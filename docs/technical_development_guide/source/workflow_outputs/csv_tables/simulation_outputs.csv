@@ -166,4 +166,4 @@ report_simulation_output.peak_load_heating_delivered_k_btu_hr,kBtu/hr,,,,Include
 report_simulation_output.resilience_battery_hr,hr,Resilience: Battery,resilience__battery__hr,hr,Average length of time the battery state of charge can meet the electric load
 report_simulation_output.unmet_hours_cooling_hr,hr,Unmet Hours: Cooling,unmet_hours__cooling__hr,hr,Number of hours where the cooling setpoint is not maintained.
 report_simulation_output.unmet_hours_heating_hr,hr,Unmet Hours: Heating,unmet_hours__heating__hr,hr,Number of hours where the heating setpoint is not maintained.
-report_simulation_output.unmet_hours_driving_hr,,Unmet Hours: Driving,unmet_hours__driving__hr,hour,Number of hours the electric vehicle was attempted to be driven when battery state of charge was at minimum level
+report_simulation_output.unmet_hours_ev_driving_hr,hr,Unmet Hours: EV Driving,unmet_hours__ev_driving__hr,hr,Number of hours where the EV driving demand is not met.

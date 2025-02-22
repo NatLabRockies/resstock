@@ -40,7 +40,5 @@ Electricity:Facility,electricity_facility__j,J,"Any user-specified EnergyPlus ou
 ,schedules_plug_loads_tv,frac,Television plug load energy use schedule.
 ,schedules_power_outage,,Unavailable period.
 ,schedules_vacancy,,Unavailable period.
-,schedules_ev_battery_charging,frac,Electric vehicle battery charging schedule
-,schedules_ev_battery_discharging,frac,Electric vehicle battery discharging schedule
-,schedules_ev_occupant,frac,Occupancy schedule of the electric vehicle driving occupant
-,schedules_present_occupants,binary,Binary representation of the occupancy of all occupants. Occupancy status of occupant n = schedules_present_occupants & (1 << n)
+,schedules_electric_vehicle_charging,frac,availability schedule for electric vehicle charging.
+,schedules_electric_vehicle_discharging,frac,availability schedule for electric vehicle discharging.
