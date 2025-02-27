@@ -2852,6 +2852,61 @@ None.
 The electric vehicle (EV) capabilities in ResStock were largely created under a joint project to ensure consistency between model inputs and outputs for ResStock and Transportation Energy \& Mobility Pathway Options Model\footnote{https://www.nrel.gov/transportation/tempo-model.html} (TEMPO), \cite{TEMPO}. The EV model in ResStock uses an EnergyPlus battery object to simulate the charging and discharging. Since a battery is typically associated with being attached to the building and not being driven around, the energy being discharged is ignored in the energy reporting as the electric vehicle is assumed to only draw energy from the dwelling unit. No vehicle-to-building energy exhange is considered in the baseline model. ResStock specifies if a specific unit has an electric vehicle, the percent of energy provided by the home charger, the electric vehicle battery type that provides the battery capacity and efficiency, the charge rate of the EV charger, and the vehicle miles traveled per year. All units are sampled with percent vehicle charge at home, an electric vehicle battery description, and a vehicle miles traveled, but these options are only used in a upgrade so that these units do not need to sample these options during an upgrade. While the charge rate is fixed in the model, the discharge rate is dynamically set using the miles traveled, vehicle efficiency, and a constant driving speed of 22 MPH (\cite{NHTS2017}), and is then scaled at each timestep based on the ambient temperature using a curve derived from emprical data (\cite{YIP2023}). Degredation of the battery over time is not considered. The schedules of charging and discharging are stochastic. The charging and discharging schedules are based on a single occupant in the dwelling unit assigned to the vehicle. Vehicle discharge events occur when the occupant leaves the unit and returns to the unit. The total duration of the discharging events is dependent on the annual vehicle miles traveled and the duration of individual events is proportional to the length of each away period. Charging is assumed to start when the occupant arrives back to the dwelling unit and the battery charges until a maximum state of charge is achived or the next trip occurs. The model draws data mainly from the TEMPO model, EIA RECS 2020 (\cite{RECS2020}), the National Household Travel Survey (\cite{NHTS2017,NHTS2022}), registration data from Experian (\cite{EXPERIAN2023}), the No Place Like Home Study (\cite{NPLH2021}), and Autonomie model (\cite{AUTONOMIE}).
 
 \subsection{Electric Vehicle Characteristics}
+\subsubsection{Electric Vehicle Ownership}
+\paragraph{Description}
+The dwelling unit owns an electric vehicle.
+
+\paragraph{Distribution Data Source(s)}
+\begin{itemize}
+  \item EV Registration Data from Experian 2023.
+  \item 2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.
+  \item U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+
+\end{itemize}
+\paragraph{Direct Conditional Dependencies}
+\begin{itemize}
+  \item Federal Poverty Level
+  \item Geometry Building Type RECS
+  \item PUMA
+  \item Tenure
+\end{itemize}
+
+\paragraph{Options}
+The options for Electric Vehicle Ownership characteristic determine if other arguments for the EV are used. The characteristic sets the \texttt{vehicle\_type} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_ev_ownership}.
+
+\begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
+  {The ResStock argument definitions set in the Electric Vehicle Ownership characteristic} {table:hc_arg_def_ev_ownership} 
+  {Name & Required & Units & Type & Choices & Description} 
+  \texttt{vehicle\_type} & false &  & String &  & The type of vehicle present at the home. \\
+  \end{customLongTable}
+
+The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_ev_ownership}. The Void option is used for impossible dependency conditions and is not sampled.
+
+\begin{longtable}[]{ |p{5cm}|p{5cm}| } \caption{Electric Vehicle Ownership options and arguments that vary for each option} \label{table:hc_opt_ev_ownership}  \\
+  \toprule\noalign{}
+  Option name & \texttt{vehicle\_type} \\
+  \midrule\noalign{}
+  \endhead
+  \bottomrule\noalign{}
+  \endlastfoot
+  No &   \\
+  Void &  \\
+  Yes &  BatteryElectricVehicle \\
+\end{longtable}
+
+\paragraph{Distribution Assumption(s)}
+\begin{itemize}
+  \item Due to low sample sizes, coarsening rules applied in the following order.
+  \begin{enumerate}
+    \item Federal Poverty Level lumped every 100\%
+    \item Federal Poverty Level lumped every 200\%
+    \item Building type is consolidated into three bins 1) single-family, 2) multi-family, and 3) mobile home
+    \item Building type is consolidated into two bins 1) single-family and 2) multi-family and mobile home
+  \end{enumerate}
+  \item PUMA level battery EV saturation is calculated using a weighted average of the County level Experian data and ResStock unit counts for each County and PUMA.
+  \item The RECS 2020 satuations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery EV saturation using the segment unit counts from PUMS 2019-5yrs survey.
+\end{itemize}
+
 \subsubsection{Electric Vehicle Battery}
 \paragraph{Description}
 The type of electric vehicle and battery range in miles.
@@ -3088,61 +3143,6 @@ The options for Electric Vehicle Outlet Access characteristic indicate whether t
     \item Household sub-tsv : deps=['Geometry Building Type RECS', 'State' 'Tenure', 'Federal Poverty Level'] 
     \item In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Vintage ACS', 'Electric Vehicle Charger'], ['Tenure', 'Federal Poverty Level']).
   \end{itemize}
-\end{itemize}
-
-\subsubsection{Electric Vehicle Ownership}
-\paragraph{Description}
-The dwelling unit owns an electric vehicle.
-
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-  \item EV Registration Data from Experian 2023.
-  \item 2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.
-  \item U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-\begin{itemize}
-  \item Federal Poverty Level
-  \item Geometry Building Type RECS
-  \item PUMA
-  \item Tenure
-\end{itemize}
-
-\paragraph{Options}
-The options for Electric Vehicle Ownership characteristic determine if other arguments for the EV are used. The characteristic sets the \texttt{vehicle\_type} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_ev_ownership}.
-
-\begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
-  {The ResStock argument definitions set in the Electric Vehicle Ownership characteristic} {table:hc_arg_def_ev_ownership} 
-  {Name & Required & Units & Type & Choices & Description} 
-  \texttt{vehicle\_type} & false &  & String &  & The type of vehicle present at the home. \\
-  \end{customLongTable}
-
-The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_ev_ownership}. The Void option is used for impossible dependency conditions and is not sampled.
-
-\begin{longtable}[]{ |p{5cm}|p{5cm}| } \caption{Electric Vehicle Ownership options and arguments that vary for each option} \label{table:hc_opt_ev_ownership}  \\
-  \toprule\noalign{}
-  Option name & \texttt{vehicle\_type} \\
-  \midrule\noalign{}
-  \endhead
-  \bottomrule\noalign{}
-  \endlastfoot
-  No &   \\
-  Void &  \\
-  Yes &  BatteryElectricVehicle \\
-\end{longtable}
-
-\paragraph{Distribution Assumption(s)}
-\begin{itemize}
-  \item Due to low sample sizes, coarsening rules applied in the following order.
-  \begin{enumerate}
-    \item Federal Poverty Level lumped every 100\%
-    \item Federal Poverty Level lumped every 200\%
-    \item Building type is consolidated into three bins 1) single-family, 2) multi-family, and 3) mobile home
-    \item Building type is consolidated into two bins 1) single-family and 2) multi-family and mobile home
-  \end{enumerate}
-  \item PUMA level battery EV saturation is calculated using a weighted average of the County level Experian data and ResStock unit counts for each County and PUMA.
-  \item The RECS 2020 satuations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery EV saturation using the segment unit counts from PUMS 2019-5yrs survey.
 \end{itemize}
 
 \subsection{Electric Vehicle Charging and Discharging Schedules}
