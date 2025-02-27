@@ -2849,7 +2849,7 @@ None.
 \section{Electric Vehicles}
 
 \subsection{Modeling Approach}
-The electric vehicle (EV) capabilities in ResStock were largely created under a joint project to ensure consistency between model outputs for ResStock and Transportation Energy \& Mobility Pathway Options Model\footnote{https://www.nrel.gov/transportation/tempo-model.html} (TEMPO), \cite{TEMPO}. The EV model in ResStock uses an EnergyPlus battery object to simulate the charging and discharging. Since a battery is typically associated with being attached to the building and not being driven around, the energy being discharged is ignored in the energy reporting to as the electric vehicle is assumed to only draw energy from the dwelling unit. No vehicle-to-building energy exhange is considered in the baseline model. ResStock specifies if a specific unit has an electric vehicle, the percent of time the vehicle charges at home, the vehicle type that provides the battery capacity and efficiency, the power draw of the EV charger, and the vehicle miles traveled per year. All units are sampled with percent vehicle charge at home, a vehicle type, and a vehicle miles traveled, but these options are only used in a upgrade so that these units do not need to sample these options during an upgrade. The EV battery model does take into account the degraded performance of electric vehicles at colder temperatures. The schedules of charging and discharging are stochastic. The charging and discharging schedules are based on a single occupant in the dwelling unit. The vehicle starts to discharge when the occupant leaves the unit and when returning to the unit. The duration of the discharging events are dependent on the duration at which the occupant is away, the vehicle range and efficiency, state of charge when leaving, and the outdoor temperature. Charging is assumed to start when the occupant arrives back to the dwelling unit and the battery charges until a maximum state of charge is achived or the next trip occurs. The model draws data mainly from the TEMPO model, EIA RECS 2020 (\cite{RECS2020}), the National Household Travel Survey (\cite{NHTS2017,NHTS2022}), registration data from Experian (\cite{EXPERIAN2023}), the No Place Like Home Study (\cite{NPLH2021}), and Autonomie model (\cite{AUTONOMIE}).
+The electric vehicle (EV) capabilities in ResStock were largely created under a joint project to ensure consistency between model inputs and outputs for ResStock and Transportation Energy \& Mobility Pathway Options Model\footnote{https://www.nrel.gov/transportation/tempo-model.html} (TEMPO), \cite{TEMPO}. The EV model in ResStock uses an EnergyPlus battery object to simulate the charging and discharging. Since a battery is typically associated with being attached to the building and not being driven around, the energy being discharged is ignored in the energy reporting as the electric vehicle is assumed to only draw energy from the dwelling unit. No vehicle-to-building energy exhange is considered in the baseline model. ResStock specifies if a specific unit has an electric vehicle, the percent of energy provided by the home charger, the electric vehicle battery type that provides the battery capacity and efficiency, the charge rate of the EV charger, and the vehicle miles traveled per year. All units are sampled with percent vehicle charge at home, an electric vehicle battery description, and a vehicle miles traveled, but these options are only used in a upgrade so that these units do not need to sample these options during an upgrade. While the charge rate is fixed in the model, the discharge rate is dynamically set using the miles traveled, vehicle efficiency, and a constant driving speed of 22 MPH (\cite{NHTS2017}), and is then scaled at each timestep based on the ambient temperature using a curve derived from emprical data (\cite{YIP2023}). Degredation of the battery over time is not considered. The schedules of charging and discharging are stochastic. The charging and discharging schedules are based on a single occupant in the dwelling unit assigned to the vehicle. Vehicle discharge events occur when the occupant leaves the unit and returns to the unit. The total duration of the discharging events is dependent on the annual vehicle miles traveled and the duration of individual events is proportional to the length of each away period. Charging is assumed to start when the occupant arrives back to the dwelling unit and the battery charges until a maximum state of charge is achived or the next trip occurs. The model draws data mainly from the TEMPO model, EIA RECS 2020 (\cite{RECS2020}), the National Household Travel Survey (\cite{NHTS2017,NHTS2022}), registration data from Experian (\cite{EXPERIAN2023}), the No Place Like Home Study (\cite{NPLH2021}), and Autonomie model (\cite{AUTONOMIE}).
 
 \subsection{Electric Vehicle Characteristics}
 \subsubsection{Electric Vehicle Battery}
@@ -2866,24 +2866,25 @@ The type of electric vehicle and battery range in miles.
 No direct conditional dependencies.
 
 \paragraph{Options}
-The options for Electric Vehicle Battery characteristic is the a set of vehicle types and battery range in miles. These options do not specifiy if the unit has a vehicle, but rather the preference of the vehicle type and battery range if the household owned an electric vehicle. Every units is assigned one of these options so that during an electric vehicle upgrade sampling to assign the vehicle type and battery range does not need to occur. The units with an electric vehicle is specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_battery\_usable\_capacity}, \texttt{vehicle\_fuel\_economy\_combined}, and \texttt{ev\_average\_mph} ResStock arguments. The argument definitions are found in Table \ref{table:hc_arg_def_ev_battery}.
+The options for Electric Vehicle Battery characteristic is a set of electric vehicle types and battery range in miles. These options do not specifiy if the unit has a vehicle, but rather the preference of the vehicle type and battery range if the household owned an electric vehicle. Every unit is assigned one of these options so that the vehicle type and battery range does not need to be sampled during an electric vehicle upgrade. The units at which an electric vehicle is modeled are specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_battery\_usable\_capacity}, \texttt{vehicle\_fuel\_economy\_combined}, and \texttt{ev\_average\_mph} ResStock arguments. The argument definitions are found in Table \ref{table:hc_arg_def_ev_battery}.
 
 \begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
 {The ResStock argument definitions set in the Electric Vehicle Battery characteristic} {table:hc_arg_def_ev_battery} 
 {Name & Required & Units & Type & Choices & Description} 
-\texttt{vehicle\_batter\_usable\_capacity} & false & kWh & Double & auto & The usable capacity of the vehicle battery, only applies to electric vehicles. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{HPXML Vehicles}) is used. \\
+\texttt{vehicle\_battery\_usable\_capacity} & false & kWh & Double & auto & The usable capacity of the vehicle battery, only applies to electric vehicles. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{HPXML Vehicles}) is used. \\
 \hline
 \texttt{vehicle\_fuel\_economy\_combined} & false &  &
 Double & auto & The combined fuel economy of the vehicle. If not provided, the OS-HPXML default (see `\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>}{HPXML Vehicles}) is used.  \\
 \hline
-\texttt{ev\_average\_mph} & false & miles/hours &
+\texttt{ev\_average\_mph} & false & miles/hour &
 Double & & The average miles/hour driven by the vehicle.  \\ % TODO: Find the units in OS-HPXML and change from hours to miles/hour
 \end{customLongTable}
 
-The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_ev_battery}. Experian dataset to characterize the distribution of electric vehicles and associated battery sizes in the vehicle stock. We used the latest available data for the year 2023, which ensures that our analysis is based on the most current information regarding the electric vehicle battery stock. Although the vehicle data included information on internal combustion engine vehicles in addition to the battery electric vehicles, we filtered the dataset to focus exclusively on personal light-duty battery electric vehicles. In the dataset, there are four different categories of light-duty vehicles, including (a) Compact, (b) Midsize, (c) Sport Utility Vehicle (SUV), and (d) Pickup truck. Additionally, the dataset includes information on two total mileage ranges for the battery: (a) 200-mile range and (b) 300-mile range.
+% TODO: add ev_efficiency_percent_increase and vehicle_fuel_economy_units
 
+The options and their ResStock argument values can be found in Table \ref{table:hc_opt_ev_battery}. The Experian dataset is used to characterize the distribution of electric vehicles and associated battery sizes in the vehicle stock. We used the latest available data for the year 2023, which ensures that our analysis is based on the most current information regarding the electric vehicle battery stock. Although the vehicle data included information on internal combustion engine vehicles in addition to the battery electric vehicles, we filtered the dataset to focus exclusively on personal light-duty battery electric vehicles. In the dataset, there are four different categories of light-duty vehicles, including (a) Compact, (b) Midsize, (c) Sport Utility Vehicle (SUV), and (d) Pickup truck. Additionally, the dataset includes information on two total mileage ranges for the battery: (a) 200-mile range and (b) 300-mile range.
 
-Then, for each electric vehicle type, we draw from Argonne National Laboratory's Autonomie20\footnote{Autonomie is the source of TEMPO's inputs about electric vehicle characteristics for both current day and future scenarios} vehicle powertrain simulation model for the electric vehicle energy consumption (\texttt{vehicle\_fuel\_economy\_combined}) and battery capacity (\texttt{vehicle\_battery\_usable\_capacity}). 
+Then, for each electric vehicle type, we draw from Argonne National Laboratory's Autonomie20\footnote{Autonomie is the source of TEMPO's inputs about electric vehicle characteristics for both current day and future scenarios} vehicle powertrain simulation model for the electric vehicle energy consumption (\texttt{vehicle\_fuel\_economy\_combined}) and battery capacity (\texttt{vehicle\_battery\_usable\_capacity}). The average driving speed is sourced from the 2017 NHTS which summarizes U.S. travel behavior (\cite{NHTS2017}). We assume that the average speed of electric vehicles is the same as the average speed of all vehicles. 
 
 \begin{longtable}[]{ |p{5cm}|p{3cm}|p{3cm}|p{3cm}| } \caption{Electric Vehicle Battery options and arguments that vary for each option} \label{table:hc_opt_ev_battery}  \\
   \toprule\noalign{}
@@ -2902,6 +2903,8 @@ Then, for each electric vehicle type, we draw from Argonne National Laboratory's
   SUV, Battery Electric Vehicle, 300 mile range     &  83.680 & 0.278934 & 22 \\
 \end{longtable}
 
+% TODO: add ev_efficiency_percent_increase and vehicle_fuel_economy_units
+
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
   \item Vehicle stock data starts with the Experian registration data and then is projected by TEMPO to 2023.
@@ -2910,7 +2913,7 @@ Then, for each electric vehicle type, we draw from Argonne National Laboratory's
 
 \subsubsection{Electric Vehicle Charge At Home}
 \paragraph{Description}
-The percentage a household would or do charge their electric vehicle at home.
+The percentage a household would or does charge their electric vehicle at home.
 
 \paragraph{Distribution Data Source(s)}
 U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
@@ -2922,7 +2925,7 @@ U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 \end{itemize}
 
 \paragraph{Options}
-The options for Electric Vehicle Charge At Home characteristic is the a set of percentage options that determine how much of the electric vehicle's energy shows up on the residential meter vs at charing at work or public chargers. Every units is assigned one of these options so that during an electric vehicle upgrade sampling to assign the vehicle type and battery range does not need to occur. The units with an electric vehicle is specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_fraction\_charged\_home} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_ev_charge_at_home}.
+The options for the Electric Vehicle Charge At Home characteristic is a set of percentages that determine how much of the electric vehicle's energy shows up on the residential meter vs charging at work or at public chargers. Every unit in the baseline is assigned one of these options so that the home charging fraction does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle are specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_fraction\_charged\_home} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_ev_charge_at_home}.
 
 \begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
 {The ResStock argument definitions set in the Electric Vehicle Charge At Home characteristic} {table:hc_arg_def_ev_charge_at_home} 
@@ -2954,7 +2957,7 @@ The options and their ResStock arguments values can be found in Table \ref{table
 
 \subsubsection{Electric Vehicle Charger}
 \paragraph{Description}
-Type of electric vehicle charger used at the dwelling unit
+Type of electric vehicle charger used at the dwelling unit.
 
 \paragraph{Distribution Data Source(s)}
 U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
@@ -2968,15 +2971,15 @@ U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 \end{itemize}
 
 \paragraph{Options}
-The options for Electric Vehicle Charger characteristic is the type of charger used by an electric vehicle owner. The characteristic sets the \texttt{ev\_charger\_present}, \texttt{ev\_charger\_power}, and \texttt{ev\_charger\_location} ResStock arguments. The argument definition is found in Table \ref{table:hc_arg_def_ev_charger}. If \texttt{ev\_charger\_present} is set to "true", then the other arguments are required otherwise the power and location arguments will not be used. In the baseline stock the \texttt{ev\_charger\_location} argument is set to "auto", meaning it takes the default OpenStudio-HPXML value (see OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-electric-vehicle-chargers}{Electric Vehicle Charger}).
+The options for the Electric Vehicle Charger characteristic describe the type of charger used by an electric vehicle owner at home. The characteristic sets the \texttt{ev\_charger\_present}, \texttt{ev\_charger\_power}, and \texttt{ev\_charger\_location} ResStock arguments. The argument definition is found in Table \ref{table:hc_arg_def_ev_charger}. If \texttt{ev\_charger\_present} is set to "true", then the other arguments are required otherwise the power and location arguments will not be used. In the baseline stock the \texttt{ev\_charger\_location} argument is set to "auto", meaning it takes the default OpenStudio-HPXML value (see OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-electric-vehicle-chargers}{Electric Vehicle Charger}).
 
 \begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
   {The ResStock argument definitions set in the Electric Vehicle Charger characteristic} {table:hc_arg_def_ev_charger} 
   {Name & Required & Units & Type & Choices & Description} 
-  \texttt{ev\_charger\_present} & false & & Double & auto, true, false & Whether there is an electric vehicle charger present.  \\
+  \texttt{ev\_charger\_present} & false & & Boolean & auto, true, false & Whether there is an electric vehicle charger present.  \\
   \hline
   \texttt{ev\_charger\_power} & false & W & 
-  Double & auto, true, false & The rated power output of the EV charger. If not provided, the OS-HPXML default (see HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>}{Electric Vehicle Chargers}) is used. \\
+  Double & auto & The rated power output of the EV charger. If not provided, the OS-HPXML default (see HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>}{Electric Vehicle Chargers}) is used. \\
   \hline
   \texttt{ev\_charger\_location} & false &  &
   Choice & auto, garage, outside & The space type for the EV charger. If not provided, the OS-HPXML default (see HPXML \href{<https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>}{Electric Vehicle Chargers}) is used. \\
@@ -3019,7 +3022,7 @@ The 2022 U.S. Federal Highway Administration National Household Travel Survey (N
 No direct conditional dependencies.
 
 \paragraph{Options}
-The options for Electric Vehicle Miles Traveled characteristic are a set of miles traveled by the electric vehicle. These options do not specifiy if the unit has a vehicle, but rather the amount of miles the EV travels if the dwelling unit has an electric vehicle. Every units is assigned one of these options so that during an electric vehicle upgrade sampling to assign the vehicle miles traveled does not need to occur. The units with an electric vehicle is specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_miles\_driven\_per\_year} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_ev_vmt}.
+The options for Electric Vehicle Miles Traveled characteristic are a set of miles traveled by the electric vehicle. These options do not specifiy if the unit has a vehicle, but rather the amount of miles the EV travels if the dwelling unit has an electric vehicle. Every unit is assigned one of these options so that the vehicle miles traveled does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle is specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_miles\_driven\_per\_year} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_ev_vmt}.
 
 \begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
   {The ResStock argument definitions set in the Electric Vehicle Miles Traveled characteristic} {table:hc_arg_def_ev_vmt} 
@@ -3066,7 +3069,7 @@ U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 \begin{itemize}
   \item Electric Vehicle Charger
   \item Federal Poverty Level
-  \item Geometry Building Type RECSgit c
+  \item Geometry Building Type RECS
   \item Tenure
   \item Vinteage ACS
 \end{itemize}
@@ -3077,7 +3080,7 @@ The options for Electric Vehicle Outlet Access characteristic indicate whether t
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
   \item RECS 2020 has Multi-Family 5+ units marked as Not Applicable. These units are replaced by data from the No Place Like Home Study (https://www.nrel.gov/docs/fy22osti/81065.pdf) Table 1 Scenario 2. Multi-Family 5+ units owners is assumed for 12\% units having electrical access. This fraction is based on the average of mid-capacity apartment and high-capacity apartment. Multi-Family 5+ units owners is assumed for 28\% units having electrical access.
-  \item Units reported to have an Level 1 or Level 2 charger in the field EVCHRGTYPE are assumed to have outlet access.
+  \item Units reported to have a Level 1 or Level 2 charger in the field EVCHRGTYPE are assumed to have outlet access.
   \item Level 1 chargers without outlet access are units with EVs, but report no outlet access within 20 ft of vehicle parking.
   \item Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The sub-tsvs have the following dependencies:
   \begin{itemize}
@@ -3110,7 +3113,7 @@ The dwelling unit owns an electric vehicle.
 The options for Electric Vehicle Ownership characteristic determine if other arguments for the EV are used. The characteristic sets the \texttt{vehicle\_type} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_ev_ownership}.
 
 \begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
-  {The ResStock argument definitions set in the Electric Vehicle Miles Traveled characteristic} {table:hc_arg_def_ev_ownership} 
+  {The ResStock argument definitions set in the Electric Vehicle Ownership characteristic} {table:hc_arg_def_ev_ownership} 
   {Name & Required & Units & Type & Choices & Description} 
   \texttt{vehicle\_type} & false &  & String &  & The type of vehicle present at the home. \\
   \end{customLongTable}
@@ -3143,7 +3146,7 @@ The options and their ResStock arguments values can be found in Table \ref{table
 \end{itemize}
 
 \subsection{Electric Vehicle Charging and Discharging Schedules}
-Charging and discharging schedules provide a time periods when the EV can begin to charge or discharge energy. The charging and discharging schedules are connected to the stochastic occupancy model (based on American Time Use Survey data) in OpenStudio-HPXML. If a unit has an EV an occupant is chosen to be the driver. The schedule generator takes EV vehicle miles traveled and the average speed to calculate the total hours driven per year. The total hours driven per year is used as an input to the EV schedule generator and produces the charging and discharging schedule, while the battery model takes care of the actual power draw during the charging and discharging period. Figure \ref{fig:ev_discharge} shows an example of a generated discharging schedule. This schedule shows that during a “away period” for the occupant, the vehicle is discharged immediately after the occupant leaves and just before they arrive back home, proportional to the length of the away period. The charging schedule is similarly based on occupancy, where the baseline behavior assumes the vehicle is plugged in when the occupant arrives home. 
+Charging and discharging schedules provide the time periods when the EV can charge or discharge energy. The charging and discharging schedules are connected to the stochastic occupancy model (based on American Time Use Survey data) in OpenStudio-HPXML. Each unit with an EV has an occupant assigned as the sole driver. The schedule generator takes EV vehicle miles traveled and the average speed to calculate the total hours driven per year. The total hours driven per year is used as an input to the EV schedule generator and produces the charging and discharging schedule, while the battery model takes care of the actual power draw during the charging and discharging period. Figure \ref{fig:ev_discharge} shows an example of a generated discharging schedule. This schedule shows that during an “away period” for the occupant, the vehicle is discharged immediately after the occupant leaves and just before they arrive back home, proportional to the length of the away period. The charging schedule is similarly based on occupancy, where the baseline behavior assumes the vehicle is plugged in when the occupant arrives home, and remains plugged in for the full occupied period.
 
 \begin{figure}
   \centering
