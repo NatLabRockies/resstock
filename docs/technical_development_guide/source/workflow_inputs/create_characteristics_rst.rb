@@ -181,8 +181,14 @@ source_report.each do |row|
       line = "   * - #{arguments_col}" if i == 0
       f.puts(line)
     end
+    missing_args = r_arguments.reject { |arg| resstockarguments_xml.keys.include?(arg) }
 
-    r_arguments = r_arguments.sort_by &resstockarguments_xml.keys.method(:index)
+    unless missing_args.empty?
+      puts "Warning: The following arguments are missing from resstockarguments_xml.keys:"
+      puts missing_args
+    end
+    r_arguments = r_arguments.select { |arg| resstockarguments_xml.keys.include?(arg) }
+      .sort_by { |arg| resstockarguments_xml.keys.index(arg) }
     r_arguments.each do |r_argument|
       f.puts("   * - ``#{r_argument}``")
       f.puts("     - #{resstockarguments_xml[r_argument]['required']}")

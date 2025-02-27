@@ -35481,6 +35481,12 @@ Arguments
      - Double
      -
      - The average miles/hour driven by the vehicle.
+   * - ``ev_efficiency_percent_increase``
+     - false
+     - hours
+     - Double
+     -
+     - The increase (%) in efficiency of the electric vehicle.
 
 Options
 *******
@@ -35497,47 +35503,56 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``vehicle_battery_usable_capacity``
      - ``vehicle_fuel_economy_combined``
      - ``ev_average_mph``
+     - ``ev_efficiency_percent_increase``
 
    * - Compact, Battery Electric Vehicle, 200 mile range
      - 12%
      - 40.168
      - 0.209901
      - 22
+     - 0.0
    * - Compact, Battery Electric Vehicle, 300 mile range
      - 34%
      - 63.433
      - 0.220020
      - 22
+     - 0.0
    * - Midsize, Battery Electric Vehicle, 200 mile range
      - 3%
      - 41.978
      - 0.219174
      - 22
+     - 0.0
    * - Midsize, Battery Electric Vehicle, 300 mile range
      - 7.6%
      - 65.441
      - 0.229449
      - 22
+     - 0.0
    * - Pickup, Battery Electric Vehicle, 200 mile range
      - 0.0055%
      - 67.738
      - 0.357648
      - 22
+     - 0.0
    * - Pickup, Battery Electric Vehicle, 300 mile range
      - 0.77%
      - 105.946
      - 0.373794
      - 22
+     - 0.0
    * - SUV, Battery Electric Vehicle, 200 mile range
      - 12%
      - 53.503
      - 0.267513
      - 22
+     - 0.0
    * - SUV, Battery Electric Vehicle, 300 mile range
      - 31%
      - 83.680
      - 0.278934
      - 22
+     - 0.0
 
 .. _electric_vehicle_charge_at_home:
 
@@ -35609,10 +35624,10 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - 40-59%
      - 1.9%
      - 0.50
-   * - 60%-79%
+   * - 60-79%
      - 7.3%
      - 0.70
-   * - 80%-99%
+   * - 80-99%
      - 34%
      - 0.90
    * - 100%
