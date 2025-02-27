@@ -9249,20 +9249,20 @@ Eaves	1 ft	ResStockArguments	geometry_eaves_depth=1
 Eaves	2 ft	ResStockArguments	geometry_eaves_depth=2
 Eaves	3 ft	ResStockArguments	geometry_eaves_depth=3
 Eaves	None	ResStockArguments	geometry_eaves_depth=0
-Electric Vehicle Battery	"Compact, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=40.168	vehicle_fuel_economy_combined=0.209901	ev_average_mph=22
-Electric Vehicle Battery	"Compact, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=63.433	vehicle_fuel_economy_combined=0.220020	ev_average_mph=22
-Electric Vehicle Battery	"Midsize, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=41.978	vehicle_fuel_economy_combined=0.219174	ev_average_mph=22
-Electric Vehicle Battery	"Midsize, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=65.441	vehicle_fuel_economy_combined=0.229449	ev_average_mph=22
-Electric Vehicle Battery	"Pickup, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=67.738	vehicle_fuel_economy_combined=0.357648	ev_average_mph=22
-Electric Vehicle Battery	"Pickup, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=105.946	vehicle_fuel_economy_combined=0.373794	ev_average_mph=22
-Electric Vehicle Battery	"SUV, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=53.503	vehicle_fuel_economy_combined=0.267513	ev_average_mph=22
-Electric Vehicle Battery	"SUV, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=83.680	vehicle_fuel_economy_combined=0.278934	ev_average_mph=22
+Electric Vehicle Battery	"Compact, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=40.168	vehicle_fuel_economy_combined=0.209901	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"Compact, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=63.433	vehicle_fuel_economy_combined=0.220020	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"Midsize, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=41.978	vehicle_fuel_economy_combined=0.219174	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"Midsize, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=65.441	vehicle_fuel_economy_combined=0.229449	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"Pickup, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=67.738	vehicle_fuel_economy_combined=0.357648	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"Pickup, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=105.946	vehicle_fuel_economy_combined=0.373794	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"SUV, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=53.503	vehicle_fuel_economy_combined=0.267513	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"SUV, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=83.680	vehicle_fuel_economy_combined=0.278934	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
 Electric Vehicle Charge At Home	0-19%	ResStockArguments	vehicle_fraction_charged_home=0.10
 Electric Vehicle Charge At Home	100%	ResStockArguments	vehicle_fraction_charged_home=1.00
 Electric Vehicle Charge At Home	20-39%	ResStockArguments	vehicle_fraction_charged_home=0.30
 Electric Vehicle Charge At Home	40-59%	ResStockArguments	vehicle_fraction_charged_home=0.50
-Electric Vehicle Charge At Home	60%-79%	ResStockArguments	vehicle_fraction_charged_home=0.70
-Electric Vehicle Charge At Home	80%-99%	ResStockArguments	vehicle_fraction_charged_home=0.90
+Electric Vehicle Charge At Home	60-79%	ResStockArguments	vehicle_fraction_charged_home=0.70
+Electric Vehicle Charge At Home	80-99%	ResStockArguments	vehicle_fraction_charged_home=0.90
 Electric Vehicle Charger	Level 1 charger	ResStockArguments	ev_charger_present=true	ev_charger_power=1600	ev_charger_location=auto
 Electric Vehicle Charger	Level 2 charger	ResStockArguments	ev_charger_present=true	ev_charger_power=5690	ev_charger_location=auto
 Electric Vehicle Charger	None	ResStockArguments	ev_charger_present=false
