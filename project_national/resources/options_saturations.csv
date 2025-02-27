@@ -13241,8 +13241,8 @@ Level,Parameter,Option,Saturation
 13,Electric Vehicle Charge At Home,0-19%,0.130877
 13,Electric Vehicle Charge At Home,20-39%,0.014261
 13,Electric Vehicle Charge At Home,40-59%,0.0190061
-13,Electric Vehicle Charge At Home,60%-79%,0.0727869
-13,Electric Vehicle Charge At Home,80%-99%,0.34108
+13,Electric Vehicle Charge At Home,60-79%,0.0727869
+13,Electric Vehicle Charge At Home,80-99%,0.34108
 13,Electric Vehicle Charge At Home,100%,0.421989
 13,Electric Vehicle Ownership,No,0.985514
 13,Electric Vehicle Ownership,Yes,0.0144856
