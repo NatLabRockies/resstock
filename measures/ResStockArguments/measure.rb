@@ -401,7 +401,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_average_mph', false)
     arg.setDisplayName('Electric Vehicle: Average Miles Per Hour')
     arg.setDescription('The average miles/hour driven by the vehicle.')
-    arg.setUnits('hours')
+    arg.setUnits('miles/hour')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_efficiency_percent_increase', false)
