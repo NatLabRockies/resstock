@@ -407,7 +407,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_efficiency_percent_increase', false)
     arg.setDisplayName('Electric Vehicle: Efficiency Improvement')
     arg.setDescription('The increase (%) in efficiency of the electric vehicle.')
-    arg.setUnits('hours')
+    arg.setUnits('percent')
     args << arg
 
     return args
