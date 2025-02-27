@@ -45,7 +45,6 @@ module Constants
                                    'pv_system_num_bedrooms_served',
                                    'battery_num_bedrooms_served',
                                    'vehicle_battery_capacity',
-                                   'vehicle_fuel_economy_units',
                                    'vehicle_hours_driven_per_week',
                                    'ev_charger_level',
                                    'misc_plug_loads_vehicle_usage_multiplier',
