@@ -44,7 +44,6 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.corridor & Type of corridor \\ \hline
         in.county & County GISJOIN identifier \\ \hline
         in.county\_and\_puma & The GISJOIN identifier for the County and the PUMA that the sample is located \\ \hline
-        
         in.dehumidifier & Presence, water removal rate, and humidity setpoint of dehumidifier (not modeled in 2024.2 dataset) \\ \hline
         in.dishwasher & Presence and rated efficiency of dishwasher \\ \hline
         in.dishwasher\_usage\_level & Dishwasher energy usage level multiplier \\ \hline
@@ -53,8 +52,12 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.duct\_leakage\_and\_insulation & Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces \\ \hline
         in.duct\_location & Location of duct system \\ \hline
         in.eaves & Depth of roof eaves \\ \hline
-        in.electric\_vehicle & Electric vehicle usage and efficiency \\ \hline
-        
+        in.electric\_vehicle\_battery & The type of battery used by EV \\ \hline
+        in.electric\_vehicle\_charge\_at\_home & Percentage of EV charging that occurs at home \\ \hline
+        in.electric\_vehicle\_charger & The type of charger used by EV \\ \hline
+        in.electric\_vehicle\_miles\_traveled & Annual miles traveled by EV \\ \hline
+        in.electric\_vehicle\_outlet\_access & The type of outlet access available for EV \\ \hline
+        in.electric\_vehicle\_ownership & Whether the EV is present or not \\ \hline
         in.energystar\_climate\_zone\_2023 & Climate zones for windows, doors, and skylights per ENERGY STAR guidelines as of 2023 \\ \hline
         in.federal\_poverty\_level & Federal poverty level of the household occupying the housing unit \\ \hline
         in.generation\_and\_emissions\_assessment\_region & Generation and carbon emissions assessment (GEA) region from Cambium 2022 \\ \hline
@@ -226,6 +229,7 @@ As an output, the energy consumption results are all preceded with an ``out.'' p
         out.electricity.cooling.energy\_consumption.kwh & kWh & Electricity consumed by cooling systems; excludes usage by fans/pumps \\ \hline
         out.electricity.cooling\_fans\_pumps.energy\_consumption.kwh & kWh & Electricity consumed by supply fan (air distribution) or circulating pump (geothermal loop) during cooling \\ \hline
         out.electricity.dishwasher.energy\_consumption.kwh & kWh & Electricity consumed by dishwashers \\ \hline
+        out.electricity.electric\_vehicle\_charging.energy\_consumption.kwh & kWh & Electricity consumed by charging electric vehicles \\ \hline
         out.electricity.freezer.energy\_consumption.kwh & kWh & Electricity consumed by standalone freezers \\ \hline
         out.electricity.heating.energy\_consumption.kwh & kWh & Electricity consumed by heating systems; excludes usage by fans/pumps \\ \hline
         out.electricity.heating\_fans\_pumps.energy\_consumption.kwh & kWh & Electricity consumed by supply fan (air distribution) or circulating pump (hydronic distribution or geothermal loop) during heating \\ \hline
