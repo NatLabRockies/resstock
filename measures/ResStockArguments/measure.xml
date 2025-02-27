@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>5b377465-f72d-4058-96f6-2d59a3b96fb1</version_id>
-  <version_modified>2025-02-20T22:49:03Z</version_modified>
+  <version_id>b335b16a-7d1c-4f81-b013-9514c8a4afc6</version_id>
+  <version_modified>2025-02-27T22:32:49Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -5430,6 +5430,37 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>vehicle_fuel_economy_units</name>
+      <display_name>Vehicle: Combined Fuel Economy Units</display_name>
+      <description>The combined fuel economy units of the vehicle. Only 'kWh/mile', 'mile/kWh', or 'mpge' are allow for electric vehicles. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'&gt;HPXML Vehicles&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>kWh/mile</value>
+          <display_name>kWh/mile</display_name>
+        </choice>
+        <choice>
+          <value>mile/kWh</value>
+          <display_name>mile/kWh</display_name>
+        </choice>
+        <choice>
+          <value>mpge</value>
+          <display_name>mpge</display_name>
+        </choice>
+        <choice>
+          <value>mpg</value>
+          <display_name>mpg</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>vehicle_fuel_economy_combined</name>
       <display_name>Vehicle: Combined Fuel Economy</display_name>
       <description>The combined fuel economy of the vehicle. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'&gt;HPXML Vehicles&lt;/a&gt;) is used.</description>
@@ -7725,16 +7756,16 @@
       <display_name>Electric Vehicle: Average Miles Per Hour</display_name>
       <description>The average miles/hour driven by the vehicle.</description>
       <type>Double</type>
-      <units>hours</units>
+      <units>miles/hour</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>ev_efficiency_percent_increase</name>
       <display_name>Electric Vehicle: Efficiency Improvement</display_name>
-      <description>The increase (%) in efficiency of the electric vehicle.</description>
+      <description>The increase (fraction) in efficiency of the electric vehicle.</description>
       <type>Double</type>
-      <units>hours</units>
+      <units>Frac</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -7756,7 +7787,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>AA3CEF46</checksum>
+      <checksum>50C43737</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7773,13 +7804,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>D2A63714</checksum>
+      <checksum>0C90D8FD</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>FCF6C905</checksum>
+      <checksum>35AE8075</checksum>
     </file>
     <file>
       <filename>measure.txt</filename>

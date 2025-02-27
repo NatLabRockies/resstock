@@ -2921,44 +2921,46 @@ The type of electric vehicle and battery range in miles.
 No direct conditional dependencies.
 
 \paragraph{Options}
-The options for Electric Vehicle Battery characteristic is a set of electric vehicle types and battery range in miles. These options do not specifiy if the unit has a vehicle, but rather the preference of the vehicle type and battery range if the household owned an electric vehicle. Every unit is assigned one of these options so that the vehicle type and battery range does not need to be sampled during an electric vehicle upgrade. The units at which an electric vehicle is modeled are specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_battery\_usable\_capacity}, \texttt{vehicle\_fuel\_economy\_combined}, and \texttt{ev\_average\_mph} ResStock arguments. The argument definitions are found in Table \ref{table:hc_arg_def_ev_battery}.
+The options for Electric Vehicle Battery characteristic is a set of electric vehicle types and battery range in miles. These options do not specifiy if the unit has a vehicle, but rather the preference of the vehicle type and battery range if the household owned an electric vehicle. Every unit is assigned one of these options so that the vehicle type and battery range does not need to be sampled during an electric vehicle upgrade. The units at which an electric vehicle is modeled are specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_battery\_usable\_capacity}, \texttt{vehicle\_fuel\_economy\_units}, \texttt{vehicle\_fuel\_economy\_combined}, \texttt{ev\_average\_mph}, and \texttt{ev\_efficiency\_percent\_increase} ResStock arguments. The argument definitions are found in Table \ref{table:hc_arg_def_ev_battery}.
 
 \begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
 {The ResStock argument definitions set in the Electric Vehicle Battery characteristic} {table:hc_arg_def_ev_battery} 
 {Name & Required & Units & Type & Choices & Description} 
 \texttt{vehicle\_battery\_usable\_capacity} & false & kWh & Double & auto & The usable capacity of the vehicle battery, only applies to electric vehicles. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{HPXML Vehicles}) is used. \\
 \hline
+\texttt{vehicle\_fuel\_economy\_units} & false &  & Choice & auto, kWh/mile, mile/kWh, mpge, mpg & The combined fuel economy units of the vehicle. Only 'kWh/mile', 'mile/kWh', or 'mpge' are allow for electric vehicles. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>`_) is used. \\
+\hline
 \texttt{vehicle\_fuel\_economy\_combined} & false &  &
 Double & auto & The combined fuel economy of the vehicle. If not provided, the OS-HPXML default (see `\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>}{HPXML Vehicles}) is used.  \\
 \hline
 \texttt{ev\_average\_mph} & false & miles/hour &
-Double & & The average miles/hour driven by the vehicle.  \\ % TODO: Find the units in OS-HPXML and change from hours to miles/hour
+Double & & The average miles/hour driven by the vehicle.  \\
+\hline
+\texttt{ev\_efficiency\_percent\_increase} & false & Frac & Double &  & The increase (fraction) in efficiency of the electric vehicle. \\
 \end{customLongTable}
 
 % TODO: add ev_efficiency_percent_increase and vehicle_fuel_economy_units
 
 The options and their ResStock argument values can be found in Table \ref{table:hc_opt_ev_battery}. The Experian dataset is used to characterize the distribution of electric vehicles and associated battery sizes in the vehicle stock. We used the latest available data for the year 2023, which ensures that our analysis is based on the most current information regarding the electric vehicle battery stock. Although the vehicle data included information on internal combustion engine vehicles in addition to the battery electric vehicles, we filtered the dataset to focus exclusively on personal light-duty battery electric vehicles. In the dataset, there are four different categories of light-duty vehicles, including (a) Compact, (b) Midsize, (c) Sport Utility Vehicle (SUV), and (d) Pickup truck. Additionally, the dataset includes information on two total mileage ranges for the battery: (a) 200-mile range and (b) 300-mile range.
 
-Then, for each electric vehicle type, we draw from Argonne National Laboratory's Autonomie20\footnote{Autonomie is the source of TEMPO's inputs about electric vehicle characteristics for both current day and future scenarios} vehicle powertrain simulation model for the electric vehicle energy consumption (\texttt{vehicle\_fuel\_economy\_combined}) and battery capacity (\texttt{vehicle\_battery\_usable\_capacity}). The average driving speed is sourced from the 2017 NHTS which summarizes U.S. travel behavior (\cite{NHTS2017}). We assume that the average speed of electric vehicles is the same as the average speed of all vehicles. 
+Then, for each electric vehicle type, we draw from Argonne National Laboratory's Autonomie20\footnote{Autonomie is the source of TEMPO's inputs about electric vehicle characteristics for both current day and future scenarios} vehicle powertrain simulation model for the electric vehicle energy consumption (\texttt{vehicle\_fuel\_economy\_combined}) and battery capacity (\texttt{vehicle\_battery\_usable\_capacity}). The units for the combined fuel economy (\texttt{vehicle\_fuel\_economy\_units}) is always kWh/mile. The average driving speed is sourced from the 2017 NHTS which summarizes U.S. travel behavior (\cite{NHTS2017}). We assume that the average speed of electric vehicles is the same as the average speed of all vehicles. A scaling factor is applied to increase the efficiency of electric vehicles (\texttt{ev\_efficiency\_percent\_increase}). This value is 0.0 for the ResStock baseline meaning that the efficiency is equal to \texttt{vehicle\_fuel\_economy\_combined}, but it is exposed so that scenarios of EV efficiency improvements can be modeled.
 
-\begin{longtable}[]{ |p{5cm}|p{3cm}|p{3cm}|p{3cm}| } \caption{Electric Vehicle Battery options and arguments that vary for each option} \label{table:hc_opt_ev_battery}  \\
+\begin{longtable}[]{ |p{5cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|} \caption{Electric Vehicle Battery options and arguments that vary for each option} \label{table:hc_opt_ev_battery}  \\
   \toprule\noalign{}
-  Option name & \texttt{vehicle\_battery\_usable\_capacity} & \texttt{vehicle\_fuel\_economy\_combined} & \texttt{ev\_average\_mph} \\
+  Option name & \texttt{vehicle\_battery\_usable\_capacity} & \texttt{vehicle\_fuel\_economy\_combined} & \texttt{ev\_average\_mph} & \texttt{vehicle\_fuel\_economy\_units} & \texttt{ev\_efficiency\_percent\_increase} \\
   \midrule\noalign{}
   \endhead
   \bottomrule\noalign{}
   \endlastfoot
-  Compact, Battery Electric Vehicle, 200 mile range &  40.168 & 0.209901 & 22 \\
-  Compact, Battery Electric Vehicle, 300 mile range &  63.433 & 0.220020 & 22 \\
-  Midsize, Battery Electric Vehicle, 200 mile range &  41.978 & 0.219174 & 22 \\
-  Midsize, Battery Electric Vehicle, 300 mile range &  65.441 & 0.229449 & 22 \\
-  Pickup, Battery Electric Vehicle, 200 mile range  &  67.738 & 0.357648 & 22 \\
-  Pickup, Battery Electric Vehicle, 300 mile range  & 105.946 & 0.373794 & 22 \\
-  SUV, Battery Electric Vehicle, 200 mile range     &  53.503 & 0.267513 & 22 \\
-  SUV, Battery Electric Vehicle, 300 mile range     &  83.680 & 0.278934 & 22 \\
+  Compact, Battery Electric Vehicle, 200 mile range &  40.168 & 0.209901 & 22 & kWh/mile & 0.0 \\
+  Compact, Battery Electric Vehicle, 300 mile range &  63.433 & 0.220020 & 22 & kWh/mile & 0.0 \\
+  Midsize, Battery Electric Vehicle, 200 mile range &  41.978 & 0.219174 & 22 & kWh/mile & 0.0 \\
+  Midsize, Battery Electric Vehicle, 300 mile range &  65.441 & 0.229449 & 22 & kWh/mile & 0.0 \\
+  Pickup, Battery Electric Vehicle, 200 mile range  &  67.738 & 0.357648 & 22 & kWh/mile & 0.0 \\
+  Pickup, Battery Electric Vehicle, 300 mile range  & 105.946 & 0.373794 & 22 & kWh/mile & 0.0 \\
+  SUV, Battery Electric Vehicle, 200 mile range     &  53.503 & 0.267513 & 22 & kWh/mile & 0.0 \\
+  SUV, Battery Electric Vehicle, 300 mile range     &  83.680 & 0.278934 & 22 & kWh/mile & 0.0 \\
 \end{longtable}
-
-% TODO: add ev_efficiency_percent_increase and vehicle_fuel_economy_units
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}

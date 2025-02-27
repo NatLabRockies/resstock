@@ -3885,6 +3885,19 @@ The usable capacity of the vehicle battery, only applies to electric vehicles. I
 
 <br/>
 
+**Vehicle: Combined Fuel Economy Units**
+
+The combined fuel economy units of the vehicle. Only 'kWh/mile', 'mile/kWh', or 'mpge' are allow for electric vehicles. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'>HPXML Vehicles</a>) is used.
+
+- **Name:** ``vehicle_fuel_economy_units``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `auto`, `kWh/mile`, `mile/kWh`, `mpge`, `mpg`
+
+<br/>
+
 **Vehicle: Combined Fuel Economy**
 
 The combined fuel economy of the vehicle. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'>HPXML Vehicles</a>) is used.
@@ -5837,7 +5850,7 @@ The average miles/hour driven by the vehicle.
 - **Name:** ``ev_average_mph``
 - **Type:** ``Double``
 
-- **Units:** ``hours``
+- **Units:** ``miles/hour``
 
 - **Required:** ``false``
 
@@ -5845,12 +5858,12 @@ The average miles/hour driven by the vehicle.
 
 **Electric Vehicle: Efficiency Improvement**
 
-The increase (%) in efficiency of the electric vehicle.
+The increase (fraction) in efficiency of the electric vehicle.
 
 - **Name:** ``ev_efficiency_percent_increase``
 - **Type:** ``Double``
 
-- **Units:** ``hours``
+- **Units:** ``Frac``
 
 - **Required:** ``false``
 

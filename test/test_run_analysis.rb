@@ -504,9 +504,9 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, "Both schedule file and monthly multipliers provided for 'electric_vehicle'; monthly multipliers will be ignored.")
 
       # For the EV minutes warning try replacing the number of minutes as a string rather than a number.
-      new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? "(<number of minutes>)" : match }
-      new_message =  new_message.gsub(/Only \d+ minutes was used/, 'Only <minutes value> minutes was used')
-      next if _expected_warning_message(new_message, "Insufficient away minutes (<number of minutes>) for required driving minutes (<number of minutes>)Only <minutes value> minutes was used.")
+      new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? '(<number of minutes>)' : match }
+      new_message = new_message.gsub(/Only \d+ minutes was used/, 'Only <minutes value> minutes was used')
+      next if _expected_warning_message(new_message, 'Insufficient away minutes (<number of minutes>) for required driving minutes (<number of minutes>)Only <minutes value> minutes was used.')
 
       flunk "Unexpected cli_output.log message found: #{message}"
     end

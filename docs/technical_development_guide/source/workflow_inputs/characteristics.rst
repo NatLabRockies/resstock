@@ -35469,24 +35469,30 @@ Arguments
      - Double
      - auto
      - The usable capacity of the vehicle battery, only applies to electric vehicles. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
-   * - ``vehicle_fuel_economy_combined``
+   * - ``vehicle_fuel_economy_units``
      - false
      - 
+     - Choice
+     - auto, kWh/mile, mile/kWh, mpge, mpg
+     - The combined fuel economy units of the vehicle. Only 'kWh/mile', 'mile/kWh', or 'mpge' are allow for electric vehicles. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
+   * - ``vehicle_fuel_economy_combined``
+     - false
+     -
      - Double
      - auto
      - The combined fuel economy of the vehicle. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
    * - ``ev_average_mph``
      - false
-     - hours
+     - miles/hour
      - Double
      -
      - The average miles/hour driven by the vehicle.
    * - ``ev_efficiency_percent_increase``
      - false
-     - hours
+     - Frac
      - Double
      -
-     - The increase (%) in efficiency of the electric vehicle.
+     - The increase (fraction) in efficiency of the electric vehicle.
 
 Options
 *******
@@ -35501,6 +35507,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Option name
      - Stock saturation
      - ``vehicle_battery_usable_capacity``
+     - ``vehicle_fuel_economy_units``
      - ``vehicle_fuel_economy_combined``
      - ``ev_average_mph``
      - ``ev_efficiency_percent_increase``
@@ -35508,48 +35515,56 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Compact, Battery Electric Vehicle, 200 mile range
      - 12%
      - 40.168
+     - kWh/mile
      - 0.209901
      - 22
      - 0.0
    * - Compact, Battery Electric Vehicle, 300 mile range
      - 34%
      - 63.433
+     - kWh/mile
      - 0.220020
      - 22
      - 0.0
    * - Midsize, Battery Electric Vehicle, 200 mile range
      - 3%
      - 41.978
+     - kWh/mile
      - 0.219174
      - 22
      - 0.0
    * - Midsize, Battery Electric Vehicle, 300 mile range
      - 7.6%
      - 65.441
+     - kWh/mile
      - 0.229449
      - 22
      - 0.0
    * - Pickup, Battery Electric Vehicle, 200 mile range
      - 0.0055%
      - 67.738
+     - kWh/mile
      - 0.357648
      - 22
      - 0.0
    * - Pickup, Battery Electric Vehicle, 300 mile range
      - 0.77%
      - 105.946
+     - kWh/mile
      - 0.373794
      - 22
      - 0.0
    * - SUV, Battery Electric Vehicle, 200 mile range
      - 12%
      - 53.503
+     - kWh/mile
      - 0.267513
      - 22
      - 0.0
    * - SUV, Battery Electric Vehicle, 300 mile range
      - 31%
      - 83.680
+     - kWh/mile
      - 0.278934
      - 22
      - 0.0
