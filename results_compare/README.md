@@ -16,7 +16,7 @@ source env/bin/activate
 well as some packages
 ```
 pip install git+https://github.com/NREL/buildstock-query#egg=buildstock-query
-pip install matplotlib openpyxl
+pip install matplotlib openpyxl statsmodels
 
 ```
 
