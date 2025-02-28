@@ -555,7 +555,7 @@ Hot water fixture usage and flow levels.
 \end{itemize}
 
 \paragraph{Options}
-The Hot Water Fixtures options are usage bins ranging from ``40\% Usage'' to ``200\% Usage'' at 10\% increments. For the ResStock baseline, the options are log-normally distributed between 40\% and 200\%, with the peak at 80\%. All options have both \texttt{water\_fixtures\_shower\_low\_flow} and
+The Hot Water Fixtures options are usage bins ranging from ``50\% Usage'' to ``200\% Usage'' at 10\% increments. For the ResStock baseline, the options are log-normally distributed between 40\% and 200\%, with the peak at 80\%. All options have both \texttt{water\_fixtures\_shower\_low\_flow} and
 \texttt{water\_fixtures\_sink\_low\_flow} set to false. \texttt{water\_fixtures\_usage\_multiplier} is set according to their option names.
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_fix}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-water-fixtures}{Water Fixtures} documentation for the available HPXML schema elements, default values, and constraints.
@@ -584,12 +584,11 @@ occupants. \\
   A log-normal distribution was shown to match the distribution of annual
   energy consumption.
 \item
-  For the log-normal distribution, the average multiplier is 0.8 and the
-  standard deviation is 0.2.
+  The data shows appoximately a log-normal distribution. From the data, the average multiplier is 0.8 and the
+  standard deviation is 0.2. The average multiplier was mean-shifted from 0.8 to 1 average usage.
 \item
   Low, Medium, and High usage is assigned based on the lower 25th
-  percent, middle 50th percent, and upper 25th percent. The bins do not
-  align perfectly with these bins so the lower users are a total of 25\%, the medium users are 47\%, and the high users are 28\% of the stock.
+  percent, middle 50th percent, and upper 25th percent.
 \end{itemize}
 
 
