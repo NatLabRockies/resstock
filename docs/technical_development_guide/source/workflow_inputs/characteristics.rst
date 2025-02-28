@@ -35477,7 +35477,7 @@ Arguments
      - The combined fuel economy units of the vehicle. Only 'kWh/mile', 'mile/kWh', or 'mpge' are allow for electric vehicles. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
    * - ``vehicle_fuel_economy_combined``
      - false
-     -
+     - 
      - Double
      - auto
      - The combined fuel economy of the vehicle. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
