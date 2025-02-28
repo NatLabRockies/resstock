@@ -181,6 +181,7 @@ source_report.each do |row|
       line = "   * - #{arguments_col}" if i == 0
       f.puts(line)
     end
+    missing_args = r_arguments.reject { |arg| resstockarguments_xml.keys.include?(arg) }
 
     r_arguments = r_arguments.sort_by &resstockarguments_xml.keys.method(:index)
     r_arguments.each do |r_argument|

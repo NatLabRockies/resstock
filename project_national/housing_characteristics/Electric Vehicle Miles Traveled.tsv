@@ -1,0 +1,5 @@
+Option=1000	Option=3000	Option=5000	Option=7000	Option=9000	Option=11000	Option=13000	Option=15000	Option=17000	Option=19000	Option=22500	Option=27500	Option=35000	Option=45000	source_weight	sampling_probability
+0.0965	0.101	0.1188	0.118	0.1135	0.1013	0.0825	0.0652	0.0488	0.036	0.0557	0.0283	0.0204	0.014	2.18e+08	1
+# Created by: manually created
+# Description: The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
+# Source: Constructed using the 2022 U.S. Federal Highway Administration National Household Travel Survey (NHTS) microdata.
