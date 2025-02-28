@@ -7,6 +7,21 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: characteristics, feature, docs, technical reference guide, outputs
+        :pullreq: 1299
+
+        **Date**: 2025-02-28
+
+        Title:
+        Electric Vehicles
+
+        Description:
+        Introduce EVs, including vehicle and charging stock characterization and assignment of EV battery modeling arguments.
+
+        Assignees: Andrew Speake, Anthony Fontanini, Rajendra Adhikari
+
+
+    .. change::
         :tags: workflow, feature, outputs
         :pullreq: 1347
 
