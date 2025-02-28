@@ -372,7 +372,7 @@ jobs:
           name: documentation
           path: |
             docs/technical_development_guide/_build/html/
-            docs/technical_reference_guide/ResStockTechnicalReferenceGuide.pdf
+            docs/technical_reference_guide/_build/ResStockTechnicalReferenceGuide.pdf
           if-no-files-found: error
 
       - name: Commit latest results

@@ -9249,9 +9249,45 @@ Eaves	1 ft	ResStockArguments	geometry_eaves_depth=1
 Eaves	2 ft	ResStockArguments	geometry_eaves_depth=2
 Eaves	3 ft	ResStockArguments	geometry_eaves_depth=3
 Eaves	None	ResStockArguments	geometry_eaves_depth=0
-Electric Vehicle	"EV, 4000 miles, 0.3 kWh/mi"	ResStockArguments	misc_plug_loads_vehicle_present=true	misc_plug_loads_vehicle_annual_kwh=1481	misc_plug_loads_vehicle_usage_multiplier=1.0	misc_plug_loads_vehicle_2_usage_multiplier=1.0
-Electric Vehicle	"EV, 5000 miles, 0.3 kWh/mi"	ResStockArguments	misc_plug_loads_vehicle_present=true	misc_plug_loads_vehicle_annual_kwh=1852	misc_plug_loads_vehicle_usage_multiplier=1.0	misc_plug_loads_vehicle_2_usage_multiplier=1.0
-Electric Vehicle	None	ResStockArguments	misc_plug_loads_vehicle_present=false	misc_plug_loads_vehicle_annual_kwh=0	misc_plug_loads_vehicle_usage_multiplier=0	misc_plug_loads_vehicle_2_usage_multiplier=0
+Electric Vehicle Battery	"Compact, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=40.168	vehicle_fuel_economy_combined=0.209901	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"Compact, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=63.433	vehicle_fuel_economy_combined=0.220020	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"Midsize, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=41.978	vehicle_fuel_economy_combined=0.219174	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"Midsize, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=65.441	vehicle_fuel_economy_combined=0.229449	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"Pickup, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=67.738	vehicle_fuel_economy_combined=0.357648	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"Pickup, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=105.946	vehicle_fuel_economy_combined=0.373794	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"SUV, Battery Electric Vehicle, 200 mile range"	ResStockArguments	vehicle_battery_usable_capacity=53.503	vehicle_fuel_economy_combined=0.267513	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Battery	"SUV, Battery Electric Vehicle, 300 mile range"	ResStockArguments	vehicle_battery_usable_capacity=83.680	vehicle_fuel_economy_combined=0.278934	vehicle_fuel_economy_units=kWh/mile	ev_average_mph=22	ev_efficiency_percent_increase=0.0
+Electric Vehicle Charge At Home	0-19%	ResStockArguments	vehicle_fraction_charged_home=0.10
+Electric Vehicle Charge At Home	100%	ResStockArguments	vehicle_fraction_charged_home=1.00
+Electric Vehicle Charge At Home	20-39%	ResStockArguments	vehicle_fraction_charged_home=0.30
+Electric Vehicle Charge At Home	40-59%	ResStockArguments	vehicle_fraction_charged_home=0.50
+Electric Vehicle Charge At Home	60-79%	ResStockArguments	vehicle_fraction_charged_home=0.70
+Electric Vehicle Charge At Home	80-99%	ResStockArguments	vehicle_fraction_charged_home=0.90
+Electric Vehicle Charger	Level 1 charger	ResStockArguments	ev_charger_present=true	ev_charger_power=1600	ev_charger_location=auto
+Electric Vehicle Charger	Level 2 charger	ResStockArguments	ev_charger_present=true	ev_charger_power=5690	ev_charger_location=auto
+Electric Vehicle Charger	None	ResStockArguments	ev_charger_present=false
+Electric Vehicle Charger	Void	ResStockArguments	ev_charger_present=false
+Electric Vehicle Efficiency Increase	15%	ResStockArguments	ev_efficiency_percent_increase=0.15
+Electric Vehicle Miles Traveled	1000	ResStockArguments	vehicle_miles_driven_per_year=1000
+Electric Vehicle Miles Traveled	11000	ResStockArguments	vehicle_miles_driven_per_year=11000
+Electric Vehicle Miles Traveled	13000	ResStockArguments	vehicle_miles_driven_per_year=13000
+Electric Vehicle Miles Traveled	15000	ResStockArguments	vehicle_miles_driven_per_year=15000
+Electric Vehicle Miles Traveled	17000	ResStockArguments	vehicle_miles_driven_per_year=17000
+Electric Vehicle Miles Traveled	19000	ResStockArguments	vehicle_miles_driven_per_year=19000
+Electric Vehicle Miles Traveled	22500	ResStockArguments	vehicle_miles_driven_per_year=22500
+Electric Vehicle Miles Traveled	27500	ResStockArguments	vehicle_miles_driven_per_year=27500
+Electric Vehicle Miles Traveled	3000	ResStockArguments	vehicle_miles_driven_per_year=3000
+Electric Vehicle Miles Traveled	35000	ResStockArguments	vehicle_miles_driven_per_year=35000
+Electric Vehicle Miles Traveled	45000	ResStockArguments	vehicle_miles_driven_per_year=45000
+Electric Vehicle Miles Traveled	5000	ResStockArguments	vehicle_miles_driven_per_year=5000
+Electric Vehicle Miles Traveled	7000	ResStockArguments	vehicle_miles_driven_per_year=7000
+Electric Vehicle Miles Traveled	9000	ResStockArguments	vehicle_miles_driven_per_year=9000
+Electric Vehicle Outlet Access	No
+Electric Vehicle Outlet Access	Void
+Electric Vehicle Outlet Access	Yes
+Electric Vehicle Ownership	No	ResStockArguments	vehicle_type=
+Electric Vehicle Ownership	Void
+Electric Vehicle Ownership	Yes	ResStockArguments	vehicle_type=BatteryElectricVehicle
 Energystar Climate Zone 2023	North-Central
 Energystar Climate Zone 2023	Northern
 Energystar Climate Zone 2023	South-Central

@@ -39,7 +39,12 @@ build_existing_model.doors,:ref:`doors`
 build_existing_model.duct_leakage_and_insulation,:ref:`duct_leakage_and_insulation`
 build_existing_model.duct_location,:ref:`duct_location`
 build_existing_model.eaves,:ref:`eaves`
-build_existing_model.electric_vehicle,:ref:`electric_vehicle`
+build_existing_model.electric_vehicle_battery, The type of battery used by EV
+build_existing_model.electric_vehicle_charge_at_home, Percentage of EV charging that occurs at home
+build_existing_model.electric_vehicle_charger, The type of charger used by EV
+build_existing_model.electric_vehicle_miles_traveled, Annual miles traveled by EV
+build_existing_model.electric_vehicle_outlet_access, The type of outlet access available for EV
+build_existing_model.electric_vehicle_ownership, Whether the EV is present or not
 build_existing_model.energystar_climate_zone_2023,:ref:`energystar_climate_zone_2023`
 build_existing_model.federal_poverty_level,:ref:`federal_poverty_level`
 build_existing_model.generation_and_emissions_assessment_region,:ref:`generation_and_emissions_assessment_region`

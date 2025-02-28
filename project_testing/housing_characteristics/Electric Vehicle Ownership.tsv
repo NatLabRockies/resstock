@@ -1,0 +1,4 @@
+Option=No	Option=Yes	sampling_probability
+0.5	0.5	1
+# Created by: sources\experian\tsv_maker.py
+# Description: The dwelling unit owns an electric vehicle.

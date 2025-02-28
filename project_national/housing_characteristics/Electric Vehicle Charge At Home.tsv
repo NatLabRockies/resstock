@@ -1,0 +1,40 @@
+Dependency=Federal Poverty Level	Dependency=Geometry Building Type RECS	Option=0-19%	Option=20-39%	Option=40-59%	Option=60-79%	Option=80-99%	Option=100%	source_count	source_weight	sampling_probability
+0-100%	Mobile Home	0	0	0	0	0.323412	0.676588	12.2566	96576.6	0.0103256
+0-100%	Multi-Family with 2 - 4 Units	0	0	0	0	0.382391	0.617609	12.7473	132045	0.0138148
+0-100%	Multi-Family with 5+ Units	0.774665	0	0	0	0	0.225335	30.6791	322668	0.031184
+0-100%	Single-Family Attached	0.200065	0	0	0	0.333789	0.466146	22.0215	105230	0.00553002
+0-100%	Single-Family Detached	0.109802	0	0.022097	0	0.205462	0.662639	154.918	1.08874e+06	0.0433086
+100-150%	Mobile Home	0	0	0	0.794447	0.152973	0.05258	7.40925	38105.2	0.00775216
+100-150%	Multi-Family with 2 - 4 Units	0	0	0	0	0.790286	0.209714	7.70593	52099.7	0.0084607
+100-150%	Multi-Family with 5+ Units	0.971442	0	0	0	0	0.0285578	18.546	127312	0.0185558
+100-150%	Single-Family Attached	0.442139	0	0	0	0.453749	0.104113	13.3123	41519.4	0.00393304
+100-150%	Single-Family Detached	0.214258	0	0.0400415	0.368413	0.246611	0.130676	93.6502	429574	0.0367738
+150-200%	Mobile Home	0	0	0	0.196069	0.620093	0.183838	8.02053	39490.8	0.00642758
+150-200%	Multi-Family with 2 - 4 Units	0	0	0	0	0.813746	0.186254	8.34169	53994.2	0.00718075
+150-200%	Multi-Family with 5+ Units	0.838004	0	0	0	0	0.161996	20.076	131941	0.0152063
+150-200%	Single-Family Attached	0.0964083	0	0	0	0.754309	0.149283	14.4106	43029.1	0.00397988
+150-200%	Single-Family Detached	0.0685689	0	0	0.0547276	0.6017	0.275003	101.377	445194	0.038968
+200-300%	Mobile Home	0	0	0	0.343312	0.277944	0.378744	29.7291	134107	0.0101332
+200-300%	Multi-Family with 2 - 4 Units	0	0	0	0	0.487323	0.512677	30.9195	183359	0.0117568
+200-300%	Multi-Family with 5+ Units	0.688096	0	0	0	0	0.311904	74.4143	448060	0.025374
+200-300%	Single-Family Attached	0.115977	0	0	0	0.462926	0.421097	53.4147	146123	0.00817629
+200-300%	Single-Family Detached	0.0603067	0	0.00665881	0.0959237	0.269974	0.567137	375.765	1.51184e+06	0.0839018
+300-400%	Mobile Home	0	0	0	0.367566	0.471064	0.161371	20.7137	90503.9	0.00628147
+300-400%	Multi-Family with 2 - 4 Units	0	0	0	0	0.790842	0.209158	21.5431	123742	0.00821742
+300-400%	Multi-Family with 5+ Units	0.0192548	0	0	0	0	0.980745	51.848	302379	0.0184049
+300-400%	Single-Family Attached	0.000364855	0.199828	0	0	0.650949	0.148859	37.2166	98613	0.00703961
+300-400%	Single-Family Detached	0.000262711	0.0299712	0.0484748	0.117992	0.525682	0.277618	261.813	1.02028e+06	0.0769027
+400%+	Mobile Home	0	0	0	0.234779	0.429971	0.33525	157.299	943555	0.00842116
+400%+	Multi-Family with 2 - 4 Units	0	0	0	0	0.624235	0.375765	163.598	1.29008e+06	0.018696
+400%+	Multi-Family with 5+ Units	0.328922	0	0	0	0	0.671078	393.733	3.15247e+06	0.0496226
+400%+	Single-Family Attached	0.0175697	0.143644	0	0	0.551655	0.287131	282.622	1.0281e+06	0.0242706
+400%+	Single-Family Detached	0.011226	0.0191179	0.0370664	0.0620926	0.395319	0.475178	1988.21	1.0637e+07	0.269883
+Not Available	Mobile Home	0	0	0	0.26166	0.420929	0.31741	738.571	5.49016e+06	0.0131485
+Not Available	Multi-Family with 2 - 4 Units	0	0	0	0	0.632043	0.367957	768.145	7.50647e+06	0.0118498
+Not Available	Multi-Family with 5+ Units	0.475558	0	0	0	0	0.524442	1848.7	1.83429e+07	0.0258791
+Not Available	Single-Family Attached	0.0316402	0.133633	0	0	0.555234	0.279493	1327	5.98207e+06	0.00563471
+Not Available	Single-Family Detached	0.0201174	0.0176984	0.0351747	0.070799	0.395937	0.460274	9335.27	6.18925e+07	0.0650048
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The percentage a household would or do charge their electric vehicle at home.
+# Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+# Assumption: Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The two sub-tsvs have the following dependencies: tsv1 dependency=['Geometry Building Type RECS'], tsv2 dependency=['Federal Poverty Level'], In combining tsv1 and tsv2, the conditional relationships are ignored across ('Geometry Building Type RECS' and 'Federal Poverty Level').
