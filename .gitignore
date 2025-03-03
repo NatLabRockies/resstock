@@ -21,7 +21,10 @@ buildstockbatch_crash_details.log
 
 ## Hawaii-specific 
 **/.ipynb_checkpoints/*
-**/data/baseline_runs/
-!/resources/data/dictionary/outputs.csv
+**/data/
+!**/data/recs_map.csv
+!**/data/UHERO.csv
+!**/data/2018_eia_monthly_data_hawaii_residential.xlsx
 env
 **/.bsq_cache
+**/plots/
