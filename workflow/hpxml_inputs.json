@@ -1160,6 +1160,11 @@
   "sample_files/base-bldgtype-mf-unit-adjacent-to-other-housing-unit.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml"
   },
+  "sample_files/base-bldgtype-mf-unit-adjacent-to-other-housing-unit-basement.xml": {
+    "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
+    "geometry_foundation_type": "UnconditionedBasement",
+    "floor_over_foundation_assembly_r": 18.7
+  },
   "sample_files/base-bldgtype-mf-unit-infil-compartmentalization-test.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
     "air_leakage_value": 12.16,
