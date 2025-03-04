@@ -22,6 +22,17 @@ User-specificed name that describes the upgrade.
 
 <br/>
 
+**Project Directory**
+
+The directory containing the housing characteristics folder (e.g., project_national).
+
+- **Name:** ``project_directory``
+- **Type:** ``String``
+
+- **Required:** ``true``
+
+<br/>
+
 **Option 1**
 
 Specify the parameter|option as found in resources\options_lookup.tsv.

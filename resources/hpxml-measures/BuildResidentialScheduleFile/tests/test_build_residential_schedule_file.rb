@@ -19,7 +19,6 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     @args_hash = {}
     @args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
     @args_hash['hpxml_output_path'] = @args_hash['hpxml_path']
-
     @year = 2007
     @tol = 0.005
   end
@@ -52,19 +51,20 @@ class BuildResidentialScheduleFileTest < Minitest::Test
                            year: @year,
                            output_path: @tmp_schedule_file_path)
 
-    assert_in_epsilon(6689, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Occupants].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(2086, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingInterior].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(2086, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingGarage].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(534, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CookingRange].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(213, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Dishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(134, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(151, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesDryer].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(3016, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CeilingFan].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(5388, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsOther].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(1517, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsTV].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(273, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(346, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(887, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
+    expected_values = {
+      Occupants: 6689,
+      LightingInterior: 2086,
+      CookingRange: 300.9,
+      Dishwasher: 161.5,
+      ClothesWasher: 67.7,
+      ClothesDryer: 114.0,
+      PlugLoadsOther: 5388,
+      PlugLoadsTV: 1517,
+      HotWaterDishwasher: 287.3,
+      HotWaterClothesWasher: 322.6,
+      HotWaterFixtures: 981.2,
+    }
+    assert_full_load_hrs_match(sf, expected_values, @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
   end
 
@@ -136,19 +136,20 @@ class BuildResidentialScheduleFileTest < Minitest::Test
                            year: @year,
                            output_path: @tmp_schedule_file_path)
 
-    assert_in_epsilon(6689, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Occupants].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(1992, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingInterior].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(1992, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingGarage].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(534, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CookingRange].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(213, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Dishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(134, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(151, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesDryer].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(3016, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CeilingFan].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(5388, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsOther].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(1517, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsTV].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(273, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(346, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(887, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
+    expected_values = {
+      Occupants: 6689,
+      LightingInterior: 1992,
+      CookingRange: 300.9,
+      Dishwasher: 161.5,
+      ClothesWasher: 67.7,
+      ClothesDryer: 114.0,
+      PlugLoadsOther: 5388,
+      PlugLoadsTV: 1517,
+      HotWaterDishwasher: 287.3,
+      HotWaterClothesWasher: 322.6,
+      HotWaterFixtures: 981.2,
+    }
+    assert_full_load_hrs_match(sf, expected_values, @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
   end
 
@@ -175,20 +176,22 @@ class BuildResidentialScheduleFileTest < Minitest::Test
                            year: @year,
                            output_path: @tmp_schedule_file_path)
 
-    assert_in_epsilon(6689, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Occupants].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(2086, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingInterior].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(2086, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingGarage].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(534, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CookingRange].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(213, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Dishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(134, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(151, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesDryer].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(3016, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CeilingFan].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(5388, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsOther].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(1517, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsTV].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(273, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(346, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(887, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(3067, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Sleeping].name, schedules: sf.tmp_schedules), @tol)
+    expected_values = {
+      Occupants: 6689,
+      LightingInterior: 2086,
+      CookingRange: 300.9,
+      Dishwasher: 161.5,
+      ClothesWasher: 67.7,
+      ClothesDryer: 114.0,
+      PlugLoadsOther: 5388,
+      PlugLoadsTV: 1517,
+      HotWaterDishwasher: 287.3,
+      HotWaterClothesWasher: 322.6,
+      HotWaterFixtures: 981.2,
+      Sleeping: 3067,
+      PresentOccupants: 46402,
+    }
+    assert_full_load_hrs_match(sf, expected_values, @tol)
   end
 
   def test_random_seed
@@ -213,21 +216,24 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     sf = SchedulesFile.new(schedules_paths: hpxml.buildings[0].header.schedules_filepaths,
                            year: @year,
                            output_path: @tmp_schedule_file_path)
+    expected_values = {
+      Occupants: 6689,
+      LightingInterior: 2070,
+      CookingRange: 300,
+      Dishwasher: 161,
+      ClothesWasher: 64,
+      ClothesDryer: 113.9,
+      PlugLoadsOther: 5388,
+      PlugLoadsTV: 1517,
+      HotWaterDishwasher: 304,
+      HotWaterClothesWasher: 322,
+      HotWaterFixtures: 936,
+    }
+    assert_full_load_hrs_match(sf, expected_values, @tol)
 
-    assert_in_epsilon(6689, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Occupants].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(2070, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingInterior].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(2070, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingGarage].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(534, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CookingRange].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(233, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Dishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(134, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(151, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesDryer].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(3233, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CeilingFan].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(5388, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsOther].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(1517, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsTV].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(288, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(320, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(889, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
+    assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:EVOccupant].name))
+    assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:PresentOccupants].name))
 
     @args_hash['schedules_random_seed'] = 2
     hpxml, result = _test_measure()
@@ -246,21 +252,20 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     sf = SchedulesFile.new(schedules_paths: hpxml.buildings[0].header.schedules_filepaths,
                            year: @year,
                            output_path: @tmp_schedule_file_path)
-
-    assert_in_epsilon(6072, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Occupants].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(1753, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingInterior].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(1753, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingGarage].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(356, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CookingRange].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(174, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Dishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(101, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(166, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesDryer].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(3276, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CeilingFan].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(5292, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsOther].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(1205, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsTV].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(233, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(244, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(1077, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
-    assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
+    expected_values = {
+      Occupants: 6072,
+      LightingInterior: 1753,
+      CookingRange: 336,
+      Dishwasher: 297,
+      ClothesWasher: 116,
+      ClothesDryer: 188,
+      PlugLoadsOther: 5292,
+      PlugLoadsTV: 1205,
+      HotWaterDishwasher: 243,
+      HotWaterClothesWasher: 263,
+      HotWaterFixtures: 1049,
+    }
+    assert_full_load_hrs_match(sf, expected_values, @tol)
   end
 
   def test_10_min_timestep
@@ -285,19 +290,20 @@ class BuildResidentialScheduleFileTest < Minitest::Test
                            year: @year,
                            output_path: @tmp_schedule_file_path)
 
-    assert_in_epsilon(6707, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Occupants].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(2077, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingInterior].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(2077, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingGarage].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(534, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CookingRange].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(213, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Dishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(105, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(151, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesDryer].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(3009, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CeilingFan].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(5393, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsOther].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(1505, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsTV].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(146, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(154, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-    assert_in_epsilon(397, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
+    expected_values = {
+      Occupants: 6707,
+      LightingInterior: 2077,
+      CookingRange: 300.9,
+      Dishwasher: 161.4,
+      ClothesWasher: 64.3,
+      ClothesDryer: 114.0,
+      PlugLoadsOther: 5393,
+      PlugLoadsTV: 1505,
+      HotWaterDishwasher: 155.9,
+      HotWaterClothesWasher: 138.4,
+      HotWaterFixtures: 280.2,
+    }
+    assert_full_load_hrs_match(sf, expected_values, @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
   end
 
@@ -332,6 +338,22 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     assert_empty(hpxml.buildings[0].header.schedules_filepaths)
   end
 
+  def test_ev_battery
+    num_occupants = 1.0
+
+    hpxml = _create_hpxml('base-vehicle-ev-charger.xml')
+    hpxml.buildings[0].building_occupancy.number_of_residents = num_occupants
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+
+    @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
+    hpxml, _result = _test_measure()
+    sf = SchedulesFile.new(schedules_paths: hpxml.buildings[0].header.schedules_filepaths,
+                           year: @year,
+                           output_path: @tmp_schedule_file_path)
+    assert_in_epsilon(5890, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ElectricVehicleCharging].name, schedules: sf.tmp_schedules), @tol)
+    assert_in_epsilon(729.9, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ElectricVehicleDischarging].name, schedules: sf.tmp_schedules), @tol)
+  end
+
   def test_multiple_buildings
     hpxml = _create_hpxml('base-bldgtype-mf-whole-building.xml')
     hpxml.buildings.each do |hpxml_bldg|
@@ -362,54 +384,51 @@ class BuildResidentialScheduleFileTest < Minitest::Test
       if hpxml_bldg.building_id == 'MyBuilding'
         assert_equal(1, hpxml_bldg.header.schedules_filepaths.size)
         assert(hpxml_bldg.header.schedules_filepaths[0].include? 'occupancy-stochastic.csv')
-        assert_in_epsilon(6689, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Occupants].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(2086, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingInterior].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(2086, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingGarage].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(534, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CookingRange].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(213, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Dishwasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(134, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(151, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesDryer].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(3016, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CeilingFan].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(5388, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsOther].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(1517, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsTV].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(273, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(346, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(887, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
-        assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
+        expected_values = {
+          Occupants: 6689,
+          LightingInterior: 2086,
+          CookingRange: 300.9,
+          Dishwasher: 161.5,
+          ClothesWasher: 67.7,
+          PlugLoadsOther: 5388,
+          PlugLoadsTV: 1517,
+          HotWaterDishwasher: 287.3,
+          HotWaterClothesWasher: 322.6,
+          HotWaterFixtures: 981.2,
+        }
+        assert_full_load_hrs_match(sf, expected_values, @tol)
       elsif hpxml_bldg.building_id == 'MyBuilding_2'
         assert_equal(1, hpxml_bldg.header.schedules_filepaths.size)
         assert(hpxml_bldg.header.schedules_filepaths[0].include? 'occupancy-stochastic_2.csv')
-        assert_in_epsilon(6072, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Occupants].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(1765, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingInterior].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(1765, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingGarage].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(356, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CookingRange].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(165, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Dishwasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(101, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(166, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesDryer].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(3103, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CeilingFan].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(5292, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsOther].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(1205, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsTV].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(221, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(266, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(894, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
-        assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
+        expected_values = {
+          Occupants: 6072,
+          LightingInterior: 1765,
+          CookingRange: 336.4,
+          Dishwasher: 297.4,
+          ClothesWasher: 116.3,
+          PlugLoadsOther: 5292,
+          PlugLoadsTV: 1205,
+          HotWaterDishwasher: 229.8,
+          HotWaterClothesWasher: 246.5,
+          HotWaterFixtures: 956.4,
+        }
+        assert_full_load_hrs_match(sf, expected_values, @tol)
       elsif hpxml_bldg.building_id == 'MyBuilding_3'
         assert_equal(1, hpxml_bldg.header.schedules_filepaths.size)
         assert(hpxml_bldg.header.schedules_filepaths[0].include? 'occupancy-stochastic_3.csv')
-        assert_in_epsilon(6045, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Occupants].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(1745, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingInterior].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(1745, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingGarage].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(421, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CookingRange].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(239, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Dishwasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(81, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(127, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesDryer].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(3079, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CeilingFan].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(5314, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsOther].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(1162, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsTV].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(224, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(209, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(970, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
-        assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
+        expected_values = {
+          Occupants: 6045,
+          LightingInterior: 1745,
+          CookingRange: 358.5,
+          Dishwasher: 207.2,
+          ClothesWasher: 126.4,
+          PlugLoadsOther: 5314,
+          PlugLoadsTV: 1162,
+          HotWaterDishwasher: 232.1,
+          HotWaterClothesWasher: 206.8,
+          HotWaterFixtures: 857.1,
+        }
+        assert_full_load_hrs_match(sf, expected_values, @tol)
       end
     end
   end
@@ -446,19 +465,19 @@ class BuildResidentialScheduleFileTest < Minitest::Test
 
         assert_equal(1, hpxml_bldg.header.schedules_filepaths.size)
         assert(hpxml_bldg.header.schedules_filepaths[0].include? 'occupancy-stochastic_2.csv')
-        assert_in_epsilon(6072, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Occupants].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(1765, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingInterior].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(1765, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:LightingGarage].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(356, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CookingRange].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(165, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:Dishwasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(101, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(166, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ClothesDryer].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(3103, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:CeilingFan].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(5292, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsOther].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(1205, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:PlugLoadsTV].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(221, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterDishwasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(266, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterClothesWasher].name, schedules: sf.tmp_schedules), @tol)
-        assert_in_epsilon(894, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:HotWaterFixtures].name, schedules: sf.tmp_schedules), @tol)
+        expected_values = {
+          Occupants: 6072,
+          LightingInterior: 1765,
+          CookingRange: 336.4,
+          Dishwasher: 297.4,
+          ClothesWasher: 116.3,
+          PlugLoadsOther: 5292,
+          PlugLoadsTV: 1205,
+          HotWaterDishwasher: 229.8,
+          HotWaterClothesWasher: 246.5,
+          HotWaterFixtures: 956.4,
+        }
+        assert_full_load_hrs_match(sf, expected_values, @tol)
         assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
       else
         assert_empty(hpxml_bldg.header.schedules_filepaths)
@@ -477,12 +496,10 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     @args_hash['output_csv_path'] = @tmp_schedule_file_path
     @args_hash['append_output'] = false
     _test_measure()
-
     assert(File.exist?(@tmp_schedule_file_path))
     outdata = File.readlines(@tmp_schedule_file_path)
     expected_cols = ScheduleGenerator.export_columns
-    assert_equal(expected_cols, outdata[0].strip.split(',')) # Header
-    assert_equal(expected_cols.size, outdata[1].split(',').size) # Data
+    assert((outdata[0].strip.split(',').to_set - expected_cols.to_set).empty?)
 
     # Test w/ append_output=true
     hpxml = _create_hpxml('base.xml')
@@ -494,9 +511,8 @@ class BuildResidentialScheduleFileTest < Minitest::Test
 
     assert(File.exist?(@tmp_schedule_file_path))
     outdata = File.readlines(@tmp_schedule_file_path)
-    expected_cols = orig_cols + ScheduleGenerator.export_columns
-    assert_equal(expected_cols, outdata[0].strip.split(',')) # Header
-    assert_equal(expected_cols.size, outdata[1].split(',').size) # Data
+    expected_cols = ScheduleGenerator.export_columns
+    assert_equal(orig_cols.to_set, (outdata[0].strip.split(',').to_set - expected_cols.to_set)) # Header
 
     # Test w/ append_output=true and inconsistent data
     existing_csv_path = File.join(File.dirname(__FILE__), '..', '..', 'HPXMLtoOpenStudio', 'resources', 'schedule_files', 'setpoints-10-mins.csv')
@@ -553,5 +569,72 @@ class BuildResidentialScheduleFileTest < Minitest::Test
 
   def _create_hpxml(hpxml_name)
     return HPXML.new(hpxml_path: File.join(@sample_files_path, hpxml_name))
+  end
+
+  def assert_full_load_hrs_match(sf, expected_values, tol)
+    mismatches = []
+    suggested_values = {}
+    missing_cols = []
+    schedule_col_names = []
+    cols_to_ignore = Set.new(['Vacancy', 'Power Outage', 'No Space Heating', 'No Space Cooling'])
+    expected_values.each do |col_name, expected_value|
+      unless SchedulesFile::Columns.key?(col_name.to_sym)
+        puts "Error: Column '#{col_name}' not found in SchedulesFile::Columns"
+        assert(false)
+      end
+      schedule_col_name = SchedulesFile::Columns[col_name.to_sym].name
+      schedule_col_names << schedule_col_name
+      if !sf.tmp_schedules.key?(schedule_col_name)
+        missing_cols << col_name
+        next
+      end
+      actual_value = sf.annual_equivalent_full_load_hrs(col_name: schedule_col_name, schedules: sf.tmp_schedules)
+
+      delta = tol * [actual_value.abs, expected_value.abs].min
+      diff = (actual_value - expected_value).abs
+      if diff > delta
+        mismatches << { col_name: col_name, expected_value: expected_value, actual_value: actual_value,
+                        message: "Expected |#{expected_value} - #{actual_value}| (#{diff}) to be <= #{delta}" }
+        suggested_values[col_name] = "#{format('%.1f', actual_value)}"
+      else
+        suggested_values[col_name] = "#{expected_value}"
+      end
+    end
+    extra_cols = sf.tmp_schedules.keys.to_set - schedule_col_names.to_set - cols_to_ignore.to_set
+
+    unless (mismatches.empty? && missing_cols.empty? && extra_cols.empty?)
+      if !mismatches.empty?
+        puts "\nMismatches found:"
+        mismatches.each do |mismatch|
+          puts "#{mismatch[:col_name]}: #{mismatch[:message]}"
+        end
+      end
+
+      if !missing_cols.empty?
+        puts "\nMissing columns:"
+        missing_cols.each do |col_name|
+          puts "    :#{col_name}"
+        end
+      end
+
+      if !extra_cols.empty?
+        puts "\nUnexpected columns found in the schedule file"
+        extra_cols.each do |col_name|
+          puts "    :#{col_name}"
+        end
+      end
+
+      puts "\nTo fix this, you can update the expected values to match the actual values and columns:"
+      puts '    expected_values = {'
+      expected_values.keys.each do |col_name|
+        if missing_cols.include?(col_name)
+          next
+        end
+
+        puts "      :#{col_name} => #{suggested_values[col_name]},"
+      end
+      puts '    }'
+      assert(false)
+    end
   end
 end

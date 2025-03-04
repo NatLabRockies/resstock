@@ -69,8 +69,9 @@
       <sch:assert role='ERROR' test='count(h:Systems/h:HVAC/h:HVACPlant/h:HeatingSystem[h:FractionHeatLoadServed > 0]) + count(h:Systems/h:HVAC/h:HVACPlant/h:HeatPump[h:FractionHeatLoadServed > 0]) &lt;= 1'>Expected at maximum one heating system for each Building</sch:assert>
       <sch:assert role='ERROR' test='sum(h:Systems/h:HVAC/h:HVACPlant/*/h:FractionHeatLoadServed) &gt;= 0.99 or count(h:Systems/h:HVAC/h:HVACPlant/*/h:FractionHeatLoadServed) = 0'>Expected sum(FractionHeatLoadServed) to be equal to 1</sch:assert>
       <sch:assert role='ERROR' test='sum(h:Systems/h:HVAC/h:HVACPlant/*/h:FractionCoolLoadServed) &gt;= 0.99 or count(h:Systems/h:HVAC/h:HVACPlant/*/h:FractionCoolLoadServed) = 0'>Expected sum(FractionCoolLoadServed) to be equal to 1</sch:assert>
-      <sch:report role='WARN' test='number(../../h:SoftwareInfo/h:extension/h:SimulationControl/h:AdvancedResearchFeatures/h:TemperatureCapacitanceMultiplier) &lt;= 1'>TemperatureCapacitanceMultiplier should typically be greater than 1.</sch:report>
       <sch:assert role='ERROR' test='number(../../h:SoftwareInfo/h:extension/h:SimulationControl/h:Timestep) = 1'>Expected ../../SoftwareInfo/extension/SimulationControl/Timestep to be 1.0</sch:assert>
+      <!-- Warnings -->
+      <sch:report role='WARN' test='number(../../h:SoftwareInfo/h:extension/h:SimulationControl/h:AdvancedResearchFeatures/h:TemperatureCapacitanceMultiplier) &lt;= 1'>TemperatureCapacitanceMultiplier should typically be greater than 1.</sch:report>
     </sch:rule>
   </sch:pattern>
 
@@ -266,6 +267,8 @@
       <sch:assert role='ERROR' test='count(h:Systems/h:SolarThermal/h:SolarThermalSystem) &lt;= 1'>Expected 0 or 1 element(s) for xpath: Systems/SolarThermal/SolarThermalSystem</sch:assert> <!-- See [SolarThermalSystem] -->
       <sch:assert role='ERROR' test='count(h:Systems/h:Photovoltaics/h:PVSystem) &gt;= 0'>Expected 0 or more element(s) for xpath: Systems/Photovoltaics/PVSystem</sch:assert> <!-- See [PVSystem] -->
       <sch:assert role='ERROR' test='count(h:Systems/h:Batteries/h:Battery) &lt;= 1'>Expected 0 or 1 element(s) for xpath: Systems/Batteries/Battery</sch:assert> <!-- See [Battery] -->
+      <sch:assert role='ERROR' test='count(h:Systems/h:Vehicles/h:Vehicle) &gt;= 0'>Expected 0 or more element(s) for xpath: Systems/Vehicles/Vehicle</sch:assert> <!-- See [Vehicle] -->
+      <sch:assert role='ERROR' test='count(h:Systems/h:ElectricVehicleChargers/h:ElectricVehicleCharger) &gt;= 0'>Expected 0 or more element(s) for xpath: Systems/ElectricVehicleChargers/ElectricVehicleCharger</sch:assert> <!-- See [ElectricVehicleCharger] -->
       <sch:assert role='ERROR' test='count(h:Systems/h:extension/h:Generators/h:Generator) &gt;= 0'>Expected 0 or more element(s) for xpath: Systems/extension/Generators/Generator</sch:assert> <!-- See [Generator] -->
       <sch:assert role='ERROR' test='count(h:Appliances/h:ClothesWasher) &lt;= 1'>Expected 0 or 1 element(s) for xpath: Appliances/ClothesWasher</sch:assert> <!-- See [ClothesWasher] -->
       <sch:assert role='ERROR' test='count(h:Appliances/h:ClothesDryer) &lt;= 1'>Expected 0 or 1 element(s) for xpath: Appliances/ClothesDryer</sch:assert> <!-- See [ClothesDryer] -->
@@ -297,11 +300,16 @@
       <sch:assert role='ERROR' test='sum(h:Zones/h:Zone[h:ZoneType="conditioned"]/h:Spaces/h:Space/h:FloorArea) &lt;= 1.01 * number(h:BuildingSummary/h:BuildingConstruction/h:ConditionedFloorArea) or not(h:Zones/h:Zone[h:ZoneType="conditioned"]/h:Spaces/h:Space/h:FloorArea) or not(h:BuildingSummary/h:BuildingConstruction/h:ConditionedFloorArea)'>Expected sum(Zones/Zone[ZoneType="conditioned"]/Spaces/Space/FloorArea) to be equal to BuildingSummary/BuildingConstruction/ConditionedFloorArea</sch:assert>
 
       <!-- Warnings -->
-      <sch:report role='WARN' test='count(h:Zones/h:Zone[h:ZoneType="conditioned"]) > 1'>While multiple conditioned zones are specified, the EnergyPlus model will only include a single conditioned thermal zone.</sch:report>
+      <sch:report role='WARN' test='count(h:Zones/h:Zone[h:ZoneType="conditioned"]) &gt; 1'>While multiple conditioned zones are specified, the EnergyPlus model will only include a single conditioned thermal zone.</sch:report>
       <sch:report role='WARN' test='count(h:Enclosure/h:Windows/h:Window) = 0'>No windows specified, the model will not include window heat transfer.</sch:report>
       <sch:report role='WARN' test='sum(h:Systems/h:HVAC/h:HVACPlant/*/h:FractionHeatLoadServed) + sum(h:Systems/h:HVAC/h:HVACPlant/*/h:IntegratedHeatingSystemFractionHeatLoadServed) = 0'>No space heating specified, the model will not include space heating energy use.</sch:report>
       <sch:report role='WARN' test='sum(h:Systems/h:HVAC/h:HVACPlant/*/h:FractionCoolLoadServed) = 0'>No space cooling specified, the model will not include space cooling energy use.</sch:report>
       <sch:report role='WARN' test='sum(h:Systems/h:WaterHeating/h:WaterHeatingSystem/h:FractionDHWLoadServed) = 0'>No water heating specified, the model will not include water heating energy use.</sch:report>
+      <sch:report role='WARN' test='count(h:Systems/h:Vehicles/h:Vehicle[h:VehicleType/h:PlugInHybridElectricVehicle]) &gt; 0'>Vehicle type 'PlugInHybridElectricVehicle' is not currently handled, the vehicle will not be modeled.</sch:report>
+      <sch:report role='WARN' test='count(h:Systems/h:Vehicles/h:Vehicle[h:VehicleType/h:HybridElectricVehicle]) &gt; 0'>Vehicle type 'HybridElectricVehicle' is not currently handled, the vehicle will not be modeled.</sch:report>
+      <sch:report role='WARN' test='count(h:Systems/h:Vehicles/h:Vehicle[h:VehicleType/h:InternalCombustionEngine]) &gt; 0'>Vehicle type 'InternalCombustionEngine' is not currently handled, the vehicle will not be modeled.</sch:report>
+      <sch:report role='WARN' test='count(h:Systems/h:Vehicles/h:Vehicle[h:VehicleType/h:FuelCellElectricVehicle]) &gt; 0'>Vehicle type 'FuelCellElectricVehicle' is not currently handled, the vehicle will not be modeled.</sch:report>
+      <sch:report role='WARN' test='count(h:Systems/h:Vehicles/h:Vehicle[h:VehicleType/h:Other]) &gt; 0'>Vehicle type 'Other' is not currently handled, the vehicle will not be modeled.</sch:report>
       <sch:report role='WARN' test='count(h:Appliances/h:ClothesWasher) = 0'>No clothes washer specified, the model will not include clothes washer energy use.</sch:report>
       <sch:report role='WARN' test='count(h:Appliances/h:ClothesDryer) = 0'>No clothes dryer specified, the model will not include clothes dryer energy use.</sch:report>
       <sch:report role='WARN' test='count(h:Appliances/h:Dishwasher) = 0'>No dishwasher specified, the model will not include dishwasher energy use.</sch:report>
@@ -2497,6 +2505,57 @@
       <sch:assert role='ERROR' test='count(../../../h:BuildingSummary/h:BuildingConstruction[h:ResidentialFacilityType[text()="single-family attached" or text()="apartment unit"]]) = 1'>Expected 1 element(s) for xpath: ../../../BuildingSummary/BuildingConstruction[ResidentialFacilityType[text()="single-family attached" or text()="apartment unit"]]</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:NumberofBedroomsServed) = 1'>Expected 1 element(s) for xpath: extension/NumberofBedroomsServed</sch:assert>
       <sch:assert role='ERROR' test='number(h:extension/h:NumberofBedroomsServed) &gt; number(../../../h:BuildingSummary/h:BuildingConstruction/h:NumberofBedrooms) or not(h:extension/h:NumberofBedroomsServed) or not(../../../h:BuildingSummary/h:BuildingConstruction/h:NumberofBedrooms)'>Expected extension/NumberofBedroomsServed to be greater than ../../../BuildingSummary/BuildingConstruction/NumberofBedrooms</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+
+  <sch:pattern>
+    <sch:title>[Vehicles]</sch:title>
+    <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:Vehicles'>
+     <sch:assert role='ERROR' test='count(h:Vehicle/h:VehicleType/h:BatteryElectricVehicle) &lt;= 1'>Expected 0 or 1 element(s) for xpath: Vehicle/VehicleType/BatteryElectricVehicle</sch:assert> <!-- Only 1 BEV allowed currently -->
+    </sch:rule>
+  </sch:pattern>
+
+  <sch:pattern>
+    <sch:title>[Vehicle]</sch:title>
+    <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:Vehicles/h:Vehicle'>
+      <sch:assert role='ERROR' test='count(h:VehicleType) = 1'>Expected 1 element(s) for xpath: VehicleType</sch:assert> <!-- See [VehicleType=BEV] -->
+    </sch:rule>
+  </sch:pattern>
+
+  <sch:pattern>
+    <sch:title>[VehicleType=BEV]</sch:title>
+    <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:Vehicles/h:Vehicle/h:VehicleType/h:BatteryElectricVehicle'>
+      <sch:assert role='ERROR' test='count(h:Battery/h:BatteryType[text()="Li-ion"]) &lt;= 1'>Expected 0 or 1 element(s) for xpath: Battery/BatteryType[text()="Li-ion"]</sch:assert>
+      <sch:assert role='ERROR' test='h:Battery/h:BatteryType[text()="Li-ion"] or not(h:Battery/h:BatteryType)'>Expected Battery/BatteryType to be "Li-ion"</sch:assert>
+      <sch:assert role='ERROR' test='count(h:Battery/h:NominalCapacity[h:Units="kWh" or h:Units="Ah"]/h:Value) &gt;= 0'>Expected 0 or more element(s) for xpath: Battery/NominalCapacity[Units="kWh" or Units="Ah"]/Value</sch:assert>
+      <sch:assert role='ERROR' test='count(h:Battery/h:UsableCapacity[h:Units="kWh" or h:Units="Ah"]/h:Value) &gt;= 0'>Expected 0 or more element(s) for xpath: Battery/UsableCapacity[Units="kWh" or Units="Ah"]/Value</sch:assert>
+      <sch:assert role='ERROR' test='number(h:Battery/h:UsableCapacity[h:Units="kWh"]/h:Value) &lt; number(h:Battery/h:NominalCapacity[h:Units="kWh"]/h:Value) or not(h:Battery/h:UsableCapacity[h:Units="kWh"]/h:Value) or not(h:Battery/h:NominalCapacity[h:Units="kWh"]/h:Value)'>Expected UsableCapacity to be less than NominalCapacity</sch:assert>
+      <sch:assert role='ERROR' test='number(h:Battery/h:UsableCapacity[h:Units="Ah"]/h:Value) &lt; number(h:Battery/h:NominalCapacity[h:Units="Ah"]/h:Value) or not(h:Battery/h:UsableCapacity[h:Units="Ah"]/h:Value) or not(h:Battery/h:NominalCapacity[h:Units="Ah"]/h:Value)'>Expected UsableCapacity to be less than NominalCapacity</sch:assert>
+      <sch:assert role='ERROR' test='count(h:Battery/h:NominalVoltage) &lt;= 1'>Expected 0 or 1 element(s) for xpath: Battery/NominalVoltage</sch:assert>
+      <sch:assert role='ERROR' test='count(h:Battery/h:extension/h:LifetimeModel) = 0'>Expected 0 element(s) for xpath: Battery/extension/LifetimeModel</sch:assert> <!-- Temporarily disabled -->
+      <sch:assert role='ERROR' test='h:Battery/h:extension/h:LifetimeModel[text()="None" or text()="KandlerSmith"] or not(h:Battery/h:extension/h:LifetimeModel)'>Expected Battery/extension/LifetimeModel to be 'None' or 'KandlerSmith'</sch:assert>
+      <sch:assert role='ERROR' test='count(h:FractionChargedLocation[h:Location="Home"]/h:Percentage) &lt;= 1'>Expected 0 or 1 element(s) for xpath: FractionChargedLocation[Location="Home"]/Percentage</sch:assert>
+      <sch:assert role='ERROR' test='count(h:ConnectedCharger) &lt;= 1'>Expected 0 or 1 element(s) for xpath: ConnectedCharger</sch:assert>
+      <sch:assert role='ERROR' test='count(h:extension/h:WeekdayScheduleFractions) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/WeekdayScheduleFractions</sch:assert>
+      <sch:assert role='ERROR' test='count(h:extension/h:WeekendScheduleFractions) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/WeekendScheduleFractions</sch:assert>
+      <sch:assert role='ERROR' test='count(h:extension/h:MonthlyScheduleMultipliers) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/MonthlyScheduleMultipliers</sch:assert>
+      <sch:assert role='ERROR' test='count(../../h:MilesDrivenPerYear) &lt;= 1'>Expected 0 or 1 element(s) for xpath: ../../MilesDrivenPerYear</sch:assert>
+      <sch:assert role='ERROR' test='count(../../h:HoursDrivenPerWeek) &lt;= 1'>Expected 0 or 1 element(s) for xpath: ../../HoursDrivenPerWeek</sch:assert>
+      <sch:assert role='ERROR' test='count(../../h:FuelEconomyCombined/h:Value) &lt;= 1'>Expected 0 or 1 element(s) for xpath: ../../FuelEconomyCombined/Value</sch:assert>
+      <sch:assert role='ERROR' test='../../h:FuelEconomyCombined[h:Units="kWh/mile" or h:Units="mile/kWh" or h:Units="mpge"] or not(../../h:FuelEconomyCombined/h:Units)'>Expected ../../FuelEconomyCombined/Units to be "kWh/mile" or "mile/kWh" or "mpge"</sch:assert>
+      <!-- Warnings -->
+      <sch:report role='WARN' test='count(../../../../../h:MiscLoads/h:PlugLoad[h:PlugLoadType[text()="electric vehicle charging"]]) &gt;= 1'>Electric vehicle charging was specified as both a PlugLoad and a Vehicle, the latter will be ignored.</sch:report>
+      <sch:report role='WARN' test='count(h:ConnectedCharger) = 0'>Electric vehicle specified with no charger provided; home EV charging will not be modeled.</sch:report>
+    </sch:rule>
+  </sch:pattern>
+
+    <sch:pattern>
+    <sch:title>[ElectricVehicleCharger]</sch:title>
+    <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:ElectricVehicleChargers/h:ElectricVehicleCharger'>
+      <sch:assert role='ERROR' test='count(h:Location) &lt;= 1'>Expected 0 or 1 element(s) for xpath: Location</sch:assert>
+      <sch:assert role='ERROR' test='h:Location[text()="garage" or text()="outside"] or not(h:Location)'>Expected Location to be 'garage' or 'outside'</sch:assert>
+      <sch:assert role='ERROR' test='count(h:ChargingLevel) &lt;= 1'>Expected 0 or 1 element(s) for xpath: ChargingLevel</sch:assert>
+      <sch:assert role='ERROR' test='count(h:ChargingPower) &lt;= 1'>Expected 0 or 1 element(s) for xpath: ChargingPower</sch:assert>
     </sch:rule>
   </sch:pattern>
 

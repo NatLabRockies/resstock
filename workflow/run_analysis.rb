@@ -55,14 +55,9 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
 
   thisdir = File.dirname(__FILE__)
 
-  buildstock_directory = cfg['buildstock_directory']
   project_directory = cfg['project_directory']
   output_directory = cfg['output_directory']
   n_datapoints = cfg['sampler']['args']['n_datapoints']
-
-  if !(Pathname.new buildstock_directory).absolute?
-    buildstock_directory = File.absolute_path(File.join(File.dirname(yml), buildstock_directory))
-  end
 
   if (Pathname.new output_directory).absolute?
     results_dir = output_directory
@@ -77,29 +72,14 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
 
   Dir.mkdir(results_dir)
 
-  # Create lib folder
-  lib_dir = File.join(thisdir, '../lib')
-  resources_dir = File.join(thisdir, '../resources')
-  housing_characteristics_dir = File.join(buildstock_directory, project_directory, 'housing_characteristics')
-  create_lib_folder(lib_dir, resources_dir, housing_characteristics_dir)
-
   # Create or read buildstock.csv
-  outfile = File.join('../lib/housing_characteristics/buildstock.csv')
   if !['precomputed'].include?(cfg['sampler']['type'])
-    # TODO: this should write directly to the results_dir...
-    # run_sampling_lib::write_csv should not take a relative path relative to
-    # the resources/run_sampling_lib.rb but an absolute path
-    create_buildstock_csv(project_directory, n_datapoints, outfile)
-    src = File.expand_path(File.join(File.dirname(__FILE__), '../lib/housing_characteristics/buildstock.csv'))
     buildstock_csv_path = File.join(results_dir, 'buildstock.csv')
-    FileUtils.cp(src, buildstock_csv_path)
-
+    create_buildstock_csv(project_directory, n_datapoints, buildstock_csv_path)
     return if samplingonly
 
     datapoints = (1..n_datapoints).to_a
   else
-    # If buildstock_csv_path is absolute: just use that
-    # If relative: relative to yml
     buildstock_csv_path = cfg['sampler']['args']['sample_file']
     unless (Pathname.new buildstock_csv_path).absolute?
       buildstock_csv_path = File.expand_path(File.join(File.dirname(yml), buildstock_csv_path))
@@ -135,6 +115,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
   bld_exist_model_args = {
     'buildstock_csv_path': buildstock_csv_path,
     'building_id': '',
+    'project_directory': project_directory,
     'sample_weight': Float(cfg['baseline']['n_buildings_represented']) / n_datapoints # aligns with buildstockbatch
   }
 
@@ -222,7 +203,8 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     'timeseries_num_decimal_places' => 3,
     'add_timeseries_dst_column' => true,
     'add_timeseries_utc_column' => true,
-    'user_output_variables' => ''
+    'user_output_variables' => '',
+    'user_output_meters' => ''
   }
   sim_out_rep_args.update(workflow_args['simulation_output_report'])
 
@@ -230,6 +212,12 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     output_variables = sim_out_rep_args['output_variables']
     sim_out_rep_args['user_output_variables'] = output_variables.collect { |o| o['name'] }.join(',')
     sim_out_rep_args.delete('output_variables')
+  end
+
+  if sim_out_rep_args.keys.include?('output_meters')
+    output_meters = sim_out_rep_args['output_meters']
+    sim_out_rep_args['user_output_meters'] = output_meters.collect { |o| o['name'] }.join(',')
+    sim_out_rep_args.delete('output_meters')
   end
 
   include_annual_bills = false
@@ -338,7 +326,8 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
 
     if upgrade_name != 'Baseline'
       apply_upgrade_measure = { 'measure_dir_name' => 'ApplyUpgrade',
-                                'arguments' => { 'run_measure' => 1 } }
+                                'arguments' => { 'run_measure' => 1,
+                                                 'project_directory': project_directory } }
       measure_d = cfg['upgrades'].find { |u| u['upgrade_name'].gsub(/[^0-9A-Za-z]/, '') == upgrade_name }
       apply_upgrade_measure['arguments']['upgrade_name'] = measure_d['upgrade_name']
       measure_d['options'].each_with_index do |option, opt_num|
@@ -499,54 +488,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     end
   end
 
-  FileUtils.rm_rf(lib_dir) if !debug_arg
-
   return true
-end
-
-def checksum_dir_content(directory_path)
-  files = Dir.glob('**/*', base: directory_path).select { |fn| File.file?(File.join(directory_path, fn)) }
-  dir_checksum = Zlib::crc32(files.map { |rel_path|
-                               [rel_path,
-                                File.mtime(File.join(directory_path, rel_path)), # mtime is affected by the copy, but we passed preserve = true
-                                File.size(File.join(directory_path, rel_path))]
-                             }.to_s)
-  return dir_checksum
-end
-
-def create_lib_folder(lib_dir, resources_dir, housing_characteristics_dir, debug: false)
-  redo_needed = true
-  if File.directory?(lib_dir)
-    lib_resources_dir = File.join(lib_dir, File.basename(resources_dir))
-    resource_matches = checksum_dir_content(resources_dir) == checksum_dir_content(lib_resources_dir)
-    if resource_matches
-      lib_housing_characteristics_dir = File.join(lib_dir, File.basename(housing_characteristics_dir))
-      housing_matches = checksum_dir_content(housing_characteristics_dir) == checksum_dir_content(lib_housing_characteristics_dir)
-      if housing_matches
-        redo_needed = false
-      elsif debug
-        puts "Housing directory is outdated: #{lib_housing_characteristics_dir}"
-      end
-    elsif debug
-      puts "Resources directory is outdated: #{lib_resources_dir}"
-    end
-  elsif debug
-    puts "Creating 'lib' folder."
-  end
-
-  if !redo_needed
-    if debug
-      puts "The 'lib' folder is up to date."
-    end
-    return
-  end
-
-  FileUtils.rm_rf(lib_dir)
-  Dir.mkdir(lib_dir)
-
-  # Preserve object’s group, user and **modification time** on copying
-  FileUtils.cp_r(resources_dir, lib_dir, preserve: true)
-  FileUtils.cp_r(housing_characteristics_dir, lib_dir, preserve: true)
 end
 
 def create_buildstock_csv(project_dir, num_samples, outfile)
@@ -719,7 +661,7 @@ OptionParser.new do |opts|
   end
 
   options[:debug] = false
-  opts.on('-d', '--debug', 'Preserve lib folder and xml/osw files for existing building') do |_t|
+  opts.on('-d', '--debug', 'Preserve xml/osw files for existing building') do |_t|
     options[:debug] = true
   end
 

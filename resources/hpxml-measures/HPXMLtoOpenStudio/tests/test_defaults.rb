@@ -479,8 +479,10 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.building_occupancy.general_water_use_monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_occupancy_values(default_hpxml_bldg, @default_schedules_csv_data[Constants::ObjectTypeOccupants]['WeekdayScheduleFractions'], @default_schedules_csv_data[Constants::ObjectTypeOccupants]['WeekendScheduleFractions'], @default_schedules_csv_data[Constants::ObjectTypeOccupants]['MonthlyScheduleMultipliers'],
-                                   @default_schedules_csv_data[SchedulesFile::Columns[:GeneralWaterUse].name]['GeneralWaterUseWeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:GeneralWaterUse].name]['GeneralWaterUseWeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:GeneralWaterUse].name]['GeneralWaterUseMonthlyScheduleMultipliers'], 1.0)
+    default_occ_sched = @default_schedules_csv_data[SchedulesFile::Columns[:Occupants].name]
+    default_gwu_sched = @default_schedules_csv_data[SchedulesFile::Columns[:GeneralWaterUse].name]
+    _test_default_occupancy_values(default_hpxml_bldg, default_occ_sched['WeekdayScheduleFractions'], default_occ_sched['WeekendScheduleFractions'], default_occ_sched['MonthlyScheduleMultipliers'],
+                                   default_gwu_sched['GeneralWaterUseWeekdayScheduleFractions'], default_gwu_sched['GeneralWaterUseWeekendScheduleFractions'], default_gwu_sched['GeneralWaterUseMonthlyScheduleMultipliers'], 1.0)
   end
 
   def test_building_construction
@@ -1166,6 +1168,27 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     assert_equal(HPXML::WindowGlassTypeLowE, default_hpxml_bldg.windows[0].glass_type)
     assert_equal(HPXML::WindowGasArgon, default_hpxml_bldg.windows[0].gas_fill)
 
+    # Test defaults w/ glass block
+    hpxml, hpxml_bldg = _create_hpxml('base.xml')
+    hpxml_bldg.windows[0].ufactor = nil
+    hpxml_bldg.windows[0].shgc = nil
+    hpxml_bldg.windows[0].glass_layers = HPXML::WindowLayersGlassBlock
+    hpxml_bldg.windows[0].interior_shading_factor_summer = nil
+    hpxml_bldg.windows[0].interior_shading_factor_winter = nil
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    assert_nil(default_hpxml_bldg.windows[0].thermal_break)
+    assert_nil(default_hpxml_bldg.windows[0].glass_type)
+    assert_nil(default_hpxml_bldg.windows[0].gas_fill)
+
+    # Test defaults w/ glass block and interior shading type
+    hpxml_bldg.windows[0].interior_shading_type = HPXML::InteriorShadingTypeDarkShades
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    assert_nil(default_hpxml_bldg.windows[0].thermal_break)
+    assert_nil(default_hpxml_bldg.windows[0].glass_type)
+    assert_nil(default_hpxml_bldg.windows[0].gas_fill)
+
     # Test U/SHGC lookups [frame_type, thermal_break, glass_layers, glass_type, gas_fill] => [ufactor, shgc]
     tests = { [HPXML::WindowFrameTypeAluminum, false, HPXML::WindowLayersSinglePane, nil, nil] => [1.27, 0.75],
               [HPXML::WindowFrameTypeWood, nil, HPXML::WindowLayersSinglePane, HPXML::WindowGlassTypeReflective, nil] => [0.89, 0.64],
@@ -1413,6 +1436,27 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     assert_nil(default_hpxml_bldg.skylights[0].thermal_break)
     assert_equal(HPXML::WindowGlassTypeLowE, default_hpxml_bldg.skylights[0].glass_type)
     assert_equal(HPXML::WindowGasArgon, default_hpxml_bldg.skylights[0].gas_fill)
+
+    # Test defaults w/ glass block
+    hpxml, hpxml_bldg = _create_hpxml('base-enclosure-skylights.xml')
+    hpxml_bldg.skylights[0].ufactor = nil
+    hpxml_bldg.skylights[0].shgc = nil
+    hpxml_bldg.skylights[0].glass_layers = HPXML::WindowLayersGlassBlock
+    hpxml_bldg.skylights[0].interior_shading_factor_summer = nil
+    hpxml_bldg.skylights[0].interior_shading_factor_winter = nil
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    assert_nil(default_hpxml_bldg.skylights[0].thermal_break)
+    assert_nil(default_hpxml_bldg.skylights[0].glass_type)
+    assert_nil(default_hpxml_bldg.skylights[0].gas_fill)
+
+    # Test defaults w/ glass block and interior shading type
+    hpxml_bldg.skylights[0].interior_shading_type = HPXML::InteriorShadingTypeDarkShades
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    assert_nil(default_hpxml_bldg.skylights[0].thermal_break)
+    assert_nil(default_hpxml_bldg.skylights[0].glass_type)
+    assert_nil(default_hpxml_bldg.skylights[0].gas_fill)
 
     # Test U/SHGC lookups [frame_type, thermal_break, glass_layers, glass_type, gas_fill] => [ufactor, shgc]
     tests = { [HPXML::WindowFrameTypeAluminum, false, HPXML::WindowLayersSinglePane, nil, nil] => [1.98, 0.75],
@@ -3379,7 +3423,9 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.hot_water_distributions[0].recirculation_pump_monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_recirc_distribution_values(default_hpxml_bldg.hot_water_distributions[0], 166.96, 10.0, 50.0, 0.0, @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_demand_control"]['RecirculationPumpWeekdayScheduleFractions'], @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_demand_control"]['RecirculationPumpWeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterRecirculationPump].name]['RecirculationPumpMonthlyScheduleMultipliers'])
+    default_rc_sched = @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterRecirculationPump].name]
+    default_dr_sched = @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_demand_control"]
+    _test_default_recirc_distribution_values(default_hpxml_bldg.hot_water_distributions[0], 166.96, 10.0, 50.0, 0.0, default_dr_sched['RecirculationPumpWeekdayScheduleFractions'], default_dr_sched['RecirculationPumpWeekendScheduleFractions'], default_rc_sched['RecirculationPumpMonthlyScheduleMultipliers'])
 
     # Test defaults w/ recirculation & unconditioned basement
     hpxml, hpxml_bldg = _create_hpxml('base-foundation-unconditioned-basement.xml')
@@ -3389,7 +3435,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
                                            recirculation_control_type: HPXML::DHWRecircControlTypeSensor)
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_recirc_distribution_values(default_hpxml_bldg.hot_water_distributions[0], 156.96, 10.0, 50.0, 0.0, @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_demand_control"]['RecirculationPumpWeekdayScheduleFractions'], @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_demand_control"]['RecirculationPumpWeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterRecirculationPump].name]['RecirculationPumpMonthlyScheduleMultipliers'])
+    _test_default_recirc_distribution_values(default_hpxml_bldg.hot_water_distributions[0], 156.96, 10.0, 50.0, 0.0, default_dr_sched['RecirculationPumpWeekdayScheduleFractions'], default_dr_sched['RecirculationPumpWeekendScheduleFractions'], default_rc_sched['RecirculationPumpMonthlyScheduleMultipliers'])
 
     # Test defaults w/ recirculation & 2-story building
     hpxml, hpxml_bldg = _create_hpxml('base-enclosure-2stories.xml')
@@ -3399,7 +3445,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
                                            recirculation_control_type: HPXML::DHWRecircControlTypeSensor)
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_recirc_distribution_values(default_hpxml_bldg.hot_water_distributions[0], 186.96, 10.0, 50.0, 0.0, @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_demand_control"]['RecirculationPumpWeekdayScheduleFractions'], @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_demand_control"]['RecirculationPumpWeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterRecirculationPump].name]['RecirculationPumpMonthlyScheduleMultipliers'])
+    _test_default_recirc_distribution_values(default_hpxml_bldg.hot_water_distributions[0], 186.96, 10.0, 50.0, 0.0, default_dr_sched['RecirculationPumpWeekdayScheduleFractions'], default_dr_sched['RecirculationPumpWeekendScheduleFractions'], default_rc_sched['RecirculationPumpMonthlyScheduleMultipliers'])
 
     # Test defaults w/ shared recirculation
     hpxml, hpxml_bldg = _create_hpxml('base-bldgtype-mf-unit-shared-water-heater-recirc.xml')
@@ -3409,7 +3455,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.hot_water_distributions[0].recirculation_pump_monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_shared_recirc_distribution_values(default_hpxml_bldg.hot_water_distributions[0], 220.0, @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_no_control"]['RecirculationPumpWeekdayScheduleFractions'], @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_no_control"]['RecirculationPumpWeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterRecirculationPump].name]['RecirculationPumpMonthlyScheduleMultipliers'])
+    default_ncr_sched = @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_no_control"]
+    _test_default_shared_recirc_distribution_values(default_hpxml_bldg.hot_water_distributions[0], 220.0, default_ncr_sched['RecirculationPumpWeekdayScheduleFractions'], default_ncr_sched['RecirculationPumpWeekendScheduleFractions'], default_rc_sched['RecirculationPumpMonthlyScheduleMultipliers'])
   end
 
   def test_water_fixtures
@@ -3437,7 +3484,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.water_fixtures[1].flow_rate = 2
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_water_fixture_values(default_hpxml_bldg, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterFixtures].name]['WaterFixturesWeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterFixtures].name]['WaterFixturesWeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterFixtures].name]['WaterFixturesMonthlyScheduleMultipliers'], true, true)
+    default_fx_sched = @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterFixtures].name]
+    _test_default_water_fixture_values(default_hpxml_bldg, 1.0, default_fx_sched['WaterFixturesWeekdayScheduleFractions'], default_fx_sched['WaterFixturesWeekendScheduleFractions'], default_fx_sched['WaterFixturesMonthlyScheduleMultipliers'], true, true)
   end
 
   def test_solar_thermal_systems
@@ -3609,6 +3657,160 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _test_default_battery_values(default_hpxml_bldg.batteries[0], 10.0, nil, 9.0, nil, 5000.0, HPXML::LocationGarage, nil, 0.925)
   end
 
+  def test_vehicles
+    # Test inputs not overridden by defaults
+    hpxml, hpxml_bldg = _create_hpxml('base-vehicle-ev-charger.xml')
+    hpxml_bldg.vehicles[0].battery_type = HPXML::BatteryTypeLithiumIon
+    hpxml_bldg.vehicles[0].nominal_capacity_kwh = 45.0
+    hpxml_bldg.vehicles[0].nominal_capacity_ah = nil
+    hpxml_bldg.vehicles[0].usable_capacity_kwh = 34.0
+    hpxml_bldg.vehicles[0].usable_capacity_ah = nil
+    hpxml_bldg.vehicles[0].miles_per_year = 5000
+    hpxml_bldg.vehicles[0].hours_per_week = 10
+    hpxml_bldg.vehicles[0].fuel_economy_combined = 0.18
+    hpxml_bldg.vehicles[0].fuel_economy_units = HPXML::UnitsKwhPerMile
+    hpxml_bldg.vehicles[0].fraction_charged_home = 0.75
+    hpxml_bldg.vehicles[0].ev_weekday_fractions = ConstantDaySchedule
+    hpxml_bldg.vehicles[0].ev_weekend_fractions = ConstantDaySchedule
+    hpxml_bldg.vehicles[0].ev_monthly_multipliers = ConstantMonthSchedule
+    hpxml_bldg.ev_chargers[0].location = HPXML::LocationOutside
+    hpxml_bldg.ev_chargers[0].charging_level = 3
+    hpxml_bldg.ev_chargers[0].charging_power = 99
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 45.0, nil, 34.0, nil, 5000, 10, 0.18, HPXML::UnitsKwhPerMile, 0.75, ConstantDaySchedule, ConstantDaySchedule, ConstantMonthSchedule, 3, 99, HPXML::LocationOutside)
+
+    # Test w/ Ah instead of kWh
+    hpxml_bldg.vehicles[0].nominal_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].nominal_capacity_ah = 987.0
+    hpxml_bldg.vehicles[0].usable_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].usable_capacity_ah = 876.0
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, nil, 987.0, nil, 876.0, 5000, 10, 0.18, HPXML::UnitsKwhPerMile, 0.75, ConstantDaySchedule, ConstantDaySchedule, ConstantMonthSchedule, 3, 99, HPXML::LocationOutside)
+
+    # Test w/ mile/kWh
+    hpxml_bldg.vehicles[0].fuel_economy_combined = 5.55
+    hpxml_bldg.vehicles[0].fuel_economy_units = HPXML::UnitsMilePerKwh
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, nil, 987.0, nil, 876.0, 5000, 10, 5.55, HPXML::UnitsMilePerKwh, 0.75, ConstantDaySchedule, ConstantDaySchedule, ConstantMonthSchedule, 3, 99, HPXML::LocationOutside)
+
+    # FIXME: Test w/ mpge
+    hpxml_bldg.vehicles[0].fuel_economy_combined = 107.0
+    hpxml_bldg.vehicles[0].fuel_economy_units = HPXML::UnitsMPGe
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, nil, 987.0, nil, 876.0, 5000, 10, 107, HPXML::UnitsMPGe, 0.75, ConstantDaySchedule, ConstantDaySchedule, ConstantMonthSchedule, 3, 99, HPXML::LocationOutside)
+
+    # Test defaults
+    hpxml, hpxml_bldg = _create_hpxml('base-vehicle-ev-charger.xml')
+    hpxml_bldg.vehicles[0].nominal_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].nominal_capacity_ah = nil
+    hpxml_bldg.vehicles[0].usable_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].usable_capacity_ah = nil
+    hpxml_bldg.vehicles[0].miles_per_year = nil
+    hpxml_bldg.vehicles[0].hours_per_week = nil
+    hpxml_bldg.vehicles[0].fuel_economy_combined = nil
+    hpxml_bldg.vehicles[0].fuel_economy_units = nil
+    hpxml_bldg.vehicles[0].fraction_charged_home = nil
+    hpxml_bldg.vehicles[0].ev_weekday_fractions = nil
+    hpxml_bldg.vehicles[0].ev_weekend_fractions = nil
+    hpxml_bldg.vehicles[0].ev_monthly_multipliers = nil
+    hpxml_bldg.ev_chargers[0].location = nil
+    hpxml_bldg.ev_chargers[0].charging_level = nil
+    hpxml_bldg.ev_chargers[0].charging_power = nil
+    default_ev_sch = @default_schedules_csv_data[SchedulesFile::Columns[:ElectricVehicle].name]
+
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 63.0, nil, 50.4, nil, 10900, 8.88, 0.22, HPXML::UnitsKwhPerMile, 0.8, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690, HPXML::LocationGarage)
+
+    # Test defaults w/ nominal kWh
+    hpxml_bldg.vehicles[0].nominal_capacity_kwh = 45.0
+    hpxml_bldg.vehicles[0].nominal_capacity_ah = nil
+    hpxml_bldg.vehicles[0].usable_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].usable_capacity_ah = nil
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 45.0, nil, 36.0, nil, 10900, 8.88, 0.22, HPXML::UnitsKwhPerMile, 0.8, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690, HPXML::LocationGarage)
+
+    # Test defaults w/ usable kWh
+    hpxml_bldg.vehicles[0].nominal_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].nominal_capacity_ah = nil
+    hpxml_bldg.vehicles[0].usable_capacity_kwh = 36.0
+    hpxml_bldg.vehicles[0].usable_capacity_ah = nil
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 45.0, nil, 36.0, nil, 10900, 8.88, 0.22, HPXML::UnitsKwhPerMile, 0.8, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690, HPXML::LocationGarage)
+
+    # Test defaults w/ nominal Ah
+    hpxml_bldg.vehicles[0].nominal_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].nominal_capacity_ah = 280.0
+    hpxml_bldg.vehicles[0].usable_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].usable_capacity_ah = nil
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, nil, 280.0, nil, 224.0, 10900, 8.88, 0.22, HPXML::UnitsKwhPerMile, 0.8, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690, HPXML::LocationGarage)
+
+    # Test defaults w/ usable Ah
+    hpxml_bldg.vehicles[0].nominal_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].nominal_capacity_ah = nil
+    hpxml_bldg.vehicles[0].usable_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].usable_capacity_ah = 224.0
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, nil, 280.0, nil, 224.0, 10900, 8.88, 0.22, HPXML::UnitsKwhPerMile, 0.8, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690, HPXML::LocationGarage)
+
+    # Test defaults w/ miles/year
+    hpxml_bldg.vehicles[0].miles_per_year = 5000
+    hpxml_bldg.vehicles[0].usable_capacity_ah = nil
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 63.0, nil, 50.4, nil, 5000, 4.07, 0.22, HPXML::UnitsKwhPerMile, 0.8, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690, HPXML::LocationGarage)
+
+    # Test defaults w/ hours/week
+    hpxml_bldg.vehicles[0].miles_per_year = nil
+    hpxml_bldg.vehicles[0].hours_per_week = 5.0
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 63.0, nil, 50.4, nil, 6137.4, 5.0, 0.22, HPXML::UnitsKwhPerMile, 0.8, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690, HPXML::LocationGarage)
+
+    # Test defaults w/ Level 1 charger
+    hpxml_bldg.ev_chargers[0].charging_level = 1
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 63.0, nil, 50.4, nil, 6137.4, 5.0, 0.22, HPXML::UnitsKwhPerMile, 0.8, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 1, 1600, HPXML::LocationGarage)
+
+    # Test defaults w/ charging power
+    hpxml_bldg.ev_chargers[0].charging_level = nil
+    hpxml_bldg.ev_chargers[0].charging_power = 3500
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 63.0, nil, 50.4, nil, 6137.4, 5.0, 0.22, HPXML::UnitsKwhPerMile, 0.8, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], nil, 3500, HPXML::LocationGarage)
+
+    # Test defaults w/ schedule file
+    hpxml, hpxml_bldg = _create_hpxml('base-vehicle-ev-charger-scheduled.xml')
+    hpxml_bldg.vehicles[0].nominal_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].nominal_capacity_ah = nil
+    hpxml_bldg.vehicles[0].usable_capacity_kwh = nil
+    hpxml_bldg.vehicles[0].usable_capacity_ah = nil
+    hpxml_bldg.vehicles[0].miles_per_year = nil
+    hpxml_bldg.vehicles[0].hours_per_week = nil
+    hpxml_bldg.vehicles[0].fuel_economy_combined = nil
+    hpxml_bldg.vehicles[0].fuel_economy_units = nil
+    hpxml_bldg.vehicles[0].fraction_charged_home = nil
+    hpxml_bldg.vehicles[0].ev_weekday_fractions = nil
+    hpxml_bldg.vehicles[0].ev_weekend_fractions = nil
+    hpxml_bldg.vehicles[0].ev_monthly_multipliers = nil
+    hpxml_bldg.ev_chargers[0].location = nil
+    hpxml_bldg.ev_chargers[0].charging_level = nil
+    hpxml_bldg.ev_chargers[0].charging_power = nil
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 63.0, nil, 50.4, nil, 10900, 8.88, 0.22, HPXML::UnitsKwhPerMile, 0.8, nil, nil, nil, 2, 5690, HPXML::LocationGarage)
+  end
+
   def test_generators
     # Test inputs not overridden by defaults
     hpxml, hpxml_bldg = _create_hpxml('base-bldgtype-sfa-unit.xml')
@@ -3662,11 +3864,12 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.clothes_washers[0].monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_clothes_washer_values(default_hpxml_bldg.clothes_washers[0], false, HPXML::LocationConditionedSpace, 1.0, 400.0, 0.12, 1.09, 27.0, 3.0, 6.0, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:ClothesWasher].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesWasher].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesWasher].name]['MonthlyScheduleMultipliers'])
+    default_cw_sched = @default_schedules_csv_data[SchedulesFile::Columns[:ClothesWasher].name]
+    _test_default_clothes_washer_values(default_hpxml_bldg.clothes_washers[0], false, HPXML::LocationConditionedSpace, 1.0, 400.0, 0.12, 1.09, 27.0, 3.0, 6.0, 1.0, default_cw_sched['WeekdayScheduleFractions'], default_cw_sched['WeekendScheduleFractions'], default_cw_sched['MonthlyScheduleMultipliers'])
 
     # Test defaults before 301-2019 Addendum A
     hpxml, hpxml_bldg = _create_hpxml('base.xml')
-    hpxml.header.eri_calculation_version = '2019'
+    hpxml.header.eri_calculation_versions = ['2019']
     hpxml_bldg.clothes_washers[0].is_shared_appliance = nil
     hpxml_bldg.clothes_washers[0].location = nil
     hpxml_bldg.clothes_washers[0].integrated_modified_energy_factor = nil
@@ -3682,7 +3885,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.clothes_washers[0].monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_clothes_washer_values(default_hpxml_bldg.clothes_washers[0], false, HPXML::LocationConditionedSpace, 0.331, 704.0, 0.08, 0.58, 23.0, 2.874, 999, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:ClothesWasher].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesWasher].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesWasher].name]['MonthlyScheduleMultipliers'])
+    _test_default_clothes_washer_values(default_hpxml_bldg.clothes_washers[0], false, HPXML::LocationConditionedSpace, 0.331, 704.0, 0.08, 0.58, 23.0, 2.874, 999, 1.0, default_cw_sched['WeekdayScheduleFractions'], default_cw_sched['WeekendScheduleFractions'], default_cw_sched['MonthlyScheduleMultipliers'])
   end
 
   def test_clothes_dryers
@@ -3711,26 +3914,27 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.clothes_dryers[0].monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_clothes_dryer_values(default_hpxml_bldg.clothes_dryers[0], false, HPXML::LocationConditionedSpace, 3.01, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['MonthlyScheduleMultipliers'])
+    default_cd_sched = @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]
+    _test_default_clothes_dryer_values(default_hpxml_bldg.clothes_dryers[0], false, HPXML::LocationConditionedSpace, 3.01, 1.0, default_cd_sched['WeekdayScheduleFractions'], default_cd_sched['WeekendScheduleFractions'], default_cd_sched['MonthlyScheduleMultipliers'])
 
     # Test defaults w/ gas clothes dryer
     hpxml_bldg.clothes_dryers[0].fuel_type = HPXML::FuelTypeNaturalGas
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_clothes_dryer_values(default_hpxml_bldg.clothes_dryers[0], false, HPXML::LocationConditionedSpace, 3.01, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['MonthlyScheduleMultipliers'])
+    _test_default_clothes_dryer_values(default_hpxml_bldg.clothes_dryers[0], false, HPXML::LocationConditionedSpace, 3.01, 1.0, default_cd_sched['WeekdayScheduleFractions'], default_cd_sched['WeekendScheduleFractions'], default_cd_sched['MonthlyScheduleMultipliers'])
 
     # Test defaults w/ electric clothes dryer before 301-2019 Addendum A
-    hpxml.header.eri_calculation_version = '2019'
+    hpxml.header.eri_calculation_versions = ['2019']
     hpxml_bldg.clothes_dryers[0].fuel_type = HPXML::FuelTypeElectricity
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_clothes_dryer_values(default_hpxml_bldg.clothes_dryers[0], false, HPXML::LocationConditionedSpace, 2.62, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['MonthlyScheduleMultipliers'])
+    _test_default_clothes_dryer_values(default_hpxml_bldg.clothes_dryers[0], false, HPXML::LocationConditionedSpace, 2.62, 1.0, default_cd_sched['WeekdayScheduleFractions'], default_cd_sched['WeekendScheduleFractions'], default_cd_sched['MonthlyScheduleMultipliers'])
 
     # Test defaults w/ gas clothes dryer before 301-2019 Addendum A
     hpxml_bldg.clothes_dryers[0].fuel_type = HPXML::FuelTypeNaturalGas
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_clothes_dryer_values(default_hpxml_bldg.clothes_dryers[0], false, HPXML::LocationConditionedSpace, 2.32, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:ClothesDryer].name]['MonthlyScheduleMultipliers'])
+    _test_default_clothes_dryer_values(default_hpxml_bldg.clothes_dryers[0], false, HPXML::LocationConditionedSpace, 2.32, 1.0, default_cd_sched['WeekdayScheduleFractions'], default_cd_sched['WeekendScheduleFractions'], default_cd_sched['MonthlyScheduleMultipliers'])
   end
 
   def test_clothes_dryer_exhaust
@@ -3789,13 +3993,14 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.dishwashers[0].monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_dishwasher_values(default_hpxml_bldg.dishwashers[0], false, HPXML::LocationConditionedSpace, 467.0, 0.12, 1.09, 33.12, 4.0, 12, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:Dishwasher].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:Dishwasher].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:Dishwasher].name]['MonthlyScheduleMultipliers'])
+    default_dw_sched = @default_schedules_csv_data[SchedulesFile::Columns[:Dishwasher].name]
+    _test_default_dishwasher_values(default_hpxml_bldg.dishwashers[0], false, HPXML::LocationConditionedSpace, 467.0, 0.12, 1.09, 33.12, 4.0, 12, 1.0, default_dw_sched['WeekdayScheduleFractions'], default_dw_sched['WeekendScheduleFractions'], default_dw_sched['MonthlyScheduleMultipliers'])
 
     # Test defaults before 301-2019 Addendum A
-    hpxml.header.eri_calculation_version = '2019'
+    hpxml.header.eri_calculation_versions = ['2019']
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_dishwasher_values(default_hpxml_bldg.dishwashers[0], false, HPXML::LocationConditionedSpace, 467.0, 999, 999, 999, 999, 12, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:Dishwasher].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:Dishwasher].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:Dishwasher].name]['MonthlyScheduleMultipliers'])
+    _test_default_dishwasher_values(default_hpxml_bldg.dishwashers[0], false, HPXML::LocationConditionedSpace, 467.0, 999, 999, 999, 999, 12, 1.0, default_dw_sched['WeekdayScheduleFractions'], default_dw_sched['WeekendScheduleFractions'], default_dw_sched['MonthlyScheduleMultipliers'])
   end
 
   def test_refrigerators
@@ -3836,7 +4041,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.refrigerators[0].temperature_coefficients = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_refrigerator_values(default_hpxml_bldg, HPXML::LocationConditionedSpace, 691.0, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:Refrigerator].name]['WeekdayScheduleFractions'], ConstantDaySchedule, @default_schedules_csv_data[SchedulesFile::Columns[:Refrigerator].name]['MonthlyScheduleMultipliers'], nil, nil)
+    default_rf_sched = @default_schedules_csv_data[SchedulesFile::Columns[:Refrigerator].name]
+    _test_default_refrigerator_values(default_hpxml_bldg, HPXML::LocationConditionedSpace, 691.0, 1.0, default_rf_sched['WeekdayScheduleFractions'], ConstantDaySchedule, default_rf_sched['MonthlyScheduleMultipliers'], nil, nil)
 
     # Test defaults 2
     hpxml_bldg.refrigerators[0].location = nil
@@ -3849,20 +4055,20 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.refrigerators[0].temperature_coefficients = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_refrigerator_values(default_hpxml_bldg, HPXML::LocationConditionedSpace, 691.0, 1.0, nil, nil, nil, @default_schedules_csv_data[SchedulesFile::Columns[:Refrigerator].name]['ConstantScheduleCoefficients'], @default_schedules_csv_data[SchedulesFile::Columns[:Refrigerator].name]['TemperatureScheduleCoefficients'])
+    _test_default_refrigerator_values(default_hpxml_bldg, HPXML::LocationConditionedSpace, 691.0, 1.0, nil, nil, nil, default_rf_sched['ConstantScheduleCoefficients'], default_rf_sched['TemperatureScheduleCoefficients'])
 
     # Test defaults w/ refrigerator in 5-bedroom house
     hpxml_bldg.building_construction.number_of_bedrooms = 5
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_refrigerator_values(default_hpxml_bldg, HPXML::LocationConditionedSpace, 727.0, 1.0, nil, nil, nil, @default_schedules_csv_data[SchedulesFile::Columns[:Refrigerator].name]['ConstantScheduleCoefficients'], @default_schedules_csv_data[SchedulesFile::Columns[:Refrigerator].name]['TemperatureScheduleCoefficients'])
+    _test_default_refrigerator_values(default_hpxml_bldg, HPXML::LocationConditionedSpace, 727.0, 1.0, nil, nil, nil, default_rf_sched['ConstantScheduleCoefficients'], default_rf_sched['TemperatureScheduleCoefficients'])
 
     # Test defaults before 301-2019 Addendum A
-    hpxml.header.eri_calculation_version = '2019'
+    hpxml.header.eri_calculation_versions = ['2019']
     hpxml_bldg.building_construction.number_of_bedrooms = 3
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_refrigerator_values(default_hpxml_bldg, HPXML::LocationConditionedSpace, 691.0, 1.0, nil, nil, nil, @default_schedules_csv_data[SchedulesFile::Columns[:Refrigerator].name]['ConstantScheduleCoefficients'], @default_schedules_csv_data[SchedulesFile::Columns[:Refrigerator].name]['TemperatureScheduleCoefficients'])
+    _test_default_refrigerator_values(default_hpxml_bldg, HPXML::LocationConditionedSpace, 691.0, 1.0, nil, nil, nil, default_rf_sched['ConstantScheduleCoefficients'], default_rf_sched['TemperatureScheduleCoefficients'])
   end
 
   def test_extra_refrigerators
@@ -3911,7 +4117,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_extra_refrigerators_values(default_hpxml_bldg, HPXML::LocationBasementConditioned, 244.0, 1.0, nil, nil, nil, @default_schedules_csv_data[SchedulesFile::Columns[:ExtraRefrigerator].name]['ConstantScheduleCoefficients'], @default_schedules_csv_data[SchedulesFile::Columns[:ExtraRefrigerator].name]['TemperatureScheduleCoefficients'])
+    default_ef_sched = @default_schedules_csv_data[SchedulesFile::Columns[:ExtraRefrigerator].name]
+    _test_default_extra_refrigerators_values(default_hpxml_bldg, HPXML::LocationBasementConditioned, 244.0, 1.0, nil, nil, nil, default_ef_sched['ConstantScheduleCoefficients'], default_ef_sched['TemperatureScheduleCoefficients'])
   end
 
   def test_freezers
@@ -3960,7 +4167,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_freezers_values(default_hpxml_bldg, HPXML::LocationBasementConditioned, 320.0, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:Freezer].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:Freezer].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:Freezer].name]['MonthlyScheduleMultipliers'], nil, nil)
+    default_fz_sched = @default_schedules_csv_data[SchedulesFile::Columns[:Freezer].name]
+    _test_default_freezers_values(default_hpxml_bldg, HPXML::LocationBasementConditioned, 320.0, 1.0, default_fz_sched['WeekdayScheduleFractions'], default_fz_sched['WeekendScheduleFractions'], default_fz_sched['MonthlyScheduleMultipliers'], nil, nil)
   end
 
   def test_cooking_ranges
@@ -3985,13 +4193,14 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.cooking_ranges[0].monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_cooking_range_values(default_hpxml_bldg.cooking_ranges[0], HPXML::LocationConditionedSpace, false, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:CookingRange].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:CookingRange].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:CookingRange].name]['MonthlyScheduleMultipliers'])
+    defult_cr_sched = @default_schedules_csv_data[SchedulesFile::Columns[:CookingRange].name]
+    _test_default_cooking_range_values(default_hpxml_bldg.cooking_ranges[0], HPXML::LocationConditionedSpace, false, 1.0, defult_cr_sched['WeekdayScheduleFractions'], defult_cr_sched['WeekendScheduleFractions'], defult_cr_sched['MonthlyScheduleMultipliers'])
 
     # Test defaults before 301-2019 Addendum A
-    hpxml.header.eri_calculation_version = '2019'
+    hpxml.header.eri_calculation_versions = ['2019']
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_cooking_range_values(default_hpxml_bldg.cooking_ranges[0], HPXML::LocationConditionedSpace, false, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:CookingRange].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:CookingRange].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:CookingRange].name]['MonthlyScheduleMultipliers'])
+    _test_default_cooking_range_values(default_hpxml_bldg.cooking_ranges[0], HPXML::LocationConditionedSpace, false, 1.0, defult_cr_sched['WeekdayScheduleFractions'], defult_cr_sched['WeekendScheduleFractions'], defult_cr_sched['MonthlyScheduleMultipliers'])
   end
 
   def test_ovens
@@ -4009,7 +4218,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _test_default_oven_values(default_hpxml_bldg.ovens[0], false)
 
     # Test defaults before 301-2019 Addendum A
-    hpxml.header.eri_calculation_version = '2019'
+    hpxml.header.eri_calculation_versions = ['2019']
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     _test_default_oven_values(default_hpxml_bldg.ovens[0], false)
@@ -4074,13 +4283,15 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.lighting.holiday_exists = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
+    default_il_sched = @default_schedules_csv_data[SchedulesFile::Columns[:LightingInterior].name]
+    default_el_sched = @default_schedules_csv_data[SchedulesFile::Columns[:LightingExterior].name]
     _test_default_lighting_values(default_hpxml_bldg, 1.0, 1.0, 1.0,
-                                  { int_wk_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingInterior].name]['InteriorWeekdayScheduleFractions'],
-                                    int_wknd_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingInterior].name]['InteriorWeekendScheduleFractions'],
-                                    int_month_mult: @default_schedules_csv_data[SchedulesFile::Columns[:LightingInterior].name]['InteriorMonthlyScheduleMultipliers'],
-                                    ext_wk_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingExterior].name]['ExteriorWeekdayScheduleFractions'],
-                                    ext_wknd_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingExterior].name]['ExteriorWeekdayScheduleFractions'],
-                                    ext_month_mult: @default_schedules_csv_data[SchedulesFile::Columns[:LightingExterior].name]['ExteriorMonthlyScheduleMultipliers'] })
+                                  { int_wk_sch: default_il_sched['InteriorWeekdayScheduleFractions'],
+                                    int_wknd_sch: default_il_sched['InteriorWeekendScheduleFractions'],
+                                    int_month_mult: default_il_sched['InteriorMonthlyScheduleMultipliers'],
+                                    ext_wk_sch: default_el_sched['ExteriorWeekdayScheduleFractions'],
+                                    ext_wknd_sch: default_el_sched['ExteriorWeekdayScheduleFractions'],
+                                    ext_month_mult: default_el_sched['ExteriorMonthlyScheduleMultipliers'] })
 
     # Test defaults w/ holiday lighting
     hpxml_bldg.lighting.holiday_exists = true
@@ -4093,20 +4304,21 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.lighting.holiday_weekend_fractions = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
+    default_hl_sched = @default_schedules_csv_data[SchedulesFile::Columns[:LightingExteriorHoliday].name]
     _test_default_lighting_values(default_hpxml_bldg, 1.0, 1.0, 1.0,
-                                  { int_wk_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingInterior].name]['InteriorWeekdayScheduleFractions'],
-                                    int_wknd_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingInterior].name]['InteriorWeekendScheduleFractions'],
-                                    int_month_mult: @default_schedules_csv_data[SchedulesFile::Columns[:LightingInterior].name]['InteriorMonthlyScheduleMultipliers'],
-                                    ext_wk_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingExterior].name]['ExteriorWeekdayScheduleFractions'],
-                                    ext_wknd_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingExterior].name]['ExteriorWeekdayScheduleFractions'],
-                                    ext_month_mult: @default_schedules_csv_data[SchedulesFile::Columns[:LightingExterior].name]['ExteriorMonthlyScheduleMultipliers'],
+                                  { int_wk_sch: default_il_sched['InteriorWeekdayScheduleFractions'],
+                                    int_wknd_sch: default_il_sched['InteriorWeekendScheduleFractions'],
+                                    int_month_mult: default_il_sched['InteriorMonthlyScheduleMultipliers'],
+                                    ext_wk_sch: default_el_sched['ExteriorWeekdayScheduleFractions'],
+                                    ext_wknd_sch: default_el_sched['ExteriorWeekdayScheduleFractions'],
+                                    ext_month_mult: default_el_sched['ExteriorMonthlyScheduleMultipliers'],
                                     hol_kwh_per_day: 1.1,
                                     hol_begin_month: 11,
                                     hol_begin_day: 24,
                                     hol_end_month: 1,
                                     hol_end_day: 6,
-                                    hol_wk_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingExteriorHoliday].name]['WeekdayScheduleFractions'],
-                                    hol_wknd_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingExteriorHoliday].name]['WeekendScheduleFractions'] })
+                                    hol_wk_sch: default_hl_sched['WeekdayScheduleFractions'],
+                                    hol_wknd_sch: default_hl_sched['WeekendScheduleFractions'] })
     # Test defaults w/ garage
     hpxml, hpxml_bldg = _create_hpxml('base-enclosure-garage.xml')
     hpxml_bldg.lighting.interior_usage_multiplier = nil
@@ -4114,16 +4326,17 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.lighting.exterior_usage_multiplier = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
+    default_gl_sched = @default_schedules_csv_data[SchedulesFile::Columns[:LightingGarage].name]
     _test_default_lighting_values(default_hpxml_bldg, 1.0, 1.0, 1.0,
-                                  { int_wk_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingInterior].name]['InteriorWeekdayScheduleFractions'],
-                                    int_wknd_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingInterior].name]['InteriorWeekendScheduleFractions'],
-                                    int_month_mult: @default_schedules_csv_data[SchedulesFile::Columns[:LightingInterior].name]['InteriorMonthlyScheduleMultipliers'],
-                                    ext_wk_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingExterior].name]['ExteriorWeekdayScheduleFractions'],
-                                    ext_wknd_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingExterior].name]['ExteriorWeekdayScheduleFractions'],
-                                    ext_month_mult: @default_schedules_csv_data[SchedulesFile::Columns[:LightingExterior].name]['ExteriorMonthlyScheduleMultipliers'],
-                                    grg_wk_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingGarage].name]['GarageWeekdayScheduleFractions'],
-                                    grg_wknd_sch: @default_schedules_csv_data[SchedulesFile::Columns[:LightingGarage].name]['GarageWeekendScheduleFractions'],
-                                    grg_month_mult: @default_schedules_csv_data[SchedulesFile::Columns[:LightingGarage].name]['GarageMonthlyScheduleMultipliers'] })
+                                  { int_wk_sch: default_il_sched['InteriorWeekdayScheduleFractions'],
+                                    int_wknd_sch: default_il_sched['InteriorWeekendScheduleFractions'],
+                                    int_month_mult: default_il_sched['InteriorMonthlyScheduleMultipliers'],
+                                    ext_wk_sch: default_el_sched['ExteriorWeekdayScheduleFractions'],
+                                    ext_wknd_sch: default_el_sched['ExteriorWeekdayScheduleFractions'],
+                                    ext_month_mult: default_el_sched['ExteriorMonthlyScheduleMultipliers'],
+                                    grg_wk_sch: default_gl_sched['GarageWeekdayScheduleFractions'],
+                                    grg_wknd_sch: default_gl_sched['GarageWeekendScheduleFractions'],
+                                    grg_month_mult: default_gl_sched['GarageMonthlyScheduleMultipliers'] })
   end
 
   def test_ceiling_fans
@@ -4163,7 +4376,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_ceiling_fan_values(default_hpxml_bldg.ceiling_fans[0], 4, nil, 42.6, @default_schedules_csv_data[SchedulesFile::Columns[:CeilingFan].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:CeilingFan].name]['WeekendScheduleFractions'], '0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0')
+    default_cf_sched = @default_schedules_csv_data[SchedulesFile::Columns[:CeilingFan].name]
+    _test_default_ceiling_fan_values(default_hpxml_bldg.ceiling_fans[0], 4, nil, 42.6, default_cf_sched['WeekdayScheduleFractions'], default_cf_sched['WeekendScheduleFractions'], '0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0')
   end
 
   def test_pools
@@ -4201,8 +4415,10 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     pool.pump_monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_pool_heater_values(default_hpxml_bldg.pools[0], HPXML::UnitsThermPerYear, 236, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:PoolHeater].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PoolHeater].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PoolHeater].name]['MonthlyScheduleMultipliers'])
-    _test_default_pool_pump_values(default_hpxml_bldg.pools[0], 2496, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:PoolPump].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PoolPump].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PoolPump].name]['MonthlyScheduleMultipliers'])
+    default_ph_sched = @default_schedules_csv_data[SchedulesFile::Columns[:PoolHeater].name]
+    default_pp_sched = @default_schedules_csv_data[SchedulesFile::Columns[:PoolPump].name]
+    _test_default_pool_heater_values(default_hpxml_bldg.pools[0], HPXML::UnitsThermPerYear, 236, 1.0, default_ph_sched['WeekdayScheduleFractions'], default_ph_sched['WeekendScheduleFractions'], default_ph_sched['MonthlyScheduleMultipliers'])
+    _test_default_pool_pump_values(default_hpxml_bldg.pools[0], 2496, 1.0, default_pp_sched['WeekdayScheduleFractions'], default_pp_sched['WeekendScheduleFractions'], default_pp_sched['MonthlyScheduleMultipliers'])
 
     # Test defaults 2
     hpxml, hpxml_bldg = _create_hpxml('base-misc-loads-large-uncommon2.xml')
@@ -4221,7 +4437,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     _test_default_pool_heater_values(default_hpxml_bldg.pools[0], nil, nil, nil, nil, nil, nil)
-    _test_default_pool_pump_values(default_hpxml_bldg.pools[0], 2496, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:PoolPump].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PoolPump].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PoolPump].name]['MonthlyScheduleMultipliers'])
+    _test_default_pool_pump_values(default_hpxml_bldg.pools[0], 2496, 1.0, default_pp_sched['WeekdayScheduleFractions'], default_pp_sched['WeekendScheduleFractions'], default_pp_sched['MonthlyScheduleMultipliers'])
   end
 
   def test_permanent_spas
@@ -4259,8 +4475,10 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     spa.pump_monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_permanent_spa_heater_values(default_hpxml_bldg.permanent_spas[0], HPXML::UnitsKwhPerYear, 1125, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaHeater].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaHeater].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaHeater].name]['MonthlyScheduleMultipliers'])
-    _test_default_permanent_spa_pump_values(default_hpxml_bldg.permanent_spas[0], 1111, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaPump].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaPump].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaPump].name]['MonthlyScheduleMultipliers'])
+    default_sh_sched = @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaHeater].name]
+    default_sp_sched = @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaPump].name]
+    _test_default_permanent_spa_heater_values(default_hpxml_bldg.permanent_spas[0], HPXML::UnitsKwhPerYear, 1125, 1.0, default_sh_sched['WeekdayScheduleFractions'], default_sh_sched['WeekendScheduleFractions'], default_sh_sched['MonthlyScheduleMultipliers'])
+    _test_default_permanent_spa_pump_values(default_hpxml_bldg.permanent_spas[0], 1111, 1.0, default_sp_sched['WeekdayScheduleFractions'], default_sp_sched['WeekendScheduleFractions'], default_sp_sched['MonthlyScheduleMultipliers'])
 
     # Test defaults 2
     hpxml, hpxml_bldg = _create_hpxml('base-misc-loads-large-uncommon2.xml')
@@ -4278,8 +4496,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     spa.pump_monthly_multipliers = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_permanent_spa_heater_values(default_hpxml_bldg.permanent_spas[0], HPXML::UnitsKwhPerYear, 225, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaHeater].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaHeater].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaHeater].name]['MonthlyScheduleMultipliers'])
-    _test_default_permanent_spa_pump_values(default_hpxml_bldg.permanent_spas[0], 1111, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaPump].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaPump].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PermanentSpaPump].name]['MonthlyScheduleMultipliers'])
+    _test_default_permanent_spa_heater_values(default_hpxml_bldg.permanent_spas[0], HPXML::UnitsKwhPerYear, 225, 1.0, default_sh_sched['WeekdayScheduleFractions'], default_sh_sched['WeekendScheduleFractions'], default_sh_sched['MonthlyScheduleMultipliers'])
+    _test_default_permanent_spa_pump_values(default_hpxml_bldg.permanent_spas[0], 1111, 1.0, default_sp_sched['WeekdayScheduleFractions'], default_sp_sched['WeekendScheduleFractions'], default_sp_sched['MonthlyScheduleMultipliers'])
   end
 
   def test_plug_loads
@@ -4336,10 +4554,14 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_plug_load_values(default_hpxml_bldg, HPXML::PlugLoadTypeTelevision, 620, 1.0, 0.0, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsTV].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsTV].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsTV].name]['MonthlyScheduleMultipliers'])
-    _test_default_plug_load_values(default_hpxml_bldg, HPXML::PlugLoadTypeOther, 2457, 0.855, 0.045, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsOther].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsOther].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsOther].name]['MonthlyScheduleMultipliers'])
-    _test_default_plug_load_values(default_hpxml_bldg, HPXML::PlugLoadTypeElectricVehicleCharging, 1667, 0.0, 0.0, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsVehicle].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsVehicle].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsVehicle].name]['MonthlyScheduleMultipliers'])
-    _test_default_plug_load_values(default_hpxml_bldg, HPXML::PlugLoadTypeWellPump, 441, 0.0, 0.0, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsWellPump].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsWellPump].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsWellPump].name]['MonthlyScheduleMultipliers'])
+    default_tv_sched = @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsTV].name]
+    default_ot_sched = @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsOther].name]
+    default_ev_sched = @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsVehicle].name]
+    default_wp_sched = @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsWellPump].name]
+    _test_default_plug_load_values(default_hpxml_bldg, HPXML::PlugLoadTypeTelevision, 620, 1.0, 0.0, 1.0, default_tv_sched['WeekdayScheduleFractions'], default_tv_sched['WeekendScheduleFractions'], default_tv_sched['MonthlyScheduleMultipliers'])
+    _test_default_plug_load_values(default_hpxml_bldg, HPXML::PlugLoadTypeOther, 2457, 0.855, 0.045, 1.0, default_ot_sched['WeekdayScheduleFractions'], default_ot_sched['WeekendScheduleFractions'], default_ot_sched['MonthlyScheduleMultipliers'])
+    _test_default_plug_load_values(default_hpxml_bldg, HPXML::PlugLoadTypeElectricVehicleCharging, 2368.4, 0.0, 0.0, 1.0, default_ev_sched['WeekdayScheduleFractions'], default_ev_sched['WeekendScheduleFractions'], default_ev_sched['MonthlyScheduleMultipliers'])
+    _test_default_plug_load_values(default_hpxml_bldg, HPXML::PlugLoadTypeWellPump, 441, 0.0, 0.0, 1.0, default_wp_sched['WeekdayScheduleFractions'], default_wp_sched['WeekendScheduleFractions'], default_wp_sched['MonthlyScheduleMultipliers'])
   end
 
   def test_fuel_loads
@@ -4387,9 +4609,12 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_fuel_load_values(default_hpxml_bldg, HPXML::FuelLoadTypeGrill, 33, 0.0, 0.0, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsGrill].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsGrill].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsGrill].name]['MonthlyScheduleMultipliers'])
-    _test_default_fuel_load_values(default_hpxml_bldg, HPXML::FuelLoadTypeLighting, 20, 0.0, 0.0, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsLighting].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsLighting].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsLighting].name]['MonthlyScheduleMultipliers'])
-    _test_default_fuel_load_values(default_hpxml_bldg, HPXML::FuelLoadTypeFireplace, 67, 0.5, 0.1, 1.0, @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsFireplace].name]['WeekdayScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsFireplace].name]['WeekendScheduleFractions'], @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsFireplace].name]['MonthlyScheduleMultipliers'])
+    default_gr_sched = @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsGrill].name]
+    default_li_sched = @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsLighting].name]
+    default_fp_sched = @default_schedules_csv_data[SchedulesFile::Columns[:FuelLoadsFireplace].name]
+    _test_default_fuel_load_values(default_hpxml_bldg, HPXML::FuelLoadTypeGrill, 33, 0.0, 0.0, 1.0, default_gr_sched['WeekdayScheduleFractions'], default_gr_sched['WeekendScheduleFractions'], default_gr_sched['MonthlyScheduleMultipliers'])
+    _test_default_fuel_load_values(default_hpxml_bldg, HPXML::FuelLoadTypeLighting, 20, 0.0, 0.0, 1.0, default_li_sched['WeekdayScheduleFractions'], default_li_sched['WeekendScheduleFractions'], default_li_sched['MonthlyScheduleMultipliers'])
+    _test_default_fuel_load_values(default_hpxml_bldg, HPXML::FuelLoadTypeFireplace, 67, 0.5, 0.1, 1.0, default_fp_sched['WeekdayScheduleFractions'], default_fp_sched['WeekendScheduleFractions'], default_fp_sched['MonthlyScheduleMultipliers'])
   end
 
   def _test_measure()
@@ -5703,6 +5928,60 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
       assert_equal(lifetime_model, battery.lifetime_model)
     end
     assert_equal(round_trip_efficiency, battery.round_trip_efficiency)
+  end
+
+  def _test_default_vehicle_values(vehicle, ev_charger, battery_type, nominal_capacity_kwh, nominal_capacity_ah, usable_capacity_kwh,
+                                   usable_capacity_ah, miles_per_year, hours_per_week, fuel_economy_combined, fuel_economy_units,
+                                   fraction_charged_home, weekday_sch, weekend_sch, usage_multiplier, charging_level, charger_power,
+                                   location)
+    assert_equal(battery_type, HPXML::BatteryTypeLithiumIon)
+    if nominal_capacity_kwh.nil?
+      assert_nil(vehicle.nominal_capacity_kwh)
+    else
+      assert_equal(nominal_capacity_kwh, vehicle.nominal_capacity_kwh)
+    end
+    if nominal_capacity_ah.nil?
+      assert_nil(vehicle.nominal_capacity_ah)
+    else
+      assert_equal(nominal_capacity_ah, vehicle.nominal_capacity_ah)
+    end
+    if usable_capacity_kwh.nil?
+      assert_nil(vehicle.usable_capacity_kwh)
+    else
+      assert_equal(usable_capacity_kwh, vehicle.usable_capacity_kwh)
+    end
+    if usable_capacity_ah.nil?
+      assert_nil(vehicle.usable_capacity_ah)
+    else
+      assert_equal(usable_capacity_ah, vehicle.usable_capacity_ah)
+    end
+    assert_in_epsilon(miles_per_year, vehicle.miles_per_year, 0.01)
+    assert_in_epsilon(hours_per_week, vehicle.hours_per_week, 0.01)
+    assert_equal(fuel_economy_combined, vehicle.fuel_economy_combined, 0.01)
+    assert_equal(fuel_economy_units, vehicle.fuel_economy_units)
+    assert_equal(fraction_charged_home, vehicle.fraction_charged_home)
+    if weekday_sch.nil?
+      assert_nil(vehicle.ev_weekday_fractions)
+    else
+      assert_equal(weekday_sch, vehicle.ev_weekday_fractions)
+    end
+    if weekend_sch.nil?
+      assert_nil(vehicle.ev_weekend_fractions)
+    else
+      assert_equal(weekend_sch, vehicle.ev_weekend_fractions)
+    end
+    if usage_multiplier.nil?
+      assert_nil(vehicle.ev_monthly_multipliers)
+    else
+      assert_equal(usage_multiplier, vehicle.ev_monthly_multipliers)
+    end
+    if charging_level.nil?
+      assert_nil(ev_charger.charging_level)
+    else
+      assert_equal(charging_level, ev_charger.charging_level)
+    end
+    assert_equal(charger_power, ev_charger.charging_power)
+    assert_equal(location, ev_charger.location)
   end
 
   def _test_default_generator_values(hpxml_bldg, is_shared_system)

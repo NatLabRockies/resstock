@@ -23,7 +23,7 @@ module HotWaterAndAppliances
     nbeds = hpxml_bldg.building_construction.number_of_bedrooms
     n_occ = hpxml_bldg.building_occupancy.number_of_residents
     unit_type = hpxml_bldg.building_construction.residential_facility_type
-    eri_version = hpxml_header.eri_calculation_version
+    eri_version = hpxml_header.eri_calculation_versions[0]
     unit_multiplier = hpxml_bldg.building_construction.number_of_units
 
     # Get appliances, etc.

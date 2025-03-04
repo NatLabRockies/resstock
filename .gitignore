@@ -9,6 +9,7 @@
 /national_baseline
 /testing_baseline
 /sdr_upgrades_tmy3*
+/test_upgrade_name
 /resources/buildstock.csv
 /project_*/**/*.csv
 !/project_*/resources/source_report.csv

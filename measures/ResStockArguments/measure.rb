@@ -21,7 +21,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
   # human readable description of modeling approach
   def modeler_description
-    return 'Passes in all arguments from the options lookup, processes them, and then registers values to the runner to be used by other measures.'
+    return 'Passes in all ResStockArguments arguments from the options lookup, processes them, and then registers values to the runner to be used by other measures.'
   end
 
   # define the arguments that the user will input
@@ -235,12 +235,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(0.0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_vehicle_2_usage_multiplier', true)
-    arg.setDisplayName('Plug Loads: Vehicle Usage Multiplier 2')
-    arg.setDescription('Additional multiplier on the electric vehicle energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(0.0)
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_control_heating_weekday_setpoint_temp', true)
     arg.setDisplayName('Heating Setpoint: Weekday Temperature')
     arg.setDescription('Specify the weekday heating setpoint temperature.')
@@ -404,6 +398,18 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Whether the heat pump uses the existing system as backup.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_average_mph', false)
+    arg.setDisplayName('Electric Vehicle: Average Miles Per Hour')
+    arg.setDescription('The average miles/hour driven by the vehicle.')
+    arg.setUnits('miles/hour')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_efficiency_percent_increase', false)
+    arg.setDisplayName('Electric Vehicle: Efficiency Improvement')
+    arg.setDescription('The increase (fraction) in efficiency of the electric vehicle.')
+    arg.setUnits('Frac')
+    args << arg
+
     return args
   end
 
@@ -496,7 +502,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     args[:misc_plug_loads_television_usage_multiplier] = args[:misc_plug_loads_television_usage_multiplier] * args[:misc_plug_loads_television_2_usage_multiplier]
     args[:misc_plug_loads_other_usage_multiplier] = args[:misc_plug_loads_other_usage_multiplier] * args[:misc_plug_loads_other_2_usage_multiplier]
     args[:misc_plug_loads_well_pump_usage_multiplier] = args[:misc_plug_loads_well_pump_usage_multiplier] * args[:misc_plug_loads_well_pump_2_usage_multiplier]
-    args[:misc_plug_loads_vehicle_usage_multiplier] = args[:misc_plug_loads_vehicle_usage_multiplier] * args[:misc_plug_loads_vehicle_2_usage_multiplier]
+    args[:misc_plug_loads_vehicle_present] = false
 
     # PV
     if args[:pv_system_present]
@@ -847,6 +853,17 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       rim_joist_assembly_r = assembly_exterior_r + assembly_interior_r
     end
     args[:rim_joist_assembly_r] = rim_joist_assembly_r
+
+    # Vehicle arguments
+    if (not args[:vehicle_miles_driven_per_year].nil?) && (not args[:ev_average_mph].nil?)
+      hours_per_year = args[:vehicle_miles_driven_per_year] / args[:ev_average_mph]
+      args[:vehicle_hours_driven_per_week] = (hours_per_year / UnitConversions.convert(1, 'yr', 'day')) * 7
+    end
+
+    if not args[:ev_efficiency_percent_increase].nil?
+      # Adjust efficiency (in kWh/mile) to reflect a percentage improvement in efficiency.
+      args[:vehicle_fuel_economy_combined] = args[:vehicle_fuel_economy_combined] / (1 + args[:ev_efficiency_percent_increase])
+    end
 
     args.each do |arg_name, arg_value|
       if args_to_delete.include?(arg_name) || (arg_value == Constants::Auto)

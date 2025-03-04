@@ -59,7 +59,8 @@
         "timeseries_timestamp_convention": "start",
         "add_timeseries_dst_column": false,
         "add_timeseries_utc_column": false,
-        "user_output_variables": ""
+        "user_output_variables": "",
+        "user_output_meters": ""
       },
       "measure_dir_name": "ReportSimulationOutput"
     },

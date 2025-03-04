@@ -385,6 +385,13 @@
             <Azimuth>180</Azimuth>
             <RValue>4.4</RValue>
           </Door>
+          <Door>
+            <SystemIdentifier id='Door2'/>
+            <AttachedToWall idref='Wall1'/>
+            <Area>70.0</Area>
+            <Azimuth>180</Azimuth>
+            <RValue>4.4</RValue>
+          </Door>
         </Doors>
       </Enclosure>
       <Systems>

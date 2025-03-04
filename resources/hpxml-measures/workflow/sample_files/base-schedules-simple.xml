@@ -450,6 +450,21 @@
             <WaterFixturesMonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</WaterFixturesMonthlyScheduleMultipliers>
           </extension>
         </WaterHeating>
+        <Vehicles>
+          <Vehicle>
+            <SystemIdentifier id='Vehicle1'/>
+            <VehicleType>
+              <BatteryElectricVehicle>
+                <ConnectedCharger idref='EVCharger1'/>
+              </BatteryElectricVehicle>
+            </VehicleType>
+          </Vehicle>
+        </Vehicles>
+        <ElectricVehicleChargers>
+          <ElectricVehicleCharger>
+            <SystemIdentifier id='EVCharger1'/>
+          </ElectricVehicleCharger>
+        </ElectricVehicleChargers>
       </Systems>
       <Appliances>
         <ClothesWasher>

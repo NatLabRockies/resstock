@@ -1,0 +1,4 @@
+Option=No	Option=Yes	sampling_probability
+0.5	0.5	1
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The unit has an outlet within 20 feet of vehicle parking.

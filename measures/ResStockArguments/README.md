@@ -6,7 +6,7 @@
 ## Description
 Measure that pre-processes the arguments passed to the BuildResidentialHPXML and BuildResidentialScheduleFile measures.
 
-Passes in all arguments from the options lookup, processes them, and then registers values to the runner to be used by other measures.
+Passes in all ResStockArguments arguments from the options lookup, processes them, and then registers values to the runner to be used by other measures.
 
 ## Arguments
 
@@ -3863,6 +3863,111 @@ The round trip efficiency of the lithium ion battery. If not provided, the OS-HP
 
 <br/>
 
+**Vehicle: Type**
+
+The type of vehicle present at the home.
+
+- **Name:** ``vehicle_type``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**Vehicle: EV Battery Usable Capacity**
+
+The usable capacity of the vehicle battery, only applies to electric vehicles. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'>HPXML Vehicles</a>) is used.
+
+- **Name:** ``vehicle_battery_usable_capacity``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**Vehicle: Combined Fuel Economy Units**
+
+The combined fuel economy units of the vehicle. Only 'kWh/mile', 'mile/kWh', or 'mpge' are allow for electric vehicles. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'>HPXML Vehicles</a>) is used.
+
+- **Name:** ``vehicle_fuel_economy_units``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `auto`, `kWh/mile`, `mile/kWh`, `mpge`, `mpg`
+
+<br/>
+
+**Vehicle: Combined Fuel Economy**
+
+The combined fuel economy of the vehicle. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'>HPXML Vehicles</a>) is used.
+
+- **Name:** ``vehicle_fuel_economy_combined``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**Vehicle: Miles Driven Per Year**
+
+The annual miles the vehicle is driven. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'>HPXML Vehicles</a>) is used.
+
+- **Name:** ``vehicle_miles_driven_per_year``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**Vehicle: Fraction Charged at Home**
+
+The fraction of charging energy provided by the at-home charger to the vehicle, only applies to electric vehicles. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'>HPXML Vehicles</a>) is used.
+
+- **Name:** ``vehicle_fraction_charged_home``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Vehicle Charger: Present**
+
+Whether there is an electric vehicle charger present.
+
+- **Name:** ``ev_charger_present``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `auto`, `true`, `false`
+
+<br/>
+
+**Electric Vehicle Charger: Rated Charging Power**
+
+The rated power output of the EV charger. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'>HPXML Electric Vehicle Chargers</a>) is used.
+
+- **Name:** ``ev_charger_power``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Vehicle Charger: Location**
+
+The space type for the EV charger. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'>HPXML Electric Vehicle Chargers</a>) is used.
+
+- **Name:** ``ev_charger_location``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `auto`, `garage`, `outside`
+
+<br/>
+
 **Lighting: Present**
 
 Whether there is lighting energy use.
@@ -4816,39 +4921,6 @@ Multiplier on the well pump energy usage that can reflect, e.g., high/low usage 
 
 <br/>
 
-**Misc Plug Loads: Vehicle Present**
-
-Whether there is an electric vehicle.
-
-- **Name:** ``misc_plug_loads_vehicle_present``
-- **Type:** ``Boolean``
-
-- **Required:** ``true``
-
-<br/>
-
-**Misc Plug Loads: Vehicle Annual kWh**
-
-The annual energy consumption of the electric vehicle plug loads. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads'>HPXML Plug Loads</a>) is used.
-
-- **Name:** ``misc_plug_loads_vehicle_annual_kwh``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**Misc Plug Loads: Vehicle Usage Multiplier**
-
-Multiplier on the electric vehicle energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads'>HPXML Plug Loads</a>) is used.
-
-- **Name:** ``misc_plug_loads_vehicle_usage_multiplier``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
 **Misc Fuel Loads: Grill Present**
 
 Whether there is a fuel loads grill.
@@ -5453,17 +5525,6 @@ Additional multiplier on the well pump energy usage that can reflect, e.g., high
 
 <br/>
 
-**Plug Loads: Vehicle Usage Multiplier 2**
-
-Additional multiplier on the electric vehicle energy usage that can reflect, e.g., high/low usage occupants.
-
-- **Name:** ``misc_plug_loads_vehicle_2_usage_multiplier``
-- **Type:** ``Double``
-
-- **Required:** ``true``
-
-<br/>
-
 **Heating Setpoint: Weekday Temperature**
 
 Specify the weekday heating setpoint temperature.
@@ -5777,6 +5838,32 @@ Whether the heat pump uses the existing system as backup.
 
 - **Name:** ``heat_pump_backup_use_existing_system``
 - **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Vehicle: Average Miles Per Hour**
+
+The average miles/hour driven by the vehicle.
+
+- **Name:** ``ev_average_mph``
+- **Type:** ``Double``
+
+- **Units:** ``miles/hour``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Vehicle: Efficiency Improvement**
+
+The increase (fraction) in efficiency of the electric vehicle.
+
+- **Name:** ``ev_efficiency_percent_increase``
+- **Type:** ``Double``
+
+- **Units:** ``Frac``
 
 - **Required:** ``false``
 

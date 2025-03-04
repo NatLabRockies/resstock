@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<measure>
+  <schema_version>3.1</schema_version>
+  <name>res_stock_arguments_post_hpxml</name>
+  <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
+  <version_id>6566f1b1-977e-47da-9d62-b4cd3fae0553</version_id>
+  <version_modified>2025-02-04T21:19:03Z</version_modified>
+  <xml_checksum>2C38F48B</xml_checksum>
+  <class_name>ResStockArgumentsPostHPXML</class_name>
+  <display_name>ResStock Arguments Post-HPXML</display_name>
+  <description>Measure that post-processes the output of the BuildResidentialHPXML and BuildResidentialScheduleFile measures.</description>
+  <modeler_description>Passes in all ResStockArgumentsPostHPXML arguments from the options lookup, processes them, and then modifies output of other measures.</modeler_description>
+  <arguments>
+    <argument>
+      <name>hpxml_path</name>
+      <display_name>HPXML File Path</display_name>
+      <description>Absolute/relative path of the HPXML file.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>building_id</name>
+      <display_name>Building Unit ID</display_name>
+      <description>The building unit number (between 1 and the number of samples).</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>output_csv_path</name>
+      <display_name>Schedules: Output CSV Path</display_name>
+      <description>Absolute/relative path of the csv file containing occupancy schedules. Relative paths are relative to the HPXML output path.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+  </arguments>
+  <outputs />
+  <provenances />
+  <tags>
+    <tag>Whole Building.Space Types</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>3.3.0</identifier>
+        <min_compatible>3.3.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>A81E9245</checksum>
+    </file>
+    <file>
+      <filename>test_resstock_arguments_post_hpxml.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>31C4A0A8</checksum>
+    </file>
+  </files>
+</measure>

@@ -135,8 +135,10 @@ class WorkflowOtherTest < Minitest::Test
         command += ' --hourly ALL'
         command += " --hourly 'Zone People Occupant Count'"
         command += " --hourly 'Zone People Total Heating Energy'"
+        command += " --hourly 'MainsWater:Facility'"
       end
       command += " --hourly 'Foobar Variable'" # Test invalid output variable request
+      command += " --hourly 'Foobar:Meter'" # Test invalid output variable request
       system(command, err: File::NULL)
 
       # Check for output files
@@ -151,22 +153,34 @@ class WorkflowOtherTest < Minitest::Test
         assert_equal(1, timeseries_rows[0].count { |r| r == 'Time' })
         assert_equal(1, timeseries_rows[0].count { |r| r == 'Zone People Occupant Count: Conditioned Space' })
         assert_equal(1, timeseries_rows[0].count { |r| r == 'Zone People Total Heating Energy: Conditioned Space' })
+        assert_equal(1, timeseries_rows[0].count { |r| r == 'MainsWater:Facility' })
       else
         refute(File.exist? timeseries_output_path)
       end
 
-      # Check run.log has warning about missing Foobar Variable
+      # Check run.log has warning about missing Foobar Variable & Meter
       assert(File.exist? File.join(File.dirname(xml), 'run', 'run.log'))
       log_lines = File.readlines(File.join(File.dirname(xml), 'run', 'run.log')).map(&:strip)
-      assert(log_lines.include? "Warning: Request for output variable 'Foobar Variable' returned no key values.")
+      assert(log_lines.include? "Warning: Request for output variable 'Foobar Variable' returned no results.")
+      assert(log_lines.include? "Warning: Request for output meter 'Foobar:Meter' returned no results.")
     end
+  end
+
+  def test_run_simulation_timeseries_outputs_comma
+    # Check that the simulation produces timeseries with requested outputs
+    rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
+    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base.xml')
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\" --hourly 'Zone People Occupant Count,MainsWater:Facility'"
+    success = system(command, err: File::NULL)
+
+    refute(success)
   end
 
   def test_run_simulation_mixed_timeseries_frequencies
     # Check that we can correctly skip the EnergyPlus simulation and reporting measures
     rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
     xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base.xml')
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\" --timestep weather --hourly enduses --daily temperatures --monthly ALL --monthly 'Zone People Total Heating Energy'"
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\" --timestep weather --hourly enduses --daily temperatures --monthly ALL --monthly 'Zone People Total Heating Energy' --daily 'MainsWater:Facility'"
     system(command, err: File::NULL)
 
     # Check for output files
@@ -180,7 +194,7 @@ class WorkflowOtherTest < Minitest::Test
     # Check timeseries columns exist
     { 'timestep' => ['Weather:'],
       'hourly' => ['End Use:'],
-      'daily' => ['Temperature:'],
+      'daily' => ['Temperature:', 'MainsWater:Facility'],
       'monthly' => ['End Use:', 'Fuel Use:', 'Zone People Total Heating Energy:'] }.each do |freq, col_names|
       timeseries_rows = CSV.read(File.join(File.dirname(xml), 'run', "results_timeseries_#{freq}.csv"))
       assert_equal(1, timeseries_rows[0].count { |r| r == 'Time' })

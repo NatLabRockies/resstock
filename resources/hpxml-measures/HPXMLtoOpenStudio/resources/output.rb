@@ -2,6 +2,10 @@
 
 # Collection of methods related to output reporting or writing output files.
 module Outputs
+  MeterCustomElectricityTotal = 'Electricity:Total'
+  MeterCustomElectricityNet = 'Electricity:Net'
+  MeterCustomElectricityPV = 'Electricity:PV'
+
   # Add EMS programs for output reporting. In the case where a whole SFA/MF building is
   # being simulated, these programs are added to the whole building (merged) model, not
   # the individual dwelling unit models.
@@ -1186,6 +1190,81 @@ module Outputs
       elsif output_format == 'msgpack'
         require 'msgpack'
         File.open(output_file_path, "#{mode}b") { |json| h.to_msgpack(json) }
+      end
+    end
+  end
+
+  # Creates custom output meters that are used across reporting measures.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @return [nil]
+  def self.create_custom_meters(model)
+    # Create custom meters:
+    # - Total Electricity (Electricity:Facility plus EV charging, batteries, generators)
+    # - Net Electricity (above plus PV)
+    # - PV Electricity
+
+    total_key_vars = []
+    net_key_vars = []
+    pv_key_vars = []
+    model.getElectricLoadCenterDistributions.each do |elcd|
+      # Batteries & EV charging output variables
+      if elcd.electricalStorage.is_initialized
+        elcs = elcd.electricalStorage.get
+        if elcs.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeVehicle
+          net_key_vars << [elcs.name.to_s.upcase, 'Electric Storage Production Decrement Energy']
+          total_key_vars << net_key_vars[-1]
+        elsif elcs.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeBattery
+          net_key_vars << [elcs.name.to_s.upcase, 'Electric Storage Production Decrement Energy']
+          total_key_vars << net_key_vars[-1]
+          net_key_vars << [elcs.name.to_s.upcase, 'Electric Storage Discharge Energy']
+          total_key_vars << net_key_vars[-1]
+        end
+      end
+
+      # PV output meters
+      elcd.generators.each do |generator|
+        next unless generator.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypePhotovoltaics
+
+        net_key_vars << ['', 'Photovoltaic:ElectricityProduced']
+        pv_key_vars << net_key_vars[-1]
+        net_key_vars << ['', 'PowerConversion:ElectricityProduced']
+        pv_key_vars << net_key_vars[-1]
+      end
+
+      # Generator output meter
+      elcd.generators.each do |generator|
+        next unless generator.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeGenerator
+
+        net_key_vars << ['', 'Cogeneration:ElectricityProduced']
+        total_key_vars << net_key_vars[-1]
+      end
+    end
+
+    # Create Total/Net meters
+    { MeterCustomElectricityTotal => total_key_vars,
+      MeterCustomElectricityNet => net_key_vars }.each do |meter_name, key_vars|
+      if key_vars.empty?
+        # Avoid OpenStudio warnings if nothing to decrement
+        meter = OpenStudio::Model::MeterCustom.new(model)
+        key_vars << ['', 'Electricity:Facility']
+      else
+        meter = OpenStudio::Model::MeterCustomDecrement.new(model, 'Electricity:Facility')
+      end
+      meter.setName(meter_name)
+      meter.setFuelType(EPlus::FuelTypeElectricity)
+      key_vars.uniq.each do |key_var|
+        meter.addKeyVarGroup(key_var[0], key_var[1])
+      end
+    end
+
+    # Create PV meter
+    if not pv_key_vars.empty?
+      meter = OpenStudio::Model::MeterCustom.new(model)
+      meter.setName(MeterCustomElectricityPV)
+      meter.setFuelType(EPlus::FuelTypeElectricity)
+      pv_key_vars.uniq.each do |key_var|
+        meter.addKeyVarGroup(key_var[0], key_var[1])
       end
     end
   end

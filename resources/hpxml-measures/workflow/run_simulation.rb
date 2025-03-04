@@ -18,7 +18,7 @@ $timeseries_types = ['ALL', 'total', 'fuels', 'enduses', 'systemuses', 'emission
 def run_workflow(basedir, rundir, hpxml, debug, skip_validation, add_comp_loads,
                  output_format, building_id, ep_input_format, stochastic_schedules,
                  hourly_outputs, daily_outputs, monthly_outputs, timestep_outputs,
-                 skip_simulation)
+                 skip_simulation, master_seed)
 
   measures_dir = File.join(basedir, '..')
   measures = {}
@@ -32,6 +32,7 @@ def run_workflow(basedir, rundir, hpxml, debug, skip_validation, add_comp_loads,
     args['output_csv_path'] = File.join(rundir, 'stochastic.csv')
     args['debug'] = debug
     args['building_id'] = building_id
+    args['schedules_random_seed'] = master_seed
     measures[measure_subdir] = [args]
   end
 
@@ -56,6 +57,11 @@ def run_workflow(basedir, rundir, hpxml, debug, skip_validation, add_comp_loads,
       'monthly' => monthly_outputs,
       'timestep' => timestep_outputs }.each do |timeseries_output_freq, timeseries_outputs|
       next if (timeseries_outputs.empty? && timeseries_output_freq != 'none')
+
+      comma_output = timeseries_outputs.find { |o| o.include? ',' }
+      if not comma_output.nil?
+        fail "Timeseries output request '#{comma_output}' cannot include a comma."
+      end
 
       if timeseries_outputs.include? 'ALL'
         # Replace 'ALL' with all individual timeseries types
@@ -85,8 +91,11 @@ def run_workflow(basedir, rundir, hpxml, debug, skip_validation, add_comp_loads,
       args['include_timeseries_airflows'] = timeseries_outputs.include? 'airflows'
       args['include_timeseries_weather'] = timeseries_outputs.include? 'weather'
       args['include_timeseries_resilience'] = timeseries_outputs.include? 'resilience'
-      user_output_variables = timeseries_outputs - $timeseries_types
-      args['user_output_variables'] = user_output_variables.join(', ') unless user_output_variables.empty?
+      remaining_outputs = timeseries_outputs - $timeseries_types
+      output_variables = remaining_outputs.select { |o| !o.include?(':') }
+      output_meters = remaining_outputs.select { |o| o.include?(':') }
+      args['user_output_variables'] = output_variables.join(', ') unless output_variables.empty?
+      args['user_output_meters'] = output_meters.join(', ') unless output_meters.empty?
       if n_timeseries_freqs > 1
         # Need to use different timeseries filenames
         args['timeseries_output_file_name'] = "results_timeseries_#{timeseries_output_freq}.#{output_format}"
@@ -125,22 +134,22 @@ OptionParser.new do |opts|
   end
 
   options[:hourly_outputs] = []
-  opts.on('--hourly NAME', 'Request hourly output category* or EnergyPlus output variable; can be called multiple times') do |t|
+  opts.on('--hourly NAME', 'Request hourly output category* or EnergyPlus output variable/meter; can be called multiple times') do |t|
     options[:hourly_outputs] << t
   end
 
   options[:daily_outputs] = []
-  opts.on('--daily NAME', 'Request daily output category* or EnergyPlus output variable; can be called multiple times') do |t|
+  opts.on('--daily NAME', 'Request daily output category* or EnergyPlus output variable/meter; can be called multiple times') do |t|
     options[:daily_outputs] << t
   end
 
   options[:monthly_outputs] = []
-  opts.on('--monthly NAME', 'Request monthly output category* or EnergyPlus output variable; can be called multiple times') do |t|
+  opts.on('--monthly NAME', 'Request monthly output category* or EnergyPlus output variable/meter; can be called multiple times') do |t|
     options[:monthly_outputs] << t
   end
 
   options[:timestep_outputs] = []
-  opts.on('--timestep NAME', 'Request timestep output category* or EnergyPlus output variable; can be called multiple times') do |t|
+  opts.on('--timestep NAME', 'Request timestep output category* or EnergyPlus output variable/meter; can be called multiple times') do |t|
     options[:timestep_outputs] << t
   end
 
@@ -162,6 +171,11 @@ OptionParser.new do |opts|
   options[:stochastic_schedules] = false
   opts.on('--add-stochastic-schedules', 'Add detailed stochastic occupancy schedules') do |_t|
     options[:stochastic_schedules] = true
+  end
+
+  options[:master_seed] = nil
+  opts.on('--master-seed SEED', Integer, 'Master seed for stochastic occupancy schedule random number generator') do |t|
+    options[:master_seed] = t
   end
 
   options[:ep_input_format] = 'idf'
@@ -228,7 +242,7 @@ else
   success = run_workflow(basedir, rundir, options[:hpxml], options[:debug], options[:skip_validation], options[:add_comp_loads],
                          options[:output_format], options[:building_id], options[:ep_input_format], options[:stochastic_schedules],
                          options[:hourly_outputs], options[:daily_outputs], options[:monthly_outputs], options[:timestep_outputs],
-                         options[:skip_simulation])
+                         options[:skip_simulation], options[:master_seed])
 
   if not success
     exit! 1

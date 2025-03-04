@@ -1,0 +1,4 @@
+Option=0-19%	Option=20-39%	Option=40-59%	Option=60-79%	Option=80-99%	Option=100%	sampling_probability
+0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	1
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The percentage a household would or do charge their electric vehicle at home.

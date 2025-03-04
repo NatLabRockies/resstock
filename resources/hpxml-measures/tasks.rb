@@ -77,7 +77,7 @@ def create_hpxmls
       build_residential_hpxml['existing_hpxml_path'] = hpxml_path if i > 1
       if hpxml_path.include?('base-bldgtype-mf-whole-building.xml')
         suffix = "_#{i}" if i > 1
-        build_residential_hpxml['schedules_filepaths'] = "../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic#{suffix}.csv"
+        build_residential_hpxml['schedules_filepaths'] = "../../HPXMLtoOpenStudio/resources/schedule_files/#{stochastic_sched_basename}-mf-unit#{suffix}.csv"
         build_residential_hpxml['geometry_foundation_type'] = (i <= 2 ? 'UnconditionedBasement' : 'AboveApartment')
         build_residential_hpxml['geometry_attic_type'] = (i >= 5 ? 'VentedAttic' : 'BelowApartment')
         build_residential_hpxml['geometry_unit_height_above_grade'] = { 1 => 0.0, 2 => 0.0, 3 => 10.0, 4 => 10.0, 5 => 20.0, 6 => 20.0 }[i]
@@ -1471,10 +1471,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
         window.overhangs_distance_to_bottom_of_window = 0.0
       end
     end
-    if ['base-enclosure-2stories-garage.xml',
-        'base-enclosure-garage.xml',
-        'base-zones-spaces.xml',
-        'base-zones-spaces-multiple.xml'].include? hpxml_file
+    if hpxml_bldg.has_location(HPXML::LocationGarage)
       grg_wall = hpxml_bldg.walls.select { |w|
                    w.interior_adjacent_to == HPXML::LocationGarage &&
                      w.exterior_adjacent_to == HPXML::LocationOutside
@@ -2345,6 +2342,19 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
       hpxml_bldg.batteries[0].usable_capacity_ah = hpxml_bldg.batteries[0].nominal_capacity_ah * default_values[:usable_fraction]
       hpxml_bldg.batteries[0].nominal_capacity_kwh = nil
       hpxml_bldg.batteries[0].usable_capacity_kwh = nil
+    end
+
+    # ------------- #
+    # HPXML Vehicle #
+    # ------------- #
+
+    if ['base-vehicle-multiple.xml'].include? hpxml_file
+      hpxml_bldg.vehicles.add(id: "Vehicle#{hpxml_bldg.vehicles.size + 1}",
+                              vehicle_type: HPXML::VehicleTypeHybrid,
+                              fuel_economy_units: HPXML::UnitsMPG,
+                              fuel_economy_combined: 44.0,
+                              miles_per_year: 15000.0,
+                              hours_per_week: 10.0)
     end
 
     # ---------------- #

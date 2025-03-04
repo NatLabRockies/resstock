@@ -51,6 +51,12 @@
           <ConditionedFloorArea>2700.0</ConditionedFloorArea>
           <ConditionedBuildingVolume>21600.0</ConditionedBuildingVolume>
         </BuildingConstruction>
+        <extension>
+          <AdditionalProperties>
+            <HeatPump>Bosch Climate 5000</HeatPump>
+            <HeatPumpAHRICert>203991186</HeatPumpAHRICert>
+          </AdditionalProperties>
+        </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
         <ClimateZoneIECC>
@@ -364,7 +370,7 @@
                   <CapacityDescription>maximum</CapacityDescription>
                   <Efficiency>
                     <Units>COP</Units>
-                    <Value>3.27</Value>
+                    <Value>5.52</Value>
                   </Efficiency>
                 </PerformanceDataPoint>
               </CoolingDetailedPerformanceData>

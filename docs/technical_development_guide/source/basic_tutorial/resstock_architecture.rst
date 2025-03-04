@@ -65,6 +65,7 @@ The BuildExistingModel and ApplyUpgrade meta measures call the following model m
   1     ResStockArguments             Model              No                      ResStock
   2     BuildResidentialHPXML         Model              No                      OS-HPXML
   3     BuildResidentialScheduleFile  Model              No                      OS-HPXML
+  4     ResStockArgumentsPostHPXML    Model              No                      ResStock
   ===== ============================= ================== ========= ============= ==========================
 
 .. _model-measures:
@@ -114,6 +115,16 @@ They contribute to the generation of the model.
        :end-before: <
 
     .. include:: ../../../../resources/hpxml-measures/BuildResidentialScheduleFile/measure.xml
+       :start-after: <modeler_description>
+       :end-before: <
+
+**ResStockArgumentsPostHPXML**
+
+    .. include:: ../../../../measures/ResStockArgumentsPostHPXML/measure.xml
+       :start-after: <description>
+       :end-before: <
+
+    .. include:: ../../../../measures/ResStockArgumentsPostHPXML/measure.xml
        :start-after: <modeler_description>
        :end-before: <
 

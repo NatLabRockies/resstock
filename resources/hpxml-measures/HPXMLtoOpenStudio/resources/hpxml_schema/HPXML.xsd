@@ -1751,6 +1751,7 @@
 										</xs:annotation>
 									</xs:element>
 									<xs:element minOccurs="0" name="HPWHOperatingMode" type="HPWHOperatingMode"/>
+									<xs:element minOccurs="0" name="HPWHVoltage" type="HPWHVoltage"/>
 									<xs:element minOccurs="0" name="HPWHDucting">
 										<xs:complexType>
 											<xs:sequence>
@@ -1845,6 +1846,7 @@
 										</xs:annotation>
 									</xs:element>
 									<xs:element minOccurs="0" name="HasMixingValve" type="HPXMLBoolean"/>
+									<xs:element minOccurs="0" name="MixingValueSetpoint" type="TemperatureGreaterThanZero"/>
 									<xs:element minOccurs="0" name="UsesDesuperheater" type="HPXMLBoolean">
 										<xs:annotation>
 											<xs:documentation>Indicates whether this water heater uses a desuperheater. The attached heat pump or air conditioner can be referenced in the
@@ -2262,6 +2264,172 @@
 					<xs:attribute name="dataSource" type="DataSource"/>
 				</xs:complexType>
 			</xs:element>
+			<xs:element minOccurs="0" name="Vehicles">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" name="Vehicle">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:group ref="SystemInfo"/>
+									<xs:element minOccurs="0" name="Manufacturer" type="Manufacturer"/>
+									<xs:element minOccurs="0" name="Model" type="Model"/>
+									<xs:element minOccurs="0" name="ModelTrim" type="Model"/>
+									<xs:element minOccurs="0" name="ModelYear" type="Year"/>
+									<xs:element minOccurs="0" name="VIN" type="HPXMLString"/>
+									<xs:element minOccurs="0" name="VehicleClass" type="VehicleClassType">
+										<xs:annotation>
+											<xs:documentation>The class as defined by the U.S. Federal Highway Administration.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element minOccurs="0" name="WeightRating" type="GrossVehicleWeightRating">
+										<xs:annotation>
+											<xs:documentation>The gross vehicle weight rating (GVWR) as defined by the U.S. Federal Highway Administration.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element minOccurs="0" name="VehicleWeight" type="HPXMLDoubleGreaterThanZero">
+										<xs:annotation>
+											<xs:documentation>[lbs] The weight of the vehicle.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element minOccurs="0" name="Count" type="IntegerGreaterThanZero">
+										<xs:annotation>
+											<xs:documentation>Number of similar vehicles.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element minOccurs="0" name="VehicleType">
+										<xs:complexType>
+											<xs:choice>
+												<xs:element minOccurs="0" name="BatteryElectricVehicle">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element minOccurs="0" name="Battery" type="VehicleBattery"/>
+															<xs:element minOccurs="0" name="FractionChargedLocation" maxOccurs="unbounded">
+																<xs:annotation>
+																	<xs:documentation>The percentage of charging energy provided at different locations.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element minOccurs="0" name="Location" type="VehicleChargingLocation"/>
+																		<xs:element minOccurs="0" name="Percentage" type="Fraction">
+																			<xs:annotation>
+																				<xs:documentation>Percentage as a fraction (50% = 0.5)</xs:documentation>
+																			</xs:annotation>
+																		</xs:element>
+																	</xs:sequence>
+																	<xs:attribute name="dataSource" type="DataSource"/>
+																</xs:complexType>
+															</xs:element>
+															<xs:element minOccurs="0" name="ConnectedCharger" type="LocalReference"/>
+															<xs:element ref="extension" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element minOccurs="0" name="PlugInHybridElectricVehicle">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element minOccurs="0" name="Battery" type="VehicleBattery"/>
+															<xs:element minOccurs="0" name="FractionChargedLocation" maxOccurs="unbounded">
+																<xs:annotation>
+																	<xs:documentation>The percentage of charging energy provided at different locations.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element minOccurs="0" name="Location" type="VehicleChargingLocation"/>
+																		<xs:element minOccurs="0" name="Percentage" type="Fraction">
+																			<xs:annotation>
+																				<xs:documentation>Percentage as a fraction (50% = 0.5)</xs:documentation>
+																			</xs:annotation>
+																		</xs:element>
+																	</xs:sequence>
+																	<xs:attribute name="dataSource" type="DataSource"/>
+																</xs:complexType>
+															</xs:element>
+															<xs:element minOccurs="0" name="ConnectedCharger" type="LocalReference"/>
+															<xs:element minOccurs="0" name="FuelType" type="VehicleFuelType">
+																<xs:annotation>
+																	<xs:documentation>Fuel type of the combustion engine</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element ref="extension" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element minOccurs="0" name="HybridElectricVehicle">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element minOccurs="0" name="Battery" type="VehicleBattery"/>
+															<xs:element minOccurs="0" name="FuelType" type="VehicleFuelType"/>
+															<xs:element ref="extension" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element minOccurs="0" name="InternalCombustionEngine">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element minOccurs="0" name="FuelType" type="VehicleFuelType"/>
+															<xs:element ref="extension" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element minOccurs="0" name="FuelCellElectricVehicle">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element minOccurs="0" name="FuelType" type="VehicleFuelType"/>
+															<xs:element ref="extension" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element minOccurs="0" name="Other">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element minOccurs="0" name="FuelType" type="VehicleFuelType"/>
+															<xs:element ref="extension" minOccurs="0"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:choice>
+										</xs:complexType>
+									</xs:element>
+									<xs:element minOccurs="0" name="PrimaryLocation" type="VehicleLocation"/>
+									<xs:element minOccurs="0" name="Mileage" type="HPXMLDoubleGreaterThanZero"/>
+									<xs:element minOccurs="0" name="MilesDrivenPerYear" type="HPXMLDoubleGreaterThanOrEqualToZero"/>
+									<xs:element minOccurs="0" name="HoursDrivenPerWeek" type="HPXMLDoubleGreaterThanOrEqualToZero"/>
+									<xs:element minOccurs="0" name="FuelEconomyCombined">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element minOccurs="0" name="Units" type="FuelEconomyUnits"/>
+												<xs:element minOccurs="0" name="Value" type="HPXMLDoubleGreaterThanZero"/>
+											</xs:sequence>
+											<xs:attribute name="dataSource" type="DataSource"/>
+										</xs:complexType>
+									</xs:element>
+									<xs:element minOccurs="0" name="FuelEconomyCity">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element minOccurs="0" name="Units" type="FuelEconomyUnits"/>
+												<xs:element minOccurs="0" name="Value" type="HPXMLDoubleGreaterThanZero"/>
+											</xs:sequence>
+											<xs:attribute name="dataSource" type="DataSource"/>
+										</xs:complexType>
+									</xs:element>
+									<xs:element minOccurs="0" name="FuelEconomyHighway">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element minOccurs="0" name="Units" type="FuelEconomyUnits"/>
+												<xs:element minOccurs="0" name="Value" type="HPXMLDoubleGreaterThanZero"/>
+											</xs:sequence>
+											<xs:attribute name="dataSource" type="DataSource"/>
+										</xs:complexType>
+									</xs:element>
+									<xs:element minOccurs="0" ref="extension"/>
+								</xs:sequence>
+								<xs:attribute name="dataSource" type="DataSource"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="dataSource" type="DataSource"/>
+				</xs:complexType>
+			</xs:element>
 			<xs:element minOccurs="0" name="ElectricVehicleChargers">
 				<xs:complexType>
 					<xs:sequence>
@@ -2273,6 +2441,7 @@
 									<xs:element minOccurs="0" name="Manufacturer" type="Manufacturer"/>
 									<xs:element maxOccurs="1" minOccurs="0" name="ModelNumber" type="Model"/>
 									<xs:element minOccurs="0" name="SerialNumber" type="HPXMLString"/>
+									<xs:element minOccurs="0" name="Location" type="EVChargerLocation"/>
 									<xs:element minOccurs="0" ref="ConnectedDevice"/>
 									<xs:element minOccurs="0" name="ChargingLevel" type="EVChargingLevel"/>
 									<xs:element minOccurs="0" name="ChargingConnector" type="EVChargingConnector"/>
@@ -6249,6 +6418,14 @@
 					<xs:attribute name="dataSource" type="DataSource"/>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="BowstringRoof">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" ref="extension"/>
+					</xs:sequence>
+					<xs:attribute name="dataSource" type="DataSource"/>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="Other">
 				<xs:complexType>
 					<xs:sequence>
@@ -6264,6 +6441,51 @@
 		<xs:sequence>
 			<xs:element name="UnitofMeasure" type="VentilationUnit" minOccurs="0"/>
 			<xs:element name="Value" type="BuildingAirLeakage" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="dataSource" type="DataSource"/>
+	</xs:complexType>
+	<xs:complexType name="VehicleBattery">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="BatteryType" type="BatteryType"/>
+			<xs:element minOccurs="0" name="NominalCapacity" type="BatteryCapacityType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The total energy available when the battery is discharged starting from 100% state of charge until it reaches the cut-off voltage.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="UsableCapacity" type="BatteryCapacityType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The stored energy that can actually be used. In most cases usable capacity is less than the nominal capacity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="CoolingStrategy" type="BatteryCoolingStrategy"/>
+			<xs:element minOccurs="0" name="RatedPowerOutput" type="Power">
+				<xs:annotation>
+					<xs:documentation>[W] The amount of power the battery typically generates under non-peak conditions.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="PeakPowerOutput" type="Power">
+				<xs:annotation>
+					<xs:documentation>[W] The peak power that the battery can generate for a short period of time.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="NominalVoltage" type="HPXMLDecimal">
+				<xs:annotation>
+					<xs:documentation>[V] The nominal voltage is the battery voltage when the state of charge is 0.5 (midway between being fully charged, and fully discharged)
+												with a 0.2C discharge current.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="RoundTripEfficiency" type="FractionExcludingZero">
+				<xs:annotation>
+					<xs:documentation>Not all the power that is used to charge the battery is available during discharge. Round trip efficiency is the ratio of the energy put
+												in to the energy retrieved from storage.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="MaximumChargingPower" type="Power">
+				<xs:annotation>
+					<xs:documentation>[W] The maximum charging power that can be accepted by the vehicle battery.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="extension" type="extensionType"/>
 		</xs:sequence>
 		<xs:attribute name="dataSource" type="DataSource"/>
 	</xs:complexType>
@@ -6456,6 +6678,18 @@
 	<xs:complexType name="HPXMLDoubleGreaterThanZero">
 		<xs:simpleContent>
 			<xs:extension base="HPXMLDoubleGreaterThanZero_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="HPXMLDoubleGreaterThanOrEqualToZero_simple">
+		<xs:restriction base="xs:double">
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="HPXMLDoubleGreaterThanOrEqualToZero">
+		<xs:simpleContent>
+			<xs:extension base="HPXMLDoubleGreaterThanOrEqualToZero_simple">
 				<xs:attribute name="dataSource" type="DataSource"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -10123,6 +10357,119 @@
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
+	<xs:simpleType name="VehicleChargingLocation_simple">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Home"/>
+			<xs:enumeration value="Work"/>
+			<xs:enumeration value="Public"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="VehicleChargingLocation">
+		<xs:simpleContent>
+			<xs:extension base="VehicleChargingLocation_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="VehicleLocation_simple">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="garage"/>
+			<xs:enumeration value="garage - conditioned"/>
+			<xs:enumeration value="garage - unconditioned"/>
+			<xs:enumeration value="outside"/>
+			<xs:enumeration value="outside - private"/>
+			<xs:enumeration value="outside - public"/>
+			<xs:enumeration value="unconditioned space"/>
+			<xs:enumeration value="other heated space"/>
+			<xs:enumeration value="other non-freezing space"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="VehicleLocation">
+		<xs:simpleContent>
+			<xs:extension base="VehicleLocation_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="VehicleFuelType_simple">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="gasoline"/>
+			<xs:enumeration value="diesel"/>
+			<xs:enumeration value="biodiesel"/>
+			<xs:enumeration value="ethanol"/>
+			<xs:enumeration value="hydrogen"/>
+			<xs:enumeration value="natural gas"/>
+			<xs:enumeration value="propane"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="VehicleFuelType">
+		<xs:simpleContent>
+			<xs:extension base="VehicleFuelType_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="VehicleClassType_simple">
+		<xs:annotation>
+			<xs:documentation>The class as defined by the U.S. Federal Highway Administration</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="motorcycle"/>
+			<xs:enumeration value="passenger car"/>
+			<xs:enumeration value="two-axle, four-tire single unit vehicle"/>
+			<xs:enumeration value="bus"/>
+			<xs:enumeration value="two-axle, six-tire, single-unit truck"/>
+			<xs:enumeration value="three-axle single-unit truck"/>
+			<xs:enumeration value="four or more axle single-unit truck"/>
+			<xs:enumeration value="four or fewer axle single-trailer truck"/>
+			<xs:enumeration value="five-axle single-trailer truck"/>
+			<xs:enumeration value="six or more axle single-trailer truck"/>
+			<xs:enumeration value="five or fewer axle multi-trailer truck"/>
+			<xs:enumeration value="six-axle multi-trailer truck"/>
+			<xs:enumeration value="seven or more axle multi-trailer truck"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="VehicleClassType">
+		<xs:simpleContent>
+			<xs:extension base="VehicleClassType_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="GrossVehicleWeightRating_simple">
+		<xs:annotation>
+			<xs:documentation>The class as defined by the U.S. Federal Highway Administration</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="light duty"/>
+			<xs:enumeration value="medium duty"/>
+			<xs:enumeration value="heavy duty"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="GrossVehicleWeightRating">
+		<xs:simpleContent>
+			<xs:extension base="GrossVehicleWeightRating_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="FuelEconomyUnits_simple">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="mpg"/>
+			<xs:enumeration value="mpge"/>
+			<xs:enumeration value="km/L"/>
+			<xs:enumeration value="mile/kWh"/>
+			<xs:enumeration value="kWh/mile"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="FuelEconomyUnits">
+		<xs:simpleContent>
+			<xs:extension base="FuelEconomyUnits_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
 	<xs:simpleType name="Current_simple">
 		<xs:restriction base="xs:decimal">
 			<xs:minInclusive value="0"/>
@@ -10956,6 +11303,22 @@
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
+	<xs:simpleType name="EVChargerLocation_simple">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="garage"/>
+			<xs:enumeration value="garage - conditioned"/>
+			<xs:enumeration value="garage - unconditioned"/>
+			<xs:enumeration value="outside"/>
+			<xs:enumeration value="unconditioned space"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="EVChargerLocation">
+		<xs:simpleContent>
+			<xs:extension base="EVChargerLocation_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
 	<xs:simpleType name="DiameterDimension_simple">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="inner"/>
@@ -11456,6 +11819,22 @@
 	<xs:complexType name="HPWHOperatingMode">
 		<xs:simpleContent>
 			<xs:extension base="HPWHOperatingModeType_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="HPWHVoltage_simple">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="240V"/>
+			<xs:pattern value="120V"/>
+			<xs:pattern value="120V dedicated circuit"/>
+			<xs:pattern value="120V shared circuit"/>
+			<xs:pattern value="other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="HPWHVoltage">
+		<xs:simpleContent>
+			<xs:extension base="HPWHVoltage_simple">
 				<xs:attribute name="dataSource" type="DataSource"/>
 			</xs:extension>
 		</xs:simpleContent>
