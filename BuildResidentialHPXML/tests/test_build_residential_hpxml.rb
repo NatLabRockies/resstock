@@ -494,9 +494,8 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['air_leakage_units'] = HPXML::UnitsACH
       args['air_leakage_house_pressure'] = 50
       args['air_leakage_value'] = 3
-      args['heating_system_type'] = HPXML::HVACTypeFurnace
       args['heating_system_fuel'] = HPXML::FuelTypeNaturalGas
-      args['heating_system_heating_efficiency'] = 0.92
+      args['heating_system'] = 'Fuel Furnace, 92% AFUE'
       args['heating_system_heating_capacity'] = 36000.0
       args['heating_system_fraction_heat_load_served'] = 1
       args['cooling_system_type'] = HPXML::HVACTypeCentralAirConditioner
@@ -787,20 +786,19 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['heating_system_2_type'] = HPXML::HVACTypeSpaceHeater
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-fireplace-to-heating-system.xml'
-      args['heating_system_type'] = HPXML::HVACTypeElectricResistance
       args['heating_system_fuel'] = HPXML::FuelTypeElectricity
-      args['heating_system_heating_efficiency'] = 1.0
+      args['heating_system'] = 'Electric Baseboard, 100% Efficiency'
       args['heating_system_heating_capacity'] = 48000.0
       args['heating_system_fraction_heat_load_served'] = 0.75
       args['cooling_system_type'] = Constants::None
       args['heating_system_2_type'] = HPXML::HVACTypeFireplace
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-boiler-to-heating-system.xml'
-      args['heating_system_type'] = HPXML::HVACTypeBoiler
+      args['heating_system'] = 'Fuel Boiler, 92% AFUE'
       args['heating_system_fraction_heat_load_served'] = 0.75
       args['heating_system_2_type'] = HPXML::HVACTypeBoiler
     when 'extra-second-heating-system-portable-heater-to-heat-pump.xml'
-      args['heating_system_type'] = Constants::None
+      args['heating_system'] = 'None'
       args['cooling_system_type'] = Constants::None
       args['heat_pump_type'] = HPXML::HVACTypeHeatPumpAirToAir
       args['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeIntegrated
@@ -814,7 +812,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['heating_system_2_type'] = HPXML::HVACTypeSpaceHeater
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-fireplace-to-heat-pump.xml'
-      args['heating_system_type'] = Constants::None
+      args['heating_system'] = 'None'
       args['cooling_system_type'] = Constants::None
       args['heat_pump_type'] = HPXML::HVACTypeHeatPumpMiniSplit
       args.delete('heat_pump_cooling_compressor_type')
@@ -826,7 +824,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['heating_system_2_type'] = HPXML::HVACTypeFireplace
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-boiler-to-heat-pump.xml'
-      args['heating_system_type'] = Constants::None
+      args['heating_system'] = 'None'
       args['cooling_system_type'] = Constants::None
       args['heat_pump_type'] = HPXML::HVACTypeHeatPumpGroundToAir
       args['heat_pump_heating_efficiency_type'] = HPXML::UnitsCOP
@@ -949,7 +947,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['battery_present'] = true
       args['battery_location'] = HPXML::LocationAttic
     when 'extra-detailed-performance-autosize.xml'
-      args['heating_system_type'] = Constants::None
+      args['heating_system'] = 'None'
       args['cooling_system_type'] = Constants::None
       args['heat_pump_type'] = HPXML::HVACTypeHeatPumpAirToAir
       args['heat_pump_heating_efficiency'] = 10.0
@@ -1145,7 +1143,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['cooling_system_type'] = Constants::None
       args['heat_pump_type'] = HPXML::HVACTypeHeatPumpAirToAir
     when 'error-cooling-system-and-heat-pump.xml'
-      args['heating_system_type'] = Constants::None
+      args['heating_system'] = 'None'
       args['heat_pump_type'] = HPXML::HVACTypeHeatPumpAirToAir
     when 'error-sfd-conditioned-basement-zero-foundation-height.xml'
       args['geometry_foundation_height'] = 0.0
@@ -1162,10 +1160,10 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['geometry_attic_type'] = HPXML::AtticTypeBelowApartment
       args.delete('foundation_wall_insulation_distance_to_bottom')
     when 'error-second-heating-system-but-no-primary-heating.xml'
-      args['heating_system_type'] = Constants::None
+      args['heating_system'] = 'None'
       args['heating_system_2_type'] = HPXML::HVACTypeFireplace
     when 'error-second-heating-system-ducted-with-ducted-primary-heating.xml'
-      args['heating_system_type'] = Constants::None
+      args['heating_system'] = 'None'
       args['cooling_system_type'] = Constants::None
       args['heat_pump_type'] = HPXML::HVACTypeHeatPumpMiniSplit
       args.delete('heat_pump_cooling_compressor_type')
@@ -1200,7 +1198,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['geometry_attic_type'] = HPXML::AtticTypeConditioned
       args['ceiling_assembly_r'] = 0.0
     when 'error-sfd-with-shared-system.xml'
-      args['heating_system_type'] = "Shared #{HPXML::HVACTypeBoiler} w/ Baseboard"
+      args['heating_system'] = 'Fuel Boiler w/ Baseboard, 92% AFUE'
     when 'error-rim-joist-height-but-no-assembly-r.xml'
       args.delete('rim_joist_assembly_r')
     when 'error-rim-joist-assembly-r-but-no-height.xml'
