@@ -63,6 +63,12 @@ class HPXMLtoOpenStudioWeatherTest < Minitest::Test
     assert_in_delta(0.0061, weather.design.CoolingHumidityRatio, 0.0001)
     assert_in_delta(27.4, weather.design.DailyTemperatureRange, 0.1)
 
+    # Check ground temps
+    assert_equal(UnitConversions.convert(12.5, 'deltac', 'deltaf'), weather.data.DeepGroundSurfTempAmp1)
+    assert_equal(UnitConversions.convert(-1.3, 'deltac', 'deltaf'), weather.data.DeepGroundSurfTempAmp2)
+    assert_equal(20, weather.data.DeepGroundPhaseShiftTempAmp1)
+    assert_equal(31, weather.data.DeepGroundPhaseShiftTempAmp2)
+
     # Check runner
     assert_equal(0, runner.result.stepErrors.size)
     assert_equal(0, runner.result.stepWarnings.size)
@@ -103,6 +109,12 @@ class HPXMLtoOpenStudioWeatherTest < Minitest::Test
     assert_in_delta(89.1, weather.design.CoolingDrybulb, 0.1)
     assert_in_delta(0.0141, weather.design.CoolingHumidityRatio, 0.0001)
     assert_in_delta(12.8, weather.design.DailyTemperatureRange, 0.1)
+
+    # Check ground temps
+    assert_equal(UnitConversions.convert(2.6, 'deltac', 'deltaf'), weather.data.DeepGroundSurfTempAmp1)
+    assert_equal(UnitConversions.convert(0.1, 'deltac', 'deltaf'), weather.data.DeepGroundSurfTempAmp2)
+    assert_equal(37, weather.data.DeepGroundPhaseShiftTempAmp1)
+    assert_equal(-13, weather.data.DeepGroundPhaseShiftTempAmp2)
 
     # Check runner
     assert_equal(0, runner.result.stepErrors.size)
@@ -145,6 +157,12 @@ class HPXMLtoOpenStudioWeatherTest < Minitest::Test
     assert_in_delta(0.0095, weather.design.CoolingHumidityRatio, 0.0001)
     assert_in_delta(17.1, weather.design.DailyTemperatureRange, 0.1)
 
+    # Check ground temps
+    assert_equal(UnitConversions.convert(-5.2, 'deltac', 'deltaf'), weather.data.DeepGroundSurfTempAmp1)
+    assert_equal(UnitConversions.convert(0.1, 'deltac', 'deltaf'), weather.data.DeepGroundSurfTempAmp2)
+    assert_equal(17, weather.data.DeepGroundPhaseShiftTempAmp1)
+    assert_equal(15, weather.data.DeepGroundPhaseShiftTempAmp2)
+
     # Check runner
     assert_equal(0, runner.result.stepErrors.size)
     assert_equal(0, runner.result.stepWarnings.size)
@@ -163,7 +181,7 @@ class HPXMLtoOpenStudioWeatherTest < Minitest::Test
     assert_in_delta(609.1, weather.data.CDD65F, 0.1)
     assert_in_delta(2863.0, weather.data.HDD50F, 0.1)
     assert_in_delta(6328.3, weather.data.HDD65F, 0.1)
-    assert_equal(0.58, weather.data.WSF)
+    assert_equal(0.53, weather.data.WSF)
     [30.8, 26.4, 43.0, 49.4, 56.8, 71.1, 71.2, 70.4, 60.8, 45.3, 39.6, 27.0].each_with_index do |monthly_temp, i|
       assert_in_delta(monthly_temp, weather.data.MonthlyAvgDrybulbs[i], 0.1)
     end
@@ -185,6 +203,12 @@ class HPXMLtoOpenStudioWeatherTest < Minitest::Test
     assert_in_delta(91.4, weather.design.CoolingDrybulb, 0.1)
     assert_in_delta(0.0046, weather.design.CoolingHumidityRatio, 0.0001)
     assert_in_delta(28.7, weather.design.DailyTemperatureRange, 0.1)
+
+    # Check ground temps
+    assert_equal(UnitConversions.convert(12.3, 'deltac', 'deltaf'), weather.data.DeepGroundSurfTempAmp1)
+    assert_equal(UnitConversions.convert(1.1, 'deltac', 'deltaf'), weather.data.DeepGroundSurfTempAmp2)
+    assert_equal(19, weather.data.DeepGroundPhaseShiftTempAmp1)
+    assert_equal(-34, weather.data.DeepGroundPhaseShiftTempAmp2)
 
     # Check runner
     assert_equal(0, runner.result.stepErrors.size)
