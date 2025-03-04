@@ -3,7 +3,7 @@ os_version: 3.9.0
 os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: /projects/rescore/hawaii/ # add run number
+output_directory: /projects/rescore/hawaii/run1
 weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip
 
 sampler:
