@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>3c51de28-7a08-48b9-965a-7303ea140de2</version_id>
-  <version_modified>2025-02-18T23:20:53Z</version_modified>
+  <version_id>875b8915-fa52-4655-bd43-3d5a5aaf2b87</version_id>
+  <version_modified>2025-03-04T21:22:10Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -2317,57 +2317,193 @@
       </choices>
     </argument>
     <argument>
-      <name>heating_system_type</name>
-      <display_name>Heating System: Type</display_name>
-      <description>The type of heating system. Use 'none' if there is no heating system or if there is a heat pump serving a heating load.</description>
+      <name>heating_system</name>
+      <display_name>Heating System</display_name>
+      <description>The heating system type/efficiency. Efficiency is Rated AFUE or Percent as a Fraction. Use 'none' if there is no heating system or if there is a heat pump serving a heating load.</description>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>Furnace</default_value>
+      <default_value>Fuel Furnace, 78% AFUE</default_value>
       <choices>
         <choice>
-          <value>none</value>
-          <display_name>none</display_name>
+          <value>Electric Furnace, 98% AFUE</value>
+          <display_name>Electric Furnace, 98% AFUE</display_name>
         </choice>
         <choice>
-          <value>Furnace</value>
-          <display_name>Furnace</display_name>
+          <value>Electric Furnace, 100% AFUE</value>
+          <display_name>Electric Furnace, 100% AFUE</display_name>
         </choice>
         <choice>
-          <value>WallFurnace</value>
-          <display_name>WallFurnace</display_name>
+          <value>Electric Baseboard, 100% Efficiency</value>
+          <display_name>Electric Baseboard, 100% Efficiency</display_name>
         </choice>
         <choice>
-          <value>FloorFurnace</value>
-          <display_name>FloorFurnace</display_name>
+          <value>Electric Boiler, 98% AFUE</value>
+          <display_name>Electric Boiler, 98% AFUE</display_name>
         </choice>
         <choice>
-          <value>Boiler</value>
-          <display_name>Boiler</display_name>
+          <value>Electric Boiler, 100% AFUE</value>
+          <display_name>Electric Boiler, 100% AFUE</display_name>
         </choice>
         <choice>
-          <value>ElectricResistance</value>
-          <display_name>ElectricResistance</display_name>
+          <value>Electric Wall Furnace, 100% AFUE</value>
+          <display_name>Electric Wall Furnace, 100% AFUE</display_name>
         </choice>
         <choice>
-          <value>Stove</value>
-          <display_name>Stove</display_name>
+          <value>Fuel Boiler, 72% AFUE</value>
+          <display_name>Fuel Boiler, 72% AFUE</display_name>
         </choice>
         <choice>
-          <value>SpaceHeater</value>
-          <display_name>SpaceHeater</display_name>
+          <value>Fuel Boiler, 76% AFUE</value>
+          <display_name>Fuel Boiler, 76% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fireplace</value>
-          <display_name>Fireplace</display_name>
+          <value>Fuel Boiler, 80% AFUE</value>
+          <display_name>Fuel Boiler, 80% AFUE</display_name>
         </choice>
         <choice>
-          <value>Shared Boiler w/ Baseboard</value>
-          <display_name>Shared Boiler w/ Baseboard</display_name>
+          <value>Fuel Boiler, 82% AFUE</value>
+          <display_name>Fuel Boiler, 82% AFUE</display_name>
         </choice>
         <choice>
-          <value>Shared Boiler w/ Ductless Fan Coil</value>
-          <display_name>Shared Boiler w/ Ductless Fan Coil</display_name>
+          <value>Fuel Boiler, 85% AFUE</value>
+          <display_name>Fuel Boiler, 85% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Boiler, 90% AFUE</value>
+          <display_name>Fuel Boiler, 90% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Boiler, 92% AFUE</value>
+          <display_name>Fuel Boiler, 92% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Boiler, 92% AFUE, 600 BTUh Pilot Light</value>
+          <display_name>Fuel Boiler, 92% AFUE, 600 BTUh Pilot Light</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Boiler, 95% AFUE</value>
+          <display_name>Fuel Boiler, 95% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Boiler, 96% AFUE</value>
+          <display_name>Fuel Boiler, 96% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 60% AFUE</value>
+          <display_name>Fuel Furnace, 60% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 68% AFUE</value>
+          <display_name>Fuel Furnace, 68% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 72% AFUE</value>
+          <display_name>Fuel Furnace, 72% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 76% AFUE</value>
+          <display_name>Fuel Furnace, 76% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 78% AFUE</value>
+          <display_name>Fuel Furnace, 78% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 80% AFUE</value>
+          <display_name>Fuel Furnace, 80% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 85% AFUE</value>
+          <display_name>Fuel Furnace, 85% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 90% AFUE</value>
+          <display_name>Fuel Furnace, 90% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 92% AFUE</value>
+          <display_name>Fuel Furnace, 92% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 92% AFUE, Airflow Defect Ratio</value>
+          <display_name>Fuel Furnace, 92% AFUE, Airflow Defect Ratio</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 92% AFUE, 600 BTUh Pilot Light</value>
+          <display_name>Fuel Furnace, 92% AFUE, 600 BTUh Pilot Light</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 92.5% AFUE</value>
+          <display_name>Fuel Furnace, 92.5% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Furnace, 96% AFUE</value>
+          <display_name>Fuel Furnace, 96% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Wall Furnace, 60% AFUE</value>
+          <display_name>Fuel Wall Furnace, 60% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Wall Furnace, 68% AFUE</value>
+          <display_name>Fuel Wall Furnace, 68% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Electric Wall Furnace, 98% AFUE</value>
+          <display_name>Electric Wall Furnace, 98% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Electric Wall Furnace, 100% AFUE</value>
+          <display_name>Electric Wall Furnace, 100% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>None</value>
+          <display_name>None</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Boiler w/ Baseboard, 78% AFUE</value>
+          <display_name>Fuel Boiler w/ Baseboard, 78% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Boiler w/ Baseboard, 92% AFUE</value>
+          <display_name>Fuel Boiler w/ Baseboard, 92% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Electric Boiler w/ Baseboard, 100% AFUE</value>
+          <display_name>Electric Boiler w/ Baseboard, 100% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Fan Coil Heating, 78% AFUE</value>
+          <display_name>Fuel Fan Coil Heating, 78% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Fan Coil Heating, 92% AFUE</value>
+          <display_name>Fuel Fan Coil Heating, 92% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Electric Fan Coil Heating, 100% AFUE</value>
+          <display_name>Electric Fan Coil Heating, 100% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Fireplace, 80% Efficiency</value>
+          <display_name>Fireplace, 80% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Stove, 80% Efficiency</value>
+          <display_name>Stove, 80% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Fuel Floor Furnace, 80% AFUE, 600 BTUh Pilot Light</value>
+          <display_name>Fuel Floor Furnace, 80% AFUE, 600 BTUh Pilot Light</display_name>
+        </choice>
+        <choice>
+          <value>Space Heater, 100% Efficiency</value>
+          <display_name>Space Heater, 100% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Space Heater, 92% Efficiency</value>
+          <display_name>Space Heater, 92% Efficiency</display_name>
         </choice>
       </choices>
     </argument>
@@ -2411,16 +2547,6 @@
       </choices>
     </argument>
     <argument>
-      <name>heating_system_heating_efficiency</name>
-      <display_name>Heating System: Rated AFUE or Percent</display_name>
-      <description>The rated heating efficiency value of the heating system.</description>
-      <type>Double</type>
-      <units>Frac</units>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>0.78</default_value>
-    </argument>
-    <argument>
       <name>heating_system_heating_capacity</name>
       <display_name>Heating System: Heating Capacity</display_name>
       <description>The output heating capacity of the heating system. If not provided, the OS-HPXML autosized default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems'&gt;HPXML Heating Systems&lt;/a&gt;) is used.</description>
@@ -2456,15 +2582,6 @@
       <required>true</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
-    </argument>
-    <argument>
-      <name>heating_system_pilot_light</name>
-      <display_name>Heating System: Pilot Light</display_name>
-      <description>The fuel usage of the pilot light. Applies only to Furnace, WallFurnace, FloorFurnace, Stove, Boiler, and Fireplace with non-electric fuel type. If not provided, assumes no pilot light.</description>
-      <type>String</type>
-      <units>Btuh</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>cooling_system_type</name>
@@ -7777,7 +7894,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>04A54AB1</checksum>
+      <checksum>E036144C</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7806,7 +7923,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>11D7F050</checksum>
+      <checksum>1A7E9D76</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>

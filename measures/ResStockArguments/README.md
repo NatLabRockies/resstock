@@ -1517,16 +1517,16 @@ Type of air leakage if providing a numeric air leakage value. If 'unit total', r
 
 <br/>
 
-**Heating System: Type**
+**Heating System**
 
-The type of heating system. Use 'none' if there is no heating system or if there is a heat pump serving a heating load.
+The heating system type/efficiency. Efficiency is Rated AFUE or Percent as a Fraction. Use 'none' if there is no heating system or if there is a heat pump serving a heating load.
 
-- **Name:** ``heating_system_type``
+- **Name:** ``heating_system``
 - **Type:** ``Choice``
 
 - **Required:** ``true``
 
-- **Choices:** `none`, `Furnace`, `WallFurnace`, `FloorFurnace`, `Boiler`, `ElectricResistance`, `Stove`, `SpaceHeater`, `Fireplace`, `Shared Boiler w/ Baseboard`, `Shared Boiler w/ Ductless Fan Coil`
+- **Choices:** `Electric Furnace, 98% AFUE`, `Electric Furnace, 100% AFUE`, `Electric Baseboard, 100% Efficiency`, `Electric Boiler, 98% AFUE`, `Electric Boiler, 100% AFUE`, `Electric Wall Furnace, 100% AFUE`, `Fuel Boiler, 72% AFUE`, `Fuel Boiler, 76% AFUE`, `Fuel Boiler, 80% AFUE`, `Fuel Boiler, 82% AFUE`, `Fuel Boiler, 85% AFUE`, `Fuel Boiler, 90% AFUE`, `Fuel Boiler, 92% AFUE`, `Fuel Boiler, 92% AFUE, 600 BTUh Pilot Light`, `Fuel Boiler, 95% AFUE`, `Fuel Boiler, 96% AFUE`, `Fuel Furnace, 60% AFUE`, `Fuel Furnace, 68% AFUE`, `Fuel Furnace, 72% AFUE`, `Fuel Furnace, 76% AFUE`, `Fuel Furnace, 78% AFUE`, `Fuel Furnace, 80% AFUE`, `Fuel Furnace, 85% AFUE`, `Fuel Furnace, 90% AFUE`, `Fuel Furnace, 92% AFUE`, `Fuel Furnace, 92% AFUE, Airflow Defect Ratio`, `Fuel Furnace, 92% AFUE, 600 BTUh Pilot Light`, `Fuel Furnace, 92.5% AFUE`, `Fuel Furnace, 96% AFUE`, `Fuel Wall Furnace, 60% AFUE`, `Fuel Wall Furnace, 68% AFUE`, `Electric Wall Furnace, 98% AFUE`, `Electric Wall Furnace, 100% AFUE`, `None`, `Fuel Boiler w/ Baseboard, 78% AFUE`, `Fuel Boiler w/ Baseboard, 92% AFUE`, `Electric Boiler w/ Baseboard, 100% AFUE`, `Fuel Fan Coil Heating, 78% AFUE`, `Fuel Fan Coil Heating, 92% AFUE`, `Electric Fan Coil Heating, 100% AFUE`, `Fireplace, 80% Efficiency`, `Stove, 80% Efficiency`, `Fuel Floor Furnace, 80% AFUE, 600 BTUh Pilot Light`, `Space Heater, 100% Efficiency`, `Space Heater, 92% Efficiency`
 
 <br/>
 
@@ -1540,19 +1540,6 @@ The fuel type of the heating system. Ignored for ElectricResistance.
 - **Required:** ``true``
 
 - **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
-
-<br/>
-
-**Heating System: Rated AFUE or Percent**
-
-The rated heating efficiency value of the heating system.
-
-- **Name:** ``heating_system_heating_efficiency``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``true``
 
 <br/>
 
@@ -1599,17 +1586,6 @@ The heating load served by the heating system.
 - **Units:** ``Frac``
 
 - **Required:** ``true``
-
-<br/>
-
-**Heating System: Pilot Light**
-
-The fuel usage of the pilot light. Applies only to Furnace, WallFurnace, FloorFurnace, Stove, Boiler, and Fireplace with non-electric fuel type. If not provided, assumes no pilot light.
-
-- **Name:** ``heating_system_pilot_light``
-- **Type:** ``String``
-
-- **Required:** ``false``
 
 <br/>
 
