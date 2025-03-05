@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>80f0d6af-d364-4e1d-b5bd-a3605b360938</version_id>
-  <version_modified>2025-02-18T20:46:00Z</version_modified>
+  <version_id>b335b16a-7d1c-4f81-b013-9514c8a4afc6</version_id>
+  <version_modified>2025-02-27T22:32:49Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -5412,6 +5412,137 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>vehicle_type</name>
+      <display_name>Vehicle: Type</display_name>
+      <description>The type of vehicle present at the home.</description>
+      <type>String</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>vehicle_battery_usable_capacity</name>
+      <display_name>Vehicle: EV Battery Usable Capacity</display_name>
+      <description>The usable capacity of the vehicle battery, only applies to electric vehicles. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'&gt;HPXML Vehicles&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>kWh</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>vehicle_fuel_economy_units</name>
+      <display_name>Vehicle: Combined Fuel Economy Units</display_name>
+      <description>The combined fuel economy units of the vehicle. Only 'kWh/mile', 'mile/kWh', or 'mpge' are allow for electric vehicles. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'&gt;HPXML Vehicles&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>kWh/mile</value>
+          <display_name>kWh/mile</display_name>
+        </choice>
+        <choice>
+          <value>mile/kWh</value>
+          <display_name>mile/kWh</display_name>
+        </choice>
+        <choice>
+          <value>mpge</value>
+          <display_name>mpge</display_name>
+        </choice>
+        <choice>
+          <value>mpg</value>
+          <display_name>mpg</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>vehicle_fuel_economy_combined</name>
+      <display_name>Vehicle: Combined Fuel Economy</display_name>
+      <description>The combined fuel economy of the vehicle. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'&gt;HPXML Vehicles&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>vehicle_miles_driven_per_year</name>
+      <display_name>Vehicle: Miles Driven Per Year</display_name>
+      <description>The annual miles the vehicle is driven. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'&gt;HPXML Vehicles&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>miles</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>vehicle_fraction_charged_home</name>
+      <display_name>Vehicle: Fraction Charged at Home</display_name>
+      <description>The fraction of charging energy provided by the at-home charger to the vehicle, only applies to electric vehicles. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles'&gt;HPXML Vehicles&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>ev_charger_present</name>
+      <display_name>Electric Vehicle Charger: Present</display_name>
+      <description>Whether there is an electric vehicle charger present.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>ev_charger_power</name>
+      <display_name>Electric Vehicle Charger: Rated Charging Power</display_name>
+      <description>The rated power output of the EV charger. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'&gt;HPXML Electric Vehicle Chargers&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>ev_charger_location</name>
+      <display_name>Electric Vehicle Charger: Location</display_name>
+      <description>The space type for the EV charger. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'&gt;HPXML Electric Vehicle Chargers&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>garage</value>
+          <display_name>garage</display_name>
+        </choice>
+        <choice>
+          <value>outside</value>
+          <display_name>outside</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>lighting_present</name>
       <display_name>Lighting: Present</display_name>
       <description>Whether there is lighting energy use.</description>
@@ -6683,43 +6814,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>misc_plug_loads_vehicle_present</name>
-      <display_name>Misc Plug Loads: Vehicle Present</display_name>
-      <description>Whether there is an electric vehicle.</description>
-      <type>Boolean</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>false</default_value>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>misc_plug_loads_vehicle_annual_kwh</name>
-      <display_name>Misc Plug Loads: Vehicle Annual kWh</display_name>
-      <description>The annual energy consumption of the electric vehicle plug loads. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads'&gt;HPXML Plug Loads&lt;/a&gt;) is used.</description>
-      <type>String</type>
-      <units>kWh/yr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>misc_plug_loads_vehicle_usage_multiplier</name>
-      <display_name>Misc Plug Loads: Vehicle Usage Multiplier</display_name>
-      <description>Multiplier on the electric vehicle energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads'&gt;HPXML Plug Loads&lt;/a&gt;) is used.</description>
-      <type>String</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>misc_fuel_loads_grill_present</name>
       <display_name>Misc Fuel Loads: Grill Present</display_name>
       <description>Whether there is a fuel loads grill.</description>
@@ -7387,15 +7481,6 @@
       <default_value>0</default_value>
     </argument>
     <argument>
-      <name>misc_plug_loads_vehicle_2_usage_multiplier</name>
-      <display_name>Plug Loads: Vehicle Usage Multiplier 2</display_name>
-      <description>Additional multiplier on the electric vehicle energy usage that can reflect, e.g., high/low usage occupants.</description>
-      <type>Double</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>0</default_value>
-    </argument>
-    <argument>
       <name>hvac_control_heating_weekday_setpoint_temp</name>
       <display_name>Heating Setpoint: Weekday Temperature</display_name>
       <description>Specify the weekday heating setpoint temperature.</description>
@@ -7666,6 +7751,24 @@
         </choice>
       </choices>
     </argument>
+    <argument>
+      <name>ev_average_mph</name>
+      <display_name>Electric Vehicle: Average Miles Per Hour</display_name>
+      <description>The average miles/hour driven by the vehicle.</description>
+      <type>Double</type>
+      <units>miles/hour</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>ev_efficiency_percent_increase</name>
+      <display_name>Electric Vehicle: Efficiency Improvement</display_name>
+      <description>The increase (fraction) in efficiency of the electric vehicle.</description>
+      <type>Double</type>
+      <units>Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
   </arguments>
   <outputs />
   <provenances />
@@ -7684,7 +7787,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>39109EF9</checksum>
+      <checksum>50C43737</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7701,13 +7804,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>315B55D1</checksum>
+      <checksum>0C90D8FD</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1E2198A5</checksum>
+      <checksum>35AE8075</checksum>
     </file>
     <file>
       <filename>measure.txt</filename>

@@ -1,0 +1,220 @@
+Dependency=Electric Vehicle Ownership	Dependency=Federal Poverty Level	Dependency=Geometry Building Type RECS	Dependency=Tenure	Option=Level 1 charger	Option=Level 2 charger	Option=None	Option=Void	source_count	source_weight	sampling_probability
+No	0-100%	Mobile Home	Not Available	0	0	0	1	346	2.20901e+06	0
+No	0-100%	Mobile Home	Owner	0	0	1	0	241	1.49238e+06	0.0061145
+No	0-100%	Mobile Home	Renter	0	0	1	0	105	716623	0.00417581
+No	100-150%	Mobile Home	Not Available	0	0	0	1	287	1.3023e+06	0
+No	100-150%	Mobile Home	Owner	0	0	1	0	226	1.05405e+06	0.00518649
+No	100-150%	Mobile Home	Renter	0	0	1	0	61	248246	0.00255112
+No	150-200%	Mobile Home	Not Available	0	0	0	1	201	870935	0
+No	150-200%	Mobile Home	Owner	0	0	1	0	157	702694	0.0045048
+No	150-200%	Mobile Home	Renter	0	0	1	0	44	168242	0.00191156
+No	200-300%	Mobile Home	Not Available	0	0	0	1	269	1.14611e+06	0
+No	200-300%	Mobile Home	Owner	0	0	1	0	229	954401	0.00748842
+No	200-300%	Mobile Home	Renter	0	0	1	0	40	191711	0.00261914
+No	300-400%	Mobile Home	Not Available	0	0	0	1	130	592755	0
+No	300-400%	Mobile Home	Owner	0	0	1	0	115	538172	0.00489681
+No	300-400%	Mobile Home	Renter	0	0	1	0	15	54582.4	0.00137293
+No	400%+	Mobile Home	Not Available	0	0	0	1	146	668823	0
+No	400%+	Mobile Home	Owner	0	0	1	0	132	606934	0.00687502
+No	400%+	Mobile Home	Renter	0	0	1	0	14	61888.7	0.00143014
+No	Not Available	Mobile Home	Not Available	0	0	1	0	967	6.78993e+06	0.0131485
+No	Not Available	Mobile Home	Owner	0	0	0	1	760	5.34864e+06	0
+No	Not Available	Mobile Home	Renter	0	0	0	1	207	1.44129e+06	0
+No	0-100%	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	321	2.86152e+06	0
+No	0-100%	Multi-Family with 2 - 4 Units	Owner	0	0	1	0	15	156347	0.000848619
+No	0-100%	Multi-Family with 2 - 4 Units	Renter	0	0	1	0	306	2.70518e+06	0.0129143
+No	100-150%	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	195	1.03184e+06	0
+No	100-150%	Multi-Family with 2 - 4 Units	Owner	0	0	1	0	17	123676	0.000757744
+No	100-150%	Multi-Family with 2 - 4 Units	Renter	0	0	1	0	178	908161	0.00769668
+No	150-200%	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	171	1.03685e+06	0
+No	150-200%	Multi-Family with 2 - 4 Units	Owner	0	0	1	0	16	84775.9	0.000818488
+No	150-200%	Multi-Family with 2 - 4 Units	Renter	0	0	1	0	155	952075	0.00635543
+No	200-300%	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	267	1.46726e+06	0
+No	200-300%	Multi-Family with 2 - 4 Units	Owner	0	0	1	0	34	213620	0.00175078
+No	200-300%	Multi-Family with 2 - 4 Units	Renter	0	0	1	0	233	1.25365e+06	0.00982077
+No	300-400%	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	171	955188	0
+No	300-400%	Multi-Family with 2 - 4 Units	Owner	0	0	1	0	27	134424	0.00159309
+No	300-400%	Multi-Family with 2 - 4 Units	Renter	0	0	1	0	144	820764	0.00654307
+No	400%+	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	268	1.94066e+06	0
+No	400%+	Multi-Family with 2 - 4 Units	Owner	0	0	1	0	55	405015	0.00584828
+No	400%+	Multi-Family with 2 - 4 Units	Renter	0	0	1	0	213	1.53564e+06	0.0126372
+No	Not Available	Multi-Family with 2 - 4 Units	Not Available	0	0	1	0	1008	9.29332e+06	0.0118498
+No	Not Available	Multi-Family with 2 - 4 Units	Owner	0	0	0	1	121	1.11786e+06	0
+No	Not Available	Multi-Family with 2 - 4 Units	Renter	0	0	0	1	887	8.17546e+06	0
+No	0-100%	Multi-Family with 5+ Units	Not Available	0	0	0	1	501	4.53408e+06	0
+No	0-100%	Multi-Family with 5+ Units	Owner	0	0	1	0	21	181433	0.00139705
+No	0-100%	Multi-Family with 5+ Units	Renter	0	0	1	0	480	4.35265e+06	0.0294136
+No	100-150%	Multi-Family with 5+ Units	Not Available	0	0	0	1	395	2.19179e+06	0
+No	100-150%	Multi-Family with 5+ Units	Owner	0	0	1	0	23	141300	0.000994536
+No	100-150%	Multi-Family with 5+ Units	Renter	0	0	1	0	372	2.05049e+06	0.0175034
+No	150-200%	Multi-Family with 5+ Units	Not Available	0	0	0	1	349	2.15615e+06	0
+No	150-200%	Multi-Family with 5+ Units	Owner	0	0	1	0	25	168885	0.00103894
+No	150-200%	Multi-Family with 5+ Units	Renter	0	0	1	0	324	1.98726e+06	0.0141006
+No	200-300%	Multi-Family with 5+ Units	Not Available	0	0	0	1	576	3.30952e+06	0
+No	200-300%	Multi-Family with 5+ Units	Owner	0	0	1	0	72	390096	0.00221098
+No	200-300%	Multi-Family with 5+ Units	Renter	0	0	1	0	504	2.91942e+06	0.0230695
+No	300-400%	Multi-Family with 5+ Units	Not Available	0	0	0	1	375	2.54106e+06	0
+No	300-400%	Multi-Family with 5+ Units	Owner	0	0	1	0	56	386775	0.00202437
+No	300-400%	Multi-Family with 5+ Units	Renter	0	0	1	0	319	2.15428e+06	0.0162024
+No	400%+	Multi-Family with 5+ Units	Not Available	0	0	0	1	1032	7.93723e+06	0
+No	400%+	Multi-Family with 5+ Units	Owner	0	0	1	0	219	1.87346e+06	0.010498
+No	400%+	Multi-Family with 5+ Units	Renter	0	0	1	0	813	6.06377e+06	0.0383028
+No	Not Available	Multi-Family with 5+ Units	Not Available	0	0	1	0	2421	2.26698e+07	0.0258791
+No	Not Available	Multi-Family with 5+ Units	Owner	0	0	0	1	334	3.14194e+06	0
+No	Not Available	Multi-Family with 5+ Units	Renter	0	0	0	1	2087	1.95279e+07	0
+No	0-100%	Single-Family Attached	Not Available	0	0	0	1	222	931639	0
+No	0-100%	Single-Family Attached	Owner	0	0	1	0	53	230570	0.00204596
+No	0-100%	Single-Family Attached	Renter	0	0	1	0	169	701069	0.00347761
+No	100-150%	Single-Family Attached	Not Available	0	0	0	1	204	628410	0
+No	100-150%	Single-Family Attached	Owner	0	0	1	0	97	292182	0.00170335
+No	100-150%	Single-Family Attached	Renter	0	0	1	0	107	336228	0.00222017
+No	150-200%	Single-Family Attached	Not Available	0	0	0	1	218	534286	0
+No	150-200%	Single-Family Attached	Owner	0	0	1	0	116	265329	0.00192853
+No	150-200%	Single-Family Attached	Renter	0	0	1	0	102	268956	0.00204259
+No	200-300%	Single-Family Attached	Not Available	0	0	0	1	431	1.13777e+06	0
+No	200-300%	Single-Family Attached	Owner	0	0	1	0	269	673960	0.00458857
+No	200-300%	Single-Family Attached	Renter	0	0	1	0	162	463814	0.00355342
+No	300-400%	Single-Family Attached	Not Available	0	0	0	1	354	951043	0
+No	300-400%	Single-Family Attached	Owner	0	0	1	0	227	596895	0.00433992
+No	300-400%	Single-Family Attached	Renter	0	0	1	0	127	354148	0.00259564
+No	400%+	Single-Family Attached	Not Available	0	0	0	1	887	3.16178e+06	0
+No	400%+	Single-Family Attached	Owner	0	0	1	0	681	2.49305e+06	0.0173817
+No	400%+	Single-Family Attached	Renter	0	0	1	0	206	668734	0.0058213
+No	Not Available	Single-Family Attached	Not Available	0	0	1	0	1723	7.34494e+06	0.00563471
+No	Not Available	Single-Family Attached	Owner	0	0	0	1	1095	4.55199e+06	0
+No	Not Available	Single-Family Attached	Renter	0	0	0	1	628	2.79295e+06	0
+No	0-100%	Single-Family Detached	Not Available	0	0	0	1	910	5.74444e+06	0
+No	0-100%	Single-Family Detached	Owner	0	0	1	0	628	3.83424e+06	0.0269007
+No	0-100%	Single-Family Detached	Renter	0	0	1	0	282	1.9102e+06	0.0161625
+No	100-150%	Single-Family Detached	Not Available	0	0	0	1	1135	5.0864e+06	0
+No	100-150%	Single-Family Detached	Owner	0	0	1	0	920	4.03366e+06	0.0257905
+No	100-150%	Single-Family Detached	Renter	0	0	1	0	215	1.05273e+06	0.0107759
+No	150-200%	Single-Family Detached	Not Available	0	0	0	1	1417	5.80887e+06	0
+No	150-200%	Single-Family Detached	Owner	0	0	1	0	1194	4.90686e+06	0.0287798
+No	150-200%	Single-Family Detached	Renter	0	0	1	0	223	902014	0.00988077
+No	200-300%	Single-Family Detached	Not Available	0	0	0	1	3180	1.21266e+07	0
+No	200-300%	Single-Family Detached	Owner	0	0	1	0	2823	1.05276e+07	0.0666336
+No	200-300%	Single-Family Detached	Renter	0	0	1	0	357	1.599e+06	0.016795
+No	300-400%	Single-Family Detached	Not Available	0	0	0	1	2959	1.06519e+07	0
+No	300-400%	Single-Family Detached	Owner	0	0	1	0	2730	9.74537e+06	0.0642875
+No	300-400%	Single-Family Detached	Renter	0	0	1	0	229	906497	0.011853
+No	400%+	Single-Family Detached	Not Available	0	0	0	1	6950	3.61906e+07	0
+No	400%+	Single-Family Detached	Owner	0	0	1	0	6571	3.414e+07	0.238255
+No	400%+	Single-Family Detached	Renter	0	0	1	0	379	2.05057e+06	0.0227172
+No	Not Available	Single-Family Detached	Not Available	0	0	1	0	12091	7.56087e+07	0.0650048
+No	Not Available	Single-Family Detached	Owner	0	0	0	1	10887	6.71877e+07	0
+No	Not Available	Single-Family Detached	Renter	0	0	0	1	1204	8.42101e+06	0
+Yes	0-100%	Mobile Home	Not Available	0	0	0	1	15	4919.92	0
+Yes	0-100%	Mobile Home	Owner	0.901144	0.0988564	0	0	13	4919.92	1.27358e-05
+Yes	0-100%	Mobile Home	Renter	0.911961	0.088039	0	0	22	0	2.25573e-05
+Yes	100-150%	Mobile Home	Not Available	0	0	0	1	15	8643.65	0
+Yes	100-150%	Mobile Home	Owner	0.901144	0.0988564	0	0	13	17.7828	5.84236e-08
+Yes	100-150%	Mobile Home	Renter	0.911961	0.088039	0	0	22	8625.86	1.44939e-05
+Yes	150-200%	Mobile Home	Not Available	0	0	0	1	15	1324.25	0
+Yes	150-200%	Mobile Home	Owner	0.901144	0.0988564	0	0	13	0	3.14462e-08
+Yes	150-200%	Mobile Home	Renter	0.911961	0.088039	0	0	22	1324.25	1.11912e-05
+Yes	200-300%	Mobile Home	Not Available	0	0	0	1	15	2928.27	0
+Yes	200-300%	Mobile Home	Owner	0.901144	0.0988564	0	0	13	2928.27	1.61655e-05
+Yes	200-300%	Mobile Home	Renter	0.911961	0.088039	0	0	22	0	9.51232e-06
+Yes	300-400%	Mobile Home	Not Available	0	0	0	1	15	0	0
+Yes	300-400%	Mobile Home	Owner	0.901144	0.0988564	0	0	13	0	6.74192e-06
+Yes	300-400%	Mobile Home	Renter	0.911961	0.088039	0	0	22	0	4.97803e-06
+Yes	400%+	Mobile Home	Not Available	0	0	0	1	31	24753.9	0
+Yes	400%+	Mobile Home	Owner	0.659052	0.340948	0	0	24	24753.9	0.000107731
+Yes	400%+	Mobile Home	Renter	0.571961	0.428039	0	0	14	0	8.26786e-06
+Yes	Not Available	Mobile Home	Not Available	0.736454	0.263546	0	0	39	42570	0
+Yes	Not Available	Mobile Home	Owner	0	0	0	1	26	32619.8	0
+Yes	Not Available	Mobile Home	Renter	0	0	0	1	14	9950.11	0
+Yes	0-100%	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	15	8804.49	0
+Yes	0-100%	Multi-Family with 2 - 4 Units	Owner	0.901144	0.0988564	0	0	13	0	7.46423e-06
+Yes	0-100%	Multi-Family with 2 - 4 Units	Renter	0.911961	0.088039	0	0	22	8804.49	4.44332e-05
+Yes	100-150%	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	15	0	0
+Yes	100-150%	Multi-Family with 2 - 4 Units	Owner	0.901144	0.0988564	0	0	13	0	6.28044e-06
+Yes	100-150%	Multi-Family with 2 - 4 Units	Renter	0.911961	0.088039	0	0	22	0	0
+Yes	150-200%	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	15	0	0
+Yes	150-200%	Multi-Family with 2 - 4 Units	Owner	0.901144	0.0988564	0	0	13	0	6.82671e-06
+Yes	150-200%	Multi-Family with 2 - 4 Units	Renter	0.911961	0.088039	0	0	22	0	0
+Yes	200-300%	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	15	18686.1	0
+Yes	200-300%	Multi-Family with 2 - 4 Units	Owner	0.901144	0.0988564	0	0	13	0	5.62465e-06
+Yes	200-300%	Multi-Family with 2 - 4 Units	Renter	0.911961	0.088039	0	0	22	18686.1	0.00017964
+Yes	300-400%	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	15	992.798	0
+Yes	300-400%	Multi-Family with 2 - 4 Units	Owner	0.901144	0.0988564	0	0	13	992.798	5.23812e-06
+Yes	300-400%	Multi-Family with 2 - 4 Units	Renter	0.911961	0.088039	0	0	22	0	7.60267e-05
+Yes	400%+	Multi-Family with 2 - 4 Units	Not Available	0	0	0	1	31	19990.9	0
+Yes	400%+	Multi-Family with 2 - 4 Units	Owner	0.659052	0.340948	0	0	24	13627.7	0.000127108
+Yes	400%+	Multi-Family with 2 - 4 Units	Renter	0.571961	0.428039	0	0	14	6363.2	8.34663e-05
+Yes	Not Available	Multi-Family with 2 - 4 Units	Not Available	0.736454	0.263546	0	0	39	48474.3	0
+Yes	Not Available	Multi-Family with 2 - 4 Units	Owner	0	0	0	1	26	14620.5	0
+Yes	Not Available	Multi-Family with 2 - 4 Units	Renter	0	0	0	1	14	33853.8	0
+Yes	0-100%	Multi-Family with 5+ Units	Not Available	0	0	0	1	15	42429.6	0
+Yes	0-100%	Multi-Family with 5+ Units	Owner	0.901144	0.0988564	0	0	13	4497.31	1.73103e-05
+Yes	0-100%	Multi-Family with 5+ Units	Renter	0.911961	0.088039	0	0	22	37932.3	0.000356069
+Yes	100-150%	Multi-Family with 5+ Units	Not Available	0	0	0	1	15	11164.3	0
+Yes	100-150%	Multi-Family with 5+ Units	Owner	0.901144	0.0988564	0	0	13	7389.12	1.16603e-05
+Yes	100-150%	Multi-Family with 5+ Units	Renter	0.911961	0.088039	0	0	22	3775.18	4.61712e-05
+Yes	150-200%	Multi-Family with 5+ Units	Not Available	0	0	0	1	15	16691.5	0
+Yes	150-200%	Multi-Family with 5+ Units	Owner	0.901144	0.0988564	0	0	13	11387.9	1.20624e-05
+Yes	150-200%	Multi-Family with 5+ Units	Renter	0.911961	0.088039	0	0	22	5303.64	5.47384e-05
+Yes	200-300%	Multi-Family with 5+ Units	Not Available	0	0	0	1	20	9933.23	0
+Yes	200-300%	Multi-Family with 5+ Units	Owner	0.901144	0.0988564	0	0	13	2889.01	9.804e-06
+Yes	200-300%	Multi-Family with 5+ Units	Renter	0.911961	0.088039	0	0	22	7044.22	8.3713e-05
+Yes	300-400%	Multi-Family with 5+ Units	Not Available	0	0	0	1	20	14229.7	0
+Yes	300-400%	Multi-Family with 5+ Units	Owner	0.901144	0.0988564	0	0	13	0	9.11621e-06
+Yes	300-400%	Multi-Family with 5+ Units	Renter	0.911961	0.088039	0	0	22	14229.7	0.000169035
+Yes	400%+	Multi-Family with 5+ Units	Not Available	0	0	0	1	40	71589.6	0
+Yes	400%+	Multi-Family with 5+ Units	Owner	0.715556	0.284444	0	0	27	20431.6	0.000213612
+Yes	400%+	Multi-Family with 5+ Units	Renter	0.571961	0.428039	0	0	14	43066.5	0.000608153
+Yes	Not Available	Multi-Family with 5+ Units	Not Available	0.913848	0.0861522	0	0	17	157946	0
+Yes	Not Available	Multi-Family with 5+ Units	Owner	0	0	0	1	31	46595	0
+Yes	Not Available	Multi-Family with 5+ Units	Renter	0	0	0	1	13	119443	0
+Yes	0-100%	Single-Family Attached	Not Available	0	0	0	1	15	0	0
+Yes	0-100%	Single-Family Attached	Owner	0.901144	0.0988564	0	0	13	0	0
+Yes	0-100%	Single-Family Attached	Renter	0.911961	0.088039	0	0	22	0	6.45112e-06
+Yes	100-150%	Single-Family Attached	Not Available	0	0	0	1	15	1867.03	0
+Yes	100-150%	Single-Family Attached	Owner	0.901144	0.0988564	0	0	13	0	0
+Yes	100-150%	Single-Family Attached	Renter	0.911961	0.088039	0	0	22	1867.03	9.52042e-06
+Yes	150-200%	Single-Family Attached	Not Available	0	0	0	1	15	0	0
+Yes	150-200%	Single-Family Attached	Owner	0.901144	0.0988564	0	0	13	0	0
+Yes	150-200%	Single-Family Attached	Renter	0.911961	0.088039	0	0	22	0	8.76354e-06
+Yes	200-300%	Single-Family Attached	Not Available	0	0	0	1	15	224.105	0
+Yes	200-300%	Single-Family Attached	Owner	0.901144	0.0988564	0	0	13	0	0
+Yes	200-300%	Single-Family Attached	Renter	0.911961	0.088039	0	0	22	224.105	3.43033e-05
+Yes	300-400%	Single-Family Attached	Not Available	0	0	0	1	15	14040.4	0
+Yes	300-400%	Single-Family Attached	Owner	0.901144	0.0988564	0	0	13	8645.47	7.86734e-05
+Yes	300-400%	Single-Family Attached	Renter	0.911961	0.088039	0	0	22	5394.88	2.53749e-05
+Yes	400%+	Single-Family Attached	Not Available	0	0	0	1	25	90110.2	0
+Yes	400%+	Single-Family Attached	Owner	0.667452	0.332548	0	0	19	64471.5	0.000681277
+Yes	400%+	Single-Family Attached	Renter	0.571961	0.428039	0	0	14	19146.9	0.000386328
+Yes	Not Available	Single-Family Attached	Not Available	0.742232	0.257768	0	0	27	99749.9	0
+Yes	Not Available	Single-Family Attached	Owner	0	0	0	1	19	73117	0
+Yes	Not Available	Single-Family Attached	Renter	0	0	0	1	14	33124.8	0
+Yes	0-100%	Single-Family Detached	Not Available	0	0	0	1	23	39299.5	0
+Yes	0-100%	Single-Family Detached	Owner	0.637592	0.362408	0	0	18	32502.4	0.000190837
+Yes	0-100%	Single-Family Detached	Renter	0.929432	0.0705676	0	0	25	6797.02	5.45031e-05
+Yes	100-150%	Single-Family Detached	Not Available	0	0	0	1	17	24977.4	0
+Yes	100-150%	Single-Family Detached	Owner	0.87847	0.12153	0	0	13	7913.86	4.53327e-05
+Yes	100-150%	Single-Family Detached	Renter	0.929432	0.0705676	0	0	25	16183.8	0.000162058
+Yes	150-200%	Single-Family Detached	Not Available	0	0	0	1	17	63417.5	0
+Yes	150-200%	Single-Family Detached	Owner	0.87847	0.12153	0	0	13	51204.4	0.000307405
+Yes	150-200%	Single-Family Detached	Renter	0.929432	0.0705676	0	0	25	0	0
+Yes	200-300%	Single-Family Detached	Not Available	0	0	0	1	33	83284.3	0
+Yes	200-300%	Single-Family Detached	Owner	0.711569	0.288431	0	0	30	73515.3	0.000417636
+Yes	200-300%	Single-Family Detached	Renter	0.929432	0.0705676	0	0	25	5048.57	5.5633e-05
+Yes	300-400%	Single-Family Detached	Not Available	0	0	0	1	37	131759	0
+Yes	300-400%	Single-Family Detached	Owner	0.613324	0.386676	0	0	37	131759	0.000762233
+Yes	300-400%	Single-Family Detached	Renter	0.929432	0.0705676	0	0	25	0	0
+Yes	400%+	Single-Family Detached	Not Available	0	0	0	1	180	1.11625e+06	0
+Yes	400%+	Single-Family Detached	Owner	0.505437	0.494563	0	0	173	1.07015e+06	0.00850229
+Yes	400%+	Single-Family Detached	Renter	0.571961	0.428039	0	0	14	25901.1	0.000408948
+Yes	Not Available	Single-Family Detached	Not Available	0.535169	0.464831	0	0	221	1.42097e+06	0
+Yes	Not Available	Single-Family Detached	Owner	0	0	0	1	222	1.40506e+06	0
+Yes	Not Available	Single-Family Detached	Renter	0	0	0	1	33	53930.5	0
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: Type of electric vehicle charger used at the dwelling unit
+# Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+# Assumption: Dwelling units with an electric vehicle need to have at least a Level 1 charger.Due to low sample sizes, fallback rules applied with lumping of:
+# Assumption: [1] Federal Poverty Level lumped every 100%
+# Assumption: [2] Federal Poverty Level lumped every 200%
+# Assumption: [3] Building type is consolidated into three bins 1) single-family detached and 2) multi-family with 5+ units, and 3) mobile homes, multi-family 2-4 units, and single-family attached
+# Assumption: [4] Building type is consolidated into two bins 1) single-family detached and all other building types
+# Assumption: [5] Federal Poverty Level is combined into 400%+ and <400% bins

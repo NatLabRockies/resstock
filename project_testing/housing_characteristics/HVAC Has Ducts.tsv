@@ -6,7 +6,7 @@ Central AC	None	Ducted Heat Pump	Ducted Heating	0	0	1	0
 Ducted Heat Pump	Cooling Only	Ducted Heat Pump	Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating Only	Ducted Heat Pump	Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	Ducted Heat Pump	Ducted Heating	0	0	1	0
-Ducted Heat Pump	None	Ducted Heat Pump	Ducted Heating	0	1	0	0.00170068
+Ducted Heat Pump	None	Ducted Heat Pump	Ducted Heating	0	1	0	0.00136054
 Evaporative or Swamp Cooler	Cooling Only	Ducted Heat Pump	Ducted Heating	0	0	1	0
 Evaporative or Swamp Cooler	Heating Only	Ducted Heat Pump	Ducted Heating	0	0	1	0
 Evaporative or Swamp Cooler	Heating and Cooling	Ducted Heat Pump	Ducted Heating	0	0	1	0
@@ -30,7 +30,7 @@ Central AC	None	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
 Ducted Heat Pump	Cooling Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
-Ducted Heat Pump	None	Ducted Heat Pump	Non-Ducted Heating	0	1	0	0.00272109
+Ducted Heat Pump	None	Ducted Heat Pump	Non-Ducted Heating	0	1	0	0.00238095
 Evaporative or Swamp Cooler	Cooling Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
 Evaporative or Swamp Cooler	Heating Only	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
 Evaporative or Swamp Cooler	Heating and Cooling	Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
@@ -54,7 +54,7 @@ Central AC	None	Ducted Heat Pump	None	0	0	1	0
 Ducted Heat Pump	Cooling Only	Ducted Heat Pump	None	0	0	1	0
 Ducted Heat Pump	Heating Only	Ducted Heat Pump	None	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	Ducted Heat Pump	None	0	0	1	0
-Ducted Heat Pump	None	Ducted Heat Pump	None	0	1	0	0.0312925
+Ducted Heat Pump	None	Ducted Heat Pump	None	0	1	0	0.0319728
 Evaporative or Swamp Cooler	Cooling Only	Ducted Heat Pump	None	0	0	1	0
 Evaporative or Swamp Cooler	Heating Only	Ducted Heat Pump	None	0	0	1	0
 Evaporative or Swamp Cooler	Heating and Cooling	Ducted Heat Pump	None	0	0	1	0
@@ -71,10 +71,10 @@ Room AC	Cooling Only	Ducted Heat Pump	None	0	0	1	0
 Room AC	Heating Only	Ducted Heat Pump	None	0	0	1	0
 Room AC	Heating and Cooling	Ducted Heat Pump	None	0	0	1	0
 Room AC	None	Ducted Heat Pump	None	0	0	1	0
-Central AC	Cooling Only	Ducted Heating	Ducted Heating	0	1	0	0.00121252
-Central AC	Heating Only	Ducted Heating	Ducted Heating	0	1	0	0.00121252
-Central AC	Heating and Cooling	Ducted Heating	Ducted Heating	0	1	0	0.00121252
-Central AC	None	Ducted Heating	Ducted Heating	0	1	0	0.00259826
+Central AC	Cooling Only	Ducted Heating	Ducted Heating	0	1	0	0.000970016
+Central AC	Heating Only	Ducted Heating	Ducted Heating	0	1	0	0.000970016
+Central AC	Heating and Cooling	Ducted Heating	Ducted Heating	0	1	0	0.000970016
+Central AC	None	Ducted Heating	Ducted Heating	0	1	0	0.00207861
 Ducted Heat Pump	Cooling Only	Ducted Heating	Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating Only	Ducted Heating	Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	Ducted Heating	Ducted Heating	0	0	1	0
@@ -88,17 +88,17 @@ Non-Ducted Heat Pump	Heating Only	Ducted Heating	Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	Heating and Cooling	Ducted Heating	Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	None	Ducted Heating	Ducted Heating	0	0	1	0
 None	Cooling Only	Ducted Heating	Ducted Heating	0	0	1	0
-None	Heating Only	Ducted Heating	Ducted Heating	0	1	0	0.00242504
+None	Heating Only	Ducted Heating	Ducted Heating	0	1	0	0.00194003
 None	Heating and Cooling	Ducted Heating	Ducted Heating	0	0	1	0
-None	None	Ducted Heating	Ducted Heating	0	1	0	0.00381078
+None	None	Ducted Heating	Ducted Heating	0	1	0	0.00304862
 Room AC	Cooling Only	Ducted Heating	Ducted Heating	0	0	1	0
-Room AC	Heating Only	Ducted Heating	Ducted Heating	0	1	0	0.00242504
+Room AC	Heating Only	Ducted Heating	Ducted Heating	0	1	0	0.00194003
 Room AC	Heating and Cooling	Ducted Heating	Ducted Heating	0	0	1	0
-Room AC	None	Ducted Heating	Ducted Heating	0	1	0	0.00381078
-Central AC	Cooling Only	Ducted Heating	Non-Ducted Heating	0	1	0	0.00194003
-Central AC	Heating Only	Ducted Heating	Non-Ducted Heating	0	1	0	0.00194003
-Central AC	Heating and Cooling	Ducted Heating	Non-Ducted Heating	1	0	0	0.00194003
-Central AC	None	Ducted Heating	Non-Ducted Heating	0	1	0	0.00415722
+Room AC	None	Ducted Heating	Ducted Heating	0	1	0	0.00304862
+Central AC	Cooling Only	Ducted Heating	Non-Ducted Heating	0	1	0	0.00169753
+Central AC	Heating Only	Ducted Heating	Non-Ducted Heating	0	1	0	0.00169753
+Central AC	Heating and Cooling	Ducted Heating	Non-Ducted Heating	1	0	0	0.00169753
+Central AC	None	Ducted Heating	Non-Ducted Heating	0	1	0	0.00363756
 Ducted Heat Pump	Cooling Only	Ducted Heating	Non-Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating Only	Ducted Heating	Non-Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	Ducted Heating	Non-Ducted Heating	0	0	1	0
@@ -112,17 +112,17 @@ Non-Ducted Heat Pump	Heating Only	Ducted Heating	Non-Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	Heating and Cooling	Ducted Heating	Non-Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	None	Ducted Heating	Non-Ducted Heating	0	0	1	0
 None	Cooling Only	Ducted Heating	Non-Ducted Heating	0	0	1	0
-None	Heating Only	Ducted Heating	Non-Ducted Heating	1	0	0	0.00388007
+None	Heating Only	Ducted Heating	Non-Ducted Heating	1	0	0	0.00339506
 None	Heating and Cooling	Ducted Heating	Non-Ducted Heating	0	0	1	0
-None	None	Ducted Heating	Non-Ducted Heating	0	1	0	0.00609725
+None	None	Ducted Heating	Non-Ducted Heating	0	1	0	0.00533509
 Room AC	Cooling Only	Ducted Heating	Non-Ducted Heating	0	0	1	0
-Room AC	Heating Only	Ducted Heating	Non-Ducted Heating	1	0	0	0.00388007
+Room AC	Heating Only	Ducted Heating	Non-Ducted Heating	1	0	0	0.00339506
 Room AC	Heating and Cooling	Ducted Heating	Non-Ducted Heating	0	0	1	0
-Room AC	None	Ducted Heating	Non-Ducted Heating	0	1	0	0.00609725
-Central AC	Cooling Only	Ducted Heating	None	0	1	0	0.0223104
-Central AC	Heating Only	Ducted Heating	None	0	1	0	0.0223104
-Central AC	Heating and Cooling	Ducted Heating	None	1	0	0	0.0223104
-Central AC	None	Ducted Heating	None	0	1	0	0.047808
+Room AC	None	Ducted Heating	Non-Ducted Heating	0	1	0	0.00533509
+Central AC	Cooling Only	Ducted Heating	None	0	1	0	0.0227954
+Central AC	Heating Only	Ducted Heating	None	0	1	0	0.0227954
+Central AC	Heating and Cooling	Ducted Heating	None	1	0	0	0.0227954
+Central AC	None	Ducted Heating	None	0	1	0	0.0488473
 Ducted Heat Pump	Cooling Only	Ducted Heating	None	0	0	1	0
 Ducted Heat Pump	Heating Only	Ducted Heating	None	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	Ducted Heating	None	0	0	1	0
@@ -136,13 +136,13 @@ Non-Ducted Heat Pump	Heating Only	Ducted Heating	None	0	0	1	0
 Non-Ducted Heat Pump	Heating and Cooling	Ducted Heating	None	0	0	1	0
 Non-Ducted Heat Pump	None	Ducted Heating	None	0	0	1	0
 None	Cooling Only	Ducted Heating	None	0	0	1	0
-None	Heating Only	Ducted Heating	None	1	0	0	0.0446208
+None	Heating Only	Ducted Heating	None	1	0	0	0.0455908
 None	Heating and Cooling	Ducted Heating	None	0	0	1	0
-None	None	Ducted Heating	None	0	1	0	0.0701184
+None	None	Ducted Heating	None	0	1	0	0.0716427
 Room AC	Cooling Only	Ducted Heating	None	0	0	1	0
-Room AC	Heating Only	Ducted Heating	None	1	0	0	0.0446208
+Room AC	Heating Only	Ducted Heating	None	1	0	0	0.0455908
 Room AC	Heating and Cooling	Ducted Heating	None	0	0	1	0
-Room AC	None	Ducted Heating	None	0	1	0	0.0701184
+Room AC	None	Ducted Heating	None	0	1	0	0.0716427
 Central AC	Cooling Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0
 Central AC	Heating Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0
 Central AC	Heating and Cooling	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0
@@ -158,7 +158,7 @@ Evaporative or Swamp Cooler	None	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	Cooling Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	Heating Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0
-Non-Ducted Heat Pump	None	Non-Ducted Heat Pump	Ducted Heating	0	1	0	0.00170068
+Non-Ducted Heat Pump	None	Non-Ducted Heat Pump	Ducted Heating	0	1	0	0.00136054
 None	Cooling Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0
 None	Heating Only	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0
 None	Heating and Cooling	Non-Ducted Heat Pump	Ducted Heating	0	0	1	0
@@ -182,7 +182,7 @@ Evaporative or Swamp Cooler	None	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	Cooling Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	Heating Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
-Non-Ducted Heat Pump	None	Non-Ducted Heat Pump	Non-Ducted Heating	1	0	0	0.00272109
+Non-Ducted Heat Pump	None	Non-Ducted Heat Pump	Non-Ducted Heating	1	0	0	0.00238095
 None	Cooling Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
 None	Heating Only	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
 None	Heating and Cooling	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	1	0
@@ -206,7 +206,7 @@ Evaporative or Swamp Cooler	None	Non-Ducted Heat Pump	None	0	0	1	0
 Non-Ducted Heat Pump	Cooling Only	Non-Ducted Heat Pump	None	0	0	1	0
 Non-Ducted Heat Pump	Heating Only	Non-Ducted Heat Pump	None	0	0	1	0
 Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heat Pump	None	0	0	1	0
-Non-Ducted Heat Pump	None	Non-Ducted Heat Pump	None	1	0	0	0.0312925
+Non-Ducted Heat Pump	None	Non-Ducted Heat Pump	None	1	0	0	0.0319728
 None	Cooling Only	Non-Ducted Heat Pump	None	0	0	1	0
 None	Heating Only	Non-Ducted Heat Pump	None	0	0	1	0
 None	Heating and Cooling	Non-Ducted Heat Pump	None	0	0	1	0
@@ -215,10 +215,10 @@ Room AC	Cooling Only	Non-Ducted Heat Pump	None	0	0	1	0
 Room AC	Heating Only	Non-Ducted Heat Pump	None	0	0	1	0
 Room AC	Heating and Cooling	Non-Ducted Heat Pump	None	0	0	1	0
 Room AC	None	Non-Ducted Heat Pump	None	0	0	1	0
-Central AC	Cooling Only	Non-Ducted Heating	Ducted Heating	0	1	0	0.00121252
-Central AC	Heating Only	Non-Ducted Heating	Ducted Heating	0	1	0	0.00121252
-Central AC	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	1	0	0.00121252
-Central AC	None	Non-Ducted Heating	Ducted Heating	0	1	0	0.00259826
+Central AC	Cooling Only	Non-Ducted Heating	Ducted Heating	0	1	0	0.000970016
+Central AC	Heating Only	Non-Ducted Heating	Ducted Heating	0	1	0	0.000970016
+Central AC	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	1	0	0.000970016
+Central AC	None	Non-Ducted Heating	Ducted Heating	0	1	0	0.00207861
 Ducted Heat Pump	Cooling Only	Non-Ducted Heating	Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating Only	Non-Ducted Heating	Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	0	1	0
@@ -232,17 +232,17 @@ Non-Ducted Heat Pump	Heating Only	Non-Ducted Heating	Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	None	Non-Ducted Heating	Ducted Heating	0	0	1	0
 None	Cooling Only	Non-Ducted Heating	Ducted Heating	0	0	1	0
-None	Heating Only	Non-Ducted Heating	Ducted Heating	0	1	0	0.00242504
+None	Heating Only	Non-Ducted Heating	Ducted Heating	0	1	0	0.00194003
 None	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	0	1	0
-None	None	Non-Ducted Heating	Ducted Heating	0	1	0	0.00381078
+None	None	Non-Ducted Heating	Ducted Heating	0	1	0	0.00304862
 Room AC	Cooling Only	Non-Ducted Heating	Ducted Heating	0	0	1	0
-Room AC	Heating Only	Non-Ducted Heating	Ducted Heating	0	1	0	0.00242504
+Room AC	Heating Only	Non-Ducted Heating	Ducted Heating	0	1	0	0.00194003
 Room AC	Heating and Cooling	Non-Ducted Heating	Ducted Heating	0	0	1	0
-Room AC	None	Non-Ducted Heating	Ducted Heating	0	1	0	0.00381078
-Central AC	Cooling Only	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00194003
-Central AC	Heating Only	Non-Ducted Heating	Non-Ducted Heating	0	1	0	0.00194003
-Central AC	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00194003
-Central AC	None	Non-Ducted Heating	Non-Ducted Heating	0	1	0	0.00415722
+Room AC	None	Non-Ducted Heating	Ducted Heating	0	1	0	0.00304862
+Central AC	Cooling Only	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00169753
+Central AC	Heating Only	Non-Ducted Heating	Non-Ducted Heating	0	1	0	0.00169753
+Central AC	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00169753
+Central AC	None	Non-Ducted Heating	Non-Ducted Heating	0	1	0	0.00363756
 Ducted Heat Pump	Cooling Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0
@@ -256,17 +256,17 @@ Non-Ducted Heat Pump	Heating Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0
 Non-Ducted Heat Pump	None	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0
 None	Cooling Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0
-None	Heating Only	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00388007
+None	Heating Only	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00339506
 None	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0
-None	None	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00609725
+None	None	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00533509
 Room AC	Cooling Only	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0
-Room AC	Heating Only	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00388007
+Room AC	Heating Only	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00339506
 Room AC	Heating and Cooling	Non-Ducted Heating	Non-Ducted Heating	0	0	1	0
-Room AC	None	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00609725
-Central AC	Cooling Only	Non-Ducted Heating	None	1	0	0	0.0223104
-Central AC	Heating Only	Non-Ducted Heating	None	0	1	0	0.0223104
-Central AC	Heating and Cooling	Non-Ducted Heating	None	1	0	0	0.0223104
-Central AC	None	Non-Ducted Heating	None	0	1	0	0.047808
+Room AC	None	Non-Ducted Heating	Non-Ducted Heating	1	0	0	0.00533509
+Central AC	Cooling Only	Non-Ducted Heating	None	1	0	0	0.0227954
+Central AC	Heating Only	Non-Ducted Heating	None	0	1	0	0.0227954
+Central AC	Heating and Cooling	Non-Ducted Heating	None	1	0	0	0.0227954
+Central AC	None	Non-Ducted Heating	None	0	1	0	0.0488473
 Ducted Heat Pump	Cooling Only	Non-Ducted Heating	None	0	0	1	0
 Ducted Heat Pump	Heating Only	Non-Ducted Heating	None	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	None	0	0	1	0
@@ -280,17 +280,17 @@ Non-Ducted Heat Pump	Heating Only	Non-Ducted Heating	None	0	0	1	0
 Non-Ducted Heat Pump	Heating and Cooling	Non-Ducted Heating	None	0	0	1	0
 Non-Ducted Heat Pump	None	Non-Ducted Heating	None	0	0	1	0
 None	Cooling Only	Non-Ducted Heating	None	0	0	1	0
-None	Heating Only	Non-Ducted Heating	None	1	0	0	0.0446208
+None	Heating Only	Non-Ducted Heating	None	1	0	0	0.0455908
 None	Heating and Cooling	Non-Ducted Heating	None	0	0	1	0
-None	None	Non-Ducted Heating	None	1	0	0	0.0701184
+None	None	Non-Ducted Heating	None	1	0	0	0.0716427
 Room AC	Cooling Only	Non-Ducted Heating	None	0	0	1	0
-Room AC	Heating Only	Non-Ducted Heating	None	1	0	0	0.0446208
+Room AC	Heating Only	Non-Ducted Heating	None	1	0	0	0.0455908
 Room AC	Heating and Cooling	Non-Ducted Heating	None	0	0	1	0
-Room AC	None	Non-Ducted Heating	None	1	0	0	0.0701184
-Central AC	Cooling Only	None	Ducted Heating	0	1	0	0.000881833
+Room AC	None	Non-Ducted Heating	None	1	0	0	0.0716427
+Central AC	Cooling Only	None	Ducted Heating	0	1	0	0
 Central AC	Heating Only	None	Ducted Heating	0	0	1	0
 Central AC	Heating and Cooling	None	Ducted Heating	0	0	1	0
-Central AC	None	None	Ducted Heating	0	1	0	0.00138574
+Central AC	None	None	Ducted Heating	0	1	0	0
 Ducted Heat Pump	Cooling Only	None	Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating Only	None	Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	None	Ducted Heating	0	0	1	0
@@ -306,15 +306,15 @@ Non-Ducted Heat Pump	None	None	Ducted Heating	0	0	1	0
 None	Cooling Only	None	Ducted Heating	0	0	1	0
 None	Heating Only	None	Ducted Heating	0	0	1	0
 None	Heating and Cooling	None	Ducted Heating	0	0	1	0
-None	None	None	Ducted Heating	0	1	0	0.00226757
+None	None	None	Ducted Heating	0	1	0	0
 Room AC	Cooling Only	None	Ducted Heating	0	0	1	0
 Room AC	Heating Only	None	Ducted Heating	0	0	1	0
 Room AC	Heating and Cooling	None	Ducted Heating	0	0	1	0
-Room AC	None	None	Ducted Heating	0	1	0	0.00226757
-Central AC	Cooling Only	None	Non-Ducted Heating	1	0	0	0.00141093
+Room AC	None	None	Ducted Heating	0	1	0	0
+Central AC	Cooling Only	None	Non-Ducted Heating	1	0	0	0
 Central AC	Heating Only	None	Non-Ducted Heating	0	0	1	0
 Central AC	Heating and Cooling	None	Non-Ducted Heating	0	0	1	0
-Central AC	None	None	Non-Ducted Heating	0	1	0	0.00221718
+Central AC	None	None	Non-Ducted Heating	0	1	0	0
 Ducted Heat Pump	Cooling Only	None	Non-Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating Only	None	Non-Ducted Heating	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	None	Non-Ducted Heating	0	0	1	0
@@ -330,15 +330,15 @@ Non-Ducted Heat Pump	None	None	Non-Ducted Heating	0	0	1	0
 None	Cooling Only	None	Non-Ducted Heating	0	0	1	0
 None	Heating Only	None	Non-Ducted Heating	0	0	1	0
 None	Heating and Cooling	None	Non-Ducted Heating	0	0	1	0
-None	None	None	Non-Ducted Heating	1	0	0	0.00362812
+None	None	None	Non-Ducted Heating	1	0	0	0
 Room AC	Cooling Only	None	Non-Ducted Heating	0	0	1	0
 Room AC	Heating Only	None	Non-Ducted Heating	0	0	1	0
 Room AC	Heating and Cooling	None	Non-Ducted Heating	0	0	1	0
-Room AC	None	None	Non-Ducted Heating	1	0	0	0.00362812
-Central AC	Cooling Only	None	None	1	0	0	0.0162257
+Room AC	None	None	Non-Ducted Heating	1	0	0	0
+Central AC	Cooling Only	None	None	1	0	0	0.0185185
 Central AC	Heating Only	None	None	0	0	1	0
 Central AC	Heating and Cooling	None	None	0	0	1	0
-Central AC	None	None	None	0	1	0	0.0254976
+Central AC	None	None	None	0	1	0	0.0291005
 Ducted Heat Pump	Cooling Only	None	None	0	0	1	0
 Ducted Heat Pump	Heating Only	None	None	0	0	1	0
 Ducted Heat Pump	Heating and Cooling	None	None	0	0	1	0
@@ -354,10 +354,10 @@ Non-Ducted Heat Pump	None	None	None	0	0	1	0
 None	Cooling Only	None	None	0	0	1	0
 None	Heating Only	None	None	0	0	1	0
 None	Heating and Cooling	None	None	0	0	1	0
-None	None	None	None	1	0	0	0.0417234
+None	None	None	None	1	0	0	0.0476191
 Room AC	Cooling Only	None	None	0	0	1	0
 Room AC	Heating Only	None	None	0	0	1	0
 Room AC	Heating and Cooling	None	None	0	0	1	0
-Room AC	None	None	None	1	0	0	0.0417234
+Room AC	None	None	None	1	0	0	0.0476191
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence of ducts in the dwelling unit.

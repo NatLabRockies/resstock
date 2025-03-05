@@ -1,0 +1,4 @@
+Option=Compact, Battery Electric Vehicle, 200 mile range	Option=Compact, Battery Electric Vehicle, 300 mile range	Option=Midsize, Battery Electric Vehicle, 200 mile range	Option=Midsize, Battery Electric Vehicle, 300 mile range	Option=Pickup, Battery Electric Vehicle, 200 mile range	Option=Pickup, Battery Electric Vehicle, 300 mile range	Option=SUV, Battery Electric Vehicle, 200 mile range	Option=SUV, Battery Electric Vehicle, 300 mile range	sampling_probability
+0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	1
+# Created by: sources\tempo\tsv_maker.py
+# Description: The type of electric vehicle and battery range in miles.

@@ -83,7 +83,6 @@ def expected_timeseries_columns(testing)
     'TimeUTC',
     'Energy Use: Total',
     'Fuel Use: Electricity: Total',
-    'End Use: Natural Gas: Heating',
     'Emissions: CO2e: LRMER_MidCase_15: Total'
   ]
   contents += [

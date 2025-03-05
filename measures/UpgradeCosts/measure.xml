@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>upgrade_costs</name>
   <uid>ef51212c-acc4-48d7-9b29-cf2a5c6c4449</uid>
-  <version_id>aec141ff-f641-4463-b7e1-bb5b3a8a928c</version_id>
-  <version_modified>2025-02-04T20:54:47Z</version_modified>
+  <version_id>22e61250-41e7-446a-8237-4815155d3420</version_id>
+  <version_modified>2025-02-13T23:08:20Z</version_modified>
   <xml_checksum>B1F14CB4</xml_checksum>
   <class_name>UpgradeCosts</class_name>
   <display_name>Upgrade Costs</display_name>

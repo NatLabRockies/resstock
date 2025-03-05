@@ -1,0 +1,5 @@
+Dependency=Electric Vehicle Ownership	Option=Level 1 charger	Option=Level 2 charger	Option=None	sampling_probability
+No	0	0	1	0.5
+Yes	0.5	0.5	0	0.5
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: Type of electric vehicle charger used at the dwelling unit

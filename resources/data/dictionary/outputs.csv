@@ -512,3 +512,5 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 511,,,,,schedules_plug_loads_tv,frac,Television plug load energy use schedule.
 512,,,,,schedules_power_outage,,Unavailable period.
 513,,,,,schedules_vacancy,,Unavailable period.
+514,,,,,schedules_electric_vehicle_charging,frac,availability schedule for electric vehicle charging.
+515,,,,,schedules_electric_vehicle_discharging,frac,availability schedule for electric vehicle discharging.

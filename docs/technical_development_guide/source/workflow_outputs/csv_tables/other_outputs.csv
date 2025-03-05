@@ -1,4 +1,10 @@
 Input Name,Input Description
+build_existing_model.electric_vehicle_battery, The type of battery used by EV
+build_existing_model.electric_vehicle_charge_at_home, Percentage of EV charging that occurs at home
+build_existing_model.electric_vehicle_charger, The type of charger used by EV
+build_existing_model.electric_vehicle_miles_traveled, Annual miles traveled by EV
+build_existing_model.electric_vehicle_outlet_access, The type of outlet access available for EV
+build_existing_model.electric_vehicle_ownership, Whether the EV is present or not
 building_id,The building unit number (between 1 and the number of samples).
 job_id,The unique identifier of the job/processor.
 started_at,Simulation start time.

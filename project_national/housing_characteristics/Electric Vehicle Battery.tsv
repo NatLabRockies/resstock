@@ -1,0 +1,8 @@
+Option=Compact, Battery Electric Vehicle, 200 mile range	Option=Compact, Battery Electric Vehicle, 300 mile range	Option=Midsize, Battery Electric Vehicle, 200 mile range	Option=Midsize, Battery Electric Vehicle, 300 mile range	Option=Pickup, Battery Electric Vehicle, 200 mile range	Option=Pickup, Battery Electric Vehicle, 300 mile range	Option=SUV, Battery Electric Vehicle, 200 mile range	Option=SUV, Battery Electric Vehicle, 300 mile range	sampling_probability
+0.11868	0.339087	0.0295077	0.0760135	5.46876e-05	0.00765117	0.122608	0.306398	1
+# Created by: sources\tempo\tsv_maker.py
+# Description: The type of electric vehicle and battery range in miles.
+# Source: Constructed using the 2023 Vehicle Stock Projection Data from NREL's TEMPO model.
+# Source: Constructed using EV Registration Data from Experian 2023.
+# Assumption: Vehicle stock data starts with the Experian registration data and then is projected by TEMPO to 2023.
+# Assumption: If the household does not have an Electric Vehicle, the options represent the household preference.

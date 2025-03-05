@@ -28,7 +28,12 @@ Doors,3.0,0.0,manually created,Exterior door material and properties.
 Duct Leakage and Insulation,14.0,1.0,sources\other\tsv_maker.py,Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces
 Duct Location,7.0,2.0,sources\other\tsv_maker.py,Location of Duct System
 Eaves,4.0,0.0,manually created,Depth of roof eaves.
-Electric Vehicle,3.0,0.0,manually created,Electric vehicle usage and efficiency (not used in project_national).
+Electric Vehicle Battery,8.0,0.0,sources\tempo\tsv_maker.py,The type of electric vehicle and battery range in miles.
+Electric Vehicle Charge At Home,6.0,0.0,sources\recs\recs2020\tsv_maker.py,The percentage a household would or do charge their electric vehicle at home.
+Electric Vehicle Charger,3.0,1.0,sources\recs\recs2020\tsv_maker.py,Type of electric vehicle charger used at the dwelling unit
+Electric Vehicle Miles Traveled,14.0,0.0,manually created,The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
+Electric Vehicle Outlet Access,2.0,0.0,sources\recs\recs2020\tsv_maker.py,The unit has an outlet within 20 feet of vehicle parking.
+Electric Vehicle Ownership,2.0,0.0,sources\experian\tsv_maker.py,The dwelling unit owns an electric vehicle.
 Generation And Emissions Assessment Region,5.0,1.0,sources\spatial\tsv_maker.py,The generation and carbon emissions assessment region that the sample is located.
 Geometry Attic Type,4.0,2.0,sources\recs\recs2020\tsv_maker.py,The dwelling unit attic type.
 Geometry Building Horizontal Location MF,5.0,2.0,sources\recs\recs2009\tsv_maker.py,"Location of the single-family attached unit horizontally within the building (left, middle, right)."
@@ -61,7 +66,7 @@ HVAC Heating Efficiency,21.0,3.0,sources\recs\recs2020\tsv_maker.py,The presence
 HVAC Heating Type,5.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and type of the primary heating system in the dwelling unit.
 HVAC Heating Type And Fuel,25.0,2.0,sources\recs\recs2020\tsv_maker.py,"The presence, type, and fuel of primary heating system."
 HVAC Secondary Heating Efficiency,10.0,3.0,sources\aris\tsv_maker.py,The efficiency and type of the heating system.
-HVAC Secondary Heating Fuel,7.0,0.0,sources\aris\tsv_maker.py,Secondary Heating Fuel for the dwelling unit
+HVAC Secondary Heating Fuel,7.0,2.0,sources\aris\tsv_maker.py,Secondary Heating Fuel for the dwelling unit
 HVAC Secondary Heating Partial Space Conditioning,7.0,3.0,sources\aris\tsv_maker.py,The fraction of heating load served by secondary heating system
 HVAC Secondary Heating Type,3.0,2.0,sources\aris\tsv_maker.py,The efficiency and type of the heating system.
 HVAC Shared Efficiencies,7.0,2.0,sources\recs\recs2020\tsv_maker.py,The presence and efficiency of the shared HVAC system.
