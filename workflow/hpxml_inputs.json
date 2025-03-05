@@ -1160,6 +1160,11 @@
   "sample_files/base-bldgtype-mf-unit-adjacent-to-other-housing-unit.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml"
   },
+  "sample_files/base-bldgtype-mf-unit-adjacent-to-other-housing-unit-basement.xml": {
+    "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
+    "geometry_foundation_type": "UnconditionedBasement",
+    "floor_over_foundation_assembly_r": 18.7
+  },
   "sample_files/base-bldgtype-mf-unit-infil-compartmentalization-test.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
     "air_leakage_value": 12.16,
@@ -1210,6 +1215,10 @@
     "cooling_system_type": "none",
     "cooling_system_cooling_efficiency": 0,
     "cooling_system_fraction_cool_load_served": 0
+  },
+  "sample_files/base-bldgtype-mf-unit-shared-boiler-only-baseboard-combi-tankless.xml": {
+    "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-boiler-only-baseboard.xml",
+    "water_heater_type": "space-heating boiler with tankless coil"
   },
   "sample_files/base-bldgtype-mf-unit-shared-boiler-only-fan-coil.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-boiler-only-baseboard.xml",

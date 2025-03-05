@@ -4504,7 +4504,7 @@ A detailed solar hot water system is entered as a ``/HPXML/Building/BuildingDeta
   ``CollectorAzimuth`` or ``CollectorOrientation``  integer or string  deg or direction  >= 0, <= 359 or See [#]_  Yes                 Direction panels face (clockwise from North)
   ``CollectorTilt``                                 double             deg               >= 0, <= 90               Yes                 Tilt relative to horizontal
   ``CollectorRatedOpticalEfficiency``               double             frac              > 0, < 1                  Yes                 Rated optical efficiency [#]_
-  ``CollectorRatedThermalLosses``                   double             Btu/hr-ft2-R      > 0                       Yes                 Rated thermal losses [#]_
+  ``CollectorRatedThermalLosses``                   double             Btu/hr-ft2-F      > 0                       Yes                 Rated thermal losses [#]_
   ``StorageVolume``                                 double             gal               > 0                       No        See [#]_  Hot water storage volume
   ``ConnectedTo``                                   idref                                See [#]_                  Yes                 Connected water heater
   ================================================  =================  ================  ========================  ========  ========  ==============================
