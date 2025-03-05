@@ -1,36 +1,49 @@
 # frozen_string_literal: true
 
+$weather_cache = {}
+
 # Object that stores EnergyPlus weather information (either directly sourced from the EPW or
 # calculated based on the EPW data).
 class WeatherFile
   # @param epw_path [String] Path to the EPW weather file
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
-  # @param hpxml [HPXML] HPXML object
-  def initialize(epw_path:, runner:, hpxml: nil)
-    @header = WeatherHeader.new
-    @data = WeatherData.new
-    @design = WeatherDesign.new
-
+  def initialize(epw_path:, runner:)
     if not File.exist?(epw_path)
       fail "Cannot find weather file at #{epw_path}."
     end
 
-    process_epw(runner, epw_path, hpxml)
+    @epw_path = epw_path
+    if not $weather_cache[epw_path].nil?
+      # Use cache
+      epw_data = $weather_cache[epw_path]
+      @header = epw_data[:header]
+      @data = epw_data[:data]
+      @design = epw_data[:design]
+      @epw_file = epw_data[:epw_file]
+      return
+    else
+      @header = WeatherHeader.new
+      @data = WeatherData.new
+      @design = WeatherDesign.new
+      @epw_file = OpenStudio::EpwFile.new(epw_path, true)
+      $weather_cache[epw_path] = { header: @header,
+                                   data: @data,
+                                   design: @design,
+                                   epw_file: @epw_file }
+    end
+
+    process_epw(runner)
   end
 
-  attr_accessor(:header, :data, :design)
+  attr_accessor(:header, :data, :design, :epw_file, :epw_path)
 
   private
 
   # Main method that processes the EPW file to extract any information we need.
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
-  # @param epw_path [String] Path to the EPW weather file
-  # @param hpxml [HPXML] HPXML object
   # @return [nil]
-  def process_epw(runner, epw_path, hpxml)
-    epw_file = OpenStudio::EpwFile.new(epw_path, true)
-
+  def process_epw(runner)
     get_header_info_from_epw(epw_file)
     epw_has_design_data = get_design_info_from_epw(runner, epw_file)
 
@@ -96,7 +109,7 @@ class WeatherFile
     calc_heat_cool_degree_days(dailydbs)
     calc_avg_monthly_highs_lows(dailyhighdbs, dailylowdbs)
     calc_shallow_ground_temperatures()
-    calc_deep_ground_temperatures(hpxml)
+    calc_deep_ground_temperatures()
     calc_mains_temperatures(dailydbs.size)
     data.WSF = calc_ashrae_622_wsf(rowdata)
 
@@ -179,15 +192,25 @@ class WeatherFile
 
   # Calculates the ASHRAE 62.2 Weather and Shielding Factor (WSF) value per report
   # LBNL-5795E "Infiltration as Ventilation: Weather-Induced Dilution" if the value is
-  # not available in the zipcode_weather_stations.csv resource file.
+  # not available in the ashrae622_wsf.csv resource file.
   #
   # @param rowdata [Array<Hash>] Weather data for each EPW record
   # @return [Double] WSF value
   def calc_ashrae_622_wsf(rowdata)
-    weather_data = Defaults.lookup_weather_data_from_wmo(header.WMONumber)
-    if not weather_data.nil?
-      return Float(weather_data[:station_ashrae_622_wsf])
+    # First look in CSV
+    wsf = nil
+    csv_path = File.join(File.dirname(__FILE__), 'data', 'ashrae622_wsf.csv')
+    File.readlines(csv_path).each do |row|
+      row = row.split(',')
+      next if row[0] != header.WMONumber
+
+      wsf = Float(row[1])
     end
+    if not wsf.nil?
+      return wsf.round(2)
+    end
+
+    # If not found, calculate from weather data
 
     # Constants
     c_d = 1.0       # discharge coefficient for ELA (at 4 Pa) (unitless)
@@ -345,34 +368,30 @@ class WeatherFile
     end
   end
 
-  # Stores deep ground temperature data for Xing's model if there is a ground
-  # source heat pump in the building.
+  # Stores deep ground temperature data for Xing's model, for use with
+  # the ground source heat pump model.
   #
-  # @param hpxml [HPXML] HPXML object
   # @return [nil]
-  def calc_deep_ground_temperatures(hpxml)
-    # Avoid this lookup/calculation if there's no GSHP since there is a (small) runtime penalty.
-    if !hpxml.nil?
-      has_gshp = false
-      hpxml.buildings.each do |hpxml_bldg|
-        has_gshp = true if hpxml_bldg.heat_pumps.count { |h| h.heat_pump_type == HPXML::HVACTypeHeatPumpGroundToAir } > 0
-      end
-      return if !has_gshp
-    end
-
-    deep_ground_temperatures = File.join(File.dirname(__FILE__), 'data', 'Xing_okstate_0664D_13659_Table_A-3.csv')
-    if not File.exist?(deep_ground_temperatures)
+  def calc_deep_ground_temperatures()
+    csv_path = File.join(File.dirname(__FILE__), 'data', 'Xing_okstate_0664D_13659_Table_A-3.csv')
+    if not File.exist?(csv_path)
       fail 'Could not find Xing_okstate_0664D_13659_Table_A-3.csv'
     end
 
     require 'csv'
     require 'matrix'
 
+    # Note: We don't use the CSV library here because it's slow for large files
+    csv_data = File.readlines(csv_path).map(&:strip)
+
     # Minimize distance to Station
     v1 = Vector[header.Latitude, header.Longitude]
     dist = 1 / Constants::Small
     temperatures_amplitudes = nil
-    CSV.foreach(deep_ground_temperatures) do |row|
+    csv_data.each_with_index do |row, i|
+      next if i == 0 # skip header
+
+      row = row.split(',')
       v2 = Vector[row[3].to_f, row[4].to_f]
       new_dist = (v1 - v2).magnitude
       if new_dist < dist

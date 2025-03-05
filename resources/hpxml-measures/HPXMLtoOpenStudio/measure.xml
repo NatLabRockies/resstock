@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>d92a5185-cd4e-4a2e-bf62-4c999fa35bde</version_id>
-  <version_modified>2025-02-20T18:38:37Z</version_modified>
+  <version_id>9be2b586-fe93-4800-b039-6bf6df2ed502</version_id>
+  <version_modified>2025-03-04T22:53:27Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -183,7 +183,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>34B61ECA</checksum>
+      <checksum>5629CCEC</checksum>
     </file>
     <file>
       <filename>airflow.rb</filename>
@@ -219,7 +219,13 @@
       <filename>data/Xing_okstate_0664D_13659_Table_A-3.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>50B7055C</checksum>
+      <checksum>63D2B9F2</checksum>
+    </file>
+    <file>
+      <filename>data/ashrae622_wsf.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>AE52BE51</checksum>
     </file>
     <file>
       <filename>data/cambium/LRMER_95DecarbBy2035.csv</filename>
@@ -321,13 +327,13 @@
       <filename>data/zipcode_weather_stations.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>308D9F48</checksum>
+      <checksum>2B7E2F0F</checksum>
     </file>
     <file>
       <filename>defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7F6189F3</checksum>
+      <checksum>49F9C868</checksum>
     </file>
     <file>
       <filename>energyplus.rb</filename>
@@ -357,7 +363,7 @@
       <filename>hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>6923DA1E</checksum>
+      <checksum>38DA3B96</checksum>
     </file>
     <file>
       <filename>hpxml_schema/HPXML.xsd</filename>
@@ -411,7 +417,7 @@
       <filename>location.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E5CD0079</checksum>
+      <checksum>3FF22771</checksum>
     </file>
     <file>
       <filename>materials.rb</filename>
@@ -453,7 +459,7 @@
       <filename>output.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2824DDC1</checksum>
+      <checksum>F1DAFE41</checksum>
     </file>
     <file>
       <filename>psychrometrics.rb</filename>
@@ -669,7 +675,7 @@
       <filename>weather.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>70BF0986</checksum>
+      <checksum>11B40537</checksum>
     </file>
     <file>
       <filename>xmlhelper.rb</filename>
@@ -741,7 +747,7 @@
       <filename>test_location.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>733BB792</checksum>
+      <checksum>48836AFF</checksum>
     </file>
     <file>
       <filename>test_miscloads.rb</filename>
@@ -789,7 +795,7 @@
       <filename>test_weather.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>AD9AB5EC</checksum>
+      <checksum>81A0B24E</checksum>
     </file>
     <file>
       <filename>util.rb</filename>
