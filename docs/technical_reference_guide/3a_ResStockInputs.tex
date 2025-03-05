@@ -2711,20 +2711,20 @@ Defines the insulation level for all slab-on-grade foundation types.
     \item Geometry Foundation Type.
 \end{itemize}
 \paragraph{Option(s)}
-ResStock uses eight different options for Insulation Slab, plus a ``None'' flag for homes without a slab-on-grade foundation; see Table \ref{table:hc_opt_ins_slab}. The options specify both the R-value as well as the location of the slab insulation. Three ResStock arguments are constant across all options: \texttt{slab\_thickness},\texttt{slab\_carpet\_fraction}, and
-\texttt{slab\_carpet\_r} are all set to auto. 
+ResStock uses eight different options for Insulation Slab, plus a ``None'' flag for homes without a slab-on-grade foundation; see Table \ref{table:hc_opt_ins_slab}. The options specify both the R-value as well as the location of the slab insulation. The ResStock arguments \texttt{slab\_thickness},\texttt{slab\_carpet\_fraction}, and
+\texttt{slab\_carpet\_r} are constant across all the options and are all set to auto. The ResStock arguments \texttt{slab\_under\_insulation\_width}, \texttt{slab\_exterior\_horizontal\_insulation\_width}, and \texttt{lab\_exterior\_horizontal\_insulation\_depth\_below\_grade} are constant and set to 0.
 
 \begin{customLongTable}{|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|} {Insulation Slab options and arguments that vary for each option} {table:hc_opt_ins_slab} 
 {Option name & \texttt{slab\_perimeter\_insulation\_r}
 & \texttt{slab\_perimeter\_depth} & \texttt{slab\_under\_insulation\_r}
-& \texttt{slab\_under\_width}}
-None & 0 & 0 & 0 & 0  \\ \hline
-Uninsulated & 0 & 0 & 0 & 0 \\ \hline
-2ft R5 Under, Horizontal & 0 & 0 & 5 & 2 \\ \hline
-2ft R10 Under, Horizontal & 0 & 0 & 10 & 2  \\ \hline
-4ft R5 Under, Horizontal & 0 & 0 & 5 & 4  \\ \hline
-2ft R5 Perimeter, Vertical & 5 & 2 & 0 & 0 \\ \hline
-2ft R10 Perimeter, Vertical & 10 & 2 & 0 & 0  \\ \hline
+& \texttt{slab\_under\_insulation\_width}}
+None & 0 & 0 & 0 & 0  \\
+Uninsulated & 0 & 0 & 0 & 0 \\
+2ft R5 Under, Horizontal & 0 & 0 & 5 & 2 \\
+2ft R10 Under, Horizontal & 0 & 0 & 10 & 2  \\
+4ft R5 Under, Horizontal & 0 & 0 & 5 & 4  \\
+2ft R5 Perimeter, Vertical & 5 & 2 & 0 & 0 \\
+2ft R10 Perimeter, Vertical & 10 & 2 & 0 & 0  \\
 R10 Whole Slab, Horizontal & 0 & 0 & 10 & 999  \\
 \end{customLongTable}
 % Template starting-place header swap: %
@@ -2736,16 +2736,17 @@ Slabs} documentation for the available HPXML schema elements, default values, an
 \texttt{slab\_perimeter\_insulation\_r} & true & h-ft\textsuperscript{2}-R/Btu &
 Double & & Nominal R-value of the vertical slab perimeter insulation.
 Applies to slab-on-grade foundations and basement/crawlspace floors. \\ \hline
-\texttt{slab\_perimeter\_depth} & true & ft & Double & & Depth from
+\texttt{slab\_perimeter\_insulation\_depth} & true & ft & Double & & Depth from
 grade to bottom of vertical slab perimeter insulation. Applies to
 slab-on-grade foundations and basement/crawlspace floors. \\ \hline
+\texttt{slab\_exterior\_horizontal\_insulation\_width} & false & h-ft\textsuperscript{2}-R/Btu & Double & & Nominal R-value of the slab exterior horizontal insulation. Applies to slab-on-grade foundations and basement/crawlspace floors. \\ \hline
+\texttt{slab\_exterior\_horizontal\_insulation\_width} & false & ft & Double & & Width of the slab exterior horizontal insulation measured from the exterior surface of the vertical slab perimeter insulation. Applies to slab-on-grade foundations and basement/crawlspace floors. \\ \hline
+\texttt{slab\_exterior\_horizontal\_insulation\_depth\_below\_grade} & false & ft & Double &
+& Depth of the slab exterior horizontal insulation measured from the top surface of the slab exterior horizontal insulation. Applies to slab-on-grade foundations and basement/crawlspace floors. \\ \hline
 \texttt{slab\_under\_insulation\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double &
 & Nominal R-value of the horizontal under slab insulation. Applies to
 slab-on-grade foundations and basement/crawlspace floors. \\ \hline
-\texttt{slab\_under\_width} & true & ft & Double & & Width from slab
-edge inward of horizontal under-slab insulation. Enter 999 to specify
-that the under slab insulation spans the entire slab. Applies to
-slab-on-grade foundations and basement/crawlspace floors. \\ \hline
+\texttt{slab\_under\_insulation\_width} & true & ft & Double & & Width from slab edge inward of horizontal under-slab insulation. Enter 999 to specify that the under slab insulation spans the entire slab. Applies to slab-on-grade foundations and basement/crawlspace floors. \\ \hline
 \texttt{slab\_thickness} & false & in & Double & auto & The thickness of
 the slab. Zero can be entered if there is a dirt floor instead of a
 slab.  \\ \hline
@@ -3586,7 +3587,7 @@ None.
 Infiltration is air leakage between the envelope and the outdoor environment. In the U.S.~residential sector, it is the leading driver of heating and cooling loads (compared to, for example, heat transfer through other parts of the envelope). In ResStock, infiltration is controlled by a single input file that provides a whole-home infiltration rate. 
 \subsubsection{Infiltration}\label{infiltration}
 \paragraph{Description}
-Air leakage rates for the living and garage spaces.
+Total infiltration to the dwelling unit.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
  
@@ -3609,9 +3610,38 @@ Air leakage rates for the living and garage spaces.
     \item Vintage.
 \end{itemize}
 \paragraph{Option(s)}
-All infiltration options in ResStock are provided in air changes per hour (ACH) at 50 Pascals, as calculated by a blower door test, so \texttt{air\_leakage\_units} is set to ACH and \texttt{air\_leakage\_house\_pressure} is set to 50 for all options (Table \ref{table:hc_opt_infil}). The ResStock argument
-\texttt{site\_shielding\_of\_home} is set to \textit{normal} and 
- \texttt{air\_leakage\_type} is set to \textit{unit exterior only} for all options.
+All infiltration options in ResStock are provided in air changes per hour (ACH) at 50 Pascals, as calculated by a blower door test. The characteristic sets the \texttt{air\_leakage\_leakiness\_description}, \texttt{air\_leakage\_units}, \texttt{air\_leakage\_house\_pressure}, \texttt{air\_leakage\_value}, \texttt{air\_leakage\_type}, and \texttt{site\_shielding\_of\_home} ResStock arguments. For the argument definitions, see Table \ref{table:hc_arg_def_infil}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html##hpxml-site}{Site} documentation for the available HPXML schema elements, default values, and constraints.
+
+\begin{customLongTable}{|p{2.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{2.cm}|p{5.5cm}|} {The ResStock argument definitions set in the Infiltration characteristic} {table:hc_arg_def_infil}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{site\_shielding\_of\_home} & false & & Choice & auto, exposed,
+normal, well-shielded & Presence of nearby buildings, trees,
+obstructions for infiltration model.  \\
+\hline
+\texttt{air\_leakage\_leakiness\_description} & false & & Choice & auto, very tight, tight, average, leaky, very leaky & Qualitative description of infiltration. If provided, the Year Built of the home is required. Either provide this input or provide a numeric air leakage value below. \\
+\hline
+\texttt{air\_leakage\_units} & true & & Choice & ACH, CFM (cubic feet per minute), ACHnatural,
+CFMnatural, EffectiveLeakageArea & The unit of measure for the air leakage if providing a numeric air leakage value. \\
+\hline
+\texttt{air\_leakage\_house\_pressure} & false & Pa & Double & & The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM. \\
+\hline
+\texttt{air\_leakage\_value} & false & & string & & Numeric air leakage value. For \textquotesingle EffectiveLeakageArea\textquotesingle, provide value in sq. in. If provided, overrides Leakiness Description input. \\
+\hline 
+\texttt{air\_leakage\_type} & false & & Choice & auto, unit total, unit
+exterior only & Type of air leakage. Type of air leakage if providing a numeric air leakage value. If \textquotesingle unit total\textquotesingle, represents the total infiltration to the unit as measured by a compartmentalization test, in which case the air leakage value will be adjusted by the ratio of exterior envelope surface area to total envelope surface area. Otherwise, if \textquotesingle unit exterior only\textquotesingle, represents the infiltration to the unit from outside only as measured by a guarded test. Required when unit type is single-family attached or apartment unit. \\
+\end{customLongTable}
+
+The options of the Infiltration characteristic range between 1 ACH 50 to 50 ACH 50 and set the \texttt{air\_leakage\_value} ResStock argument, Table \ref{table:hc_opt_infil}. 
+
+Below is a list of arguments and their values that are constant across all the options.
+\begin{itemize}
+	\item \texttt{air\_leakage\_leakiness\_description} = auto
+	\item \texttt{air\_leakage\_units} = ACH
+	\item \texttt{air\_leakage\_house\_pressure} = 50
+	\item \texttt{air\_leakage\_type} = unit total
+	\item \texttt{site\_shielding\_of\_home} = normal
+\end{itemize} 
+ 
  
 \begin{longtable}[]{|p{2.cm}|p{3.5cm}|} \caption{Infiltration options and arguments that vary for each option} \label{table:hc_opt_infil} \\  
 \toprule\noalign{}
@@ -3638,36 +3668,7 @@ Option name &
 40 ACH50 & 40  \\
 50 ACH50 & 50  \\
 \end{longtable}
-For the argument definitions, see Table \ref{table:hc_arg_def_infil}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html##hpxml-site}{Site} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{customLongTable}{|p{2.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{2.cm}|p{5.5cm}|} {The ResStock argument definitions set in the Infiltration characteristic} {table:hc_arg_def_infil}
-{Name & Required & Units & Type & Choices & Description}
-\texttt{site\_shielding\_of\_home} & false & & Choice & auto, exposed,
-normal, well-shielded & Presence of nearby buildings, trees,
-obstructions for infiltration model.  \\
-\hline
-\texttt{air\_leakage\_units} & true & & Choice & ACH, CFM (cubic feet per minute), ACHnatural,
-CFMnatural, EffectiveLeakageArea & The unit of measure for the air
-leakage. \\
-\hline
-\texttt{air\_leakage\_house\_pressure} & true & Pa & Double & & The
-house pressure relative to outside. Required when units are ACH or
-CFM. \\
-\hline
-\texttt{air\_leakage\_value} & true & & Double & & Air exchange rate
-value. For \textquotesingle EffectiveLeakageArea\textquotesingle,
-provide value in sq. in. \\
-\hline
-\texttt{air\_leakage\_type} & false & & Choice & auto, unit total, unit
-exterior only & Type of air leakage. If \textquotesingle unit
-total\textquotesingle, represents the total infiltration to the unit as
-measured by a compartmentalization test, in which case the air leakage
-value will be adjusted by the ratio of exterior envelope surface area to
-total envelope surface area. Otherwise, if \textquotesingle unit
-exterior only\textquotesingle, represents the infiltration to the unit
-from outside only as measured by a guarded test. Required when unit type
-is single-family attached or apartment unit. \\
-\end{customLongTable}
 \paragraph{Distribution Assumption(s)}
 
 \begin{itemize}
@@ -3684,6 +3685,7 @@ is single-family attached or apartment unit. \\
   qualified and not ENERGY STAR certified.
 \item
   Climate zones 7AK and 8AK are averages of 6A and 6B.
+\item ResStock models multi-family and SFA units with the unit total air leakage type. The unit total air leakage assume that some of the sampled ACH50 value goes to neighboring units. The model infiltration value to the exterior is a smaller infiltration value that what is sampled and is adjusted by the ratio of exterior envelope surface area to total envelope surface area. The modeled infiltration to the exterior is reported in the results.
 \item
   For Alaska, we are using a field in ARIS that lumps multifamily 2--4
   units and multifamily 5+ units buildings together. Data from the
