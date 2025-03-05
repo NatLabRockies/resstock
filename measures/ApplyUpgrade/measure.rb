@@ -389,10 +389,12 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       measures['BuildResidentialHPXML'][0]['heat_pump_cooling_autosizing_factor'] = autosizing_factors['heat_pump_cooling_autosizing_factor']
       measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_autosizing_factor'] = autosizing_factors['heat_pump_backup_heating_autosizing_factor']
 
-      # b.c. heating_system_airflow_defect_ratio, cooling_system_airflow_defect_ratio etc. are removed from BuildResidentialHPXML, the lines below would throw an error
-      # as BuildResidentialHPXML measure.xml no longer expects these arguments, but (prior to lines below being commented) they are being passed to BuildResidentialHPXML
-      
-      # no HVAC options in resstock currently use a heating_system_airflow_defect_ratio that is not defaulted.
+      # b.c. heating_system_airflow_defect_ratio, cooling_system_airflow_defect_ratio etc. are removed from BuildResidentialHPXML args section and placed one layer lower in resources\xxx.tsv,
+      # the lines below would throw an error as BuildResidentialHPXML measure.xml no longer expects these args
+
+      # all HVAC options in resstock currently use a default heating_system_airflow_defect_ratio
+      # TODO: when refactoring, check that cooling_system_airflow_defect_ratio, cooling_system_charge_defect_ratio, heat_pump_airflow_defect_ratio, heat_pump_charge_defect_ratio are also defaulted
+      # per Joe Robertson, if ResStock doesn't use these args, the lines below can be commented out without any issue
 
       # measures['BuildResidentialHPXML'][0]['heating_system_airflow_defect_ratio'] = defect_ratios['heating_system_airflow_defect_ratio']
       # measures['BuildResidentialHPXML'][0]['cooling_system_airflow_defect_ratio'] = defect_ratios['cooling_system_airflow_defect_ratio']
