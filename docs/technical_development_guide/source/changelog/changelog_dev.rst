@@ -10,6 +10,21 @@ Development Changelog
         :tags: characteristics, feature, docs, technical reference guide, outputs
         :pullreq: 1299
 
+        **Date**: 2025-03-06
+
+        Title:
+        Solar Hot Water
+
+        Description:
+        Break out Solar Thermal from Other Fuel for Water Heater Fuel, consolidate Solar Hot Water with Water Heater Efficiency, assign all solar hot water systems as south-facing roof pitch installed 40ft solar collectors.
+
+        Assignees: Lixi Liu, Anthony Fontanini, Jeff Maguire
+
+
+    .. change::
+        :tags: characteristics, feature, docs, technical reference guide, outputs
+        :pullreq: 1299
+
         **Date**: 2025-02-28
 
         Title:
