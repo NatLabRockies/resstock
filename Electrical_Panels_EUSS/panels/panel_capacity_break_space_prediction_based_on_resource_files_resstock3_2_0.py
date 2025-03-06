@@ -127,7 +127,26 @@ def buildstock_csv_column_renaming(df):
     )
     return df
 
-def results_column_renaming(df):
+def oedi_column_renaming(df):
+    df = df.rename(
+        columns={
+            "in.heating_fuel": "build_existing_model.heating_fuel",
+            "in.clothes_dryer": "build_existing_model.clothes_dryer",
+            "in.cooking_range": "build_existing_model.cooking_range",
+            "in.geometry_building_type_recs": "build_existing_model.geometry_building_type_recs",
+            "in.hvac_cooling_type": "build_existing_model.hvac_cooling_type",
+            "in.water_heater_fuel": "build_existing_model.water_heater_fuel",
+            "in.vintage": "build_existing_model.vintage",
+            "in.geometry_floor_area": "build_existing_model.geometry_floor_area",
+            "in.has_pv": "build_existing_model.has_pv",
+            "in.hvac_heating_type": "build_existing_model.hvac_heating_type",
+            "bldg_id": "building_id",
+        }
+    )
+    return df
+
+
+def buildstock_csv_results_column_renaming(df):
     df = df.rename(
         columns={
             "panel_capacity": "Panel Size",
@@ -144,6 +163,28 @@ def results_column_renaming(df):
             "build_existing_model.has_pv": "Has PV",
             "build_existing_model.hvac_heating_type": "HVAC Heating Type",
             "building_id": "Building",
+        }
+    )
+    return df
+
+
+def oedi_results_column_renaming(df):
+    df = df.rename(
+        columns={
+            "panel_capacity": "out.panel_capacity",
+            "break_space_headroom": "out.break_space_headroom",
+            "major_elec_load_count": "out.major_elec_load_count",
+            "build_existing_model.heating_fuel": "in.heating_fuel",
+            "build_existing_model.clothes_dryer": "in.clothes_dryer",
+            "build_existing_model.cooking_range": "in.cooking_range",
+            "build_existing_model.geometry_building_type_recs": "in.geometry_building_type_recs",
+            "build_existing_model.hvac_cooling_type": "in.hvac_cooling_type",
+            "build_existing_model.water_heater_fuel": "in.water_heater_fuel",
+            "vintage": "in.vintage",
+            "geometry_unit_cfa_bin": "in.geometry_floor_area",
+            "build_existing_model.has_pv": "in.has_pv",
+            "build_existing_model.hvac_heating_type": "in.hvac_heating_type",
+            "building_id": "bldg_id",
         }
     )
     return df
@@ -349,6 +390,7 @@ def drop_columns(df):
 def main(
         filename: str | None = None,
         buildstock_csv: bool = False,
+        oedi_baseline_results: bool = False,
         ):
     global data_dir, electrical_panel_resources_dir
 
@@ -366,7 +408,12 @@ def main(
     
     dfb = read_file(filename, low_memory=False)
     if buildstock_csv:
+        print("process data for buildstock csv data format")
         dfb = buildstock_csv_column_renaming(dfb)
+    elif oedi_baseline_results:
+        print("process data for oedi data format")
+        dfb.reset_index(inplace=True)
+        dfb = oedi_column_renaming(dfb)
 
     dfb["panel_capacity"] = 0
     dfb["break_space_headroom"] = 0
@@ -386,7 +433,9 @@ def main(
     dfb = drop_columns(dfb)
 
     if buildstock_csv:
-        dfb = results_column_renaming(dfb)
+        dfb = buildstock_csv_results_column_renaming(dfb)
+    elif oedi_baseline_results:
+        dfb = oedi_results_column_renaming(dfb)
 
     dfb.to_csv(output_filename, index=False)
 
@@ -407,11 +456,22 @@ if __name__ == "__main__":
         "--buildstock_csv",
         action="store_true",
         default=False,
-        help="The input file is buildstock csv file instead of ResStock baseline result file",
+        help="The input file is buildstock csv file instead of ResStock baseline result file"
+        "e.g., buildstock.csv",
+    )
+
+    parser.add_argument(
+        "-o",
+        "--oedi_baseline_results",
+        action="store_true",
+        default=False,
+        help="The input file is OEDI baseline result file instead of ResStock baseline result file"
+        "e.g., baseline_metadata_and_annual_results.csv",
     )
 
     args = parser.parse_args()
     main(
         args.filename,
         buildstock_csv=args.buildstock_csv,
+        oedi_baseline_results=args.oedi_baseline_results,
     )
