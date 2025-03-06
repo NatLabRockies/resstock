@@ -124,11 +124,10 @@ Range Spot Vent Hour,24.0,0.0,manually created,Range spot ventilation daily star
 Refrigerator,9.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of the primary refrigerator.
 Refrigerator Usage Level,3.0,0.0,sources\other\tsv_maker.py,Refrigerator energy usage level multiplier.
 Roof Material,7.0,1.0,sources\recs\recs2020\tsv_maker.py,Roof material and color.
-Solar Hot Water,7.0,1.0,manually created,"Presence, size, and location of solar hot water system (not modeled in project_national)."
 State,5.0,1.0,sources\spatial\tsv_maker.py,The U.S. State the sample is located.
 Tenure,3.0,1.0,sources\pums\pums2019_5yrs\tsv_maker.py,The tenancy (owner or renter) of the household occupying the dwelling unit.
 Vacancy Status,2.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The vacancy status (occupied or vacant) of the dwelling unit.
-Water Heater Efficiency,15.0,0.0,sources\recs\recs2020\tsv_maker.py,"The efficiency, type, and heating fuel of water heater."
+Water Heater Efficiency,16.0,0.0,sources\recs\recs2020\tsv_maker.py,"The efficiency, type, and heating fuel of water heater."
 Water Heater Location,8.0,2.0,sources\recs\recs2020\tsv_maker.py,location of water heater.
 Window Areas,9.0,1.0,sources\rbsa_II\tsv_maker.py,"Window to wall ratios of the front, back, left, and right walls."
 Windows,11.0,2.0,sources\recs\recs2020\tsv_maker.py,Construction type and efficiency levels of windows.
