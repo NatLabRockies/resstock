@@ -4,7 +4,7 @@ os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
 # output_directory: /Volumes/LaCie/load_flexibility/pre_peak_sensitivity_feb2
-output_directory: /projects/rescore/load_flex/pre_peak_sensitivity_feb6
+output_directory: /projects/rescore/load_flex/final_test_run_feb11
 #weather_files_path: ../BuildStock_2020_FIPS.zip
 weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2020_FIPS.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip
@@ -12,16 +12,16 @@ weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2020_FIP
 sampler:
   type: residential_quota
   args:
-    n_datapoints: 1000
+    n_datapoints: 30000
 
 
 kestrel:
-  n_jobs: 30
-  minutes_per_sim: 3
+  n_jobs: 100
+  minutes_per_sim: 5
   account: rescore
   postprocessing:
-    time: 120
-    n_workers: 10
+    time: 600
+    n_workers: 20
     n_procs: 20
   sampling:
     time: 30
@@ -73,42 +73,33 @@ baseline:
   n_buildings_represented: 139647020 # American Community Survey 2021 5-year, B25001, does not include territories ( 138765649 without AK and HI )
 
 upgrades:
-  - upgrade_name: peak_only_4hr_2deg  # upgrade 1
+  - upgrade_name: peak_only_4hr_2deg
+    package_apply_logic: &has_cooling_or_ele_heating
+      - or:
+        - not: HVAC Cooling Type|None
+        - Heating Fuel|Electricity          
     options:
       - option: LoadFlexibility|peak_only_4hr_2deg
-  - upgrade_name: pre_only_4hr_2deg # upgrade 2
+
+  - upgrade_name: pre_only_4hr_2deg
+    package_apply_logic: *has_cooling_or_ele_heating
     options:
       - option: LoadFlexibility|pre_only_4hr_2deg
-  - upgrade_name: both_4hr_2deg # upgrade 3
-    options:
-      - option: LoadFlexibility|both_4hr_2deg
-  - upgrade_name: peak_only_4hr_4deg # upgrade 4
+
+  - upgrade_name: peak_only_4hr_4deg
+    package_apply_logic: *has_cooling_or_ele_heating
     options:
       - option: LoadFlexibility|peak_only_4hr_4deg
-  - upgrade_name: pre_only_4hr_4deg # upgrade 5
+
+  - upgrade_name: pre_only_4hr_4deg
+    package_apply_logic: *has_cooling_or_ele_heating
     options:
       - option: LoadFlexibility|pre_only_4hr_4deg
-  - upgrade_name: both_4hr_4deg # upgrade 6
-    options:
-      - option: LoadFlexibility|both_4hr_4deg
-  # - upgrade_name: peak_only_1hr_2deg
-  #   options:
-  #     - option: LoadFlexibility|peak_only_1hr_2deg
-  - upgrade_name: pre_only_1hr_2deg  # upgrade 7
+
+  - upgrade_name: pre_only_1hr_2deg
+    package_apply_logic: *has_cooling_or_ele_heating
     options:
       - option: LoadFlexibility|pre_only_1hr_2deg
-  - upgrade_name: both_1hr_2deg # upgrade 8
-    options:
-      - option: LoadFlexibility|both_1hr_2deg
-  # - upgrade_name: peak_only_1hr_4deg
-  #   options:
-  #     - option: LoadFlexibility|peak_only_1hr_4deg
-  - upgrade_name: pre_only_1hr_4deg # upgrade 9
-    options:
-      - option: LoadFlexibility|pre_only_1hr_4deg
-  - upgrade_name: both_1hr_4deg # upgrade 10
-    options:
-      - option: LoadFlexibility|both_1hr_4deg
 
 postprocessing:
   keep_individual_timeseries: true
