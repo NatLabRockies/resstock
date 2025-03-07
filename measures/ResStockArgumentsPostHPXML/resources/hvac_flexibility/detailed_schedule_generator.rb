@@ -69,7 +69,7 @@ class HVACScheduleGenerator
     hvac_control = @hpxml_bldg.hvac_controls[0]
     onoff_thermostat_ddb = @hpxml.header.hvac_onoff_thermostat_deadband.to_f
     htg_weekday_setpoints, htg_weekend_setpoints = HVAC.get_heating_setpoints(hvac_control, @sim_year, onoff_thermostat_ddb)
-    clg_weekday_setpoints, clg_weekend_setpoints = HVAC.get_cooling_setpoints(hvac_control, has_ceiling_fan, @sim_year, @weather, onoff_thermostat_ddb)
+    clg_weekday_setpoints, clg_weekend_setpoints = HVAC.get_cooling_setpoints(@hpxml_bldg, hvac_control, has_ceiling_fan, @sim_year, @weather, onoff_thermostat_ddb)
 
     htg_weekday_setpoints, htg_weekend_setpoints, clg_weekday_setpoints, clg_weekend_setpoints = HVAC.create_setpoint_schedules(@runner, htg_weekday_setpoints, htg_weekend_setpoints, clg_weekday_setpoints, clg_weekend_setpoints, @sim_year, hvac_season_days)
     return c2f(clg_weekday_setpoints), c2f(clg_weekend_setpoints), c2f(htg_weekday_setpoints), c2f(htg_weekend_setpoints)

@@ -11,11 +11,12 @@ Dir["#{File.dirname(__FILE__)}/../../../../resources/hpxml-measures/HPXMLtoOpenS
   require resource_file
 end
 
-FlexibilityInputs = Struct.new(:peak_duration_steps, :peak_offset, :pre_peak_duration_steps, :pre_peak_offset, :random_shift_steps, keyword_init: true)
+FlexibilityInputs = Struct.new(:peak_offset, :pre_peak_duration_steps, :pre_peak_offset, :random_shift_steps, keyword_init: true)
 DailyPeakIndices = Struct.new(:pre_peak_start_index, :peak_start_index, :peak_end_index)
+DSTInfo = Struct.new(:dst_begin_month, :dst_begin_day, :dst_end_month, :dst_end_day)
 
 class HVACScheduleModifier
-  def initialize(state:, sim_year:, weather:, epw_path:, minutes_per_step:, runner:)
+  def initialize(state:, sim_year:, weather:, epw_path:, minutes_per_step:, runner:, dst_info:)
     @state = state
     @minutes_per_step = minutes_per_step
     @runner = runner
@@ -28,8 +29,9 @@ class HVACScheduleModifier
     @steps_in_day = 24 * 60 / @minutes_per_step
     @num_timesteps_per_hour = 60 / @minutes_per_step
     current_dir = File.dirname(__FILE__)
-    @summer_peak_hours_dict = JSON.parse(File.read("#{current_dir}/state_summer_peak_hour_dict.json"))
-    @winter_peak_hours_dict = JSON.parse(File.read("#{current_dir}/state_winter_peak_hour_dict.json"))
+    @peak_hours_dict_shift = JSON.parse(File.read("#{current_dir}/seasonal_shifting_peak_hours.json"))
+    @peak_hours_dict_shed = JSON.parse(File.read("#{current_dir}/seasonal_shedding_peak_hours.json"))
+    @dst_info = dst_info
   end
 
   def modify_setpoints(setpoints, flexibility_inputs)
@@ -42,78 +44,105 @@ class HVACScheduleModifier
     total_indices.times do |index|
       offset_times = _get_peak_times(index, flexibility_inputs)
       day_type = _get_day_type(index)
-      if day_type == 'heating'
-        heating_setpoint[index] += _get_setpoint_offset(index, 'heating', offset_times, flexibility_inputs)
-        # If the offset causes the set points to be inverted, adjust the cooling setpoint to correct it
-        # This can happen during pre-heating if originally the cooling and heating setpoints were the same
-        if heating_setpoint[index] > cooling_setpoint[index]
-          cooling_setpoint[index] = heating_setpoint[index]
+      index_in_day = index % (24 * @num_timesteps_per_hour)
+      if offset_times.pre_peak_start_index <= index_in_day && index_in_day < offset_times.peak_start_index
+        # Preheating
+        if day_type == 'preheating'
+          heating_setpoint[index] += flexibility_inputs.pre_peak_offset
+          heating_setpoint[index] = _clip_setpoints(heating_setpoint[index])
+          # If the offset causes the set points to be inverted, adjust the cooling setpoint to correct it
+          # This can happen during pre-heating if originally the cooling and heating setpoints were the same
+          if heating_setpoint[index] > cooling_setpoint[index]
+            cooling_setpoint[index] = heating_setpoint[index]
+          end
+        elsif day_type == 'precooling'
+          cooling_setpoint[index] -= flexibility_inputs.pre_peak_offset
+          cooling_setpoint[index] = _clip_setpoints(cooling_setpoint[index])
+          # If the offset causes the set points to be inverted, adjust the heating setpoint to correct it
+          # This can happen during precooling if originally the cooling and heating setpoints were the same
+          if heating_setpoint[index] > cooling_setpoint[index]
+            heating_setpoint[index] = cooling_setpoint[index]
+          end
         end
-      else
-        cooling_setpoint[index] += _get_setpoint_offset(index, 'cooling', offset_times, flexibility_inputs)
-        # If the offset causes the set points to be inverted, adjust the heating setpoint to correct it
-        # This can happen during pre-cooling if originally the cooling and heating setpoints were the same
-        if heating_setpoint[index] > cooling_setpoint[index]
-          heating_setpoint[index] = cooling_setpoint[index]
-        end
+      elsif offset_times.peak_start_index <= index_in_day && index_in_day < offset_times.peak_end_index
+        # Peak
+        heating_setpoint[index] -= flexibility_inputs.peak_offset
+        cooling_setpoint[index] += flexibility_inputs.peak_offset
       end
     end
     { heating_setpoint: heating_setpoint, cooling_setpoint: cooling_setpoint }
   end
 
+  def _clip_setpoints(setpoint)
+    return 82 if setpoint > 82
+    return 55 if setpoint < 55
+
+    setpoint
+  end
+
   def _get_peak_times(index, flexibility_inputs)
-    month = _get_month(index:)
-    peak_hour = _get_peak_hour(month:)
-    peak_index = peak_hour * @num_timesteps_per_hour
+    month, day = _get_month_day(index:)
+
+    pre_peak_duration = flexibility_inputs.pre_peak_duration_steps
+    peak_hour_start, peak_hour_end = _get_peak_hour(pre_peak_duration, month:)
+    if @dst_info.values.all? { |v| !v.nil? }
+      dst_adjust_hour = _dst_ajustment(month, day)
+      peak_hour_start += dst_adjust_hour
+      peak_hour_end += dst_adjust_hour
+    end
+
     peak_times = DailyPeakIndices.new
-    peak_times.peak_start_index = peak_index + flexibility_inputs.random_shift_steps
-    peak_times.peak_end_index = peak_times.peak_start_index + flexibility_inputs.peak_duration_steps
+    random_shift_steps = flexibility_inputs.random_shift_steps
+    peak_times.peak_start_index = peak_hour_start * @num_timesteps_per_hour + random_shift_steps
+    peak_times.peak_end_index = peak_hour_end * @num_timesteps_per_hour + random_shift_steps
     peak_times.pre_peak_start_index = peak_times.peak_start_index - flexibility_inputs.pre_peak_duration_steps
-    peak_times
+    return peak_times
   end
 
-  def _get_setpoint_offset(index, setpoint_type, offset_times, flexibility_inputs)
-    case setpoint_type
-    when 'heating'
-      pre_peak_offset = flexibility_inputs.pre_peak_offset
-      peak_offset = -flexibility_inputs.peak_offset
-    when 'cooling'
-      pre_peak_offset = -flexibility_inputs.pre_peak_offset
-      peak_offset = flexibility_inputs.peak_offset
-    else
-      raise "Unsupported setpoint type: #{setpoint_type}"
-    end
-
-    index_in_day = index % (24 * @num_timesteps_per_hour)
-    if offset_times.pre_peak_start_index <= index_in_day && index_in_day < offset_times.peak_start_index
-      pre_peak_offset
-    elsif offset_times.peak_start_index <= index_in_day && index_in_day < offset_times.peak_end_index
-      peak_offset
-    else
-      0
-    end
-  end
-
-  def _get_month(index:)
+  def _get_month_day(index:)
     start_of_year = Date.new(@sim_year, 1, 1)
     index_date = start_of_year + (index.to_f / @num_timesteps_per_hour / 24)
     index_date.month
+    index_date.day
+    return index_date.month, index_date.day
   end
 
-  def _get_peak_hour(month:)
-    if [6, 7, 8, 9].include?(month)
-      return @summer_peak_hours_dict[@state]
+  def _get_peak_hour(pre_peak_duration, month:)
+    if pre_peak_duration == 0
+      peak_hours = @peak_hours_dict_shed[@state]
     else
-      return @winter_peak_hours_dict[@state]
+      peak_hours = @peak_hours_dict_shift[@state]
     end
+    if [6, 7, 8, 9].include?(month)
+      return peak_hours['summer_peak_start'][11..12].to_i, peak_hours['summer_peak_end'][11..12].to_i
+    elsif [1, 2, 3, 12].include?(month)
+      return peak_hours['winter_peak_start'][11..12].to_i, peak_hours['winter_peak_end'][11..12].to_i
+    else
+      return peak_hours['intermediate_peak_start'][11..12].to_i, peak_hours['intermediate_peak_end'][11..12].to_i
+    end
+  end
+
+  def _dst_ajustment(month, day)
+    if month > @dst_info.dst_begin_month &&  month < @dst_info.dst_end_month
+      dst_adjust_hour = 1
+    elsif month == @dst_info.dst_begin_month && day >= @dst_info.dst_begin_day # double check
+      dst_adjust_hour = 1
+    elsif month == @dst_info.dst_end_month && day < @dst_info.dst_end_day # double check
+      dst_adjust_hour = 1
+    else
+      dst_adjust_hour = 0
+    end
+    return dst_adjust_hour
   end
 
   def _get_day_type(index)
     day = index / @steps_in_day
-    if @daily_avg_temps[day] < 66.0
-      return 'heating'
+    if @daily_avg_temps[day] < 50.0
+      return 'preheating'
+    elsif @daily_avg_temps[day] > 68.0
+      return 'precooling'
     else
-      return 'cooling'
+      return 'prenothing'  # Neither preheating nor precooling
     end
   end
 
@@ -140,7 +169,6 @@ class HVACScheduleModifier
     return unless @runner
 
     @runner.registerInfo('Modifying setpoints ...')
-    @runner.registerInfo("peak_duration_steps=#{inputs.peak_duration_steps}")
     @runner.registerInfo("pre_peak_duration_steps=#{inputs.pre_peak_duration_steps}")
     @runner.registerInfo("random_shift_steps=#{inputs.random_shift_steps}")
     @runner.registerInfo("pre_peak_offset=#{inputs.pre_peak_offset}")
