@@ -12821,7 +12821,6 @@ Level,Parameter,Option,Saturation
 7,HVAC Secondary Heating Type,Ducted Heating,2.93623e-05
 7,HVAC Secondary Heating Type,Non-Ducted Heating,0.000357846
 7,HVAC Secondary Heating Type,None,0.999613
-7,Water Heater Efficiency,"40 sqft, South, Roof Pitch",0.00163144
 7,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.0031028
 7,Water Heater Efficiency,"Electric Heat Pump, 66 gal, 3.35 UEF",0
 7,Water Heater Efficiency,"Electric Heat Pump, 80 gal, 3.45 UEF",0
@@ -12838,6 +12837,10 @@ Level,Parameter,Option,Saturation
 7,Water Heater Efficiency,Propane Premium,0.00631771
 7,Water Heater Efficiency,Propane Standard,0.023876
 7,Water Heater Efficiency,Propane Tankless,0.00923329
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup",0.00155012
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup",3.17514e-06
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup",1.99033e-05
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup",5.82416e-05
 7,Insulation Floor,None,0.393074
 7,Insulation Floor,Uninsulated,0.479199
 7,Insulation Floor,Ceiling R-13,0.0478492

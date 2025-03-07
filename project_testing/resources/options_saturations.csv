@@ -371,22 +371,25 @@ Level,Parameter,Option,Saturation
 0,Refrigerator Usage Level,105% Usage,0.333333
 0,Vacancy Status,Occupied,0.5
 0,Vacancy Status,Vacant,0.5
-0,Water Heater Efficiency,"40 sqft, South, Roof Pitch",0.0625
-0,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.0625
-0,Water Heater Efficiency,"Electric Heat Pump, 66 gal, 3.35 UEF",0.0625
-0,Water Heater Efficiency,"Electric Heat Pump, 80 gal, 3.45 UEF",0.0625
-0,Water Heater Efficiency,Electric Premium,0.0625
-0,Water Heater Efficiency,Electric Standard,0.0625
-0,Water Heater Efficiency,Electric Tankless,0.0625
-0,Water Heater Efficiency,FIXME Fuel Oil Indirect,0.0625
-0,Water Heater Efficiency,Fuel Oil Premium,0.0625
-0,Water Heater Efficiency,Fuel Oil Standard,0.0625
-0,Water Heater Efficiency,Natural Gas Premium,0.0625
-0,Water Heater Efficiency,Natural Gas Standard,0.0625
-0,Water Heater Efficiency,Natural Gas Tankless,0.0625
-0,Water Heater Efficiency,Propane Premium,0.0625
-0,Water Heater Efficiency,Propane Standard,0.0625
-0,Water Heater Efficiency,Propane Tankless,0.0625
+0,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.0526316
+0,Water Heater Efficiency,"Electric Heat Pump, 66 gal, 3.35 UEF",0.0526316
+0,Water Heater Efficiency,"Electric Heat Pump, 80 gal, 3.45 UEF",0.0526316
+0,Water Heater Efficiency,Electric Premium,0.0526316
+0,Water Heater Efficiency,Electric Standard,0.0526316
+0,Water Heater Efficiency,Electric Tankless,0.0526316
+0,Water Heater Efficiency,FIXME Fuel Oil Indirect,0.0526316
+0,Water Heater Efficiency,Fuel Oil Premium,0.0526316
+0,Water Heater Efficiency,Fuel Oil Standard,0.0526316
+0,Water Heater Efficiency,Natural Gas Premium,0.0526316
+0,Water Heater Efficiency,Natural Gas Standard,0.0526316
+0,Water Heater Efficiency,Natural Gas Tankless,0.0526316
+0,Water Heater Efficiency,Propane Premium,0.0526316
+0,Water Heater Efficiency,Propane Standard,0.0526316
+0,Water Heater Efficiency,Propane Tankless,0.0526316
+0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup",0.0526316
+0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup",0.0526316
+0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup",0.0526316
+0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup",0.0526316
 1,Cooling Setpoint Offset Magnitude,0F,0.5
 1,Cooling Setpoint Offset Magnitude,2F,0.166666
 1,Cooling Setpoint Offset Magnitude,5F,0.166666
