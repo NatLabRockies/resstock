@@ -44,28 +44,9 @@ Level,Parameter,Option,Saturation
 0,Door Area,20 ft^2,1
 0,Doors,Fiberglass,1
 0,Eaves,2 ft,1
-0,Electric Vehicle Battery,"Compact, Battery Electric Vehicle, 200 mile range",0.11868
-0,Electric Vehicle Battery,"Compact, Battery Electric Vehicle, 300 mile range",0.339087
-0,Electric Vehicle Battery,"Midsize, Battery Electric Vehicle, 200 mile range",0.0295077
-0,Electric Vehicle Battery,"Midsize, Battery Electric Vehicle, 300 mile range",0.0760135
-0,Electric Vehicle Battery,"Pickup, Battery Electric Vehicle, 200 mile range",5.46876e-05
-0,Electric Vehicle Battery,"Pickup, Battery Electric Vehicle, 300 mile range",0.00765117
-0,Electric Vehicle Battery,"SUV, Battery Electric Vehicle, 200 mile range",0.122608
-0,Electric Vehicle Battery,"SUV, Battery Electric Vehicle, 300 mile range",0.306398
-0,Electric Vehicle Miles Traveled,1000,0.0965
-0,Electric Vehicle Miles Traveled,3000,0.101
-0,Electric Vehicle Miles Traveled,5000,0.1188
-0,Electric Vehicle Miles Traveled,7000,0.118
-0,Electric Vehicle Miles Traveled,9000,0.1135
-0,Electric Vehicle Miles Traveled,11000,0.1013
-0,Electric Vehicle Miles Traveled,13000,0.0825
-0,Electric Vehicle Miles Traveled,15000,0.0652
-0,Electric Vehicle Miles Traveled,17000,0.0488
-0,Electric Vehicle Miles Traveled,19000,0.036
-0,Electric Vehicle Miles Traveled,22500,0.0557
-0,Electric Vehicle Miles Traveled,27500,0.0283
-0,Electric Vehicle Miles Traveled,35000,0.0204
-0,Electric Vehicle Miles Traveled,45000,0.014
+0,Electric Vehicle,None,1
+0,Electric Vehicle,"EV, 5000 miles, 0.3 kWh/mi",0
+0,Electric Vehicle,"EV, 4000 miles, 0.3 kWh/mi",0
 0,HVAC System Is Faulted,No,1
 0,HVAC System Is Faulted,Yes,0
 0,HVAC System Is Scaled,No,1
@@ -12657,6 +12638,13 @@ Level,Parameter,Option,Saturation
 5,Radiant Barrier,No,0.735797
 5,Vacancy Status,Occupied,0.878483
 5,Vacancy Status,Vacant,0.121517
+5,HVAC Secondary Heating Fuel,Electricity,0
+5,HVAC Secondary Heating Fuel,Fuel Oil,0.000103468
+5,HVAC Secondary Heating Fuel,Natural Gas,3.93984e-05
+5,HVAC Secondary Heating Fuel,None,0.999613
+5,HVAC Secondary Heating Fuel,Other Fuel,1.6855e-06
+5,HVAC Secondary Heating Fuel,Propane,1.31903e-05
+5,HVAC Secondary Heating Fuel,Wood,0.000229466
 5,Heating Fuel,Electricity,0.394039
 5,Heating Fuel,Fuel Oil,0.0485922
 5,Heating Fuel,Natural Gas,0.468668
@@ -12733,23 +12721,19 @@ Level,Parameter,Option,Saturation
 6,Ceiling Fan,None,0.28
 6,Ceiling Fan,Standard Efficiency,0.632508
 6,Ceiling Fan,"Standard Efficiency, No usage",0.0874922
-6,Has PV,No,0.99062
-6,Has PV,Yes,0.00937984
+6,Has PV,No,0.990058
+6,Has PV,Yes,0.00994237
 6,Tenure,Not Available,0.121517
 6,Tenure,Owner,0.559043
 6,Tenure,Renter,0.31944
+6,HVAC Secondary Heating Type,Ducted Heating,2.93623e-05
+6,HVAC Secondary Heating Type,Non-Ducted Heating,0.000357846
+6,HVAC Secondary Heating Type,None,0.999613
 6,HVAC Heating Type,Ducted Heat Pump,0.153727
 6,HVAC Heating Type,Ducted Heating,0.589634
 6,HVAC Heating Type,Non-Ducted Heat Pump,0.00974977
 6,HVAC Heating Type,Non-Ducted Heating,0.23555
 6,HVAC Heating Type,None,0.0113391
-6,HVAC Secondary Heating Fuel,Electricity,0
-6,HVAC Secondary Heating Fuel,Fuel Oil,0.000103468
-6,HVAC Secondary Heating Fuel,Natural Gas,3.93984e-05
-6,HVAC Secondary Heating Fuel,None,0.999613
-6,HVAC Secondary Heating Fuel,Other Fuel,1.6855e-06
-6,HVAC Secondary Heating Fuel,Propane,1.31903e-05
-6,HVAC Secondary Heating Fuel,Wood,0.000229466
 6,Water Heater Fuel,Electricity,0.4889
 6,Water Heater Fuel,Fuel Oil,0.0248211
 6,Water Heater Fuel,Natural Gas,0.44488
@@ -12775,23 +12759,23 @@ Level,Parameter,Option,Saturation
 7,Battery,"20 kWh, Outside",0
 7,Battery,"20 kWh, Garage",0
 7,Battery,"20 kWh, 80% Round Trip Efficiency",0
-7,PV Orientation,East,0.0014847
-7,PV Orientation,None,0.99062
-7,PV Orientation,North,0.000156838
-7,PV Orientation,Northeast,0.00013649
-7,PV Orientation,Northwest,9.27069e-05
-7,PV Orientation,South,0.00421553
-7,PV Orientation,Southeast,0.00134174
-7,PV Orientation,Southwest,0.00113522
-7,PV Orientation,West,0.00081661
-7,PV System Size,1.0 kWDC,0.00025106
-7,PV System Size,3.0 kWDC,0.00183402
-7,PV System Size,5.0 kWDC,0.00278418
-7,PV System Size,7.0 kWDC,0.00209545
-7,PV System Size,9.0 kWDC,0.00137372
-7,PV System Size,11.0 kWDC,0.000740201
-7,PV System Size,13.0 kWDC,0.000301214
-7,PV System Size,None,0.99062
+7,PV Orientation,East,0.00157374
+7,PV Orientation,None,0.990058
+7,PV Orientation,North,0.000166244
+7,PV Orientation,Northeast,0.000144675
+7,PV Orientation,Northwest,9.82668e-05
+7,PV Orientation,South,0.00446835
+7,PV Orientation,Southeast,0.00142221
+7,PV Orientation,Southwest,0.0012033
+7,PV Orientation,West,0.000865584
+7,PV System Size,1.0 kWDC,0.000268917
+7,PV System Size,3.0 kWDC,0.0019758
+7,PV System Size,5.0 kWDC,0.00296422
+7,PV System Size,7.0 kWDC,0.00221376
+7,PV System Size,9.0 kWDC,0.00143743
+7,PV System Size,11.0 kWDC,0.000769446
+7,PV System Size,13.0 kWDC,0.000312789
+7,PV System Size,None,0.990058
 7,Income,<10000,0.0536329
 7,Income,10000-14999,0.0379308
 7,Income,15000-19999,0.0385917
@@ -12812,15 +12796,29 @@ Level,Parameter,Option,Saturation
 7,Income,180000-199999,0.0175352
 7,Income,200000+,0.0688953
 7,Income,Not Available,0.121517
+7,HVAC Secondary Heating Efficiency,"Fuel Boiler, 76% AFUE",0.000174001
+7,HVAC Secondary Heating Efficiency,"Fuel Boiler, 80% AFUE",0.000141715
+7,HVAC Secondary Heating Efficiency,"Fuel Boiler, 90% AFUE",2.36463e-05
+7,HVAC Secondary Heating Efficiency,"Fuel Furnace, 60% AFUE",3.89049e-07
+7,HVAC Secondary Heating Efficiency,"Fuel Furnace, 76% AFUE",5.24661e-06
+7,HVAC Secondary Heating Efficiency,"Fuel Furnace, 80% AFUE",1.51157e-05
+7,HVAC Secondary Heating Efficiency,"Fuel Furnace, 92.5% AFUE",8.18466e-06
+7,HVAC Secondary Heating Efficiency,None,0.999614
+7,HVAC Secondary Heating Efficiency,Shared Heating,1.72243e-05
+7,HVAC Secondary Heating Efficiency,Void,0
+7,HVAC Secondary Heating Partial Space Conditioning,0%,0.999614
+7,HVAC Secondary Heating Partial Space Conditioning,10%,4.58528e-05
+7,HVAC Secondary Heating Partial Space Conditioning,20%,8.199e-05
+7,HVAC Secondary Heating Partial Space Conditioning,30%,0.000136386
+7,HVAC Secondary Heating Partial Space Conditioning,40%,6.09168e-05
+7,HVAC Secondary Heating Partial Space Conditioning,49%,6.03771e-05
+7,HVAC Secondary Heating Partial Space Conditioning,Void,0
 7,HVAC Cooling Type,Central AC,0.530812
 7,HVAC Cooling Type,Ducted Heat Pump,0.153727
 7,HVAC Cooling Type,Evaporative or Swamp Cooler,0
 7,HVAC Cooling Type,Non-Ducted Heat Pump,0.00974977
 7,HVAC Cooling Type,None,0.105864
 7,HVAC Cooling Type,Room AC,0.199847
-7,HVAC Secondary Heating Type,Ducted Heating,2.93623e-05
-7,HVAC Secondary Heating Type,Non-Ducted Heating,0.000357846
-7,HVAC Secondary Heating Type,None,0.999613
 7,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.00312622
 7,Water Heater Efficiency,"Electric Heat Pump, 66 gal, 3.35 UEF",0
 7,Water Heater Efficiency,"Electric Heat Pump, 80 gal, 3.45 UEF",0
@@ -12888,23 +12886,6 @@ Level,Parameter,Option,Saturation
 8,HVAC Has Shared System,Heating Only,0.0720271
 8,HVAC Has Shared System,None,0.889651
 8,HVAC Has Shared System,Void,0
-8,HVAC Secondary Heating Efficiency,"Fuel Boiler, 76% AFUE",0.000183306
-8,HVAC Secondary Heating Efficiency,"Fuel Boiler, 80% AFUE",0.000148701
-8,HVAC Secondary Heating Efficiency,"Fuel Boiler, 90% AFUE",2.41524e-05
-8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 60% AFUE",3.89049e-07
-8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 76% AFUE",5.33846e-06
-8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 80% AFUE",1.53861e-05
-8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 92.5% AFUE",8.24867e-06
-8,HVAC Secondary Heating Efficiency,None,0.999614
-8,HVAC Secondary Heating Efficiency,Shared Heating,0
-8,HVAC Secondary Heating Efficiency,Void,0
-8,HVAC Secondary Heating Partial Space Conditioning,0%,0.999614
-8,HVAC Secondary Heating Partial Space Conditioning,10%,4.58528e-05
-8,HVAC Secondary Heating Partial Space Conditioning,20%,8.199e-05
-8,HVAC Secondary Heating Partial Space Conditioning,30%,0.000136386
-8,HVAC Secondary Heating Partial Space Conditioning,40%,6.09168e-05
-8,HVAC Secondary Heating Partial Space Conditioning,49%,6.03771e-05
-8,HVAC Secondary Heating Partial Space Conditioning,Void,0
 8,Insulation Rim Joist,None,0.481809
 8,Insulation Rim Joist,Uninsulated,0.473216
 8,Insulation Rim Joist,"R-5, Exterior",0.0115217
@@ -13238,15 +13219,6 @@ Level,Parameter,Option,Saturation
 13,Dishwasher,318 Rated kWh,0.419347
 13,Dishwasher,None,0.276931
 13,Dishwasher,Void,0
-13,Electric Vehicle Charge At Home,0-19%,0.130877
-13,Electric Vehicle Charge At Home,20-39%,0.014261
-13,Electric Vehicle Charge At Home,40-59%,0.0190061
-13,Electric Vehicle Charge At Home,60-79%,0.0727869
-13,Electric Vehicle Charge At Home,80-99%,0.34108
-13,Electric Vehicle Charge At Home,100%,0.421989
-13,Electric Vehicle Ownership,No,0.985514
-13,Electric Vehicle Ownership,Yes,0.0144856
-13,Electric Vehicle Ownership,Void,0
 13,Household Has Tribal Persons,No,0.869433
 13,Household Has Tribal Persons,Not Available,0.121517
 13,Household Has Tribal Persons,Yes,0.00904983
@@ -13333,10 +13305,6 @@ Level,Parameter,Option,Saturation
 14,Heating Unavailable Days,3 months,0.0035502
 14,Heating Unavailable Days,Never,0.960606
 14,Heating Unavailable Days,Year round,0.0024059
-14,Electric Vehicle Charger,Level 1 charger,0.00860465
-14,Electric Vehicle Charger,Level 2 charger,0.00588093
-14,Electric Vehicle Charger,None,0.985514
-14,Electric Vehicle Charger,Void,0
 14,Misc Pool Heater,Electric Heat Pump,0.00131093
 14,Misc Pool Heater,Electricity,0.0057206
 14,Misc Pool Heater,Natural Gas,0.0104085
@@ -13517,9 +13485,6 @@ Level,Parameter,Option,Saturation
 14,Insulation Wall,"Brick, 12-in, 3-wythe, R-15",0.0139701
 14,Insulation Wall,"Brick, 12-in, 3-wythe, R-19",0.0151591
 14,Insulation Wall,Void,0
-15,Electric Vehicle Outlet Access,No,0.435499
-15,Electric Vehicle Outlet Access,Yes,0.564501
-15,Electric Vehicle Outlet Access,Void,0
 15,Duct Location,Attic,0.170261
 15,Duct Location,Crawlspace,0.154223
 15,Duct Location,Garage,0.047835
