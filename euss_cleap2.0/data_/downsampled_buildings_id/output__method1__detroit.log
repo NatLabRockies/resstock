@@ -1,0 +1,91 @@
+2025-03-07 10:00:53,913 - INFO - ---------------------------------------------------------
+2025-03-07 10:00:53,913 - INFO - Downsampling buildstock for  detroit  using method 1
+2025-03-07 10:00:53,913 - INFO - ---------------------------------------------------------
+2025-03-07 10:00:53,916 - INFO - bst_to_match has 1885 samples >= n=1000, returning building_id and weight directly.
+2025-03-07 10:00:53,920 - INFO - No matched dataset provided. Displaying only 'truth' per-dwelling-unit means:
+2025-03-07 10:00:53,921 - INFO - 
+electricity     7274.242716
+fuel_oil          21.140608
+natural_gas    25928.522308
+propane           76.792394
+site_energy    33300.698025
+dtype: float64
+
+2025-03-07 10:00:53,927 - INFO - No matched dataset provided. Displaying only 'truth' per-dwelling-unit means:
+2025-03-07 10:00:53,928 - INFO - 
+in.vacancy_status             
+Occupied           electricity    8692.383199720314
+                   fuel_oil      16.755162661429857
+                   natural_gas    30270.95286830936
+                   propane        91.41065355497855
+                   site_energy    39071.50188424608
+Vacant             electricity   2855.7133029506176
+                   fuel_oil       34.80442920903349
+                   natural_gas      12398.722285091
+                   propane       31.245983311156355
+                   site_energy    15320.48600056181
+dtype: double[pyarrow]
+
+2025-03-07 10:00:53,939 - INFO - No matched dataset provided. Displaying only 'truth' per-dwelling-unit means:
+2025-03-07 10:00:53,943 - INFO - 
+in.tenure                 
+Not Available  electricity   2855.7133029506176
+               fuel_oil       34.80442920903349
+               natural_gas      12398.722285091
+               propane       31.245983311156355
+               site_energy    15320.48600056181
+Owner          electricity    9474.583842018967
+               fuel_oil      14.252446856270847
+               natural_gas    38510.81579763956
+               propane        33.68667308998353
+               site_energy    48033.33875960477
+Renter         electricity    7835.523171592859
+               fuel_oil      19.496757361354415
+               natural_gas    21244.61256686982
+               propane       154.64426504820364
+               site_energy   29254.276760872228
+dtype: double[pyarrow]
+
+2025-03-07 10:00:53,958 - INFO - No matched dataset provided. Displaying only 'truth' per-dwelling-unit means:
+2025-03-07 10:00:53,960 - INFO - 
+in.federal_poverty_level             
+0-100%                    electricity    7869.990353979991
+                          fuel_oil       22.07023370714824
+                          natural_gas    24415.94765256355
+                          propane        116.9254463828171
+                          site_energy    32424.93368663351
+100-150%                  electricity     7757.98574620703
+                          fuel_oil                     0.0
+                          natural_gas    26731.05739826534
+                          propane       218.34921924254297
+                          site_energy   34707.392363714906
+150-200%                  electricity    8846.841516165434
+                          fuel_oil       62.45154747123181
+                          natural_gas    29089.77057180242
+                          propane                      0.0
+                          site_energy    37999.06363543909
+200-300%                  electricity    8288.396334083063
+                          fuel_oil                     0.0
+                          natural_gas    33780.07690554125
+                          propane        69.15732160123329
+                          site_energy    42137.63056122556
+300-400%                  electricity    9752.238567032986
+                          fuel_oil                     0.0
+                          natural_gas   34253.002577359235
+                          propane                      0.0
+                          site_energy   44005.241144392225
+400%+                     electricity    10089.26563865249
+                          fuel_oil      20.305917548666038
+                          natural_gas    36214.50102391846
+                          propane         86.5839400681141
+                          site_energy    46410.65652018773
+Not Available             electricity   2855.7133029506176
+                          fuel_oil       34.80442920903349
+                          natural_gas      12398.722285091
+                          propane       31.245983311156355
+                          site_energy    15320.48600056181
+dtype: double[pyarrow]
+
+2025-03-07 10:00:53,965 - INFO - >> Database down-selected to 1885 buildings, based on input data of 1885 buildings, result outputs to: 
+/Users/sphoung/resstock/euss_cleap2.0/data_/downsampled_buildings_id/baseline_metadata_and_annual_results__downsampled_method1__detroit.csv
+

@@ -1,0 +1,46 @@
+system_type,ventilation_type,primary_heating,primary_cooling
+Baseboard electric,None,Electric Resistance,None
+Baseboard gas boiler,None,Boiler ,None
+DOAS with VRF,DOAS+Zone terminal equipment,ASHP,ASHP
+DOAS with fan coil air-cooled chiller with baseboard electric,DOAS+Zone terminal equipment,Electric Resistance,ACC
+DOAS with fan coil air-cooled chiller with boiler,DOAS+Zone terminal equipment,Boiler ,ACC
+DOAS with fan coil air-cooled chiller with district hot water,DOAS+Zone terminal equipment,District,ACC
+DOAS with fan coil chiller with baseboard electric,DOAS+Zone terminal equipment,Electric Resistance,WCC
+DOAS with fan coil chiller with boiler,DOAS+Zone terminal equipment,Boiler ,WCC
+DOAS with fan coil chiller with district hot water,DOAS+Zone terminal equipment,District,WCC
+DOAS with fan coil district chilled water with baseboard electric,DOAS+Zone terminal equipment,Electric Resistance,District
+DOAS with fan coil district chilled water with boiler,DOAS+Zone terminal equipment,Boiler ,District
+DOAS with fan coil district chilled water with district hot water,DOAS+Zone terminal equipment,District,District
+DOAS with water source heat pumps cooling tower with boiler,DOAS+Zone terminal equipment,WSHP,WSHP
+DOAS with water source heat pumps with ground source heat pump,DOAS+Zone terminal equipment,GSHP,GSHP
+Direct evap coolers with baseboard electric,Central Single-zone RTU,Electric Resistance,Evaporative Cooling
+Direct evap coolers with baseboard gas boiler,Central Single-zone RTU,Boiler ,Evaporative Cooling
+Direct evap coolers with forced air furnace,Central Single-zone RTU,Furnace,Evaporative Cooling
+Gas unit heaters,Zone terminal equipment,Furnace,None
+PSZ-AC district chilled water with district hot water,Central Single-zone RTU,District,District
+PSZ-AC district chilled water with electric coil,Central Single-zone RTU,Electric Resistance,District
+PSZ-AC with district hot water,Central Single-zone RTU,District,DX
+PSZ-AC with electric coil,Central Single-zone RTU,Electric Resistance,DX
+PSZ-AC with gas boiler,Central Single-zone RTU,Boiler ,DX
+PSZ-AC with gas coil,Central Single-zone RTU,Furnace,DX
+PSZ-HP,Central Single-zone RTU,ASHP,ASHP
+PTAC with baseboard district hot water,Zone terminal equipment,District,DX
+PTAC with electric coil,Zone terminal equipment,Electric Resistance,DX
+PTAC with gas boiler,Zone terminal equipment,Boiler ,DX
+PTAC with gas coil,Zone terminal equipment,Furnace,DX
+PTHP,Zone terminal equipment,ASHP,ASHP
+PVAV with PFP boxes,Central Multi-zone VAV RTU,Electric Resistance,DX
+PVAV with district hot water reheat,Central Multi-zone VAV RTU,District,DX
+PVAV with gas boiler reheat,Central Multi-zone VAV RTU,Boiler ,DX
+PVAV with gas heat with electric reheat,Central Multi-zone VAV RTU,Furnace,DX
+Residential AC with residential forced air furnace,Residential forced air,Furnace,DX
+Residential forced air furnace,Residential forced air,Furnace,None
+VAV air-cooled chiller with PFP boxes,Central Multi-zone VAV RTU,Electric Resistance,ACC
+VAV air-cooled chiller with district hot water reheat,Central Multi-zone VAV RTU,District,ACC
+VAV air-cooled chiller with gas boiler reheat,Central Multi-zone VAV RTU,Boiler ,ACC
+VAV chiller with PFP boxes,Central Multi-zone VAV RTU,Electric Resistance,WCC
+VAV chiller with district hot water reheat,Central Multi-zone VAV RTU,District,WCC
+VAV chiller with gas boiler reheat,Central Multi-zone VAV RTU,Boiler ,WCC
+VAV district chilled water with PFP boxes,Central Multi-zone VAV RTU,Electric Resistance,District
+VAV district chilled water with district hot water reheat,Central Multi-zone VAV RTU,District,District
+VAV district chilled water with gas boiler reheat,Central Multi-zone VAV RTU,Boiler ,District

@@ -1,0 +1,401 @@
+enumeration,enumeration_description
+_1000,Less than one thousand
+_1pct,Less than one percent
+11_25pct,Eleven to twenty five percent
+1946 to 1959,Years 1946 to 1959
+1960 to 1969,Years 1960 to 1969
+1970 to 1979,Years 1970 to 1979
+1980 to 1989,Years 1980 to 1989
+1990 to 1999,Years 1990 to 1999
+1A,ASHRAE climate zone 1A very hot humid
+2_10pct,Two to ten percent
+2000 to 2012,Years 2000 to 2012
+2013 to 2018,Years 2013 to 2018
+26_50pct,Twenty six to fifty percent
+2A,ASHRAE climate zone 2A hot humid
+2B,ASHRAE climate zone 2A hot dry
+3A,ASHRAE climate zone 3A warm humid
+3B,ASHRAE climate zone 3B warm dry
+3C,ASHRAE climate zone 3C warm marine
+4A,ASHRAE climate zone 4A mixed humid
+4B,ASHRAE climate zone 4B mixed dry
+4C,ASHRAE climate zone 4B mixed marine
+500001_1mil,"500,000 to 1,000,000"
+51_75pct,Fifty one to seventy five percent
+5A,ASHRAE climate zone 5A cool humid
+5B,ASHRAE climate zone 5B cool dry
+6A,ASHRAE climate zone 6A cold humid
+6B,ASHRAE climate zone 6B cold dry
+76_100pct,Seventy six to one hundred percent
+7A,ASHRAE climate zone 7 very cold
+7B,ASHRAE climate zone 7 very cold
+A: Non Food-Service Buildings with Small Packaged Units,"Addressable Segment A. Buildings with small packaged units and non food-service tenants. Common Examples:  1-2 story strip malls, retail buildings, warehouses, offices."
+ACC,Air cooled chiller
+AKGD,eGrid grid region for ASCC Alaska Grid. See https://www.epa.gov/egrid
+AKMS,eGrid grid region for ASCC Miscellaneous. See https://www.epa.gov/egrid
+ASHP,Air source heat pump
+ASHRAE 169-2013-1A,ASHRAE 90.1 climate zone 1A
+ASHRAE 169-2013-2A,ASHRAE 90.1 climate zone 2A
+ASHRAE 169-2013-2B,ASHRAE 90.1 climate zone 2B
+ASHRAE 169-2013-3A,ASHRAE 90.1 climate zone 3A
+ASHRAE 169-2013-3B,ASHRAE 90.1 climate zone 3B
+ASHRAE 169-2013-4A,ASHRAE 90.1 climate zone 4A
+ASHRAE 169-2013-4B,ASHRAE 90.1 climate zone 4B
+ASHRAE 169-2013-4C,ASHRAE 90.1 climate zone 4C
+ASHRAE 169-2013-5A,ASHRAE 90.1 climate zone 5A
+ASHRAE 169-2013-5B,ASHRAE 90.1 climate zone 5B
+ASHRAE 169-2013-6A,ASHRAE 90.1 climate zone 6A
+ASHRAE 169-2013-6B,ASHRAE 90.1 climate zone 6B
+ASHRAE 169-2013-7A,ASHRAE 90.1 climate zone 7A
+ASHRAE 169-2013-8A,ASHRAE 90.1 climate zone 8A
+AZNMc,Cambium grid region AZNMc. See https://www.nrel.gov/analysis/cambium.html
+B: Food-Service Buildings with Small Packaged Units,Addressable Segment B. Buildings with food service tenants with small packaged units. Common Examples:  freestanding restaurants.
+Baseboard electric,"HVAC system type using zone electric resistance baseboard heating and no cooling, no outside ventilation air"
+Baseboard gas boiler,"HVAC system type using zone hot water baseboard heating from gas boiler and no cooling, no outside ventilation air"
+Baseline,The building without any upgrades beyond those that have occurred up to 2018
+Before 1946,Years before 1946
+Boiler ,"A piece of HVAC equipment that heats water, either through the combustion of fuel or through an electric resistance coil"
+building_owner,The entity who legally owns the building
+building_owner_or_tenant,The entity who legally owns or leases the building
+Burger A,A type of restaurant in a survey of kitchen equipment
+Burger B,A type of restaurant in a survey of kitchen equipment
+C: Strip Malls with some Food-Service with Small Packaged Units,"Addressable Segment C. Strip malls with a mix of food service and non food-service tenants with small packaged units. Common Examples:  strip malls with restaurants, retail, and salons."
+Cafe,A type of restaurant in a survey of kitchen equipment
+CAISO,California Indepentent System Operator
+CAMXc,Cambium grid region CAMXc. See https://www.nrel.gov/analysis/cambium.html
+Central Multi-zone VAV RTU,HVAC system type using variable air volume system
+Central Multi-zone VAV RTU_Boiler _ACC,"HVAC system type using variable air volume system with hot water heating/reheating from gas boiler and chilled water cooling from air cooled chiller, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_Boiler _District,"HVAC system type using variable air volume system with  heating/reheating from district heating system and chilled water cooling from district chilled water system, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_Boiler _DX,"HVAC system type using variable air volume system with hot water heating/reheating from gas boiler and DX cooling, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_Boiler _WCC,"HVAC system type using variable air volume system with hot water heating/reheating from gas boiler and chilled water cooling from water cooled chiller, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_District_ACC,"HVAC system type using variable air volume system with hot water heating/reheating from district hot water system and chilled water cooling from air cooled chiller, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_District_District,"HVAC system type using variable air volume system with hot water heating/reheating from district hot water system and chilled water cooling from district chilled water system, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_District_DX,"HVAC system type using variable air volume system with hot water heating/reheating from district hot water system and DX cooling, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_District_WCC,"HVAC system type using variable air volume system with hot water heating/reheating from district hot water system and chilled water cooling from water cooled chiller, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_Electric Resistance_ACC,"HVAC system type using variable air volume system with heating/reheating from electric coils and chilled water cooling from air cooled chiller, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_Electric Resistance_District,"HVAC system type using variable air volume system with heating/reheating from electric coils and chilled water cooling from a district system, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_Electric Resistance_DX,"HVAC system type using variable air volume system with heating/reheating from electric coils and DX cooling, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_Electric Resistance_WCC,"HVAC system type using variable air volume system with heating/reheating from electric coils and chilled water cooling from air cooled chiller, outside ventilation air supplied directly through system"
+Central Multi-zone VAV RTU_Furnace_DX,"HVAC system type using variable air volume system with heating/reheating from gas furnace and DX cooling, outside ventilation air supplied directly through system"
+Central Single-zone RTU,HVAC system type using single zone rooftop units
+Central Single-zone RTU_ASHP_ASHP,HVAC system type using single zone rooftop units with air source heat pump for heating and cooling
+Central Single-zone RTU_Boiler _DX,HVAC system type using single zone rooftop units with hot water heating from boiler and DX cooling
+Central Single-zone RTU_Boiler _Evaporative Cooling,HVAC system type using single zone rooftop units with hot water heating from boiler and evaporative cooling
+Central Single-zone RTU_District_District,HVAC system type using single zone rooftop units with hot water heating from district source and chilled water cooling from district source
+Central Single-zone RTU_District_DX,HVAC system type using single zone rooftop units with hot water heating from district source and DX cooling
+Central Single-zone RTU_Electric Resistance_District,HVAC system type using single zone rooftop units with heating from electric resistance coils and chilled water cooling from district source
+Central Single-zone RTU_Electric Resistance_DX,HVAC system type using single zone rooftop units with heating from electric resistance coils and DX cooling
+Central Single-zone RTU_Electric Resistance_Evaporative Cooling,HVAC system type using single zone rooftop units with heating from electric resistance coils and cooling from evaporative coolers
+Central Single-zone RTU_Furnace_DX,HVAC system type using single zone rooftop units with heating from gas furnace and cooling from DX cooling
+Central Single-zone RTU_Furnace_Evaporative Cooling,HVAC system type using single zone rooftop units with heating from gas furnace and cooling from evaporative cooling
+Chicken A,A type of restaurant in a survey of kitchen equipment
+Chicken B,A type of restaurant in a survey of kitchen equipment
+Chinese A,A type of restaurant in a survey of kitchen equipment
+Chinese B,A type of restaurant in a survey of kitchen equipment
+Cold,The ASHRAE climate zone description
+ComStock 90.1-2004,An energy code closely following ASHRAE 90.1-2004
+ComStock 90.1-2007,An energy code closely following ASHRAE 90.1-2007
+ComStock 90.1-2010,An energy code closely following ASHRAE 90.1-2010
+ComStock 90.1-2013,An energy code closely following ASHRAE 90.1-2013
+ComStock DEER 1985,"The CA Title 24 Nonresidential Energy Code, as represented in MASControl2"
+ComStock DEER 1996,"The CA Title 24 Nonresidential Energy Code, as represented in MASControl2"
+ComStock DEER 2003,"The CA Title 24 Nonresidential Energy Code, as represented in MASControl2"
+ComStock DEER 2007,"The CA Title 24 Nonresidential Energy Code, as represented in MASControl2"
+ComStock DEER 2011,"The CA Title 24 Nonresidential Energy Code, as represented in MASControl2"
+ComStock DEER 2014,"The CA Title 24 Nonresidential Energy Code, as represented in MASControl2"
+ComStock DEER 2015,"The CA Title 24 Nonresidential Energy Code, as represented in MASControl2"
+ComStock DEER 2017,"The CA Title 24 Nonresidential Energy Code, as represented in MASControl2"
+ComStock DEER Pre-1975,"The CA Title 24 Nonresidential Energy Code, as represented in MASControl2"
+ComStock DOE Ref 1980-2004,An energy code closely following ASHRAE 90.1-1980
+ComStock DOE Ref Pre-1980,An energy code formatted set of assumptions representing bulding practices before widespread energy code adoption
+Cookie,A type of restaurant in a survey of kitchen equipment
+D: Buildings with Hydronically Heated Multizone Systems,"Addressable Segment D. Buildings with Hydronically Heated Multizone Systems. Common Examples: large buildings with boilers (schools, large offices, healthcare facilities)."
+default_nochange,The outdoor air system is assumed to operate at night per the code requirements from when the HVAC system was most recently updated
+Dept. Stores,A type of restaurant in a survey of kitchen equipment
+DifferentialDryBulb,An economizer control where operation is based on the difference in dry bulb temperatur between return air and outdoor air
+DifferentialEnthalpy,An economizer control where operation is based on the difference in enthalpy between return air and outdoor air
+Diner,A type of restaurant in a survey of kitchen equipment
+Direct evap coolers with baseboard electric,"HVAC system type using direct evaporative coolers for cooling and zone electric resistance baseboard heating, outside ventilation air supplied directly through system"
+Direct evap coolers with baseboard gas boiler,"Cooling with evaporative coolers, heating with baseboard radiators fed hot water heated by a gas-fired boiler"
+Direct evap coolers with forced air furnace,"HVAC system type using direct evaporative coolers for cooling and forced air furnace heating, outside ventilation air supplied directly through system"
+Direct evap coolers with gas unit heaters,"HVAC system type using direct evaporative coolers for cooling and gas unit heaters for heating, outside ventilation air supplied directly through system"
+Direct evap coolers with no heat...,"HVAC system type using direct evaporative coolers for cooling and no heating, outside ventilation air supplied directly through system"
+District,Heating or cooling provided by a large central plant that serves a district of many buildings
+DistrictHeating,"Fuel type of fuel oil for either space heating, water heating, equipment, etc."
+DOAS with fan coil air-cooled chiller with baseboard electric,"HVAC system type using zone fan coil units for cooling from air-cooled chiller, baseboard electric resistance for heating, and outside ventilation air provided by DOAS"
+DOAS with fan coil air-cooled chiller with boiler,"HVAC system type using zone fan coil units for heating and cooling from gas boiler and air-cooled chiller, outside ventilation air provided by DOAS"
+DOAS with fan coil air-cooled chiller with district hot water,"HVAC system type using zone fan coil units for heating and cooling from district hot water system and air-cooled chiller, outside ventilation air provided by DOAS"
+DOAS with fan coil chiller with baseboard electric,"HVAC system type using zone fan coil units for heating and cooling from electric baseboards and water-cooled chiller, outside ventilation air provided by DOAS"
+DOAS with fan coil chiller with boiler,"HVAC system type using zone fan coil units for heating and cooling from gas boiler and water-cooled chiller, outside ventilation air provided by DOAS"
+DOAS with fan coil chiller with district hot water,"HVAC system type using zone fan coil units for heating and cooling from district heating plant and water-cooled chiller, outside ventilation air provided by DOAS"
+DOAS with fan coil district chilled water with baseboard electric,"HVAC system type using zone fan coil units for heating and cooling from electric baseboards and district chilled water system, outside ventilation air provided by DOAS"
+DOAS with fan coil district chilled water with boiler,"HVAC system type using zone fan coil units for heating and cooling from gas boiler and district chilled water system, outside ventilation air provided by DOAS"
+DOAS with fan coil district chilled water with district hot water,"HVAC system type using zone fan coil units for heating and cooling from district hot water system and district chilled water system, outside ventilation air provided by DOAS"
+DOAS with VRF,"HVAC system type using zone variable refrigerant flow air source heat pumps for heating and cooling, outside ventilation air provided by DOAS"
+DOAS with water source heat pumps cooling tower with boiler,"HVAC system type using zone water source heat pumps for heating and cooling with heat rejection served by cooling tower and gas boiler, outside ventilation air provided by DOAS"
+DOAS with water source heat pumps with ground source heat pump,"HVAC system type using zone water source heat pumps for heating and cooling with heat rejection served by ground loop, outside ventilation air provided by DOAS"
+DOAS+Zone terminal equipment,HVAC system type where outdoor air ventilation is provided by DOAS
+DOAS+Zone terminal equipment_ASHP_ASHP,"HVAC system type using zone air source heat pumps, outdoor air ventilation provided by DOAS"
+DOAS+Zone terminal equipment_Boiler _ACC,"HVAC system type using zone equipment with hot water heating from boiler and chilled water cooling from air cooled chiller, outdoor air ventilation provided by DOAS"
+DOAS+Zone terminal equipment_Boiler _District,"HVAC system type using zone equipment with hot water heating from district hot water system and chilled water cooling from district cooling system, outdoor air ventilation provided by DOAS"
+DOAS+Zone terminal equipment_Boiler _WCC,"HVAC system type using zone equipment with hot water heating from boiler and chilled water cooling from water cooled chiller, outdoor air ventilation provided by DOAS"
+DOAS+Zone terminal equipment_District_ACC,"HVAC system type using zone equipment with hot water heating from district hot water system and chilled water cooling from air cooled chiller, outdoor air ventilation provided by DOAS"
+DOAS+Zone terminal equipment_District_District,"HVAC system type using zone equipment with hot water heating from district hot water system and chilled water cooling from district chilled water system, outdoor air ventilation provided by DOAS"
+DOAS+Zone terminal equipment_District_WCC,"HVAC system type using zone equipment with hot water heating from district hot water system and chilled water cooling from water cooled chiller, outdoor air ventilation provided by DOAS"
+DOAS+Zone terminal equipment_Electric Resistance_ACC,"HVAC system type using zone equipment with electric resistance heating and chilled water cooling from air cooled chiller, outdoor air ventilation provided by DOAS"
+DOAS+Zone terminal equipment_Electric Resistance_District,"HVAC system type using zone equipment with electric resistance heating and chilled water cooling from district source, outdoor air ventilation provided by DOAS"
+DOAS+Zone terminal equipment_Electric Resistance_WCC,"HVAC system type using zone equipment with electric resistance heating and chilled water cooling from water cooled chilled, outdoor air ventilation provided by DOAS"
+DOAS+Zone terminal equipment_GSHP_GSHP,"HVAC system type using zone equipment with ground source heat pump heating and cooling, outdoor air ventilation provided by DOAS"
+DOAS+Zone terminal equipment_WSHP_WSHP,"HVAC system type using zone equipment with water source heat pump heating and cooling, outdoor air ventilation provided by DOAS"
+Donut,A type of restaurant in a survey of kitchen equipment
+Double - LowE - Clear - Aluminum,"Window construction type with double pane clear glass, lowE coating, in aluminum frame with no thermal break"
+Double - LowE - Clear - Thermally Broken Aluminum,"Window construction type with double pane clear glass, lowE coating, in thermally broken aluminum frame"
+Double - LowE - Tinted/Reflective - Aluminum,"Window construction type with double pane tinted glass, lowE coating, in aluminum frame with no thermal break"
+Double - LowE - Tinted/Reflective - Thermally Broken Aluminum,"Window construction type with double pane tinted glass, lowE coating, in thermally broken aluminum frame"
+Double - No LowE - Clear - Aluminum,"Window construction type with double pane clear glass, no lowE coating, in aluminum frame with no thermal break"
+Double - No LowE - Tinted/Reflective - Aluminum,"Window construction type with double pane tinted glass, no lowE coating, in aluminum frame with no thermal break"
+DX,Direct expansion
+E: Lodging with Zone-by-Zone Systems,"Addressable Segment E. Lodging with zone-by-zone HVAC systems. Common Examples: motels and hotels, typically part of large chains"
+East North Central,"The census division covering IL, IN, MI, OH, and WI"
+East South Central,"The census division covering AL, KY, MS, and TN"
+Education,Building group for education building types
+Electric,Uses electricity as the primary input to some equipment or process
+Electric Resistance,Passes electricity through a resistive element to generate heat
+Electricity,"Fuel type of electricity for either space heating, water heating, equipment, etc."
+ERCOT,Energy Reliability Council of Texas
+ERCTc,Cambium grid region ERCTc. See https://www.nrel.gov/analysis/cambium.html
+Evaporative Cooling,"Moves air over a water-wetted media, evaporating the water to remove heat from the airstream"
+F: Buildings with Electric Resistance Multizone Systems,Addressable Segment F. Buildings with electric resistance multizone systems. Common Examples: medium to large offices and healthcare facilities.
+Fail,"An upgrade completed with errors. If a model fails during an upgrade, results are replaced with Baseline results for this model."
+Fan coil air-cooled chiller with boiler,"HVAC system type using zone fan coil units for heating and cooling from gas boiler and air-cooled chiller, outside ventilation air supplied directly through system"
+Fan coil air-cooled chiller with no heat,"HVAC system type using zone fan coil units for cooling from air-cooled chiller and no heating, outside ventilation air supplied directly through system"
+Fan coil chiller with baseboard electric,"HVAC system type using zone fan coil units for cooling from air-cooled chiller and heating from zone electric resistance baseboard, outside ventilation air supplied directly through system"
+Fan coil chiller with boiler,"HVAC system type using zone fan coil units for heating and cooling from gas boiler and water-cooled chiller, outside ventilation air supplied directly through system"
+Fan coil chiller with district hot water,"HVAC system type using zone fan coil units for heating and cooling from district hot water and water-cooled chiller, outside ventilation air supplied directly through system"
+Fan coil chiller with no heat,"HVAC system type using zone fan coil units for cooling  water-cooled chiller with no heating, outside ventilation air supplied directly through system"
+Fan coil district chilled water with district hot water,"HVAC system type using zone fan coil units for heating and cooling from district hot water and district chilled water, outside ventilation air supplied directly through system"
+Fault apr,The economizer fault happens in this building for the month of April
+Fault aug,The economizer fault happens in this building for the month of August
+Fault dec,The economizer fault happens in this building for the month of December
+Fault feb,The economizer fault happens in this building for the month of February
+Fault jan,The economizer fault happens in this building for the month of January
+Fault jul,The economizer fault happens in this building for the month of July
+Fault jun,The economizer fault happens in this building for the month of June
+Fault mar,The economizer fault happens in this building for the month of March
+Fault may,The economizer fault happens in this building for the month of May
+Fault nov,The economizer fault happens in this building for the month of November
+Fault oct,The economizer fault happens in this building for the month of October
+Fault sep,The economizer fault happens in this building for the month of September
+federal,Owned by the Federal government
+Fish A,A type of restaurant in a survey of kitchen equipment
+Fish B,A type of restaurant in a survey of kitchen equipment
+FixedDryBulb,An economizer control where operation is based on a pre-determined outdoor air drybulb temperature below which the air is assumed to be benefical for free cooling
+Food Service,Building group for food service building types
+Forced air furnace,HVAC system type using forced air furnace for heating
+FRCCc,Cambium grid region FRCCc. See https://www.nrel.gov/analysis/cambium.html
+FuelOil,"Fuel type of Fuel Oil for either space heating, water heating, equipment, etc."
+FullServiceRestaurant,Full service restaurant building type
+Furnace,A fossil fuel combustion appliance where the heat exchanger directly heats a moving airstream which is used to heat a building
+G: Buildings with Furnace-Based Multizone Systems,"Addressable Segment G: Buildings with packaged furnace based multi-zone systems. Common Examples: small to medium offices and schools."
+Gas,Natural gas
+Gas unit heaters,"HVAC system type using zone gas unit heaters for heating and no cooling, no outside ventilation air"
+gen1_t12_incandescent,Lighting type for building using t12 incandescent fixtures
+gen2_t8_halogen,Lighting type for building using t12 halogen fixtures
+gen3_t5_cfl,Lighting type for building using t5 compact fluorescent fixtures
+gen4_led,Lighting type for building using older LED lighting
+gen5_led,Lighting type for building using newer LED lighting
+Grills,A type of restaurant in a survey of kitchen equipment
+GSHP,"Ground source heat pump, sometimes also called a geothermal heat pump"
+H: Buildings with Residential Style Central Systems,"Addressable Segment H: Buildings with Residential Style Central Systems. Common Examples: small buildings converted from residential uses (small offices such as dentist, accountant, lawyer, etc.)."
+Healthcare,Building group for healthcare building types
+High School,A type of building in a survey of kitchen equipment
+HIMS,eGrid grid region for HIMS Miscellaneous. See https://www.epa.gov/egrid
+HIOA,eGrid grid region for ASCC Hawaii Oahu. See https://www.epa.gov/egrid
+Hospital,Hospital building type
+Hospitals Large,A type of building in a survey of kitchen equipment
+Hospitals Small,A type of building in a survey of kitchen equipment
+Hot Dog,A type of restaurant in a survey of kitchen equipment
+Hot-Dry,The ASHRAE climate zone description
+Hotel A,A type of building in a survey of kitchen equipment
+Hotel B,A type of building in a survey of kitchen equipment
+Hot-Humid,The ASHRAE climate zone description
+HVAC,"An end use group that includes the following end uses: cooling, heating, interior equipment, lighting, refrigeration, water systems"
+I: Non-Lodging Buildings with Zone-by-Zone Systems,Addressable Segment I: All non-lodging buildings with zone-by-zone systems.
+Invalid,"An upgrade completed but was not applicable to this model. Results are replaced with Baseline results for this model."
+J: Other,Addressable Segment J: All buildings not in addressable segments A-I
+LargeHotel,Large hotel building type
+LargeOffice,Large office building type
+largeoffice_datacenter,Large office building type including floor area for data center
+largeoffice_nodatacenter,Large office building type with no floor area for data center
+leased,The tenants of the building pay rent to a different legal entity who owns the building in exchange for occupancy
+Lighting,An end use group that includes the following end uses: exterior lighting and interior lighting
+local,"Owned by a local government, such as a city or county"
+Lodging,Building group for lodging building types
+Marine,The ASHRAE climate zone description
+Mass,Building construction type that uses mass building construction
+MediumOffice,Medium office building type
+mediumoffice_datacenter,Medium office building type including floor area for data center
+mediumoffice_nodatacenter,Medium office building type with no floor area for data center
+Mercantile,Building group for retail building types
+Metal Building,Building construction type that uses metal building construction
+Middle Atlantic,"The census division covering NJ, NY, and PA"
+Midwest,The census region covering the East North Central and West North Central divisions
+MISO,Midwest Independent System Operator
+Mixed-Dry,The ASHRAE climate zone description
+Mixed-Humid,The ASHRAE climate zone description
+Mountain,"The census division coering AZ, CO, ID, MT, NV, NM, UT, and WY"
+MROEc,Cambium grid region MROEc. See https://www.nrel.gov/analysis/cambium.html
+MROWc,Cambium grid region MROWc. See https://www.nrel.gov/analysis/cambium.html
+Muffin,A type of building in a survey of kitchen equipment
+Multizone CAV/VAV,"HVAC system that serves multiple zones, either constant air volume or variable air volume"
+NA,Not applicable
+NaturalGas,"Fuel type of Fuel Oil for either space heating, water heating, equipment, etc."
+NEISO,New England Independent System Operator
+New England,"The census division covering CT, ME, MA, NH, RI, and VT"
+NEWEc,Cambium grid region NEWEc. See https://www.nrel.gov/analysis/cambium.html
+night_fancycle_novent,"When the HVAC system fan cycles on at night, no outdoor air is brought into the building"
+night_fancycle_vent,"When the HVAC system fan cycles on at night, outdoor air is brought into the building"
+night_fanon_vent,"The HVAC system runs all night, during which time outdoor air is brought into the building"
+No fault,There is no fault present for the system
+NoEconomizer,The system does not have an economizer
+NoHeating,Specifies no heating for HVAC system
+None,The system does not have the attribute described by this column
+None_Electric Resistance_None,HVAC combined system type using electric resistance heat
+Northeast,The census region covering the New England and Middle Atlantic divisions
+NWPPc,Cambium grid region NWPPc. See https://www.nrel.gov/analysis/cambium.html
+NYISO,New York Independent System Operator
+NYSTc,Cambium grid region NYSTc. See https://www.nrel.gov/analysis/cambium.html
+Office,Building group for office building types
+other,Not covered by one of the distinct enumerations listed in this column
+Other Fuel,Propane and fuel oil
+Other HVAC,HVAC system category for systems that do not fit into another HVAC category
+Outpatient,Outpatient building type
+over_1mil,Over one million
+over_25,Over twenty five
+owner_occupied,The tenants of the building own the building
+Pacific,"The census division covering AK, CA, HI, OR, and WA"
+Pancake,A type of building in a survey of kitchen equipment
+Pizza A,A type of building in a survey of kitchen equipment
+Pizza B,A type of building in a survey of kitchen equipment
+PJM,The Pennsylvania New Jersey Maryland interconnect
+Potato,A type of building in a survey of kitchen equipment
+PrimarySchool,Primary school building type
+prop_manager,"The property manager for the building, typically a company that specializes in operating properties on behalf of building owners in exchange for a fee"
+Propane,"Fuel type of propane for either space heating, water heating, equipment, etc."
+PSZ-AC district chilled water with district hot water,"HVAC system type using constant air volume single-zone air handling unit with cooling from district chilled water system and heating from district heating system, outside ventilation air supplied directly through system"
+PSZ-AC district chilled water with electric coil,"HVAC system type using constant air volume single-zone air handling unit with cooling from district chilled water system and heating from electric resistance coil, outside ventilation air supplied directly through system"
+PSZ-AC with baseboard electric,"HVAC system type using constant air volume single-zone air handling unit with DX cooling and heating from zone electric resistance baseboards, outside ventilation air supplied directly through system"
+PSZ-AC with baseboard gas boiler,"HVAC system type using constant air volume single-zone air handling unit with DX cooling and zone hot water baseboard heating from gas boiler, outside ventilation air supplied directly through system"
+PSZ-AC with district hot water,"HVAC system type using single zone rooftop unit with hot water heating from district hot water system and chilled water cooling from district cooling system, outside ventilation air supplied directly through system"
+PSZ-AC with electric coil,"HVAC system type using constant air volume single-zone air handling unit with DX cooling and electric resistance heating, outside ventilation air supplied directly through system"
+PSZ-AC with gas boiler,"HVAC system type using constant air volume single-zone air handling unit with DX cooling and hot water heating from gas boiler, outside ventilation air supplied directly through system"
+PSZ-AC with gas coil,"HVAC system type using constant air volume single-zone air handling unit with DX cooling and gas furnace heating, outside ventilation air supplied directly through system"
+PSZ-AC with gas unit heaters,"HVAC system type using constant air volume single-zone air handling unit with DX cooling and gas unit heaters for heating, outside ventilation air supplied directly through system"
+PSZ-AC with no heat,"HVAC system type using constant air volume single-zone air handling unit with DX cooling and no heat, outside ventilation air supplied directly through system"
+PSZ-HP,"HVAC system type using constant air volume single-zone air handling unit with air source heat pump for heating and cooling, outside ventilation air supplied directly through system"
+PTAC with baseboard district hot water,"HVAC system type using zone packaged terminal air conditioners with DX cooling and zone hot water baseboard heating from district heating system, outside ventilation air supplied directly through system"
+PTAC with baseboard electric,"HVAC system type using zone packaged terminal air conditioners with DX cooling and zone electric resistance baseboard heating, outside ventilation air supplied directly through system"
+PTAC with baseboard gas boiler,"HVAC system type using zone packaged terminal air conditioners with DX cooling and zone hot water baseboard heating from gas boiler, outside ventilation air supplied directly through system"
+PTAC with electric coil,"HVAC system type using zone packaged terminal air conditioners with DX cooling and electric resistance heating, outside ventilation air supplied directly through system"
+PTAC with gas boiler,"HVAC system type using zone packaged terminal air conditioners with DX cooling and hot water heating from gas boiler, outside ventilation air supplied directly through system"
+PTAC with gas coil,"HVAC system type using zone packaged terminal air conditioners with DX cooling and gas furnace heating, outside ventilation air supplied directly through system"
+PTAC with gas unit heaters,"HVAC system type using zone packaged terminal air conditioners with DX cooling and gas unit heaters for heating, outside ventilation air supplied directly through system"
+PTAC with no heat,"HVAC system type using zone packaged terminal air conditioners with DX cooling and no heat, outside ventilation air supplied directly through system"
+PTHP,"HVAC system type using zone packaged terminal heat pump with air source heat pump for heating and cooling, outside ventilation air supplied directly through system"
+Pubs/Taverns,A type of building in a survey of kitchen equipment
+PVAV with district hot water reheat,"HVAC system type using variable air volume system with hot water heating/reheating from district hot water system and DX cooling, outside ventilation air supplied directly through system"
+PVAV with gas boiler reheat,"HVAC system type using packaged variable air volume system with hot water heating/reheating from gas boiler and dx cooling, outside ventilation air supplied directly through system"
+PVAV with gas heat with electric reheat,"HVAC system type using variable air volume system with hot water heating from boiler, reheat from electric resistance coils,  and DX cooling, outside ventilation air supplied directly through system"
+PVAV with PFP boxes,"HVAC system type using packaged variable air volume system with electric resistance heating/reheating and dx cooling, outside ventilation air supplied directly through system"
+QuickServiceRestaurant,Quick service restaurant building type
+Residential AC with baseboard electric,"HVAC system type using residential forced air system with DX cooling and zone electric resistance baseboard heating, no outside ventilation air"
+Residential AC with no heat,"HVAC system type using residential forced air system with DX cooling and no heating, no outside ventilation air"
+Residential AC with residential forced air furnace,"HVAC system type using residential forced air system with DX cooling and gas furnace heating, no outside ventilation air"
+Residential forced air,A residential style HVAC system providing space conditioning by means of heating or cooling an airstream. Does not include outdoor air for ventilation in the way that most commercial HVAC systems do.
+Residential forced air furnace,"HVAC system type using residential forced air system with gas furnace heating and no cooling, no outside ventilation air"
+Residential forced air_Furnace_DX,"HVAC system type using residential system forced air system with heating from gas furnace and cooling from DX cooling, does not include ventilation air"
+Residential forced air_Furnace_None,"HVAC system type using residential system forced air system with heating from gas furnace and no cooling, does not include ventilation air"
+Residential Style Central Systems,"HVAC system type using residential system forced air system, does not include ventilation air"
+Restaurant A,A type of restaurant in a survey of kitchen equipment
+Restaurant B,A type of restaurant in a survey of kitchen equipment
+Restaurant C,A type of restaurant in a survey of kitchen equipment
+RetailStandalone,Standalone retail building type
+RetailStripmall,Strip mall retail building type
+RFCEc,Cambium grid region RFCEc. See https://www.nrel.gov/analysis/cambium.html
+RFCMc,Cambium grid region RFCMc. See https://www.nrel.gov/analysis/cambium.html
+RFCWc,Cambium grid region RFCWc. See https://www.nrel.gov/analysis/cambium.html
+RMPAc,Cambium grid region RMPAc. See https://www.nrel.gov/analysis/cambium.html
+Roast Beef,A type of restaurant in a survey of kitchen equipment
+SecondarySchool,Secondary school building type
+Single - No LowE - Clear - Aluminum,"Window construction type with single pane clear glass, no lowE coating, in aluminum frame with no thermal break"
+Single - No LowE - Clear - Wood,"Window construction type with single pane clear glass, no lowE coating, in wood frame with no thermal break"
+Single - No LowE - Tinted/Reflective - Aluminum,"Window construction type with single pane tinted glass, no lowE coating, in aluminum frame with no thermal break"
+Single - No LowE - Tinted/Reflective - Wood,"Window construction type with single pane tinted glass, no lowE coating, in wood frame with no thermal break"
+Small Packaged Unit,HVAC system using small packaged units
+SmallHotel,Small hotel building type
+SmallOffice,Small office building type
+South,"The census region covering the South Atlantic, East South Central, and West South Central divisions"
+South Atlantic,"The census division covering DE, DC, FL, GA, MD, NC, SC, VA, and WV"
+SPNOc,Cambium grid region SPNOc. See https://www.nrel.gov/analysis/cambium.html
+SPP,Southwest Power Pool
+SPSOc,Cambium grid region SPSOc. See https://www.nrel.gov/analysis/cambium.html
+SRMVc,Cambium grid region SRMVc. See https://www.nrel.gov/analysis/cambium.html
+SRMWc,Cambium grid region SRMWc. See https://www.nrel.gov/analysis/cambium.html
+SRSOc,Cambium grid region SRSOc. See https://www.nrel.gov/analysis/cambium.html
+SRTVc,Cambium grid region SRTVc. See https://www.nrel.gov/analysis/cambium.html
+SRVCc,Cambium grid region SRVCc. See https://www.nrel.gov/analysis/cambium.html
+state,Owned by a state government
+SteelFramed,Building construction type that uses steel framed construction
+strip_mall_restaurant0,Strip mall building type with 0% restaurant floor area
+strip_mall_restaurant10,Strip mall building type with 10% restaurant floor area
+strip_mall_restaurant20,Strip mall building type with 20% restaurant floor area
+strip_mall_restaurant30,Strip mall building type with 30% restaurant floor area
+strip_mall_restaurant40,Strip mall building type with 40% restaurant floor area
+Subarctic,The ASHRAE climate zone description
+Success,A run or measure completed without errors
+T24-CEC1,California Energy Commission Title 24 climate zone 1
+T24-CEC10,California Energy Commission Title 24 climate zone 10
+T24-CEC11,California Energy Commission Title 24 climate zone 11
+T24-CEC12,California Energy Commission Title 24 climate zone 12
+T24-CEC13,California Energy Commission Title 24 climate zone 13
+T24-CEC15,California Energy Commission Title 24 climate zone 15
+T24-CEC16,California Energy Commission Title 24 climate zone 16
+T24-CEC2,California Energy Commission Title 24 climate zone 2
+T24-CEC3,California Energy Commission Title 24 climate zone 3
+T24-CEC4,California Energy Commission Title 24 climate zone 4
+T24-CEC5,California Energy Commission Title 24 climate zone 5
+T24-CEC6,California Energy Commission Title 24 climate zone 6
+T24-CEC7,California Energy Commission Title 24 climate zone 7
+T24-CEC8,California Energy Commission Title 24 climate zone 8
+T24-CEC9,California Energy Commission Title 24 climate zone 9
+Triple - LowE - Clear - Thermally Broken Aluminum,"Window construction type with triple pane clear glass, lowE coating, in thermally broken aluminim frame"
+Triple - LowE - Tinted/Reflective - Thermally Broken Aluminum,"Window construction type with triple pane tinted glass, lowE coating, in thermally broken aluminim frame"
+Truck Stop,A type of restaurant in a survey of kitchen equipment
+VAV air-cooled chiller with district hot water reheat,"HVAC system type using variable air volume system with hot water heating/reheating from district heating system and chilled water cooling from air cooled chiller, outside ventilation air supplied directly through system"
+VAV air-cooled chiller with gas boiler reheat,"HVAC system type using variable air volume system with hot water heating/reheating from gas boiler and chilled water cooling from air cooled chiller, outside ventilation air supplied directly through system"
+VAV air-cooled chiller with PFP boxes,"HVAC system type using variable air volume system with electric heating/reheating and chilled water cooling from air cooled chiller, outside ventilation air supplied directly through system"
+VAV chiller with district hot water reheat,"HVAC system type using variable air volume system with hot water heating/reheating from district heating system and chilled water cooling from water cooled chiller, outside ventilation air supplied directly through system"
+VAV chiller with gas boiler reheat,"HVAC system type using variable air volume system with hot water heating/reheating from gas boiler and chilled water cooling from water cooled chiller, outside ventilation air supplied directly through system"
+VAV chiller with gas coil reheat,"HVAC system type using variable air volume system with gas furnace heating/reheating and chilled water cooling from water cooled chiller, outside ventilation air supplied directly through system"
+VAV chiller with PFP boxes,"HVAC system type using variable air volume system with electric heating/reheating and chilled water cooling from water cooled chiller, outside ventilation air supplied directly through system"
+VAV district chilled water with district hot water reheat,"HVAC system type using variable air volume system with  heating/reheating from district heating system and chilled water cooling from district chilled water system, outside ventilation air supplied directly through system"
+VAV district chilled water with gas boiler reheat,"HVAC system type using variable air volume system with hot water heating/reheating from gas boiler and chilled water cooling from district cooling system, outside ventilation air supplied directly through system"
+VAV district chilled water with PFP boxes,"HVAC system type using variable air volume system with electric heating/reheating and chilled water cooling from district cooling system, outside ventilation air supplied directly through system"
+Very Cold,The ASHRAE climate zone description
+Warehouse,Warehouse building type
+Warehouse and Storage,Building group for warehouse and storage building types
+Water source heat pumps with ground source heat pump,"HVAC system type using zone water source heat pumps for heating and cooling with heat rejection served by ground loop, outside ventilation air supplied directly through system"
+WCC,Water cooled chiller
+West,The census region covering the Mountain and Pacific divisions
+West North Central,"The census division covering IA, KS, MN, MO, NE, ND, and SD"
+West South Central,"The census division covering AK, LA, OK, and TX"
+WetBulbTemperature,An economizer control where operation is based on a pre-determined outdoor air wetbulb temperature below which the air is assumed to be benefical for free cooling
+WoodFramed,Building construction type that uses wood framed construction
+WSHP,Water source heat pump
+Zone terminal equipment,HVAC equipment serving a single thermal zone
+Zone terminal equipment_ASHP_ASHP,HVAC system using zone terminal air source heat pumps
+Zone terminal equipment_Boiler _DX,HVAC system using zone terminal equipment with hot water heating from gas boiler and DX cooling
+Zone terminal equipment_Electric Resistance_DX,HVAC system using zone terminal equipment with electric resistance heating and DX cooling
+Zone terminal equipment_Furnace_DX,HVAC system using zone terminal equipment with gas furnace heating and DX cooling
+Zone terminal equipment_Furnace_None,HVAC system using zone terminal equipment with gas furnace heating and no cooling
+Zone-by-Zone,HVAC system category that uses zone terminal systems

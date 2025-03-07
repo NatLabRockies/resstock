@@ -1,0 +1,54 @@
+
+This is a guide for CLEAP2.0
+
+Community list: ["brainerd","detroit","parramore"]
+
+0. conda environment:
+create a conda environment of resstock-estimation (https://github.com/NREL/resstock-estimation)
+
+1. downsample_buildstock_cleap2.0.py
+- downselect data to specific community level based on PUMA code(s)
+- input: requires resstock national level baseline results file, which could be downloaded from https://resstock.nrel.gov/datasets
+- place this files into /Users/xxxxx/resstock/euss_cleap2.0/data_/final_AMY2018_EUSSRR2
+- download national upgrade files as well for later use, place into same path above
+
+- run python downsample_buildstock_cleap2.0.py in the terminal or other interpreter. make sure to make make necessary changes --e.g., community names and PUMA codes
+- output:/Users/xxxx/resstock/euss_cleap2.0/data_/downsampled_buildings_id/baseline_metadata_and_annual_results__downsampled_method1__{community_name}.csv
+
+2. inflation_adjusted_ami.py
+- This step is done to inflation adjust income. The annual household income (representative_income) used in the ResStock dataset is based on derived income from the 2019 5-years ACS. 
+- However, the utility rates reported are for 2021-2022. 
+- To more accurately calculate the energy burden of communities (utility cost/income), it is important to align these two data sets by adjusting the income to 2022 values.
+- input: change and input Consumer Price Index (CPI) values for each community into the python script. CPI found here: https://fred.stlouisfed.org
+- input: determine which two years to use to adjust income for inflation 
+- input: require results from step 1 and all baseline and upgrade files from https://resstock.nrel.gov/datasets
+- Output: /Users/xxxx/resstock/euss_cleap2.0/data_/final_AMY2018_EUSSRR2/{community_name}_inflation_adjusted_income_{upgrade or baseline}_metadata_and_annual_results.csv
+
+3. energy_burden.py
+- energy burden is the ratio of (utility cost/income)
+- input: optional: need to adjust utility rates 
+- ouput: /Users/xxxxx/resstock/euss_cleap2.0/data_/final_results/brainerd_{upgrade or baseline}_metadata_and_annual_results_downsampled_with_inflation_adj_income_and_energy_burden.csv
+
+3.5. adjust_weight_to_empirical_data.py
+- optional: in case reweighting is required when there is empirical data to valid the distribution of the results --e.g., income by census tracts or HVAC system types, etc.  
+- input: distribution of empircal data 
+- output: /Users/xxx/resstock/euss_cleap2.0/data_/final_results/{community_name}_{upgrade or baseline}_metadata_and_annual_results_downsampled_with_inflation_adj_income_energy_burden_and_adjusted_income_distribution.csv
+
+4. compiling_the_files.py
+- compiling all the baseline and upgrades results for each community into one csv file 
+- input: all final baseline and upgrades files for each community 
+- output: one file that contains all info for a community 
+- output: /Users/xxxxxx/resstock/euss_cleap2.0/data_/compiled_results/{community_name}_compiled_results.csv
+
+5. baseline_and_upgrades_for_tableau.py
+- for figure regeneration using Tableau
+- need uncertainty-quanification environment. https://github.com/NREL/EULP-uncertainty-quantification
+- input: utility rates for each community 
+- input: file structure: /Users/xxxxx/resstock/euss_cleap2.0/data_/2024-2 Col Plan CLEAP including Upgrades.csv
+- output: file to be used for Tableau: /Users/xxxxx/resstock/euss_cleap2.0/data_/final_results/CLEAP_Brainerd_data_with_upgrades.csv
+
+6. CLEAP2.0 Workbook.twb
+- for figures generations 
+- note: might need to open the file as text editor and manually search (control F) and input new file name --e.g., replace "sphoung" with your username. replace {community_name}
+- input: file from step #5
+- output: figures for housing characteristics, energy, emissions, etc. 

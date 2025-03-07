@@ -1,0 +1,228 @@
+2025-03-07 10:00:54,006 - INFO - ---------------------------------------------------------
+2025-03-07 10:00:54,006 - INFO - Downsampling buildstock for  brainerd  using method 1
+2025-03-07 10:00:54,006 - INFO - ---------------------------------------------------------
+2025-03-07 10:00:54,009 - INFO - Creating n>=1000 subset by downsampling from bst_to_search (549718 samples), while trying to match 13 key HCs from bst_to_match (969 samples): ['Income', 'ASHRAE IECC Climate Zone 2004', 'State', 'Geometry Building Type RECS', 'Heating Fuel', 'HVAC Cooling Type', 'Tenure', 'Water Heater Fuel', 'Vintage ACS', 'Geometry Floor Area Bin', 'HVAC Heating Type', 'Federal Poverty Level', 'Vacancy Status']
+2025-03-07 10:00:54,010 - INFO - 
+2025-03-07 10:00:54,010 - INFO - 
+---- Attempt 1: downsample using 13 key HCs: ----
+2025-03-07 10:00:54,134 - INFO -    Located 9832 positively weighted rows in bst_to_search
+2025-03-07 10:00:54,135 - INFO - 
+ -> Step 2 : Weight Recalculation
+Method 1 - near-exact joint prob, but allow partial mismatch...
+2025-03-07 10:00:54,189 - INFO - 
+
+** Downsampled to: 1900 samples, by matching to: ['in.income', 'in.ashrae_iecc_climate_zone_2004', 'in.state', 'in.geometry_building_type_recs', 'in.heating_fuel', 'in.hvac_cooling_type', 'in.tenure', 'in.water_heater_fuel', 'in.vintage_acs', 'in.geometry_floor_area_bin', 'in.hvac_heating_type', 'in.federal_poverty_level', 'in.vacancy_status']
+2025-03-07 10:00:54,190 - INFO - 
+ -> Step 3 : Weight Normalization
+2025-03-07 10:00:54,191 - INFO - Checking marginals from weight_map with n=1900 rows...
+2025-03-07 10:00:54,201 - INFO -  [[ in.income ]] 
+2025-03-07 10:00:54,207 - INFO - 
+                matched     truth  pct_diff
+10000-14999    0.030960  0.030960      -0.0
+100000-119999  0.060888  0.060888       0.0
+120000-139999  0.041280  0.041280       0.0
+140000-159999  0.026832  0.026832       0.0
+15000-19999    0.029928  0.029928      -0.0
+160000-179999  0.011352  0.011352       0.0
+180000-199999  0.009288  0.009288       0.0
+20000-24999    0.045408  0.045408       0.0
+200000+        0.028896  0.028896       0.0
+25000-29999    0.029928  0.029928      -0.0
+30000-34999    0.039216  0.039216       0.0
+35000-39999    0.036120  0.036120       0.0
+40000-44999    0.035088  0.035088       0.0
+45000-49999    0.025800  0.025800       0.0
+50000-59999    0.062951  0.062951       0.0
+60000-69999    0.066047  0.066047       0.0
+70000-79999    0.049536  0.049536      -0.0
+80000-99999    0.089783  0.089783       0.0
+<10000         0.039216  0.039216       0.0
+Not Available  0.241486  0.241486      -0.0
+
+2025-03-07 10:00:54,213 - INFO -  [[ in.ashrae_iecc_climate_zone_2004 ]] 
+2025-03-07 10:00:54,217 - INFO - 
+    matched    truth  pct_diff
+6A  0.45614  0.45614       0.0
+7A  0.54386  0.54386       0.0
+
+2025-03-07 10:00:54,221 - INFO -  [[ in.state ]] 
+2025-03-07 10:00:54,224 - INFO - 
+    matched  truth  pct_diff
+MN      1.0    1.0       0.0
+
+2025-03-07 10:00:54,230 - INFO -  [[ in.geometry_building_type_recs ]] 
+2025-03-07 10:00:54,234 - INFO - 
+                                matched     truth  pct_diff
+Mobile Home                    0.075335  0.075335      -0.0
+Multi-Family with 2 - 4 Units  0.025800  0.025800       0.0
+Multi-Family with 5+ Units     0.079463  0.079463      -0.0
+Single-Family Attached         0.026832  0.026832       0.0
+Single-Family Detached         0.792570  0.792570      -0.0
+
+2025-03-07 10:00:54,239 - INFO -  [[ in.heating_fuel ]] 
+2025-03-07 10:00:54,244 - INFO - 
+              matched     truth  pct_diff
+Electricity  0.187822  0.187822       0.0
+Fuel Oil     0.037152  0.037152       0.0
+Natural Gas  0.411765  0.411765       0.0
+None         0.004128  0.004128       0.0
+Other Fuel   0.078431  0.078431       0.0
+Propane      0.280702  0.280702       0.0
+
+2025-03-07 10:00:54,249 - INFO -  [[ in.hvac_cooling_type ]] 
+2025-03-07 10:00:54,254 - INFO - 
+                       matched     truth  pct_diff
+Central AC            0.720330  0.720330       0.0
+Ducted Heat Pump      0.038184  0.038184      -0.0
+Non-Ducted Heat Pump  0.001032  0.001032       0.0
+None                  0.063983  0.063983       0.0
+Room AC               0.176471  0.176471      -0.0
+
+2025-03-07 10:00:54,259 - INFO -  [[ in.tenure ]] 
+2025-03-07 10:00:54,263 - INFO - 
+                matched     truth  pct_diff
+Not Available  0.241486  0.241486      -0.0
+Owner          0.599587  0.599587       0.0
+Renter         0.158927  0.158927      -0.0
+
+2025-03-07 10:00:54,268 - INFO -  [[ in.water_heater_fuel ]] 
+2025-03-07 10:00:54,273 - INFO - 
+              matched     truth  pct_diff
+Electricity  0.552116  0.552116       0.0
+Fuel Oil     0.003096  0.003096      -0.0
+Natural Gas  0.360165  0.360165       0.0
+Other Fuel   0.010320  0.010320       0.0
+Propane      0.074303  0.074303       0.0
+
+2025-03-07 10:00:54,278 - INFO -  [[ in.vintage_acs ]] 
+2025-03-07 10:00:54,282 - INFO - 
+          matched     truth  pct_diff
+1940-59  0.111455  0.111455       0.0
+1960-79  0.233230  0.233230      -0.0
+1980-99  0.265222  0.265222      -0.0
+2000-09  0.185759  0.185759      -0.0
+2010s    0.044376  0.044376       0.0
+<1940    0.159959  0.159959       0.0
+
+2025-03-07 10:00:54,287 - INFO -  [[ in.geometry_floor_area_bin ]] 
+2025-03-07 10:00:54,291 - INFO - 
+            matched     truth  pct_diff
+0-1499     0.462332  0.462332       0.0
+1500-2499  0.303406  0.303406       0.0
+2500-3999  0.195046  0.195046       0.0
+4000+      0.039216  0.039216       0.0
+
+2025-03-07 10:00:54,296 - INFO -  [[ in.hvac_heating_type ]] 
+2025-03-07 10:00:54,301 - INFO - 
+                       matched     truth  pct_diff
+Ducted Heat Pump      0.038184  0.038184      -0.0
+Ducted Heating        0.748194  0.748194       0.0
+Non-Ducted Heat Pump  0.001032  0.001032       0.0
+Non-Ducted Heating    0.208462  0.208462       0.0
+None                  0.004128  0.004128       0.0
+
+2025-03-07 10:00:54,306 - INFO -  [[ in.federal_poverty_level ]] 
+2025-03-07 10:00:54,310 - INFO - 
+                matched     truth  pct_diff
+0-100%         0.078431  0.078431       0.0
+100-150%       0.067079  0.067079      -0.0
+150-200%       0.060888  0.060888       0.0
+200-300%       0.143447  0.143447       0.0
+300-400%       0.110423  0.110423      -0.0
+400%+          0.298246  0.298246       0.0
+Not Available  0.241486  0.241486      -0.0
+
+2025-03-07 10:00:54,315 - INFO -  [[ in.vacancy_status ]] 
+2025-03-07 10:00:54,319 - INFO - 
+           matched     truth  pct_diff
+Occupied  0.758514  0.758514       0.0
+Vacant    0.241486  0.241486      -0.0
+
+2025-03-07 10:00:54,321 - INFO - No unmatched HC
+2025-03-07 10:00:54,360 - INFO - truth vs. matched - per dwelling unit energy:
+2025-03-07 10:00:54,363 - INFO - 
+                  matched         truth  pct_diff
+electricity  11988.431128  11944.620483  0.366781
+fuel_oil      1518.632788   1494.053632  1.645132
+natural_gas  16171.227221  16274.508426 -0.634620
+propane      10862.574873  10814.742588  0.442288
+site_energy  40540.866010  40527.925130  0.031931
+
+2025-03-07 10:00:54,403 - INFO - truth vs. matched - per dwelling unit energy:
+2025-03-07 10:00:54,408 - INFO - 
+                                    matched              truth  pct_diff
+in.vacancy_status                                                       
+Occupied          electricity  14522.553103 14457.255702018205  0.451658
+                  fuel_oil      1715.290347 1693.8598737532684  1.265186
+                  natural_gas  18850.239845  18969.26306237857 -0.627453
+                  propane      12771.983356 12730.619318007486  0.324918
+                  site_energy  47860.066651  47850.99795615753  0.018952
+Vacant            electricity   4028.689025  4052.368833699566 -0.584345
+                  fuel_oil       900.926353    866.45710432135  3.978183
+                  natural_gas   7756.379875  7810.215018721226 -0.689291
+                  propane       4865.073872  4796.924654555392  1.420686
+                  site_energy  17551.069125 17525.965611297535  0.143236
+
+2025-03-07 10:00:54,447 - INFO - truth vs. matched - per dwelling unit energy:
+2025-03-07 10:00:54,453 - INFO - 
+                                matched              truth  pct_diff
+in.tenure                                                           
+Not Available electricity   4028.689025  4052.368833699566 -0.584345
+              fuel_oil       900.926353    866.45710432135  3.978183
+              natural_gas   7756.379875  7810.215018721226 -0.689291
+              propane       4865.073872  4796.924654555392  1.420686
+              site_energy  17551.069125 17525.965611297535  0.143236
+Owner         electricity  15276.012733  15178.93308778193  0.639568
+              fuel_oil      1776.243730 1749.1328902297996  1.549959
+              natural_gas  20740.257841  20886.37363945224 -0.699575
+              propane      15338.148293 15285.820293803316  0.342330
+              site_energy  53130.662597  53100.25991126728  0.057255
+Renter        electricity  11679.955408  11734.56374663688 -0.465363
+              fuel_oil      1485.329857 1485.3298570463558 -0.000000
+              natural_gas  11719.717407 11736.527703418815 -0.143231
+              propane       3090.542909  3090.542909323225 -0.000000
+              site_energy  27975.545582 28046.964216425273 -0.254639
+
+2025-03-07 10:00:54,494 - INFO - truth vs. matched - per dwelling unit energy:
+2025-03-07 10:00:54,502 - INFO - 
+                                           matched              truth  pct_diff
+in.federal_poverty_level                                                       
+0-100%                   electricity  12293.209754 12441.364378390468 -1.190823
+                         fuel_oil      1416.150261 1416.1502606585118  0.000000
+                         natural_gas  15264.922372 15559.170108831318 -1.891153
+                         propane      10230.744721 10346.820145654223 -1.121846
+                         site_energy  39205.027108 39763.504893534526 -1.404498
+100-150%                 electricity  11885.114004  11776.45226880193  0.922703
+                         fuel_oil      2150.388688  2150.388687853053  0.000000
+                         natural_gas  19692.712925 19577.174540218613  0.590169
+                         propane       7297.888964  7297.888964357964  0.000000
+                         site_energy  41026.104581  40801.90446123156  0.549484
+150-200%                 electricity  14357.611667 14582.123644389472 -1.539638
+                         fuel_oil       880.256345  880.2563448342289  0.000000
+                         natural_gas  17572.711581 17541.520539844656  0.177813
+                         propane       7290.341563   7276.38839946103  0.191759
+                         site_energy  40100.921155  40280.28892852939 -0.445299
+200-300%                 electricity  14256.533749 14217.267672673073  0.276186
+                         fuel_oil       768.137166  768.1371664964291  0.000000
+                         natural_gas  17542.839071 17412.368539764986  0.749298
+                         propane      10006.572235  9971.572380187676  0.350996
+                         site_energy  42574.082222  42369.34575912216  0.483218
+300-400%                 electricity  12344.421759 11906.464157770622  3.678318
+                         fuel_oil      1676.151511 1574.7722023680265  6.437713
+                         natural_gas  19281.504102  19306.42651016031 -0.129089
+                         propane      17205.968347 17211.406595543198 -0.031597
+                         site_energy  50508.045720 49999.069465842156  1.017971
+400%+                    electricity  16670.068414 16624.680568690615  0.273015
+                         fuel_oil      2336.613558  2319.645351372163  0.731500
+                         natural_gas  20333.565026  20644.76990310567 -1.507427
+                         propane      15478.982972 15360.927691505553  0.768543
+                         site_energy  54819.229970 54950.023514673994 -0.238023
+Not Available            electricity   4028.689025  4052.368833699566 -0.584345
+                         fuel_oil       900.926353    866.45710432135  3.978183
+                         natural_gas   7756.379875  7810.215018721226 -0.689291
+                         propane       4865.073872  4796.924654555392  1.420686
+                         site_energy  17551.069125 17525.965611297535  0.143236
+
+2025-03-07 10:00:54,507 - INFO - >> Database down-selected to 1900 buildings, based on input data of 969 buildings, result outputs to: 
+/Users/sphoung/resstock/euss_cleap2.0/data_/downsampled_buildings_id/baseline_metadata_and_annual_results__downsampled_method1__brainerd.csv
+

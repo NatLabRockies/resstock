@@ -1,0 +1,56 @@
+CBECS More specific building activity,CBECS Principal building activity,CBECS Reporting Building Type,ComStock Intermediate Building Type,NEMS and AEO Intermediate Building Type
+College/university,Education,Education,Other,Education
+Elementary school,Education,Education,PrimarySchool,Education
+Multi-grade school (any K-12),Education,Education,PrimarySchool,Education
+Middle/junior high school,Education,Education,SecondarySchool,Education
+High school,Education,Education,SecondarySchool,Education
+Preschool/daycare,Education,Education,Other,Education
+Other classroom education,Education,Education,Other,Education
+Convenience store (w/ or w/out gas station),Food sales,Food sales,Other,Food Sales
+Grocery store/food market,Food sales,Food sales,Other,Food Sales
+Other food sales,Food sales,Food sales,Other,Food Sales
+Fast food,Food service,Food service,QuickServiceRestaurant,Food Services
+Restaurant/cafeteria,Food service,Food service,FullServiceRestaurant,Food Services
+Other food service,Food service,Food service,Other,Food Services
+Bar/pub/lounge,Food service,Food service,FullServiceRestaurant,Food Services
+Medical office (diagnostic),Outpatient health care,Health care,Outpatient,Office
+Clinic/other outpatient health,Outpatient health care,Health care,Outpatient,Office
+Hospital/inpatient health,Inpatient health care,Health care,Hospital,Health Care
+Nursing home/assisted living,Nursing,Lodging,Other,Lodging
+Dormitory/fraternity/sorority,Lodging,Lodging,Other,Lodging
+Hotel/resort,Lodging,Lodging,LargeHotel,Lodging
+Motel/inn/bed and breakfast,Lodging,Lodging,SmallHotel,Lodging
+Other lodging,Lodging,Lodging,Other,Lodging
+Vehicle dealership/showroom,Retail other than mall,Mercantile,Other,Mercantile
+Retail store,Retail other than mall,Mercantile,RetailStandalone,Mercantile
+Other retail,Retail other than mall,Mercantile,RetailStandalone,Mercantile
+Strip shopping mall,Strip shopping mall,Mercantile,RetailStripmall,Mercantile
+Enclosed mall,Enclosed mall,Mercantile,Other,Mercantile
+Administrative/professional office,Office,Office,Office,Office
+Bank/other financial,Office,Office,Office,Office
+Government office,Office,Office,Office,Office
+Medical office (non-diagnostic),Office,Office,Office,Office
+Mixed-use office,Office,Office,Other,Office
+Other office,Office,Office,Office,Office
+Laboratory,Laboratory,Other,Other,Other
+Other,Other,Other,Other,Other
+Entertainment/culture,Public assembly,Public assembly,Other,Assembly
+Library,Public assembly,Public assembly,Other,Assembly
+Recreation,Public assembly,Public assembly,Other,Assembly
+Social/meeting,Public assembly,Public assembly,Other,Assembly
+Other public assembly,Public assembly,Public assembly,Other,Assembly
+Fire station/police station,Public order and safety,Public order and safety,Other,Other
+Other public order and safety,Public order and safety,Public order and safety,Other,Other
+Courthouse/probation office,Public order and safety,Public order and safety,Other,Other
+Religious worship,Religious worship,Religious worship,Other,Assembly
+Post office/postal center,Service,Service,Other,Mercantile and Service
+Repair shop,Service,Service,Other,Mercantile and Service
+Vehicle service/repair shop,Service,Service,Other,Mercantile and Service
+Vehicle storage/maintenance,Service,Service,Other,Mercantile and Service
+Other service,Service,Service,Other,Mercantile and Service
+Vacant,Vacant,Vacant,Other,Other
+Distribution/shipping center,Nonrefrigerated warehouse,Warehouse and storage,Warehouse,Warehouse
+Non-refrigerated warehouse,Nonrefrigerated warehouse,Warehouse and storage,Warehouse,Warehouse
+Public rental storage units,Nonrefrigerated warehouse,Warehouse and storage,Warehouse,Warehouse
+Refrigerated warehouse,Refrigerated warehouse,Warehouse and storage,Other,Warehouse
+Withheld to protect confidentiality,Withheld,Withheld,Other,Other
