@@ -150,6 +150,7 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
       Outputs.apply_ems_programs(model, hpxml_osm_map, hpxml.header, args[:add_component_loads])
       Outputs.apply_output_file_controls(model, args[:debug])
       Outputs.apply_additional_properties(model, hpxml, hpxml_osm_map, args[:hpxml_path], args[:building_id], args[:hpxml_defaults_path])
+      Outputs.create_custom_meters(model)
       # Outputs.apply_ems_debug_output(model) # Uncomment to debug EMS
 
       # Write output files
@@ -371,6 +372,7 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     PV.apply(model, hpxml_bldg)
     Generator.apply(model, hpxml_bldg)
     Battery.apply(runner, model, spaces, hpxml_bldg, schedules_file)
+    Vehicle.apply(runner, model, spaces, hpxml_bldg, hpxml.header, schedules_file)
   end
 
   # Miscellaneous logic that needs to occur upfront.
@@ -396,11 +398,15 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     hpxml_bldg.delete_adiabatic_subsurfaces() # EnergyPlus doesn't allow this
 
     # Hidden feature: Version of the ANSI/RESNET/ICC 301 Standard to use for equations/assumptions
-    if hpxml_header.eri_calculation_version.nil?
-      hpxml_header.eri_calculation_version = 'latest'
+    if hpxml_header.eri_calculation_versions.size > 1
+      fail 'Only a single ERI version is supported.'
     end
-    if hpxml_header.eri_calculation_version == 'latest'
-      hpxml_header.eri_calculation_version = Constants::ERIVersions[-1]
+
+    if hpxml_header.eri_calculation_versions.empty?
+      hpxml_header.eri_calculation_versions = ['latest']
+    end
+    if hpxml_header.eri_calculation_versions == ['latest']
+      hpxml_header.eri_calculation_versions = [Constants::ERIVersions[-1]]
     end
 
     # Hidden feature: Whether to override certain assumptions to better match the ASHRAE 140 specification

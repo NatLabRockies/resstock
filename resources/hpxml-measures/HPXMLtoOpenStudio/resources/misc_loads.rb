@@ -29,7 +29,7 @@ module MiscLoads
         obj_name = Constants::ObjectTypeMiscWellPump
       end
       if obj_name.nil?
-        runner.registerWarning("Unexpected plug load type '#{plug_load.plug_load_type}'. The plug load will not be modeled.")
+        # Warning issued by Schematron validator
         next
       end
 
@@ -132,7 +132,7 @@ module MiscLoads
         obj_name = Constants::ObjectTypeMiscFireplace
       end
       if obj_name.nil?
-        runner.registerWarning("Unexpected fuel load type '#{fuel_load.fuel_load_type}'. The fuel load will not be modeled.")
+        # Warning issued by Schematron validator
         next
       end
 

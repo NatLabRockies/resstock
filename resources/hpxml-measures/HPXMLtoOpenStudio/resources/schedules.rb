@@ -649,6 +649,10 @@ module Schedule
   end
 
   # Add unavailable period rules to the OpenStudio Schedule object.
+  # An unavailable period rule is an OpenStudio ScheduleRule object.
+  # Each OpenStudio ScheduleRule stores start month/day, end month/day, and day (24 hour) schedule.
+  # The unavailable period (i.e., number of consecutive days, whether starting/ending in the middle of the day, etc.) determines
+  # the number of ScheduleRule objects that are needed, as well as the start, end, and day schedule fields that are set.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param schedule [OpenStudio::Model::ScheduleRuleset] the OpenStudio Schedule object for which to set unavailable period rules
@@ -691,81 +695,43 @@ module Schedule
       begin_day_schedule = schedule.getDaySchedules(date_s, date_s)[0]
       end_day_schedule = schedule.getDaySchedules(date_e, date_e)[0]
 
-      outage_days = day_e - day_s
-      if outage_days == 0 # outage is less than 1 calendar day (need 1 outage rule)
+      # [[start_date, end_date, hourly_values], ...]
+      schedule_ruleset_rules = []
+
+      unavail_days = day_e - day_s
+      if unavail_days == 0 # unavailable period is less than 1 calendar day (need 1 unavailable period rule)
+        schedule_ruleset_rules << [date_s, date_e, (0..23).map { |h| (h < period.begin_hour) || (h >= period.end_hour) ? begin_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }]
+      else # unavailable period is at least 1 calendar day
+        if period.begin_hour == 0 && period.end_hour == 24 # 1 unavailable period rule
+          schedule_ruleset_rules << [date_s, date_e, [value] * 24]
+        elsif (period.begin_hour == 0 && period.end_hour != 24) || (period.begin_hour != 0 && period.end_hour == 24) # 2 unavailable period rules
+          if period.begin_hour == 0 && period.end_hour != 24
+            schedule_ruleset_rules << [date_e, date_e, (0..23).map { |h| (h >= period.end_hour) ? end_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }] # last day
+            schedule_ruleset_rules << [date_s, OpenStudio::Date::fromDayOfYear(day_e - 1, year), [value] * 24] # all other days
+          elsif period.begin_hour != 0 && period.end_hour == 24
+            schedule_ruleset_rules << [date_s, date_s, (0..23).map { |h| (h < period.begin_hour) ? begin_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }] # first day
+            schedule_ruleset_rules << [OpenStudio::Date::fromDayOfYear(day_s + 1, year), date_e, [value] * 24]
+          end
+        else # 2 or 3 unavailable period rules
+          if unavail_days == 1 # 2 unavailable period rules
+            schedule_ruleset_rules << [date_s, date_s, (0..23).map { |h| (h < period.begin_hour) ? begin_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }] # first day
+            schedule_ruleset_rules << [date_e, date_e, (0..23).map { |h| (h >= period.end_hour) ? end_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }] # last day
+          else # 3 unavailable period rules
+            schedule_ruleset_rules << [date_s, date_s, (0..23).map { |h| (h < period.begin_hour) ? begin_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }] # first day
+            schedule_ruleset_rules << [OpenStudio::Date::fromDayOfYear(day_s + 1, year), OpenStudio::Date::fromDayOfYear(day_e - 1, year), [value] * 24] # all other days
+            schedule_ruleset_rules << [date_e, date_e, (0..23).map { |h| (h >= period.end_hour) ? end_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }] # last day
+          end
+        end
+      end
+
+      schedule_ruleset_rules.each do |schedule_ruleset_rule|
+        start_date, end_date, hourly_values = schedule_ruleset_rule
         Model.add_schedule_ruleset_rule(
           schedule,
-          start_date: date_s,
-          end_date: date_e,
-          hourly_values: (0..23).map { |h| (h < period.begin_hour) || (h >= period.end_hour) ? begin_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }
+          start_date: start_date,
+          end_date: end_date,
+          hourly_values: hourly_values
         )
-      else # outage is at least 1 calendar day
-        if period.begin_hour == 0 && period.end_hour == 24 # 1 outage rule
-          Model.add_schedule_ruleset_rule(
-            schedule,
-            start_date: date_s,
-            end_date: date_e,
-            hourly_values: [value] * 24
-          )
-        elsif (period.begin_hour == 0 && period.end_hour != 24) || (period.begin_hour != 0 && period.end_hour == 24) # 2 outage rules
-          if period.begin_hour == 0 && period.end_hour != 24
-            # last day
-            Model.add_schedule_ruleset_rule(
-              schedule,
-              start_date: date_e,
-              end_date: date_e,
-              hourly_values: (0..23).map { |h| (h >= period.end_hour) ? end_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }
-            )
-
-            # all other days
-            Model.add_schedule_ruleset_rule(
-              schedule,
-              start_date: date_s,
-              end_date: OpenStudio::Date::fromDayOfYear(day_e - 1, year),
-              hourly_values: [value] * 24
-            )
-          elsif period.begin_hour != 0 && period.end_hour == 24
-            # first day
-            Model.add_schedule_ruleset_rule(
-              schedule,
-              start_date: date_s,
-              end_date: date_s,
-              hourly_values: (0..23).map { |h| (h < period.begin_hour) ? begin_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }
-            )
-
-            # all other days
-            Model.add_schedule_ruleset_rule(
-              schedule,
-              start_date: OpenStudio::Date::fromDayOfYear(day_s + 1, year),
-              end_date: date_e,
-              hourly_values: [value] * 24
-            )
-          end
-        else # 3 outage rules
-          # first day
-          Model.add_schedule_ruleset_rule(
-            schedule,
-            start_date: date_s,
-            end_date: date_s,
-            hourly_values: (0..23).map { |h| (h < period.begin_hour) ? begin_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }
-          )
-
-          # all other days
-          Model.add_schedule_ruleset_rule(
-            schedule,
-            start_date: OpenStudio::Date::fromDayOfYear(day_s + 1, year),
-            end_date: OpenStudio::Date::fromDayOfYear(day_e - 1, year),
-            hourly_values: [value] * 24
-          )
-
-          # last day
-          Model.add_schedule_ruleset_rule(
-            schedule,
-            start_date: date_e,
-            end_date: date_e,
-            hourly_values: (0..23).map { |h| (h >= period.end_hour) ? end_day_schedule.getValue(OpenStudio::Time.new(0, h + 1, 0, 0)) : value }
-          )
-        end
       end
     end
   end
@@ -972,6 +938,24 @@ module Schedule
       end
     end
   end
+
+  # Splits a comma separated schedule string into charging (positive) and discharging (negative) schedules
+  #
+  # @param schedule_str [String] schedule with values separated by commas
+  # @return [Array<String, String>] 24 hourly comma-separated charging and discharging schedules
+  def self.split_signed_charging_schedule(schedule_str)
+    charge_schedule, discharge_schedule = [], []
+    schedule_str.split(',').map(&:strip).map(&:to_f).each do |frac|
+      if frac >= 0
+        charge_schedule << frac.to_s
+        discharge_schedule << 0
+      elsif frac < 0
+        charge_schedule << 0
+        discharge_schedule << (-frac).to_s
+      end
+    end
+    return charge_schedule.join(', '), discharge_schedule.join(', ')
+  end
 end
 
 # Object that contains information for detailed schedule CSVs.
@@ -1024,7 +1008,9 @@ class SchedulesFile
     HotWaterFixtures: Column.new('hot_water_fixtures', true, true, :frac),
     HotWaterRecirculationPump: Column.new('hot_water_recirculation_pump', true, false, :frac),
     GeneralWaterUse: Column.new('general_water_use', true, false, :frac),
-    Sleeping: Column.new('sleeping', false, false, nil),
+    Sleeping: Column.new('sleeping', false, false, nil), # only used to debug stochastic schedule generation
+    PresentOccupants: Column.new('present_occupants', false, false, :int), # only used to debug stochastic schedule generation
+    EVOccupant: Column.new('ev_occupant', false, false, nil), # only used to debug stochastic schedule generation
     HeatingSetpoint: Column.new('heating_setpoint', false, false, :setpoint),
     CoolingSetpoint: Column.new('cooling_setpoint', false, false, :setpoint),
     WaterHeaterSetpoint: Column.new('water_heater_setpoint', false, false, :setpoint),
@@ -1032,6 +1018,9 @@ class SchedulesFile
     Battery: Column.new('battery', false, false, :neg_one_to_one),
     BatteryCharging: Column.new('battery_charging', true, false, nil),
     BatteryDischarging: Column.new('battery_discharging', true, false, nil),
+    ElectricVehicle: Column.new('electric_vehicle', false, false, :neg_one_to_one),
+    ElectricVehicleCharging: Column.new('electric_vehicle_charging', true, false, nil),
+    ElectricVehicleDischarging: Column.new('electric_vehicle_discharging', true, false, nil),
     SpaceHeating: Column.new('space_heating', true, false, nil),
     SpaceCooling: Column.new('space_cooling', true, false, nil),
     HVACMaximumPowerRatio: Column.new('hvac_maximum_power_ratio', false, false, :frac),
@@ -1488,22 +1477,38 @@ class SchedulesFile
     end
   end
 
-  # Create separate charging (positive) and discharging (negative) detailed schedules from the battery schedule.
+  # Assign separate detailed battery charging and discharging schedules
+  # If a single column (e.g., 'battery' or 'electric_vehicle') is provided, it will be split into two columns based on the sign.
   #
   # @return [nil]
   def create_battery_charging_discharging_schedules
-    battery_col_name = Columns[:Battery].name
-    return if !@schedules.keys.include?(battery_col_name)
+    battery_col_hashes = [:Battery, :ElectricVehicle].map do |battery_type|
+      { col: SchedulesFile::Columns[battery_type].name, charging_col: SchedulesFile::Columns[:"#{battery_type}Charging"].name, discharging_col: SchedulesFile::Columns[:"#{battery_type}Discharging"].name }
+    end
+    battery_col_hashes.each do |battery_cols|
+      next unless @schedules.keys.include?(battery_cols[:col])
 
-    @schedules[SchedulesFile::Columns[:BatteryCharging].name] = Array.new(@schedules[battery_col_name].size, 0)
-    @schedules[SchedulesFile::Columns[:BatteryDischarging].name] = Array.new(@schedules[battery_col_name].size, 0)
-    @schedules[battery_col_name].each_with_index do |_ts, i|
-      if @schedules[battery_col_name][i] > 0
-        @schedules[SchedulesFile::Columns[:BatteryCharging].name][i] = @schedules[battery_col_name][i]
-      elsif @schedules[battery_col_name][i] < 0
-        @schedules[SchedulesFile::Columns[:BatteryDischarging].name][i] = -1 * @schedules[battery_col_name][i]
+      split_signed_column(battery_cols[:col], battery_cols[:charging_col], battery_cols[:discharging_col])
+    end
+  end
+
+  # Splits a single column from the @schedules object into two columns, one populated with the positive values and zeros, and one with the negative values and zeros, then deletes the original column.
+  #
+  # @param column [String] Column name in the @schedules object
+  # @param positive_col [String] Name of new positive column in the @schedules object
+  # @param negative_col [String] Name of new negative column in the @schedules object
+  #
+  # @return [nil]
+  def split_signed_column(column, positive_col, negative_col)
+    @schedules[positive_col] = Array.new(@schedules[column].size, 0)
+    @schedules[negative_col] = Array.new(@schedules[column].size, 0)
+    @schedules[column].each_with_index do |_ts, i|
+      if @schedules[column][i] > 0
+        @schedules[positive_col][i] = @schedules[column][i]
+      elsif @schedules[column][i] < 0
+        @schedules[negative_col][i] = -1 * @schedules[column][i]
       end
     end
-    @schedules.delete(battery_col_name)
+    @schedules.delete(column)
   end
 end

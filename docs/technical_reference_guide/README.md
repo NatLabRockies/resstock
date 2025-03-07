@@ -29,21 +29,24 @@ $ docker pull mfisherman/texlive-full
 docker run --rm -it -v $(pwd):/workspace mfisherman/texlive-full /bin/bash
 ```
 
-4. Go to the workspace folder
+4. The container should start running immediately. Once in the container, your CLI looks something like this: `19603f1794b0:/data#`, with `19603f1794b0` likely being different. Go to the workspace folder where the Technical Reference Guide directory is located.
 
 ```
 cd ../workspace
 ```
 
-6. Create a _build directory for the output of `pdflatex` to be stored.
+5. Create a _build directory for the output of `pdflatex` to be stored.
 ```
 mkdir _build
 ```
 
-5. Compile the documentation (this command may need to be run two times for some parts of the documentation to show up in the output pdf)
+6. Compile the documentation (this command may need to be run two times for some parts of the documentation to show up in the output pdf)
 
 ```
 latexmk -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -output-directory=_build -halt-on-error ResStockTechnicalReferenceGuide.tex 
-
-6. All of the pdf and log files from the compile will be located in docs/technical_reference_guide/_build (Note: this won't show up as modified files in git because _build is in .gitignore)
 ```
+
+7. All of the pdf and log files from the compile will be located in docs/technical_reference_guide/_build (Note: this won't show up as modified files in git because _build is in .gitignore)
+
+8. If the pdf does not compile successfully, look for fatal errors in the .log file, apply fixes, and recompile as needed by repeating step 5. To stop the workflow and exit out of the container, type exit in the CLI or hit Ctrl + D on your keyword.
+

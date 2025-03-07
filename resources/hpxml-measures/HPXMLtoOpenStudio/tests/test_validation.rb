@@ -8,7 +8,6 @@ require_relative '../measure.rb'
 require 'csv'
 require_relative '../resources/xmlhelper.rb'
 require_relative '../resources/xmlvalidator.rb'
-
 class HPXMLtoOpenStudioValidationTest < Minitest::Test
   def setup
     @root_path = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..'))
@@ -262,6 +261,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'solar-fraction-one' => ['Expected SolarFraction to be less than 1 [context: /HPXML/Building/BuildingDetails/Systems/SolarThermal/SolarThermalSystem[SolarFraction], id: "SolarThermalSystem1"]'],
                             'sum-space-floor-area' => ['Expected sum(Zones/Zone[ZoneType="conditioned"]/Spaces/Space/FloorArea) to be equal to BuildingSummary/BuildingConstruction/ConditionedFloorArea'],
                             'sum-space-floor-area2' => ['Expected sum(Zones/Zone[ZoneType="conditioned"]/Spaces/Space/FloorArea) to be equal to BuildingSummary/BuildingConstruction/ConditionedFloorArea'],
+                            'vehicle-ev-multiple-BEV' => ['Expected 0 or 1 element(s) for xpath: Vehicle/VehicleType/BatteryElectricVehicle [context: /HPXML/Building/BuildingDetails/Systems/Vehicles, id: "MyBuilding"]'],
+                            'vehicle-ev-invalid-fuel-economy-units' => ['Expected ../../FuelEconomyCombined/Units to be "kWh/mile" or "mile/kWh" or "mpge" [context: /HPXML/Building/BuildingDetails/Systems/Vehicles/Vehicle/VehicleType/BatteryElectricVehicle, id: "Vehicle1"]'],
                             'water-heater-location' => ['A location is specified as "crawlspace - vented" but no surfaces were found adjacent to this space type.'],
                             'water-heater-location-other' => ["Expected Location to be 'conditioned space' or 'basement - unconditioned' or 'basement - conditioned' or 'attic - unvented' or 'attic - vented' or 'garage' or 'crawlspace - unvented' or 'crawlspace - vented' or 'crawlspace - conditioned' or 'other exterior' or 'other housing unit' or 'other heated space' or 'other multifamily buffer space' or 'other non-freezing space'"],
                             'water-heater-recovery-efficiency' => ['Expected RecoveryEfficiency to be greater than EnergyFactor'],
@@ -787,6 +788,13 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.conditioned_spaces.each do |space|
           space.floor_area *= 2.0
         end
+      when 'vehicle-ev-multiple-BEV'
+        hpxml, hpxml_bldg = _create_hpxml('base-vehicle-ev-charger-scheduled.xml')
+        hpxml_bldg.vehicles.add(id: 'ElectricVehicle2',
+                                vehicle_type: HPXML::VehicleTypeBEV)
+      when 'vehicle-ev-invalid-fuel-economy-units'
+        hpxml, hpxml_bldg = _create_hpxml('base-vehicle-ev-charger-scheduled.xml')
+        hpxml_bldg.vehicles[0].fuel_economy_units = 'mpg'
       when 'water-heater-location'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.water_heating_systems[0].location = HPXML::LocationCrawlspaceVented
@@ -837,6 +845,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'dhw-setpoint-low' => ['Hot water setpoint should typically be greater than or equal to 110 deg-F.'],
                               'erv-atre-low' => ['Adjusted total recovery efficiency should typically be at least half of the adjusted sensible recovery efficiency.'],
                               'erv-tre-low' => ['Total recovery efficiency should typically be at least half of the sensible recovery efficiency.'],
+                              'ev-charging-methods' => ['Electric vehicle charging was specified as both a PlugLoad and a Vehicle, the latter will be ignored.'],
                               'fuel-load-type-other' => ["Fuel load type 'other' is not currently handled, the fuel load will not be modeled."],
                               'garage-ventilation' => ['Ventilation fans for the garage are not currently modeled.'],
                               'heat-pump-low-backup-switchover-temp' => ['BackupHeatingSwitchoverTemperature is below 30 deg-F; this may result in significant unmet hours if the heat pump does not have sufficient capacity.'],
@@ -899,6 +908,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'slab-large-exposed-perimeter' => ['Slab exposed perimeter is more than twice the slab area, this may indicate an input error.'],
                               'slab-zero-exposed-perimeter' => ['Slab has zero exposed perimeter, this may indicate an input error.'],
                               'unit-multiplier' => ['NumberofUnits is greater than 1, indicating that the HPXML Building represents multiple dwelling units; simulation outputs will reflect this unit multiplier.'],
+                              'vehicle-phev' => ["Vehicle type 'PlugInHybridElectricVehicle' is not currently handled, the vehicle will not be modeled."],
                               'window-exterior-shading-types' => ["Exterior shading type is 'external overhangs', but overhangs are explicitly defined; exterior shading type will be ignored.",
                                                                   "Exterior shading type is 'building', but neighbor buildings are explicitly defined; exterior shading type will be ignored."],
                               'wrong-units' => ['Thickness is greater than 12 inches; this may indicate incorrect units.',
@@ -942,6 +952,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'erv-tre-low'
         hpxml, hpxml_bldg = _create_hpxml('base-mechvent-erv.xml')
         hpxml_bldg.ventilation_fans[0].total_recovery_efficiency = 0.1
+      when 'ev-charging-methods'
+        hpxml, _hpxml_bldg = _create_hpxml('base-vehicle-ev-charger-plug-load-ev.xml')
       when 'garage-ventilation'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.ventilation_fans.add(id: 'VentilationFan1',
@@ -1060,6 +1072,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'unit-multiplier'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.building_construction.number_of_units = 5
+      when 'vehicle-phev'
+        hpxml, hpxml_bldg = _create_hpxml('base-vehicle-ev-charger-scheduled.xml')
+        hpxml_bldg.vehicles[0].vehicle_type = 'PlugInHybridElectricVehicle'
       when 'window-exterior-shading-types'
         hpxml, _hpxml_bldg = _create_hpxml('base-enclosure-windows-shading-types-detailed.xml')
       when 'wrong-units'
@@ -1207,13 +1222,13 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'battery-bad-values-max-greater-than-one'
         hpxml, hpxml_bldg = _create_hpxml('base-battery-scheduled.xml')
         csv_data = CSV.read(File.join(File.dirname(hpxml.hpxml_path), hpxml_bldg.header.schedules_filepaths[0]))
-        csv_data[1][0] = 1.1
+        csv_data[1][csv_data[0].index('battery')] = 1.1
         File.write(@tmp_csv_path, csv_data.map(&:to_csv).join)
         hpxml_bldg.header.schedules_filepaths = [@tmp_csv_path]
       when 'battery-bad-values-min-less-than-neg-one'
         hpxml, hpxml_bldg = _create_hpxml('base-battery-scheduled.xml')
         csv_data = CSV.read(File.join(File.dirname(hpxml.hpxml_path), hpxml_bldg.header.schedules_filepaths[0]))
-        csv_data[1][0] = -1.1
+        csv_data[1][csv_data[0].index('battery')] = -1.1
         File.write(@tmp_csv_path, csv_data.map(&:to_csv).join)
         hpxml_bldg.header.schedules_filepaths = [@tmp_csv_path]
       when 'cfis-with-hydronic-distribution'
@@ -1549,19 +1564,19 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'schedule-detailed-bad-values-max-not-one'
         hpxml, hpxml_bldg = _create_hpxml('base-schedules-detailed-occupancy-stochastic.xml')
         csv_data = CSV.read(File.join(File.dirname(hpxml.hpxml_path), hpxml_bldg.header.schedules_filepaths[0]))
-        csv_data[1][1] = 1.1
+        csv_data[1][csv_data[0].index('lighting_interior')] = 1.1
         File.write(@tmp_csv_path, csv_data.map(&:to_csv).join)
         hpxml_bldg.header.schedules_filepaths = [@tmp_csv_path]
       when 'schedule-detailed-bad-values-negative'
         hpxml, hpxml_bldg = _create_hpxml('base-schedules-detailed-occupancy-stochastic.xml')
         csv_data = CSV.read(File.join(File.dirname(hpxml.hpxml_path), hpxml_bldg.header.schedules_filepaths[0]))
-        csv_data[1][1] = -0.5
+        csv_data[1][csv_data[0].index('lighting_interior')] = -0.5
         File.write(@tmp_csv_path, csv_data.map(&:to_csv).join)
         hpxml_bldg.header.schedules_filepaths = [@tmp_csv_path]
       when 'schedule-detailed-bad-values-non-numeric'
         hpxml, hpxml_bldg = _create_hpxml('base-schedules-detailed-occupancy-stochastic.xml')
         csv_data = CSV.read(File.join(File.dirname(hpxml.hpxml_path), hpxml_bldg.header.schedules_filepaths[0]))
-        csv_data[1][1] = 'NA'
+        csv_data[1][csv_data[0].index('lighting_interior')] = 'NA'
         File.write(@tmp_csv_path, csv_data.map(&:to_csv).join)
         hpxml_bldg.header.schedules_filepaths = [@tmp_csv_path]
       when 'schedule-detailed-bad-values-mode-negative'
@@ -1804,9 +1819,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                                                   "Both 'plug_loads_other' schedule file and weekday fractions provided; the latter will be ignored.",
                                                                                   "Both 'plug_loads_other' schedule file and weekend fractions provided; the latter will be ignored.",
                                                                                   "Both 'plug_loads_other' schedule file and monthly multipliers provided; the latter will be ignored.",
-                                                                                  "Both 'plug_loads_vehicle' schedule file and weekday fractions provided; the latter will be ignored.",
-                                                                                  "Both 'plug_loads_vehicle' schedule file and weekend fractions provided; the latter will be ignored.",
-                                                                                  "Both 'plug_loads_vehicle' schedule file and monthly multipliers provided; the latter will be ignored.",
                                                                                   "Both 'plug_loads_well_pump' schedule file and weekday fractions provided; the latter will be ignored.",
                                                                                   "Both 'plug_loads_well_pump' schedule file and weekend fractions provided; the latter will be ignored.",
                                                                                   "Both 'plug_loads_well_pump' schedule file and monthly multipliers provided; the latter will be ignored.",
@@ -1837,6 +1849,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                                                   "Both 'permanent_spa_heater' schedule file and weekday fractions provided; the latter will be ignored.",
                                                                                   "Both 'permanent_spa_heater' schedule file and weekend fractions provided; the latter will be ignored.",
                                                                                   "Both 'permanent_spa_heater' schedule file and monthly multipliers provided; the latter will be ignored."],
+                              'schedule-file-and-weekday-weekend-multipliers-ev' => ["Both schedule file and weekday fractions provided for 'electric_vehicle'; weekday fractions will be ignored.",
+                                                                                     "Both schedule file and weekend fractions provided for 'electric_vehicle'; weekend fractions will be ignored.",
+                                                                                     "Both schedule file and monthly multipliers provided for 'electric_vehicle'; monthly multipliers will be ignored.",],
                               'schedule-file-and-refrigerators-freezer-coefficients' => ["Both 'refrigerator' schedule file and constant coefficients provided; the latter will be ignored.",
                                                                                          "Both 'refrigerator' schedule file and temperature coefficients provided; the latter will be ignored.",
                                                                                          "Both 'extra_refrigerator' schedule file and constant coefficients provided; the latter will be ignored.",
@@ -1965,6 +1980,13 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.hot_water_distributions[0].recirculation_pump_weekday_fractions = @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_no_control"]['RecirculationPumpWeekdayScheduleFractions']
         hpxml_bldg.hot_water_distributions[0].recirculation_pump_weekend_fractions = @default_schedules_csv_data["#{SchedulesFile::Columns[:HotWaterRecirculationPump].name}_no_control"]['RecirculationPumpWeekendScheduleFractions']
         hpxml_bldg.hot_water_distributions[0].recirculation_pump_monthly_multipliers = @default_schedules_csv_data[SchedulesFile::Columns[:HotWaterRecirculationPump].name]['RecirculationPumpMonthlyScheduleMultipliers']
+      when 'schedule-file-and-weekday-weekend-multipliers-ev'
+        hpxml, hpxml_bldg = _create_hpxml('base-vehicle-ev-charger.xml')
+        hpxml_bldg.header.schedules_filepaths << File.join(File.dirname(__FILE__), '../resources/schedule_files/vehicle-ev.csv')
+        hpxml_bldg.vehicles[0].nominal_capacity_kwh = 500
+        hpxml_bldg.vehicles[0].ev_weekday_fractions = @default_schedules_csv_data[SchedulesFile::Columns[:ElectricVehicle].name]['WeekdayScheduleFractions']
+        hpxml_bldg.vehicles[0].ev_weekend_fractions = @default_schedules_csv_data[SchedulesFile::Columns[:ElectricVehicle].name]['WeekendScheduleFractions']
+        hpxml_bldg.vehicles[0].ev_monthly_multipliers = @default_schedules_csv_data[SchedulesFile::Columns[:ElectricVehicle].name]['MonthlyScheduleMultipliers']
       when 'schedule-file-and-refrigerators-freezer-coefficients'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.header.schedules_filepaths << File.join(File.dirname(__FILE__), '../resources/schedule_files/occupancy-stochastic.csv')

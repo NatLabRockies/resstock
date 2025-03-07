@@ -550,8 +550,8 @@ module Airflow
       vent_program.addLine("Set Tnvsp = (#{htg_sp_sensor.name} + #{clg_sp_sensor.name}) / 2")
     else
       # No HVAC system; use the average of defaulted heating/cooling setpoints.
-      htg_weekday_setpoints, htg_weekend_setpoints = Defaults.get_heating_setpoint(HPXML::HVACControlTypeManual, hpxml_header.eri_calculation_version)
-      clg_weekday_setpoints, clg_weekend_setpoints = Defaults.get_cooling_setpoint(HPXML::HVACControlTypeManual, hpxml_header.eri_calculation_version)
+      htg_weekday_setpoints, htg_weekend_setpoints = Defaults.get_heating_setpoint(HPXML::HVACControlTypeManual, hpxml_header.eri_calculation_versions[0])
+      clg_weekday_setpoints, clg_weekend_setpoints = Defaults.get_cooling_setpoint(HPXML::HVACControlTypeManual, hpxml_header.eri_calculation_versions[0])
       if htg_weekday_setpoints.split(', ').uniq.size == 1 && htg_weekend_setpoints.split(', ').uniq.size == 1 && htg_weekday_setpoints.split(', ').uniq == htg_weekend_setpoints.split(', ').uniq
         default_htg_sp = UnitConversions.convert(htg_weekend_setpoints.split(', ').uniq[0].to_f, 'F', 'C')
       else
@@ -2391,14 +2391,14 @@ module Airflow
     infil_program.addLine('Set Qfan_with_ducts = (@Max Qexhaust Qsupply)')
 
     # Total combined air exchange
-    if Constants::ERIVersions.index(hpxml_header.eri_calculation_version) >= Constants::ERIVersions.index('2022')
+    if Constants::ERIVersions.index(hpxml_header.eri_calculation_versions[0]) >= Constants::ERIVersions.index('2022')
       infil_program.addLine('Set Qimb = (@Abs (Qsupply - Qexhaust))')
       infil_program.addLine('If Qinf + Qimb > 0')
       infil_program.addLine('  Set Qtot = Qfan_with_ducts + (Qinf^2) / (Qinf + Qimb)')
       infil_program.addLine('Else')
       infil_program.addLine('  Set Qtot = Qfan_with_ducts')
       infil_program.addLine('EndIf')
-    elsif Constants::ERIVersions.index(hpxml_header.eri_calculation_version) >= Constants::ERIVersions.index('2019')
+    elsif Constants::ERIVersions.index(hpxml_header.eri_calculation_versions[0]) >= Constants::ERIVersions.index('2019')
       # Follow ASHRAE 62.2-2016, Normative Appendix C equations for time-varying total airflow
       infil_program.addLine('If Qfan_with_ducts > 0')
       # Balanced system if the total supply airflow and total exhaust airflow are within 10% of their average.

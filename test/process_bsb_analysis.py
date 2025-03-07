@@ -18,7 +18,7 @@ if __name__ == '__main__':
                       'timeseries_num_decimal_places',
                       'upgrade_name',
                       'add_timeseries_',
-                      'user_output_variables',
+                      'user_output_',
                       'debug',
                       'include_monthly_',
                       'register_annual_',

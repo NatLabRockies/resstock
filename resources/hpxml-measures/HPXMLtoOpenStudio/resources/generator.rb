@@ -73,6 +73,7 @@ module Generator
     gmt.setElectricalPowerFunctionofTemperatureandElevationCurve(curve_biquadratic_constant)
     gmt.setElectricalEfficiencyFunctionofTemperatureCurve(curve_cubic_constant)
     gmt.setElectricalEfficiencyFunctionofPartLoadRatioCurve(curve_cubic_constant)
+    gmt.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeGenerator)
 
     elcd = OpenStudio::Model::ElectricLoadCenterDistribution.new(model)
     elcd.setName("#{obj_name} elec load center dist")

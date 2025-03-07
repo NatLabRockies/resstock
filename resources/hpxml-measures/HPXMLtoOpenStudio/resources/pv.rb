@@ -37,6 +37,7 @@ module PV
 
     # Apply unit multiplier
     max_power = pv_system.max_power_output * unit_multiplier
+    return if max_power <= 0
 
     if pv_system.is_shared_system
       # Apportion to single dwelling unit by # bedrooms
@@ -64,6 +65,7 @@ module PV
     gpvwatts.setSystemLosses(pv_system.system_losses_fraction)
     gpvwatts.setTiltAngle(pv_system.array_tilt)
     gpvwatts.setAzimuthAngle(pv_system.array_azimuth)
+    gpvwatts.additionalProperties.setFeature('ObjectType', Constants::ObjectTypePhotovoltaics)
 
     case pv_system.tracking
     when HPXML::PVTrackingTypeFixed

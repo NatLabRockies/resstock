@@ -54,7 +54,7 @@ sampler:
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.01.29
+  version: 2025.02.05
   args:
     # Annual simulation and timestep
     build_existing_model:

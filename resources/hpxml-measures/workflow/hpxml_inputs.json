@@ -1006,6 +1006,69 @@
     "schedules_unavailable_period_types": "Power Outage",
     "schedules_unavailable_period_dates": "Jul 1 5 - Jul 31 14"
   },
+  "sample_files/base-vehicle-ev-no-charger.xml": {
+    "parent_hpxml": "sample_files/base-enclosure-garage.xml",
+    "vehicle_type": "BatteryElectricVehicle"
+  },
+  "sample_files/base-ev-charger.xml": {
+    "parent_hpxml": "sample_files/base.xml",
+    "ev_charger_present": true
+  },
+  "sample_files/base-vehicle-ev-charger.xml": {
+    "parent_hpxml": "sample_files/base-vehicle-ev-no-charger.xml",
+    "vehicle_battery_capacity": 100,
+    "vehicle_battery_usable_capacity": 80,
+    "vehicle_miles_driven_per_year": 10000,
+    "vehicle_hours_driven_per_week": 14,
+    "vehicle_fuel_economy_combined": 0.25,
+    "vehicle_fuel_economy_units": "kWh/mile",
+    "vehicle_fraction_charged_home": 0.75,
+    "ev_charger_present": true,
+    "ev_charger_power": 7000,
+    "ev_charger_location": "garage"
+  },
+  "sample_files/base-vehicle-ev-charger-level1.xml": {
+    "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml",
+    "ev_charger_level": 1,
+    "ev_charger_power": null
+  },
+  "sample_files/base-vehicle-ev-charger-miles-per-kwh.xml": {
+    "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml",
+    "vehicle_fuel_economy_combined": 4.0,
+    "vehicle_fuel_economy_units": "mile/kWh"
+  },
+  "sample_files/base-vehicle-ev-charger-mpge.xml": {
+    "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml",
+    "vehicle_fuel_economy_combined": 135.0,
+    "vehicle_fuel_economy_units": "mpge"
+  },
+  "sample_files/base-vehicle-ev-charger-scheduled.xml": {
+    "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml",
+    "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/vehicle-ev.csv"
+  },
+  "sample_files/base-vehicle-ev-charger-undercharged.xml": {
+    "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml",
+    "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/vehicle-ev-undercharged.csv"
+  },
+  "sample_files/base-vehicle-ev-charger-plug-load-ev.xml": {
+    "parent_hpxml": "sample_files/base-vehicle-ev-charger-scheduled.xml",
+    "misc_plug_loads_vehicle_present": true,
+    "misc_plug_loads_vehicle_annual_kwh": 3000
+  },
+  "sample_files/base-vehicle-multiple.xml": {
+    "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml"
+  },
+  "sample_files/base-vehicle-ev-charger-occupancy-stochastic.xml": {
+    "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml",
+    "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-ev-charger.csv"
+  },
+  "sample_files/base-pv-battery-and-vehicle-ev.xml": {
+    "parent_hpxml": "sample_files/base-pv-battery.xml",
+    "vehicle_type": "BatteryElectricVehicle",
+    "ev_charger_present": true,
+    "ev_charger_location": "outside",
+    "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/vehicle-ev.csv"
+  },
   "sample_files/base-bldgtype-sfa-unit.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_type": "single-family attached",
@@ -2169,8 +2232,9 @@
     "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
     "hvac_perf_data_cooling_min_speed_capacities": "11700, 13200",
     "hvac_perf_data_cooling_max_speed_capacities": "36000, 40000",
-    "hvac_perf_data_cooling_min_speed_cops": "4.47, 6.34",
-    "hvac_perf_data_cooling_max_speed_cops": "2.71, 3.53"
+    "hvac_perf_data_cooling_min_speed_cops": "4.57, 6.34",
+    "hvac_perf_data_cooling_max_speed_cops": "2.71, 3.53",
+    "additional_properties": "HeatPump=YORK HMH7|HeatPumpAHRICert#=208613158"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance-heating-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml",
@@ -2189,28 +2253,9 @@
     "hvac_perf_data_cooling_max_speed_capacities": "1.0, 1.11"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance-autosize.xml": {
-    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml",
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance-normalized-capacities.xml",
     "heat_pump_heating_capacity": null,
-    "heat_pump_cooling_capacity": null,
-    "hvac_perf_data_capacity_type": "Normalized capacity fractions",
-    "hvac_perf_data_heating_min_speed_capacities": "0.28, 0.12, 0.05",
-    "hvac_perf_data_heating_max_speed_capacities": "1.0, 0.69, 0.55",
-    "hvac_perf_data_cooling_min_speed_capacities": "0.325, 0.37",
-    "hvac_perf_data_cooling_max_speed_capacities": "1.0, 1.11"
-  },
-  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance-other-temperatures.xml": {
-    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml",
-    "hvac_perf_data_capacity_type": "Absolute capacities",
-    "hvac_perf_data_heating_outdoor_temperatures": "47.0, 55.0",
-    "hvac_perf_data_heating_min_speed_capacities": "10000, 12000",
-    "hvac_perf_data_heating_max_speed_capacities": "36000, 45000",
-    "hvac_perf_data_heating_min_speed_cops": "4.73, 5.5",
-    "hvac_perf_data_heating_max_speed_cops": "3.44, 4.0",
-    "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 105.0",
-    "hvac_perf_data_cooling_min_speed_capacities": "11700, 10000",
-    "hvac_perf_data_cooling_max_speed_capacities": "36000, 30000",
-    "hvac_perf_data_cooling_min_speed_cops": "4.47, 3.9",
-    "hvac_perf_data_cooling_max_speed_cops": "2.71, 2.3"
+    "heat_pump_cooling_capacity": null
   },
   "sample_files/base-hvac-autosize.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2306,8 +2351,9 @@
     "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
     "hvac_perf_data_cooling_min_speed_capacities": "11700, 13200",
     "hvac_perf_data_cooling_max_speed_capacities": "36000, 40000",
-    "hvac_perf_data_cooling_min_speed_cops": "4.47, 6.34",
-    "hvac_perf_data_cooling_max_speed_cops": "2.71, 3.53"
+    "hvac_perf_data_cooling_min_speed_cops": "4.57, 6.34",
+    "hvac_perf_data_cooling_max_speed_cops": "2.71, 3.53",
+    "additional_properties": "HeatPump=YORK HMH7|HeatPumpAHRICert#=208613158"
   },
   "sample_files/base-hvac-central-ac-only-var-speed-detailed-performance-autosize.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-var-speed-detailed-performance.xml",
@@ -2712,7 +2758,8 @@
     "hvac_perf_data_cooling_min_speed_capacities": "10372, 19456",
     "hvac_perf_data_cooling_max_speed_capacities": "42653, 40093",
     "hvac_perf_data_cooling_min_speed_cops": "4.05, 8.03",
-    "hvac_perf_data_cooling_max_speed_cops": "3.27, 3.27"
+    "hvac_perf_data_cooling_max_speed_cops": "3.27, 5.52",
+    "additional_properties": "HeatPump=Bosch Climate 5000|HeatPumpAHRICert#=203991186"
   },
   "sample_files/base-hvac-mini-split-air-conditioner-only-ductless-detailed-performance-autosize.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-air-conditioner-only-ductless-detailed-performance.xml",
@@ -2757,24 +2804,25 @@
     "heat_pump_cooling_efficiency": 16.7,
     "heat_pump_heating_efficiency": 11.3,
     "hvac_perf_data_capacity_type": "Absolute capacities",
-    "hvac_perf_data_heating_outdoor_temperatures": "47.0, 17.0, 5.0",
-    "hvac_perf_data_heating_min_speed_capacities": "9200, 7063, 6310",
-    "hvac_perf_data_heating_max_speed_capacities": "48000, 36800, 32920",
-    "hvac_perf_data_heating_min_speed_cops": "4.35, 2.92, 2.60",
-    "hvac_perf_data_heating_max_speed_cops": "3.21, 2.15, 1.93",
+    "hvac_perf_data_heating_outdoor_temperatures": "47.0, 17.0, 5.0, -5.0",
+    "hvac_perf_data_heating_min_speed_capacities": "9200, 7063, 6310, 5683",
+    "hvac_perf_data_heating_max_speed_capacities": "48000, 36800, 32920, 29640",
+    "hvac_perf_data_heating_min_speed_cops": "4.35, 2.92, 2.60, 2.49",
+    "hvac_perf_data_heating_max_speed_cops": "3.21, 2.15, 1.93, 1.82",
     "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
     "hvac_perf_data_cooling_min_speed_capacities": "9600, 10224",
     "hvac_perf_data_cooling_max_speed_capacities": "39000, 41587",
     "hvac_perf_data_cooling_min_speed_cops": "4.02, 4.61",
-    "hvac_perf_data_cooling_max_speed_cops": "2.86, 3.29"
+    "hvac_perf_data_cooling_max_speed_cops": "2.86, 3.29",
+    "additional_properties": "HeatPump=FUJITSU H-Series|HeatPumpAHRICert#=202537549"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ducted-detailed-performance-autosize.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ducted-detailed-performance.xml",
     "heat_pump_heating_capacity": null,
     "heat_pump_cooling_capacity": null,
     "hvac_perf_data_capacity_type": "Normalized capacity fractions",
-    "hvac_perf_data_heating_min_speed_capacities": "0.26, 0.20, 0.18",
-    "hvac_perf_data_heating_max_speed_capacities": "1.33, 1.02, 0.91",
+    "hvac_perf_data_heating_min_speed_capacities": "0.26, 0.20, 0.18, 0.16",
+    "hvac_perf_data_heating_max_speed_capacities": "1.33, 1.02, 0.91, 0.82",
     "hvac_perf_data_cooling_min_speed_capacities": "0.27, 0.28",
     "hvac_perf_data_cooling_max_speed_capacities": "1.08, 1.16"
   },
@@ -2834,7 +2882,8 @@
     "hvac_perf_data_cooling_min_speed_capacities": "10372, 19456",
     "hvac_perf_data_cooling_max_speed_capacities": "42653, 40093",
     "hvac_perf_data_cooling_min_speed_cops": "4.05, 8.03",
-    "hvac_perf_data_cooling_max_speed_cops": "3.27, 3.27"
+    "hvac_perf_data_cooling_max_speed_cops": "3.27, 5.52",
+    "additional_properties": "HeatPump=Bosch Climate 5000|HeatPumpAHRICert#=203991186"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-detailed-performance-autosize.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-detailed-performance.xml",
@@ -3415,6 +3464,8 @@
     "pv_system_array_tilt": 20,
     "pv_system_max_power_output": 4000,
     "battery_present": true,
+    "vehicle_type": "BatteryElectricVehicle",
+    "ev_charger_present": true,
     "clothes_washer_location": null,
     "clothes_washer_efficiency": null,
     "clothes_washer_rated_annual_kwh": null,
@@ -3445,7 +3496,7 @@
     "misc_plug_loads_other_frac_latent": null
   },
   "sample_files/base-misc-emissions.xml": {
-    "parent_hpxml": "sample_files/base-pv-battery.xml",
+    "parent_hpxml": "sample_files/base-pv-battery-and-vehicle-ev.xml",
     "emissions_scenario_names": "Cambium Hourly MidCase LRMER RMPA, Cambium Hourly LowRECosts LRMER RMPA, Cambium Annual MidCase AER National, eGRID RMPA, eGRID RMPA",
     "emissions_types": "CO2e, CO2e, CO2e, SO2, NOx",
     "emissions_electricity_units": "kg/MWh, kg/MWh, kg/MWh, lb/MWh, lb/MWh",
@@ -3475,6 +3526,8 @@
   "sample_files/base-misc-loads-large-uncommon.xml": {
     "parent_hpxml": "sample_files/base-schedules-simple.xml",
     "hot_water_distribution_system_type": "Standard",
+    "vehicle_type": "none",
+    "ev_charger_present": false,
     "extra_refrigerator_present": true,
     "extra_refrigerator_rated_annual_kwh": 700,
     "freezer_present": true,
@@ -3745,7 +3798,10 @@
     "hot_water_distribution_recirc_control_type": "no control",
     "hot_water_distribution_recirc_piping_length": 50,
     "hot_water_distribution_recirc_branch_piping_length": 50,
-    "hot_water_distribution_recirc_pump_power": 50
+    "hot_water_distribution_recirc_pump_power": 50,
+    "vehicle_type": "BatteryElectricVehicle",
+    "ev_charger_present": true,
+    "misc_plug_loads_vehicle_present": false
   },
   "sample_files/base-schedules-simple-vacancy.xml": {
     "parent_hpxml": "sample_files/base.xml",

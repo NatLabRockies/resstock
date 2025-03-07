@@ -144,7 +144,6 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
         epw_path = Location.get_epw_path(hpxml_bldg, hpxml_path)
         weather = WeatherFile.new(epw_path: epw_path, runner: runner, hpxml: hpxml)
       end
-
       # deterministically vary schedules across building units
       args[:random_seed] *= (i + 1)
 
@@ -201,11 +200,13 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
   def create_schedules(runner, hpxml, hpxml_bldg, weather, args)
     info_msgs = []
 
-    get_simulation_parameters(hpxml, weather, args)
-    get_generator_inputs(hpxml_bldg, weather, args)
+    Defaults.apply(runner, hpxml, hpxml_bldg, weather)
+
+    get_simulation_parameters(hpxml, args)
+    get_generator_inputs(hpxml_bldg, args)
 
     args[:resources_path] = File.join(File.dirname(__FILE__), 'resources')
-    schedule_generator = ScheduleGenerator.new(runner: runner, **args)
+    schedule_generator = ScheduleGenerator.new(runner: runner, hpxml_bldg: hpxml_bldg, **args)
 
     success = schedule_generator.create(args: args, weather: weather)
     return false if not success
@@ -236,32 +237,26 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
   # Get simulation parameters that are required for the stochastic schedule generator.
   #
   # @param hpxml [HPXML] HPXML object
-  # @param weather [WeatherFile] Weather object containing EPW information
   # @param args [Hash] Map of :argument_name => value
-  def get_simulation_parameters(hpxml, weather, args)
+  def get_simulation_parameters(hpxml, args)
     args[:minutes_per_step] = 60
     if !hpxml.header.timestep.nil?
       args[:minutes_per_step] = hpxml.header.timestep
     end
     args[:steps_in_day] = 24 * 60 / args[:minutes_per_step]
-    args[:mkc_ts_per_day] = 96
-    args[:mkc_ts_per_hour] = args[:mkc_ts_per_day] / 24
 
-    calendar_year = Location.get_sim_calendar_year(hpxml.header.sim_calendar_year, weather)
-    args[:sim_year] = calendar_year
+    args[:sim_year] = hpxml.header.sim_calendar_year
     args[:sim_start_day] = DateTime.new(args[:sim_year], 1, 1)
-    args[:total_days_in_year] = Calendar.num_days_in_year(calendar_year)
+    args[:total_days_in_year] = Calendar.num_days_in_year(hpxml.header.sim_calendar_year)
   end
 
   # Get generator inputs that are required for the stochastic schedule generator.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
-  # @param weather [WeatherFile] Weather object containing EPW information
   # @param args [Hash] Map of :argument_name => value
-  def get_generator_inputs(hpxml_bldg, weather, args)
-    state_code = Defaults.get_state_code(hpxml_bldg.state_code, weather)
-    if Constants::StateCodesMap.keys.include?(state_code)
-      args[:state] = state_code
+  def get_generator_inputs(hpxml_bldg, args)
+    if Constants::StateCodesMap.keys.include?(hpxml_bldg.state_code)
+      args[:state] = hpxml_bldg.state_code
     else
       # Unhandled state code, fallback to CO
       args[:state] = 'CO'
@@ -275,9 +270,9 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
     end
     args[:geometry_num_occupants] = Float(Integer(args[:geometry_num_occupants]))
 
-    args[:time_zone_utc_offset] = Defaults.get_time_zone(hpxml_bldg.time_zone_utc_offset, weather)
-    args[:latitude] = Defaults.get_latitude(hpxml_bldg.latitude, weather)
-    args[:longitude] = Defaults.get_longitude(hpxml_bldg.longitude, weather)
+    args[:time_zone_utc_offset] = hpxml_bldg.time_zone_utc_offset
+    args[:latitude] = hpxml_bldg.latitude
+    args[:longitude] = hpxml_bldg.longitude
   end
 end
 

@@ -33,14 +33,19 @@ jobs:
           git config --global --add safe.directory $(realpath .)
           git diff --exit-code --ignore-cr-at-eol *.rb
 
-      - name: Check HPXMLs
+      - name: Check HPXMLs/Schedules
         shell: bash
         run: |
           echo "Regenerating HPXML files..."
           openstudio tasks.rb update_hpxmls
-          echo "Checking for HPXML differences..."
           git config --global --add safe.directory $(realpath .)
+          echo "Checking for HPXML differences..."
+          echo "If differences are found below, then HPXMLs need to be regenerated using: openstudio tasks.rb update_hpxmls"
           git diff --exit-code --ignore-cr-at-eol workflow/*.xml
+          echo "Checking for schedule CSV differences..."
+          echo "If differences are found below, then schedule CSVs need to be regenerated using: openstudio tasks.rb update_hpxmls"
+          git diff --stat --ignore-cr-at-eol HPXMLtoOpenStudio/resources/schedule_files/*.csv
+          git diff --quiet --ignore-cr-at-eol HPXMLtoOpenStudio/resources/schedule_files/*.csv
 
       - name: Run measure unit tests
         run: |

@@ -1061,10 +1061,10 @@ module Geometry
     # Adiabatic floor/ceiling
     adb_levels = []
     if attic_type == HPXML::LocationOtherHousingUnit
-      adb_levels += [EPlus::SurfaceTypeRoofCeiling]
+      adb_levels.concat([EPlus::SurfaceTypeRoofCeiling])
     end
     if foundation_type == HPXML::LocationOtherHousingUnit
-      adb_levels += [EPlus::SurfaceTypeFloor]
+      adb_levels.concat([EPlus::SurfaceTypeFloor])
     end
 
     # Make conditioned space surfaces adiabatic

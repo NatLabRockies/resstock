@@ -366,7 +366,7 @@ class HPXMLtoOpenStudioMiscLoadsTest < Minitest::Test
 
     # Check vehicle
     kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscElectricVehicleCharging)
-    assert_in_delta(1667, kwh_yr, 1.0)
+    assert_in_delta(2368, kwh_yr, 1.0)
     assert_equal(0, therm_yr)
 
     # Check well pump
@@ -427,7 +427,7 @@ class HPXMLtoOpenStudioMiscLoadsTest < Minitest::Test
 
     # Check vehicle
     kwh_yr, therm_yr = get_kwh_therm_per_year(model, Constants::ObjectTypeMiscElectricVehicleCharging)
-    assert_in_delta(1667, kwh_yr, 1.0)
+    assert_in_delta(2368, kwh_yr, 1.0)
     assert_equal(0, therm_yr)
 
     # Check well pump

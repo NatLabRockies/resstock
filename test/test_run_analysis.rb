@@ -488,7 +488,7 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, 'The garage pitch was changed to accommodate garage ridge >= house ridge')
       next if _expected_warning_message(message, 'Could not find County=') # we intentionally leave some fields blank in resources/data/simple_rates/County.tsv
       next if _expected_warning_message(message, 'Battery without PV specified, and no charging/discharging schedule provided; battery is assumed to operate as backup and will not be modeled.')
-      next if _expected_warning_message(message, "Request for output variable 'Zone People Occupant Count' returned no key values.")
+      next if _expected_warning_message(message, "Request for output variable 'Zone People Occupant Count' returned no results.")
       next if _expected_warning_message(message, 'No windows specified, the model will not include window heat transfer. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
       next if _expected_warning_message(message, 'No interior lighting specified, the model will not include interior lighting energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
       next if _expected_warning_message(message, 'No exterior lighting specified, the model will not include exterior lighting energy use. [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]')
@@ -499,6 +499,16 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, 'Heating capacity should typically be greater than or equal to 1000 Btu/hr. [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/HeatingSystem[HeatingSystemType/Fireplace]')
       next if _expected_warning_message(message, 'Heating capacity should typically be greater than or equal to 1000 Btu/hr. [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/HeatingSystem[HeatingSystemType/SpaceHeater]')
       next if _expected_warning_message(message, 'Backup heating capacity should typically be greater than or equal to 1000 Btu/hr. [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/HeatPump[BackupType="integrated" or BackupSystemFuel]')
+      next if _expected_warning_message(message, 'driving hours could not be met due to insufficient vehicle charge. This issue may result from a combination EV battery parameters, charging power, and driving or discharging schedules')
+      next if _expected_warning_message(message, 'do not match the hours per week calculated from the discharging schedule')
+      next if _expected_warning_message(message, "Both schedule file and weekday fractions provided for 'electric_vehicle'; weekday fractions will be ignored.")
+      next if _expected_warning_message(message, "Both schedule file and weekend fractions provided for 'electric_vehicle'; weekend fractions will be ignored.")
+      next if _expected_warning_message(message, "Both schedule file and monthly multipliers provided for 'electric_vehicle'; monthly multipliers will be ignored.")
+
+      # For the EV minutes warning try replacing the number of minutes as a string rather than a number.
+      new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? '(<number of minutes>)' : match }
+      new_message = new_message.gsub(/Only \d+ minutes was used/, 'Only <minutes value> minutes was used')
+      next if _expected_warning_message(new_message, 'Insufficient away minutes (<number of minutes>) for required driving minutes (<number of minutes>)Only <minutes value> minutes was used.')
 
       flunk "Unexpected cli_output.log message found: #{message}"
     end
