@@ -6,6 +6,7 @@ Predictive capacity models:
   - 822198: Non-elec only, seven bins
 These models apply to Single-Family Attached and Detached only
 """
+
 from pathlib import Path
 import argparse
 import sys
@@ -30,6 +31,7 @@ def load_model(model_file: Path, feature_names: list[str] | None = None):
     ), f"mismatch between model.classes_ and output_mapping: \n{model.classes_} vs. {output_mapping.keys()}"
 
     return model
+
 
 def yield_floor_area_dataframe():
     # https://github.com/NREL/resstock/blob/develop/measures/ResStockArguments/measure.rb
@@ -85,6 +87,7 @@ def yield_floor_area_dataframe():
     )
     return df_fa
 
+
 def yield_input_options(hc_list=None):
     input_options = {
         "Geometry Floor Area": [
@@ -101,7 +104,7 @@ def yield_input_options(hc_list=None):
         "Geometry Building Type RECS": [
             "Single-Family Attached",
             "Single-Family Detached",
-        ], # SFA and SFD combined for ne models,
+        ],  # SFA and SFD combined for ne models,
         "Vintage": [
             "<1940",
             "1940s",
@@ -114,7 +117,13 @@ def yield_input_options(hc_list=None):
             "2010s",
             "2020s",
         ],  # We do not have 2020s yet
-        "HVAC Cooling Type": ["Central AC", "Ducted Heat Pump", "Non-Ducted Heat Pump", "None", "Room AC"],
+        "HVAC Cooling Type": [
+            "Central AC",
+            "Ducted Heat Pump",
+            "Non-Ducted Heat Pump",
+            "None",
+            "Room AC",
+        ],
         "Clothes Dryer": [
             "Electric",
             "Gas",
@@ -155,8 +164,8 @@ def create_input_tsv(
     """
     print("\nTransforming model into a ResStock input tsv file ...")
     ## create intermediate tsv
-    df_e = create_input_tsv_electric(model_e, dummy_file_e) # n = 1,620,000
-    df_ne = create_input_tsv_nonelectric(model_ne, dummy_file_ne) # n = 405
+    df_e = create_input_tsv_electric(model_e, dummy_file_e)  # n = 1,620,000
+    df_ne = create_input_tsv_nonelectric(model_ne, dummy_file_ne)  # n = 405
 
     ## combine
     print("\n-- Combining intermediate tsvs together -- ")
@@ -178,7 +187,7 @@ def create_input_tsv(
     if len(diff) > 0:
         print("df_e and df_ne2 do not have the same dep rows")
         breakpoint()
-    
+
     opts = [x for x in df_ne2.columns if "Option=" in x]
     if (df_ne2[opts].sum(axis=1).round(1) != 1).sum() > 0:
         print("Error in duplicating rows in df_ne2 for missing dependencies")
@@ -195,7 +204,7 @@ def create_input_tsv(
         "Propane",
         "Wood",
         "None",
-        ]
+    ]
     df = [df_e]
     for fuel in fuels:
         df_ne22 = df_ne2.copy()
@@ -207,9 +216,11 @@ def create_input_tsv(
     df = df[cols]
 
     # QC
-    #n_rows = 1620000*6
-    #assert len(df) == n_rows, f"final tsv does not have the expected number of rows: {n_rows}"
-    if (df[opts].sum(axis=1).round(1).sum() != len(df)) or ((df[opts].sum(axis=1).round(1) != 1).sum() > 0):
+    # n_rows = 1620000*6
+    # assert len(df) == n_rows, f"final tsv does not have the expected number of rows: {n_rows}"
+    if (df[opts].sum(axis=1).round(1).sum() != len(df)) or (
+        (df[opts].sum(axis=1).round(1) != 1).sum() > 0
+    ):
         print("Error in duplicating rows in df_ne2 for missing dependencies")
         breakpoint()
 
@@ -254,7 +265,9 @@ def create_input_tsv_electric(model, dummy_file):
     delta = set(dfi.columns) - set(model.feature_names)
     if len(delta) != 0:
         if delta != expected_missing_cols:
-            print(f"Expecting missing cols from model input data: {expected_missing_cols} ")
+            print(
+                f"Expecting missing cols from model input data: {expected_missing_cols} "
+            )
             print(f"but found these missing cols instead: {delta}")
             breakpoint()
 
@@ -306,19 +319,22 @@ def create_input_tsv_electric(model, dummy_file):
         breakpoint()
 
     # renormalize all probs so sum is closer to 1
-    df[panel_labels] = df[panel_labels].div(df[panel_labels].sum(axis=1), axis=0).round(6)
+    df[panel_labels] = (
+        df[panel_labels].div(df[panel_labels].sum(axis=1), axis=0).round(6)
+    )
 
-    # save intermediate tsv    
+    # save intermediate tsv
     tsv_file = data_dir / f"intermediate_amp_electric - Model {model.model_num}.tsv"
     df.to_csv(tsv_file, sep="\t", index=False, lineterminator="\r\n")
 
     return df
 
+
 def create_input_tsv_nonelectric(model, dummy_file):
 
     print("\n-- Intermediate tsv for NON-ELECTRIC heating fuel --")
     ## -- process data to align with model inputs --
-    hc_list=["Geometry Floor Area", "Geometry Building Type RECS", "Vintage"]
+    hc_list = ["Geometry Floor Area", "Geometry Building Type RECS", "Vintage"]
     input_options = yield_input_options(hc_list=hc_list)
 
     df_fa = yield_floor_area_dataframe()
@@ -346,7 +362,9 @@ def create_input_tsv_nonelectric(model, dummy_file):
     delta = set(dfi.columns) - set(model.feature_names)
     if len(delta) != 0:
         if delta != expected_missing_cols:
-            print(f"Expecting missing cols from model input data: {expected_missing_cols} ")
+            print(
+                f"Expecting missing cols from model input data: {expected_missing_cols} "
+            )
             print(f"but found these missing cols instead: {delta}")
             breakpoint()
 
@@ -398,13 +416,16 @@ def create_input_tsv_nonelectric(model, dummy_file):
         breakpoint()
 
     # renormalize all probs so sum is closer to 1
-    df[panel_labels] = df[panel_labels].div(df[panel_labels].sum(axis=1), axis=0).round(6)
+    df[panel_labels] = (
+        df[panel_labels].div(df[panel_labels].sum(axis=1), axis=0).round(6)
+    )
 
-    # save intermediate tsv    
+    # save intermediate tsv
     tsv_file = data_dir / f"intermediate_amp_nonelectric - Model {model.model_num}.tsv"
     df.to_csv(tsv_file, sep="\t", index=False, lineterminator="\r\n")
 
     return df
+
 
 def undummify_input_data(df: pd.DataFrame, input_options: dict) -> pd.DataFrame:
     # undummy categorical columns
@@ -446,9 +467,11 @@ def undummify(df: pd.DataFrame, prefix_sep: str = "__") -> pd.DataFrame:
 
 
 def apply_special_mapping(dfi: pd.DataFrame, model_type: str) -> pd.DataFrame:
-    """ translate resstock options to model input options """
+    """translate resstock options to model input options"""
     if model_type == "non_electric":
-        dfi["geometry_building_type_recs_simp"] = dfi["geometry_building_type_recs_simp"].map(
+        dfi["geometry_building_type_recs_simp"] = dfi[
+            "geometry_building_type_recs_simp"
+        ].map(
             {
                 "Mobile Home": "Mobile Home",
                 "Multi-Family with 2 - 4 Units": "Multi-Family with 2 - 4 Units",
@@ -529,7 +552,10 @@ def apply_special_mapping(dfi: pd.DataFrame, model_type: str) -> pd.DataFrame:
 
 
 def apply_tsv_to_results(
-    df: pd.DataFrame, tsv_file: Path, retain_proba: bool = False
+    df: pd.DataFrame,
+    tsv_file: Path,
+    retain_proba: bool = False,
+    oedi_data_format: bool = False,
 ) -> pd.DataFrame:
     """Apply tsv (derived from model) to ResStock result dataframe
     Args :
@@ -545,8 +571,7 @@ def apply_tsv_to_results(
 
     dep_cols = [x for x in tsv.columns if x.startswith("Dependency=")]
     res_cols = [
-        "build_existing_model."
-        + x.removeprefix("Dependency=").lower().replace(" ", "_")
+        f"{bxm}." + x.removeprefix("Dependency=").lower().replace(" ", "_")
         for x in dep_cols
     ]
     option_cols = [x for x in tsv.columns if x.startswith("Option=")]
@@ -559,14 +584,16 @@ def apply_tsv_to_results(
         on=res_cols,
         how="left",
     )
-
-    cond = df["completed_status"] == "Success"
-    if dff.loc[cond, panel_labels].isna().sum().sum() != 0:
-        print(f"Prediction in apply_tsv_to_results has NA values {dff.loc[cond & (dff[panel_labels].isna().sum(axis=1)!=0)]}")
-        error_file = output_filedir / "error_panel_result.csv"
-        print(f"A copy of the data is exported for review to {error_file}")
-        dff.to_csv(error_file, index=False)
-        breakpoint()
+    if not oedi_data_format:
+        cond = df["completed_status"] == "Success"
+        if dff.loc[cond, panel_labels].isna().sum().sum() != 0:
+            print(
+                f"Prediction in apply_tsv_to_results has NA values {dff.loc[cond & (dff[panel_labels].isna().sum(axis=1)!=0)]}"
+            )
+            error_file = output_filedir / "error_panel_result.csv"
+            print(f"A copy of the data is exported for review to {error_file}")
+            dff.to_csv(error_file, index=False)
+            breakpoint()
 
     if retain_proba:
         return pd.concat([df, dff[panel_labels]], axis=1)
@@ -585,17 +612,55 @@ def apply_tsv_to_results(
     df_panel = panel_amp_unbin(df_panel)
     return df_panel
 
+
 def panel_amp_unbin(df_panel):
-    df_panel["predicted_panel_amp"] = df_panel["predicted_panel_amp_bin"].copy()          
-    df_panel.loc[(df_panel['predicted_panel_amp_bin'] == '<100') & (df_panel['build_existing_model.heating_fuel'] == 'Electricity'), "predicted_panel_amp"] = 90
-    df_panel.loc[(df_panel['predicted_panel_amp_bin'] == '<100') & (df_panel['build_existing_model.heating_fuel'] != 'Electricity'), "predicted_panel_amp"] = 60
-    df_panel.loc[df_panel['predicted_panel_amp_bin'] == '101-124', "predicted_panel_amp"] = 120
-    df_panel.loc[df_panel['predicted_panel_amp_bin'] == '126-199', "predicted_panel_amp"] = 150
-    df_panel.loc[(df_panel['predicted_panel_amp_bin'] == '201+') & (df_panel['build_existing_model.geometry_floor_area'].isin(['0-499','500-749', '750-999', '1000-1499','1500-1999','2000-2499','2500-2999'])), "predicted_panel_amp"] = 250
-    df_panel.loc[(df_panel['predicted_panel_amp_bin'] == '201+') & (df_panel['build_existing_model.geometry_floor_area']== '3000-3999'), "predicted_panel_amp"] = 300
-    df_panel.loc[(df_panel['predicted_panel_amp_bin'] == '201+') & (df_panel['build_existing_model.geometry_floor_area'] == '4000+'), "predicted_panel_amp"] = 400
+    df_panel["predicted_panel_amp"] = df_panel["predicted_panel_amp_bin"].copy()
+    df_panel.loc[
+        (df_panel["predicted_panel_amp_bin"] == "<100")
+        & (df_panel[f"{bxm}.heating_fuel"] == "Electricity"),
+        "predicted_panel_amp",
+    ] = 90
+    df_panel.loc[
+        (df_panel["predicted_panel_amp_bin"] == "<100")
+        & (df_panel[f"{bxm}.heating_fuel"] != "Electricity"),
+        "predicted_panel_amp",
+    ] = 60
+    df_panel.loc[
+        df_panel["predicted_panel_amp_bin"] == "101-124", "predicted_panel_amp"
+    ] = 120
+    df_panel.loc[
+        df_panel["predicted_panel_amp_bin"] == "126-199", "predicted_panel_amp"
+    ] = 150
+    df_panel.loc[
+        (df_panel["predicted_panel_amp_bin"] == "201+")
+        & (
+            df_panel[f"{bxm}.geometry_floor_area"].isin(
+                [
+                    "0-499",
+                    "500-749",
+                    "750-999",
+                    "1000-1499",
+                    "1500-1999",
+                    "2000-2499",
+                    "2500-2999",
+                ]
+            )
+        ),
+        "predicted_panel_amp",
+    ] = 250
+    df_panel.loc[
+        (df_panel["predicted_panel_amp_bin"] == "201+")
+        & (df_panel[f"{bxm}.geometry_floor_area"] == "3000-3999"),
+        "predicted_panel_amp",
+    ] = 300
+    df_panel.loc[
+        (df_panel["predicted_panel_amp_bin"] == "201+")
+        & (df_panel[f"{bxm}.geometry_floor_area"] == "4000+"),
+        "predicted_panel_amp",
+    ] = 400
     return df_panel
-   
+
+
 def extract_left_edge(val):
     # for sorting things like AMI
     if val is None:
@@ -641,15 +706,19 @@ def sort_index(df: pd.DataFrame, axis: str = "index", **kwargs) -> pd.DataFrame:
 
 
 def plot_output_saturation(
-    df: pd.DataFrame, output_dir: Path, panel_metrics: list[str], sfd_only=False
+    df: pd.DataFrame,
+    output_dir: Path,
+    panel_metrics: list[str],
+    sfd_only=False,
+    oedi_data_format: bool = False,
 ):
     print(f"Plots output to: {output_dir}")
-    cond = df["completed_status"] == "Success"
+    if oedi_data_format:
+        cond = df[bldg_id].isin(df[bldg_id])  # all
+    else:
+        cond = df["completed_status"] == "Success"
     if sfd_only:
-        cond &= (
-            df["build_existing_model.geometry_building_type_recs"]
-            == "Single-Family Detached"
-        )
+        cond &= df[f"{bxm}.geometry_building_type_recs"] == "Single-Family Detached"
         df = df.loc[cond]
         print(
             f"Plotting applies to {len(df)} valid Single-Family Detached samples only"
@@ -659,52 +728,54 @@ def plot_output_saturation(
         print(f"Plotting applies to {len(df)} valid samples only")
 
     for hc in [
-        "build_existing_model.census_region",
-        "build_existing_model.federal_poverty_level",
-        "build_existing_model.area_median_income",
-        "build_existing_model.geometry_floor_area_bin",
-        "build_existing_model.geometry_building_type_recs",
-        "build_existing_model.vintage",
+        f"{bxm}.census_region",
+        f"{bxm}.federal_poverty_level",
+        f"{bxm}.area_median_income",
+        f"{bxm}.geometry_floor_area_bin",
+        f"{bxm}.geometry_building_type_recs",
+        f"{bxm}.vintage",
     ]:
         _plot_bar(df, [hc], panel_metrics, output_dir=output_dir, sfd_only=sfd_only)
 
     for hc in [
-        "build_existing_model.census_region",
-        "build_existing_model.census_division",
-        "build_existing_model.ashrae_iecc_climate_zone_2004",
-        "build_existing_model.geometry_building_type_recs",  # dep
-        "build_existing_model.state",
-        "build_existing_model.vintage",  # dep
-        "build_existing_model.vintage_acs",
-        "build_existing_model.federal_poverty_level",
-        "build_existing_model.area_median_income",
-        "build_existing_model.tenure",
-        "build_existing_model.geometry_floor_area_bin",
-        "build_existing_model.geometry_floor_area",  # dep
-        "build_existing_model.heating_fuel",  # dep
-        "build_existing_model.water_heater_fuel",  # dep
-        "build_existing_model.hvac_heating_type",
-        "build_existing_model.hvac_cooling_type",  # dep
-        "build_existing_model.has_pv", # dep
+        f"{bxm}.census_region",
+        f"{bxm}.census_division",
+        f"{bxm}.ashrae_iecc_climate_zone_2004",
+        f"{bxm}.geometry_building_type_recs",  # dep
+        f"{bxm}.state",
+        f"{bxm}.vintage",  # dep
+        f"{bxm}.vintage_acs",
+        f"{bxm}.federal_poverty_level",
+        f"{bxm}.area_median_income",
+        f"{bxm}.tenure",
+        f"{bxm}.geometry_floor_area_bin",
+        f"{bxm}.geometry_floor_area",  # dep
+        f"{bxm}.heating_fuel",  # dep
+        f"{bxm}.water_heater_fuel",  # dep
+        f"{bxm}.hvac_heating_type",
+        f"{bxm}.hvac_cooling_type",  # dep
+        f"{bxm}.has_pv",  # dep
     ]:
-        _plot_bar_stacked(df, [hc], panel_metrics, output_dir=output_dir, sfd_only=sfd_only)
+        _plot_bar_stacked(
+            df, [hc], panel_metrics, output_dir=output_dir, sfd_only=sfd_only
+        )
 
     _plot_bar_stacked(
         df,
-        ["build_existing_model.vintage", "build_existing_model.geometry_floor_area"],
+        [f"{bxm}.vintage", f"{bxm}.geometry_floor_area"],
         panel_metrics,
         output_dir=output_dir,
-        sfd_only=sfd_only
+        sfd_only=sfd_only,
     )
     _plot_bar_stacked(
         df,
         [
-            "build_existing_model.census_region",
-            "build_existing_model.geometry_building_type_recs",
+            f"{bxm}.census_region",
+            f"{bxm}.geometry_building_type_recs",
         ],
         panel_metrics,
         output_dir=output_dir,
-        sfd_only=sfd_only
+        sfd_only=sfd_only,
     )
 
 
@@ -713,17 +784,19 @@ def _plot_bar(
     groupby_cols: list[str],
     metric_cols: list[str],
     output_dir: Path | None = None,
-    sfd_only: bool | None = None
+    sfd_only: bool | None = None,
 ):
     if sfd_only:
-        dfi = df.loc[df["build_existing_model.geometry_building_type_recs"]=="Single-Family Detached"]
+        dfi = df.loc[
+            df[f"{bxm}.geometry_building_type_recs"] == "Single-Family Detached"
+        ]
     else:
         dfi = df.copy()
 
     if "predicted_panel_amp_bin" in metric_cols:
         metric_cols = ["predicted_panel_amp_bin"]
-        dfi = dfi[groupby_cols + metric_cols + ["building_id"]]
-        dfi = dfi.groupby(groupby_cols + metric_cols)["building_id"].count().unstack()
+        dfi = dfi[groupby_cols + metric_cols + [bldg_id]]
+        dfi = dfi.groupby(groupby_cols + metric_cols)[bldg_id].count().unstack()
     else:
         dfi = dfi.groupby(groupby_cols)[metric_cols].sum()
         metric_cols = ["predicted_panel_amp_expected_value"]
@@ -732,7 +805,7 @@ def _plot_bar(
     fig, ax = plt.subplots()
     dfi.plot(kind="bar", ax=ax)
     if output_dir is not None:
-        metric = "__by__".join(groupby_cols + metric_cols).replace("build_existing_model.", "")
+        metric = "__by__".join(groupby_cols + metric_cols).replace(f"{bxm}.", "")
         fig.savefig(output_dir / f"bar_{metric}.png", dpi=400, bbox_inches="tight")
         dfi.to_csv(output_dir / f"data__bar_{metric}.csv", index=True)
     plt.close()
@@ -743,17 +816,19 @@ def _plot_bar_stacked(
     groupby_cols: list[str],
     metric_cols: list[str],
     output_dir: Path | None = None,
-    sfd_only: bool | None = None
+    sfd_only: bool | None = None,
 ):
     if sfd_only:
-        dfi = df.loc[df["build_existing_model.geometry_building_type_recs"]=="Single-Family Detached"]
+        dfi = df.loc[
+            df[f"{bxm}.geometry_building_type_recs"] == "Single-Family Detached"
+        ]
     else:
         dfi = df.copy()
 
     if "predicted_panel_amp_bin" in metric_cols:
         metric_cols = ["predicted_panel_amp_bin"]
-        dfi = dfi[groupby_cols + metric_cols + ["building_id"]]
-        dfi = dfi.groupby(groupby_cols + metric_cols)["building_id"].count().unstack()
+        dfi = dfi[groupby_cols + metric_cols + [bldg_id]]
+        dfi = dfi.groupby(groupby_cols + metric_cols)[bldg_id].count().unstack()
     else:
         dfi = dfi.groupby(groupby_cols)[metric_cols].sum()
         metric_cols = ["predicted_panel_amp_expected_value"]
@@ -766,7 +841,7 @@ def _plot_bar_stacked(
     ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
     ax.set_title(f"Saturation of {metric_cols[0]}")
     if output_dir is not None:
-        metric = "__by__".join(groupby_cols + metric_cols).replace("build_existing_model.", "")
+        metric = "__by__".join(groupby_cols + metric_cols).replace(f"{bxm}.", "")
         fig.savefig(
             output_dir / f"stacked_bar_{metric}.png", dpi=400, bbox_inches="tight"
         )
@@ -789,22 +864,34 @@ def read_file(filename: str | Path, low_memory: bool = True, **kwargs) -> pd.Dat
 
 
 def get_model_parameters(model):
-    
+
     if model == "7bins":
         # w/ simplified heating fuel
-        model_file_e = Path("panel_capacity_elec_heat") / "final_panel_model_rank_test_f1_weighted_730046.p"
-        model_file_ne = Path("panel_capacity_non_elec_heat") / "final_panel_model_rank_test_f1_weighted_822198.p"
-        dummy_file_e = Path("panel_capacity_elec_heat") / "train_data_with_continuous_panel_amp_730046.csv"
-        dummy_file_ne = Path("panel_capacity_non_elec_heat") / "train_data_with_continuous_panel_amp_822198.csv"
+        model_file_e = (
+            Path("panel_capacity_elec_heat")
+            / "final_panel_model_rank_test_f1_weighted_730046.p"
+        )
+        model_file_ne = (
+            Path("panel_capacity_non_elec_heat")
+            / "final_panel_model_rank_test_f1_weighted_822198.p"
+        )
+        dummy_file_e = (
+            Path("panel_capacity_elec_heat")
+            / "train_data_with_continuous_panel_amp_730046.csv"
+        )
+        dummy_file_ne = (
+            Path("panel_capacity_non_elec_heat")
+            / "train_data_with_continuous_panel_amp_822198.csv"
+        )
         output_mapping = {
             0: "100",
             1: "101-124",
             2: "125",
             3: "126-199",
-            4: "200", 
+            4: "200",
             5: "201+",
             6: "<100",  # "lt_100",
-        }  
+        }
     else:
         raise ValueError(f"Unknown model={model}, valid: ['5bins', '7bins']")
 
@@ -817,8 +904,16 @@ def main(
     plot_only: bool = False,
     sfd_only: bool = False,
     export_result_as_map: bool = False,
+    oedi_data_format: bool = False,
 ):
-    global local_dir, data_dir, output_filedir, output_mapping
+    global local_dir, data_dir, output_filedir, output_mapping, bxm, bldg_id
+
+    if oedi_data_format:
+        bxm = "in"
+        bldg_id = "bldg_id"
+    else:
+        bxm = f"{bxm}"
+        bldg_id = "building_id"
 
     local_dir = Path(__file__).resolve().parent
     data_dir = local_dir / "models_20241204_sf_only"
@@ -891,35 +986,49 @@ def main(
     # Prediction
     if not tsv_file.exists():
         # Load model
-        feature_names = pd.read_csv(
-            dummy_file_e, header=0, nrows=0
-        ).columns.tolist()[:-2]
+        feature_names = pd.read_csv(dummy_file_e, header=0, nrows=0).columns.tolist()[
+            :-2
+        ]
         model_e = load_model(model_file_e, feature_names)
         model_ne = load_model(model_file_ne, feature_names)
         model_e.model_num = model_num
         model_ne.model_num = model_num
 
-        create_input_tsv(model_e, model_ne, dummy_file_e, dummy_file_ne, tsv_file=tsv_file)
+        create_input_tsv(
+            model_e, model_ne, dummy_file_e, dummy_file_ne, tsv_file=tsv_file
+        )
 
     df = read_file(filename, low_memory=False)
+    if oedi_data_format:
+        df.reset_index(inplace=True)
     # retain SF only
-    cond = df["build_existing_model.geometry_building_type_recs"].isin([
+    cond = df[f"{bxm}.geometry_building_type_recs"].isin(
+        [
             "Single-Family Detached",
             "Single-Family Attached",
-        ])
+        ]
+    )
     df = df.loc[cond].reset_index(drop=True)
-    df = apply_tsv_to_results(df, tsv_file, retain_proba=retain_proba)
+    df = apply_tsv_to_results(
+        df, tsv_file, retain_proba=retain_proba, oedi_data_format=oedi_data_format
+    )
 
     ## -- export --
     if export_result_as_map:
         output_filename = output_filedir / ("panel_result__" + ext + ".csv")
-        df[["building_id"]+panel_metrics].to_csv(output_filename, index=False)
+        df[[bldg_id] + panel_metrics].to_csv(output_filename, index=False)
     else:
         df.to_csv(output_filename, index=False)
     print(f"File output to: {output_filename}")
 
     ## -- plot --
-    plot_output_saturation(df, output_dir, panel_metrics, sfd_only=sfd_only)
+    plot_output_saturation(
+        df,
+        output_dir,
+        panel_metrics,
+        sfd_only=sfd_only,
+        oedi_data_format=oedi_data_format,
+    )
 
 
 if __name__ == "__main__":
@@ -963,6 +1072,14 @@ if __name__ == "__main__":
         help="Whether to export panel prediction result as a building_id map only. "
         "Default to appending panel prediction result as new column(s) to input result file. ",
     )
+    parser.add_argument(
+        "-o",
+        "--oedi_data_format",
+        action="store_true",
+        default=False,
+        help="Used to process Standard Dataset stored on OEDI, which has in.xxx format"
+        "Default to processing normal ResStock run output, which has build_existing_model.xxx format. ",
+    )
 
     args = parser.parse_args()
     main(
@@ -971,4 +1088,5 @@ if __name__ == "__main__":
         plot_only=args.plot_only,
         sfd_only=args.sfd_only,
         export_result_as_map=args.export_result_as_map,
+        oedi_data_format=args.oedi_data_format,
     )

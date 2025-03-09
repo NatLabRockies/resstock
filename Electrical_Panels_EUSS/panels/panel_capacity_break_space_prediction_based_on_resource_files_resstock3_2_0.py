@@ -1,4 +1,9 @@
-""" predict the panel size and breaker space for baseline results csv based on resstock resource files
+""" predict the panel size and breaker space for baseline results csv based on 
+resstock resource files stored in:
+./electrical_panel_resources
+
+
+by: Yingli.Lou@nrel.gov
 updated: 01/13/2025
 
 """
@@ -27,7 +32,7 @@ def apply_special_mapping(df):
             "None": "non-electricity",
             "Other Fuel": "non-electricity",
             "Propane": "non-electricity",
-            "Wood": "non-electricity", 
+            "Wood": "non-electricity",
         }
     )
     df["clothes_dryer"] = df["build_existing_model.clothes_dryer"].map(
@@ -47,7 +52,9 @@ def apply_special_mapping(df):
             "Propane": "non-electricity",
         }
     )
-    df["geometry_building_type_recs"] = df["build_existing_model.geometry_building_type_recs"].map(
+    df["geometry_building_type_recs"] = df[
+        "build_existing_model.geometry_building_type_recs"
+    ].map(
         {
             "Mobile Home": "manufactured home",
             "Multi-Family with 2 - 4 Units": "apartment unit, 2-4",
@@ -87,7 +94,9 @@ def apply_special_mapping(df):
             "2010s": "1990+",
         }
     )
-    df["geometry_unit_cfa_bin_simp"] = df["build_existing_model.geometry_floor_area"].map(
+    df["geometry_unit_cfa_bin_simp"] = df[
+        "build_existing_model.geometry_floor_area"
+    ].map(
         {
             "0-499": "0-999",
             "500-749": "0-999",
@@ -127,6 +136,7 @@ def buildstock_csv_column_renaming(df):
     )
     return df
 
+
 def oedi_column_renaming(df):
     df = df.rename(
         columns={
@@ -146,50 +156,143 @@ def oedi_column_renaming(df):
     return df
 
 
-def buildstock_csv_results_column_renaming(df):
-    df = df.rename(
-        columns={
-            "panel_capacity": "Panel Size",
-            "break_space_headroom": "Break Space Headroom",
-            "major_elec_load_count": "Major Elec Load Count",
-            "build_existing_model.heating_fuel": "Heating Fuel",
-            "build_existing_model.clothes_dryer": "Clothes Dryer",
-            "build_existing_model.cooking_range": "Cooking Range",
-            "build_existing_model.geometry_building_type_recs": "Geometry Building Type RECS",
-            "build_existing_model.hvac_cooling_type": "HVAC Cooling Type",
-            "build_existing_model.water_heater_fuel": "Water Heater Fuel",
-            "vintage": "Vintage",
-            "geometry_unit_cfa_bin": "Geometry Floor Area",
-            "build_existing_model.has_pv": "Has PV",
-            "build_existing_model.hvac_heating_type": "HVAC Heating Type",
-            "building_id": "Building",
-        }
-    )
+def buildstock_csv_results_column_renaming_dict():
+    return {
+        "electric_panel_service_rating": "Electrical Panel Service Rating",
+        "electric_panel_service_rating_bin": "Electrical Panel Service Rating Bin",
+        "breaker_spaces_headroom": "Electric Panel Breaker Spaces Headroom Count",
+        "major_elec_load_count": "Electric Panel Major Electrical Load Count",
+        "build_existing_model.heating_fuel": "Heating Fuel",
+        "build_existing_model.clothes_dryer": "Clothes Dryer",
+        "build_existing_model.cooking_range": "Cooking Range",
+        "build_existing_model.geometry_building_type_recs": "Geometry Building Type RECS",
+        "build_existing_model.hvac_cooling_type": "HVAC Cooling Type",
+        "build_existing_model.water_heater_fuel": "Water Heater Fuel",
+        "vintage": "Vintage",
+        "geometry_unit_cfa_bin": "Geometry Floor Area",
+        "build_existing_model.has_pv": "Has PV",
+        "build_existing_model.hvac_heating_type": "HVAC Heating Type",
+        "building_id": "Building",
+    }
+
+
+def buildstock_csv_results_column_renaming(
+    df: pd.DataFrame, retain_columns: list[str] | None = None
+):
+    dct = buildstock_csv_results_column_renaming_dict()
+    df = df.rename(columns=dct)
+    if retain_columns:
+        cols = [dct[x] for x in retain_columns]
+        df = df[cols]
+
     return df
 
 
-def oedi_results_column_renaming(df):
-    df = df.rename(
-        columns={
-            "panel_capacity": "out.panel_capacity",
-            "break_space_headroom": "out.break_space_headroom",
-            "major_elec_load_count": "out.major_elec_load_count",
-            "build_existing_model.heating_fuel": "in.heating_fuel",
-            "build_existing_model.clothes_dryer": "in.clothes_dryer",
-            "build_existing_model.cooking_range": "in.cooking_range",
-            "build_existing_model.geometry_building_type_recs": "in.geometry_building_type_recs",
-            "build_existing_model.hvac_cooling_type": "in.hvac_cooling_type",
-            "build_existing_model.water_heater_fuel": "in.water_heater_fuel",
-            "vintage": "in.vintage",
-            "geometry_unit_cfa_bin": "in.geometry_floor_area",
-            "build_existing_model.has_pv": "in.has_pv",
-            "build_existing_model.hvac_heating_type": "in.hvac_heating_type",
-            "building_id": "bldg_id",
-        }
-    )
+def oedi_results_column_renaming_dict():
+    return {
+        "electric_panel_service_rating": "in.electric_panel_service_rating",
+        "electric_panel_service_rating_bin": "in.electric_panel_service_rating_bin",
+        "breaker_spaces_headroom": "out.electric_panel_breaker_spaces_headroom_count",
+        "major_elec_load_count": "out.electric_panel_major_electrical_load_count",
+        "build_existing_model.heating_fuel": "in.heating_fuel",
+        "build_existing_model.clothes_dryer": "in.clothes_dryer",
+        "build_existing_model.cooking_range": "in.cooking_range",
+        "build_existing_model.geometry_building_type_recs": "in.geometry_building_type_recs",
+        "build_existing_model.hvac_cooling_type": "in.hvac_cooling_type",
+        "build_existing_model.water_heater_fuel": "in.water_heater_fuel",
+        "vintage": "in.vintage",
+        "geometry_unit_cfa_bin": "in.geometry_floor_area",
+        "build_existing_model.has_pv": "in.has_pv",
+        "build_existing_model.hvac_heating_type": "in.hvac_heating_type",
+        "building_id": "bldg_id",
+    }
+
+
+def oedi_results_column_renaming(
+    df: pd.DataFrame, retain_columns: list[str] | None = None
+):
+    dct = oedi_results_column_renaming_dict()
+    df = df.rename(columns=dct)
+    if retain_columns:
+        cols = [dct[x] for x in retain_columns]
+        df = df[cols]
+
     return df
 
-    
+
+def results_column_renaming_dict():
+    return {
+        "electric_panel_service_rating": "build_existing_model.electric_panel_service_rating",
+        "electric_panel_service_rating_bin": "build_existing_model.electric_panel_service_rating_bin",
+        "breaker_spaces_headroom": "report_simulation_output.electric_panel_breaker_spaces_headroom_count",
+        "major_elec_load_count": "report_simulation_output.electric_panel_major_electrical_load_count",
+        "vintage": "build_existing_model.vintage",
+        "geometry_unit_cfa_bin": "build_existing_model.geometry_floor_area",
+    }
+
+
+def results_column_renaming(df: pd.DataFrame, retain_columns: list[str] | None = None):
+    dct = results_column_renaming_dict()
+    df = df.rename(columns=dct)
+    if retain_columns:
+        cols = [dct[x] for x in retain_columns]
+        df = df[cols]
+
+    return df
+
+
+def panel_amp_unbin(df_panel):
+    df_panel["electric_panel_service_rating"] = df_panel[
+        "electric_panel_service_rating_bin"
+    ].copy()
+    df_panel.loc[
+        (df_panel["electric_panel_service_rating_bin"] == "<100")
+        & (df_panel["heating_fuel"] == "electricity"),
+        "electric_panel_service_rating",
+    ] = 90
+    df_panel.loc[
+        (df_panel["electric_panel_service_rating_bin"] == "<100")
+        & (df_panel["heating_fuel"] == "non-electricity"),
+        "electric_panel_service_rating",
+    ] = 60
+    df_panel.loc[
+        df_panel["electric_panel_service_rating_bin"] == "101-124",
+        "electric_panel_service_rating",
+    ] = 120
+    df_panel.loc[
+        df_panel["electric_panel_service_rating_bin"] == "126-199",
+        "electric_panel_service_rating",
+    ] = 150
+    df_panel.loc[
+        (df_panel["electric_panel_service_rating_bin"] == "201+")
+        & (
+            df_panel["geometry_unit_cfa_bin"].isin(
+                [
+                    "0-499",
+                    "500-749",
+                    "750-999",
+                    "1000-1499",
+                    "1500-1999",
+                    "2000-2499",
+                    "2500-2999",
+                ]
+            )
+        ),
+        "predicted_panel_amp",
+    ] = 250
+    df_panel.loc[
+        (df_panel["electric_panel_service_rating_bin"] == "201+")
+        & (df_panel["geometry_unit_cfa_bin"] == "3000-3999"),
+        "electric_panel_service_rating",
+    ] = 300
+    df_panel.loc[
+        (df_panel["electric_panel_service_rating_bin"] == "201+")
+        & (df_panel["geometry_unit_cfa_bin"] == "4000+"),
+        "electric_panel_service_rating",
+    ] = 400
+    return df_panel
+
+
 def read_file(
     filename: Union[str, Path], low_memory: bool = True, **kwargs
 ) -> pd.DataFrame:
@@ -208,10 +311,7 @@ def read_file(
 
 def read_probs_table(prediction_type: str, building_type: str, heating_fuel: str):
     if prediction_type == "break_space":
-        return (
-            electrical_panel_resources_dir
-            / "electrical_panel_breaker_space.csv"
-        )
+        return electrical_panel_resources_dir / "electrical_panel_breaker_space.csv"
     elif prediction_type == "capacity":
         if building_type == "single_family":
             # w/ simplified heating fuel
@@ -227,37 +327,79 @@ def read_probs_table(prediction_type: str, building_type: str, heating_fuel: str
                 )
         elif building_type == "multi_family":
             return (
-                    electrical_panel_resources_dir
-                    / "electrical_panel_rated_capacity__multi_family.csv"
-                )
+                electrical_panel_resources_dir
+                / "electrical_panel_rated_capacity__multi_family.csv"
+            )
     raise ValueError(f"Unknown {heating_fuel=}")
 
 
 def get_major_elec_load_count(df):
-    df.loc[df["build_existing_model.heating_fuel"] != "Electricity", "has_elec_heating_primary"] = 0
-    df.loc[df["build_existing_model.heating_fuel"] == "Electricity", "has_elec_heating_primary"] = 1 
-    df.loc[df["build_existing_model.hvac_cooling_type"].isin(["None","Room AC"]), "has_central_non_heat_pump_cooling"] = 0
-    df.loc[df["build_existing_model.hvac_cooling_type"].isin(["Central AC","Non-Ducted Heat Pump"]), "has_central_non_heat_pump_cooling"] = 1 
+    df.loc[
+        df["build_existing_model.heating_fuel"] != "Electricity",
+        "has_elec_heating_primary",
+    ] = 0
+    df.loc[
+        df["build_existing_model.heating_fuel"] == "Electricity",
+        "has_elec_heating_primary",
+    ] = 1
+    df.loc[
+        df["build_existing_model.hvac_cooling_type"].isin(["None", "Room AC"]),
+        "has_central_non_heat_pump_cooling",
+    ] = 0
+    df.loc[
+        df["build_existing_model.hvac_cooling_type"].isin(
+            ["Central AC", "Non-Ducted Heat Pump"]
+        ),
+        "has_central_non_heat_pump_cooling",
+    ] = 1
     # Ducted heat pump provides heating and cooling, so no additional slots for cooling
-    df.loc[((df["build_existing_model.hvac_cooling_type"] == "Ducted Heat Pump") & (df["build_existing_model.hvac_heating_type"] == "Ducted Heat Pump")), "has_central_non_heat_pump_cooling"] = 0
-    df.loc[df["build_existing_model.water_heater_fuel"] != "Electricity", "has_elec_water_heater"] = 0
-    df.loc[df["build_existing_model.water_heater_fuel"] == "Electricity", "has_elec_water_heater"] = 1 
-    df.loc[~df["build_existing_model.clothes_dryer"].isin(['Electric']), "has_elec_drying"] = 0
-    df.loc[df["build_existing_model.clothes_dryer"].isin(['Electric']), "has_elec_drying"] = 1
-    df.loc[~df["build_existing_model.cooking_range"].isin(['Electric Resistance', 'Electric Induction']), "has_elec_cooking"] = 0
-    df.loc[df["build_existing_model.cooking_range"].isin(['Electric Resistance','Electric Induction']), "has_elec_cooking"] = 1
+    df.loc[
+        (
+            (df["build_existing_model.hvac_cooling_type"] == "Ducted Heat Pump")
+            & (df["build_existing_model.hvac_heating_type"] == "Ducted Heat Pump")
+        ),
+        "has_central_non_heat_pump_cooling",
+    ] = 0
+    df.loc[
+        df["build_existing_model.water_heater_fuel"] != "Electricity",
+        "has_elec_water_heater",
+    ] = 0
+    df.loc[
+        df["build_existing_model.water_heater_fuel"] == "Electricity",
+        "has_elec_water_heater",
+    ] = 1
+    df.loc[
+        ~df["build_existing_model.clothes_dryer"].isin(["Electric"]), "has_elec_drying"
+    ] = 0
+    df.loc[
+        df["build_existing_model.clothes_dryer"].isin(["Electric"]), "has_elec_drying"
+    ] = 1
+    df.loc[
+        ~df["build_existing_model.cooking_range"].isin(
+            ["Electric Resistance", "Electric Induction"]
+        ),
+        "has_elec_cooking",
+    ] = 0
+    df.loc[
+        df["build_existing_model.cooking_range"].isin(
+            ["Electric Resistance", "Electric Induction"]
+        ),
+        "has_elec_cooking",
+    ] = 1
     df.loc[df["build_existing_model.has_pv"] != "Yes", "has_pv"] = 0
-    df.loc[df["build_existing_model.has_pv"] == "Yes", "has_pv"] = 1 
+    df.loc[df["build_existing_model.has_pv"] == "Yes", "has_pv"] = 1
     df["has_ev_charging"] = 0
 
-    load_vars = ['has_elec_heating_primary',
-                 'has_central_non_heat_pump_cooling',
-                 'has_elec_water_heater',
-                 'has_elec_drying',
-                 'has_elec_cooking',
-                 'has_pv',
-                 'has_ev_charging']
-    df['major_elec_load_count'] = df[load_vars].sum(axis=1)
+    load_vars = [
+        "has_elec_heating_primary",
+        "has_central_non_heat_pump_cooling",
+        "has_elec_water_heater",
+        "has_elec_drying",
+        "has_elec_cooking",
+        "has_pv",
+        "has_ev_charging",
+    ]
+    df["major_elec_load_count"] = df[load_vars].sum(axis=1)
 
     return df
 
@@ -265,7 +407,7 @@ def get_major_elec_load_count(df):
 def get_row_headers(prob_table, lookup_array, header_size):
     length = len(lookup_array)
     column_names = prob_table.columns.tolist()
-    row_headers = column_names[length:length + header_size]
+    row_headers = column_names[length : length + header_size]
     return row_headers
 
 
@@ -277,42 +419,54 @@ def get_row_probability(prob_table, lookup_array, header_size):
     subset = prob_table.iloc[:, :length]
     mask = (subset == lookup_array).all(axis=1)
     matching_rows = prob_table[mask]
-    row_probability = [float(value) for value in matching_rows.iloc[0][length:length+ header_size]]
+    row_probability = [
+        float(value) for value in matching_rows.iloc[0][length : length + header_size]
+    ]
 
     if len(row_probability) != header_size:
-        raise ValueError(f"ElectricalPanelSampler cannot find row_probability for keys: {lookup_array}")
+        raise ValueError(
+            f"ElectricalPanelSampler cannot find row_probability for keys: {lookup_array}"
+        )
 
     return row_probability
 
 
 def weighted_random(weights, building_id):
     random.seed(building_id)
-    slots = [x for x in range(0,len(weights))]
-    index= random.choices(slots, weights=weights)[0]
+    slots = [x for x in range(0, len(weights))]
+    index = random.choices(slots, weights=weights)[0]
     return index
 
 
 def sample_rated_capacity_bin(prob_map, row, model_type: str):
     building_id = row["building_id"]
     if model_type == "single-family-e":
-        lookup_array = [row["clothes_dryer"],
-                        row["cooking_range"],
-                        row["geometry_building_type_recs"],
-                        row["geometry_unit_cfa_bin"],
-                        row["hvac_cooling_type"],
-                        row["vintage"],
-                        row["water_heater_fuel_type"]]
+        lookup_array = [
+            row["clothes_dryer"],
+            row["cooking_range"],
+            row["geometry_building_type_recs"],
+            row["geometry_unit_cfa_bin"],
+            row["hvac_cooling_type"],
+            row["vintage"],
+            row["water_heater_fuel_type"],
+        ]
     elif model_type == "single-family-ne":
-        lookup_array = [row["geometry_building_type_recs"],
-                        row["geometry_unit_cfa_bin"],
-                        row["vintage"]]
+        lookup_array = [
+            row["geometry_building_type_recs"],
+            row["geometry_unit_cfa_bin"],
+            row["vintage"],
+        ]
     elif model_type == "multi-family":
-        lookup_array = [row["geometry_unit_cfa_bin_simp"],
-                        row["vintage_simp"],
-                        row["heating_fuel"]]
+        lookup_array = [
+            row["geometry_unit_cfa_bin_simp"],
+            row["vintage_simp"],
+            row["heating_fuel"],
+        ]
     else:
-        raise ValueError(f"Unknown model type={model_type}, valid: ['single-family-e', 'single-family-ne', 'multi-family']")
-        
+        raise ValueError(
+            f"Unknown model type={model_type}, valid: ['single-family-e', 'single-family-ne', 'multi-family']"
+        )
+
     capacity_bins = get_row_headers(prob_map, lookup_array, 7)
     row_probability = get_row_probability(prob_map, lookup_array, 7)
     index = weighted_random(row_probability, building_id)
@@ -321,12 +475,18 @@ def sample_rated_capacity_bin(prob_map, row, model_type: str):
 
 def sample_breaker_space_headroom(breaker_space_headroom_prob_map, row):
     building_id = row["building_id"]
-    lookup_array = [row["geometry_building_type_recs"],
-                        row["geometry_unit_cfa_bin"],
-                        row["major_elec_load_count"],
-                        row["panel_capacity"]]
-    breaker_space_headroom = get_row_headers(breaker_space_headroom_prob_map, lookup_array, 32)
-    row_probability = get_row_probability(breaker_space_headroom_prob_map, lookup_array, 32)
+    lookup_array = [
+        row["geometry_building_type_recs"],
+        row["geometry_unit_cfa_bin"],
+        row["major_elec_load_count"],
+        row["electric_panel_service_rating_bin"],
+    ]
+    breaker_space_headroom = get_row_headers(
+        breaker_space_headroom_prob_map, lookup_array, 32
+    )
+    row_probability = get_row_probability(
+        breaker_space_headroom_prob_map, lookup_array, 32
+    )
     index = weighted_random(row_probability, building_id)
     return breaker_space_headroom[index]
 
@@ -340,22 +500,41 @@ def capacity_prediction(dfb):
     df_prob_table_mf = read_file(mf_file)
 
     # process baseline results data
-    dfb_sf = dfb.loc[dfb['geometry_building_type_recs'].isin(["manufactured home",
-                                                              "single-family attached",
-                                                              "single-family detached",])]
-    dfb_mf = dfb.loc[dfb['geometry_building_type_recs'].isin(["apartment unit, 2-4",
-                                                              "apartment unit, 5+",])]
-    dfb_sf_e = dfb_sf.loc[dfb_sf['heating_fuel'] == "electricity"]
-    dfb_sf_ne = dfb_sf.loc[dfb_sf['heating_fuel'] == "non-electricity"]
+    dfb_sf = dfb.loc[
+        dfb["geometry_building_type_recs"].isin(
+            [
+                "manufactured home",
+                "single-family attached",
+                "single-family detached",
+            ]
+        )
+    ]
+    dfb_mf = dfb.loc[
+        dfb["geometry_building_type_recs"].isin(
+            [
+                "apartment unit, 2-4",
+                "apartment unit, 5+",
+            ]
+        )
+    ]
+    dfb_sf_e = dfb_sf.loc[dfb_sf["heating_fuel"] == "electricity"]
+    dfb_sf_ne = dfb_sf.loc[dfb_sf["heating_fuel"] == "non-electricity"]
 
     for index, row in dfb_sf_e.iterrows():
-        dfb_sf_e.at[index, "panel_capacity"] = sample_rated_capacity_bin(df_prob_table_sf_e, row, "single-family-e")
+        dfb_sf_e.at[index, "electric_panel_service_rating_bin"] = (
+            sample_rated_capacity_bin(df_prob_table_sf_e, row, "single-family-e")
+        )
     for index, row in dfb_sf_ne.iterrows():
-        dfb_sf_ne.at[index, "panel_capacity"] = sample_rated_capacity_bin(df_prob_table_sf_ne, row, "single-family-ne")
+        dfb_sf_ne.at[index, "electric_panel_service_rating_bin"] = (
+            sample_rated_capacity_bin(df_prob_table_sf_ne, row, "single-family-ne")
+        )
     for index, row in dfb_mf.iterrows():
-        dfb_mf.at[index, "panel_capacity"] = sample_rated_capacity_bin(df_prob_table_mf, row, "multi-family")
+        dfb_mf.at[index, "electric_panel_service_rating_bin"] = (
+            sample_rated_capacity_bin(df_prob_table_mf, row, "multi-family")
+        )
 
     df_capacity = pd.concat([dfb_sf_e, dfb_sf_ne, dfb_mf], ignore_index=True)
+    df_capacity = panel_amp_unbin(df_capacity)
 
     return df_capacity
 
@@ -365,47 +544,57 @@ def breaker_space_prediction(dfb):
     df_prob_table = read_file(file)
 
     # breaker space prediction
-    for index, row in dfb.iterrows(): 
-        dfb.at[index,"break_space_headroom"] = sample_breaker_space_headroom(df_prob_table, row)
+    for index, row in dfb.iterrows():
+        dfb.at[index, "breaker_spaces_headroom"] = sample_breaker_space_headroom(
+            df_prob_table, row
+        )
     return dfb
 
+
 def drop_columns(df):
-    df.drop(['has_elec_heating_primary',
-              'has_central_non_heat_pump_cooling',
-              'has_elec_water_heater',
-              'has_elec_drying',
-              'has_elec_cooking',
-              'has_pv',
-              'has_ev_charging',
-              'heating_fuel',
-              'clothes_dryer',
-              'cooking_range',
-              'geometry_building_type_recs',
-              'hvac_cooling_type',
-              'water_heater_fuel_type',
-              'vintage_simp',
-              'geometry_unit_cfa_bin_simp'], axis=1, inplace=True)
+    df.drop(
+        [
+            "has_elec_heating_primary",
+            "has_central_non_heat_pump_cooling",
+            "has_elec_water_heater",
+            "has_elec_drying",
+            "has_elec_cooking",
+            "has_pv",
+            "has_ev_charging",
+            "heating_fuel",
+            "clothes_dryer",
+            "cooking_range",
+            "geometry_building_type_recs",
+            "hvac_cooling_type",
+            "water_heater_fuel_type",
+            "vintage_simp",
+            "geometry_unit_cfa_bin_simp",
+        ],
+        axis=1,
+        inplace=True,
+    )
     return df
 
+
 def main(
-        filename: str | None = None,
-        buildstock_csv: bool = False,
-        oedi_baseline_results: bool = False,
-        ):
-    global data_dir, electrical_panel_resources_dir
+    filename: str | None = None,
+    buildstock_csv: bool = False,
+    oedi_baseline_results: bool = False,
+    export_result_as_map: bool = False,
+):
+    global electrical_panel_resources_dir
 
     local_dir = Path(__file__).resolve().parent
-    data_dir = local_dir / "test_data"
-    electrical_panel_resources_dir = local_dir / "test_data" / "electrical_panel_resources"
+    electrical_panel_resources_dir = local_dir / "electrical_panel_resources"
 
     if filename is None:
         filename = local_dir / "test_data" / "panels_30k_results_up00_100.csv"
     else:
         filename = Path(filename)
 
-    ext = "panel_prediction"
-    output_filename = data_dir / (filename.stem + "__" + ext + ".csv")
-    
+    output_dir = filename.parent / "panel_capacity_and_breaker_space"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
     dfb = read_file(filename, low_memory=False)
     if buildstock_csv:
         print("process data for buildstock csv data format")
@@ -415,29 +604,48 @@ def main(
         dfb.reset_index(inplace=True)
         dfb = oedi_column_renaming(dfb)
 
-    dfb["panel_capacity"] = 0
-    dfb["break_space_headroom"] = 0
+    dfb["electric_panel_service_rating_bin"] = 0
+    dfb["breaker_spaces_headroom"] = 0
     dfb = get_major_elec_load_count(dfb)
     dfb = apply_special_mapping(dfb)
-    print("capacity prediction") 
+    print("capacity prediction")
     current_time = datetime.datetime.now()
     print(current_time.strftime("%Y-%m-%d %H:%M:%S"))
     dfb = capacity_prediction(dfb)
-    print("breaker space prediction") 
+    print("breaker space prediction")
     current_time = datetime.datetime.now()
     print(current_time.strftime("%Y-%m-%d %H:%M:%S"))
     dfb = breaker_space_prediction(dfb)
-    print("prediction finished") 
+    print("prediction finished")
     current_time = datetime.datetime.now()
     print(current_time.strftime("%Y-%m-%d %H:%M:%S"))
     dfb = drop_columns(dfb)
 
-    if buildstock_csv:
-        dfb = buildstock_csv_results_column_renaming(dfb)
-    elif oedi_baseline_results:
-        dfb = oedi_results_column_renaming(dfb)
+    if export_result_as_map:
+        cols = [
+            "building_id",
+            "electric_panel_service_rating_bin",
+            "electric_panel_service_rating",
+            "breaker_spaces_headroom",
+            "major_elec_load_count",
+        ]
+        ext = "_as_map"
+    else:
+        cols = None
+        ext = ""
 
+    if buildstock_csv:
+        dfb = buildstock_csv_results_column_renaming(dfb, retain_columns=cols)
+    elif oedi_baseline_results:
+        dfb = oedi_results_column_renaming(dfb, retain_columns=cols)
+    else:
+        dfb = results_column_renaming(dfb, retain_columns=cols)
+
+    output_filename = output_dir / (
+        filename.stem + "__panel_characteristics" + ext + ".csv"
+    )
     dfb.to_csv(output_filename, index=False)
+    print(f"File saved to: {output_filename}")
 
 
 if __name__ == "__main__":
@@ -447,7 +655,7 @@ if __name__ == "__main__":
         action="store",
         default=None,
         nargs="?",
-        help="Path to ResStock baseline result file, e.g., results_up00.csv"
+        help="Path to ResStock baseline result file, e.g., results_up00.csv "
         "defaults to test data: test_data/panels_30k_results_up00_100.csv",
     )
 
@@ -456,7 +664,7 @@ if __name__ == "__main__":
         "--buildstock_csv",
         action="store_true",
         default=False,
-        help="The input file is buildstock csv file instead of ResStock baseline result file"
+        help="The input file is buildstock csv file instead of ResStock baseline result file "
         "e.g., buildstock.csv",
     )
 
@@ -465,8 +673,16 @@ if __name__ == "__main__":
         "--oedi_baseline_results",
         action="store_true",
         default=False,
-        help="The input file is OEDI baseline result file instead of ResStock baseline result file"
+        help="The input file is OEDI baseline result file instead of ResStock baseline result file "
         "e.g., baseline_metadata_and_annual_results.csv",
+    )
+    parser.add_argument(
+        "-x",
+        "--export_result_as_map",
+        action="store_true",
+        default=False,
+        help="Whether to export panel prediction result as a building_id map only. "
+        "Default to appending panel prediction result as new column(s) to input result file. ",
     )
 
     args = parser.parse_args()
@@ -474,4 +690,5 @@ if __name__ == "__main__":
         args.filename,
         buildstock_csv=args.buildstock_csv,
         oedi_baseline_results=args.oedi_baseline_results,
+        export_result_as_map=args.export_result_as_map,
     )

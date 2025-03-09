@@ -14,19 +14,41 @@ import pandas as pd
 
 
 def main(
-    directory: Path, 
-    plot: bool = False, sfd_only: bool = False, explode_result: bool = False, result_as_map: bool = False, oedi_data_format: bool = False):
-    
+    directory: Path,
+    plot: bool = False,
+    sfd_only: bool = False,
+    explode_result: bool = False,
+    result_as_map: bool = False,
+    oedi_data_format: bool = False,
+):
+
     assert directory.exists(), f"{directory=} does not exist."
     nec_file = "postprocess_panel_new_load_nec_for_sdr_2024_2.py"
     msg = "using 2023 NEC"
     output_folder = "nec_calculations"
 
-    upgrade_files = sorted([x for x in directory.glob("*metadata_and_annual_results*") if "upgrade" in str(x)])
-    baseline_file = [x for x in directory.glob("*metadata_and_annual_results*") if "baseline" in str(x)][0]
+    upgrade_files = sorted(
+        [
+            x
+            for x in directory.glob("*metadata_and_annual_results*")
+            if "upgrade" in str(x)
+        ]
+    )
+    baseline_file = [
+        x
+        for x in directory.glob("*metadata_and_annual_results*")
+        if "baseline" in str(x)
+    ][0]
 
-    upgrades_to_skip = [5, 10, 15] # <--- with geothermal
-    upgrade_files = [x for x in upgrade_files if int(x.stem.removeprefix("upgrade").removesuffix("_metadata_and_annual_results")) not in upgrades_to_skip]
+    upgrades_to_skip = [5, 10, 15]  # <--- with geothermal
+    upgrade_files = [
+        x
+        for x in upgrade_files
+        if int(
+            x.stem.removeprefix("upgrade").removesuffix("_metadata_and_annual_results")
+        )
+        not in upgrades_to_skip
+    ]
     print(f"Skipping geothermal upgrades: {upgrades_to_skip}")
 
     completed_files = []
@@ -36,12 +58,12 @@ def main(
         completed_upgrade = file.stem[:9]
         completed_files.append(
             Path(str(baseline_file).replace("baseline", completed_upgrade))
-            )
+        )
 
     upgrade_files = [x for x in upgrade_files if x not in completed_files]
     print(f"Processing {len(upgrade_files)} upgrade files in directory, {msg}")
     print(f"{len(completed_files)} files completed...")
-    for i, file in enumerate(upgrade_files,1):
+    for i, file in enumerate(upgrade_files, 1):
         print(f" {i}. {file}")
 
     failed_files = []
@@ -63,11 +85,11 @@ def main(
             print()
             print(cli_cmd)
             result = subprocess.run(
-                    cli_cmd,
-                    capture_output=True,
-                    check=True,
-                    text=True,
-                )
+                cli_cmd,
+                capture_output=True,
+                check=True,
+                text=True,
+            )
             print(f"stdout=\n{result.stdout}")
             if result.stderr:
                 print(f"stderr=\n{result.stderr}")
@@ -78,9 +100,7 @@ def main(
                 failed_files.append(file)
             else:
                 elapsed_time = time.time() - start_time
-                successful_file_times.append(
-                    (file.stem, elapsed_time)
-                )
+                successful_file_times.append((file.stem, elapsed_time))
         except subprocess.CalledProcessError as exp:
             print("Caught file processing failure")
             print(
@@ -109,8 +129,8 @@ if __name__ == "__main__":
         action="store",
         default=None,
         nargs="?",
-        help="Path to ResStock result directory."
-        )
+        help="Path to ResStock result directory.",
+    )
     parser.add_argument(
         "-p",
         "--plot",
@@ -152,5 +172,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     main(
         Path(args.directory),
-        plot=args.plot, sfd_only=args.sfd_only, explode_result=args.explode_result, result_as_map=args.result_as_map, oedi_data_format=args.oedi_data_format
-        )
+        plot=args.plot,
+        sfd_only=args.sfd_only,
+        explode_result=args.explode_result,
+        result_as_map=args.result_as_map,
+        oedi_data_format=args.oedi_data_format,
+    )
