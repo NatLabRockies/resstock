@@ -17,20 +17,20 @@ Follow the `README.md` one directory up on instructions on setting up a python e
 ### Generate panel information for baseline
 Run the following command to generate a lookup file for electrical panel service rating and available breaker space by building id.
 ```
-python panel_capacity_break_space_prediction_based_on_resource_files_resstock3_2_0.py -o -x <path_to_oedi_data>/baseline_metadata_and_annual_results.parquet
+python panel_capacity_break_space_prediction_based_on_resource_files_resstock3_2_0.py -o -x -m <path_to_oedi_data>/baseline_metadata_and_annual_results.parquet
 ```
-The `-o` flag is needed to process OEDI-formatted data. `-x` is used to export the result as a lookup by building id.
+The `-o` flag is needed to process OEDI-formatted data. `-x` is used to break out the service load into end uses. `-m` is used to export the result as a lookup by building id.
 
 ### Evalaute panel constraint by upgrade
 Run the following command to generate one file per upgrade on panel capacity constraint.
 
 ```
-$ python postprocess_panel_new_load_nec_for_sdr_2024_2__all_upgrades.py -x -o <path_to_oedi_data>
+$ python postprocess_panel_new_load_nec_for_sdr_2024_2__all_upgrades.py -o -x <path_to_oedi_data>
 ```
- This command can take a while to complete. The results will be exported to a folder labeled `nec_calculations` within the `<path_to_oedi_data>` directory.
+The `-o` flag is needed to process OEDI-formatted data. `-x` (different from above, confusing I know) is used to export the result as a lookup by building id. This command can take a while to complete. The results will be exported to a folder labeled `nec_calculations` within the `<path_to_oedi_data>` directory.
 
- If desired, convert the generated result parquet files to csv files by running the following:
- ```
- $ python helper_files/for_sdr_2024_2/convert_from_parquet_to_csv.py <path_to_oedi_data>/nec_calculations                                       
- ```
+If desired, convert the generated result parquet files to csv files by running the following:
+```
+$ python helper_files/for_sdr_2024_2/convert_from_parquet_to_csv.py <path_to_oedi_data>/nec_calculations                                       
+```
 This will create a new folder labeled `nec_calculations_csv` within the `<path_to_oedi_data>` directory for the converted files.
