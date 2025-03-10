@@ -139,7 +139,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     state = hpxml_bldg.state_code
     sim_year = hpxml.header.sim_calendar_year
     epw_path = Location.get_epw_path(hpxml_bldg, args[:hpxml_path])
-    weather = WeatherFile.new(epw_path: epw_path, runner: runner, hpxml: hpxml)
+    weather = WeatherFile.new(epw_path: epw_path, runner: runner)
     dst_info = DSTInfo.new(dst_begin_month: hpxml_bldg.dst_begin_month,
                            dst_begin_day: hpxml_bldg.dst_begin_day,
                            dst_end_month: hpxml_bldg.dst_end_month,
