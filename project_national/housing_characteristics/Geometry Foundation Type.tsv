@@ -517,4 +517,4 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 # Assumption: Single-family attached buildings cannot have Ambient foundations
 # Assumption: Foundation types are the same for each building type except mobile homes and the applicable options.
 # Assumption: Because we need to assume a foundation type for ground-floor MF units, we use the lumped SFD+SFA distributions for MF2-4 and MF5+ building foundations. (RECS data for households in MF2-4 unit buildings are not useful since we do not know which floor the unitis on. RECS does not include foundation responses for households in MF5+ unit buildings.)
-# Assumption: For SFD and SFA, if no foundation type specified, then sample has Ambient foundation.
+# Assumption: For Single-Family Detached, if no foundation type specified, then sample has Ambient foundation.

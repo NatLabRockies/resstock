@@ -1,4 +1,4 @@
-Dependency=Geometry Building Type RECS	Dependency=Geometry Stories	Option=Mobile Home	Option=Multifamily with 2-4 Units	Option=Multifamily with 5+ units, 1-3 stories	Option=Multifamily with 5+ units, 4-7 stories	Option=Multifamily with 5+ units, 8+ stories	Option=Single-Family Attached	Option=Single-Family Detached	source_count	source_weight	sampling_probability
+Dependency=Geometry Building Type RECS	Dependency=Geometry Stories	Option=Mobile Home	Option=Multi-Family with 2 - 4 Units	Option=Multi-Family with 5+ Units, 1-3 Stories	Option=Multi-Family with 5+ Units, 4-7 Stories	Option=Multi-Family with 5+ Units, 8+ Stories	Option=Single-Family Attached	Option=Single-Family Detached	source_count	source_weight	sampling_probability
 Mobile Home	1	1	0	0	0	0	0	0	541	6.94096e+06	0.0624897
 Mobile Home	2	1	0	0	0	0	0	0	0	0	0
 Mobile Home	3	1	0	0	0	0	0	0	0	0	0
