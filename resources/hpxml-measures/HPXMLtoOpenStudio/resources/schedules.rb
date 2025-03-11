@@ -1009,7 +1009,6 @@ class SchedulesFile
     HotWaterRecirculationPump: Column.new('hot_water_recirculation_pump', true, false, :frac),
     GeneralWaterUse: Column.new('general_water_use', true, false, :frac),
     Sleeping: Column.new('sleeping', false, false, nil), # only used to debug stochastic schedule generation
-    PresentOccupants: Column.new('present_occupants', false, false, :int), # only used to debug stochastic schedule generation
     EVOccupant: Column.new('ev_occupant', false, false, nil), # only used to debug stochastic schedule generation
     HeatingSetpoint: Column.new('heating_setpoint', false, false, :setpoint),
     CoolingSetpoint: Column.new('cooling_setpoint', false, false, :setpoint),

@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>9be2b586-fe93-4800-b039-6bf6df2ed502</version_id>
-  <version_modified>2025-03-04T22:53:27Z</version_modified>
+  <version_id>bf49e5d4-f560-4fe9-bd25-7ef114a94217</version_id>
+  <version_modified>2025-03-10T21:01:35Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -267,7 +267,7 @@
       <filename>data/default_schedules.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CDD2DA76</checksum>
+      <checksum>B5344F37</checksum>
     </file>
     <file>
       <filename>data/g_functions/C_configurations_5m_v1.0.json</filename>
@@ -501,61 +501,67 @@
       <filename>schedule_files/occupancy-stochastic-10-mins.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D9B181A4</checksum>
+      <checksum>909344D3</checksum>
     </file>
     <file>
       <filename>schedule_files/occupancy-stochastic-30-mins.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D9B181A4</checksum>
+      <checksum>909344D3</checksum>
     </file>
     <file>
       <filename>schedule_files/occupancy-stochastic-ev-charger.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>188BC7F1</checksum>
+      <checksum>AC791A12</checksum>
     </file>
     <file>
       <filename>schedule_files/occupancy-stochastic-mf-unit.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>308CB2EE</checksum>
+      <checksum>537893DB</checksum>
     </file>
     <file>
       <filename>schedule_files/occupancy-stochastic-mf-unit_2.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>DB7B62B3</checksum>
+      <checksum>35C8ED5E</checksum>
     </file>
     <file>
       <filename>schedule_files/occupancy-stochastic-mf-unit_3.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7452D495</checksum>
+      <checksum>C1278017</checksum>
     </file>
     <file>
       <filename>schedule_files/occupancy-stochastic-mf-unit_4.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>AEB1502E</checksum>
+      <checksum>EEB992CB</checksum>
     </file>
     <file>
       <filename>schedule_files/occupancy-stochastic-mf-unit_5.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D10757F1</checksum>
+      <checksum>6B074AE4</checksum>
     </file>
     <file>
       <filename>schedule_files/occupancy-stochastic-mf-unit_6.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9B96E690</checksum>
+      <checksum>4CE3DD90</checksum>
     </file>
     <file>
       <filename>schedule_files/occupancy-stochastic.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>703EC57D</checksum>
+      <checksum>9A61ABB2</checksum>
+    </file>
+    <file>
+      <filename>schedule_files/print_diff.py</filename>
+      <filetype>py</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>901D504D</checksum>
     </file>
     <file>
       <filename>schedule_files/setpoints-10-mins.csv</filename>
@@ -627,7 +633,7 @@
       <filename>schedules.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7E83A486</checksum>
+      <checksum>D2EF0FF6</checksum>
     </file>
     <file>
       <filename>simcontrols.rb</filename>
@@ -765,7 +771,7 @@
       <filename>test_schedules.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>67722FDB</checksum>
+      <checksum>40C7F0E6</checksum>
     </file>
     <file>
       <filename>test_simcontrols.rb</filename>
