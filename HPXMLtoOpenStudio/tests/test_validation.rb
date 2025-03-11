@@ -256,6 +256,10 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'negative-autosizing-factors' => ['CoolingAutosizingFactor should be greater than 0.0',
                                                               'HeatingAutosizingFactor should be greater than 0.0',
                                                               'BackupHeatingAutosizingFactor should be greater than 0.0'],
+                            'panel-negative-headroom-breaker-spaces' => ["Element 'Headroom': [facet 'minInclusive'] The value '-1' is less than the minimum value allowed ('0')."],
+                            'panel-negative-total-breaker-spaces' => ["Element 'RatedTotalSpaces': [facet 'minExclusive'] The value '0' must be greater than '0'."],
+                            'panel-without-required-system' => ['Expected 1 or more element(s) for xpath: AttachedToComponent [context: /HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel/ServiceFeeders/ServiceFeeder, id: "ServiceFeeder1"]'],
+                            'panel-with-unrequired-system' => ['Expected 0 element(s) for xpath: AttachedToComponent [context: /HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel/ServiceFeeders/ServiceFeeder, id: "ServiceFeeder1"]'],
                             'refrigerator-location' => ['A location is specified as "garage" but no surfaces were found adjacent to this space type.'],
                             'refrigerator-schedule' => ['Expected either schedule fractions/multipliers or schedule coefficients but not both.'],
                             'solar-fraction-one' => ['Expected SolarFraction to be less than 1 [context: /HPXML/Building/BuildingDetails/Systems/SolarThermal/SolarThermalSystem[SolarFraction], id: "SolarThermalSystem1"]'],
@@ -768,6 +772,25 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.heat_pumps[0].heating_autosizing_factor = -0.5
         hpxml_bldg.heat_pumps[0].cooling_autosizing_factor = -1.2
         hpxml_bldg.heat_pumps[0].backup_heating_autosizing_factor = -0.1
+      when 'panel-negative-headroom-breaker-spaces'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.electric_panels.add(id: 'ElectricPanel1',
+                                       headroom: -1)
+      when 'panel-negative-total-breaker-spaces'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.electric_panels.add(id: 'ElectricPanel1',
+                                       rated_total_spaces: 0)
+      when 'panel-without-required-system'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.electric_panels.add(id: 'ElectricPanel1')
+        hpxml_bldg.electric_panels[0].service_feeders.add(id: 'ServiceFeeder1',
+                                                          type: HPXML::ElectricPanelLoadTypeHeating)
+      when 'panel-with-unrequired-system'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.electric_panels.add(id: 'ElectricPanel1')
+        hpxml_bldg.electric_panels[0].service_feeders.add(id: 'ServiceFeeder1',
+                                                          type: HPXML::ElectricPanelLoadTypeLighting,
+                                                          component_idrefs: [hpxml_bldg.lighting_groups[0].id])
       when 'refrigerator-location'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.refrigerators[0].location = HPXML::LocationGarage
@@ -896,6 +919,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                             'No exterior lighting specified, the model will not include exterior lighting energy use.',
                                                             'No garage lighting specified, the model will not include garage lighting energy use.'],
                               'missing-attached-surfaces' => ['ResidentialFacilityType is single-family attached or apartment unit, but no attached surfaces were found. This may result in erroneous results (e.g., for infiltration).'],
+                              'panel-max-current-rating-high' => ['MaxCurrentRating should typically be less than or equal to 400.'],
                               'plug-load-type-sauna' => ["Plug load type 'sauna' is not currently handled, the plug load will not be modeled."],
                               'plug-load-type-aquarium' => ["Plug load type 'aquarium' is not currently handled, the plug load will not be modeled."],
                               'plug-load-type-water-bed' => ["Plug load type 'water bed' is not currently handled, the plug load will not be modeled."],
@@ -1036,6 +1060,10 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'hvac-research-features-onoff-thermostat-temperature-capacitance-multiplier-one'
         hpxml, _hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed-research-features.xml')
         hpxml.header.temperature_capacitance_multiplier = 1
+      when 'panel-max-current-rating-high'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.electric_panels.add(id: 'ElectricPanel1',
+                                       max_current_rating: 450.0)
       when 'plug-load-type-sauna'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.plug_loads[0].plug_load_type = HPXML::PlugLoadTypeSauna
@@ -1173,6 +1201,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                                "Calculated a negative net surface area for surface 'Floor1'."],
                             'orphaned-geothermal-loop' => ["Geothermal loop 'GeothermalLoop1' found but no heat pump attached to it."],
                             'orphaned-hvac-distribution' => ["Distribution system 'HVACDistribution1' found but no HVAC system attached to it."],
+                            'panel-wrong-system-type' => ["One or more referenced components 'WaterHeatingSystem1' not valid for service feeder 'ServiceFeeder1'"],
+                            'panel-missing-system' => ["One or more referenced components 'foobar' not found for service feeder 'ServiceFeeder1'"],
                             'refrigerators-multiple-primary' => ['More than one refrigerator designated as the primary.'],
                             'refrigerators-no-primary' => ['Could not find a primary refrigerator.'],
                             'repeated-relatedhvac-dhw-indirect' => ["RelatedHVACSystem 'HeatingSystem1' is attached to multiple water heating systems."],
@@ -1543,6 +1573,18 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-furnace-gas-room-ac.xml')
         hpxml_bldg.heating_systems[0].delete
         hpxml_bldg.hvac_controls[0].heating_setpoint_temp = nil
+      when 'panel-wrong-system-type'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.electric_panels.add(id: 'ElectricPanel1')
+        hpxml_bldg.electric_panels[0].service_feeders.add(id: 'ServiceFeeder1',
+                                                          type: HPXML::ElectricPanelLoadTypeHeating,
+                                                          component_idrefs: [hpxml_bldg.water_heating_systems[0].id])
+      when 'panel-missing-system'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.electric_panels.add(id: 'ElectricPanel1')
+        hpxml_bldg.electric_panels[0].service_feeders.add(id: 'ServiceFeeder1',
+                                                          type: HPXML::ElectricPanelLoadTypeCooling,
+                                                          component_idrefs: ['foobar'])
       when 'refrigerators-multiple-primary'
         hpxml, hpxml_bldg = _create_hpxml('base-misc-loads-large-uncommon.xml')
         hpxml_bldg.refrigerators[1].primary_indicator = true
@@ -1778,6 +1820,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'manualj-sum-space-internal-loads-sensible' => ['ManualJInputs/InternalLoadsSensible (1000.0) does not match sum of conditioned spaces (1200.0).'],
                               'manualj-sum-space-internal-loads-latent' => ['ManualJInputs/InternalLoadsLatent (200.0) does not match sum of conditioned spaces (100.0).'],
                               'multiple-conditioned-zone' => ['While multiple conditioned zones are specified, the EnergyPlus model will only include a single conditioned thermal zone.'],
+                              'panel-missing-default' => ["Voltage (240) for 'dishwasher' is not specified in default_panels.csv; PowerRating will be assigned according to Voltage=120.",
+                                                          "Voltage (240) for 'dishwasher' is not specified in default_panels.csv; BreakerSpaces will be recalculated using Voltage=240."],
                               'power-outage' => ['It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus during an unavailable period.',
                                                  'It is not possible to eliminate all DHW energy use (e.g. water heater parasitics) in EnergyPlus during an unavailable period.'],
                               'schedule-file-and-weekday-weekend-multipliers' => ["Both 'occupants' schedule file and weekday fractions provided; the latter will be ignored.",
@@ -1965,6 +2009,17 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         end
       when 'multiple-conditioned-zone'
         hpxml, hpxml_bldg = _create_hpxml('base-zones-spaces-multiple.xml')
+      when 'panel-missing-default'
+        hpxml, hpxml_bldg = _create_hpxml('base-detailed-electric-panel.xml')
+        hpxml_bldg.dishwashers.add(id: 'Dishwasher')
+        service_feeders = hpxml_bldg.electric_panels[0].service_feeders
+        service_feeders.add(id: 'NewServiceFeeder',
+                            type: HPXML::ElectricPanelLoadTypeDishwasher,
+                            component_idrefs: [hpxml_bldg.dishwashers[0].id])
+        branch_circuits = hpxml_bldg.electric_panels[0].branch_circuits
+        branch_circuits.add(id: 'NewBranchCircuit',
+                            voltage: HPXML::ElectricPanelVoltage240,
+                            component_idrefs: [hpxml_bldg.dishwashers[0].id])
       when 'power-outage'
         hpxml, _hpxml_bldg = _create_hpxml('base-schedules-simple-power-outage.xml')
       when 'multistage-backup-more-than-4-stages'

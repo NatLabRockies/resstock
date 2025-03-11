@@ -1111,21 +1111,26 @@ class ScheduleGenerator
     duration_precomputed = weighted_random_precompute(sink_duration_probs)
     # Generate sink events for each day
     @total_days_in_year.times do |day|
-      cluster_per_day.times do
+      todays_probable_steps = sink_activity_probable_mins[day * @mkc_ts_per_day..((day + 1) * @mkc_ts_per_day - 1)]
+      todays_probablities = todays_probable_steps.map.with_index { |p, i| p * hourly_onset_prob[i / @mkc_ts_per_hour] }
+      # Normalize probabilities and select start time
+      prob_sum = todays_probablities.sum(0)
+      normalized_probabilities = todays_probablities.map { |p| p * 1 / prob_sum }
+      precomputed_cumweights = weighted_random_precompute(normalized_probabilities)
+      generated_clusters = 0
+      max_attempts = 200
+      attempts = 0
+      while generated_clusters < cluster_per_day && attempts < max_attempts
         # Get probability distribution for today's events
-        todays_probable_steps = sink_activity_probable_mins[day * @mkc_ts_per_day..((day + 1) * @mkc_ts_per_day - 1)]
-        todays_probablities = todays_probable_steps.map.with_index { |p, i| p * hourly_onset_prob[i / @mkc_ts_per_hour] }
-
-        # Normalize probabilities and select start time
-        prob_sum = todays_probablities.sum(0)
-        normalized_probabilities = todays_probablities.map { |p| p * 1 / prob_sum }
-        cluster_start_index = weighted_random(@prngs[:hygiene], normalized_probabilities)
-
-        # Mark time slot as used
-        if sink_activity_probable_mins[cluster_start_index] != 0
-          sink_activity_probable_mins[cluster_start_index] = 0
+        cluster_start_index = weighted_random(@prngs[:hygiene], normalized_probabilities, precomputed_cumweights)
+        attempts += 1
+        if sink_activity_probable_mins[day * @mkc_ts_per_day + cluster_start_index] == 0
+          next # Sample again if time slot is already used
         end
 
+        # Mark time slot as used
+        sink_activity_probable_mins[day * @mkc_ts_per_day + cluster_start_index] = 0
+        generated_clusters += 1
         # Generate events within this cluster
         num_events = weighted_random(@prngs[:hygiene], events_per_cluster_probs, events_per_cluster_precomputed) + 1
         start_min = cluster_start_index * 15

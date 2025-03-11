@@ -1,0 +1,30 @@
+Load Name,Voltage,Power Rating,Units,Breaker Spaces,Load Type,Notes
+lighting,120,3,W/sqft,0,lighting,Multiplier for conditioned floor area to account  for capacity impacts of general lighting.
+kitchen,120,3000,W,2,kitchen,Two kitchen small appliance circuits at 1.5 kVA.
+laundry,120,1500,W,1,laundry,One laundry circuit at 1.5 kVA.
+ev_level,120,1650,W,1,electric vehicle charging,Level 1 - 120V EV charger. Assumes dedicated circuit.
+ev_level,240,7680,W,2,electric vehicle charging,Level 2 - 240V EV charger.
+wellpump_large,240,1119,W,2,well pump,Well pump capacity - 4 or larger bedroom home.
+wellpump_small,240,746,W,2,well pump,Well pump capacity - 3 or fewer bedroom home.
+poolpump,240,1491,W,2,pool pump,2 HP pool pump capacity.
+poolheater,240,27000,W,6,pool heater,Electric resistance pool heater.
+poolheater_hp,240,5100,W,2,pool heater,Heat pump pool heater.
+spaheater,240,4000,W,2,permanent spa heater,Electric resistance hot tub heater.
+spaheater_hp,240,1000,W,2,permanent spa heater,Heat pump hot tub heater.
+spapump,240,1491,W,2,permanent spa pump,Hot tub pump.
+dryer,240,5760,W,2,clothes dryer,Electric clothes dryer.
+dryer_hp,120,996,W,1,clothes dryer,120V heat pump clothes dryer.
+dryer_hp,240,860,W,2,clothes dryer,240V heat pump clothes dryer.
+dishwasher,120,1200,W,1,dishwasher,Dishwasher.
+rangeoven,120,1800,W,1,range/oven,120V range-oven.
+rangeoven,240,12000,W,2,range/oven,240V range-oven.
+wh_tankless1,240,18000,W,4,hot water,Tankless water heater - one bathroom.
+wh_tankless2,240,24000,W,4,hot water,Tankless water heater - two bathrooms.
+wh_tankless3,240,36000,W,6,hot water,Tankless water heater - three or more bathrooms.
+mechvent,120,3000,W,1,mech vent,Using autosized values for ventilation capacity unless unavailable.
+other,120,373,W,1,other,Only assumes 1 garage door opener if a garage is present and does not account for other permanent appliances (e.g. garbage disposal).
+wh_tank,240,auto,W,auto,hot water,Storage water heater.
+wh_hp,120,auto,W,auto,hot water,120V heat pump water heater. Assumes dedicated circuit.
+wh_hp,240,auto,W,auto,hot water,240V heat pump water heater.
+heating,240,auto,W,auto,heating,Using autosize values for capacity of all heating.
+cooling,240,auto,W,auto,cooling,Using autosize values for capacity of all cooling.

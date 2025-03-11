@@ -40,6 +40,7 @@
         "include_annual_component_loads": true,
         "include_annual_hot_water_uses": true,
         "include_annual_hvac_summary": true,
+        "include_annual_panel_summary": true,
         "include_annual_resilience": true,
         "timeseries_frequency": "none",
         "include_timeseries_total_consumptions": false,

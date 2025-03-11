@@ -2303,9 +2303,9 @@
 													<xs:complexType>
 														<xs:sequence>
 															<xs:element minOccurs="0" name="Battery" type="VehicleBattery"/>
-															<xs:element minOccurs="0" name="FractionChargedLocation" maxOccurs="unbounded">
+															<xs:element minOccurs="0" name="FractionChargedLocation">
 																<xs:annotation>
-																	<xs:documentation>The percentage of charging energy provided at different locations.</xs:documentation>
+																	<xs:documentation>The percentage of charging energy provided at a certain location.</xs:documentation>
 																</xs:annotation>
 																<xs:complexType>
 																	<xs:sequence>
@@ -2328,9 +2328,9 @@
 													<xs:complexType>
 														<xs:sequence>
 															<xs:element minOccurs="0" name="Battery" type="VehicleBattery"/>
-															<xs:element minOccurs="0" name="FractionChargedLocation" maxOccurs="unbounded">
+															<xs:element minOccurs="0" name="FractionChargedLocation">
 																<xs:annotation>
-																	<xs:documentation>The percentage of charging energy provided at different locations.</xs:documentation>
+																	<xs:documentation>The percentage of charging energy provided at a certain location.</xs:documentation>
 																</xs:annotation>
 																<xs:complexType>
 																	<xs:sequence>
@@ -6625,7 +6625,83 @@
 					<xs:documentation>[A]</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element minOccurs="0" name="Headroom" type="IntegerGreaterThanOrEqualToZero">
+				<xs:annotation>
+					<xs:documentation>The number of open breaker spaces.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="RatedTotalSpaces" type="IntegerGreaterThanZero">
+				<xs:annotation>
+					<xs:documentation>The rated number of breaker spaces.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="BranchCircuits">
+				<xs:annotation>
+					<xs:documentation>Records the branch circuit layout and breaker usage of the electrical panel.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="1" name="BranchCircuit" type="BranchCircuitType">
+							<xs:annotation>
+								<xs:documentation>Each branch circuit is protected by an overcurrent protection device. However, a breaker can protect more than one branch circuit. For example, a tandem breaker takes up one breaker space but serves two branch circuits. Each BranchCircuit records the attributes of a branch circuit, including the voltage served, max current rating, number of breaker spaces occupied, and what system(s) it is connected to.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element minOccurs="0" name="ServiceFeeders">
+				<xs:annotation>
+					<xs:documentation>Records the electrical loads of major electric and other specific systems for sizing the service entrance conductors (wires going into the main electrical panel from the utility pole) or the feeder conductors (wires between electrical panels) according to the National Electrical Code. This calculation is known as the service load or feeder load calculation. The electrical load refers to the nominal or nameplate power rating of a device in Volt-Amps or Watts. It can be calculated as the product of voltage and full load amp (FLA) or rated load amp (RLA). Minimum circuit amp (MCA) or maximum overcurrent rating can be used but are more conservative than FLA or RLA.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="1" name="ServiceFeeder" type="ServiceFeederType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element minOccurs="0" ref="extension"/>
+		</xs:sequence>
+		<xs:attribute name="dataSource" type="DataSource"/>
+	</xs:complexType>
+	<xs:complexType name="BranchCircuitType">
+		<xs:sequence>
+			<xs:group ref="SystemInfo"/>
+			<xs:element minOccurs="0" name="Voltage" type="ElectricPanelVoltage"/>
+			<xs:element minOccurs="0" name="MaxCurrentRating" type="Current">
+				<xs:annotation>
+					<xs:documentation>[A]</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="OccupiedSpaces" type="BranchCircuitOccupiedSpaces">
+				<xs:annotation>
+					<xs:documentation>Number of occupied breaker spaces.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="AttachedToComponent" type="LocalReference" maxOccurs="unbounded"/>
+			<xs:element minOccurs="0" name="AttachedToSubPanel" type="LocalReference">
+				<xs:annotation>
+					<xs:documentation>References the ElectricPanel that this BranchCircuit is attached to.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="dataSource" type="DataSource"/>
+	</xs:complexType>
+	<xs:complexType name="ServiceFeederType">
+		<xs:sequence>
+			<xs:group ref="SystemInfo"/>
+			<xs:element minOccurs="0" name="LoadType" type="ServiceFeederLoadType"/>
+			<xs:element minOccurs="0" name="PowerRating" type="HPXMLDouble">
+				<xs:annotation>
+					<xs:documentation>[W]</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="IsNewLoad" type="HPXMLBoolean">
+				<xs:annotation>
+					<xs:documentation>In the context of an NEC calculation, whether the load is an addition or not.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="NumberofAppliances" type="IntegerGreaterThanOrEqualToZero"/>
+			<xs:element minOccurs="0" name="AttachedToComponent" type="LocalReference" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="dataSource" type="DataSource"/>
 	</xs:complexType>
@@ -11893,6 +11969,50 @@
 	<xs:complexType name="ElectricPanelVoltage">
 		<xs:simpleContent>
 			<xs:extension base="ElectricPanelVoltage_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="BranchCircuitOccupiedSpaces_simple">
+		<xs:restriction base="xs:double">
+			<xs:enumeration value="0.0"/>
+			<xs:enumeration value="0.5"/>
+			<xs:enumeration value="1.0"/>
+			<xs:enumeration value="2.0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BranchCircuitOccupiedSpaces">
+		<xs:simpleContent>
+			<xs:extension base="BranchCircuitOccupiedSpaces_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ServiceFeederLoadType_simple">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="heating"/>
+			<xs:enumeration value="cooling"/>
+			<xs:enumeration value="hot water"/>
+			<xs:enumeration value="clothes dryer"/>
+			<xs:enumeration value="dishwasher"/>
+			<xs:enumeration value="range/oven"/>
+			<xs:enumeration value="refrigeration"/>
+			<xs:enumeration value="mech vent"/>
+			<xs:enumeration value="permanent spa heater"/>
+			<xs:enumeration value="permanent spa pump"/>
+			<xs:enumeration value="pool heater"/>
+			<xs:enumeration value="pool pump"/>
+			<xs:enumeration value="well pump"/>
+			<xs:enumeration value="electric vehicle charging"/>
+			<xs:enumeration value="lighting"/>
+			<xs:enumeration value="kitchen"/>
+			<xs:enumeration value="laundry"/>
+			<xs:enumeration value="other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ServiceFeederLoadType">
+		<xs:simpleContent>
+			<xs:extension base="ServiceFeederLoadType_simple">
 				<xs:attribute name="dataSource" type="DataSource"/>
 			</xs:extension>
 		</xs:simpleContent>
