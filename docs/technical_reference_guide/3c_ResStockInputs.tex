@@ -240,16 +240,17 @@ The efficiency and type of the water heater by heating fuel.
 Water Heater Efficiency options define the technical details of the standalone water heaters, from fuel type to the presence of flue (Table \ref{table:hc_opt_water_heater_eff}).  The following arguments are constant across the options:
 
 \begin{itemize}
-    \item \texttt{water\_heater\_usage\_bin}: auto
-    \item \texttt{water\_heater\_heating\_capacity}: auto
-    \item \texttt{water\_heater\_standby\_loss}: 0
-    \item \texttt{water\_heater\_jacket\_rvalue}: 0
-    \item \texttt{water\_heater\_setpoint\_temperature}: 125
-    \item \texttt{water\_heater\_num\_bedrooms\_served}: auto
-    \item \texttt{water\_heater\_uses\_desuperheater}: auto
-    \item \texttt{water\_heater\_tank\_model\_type}: auto
-    \item \texttt{water\_heater\_operating\_mode}: auto
+    \item \texttt{water\_heater\_backup\_heating\_capacity}: auto
     \item \texttt{water\_heater\_has\_flue\_or\_chimney}: auto.
+    \item \texttt{water\_heater\_heating\_capacity}: auto
+    \item \texttt{water\_heater\_jacket\_rvalue}: 0
+    \item \texttt{water\_heater\_num\_bedrooms\_served}: auto
+    \item \texttt{water\_heater\_operating\_mode}: auto
+    \item \texttt{water\_heater\_setpoint\_temperature}: 125
+    \item \texttt{water\_heater\_standby\_loss}: 0
+    \item \texttt{water\_heater\_tank\_model\_type}: auto
+    \item \texttt{water\_heater\_usage\_bin}: auto
+    \item \texttt{water\_heater\_uses\_desuperheater}: auto
 \end{itemize}
 
 For heat pump water heaters the \texttt{water\_heater\_efficiency\_type} UniformEnergyFactor is used for heat pump water heaters; EnergyFactor is currently used for all other water heaters.
@@ -300,9 +301,10 @@ natural gas, fuel oil, propane, wood, coal & The fuel type of water
 heater. Ignored for heat pump water heater. \\
 \hline
 \texttt{water\_heater\_tank\_volume} & false & gal & Double & auto &
-Nominal volume of water heater tank. Only applies to storage water
-heater, heat pump water heater, and space-heating boiler with storage
-tank.\\
+Nominal volume of water heater tank. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#conventional-storage}{Conventional Storage}, \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#heat-pump}{Heat Pump} is used.) \\
+\hline
+\texttt{water\_backup\_heaing\_efficiency} & false & Btu/hr & Double &
+auto & Backup heating capacity for a heat pump water heater. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#heat-pump}{Heat Pump}.)\\
 \hline
 \texttt{water\_heater\_efficiency\_type} & true & & Choice &
 EnergyFactor, UniformEnergyFactor & The efficiency type of water heater.
@@ -323,7 +325,7 @@ of the fuel consumed by the water heater. Only used for non-electric
 storage water heaters.  \\
 \hline
 \texttt{water\_heater\_heating\_capacity} & false & Btu/hr & Double &
-auto & Heating capacity. Only applies to storage water heater.  \\
+auto & Heating capacity. Only applies to storage water heater and heat pump water heater (compressor). If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#conventional-storage}{Conventional Storage}, \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#heat-pump}{Heat Pump} is used.) \\
 \hline
 \texttt{water\_heater\_standby\_loss} & false & deg-F/hr & Double & auto
 & The standby loss of water heater. Only applies to space-heating
