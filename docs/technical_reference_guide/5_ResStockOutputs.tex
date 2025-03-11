@@ -39,6 +39,7 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.cooling\_setpoint\_has\_offset & Presence of cooling setpoint offset \\ \hline
         in.cooling\_setpoint\_offset\_magnitude & The magnitude of cooling setpoint offset \\ \hline
         in.cooling\_setpoint\_offset\_period & The period during which the cooling setpoint offset is applied \\ \hline
+        in.cooling\_unavailable\_days & The number of days in a year the cooling system is unavailable. \\ \hline
         in.corridor & Type of corridor \\ \hline
         in.county & County GISJOIN identifier \\ \hline
         in.county\_and\_puma & The GISJOIN identifier for the County and the PUMA that the sample is located \\ \hline
@@ -85,6 +86,7 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.heating\_setpoint\_has\_offset & Presence of heating setpoint offset \\ \hline
         in.heating\_setpoint\_offset\_magnitude & The magnitude of heating setpoint offset \\ \hline
         in.heating\_setpoint\_offset\_period & The period during which the heating setpoint offset is applied \\ \hline
+        in.heating\_unavailable\_days & The number of days in a year the heating system is unavailable. \\ \hline
         in.holiday\_lighting & Presence, energy usage, and schedule of holiday lighting \\ \hline
         in.hot\_water\_distribution & Hot water piping material and insulation level \\ \hline
         in.hot\_water\_fixtures & Hot water fixture usage and flow levels \\ \hline
@@ -389,8 +391,10 @@ Table \ref{tab:other_outputs} shows a list of output variables that are not cove
 \begin{customLongTable}{ |p{6.cm}|p{1.8cm}|p{8.2cm}| }
 {Other ResStock results output field names, units, and descriptions} {tab:other_outputs} 
 {\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}} 
+        out.cooling\_unavailable\_period & & Cooling unavailable period. \\ \hline
         out.electricity.summer.peak.kw & kW & Maximum power value in Jun/Jul/Aug \\ \hline
         out.electricity.winter.peak.kw & kW & Maximum power value in Dec/Jan/Feb \\ \hline
+        out.heating\_unavailable\_period & & Heating unavailable period. \\ \hline
         out.hot\_water.clothes\_washer.gal & gal & Hot water consumed by clothes washer \\ \hline
         out.hot\_water.dishwasher.gal & gal & Hot water consumed by dishwasher \\ \hline
         out.hot\_water.distribution\_waste.gal & gal & Hot water consumed by water distribution system (water remaining in the pipe) \\ \hline
