@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>9cfdcfaf-cd54-41c1-bb1d-7b2bd28a43c8</version_id>
-  <version_modified>2025-03-11T21:50:47Z</version_modified>
+  <version_id>bb17fdcb-9618-41e9-a78e-251951b0058e</version_id>
+  <version_modified>2025-03-11T22:31:39Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -5294,15 +5294,6 @@
       <default_value>4000</default_value>
     </argument>
     <argument>
-      <name>electric_panel_baseline_peak_electricity_power</name>
-      <display_name>Electric Panel: Peak Electricity Power</display_name>
-      <description>Specifies the baseline peak electricity. Used for 2023 Existing Dwelling Meter-Based.</description>
-      <type>String</type>
-      <units>W</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>electric_panel_load_cooking_range_power</name>
       <display_name>Electric Panel: Cooking Range/Oven Power</display_name>
       <description>Specifies the panel load cooking range/oven power. Only applies to electric cooking range/oven. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'&gt;Panel Loads&lt;/a&gt;) is used.</description>
@@ -7805,7 +7796,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>B21BF808</checksum>
+      <checksum>7F2F1FBB</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7828,7 +7819,7 @@
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9F47EDA7</checksum>
+      <checksum>5F6986C8</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>

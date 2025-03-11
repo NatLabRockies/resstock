@@ -52,6 +52,7 @@ module Constants
                                    'misc_plug_loads_vehicle_annual_kwh',
                                    'misc_plug_loads_vehicle_present',
                                    'electric_panel_service_feeders_load_calculation_types',
+                                   'electric_panel_baseline_peak_electricity_power',
                                    'electric_panel_service_voltage',
                                    'electric_panel_service_rating',
                                    'electric_panel_breaker_spaces_type',
