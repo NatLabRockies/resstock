@@ -827,12 +827,14 @@ In this section, we discuss the inputs that control the actual geometry of the b
 
 There are two reference frames for locating the housing units modeled in ResStock: (1) the building frame of reference and (2) the polar reference frame. The building frame defines the front, back, top, bottom, left, and right sides of the unit. The polar reference frame defines the orientation of the unit's front door with respect to the cardinal directions north, south, east, and west. 
 
-In ResStock, housing units are modeled as single zones, regardless if they are in larger buildings. To do this, adiabatic walls are assigned/modeled for walls, ceilings, or floors shared between the modeled housing unit and an adjacent unit.
+In ResStock, housing units are modeled as single zones, regardless if they are in larger buildings. To do this, adiabatic walls are assigned/modeled for walls, ceilings, or floors shared between the modeled housing unit, an adjacent unit, and a corridor.
 %For identifying adiabatic walls, the process starts with distributions for the number of units in the building where the unit model is located. There are different distributions for the number of units in the building for single-family attached and multi-family units. The number of units characteristics are Geometry Building Number of Units MF and Geometry Building Number of Units SFA. Next, the number of stories is sampled in the Geometry Stories characteristic. Once a number of units for the building and the number of stories are sampled for the model, the horizontal and vertical locations of the unit are sampled in the Geometry Building Horizontal Location MF, Geometry Building Horizontal Location SFA, and Geometry Building Level MF characteristics. 
 
 %Single-family attached units have the possibility of their right and left sides being adiabatic. If the single-family attached unit is an end unit, one of the walls are adiabatic (the right or the left side). If the single-family attached unit is a middle unit both the left and right walls of the unit are adiabatic. Multi-family units follow the same rules as single-family attached, but add if the unit is a top, bottom, or middle unit. If the multi-family unit is a middle unit the top, bottom, left, and right walls are adiabatic. If the multi-family unit is a top unit, the bottom wall (floor) is adiabatic. If the multi-family unit is a bottom unit the top wall (ceiling) is adiabatic. For top and bottom multi-family units, left and right adiabatic walls are determined using the horizontal position {\footnote{see discussion of single-family attached units previously in this paragraph}. Single-family attached units the front and back are heat transfer surfaces. Multi-family units in ResStock have a front heat transfer surface, while the back is adiabatic (connected to an interior double corridor)}.
 
 The units are shaded by how near other buildings are to the modeled unit.  OpenStudio-HPXML can model shading with exterior corridors for multifamily units, but ResStock does not use these capabilities for multifamily or single-family attached units.
+
+The height above grade for the unit is based on the the number of floors the average ceiling height and the unit level (top floor, middle floors, or bottom floor). The height above grade largely impacts the importance of wind driven infiltration. For bottom units the above grade height is 0 ft. For middle units, the average height of all middle units is used. For top units, the height of the top floor.
 
 There are 12 input files controlling building siting in ResStock:
 
@@ -867,26 +869,26 @@ No direct conditional dependencies.
 \paragraph{Options}
 The options for the Orientation characteristic are east, west, northeast, southwest, north, south, northwest, and southeast. The options set the \texttt{geometry\_unit\_orientation} ResStock argument; see Table \ref{table:hc_opt_orient}. The argument definition can be found in Table \ref{table:hc_arg_def_oient}.
 
-\begin{longtable}[]{ |p{4.cm}|p{2cm}|p{4cm}| } \caption{Bedroom options and arguments that vary for each option} \label{table:hc_opt_orient} \\  
+\begin{longtable}[]{ |p{4.cm}|p{2cm}|p{6cm}| } \caption{Orientation options and arguments that vary for each option} \label{table:hc_opt_orient} \\  
 \toprule\noalign{}
 Option name & Stock saturation & \texttt{geometry\_unit\_orientation} \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-East & 17\% & 90 \\ \hline
-West & 17\% & 270 \\ \hline
-Northeast & 7.2\% & 45 \\ \hline
-Southwest & 7.2\% & 225 \\ \hline
-North & 18\% & 0 \\ \hline
-South & 18\% & 180 \\ \hline
-Northwest & 7.7\% & 315 \\ \hline
-Southeast & 7.7\% & 135 \\ \hline
+East & 17\% & 90 \\
+West & 17\% & 270 \\ 
+Northeast & 7.2\% & 45 \\
+Southwest & 7.2\% & 225 \\
+North & 18\% & 0 \\
+South & 18\% & 180 \\
+Northwest & 7.7\% & 315 \\
+Southeast & 7.7\% & 135 \\
 \end{longtable}
 
 For the argument definitions, see Table \ref{table:hc_arg_def_geom_stories}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}|}
+\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3cm}|}
 \caption{The ResStock argument definitions set in the Orientation characteristic} \label{table:hc_arg_def_oient} \\
 \toprule\noalign{}
 Name & Required & Units & Type & Description \\
@@ -929,23 +931,23 @@ Option name & Stock saturation &
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-1 & 49\% & 1 \\ \hline
-2 & 37\% & 2 \\ \hline
-3 & 8\% & 3 \\ \hline
-4 & 2\% & 4 \\ \hline
-5 & 0.79\% & 5 \\ \hline
-6 & 0.7\% & 6 \\ \hline
-7 & 0.16\% & 7 \\ \hline
-8 & 0.16\% & 8 \\ \hline
-9 & 0.13\% & 9 \\ \hline
-10 & 0.17\% & 10 \\ \hline
-11 & 0.09\% & 11 \\ \hline
-12 & 0.19\% & 12 \\ \hline
-13 & 0.12\% & 13 \\ \hline
-14 & 0.11\% & 14 \\ \hline
-15 & 0.12\% & 15 \\ \hline
-20 & 0.21\% & 20 \\ \hline
-21 & 0.66\% & 21 \\ \hline
+1 & 49\% & 1 \\
+2 & 37\% & 2 \\
+3 & 8\% & 3 \\
+4 & 2\% & 4 \\
+5 & 0.79\% & 5 \\
+6 & 0.7\% & 6 \\
+7 & 0.16\% & 7 \\
+8 & 0.16\% & 8 \\
+9 & 0.13\% & 9 \\
+10 & 0.17\% & 10 \\
+11 & 0.09\% & 11 \\
+12 & 0.19\% & 12 \\
+13 & 0.12\% & 13 \\
+14 & 0.11\% & 14 \\
+15 & 0.12\% & 15 \\
+20 & 0.21\% & 20 \\
+21 & 0.66\% & 21 \\
 35 & 0.11\% & 35 \\ 
 \end{longtable}
 
@@ -1094,33 +1096,33 @@ Option name & Stock saturation &
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-2 & 3.6\% & 2 \\ \hline
-3 & 1.4\% & 3 \\ \hline
-4 & 3\% & 4 \\ \hline
-5 & 0.54\% & 5 \\ \hline
-6 & 1.5\% & 6 \\ \hline
-7 & 0.26\% & 7 \\ \hline
-8 & 2.3\% & 8 \\ \hline
-9 & 0.15\% & 9 \\ \hline
-10 & 0.95\% & 10 \\ \hline
-11 & 0.098\% & 11 \\ \hline
-12 & 1.9\% & 12 \\ \hline
-13 & 0.15\% & 13 \\ \hline
-14 & 0.18\% & 14 \\ \hline
-15 & 0.27\% & 15 \\ \hline
-16 & 0.61\% & 16 \\ \hline
-17 & 0.023\% & 17 \\ \hline
-18 & 0.22\% & 18 \\ \hline
-19 & 0.016\% & 19 \\ \hline
-20 & 0.75\% & 20 \\ \hline
-24 & 0.96\% & 24 \\ \hline
-30 & 0.81\% & 30 \\ \hline
-36 & 0.48\% & 36 \\ \hline
-43 & 0.67\% & 43 \\ \hline
-67 & 2.7\% & 67 \\ \hline
-116 & 1.2\% & 116 \\ \hline
-183 & 0.62\% & 183 \\ \hline
-326 & 1\% & 326 \\ \hline
+2 & 3.6\% & 2 \\
+3 & 1.4\% & 3 \\
+4 & 3\% & 4 \\
+5 & 0.54\% & 5 \\
+6 & 1.5\% & 6 \\
+7 & 0.26\% & 7 \\
+8 & 2.3\% & 8 \\
+9 & 0.15\% & 9 \\
+10 & 0.95\% & 10 \\
+11 & 0.098\% & 11 \\
+12 & 1.9\% & 12 \\
+13 & 0.15\% & 13 \\
+14 & 0.18\% & 14 \\
+15 & 0.27\% & 15 \\
+16 & 0.61\% & 16 \\
+17 & 0.023\% & 17 \\
+18 & 0.22\% & 18 \\
+19 & 0.016\% & 19 \\
+20 & 0.75\% & 20 \\
+24 & 0.96\% & 24 \\
+30 & 0.81\% & 30 \\
+36 & 0.48\% & 36 \\
+43 & 0.67\% & 43 \\
+67 & 2.7\% & 67 \\
+116 & 1.2\% & 116 \\
+183 & 0.62\% & 183 \\
+326 & 1\% & 326 \\
 None & 74\% & \\ 
 \end{longtable}
 

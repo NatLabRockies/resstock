@@ -381,9 +381,35 @@ ResStock results can also be used as inputs to calculate utility bills using oth
 Energy burden is calculated as the ratio of two values from ResStock data. The first is the energy bill, which is calculated for each individual housing unit model in an analysis as described in the above section. The second is the representative household income, which is converted from income bin and other household characteristics described in Section \ref{resstock_input_energy_burden}. The energy burden is the energy bill total divided by the representative household income, typically expressed as a percentage. As the utility bill does not account for financial assistance such as LIHEAP, energy burden may be overestimated for low-income households who may qualify for those assistance. Additionally, the representative income is in 2019 USD, reflecting the vintage of PUMS used to derived the data. The dollar value of the utility bill is typically more recent and thus may not align with that of the income denominator.
 
 When this field is available in public datasets, it begins with ``out.energy\_burden.''
-% \section{PRIORITY B Costs?}
+
+\section{Schedules}
+ResStock optionally outputs schedules into the timeseries files. These schedules include energy use schedules as fractions (0-1) and unavailable period schedules from HVAC, power outage, and vacancy periods.
+
+\begin{customLongTable}{ |p{6.cm}|p{1.8cm}|p{8.2cm}| }
+{ResStock schedule output field names, units, and descriptions} {tab:schedule_outputs} 
+{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}} 
+out.schedules\_ceiling\_fan & frac & Ceiling fan energy use schedule. \\ \hline
+out.schedules\_clothes\_dryer & frac & Clothes dryer energy use schedule. \\ \hline
+out.schedules\_clothes\_washer & frac & Clothes washer energy use schedule. \\ \hline
+out.schedules\_cooking\_range & frac & Cooking range and oven energy use schedule. \\ \hline
+out.schedules\_dishwasher & frac & Dishwasher energy use schedule. \\ \hline
+out.schedules\_hot\_water\_clothes\_washer & frac & Clothes washer hot water use schedule. \\ \hline
+out.schedules\_hot\_water\_dishwasher & frac & Dishwasher hot water use schedule. \\ \hline
+out.schedules\_hot\_water\_fixtures & frac & Fixtures (sinks, showers, baths) hot water use schedule. \\ \hline
+out.schedules\_lighting\_garage & frac & Garage lighting energy use schedule. \\ \hline
+out.schedules\_lighting\_interior & frac & Interior lighting energy use schedule. \\ \hline
+out.schedules\_no\_space\_cooling & 0,1 & Cooling unavailable period. \\ \hline
+out.schedules\_no\_space\_heating & 0,1 &  Heating unavailable period. \\ \hline
+out.schedules\_occupants & frac & Occupant heat gain schedule. \\ \hline
+out.schedules\_plug\_loads\_other & frac & Other plug load energy use schedule. \\ \hline
+out.schedules\_plug\_loads\_tv & frac & Television plug load energy use schedule. \\  \hline
+out.schedules\_power\_outage & 0,1 & Power outage unavailable period. \\ \hline
+out.schedules\_vacancy & 0,1 & Vacancy unavailable period. \\
+\end{customLongTable}
+
+
 \section{Other Outputs}
-% \ stuff like loads, unmet hours, hot water, etc.
+
 The ResStock workflow can optionally output any variable available in EnergyPlus. We regularly use this capability for a variety of purposes, including modeling improvement and validation, debugging, special purpose variables for specific projects, and additional variables to publish as part of public datasets. 
 
 Table \ref{tab:other_outputs} shows a list of output variables that are not covered in other headings in this section but that we have typically included in many of our recent public datasets, where they begin with ``out.x.''
