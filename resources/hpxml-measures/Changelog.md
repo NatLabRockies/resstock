@@ -12,6 +12,9 @@ __New Features__
 - Output updates:
   - **Breaking change**: Adds generator electricity produced to *total* fuel/energy use; previously it was only included in *net* values.
   - Adds new outputs for *net* peak electricity (summer/winter/annual); same as *total* peak electricity outputs but subtracts power produced by PV.
+- Electric panel calculations:
+  - Allows optional `ElectricPanel` inputs for describing branch circuits and service feeders
+  - Optionally reports breaker spaces and calculated loads for specified NEC calculation types
 
 __Bugfixes__
 - Fixes zero occupants specified for one unit in a whole MF building from being treated like zero occupants for every unit.
@@ -23,6 +26,7 @@ __Bugfixes__
 - Fixes possible error if there's a surface w/ interior unconditioned space and exterior "other housing unit".
 - BuildResidentialHPXML measure: Fixes error when specifying a combi boiler as the water heater type and a *shared* boiler as the heating system type.
 - BuildResidentialScheduleFile measure: Fixes out-of-sync shifting of occupancy and end use schedule resulting in activities even when there is no occupancy.
+- BuildResidentialScheduleFile measure: Fixes a small bug in sink schedule generation resulting in more concentrated schedule.
 
 ## OpenStudio-HPXML v1.9.1
 
