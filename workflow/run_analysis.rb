@@ -203,7 +203,8 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     'timeseries_num_decimal_places' => 3,
     'add_timeseries_dst_column' => true,
     'add_timeseries_utc_column' => true,
-    'user_output_variables' => ''
+    'user_output_variables' => '',
+    'user_output_meters' => ''
   }
   sim_out_rep_args.update(workflow_args['simulation_output_report'])
 
@@ -211,6 +212,12 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     output_variables = sim_out_rep_args['output_variables']
     sim_out_rep_args['user_output_variables'] = output_variables.collect { |o| o['name'] }.join(',')
     sim_out_rep_args.delete('output_variables')
+  end
+
+  if sim_out_rep_args.keys.include?('output_meters')
+    output_meters = sim_out_rep_args['output_meters']
+    sim_out_rep_args['user_output_meters'] = output_meters.collect { |o| o['name'] }.join(',')
+    sim_out_rep_args.delete('output_meters')
   end
 
   include_annual_bills = false

@@ -21,7 +21,8 @@ Weather: Relative Humidity,weather__relative_humidity__%,%,"Weather file data in
 Weather: Wind Speed,weather__wind_speed__mph,mph,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
 Weather: Diffuse Solar Radiation,weather__diffuse_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
 Weather: Direct Solar Radiation,weather__direct_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-Zone People Occupant Count: Conditioned Space,zone_people_occupant_count__conditioned_space,,User-requested EnergyPlus output variable.
+Zone People Occupant Count: Conditioned Space,zone_people_occupant_count__conditioned_space,,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
+Electricity:Facility,electricity_facility__j,J,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
 ,schedules_ceiling_fan,frac,Ceiling fan energy use schedule.
 ,schedules_clothes_dryer,frac,Clothes dryer energy use schedule.
 ,schedules_clothes_washer,frac,Clothes washer energy use schedule.
@@ -39,3 +40,5 @@ Zone People Occupant Count: Conditioned Space,zone_people_occupant_count__condit
 ,schedules_plug_loads_tv,frac,Television plug load energy use schedule.
 ,schedules_power_outage,,Unavailable period.
 ,schedules_vacancy,,Unavailable period.
+,schedules_electric_vehicle_charging,frac,availability schedule for electric vehicle charging.
+,schedules_electric_vehicle_discharging,frac,availability schedule for electric vehicle discharging.

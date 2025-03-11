@@ -2,6 +2,10 @@
 
 # Collection of methods related to output reporting or writing output files.
 module Outputs
+  MeterCustomElectricityTotal = 'Electricity:Total'
+  MeterCustomElectricityNet = 'Electricity:Net'
+  MeterCustomElectricityPV = 'Electricity:PV'
+
   # Add EMS programs for output reporting. In the case where a whole SFA/MF building is
   # being simulated, these programs are added to the whole building (merged) model, not
   # the individual dwelling unit models.
@@ -945,11 +949,11 @@ module Outputs
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param weather [WeatherFile] Weather object containing EPW information
   # @param debug [Boolean] If true, writes the OSM/EPW files to the output dir
   # @param output_dir [String] Path of the output files directory
-  # @param epw_path [String] Path to the EPW weather file
   # @return [nil]
-  def self.write_debug_files(runner, model, debug, output_dir, epw_path)
+  def self.write_debug_files(runner, model, weather, debug, output_dir)
     return unless debug
 
     # Write OSM file to run dir
@@ -959,7 +963,7 @@ module Outputs
 
     # Copy EPW file to run dir
     epw_output_path = File.join(output_dir, 'in.epw')
-    FileUtils.cp(epw_path, epw_output_path)
+    FileUtils.cp(weather.epw_path, epw_output_path)
   end
 
   # Calculates total HVAC capacities (across all HVAC systems) for a given HPXML Building.
@@ -1305,9 +1309,8 @@ module Outputs
   #
   # @param hpxml_bldgs [Array<HPXML::Building>] List of HPXML Building objects representing an individual dwelling unit
   # @param results_out [Array] Rows of output data
-  # @param peak_fuels [Hash] Map of peak building electricity outputs
   # @return [Array] Rows of output data, with electric panel results appended
-  def self.append_panel_results(hpxml_header, hpxml_bldgs, peak_fuels, results_out)
+  def self.append_panel_results(hpxml_header, hpxml_bldgs, results_out)
     line_break = nil
 
     # Summary breaker spaces
@@ -1349,10 +1352,8 @@ module Outputs
     results_out << ['Electric Panel Load: Electric Vehicle Charging (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[12] }.sum(0.0).round(1)]
     results_out << ['Electric Panel Load: Other (W)', hpxml_bldgs.map { |hpxml_bldg| Outputs.get_total_panel_loads(hpxml_bldg)[13] }.sum(0.0).round(1)]
 
-    # Load-based capacities
+    # Load calculations
     hpxml_header.service_feeders_load_calculation_types.each do |service_feeders_load_calculation_type|
-      next unless service_feeders_load_calculation_type.include?('Load-Based')
-
       capacity_total_watt = 0.0
       capacity_total_amp = 0.0
       capacity_headroom_amp = 0.0
@@ -1377,33 +1378,6 @@ module Outputs
       results_out << ["Electric Panel Load: #{service_feeders_load_calculation_type}: Total Load (W)", capacity_total_watt.round(1)]
       results_out << ["Electric Panel Load: #{service_feeders_load_calculation_type}: Total Capacity (A)", capacity_total_amp.round(1)]
       results_out << ["Electric Panel Load: #{service_feeders_load_calculation_type}: Headroom Capacity (A)", capacity_headroom_amp.round(1)]
-    end
-
-    # Meter-based capacities
-    if not peak_fuels.nil?
-      return results_out if hpxml_header.whole_sfa_or_mf_building_sim && (hpxml_bldgs.size > 1)
-
-      hpxml_header.service_feeders_load_calculation_types.each do |service_feeders_load_calculation_type|
-        next unless service_feeders_load_calculation_type.include?('Meter-Based')
-
-        capacity_total_watt = 0.0
-        capacity_total_amp = 0.0
-        capacity_headroom_amp = 0.0
-        hpxml_bldgs.each do |hpxml_bldg|
-          hpxml_bldg.electric_panels.each do |electric_panel|
-            ctw, cta, cha = ElectricPanel.calculate_meter_based(hpxml_bldg, electric_panel, peak_fuels, service_feeders_load_calculation_type)
-
-            capacity_total_watt += ctw
-            capacity_total_amp += cta
-            capacity_headroom_amp += cha
-          end
-        end
-
-        results_out << [line_break]
-        results_out << ["Electric Panel Load: #{service_feeders_load_calculation_type}: Total Load (W)", capacity_total_watt.round(1)]
-        results_out << ["Electric Panel Load: #{service_feeders_load_calculation_type}: Total Capacity (A)", capacity_total_amp.round(1)]
-        results_out << ["Electric Panel Load: #{service_feeders_load_calculation_type}: Headroom Capacity (A)", capacity_headroom_amp.round(1)]
-      end
     end
 
     return results_out
@@ -1440,6 +1414,81 @@ module Outputs
       elsif output_format == 'msgpack'
         require 'msgpack'
         File.open(output_file_path, "#{mode}b") { |json| h.to_msgpack(json) }
+      end
+    end
+  end
+
+  # Creates custom output meters that are used across reporting measures.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @return [nil]
+  def self.create_custom_meters(model)
+    # Create custom meters:
+    # - Total Electricity (Electricity:Facility plus EV charging, batteries, generators)
+    # - Net Electricity (above plus PV)
+    # - PV Electricity
+
+    total_key_vars = []
+    net_key_vars = []
+    pv_key_vars = []
+    model.getElectricLoadCenterDistributions.each do |elcd|
+      # Batteries & EV charging output variables
+      if elcd.electricalStorage.is_initialized
+        elcs = elcd.electricalStorage.get
+        if elcs.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeVehicle
+          net_key_vars << [elcs.name.to_s.upcase, 'Electric Storage Production Decrement Energy']
+          total_key_vars << net_key_vars[-1]
+        elsif elcs.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeBattery
+          net_key_vars << [elcs.name.to_s.upcase, 'Electric Storage Production Decrement Energy']
+          total_key_vars << net_key_vars[-1]
+          net_key_vars << [elcs.name.to_s.upcase, 'Electric Storage Discharge Energy']
+          total_key_vars << net_key_vars[-1]
+        end
+      end
+
+      # PV output meters
+      elcd.generators.each do |generator|
+        next unless generator.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypePhotovoltaics
+
+        net_key_vars << ['', 'Photovoltaic:ElectricityProduced']
+        pv_key_vars << net_key_vars[-1]
+        net_key_vars << ['', 'PowerConversion:ElectricityProduced']
+        pv_key_vars << net_key_vars[-1]
+      end
+
+      # Generator output meter
+      elcd.generators.each do |generator|
+        next unless generator.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeGenerator
+
+        net_key_vars << ['', 'Cogeneration:ElectricityProduced']
+        total_key_vars << net_key_vars[-1]
+      end
+    end
+
+    # Create Total/Net meters
+    { MeterCustomElectricityTotal => total_key_vars,
+      MeterCustomElectricityNet => net_key_vars }.each do |meter_name, key_vars|
+      if key_vars.empty?
+        # Avoid OpenStudio warnings if nothing to decrement
+        meter = OpenStudio::Model::MeterCustom.new(model)
+        key_vars << ['', 'Electricity:Facility']
+      else
+        meter = OpenStudio::Model::MeterCustomDecrement.new(model, 'Electricity:Facility')
+      end
+      meter.setName(meter_name)
+      meter.setFuelType(EPlus::FuelTypeElectricity)
+      key_vars.uniq.each do |key_var|
+        meter.addKeyVarGroup(key_var[0], key_var[1])
+      end
+    end
+
+    # Create PV meter
+    if not pv_key_vars.empty?
+      meter = OpenStudio::Model::MeterCustom.new(model)
+      meter.setName(MeterCustomElectricityPV)
+      meter.setFuelType(EPlus::FuelTypeElectricity)
+      pv_key_vars.uniq.each do |key_var|
+        meter.addKeyVarGroup(key_var[0], key_var[1])
       end
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-$zip_csv_data = nil
+$weather_lookup_cache = {}
 
 # Collection of methods related to defaulting optional inputs in the HPXML
 # that were not provided.
@@ -27,9 +27,10 @@ module Defaults
   # @param convert_shared_systems [Boolean] Whether to convert shared systems to equivalent in-unit systems per ANSI/RESNET/ICC 301
   # @return [Array<Hash, Hash>] Maps of HPXML::Zones => DesignLoadValues object, HPXML::Spaces => DesignLoadValues object
   def self.apply(runner, hpxml, hpxml_bldg, weather, schedules_file: nil, convert_shared_systems: true)
-    eri_version = hpxml.header.eri_calculation_version
-    if eri_version.nil?
+    if hpxml.header.eri_calculation_versions.nil? || hpxml.header.eri_calculation_versions.empty?
       eri_version = 'latest'
+    else
+      eri_version = hpxml.header.eri_calculation_versions[0]
     end
     if eri_version == 'latest'
       eri_version = Constants::ERIVersions[-1]
@@ -92,6 +93,7 @@ module Defaults
     apply_pv_systems(hpxml_bldg)
     apply_generators(hpxml_bldg)
     apply_batteries(hpxml_bldg)
+    apply_vehicles(hpxml_bldg, schedules_file)
 
     # Do HVAC sizing after all other defaults have been applied
     all_zone_loads, all_space_loads = apply_hvac_sizing(runner, hpxml_bldg, weather)
@@ -101,7 +103,7 @@ module Defaults
     apply_cfis_fan_power(hpxml_bldg)
 
     # Default electric panels has to be after sizing to have autosized capacity information
-    apply_electric_panels(runner, hpxml.header, hpxml_bldg)
+    apply_electric_panels(runner, hpxml.header, hpxml_bldg, unit_num)
 
     cleanup_zones_spaces(hpxml_bldg)
 
@@ -936,7 +938,7 @@ module Defaults
   def self.apply_climate_and_risk_zones(hpxml_bldg, weather, unit_num)
     if (not weather.nil?) && hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.empty?
       weather_data = lookup_weather_data_from_wmo(weather.header.WMONumber)
-      if not weather_data.nil?
+      if not weather_data.empty?
         hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.add(zone: weather_data[:zipcode_iecc_zone],
                                                                  year: 2006,
                                                                  zone_isdefaulted: true,
@@ -1514,34 +1516,36 @@ module Defaults
 
     hpxml_bldg.windows.each do |window|
       if window.ufactor.nil? || window.shgc.nil?
-        # Frame/Glass provided instead, fill in more defaults as needed
-        if window.glass_type.nil?
-          window.glass_type = HPXML::WindowGlassTypeClear
-          window.glass_type_isdefaulted = true
-        end
-        if window.thermal_break.nil? && [HPXML::WindowFrameTypeAluminum, HPXML::WindowFrameTypeMetal].include?(window.frame_type)
-          if window.glass_layers == HPXML::WindowLayersSinglePane
-            window.thermal_break = false
-            window.thermal_break_isdefaulted = true
-          elsif window.glass_layers == HPXML::WindowLayersDoublePane
-            window.thermal_break = true
-            window.thermal_break_isdefaulted = true
+        if window.glass_layers != HPXML::WindowLayersGlassBlock
+          # Frame/Glass provided instead, fill in more defaults as needed
+          if window.glass_type.nil?
+            window.glass_type = HPXML::WindowGlassTypeClear
+            window.glass_type_isdefaulted = true
           end
-        end
-        if window.gas_fill.nil?
-          if window.glass_layers == HPXML::WindowLayersDoublePane
-            if [HPXML::WindowGlassTypeLowE,
-                HPXML::WindowGlassTypeLowEHighSolarGain,
-                HPXML::WindowGlassTypeLowELowSolarGain].include? window.glass_type
+          if window.thermal_break.nil? && [HPXML::WindowFrameTypeAluminum, HPXML::WindowFrameTypeMetal].include?(window.frame_type)
+            if window.glass_layers == HPXML::WindowLayersSinglePane
+              window.thermal_break = false
+              window.thermal_break_isdefaulted = true
+            elsif window.glass_layers == HPXML::WindowLayersDoublePane
+              window.thermal_break = true
+              window.thermal_break_isdefaulted = true
+            end
+          end
+          if window.gas_fill.nil?
+            if window.glass_layers == HPXML::WindowLayersDoublePane
+              if [HPXML::WindowGlassTypeLowE,
+                  HPXML::WindowGlassTypeLowEHighSolarGain,
+                  HPXML::WindowGlassTypeLowELowSolarGain].include? window.glass_type
+                window.gas_fill = HPXML::WindowGasArgon
+                window.gas_fill_isdefaulted = true
+              else
+                window.gas_fill = HPXML::WindowGasAir
+                window.gas_fill_isdefaulted = true
+              end
+            elsif window.glass_layers == HPXML::WindowLayersTriplePane
               window.gas_fill = HPXML::WindowGasArgon
               window.gas_fill_isdefaulted = true
-            else
-              window.gas_fill = HPXML::WindowGasAir
-              window.gas_fill_isdefaulted = true
             end
-          elsif window.glass_layers == HPXML::WindowLayersTriplePane
-            window.gas_fill = HPXML::WindowGasArgon
-            window.gas_fill_isdefaulted = true
           end
         end
         # Now lookup U/SHGC based on properties
@@ -1565,7 +1569,11 @@ module Defaults
       end
       if window.interior_shading_factor_winter.nil? || window.interior_shading_factor_summer.nil?
         if window.interior_shading_type.nil?
-          window.interior_shading_type = HPXML::InteriorShadingTypeLightCurtains # ANSI/RESNET/ICC 301-2022
+          if window.glass_layers == HPXML::WindowLayersGlassBlock
+            window.interior_shading_type = HPXML::InteriorShadingTypeNone
+          else
+            window.interior_shading_type = HPXML::InteriorShadingTypeLightCurtains # ANSI/RESNET/ICC 301-2022
+          end
           window.interior_shading_type_isdefaulted = true
         end
         if window.interior_shading_coverage_summer.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
@@ -1715,34 +1723,36 @@ module Defaults
       end
       next unless skylight.ufactor.nil? || skylight.shgc.nil?
 
-      # Frame/Glass provided instead, fill in more defaults as needed
-      if skylight.glass_type.nil?
-        skylight.glass_type = HPXML::WindowGlassTypeClear
-        skylight.glass_type_isdefaulted = true
-      end
-      if skylight.thermal_break.nil? && [HPXML::WindowFrameTypeAluminum, HPXML::WindowFrameTypeMetal].include?(skylight.frame_type)
-        if skylight.glass_layers == HPXML::WindowLayersSinglePane
-          skylight.thermal_break = false
-          skylight.thermal_break_isdefaulted = true
-        elsif skylight.glass_layers == HPXML::WindowLayersDoublePane
-          skylight.thermal_break = true
-          skylight.thermal_break_isdefaulted = true
+      if skylight.glass_layers != HPXML::WindowLayersGlassBlock
+        # Frame/Glass provided instead, fill in more defaults as needed
+        if skylight.glass_type.nil?
+          skylight.glass_type = HPXML::WindowGlassTypeClear
+          skylight.glass_type_isdefaulted = true
         end
-      end
-      if skylight.gas_fill.nil?
-        if skylight.glass_layers == HPXML::WindowLayersDoublePane
-          if [HPXML::WindowGlassTypeLowE,
-              HPXML::WindowGlassTypeLowEHighSolarGain,
-              HPXML::WindowGlassTypeLowELowSolarGain].include? skylight.glass_type
+        if skylight.thermal_break.nil? && [HPXML::WindowFrameTypeAluminum, HPXML::WindowFrameTypeMetal].include?(skylight.frame_type)
+          if skylight.glass_layers == HPXML::WindowLayersSinglePane
+            skylight.thermal_break = false
+            skylight.thermal_break_isdefaulted = true
+          elsif skylight.glass_layers == HPXML::WindowLayersDoublePane
+            skylight.thermal_break = true
+            skylight.thermal_break_isdefaulted = true
+          end
+        end
+        if skylight.gas_fill.nil?
+          if skylight.glass_layers == HPXML::WindowLayersDoublePane
+            if [HPXML::WindowGlassTypeLowE,
+                HPXML::WindowGlassTypeLowEHighSolarGain,
+                HPXML::WindowGlassTypeLowELowSolarGain].include? skylight.glass_type
+              skylight.gas_fill = HPXML::WindowGasArgon
+              skylight.gas_fill_isdefaulted = true
+            else
+              skylight.gas_fill = HPXML::WindowGasAir
+              skylight.gas_fill_isdefaulted = true
+            end
+          elsif skylight.glass_layers == HPXML::WindowLayersTriplePane
             skylight.gas_fill = HPXML::WindowGasArgon
             skylight.gas_fill_isdefaulted = true
-          else
-            skylight.gas_fill = HPXML::WindowGasAir
-            skylight.gas_fill_isdefaulted = true
           end
-        elsif skylight.glass_layers == HPXML::WindowLayersTriplePane
-          skylight.gas_fill = HPXML::WindowGasArgon
-          skylight.gas_fill_isdefaulted = true
         end
       end
       # Now lookup U/SHGC based on properties
@@ -3162,13 +3172,24 @@ module Defaults
     end
   end
 
+  # TODO
+  def self.get_id(prefix, objects, unit_num)
+    if not unit_num.nil?
+      id = "#{prefix}#{objects.size + 1}_#{unit_num}"
+    else
+      id = "#{prefix}#{objects.size + 1}"
+    end
+    return id
+  end
+
   # Assigns default values for omitted optional inputs in the HPXML::ElectricPanel objects.
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param unit_num [Integer] Dwelling unit number
   # @return [nil]
-  def self.apply_electric_panels(runner, hpxml_header, hpxml_bldg)
+  def self.apply_electric_panels(runner, hpxml_header, hpxml_bldg, unit_num)
     default_panels_csv_data = get_panels_csv_data()
 
     hpxml_bldg.electric_panels.each do |electric_panel|
@@ -3179,7 +3200,7 @@ module Defaults
         next if heating_system.fraction_heat_load_served == 0
         next unless heating_system.service_feeders.empty?
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeHeating,
                             type_isdefaulted: true,
                             component_idrefs: [heating_system.id],
@@ -3190,7 +3211,7 @@ module Defaults
         next if cooling_system.fraction_cool_load_served == 0
         next unless cooling_system.service_feeders.empty?
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeCooling,
                             type_isdefaulted: true,
                             component_idrefs: [cooling_system.id],
@@ -3201,7 +3222,7 @@ module Defaults
         next unless heat_pump.service_feeders.empty?
 
         if heat_pump.fraction_heat_load_served != 0
-          service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+          service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                               type: HPXML::ElectricPanelLoadTypeHeating,
                               type_isdefaulted: true,
                               component_idrefs: [heat_pump.id],
@@ -3209,7 +3230,7 @@ module Defaults
         end
         next unless heat_pump.fraction_cool_load_served != 0
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeCooling,
                             type_isdefaulted: true,
                             component_idrefs: [heat_pump.id],
@@ -3220,7 +3241,7 @@ module Defaults
         next if water_heating_system.fuel_type != HPXML::FuelTypeElectricity
         next unless water_heating_system.service_feeders.empty?
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeWaterHeater,
                             type_isdefaulted: true,
                             component_idrefs: [water_heating_system.id],
@@ -3231,7 +3252,7 @@ module Defaults
         next if clothes_dryer.fuel_type != HPXML::FuelTypeElectricity
         next unless clothes_dryer.service_feeders.empty?
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeClothesDryer,
                             type_isdefaulted: true,
                             component_idrefs: [clothes_dryer.id],
@@ -3241,7 +3262,7 @@ module Defaults
       hpxml_bldg.dishwashers.each do |dishwasher|
         next unless dishwasher.service_feeders.empty?
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeDishwasher,
                             type_isdefaulted: true,
                             component_idrefs: [dishwasher.id],
@@ -3252,7 +3273,7 @@ module Defaults
         next if cooking_range.fuel_type != HPXML::FuelTypeElectricity
         next unless cooking_range.service_feeders.empty?
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeRangeOven,
                             type_isdefaulted: true,
                             component_idrefs: [cooking_range.id],
@@ -3262,7 +3283,7 @@ module Defaults
       hpxml_bldg.ventilation_fans.each do |ventilation_fan|
         next unless ventilation_fan.service_feeders.empty?
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeMechVent,
                             type_isdefaulted: true,
                             component_idrefs: [ventilation_fan.id],
@@ -3273,7 +3294,7 @@ module Defaults
         next if permanent_spa.type == HPXML::TypeNone
 
         if permanent_spa.pump_service_feeders.empty?
-          service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+          service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                               type: HPXML::ElectricPanelLoadTypePermanentSpaPump,
                               type_isdefaulted: true,
                               component_idrefs: [permanent_spa.pump_id],
@@ -3283,7 +3304,7 @@ module Defaults
         next unless [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(permanent_spa.heater_type)
         next unless permanent_spa.heater_service_feeders.empty?
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypePermanentSpaHeater,
                             type_isdefaulted: true,
                             component_idrefs: [permanent_spa.heater_id],
@@ -3294,7 +3315,7 @@ module Defaults
         next if pool.type == HPXML::TypeNone
 
         if pool.pump_service_feeders.empty?
-          service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+          service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                               type: HPXML::ElectricPanelLoadTypePoolPump,
                               type_isdefaulted: true,
                               component_idrefs: [pool.pump_id],
@@ -3304,7 +3325,7 @@ module Defaults
         next unless [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(pool.heater_type)
         next unless pool.heater_service_feeders.empty?
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypePoolHeater,
                             type_isdefaulted: true,
                             component_idrefs: [pool.heater_id],
@@ -3315,7 +3336,7 @@ module Defaults
         next if plug_load.plug_load_type != HPXML::PlugLoadTypeWellPump
         next unless plug_load.service_feeders.empty?
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeWellPump,
                             type_isdefaulted: true,
                             component_idrefs: [plug_load.id],
@@ -3326,7 +3347,7 @@ module Defaults
         next if plug_load.plug_load_type != HPXML::PlugLoadTypeElectricVehicleCharging
         next unless plug_load.service_feeders.empty?
 
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeElectricVehicleCharging,
                             type_isdefaulted: true,
                             component_idrefs: [plug_load.id],
@@ -3339,17 +3360,17 @@ module Defaults
         service_feeder.components.each do |component|
           if component.is_a?(HPXML::Pool) || component.is_a?(HPXML::PermanentSpa)
             if component.pump_branch_circuits.empty?
-              branch_circuits.add(id: "#{electric_panel.id}_BranchCircuit#{branch_circuits.size + 1}",
+              branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
                                   component_idrefs: [component.pump_id])
             end
             if component.heater_branch_circuits.empty?
-              branch_circuits.add(id: "#{electric_panel.id}_BranchCircuit#{branch_circuits.size + 1}",
+              branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
                                   component_idrefs: [component.heater_id])
             end
           elsif component.branch_circuits.empty?
             # Skip HVAC system branch circuits; these will be added on the fly down below when we loop thru service feeders
             if !component.is_a?(HPXML::HeatingSystem) && !component.is_a?(HPXML::CoolingSystem) && !component.is_a?(HPXML::HeatPump)
-              branch_circuits.add(id: "#{electric_panel.id}_BranchCircuit#{branch_circuits.size + 1}",
+              branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
                                   component_idrefs: [component.id])
             end
           end
@@ -3357,48 +3378,48 @@ module Defaults
       end
 
       if service_feeders.count { |pl| pl.type == HPXML::ElectricPanelLoadTypeOther } == 0
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeOther,
                             type_isdefaulted: true,
                             component_idrefs: [])
         (1..get_default_panels_value(runner, default_panels_csv_data, 'other', 'BreakerSpaces', HPXML::ElectricPanelVoltage120)).each do |_i|
-          branch_circuits.add(id: "#{electric_panel.id}_BranchCircuit#{branch_circuits.size + 1}",
+          branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
                               occupied_spaces: 1,
                               occupied_spaces_isdefaulted: true)
         end
       end
 
       if service_feeders.count { |pl| pl.type == HPXML::ElectricPanelLoadTypeLighting } == 0
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeLighting,
                             type_isdefaulted: true,
                             component_idrefs: [])
         (1..get_default_panels_value(runner, default_panels_csv_data, 'lighting', 'BreakerSpaces', HPXML::ElectricPanelVoltage120)).each do |_i|
-          branch_circuits.add(id: "#{electric_panel.id}_BranchCircuit#{branch_circuits.size + 1}",
+          branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
                               occupied_spaces: 1,
                               occupied_spaces_isdefaulted: true)
         end
       end
 
       if service_feeders.count { |pl| pl.type == HPXML::ElectricPanelLoadTypeKitchen } == 0
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeKitchen,
                             type_isdefaulted: true,
                             component_idrefs: [])
         (1..get_default_panels_value(runner, default_panels_csv_data, 'kitchen', 'BreakerSpaces', HPXML::ElectricPanelVoltage120)).each do |_i|
-          branch_circuits.add(id: "#{electric_panel.id}_BranchCircuit#{branch_circuits.size + 1}",
+          branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
                               occupied_spaces: 1,
                               occupied_spaces_isdefaulted: true)
         end
       end
 
       if service_feeders.count { |pl| pl.type == HPXML::ElectricPanelLoadTypeLaundry } == 0
-        service_feeders.add(id: "#{electric_panel.id}_ServiceFeeder#{service_feeders.size + 1}",
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
                             type: HPXML::ElectricPanelLoadTypeLaundry,
                             type_isdefaulted: true,
                             component_idrefs: [])
         (1..get_default_panels_value(runner, default_panels_csv_data, 'laundry', 'BreakerSpaces', HPXML::ElectricPanelVoltage120)).each do |_i|
-          branch_circuits.add(id: "#{electric_panel.id}_BranchCircuit#{branch_circuits.size + 1}",
+          branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
                               occupied_spaces: 1,
                               occupied_spaces_isdefaulted: true)
         end
@@ -3417,7 +3438,7 @@ module Defaults
 
       service_feeders.each do |service_feeder|
         if service_feeder.power.nil?
-          service_feeder.power = get_service_feeder_power_default_values(runner, hpxml_bldg, service_feeder, default_panels_csv_data, electric_panel)
+          service_feeder.power = get_service_feeder_power_default_values(runner, hpxml_bldg, service_feeder, default_panels_csv_data, electric_panel, unit_num)
           service_feeder.power_isdefaulted = true
         else
           if service_feeder.type == HPXML::ElectricPanelLoadTypeHeating
@@ -3426,7 +3447,7 @@ module Defaults
               next if heating_system.is_shared_system
               next if heating_system.fraction_heat_load_served == 0
 
-              branch_circuit = get_or_add_branch_circuit(electric_panel, heating_system)
+              branch_circuit = get_or_add_branch_circuit(electric_panel, heating_system, unit_num)
               if branch_circuit.occupied_spaces.nil?
                 branch_circuit.occupied_spaces = get_breaker_spaces_from_power_watts_voltage_amps(service_feeder.power, branch_circuit.voltage, branch_circuit.max_current_rating)
                 branch_circuit.occupied_spaces_isdefaulted = true
@@ -3437,7 +3458,7 @@ module Defaults
               next if !service_feeder.component_idrefs.include?(heat_pump.id)
               next if heat_pump.fraction_heat_load_served == 0
 
-              branch_circuit = get_or_add_branch_circuit(electric_panel, heat_pump)
+              branch_circuit = get_or_add_branch_circuit(electric_panel, heat_pump, unit_num)
               if branch_circuit.occupied_spaces.nil?
                 branch_circuit.occupied_spaces = get_breaker_spaces_from_power_watts_voltage_amps(service_feeder.power, branch_circuit.voltage, branch_circuit.max_current_rating)
                 branch_circuit.occupied_spaces_isdefaulted = true
@@ -3449,7 +3470,7 @@ module Defaults
               next if cooling_system.is_shared_system
               next if cooling_system.fraction_cool_load_served == 0
 
-              branch_circuit = get_or_add_branch_circuit(electric_panel, cooling_system)
+              branch_circuit = get_or_add_branch_circuit(electric_panel, cooling_system, unit_num)
               if branch_circuit.occupied_spaces.nil?
                 branch_circuit.occupied_spaces = get_breaker_spaces_from_power_watts_voltage_amps(service_feeder.power, branch_circuit.voltage, branch_circuit.max_current_rating)
                 branch_circuit.occupied_spaces_isdefaulted = true
@@ -3460,7 +3481,7 @@ module Defaults
               next if !service_feeder.component_idrefs.include?(heat_pump.id)
               next if heat_pump.fraction_cool_load_served == 0
 
-              branch_circuit = get_or_add_branch_circuit(electric_panel, heat_pump)
+              branch_circuit = get_or_add_branch_circuit(electric_panel, heat_pump, unit_num)
               if branch_circuit.occupied_spaces.nil?
                 branch_circuit.occupied_spaces = get_breaker_spaces_from_power_watts_voltage_amps(service_feeder.power, branch_circuit.voltage, branch_circuit.max_current_rating)
                 branch_circuit.occupied_spaces_isdefaulted = true
@@ -3545,7 +3566,92 @@ module Defaults
     end
   end
 
+  # Assigns default values for omitted optional inputs in the HPXML::Vehicle objects
+  # If an EV charger is found, apply_ev_charger is run to set its default values
+  # Default values for the battery are first applied with the apply_battery method, then electric vehicle-specific fields are populated such as miles/year, hours/week, and fraction charged at home.
+  #
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @return [nil]
+  def self.apply_vehicles(hpxml_bldg, schedules_file)
+    default_values = get_electric_vehicle_values
+    hpxml_bldg.vehicles.each do |vehicle|
+      next unless vehicle.vehicle_type == HPXML::VehicleTypeBEV
+
+      apply_battery(vehicle, default_values)
+      if vehicle.battery_type.nil?
+        vehicle.battery_type = default_values[:battery_type]
+        vehicle.battery_type_isdefaulted = true
+      end
+      if vehicle.fuel_economy_combined.nil? || vehicle.fuel_economy_units.nil?
+        vehicle.fuel_economy_combined = default_values[:fuel_economy_combined]
+        vehicle.fuel_economy_combined_isdefaulted = true
+        vehicle.fuel_economy_units = default_values[:fuel_economy_units]
+        vehicle.fuel_economy_units_isdefaulted = true
+      end
+      miles_to_hrs_per_week = default_values[:miles_per_year] / default_values[:hours_per_week]
+      if vehicle.miles_per_year.nil? && vehicle.hours_per_week.nil?
+        vehicle.miles_per_year = default_values[:miles_per_year]
+        vehicle.miles_per_year_isdefaulted = true
+        vehicle.hours_per_week = default_values[:hours_per_week]
+        vehicle.hours_per_week_isdefaulted = true
+      elsif (not vehicle.hours_per_week.nil?) && vehicle.miles_per_year.nil?
+        vehicle.miles_per_year = vehicle.hours_per_week * miles_to_hrs_per_week
+        vehicle.miles_per_year_isdefaulted = true
+      elsif (not vehicle.miles_per_year.nil?) && vehicle.hours_per_week.nil?
+        vehicle.hours_per_week = vehicle.miles_per_year / miles_to_hrs_per_week
+        vehicle.hours_per_week_isdefaulted = true
+      end
+      if vehicle.fraction_charged_home.nil?
+        vehicle.fraction_charged_home = default_values[:fraction_charged_home]
+        vehicle.fraction_charged_home_isdefaulted = true
+      end
+      schedules_file_includes_ev = (schedules_file.nil? ? false : schedules_file.includes_col_name(SchedulesFile::Columns[:ElectricVehicleCharging].name) && schedules_file.includes_col_name(SchedulesFile::Columns[:ElectricVehicleDischarging].name))
+      if vehicle.ev_weekday_fractions.nil? && !schedules_file_includes_ev
+        vehicle.ev_weekday_fractions = @default_schedules_csv_data[SchedulesFile::Columns[:ElectricVehicle].name]['WeekdayScheduleFractions']
+        vehicle.ev_weekday_fractions_isdefaulted = true
+      end
+      if vehicle.ev_weekend_fractions.nil? && !schedules_file_includes_ev
+        vehicle.ev_weekend_fractions = @default_schedules_csv_data[SchedulesFile::Columns[:ElectricVehicle].name]['WeekendScheduleFractions']
+        vehicle.ev_weekend_fractions_isdefaulted = true
+      end
+      if vehicle.ev_monthly_multipliers.nil? && !schedules_file_includes_ev
+        vehicle.ev_monthly_multipliers = @default_schedules_csv_data[SchedulesFile::Columns[:ElectricVehicle].name]['MonthlyScheduleMultipliers']
+        vehicle.ev_monthly_multipliers_isdefaulted = true
+      end
+
+      next if vehicle.ev_charger.nil?
+
+      apply_ev_charger(hpxml_bldg, vehicle.ev_charger)
+    end
+  end
+
+  # Assigns default values for omitted optional inputs in the HPXML::ElectricVehicleCharger objects
+  #
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param ev_charger [HPXML::ElectricVehicleCharger] Object that defines a single electric vehicle charger
+  # @return [nil]
+  def self.apply_ev_charger(hpxml_bldg, ev_charger)
+    default_values = get_ev_charger_values(hpxml_bldg.has_location(HPXML::LocationGarage))
+    if ev_charger.location.nil?
+      ev_charger.location = default_values[:location]
+      ev_charger.location_isdefaulted = true
+    end
+    if ev_charger.charging_level.nil? && ev_charger.charging_power.nil?
+      ev_charger.charging_level = default_values[:charging_level]
+      ev_charger.charging_level_isdefaulted = true
+    end
+    if ev_charger.charging_power.nil?
+      if ev_charger.charging_level == 1
+        ev_charger.charging_power = default_values[:level1_charging_power]
+      elsif ev_charger.charging_level >= 2
+        ev_charger.charging_power = default_values[:level2_charging_power]
+      end
+      ev_charger.charging_power_isdefaulted = true
+    end
+  end
+
   # Assigns default values for omitted optional inputs in the HPXML::Battery objects
+  # This method assigns fields specific to home battery systems, and calls a general method (apply_battery) that defaults values for any battery system.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
@@ -3560,54 +3666,64 @@ module Defaults
         battery.is_shared_system = false
         battery.is_shared_system_isdefaulted = true
       end
-      # if battery.lifetime_model.nil?
-      # battery.lifetime_model = default_values[:lifetime_model]
-      # battery.lifetime_model_isdefaulted = true
-      # end
-      if battery.nominal_voltage.nil?
-        battery.nominal_voltage = default_values[:nominal_voltage] # V
-        battery.nominal_voltage_isdefaulted = true
-      end
       if battery.round_trip_efficiency.nil?
         battery.round_trip_efficiency = default_values[:round_trip_efficiency]
         battery.round_trip_efficiency_isdefaulted = true
       end
-      if battery.nominal_capacity_kwh.nil? && battery.nominal_capacity_ah.nil?
-        # Calculate nominal capacity from usable capacity or rated power output if available
-        if not battery.usable_capacity_kwh.nil?
-          battery.nominal_capacity_kwh = (battery.usable_capacity_kwh / default_values[:usable_fraction]).round(2)
-          battery.nominal_capacity_kwh_isdefaulted = true
-        elsif not battery.usable_capacity_ah.nil?
-          battery.nominal_capacity_ah = (battery.usable_capacity_ah / default_values[:usable_fraction]).round(2)
-          battery.nominal_capacity_ah_isdefaulted = true
-        elsif not battery.rated_power_output.nil?
-          battery.nominal_capacity_kwh = (UnitConversions.convert(battery.rated_power_output, 'W', 'kW') / 0.5).round(2)
-          battery.nominal_capacity_kwh_isdefaulted = true
-        else
-          battery.nominal_capacity_kwh = default_values[:nominal_capacity_kwh] # kWh
-          battery.nominal_capacity_kwh_isdefaulted = true
-        end
-      end
-      if battery.usable_capacity_kwh.nil? && battery.usable_capacity_ah.nil?
-        # Calculate usable capacity from nominal capacity
-        if not battery.nominal_capacity_kwh.nil?
-          battery.usable_capacity_kwh = (battery.nominal_capacity_kwh * default_values[:usable_fraction]).round(2)
-          battery.usable_capacity_kwh_isdefaulted = true
-        elsif not battery.nominal_capacity_ah.nil?
-          battery.usable_capacity_ah = (battery.nominal_capacity_ah * default_values[:usable_fraction]).round(2)
-          battery.usable_capacity_ah_isdefaulted = true
-        end
-      end
-      next unless battery.rated_power_output.nil?
 
-      # Calculate rated power from nominal capacity
-      if not battery.nominal_capacity_kwh.nil?
-        battery.rated_power_output = (UnitConversions.convert(battery.nominal_capacity_kwh, 'kWh', 'Wh') * 0.5).round(0)
-      elsif not battery.nominal_capacity_ah.nil?
-        battery.rated_power_output = (UnitConversions.convert(Battery.get_kWh_from_Ah(battery.nominal_capacity_ah, battery.nominal_voltage), 'kWh', 'Wh') * 0.5).round(0)
-      end
-      battery.rated_power_output_isdefaulted = true
+      apply_battery(battery, default_values)
     end
+  end
+
+  # Assigns default values for omitted optional inputs in the HPXML::Battery or HPXML::Vehicle objects
+  #
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param default_values [Hash] map of home battery or vehicle battery properties to default values
+  # @return [nil]
+  def self.apply_battery(battery, default_values)
+    # if battery.lifetime_model.nil?
+    #   battery.lifetime_model = default_values[:lifetime_model]
+    #   battery.lifetime_model_isdefaulted = true
+    # end
+    if battery.nominal_voltage.nil?
+      battery.nominal_voltage = default_values[:nominal_voltage] # V
+      battery.nominal_voltage_isdefaulted = true
+    end
+    if battery.nominal_capacity_kwh.nil? && battery.nominal_capacity_ah.nil?
+      # Calculate nominal capacity from usable capacity or rated power output if available
+      if not battery.usable_capacity_kwh.nil?
+        battery.nominal_capacity_kwh = (battery.usable_capacity_kwh / default_values[:usable_fraction]).round(2)
+        battery.nominal_capacity_kwh_isdefaulted = true
+      elsif not battery.usable_capacity_ah.nil?
+        battery.nominal_capacity_ah = (battery.usable_capacity_ah / default_values[:usable_fraction]).round(2)
+        battery.nominal_capacity_ah_isdefaulted = true
+      elsif battery.respond_to?(:rated_power_output) && (not battery.rated_power_output.nil?)
+        battery.nominal_capacity_kwh = (UnitConversions.convert(battery.rated_power_output, 'W', 'kW') / 0.5).round(2)
+        battery.nominal_capacity_kwh_isdefaulted = true
+      else
+        battery.nominal_capacity_kwh = default_values[:nominal_capacity_kwh] # kWh
+        battery.nominal_capacity_kwh_isdefaulted = true
+      end
+    end
+    if battery.usable_capacity_kwh.nil? && battery.usable_capacity_ah.nil?
+      # Calculate usable capacity from nominal capacity
+      if not battery.nominal_capacity_kwh.nil?
+        battery.usable_capacity_kwh = (battery.nominal_capacity_kwh * default_values[:usable_fraction]).round(2)
+        battery.usable_capacity_kwh_isdefaulted = true
+      elsif not battery.nominal_capacity_ah.nil?
+        battery.usable_capacity_ah = (battery.nominal_capacity_ah * default_values[:usable_fraction]).round(2)
+        battery.usable_capacity_ah_isdefaulted = true
+      end
+    end
+    return unless battery.respond_to?(:rated_power_output) && battery.rated_power_output.nil?
+
+    # Calculate rated power from nominal capacity
+    if not battery.nominal_capacity_kwh.nil?
+      battery.rated_power_output = (UnitConversions.convert(battery.nominal_capacity_kwh, 'kWh', 'Wh') * 0.5).round(0)
+    elsif not battery.nominal_capacity_ah.nil?
+      battery.rated_power_output = (UnitConversions.convert(Battery.get_kWh_from_Ah(battery.nominal_capacity_ah, battery.nominal_voltage), 'kWh', 'Wh') * 0.5).round(0)
+    end
+    battery.rated_power_output_isdefaulted = true
   end
 
   # Assigns default values for omitted optional inputs in the HPXML::ClothesWasher, HPXML::ClothesDryer,
@@ -4259,7 +4375,7 @@ module Defaults
           plug_load.weekday_fractions_isdefaulted = true
         end
         if plug_load.weekend_fractions.nil? && !schedules_file_includes_plug_loads_vehicle
-          plug_load.weekend_fractions = @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsVehicle].name]['WeekdayScheduleFractions']
+          plug_load.weekend_fractions = @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsVehicle].name]['WeekendScheduleFractions']
           plug_load.weekend_fractions_isdefaulted = true
         end
         if plug_load.monthly_multipliers.nil? && !schedules_file_includes_plug_loads_vehicle
@@ -4286,7 +4402,7 @@ module Defaults
           plug_load.weekday_fractions_isdefaulted = true
         end
         if plug_load.weekend_fractions.nil? && !schedules_file_includes_plug_loads_well_pump
-          plug_load.weekend_fractions = @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsWellPump].name]['WeekdayScheduleFractions']
+          plug_load.weekend_fractions = @default_schedules_csv_data[SchedulesFile::Columns[:PlugLoadsWellPump].name]['WeekendScheduleFractions']
           plug_load.weekend_fractions_isdefaulted = true
         end
         if plug_load.monthly_multipliers.nil? && !schedules_file_includes_plug_loads_well_pump
@@ -4762,12 +4878,12 @@ module Defaults
   def self.get_weather_station_csv_data
     zipcode_csv_filepath = File.join(File.dirname(__FILE__), 'data', 'zipcode_weather_stations.csv')
 
-    if $zip_csv_data.nil?
+    if $weather_lookup_cache[:csv_data].nil?
       # Note: We don't use the CSV library here because it's slow for large files
-      $zip_csv_data = File.readlines(zipcode_csv_filepath).map(&:strip)
+      $weather_lookup_cache[:csv_data] = File.readlines(zipcode_csv_filepath).map { |r| r.strip.split(',') }
     end
 
-    return $zip_csv_data
+    return $weather_lookup_cache[:csv_data]
   end
 
   # Gets the default TMY3 EPW weather station for the specified zipcode. If the exact
@@ -4776,6 +4892,11 @@ module Defaults
   # @param zipcode [String] Zipcode of interest
   # @return [Hash] Mapping with keys for every column name in zipcode_weather_stations.csv
   def self.lookup_weather_data_from_zipcode(zipcode)
+    if not $weather_lookup_cache["zipcode_#{zipcode}"].nil?
+      # Use cache
+      return $weather_lookup_cache["zipcode_#{zipcode}"]
+    end
+
     begin
       zipcode3 = zipcode[0, 3]
       zipcode_int = Integer(Float(zipcode[0, 5])) # Convert to 5-digit integer
@@ -4790,13 +4911,11 @@ module Defaults
     col_names = nil
     zip_csv_data.each_with_index do |row, i|
       if i == 0 # header
-        col_names = row.split(',').map { |x| x.to_sym }
+        col_names = row.map { |x| x.to_sym }
         next
       end
-      next if row.nil?
-      next unless row.start_with?(zipcode3) # Only allow match if first 3 digits are the same
-
-      row = row.split(',')
+      next if row.nil? || row.empty?
+      next unless row[0].start_with?(zipcode3) # Only allow match if first 3 digits are the same
 
       if row[0].size != 5
         fail "Zip code '#{row[0]}' in zipcode_weather_stations.csv does not have 5 digits."
@@ -4810,15 +4929,17 @@ module Defaults
           weather_station[col_name] = row[j]
         end
       end
-      if distance == 0
-        return weather_station # Exact match
-      end
+      next unless distance == 0
+
+      $weather_lookup_cache["zipcode_#{zipcode}"] = weather_station
+      return weather_station # Exact match
     end
 
     if weather_station.empty?
       fail "Zip code '#{zipcode}' could not be found in zipcode_weather_stations.csv"
     end
 
+    $weather_lookup_cache["zipcode_#{zipcode}"] = weather_station
     return weather_station
   end
 
@@ -4827,30 +4948,34 @@ module Defaults
   # @param wmo [String] Weather station World Meteorological Organization (WMO) number
   # @return [Hash or nil] Mapping with keys for every column name in zipcode_weather_stations.csv if WMO is found, otherwise nil
   def self.lookup_weather_data_from_wmo(wmo)
+    if not $weather_lookup_cache["wmo_#{wmo}"].nil?
+      # Use cache
+      return $weather_lookup_cache["wmo_#{wmo}"]
+    end
+
     zip_csv_data = get_weather_station_csv_data()
 
+    weather_station = {}
     col_names = nil
     wmo_idx = nil
     zip_csv_data.each_with_index do |row, i|
       if i == 0 # header
-        col_names = row.split(',').map { |x| x.to_sym }
+        col_names = row.map { |x| x.to_sym }
         wmo_idx = col_names.index(:station_wmo)
         next
       end
-      next if row.nil?
-
-      row = row.split(',')
+      next if row.nil? || row.empty?
 
       next unless row[wmo_idx] == wmo
 
-      weather_station = {}
       col_names.each_with_index do |col_name, j|
         weather_station[col_name] = row[j]
       end
-      return weather_station
+      break
     end
 
-    return
+    $weather_lookup_cache["wmo_#{wmo}"] = weather_station
+    return weather_station
   end
 
   # Gets the default number of bathrooms in the dwelling unit.
@@ -6122,10 +6247,10 @@ module Defaults
   # @param component [HPXML::XXX] a component
   # @param add [Boolean] whether to add a branch circuit even if one already exists
   # @return [HPXML::BranchCircuit] Object that defines a single electric panel branch circuit
-  def self.get_or_add_branch_circuit(electric_panel, component, add = false)
+  def self.get_or_add_branch_circuit(electric_panel, component, unit_num, add = false)
     branch_circuits = electric_panel.branch_circuits
     if component.branch_circuits.empty? || add
-      branch_circuits.add(id: "#{electric_panel.id}_BranchCircuit#{branch_circuits.size + 1}",
+      branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
                           component_idrefs: [component.id])
       branch_circuit = branch_circuits[-1]
     else
@@ -6152,7 +6277,7 @@ module Defaults
   # @param default_panels_csv_data [Hash] { load_name => { voltage => power_rating, ... }, ... }
   # @param electric_panel [HPXML::ElectricPanel] Object that defines a single electric panel
   # @return [Double] power rating (W)
-  def self.get_service_feeder_power_default_values(runner, hpxml_bldg, service_feeder, default_panels_csv_data, electric_panel)
+  def self.get_service_feeder_power_default_values(runner, hpxml_bldg, service_feeder, default_panels_csv_data, electric_panel, unit_num)
     type = service_feeder.type
     component_ids = service_feeder.component_idrefs
     watts = 0
@@ -6163,7 +6288,7 @@ module Defaults
         next if heating_system.is_shared_system
         next if heating_system.fraction_heat_load_served == 0
 
-        branch_circuit = get_or_add_branch_circuit(electric_panel, heating_system)
+        branch_circuit = get_or_add_branch_circuit(electric_panel, heating_system, unit_num)
 
         if heating_system.heating_system_fuel == HPXML::FuelTypeElectricity
           watts += UnitConversions.convert(HVAC.get_heating_input_capacity(heating_system.heating_capacity, heating_system.heating_efficiency_afue, heating_system.heating_efficiency_percent), 'btu/hr', 'w')
@@ -6182,8 +6307,8 @@ module Defaults
         next if !component_ids.include?(heat_pump.id)
         next if heat_pump.fraction_heat_load_served == 0
 
-        branch_circuit_odu = get_or_add_branch_circuit(electric_panel, heat_pump)
-        branch_circuit_ahu = get_or_add_branch_circuit(electric_panel, heat_pump, true)
+        branch_circuit_odu = get_or_add_branch_circuit(electric_panel, heat_pump, unit_num)
+        branch_circuit_ahu = get_or_add_branch_circuit(electric_panel, heat_pump, unit_num, true)
 
         watts_ahu = HVAC.get_blower_fan_power_watts(heat_pump.fan_watts_per_cfm, heat_pump.heating_airflow_cfm)
         watts_odu = HVAC.get_dx_coil_power_watts_from_capacity(UnitConversions.convert(heat_pump.heating_capacity, 'btu/hr', 'kbtu/hr'), branch_circuit_odu.voltage)
@@ -6233,8 +6358,8 @@ module Defaults
         next if cooling_system.is_shared_system
         next if cooling_system.fraction_cool_load_served == 0
 
-        branch_circuit_odu = get_or_add_branch_circuit(electric_panel, cooling_system)
-        branch_circuit_ahu = get_or_add_branch_circuit(electric_panel, cooling_system, true)
+        branch_circuit_odu = get_or_add_branch_circuit(electric_panel, cooling_system, unit_num)
+        branch_circuit_ahu = get_or_add_branch_circuit(electric_panel, cooling_system, unit_num, true)
 
         watts_ahu = HVAC.get_blower_fan_power_watts(cooling_system.fan_watts_per_cfm, cooling_system.cooling_airflow_cfm)
         watts_odu = HVAC.get_dx_coil_power_watts_from_capacity(UnitConversions.convert(cooling_system.cooling_capacity, 'btu/hr', 'kbtu/hr'), branch_circuit_odu.voltage)
@@ -6270,8 +6395,8 @@ module Defaults
         watts_odu = HVAC.get_dx_coil_power_watts_from_capacity(UnitConversions.convert(heat_pump.cooling_capacity, 'btu/hr', 'kbtu/hr'), HPXML::ElectricPanelVoltage240)
 
         if heat_pump.fraction_heat_load_served == 0
-          branch_circuit_odu = get_or_add_branch_circuit(electric_panel, heat_pump)
-          branch_circuit_ahu = get_or_add_branch_circuit(electric_panel, heat_pump, true)
+          branch_circuit_odu = get_or_add_branch_circuit(electric_panel, heat_pump, unit_num)
+          branch_circuit_ahu = get_or_add_branch_circuit(electric_panel, heat_pump, unit_num, true)
 
           if branch_circuit_ahu.occupied_spaces.nil?
             branch_circuit_ahu.occupied_spaces = get_breaker_spaces_from_power_watts_voltage_amps(watts_ahu, branch_circuit_ahu.voltage, branch_circuit_ahu.max_current_rating)
@@ -6592,6 +6717,41 @@ module Defaults
              usable_fraction: 0.9 } # Fraction of usable capacity to nominal capacity
   end
 
+  # Get default lifetime model, miles/year, hours/week, nominal capacity/voltage, round trip efficiency, fraction charged at home,
+  # and usable fraction for an electric vehicle and its battery.
+  #
+  # @return [Hash] map of EV properties to default values
+  def self.get_electric_vehicle_values()
+    return { battery_type: HPXML::BatteryTypeLithiumIon,
+             lifetime_model: HPXML::BatteryLifetimeModelNone,
+             miles_per_year: 10900,
+             hours_per_week: 8.88,
+             nominal_capacity_kwh: 63,
+             nominal_voltage: 50.0,
+             fuel_economy_combined: 0.22,
+             fuel_economy_units: HPXML::UnitsKwhPerMile,
+             fraction_charged_home: 0.8,
+             usable_fraction: 0.8 } # Fraction of usable capacity to nominal capacity
+  end
+
+  # Get default location, charging power, and charging level for an electric vehicle charger.
+  # The default location is the garage if one is present.
+  #
+  # @param has_garage [Boolean] whether the HPXML Building object has a garage
+  # @return [Hash] map of electric vehicle charger properties to default values
+  def self.get_ev_charger_values(has_garage = false)
+    if has_garage
+      location = HPXML::LocationGarage
+    else
+      location = HPXML::LocationOutside
+    end
+
+    return { location: location,
+             charging_level: 2,
+             level1_charging_power: 1600,
+             level2_charging_power: 5690 } # Median L2 charging rate in EVWatts
+  end
+
   # Gets the default values for a dehumidifier
   # Used by OS-ERI. FUTURE: Change OS-HPXML inputs to be optional and use these.
   #
@@ -6777,9 +6937,12 @@ module Defaults
   def self.get_electric_vehicle_charging_annual_energy()
     ev_charger_efficiency = 0.9
     ev_battery_efficiency = 0.9
-    vehicle_annual_miles_driven = 4500.0
-    vehicle_kWh_per_mile = 0.3
-    return vehicle_annual_miles_driven * vehicle_kWh_per_mile / (ev_charger_efficiency * ev_battery_efficiency)
+
+    # Use detailed vehicle model defaults
+    vehicle_defaults = get_electric_vehicle_values
+    kwh_per_year = vehicle_defaults[:miles_per_year] * vehicle_defaults[:fuel_economy_combined] * vehicle_defaults[:fraction_charged_home] / (ev_charger_efficiency * ev_battery_efficiency)
+
+    return kwh_per_year.round(1)
   end
 
   # Gets the default well pump annual energy use.

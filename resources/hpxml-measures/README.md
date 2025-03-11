@@ -57,6 +57,7 @@ OpenStudio-HPXML is used by a number of software products or organizations, incl
 - [URBANopt](https://www.nrel.gov/buildings/urbanopt.html)
 - [VEIC](https://www.veic.org)
 - [Weatherization Assistant](https://weatherization.ornl.gov/softwaredescription/) (pending)
+- [XeroHome](https://about.xerohome.com/)
 
 Are you using OpenStudio-HPXML and want to be mentioned here? [Email us](mailto:scott.horowitz@nrel.gov) or [open a Pull Request](https://github.com/NREL/OpenStudio-HPXML/edit/master/README.md).
 

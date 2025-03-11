@@ -61,7 +61,7 @@
           <ConditionedBuildingVolume>9600.0</ConditionedBuildingVolume>
         </BuildingConstruction>
         <extension>
-          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic.csv</SchedulesFilePath>
+          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit.csv</SchedulesFilePath>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
@@ -421,27 +421,27 @@
             <SystemIdentifier id='ElectricPanel1'/>
             <ServiceFeeders>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder1'/>
+                <SystemIdentifier id='ServiceFeeder1'/>
                 <LoadType>heating</LoadType>
                 <AttachedToComponent idref='HeatingSystem1'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder2'/>
+                <SystemIdentifier id='ServiceFeeder2'/>
                 <LoadType>cooling</LoadType>
                 <AttachedToComponent idref='CoolingSystem1'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder3'/>
+                <SystemIdentifier id='ServiceFeeder3'/>
                 <LoadType>hot water</LoadType>
                 <AttachedToComponent idref='WaterHeatingSystem1'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder4'/>
+                <SystemIdentifier id='ServiceFeeder4'/>
                 <LoadType>dishwasher</LoadType>
                 <AttachedToComponent idref='Dishwasher1'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder5'/>
+                <SystemIdentifier id='ServiceFeeder5'/>
                 <LoadType>range/oven</LoadType>
                 <AttachedToComponent idref='CookingRange1'/>
               </ServiceFeeder>
@@ -597,7 +597,7 @@
           <ConditionedBuildingVolume>9600.0</ConditionedBuildingVolume>
         </BuildingConstruction>
         <extension>
-          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic_2.csv</SchedulesFilePath>
+          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit_2.csv</SchedulesFilePath>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
@@ -957,27 +957,27 @@
             <SystemIdentifier id='ElectricPanel1_2'/>
             <ServiceFeeders>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder1_2'/>
+                <SystemIdentifier id='ServiceFeeder1_2'/>
                 <LoadType>heating</LoadType>
                 <AttachedToComponent idref='HeatingSystem1_2'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder2_2'/>
+                <SystemIdentifier id='ServiceFeeder2_2'/>
                 <LoadType>cooling</LoadType>
                 <AttachedToComponent idref='CoolingSystem1_2'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder3_2'/>
+                <SystemIdentifier id='ServiceFeeder3_2'/>
                 <LoadType>hot water</LoadType>
                 <AttachedToComponent idref='WaterHeatingSystem1_2'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder4_2'/>
+                <SystemIdentifier id='ServiceFeeder4_2'/>
                 <LoadType>dishwasher</LoadType>
                 <AttachedToComponent idref='Dishwasher1_2'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder5_2'/>
+                <SystemIdentifier id='ServiceFeeder5_2'/>
                 <LoadType>range/oven</LoadType>
                 <AttachedToComponent idref='CookingRange1_2'/>
               </ServiceFeeder>
@@ -1133,7 +1133,7 @@
           <ConditionedBuildingVolume>9600.0</ConditionedBuildingVolume>
         </BuildingConstruction>
         <extension>
-          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic_3.csv</SchedulesFilePath>
+          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit_3.csv</SchedulesFilePath>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
@@ -1381,27 +1381,27 @@
             <SystemIdentifier id='ElectricPanel1_3'/>
             <ServiceFeeders>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder1_3'/>
+                <SystemIdentifier id='ServiceFeeder1_3'/>
                 <LoadType>heating</LoadType>
                 <AttachedToComponent idref='HeatingSystem1_3'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder2_3'/>
+                <SystemIdentifier id='ServiceFeeder2_3'/>
                 <LoadType>cooling</LoadType>
                 <AttachedToComponent idref='CoolingSystem1_3'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder3_3'/>
+                <SystemIdentifier id='ServiceFeeder3_3'/>
                 <LoadType>hot water</LoadType>
                 <AttachedToComponent idref='WaterHeatingSystem1_3'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder4_3'/>
+                <SystemIdentifier id='ServiceFeeder4_3'/>
                 <LoadType>dishwasher</LoadType>
                 <AttachedToComponent idref='Dishwasher1_3'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder5_3'/>
+                <SystemIdentifier id='ServiceFeeder5_3'/>
                 <LoadType>range/oven</LoadType>
                 <AttachedToComponent idref='CookingRange1_3'/>
               </ServiceFeeder>
@@ -1557,7 +1557,7 @@
           <ConditionedBuildingVolume>9600.0</ConditionedBuildingVolume>
         </BuildingConstruction>
         <extension>
-          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic_4.csv</SchedulesFilePath>
+          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit_4.csv</SchedulesFilePath>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
@@ -1805,27 +1805,27 @@
             <SystemIdentifier id='ElectricPanel1_4'/>
             <ServiceFeeders>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder1_4'/>
+                <SystemIdentifier id='ServiceFeeder1_4'/>
                 <LoadType>heating</LoadType>
                 <AttachedToComponent idref='HeatingSystem1_4'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder2_4'/>
+                <SystemIdentifier id='ServiceFeeder2_4'/>
                 <LoadType>cooling</LoadType>
                 <AttachedToComponent idref='CoolingSystem1_4'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder3_4'/>
+                <SystemIdentifier id='ServiceFeeder3_4'/>
                 <LoadType>hot water</LoadType>
                 <AttachedToComponent idref='WaterHeatingSystem1_4'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder4_4'/>
+                <SystemIdentifier id='ServiceFeeder4_4'/>
                 <LoadType>dishwasher</LoadType>
                 <AttachedToComponent idref='Dishwasher1_4'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder5_4'/>
+                <SystemIdentifier id='ServiceFeeder5_4'/>
                 <LoadType>range/oven</LoadType>
                 <AttachedToComponent idref='CookingRange1_4'/>
               </ServiceFeeder>
@@ -1981,7 +1981,7 @@
           <ConditionedBuildingVolume>9600.0</ConditionedBuildingVolume>
         </BuildingConstruction>
         <extension>
-          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic_5.csv</SchedulesFilePath>
+          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit_5.csv</SchedulesFilePath>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
@@ -2286,27 +2286,27 @@
             <SystemIdentifier id='ElectricPanel1_5'/>
             <ServiceFeeders>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder1_5'/>
+                <SystemIdentifier id='ServiceFeeder1_5'/>
                 <LoadType>heating</LoadType>
                 <AttachedToComponent idref='HeatingSystem1_5'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder2_5'/>
+                <SystemIdentifier id='ServiceFeeder2_5'/>
                 <LoadType>cooling</LoadType>
                 <AttachedToComponent idref='CoolingSystem1_5'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder3_5'/>
+                <SystemIdentifier id='ServiceFeeder3_5'/>
                 <LoadType>hot water</LoadType>
                 <AttachedToComponent idref='WaterHeatingSystem1_5'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder4_5'/>
+                <SystemIdentifier id='ServiceFeeder4_5'/>
                 <LoadType>dishwasher</LoadType>
                 <AttachedToComponent idref='Dishwasher1_5'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder5_5'/>
+                <SystemIdentifier id='ServiceFeeder5_5'/>
                 <LoadType>range/oven</LoadType>
                 <AttachedToComponent idref='CookingRange1_5'/>
               </ServiceFeeder>
@@ -2462,7 +2462,7 @@
           <ConditionedBuildingVolume>9600.0</ConditionedBuildingVolume>
         </BuildingConstruction>
         <extension>
-          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic_6.csv</SchedulesFilePath>
+          <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit_6.csv</SchedulesFilePath>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
@@ -2767,27 +2767,27 @@
             <SystemIdentifier id='ElectricPanel1_6'/>
             <ServiceFeeders>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder1_6'/>
+                <SystemIdentifier id='ServiceFeeder1_6'/>
                 <LoadType>heating</LoadType>
                 <AttachedToComponent idref='HeatingSystem1_6'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder2_6'/>
+                <SystemIdentifier id='ServiceFeeder2_6'/>
                 <LoadType>cooling</LoadType>
                 <AttachedToComponent idref='CoolingSystem1_6'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder3_6'/>
+                <SystemIdentifier id='ServiceFeeder3_6'/>
                 <LoadType>hot water</LoadType>
                 <AttachedToComponent idref='WaterHeatingSystem1_6'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder4_6'/>
+                <SystemIdentifier id='ServiceFeeder4_6'/>
                 <LoadType>dishwasher</LoadType>
                 <AttachedToComponent idref='Dishwasher1_6'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder5_6'/>
+                <SystemIdentifier id='ServiceFeeder5_6'/>
                 <LoadType>range/oven</LoadType>
                 <AttachedToComponent idref='CookingRange1_6'/>
               </ServiceFeeder>

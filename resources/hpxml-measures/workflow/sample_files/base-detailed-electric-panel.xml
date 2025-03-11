@@ -57,6 +57,11 @@
           <ConditionedFloorArea>1228.0</ConditionedFloorArea>
           <ConditionedBuildingVolume>9824.0</ConditionedBuildingVolume>
         </BuildingConstruction>
+        <extension>
+          <AdditionalProperties>
+            <PeakElectricity>4500.0</PeakElectricity>
+          </AdditionalProperties>
+        </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
         <ClimateZoneIECC>
@@ -455,30 +460,35 @@
             <Voltage>240</Voltage>
             <MaxCurrentRating>100.0</MaxCurrentRating>
             <Headroom>5</Headroom>
+            <BranchCircuits>
+              <BranchCircuit>
+                <SystemIdentifier id='BranchCircuit1'/>
+                <OccupiedSpaces>1.0</OccupiedSpaces>
+              </BranchCircuit>
+            </BranchCircuits>
             <ServiceFeeders>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder1'/>
+                <SystemIdentifier id='ServiceFeeder1'/>
                 <LoadType>heating</LoadType>
                 <AttachedToComponent idref='HeatingSystem1'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder2'/>
+                <SystemIdentifier id='ServiceFeeder2'/>
                 <LoadType>cooling</LoadType>
-                <PowerRating>3542.0</PowerRating>
                 <AttachedToComponent idref='CoolingSystem1'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder3'/>
+                <SystemIdentifier id='ServiceFeeder3'/>
                 <LoadType>mech vent</LoadType>
                 <AttachedToComponent idref='VentilationFan1'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder4'/>
+                <SystemIdentifier id='ServiceFeeder4'/>
                 <LoadType>mech vent</LoadType>
                 <AttachedToComponent idref='VentilationFan2'/>
               </ServiceFeeder>
               <ServiceFeeder>
-                <SystemIdentifier id='ElectricPanel1_ServiceFeeder5'/>
+                <SystemIdentifier id='ServiceFeeder5'/>
                 <LoadType>other</LoadType>
                 <PowerRating>559.0</PowerRating>
               </ServiceFeeder>

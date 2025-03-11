@@ -540,10 +540,20 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       return false
     end
 
+    measures['ResStockArgumentsPostHPXML'] = [{}] if !measures.keys.include?('ResStockArgumentsPostHPXML')
+    measures['ResStockArgumentsPostHPXML'][0]['hpxml_path'] = hpxml_path
+    measures['ResStockArgumentsPostHPXML'][0]['output_csv_path'] = File.expand_path('../schedules.csv')
+    measures['ResStockArgumentsPostHPXML'][0]['building_id'] = values['building_id']
+    measures_hash = { 'ResStockArgumentsPostHPXML' => measures['ResStockArgumentsPostHPXML'] }
+    if not apply_measures(measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
+      register_logs(runner, new_runner)
+      return false
+    end
+
     # Specify measures to run
     measures_to_apply_hash = { measures_dir => {} }
 
-    upgrade_measures = measures.keys - ['ResStockArguments', 'BuildResidentialHPXML', 'BuildResidentialScheduleFile']
+    upgrade_measures = measures.keys - ['ResStockArguments', 'BuildResidentialHPXML', 'BuildResidentialScheduleFile', 'ResStockArgumentsPostHPXML']
     upgrade_measures.each do |upgrade_measure|
       measures_to_apply_hash[measures_dir][upgrade_measure] = measures[upgrade_measure]
     end
@@ -565,6 +575,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     FileUtils.cp(hpxml_path, in_path)
 
     register_logs(runner, resstock_arguments_runner)
+    register_logs(runner, new_runner)
 
     return true
   end

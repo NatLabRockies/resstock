@@ -1741,7 +1741,7 @@ The heating fuel of the pool heater if there is a pool.
 
 \paragraph{Options}
 
-There are five options for pool heaters: Electricity, Electric Heat Pump, Natural Gas, None, and Other Fuel. The Electricity option defines a traditional electric resistance pool heater, whereas the Electric Heat Pump option uses heat pump technology for heating the pool. The “Other Fuel” pool heater option currently is currently not modeled in ResStock. The ResStock arguments assigned for each of these options is given in  Table \ref{table:opt_def_pool_heat}. 
+There are five options for pool heaters: Electricity, Electric Heat Pump, Natural Gas, None, and Other Fuel. The Electricity option defines a traditional electric resistance pool heater, whereas the Electric Heat Pump option uses heat pump technology for heating the pool. The “Other Fuel” pool heater option currently is currently not modeled in ResStock. The ResStock arguments assigned for each of these options is given in Table \ref{table:opt_def_pool_heat}.
 
 \begin{customLongTable}{ |p{2.5cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}| }
 {Pool Heater options and arguments that vary for each option} {table:opt_def_pool_heat} 
@@ -1750,7 +1750,7 @@ There are five options for pool heaters: Electricity, Electric Heat Pump, Natura
 \texttt{pool\_heater\_annual\_therm} &
 \texttt{pool\_heater\_usage\_multiplier}} 
 Electricity & electric resistance & auto & 0 & 1.0 \\
-Electric Heat Pump & heat pump & auto & 0 & 1.0 \\ 
+Electric Heat Pump & heat pump & auto & 0 & 1.0 \\
 Natural Gas & gas fired & 0 & auto & 1.0 \\
 None & none & 0 & 0 & 0 \\
 Other Fuel & none & 0 & 0 & 0 \\
@@ -1943,7 +1943,7 @@ In combining the housing unit sub-input file and household sub-input file, the c
 
 \subsection{Well Pump}
 \subsubsection{Modeling Approach}
-Well pumps are used to extract potable water from a well. The 2017-2019 American Housing Surveys ({\cite{ahs}}) estimated that 11\% of US homes have a well pump, and that data is used to construct the characteristic distribution, which has a dependency to Census Division, PUMA Metro Status, and Geometry Building Type Height. Well pumps are also more common outside the metro areas than in metro areas, particularly within a principal city. A well pump in ResStock is modeled as a type of plug load that does not provide any latent or sensible heat to the housing units. The annual energy for well pumping is estimated based on conditioned floor area and number of bedrooms converted from occupants using an equation from 2014 Building America House Simulation Protocols (BAHSP) (\cite{Wilson2014}) and can be adjusted by a usage multiplier. The annual energy is then multiplied by a default simple schedule to produce the end-use load profile. 
+Well pumps are used to extract potable water from a well. The 2017-2019 American Housing Surveys ({\cite{ahs}}) estimated that 11\% of US homes have a well pump, and that data is used to construct the characteristic distribution, which has a dependency to Census Division, PUMA Metro Status, and Geometry Building Type Height. Well pumps are also more common outside the metro areas than in metro areas, particularly within a principal city. A well pump in ResStock is modeled as a type of plug load that does not provide any latent or sensible heat to the housing units. The annual energy for well pumping is estimated based on conditioned floor area and number of bedrooms converted from occupants using an equation from 2014 Building America House Simulation Protocols (BAHSP) (\cite{Wilson2014}) and can be adjusted by a usage multiplier. The annual energy is then multiplied by a default simple schedule to produce the end-use load profile.
 
 \subsubsection{Misc Well Pump}
 \paragraph{Description}
@@ -1951,6 +1951,7 @@ Presence and efficiency of well pump.
 
 \paragraph{Distribution Data Source(s)}
 2017 - 2019 American Housing Survey
+
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
     \item Census Division
@@ -2299,12 +2300,10 @@ Installations of unknown mount type are assumed to be rooftop. States without da
 PV is not modeled in AK and HI. The Option=None is set so that an error is thrown if PV is modeled as an argument.
 
 \subsection{Additional Capabilities}
-This section describes the additional modeling capabilities in OpenStudio-HPXML/ResStock that are not yet fully deployed in the ResStock baseline. These include batteries, electric vehicles, and dehumidifiers. These loads at present are not available in the baseline but can be modeled as upgrade measures. This is because their characteristic distribution is not yet fully characterized but is instead set to 100\% None.
+This section describes the additional modeling capabilities in OpenStudio-HPXML/ResStock that are not yet fully deployed in the ResStock baseline. These include batteries and dehumidifiers. These loads at present are not available in the baseline but can be modeled as upgrade measures. This is because their characteristic distribution is not yet fully characterized but is instead set to 100\% None.
 
 \paragraph{Modeling Approach}
 Batteries in ResStock use a standalone Lithium-ion battery model whose performance is characterized by voltage rating, power rating, installed capacity, usable capacity, round trip efficiency, and installed location. The battery can charge and discharge based on a detailed schedule input or be controlled to capture net solar production and modulate whole-home load in a home with PV.
-
-Electric vehicle (EV) charging is modeled as a plug load. The annual energy is 1,666.67 kWh, which is estimated assuming 4,500 annual miles, 0.3 kWh/mile, a charger efficiency of 0.9, and a battery efficiency of 0.9. The annual energy is then multiplied by a default simple schedule to produce the end-use load profile. Eventually, EV charging will be modeled as a battery model that can charge and discharge based on a schedule input or a control logic in response to an occupant schedule of state of charge demand by trip.
 
 A dehumidifier is a device used to maintain a reasonable relative humidity in the home. ResStock models a dehumidifier as a portable device located in the conditioned space of the home. Other inputs to this model include capacity, rated efficiency, and relative humidity setpoint. The dehumidifier model is not intended to handle, e.g., a wet basement or crawlspace where there is significant moisture from the ground.
 
@@ -2342,41 +2341,6 @@ usable capacity of the lithium ion battery.  \\
 \hline
 \texttt{battery\_round\_trip\_efficiency} & false & Frac & Double & auto
 & The round trip efficiency of the lithium ion battery.  \\
-\end{customLongTable}
-
-\paragraph{Distribution Assumption(s)}
-Not applicable.
-
-\subsubsection{Electric Vehicle}
-\paragraph{Description}
-Presence, usage, and efficiency of an electric vehicle.
-
-\paragraph{Distribution Data Source(s)}
-Not applicable.
-
-\paragraph{Direct Conditional Dependencies}
-Not applicable.
-
-\paragraph{Options}
-Currently only the option ``None'' is defined in the ResStock baseline. This option is nullified by setting the \texttt{misc\_plug\_loads\_vehicle\_present} to false. Other options are available for use in an upgrade measure and the argument table shows how the options can be defined (Table \ref{table:hc_arg_def_ev}). The characteristic sets the \texttt{misc\_plug\_loads\_vehicle\_present}, \texttt{misc\_plug\_loads\_vehicle\_annual\_kwh}, \texttt{misc\_plug\_loads\_vehicle\_usage\_multiplier}, and \texttt{misc\_plug\_loads\_vehicle\_2\_usage\_multiplier} ResStock arguments.
-
-\begin{customLongTable}{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
-{The ResStock argument definitions set in the Electric Vehicle characteristic} {table:hc_arg_def_ev} 
-{Name & Required & Units & Type & Choices & Description} 
-\texttt{misc\_plug\_loads\_vehicle\_present} & true & & Boolean & true,
-false & Whether there is an electric vehicle. \\
-\hline
-\texttt{misc\_plug\_loads\_vehicle\_annual\_kwh} & false & kWh/yr &
-Double & auto & The annual energy consumption of the electric vehicle
-plug loads.  \\
-\hline
-\texttt{misc\_plug\_loads\_vehicle\_usage\_multiplier} & false & &
-Double & auto & Multiplier on the electric vehicle energy usage that can
-reflect, e.g., high/low usage occupants.  \\
-\hline
-\texttt{misc\_plug\_loads\_vehicle\_2\_usage\_multiplier} & true & &
-Double & & Additional multiplier on the electric vehicle energy usage
-that can reflect, e.g., high/low usage occupants. \\
 \end{customLongTable}
 
 \paragraph{Distribution Assumption(s)}
@@ -2439,6 +2403,7 @@ ResStock models three lighting technologies: light-emitting diodes (LEDs), incan
 
 Separately, outside these input files, ResStock provides schedules for lighting based on the occupancy schedule generator (Section \ref{occupancy_model}).
 
+\subsection{Lighting Characteristics}
 \subsubsection{Lighting}\label{lighting}
 
 \paragraph{Description}
@@ -2460,8 +2425,6 @@ Specifies the type of lighting technology used in the housing unit.
     \item{Census Division RECS}
     \item{Geometry Building Type RECS}.
 \end{itemize}
-
-
 
 \paragraph{Options}\label{options-108}
 In ResStock there are three options available for lighting: \textit{100\% CFL}, \textit{100\% LED}, and \textit{100\% Incandescent}. The assumption in ResStock is that all lighting within a home is of the same technology, both interior and exterior. Across all three options, the argument \textit{lighting\_present = true}. Each ResStock option specifies the corresponding ResStock arguments for interior, exterior, and garage of the building. All non-specified arguments in the table below for other technologies are set to zero. In OpenStudio-HPXML, all lighting that is not specified as one of the set technologies (e.g., CFL or LED) is assumed to be incandescent, so the \textit{100\% Incandescent} option has all technology options set to 0 (i.e., there is no explicit incandescent option in OpenStudio-HPXML). 
@@ -2490,8 +2453,6 @@ Option name & Interior argument & Exterior argument & Garage argument\\
 \hline
 100\% LED & \textit{lighting\_interior\_fraction\_led} = 1 &\textit{lighting\_exterior\_fraction\_led} = 1 & \textit{lighting\_garage\_fraction\_led} = 1 \\
 \end{longtable}
-
-
 
 For the argument definitions, see Table \ref{table:hc_arg_def_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints.
 
@@ -2727,8 +2688,8 @@ high/low usage occupants. \\
 \end{itemize}
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \section{Plug Loads}
 In ResStock, plug loads capture electric loads in the home that are not explicitly modeled on their own. Examples of plug loads includes things like microwaves, garbage disposals, toasters, fish tanks, cell phones, televisions, and portable humidifiers. Most of these items are not modeled explicitly under the plug loads modeling in ResStock, but instead are captured through a regression equation from RECS applied to ResStock homes, with some additional variability inserted on top to mimic the real-world variation and diversity that exist within these loads. These regressions form the usage multipliers that are applied to the default OpenStudio-HPXML calculations for plug loads. Based on ANSI/RESNET/ICC 301-2019, the plug load calculation estimates TV load based on the number of bedrooms converted from occupants and other load based on conditioned floor area. Two input files control plug loads in ResStock: Plug Loads and Plug Load Diversity.
@@ -2891,7 +2852,325 @@ reflect, e.g., high/low usage occupants. \\
 
 
 \paragraph{Distribution Assumption(s)}
-None. 
+None.
+
+
+
+
+
+
+
+
+\section{Electric Vehicles}
+
+\subsection{Modeling Approach}
+The electric vehicle (EV) capabilities in ResStock were largely created under a joint project to ensure consistency between model inputs and outputs for ResStock and Transportation Energy \& Mobility Pathway Options Model\footnote{https://www.nrel.gov/transportation/tempo-model.html} (TEMPO), \cite{MURATORI2021102967}. The EV model in ResStock uses an EnergyPlus battery object to simulate the charging and discharging. Since a battery is typically associated with being attached to the building and not being driven around, the energy being discharged is ignored in the energy reporting as the electric vehicle is assumed to only draw energy from the dwelling unit. No vehicle-to-building energy exhange is considered in the baseline model. ResStock specifies if a specific unit has an electric vehicle, the percent of energy provided by the home charger, the electric vehicle battery type that provides the battery capacity and efficiency, the charge rate of the EV charger, and the vehicle miles traveled per year. Units without an EV are also assigned a percent vehicle charge at home, an electric vehicle battery description, and a vehicle miles traveled so that they do not need to be sampled when applying an EV upgrade. While the charge rate is fixed in the model, the discharge rate is dynamically set using the miles traveled, vehicle efficiency, and a constant driving speed of 22 MPH (\cite{NHTS2017}), which is then scaled at each timestep based on the ambient temperature using a curve derived from emprical data (\cite{YIP2023}). Degredation of the battery over time is not considered. The schedules of charging and discharging are stochastic. The charging and discharging schedules are based on a single occupant in the dwelling unit assigned to the vehicle. Vehicle discharge events occur when the occupant leaves the unit and returns to the unit. The total duration of the discharging events is dependent on the annual vehicle miles traveled and the duration of individual events is proportional to the length of each away period. Charging is assumed to start when the occupant arrives back to the dwelling unit and the battery charges until a maximum state of charge is achived or the next trip occurs. The model draws data mainly from the TEMPO model, EIA RECS 2020 (\cite{RECS2020}), the National Household Travel Survey (\cite{NHTS2017,NHTS2022}), registration data from Experian (\cite{EXPERIAN2023}), the No Place Like Home Study (\cite{NPLH2021}), and Autonomie model (\cite{AUTONOMIE}).
+
+\subsection{Electric Vehicle Characteristics}
+\subsubsection{Electric Vehicle Ownership}
+\paragraph{Description}
+The dwelling unit owns an electric vehicle.
+
+\paragraph{Distribution Data Source(s)}
+\begin{itemize}
+  \item EV Registration Data from Experian 2023.
+  \item 2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.
+  \item U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+
+\end{itemize}
+\paragraph{Direct Conditional Dependencies}
+\begin{itemize}
+  \item Federal Poverty Level
+  \item Geometry Building Type RECS
+  \item PUMA
+  \item Tenure
+\end{itemize}
+
+\paragraph{Options}
+The options for Electric Vehicle Ownership characteristic determine if other arguments for the EV are used. The characteristic sets the \texttt{vehicle\_type} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_ev_ownership}.
+
+\begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
+  {The ResStock argument definitions set in the Electric Vehicle Ownership characteristic} {table:hc_arg_def_ev_ownership} 
+  {Name & Required & Units & Type & Choices & Description} 
+  \texttt{vehicle\_type} & false &  & String &  & The type of vehicle present at the home. \\
+  \end{customLongTable}
+
+The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_ev_ownership}. The Void option is used for impossible dependency conditions and is not sampled.
+
+\begin{longtable}[]{ |p{5cm}|p{5cm}| } \caption{Electric Vehicle Ownership options and arguments that vary for each option} \label{table:hc_opt_ev_ownership}  \\
+  \toprule\noalign{}
+  Option name & \texttt{vehicle\_type} \\
+  \midrule\noalign{}
+  \endhead
+  \bottomrule\noalign{}
+  \endlastfoot
+  No &   \\
+  Void &  \\
+  Yes &  BatteryElectricVehicle \\
+\end{longtable}
+
+\paragraph{Distribution Assumption(s)}
+\begin{itemize}
+  \item Due to low sample sizes, coarsening rules applied in the following order.
+  \begin{enumerate}
+    \item Federal Poverty Level lumped every 100\%
+    \item Federal Poverty Level lumped every 200\%
+    \item Building type is consolidated into three bins 1) single-family, 2) multi-family, and 3) mobile home
+    \item Building type is consolidated into two bins 1) single-family and 2) multi-family and mobile home
+  \end{enumerate}
+  \item PUMA level battery EV saturation is calculated using a weighted average of the County level Experian data and ResStock unit counts for each County and PUMA.
+  \item The RECS 2020 satuations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery EV saturation using the segment unit counts from PUMS 2019-5yrs survey.
+\end{itemize}
+
+\subsubsection{Electric Vehicle Battery}
+\paragraph{Description}
+The type of electric vehicle and battery range in miles.
+
+\paragraph{Distribution Data Source(s)}
+\begin{itemize}
+  \item The 2023 Vehicle Stock Projection Data from NREL's TEMPO model
+  \item EV Registration Data from Experian 2023
+\end{itemize}
+
+\paragraph{Direct Conditional Dependencies}
+No direct conditional dependencies.
+
+\paragraph{Options}
+The options for Electric Vehicle Battery characteristic is a set of electric vehicle types and battery range in miles. These options do not specifiy if the unit has a vehicle, but rather the preference of the vehicle type and battery range if the household owned an electric vehicle. Every unit is assigned one of these options so that the vehicle type and battery range does not need to be sampled during an electric vehicle upgrade. The housing units at which an electric vehicle is modeled are specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_battery\_usable\_capacity}, \texttt{vehicle\_fuel\_economy\_units}, \texttt{vehicle\_fuel\_economy\_combined}, \texttt{ev\_average\_mph}, and \texttt{ev\_efficiency\_percent\_increase} ResStock arguments. The argument definitions are found in Table \ref{table:hc_arg_def_ev_battery}.
+
+\begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
+{The ResStock argument definitions set in the Electric Vehicle Battery characteristic} {table:hc_arg_def_ev_battery} 
+{Name & Required & Units & Type & Choices & Description} 
+\texttt{vehicle\_battery\_usable\_capacity} & false & kWh & Double & auto & The usable capacity of the vehicle battery, only applies to electric vehicles. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{HPXML Vehicles}) is used. \\
+\hline
+\texttt{vehicle\_fuel\_economy\_units} & false &  & Choice & auto, kWh/mile, mile/kWh, mpge, mpg & The combined fuel economy units of the vehicle. Only 'kWh/mile', 'mile/kWh', or 'mpge' are allow for electric vehicles. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>}{HPXML Vehicles}) is used. \\
+\hline
+\texttt{vehicle\_fuel\_economy\_combined} & false &  &
+Double & auto & The combined fuel economy of the vehicle. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>}{HPXML Vehicles}) is used.  \\
+\hline
+\texttt{ev\_average\_mph} & false & miles/hour &
+Double & & The average miles/hour driven by the vehicle.  \\
+\hline
+\texttt{ev\_efficiency\_percent\_increase} & false & Frac & Double &  & The increase (fraction) in efficiency of the electric vehicle. \\
+\end{customLongTable}
+
+% TODO: add ev_efficiency_percent_increase and vehicle_fuel_economy_units
+
+The options and their ResStock argument values can be found in Table \ref{table:hc_opt_ev_battery}. The Experian dataset is used to characterize the distribution of electric vehicles and associated battery sizes in the vehicle stock. We used the latest available data for the year 2023, which ensures that our analysis is based on the most current information regarding the electric vehicle battery stock. Although the vehicle data included information on internal combustion engine vehicles in addition to the battery electric vehicles, we filtered the dataset to focus exclusively on personal light-duty battery electric vehicles. In the dataset, there are four different categories of light-duty vehicles, including (a) Compact, (b) Midsize, (c) Sport Utility Vehicle (SUV), and (d) Pickup truck. Additionally, the dataset includes information on two total mileage ranges for the battery: (a) 200-mile range and (b) 300-mile range.
+
+Then, for each electric vehicle type, we draw from Argonne National Laboratory's Autonomie20\footnote{Autonomie is the source of TEMPO's inputs about electric vehicle characteristics for both current day and future scenarios} vehicle powertrain simulation model for the electric vehicle energy consumption (\texttt{vehicle\_fuel\_economy\_combined}) and battery capacity (\texttt{vehicle\_battery\_usable\_capacity}). The units for the combined fuel economy (\texttt{vehicle\_fuel\_economy\_units}) are always kWh/mile. The average driving speed is sourced from the 2017 NHTS which summarizes U.S. travel behavior (\cite{NHTS2017}). We assume that the average speed of electric vehicles is the same as the average speed of all vehicles. A scaling factor is applied to increase the efficiency of electric vehicles (\texttt{ev\_efficiency\_percent\_increase}). This value is 0.0 for the ResStock baseline meaning that the efficiency is equal to \texttt{vehicle\_fuel\_economy\_combined}, but it is exposed so that scenarios of EV efficiency improvements can be modeled.
+
+\begin{longtable}[]{ |p{5cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|} \caption{Electric Vehicle Battery options and arguments that vary for each option} \label{table:hc_opt_ev_battery}  \\
+  \toprule\noalign{}
+  Option name & \texttt{vehicle\_battery\_usable\_capacity} & \texttt{vehicle\_fuel\_economy\_combined} & \texttt{ev\_average\_mph} & \texttt{vehicle\_fuel\_economy\_units} & \texttt{ev\_efficiency\_percent\_increase} \\
+  \midrule\noalign{}
+  \endhead
+  \bottomrule\noalign{}
+  \endlastfoot
+  Compact, Battery Electric Vehicle, 200 mile range &  40.168 & 0.209901 & 22 & kWh/mile & 0.0 \\
+  Compact, Battery Electric Vehicle, 300 mile range &  63.433 & 0.220020 & 22 & kWh/mile & 0.0 \\
+  Midsize, Battery Electric Vehicle, 200 mile range &  41.978 & 0.219174 & 22 & kWh/mile & 0.0 \\
+  Midsize, Battery Electric Vehicle, 300 mile range &  65.441 & 0.229449 & 22 & kWh/mile & 0.0 \\
+  Pickup, Battery Electric Vehicle, 200 mile range  &  67.738 & 0.357648 & 22 & kWh/mile & 0.0 \\
+  Pickup, Battery Electric Vehicle, 300 mile range  & 105.946 & 0.373794 & 22 & kWh/mile & 0.0 \\
+  SUV, Battery Electric Vehicle, 200 mile range     &  53.503 & 0.267513 & 22 & kWh/mile & 0.0 \\
+  SUV, Battery Electric Vehicle, 300 mile range     &  83.680 & 0.278934 & 22 & kWh/mile & 0.0 \\
+\end{longtable}
+
+\paragraph{Distribution Assumption(s)}
+\begin{itemize}
+  \item Vehicle stock data starts with the Experian registration data and then is projected by TEMPO to 2023.
+  \item If the household does not have an electric vehicle, the options represent the household preference.
+\end{itemize}
+
+\subsubsection{Electric Vehicle Charge At Home}
+\paragraph{Description}
+The percentage a household would or does charge their electric vehicle at home.
+
+\paragraph{Distribution Data Source(s)}
+U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+
+\paragraph{Direct Conditional Dependencies}
+\begin{itemize}
+  \item Federal Poverty Level
+  \item Geometry Building Type RECS
+\end{itemize}
+
+\paragraph{Options}
+The options for the Electric Vehicle Charge At Home characteristic is a set of percentages that determine how much of the electric vehicle's energy shows up on the residential meter vs charging at work or at public chargers. Every unit in the baseline is assigned one of these options so that the home charging fraction does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle are specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_fraction\_charged\_home} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_ev_charge_at_home}.
+
+\begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
+{The ResStock argument definitions set in the Electric Vehicle Charge At Home characteristic} {table:hc_arg_def_ev_charge_at_home} 
+{Name & Required & Units & Type & Choices & Description} 
+\texttt{vehicle\_fraction\_charged\_home} & false & & Double & auto & The fraction of charging energy provided by the at-home charger to the vehicle, only applies to electric vehicles. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles}{HPXML Vehicles}) is used. \\
+\end{customLongTable}
+
+The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_ev_charge_at_home}.
+
+\begin{longtable}[]{ |p{3cm}|p{7cm}|} \caption{Electric Vehicle Charge At Home options and arguments that vary for each option} \label{table:hc_opt_ev_charge_at_home}  \\
+  \toprule\noalign{}
+  Option name & \texttt{vehicle\_fraction\_charged\_home} \\
+  \midrule\noalign{}
+  \endhead
+  \bottomrule\noalign{}
+  \endlastfoot
+  0-19\% &  0.1 \\
+  20-39\% &  0.3 \\
+  40-59\% &  0.5 \\
+  60-79\% &  0.7 \\
+  80-99\% &  0.9 \\
+  100\% &  1.0 \\
+\end{longtable}
+
+\paragraph{Distribution Assumption(s)}
+\begin{itemize}
+  \item Due to a low sample count, the distributions are constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The two sub-tsvs have the following dependencies: tsv1 dependency=['Geometry Building Type RECS'], tsv2 dependency=['Federal Poverty Level'], In combining tsv1 and tsv2, the conditional relationships are ignored across ('Geometry Building Type RECS' and 'Federal Poverty Level').
+\end{itemize}
+
+\subsubsection{Electric Vehicle Charger}
+\paragraph{Description}
+Presence and type of electric vehicle charger used at the dwelling unit.
+
+\paragraph{Distribution Data Source(s)}
+U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+
+\paragraph{Direct Conditional Dependencies}
+\begin{itemize}
+  \item Electrical Vehicle Ownership
+  \item Federal Poverty Level
+  \item Geometry Building Type RECS
+  \item Tenure
+\end{itemize}
+
+\paragraph{Options}
+The options for the Electric Vehicle Charger characteristic describe the type of charger used by an electric vehicle owner at home. The characteristic sets the \texttt{ev\_charger\_present}, \texttt{ev\_charger\_power}, and \texttt{ev\_charger\_location} ResStock arguments. The argument definition is found in Table \ref{table:hc_arg_def_ev_charger}. If \texttt{ev\_charger\_present} is set to "true", then the other arguments are required otherwise the power and location arguments will not be used. In the baseline stock the \texttt{ev\_charger\_location} argument is set to "auto", meaning it takes the default OpenStudio-HPXML value (see OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-electric-vehicle-chargers}{Electric Vehicle Charger}).
+
+\begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
+  {The ResStock argument definitions set in the Electric Vehicle Charger characteristic} {table:hc_arg_def_ev_charger} 
+  {Name & Required & Units & Type & Choices & Description} 
+  \texttt{ev\_charger\_present} & false & & Boolean & auto, true, false & Whether there is an electric vehicle charger present.  \\
+  \hline
+  \texttt{ev\_charger\_power} & false & W & 
+  Double & auto & The rated power output of the EV charger. If not provided, the OS-HPXML default (see HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>}{Electric Vehicle Chargers}) is used. \\
+  \hline
+  \texttt{ev\_charger\_location} & false &  &
+  Choice & auto, garage, outside & The space type for the EV charger. If not provided, the OS-HPXML default (see HPXML \href{<https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>}{Electric Vehicle Chargers}) is used. \\
+  \end{customLongTable}
+
+The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_ev_charger}. The Void option will not be sampled but indicates when an impossible combination of dependencies are listed.
+
+
+\begin{longtable}[]{ |p{5cm}|p{3cm}|p{3cm}|p{3cm}| } \caption{Electric Vehicle Charger options and arguments that vary for each option} \label{table:hc_opt_ev_charger}  \\
+  \toprule\noalign{}
+  Option name & \texttt{ev\_charger\_present} & \texttt{ev\_charger\_power} & \texttt{ev\_charger\_location} \\
+  \midrule\noalign{}
+  \endhead
+  \bottomrule\noalign{}
+  \endlastfoot
+  Level 1 charger &  true & 1600 & auto \\
+  Level 2 charger &  true & 5690 & auto \\
+  None &  false &  &  \\
+  Void &  false &  &  \\
+\end{longtable}
+
+\paragraph{Distribution Assumption(s)}
+Dwelling units with an electric vehicle need to have at least a Level 1 charger. Due to low sample sizes, coarsening of the dependencies are applied in the following order.
+\begin{enumerate}
+  \item Federal Poverty Level lumped every 100\%
+  \item Federal Poverty Level lumped every 200\%
+  \item Building type is consolidated into three bins 1) single-family detached and 2) multi-family with 5+ units, and 3) mobile homes, multi-family 2-4 units, and single-family attached
+  \item Building type is consolidated into two bins 1) single-family detached and 2) all other building types
+  \item Federal Poverty Level is combined into 400\%+ and <400\% bins
+\end{enumerate}
+
+\subsubsection{Electric Vehicle Miles Traveled}
+\paragraph{Description}
+The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
+
+\paragraph{Distribution Data Source(s)}
+The 2022 U.S. Federal Highway Administration National Household Travel Survey (NHTS) microdata.
+
+\paragraph{Direct Conditional Dependencies}
+No direct conditional dependencies.
+
+\paragraph{Options}
+The options for Electric Vehicle Miles Traveled characteristic are a set of miles traveled by the electric vehicle. These options do not specifiy if the unit has a vehicle, but rather the amount of miles the EV travels if the dwelling unit has an electric vehicle. Every unit is assigned one of these options so that the vehicle miles traveled does not need to be sampled during an electric vehicle upgrade. The units with an electric vehicle is specified by the Electric Vehicle Ownership characteristic. The characteristic sets the \texttt{vehicle\_miles\_driven\_per\_year} ResStock argument. The argument definition is found in Table \ref{table:hc_arg_def_ev_vmt}.
+
+\begin{customLongTable}{|p{2.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|}
+  {The ResStock argument definitions set in the Electric Vehicle Miles Traveled characteristic} {table:hc_arg_def_ev_vmt} 
+  {Name & Required & Units & Type & Choices & Description} 
+  \texttt{vehicle\_miles\_driven\_per\_year} & false & miles & Double & auto & The annual miles the vehicle is driven. If not provided, the OS-HPXML default (see HPXML \href{<https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>}{Vehicles}) is used. \\
+  \end{customLongTable}
+
+The options and their ResStock arguments values can be found in Table \ref{table:hc_opt_ev_vmt}. The options range between 1,000 miles and 45,000 miles.
+
+\begin{longtable}[]{ |p{5cm}|p{5cm}| } \caption{Electric Vehicle Vehicle Miles Traveled options and arguments that vary for each option} \label{table:hc_opt_ev_vmt}  \\
+  \toprule\noalign{}
+  Option name & \texttt{vehicle\_miles\_driven\_per\_year} \\
+  \midrule\noalign{}
+  \endhead
+  \bottomrule\noalign{}
+  \endlastfoot
+  1000 &  1000 \\
+  3000 &  3000 \\
+  5000 &  5000 \\
+  7000 &  7000 \\
+  9000 &  9000 \\
+  11000 &  11000 \\
+  13000 &  13000 \\
+  15000 &  15000 \\
+  17000 &  17000 \\
+  19000 &  19000 \\
+  22500 &  22500 \\
+  27500 &  27500 \\
+  35000 &  35000 \\
+  45000 &  45000 \\
+\end{longtable}
+
+\paragraph{Distribution Assumption(s)}
+No assumptions are made.
+
+\subsubsection{Electric Vehicle Outlet Access}
+\paragraph{Description}
+The unit has an outlet within 20 feet of vehicle parking.
+
+\paragraph{Distribution Data Source(s)}
+U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+
+\paragraph{Direct Conditional Dependencies}
+\begin{itemize}
+  \item Electric Vehicle Charger
+  \item Federal Poverty Level
+  \item Geometry Building Type RECS
+  \item Tenure
+  \item Vinteage ACS
+\end{itemize}
+
+\paragraph{Options}
+The options for Electric Vehicle Outlet Access characteristic indicate whether the unit has charging within 20 ft of the vehicle parking. This characteristic does not assign any ResStock arguments. The options are Yes, No, and Void. The Void option is assigned to impossible dependency combinations. 
+
+\paragraph{Distribution Assumption(s)}
+\begin{itemize}
+  \item RECS 2020 has Multi-Family 5+ units marked as Not Applicable. These units are replaced by data from the No Place Like Home Study (https://www.nrel.gov/docs/fy22osti/81065.pdf) Table 1 Scenario 2. Multi-Family 5+ units owners is assumed for 12\% units having electrical access. This fraction is based on the average of mid-capacity apartment and high-capacity apartment. Multi-Family 5+ units owners is assumed for 28\% units having electrical access.
+  \item Units reported to have a Level 1 or Level 2 charger in the field EVCHRGTYPE are assumed to have outlet access.
+  \item Level 1 chargers without outlet access are units with EVs, but report no outlet access within 20 ft of vehicle parking.
+  \item Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The sub-tsvs have the following dependencies:
+  \begin{itemize}
+    \item Dwelling unit sub-tsv : deps=['Geometry Building Type RECS', 'Vintage ACS', 'Electric Vehicle Charger'] with the following fallback coarsening order: 1) Vintage ACS to the National distribution and 2) combining Geometry Building Type RECS together into two bins a) single-family detached, mobile homes, and single family attached and b) multi-family with 2 - 4 units and multi-family with 5+ units
+    \item Household sub-tsv : deps=['Geometry Building Type RECS', 'State' 'Tenure', 'Federal Poverty Level'] 
+    \item In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Vintage ACS', 'Electric Vehicle Charger'], ['Tenure', 'Federal Poverty Level']).
+  \end{itemize}
+\end{itemize}
+
+\subsection{Electric Vehicle Charging and Discharging Schedules}
+Charging and discharging schedules provide the time periods when the EV can charge or discharge energy. The charging and discharging schedules are connected to the stochastic occupancy model (based on American Time Use Survey data) in OpenStudio-HPXML. Each unit with an EV has an occupant assigned as the sole driver. The schedule generator takes EV vehicle miles traveled and the average speed to calculate the total hours driven per year. The total hours driven per year is used as an input to the EV schedule generator and produces the charging and discharging schedule, while the battery model takes care of the actual power draw during the charging and discharging period. Figure \ref{fig:ev_discharge} shows an example of a generated discharging schedule. This schedule shows that during an “away period” for the occupant, the vehicle is discharged immediately after the occupant leaves and just before they arrive back home, proportional to the length of the away period. The charging schedule is similarly based on occupancy, where the baseline behavior assumes the vehicle is plugged in when the occupant arrives home, and remains plugged in for the full occupied period.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1\linewidth]{images/Example EV Discharging Schedule.png}
+  \caption{Illustration of EV battery discharge schedule generation.}
+  \label{fig:ev_discharge}
+\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Electrical Panels} \label{sec:input_panels}

@@ -1,6 +1,17 @@
 ## OpenStudio-HPXML v1.10.0
 
 __New Features__
+- Electric vehicle enhancements:
+  - Allows detailed modeling of electric vehicles (batteries and charging/discharging) using `Vehicles` as an alternative to the simple EV charging `PlugLoad`.
+  - Adds EV driving unmet hours output.
+  - Updates the default schedule for the EV charging `PlugLoad` to better reflect real-world hourly/monthly variation.
+- Allows requesting timeseries EnergyPlus output meters (e.g., `--hourly "MainsWater:Facility"`), similar to requesting EnergyPlus output variables.
+- BuildResidentialScheduleFile measure:
+  - Adds stochastic schedule generation for electric vehicle charging (using `Vehicles`).
+  - Removes generation of stochastic schedules for building components not present in the HPXML file.
+- Output updates:
+  - **Breaking change**: Adds generator electricity produced to *total* fuel/energy use; previously it was only included in *net* values.
+  - Adds new outputs for *net* peak electricity (summer/winter/annual); same as *total* peak electricity outputs but subtracts power produced by PV.
 - Electric panel calculations:
   - Allows optional `ElectricPanel` inputs for describing branch circuits and service feeders
   - Optionally reports breaker spaces and calculated loads for specified NEC calculation types
@@ -9,6 +20,13 @@ __Bugfixes__
 - Fixes zero occupants specified for one unit in a whole MF building from being treated like zero occupants for every unit.
 - Fixes using detailed schedules with higher resolution (e.g., 10-min data) than the simulation timestep (e.g., 60-min).
 - Fixes possible heating/cooling spikes when using maximum power ratio detailed schedule for variable-speed HVAC systems.
+- Fixes unavailable periods for two consecutive, but partial, days.
+- Fixes error when specifying a glass block window without interior shading coefficients.
+- Fixes battery charging/discharging not being included in peak electricity outputs.
+- Fixes possible error if there's a surface w/ interior unconditioned space and exterior "other housing unit".
+- BuildResidentialHPXML measure: Fixes error when specifying a combi boiler as the water heater type and a *shared* boiler as the heating system type.
+- BuildResidentialScheduleFile measure: Fixes out-of-sync shifting of occupancy and end use schedule resulting in activities even when there is no occupancy.
+- BuildResidentialScheduleFile measure: Fixes a small bug in sink schedule generation resulting in more concentrated schedule.
 
 ## OpenStudio-HPXML v1.9.1
 

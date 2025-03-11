@@ -155,11 +155,15 @@ report_simulation_output.load_hot_water_delivered_m_btu,MBtu,Load: Hot Water: De
 report_simulation_output.load_hot_water_desuperheater_m_btu,MBtu,Load: Hot Water: Desuperheater,load__hot_water__desuperheater__kbtu,kBtu,Load served by the desuperheater.
 report_simulation_output.load_hot_water_solar_thermal_m_btu,MBtu,Load: Hot Water: Solar Thermal,load__hot_water__solar_thermal__kbtu,kBtu,Load served by the solar thermal system.
 report_simulation_output.load_hot_water_tank_losses_m_btu,MBtu,Load: Hot Water: Tank Losses,load__hot_water__tank_losses__kbtu,kBtu,
-report_simulation_output.peak_electricity_annual_total_w,W,,,,Maximum value in any month
-report_simulation_output.peak_electricity_summer_total_w,W,,,,Maximum value in Jun/Jul/Aug (or Dec/Jan/Feb in the southern hemisphere)
-report_simulation_output.peak_electricity_winter_total_w,W,,,,Maximum value in Dec/Jan/Feb (or Jun/Jul/Aug in the southern hemisphere)
+report_simulation_output.peak_electricity_annual_net_w,W,,,,Annual maximum for total electricity consumption minus power produced by PV
+report_simulation_output.peak_electricity_summer_net_w,W,,,,Summer maximum for total electricity consumption minus power produced by PV
+report_simulation_output.peak_electricity_winter_net_w,W,,,,Winter maximum for total electricity consumption minus power produced by PV
+report_simulation_output.peak_electricity_annual_total_w,W,,,,Annual maximum for total electricity consumption
+report_simulation_output.peak_electricity_summer_total_w,W,,,,Summer maximum for total electricity consumption
+report_simulation_output.peak_electricity_winter_total_w,W,,,,Winter maximum for total electricity consumption
 report_simulation_output.peak_load_cooling_delivered_k_btu_hr,kBtu/hr,,,,Includes HVAC distribution losses.
 report_simulation_output.peak_load_heating_delivered_k_btu_hr,kBtu/hr,,,,Includes HVAC distribution losses.
 report_simulation_output.resilience_battery_hr,hr,Resilience: Battery,resilience__battery__hr,hr,Average length of time the battery state of charge can meet the electric load
 report_simulation_output.unmet_hours_cooling_hr,hr,Unmet Hours: Cooling,unmet_hours__cooling__hr,hr,Number of hours where the cooling setpoint is not maintained.
 report_simulation_output.unmet_hours_heating_hr,hr,Unmet Hours: Heating,unmet_hours__heating__hr,hr,Number of hours where the heating setpoint is not maintained.
+report_simulation_output.unmet_hours_ev_driving_hr,hr,Unmet Hours: EV Driving,unmet_hours__ev_driving__hr,hr,Number of hours where the EV driving demand is not met.

@@ -1,45 +1,45 @@
 Dependency=Custom State	Dependency=HVAC Secondary Heating Fuel	Dependency=HVAC Secondary Heating Type	Option=0%	Option=10%	Option=20%	Option=30%	Option=40%	Option=49%	Option=Void	sampling_probability
 AK	Electricity	Ducted Heating	1	0	0	0	0	0	0	0
 AK	Electricity	Non-Ducted Heating	1	0	0	0	0	0	0	0
-AK	Electricity	None	1	0	0	0	0	0	0	0.0285714
-AK	Fuel Oil	Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.0095238
-AK	Fuel Oil	Non-Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.0095238
-AK	Fuel Oil	None	1	0	0	0	0	0	0	0.0095238
-AK	Natural Gas	Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.0095238
-AK	Natural Gas	Non-Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.0095238
-AK	Natural Gas	None	1	0	0	0	0	0	0	0.0095238
-AK	None	Ducted Heating	1	0	0	0	0	0	0	0.0095238
-AK	None	Non-Ducted Heating	1	0	0	0	0	0	0	0.0095238
-AK	None	None	1	0	0	0	0	0	0	0.0095238
+AK	Electricity	None	1	0	0	0	0	0	0	0.0244898
+AK	Fuel Oil	Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.00816325
+AK	Fuel Oil	Non-Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.00816325
+AK	Fuel Oil	None	1	0	0	0	0	0	0	0.00816325
+AK	Natural Gas	Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.00816325
+AK	Natural Gas	Non-Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.00816325
+AK	Natural Gas	None	1	0	0	0	0	0	0	0.00816325
+AK	None	Ducted Heating	1	0	0	0	0	0	0	0
+AK	None	Non-Ducted Heating	1	0	0	0	0	0	0	0
+AK	None	None	1	0	0	0	0	0	0	0.0530612
 AK	Other Fuel	Ducted Heating	1	0	0	0	0	0	0	0
-AK	Other Fuel	Non-Ducted Heating	1	0	0	0	0	0	0	0.0285714
+AK	Other Fuel	Non-Ducted Heating	1	0	0	0	0	0	0	0.0244898
 AK	Other Fuel	None	1	0	0	0	0	0	0	0
-AK	Propane	Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.0095238
-AK	Propane	Non-Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.0095238
-AK	Propane	None	1	0	0	0	0	0	0	0.0095238
-AK	Wood	Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.0095238
-AK	Wood	Non-Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.0095238
-AK	Wood	None	1	0	0	0	0	0	0	0.0095238
+AK	Propane	Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.00816325
+AK	Propane	Non-Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.00816325
+AK	Propane	None	1	0	0	0	0	0	0	0.00816325
+AK	Wood	Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.00816325
+AK	Wood	Non-Ducted Heating	0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	0	0.00816325
+AK	Wood	None	1	0	0	0	0	0	0	0.00816325
 Others	Electricity	Ducted Heating	1	0	0	0	0	0	0	0
 Others	Electricity	Non-Ducted Heating	1	0	0	0	0	0	0	0
-Others	Electricity	None	1	0	0	0	0	0	0	0.114286
+Others	Electricity	None	1	0	0	0	0	0	0	0
 Others	Fuel Oil	Ducted Heating	1	0	0	0	0	0	0	0
 Others	Fuel Oil	Non-Ducted Heating	1	0	0	0	0	0	0	0
-Others	Fuel Oil	None	1	0	0	0	0	0	0	0.114286
+Others	Fuel Oil	None	1	0	0	0	0	0	0	0
 Others	Natural Gas	Ducted Heating	1	0	0	0	0	0	0	0
 Others	Natural Gas	Non-Ducted Heating	1	0	0	0	0	0	0	0
-Others	Natural Gas	None	1	0	0	0	0	0	0	0.114286
+Others	Natural Gas	None	1	0	0	0	0	0	0	0
 Others	None	Ducted Heating	1	0	0	0	0	0	0	0
 Others	None	Non-Ducted Heating	1	0	0	0	0	0	0	0
-Others	None	None	1	0	0	0	0	0	0	0.114286
+Others	None	None	1	0	0	0	0	0	0	0.8
 Others	Other Fuel	Ducted Heating	1	0	0	0	0	0	0	0
 Others	Other Fuel	Non-Ducted Heating	1	0	0	0	0	0	0	0
-Others	Other Fuel	None	1	0	0	0	0	0	0	0.114286
+Others	Other Fuel	None	1	0	0	0	0	0	0	0
 Others	Propane	Ducted Heating	1	0	0	0	0	0	0	0
 Others	Propane	Non-Ducted Heating	1	0	0	0	0	0	0	0
-Others	Propane	None	1	0	0	0	0	0	0	0.114286
+Others	Propane	None	1	0	0	0	0	0	0	0
 Others	Wood	Ducted Heating	1	0	0	0	0	0	0	0
 Others	Wood	Non-Ducted Heating	1	0	0	0	0	0	0	0
-Others	Wood	None	1	0	0	0	0	0	0	0.114286
+Others	Wood	None	1	0	0	0	0	0	0	0
 # Created by: sources\aris\tsv_maker.py
 # Description: The fraction of heating load served by secondary heating system

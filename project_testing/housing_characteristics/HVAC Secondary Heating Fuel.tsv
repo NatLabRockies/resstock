@@ -1,4 +1,17 @@
-Option=Electricity	Option=Fuel Oil	Option=Natural Gas	Option=None	Option=Other Fuel	Option=Propane	Option=Wood	sampling_probability
-0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	1
+Dependency=Custom State	Dependency=Heating Fuel	Option=Electricity	Option=Fuel Oil	Option=Natural Gas	Option=None	Option=Other Fuel	Option=Propane	Option=Wood	sampling_probability
+AK	Electricity	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.0285714
+Others	Electricity	0	0	0	1	0	0	0	0.114286
+AK	Natural Gas	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.0285714
+Others	Natural Gas	0	0	0	1	0	0	0	0.114286
+AK	Fuel Oil	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.0285714
+Others	Fuel Oil	0	0	0	1	0	0	0	0.114286
+AK	Propane	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.0285714
+Others	Propane	0	0	0	1	0	0	0	0.114286
+AK	None	0	0	0	1	0	0	0	0.0285714
+Others	None	0	0	0	1	0	0	0	0.114286
+AK	Other Fuel	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.0285714
+Others	Other Fuel	0	0	0	1	0	0	0	0.114286
+AK	Wood	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.0285714
+Others	Wood	0	0	0	1	0	0	0	0.114286
 # Created by: sources\aris\tsv_maker.py
 # Description: Secondary Heating Fuel for the dwelling unit

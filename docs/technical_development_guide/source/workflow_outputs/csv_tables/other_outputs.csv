@@ -1,4 +1,10 @@
 Input Name,Input Description
+build_existing_model.electric_vehicle_battery, The type of battery used by EV
+build_existing_model.electric_vehicle_charge_at_home, Percentage of EV charging that occurs at home
+build_existing_model.electric_vehicle_charger, The type of charger used by EV
+build_existing_model.electric_vehicle_miles_traveled, Annual miles traveled by EV
+build_existing_model.electric_vehicle_outlet_access, The type of outlet access available for EV
+build_existing_model.electric_vehicle_ownership, Whether the EV is present or not
 building_id,The building unit number (between 1 and the number of samples).
 job_id,The unique identifier of the job/processor.
 started_at,Simulation start time.
@@ -95,7 +101,8 @@ report_simulation_output.timeseries_timestamp_convention,Determines whether time
 report_simulation_output.timeseries_num_decimal_places,"Allows overriding the default number of decimal places for timeseries output. Does not apply if output format is msgpack, where no rounding is performed because there is no file size penalty to storing full precision."
 report_simulation_output.add_timeseries_dst_column,"Optionally add, in addition to the default local standard Time column, a local clock TimeDST column. Requires that daylight saving time is enabled."
 report_simulation_output.add_timeseries_utc_column,"Optionally add, in addition to the default local standard Time column, a local clock TimeUTC column. If the time zone UTC offset is not provided in the HPXML file, the time zone in the EPW header will be used."
-report_simulation_output.user_output_variables,"Optionally generates timeseries EnergyPlus output variables. If multiple output variables are desired, use a comma-separated list. Do not include key values; by default all key values will be requested. Example: ""Zone People Occupant Count, Zone People Total Heating Energy"""
+report_simulation_output.user_output_variables,"Optionally generates timeseries EnergyPlus output variables. If multiple output variables are desired, use a comma-separated list. Do not include key values; by default all key values will be requested. Example: 'Zone People Occupant Count, Zone People Total Heating Energy'"
+report_simulation_output.user_output_meters,"Optionally generates timeseries EnergyPlus output meters. If multiple output meters are desired, use a comma-separated list. Example: 'Electricity:Facility, HeatingCoils:EnergyTransfer'"
 report_utility_bills.applicable,The measure was applied to the workflow.
 report_utility_bills.output_format,"The file format of the annual (and timeseries, if requested) outputs."
 report_utility_bills.include_annual_bills,Generates output file containing annual utility bills.

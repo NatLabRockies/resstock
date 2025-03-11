@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>report_simulation_output</name>
   <uid>df9d170c-c21a-4130-866d-0d46b06073fd</uid>
-  <version_id>f893ba9a-3f55-4cc8-ae71-e7f893b10297</version_id>
-  <version_modified>2025-01-29T17:40:19Z</version_modified>
+  <version_id>f2d72703-a7b1-4f01-a7f2-f87f18b1b446</version_id>
+  <version_modified>2025-03-11T16:36:41Z</version_modified>
   <xml_checksum>9BF1E6AC</xml_checksum>
   <class_name>ReportSimulationOutput</class_name>
   <display_name>HPXML Simulation Output Report</display_name>
@@ -193,7 +193,7 @@
     <argument>
       <name>include_annual_unmet_hours</name>
       <display_name>Generate Annual Output: Unmet Hours</display_name>
-      <description>Generates annual unmet hours for heating and cooling.</description>
+      <description>Generates annual unmet hours for heating, cooling, and EV driving.</description>
       <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -212,7 +212,7 @@
     <argument>
       <name>include_annual_peak_fuels</name>
       <display_name>Generate Annual Output: Peak Fuels</display_name>
-      <description>Generates annual electricity peaks for summer/winter.</description>
+      <description>Generates annual/summer/winter electricity peaks.</description>
       <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -566,7 +566,7 @@
     <argument>
       <name>include_timeseries_unmet_hours</name>
       <display_name>Generate Timeseries Output: Unmet Hours</display_name>
-      <description>Generates timeseries unmet hours for heating and cooling.</description>
+      <description>Generates timeseries unmet hours for heating, cooling, and EV driving.</description>
       <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -732,6 +732,14 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>user_output_meters</name>
+      <display_name>Generate Timeseries Output: EnergyPlus Output Meters</display_name>
+      <description>Optionally generates timeseries EnergyPlus output meters. If multiple output meters are desired, use a comma-separated list. Example: "Electricity:Facility, HeatingCoils:EnergyTransfer"</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>annual_output_file_name</name>
       <display_name>Annual Output File Name</display_name>
       <description>If not provided, defaults to 'results_annual.csv' (or 'results_annual.json' or 'results_annual.msgpack').</description>
@@ -775,6 +783,13 @@
       <name>fuel_use_electricity_total_m_btu</name>
       <display_name>fuel_use_electricity_total_m_btu</display_name>
       <short_name>fuel_use_electricity_total_m_btu</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>fuel_use_electricity_net_m_btu</name>
+      <display_name>fuel_use_electricity_net_m_btu</display_name>
+      <short_name>fuel_use_electricity_net_m_btu</short_name>
       <type>Double</type>
       <model_dependent>false</model_dependent>
     </output>
@@ -1003,13 +1018,6 @@
       <model_dependent>false</model_dependent>
     </output>
     <output>
-      <name>end_use_electricity_electric_vehicle_charging_m_btu</name>
-      <display_name>end_use_electricity_electric_vehicle_charging_m_btu</display_name>
-      <short_name>end_use_electricity_electric_vehicle_charging_m_btu</short_name>
-      <type>Double</type>
-      <model_dependent>false</model_dependent>
-    </output>
-    <output>
       <name>end_use_electricity_well_pump_m_btu</name>
       <display_name>end_use_electricity_well_pump_m_btu</display_name>
       <short_name>end_use_electricity_well_pump_m_btu</short_name>
@@ -1062,6 +1070,13 @@
       <name>end_use_electricity_battery_m_btu</name>
       <display_name>end_use_electricity_battery_m_btu</display_name>
       <short_name>end_use_electricity_battery_m_btu</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>end_use_electricity_electric_vehicle_charging_m_btu</name>
+      <display_name>end_use_electricity_electric_vehicle_charging_m_btu</display_name>
+      <short_name>end_use_electricity_electric_vehicle_charging_m_btu</short_name>
       <type>Double</type>
       <model_dependent>false</model_dependent>
     </output>
@@ -1563,6 +1578,13 @@
       <model_dependent>false</model_dependent>
     </output>
     <output>
+      <name>unmet_hours_ev_driving_hr</name>
+      <display_name>unmet_hours_ev_driving_hr</display_name>
+      <short_name>unmet_hours_ev_driving_hr</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
       <name>peak_electricity_winter_total_w</name>
       <display_name>peak_electricity_winter_total_w</display_name>
       <short_name>peak_electricity_winter_total_w</short_name>
@@ -1580,6 +1602,27 @@
       <name>peak_electricity_annual_total_w</name>
       <display_name>peak_electricity_annual_total_w</display_name>
       <short_name>peak_electricity_annual_total_w</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>peak_electricity_winter_net_w</name>
+      <display_name>peak_electricity_winter_net_w</display_name>
+      <short_name>peak_electricity_winter_net_w</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>peak_electricity_summer_net_w</name>
+      <display_name>peak_electricity_summer_net_w</display_name>
+      <short_name>peak_electricity_summer_net_w</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>peak_electricity_annual_net_w</name>
+      <display_name>peak_electricity_annual_net_w</display_name>
+      <short_name>peak_electricity_annual_net_w</short_name>
       <type>Double</type>
       <model_dependent>false</model_dependent>
     </output>
@@ -1939,7 +1982,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>9B7B8AF5</checksum>
+      <checksum>403BC6A3</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -1956,13 +1999,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>23BF3A43</checksum>
+      <checksum>C7A7E2B3</checksum>
     </file>
     <file>
       <filename>test_report_sim_output.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>1C09A5D0</checksum>
+      <checksum>4F73165E</checksum>
     </file>
   </files>
 </measure>

@@ -35432,25 +35432,35 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 100%
      - 2
 
-.. _electric_vehicle:
+.. _electric_vehicle_battery:
 
-Electric Vehicle
-----------------
+Electric Vehicle Battery
+------------------------
 
 Description
 ***********
 
-Electric vehicle usage and efficiency (not used in project_national).
+The type of electric vehicle and battery range in miles.
 
 Created by
 **********
 
-manually created
+``sources/tempo/tsv_maker.py``
 
 Source
 ******
 
-- \Not applicable (electric vehicle charging is not currently modeled separate from plug loads)
+- \the 2023 Vehicle Stock Projection Data from NREL's TEMPO model.
+
+- \EV Registration Data from Experian 2023.
+
+
+Assumption
+**********
+
+- \Vehicle stock data starts with the Experian registration data and then is projected by TEMPO to 2023.
+
+- \If the household does not have an Electric Vehicle, the options represent the household preference.
 
 
 Arguments
@@ -35466,35 +35476,41 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``misc_plug_loads_vehicle_present``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Whether there is an electric vehicle.
-   * - ``misc_plug_loads_vehicle_annual_kwh``
+   * - ``vehicle_battery_usable_capacity``
      - false
-     - kWh/yr
+     - kWh
      - Double
      - auto
-     - The annual energy consumption of the electric vehicle plug loads. If not provided, the OS-HPXML default (see `HPXML Plug Loads <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads>`_) is used.
-   * - ``misc_plug_loads_vehicle_usage_multiplier``
+     - The usable capacity of the vehicle battery, only applies to electric vehicles. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
+   * - ``vehicle_fuel_economy_units``
+     - false
+     - 
+     - Choice
+     - auto, kWh/mile, mile/kWh, mpge, mpg
+     - The combined fuel economy units of the vehicle. Only 'kWh/mile', 'mile/kWh', or 'mpge' are allow for electric vehicles. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
+   * - ``vehicle_fuel_economy_combined``
      - false
      - 
      - Double
      - auto
-     - Multiplier on the electric vehicle energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Plug Loads <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads>`_) is used.
-   * - ``misc_plug_loads_vehicle_2_usage_multiplier``
-     - true
-     - 
+     - The combined fuel economy of the vehicle. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
+   * - ``ev_average_mph``
+     - false
+     - miles/hour
      - Double
      -
-     - Additional multiplier on the electric vehicle energy usage that can reflect, e.g., high/low usage occupants.
+     - The average miles/hour driven by the vehicle.
+   * - ``ev_efficiency_percent_increase``
+     - false
+     - Frac
+     - Double
+     -
+     - The increase (fraction) in efficiency of the electric vehicle.
 
 Options
 *******
 
-From ``project_national`` the list of options, option stock sturation, and option arguments for the **Electric Vehicle** characteristic.
+From ``project_national`` the list of options, option stock sturation, and option arguments for the **Electric Vehicle Battery** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -35503,29 +35519,500 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``misc_plug_loads_vehicle_present``
-     - ``misc_plug_loads_vehicle_annual_kwh``
-     - ``misc_plug_loads_vehicle_usage_multiplier``
-     - ``misc_plug_loads_vehicle_2_usage_multiplier``
+     - ``vehicle_battery_usable_capacity``
+     - ``vehicle_fuel_economy_units``
+     - ``vehicle_fuel_economy_combined``
+     - ``ev_average_mph``
+     - ``ev_efficiency_percent_increase``
 
-   * - None
-     - 100%
+   * - Compact, Battery Electric Vehicle, 200 mile range
+     - 12%
+     - 40.168
+     - kWh/mile
+     - 0.209901
+     - 22
+     - 0.0
+   * - Compact, Battery Electric Vehicle, 300 mile range
+     - 34%
+     - 63.433
+     - kWh/mile
+     - 0.220020
+     - 22
+     - 0.0
+   * - Midsize, Battery Electric Vehicle, 200 mile range
+     - 3%
+     - 41.978
+     - kWh/mile
+     - 0.219174
+     - 22
+     - 0.0
+   * - Midsize, Battery Electric Vehicle, 300 mile range
+     - 7.6%
+     - 65.441
+     - kWh/mile
+     - 0.229449
+     - 22
+     - 0.0
+   * - Pickup, Battery Electric Vehicle, 200 mile range
+     - 0.0055%
+     - 67.738
+     - kWh/mile
+     - 0.357648
+     - 22
+     - 0.0
+   * - Pickup, Battery Electric Vehicle, 300 mile range
+     - 0.77%
+     - 105.946
+     - kWh/mile
+     - 0.373794
+     - 22
+     - 0.0
+   * - SUV, Battery Electric Vehicle, 200 mile range
+     - 12%
+     - 53.503
+     - kWh/mile
+     - 0.267513
+     - 22
+     - 0.0
+   * - SUV, Battery Electric Vehicle, 300 mile range
+     - 31%
+     - 83.680
+     - kWh/mile
+     - 0.278934
+     - 22
+     - 0.0
+
+.. _electric_vehicle_charge_at_home:
+
+Electric Vehicle Charge At Home
+-------------------------------
+
+Description
+***********
+
+The percentage a household would or do charge their electric vehicle at home.
+
+Created by
+**********
+
+``sources/recs/recs2020/tsv_maker.py``
+
+Source
+******
+
+- \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+
+
+Assumption
+**********
+
+- \Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The two sub-tsvs have the following dependencies: tsv1 dependency=['Geometry Building Type RECS'], tsv2 dependency=['Federal Poverty Level'], In combining tsv1 and tsv2, the conditional relationships are ignored across ('Geometry Building Type RECS' and 'Federal Poverty Level').
+
+
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``vehicle_fraction_charged_home``
      - false
-     - 0
-     - 0
-     - 0
-   * - EV, 5000 miles, 0.3 kWh/mi
-     - 0%
+     - 
+     - Double
+     - auto
+     - The fraction of charging energy provided by the at-home charger to the vehicle, only applies to electric vehicles. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
+
+Options
+*******
+
+From ``project_national`` the list of options, option stock sturation, and option arguments for the **Electric Vehicle Charge At Home** characteristic.
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+   :widths: auto
+
+   * - Option name
+     - Stock saturation
+     - ``vehicle_fraction_charged_home``
+
+   * - 0-19%
+     - 13%
+     - 0.10
+   * - 20-39%
+     - 1.4%
+     - 0.30
+   * - 40-59%
+     - 1.9%
+     - 0.50
+   * - 60-79%
+     - 7.3%
+     - 0.70
+   * - 80-99%
+     - 34%
+     - 0.90
+   * - 100%
+     - 42%
+     - 1.00
+
+.. _electric_vehicle_charger:
+
+Electric Vehicle Charger
+------------------------
+
+Description
+***********
+
+Type of electric vehicle charger used at the dwelling unit
+
+Created by
+**********
+
+``sources/recs/recs2020/tsv_maker.py``
+
+Source
+******
+
+- \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+
+
+Assumption
+**********
+
+- \Dwelling units with an electric vehicle need to have at least a Level 1 charger.Due to low sample sizes, fallback rules applied with lumping of:
+
+  - \[1] Federal Poverty Level lumped every 100%
+
+  - \[2] Federal Poverty Level lumped every 200%
+
+  - \[3] Building type is consolidated into three bins 1) single-family detached and 2) multi-family with 5+ units, and 3) mobile homes, multi-family 2-4 units, and single-family attached
+
+  - \[4] Building type is consolidated into two bins 1) single-family detached and all other building types
+
+  - \[5] Federal Poverty Level is combined into 400%+ and <400% bins
+
+
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``ev_charger_present``
+     - false
+     - 
+     - Boolean
+     - auto, true, false
+     - Whether there is an electric vehicle charger present.
+   * - ``ev_charger_power``
+     - false
+     - W
+     - Double
+     - auto
+     - The rated power output of the EV charger. If not provided, the OS-HPXML default (see `HPXML Electric Vehicle Chargers <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>`_) is used.
+   * - ``ev_charger_location``
+     - false
+     - 
+     - Choice
+     - auto, garage, outside
+     - The space type for the EV charger. If not provided, the OS-HPXML default (see `HPXML Electric Vehicle Chargers <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>`_) is used.
+
+Options
+*******
+
+From ``project_national`` the list of options, option stock sturation, and option arguments for the **Electric Vehicle Charger** characteristic.
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+   :widths: auto
+
+   * - Option name
+     - Stock saturation
+     - ``ev_charger_present``
+     - ``ev_charger_power``
+     - ``ev_charger_location``
+
+   * - Level 1 charger
+     - 0.86%
      - true
-     - 1852
-     - 1.0
-     - 1.0
-   * - EV, 4000 miles, 0.3 kWh/mi
-     - 0%
+     - 1600
+     - auto
+   * - Level 2 charger
+     - 0.59%
      - true
-     - 1481
-     - 1.0
-     - 1.0
+     - 5690
+     - auto
+   * - None
+     - 99%
+     - false
+     - 
+     - 
+   * - Void
+     - 0%
+     - false
+     - 
+     - 
+
+.. _electric_vehicle_miles_traveled:
+
+Electric Vehicle Miles Traveled
+-------------------------------
+
+Description
+***********
+
+The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
+
+Created by
+**********
+
+manually created
+
+Source
+******
+
+- \the 2022 U.S. Federal Highway Administration National Household Travel Survey (NHTS) microdata.
+
+
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``vehicle_miles_driven_per_year``
+     - false
+     - miles
+     - Double
+     - auto
+     - The annual miles the vehicle is driven. If not provided, the OS-HPXML default (see `HPXML Vehicles <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-vehicles>`_) is used.
+
+Options
+*******
+
+From ``project_national`` the list of options, option stock sturation, and option arguments for the **Electric Vehicle Miles Traveled** characteristic.
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+   :widths: auto
+
+   * - Option name
+     - Stock saturation
+     - ``vehicle_miles_driven_per_year``
+
+   * - 1000
+     - 9.6%
+     - 1000
+   * - 3000
+     - 10%
+     - 3000
+   * - 5000
+     - 12%
+     - 5000
+   * - 7000
+     - 12%
+     - 7000
+   * - 9000
+     - 11%
+     - 9000
+   * - 11000
+     - 10%
+     - 11000
+   * - 13000
+     - 8.2%
+     - 13000
+   * - 15000
+     - 6.5%
+     - 15000
+   * - 17000
+     - 4.9%
+     - 17000
+   * - 19000
+     - 3.6%
+     - 19000
+   * - 22500
+     - 5.6%
+     - 22500
+   * - 27500
+     - 2.8%
+     - 27500
+   * - 35000
+     - 2%
+     - 35000
+   * - 45000
+     - 1.4%
+     - 45000
+
+.. _electric_vehicle_outlet_access:
+
+Electric Vehicle Outlet Access
+------------------------------
+
+Description
+***********
+
+The unit has an outlet within 20 feet of vehicle parking.
+
+Created by
+**********
+
+``sources/recs/recs2020/tsv_maker.py``
+
+Source
+******
+
+- \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+
+
+Assumption
+**********
+
+- \RECS 2020 has Multi-Family 5+ units marked as Not Applicable. These units are replaced by data from the No Place Like Home Study (https://www.nrel.gov/docs/fy22osti/81065.pdf) Table 1 Scenario 2. Multi-Family 5+ units owners is assumed for 12% units having electrical access. This fraction is based on the average of mid-capacity apt and high-capacity apt. Multi-Family 5+ units owners is assumed for 28% units having electrical access.
+
+- \Units reported to have an L1 or L2 charger in the field EVCHRGTYPE are assumed to have outlet access.
+
+- \L1 chargers without outlet access are units with EVs, but report no outlet access within 20 ft of vehicle parking.
+
+- \Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The sub-tsvs have the following dependencies:
+
+- \Dwelling unit sub-tsv : deps=['Geometry Building Type RECS', 'Vintage ACS', 'Electric Vehicle Charger'] with the following fallback coarsening order
+
+  - \[1] Vintage ACS to the National distribution
+
+  - \[2] Combining Geometry Building Type RECS together into SFD+MF+SFA and MF 2-4+MF 5+ bins
+
+- \Household sub-tsv : deps=['Geometry Building Type RECS', 'State' 'Tenure', 'Federal Poverty Level'] In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Vintage ACS', 'Electric Vehicle Charger'], ['Tenure', 'Federal Poverty Level']).
+
+
+Options
+*******
+
+From ``project_national`` the list of options, option stock sturation, and option arguments for the **Electric Vehicle Outlet Access** characteristic.
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+   :widths: auto
+
+   * - Option name
+     - Stock saturation
+
+   * - No
+     - 44%
+   * - Yes
+     - 56%
+   * - Void
+     - 0%
+
+.. _electric_vehicle_ownership:
+
+Electric Vehicle Ownership
+--------------------------
+
+Description
+***********
+
+The dwelling unit owns an electric vehicle.
+
+Created by
+**********
+
+``sources/experian/tsv_maker.py``
+
+Source
+******
+
+- \EV Registration Data from Experian 2023.
+
+- \2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.
+
+- \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+
+
+Assumption
+**********
+
+- \Due to low sample sizes, fallback rules applied with lumping of:
+
+  - \[1] Federal Poverty Level lumped every 100%
+
+  - \[2] Federal Poverty Level lumped every 200%
+
+  - \[3] Building type is consolidated into three bins 1) single-family, 2) multi-family, and 3) mobile home bins
+
+  - \[4] Building type is consolidated into two bins 1) single-family and 2) multi-family and mobile home bins
+
+- \PUMA level battery electric vehicle saturation is calculated using a weighted average of the County level Experian data and ResStock unit counts for each County and PUMA.
+
+- \The RECS 2020 satuations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery electric vehicle saturation using the segment unit counts from PUMS 2019-5yrs survey.
+
+
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``vehicle_type``
+     - false
+     - 
+     - String
+     -
+     - The type of vehicle present at the home.
+
+Options
+*******
+
+From ``project_national`` the list of options, option stock sturation, and option arguments for the **Electric Vehicle Ownership** characteristic.
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+   :widths: auto
+
+   * - Option name
+     - Stock saturation
+     - ``vehicle_type``
+
+   * - No
+     - 99%
+     - 
+   * - Yes
+     - 1.4%
+     - BatteryElectricVehicle
+   * - Void
+     - 0%
+     - 
 
 .. _energystar_climate_zone_2023:
 
@@ -40136,14 +40623,14 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``heating_system_2_has_flue_or_chimney``
 
    * - Fuel Boiler, 76% AFUE
-     - 0.017%
+     - 0.018%
      - Boiler
      - 0.76
      - auto
      - auto
      - auto
    * - Fuel Boiler, 80% AFUE
-     - 0.014%
+     - 0.015%
      - Boiler
      - 0.8
      - auto
@@ -40164,7 +40651,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
    * - Fuel Furnace, 76% AFUE
-     - 0.00052%
+     - 0.00053%
      - Furnace
      - 0.76
      - auto
@@ -40192,7 +40679,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
    * - Shared Heating
-     - 0.0017%
+     - 0%
      - none
      - 0
      - auto
@@ -40235,6 +40722,8 @@ Assumption
 - \For Alaska, all wood is modelled as cord wood.
 
 - \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary. Rest of the fuels are ignored.
+
+- \A unit without a primary heating system (heating fuel is None) cannot have a secondary heating system (secondary heating fuel is None).
 
 
 Arguments

@@ -44,7 +44,6 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.corridor & Type of corridor \\ \hline
         in.county & County GISJOIN identifier \\ \hline
         in.county\_and\_puma & The GISJOIN identifier for the County and the PUMA that the sample is located \\ \hline
-        
         in.dehumidifier & Presence, water removal rate, and humidity setpoint of dehumidifier (not modeled in 2024.2 dataset) \\ \hline
         in.dishwasher & Presence and rated efficiency of dishwasher \\ \hline
         in.dishwasher\_usage\_level & Dishwasher energy usage level multiplier \\ \hline
@@ -55,8 +54,12 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.eaves & Depth of roof eaves \\ \hline
         in.electric\_panel\_service\_rating & Electrical panel service or max current rating (A) \\ \hline
         in.electric\_panel\_service\_rating\_bin & Electrical panel service or max current rating in bins (A) \\ \hline
-        in.electric\_vehicle & Electric vehicle usage and efficiency \\ \hline
-        
+        in.electric\_vehicle\_battery & The type of battery used by EV \\ \hline
+        in.electric\_vehicle\_charge\_at\_home & Percentage of EV charging that occurs at home \\ \hline
+        in.electric\_vehicle\_charger & The type of charger used by EV \\ \hline
+        in.electric\_vehicle\_miles\_traveled & Annual miles traveled by EV \\ \hline
+        in.electric\_vehicle\_outlet\_access & The type of outlet access available for EV \\ \hline
+        in.electric\_vehicle\_ownership & Whether the EV is present or not \\ \hline
         in.energystar\_climate\_zone\_2023 & Climate zones for windows, doors, and skylights per ENERGY STAR guidelines as of 2023 \\ \hline
         in.federal\_poverty\_level & Federal poverty level of the household occupying the housing unit \\ \hline
         in.generation\_and\_emissions\_assessment\_region & Generation and carbon emissions assessment (GEA) region from Cambium 2022 \\ \hline
@@ -228,6 +231,7 @@ As an output, the energy consumption results are all preceded with an ``out.'' p
         out.electricity.cooling.energy\_consumption.kwh & kWh & Electricity consumed by cooling systems; excludes usage by fans/pumps \\ \hline
         out.electricity.cooling\_fans\_pumps.energy\_consumption.kwh & kWh & Electricity consumed by supply fan (air distribution) or circulating pump (geothermal loop) during cooling \\ \hline
         out.electricity.dishwasher.energy\_consumption.kwh & kWh & Electricity consumed by dishwashers \\ \hline
+        out.electricity.electric\_vehicle\_charging.energy\_consumption.kwh & kWh & Electricity consumed by charging electric vehicles \\ \hline
         out.electricity.freezer.energy\_consumption.kwh & kWh & Electricity consumed by standalone freezers \\ \hline
         out.electricity.heating.energy\_consumption.kwh & kWh & Electricity consumed by heating systems; excludes usage by fans/pumps \\ \hline
         out.electricity.heating\_fans\_pumps.energy\_consumption.kwh & kWh & Electricity consumed by supply fan (air distribution) or circulating pump (hydronic distribution or geothermal loop) during heating \\ \hline
@@ -379,12 +383,9 @@ ResStock results can also be used as inputs to calculate utility bills using oth
 Energy burden is calculated as the ratio of two values from ResStock data. The first is the energy bill, which is calculated for each individual housing unit model in an analysis as described in the above section. The second is the representative household income, which is converted from income bin and other household characteristics described in Section \ref{resstock_input_energy_burden}. The energy burden is the energy bill total divided by the representative household income, typically expressed as a percentage. As the utility bill does not account for financial assistance such as LIHEAP, energy burden may be overestimated for low-income households who may qualify for those assistance. Additionally, the representative income is in 2019 USD, reflecting the vintage of PUMS used to derived the data. The dollar value of the utility bill is typically more recent and thus may not align with that of the income denominator.
 
 When this field is available in public datasets, it begins with ``out.energy\_burden.``
-
 \section{Electrical Panels} \label{sec:output_panels}
 For electrical panel, occupied capacity and breaker spaces are tabulated by end use. The total occupied capacity and spaces are calculated as well as their headroom, or the amount of capacity or space left unused.  In public ResStock datasets, these fields are prefixed with ``out.electric\_panel`` and described in \ref{tab:panels}. 
-
 For capacity, the total occupied load (W) can be calculated using different methods and will be labeled accordingly. In the public datasets, results are available for the 2023 load-based (NEC 220.83) and meter-based (NEC 220.87) methods for existing dwellings. See Section \ref{sec:input_panels} for the method description. The occupied capacity (A) is converted from occupied load (W) by dividing by 240V, the panel voltage, and then subtracted from the input field ``in.electrical\_panel\_service\_rating``'' (A) to get the headroom capacity (A). Users can use the headroom capacity to estimate the number of homes that may require an electrical intervention, such as a panel or service upsizing, for a given upgrade. If the headroom capacity value is negative, then the panel is considered capacity-constrained, and an intervention may be required. If the headroom is positive, no mitigation is necessary. Headroom capacity is also calculated for the baseline and a negative value, while uncommon, can be interpreted as the home already being capacity-constrained prior to any upgrade. This is consistent with anecdotal observations that some homes do in fact trip their breakers often, an indication of a capacity shortfall. However, it's important to interpret any electrical panel outcomes as modeled estimates and that results with negative capacity headroom in the baseline have the same degree of uncertainty as those with positive capacity headroom.  
-
 For breaker spaces, headroom count is labeled as an output metric but is actually an input characteristic probabilistically assigned based on the panel service rating, the number of major electrical loads of the home, and, in some cases, floor area as well. Because the headroom count is predetermined in the baseline, it can never be negative, unlike capacity. Using the input headroom count and a bottom-up tabulation of electrical equipment in the home, the total rated space count is determined for the baseline. In the upgrade simulations, this total rated count remains the same for the home and the headroom count is recalculated according to the content of the upgrade package. See Section \ref{sec:input_panels} for details. Users can estimate the number of homes that are space-constrained and requiring mitigation by looking at the headroom counts that are negative, similar to capacity. 
 \begin{customLongTable}{ |p{6cm}|p{1.5cm}|p{7.5cm}| }
         {ResStock electrical panel output field names, units, and descriptions} {tab:panels} 
@@ -406,7 +407,6 @@ For breaker spaces, headroom count is labeled as an output metric but is actuall
                 out.electric\_panel\_load.well\_pump.w & W & Sum of well pump demand loads \\ \hline
                 out.electric\_panel\_load.electric\_vehicle\_charging.w & W & Sum of electric vehicle charging demand loads \\ \hline
                 out.electric\_panel\_load.other.w & W & Sum of other electric demand loads \\ \hline
-
                 out.electric\_panel\_breaker\_spaces.total.count & count & Total rated number of spaces on the panel \\ \hline
                 out.electric\_panel\_breaker\_spaces.occupied.count & count & Total number of occupied spaces on the panel \\ \hline
                 out.electric\_panel\_breaker\_spaces.headroom.count & count & Available spaces, calculated as total rated spaces minus occupied spaces \\ \hline

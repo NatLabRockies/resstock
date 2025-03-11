@@ -6678,9 +6678,9 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element minOccurs="0" name="AttachedToComponent" type="LocalReference" maxOccurs="unbounded"/>
-			<xs:element minOccurs="0" name="AttachedToElectricPanel" type="LocalReference">
+			<xs:element minOccurs="0" name="AttachedToSubPanel" type="LocalReference">
 				<xs:annotation>
-					<xs:documentation>This references a subpanel.</xs:documentation>
+					<xs:documentation>References the ElectricPanel that this BranchCircuit is attached to.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -6692,7 +6692,7 @@
 			<xs:element minOccurs="0" name="LoadType" type="ServiceFeederLoadType"/>
 			<xs:element minOccurs="0" name="PowerRating" type="HPXMLDouble">
 				<xs:annotation>
-					<xs:documentation>Volt-Amps [VA] or Watts [W]</xs:documentation>
+					<xs:documentation>[W]</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element minOccurs="0" name="IsNewLoad" type="HPXMLBoolean">
@@ -12013,32 +12013,6 @@
 	<xs:complexType name="ServiceFeederLoadType">
 		<xs:simpleContent>
 			<xs:extension base="ServiceFeederLoadType_simple">
-				<xs:attribute name="dataSource" type="DataSource"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-	<xs:simpleType name="DemandLoadsBuildingType_simple">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="dwelling unit"/>
-			<xs:enumeration value="whole building"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:complexType name="DemandLoadsBuildingType">
-		<xs:simpleContent>
-			<xs:extension base="DemandLoadsBuildingType_simple">
-				<xs:attribute name="dataSource" type="DataSource"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-	<xs:simpleType name="DemandLoadsDemandLoadType_simple">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="service / feeder"/>
-			<xs:enumeration value="branch circuit"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:complexType name="DemandLoadsDemandLoadType">
-		<xs:simpleContent>
-			<xs:extension base="DemandLoadsDemandLoadType_simple">
 				<xs:attribute name="dataSource" type="DataSource"/>
 			</xs:extension>
 		</xs:simpleContent>

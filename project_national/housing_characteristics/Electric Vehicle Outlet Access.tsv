@@ -1,0 +1,1902 @@
+Dependency=Electric Vehicle Charger	Dependency=Federal Poverty Level	Dependency=Geometry Building Type RECS	Dependency=Tenure	Dependency=Vintage ACS	Option=No	Option=Yes	Option=Void	source_count	source_weight	sampling_probability
+Level 1 charger	0-100%	Mobile Home	Not Available	1940-59	0	0	1	7.747	5.24871e-18	0
+Level 1 charger	0-100%	Mobile Home	Not Available	1960-79	0	0	1	7.747	919.696	0
+Level 1 charger	0-100%	Mobile Home	Not Available	1980-99	0	0	1	7.747	732.457	0
+Level 1 charger	0-100%	Mobile Home	Not Available	2000-09	0	0	1	7.747	59.9681	0
+Level 1 charger	0-100%	Mobile Home	Not Available	2010s	0	0	1	7.747	5.24871e-18	0
+Level 1 charger	0-100%	Mobile Home	Not Available	<1940	0	0	1	7.747	5.24871e-18	0
+Level 1 charger	0-100%	Mobile Home	Owner	1940-59	0.1054	0.8946	0	3.65398	2.40075e-18	4.57309e-07
+Level 1 charger	0-100%	Mobile Home	Owner	1960-79	0.1054	0.8946	0	3.65398	420.666	4.62363e-06
+Level 1 charger	0-100%	Mobile Home	Owner	1980-99	0.1054	0.8946	0	3.65398	335.024	4.76144e-06
+Level 1 charger	0-100%	Mobile Home	Owner	2000-09	0.1054	0.8946	0	3.65398	27.4292	1.18696e-06
+Level 1 charger	0-100%	Mobile Home	Owner	2010s	0.1054	0.8946	0	3.65398	2.40075e-18	3.40059e-07
+Level 1 charger	0-100%	Mobile Home	Owner	<1940	0.1054	0.8946	0	3.65398	2.40075e-18	1.07367e-07
+Level 1 charger	0-100%	Mobile Home	Renter	1940-59	0.197402	0.802598	0	0.758789	5.4993e-19	7.81222e-07
+Level 1 charger	0-100%	Mobile Home	Renter	1960-79	0.197402	0.802598	0	0.758789	96.3606	7.31235e-06
+Level 1 charger	0-100%	Mobile Home	Renter	1980-99	0.197402	0.802598	0	0.758789	76.7428	8.91627e-06
+Level 1 charger	0-100%	Mobile Home	Renter	2000-09	0.197402	0.802598	0	0.758789	6.28312	2.58909e-06
+Level 1 charger	0-100%	Mobile Home	Renter	2010s	0.197402	0.802598	0	0.758789	5.4993e-19	7.05329e-07
+Level 1 charger	0-100%	Mobile Home	Renter	<1940	0.197402	0.802598	0	0.758789	5.4993e-19	2.67147e-07
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.870201	403.74	0
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.870201	387.195	0
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.870201	4.3977e-18	0
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.870201	4.3977e-18	0
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.870201	377.656	0
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.870201	320.2	0
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	1940-59	0.398034	0.601966	0	0.00220808	1.1979	1.03573e-06
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	1960-79	0.398034	0.601966	0	0.00220808	1.14881	1.86391e-06
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	1980-99	0.398034	0.601966	0	0.00220808	1.3048e-20	1.41833e-06
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	2000-09	0.398034	0.601966	0	0.00220808	1.3048e-20	3.39379e-07
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	2010s	0.398034	0.601966	0	0.00220808	1.12051	1.40263e-07
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	<1940	0.398034	0.601966	0	0.00220808	0.950035	1.92872e-06
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	1940-59	0.736095	0.263905	0	0.784472	360.954	6.99629e-06
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	1960-79	0.736095	0.263905	0	0.784472	346.163	1.18854e-05
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	1980-99	0.736095	0.263905	0	0.784472	3.93166e-18	8.95434e-06
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	2000-09	0.736095	0.263905	0	0.784472	3.93166e-18	2.88569e-06
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	2010s	0.736095	0.263905	0	0.784472	337.634	1.11397e-06
+Level 1 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	<1940	0.736095	0.263905	0	0.784472	286.267	8.68561e-06
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	0.297795	78.1831	0
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	0.297795	742.057	0
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	0.297795	1.88354e-18	0
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	0.297795	1355.76	0
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	0.297795	340.629	0
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	0.297795	202.043	0
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Owner	1940-59	0.496824	0.503176	0	0.000526023	0.129046	1.69873e-06
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Owner	1960-79	0.496824	0.503176	0	0.000526023	1.22481	6.27866e-06
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Owner	1980-99	0.496824	0.503176	0	0.000526023	3.10889e-21	4.5066e-06
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Owner	2000-09	0.496824	0.503176	0	0.000526023	2.23777	1.25357e-06
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Owner	2010s	0.496824	0.503176	0	0.000526023	0.562228	7.23733e-07
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Owner	<1940	0.496824	0.503176	0	0.000526023	0.333484	1.13778e-06
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Renter	1940-59	0.754005	0.245995	0	0.273275	71.9595	3.65585e-05
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Renter	1960-79	0.754005	0.245995	0	0.273275	682.987	0.000106954
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Renter	1980-99	0.754005	0.245995	0	0.273275	1.7336e-18	8.83111e-05
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Renter	2000-09	0.754005	0.245995	0	0.273275	1247.84	3.67171e-05
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Renter	2010s	0.754005	0.245995	0	0.273275	313.514	1.99132e-05
+Level 1 charger	0-100%	Multi-Family with 5+ Units	Renter	<1940	0.754005	0.245995	0	0.273275	185.96	3.62668e-05
+Level 1 charger	0-100%	Single-Family Attached	Not Available	1940-59	0	0	1	0.161478	2.66109	0
+Level 1 charger	0-100%	Single-Family Attached	Not Available	1960-79	0	0	1	0.161478	223.348	0
+Level 1 charger	0-100%	Single-Family Attached	Not Available	1980-99	0	0	1	0.161478	88.1057	0
+Level 1 charger	0-100%	Single-Family Attached	Not Available	2000-09	0	0	1	0.161478	144.759	0
+Level 1 charger	0-100%	Single-Family Attached	Not Available	2010s	0	0	1	0.161478	127.467	0
+Level 1 charger	0-100%	Single-Family Attached	Not Available	<1940	0	0	1	0.161478	6.87688	0
+Level 1 charger	0-100%	Single-Family Attached	Owner	1940-59	0.0338401	0.96616	0	0.00954095	0.162993	0
+Level 1 charger	0-100%	Single-Family Attached	Owner	1960-79	0.0338401	0.96616	0	0.00954095	13.6802	0
+Level 1 charger	0-100%	Single-Family Attached	Owner	1980-99	0.0338401	0.96616	0	0.00954095	5.39652	0
+Level 1 charger	0-100%	Single-Family Attached	Owner	2000-09	0.0338401	0.96616	0	0.00954095	8.86659	0
+Level 1 charger	0-100%	Single-Family Attached	Owner	2010s	0.0338401	0.96616	0	0.00954095	7.80745	0
+Level 1 charger	0-100%	Single-Family Attached	Owner	<1940	0.0338401	0.96616	0	0.00954095	0.421212	0
+Level 1 charger	0-100%	Single-Family Attached	Renter	1940-59	0.0590002	0.941	0	0.0925041	1.50691	1.10467e-06
+Level 1 charger	0-100%	Single-Family Attached	Renter	1960-79	0.0590002	0.941	0	0.0925041	126.476	1.41905e-06
+Level 1 charger	0-100%	Single-Family Attached	Renter	1980-99	0.0590002	0.941	0	0.0925041	49.8919	1.47639e-06
+Level 1 charger	0-100%	Single-Family Attached	Renter	2000-09	0.0590002	0.941	0	0.0925041	81.9735	6.14476e-07
+Level 1 charger	0-100%	Single-Family Attached	Renter	2010s	0.0590002	0.941	0	0.0925041	72.1814	2.07745e-07
+Level 1 charger	0-100%	Single-Family Attached	Renter	<1940	0.0590002	0.941	0	0.0925041	3.89419	1.06084e-06
+Level 1 charger	0-100%	Single-Family Detached	Not Available	1940-59	0	0	1	0.0798422	326.091	0
+Level 1 charger	0-100%	Single-Family Detached	Not Available	1960-79	0	0	1	0.0487925	344.377	0
+Level 1 charger	0-100%	Single-Family Detached	Not Available	1980-99	0	0	1	0.0620995	496.122	0
+Level 1 charger	0-100%	Single-Family Detached	Not Available	2000-09	0	0	1	0.0399211	212.625	0
+Level 1 charger	0-100%	Single-Family Detached	Not Available	2010s	0	0	1	0.0243962	134.39	0
+Level 1 charger	0-100%	Single-Family Detached	Not Available	<1940	0	0	1	0.055446	304.999	0
+Level 1 charger	0-100%	Single-Family Detached	Owner	1940-59	0.132022	0.867978	0	0.0368874	145.751	3.2063e-05
+Level 1 charger	0-100%	Single-Family Detached	Owner	1960-79	0.411295	0.588705	0	0.0225423	153.925	3.35344e-05
+Level 1 charger	0-100%	Single-Family Detached	Owner	1980-99	0.121111	0.878889	0	0.0286902	221.75	2.4871e-05
+Level 1 charger	0-100%	Single-Family Detached	Owner	2000-09	0	1	0	0.0184437	95.0361	1.15727e-05
+Level 1 charger	0-100%	Single-Family Detached	Owner	2010s	0.529209	0.470791	0	0.0112711	60.0675	3.13672e-06
+Level 1 charger	0-100%	Single-Family Detached	Owner	<1940	0.315338	0.684662	0	0.0256162	136.324	1.64984e-05
+Level 1 charger	0-100%	Single-Family Detached	Renter	1940-59	0.207933	0.792067	0	0.0081759	35.8231	1.36477e-05
+Level 1 charger	0-100%	Single-Family Detached	Renter	1960-79	0.546653	0.453347	0	0.00499638	37.8319	1.27592e-05
+Level 1 charger	0-100%	Single-Family Detached	Renter	1980-99	0.192137	0.807863	0	0.00635903	54.502	9.97158e-06
+Level 1 charger	0-100%	Single-Family Detached	Renter	2000-09	0	1	0	0.00408795	23.3582	5.0779e-06
+Level 1 charger	0-100%	Single-Family Detached	Renter	2010s	0.659874	0.340126	0	0.00249819	14.7635	1.45079e-06
+Level 1 charger	0-100%	Single-Family Detached	Renter	<1940	0.442873	0.557127	0	0.00567771	33.506	7.74978e-06
+Level 1 charger	100-150%	Mobile Home	Not Available	1940-59	0	0	1	3.82051	1.84031e-18	0
+Level 1 charger	100-150%	Mobile Home	Not Available	1960-79	0	0	1	3.82051	322.465	0
+Level 1 charger	100-150%	Mobile Home	Not Available	1980-99	0	0	1	3.82051	256.815	0
+Level 1 charger	100-150%	Mobile Home	Not Available	2000-09	0	0	1	3.82051	21.0261	0
+Level 1 charger	100-150%	Mobile Home	Not Available	2010s	0	0	1	3.82051	1.84031e-18	0
+Level 1 charger	100-150%	Mobile Home	Not Available	<1940	0	0	1	3.82051	1.84031e-18	0
+Level 1 charger	100-150%	Mobile Home	Owner	1940-59	0.0834749	0.916525	0	2.41288	1.18977e-18	1.7666e-09
+Level 1 charger	100-150%	Mobile Home	Owner	1960-79	0.0834749	0.916525	0	2.41288	208.476	2.08705e-08
+Level 1 charger	100-150%	Mobile Home	Owner	1980-99	0.0834749	0.916525	0	2.41288	166.033	2.20491e-08
+Level 1 charger	100-150%	Mobile Home	Owner	2000-09	0.0834749	0.916525	0	2.41288	13.5935	5.89123e-09
+Level 1 charger	100-150%	Mobile Home	Owner	2010s	0.0834749	0.916525	0	2.41288	1.18977e-18	1.66677e-09
+Level 1 charger	100-150%	Mobile Home	Owner	<1940	0.0834749	0.916525	0	2.41288	1.18977e-18	4.03858e-10
+Level 1 charger	100-150%	Mobile Home	Renter	1940-59	0.230047	0.769953	0	0.160601	7.06574e-20	4.27795e-07
+Level 1 charger	100-150%	Mobile Home	Renter	1960-79	0.230047	0.769953	0	0.160601	12.3808	4.57505e-06
+Level 1 charger	100-150%	Mobile Home	Renter	1980-99	0.230047	0.769953	0	0.160601	9.86023	5.83659e-06
+Level 1 charger	100-150%	Mobile Home	Renter	2000-09	0.230047	0.769953	0	0.160601	0.807282	1.80075e-06
+Level 1 charger	100-150%	Mobile Home	Renter	2010s	0.230047	0.769953	0	0.160601	7.06574e-20	4.77857e-07
+Level 1 charger	100-150%	Mobile Home	Renter	<1940	0.230047	0.769953	0	0.160601	7.06574e-20	9.98132e-08
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.189443	52.1749	0
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.189443	50.0368	0
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.189443	5.6831e-19	0
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.189443	5.6831e-19	0
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.189443	48.804	0
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.189443	41.379	0
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	1940-59	0.927075	0.0729245	0	0.00197955	0.749562	8.94016e-07
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	1960-79	0.927075	0.0729245	0	0.00197955	0.718845	1.59671e-06
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	1980-99	0.927075	0.0729245	0	0.00197955	8.16453e-21	1.19414e-06
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	2000-09	0.927075	0.0729245	0	0.00197955	8.16453e-21	2.69442e-07
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	2010s	0.927075	0.0729245	0	0.00197955	0.701135	7.7562e-08
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	<1940	0.927075	0.0729245	0	0.00197955	0.594465	1.62771e-06
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	1940-59	0.849204	0.150796	0	0.1522	40.4171	0
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	1960-79	0.849204	0.150796	0	0.1522	38.7608	0
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	1980-99	0.849204	0.150796	0	0.1522	4.4024e-19	0
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	2000-09	0.849204	0.150796	0	0.1522	4.4024e-19	0
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	2010s	0.849204	0.150796	0	0.1522	37.8059	0
+Level 1 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	<1940	0.849204	0.150796	0	0.1522	32.0542	0
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	0.112468	18.1157	0
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	0.112468	171.941	0
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	0.112468	4.36432e-19	0
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	0.112468	314.143	0
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	0.112468	78.9269	0
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	0.112468	46.8152	0
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Owner	1940-59	0.475243	0.524757	0	0.000458903	0.0825277	1.13992e-06
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Owner	1960-79	0.475243	0.524757	0	0.000458903	0.783292	4.47042e-06
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Owner	1980-99	0.475243	0.524757	0	0.000458903	1.9882e-21	3.14367e-06
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Owner	2000-09	0.475243	0.524757	0	0.000458903	1.4311	7.66567e-07
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Owner	2010s	0.475243	0.524757	0	0.000458903	0.359558	3.66649e-07
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Owner	<1940	0.475243	0.524757	0	0.000458903	0.21327	6.20384e-07
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Renter	1940-59	0.75117	0.24883	0	0.0985367	15.7528	4.59379e-06
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Renter	1960-79	0.75117	0.24883	0	0.0985367	149.514	1.42956e-05
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Renter	1980-99	0.75117	0.24883	0	0.0985367	3.79507e-19	1.20344e-05
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Renter	2000-09	0.75117	0.24883	0	0.0985367	273.168	4.60088e-06
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Renter	2010s	0.75117	0.24883	0	0.0985367	68.6321	2.23701e-06
+Level 1 charger	100-150%	Multi-Family with 5+ Units	Renter	<1940	0.75117	0.24883	0	0.0985367	40.7089	4.34469e-06
+Level 1 charger	100-150%	Single-Family Attached	Not Available	1940-59	0	0	1	0.100879	1.21795	0
+Level 1 charger	100-150%	Single-Family Attached	Not Available	1960-79	0	0	1	0.100879	102.223	0
+Level 1 charger	100-150%	Single-Family Attached	Not Available	1980-99	0	0	1	0.100879	40.3248	0
+Level 1 charger	100-150%	Single-Family Attached	Not Available	2000-09	0	0	1	0.100879	66.2544	0
+Level 1 charger	100-150%	Single-Family Attached	Not Available	2010s	0	0	1	0.100879	58.3401	0
+Level 1 charger	100-150%	Single-Family Attached	Not Available	<1940	0	0	1	0.100879	3.14745	0
+Level 1 charger	100-150%	Single-Family Attached	Owner	1940-59	0.0155585	0.984442	0	0.0221278	0.261741	0
+Level 1 charger	100-150%	Single-Family Attached	Owner	1960-79	0.0155585	0.984442	0	0.0221278	21.9682	0
+Level 1 charger	100-150%	Single-Family Attached	Owner	1980-99	0.0155585	0.984442	0	0.0221278	8.66594	0
+Level 1 charger	100-150%	Single-Family Attached	Owner	2000-09	0.0155585	0.984442	0	0.0221278	14.2383	0
+Level 1 charger	100-150%	Single-Family Attached	Owner	2010s	0.0155585	0.984442	0	0.0221278	12.5375	0
+Level 1 charger	100-150%	Single-Family Attached	Owner	<1940	0.0155585	0.984442	0	0.0221278	0.676399	0
+Level 1 charger	100-150%	Single-Family Attached	Renter	1940-59	0.0253816	0.974618	0	0.0285086	0.350464	1.49219e-06
+Level 1 charger	100-150%	Single-Family Attached	Renter	1960-79	0.0253816	0.974618	0	0.0285086	29.4147	2.16916e-06
+Level 1 charger	100-150%	Single-Family Attached	Renter	1980-99	0.0253816	0.974618	0	0.0285086	11.6034	2.35302e-06
+Level 1 charger	100-150%	Single-Family Attached	Renter	2000-09	0.0253816	0.974618	0	0.0285086	19.0647	9.59707e-07
+Level 1 charger	100-150%	Single-Family Attached	Renter	2010s	0.0253816	0.974618	0	0.0285086	16.7873	3.23917e-07
+Level 1 charger	100-150%	Single-Family Attached	Renter	<1940	0.0253816	0.974618	0	0.0285086	0.905678	1.38425e-06
+Level 1 charger	100-150%	Single-Family Detached	Not Available	1940-59	0	0	1	0.0878925	254.681	0
+Level 1 charger	100-150%	Single-Family Detached	Not Available	1960-79	0	0	1	0.0537121	268.963	0
+Level 1 charger	100-150%	Single-Family Detached	Not Available	1980-99	0	0	1	0.0683608	387.478	0
+Level 1 charger	100-150%	Single-Family Detached	Not Available	2000-09	0	0	1	0.0439462	166.063	0
+Level 1 charger	100-150%	Single-Family Detached	Not Available	2010s	0	0	1	0.026856	104.96	0
+Level 1 charger	100-150%	Single-Family Detached	Not Available	<1940	0	0	1	0.0610365	238.208	0
+Level 1 charger	100-150%	Single-Family Detached	Owner	1940-59	0.0769743	0.923026	0	0.0563528	159.299	1.06204e-05
+Level 1 charger	100-150%	Single-Family Detached	Owner	1960-79	0.276958	0.723042	0	0.0344378	168.232	1.14006e-05
+Level 1 charger	100-150%	Single-Family Detached	Owner	1980-99	0.0702443	0.929756	0	0.04383	242.361	8.0018e-06
+Level 1 charger	100-150%	Single-Family Detached	Owner	2000-09	0	1	0	0.0281764	103.87	3.68497e-06
+Level 1 charger	100-150%	Single-Family Detached	Owner	2010s	0.381303	0.618697	0	0.0172189	65.6507	8.32137e-07
+Level 1 charger	100-150%	Single-Family Detached	Owner	<1940	0.201609	0.798391	0	0.0391339	148.995	5.28357e-06
+Level 1 charger	100-150%	Single-Family Detached	Renter	1940-59	0.145255	0.854745	0	0.00347958	11.1381	3.99143e-05
+Level 1 charger	100-150%	Single-Family Detached	Renter	1960-79	0.438383	0.561617	0	0.00212641	11.7627	3.89451e-05
+Level 1 charger	100-150%	Single-Family Detached	Renter	1980-99	0.133418	0.866582	0	0.00270634	16.9457	3.02549e-05
+Level 1 charger	100-150%	Single-Family Detached	Renter	2000-09	0	1	0	0.00173979	7.2625	1.59315e-05
+Level 1 charger	100-150%	Single-Family Detached	Renter	2010s	0.556718	0.443282	0	0.0010632	4.59026	4.18031e-06
+Level 1 charger	100-150%	Single-Family Detached	Renter	<1940	0.339753	0.660247	0	0.00241637	10.4177	2.1396e-05
+Level 1 charger	150-200%	Mobile Home	Not Available	1940-59	0	0	1	1.7768	8.14737e-19	0
+Level 1 charger	150-200%	Mobile Home	Not Available	1960-79	0	0	1	1.7768	142.761	0
+Level 1 charger	150-200%	Mobile Home	Not Available	1980-99	0	0	1	1.7768	113.696	0
+Level 1 charger	150-200%	Mobile Home	Not Available	2000-09	0	0	1	1.7768	9.30861	0
+Level 1 charger	150-200%	Mobile Home	Not Available	2010s	0	0	1	1.7768	8.14737e-19	0
+Level 1 charger	150-200%	Mobile Home	Not Available	<1940	0	0	1	1.7768	8.14737e-19	0
+Level 1 charger	150-200%	Mobile Home	Owner	1940-59	0.0561506	0.943849	0	1.11252	5.28759e-19	8.14407e-10
+Level 1 charger	150-200%	Mobile Home	Owner	1960-79	0.0561506	0.943849	0	1.11252	92.6509	1.05721e-08
+Level 1 charger	150-200%	Mobile Home	Owner	1980-99	0.0561506	0.943849	0	1.11252	73.7883	1.21768e-08
+Level 1 charger	150-200%	Mobile Home	Owner	2000-09	0.0561506	0.943849	0	1.11252	6.04123	3.56068e-09
+Level 1 charger	150-200%	Mobile Home	Owner	2010s	0.0561506	0.943849	0	1.11252	5.28759e-19	1.03686e-09
+Level 1 charger	150-200%	Mobile Home	Owner	<1940	0.0561506	0.943849	0	1.11252	5.28759e-19	1.76662e-10
+Level 1 charger	150-200%	Mobile Home	Renter	1940-59	0.253525	0.746475	0	0.076947	3.07895e-20	3.17082e-07
+Level 1 charger	150-200%	Mobile Home	Renter	1960-79	0.253525	0.746475	0	0.076947	5.39504	3.3453e-06
+Level 1 charger	150-200%	Mobile Home	Renter	1980-99	0.253525	0.746475	0	0.076947	4.29668	4.58648e-06
+Level 1 charger	150-200%	Mobile Home	Renter	2000-09	0.253525	0.746475	0	0.076947	0.351779	1.46352e-06
+Level 1 charger	150-200%	Mobile Home	Renter	2010s	0.253525	0.746475	0	0.076947	3.07895e-20	4.11708e-07
+Level 1 charger	150-200%	Mobile Home	Renter	<1940	0.253525	0.746475	0	0.076947	3.07895e-20	8.18386e-08
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.166934	52.6831	0
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.166934	50.5242	0
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.166934	5.73846e-19	0
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.166934	5.73846e-19	0
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.166934	49.2795	0
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.166934	41.7822	0
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	1940-59	0.620663	0.379337	0	0.0012771	0.352196	9.9803e-07
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	1960-79	0.620663	0.379337	0	0.0012771	0.337763	1.7152e-06
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	1980-99	0.620663	0.379337	0	0.0012771	3.83626e-21	1.29522e-06
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	2000-09	0.620663	0.379337	0	0.0012771	3.83626e-21	3.15073e-07
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	2010s	0.620663	0.379337	0	0.0012771	0.329442	9.24359e-08
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	<1940	0.620663	0.379337	0	0.0012771	0.279321	1.73588e-06
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	1940-59	0.726604	0.273396	0	0.138943	44.4203	0
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	1960-79	0.726604	0.273396	0	0.138943	42.6	0
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	1980-99	0.726604	0.273396	0	0.138943	4.83844e-19	0
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	2000-09	0.726604	0.273396	0	0.138943	4.83844e-19	0
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	2010s	0.726604	0.273396	0	0.138943	41.5504	0
+Level 1 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	<1940	0.726604	0.273396	0	0.138943	35.229	0
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	0.098077	17.6238	0
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	0.098077	167.272	0
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	0.098077	4.24581e-19	0
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	0.098077	305.613	0
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	0.098077	76.7837	0
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	0.098077	45.544	0
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Owner	1940-59	0.518022	0.481978	0	0.000602749	0.121313	1.04763e-06
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Owner	1960-79	0.518022	0.481978	0	0.000602749	1.15141	4.53683e-06
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Owner	1980-99	0.518022	0.481978	0	0.000602749	2.92259e-21	3.31857e-06
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Owner	2000-09	0.518022	0.481978	0	0.000602749	2.10367	8.84342e-07
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Owner	2010s	0.518022	0.481978	0	0.000602749	0.528538	3.98034e-07
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Owner	<1940	0.518022	0.481978	0	0.000602749	0.3135	6.84597e-07
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Renter	1940-59	0.749903	0.250097	0	0.0832776	14.8207	5.20134e-06
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Renter	1960-79	0.749903	0.250097	0	0.0832776	140.668	1.68249e-05
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Renter	1980-99	0.749903	0.250097	0	0.0832776	3.57052e-19	1.49819e-05
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Renter	2000-09	0.749903	0.250097	0	0.0832776	257.005	5.52764e-06
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Renter	2010s	0.749903	0.250097	0	0.0832776	64.5713	2.81468e-06
+Level 1 charger	150-200%	Multi-Family with 5+ Units	Renter	<1940	0.749903	0.250097	0	0.0832776	38.3002	4.56876e-06
+Level 1 charger	150-200%	Single-Family Attached	Not Available	1940-59	0	0	1	0.0909376	0.87521	0
+Level 1 charger	150-200%	Single-Family Attached	Not Available	1960-79	0	0	1	0.0909376	73.4572	0
+Level 1 charger	150-200%	Single-Family Attached	Not Available	1980-99	0	0	1	0.0909376	28.9772	0
+Level 1 charger	150-200%	Single-Family Attached	Not Available	2000-09	0	0	1	0.0909376	47.6101	0
+Level 1 charger	150-200%	Single-Family Attached	Not Available	2010s	0	0	1	0.0909376	41.9229	0
+Level 1 charger	150-200%	Single-Family Attached	Not Available	<1940	0	0	1	0.0909376	2.26174	0
+Level 1 charger	150-200%	Single-Family Attached	Owner	1940-59	0.0143208	0.985679	0	0.0240302	0.215842	0
+Level 1 charger	150-200%	Single-Family Attached	Owner	1960-79	0.0143208	0.985679	0	0.0240302	18.1158	0
+Level 1 charger	150-200%	Single-Family Attached	Owner	1980-99	0.0143208	0.985679	0	0.0240302	7.14627	0
+Level 1 charger	150-200%	Single-Family Attached	Owner	2000-09	0.0143208	0.985679	0	0.0240302	11.7415	0
+Level 1 charger	150-200%	Single-Family Attached	Owner	2010s	0.0143208	0.985679	0	0.0240302	10.3389	0
+Level 1 charger	150-200%	Single-Family Attached	Owner	<1940	0.0143208	0.985679	0	0.0240302	0.557785	0
+Level 1 charger	150-200%	Single-Family Attached	Renter	1940-59	0.0360307	0.963969	0	0.0214188	0.221783	1.22836e-06
+Level 1 charger	150-200%	Single-Family Attached	Renter	1960-79	0.0360307	0.963969	0	0.0214188	18.6145	1.99595e-06
+Level 1 charger	150-200%	Single-Family Attached	Renter	1980-99	0.0360307	0.963969	0	0.0214188	7.34298	2.3265e-06
+Level 1 charger	150-200%	Single-Family Attached	Renter	2000-09	0.0360307	0.963969	0	0.0214188	12.0647	9.84175e-07
+Level 1 charger	150-200%	Single-Family Attached	Renter	2010s	0.0360307	0.963969	0	0.0214188	10.6235	3.53663e-07
+Level 1 charger	150-200%	Single-Family Attached	Renter	<1940	0.0360307	0.963969	0	0.0214188	0.573139	1.10337e-06
+Level 1 charger	150-200%	Single-Family Detached	Not Available	1940-59	0	0	1	0.126376	336.152	0
+Level 1 charger	150-200%	Single-Family Detached	Not Available	1960-79	0	0	1	0.0772296	355.002	0
+Level 1 charger	150-200%	Single-Family Detached	Not Available	1980-99	0	0	1	0.0982923	511.43	0
+Level 1 charger	150-200%	Single-Family Detached	Not Available	2000-09	0	0	1	0.0631879	219.186	0
+Level 1 charger	150-200%	Single-Family Detached	Not Available	2010s	0	0	1	0.0386148	138.536	0
+Level 1 charger	150-200%	Single-Family Detached	Not Available	<1940	0	0	1	0.087761	314.41	0
+Level 1 charger	150-200%	Single-Family Detached	Owner	1940-59	0.0622469	0.937753	0	0.0902601	240.814	6.79216e-05
+Level 1 charger	150-200%	Single-Family Detached	Owner	1960-79	0.233654	0.766346	0	0.0551589	254.318	7.68092e-05
+Level 1 charger	150-200%	Single-Family Detached	Owner	1980-99	0.0567254	0.943275	0	0.0702023	366.38	5.74814e-05
+Level 1 charger	150-200%	Single-Family Detached	Owner	2000-09	0	1	0	0.04513	157.021	2.78761e-05
+Level 1 charger	150-200%	Single-Family Detached	Owner	2010s	0.32911	0.67089	0	0.0275795	99.2451	6.52928e-06
+Level 1 charger	150-200%	Single-Family Detached	Owner	<1940	0.167359	0.832641	0	0.0626806	225.238	3.34282e-05
+Level 1 charger	150-200%	Single-Family Detached	Renter	1940-59	0.128687	0.871313	0	0.00303142	7.93137	0
+Level 1 charger	150-200%	Single-Family Detached	Renter	1960-79	0.40419	0.59581	0	0.00185254	8.37613	0
+Level 1 charger	150-200%	Single-Family Detached	Renter	1980-99	0.118014	0.881986	0	0.00235777	12.067	0
+Level 1 charger	150-200%	Single-Family Detached	Renter	2000-09	0	1	0	0.00151571	5.17159	0
+Level 1 charger	150-200%	Single-Family Detached	Renter	2010s	0.521872	0.478128	0	0.000926268	3.2687	0
+Level 1 charger	150-200%	Single-Family Detached	Renter	<1940	0.309021	0.690979	0	0.00210515	7.41836	0
+Level 1 charger	200-300%	Mobile Home	Not Available	1940-59	0	0	1	3.12852	1.41383e-18	0
+Level 1 charger	200-300%	Mobile Home	Not Available	1960-79	0	0	1	3.12852	247.735	0
+Level 1 charger	200-300%	Mobile Home	Not Available	1980-99	0	0	1	3.12852	197.299	0
+Level 1 charger	200-300%	Mobile Home	Not Available	2000-09	0	0	1	3.12852	16.1534	0
+Level 1 charger	200-300%	Mobile Home	Not Available	2010s	0	0	1	3.12852	1.41383e-18	0
+Level 1 charger	200-300%	Mobile Home	Not Available	<1940	0	0	1	3.12852	1.41383e-18	0
+Level 1 charger	200-300%	Mobile Home	Owner	1940-59	0.0794385	0.920561	0	2.22039	9.81405e-19	3.82169e-07
+Level 1 charger	200-300%	Mobile Home	Owner	1960-79	0.0794385	0.920561	0	2.22039	171.965	5.04622e-06
+Level 1 charger	200-300%	Mobile Home	Owner	1980-99	0.0794385	0.920561	0	2.22039	136.955	6.3791e-06
+Level 1 charger	200-300%	Mobile Home	Owner	2000-09	0.0794385	0.920561	0	2.22039	11.2128	2.05178e-06
+Level 1 charger	200-300%	Mobile Home	Owner	2010s	0.0794385	0.920561	0	2.22039	9.81405e-19	6.21443e-07
+Level 1 charger	200-300%	Mobile Home	Owner	<1940	0.0794385	0.920561	0	2.22039	9.81405e-19	8.67333e-08
+Level 1 charger	200-300%	Mobile Home	Renter	1940-59	0.105147	0.894853	0	0.0773298	3.93567e-20	2.70152e-07
+Level 1 charger	200-300%	Mobile Home	Renter	1960-79	0.105147	0.894853	0	0.0773298	6.8962	2.69093e-06
+Level 1 charger	200-300%	Mobile Home	Renter	1980-99	0.105147	0.894853	0	0.0773298	5.49222	3.98165e-06
+Level 1 charger	200-300%	Mobile Home	Renter	2000-09	0.105147	0.894853	0	0.0773298	0.449661	1.27651e-06
+Level 1 charger	200-300%	Mobile Home	Renter	2010s	0.105147	0.894853	0	0.0773298	3.93567e-20	3.87596e-07
+Level 1 charger	200-300%	Mobile Home	Renter	<1940	0.105147	0.894853	0	0.0773298	3.93567e-20	6.80275e-08
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.376348	108.205	0
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.376348	103.771	0
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.376348	1.17861e-18	0
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.376348	1.17861e-18	0
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.376348	101.214	0
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.376348	85.8158	0
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	1940-59	0.388753	0.611247	0	0.00683837	2.23625	8.32955e-07
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	1960-79	0.388753	0.611247	0	0.00683837	2.14461	1.38203e-06
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	1980-99	0.388753	0.611247	0	0.00683837	2.43582e-20	1.11786e-06
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	2000-09	0.388753	0.611247	0	0.00683837	2.43582e-20	2.94458e-07
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	2010s	0.388753	0.611247	0	0.00683837	2.09178	7.92852e-08
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	<1940	0.388753	0.611247	0	0.00683837	1.77354	1.36202e-06
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	1940-59	0.788758	0.211242	0	0.281514	79.3304	2.71366e-05
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	1960-79	0.788758	0.211242	0	0.281514	76.0795	4.849e-05
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	1980-99	0.788758	0.211242	0	0.281514	8.64099e-19	3.86801e-05
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	2000-09	0.788758	0.211242	0	0.281514	8.64099e-19	1.08467e-05
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	2010s	0.788758	0.211242	0	0.281514	74.2051	4.0449e-06
+Level 1 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	<1940	0.788758	0.211242	0	0.281514	62.9157	3.46262e-05
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	0.247159	41.1316	0
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	0.247159	390.391	0
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	0.247159	9.90916e-19	0
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	0.247159	713.259	0
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	0.247159	179.203	0
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	0.247159	106.294	0
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Owner	1940-59	0.518022	0.481978	0	0.00368918	0.576494	9.35052e-07
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Owner	1960-79	0.518022	0.481978	0	0.00368918	5.47166	3.45438e-06
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Owner	1980-99	0.518022	0.481978	0	0.00368918	1.38885e-20	2.71822e-06
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Owner	2000-09	0.518022	0.481978	0	0.00368918	9.99692	7.9716e-07
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Owner	2010s	0.518022	0.481978	0	0.00368918	2.51168	3.71175e-07
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Owner	<1940	0.518022	0.481978	0	0.00368918	1.48979	5.58823e-07
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Renter	1940-59	0.754005	0.245995	0	0.190426	31.9691	7.46258e-06
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Renter	1960-79	0.754005	0.245995	0	0.190426	303.427	2.52713e-05
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Renter	1980-99	0.754005	0.245995	0	0.190426	7.70178e-19	2.35565e-05
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Renter	2000-09	0.754005	0.245995	0	0.190426	554.372	8.76446e-06
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Renter	2010s	0.754005	0.245995	0	0.190426	139.283	4.69912e-06
+Level 1 charger	200-300%	Multi-Family with 5+ Units	Renter	<1940	0.754005	0.245995	0	0.190426	82.6155	6.58909e-06
+Level 1 charger	200-300%	Single-Family Attached	Not Available	1940-59	0	0	1	0.384718	3.97052	0
+Level 1 charger	200-300%	Single-Family Attached	Not Available	1960-79	0	0	1	0.384718	333.25	0
+Level 1 charger	200-300%	Single-Family Attached	Not Available	1980-99	0	0	1	0.384718	131.459	0
+Level 1 charger	200-300%	Single-Family Attached	Not Available	2000-09	0	0	1	0.384718	215.99	0
+Level 1 charger	200-300%	Single-Family Attached	Not Available	2010s	0	0	1	0.384718	190.19	0
+Level 1 charger	200-300%	Single-Family Attached	Not Available	<1940	0	0	1	0.384718	10.2607	0
+Level 1 charger	200-300%	Single-Family Attached	Owner	1940-59	0.0138622	0.986138	0	0.141547	1.39262	0
+Level 1 charger	200-300%	Single-Family Attached	Owner	1960-79	0.0138622	0.986138	0	0.141547	116.884	0
+Level 1 charger	200-300%	Single-Family Attached	Owner	1980-99	0.0138622	0.986138	0	0.141547	46.1081	0
+Level 1 charger	200-300%	Single-Family Attached	Owner	2000-09	0.0138622	0.986138	0	0.141547	75.7565	0
+Level 1 charger	200-300%	Single-Family Attached	Owner	2010s	0.0138622	0.986138	0	0.141547	66.7071	0
+Level 1 charger	200-300%	Single-Family Attached	Owner	<1940	0.0138622	0.986138	0	0.141547	3.59885	0
+Level 1 charger	200-300%	Single-Family Attached	Renter	1940-59	0.029886	0.970114	0	0.059417	0.660194	4.29293e-06
+Level 1 charger	200-300%	Single-Family Attached	Renter	1960-79	0.029886	0.970114	0	0.059417	55.4107	7.83528e-06
+Level 1 charger	200-300%	Single-Family Attached	Renter	1980-99	0.029886	0.970114	0	0.059417	21.8582	9.57088e-06
+Level 1 charger	200-300%	Single-Family Attached	Renter	2000-09	0.029886	0.970114	0	0.059417	35.9136	4.34658e-06
+Level 1 charger	200-300%	Single-Family Attached	Renter	2010s	0.029886	0.970114	0	0.059417	31.6236	1.55313e-06
+Level 1 charger	200-300%	Single-Family Attached	Renter	<1940	0.029886	0.970114	0	0.059417	1.70609	3.68449e-06
+Level 1 charger	200-300%	Single-Family Detached	Not Available	1940-59	0	0	1	0.59122	1453.26	0
+Level 1 charger	200-300%	Single-Family Detached	Not Available	1960-79	0	0	1	0.361301	1534.75	0
+Level 1 charger	200-300%	Single-Family Detached	Not Available	1980-99	0	0	1	0.459838	2211.02	0
+Level 1 charger	200-300%	Single-Family Detached	Not Available	2000-09	0	0	1	0.29561	947.585	0
+Level 1 charger	200-300%	Single-Family Detached	Not Available	2010s	0	0	1	0.180651	598.92	0
+Level 1 charger	200-300%	Single-Family Detached	Not Available	<1940	0	0	1	0.41057	1359.26	0
+Level 1 charger	200-300%	Single-Family Detached	Owner	1940-59	0.0540625	0.945937	0	0.456329	1096.5	6.99026e-05
+Level 1 charger	200-300%	Single-Family Detached	Owner	1960-79	0.20793	0.79207	0	0.278868	1157.99	8.2911e-05
+Level 1 charger	200-300%	Single-Family Detached	Owner	1980-99	0.0492289	0.950771	0	0.354922	1668.24	6.69309e-05
+Level 1 charger	200-300%	Single-Family Detached	Owner	2000-09	0	1	0	0.228164	714.964	3.40197e-05
+Level 1 charger	200-300%	Single-Family Detached	Owner	2010s	0.296949	0.703051	0	0.139434	451.893	8.64382e-06
+Level 1 charger	200-300%	Single-Family Detached	Owner	<1940	0.147529	0.852471	0	0.316895	1025.58	3.47692e-05
+Level 1 charger	200-300%	Single-Family Detached	Renter	1940-59	0.099784	0.900216	0	0.00865425	25.0818	1.23205e-05
+Level 1 charger	200-300%	Single-Family Detached	Renter	1960-79	0.337369	0.662631	0	0.00528871	26.4882	1.33348e-05
+Level 1 charger	200-300%	Single-Family Detached	Renter	1980-99	0.0912569	0.908743	0	0.00673108	38.16	1.15785e-05
+Level 1 charger	200-300%	Single-Family Detached	Renter	2000-09	0	1	0	0.00432713	16.3544	6.45947e-06
+Level 1 charger	200-300%	Single-Family Detached	Renter	2010s	0.450299	0.549701	0	0.00264435	10.3368	1.75965e-06
+Level 1 charger	200-300%	Single-Family Detached	Renter	<1940	0.251297	0.748703	0	0.0060099	23.4594	6.25422e-06
+Level 1 charger	300-400%	Mobile Home	Not Available	1940-59	0	0	1	0.777067	3.76249e-19	0
+Level 1 charger	300-400%	Mobile Home	Not Available	1960-79	0	0	1	0.777067	65.9276	0
+Level 1 charger	300-400%	Mobile Home	Not Available	1980-99	0	0	1	0.777067	52.5055	0
+Level 1 charger	300-400%	Mobile Home	Not Available	2000-09	0	0	1	0.777067	4.29876	0
+Level 1 charger	300-400%	Mobile Home	Not Available	2010s	0	0	1	0.777067	3.76249e-19	0
+Level 1 charger	300-400%	Mobile Home	Not Available	<1940	0	0	1	0.777067	3.76249e-19	0
+Level 1 charger	300-400%	Mobile Home	Owner	1940-59	0.060074	0.939926	0	0.624108	3.10147e-19	1.40076e-07
+Level 1 charger	300-400%	Mobile Home	Owner	1960-79	0.060074	0.939926	0	0.624108	54.345	1.90755e-06
+Level 1 charger	300-400%	Mobile Home	Owner	1980-99	0.060074	0.939926	0	0.624108	43.281	2.71707e-06
+Level 1 charger	300-400%	Mobile Home	Owner	2000-09	0.060074	0.939926	0	0.624108	3.54353	9.6392e-07
+Level 1 charger	300-400%	Mobile Home	Owner	2010s	0.060074	0.939926	0	0.624108	3.10147e-19	3.03041e-07
+Level 1 charger	300-400%	Mobile Home	Owner	<1940	0.060074	0.939926	0	0.624108	3.10147e-19	4.37901e-08
+Level 1 charger	300-400%	Mobile Home	Renter	1940-59	0.0518763	0.948124	0	0.00825629	3.1903e-21	1.32653e-07
+Level 1 charger	300-400%	Mobile Home	Renter	1960-79	0.0518763	0.948124	0	0.00825629	0.559015	1.36125e-06
+Level 1 charger	300-400%	Mobile Home	Renter	1980-99	0.0518763	0.948124	0	0.00825629	0.445206	2.08596e-06
+Level 1 charger	300-400%	Mobile Home	Renter	2000-09	0.0518763	0.948124	0	0.00825629	0.0364501	6.92847e-07
+Level 1 charger	300-400%	Mobile Home	Renter	2010s	0.0518763	0.948124	0	0.00825629	3.1903e-21	2.31877e-07
+Level 1 charger	300-400%	Mobile Home	Renter	<1940	0.0518763	0.948124	0	0.00825629	3.1903e-21	3.51842e-08
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.154846	44.8042	0
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.154846	42.9682	0
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.154846	4.88026e-19	0
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.154846	4.88026e-19	0
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.154846	41.9096	0
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.154846	35.5335	0
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	1940-59	0.485725	0.514275	0	0.00356995	0.898635	7.89337e-07
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	1960-79	0.485725	0.514275	0	0.00356995	0.86181	1.22436e-06
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	1980-99	0.485725	0.514275	0	0.00356995	9.78831e-21	1.00725e-06
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	2000-09	0.485725	0.514275	0	0.00356995	9.78831e-21	3.01003e-07
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	2010s	0.485725	0.514275	0	0.00356995	0.840578	8.25527e-08
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	<1940	0.485725	0.514275	0	0.00356995	0.712693	1.31581e-06
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	1940-59	0.73994	0.26006	0	0.111279	33.0123	1.15095e-05
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	1960-79	0.73994	0.26006	0	0.111279	31.6595	2.01688e-05
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	1980-99	0.73994	0.26006	0	0.111279	3.59584e-19	1.61551e-05
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	2000-09	0.73994	0.26006	0	0.111279	3.59584e-19	4.48498e-06
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	2010s	0.73994	0.26006	0	0.111279	30.8795	1.69122e-06
+Level 1 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	<1940	0.73994	0.26006	0	0.111279	26.1815	1.53238e-05
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	0.123883	24.3738	0
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	0.123883	231.338	0
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	0.123883	5.87197e-19	0
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	0.123883	422.663	0
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	0.123883	106.192	0
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	0.123883	62.9874	0
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Owner	1940-59	0.518022	0.481978	0	0.00278534	0.558421	7.8683e-07
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Owner	1960-79	0.518022	0.481978	0	0.00278534	5.30012	3.10226e-06
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Owner	1980-99	0.518022	0.481978	0	0.00278534	1.34531e-20	2.50843e-06
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Owner	2000-09	0.518022	0.481978	0	0.00278534	9.68352	8.35439e-07
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Owner	2010s	0.518022	0.481978	0	0.00278534	2.43294	4.28883e-07
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Owner	<1940	0.518022	0.481978	0	0.00278534	1.44309	5.53182e-07
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Renter	1940-59	0.754005	0.245995	0	0.0895155	17.5536	1.42651e-05
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Renter	1960-79	0.754005	0.245995	0	0.0895155	166.606	4.9659e-05
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Renter	1980-99	0.754005	0.245995	0	0.0895155	4.2289e-19	4.80888e-05
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Renter	2000-09	0.754005	0.245995	0	0.0895155	304.395	1.85258e-05
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Renter	2010s	0.754005	0.245995	0	0.0895155	76.4778	1.09489e-05
+Level 1 charger	300-400%	Multi-Family with 5+ Units	Renter	<1940	0.754005	0.245995	0	0.0895155	45.3626	1.26656e-05
+Level 1 charger	300-400%	Single-Family Attached	Not Available	1940-59	0	0	1	0.273518	2.85558	0
+Level 1 charger	300-400%	Single-Family Attached	Not Available	1960-79	0	0	1	0.273518	239.672	0
+Level 1 charger	300-400%	Single-Family Attached	Not Available	1980-99	0	0	1	0.273518	94.545	0
+Level 1 charger	300-400%	Single-Family Attached	Not Available	2000-09	0	0	1	0.273518	155.339	0
+Level 1 charger	300-400%	Single-Family Attached	Not Available	2010s	0	0	1	0.273518	136.784	0
+Level 1 charger	300-400%	Single-Family Attached	Not Available	<1940	0	0	1	0.273518	7.37949	0
+Level 1 charger	300-400%	Single-Family Attached	Owner	1940-59	0.0137503	0.98625	0	0.109684	1.12422	7.65939e-06
+Level 1 charger	300-400%	Single-Family Attached	Owner	1960-79	0.0137503	0.98625	0	0.109684	94.3569	1.765e-05
+Level 1 charger	300-400%	Single-Family Attached	Owner	1980-99	0.0137503	0.98625	0	0.109684	37.2216	2.48362e-05
+Level 1 charger	300-400%	Single-Family Attached	Owner	2000-09	0.0137503	0.98625	0	0.109684	61.1559	1.09689e-05
+Level 1 charger	300-400%	Single-Family Attached	Owner	2010s	0.0137503	0.98625	0	0.109684	53.8506	3.1676e-06
+Level 1 charger	300-400%	Single-Family Attached	Owner	<1940	0.0137503	0.98625	0	0.109684	2.90524	6.6139e-06
+Level 1 charger	300-400%	Single-Family Attached	Renter	1940-59	0.021666	0.978334	0	0.0367736	0.396339	2.79117e-06
+Level 1 charger	300-400%	Single-Family Attached	Renter	1960-79	0.021666	0.978334	0	0.0367736	33.2651	5.75232e-06
+Level 1 charger	300-400%	Single-Family Attached	Renter	1980-99	0.021666	0.978334	0	0.0367736	13.1223	7.30441e-06
+Level 1 charger	300-400%	Single-Family Attached	Renter	2000-09	0.021666	0.978334	0	0.0367736	21.5602	3.5671e-06
+Level 1 charger	300-400%	Single-Family Attached	Renter	2010s	0.021666	0.978334	0	0.0367736	18.9848	1.2811e-06
+Level 1 charger	300-400%	Single-Family Attached	Renter	<1940	0.021666	0.978334	0	0.0367736	1.02423	2.44484e-06
+Level 1 charger	300-400%	Single-Family Detached	Not Available	1940-59	0	0	1	0.486894	1133.58	0
+Level 1 charger	300-400%	Single-Family Detached	Not Available	1960-79	0	0	1	0.297547	1197.14	0
+Level 1 charger	300-400%	Single-Family Detached	Not Available	1980-99	0	0	1	0.378696	1724.65	0
+Level 1 charger	300-400%	Single-Family Detached	Not Available	2000-09	0	0	1	0.243447	739.141	0
+Level 1 charger	300-400%	Single-Family Detached	Not Available	2010s	0	0	1	0.148773	467.173	0
+Level 1 charger	300-400%	Single-Family Detached	Not Available	<1940	0	0	1	0.338121	1060.26	0
+Level 1 charger	300-400%	Single-Family Detached	Owner	1940-59	0.0353943	0.964606	0	0.411878	951.005	0.00010325
+Level 1 charger	300-400%	Single-Family Detached	Owner	1960-79	0.144231	0.855769	0	0.251703	1004.33	0.0001266
+Level 1 charger	300-400%	Single-Family Detached	Owner	1980-99	0.032173	0.967827	0	0.320349	1446.88	0.000110775
+Level 1 charger	300-400%	Single-Family Detached	Owner	2000-09	0	1	0	0.205939	620.096	5.91178e-05
+Level 1 charger	300-400%	Single-Family Detached	Owner	2010s	0.213324	0.786676	0	0.125851	391.931	1.64423e-05
+Level 1 charger	300-400%	Single-Family Detached	Owner	<1940	0.0999976	0.900002	0	0.286026	889.494	5.13113e-05
+Level 1 charger	300-400%	Single-Family Detached	Renter	1940-59	0.0889435	0.911056	0	0.00312846	8.01039	0
+Level 1 charger	300-400%	Single-Family Detached	Renter	1960-79	0.309594	0.690406	0	0.00191183	8.45958	0
+Level 1 charger	300-400%	Single-Family Detached	Renter	1980-99	0.0812592	0.918741	0	0.00243324	12.1872	0
+Level 1 charger	300-400%	Single-Family Detached	Renter	2000-09	0	1	0	0.00156423	5.22312	0
+Level 1 charger	300-400%	Single-Family Detached	Renter	2010s	0.419107	0.580893	0	0.000955917	3.30127	0
+Level 1 charger	300-400%	Single-Family Detached	Renter	<1940	0.228168	0.771832	0	0.00217254	7.49228	0
+Level 1 charger	400%+	Mobile Home	Not Available	1940-59	0	0	1	1.04912	5.15128e-19	0
+Level 1 charger	400%+	Mobile Home	Not Available	1960-79	0	0	1	1.04912	90.2623	0
+Level 1 charger	400%+	Mobile Home	Not Available	1980-99	0	0	1	1.04912	71.886	0
+Level 1 charger	400%+	Mobile Home	Not Available	2000-09	0	0	1	1.04912	5.88549	0
+Level 1 charger	400%+	Mobile Home	Not Available	2010s	0	0	1	1.04912	5.15128e-19	0
+Level 1 charger	400%+	Mobile Home	Not Available	<1940	0	0	1	1.04912	5.15128e-19	0
+Level 1 charger	400%+	Mobile Home	Owner	1940-59	0.0373968	0.962603	0	0.866327	4.27298e-19	1.66983e-06
+Level 1 charger	400%+	Mobile Home	Owner	1960-79	0.0373968	0.962603	0	0.866327	74.8726	2.04531e-05
+Level 1 charger	400%+	Mobile Home	Owner	1980-99	0.0373968	0.962603	0	0.866327	59.6294	3.11971e-05
+Level 1 charger	400%+	Mobile Home	Owner	2000-09	0.0373968	0.962603	0	0.866327	4.88201	1.27341e-05
+Level 1 charger	400%+	Mobile Home	Owner	2010s	0.0373968	0.962603	0	0.866327	4.27298e-19	4.25499e-06
+Level 1 charger	400%+	Mobile Home	Owner	<1940	0.0373968	0.962603	0	0.866327	4.27298e-19	6.90907e-07
+Level 1 charger	400%+	Mobile Home	Renter	1940-59	0.139269	0.860731	0	0.00873735	4.10155e-21	1.41728e-07
+Level 1 charger	400%+	Mobile Home	Renter	1960-79	0.139269	0.860731	0	0.00873735	0.718687	1.46595e-06
+Level 1 charger	400%+	Mobile Home	Renter	1980-99	0.139269	0.860731	0	0.00873735	0.572371	2.06759e-06
+Level 1 charger	400%+	Mobile Home	Renter	2000-09	0.139269	0.860731	0	0.00873735	0.0468615	6.98264e-07
+Level 1 charger	400%+	Mobile Home	Renter	2010s	0.139269	0.860731	0	0.00873735	4.10155e-21	2.96874e-07
+Level 1 charger	400%+	Mobile Home	Renter	<1940	0.139269	0.860731	0	0.00873735	4.10155e-21	5.84887e-08
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.49842	188.381	0
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.49842	180.662	0
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.49842	2.05193e-18	0
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.49842	2.05193e-18	0
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.49842	176.211	0
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.49842	149.402	0
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Owner	1940-59	0.579408	0.420592	0	0.0220731	8.58867	1.29956e-05
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Owner	1960-79	0.579408	0.420592	0	0.0220731	8.23672	1.96168e-05
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Owner	1980-99	0.579408	0.420592	0	0.0220731	9.35513e-20	1.58837e-05
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Owner	2000-09	0.579408	0.420592	0	0.0220731	9.35513e-20	5.56986e-06
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Owner	2010s	0.579408	0.420592	0	0.0220731	8.03379	1.95187e-06
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Owner	<1940	0.579408	0.420592	0	0.0220731	6.81154	2.77529e-05
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Renter	1940-59	0.685291	0.314709	0	0.310693	116.523	7.68617e-06
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Renter	1960-79	0.685291	0.314709	0	0.310693	111.748	1.2889e-05
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Renter	1980-99	0.685291	0.314709	0	0.310693	1.26921e-18	9.93825e-06
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Renter	2000-09	0.685291	0.314709	0	0.310693	1.26921e-18	2.721e-06
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Renter	2010s	0.685291	0.314709	0	0.310693	108.994	1.15608e-06
+Level 1 charger	400%+	Multi-Family with 2 - 4 Units	Renter	<1940	0.685291	0.314709	0	0.310693	92.4122	1.33489e-05
+Level 1 charger	400%+	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	1.07214	239.431	0
+Level 1 charger	400%+	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	1.07214	2272.51	0
+Level 1 charger	400%+	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	1.07214	5.76822e-18	0
+Level 1 charger	400%+	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	1.07214	4151.95	0
+Level 1 charger	400%+	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	1.07214	1043.16	0
+Level 1 charger	400%+	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	1.07214	618.745	0
+Level 1 charger	400%+	Multi-Family with 5+ Units	Owner	1940-59	0.518022	0.481978	0	0.0540678	13.3891	1.32509e-05
+Level 1 charger	400%+	Multi-Family with 5+ Units	Owner	1960-79	0.518022	0.481978	0	0.0540678	127.08	4.57687e-05
+Level 1 charger	400%+	Multi-Family with 5+ Units	Owner	1980-99	0.518022	0.481978	0	0.0540678	3.22562e-19	4.09114e-05
+Level 1 charger	400%+	Multi-Family with 5+ Units	Owner	2000-09	0.518022	0.481978	0	0.0540678	232.179	2.24743e-05
+Level 1 charger	400%+	Multi-Family with 5+ Units	Owner	2010s	0.518022	0.481978	0	0.0540678	58.334	1.27662e-05
+Level 1 charger	400%+	Multi-Family with 5+ Units	Owner	<1940	0.518022	0.481978	0	0.0540678	34.6006	1.76799e-05
+Level 1 charger	400%+	Multi-Family with 5+ Units	Renter	1940-59	0.750574	0.249426	0	0.644032	139.581	2.89049e-05
+Level 1 charger	400%+	Multi-Family with 5+ Units	Renter	1960-79	0.750574	0.249426	0	0.644032	1324.8	0.000100229
+Level 1 charger	400%+	Multi-Family with 5+ Units	Renter	1980-99	0.750574	0.249426	0	0.644032	3.3627e-18	9.89549e-05
+Level 1 charger	400%+	Multi-Family with 5+ Units	Renter	2000-09	0.750574	0.249426	0	0.644032	2420.46	4.99653e-05
+Level 1 charger	400%+	Multi-Family with 5+ Units	Renter	2010s	0.750574	0.249426	0	0.644032	608.129	3.74857e-05
+Level 1 charger	400%+	Multi-Family with 5+ Units	Renter	<1940	0.750574	0.249426	0	0.644032	360.71	3.23002e-05
+Level 1 charger	400%+	Single-Family Attached	Not Available	1940-59	0	0	1	2.3155	32.4219	0
+Level 1 charger	400%+	Single-Family Attached	Not Available	1960-79	0	0	1	2.3155	2721.2	0
+Level 1 charger	400%+	Single-Family Attached	Not Available	1980-99	0	0	1	2.3155	1073.45	0
+Level 1 charger	400%+	Single-Family Attached	Not Available	2000-09	0	0	1	2.3155	1763.7	0
+Level 1 charger	400%+	Single-Family Attached	Not Available	2010s	0	0	1	2.3155	1553.02	0
+Level 1 charger	400%+	Single-Family Attached	Not Available	<1940	0	0	1	2.3155	83.7855	0
+Level 1 charger	400%+	Single-Family Attached	Owner	1940-59	0.00836794	0.991632	0	1.39775	20.0541	4.08988e-05
+Level 1 charger	400%+	Single-Family Attached	Owner	1960-79	0.00836794	0.991632	0	1.39775	1683.16	0.000102277
+Level 1 charger	400%+	Single-Family Attached	Owner	1980-99	0.00836794	0.991632	0	1.39775	663.968	0.000157022
+Level 1 charger	400%+	Single-Family Attached	Owner	2000-09	0.00836794	0.991632	0	1.39775	1090.91	7.87786e-05
+Level 1 charger	400%+	Single-Family Attached	Owner	2010s	0.00836794	0.991632	0	1.39775	960.6	3.24037e-05
+Level 1 charger	400%+	Single-Family Attached	Owner	<1940	0.00836794	0.991632	0	1.39775	51.8244	4.33393e-05
+Level 1 charger	400%+	Single-Family Attached	Renter	1940-59	0.014816	0.985184	0	0.114932	1.47826	2.19234e-05
+Level 1 charger	400%+	Single-Family Attached	Renter	1960-79	0.014816	0.985184	0	0.114932	124.072	5.26356e-05
+Level 1 charger	400%+	Single-Family Attached	Renter	1980-99	0.014816	0.985184	0	0.114932	48.9434	7.09985e-05
+Level 1 charger	400%+	Single-Family Attached	Renter	2000-09	0.014816	0.985184	0	0.114932	80.4151	3.82143e-05
+Level 1 charger	400%+	Single-Family Attached	Renter	2010s	0.014816	0.985184	0	0.114932	70.8092	1.46766e-05
+Level 1 charger	400%+	Single-Family Attached	Renter	<1940	0.014816	0.985184	0	0.114932	3.82016	2.25159e-05
+Level 1 charger	400%+	Single-Family Detached	Not Available	1940-59	0	0	1	4.00872	13567.4	0
+Level 1 charger	400%+	Single-Family Detached	Not Available	1960-79	0	0	1	2.44977	14328.2	0
+Level 1 charger	400%+	Single-Family Detached	Not Available	1980-99	0	0	1	3.1179	20641.8	0
+Level 1 charger	400%+	Single-Family Detached	Not Available	2000-09	0	0	1	2.00436	8846.55	0
+Level 1 charger	400%+	Single-Family Detached	Not Available	2010s	0	0	1	1.22489	5591.46	0
+Level 1 charger	400%+	Single-Family Detached	Not Available	<1940	0	0	1	2.78384	12689.9	0
+Level 1 charger	400%+	Single-Family Detached	Owner	1940-59	0.0264578	0.973542	0	3.58278	12099.2	0.000829331
+Level 1 charger	400%+	Single-Family Detached	Owner	1960-79	0.110976	0.889024	0	2.18948	12777.6	0.00105825
+Level 1 charger	400%+	Single-Family Detached	Owner	1980-99	0.0240295	0.97597	0	2.78661	18407.9	0.00109769
+Level 1 charger	400%+	Single-Family Detached	Owner	2000-09	0	1	0	1.79139	7889.17	0.00064022
+Level 1 charger	400%+	Single-Family Detached	Owner	2010s	0.167252	0.832748	0	1.09474	4986.35	0.000216977
+Level 1 charger	400%+	Single-Family Detached	Owner	<1940	0.0760355	0.923965	0	2.48804	11316.6	0.000454897
+Level 1 charger	400%+	Single-Family Detached	Renter	1940-59	0.0695317	0.930468	0	0.0119541	42.0312	5.11709e-05
+Level 1 charger	400%+	Single-Family Detached	Renter	1960-79	0.255532	0.744468	0	0.00730528	44.3881	5.82934e-05
+Level 1 charger	400%+	Single-Family Detached	Renter	1980-99	0.0634077	0.936592	0	0.00929763	63.9472	5.42236e-05
+Level 1 charger	400%+	Single-Family Detached	Renter	2000-09	0	1	0	0.00597705	27.4061	3.31327e-05
+Level 1 charger	400%+	Single-Family Detached	Renter	2010s	0.355777	0.644223	0	0.00365264	17.322	1.03954e-05
+Level 1 charger	400%+	Single-Family Detached	Renter	<1940	0.184525	0.815475	0	0.00830145	39.3126	2.66863e-05
+Level 1 charger	Not Available	Mobile Home	Not Available	1940-59	0.089963	0.910037	0	67.1087	4.99902e-17	0
+Level 1 charger	Not Available	Mobile Home	Not Available	1960-79	0.089963	0.910037	0	67.1087	8759.44	0
+Level 1 charger	Not Available	Mobile Home	Not Available	1980-99	0.089963	0.910037	0	67.1087	6976.13	0
+Level 1 charger	Not Available	Mobile Home	Not Available	2000-09	0.089963	0.910037	0	67.1087	571.153	0
+Level 1 charger	Not Available	Mobile Home	Not Available	2010s	0.089963	0.910037	0	67.1087	4.99902e-17	0
+Level 1 charger	Not Available	Mobile Home	Not Available	<1940	0.089963	0.910037	0	67.1087	4.99902e-17	0
+Level 1 charger	Not Available	Mobile Home	Owner	1940-59	0	0	1	41.5674	3.10094e-17	0
+Level 1 charger	Not Available	Mobile Home	Owner	1960-79	0	0	1	41.5674	5433.56	0
+Level 1 charger	Not Available	Mobile Home	Owner	1980-99	0	0	1	41.5674	4327.36	0
+Level 1 charger	Not Available	Mobile Home	Owner	2000-09	0	0	1	41.5674	354.291	0
+Level 1 charger	Not Available	Mobile Home	Owner	2010s	0	0	1	41.5674	3.10094e-17	0
+Level 1 charger	Not Available	Mobile Home	Owner	<1940	0	0	1	41.5674	3.10094e-17	0
+Level 1 charger	Not Available	Mobile Home	Renter	1940-59	0	0	1	3.04399	2.25531e-18	0
+Level 1 charger	Not Available	Mobile Home	Renter	1960-79	0	0	1	3.04399	395.182	0
+Level 1 charger	Not Available	Mobile Home	Renter	1980-99	0	0	1	3.04399	314.728	0
+Level 1 charger	Not Available	Mobile Home	Renter	2000-09	0	0	1	3.04399	25.7676	0
+Level 1 charger	Not Available	Mobile Home	Renter	2010s	0	0	1	3.04399	2.25531e-18	0
+Level 1 charger	Not Available	Mobile Home	Renter	<1940	0	0	1	3.04399	2.25531e-18	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	1940-59	0.719904	0.280096	0	8.90988	4276.61	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	1960-79	0.719904	0.280096	0	8.90988	4101.36	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	1980-99	0.719904	0.280096	0	8.90988	4.65826e-17	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	2000-09	0.719904	0.280096	0	8.90988	4.65826e-17	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	2010s	0.719904	0.280096	0	8.90988	4000.31	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	<1940	0.719904	0.280096	0	8.90988	3391.71	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	1940-59	0	0	1	0.130083	62.849	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	1960-79	0	0	1	0.130083	60.2735	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	1980-99	0	0	1	0.130083	6.84577e-19	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	2000-09	0	0	1	0.130083	6.84577e-19	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	2010s	0	0	1	0.130083	58.7886	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	<1940	0	0	1	0.130083	49.8446	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	1940-59	0	0	1	6.88679	3302.58	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	1960-79	0	0	1	6.88679	3167.24	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	1980-99	0	0	1	6.88679	3.5973e-17	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	2000-09	0	0	1	6.88679	3.5973e-17	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	2010s	0	0	1	6.88679	3089.21	0
+Level 1 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	<1940	0	0	1	6.88679	2619.22	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Not Available	1940-59	0.713705	0.286295	0	7.16244	1946.61	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Not Available	1960-79	0.713705	0.286295	0	7.16244	18475.8	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Not Available	1980-99	0.713705	0.286295	0	7.16244	4.68964e-17	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Not Available	2000-09	0.713705	0.286295	0	7.16244	33755.9	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Not Available	2010s	0.713705	0.286295	0	7.16244	8481.01	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Not Available	<1940	0.713705	0.286295	0	7.16244	5030.48	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Owner	1940-59	0	0	1	0.139003	37.9514	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Owner	1960-79	0	0	1	0.139003	360.207	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Owner	1980-99	0	0	1	0.139003	9.143e-19	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Owner	2000-09	0	0	1	0.139003	658.111	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Owner	2010s	0	0	1	0.139003	165.347	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Owner	<1940	0	0	1	0.139003	98.075	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Renter	1940-59	0	0	1	5.30584	1440.96	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Renter	1960-79	0	0	1	5.30584	13676.5	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Renter	1980-99	0	0	1	5.30584	3.47146e-17	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Renter	2000-09	0	0	1	5.30584	24987.5	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Renter	2010s	0	0	1	5.30584	6277.98	0
+Level 1 charger	Not Available	Multi-Family with 5+ Units	Renter	<1940	0	0	1	5.30584	3723.76	0
+Level 1 charger	Not Available	Single-Family Attached	Not Available	1940-59	0.0160783	0.983922	0	10.1865	170.222	0
+Level 1 charger	Not Available	Single-Family Attached	Not Available	1960-79	0.0160783	0.983922	0	10.1865	14286.9	0
+Level 1 charger	Not Available	Single-Family Attached	Not Available	1980-99	0.0160783	0.983922	0	10.1865	5635.84	0
+Level 1 charger	Not Available	Single-Family Attached	Not Available	2000-09	0.0160783	0.983922	0	10.1865	9259.8	0
+Level 1 charger	Not Available	Single-Family Attached	Not Available	2010s	0.0160783	0.983922	0	10.1865	8153.68	0
+Level 1 charger	Not Available	Single-Family Attached	Not Available	<1940	0.0160783	0.983922	0	10.1865	439.892	0
+Level 1 charger	Not Available	Single-Family Attached	Owner	1940-59	0	0	1	4.02272	65.5855	0
+Level 1 charger	Not Available	Single-Family Attached	Owner	1960-79	0	0	1	4.02272	5504.65	0
+Level 1 charger	Not Available	Single-Family Attached	Owner	1980-99	0	0	1	4.02272	2171.46	0
+Level 1 charger	Not Available	Single-Family Attached	Owner	2000-09	0	0	1	4.02272	3567.75	0
+Level 1 charger	Not Available	Single-Family Attached	Owner	2010s	0	0	1	4.02272	3141.57	0
+Level 1 charger	Not Available	Single-Family Attached	Owner	<1940	0	0	1	4.02272	169.488	0
+Level 1 charger	Not Available	Single-Family Attached	Renter	1940-59	0	0	1	1.40552	24.4868	0
+Level 1 charger	Not Available	Single-Family Attached	Renter	1960-79	0	0	1	1.40552	2055.2	0
+Level 1 charger	Not Available	Single-Family Attached	Renter	1980-99	0	0	1	1.40552	810.729	0
+Level 1 charger	Not Available	Single-Family Attached	Renter	2000-09	0	0	1	1.40552	1332.05	0
+Level 1 charger	Not Available	Single-Family Attached	Renter	2010s	0	0	1	1.40552	1172.93	0
+Level 1 charger	Not Available	Single-Family Attached	Renter	<1940	0	0	1	1.40552	63.2795	0
+Level 1 charger	Not Available	Single-Family Detached	Not Available	1940-59	0.0473124	0.952688	0	14.3079	57898.4	0
+Level 1 charger	Not Available	Single-Family Detached	Not Available	1960-79	0.18574	0.81426	0	8.74372	61145.1	0
+Level 1 charger	Not Available	Single-Family Detached	Not Available	1980-99	0.0430548	0.956945	0	11.1284	88087.9	0
+Level 1 charger	Not Available	Single-Family Detached	Not Available	2000-09	0	1	0	7.15395	37752.2	0
+Level 1 charger	Not Available	Single-Family Detached	Not Available	2010s	0.26848	0.73152	0	4.37186	23861.3	0
+Level 1 charger	Not Available	Single-Family Detached	Not Available	<1940	0.130721	0.869279	0	9.93605	54153.5	0
+Level 1 charger	Not Available	Single-Family Detached	Owner	1940-59	0	0	1	11.4837	45864.6	0
+Level 1 charger	Not Available	Single-Family Detached	Owner	1960-79	0	0	1	7.01781	48436.5	0
+Level 1 charger	Not Available	Single-Family Detached	Owner	1980-99	0	0	1	8.93176	69779.5	0
+Level 1 charger	Not Available	Single-Family Detached	Owner	2000-09	0	0	1	5.74185	29905.7	0
+Level 1 charger	Not Available	Single-Family Detached	Owner	2010s	0	0	1	3.50891	18901.9	0
+Level 1 charger	Not Available	Single-Family Detached	Owner	<1940	0	0	1	7.97479	42898.1	0
+Level 1 charger	Not Available	Single-Family Detached	Renter	1940-59	0	0	1	0.154543	700.156	0
+Level 1 charger	Not Available	Single-Family Detached	Renter	1960-79	0	0	1	0.0944431	739.418	0
+Level 1 charger	Not Available	Single-Family Detached	Renter	1980-99	0	0	1	0.1202	1065.23	0
+Level 1 charger	Not Available	Single-Family Detached	Renter	2000-09	0	0	1	0.0772717	456.532	0
+Level 1 charger	Not Available	Single-Family Detached	Renter	2010s	0	0	1	0.0472216	288.55	0
+Level 1 charger	Not Available	Single-Family Detached	Renter	<1940	0	0	1	0.107322	654.869	0
+Level 2 charger	0-100%	Mobile Home	Not Available	1940-59	0	0	1	6.16486	5.24871e-18	0
+Level 2 charger	0-100%	Mobile Home	Not Available	1960-79	0	0	1	6.16486	5.24871e-18	0
+Level 2 charger	0-100%	Mobile Home	Not Available	1980-99	0	0	1	6.16486	5.24871e-18	0
+Level 2 charger	0-100%	Mobile Home	Not Available	2000-09	0	0	1	6.16486	522.253	0
+Level 2 charger	0-100%	Mobile Home	Not Available	2010s	0	0	1	6.16486	5.24871e-18	0
+Level 2 charger	0-100%	Mobile Home	Not Available	<1940	0	0	1	6.16486	5.24871e-18	0
+Level 2 charger	0-100%	Mobile Home	Owner	1940-59	0	1	0	2.90774	2.40075e-18	5.01672e-08
+Level 2 charger	0-100%	Mobile Home	Owner	1960-79	0	1	0	2.90774	2.40075e-18	5.07217e-07
+Level 2 charger	0-100%	Mobile Home	Owner	1980-99	0	1	0	2.90774	2.40075e-18	5.22335e-07
+Level 2 charger	0-100%	Mobile Home	Owner	2000-09	0	1	0	2.90774	238.877	1.30211e-07
+Level 2 charger	0-100%	Mobile Home	Owner	2010s	0	1	0	2.90774	2.40075e-18	3.73048e-08
+Level 2 charger	0-100%	Mobile Home	Owner	<1940	0	1	0	2.90774	2.40075e-18	1.17782e-08
+Level 2 charger	0-100%	Mobile Home	Renter	1940-59	0	1	0	0.603825	5.4993e-19	7.54177e-08
+Level 2 charger	0-100%	Mobile Home	Renter	1960-79	0	1	0	0.603825	5.4993e-19	7.0592e-07
+Level 2 charger	0-100%	Mobile Home	Renter	1980-99	0	1	0	0.603825	5.4993e-19	8.6076e-07
+Level 2 charger	0-100%	Mobile Home	Renter	2000-09	0	1	0	0.603825	54.7187	2.49946e-07
+Level 2 charger	0-100%	Mobile Home	Renter	2010s	0	1	0	0.603825	5.4993e-19	6.80911e-08
+Level 2 charger	0-100%	Mobile Home	Renter	<1940	0	1	0	0.603825	5.4993e-19	2.57899e-08
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.0870201	179.387	0
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.0870201	4.3977e-18	0
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.0870201	4.3977e-18	0
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.0870201	4.3977e-18	0
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.0870201	4.3977e-18	0
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.0870201	463.578	0
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	1940-59	0	1	0	0.000220808	0.532243	1.13621e-07
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	1960-79	0	1	0	0.000220808	1.3048e-20	2.04473e-07
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	1980-99	0	1	0	0.000220808	1.3048e-20	1.55593e-07
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	2000-09	0	1	0	0.000220808	1.3048e-20	3.72303e-08
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	2010s	0	1	0	0.000220808	1.3048e-20	1.5387e-08
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Owner	<1940	0	1	0	0.000220808	1.37544	2.11583e-07
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	1940-59	0	1	0	0.0784472	160.377	6.75409e-07
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	1960-79	0	1	0	0.0784472	3.93166e-18	1.14739e-06
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	1980-99	0	1	0	0.0784472	3.93166e-18	8.64435e-07
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	2000-09	0	1	0	0.0784472	3.93166e-18	2.78579e-07
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	2010s	0	1	0	0.0784472	3.93166e-18	1.07541e-07
+Level 2 charger	0-100%	Multi-Family with 2 - 4 Units	Renter	<1940	0	1	0	0.0784472	414.451	8.38492e-07
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	0.0372243	1.88354e-18	0
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	0.0372243	256.301	0
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	0.0372243	1.88354e-18	0
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	0.0372243	1.88354e-18	0
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	0.0372243	1.88354e-18	0
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	0.0372243	1.88354e-18	0
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Owner	1940-59	0	1	0	6.57528e-05	3.10889e-21	1.86352e-07
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Owner	1960-79	0	1	0	6.57528e-05	0.42304	6.88775e-07
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Owner	1980-99	0	1	0	6.57528e-05	3.10889e-21	4.94378e-07
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Owner	2000-09	0	1	0	6.57528e-05	3.10889e-21	1.37517e-07
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Owner	2010s	0	1	0	6.57528e-05	3.10889e-21	7.93943e-08
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Owner	<1940	0	1	0	6.57528e-05	3.10889e-21	1.24815e-07
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Renter	1940-59	0	1	0	0.0341593	1.7336e-18	3.52929e-06
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Renter	1960-79	0	1	0	0.0341593	235.899	1.03252e-05
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Renter	1980-99	0	1	0	0.0341593	1.7336e-18	8.52538e-06
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Renter	2000-09	0	1	0	0.0341593	1.7336e-18	3.5446e-06
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Renter	2010s	0	1	0	0.0341593	1.7336e-18	1.92238e-06
+Level 2 charger	0-100%	Multi-Family with 5+ Units	Renter	<1940	0	1	0	0.0341593	1.7336e-18	3.50113e-06
+Level 2 charger	0-100%	Single-Family Attached	Not Available	1940-59	0	0	1	0.868907	8.01241e-19	0
+Level 2 charger	0-100%	Single-Family Attached	Not Available	1960-79	0	0	1	0.868907	131.919	0
+Level 2 charger	0-100%	Single-Family Attached	Not Available	1980-99	0	0	1	0.868907	8.01241e-19	0
+Level 2 charger	0-100%	Single-Family Attached	Not Available	2000-09	0	0	1	0.868907	33.8301	0
+Level 2 charger	0-100%	Single-Family Attached	Not Available	2010s	0	0	1	0.868907	40.2691	0
+Level 2 charger	0-100%	Single-Family Attached	Not Available	<1940	0	0	1	0.868907	8.01241e-19	0
+Level 2 charger	0-100%	Single-Family Attached	Owner	1940-59	0	1	0	0.0513394	4.90764e-20	0
+Level 2 charger	0-100%	Single-Family Attached	Owner	1960-79	0	1	0	0.0513394	8.08009	0
+Level 2 charger	0-100%	Single-Family Attached	Owner	1980-99	0	1	0	0.0513394	4.90764e-20	0
+Level 2 charger	0-100%	Single-Family Attached	Owner	2000-09	0	1	0	0.0513394	2.07211	0
+Level 2 charger	0-100%	Single-Family Attached	Owner	2010s	0	1	0	0.0513394	2.4665	0
+Level 2 charger	0-100%	Single-Family Attached	Owner	<1940	0	1	0	0.0513394	4.90764e-20	0
+Level 2 charger	0-100%	Single-Family Attached	Renter	1940-59	0	1	0	0.49776	4.53721e-19	1.06643e-07
+Level 2 charger	0-100%	Single-Family Attached	Renter	1960-79	0	1	0	0.49776	74.7021	1.36992e-07
+Level 2 charger	0-100%	Single-Family Attached	Renter	1980-99	0	1	0	0.49776	4.53721e-19	1.42528e-07
+Level 2 charger	0-100%	Single-Family Attached	Renter	2000-09	0	1	0	0.49776	19.1571	5.93204e-08
+Level 2 charger	0-100%	Single-Family Attached	Renter	2010s	0	1	0	0.49776	22.8033	2.00553e-08
+Level 2 charger	0-100%	Single-Family Attached	Renter	<1940	0	1	0	0.49776	4.53721e-19	1.02411e-07
+Level 2 charger	0-100%	Single-Family Detached	Not Available	1940-59	0	0	1	0.0465746	251.674	0
+Level 2 charger	0-100%	Single-Family Detached	Not Available	1960-79	0	0	1	0.0421389	292.67	0
+Level 2 charger	0-100%	Single-Family Detached	Not Available	1980-99	0	0	1	0.055446	339.061	0
+Level 2 charger	0-100%	Single-Family Detached	Not Available	2000-09	0	0	1	0.0465746	314.05	0
+Level 2 charger	0-100%	Single-Family Detached	Not Available	2010s	0	0	1	0.0443568	265.777	0
+Level 2 charger	0-100%	Single-Family Detached	Not Available	<1940	0	0	1	0.0221784	116.353	0
+Level 2 charger	0-100%	Single-Family Detached	Owner	1940-59	0	1	0	0.0215176	112.49	1.82246e-05
+Level 2 charger	0-100%	Single-Family Detached	Owner	1960-79	0	1	0	0.0194683	130.813	1.9061e-05
+Level 2 charger	0-100%	Single-Family Detached	Owner	1980-99	0	1	0	0.0256162	151.548	1.41367e-05
+Level 2 charger	0-100%	Single-Family Detached	Owner	2000-09	0	1	0	0.0215176	140.369	6.57793e-06
+Level 2 charger	0-100%	Single-Family Detached	Owner	2010s	0	1	0	0.020493	118.793	1.78292e-06
+Level 2 charger	0-100%	Single-Family Detached	Owner	<1940	0	1	0	0.0102465	52.0059	9.37769e-06
+Level 2 charger	0-100%	Single-Family Detached	Renter	1940-59	0	1	0	0.00476927	27.6479	1.03621e-06
+Level 2 charger	0-100%	Single-Family Detached	Renter	1960-79	0	1	0	0.00431506	32.1515	9.68748e-07
+Level 2 charger	0-100%	Single-Family Detached	Renter	1980-99	0	1	0	0.00567771	37.2478	7.57097e-07
+Level 2 charger	0-100%	Single-Family Detached	Renter	2000-09	0	1	0	0.00476927	34.5003	3.85542e-07
+Level 2 charger	0-100%	Single-Family Detached	Renter	2010s	0	1	0	0.00454216	29.1971	1.10152e-07
+Level 2 charger	0-100%	Single-Family Detached	Renter	<1940	0	1	0	0.00227108	12.7821	5.88406e-07
+Level 2 charger	100-150%	Mobile Home	Not Available	1940-59	0	0	1	3.04026	1.84031e-18	0
+Level 2 charger	100-150%	Mobile Home	Not Available	1960-79	0	0	1	3.04026	1.84031e-18	0
+Level 2 charger	100-150%	Mobile Home	Not Available	1980-99	0	0	1	3.04026	1.84031e-18	0
+Level 2 charger	100-150%	Mobile Home	Not Available	2000-09	0	0	1	3.04026	183.113	0
+Level 2 charger	100-150%	Mobile Home	Not Available	2010s	0	0	1	3.04026	1.84031e-18	0
+Level 2 charger	100-150%	Mobile Home	Not Available	<1940	0	0	1	3.04026	1.84031e-18	0
+Level 2 charger	100-150%	Mobile Home	Owner	1940-59	0	1	0	1.92011	1.18977e-18	1.93798e-10
+Level 2 charger	100-150%	Mobile Home	Owner	1960-79	0	1	0	1.92011	1.18977e-18	2.28952e-09
+Level 2 charger	100-150%	Mobile Home	Owner	1980-99	0	1	0	1.92011	1.18977e-18	2.41881e-09
+Level 2 charger	100-150%	Mobile Home	Owner	2000-09	0	1	0	1.92011	118.384	6.46274e-10
+Level 2 charger	100-150%	Mobile Home	Owner	2010s	0	1	0	1.92011	1.18977e-18	1.82846e-10
+Level 2 charger	100-150%	Mobile Home	Owner	<1940	0	1	0	1.92011	1.18977e-18	4.43036e-11
+Level 2 charger	100-150%	Mobile Home	Renter	1940-59	0	1	0	0.127802	7.06574e-20	4.12985e-08
+Level 2 charger	100-150%	Mobile Home	Renter	1960-79	0	1	0	0.127802	7.06574e-20	4.41667e-07
+Level 2 charger	100-150%	Mobile Home	Renter	1980-99	0	1	0	0.127802	7.06574e-20	5.63453e-07
+Level 2 charger	100-150%	Mobile Home	Renter	2000-09	0	1	0	0.127802	7.03049	1.73841e-07
+Level 2 charger	100-150%	Mobile Home	Renter	2010s	0	1	0	0.127802	7.06574e-20	4.61314e-08
+Level 2 charger	100-150%	Mobile Home	Renter	<1940	0	1	0	0.127802	7.06574e-20	9.63577e-09
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.0189443	23.182	0
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.0189443	5.6831e-19	0
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.0189443	5.6831e-19	0
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.0189443	5.6831e-19	0
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.0189443	5.6831e-19	0
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.0189443	59.9076	0
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	1940-59	0	1	0	0.000197955	0.33304	9.80745e-08
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	1960-79	0	1	0	0.000197955	8.16453e-21	1.75161e-07
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	1980-99	0	1	0	0.000197955	8.16453e-21	1.30998e-07
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	2000-09	0	1	0	0.000197955	8.16453e-21	2.95581e-08
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	2010s	0	1	0	0.000197955	8.16453e-21	8.50863e-09
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Owner	<1940	0	1	0	0.000197955	0.860653	1.78561e-07
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	1940-59	0	1	0	0.01522	17.9579	0
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	1960-79	0	1	0	0.01522	4.4024e-19	0
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	1980-99	0	1	0	0.01522	4.4024e-19	0
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	2000-09	0	1	0	0.01522	4.4024e-19	0
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	2010s	0	1	0	0.01522	4.4024e-19	0
+Level 2 charger	100-150%	Multi-Family with 2 - 4 Units	Renter	<1940	0	1	0	0.01522	46.4072	0
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	0.0140585	4.36432e-19	0
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	0.0140585	59.3873	0
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	0.0140585	4.36432e-19	0
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	0.0140585	4.36432e-19	0
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	0.0140585	4.36432e-19	0
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	0.0140585	4.36432e-19	0
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Owner	1940-59	0	1	0	5.73629e-05	1.9882e-21	1.2505e-07
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Owner	1960-79	0	1	0	5.73629e-05	0.270543	4.90409e-07
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Owner	1980-99	0	1	0	5.73629e-05	1.9882e-21	3.44863e-07
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Owner	2000-09	0	1	0	5.73629e-05	1.9882e-21	8.40932e-08
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Owner	2010s	0	1	0	5.73629e-05	1.9882e-21	4.02217e-08
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Owner	<1940	0	1	0	5.73629e-05	1.9882e-21	6.80568e-08
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Renter	1940-59	0	1	0	0.0123171	3.79507e-19	4.43476e-07
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Renter	1960-79	0	1	0	0.0123171	51.6411	1.38007e-06
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Renter	1980-99	0	1	0	0.0123171	3.79507e-19	1.16178e-06
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Renter	2000-09	0	1	0	0.0123171	3.79507e-19	4.4416e-07
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Renter	2010s	0	1	0	0.0123171	3.79507e-19	2.15957e-07
+Level 2 charger	100-150%	Multi-Family with 5+ Units	Renter	<1940	0	1	0	0.0123171	3.79507e-19	4.19428e-07
+Level 2 charger	100-150%	Single-Family Attached	Not Available	1940-59	0	0	1	0.542823	3.66717e-19	0
+Level 2 charger	100-150%	Single-Family Attached	Not Available	1960-79	0	0	1	0.542823	60.3774	0
+Level 2 charger	100-150%	Single-Family Attached	Not Available	1980-99	0	0	1	0.542823	3.66717e-19	0
+Level 2 charger	100-150%	Single-Family Attached	Not Available	2000-09	0	0	1	0.542823	15.4836	0
+Level 2 charger	100-150%	Single-Family Attached	Not Available	2010s	0	0	1	0.542823	18.4306	0
+Level 2 charger	100-150%	Single-Family Attached	Not Available	<1940	0	0	1	0.542823	3.66717e-19	0
+Level 2 charger	100-150%	Single-Family Attached	Owner	1940-59	0	1	0	0.119069	7.88088e-20	0
+Level 2 charger	100-150%	Single-Family Attached	Owner	1960-79	0	1	0	0.119069	12.9753	0
+Level 2 charger	100-150%	Single-Family Attached	Owner	1980-99	0	1	0	0.119069	7.88088e-20	0
+Level 2 charger	100-150%	Single-Family Attached	Owner	2000-09	0	1	0	0.119069	3.32748	0
+Level 2 charger	100-150%	Single-Family Attached	Owner	2010s	0	1	0	0.119069	3.96081	0
+Level 2 charger	100-150%	Single-Family Attached	Owner	<1940	0	1	0	0.119069	7.88088e-20	0
+Level 2 charger	100-150%	Single-Family Attached	Renter	1940-59	0	1	0	0.153404	1.05523e-19	1.44053e-07
+Level 2 charger	100-150%	Single-Family Attached	Renter	1960-79	0	1	0	0.153404	17.3736	2.09407e-07
+Level 2 charger	100-150%	Single-Family Attached	Renter	1980-99	0	1	0	0.153404	1.05523e-19	2.27156e-07
+Level 2 charger	100-150%	Single-Family Attached	Renter	2000-09	0	1	0	0.153404	4.45539	9.26483e-08
+Level 2 charger	100-150%	Single-Family Attached	Renter	2010s	0	1	0	0.153404	5.3034	3.12704e-08
+Level 2 charger	100-150%	Single-Family Attached	Renter	<1940	0	1	0	0.153404	1.05523e-19	1.33633e-07
+Level 2 charger	100-150%	Single-Family Detached	Not Available	1940-59	0	0	1	0.0512706	196.561	0
+Level 2 charger	100-150%	Single-Family Detached	Not Available	1960-79	0	0	1	0.0463877	228.579	0
+Level 2 charger	100-150%	Single-Family Detached	Not Available	1980-99	0	0	1	0.0610365	264.811	0
+Level 2 charger	100-150%	Single-Family Detached	Not Available	2000-09	0	0	1	0.0512706	245.277	0
+Level 2 charger	100-150%	Single-Family Detached	Not Available	2010s	0	0	1	0.0488292	207.575	0
+Level 2 charger	100-150%	Single-Family Detached	Not Available	<1940	0	0	1	0.0244146	90.8734	0
+Level 2 charger	100-150%	Single-Family Detached	Owner	1940-59	0	1	0	0.0328725	122.946	1.46925e-06
+Level 2 charger	100-150%	Single-Family Detached	Owner	1960-79	0	1	0	0.0297418	142.972	1.57719e-06
+Level 2 charger	100-150%	Single-Family Detached	Owner	1980-99	0	1	0	0.0391339	165.635	1.10699e-06
+Level 2 charger	100-150%	Single-Family Detached	Owner	2000-09	0	1	0	0.0328725	153.417	5.0979e-07
+Level 2 charger	100-150%	Single-Family Detached	Owner	2010s	0	1	0	0.0313071	129.835	1.1512e-07
+Level 2 charger	100-150%	Single-Family Detached	Owner	<1940	0	1	0	0.0156536	56.8398	7.30944e-07
+Level 2 charger	100-150%	Single-Family Detached	Renter	1940-59	0	1	0	0.00202975	8.59627	3.03051e-06
+Level 2 charger	100-150%	Single-Family Detached	Renter	1960-79	0	1	0	0.00183644	9.99652	2.95693e-06
+Level 2 charger	100-150%	Single-Family Detached	Renter	1980-99	0	1	0	0.00241637	11.5811	2.29712e-06
+Level 2 charger	100-150%	Single-Family Detached	Renter	2000-09	0	1	0	0.00202975	10.7268	1.20961e-06
+Level 2 charger	100-150%	Single-Family Detached	Renter	2010s	0	1	0	0.0019331	9.07795	3.17392e-07
+Level 2 charger	100-150%	Single-Family Detached	Renter	<1940	0	1	0	0.000966549	3.9742	1.6245e-06
+Level 2 charger	150-200%	Mobile Home	Not Available	1940-59	0	0	1	1.41393	8.14737e-19	0
+Level 2 charger	150-200%	Mobile Home	Not Available	1960-79	0	0	1	1.41393	8.14737e-19	0
+Level 2 charger	150-200%	Mobile Home	Not Available	1980-99	0	0	1	1.41393	8.14737e-19	0
+Level 2 charger	150-200%	Mobile Home	Not Available	2000-09	0	0	1	1.41393	81.0672	0
+Level 2 charger	150-200%	Mobile Home	Not Available	2010s	0	0	1	1.41393	8.14737e-19	0
+Level 2 charger	150-200%	Mobile Home	Not Available	<1940	0	0	1	1.41393	8.14737e-19	0
+Level 2 charger	150-200%	Mobile Home	Owner	1940-59	0	1	0	0.885312	5.28759e-19	8.93413e-11
+Level 2 charger	150-200%	Mobile Home	Owner	1960-79	0	1	0	0.885312	5.28759e-19	1.15977e-09
+Level 2 charger	150-200%	Mobile Home	Owner	1980-99	0	1	0	0.885312	5.28759e-19	1.33581e-09
+Level 2 charger	150-200%	Mobile Home	Owner	2000-09	0	1	0	0.885312	52.6121	3.9061e-10
+Level 2 charger	150-200%	Mobile Home	Owner	2010s	0	1	0	0.885312	5.28759e-19	1.13744e-10
+Level 2 charger	150-200%	Mobile Home	Owner	<1940	0	1	0	0.885312	5.28759e-19	1.938e-11
+Level 2 charger	150-200%	Mobile Home	Renter	1940-59	0	1	0	0.0612325	3.07895e-20	3.06105e-08
+Level 2 charger	150-200%	Mobile Home	Renter	1960-79	0	1	0	0.0612325	3.07895e-20	3.22949e-07
+Level 2 charger	150-200%	Mobile Home	Renter	1980-99	0	1	0	0.0612325	3.07895e-20	4.4277e-07
+Level 2 charger	150-200%	Mobile Home	Renter	2000-09	0	1	0	0.0612325	3.06359	1.41285e-07
+Level 2 charger	150-200%	Mobile Home	Renter	2010s	0	1	0	0.0612325	3.07895e-20	3.97455e-08
+Level 2 charger	150-200%	Mobile Home	Renter	<1940	0	1	0	0.0612325	3.07895e-20	7.90055e-09
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.0166934	23.4078	0
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.0166934	5.73846e-19	0
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.0166934	5.73846e-19	0
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.0166934	5.73846e-19	0
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.0166934	5.73846e-19	0
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.0166934	60.4912	0
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	1940-59	0	1	0	0.00012771	0.156485	1.09485e-07
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	1960-79	0	1	0	0.00012771	3.83626e-21	1.88159e-07
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	1980-99	0	1	0	0.00012771	3.83626e-21	1.42087e-07
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	2000-09	0	1	0	0.00012771	3.83626e-21	3.45639e-08
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	2010s	0	1	0	0.00012771	3.83626e-21	1.01403e-08
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Owner	<1940	0	1	0	0.00012771	0.404394	1.90428e-07
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	1940-59	0	1	0	0.0138943	19.7365	0
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	1960-79	0	1	0	0.0138943	4.83844e-19	0
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	1980-99	0	1	0	0.0138943	4.83844e-19	0
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	2000-09	0	1	0	0.0138943	4.83844e-19	0
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	2010s	0	1	0	0.0138943	4.83844e-19	0
+Level 2 charger	150-200%	Multi-Family with 2 - 4 Units	Renter	<1940	0	1	0	0.0138943	51.0037	0
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	0.0122596	4.24581e-19	0
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	0.0122596	57.7746	0
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	0.0122596	4.24581e-19	0
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	0.0122596	4.24581e-19	0
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	0.0122596	4.24581e-19	0
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	0.0122596	4.24581e-19	0
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Owner	1940-59	0	1	0	7.53436e-05	2.92259e-21	1.14926e-07
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Owner	1960-79	0	1	0	7.53436e-05	0.397689	4.97694e-07
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Owner	1980-99	0	1	0	7.53436e-05	2.92259e-21	3.64051e-07
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Owner	2000-09	0	1	0	7.53436e-05	2.92259e-21	9.70132e-08
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Owner	2010s	0	1	0	7.53436e-05	2.92259e-21	4.36648e-08
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Owner	<1940	0	1	0	7.53436e-05	2.92259e-21	7.5101e-08
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Renter	1940-59	0	1	0	0.0104097	3.57052e-19	5.02127e-07
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Renter	1960-79	0	1	0	0.0104097	48.5856	1.62425e-06
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Renter	1980-99	0	1	0	0.0104097	3.57052e-19	1.44632e-06
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Renter	2000-09	0	1	0	0.0104097	3.57052e-19	5.33628e-07
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Renter	2010s	0	1	0	0.0104097	3.57052e-19	2.71724e-07
+Level 2 charger	150-200%	Multi-Family with 5+ Units	Renter	<1940	0	1	0	0.0104097	3.57052e-19	4.41059e-07
+Level 2 charger	150-200%	Single-Family Attached	Not Available	1940-59	0	0	1	0.489331	2.63521e-19	0
+Level 2 charger	150-200%	Single-Family Attached	Not Available	1960-79	0	0	1	0.489331	43.3869	0
+Level 2 charger	150-200%	Single-Family Attached	Not Available	1980-99	0	0	1	0.489331	2.63521e-19	0
+Level 2 charger	150-200%	Single-Family Attached	Not Available	2000-09	0	0	1	0.489331	11.1264	0
+Level 2 charger	150-200%	Single-Family Attached	Not Available	2010s	0	0	1	0.489331	13.2442	0
+Level 2 charger	150-200%	Single-Family Attached	Not Available	<1940	0	0	1	0.489331	2.63521e-19	0
+Level 2 charger	150-200%	Single-Family Attached	Owner	1940-59	0	1	0	0.129305	6.49888e-20	0
+Level 2 charger	150-200%	Single-Family Attached	Owner	1960-79	0	1	0	0.129305	10.7	0
+Level 2 charger	150-200%	Single-Family Attached	Owner	1980-99	0	1	0	0.129305	6.49888e-20	0
+Level 2 charger	150-200%	Single-Family Attached	Owner	2000-09	0	1	0	0.129305	2.74397	0
+Level 2 charger	150-200%	Single-Family Attached	Owner	2010s	0	1	0	0.129305	3.26624	0
+Level 2 charger	150-200%	Single-Family Attached	Owner	<1940	0	1	0	0.129305	6.49888e-20	0
+Level 2 charger	150-200%	Single-Family Attached	Renter	1940-59	0	1	0	0.115254	6.67777e-20	1.18583e-07
+Level 2 charger	150-200%	Single-Family Attached	Renter	1960-79	0	1	0	0.115254	10.9945	1.92685e-07
+Level 2 charger	150-200%	Single-Family Attached	Renter	1980-99	0	1	0	0.115254	6.67777e-20	2.24596e-07
+Level 2 charger	150-200%	Single-Family Attached	Renter	2000-09	0	1	0	0.115254	2.8195	9.50104e-08
+Level 2 charger	150-200%	Single-Family Attached	Renter	2010s	0	1	0	0.115254	3.35614	3.4142e-08
+Level 2 charger	150-200%	Single-Family Attached	Renter	<1940	0	1	0	0.115254	6.67777e-20	1.06517e-07
+Level 2 charger	150-200%	Single-Family Detached	Not Available	1940-59	0	0	1	0.0737192	259.44	0
+Level 2 charger	150-200%	Single-Family Detached	Not Available	1960-79	0	0	1	0.0666983	301.7	0
+Level 2 charger	150-200%	Single-Family Detached	Not Available	1980-99	0	0	1	0.087761	349.522	0
+Level 2 charger	150-200%	Single-Family Detached	Not Available	2000-09	0	0	1	0.0737192	323.74	0
+Level 2 charger	150-200%	Single-Family Detached	Not Available	2010s	0	0	1	0.0702088	273.977	0
+Level 2 charger	150-200%	Single-Family Detached	Not Available	<1940	0	0	1	0.0351044	119.943	0
+Level 2 charger	150-200%	Single-Family Detached	Owner	1940-59	0	1	0	0.0526517	185.858	9.39646e-06
+Level 2 charger	150-200%	Single-Family Detached	Owner	1960-79	0	1	0	0.0476373	216.133	1.0626e-05
+Level 2 charger	150-200%	Single-Family Detached	Owner	1980-99	0	1	0	0.0626806	250.392	7.95213e-06
+Level 2 charger	150-200%	Single-Family Detached	Owner	2000-09	0	1	0	0.0526517	231.922	3.85645e-06
+Level 2 charger	150-200%	Single-Family Detached	Owner	2010s	0	1	0	0.0501445	196.273	9.03279e-07
+Level 2 charger	150-200%	Single-Family Detached	Owner	<1940	0	1	0	0.0250722	85.9254	4.62455e-06
+Level 2 charger	150-200%	Single-Family Detached	Renter	1940-59	0	1	0	0.00176833	6.12137	0
+Level 2 charger	150-200%	Single-Family Detached	Renter	1960-79	0	1	0	0.00159992	7.11848	0
+Level 2 charger	150-200%	Single-Family Detached	Renter	1980-99	0	1	0	0.00210515	8.24682	0
+Level 2 charger	150-200%	Single-Family Detached	Renter	2000-09	0	1	0	0.00176833	7.6385	0
+Level 2 charger	150-200%	Single-Family Detached	Renter	2010s	0	1	0	0.00168412	6.46437	0
+Level 2 charger	150-200%	Single-Family Detached	Renter	<1940	0	1	0	0.000842062	2.83001	0
+Level 2 charger	200-300%	Mobile Home	Not Available	1940-59	0	0	1	2.4896	1.41383e-18	0
+Level 2 charger	200-300%	Mobile Home	Not Available	1960-79	0	0	1	2.4896	1.41383e-18	0
+Level 2 charger	200-300%	Mobile Home	Not Available	1980-99	0	0	1	2.4896	1.41383e-18	0
+Level 2 charger	200-300%	Mobile Home	Not Available	2000-09	0	0	1	2.4896	140.677	0
+Level 2 charger	200-300%	Mobile Home	Not Available	2010s	0	0	1	2.4896	1.41383e-18	0
+Level 2 charger	200-300%	Mobile Home	Not Available	<1940	0	0	1	2.4896	1.41383e-18	0
+Level 2 charger	200-300%	Mobile Home	Owner	1940-59	0	1	0	1.76693	9.81405e-19	4.19243e-08
+Level 2 charger	200-300%	Mobile Home	Owner	1960-79	0	1	0	1.76693	9.81405e-19	5.53575e-07
+Level 2 charger	200-300%	Mobile Home	Owner	1980-99	0	1	0	1.76693	9.81405e-19	6.99793e-07
+Level 2 charger	200-300%	Mobile Home	Owner	2000-09	0	1	0	1.76693	97.6509	2.25082e-07
+Level 2 charger	200-300%	Mobile Home	Owner	2010s	0	1	0	1.76693	9.81405e-19	6.8173e-08
+Level 2 charger	200-300%	Mobile Home	Owner	<1940	0	1	0	1.76693	9.81405e-19	9.51473e-09
+Level 2 charger	200-300%	Mobile Home	Renter	1940-59	0	1	0	0.0615371	3.93567e-20	2.608e-08
+Level 2 charger	200-300%	Mobile Home	Renter	1960-79	0	1	0	0.0615371	3.93567e-20	2.59777e-07
+Level 2 charger	200-300%	Mobile Home	Renter	1980-99	0	1	0	0.0615371	3.93567e-20	3.84381e-07
+Level 2 charger	200-300%	Mobile Home	Renter	2000-09	0	1	0	0.0615371	3.91603	1.23232e-07
+Level 2 charger	200-300%	Mobile Home	Renter	2010s	0	1	0	0.0615371	3.93567e-20	3.74177e-08
+Level 2 charger	200-300%	Mobile Home	Renter	<1940	0	1	0	0.0615371	3.93567e-20	6.56724e-09
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.0376348	48.077	0
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.0376348	1.17861e-18	0
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.0376348	1.17861e-18	0
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.0376348	1.17861e-18	0
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.0376348	1.17861e-18	0
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.0376348	124.242	0
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	1940-59	0	1	0	0.000683837	0.993598	9.1376e-08
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	1960-79	0	1	0	0.000683837	2.43582e-20	1.5161e-07
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	1980-99	0	1	0	0.000683837	2.43582e-20	1.22631e-07
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	2000-09	0	1	0	0.000683837	2.43582e-20	3.23024e-08
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	2010s	0	1	0	0.000683837	2.43582e-20	8.69767e-09
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Owner	<1940	0	1	0	0.000683837	2.56769	1.49415e-07
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	1940-59	0	1	0	0.0281514	35.2476	2.61972e-06
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	1960-79	0	1	0	0.0281514	8.64099e-19	4.68114e-06
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	1980-99	0	1	0	0.0281514	8.64099e-19	3.7341e-06
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	2000-09	0	1	0	0.0281514	8.64099e-19	1.04712e-06
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	2010s	0	1	0	0.0281514	8.64099e-19	3.90487e-07
+Level 2 charger	200-300%	Multi-Family with 2 - 4 Units	Renter	<1940	0	1	0	0.0281514	91.0878	3.34274e-06
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	0.0308949	9.90916e-19	0
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	0.0308949	134.838	0
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	0.0308949	9.90916e-19	0
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	0.0308949	9.90916e-19	0
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	0.0308949	9.90916e-19	0
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	0.0308949	9.90916e-19	0
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Owner	1940-59	0	1	0	0.000461148	1.38885e-20	1.02576e-07
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Owner	1960-79	0	1	0	0.000461148	1.88987	3.78949e-07
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Owner	1980-99	0	1	0	0.000461148	1.38885e-20	2.98191e-07
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Owner	2000-09	0	1	0	0.000461148	1.38885e-20	8.74492e-08
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Owner	2010s	0	1	0	0.000461148	1.38885e-20	4.07182e-08
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Owner	<1940	0	1	0	0.000461148	1.38885e-20	6.13035e-08
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Renter	1940-59	0	1	0	0.0238032	7.70178e-19	7.20423e-07
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Renter	1960-79	0	1	0	0.0238032	104.802	2.43964e-06
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Renter	1980-99	0	1	0	0.0238032	7.70178e-19	2.2741e-06
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Renter	2000-09	0	1	0	0.0238032	7.70178e-19	8.46105e-07
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Renter	2010s	0	1	0	0.0238032	7.70178e-19	4.53645e-07
+Level 2 charger	200-300%	Multi-Family with 5+ Units	Renter	<1940	0	1	0	0.0238032	7.70178e-19	6.36099e-07
+Level 2 charger	200-300%	Single-Family Attached	Not Available	1940-59	0	0	1	2.07015	1.1955e-18	0
+Level 2 charger	200-300%	Single-Family Attached	Not Available	1960-79	0	0	1	2.07015	196.831	0
+Level 2 charger	200-300%	Single-Family Attached	Not Available	1980-99	0	0	1	2.07015	1.1955e-18	0
+Level 2 charger	200-300%	Single-Family Attached	Not Available	2000-09	0	0	1	2.07015	50.4767	0
+Level 2 charger	200-300%	Single-Family Attached	Not Available	2010s	0	0	1	2.07015	60.0841	0
+Level 2 charger	200-300%	Single-Family Attached	Not Available	<1940	0	0	1	2.07015	1.1955e-18	0
+Level 2 charger	200-300%	Single-Family Attached	Owner	1940-59	0	1	0	0.761656	4.19311e-19	0
+Level 2 charger	200-300%	Single-Family Attached	Owner	1960-79	0	1	0	0.761656	69.0366	0
+Level 2 charger	200-300%	Single-Family Attached	Owner	1980-99	0	1	0	0.761656	4.19311e-19	0
+Level 2 charger	200-300%	Single-Family Attached	Owner	2000-09	0	1	0	0.761656	17.7042	0
+Level 2 charger	200-300%	Single-Family Attached	Owner	2010s	0	1	0	0.761656	21.0739	0
+Level 2 charger	200-300%	Single-Family Attached	Owner	<1940	0	1	0	0.761656	4.19311e-19	0
+Level 2 charger	200-300%	Single-Family Attached	Renter	1940-59	0	1	0	0.31972	1.98781e-19	4.14431e-07
+Level 2 charger	200-300%	Single-Family Attached	Renter	1960-79	0	1	0	0.31972	32.7279	7.56404e-07
+Level 2 charger	200-300%	Single-Family Attached	Renter	1980-99	0	1	0	0.31972	1.98781e-19	9.23955e-07
+Level 2 charger	200-300%	Single-Family Attached	Renter	2000-09	0	1	0	0.31972	8.39295	4.19611e-07
+Level 2 charger	200-300%	Single-Family Attached	Renter	2010s	0	1	0	0.31972	9.99041	1.49936e-07
+Level 2 charger	200-300%	Single-Family Attached	Renter	<1940	0	1	0	0.31972	1.98781e-19	3.55694e-07
+Level 2 charger	200-300%	Single-Family Detached	Not Available	1940-59	0	0	1	0.344878	1121.61	0
+Level 2 charger	200-300%	Single-Family Detached	Not Available	1960-79	0	0	1	0.312033	1304.31	0
+Level 2 charger	200-300%	Single-Family Detached	Not Available	1980-99	0	0	1	0.41057	1511.06	0
+Level 2 charger	200-300%	Single-Family Detached	Not Available	2000-09	0	0	1	0.344878	1399.59	0
+Level 2 charger	200-300%	Single-Family Detached	Not Available	2010s	0	0	1	0.328456	1184.46	0
+Level 2 charger	200-300%	Single-Family Detached	Not Available	<1940	0	0	1	0.164228	518.539	0
+Level 2 charger	200-300%	Single-Family Detached	Owner	1940-59	0	1	0	0.266192	846.269	2.83347e-05
+Level 2 charger	200-300%	Single-Family Detached	Owner	1960-79	0	1	0	0.24084	984.118	3.36076e-05
+Level 2 charger	200-300%	Single-Family Detached	Owner	1980-99	0	1	0	0.316895	1140.11	2.71301e-05
+Level 2 charger	200-300%	Single-Family Detached	Owner	2000-09	0	1	0	0.266192	1056.01	1.37897e-05
+Level 2 charger	200-300%	Single-Family Detached	Owner	2010s	0	1	0	0.253516	893.688	3.50373e-06
+Level 2 charger	200-300%	Single-Family Detached	Owner	<1940	0	1	0	0.126758	391.244	1.40935e-05
+Level 2 charger	200-300%	Single-Family Detached	Renter	1940-59	0	1	0	0.00504831	19.3579	9.35437e-07
+Level 2 charger	200-300%	Single-Family Detached	Renter	1960-79	0	1	0	0.00456752	22.5111	1.01245e-06
+Level 2 charger	200-300%	Single-Family Detached	Renter	1980-99	0	1	0	0.0060099	26.0793	8.79101e-07
+Level 2 charger	200-300%	Single-Family Detached	Renter	2000-09	0	1	0	0.00504831	24.1556	4.90438e-07
+Level 2 charger	200-300%	Single-Family Detached	Renter	2010s	0	1	0	0.00480792	20.4426	1.33603e-07
+Level 2 charger	200-300%	Single-Family Detached	Renter	<1940	0	1	0	0.00240396	8.94947	4.74855e-07
+Level 2 charger	300-400%	Mobile Home	Not Available	1940-59	0	0	1	0.618371	3.76249e-19	0
+Level 2 charger	300-400%	Mobile Home	Not Available	1960-79	0	0	1	0.618371	3.76249e-19	0
+Level 2 charger	300-400%	Mobile Home	Not Available	1980-99	0	0	1	0.618371	3.76249e-19	0
+Level 2 charger	300-400%	Mobile Home	Not Available	2000-09	0	0	1	0.618371	37.4372	0
+Level 2 charger	300-400%	Mobile Home	Not Available	2010s	0	0	1	0.618371	3.76249e-19	0
+Level 2 charger	300-400%	Mobile Home	Not Available	<1940	0	0	1	0.618371	3.76249e-19	0
+Level 2 charger	300-400%	Mobile Home	Owner	1940-59	0	1	0	0.496649	3.10147e-19	1.53665e-08
+Level 2 charger	300-400%	Mobile Home	Owner	1960-79	0	1	0	0.496649	3.10147e-19	2.0926e-07
+Level 2 charger	300-400%	Mobile Home	Owner	1980-99	0	1	0	0.496649	3.10147e-19	2.98065e-07
+Level 2 charger	300-400%	Mobile Home	Owner	2000-09	0	1	0	0.496649	30.86	1.05743e-07
+Level 2 charger	300-400%	Mobile Home	Owner	2010s	0	1	0	0.496649	3.10147e-19	3.32439e-08
+Level 2 charger	300-400%	Mobile Home	Owner	<1940	0	1	0	0.496649	3.10147e-19	4.80382e-09
+Level 2 charger	300-400%	Mobile Home	Renter	1940-59	0	1	0	0.00657014	3.1903e-21	1.28061e-08
+Level 2 charger	300-400%	Mobile Home	Renter	1960-79	0	1	0	0.00657014	3.1903e-21	1.31413e-07
+Level 2 charger	300-400%	Mobile Home	Renter	1980-99	0	1	0	0.00657014	3.1903e-21	2.01375e-07
+Level 2 charger	300-400%	Mobile Home	Renter	2000-09	0	1	0	0.00657014	0.317439	6.68862e-08
+Level 2 charger	300-400%	Mobile Home	Renter	2010s	0	1	0	0.00657014	3.1903e-21	2.2385e-08
+Level 2 charger	300-400%	Mobile Home	Renter	<1940	0	1	0	0.00657014	3.1903e-21	3.39662e-09
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.0154846	19.9071	0
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.0154846	4.88026e-19	0
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.0154846	4.88026e-19	0
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.0154846	4.88026e-19	0
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.0154846	4.88026e-19	0
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.0154846	51.4446	0
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	1940-59	0	1	0	0.000356995	0.399276	8.6591e-08
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	1960-79	0	1	0	0.000356995	9.78831e-21	1.34313e-07
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	1980-99	0	1	0	0.000356995	9.78831e-21	1.10496e-07
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	2000-09	0	1	0	0.000356995	9.78831e-21	3.30203e-08
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	2010s	0	1	0	0.000356995	9.78831e-21	9.05611e-09
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Owner	<1940	0	1	0	0.000356995	1.03182	1.44345e-07
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	1940-59	0	1	0	0.0111279	14.6678	1.11111e-06
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	1960-79	0	1	0	0.0111279	3.59584e-19	1.94705e-06
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	1980-99	0	1	0	0.0111279	3.59584e-19	1.55958e-06
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	2000-09	0	1	0	0.0111279	3.59584e-19	4.32971e-07
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	2010s	0	1	0	0.0111279	3.59584e-19	1.63267e-07
+Level 2 charger	300-400%	Multi-Family with 2 - 4 Units	Renter	<1940	0	1	0	0.0111279	37.905	1.47933e-06
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	0.0154854	5.87197e-19	0
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	0.0154854	79.9024	0
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	0.0154854	5.87197e-19	0
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	0.0154854	5.87197e-19	0
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	0.0154854	5.87197e-19	0
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	0.0154854	5.87197e-19	0
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Owner	1940-59	0	1	0	0.000348168	1.34531e-20	8.63161e-08
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Owner	1960-79	0	1	0	0.000348168	1.83062	3.40321e-07
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Owner	1980-99	0	1	0	0.000348168	1.34531e-20	2.75177e-07
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Owner	2000-09	0	1	0	0.000348168	1.34531e-20	9.16485e-08
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Owner	2010s	0	1	0	0.000348168	1.34531e-20	4.70489e-08
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Owner	<1940	0	1	0	0.000348168	1.34531e-20	6.06846e-08
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Renter	1940-59	0	1	0	0.0111894	4.2289e-19	1.37712e-06
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Renter	1960-79	0	1	0	0.0111894	57.5445	4.79398e-06
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Renter	1980-99	0	1	0	0.0111894	4.2289e-19	4.6424e-06
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Renter	2000-09	0	1	0	0.0111894	4.2289e-19	1.78845e-06
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Renter	2010s	0	1	0	0.0111894	4.2289e-19	1.05698e-06
+Level 2 charger	300-400%	Multi-Family with 5+ Units	Renter	<1940	0	1	0	0.0111894	4.2289e-19	1.22271e-06
+Level 2 charger	300-400%	Single-Family Attached	Not Available	1940-59	0	0	1	1.47178	8.59801e-19	0
+Level 2 charger	300-400%	Single-Family Attached	Not Available	1960-79	0	0	1	1.47178	141.56	0
+Level 2 charger	300-400%	Single-Family Attached	Not Available	1980-99	0	0	1	1.47178	8.59801e-19	0
+Level 2 charger	300-400%	Single-Family Attached	Not Available	2000-09	0	0	1	1.47178	36.3026	0
+Level 2 charger	300-400%	Single-Family Attached	Not Available	2010s	0	0	1	1.47178	43.2122	0
+Level 2 charger	300-400%	Single-Family Attached	Not Available	<1940	0	0	1	1.47178	8.59801e-19	0
+Level 2 charger	300-400%	Single-Family Attached	Owner	1940-59	0	1	0	0.590206	3.38497e-19	8.40242e-07
+Level 2 charger	300-400%	Single-Family Attached	Owner	1960-79	0	1	0	0.590206	55.7312	1.93623e-06
+Level 2 charger	300-400%	Single-Family Attached	Owner	1980-99	0	1	0	0.590206	3.38497e-19	2.72456e-06
+Level 2 charger	300-400%	Single-Family Attached	Owner	2000-09	0	1	0	0.590206	14.2921	1.2033e-06
+Level 2 charger	300-400%	Single-Family Attached	Owner	2010s	0	1	0	0.590206	17.0123	3.47489e-07
+Level 2 charger	300-400%	Single-Family Attached	Owner	<1940	0	1	0	0.590206	3.38497e-19	7.25551e-07
+Level 2 charger	300-400%	Single-Family Attached	Renter	1940-59	0	1	0	0.197877	1.19336e-19	2.69455e-07
+Level 2 charger	300-400%	Single-Family Attached	Renter	1960-79	0	1	0	0.197877	19.6478	5.55318e-07
+Level 2 charger	300-400%	Single-Family Attached	Renter	1980-99	0	1	0	0.197877	1.19336e-19	7.05154e-07
+Level 2 charger	300-400%	Single-Family Attached	Renter	2000-09	0	1	0	0.197877	5.0386	3.44361e-07
+Level 2 charger	300-400%	Single-Family Attached	Renter	2010s	0	1	0	0.197877	5.99762	1.23675e-07
+Level 2 charger	300-400%	Single-Family Attached	Renter	<1940	0	1	0	0.197877	1.19336e-19	2.3602e-07
+Level 2 charger	300-400%	Single-Family Detached	Not Available	1940-59	0	0	1	0.284022	874.885	0
+Level 2 charger	300-400%	Single-Family Detached	Not Available	1960-79	0	0	1	0.256972	1017.4	0
+Level 2 charger	300-400%	Single-Family Detached	Not Available	1980-99	0	0	1	0.338121	1178.66	0
+Level 2 charger	300-400%	Single-Family Detached	Not Available	2000-09	0	0	1	0.284022	1091.72	0
+Level 2 charger	300-400%	Single-Family Detached	Not Available	2010s	0	0	1	0.270497	923.908	0
+Level 2 charger	300-400%	Single-Family Detached	Not Available	<1940	0	0	1	0.135248	404.474	0
+Level 2 charger	300-400%	Single-Family Detached	Owner	1940-59	0	1	0	0.240262	733.978	6.50947e-05
+Level 2 charger	300-400%	Single-Family Detached	Owner	1960-79	0	1	0	0.21738	853.536	7.98161e-05
+Level 2 charger	300-400%	Single-Family Detached	Owner	1980-99	0	1	0	0.286026	988.829	6.9839e-05
+Level 2 charger	300-400%	Single-Family Detached	Owner	2000-09	0	1	0	0.240262	915.888	3.72714e-05
+Level 2 charger	300-400%	Single-Family Detached	Owner	2010s	0	1	0	0.228821	775.105	1.03662e-05
+Level 2 charger	300-400%	Single-Family Detached	Owner	<1940	0	1	0	0.11441	339.33	3.23497e-05
+Level 2 charger	300-400%	Single-Family Detached	Renter	1940-59	0	1	0	0.00182493	6.18235	0
+Level 2 charger	300-400%	Single-Family Detached	Renter	1960-79	0	1	0	0.00165113	7.1894	0
+Level 2 charger	300-400%	Single-Family Detached	Renter	1980-99	0	1	0	0.00217254	8.32899	0
+Level 2 charger	300-400%	Single-Family Detached	Renter	2000-09	0	1	0	0.00182493	7.7146	0
+Level 2 charger	300-400%	Single-Family Detached	Renter	2010s	0	1	0	0.00173803	6.52877	0
+Level 2 charger	300-400%	Single-Family Detached	Renter	<1940	0	1	0	0.000869015	2.85821	0
+Level 2 charger	400%+	Mobile Home	Not Available	1940-59	0	0	1	0.834865	5.15128e-19	0
+Level 2 charger	400%+	Mobile Home	Not Available	1960-79	0	0	1	0.834865	5.15128e-19	0
+Level 2 charger	400%+	Mobile Home	Not Available	1980-99	0	0	1	0.834865	5.15128e-19	0
+Level 2 charger	400%+	Mobile Home	Not Available	2000-09	0	0	1	0.834865	51.2558	0
+Level 2 charger	400%+	Mobile Home	Not Available	2010s	0	0	1	0.834865	5.15128e-19	0
+Level 2 charger	400%+	Mobile Home	Not Available	<1940	0	0	1	0.834865	5.15128e-19	0
+Level 2 charger	400%+	Mobile Home	Owner	1940-59	0	1	0	0.689401	4.27298e-19	8.63853e-07
+Level 2 charger	400%+	Mobile Home	Owner	1960-79	0	1	0	0.689401	4.27298e-19	1.0581e-05
+Level 2 charger	400%+	Mobile Home	Owner	1980-99	0	1	0	0.689401	4.27298e-19	1.61392e-05
+Level 2 charger	400%+	Mobile Home	Owner	2000-09	0	1	0	0.689401	42.5167	6.58775e-06
+Level 2 charger	400%+	Mobile Home	Owner	2010s	0	1	0	0.689401	4.27298e-19	2.20124e-06
+Level 2 charger	400%+	Mobile Home	Owner	<1940	0	1	0	0.689401	4.27298e-19	3.57428e-07
+Level 2 charger	400%+	Mobile Home	Renter	1940-59	0	1	0	0.00695296	4.10155e-21	1.06065e-07
+Level 2 charger	400%+	Mobile Home	Renter	1960-79	0	1	0	0.00695296	4.10155e-21	1.09707e-06
+Level 2 charger	400%+	Mobile Home	Renter	1980-99	0	1	0	0.00695296	4.10155e-21	1.54732e-06
+Level 2 charger	400%+	Mobile Home	Renter	2000-09	0	1	0	0.00695296	0.408109	5.22561e-07
+Level 2 charger	400%+	Mobile Home	Renter	2010s	0	1	0	0.00695296	4.10155e-21	2.22172e-07
+Level 2 charger	400%+	Mobile Home	Renter	<1940	0	1	0	0.00695296	4.10155e-21	4.37712e-08
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	0.049842	83.7004	0
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	0.049842	2.05193e-18	0
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	0.049842	2.05193e-18	0
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.049842	2.05193e-18	0
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.049842	2.05193e-18	0
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	0.049842	216.301	0
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Owner	1940-59	0	1	0	0.00220731	3.81606	6.72303e-06
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Owner	1960-79	0	1	0	0.00220731	9.35513e-20	1.01484e-05
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Owner	1980-99	0	1	0	0.00220731	9.35513e-20	8.21714e-06
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Owner	2000-09	0	1	0	0.00220731	9.35513e-20	2.88146e-06
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Owner	2010s	0	1	0	0.00220731	9.35513e-20	1.00976e-06
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Owner	<1940	0	1	0	0.00220731	9.86158	1.43574e-05
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Renter	1940-59	0	1	0	0.0310693	51.7726	5.7521e-06
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Renter	1960-79	0	1	0	0.0310693	1.26921e-18	9.64576e-06
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Renter	1980-99	0	1	0	0.0310693	1.26921e-18	7.4375e-06
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Renter	2000-09	0	1	0	0.0310693	1.26921e-18	2.03632e-06
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Renter	2010s	0	1	0	0.0310693	1.26921e-18	8.65179e-07
+Level 2 charger	400%+	Multi-Family with 2 - 4 Units	Renter	<1940	0	1	0	0.0310693	133.792	9.98995e-06
+Level 2 charger	400%+	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	0.134017	5.76822e-18	0
+Level 2 charger	400%+	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	0.134017	784.907	0
+Level 2 charger	400%+	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	0.134017	5.76822e-18	0
+Level 2 charger	400%+	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	0.134017	5.76822e-18	0
+Level 2 charger	400%+	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	0.134017	5.76822e-18	0
+Level 2 charger	400%+	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	0.134017	5.76822e-18	0
+Level 2 charger	400%+	Multi-Family with 5+ Units	Owner	1940-59	0	1	0	0.00675848	3.22562e-19	5.26741e-06
+Level 2 charger	400%+	Multi-Family with 5+ Units	Owner	1960-79	0	1	0	0.00675848	43.8924	1.81937e-05
+Level 2 charger	400%+	Multi-Family with 5+ Units	Owner	1980-99	0	1	0	0.00675848	3.22562e-19	1.62629e-05
+Level 2 charger	400%+	Multi-Family with 5+ Units	Owner	2000-09	0	1	0	0.00675848	3.22562e-19	8.93387e-06
+Level 2 charger	400%+	Multi-Family with 5+ Units	Owner	2010s	0	1	0	0.00675848	3.22562e-19	5.07476e-06
+Level 2 charger	400%+	Multi-Family with 5+ Units	Owner	<1940	0	1	0	0.00675848	3.22562e-19	7.02803e-06
+Level 2 charger	400%+	Multi-Family with 5+ Units	Renter	1940-59	0	1	0	0.080504	3.3627e-18	2.16316e-05
+Level 2 charger	400%+	Multi-Family with 5+ Units	Renter	1960-79	0	1	0	0.080504	457.577	7.50085e-05
+Level 2 charger	400%+	Multi-Family with 5+ Units	Renter	1980-99	0	1	0	0.080504	3.3627e-18	7.4055e-05
+Level 2 charger	400%+	Multi-Family with 5+ Units	Renter	2000-09	0	1	0	0.080504	3.3627e-18	3.73926e-05
+Level 2 charger	400%+	Multi-Family with 5+ Units	Renter	2010s	0	1	0	0.080504	3.3627e-18	2.80532e-05
+Level 2 charger	400%+	Multi-Family with 5+ Units	Renter	<1940	0	1	0	0.080504	3.3627e-18	2.41725e-05
+Level 2 charger	400%+	Single-Family Attached	Not Available	1940-59	0	0	1	12.4596	9.76204e-18	0
+Level 2 charger	400%+	Single-Family Attached	Not Available	1960-79	0	0	1	12.4596	1607.25	0
+Level 2 charger	400%+	Single-Family Attached	Not Available	1980-99	0	0	1	12.4596	9.76204e-18	0
+Level 2 charger	400%+	Single-Family Attached	Not Available	2000-09	0	0	1	12.4596	412.174	0
+Level 2 charger	400%+	Single-Family Attached	Not Available	2010s	0	0	1	12.4596	490.625	0
+Level 2 charger	400%+	Single-Family Attached	Not Available	<1940	0	0	1	12.4596	9.76204e-18	0
+Level 2 charger	400%+	Single-Family Attached	Owner	1940-59	0	1	0	7.52125	6.03818e-18	2.03772e-05
+Level 2 charger	400%+	Single-Family Attached	Owner	1960-79	0	1	0	7.52125	994.146	5.0958e-05
+Level 2 charger	400%+	Single-Family Attached	Owner	1980-99	0	1	0	7.52125	6.03818e-18	7.8234e-05
+Level 2 charger	400%+	Single-Family Attached	Owner	2000-09	0	1	0	7.52125	254.945	3.92503e-05
+Level 2 charger	400%+	Single-Family Attached	Owner	2010s	0	1	0	7.52125	303.47	1.61447e-05
+Level 2 charger	400%+	Single-Family Attached	Owner	<1940	0	1	0	7.52125	6.03818e-18	2.15932e-05
+Level 2 charger	400%+	Single-Family Attached	Renter	1940-59	0	1	0	0.618446	4.45096e-19	1.64068e-05
+Level 2 charger	400%+	Single-Family Attached	Renter	1960-79	0	1	0	0.618446	73.282	3.93909e-05
+Level 2 charger	400%+	Single-Family Attached	Renter	1980-99	0	1	0	0.618446	4.45096e-19	5.31332e-05
+Level 2 charger	400%+	Single-Family Attached	Renter	2000-09	0	1	0	0.618446	18.7929	2.85984e-05
+Level 2 charger	400%+	Single-Family Attached	Renter	2010s	0	1	0	0.618446	22.3698	1.09835e-05
+Level 2 charger	400%+	Single-Family Attached	Renter	<1940	0	1	0	0.618446	4.45096e-19	1.68502e-05
+Level 2 charger	400%+	Single-Family Detached	Not Available	1940-59	0	0	1	2.33842	10471.2	0
+Level 2 charger	400%+	Single-Family Detached	Not Available	1960-79	0	0	1	2.11571	12176.9	0
+Level 2 charger	400%+	Single-Family Detached	Not Available	1980-99	0	0	1	2.78384	14107.1	0
+Level 2 charger	400%+	Single-Family Detached	Not Available	2000-09	0	0	1	2.33842	13066.4	0
+Level 2 charger	400%+	Single-Family Detached	Not Available	2010s	0	0	1	2.22707	11058	0
+Level 2 charger	400%+	Single-Family Detached	Not Available	<1940	0	0	1	1.11353	4841.03	0
+Level 2 charger	400%+	Single-Family Detached	Owner	1940-59	0	1	0	2.08996	9338.04	0.000811489
+Level 2 charger	400%+	Single-Family Detached	Owner	1960-79	0	1	0	1.89091	10859.1	0.00103548
+Level 2 charger	400%+	Single-Family Detached	Owner	1980-99	0	1	0	2.48804	12580.4	0.00107408
+Level 2 charger	400%+	Single-Family Detached	Owner	2000-09	0	1	0	2.08996	11652.4	0.000626446
+Level 2 charger	400%+	Single-Family Detached	Owner	2010s	0	1	0	1.99043	9861.28	0.000212309
+Level 2 charger	400%+	Single-Family Detached	Owner	<1940	0	1	0	0.995217	4317.13	0.00044511
+Level 2 charger	400%+	Single-Family Detached	Renter	1940-59	0	1	0	0.00697322	32.4393	3.82948e-05
+Level 2 charger	400%+	Single-Family Detached	Renter	1960-79	0	1	0	0.00630911	37.7234	4.36251e-05
+Level 2 charger	400%+	Single-Family Detached	Renter	1980-99	0	1	0	0.00830145	43.7029	4.05794e-05
+Level 2 charger	400%+	Single-Family Detached	Renter	2000-09	0	1	0	0.00697322	40.4791	2.47956e-05
+Level 2 charger	400%+	Single-Family Detached	Renter	2010s	0	1	0	0.00664116	34.257	7.7796e-06
+Level 2 charger	400%+	Single-Family Detached	Renter	<1940	0	1	0	0.00332058	14.9972	1.99712e-05
+Level 2 charger	Not Available	Mobile Home	Not Available	1940-59	0	1	0	53.4034	4.99902e-17	0
+Level 2 charger	Not Available	Mobile Home	Not Available	1960-79	0	1	0	53.4034	4.99902e-17	0
+Level 2 charger	Not Available	Mobile Home	Not Available	1980-99	0	1	0	53.4034	4.99902e-17	0
+Level 2 charger	Not Available	Mobile Home	Not Available	2000-09	0	1	0	53.4034	4974.08	0
+Level 2 charger	Not Available	Mobile Home	Not Available	2010s	0	1	0	53.4034	4.99902e-17	0
+Level 2 charger	Not Available	Mobile Home	Not Available	<1940	0	1	0	53.4034	4.99902e-17	0
+Level 2 charger	Not Available	Mobile Home	Owner	1940-59	0	0	1	33.0783	3.10094e-17	0
+Level 2 charger	Not Available	Mobile Home	Owner	1960-79	0	0	1	33.0783	3.10094e-17	0
+Level 2 charger	Not Available	Mobile Home	Owner	1980-99	0	0	1	33.0783	3.10094e-17	0
+Level 2 charger	Not Available	Mobile Home	Owner	2000-09	0	0	1	33.0783	3085.47	0
+Level 2 charger	Not Available	Mobile Home	Owner	2010s	0	0	1	33.0783	3.10094e-17	0
+Level 2 charger	Not Available	Mobile Home	Owner	<1940	0	0	1	33.0783	3.10094e-17	0
+Level 2 charger	Not Available	Mobile Home	Renter	1940-59	0	0	1	2.42233	2.25531e-18	0
+Level 2 charger	Not Available	Mobile Home	Renter	1960-79	0	0	1	2.42233	2.25531e-18	0
+Level 2 charger	Not Available	Mobile Home	Renter	1980-99	0	0	1	2.42233	2.25531e-18	0
+Level 2 charger	Not Available	Mobile Home	Renter	2000-09	0	0	1	2.42233	224.406	0
+Level 2 charger	Not Available	Mobile Home	Renter	2010s	0	0	1	2.42233	2.25531e-18	0
+Level 2 charger	Not Available	Mobile Home	Renter	<1940	0	0	1	2.42233	2.25531e-18	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	1	0	0.890988	1900.16	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	1	0	0.890988	4.65826e-17	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	1	0	0.890988	4.65826e-17	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	1	0	0.890988	4.65826e-17	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	2010s	0	1	0	0.890988	4.65826e-17	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Not Available	<1940	0	1	0	0.890988	4910.44	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	1940-59	0	0	1	0.0130083	27.9247	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	1960-79	0	0	1	0.0130083	6.84577e-19	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	1980-99	0	0	1	0.0130083	6.84577e-19	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	2000-09	0	0	1	0.0130083	6.84577e-19	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	2010s	0	0	1	0.0130083	6.84577e-19	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Owner	<1940	0	0	1	0.0130083	72.1638	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	1940-59	0	0	1	0.688679	1467.38	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	1960-79	0	0	1	0.688679	3.5973e-17	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	1980-99	0	0	1	0.688679	3.5973e-17	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	2000-09	0	0	1	0.688679	3.5973e-17	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	2010s	0	0	1	0.688679	3.5973e-17	0
+Level 2 charger	Not Available	Multi-Family with 2 - 4 Units	Renter	<1940	0	0	1	0.688679	3792.05	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Not Available	1940-59	0	1	0	0.895305	4.68964e-17	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Not Available	1960-79	0	1	0	0.895305	6381.4	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Not Available	1980-99	0	1	0	0.895305	4.68964e-17	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Not Available	2000-09	0	1	0	0.895305	4.68964e-17	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Not Available	2010s	0	1	0	0.895305	4.68964e-17	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Not Available	<1940	0	1	0	0.895305	4.68964e-17	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Owner	1940-59	0	0	1	0.0173753	9.143e-19	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Owner	1960-79	0	0	1	0.0173753	124.413	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Owner	1980-99	0	0	1	0.0173753	9.143e-19	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Owner	2000-09	0	0	1	0.0173753	9.143e-19	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Owner	2010s	0	0	1	0.0173753	9.143e-19	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Owner	<1940	0	0	1	0.0173753	9.143e-19	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Renter	1940-59	0	0	1	0.663231	3.47146e-17	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Renter	1960-79	0	0	1	0.663231	4723.76	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Renter	1980-99	0	0	1	0.663231	3.47146e-17	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Renter	2000-09	0	0	1	0.663231	3.47146e-17	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Renter	2010s	0	0	1	0.663231	3.47146e-17	0
+Level 2 charger	Not Available	Multi-Family with 5+ Units	Renter	<1940	0	0	1	0.663231	3.47146e-17	0
+Level 2 charger	Not Available	Single-Family Attached	Not Available	1940-59	0	1	0	54.813	5.12528e-17	0
+Level 2 charger	Not Available	Single-Family Attached	Not Available	1960-79	0	1	0	54.813	8438.42	0
+Level 2 charger	Not Available	Single-Family Attached	Not Available	1980-99	0	1	0	54.813	5.12528e-17	0
+Level 2 charger	Not Available	Single-Family Attached	Not Available	2000-09	0	1	0	54.813	2164	0
+Level 2 charger	Not Available	Single-Family Attached	Not Available	2010s	0	1	0	54.813	2575.89	0
+Level 2 charger	Not Available	Single-Family Attached	Not Available	<1940	0	1	0	54.813	5.12528e-17	0
+Level 2 charger	Not Available	Single-Family Attached	Owner	1940-59	0	0	1	21.6461	1.97474e-17	0
+Level 2 charger	Not Available	Single-Family Attached	Owner	1960-79	0	0	1	21.6461	3251.28	0
+Level 2 charger	Not Available	Single-Family Attached	Owner	1980-99	0	0	1	21.6461	1.97474e-17	0
+Level 2 charger	Not Available	Single-Family Attached	Owner	2000-09	0	0	1	21.6461	833.779	0
+Level 2 charger	Not Available	Single-Family Attached	Owner	2010s	0	0	1	21.6461	992.475	0
+Level 2 charger	Not Available	Single-Family Attached	Owner	<1940	0	0	1	21.6461	1.97474e-17	0
+Level 2 charger	Not Available	Single-Family Attached	Renter	1940-59	0	0	1	7.56303	7.37284e-18	0
+Level 2 charger	Not Available	Single-Family Attached	Renter	1960-79	0	0	1	7.56303	1213.89	0
+Level 2 charger	Not Available	Single-Family Attached	Renter	1980-99	0	0	1	7.56303	7.37284e-18	0
+Level 2 charger	Not Available	Single-Family Attached	Renter	2000-09	0	0	1	7.56303	311.297	0
+Level 2 charger	Not Available	Single-Family Attached	Renter	2010s	0	0	1	7.56303	370.548	0
+Level 2 charger	Not Available	Single-Family Attached	Renter	<1940	0	0	1	7.56303	7.37284e-18	0
+Level 2 charger	Not Available	Single-Family Detached	Not Available	1940-59	0	1	0	8.34628	44685.5	0
+Level 2 charger	Not Available	Single-Family Detached	Not Available	1960-79	0	1	0	7.5514	51964.3	0
+Level 2 charger	Not Available	Single-Family Detached	Not Available	1980-99	0	1	0	9.93605	60201.1	0
+Level 2 charger	Not Available	Single-Family Detached	Not Available	2000-09	0	1	0	8.34628	55760.4	0
+Level 2 charger	Not Available	Single-Family Detached	Not Available	2010s	0	1	0	7.94884	47189.3	0
+Level 2 charger	Not Available	Single-Family Detached	Not Available	<1940	0	1	0	3.97442	20658.8	0
+Level 2 charger	Not Available	Single-Family Detached	Owner	1940-59	0	0	1	6.69882	35397.9	0
+Level 2 charger	Not Available	Single-Family Detached	Owner	1960-79	0	0	1	6.06084	41163.9	0
+Level 2 charger	Not Available	Single-Family Detached	Owner	1980-99	0	0	1	7.97479	47688.8	0
+Level 2 charger	Not Available	Single-Family Detached	Owner	2000-09	0	0	1	6.69882	44171	0
+Level 2 charger	Not Available	Single-Family Detached	Owner	2010s	0	0	1	6.37983	37381.4	0
+Level 2 charger	Not Available	Single-Family Detached	Owner	<1940	0	0	1	3.18991	16365.1	0
+Level 2 charger	Not Available	Single-Family Detached	Renter	1940-59	0	0	1	0.0901503	540.375	0
+Level 2 charger	Not Available	Single-Family Detached	Renter	1960-79	0	0	1	0.0815645	628.396	0
+Level 2 charger	Not Available	Single-Family Detached	Renter	1980-99	0	0	1	0.107322	728.003	0
+Level 2 charger	Not Available	Single-Family Detached	Renter	2000-09	0	0	1	0.0901503	674.302	0
+Level 2 charger	Not Available	Single-Family Detached	Renter	2010s	0	0	1	0.0858574	570.653	0
+Level 2 charger	Not Available	Single-Family Detached	Renter	<1940	0	0	1	0.0429287	249.824	0
+None	0-100%	Mobile Home	Not Available	1940-59	0	0	1	1.69125	10003.1	0
+None	0-100%	Mobile Home	Not Available	1960-79	0	0	1	13.7482	88812.5	0
+None	0-100%	Mobile Home	Not Available	1980-99	0	0	1	23.732	170012	0
+None	0-100%	Mobile Home	Not Available	2000-09	0	0	1	8.67446	50941.9	0
+None	0-100%	Mobile Home	Not Available	2010s	0	0	1	4.91007	33055.3	0
+None	0-100%	Mobile Home	Not Available	<1940	0	0	1	0.545563	3559.5	0
+None	0-100%	Mobile Home	Owner	1940-59	0.666951	0.333049	0	0.7977	4575.37	0.000150575
+None	0-100%	Mobile Home	Owner	1960-79	0.540117	0.459883	0	6.48453	40622.6	0.00202692
+None	0-100%	Mobile Home	Owner	1980-99	0.539472	0.460528	0	11.1935	77762.8	0.00296428
+None	0-100%	Mobile Home	Owner	2000-09	0.613504	0.386496	0	4.09143	23300.7	0.000733053
+None	0-100%	Mobile Home	Owner	2010s	0.454566	0.545434	0	2.3159	15119.4	0.00019303
+None	0-100%	Mobile Home	Owner	<1940	0.681352	0.318648	0	0.257322	1628.1	4.66325e-05
+None	0-100%	Mobile Home	Renter	1940-59	0.806969	0.193031	0	0.165651	1048.06	9.2607e-05
+None	0-100%	Mobile Home	Renter	1960-79	0.710295	0.289705	0	1.34658	9305.27	0.00115461
+None	0-100%	Mobile Home	Renter	1980-99	0.70976	0.29024	0	2.32446	17812.9	0.00212038
+None	0-100%	Mobile Home	Renter	2000-09	0.768182	0.231818	0	0.849629	5337.4	0.000604866
+None	0-100%	Mobile Home	Renter	2010s	0.635009	0.364991	0	0.480922	3463.35	0.000165768
+None	0-100%	Mobile Home	Renter	<1940	0.816977	0.183023	0	0.0534358	372.944	3.75739e-05
+None	0-100%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	13.7492	62100.3	0
+None	0-100%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	12.6179	117185	0
+None	0-100%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	10.8775	104713	0
+None	0-100%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	3.9159	31620.5	0
+None	0-100%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	2.69762	18930.7	0
+None	0-100%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	10.4859	74142.9	0
+None	0-100%	Multi-Family with 2 - 4 Units	Owner	1940-59	0.459317	0.540683	0	0.0348876	184.252	0.000140927
+None	0-100%	Multi-Family with 2 - 4 Units	Owner	1960-79	0.488165	0.511835	0	0.0320171	347.69	0.000212591
+None	0-100%	Multi-Family with 2 - 4 Units	Owner	1980-99	0.506828	0.493172	0	0.027601	310.684	0.000166893
+None	0-100%	Multi-Family with 2 - 4 Units	Owner	2000-09	0.423009	0.576991	0	0.00993635	93.8182	4.42043e-05
+None	0-100%	Multi-Family with 2 - 4 Units	Owner	2010s	0.433889	0.566111	0	0.00684504	56.1676	1.80398e-05
+None	0-100%	Multi-Family with 2 - 4 Units	Owner	<1940	0.436041	0.563959	0	0.0266073	219.983	0.000265963
+None	0-100%	Multi-Family with 2 - 4 Units	Renter	1940-59	0.781826	0.218174	0	12.3947	55519.3	0.00198741
+None	0-100%	Multi-Family with 2 - 4 Units	Renter	1960-79	0.800925	0.199075	0	11.3748	104767	0.00363757
+None	0-100%	Multi-Family with 2 - 4 Units	Renter	1980-99	0.812562	0.187438	0	9.8059	93616	0.00298531
+None	0-100%	Multi-Family with 2 - 4 Units	Renter	2000-09	0.755654	0.244346	0	3.53012	28269.6	0.000966048
+None	0-100%	Multi-Family with 2 - 4 Units	Renter	2010s	0.763764	0.236236	0	2.43186	16924.6	0.000414269
+None	0-100%	Multi-Family with 2 - 4 Units	Renter	<1940	0.765341	0.234659	0	9.45289	66285.8	0.00292369
+None	0-100%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	8.17074	39599.9	0
+None	0-100%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	12.5446	119865	0
+None	0-100%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	11.3906	115779	0
+None	0-100%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	6.45842	58364.5	0
+None	0-100%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	6.49565	51788	0
+None	0-100%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	5.6581	41597.3	0
+None	0-100%	Multi-Family with 5+ Units	Owner	1940-59	0.698059	0.301941	0	0.0144327	65.3619	0.000154735
+None	0-100%	Multi-Family with 5+ Units	Owner	1960-79	0.702411	0.297589	0	0.0221587	197.845	0.000519401
+None	0-100%	Multi-Family with 5+ Units	Owner	1980-99	0.703882	0.296118	0	0.0201204	191.1	0.000407076
+None	0-100%	Multi-Family with 5+ Units	Owner	2000-09	0.701812	0.298188	0	0.0114081	96.334	0.000118076
+None	0-100%	Multi-Family with 5+ Units	Owner	2010s	0.735277	0.264723	0	0.0114739	85.4791	6.44796e-05
+None	0-100%	Multi-Family with 5+ Units	Owner	<1940	0.689926	0.310074	0	0.00999443	68.6588	0.000133287
+None	0-100%	Multi-Family with 5+ Units	Renter	1940-59	0.877704	0.122296	0	7.49797	36447.6	0.00315686
+None	0-100%	Multi-Family with 5+ Units	Renter	1960-79	0.879912	0.120088	0	11.5117	110324	0.00950425
+None	0-100%	Multi-Family with 5+ Units	Renter	1980-99	0.880655	0.119345	0	10.4528	106563	0.00817955
+None	0-100%	Multi-Family with 5+ Units	Renter	2000-09	0.879609	0.120391	0	5.92664	53718.5	0.00327936
+None	0-100%	Multi-Family with 5+ Units	Renter	2010s	0.896075	0.103925	0	5.9608	47665.5	0.00183467
+None	0-100%	Multi-Family with 5+ Units	Renter	<1940	0.873534	0.126466	0	5.19222	38286	0.00345888
+None	0-100%	Single-Family Attached	Not Available	1940-59	0	0	1	2.29914	5744.71	0
+None	0-100%	Single-Family Attached	Not Available	1960-79	0	0	1	2.74513	12460.7	0
+None	0-100%	Single-Family Attached	Not Available	1980-99	0	0	1	4.20612	18717.4	0
+None	0-100%	Single-Family Attached	Not Available	2000-09	0	0	1	2.51445	10232.2	0
+None	0-100%	Single-Family Attached	Not Available	2010s	0	0	1	1.48406	5105.71	0
+None	0-100%	Single-Family Attached	Not Available	<1940	0	0	1	1.65323	6589.8	0
+None	0-100%	Single-Family Attached	Owner	1940-59	0.783766	0.216234	0	0.135845	351.866	0.000325492
+None	0-100%	Single-Family Attached	Owner	1960-79	0.690607	0.309393	0	0.162196	763.225	0.000421237
+None	0-100%	Single-Family Attached	Owner	1980-99	0.600391	0.399609	0	0.248519	1146.45	0.000578249
+None	0-100%	Single-Family Attached	Owner	2000-09	0.455956	0.544044	0	0.148566	626.729	0.000249525
+None	0-100%	Single-Family Attached	Owner	2010s	0.30566	0.69434	0	0.0876859	312.727	6.97809e-05
+None	0-100%	Single-Family Attached	Owner	<1940	0.815229	0.184771	0	0.0976812	403.629	0.000401673
+None	0-100%	Single-Family Attached	Renter	1940-59	0.866462	0.133538	0	1.31708	3253.08	0.000612861
+None	0-100%	Single-Family Attached	Renter	1960-79	0.799831	0.200169	0	1.57257	7056.17	0.000761933
+None	0-100%	Single-Family Attached	Renter	1980-99	0.728964	0.271036	0	2.40951	10599.2	0.000856211
+None	0-100%	Single-Family Attached	Renter	2000-09	0.600044	0.399956	0	1.44042	5794.24	0.000404854
+None	0-100%	Single-Family Attached	Renter	2010s	0.440728	0.559272	0	0.850157	2891.23	0.000132221
+None	0-100%	Single-Family Attached	Renter	<1940	0.887617	0.112383	0	0.947066	3731.63	0.000709532
+None	0-100%	Single-Family Detached	Not Available	1940-59	0	0	1	7.2235	32156.3	0
+None	0-100%	Single-Family Detached	Not Available	1960-79	0	0	1	6.76219	44054	0
+None	0-100%	Single-Family Detached	Not Available	1980-99	0	0	1	6.61138	45370.8	0
+None	0-100%	Single-Family Detached	Not Available	2000-09	0	0	1	3.92557	23341.8	0
+None	0-100%	Single-Family Detached	Not Available	2010s	0	0	1	2.29325	12918	0
+None	0-100%	Single-Family Detached	Not Available	<1940	0	0	1	4.23607	22973.7	0
+None	0-100%	Single-Family Detached	Owner	1940-59	0.632226	0.367774	0	3.33728	14372.8	0.00671227
+None	0-100%	Single-Family Detached	Owner	1960-79	0.513258	0.486742	0	3.12415	19690.6	0.00737163
+None	0-100%	Single-Family Detached	Owner	1980-99	0.40788	0.59212	0	3.05448	20279.2	0.00526926
+None	0-100%	Single-Family Detached	Owner	2000-09	0.357272	0.642728	0	1.81363	10433	0.00245269
+None	0-100%	Single-Family Detached	Owner	2010s	0.308562	0.691438	0	1.05949	5773.91	0.000714902
+None	0-100%	Single-Family Detached	Owner	<1940	0.652803	0.347197	0	1.95708	10268.4	0.00437997
+None	0-100%	Single-Family Detached	Renter	1940-59	0.747919	0.252081	0	0.739691	3532.57	0.00378154
+None	0-100%	Single-Family Detached	Renter	1960-79	0.645384	0.354616	0	0.692453	4839.6	0.00421479
+None	0-100%	Single-Family Detached	Renter	1980-99	0.54315	0.45685	0	0.67701	4984.25	0.00336337
+None	0-100%	Single-Family Detached	Renter	2000-09	0.489637	0.510363	0	0.401982	2564.24	0.00175469
+None	0-100%	Single-Family Detached	Renter	2010s	0.435097	0.564903	0	0.23483	1419.12	0.000530345
+None	0-100%	Single-Family Detached	Renter	<1940	0.764435	0.235565	0	0.433777	2523.8	0.00251778
+None	100-150%	Mobile Home	Not Available	1940-59	0	0	1	0.834055	3507.29	0
+None	100-150%	Mobile Home	Not Available	1960-79	0	0	1	6.78006	31139.6	0
+None	100-150%	Mobile Home	Not Available	1980-99	0	0	1	11.7037	59609.7	0
+None	100-150%	Mobile Home	Not Available	2000-09	0	0	1	4.27789	17861.3	0
+None	100-150%	Mobile Home	Not Available	2010s	0	0	1	2.42145	11589.9	0
+None	100-150%	Mobile Home	Not Available	<1940	0	0	1	0.26905	1248.04	0
+None	100-150%	Mobile Home	Owner	1940-59	0.607544	0.392456	0	0.526755	2267.48	0.000109509
+None	100-150%	Mobile Home	Owner	1960-79	0.475866	0.524134	0	4.28201	20131.9	0.00162177
+None	100-150%	Mobile Home	Owner	1980-99	0.475218	0.524782	0	7.39156	38538	0.00256053
+None	100-150%	Mobile Home	Owner	2000-09	0.550982	0.449018	0	2.70174	11547.4	0.000681938
+None	100-150%	Mobile Home	Owner	2010s	0.39182	0.60818	0	1.52929	7492.94	0.000183901
+None	100-150%	Mobile Home	Owner	<1940	0.623062	0.376938	0	0.169921	806.863	2.88404e-05
+None	100-150%	Mobile Home	Renter	1940-59	0.835483	0.164517	0	0.0350608	134.66	4.66551e-05
+None	100-150%	Mobile Home	Renter	1960-79	0.748642	0.251358	0	0.28501	1195.58	0.000679752
+None	100-150%	Mobile Home	Renter	1980-99	0.748153	0.251847	0	0.491982	2288.67	0.00131859
+None	100-150%	Mobile Home	Renter	2000-09	0.801013	0.198987	0	0.179828	685.772	0.000387026
+None	100-150%	Mobile Home	Renter	2010s	0.678814	0.321186	0	0.101789	444.986	0.000105967
+None	100-150%	Mobile Home	Renter	<1940	0.844298	0.155702	0	0.0113099	47.9174	1.31245e-05
+None	100-150%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	2.9932	8025.14	0
+None	100-150%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	2.74692	15143.7	0
+None	100-150%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	2.36803	13531.9	0
+None	100-150%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.852493	4086.28	0
+None	100-150%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.587273	2446.39	0
+None	100-150%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	2.28279	9581.41	0
+None	100-150%	Multi-Family with 2 - 4 Units	Owner	1940-59	0.942306	0.0576937	0	0.0312768	115.292	0.000120353
+None	100-150%	Multi-Family with 2 - 4 Units	Owner	1960-79	0.948286	0.0517141	0	0.0287034	217.56	0.000193636
+None	100-150%	Multi-Family with 2 - 4 Units	Owner	1980-99	0.951827	0.0481728	0	0.0247443	194.404	0.000149219
+None	100-150%	Multi-Family with 2 - 4 Units	Owner	2000-09	0.933754	0.0662458	0	0.00890795	58.7049	3.70947e-05
+None	100-150%	Multi-Family with 2 - 4 Units	Owner	2010s	0.93645	0.0635498	0	0.00613659	35.1457	1.24206e-05
+None	100-150%	Multi-Family with 2 - 4 Units	Owner	<1940	0.936969	0.0630307	0	0.0238535	137.65	0.000245021
+None	100-150%	Multi-Family with 2 - 4 Units	Renter	1940-59	0.878569	0.121431	0	2.40476	6216.65	0.00116496
+None	100-150%	Multi-Family with 2 - 4 Units	Renter	1960-79	0.890386	0.109614	0	2.2069	11731	0.00215466
+None	100-150%	Multi-Family with 2 - 4 Units	Renter	1980-99	0.897463	0.102537	0	1.9025	10482.5	0.00178722
+None	100-150%	Multi-Family with 2 - 4 Units	Renter	2000-09	0.861953	0.138047	0	0.684901	3165.42	0.000577515
+None	100-150%	Multi-Family with 2 - 4 Units	Renter	2010s	0.867155	0.132845	0	0.471821	1895.09	0.000232295
+None	100-150%	Multi-Family with 2 - 4 Units	Renter	<1940	0.868161	0.131839	0	1.83401	7422.21	0.00178003
+None	100-150%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	3.08584	9175.65	0
+None	100-150%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	4.73771	27773.9	0
+None	100-150%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	4.3019	26827.1	0
+None	100-150%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	2.43915	13523.6	0
+None	100-150%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	2.45321	11999.7	0
+None	100-150%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	2.13689	9638.47	0
+None	100-150%	Multi-Family with 5+ Units	Owner	1940-59	0.679542	0.320458	0	0.0125912	41.8004	0.000110007
+None	100-150%	Multi-Family with 5+ Units	Owner	1960-79	0.68404	0.31596	0	0.0193313	126.526	0.000386783
+None	100-150%	Multi-Family with 5+ Units	Owner	1980-99	0.685561	0.314439	0	0.017553	122.213	0.000302871
+None	100-150%	Multi-Family with 5+ Units	Owner	2000-09	0.683421	0.316579	0	0.00995246	61.6077	8.12981e-05
+None	100-150%	Multi-Family with 5+ Units	Owner	2010s	0.71812	0.28188	0	0.0100098	54.6658	3.66618e-05
+None	100-150%	Multi-Family with 5+ Units	Owner	<1940	0.671146	0.328854	0	0.00871916	43.9088	7.69153e-05
+None	100-150%	Multi-Family with 5+ Units	Renter	1940-59	0.876061	0.123939	0	2.7036	7978.83	0.0017535
+None	100-150%	Multi-Family with 5+ Units	Renter	1960-79	0.878294	0.121706	0	4.15086	24151.2	0.00570024
+None	100-150%	Multi-Family with 5+ Units	Renter	1980-99	0.879045	0.120955	0	3.76903	23327.9	0.00518495
+None	100-150%	Multi-Family with 5+ Units	Renter	2000-09	0.877988	0.122012	0	2.13701	11759.6	0.00200641
+None	100-150%	Multi-Family with 5+ Units	Renter	2010s	0.894649	0.105351	0	2.14933	10434.6	0.000997145
+None	100-150%	Multi-Family with 5+ Units	Renter	<1940	0.871842	0.128158	0	1.8722	8381.28	0.00186114
+None	100-150%	Single-Family Attached	Not Available	1940-59	0	0	1	1.43632	2629.27	0
+None	100-150%	Single-Family Attached	Not Available	1960-79	0	0	1	1.71494	5703.1	0
+None	100-150%	Single-Family Attached	Not Available	1980-99	0	0	1	2.62765	8566.72	0
+None	100-150%	Single-Family Attached	Not Available	2000-09	0	0	1	1.57082	4683.15	0
+None	100-150%	Single-Family Attached	Not Available	2010s	0	0	1	0.927122	2336.81	0
+None	100-150%	Single-Family Attached	Not Available	<1940	0	0	1	1.0328	3016.06	0
+None	100-150%	Single-Family Attached	Owner	1940-59	0.620569	0.379431	0	0.315058	565.041	0.00025715
+None	100-150%	Single-Family Attached	Owner	1960-79	0.501793	0.498207	0	0.376173	1225.62	0.00037124
+None	100-150%	Single-Family Attached	Owner	1980-99	0.404032	0.595968	0	0.576377	1841.02	0.000510918
+None	100-150%	Single-Family Attached	Owner	2000-09	0.274399	0.725601	0	0.344562	1006.43	0.000216655
+None	100-150%	Single-Family Attached	Owner	2010s	0.16572	0.83428	0	0.203365	502.19	4.72977e-05
+None	100-150%	Single-Family Attached	Owner	<1940	0.665648	0.334352	0	0.226547	648.163	0.000300087
+None	100-150%	Single-Family Attached	Renter	1940-59	0.729366	0.270634	0	0.405908	756.573	0.000344259
+None	100-150%	Single-Family Attached	Renter	1960-79	0.624013	0.375987	0	0.484647	1641.06	0.000499609
+None	100-150%	Single-Family Attached	Renter	1980-99	0.52766	0.47234	0	0.742582	2465.07	0.00061713
+None	100-150%	Single-Family Attached	Renter	2000-09	0.383913	0.616087	0	0.44392	1347.57	0.000292258
+None	100-150%	Single-Family Attached	Renter	2010s	0.2466	0.7534	0	0.262008	672.417	9.29254e-05
+None	100-150%	Single-Family Attached	Renter	<1940	0.766385	0.233615	0	0.291874	867.871	0.000373986
+None	100-150%	Single-Family Detached	Not Available	1940-59	0	0	1	7.95183	25114.5	0
+None	100-150%	Single-Family Detached	Not Available	1960-79	0	0	1	7.44401	34406.8	0
+None	100-150%	Single-Family Detached	Not Available	1980-99	0	0	1	7.27799	35435.2	0
+None	100-150%	Single-Family Detached	Not Available	2000-09	0	0	1	4.32138	18230.3	0
+None	100-150%	Single-Family Detached	Not Available	2010s	0	0	1	2.52447	10089.1	0
+None	100-150%	Single-Family Detached	Not Available	<1940	0	0	1	4.66318	17942.7	0
+None	100-150%	Single-Family Detached	Owner	1940-59	0.485202	0.514798	0	5.09836	15708.7	0.0064224
+None	100-150%	Single-Family Detached	Owner	1960-79	0.366341	0.633659	0	4.77277	21520.8	0.00731468
+None	100-150%	Single-Family Detached	Owner	1980-99	0.274138	0.725862	0	4.66633	22164.1	0.00498446
+None	100-150%	Single-Family Detached	Owner	2000-09	0.233579	0.766421	0	2.77068	11402.7	0.00233145
+None	100-150%	Single-Family Detached	Owner	2010s	0.196575	0.803425	0	1.61858	6310.59	0.000592389
+None	100-150%	Single-Family Detached	Owner	<1940	0.507598	0.492402	0	2.98983	11222.9	0.00414508
+None	100-150%	Single-Family Detached	Renter	1940-59	0.657611	0.342389	0	0.314805	1098.34	0.00243557
+None	100-150%	Single-Family Detached	Renter	1960-79	0.540891	0.459109	0	0.294701	1504.72	0.00286725
+None	100-150%	Single-Family Detached	Renter	1980-99	0.434909	0.565091	0	0.288128	1549.7	0.00230875
+None	100-150%	Single-Family Detached	Renter	2000-09	0.383117	0.616883	0	0.171079	797.271	0.00123918
+None	100-150%	Single-Family Detached	Renter	2010s	0.332707	0.667293	0	0.0999412	441.232	0.000350376
+None	100-150%	Single-Family Detached	Renter	<1940	0.677492	0.322508	0	0.184611	784.696	0.00157476
+None	150-200%	Mobile Home	Not Available	1940-59	0	0	1	0.387892	1552.74	0
+None	150-200%	Mobile Home	Not Available	1960-79	0	0	1	3.15319	13786	0
+None	150-200%	Mobile Home	Not Available	1980-99	0	0	1	5.443	26390.2	0
+None	150-200%	Mobile Home	Not Available	2000-09	0	0	1	1.98951	7907.51	0
+None	150-200%	Mobile Home	Not Available	2010s	0	0	1	1.12614	5131.05	0
+None	150-200%	Mobile Home	Not Available	<1940	0	0	1	0.125127	552.527	0
+None	150-200%	Mobile Home	Owner	1940-59	0.502779	0.497221	0	0.242873	1007.72	8.1452e-05
+None	150-200%	Mobile Home	Owner	1960-79	0.372269	0.627731	0	1.97432	8947.04	0.00127831
+None	150-200%	Mobile Home	Owner	1980-99	0.371662	0.628338	0	3.40806	17127.1	0.00227446
+None	150-200%	Mobile Home	Owner	2000-09	0.444913	0.555087	0	1.2457	5131.92	0.0006594
+None	150-200%	Mobile Home	Owner	2010s	0.296181	0.703819	0	0.705116	3330.02	0.000188292
+None	150-200%	Mobile Home	Owner	<1940	0.519161	0.480839	0	0.0783462	358.587	2.28799e-05
+None	150-200%	Mobile Home	Renter	1940-59	0.852349	0.147651	0	0.0167983	58.6791	3.28977e-05
+None	150-200%	Mobile Home	Renter	1960-79	0.771981	0.228019	0	0.136554	520.984	0.000478521
+None	150-200%	Mobile Home	Renter	1980-99	0.771524	0.228476	0	0.235718	997.306	0.00099692
+None	150-200%	Mobile Home	Renter	2000-09	0.820654	0.179346	0	0.0861589	298.831	0.000306104
+None	150-200%	Mobile Home	Renter	2010s	0.706092	0.293908	0	0.0487692	193.906	8.73154e-05
+None	150-200%	Mobile Home	Renter	<1940	0.860411	0.139589	0	0.0054188	20.8804	9.80085e-06
+None	150-200%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	2.63756	8103.32	0
+None	150-200%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	2.42054	15291.3	0
+None	150-200%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	2.08667	13663.7	0
+None	150-200%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.751203	4126.09	0
+None	150-200%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.517495	2470.23	0
+None	150-200%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	2.01155	9674.75	0
+None	150-200%	Multi-Family with 2 - 4 Units	Owner	1940-59	0.677638	0.322362	0	0.0201782	54.1721	0.000131141
+None	150-200%	Multi-Family with 2 - 4 Units	Owner	1960-79	0.702385	0.297615	0	0.0185179	102.225	0.000204949
+None	150-200%	Multi-Family with 2 - 4 Units	Owner	1980-99	0.717753	0.282247	0	0.0159637	91.3444	0.000161173
+None	150-200%	Multi-Family with 2 - 4 Units	Owner	2000-09	0.644648	0.355352	0	0.00574695	27.5836	4.30544e-05
+None	150-200%	Multi-Family with 2 - 4 Units	Owner	2010s	0.65476	0.34524	0	0.00395901	16.5139	1.32435e-05
+None	150-200%	Multi-Family with 2 - 4 Units	Owner	<1940	0.656736	0.343264	0	0.0153891	64.6773	0.000264927
+None	150-200%	Multi-Family with 2 - 4 Units	Renter	1940-59	0.773474	0.226526	0	2.19529	6832.39	0.000947066
+None	150-200%	Multi-Family with 2 - 4 Units	Renter	1960-79	0.79311	0.20689	0	2.01467	12893	0.00174009
+None	150-200%	Multi-Family with 2 - 4 Units	Renter	1980-99	0.805093	0.194907	0	1.73678	11520.7	0.00150496
+None	150-200%	Multi-Family with 2 - 4 Units	Renter	2000-09	0.746625	0.253375	0	0.625241	3478.95	0.00048098
+None	150-200%	Multi-Family with 2 - 4 Units	Renter	2010s	0.754937	0.245063	0	0.430722	2082.8	0.000195788
+None	150-200%	Multi-Family with 2 - 4 Units	Renter	<1940	0.756554	0.243446	0	1.67426	8157.35	0.00148655
+None	150-200%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	2.69099	8926.49	0
+None	150-200%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	4.13149	27019.7	0
+None	150-200%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	3.75144	26098.6	0
+None	150-200%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	2.12704	13156.4	0
+None	150-200%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	2.1393	11673.9	0
+None	150-200%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	1.86346	9376.75	0
+None	150-200%	Multi-Family with 5+ Units	Owner	1940-59	0.715633	0.284367	0	0.0165379	61.4451	0.000105507
+None	150-200%	Multi-Family with 5+ Units	Owner	1960-79	0.719833	0.280167	0	0.0253908	185.989	0.000399767
+None	150-200%	Multi-Family with 5+ Units	Owner	1980-99	0.721251	0.278749	0	0.0230552	179.649	0.000323425
+None	150-200%	Multi-Family with 5+ Units	Owner	2000-09	0.719255	0.280745	0	0.0130721	90.5613	9.27062e-05
+None	150-200%	Multi-Family with 5+ Units	Owner	2010s	0.751455	0.248545	0	0.0131475	80.3568	4.03393e-05
+None	150-200%	Multi-Family with 5+ Units	Owner	<1940	0.707775	0.292225	0	0.0114522	64.5445	7.71937e-05
+None	150-200%	Multi-Family with 5+ Units	Renter	1940-59	0.875324	0.124676	0	2.28493	7506.73	0.00133149
+None	150-200%	Multi-Family with 5+ Units	Renter	1960-79	0.877569	0.122431	0	3.50807	22722.2	0.00447666
+None	150-200%	Multi-Family with 5+ Units	Renter	1980-99	0.878324	0.121676	0	3.18537	21947.7	0.00437214
+None	150-200%	Multi-Family with 5+ Units	Renter	2000-09	0.87726	0.12274	0	1.80608	11063.8	0.00167665
+None	150-200%	Multi-Family with 5+ Units	Renter	2010s	0.894009	0.105991	0	1.81649	9817.17	0.000886496
+None	150-200%	Multi-Family with 5+ Units	Renter	<1940	0.871084	0.128916	0	1.58228	7885.38	0.00135712
+None	150-200%	Single-Family Attached	Not Available	1940-59	0	0	1	1.29478	1889.38	0
+None	150-200%	Single-Family Attached	Not Available	1960-79	0	0	1	1.54594	4098.22	0
+None	150-200%	Single-Family Attached	Not Available	1980-99	0	0	1	2.36871	6156	0
+None	150-200%	Single-Family Attached	Not Available	2000-09	0	0	1	1.41603	3365.29	0
+None	150-200%	Single-Family Attached	Not Available	2010s	0	0	1	0.83576	1679.22	0
+None	150-200%	Single-Family Attached	Not Available	<1940	0	0	1	0.931028	2167.33	0
+None	150-200%	Single-Family Attached	Owner	1940-59	0.600564	0.399436	0	0.342144	465.955	0.000266043
+None	150-200%	Single-Family Attached	Owner	1960-79	0.480765	0.519235	0	0.408513	1010.69	0.000419395
+None	150-200%	Single-Family Attached	Owner	1980-99	0.383944	0.616056	0	0.625929	1518.18	0.000609999
+None	150-200%	Single-Family Attached	Owner	2000-09	0.257966	0.742034	0	0.374184	829.938	0.000275248
+None	150-200%	Single-Family Attached	Owner	2010s	0.15441	0.84559	0	0.220849	414.125	6.39992e-05
+None	150-200%	Single-Family Attached	Owner	<1940	0.646666	0.353334	0	0.246023	534.501	0.000293846
+None	150-200%	Single-Family Attached	Renter	1940-59	0.794578	0.205422	0	0.304963	478.781	0.000281177
+None	150-200%	Single-Family Attached	Renter	1960-79	0.704319	0.295681	0	0.36412	1038.51	0.000455455
+None	150-200%	Single-Family Attached	Renter	1980-99	0.615878	0.384122	0	0.557909	1559.97	0.00060703
+None	150-200%	Single-Family Attached	Renter	2000-09	0.47212	0.52788	0	0.333522	852.783	0.000302905
+None	150-200%	Single-Family Attached	Renter	2010s	0.319626	0.680374	0	0.196849	425.524	9.83322e-05
+None	150-200%	Single-Family Attached	Renter	<1940	0.824819	0.175181	0	0.219288	549.213	0.000297685
+None	150-200%	Single-Family Detached	Not Available	1940-59	0	0	1	11.4335	33148.5	0
+None	150-200%	Single-Family Detached	Not Available	1960-79	0	0	1	10.7033	45413.3	0
+None	150-200%	Single-Family Detached	Not Available	1980-99	0	0	1	10.4646	46770.7	0
+None	150-200%	Single-Family Detached	Not Available	2000-09	0	0	1	6.21348	24062	0
+None	150-200%	Single-Family Detached	Not Available	2010s	0	0	1	3.62979	13316.6	0
+None	150-200%	Single-Family Detached	Not Available	<1940	0	0	1	6.70494	23682.5	0
+None	150-200%	Single-Family Detached	Owner	1940-59	0.42864	0.57136	0	8.16603	23747.1	0.00669635
+None	150-200%	Single-Family Detached	Owner	1960-79	0.315153	0.684847	0	7.64453	32533.3	0.00810044
+None	150-200%	Single-Family Detached	Owner	1980-99	0.231134	0.768866	0	7.47403	33505.8	0.00594153
+None	150-200%	Single-Family Detached	Owner	2000-09	0.195226	0.804774	0	4.43779	17237.6	0.00294283
+None	150-200%	Single-Family Detached	Owner	2010s	0.163006	0.836994	0	2.59247	9539.8	0.000766525
+None	150-200%	Single-Family Detached	Owner	<1940	0.450711	0.549289	0	4.7888	16965.8	0.00433212
+None	150-200%	Single-Family Detached	Renter	1940-59	0.625359	0.374641	0	0.27426	782.125	0.00212411
+None	150-200%	Single-Family Detached	Renter	1960-79	0.505905	0.494095	0	0.256745	1071.51	0.00260646
+None	150-200%	Single-Family Detached	Renter	1980-99	0.400793	0.599207	0	0.251019	1103.53	0.00221815
+None	150-200%	Single-Family Detached	Renter	2000-09	0.350544	0.649456	0	0.149045	567.733	0.00123274
+None	150-200%	Single-Family Detached	Renter	2010s	0.30232	0.69768	0	0.0870692	314.199	0.000353061
+None	150-200%	Single-Family Detached	Renter	<1940	0.646104	0.353896	0	0.160834	558.778	0.00134625
+None	200-300%	Mobile Home	Not Available	1940-59	0	0	1	0.682987	2694.49	0
+None	200-300%	Mobile Home	Not Available	1960-79	0	0	1	5.55203	23923.1	0
+None	200-300%	Mobile Home	Not Available	1980-99	0	0	1	9.58385	45795.4	0
+None	200-300%	Mobile Home	Not Available	2000-09	0	0	1	3.50306	13722	0
+None	200-300%	Mobile Home	Not Available	2010s	0	0	1	1.98287	8903.99	0
+None	200-300%	Mobile Home	Not Available	<1940	0	0	1	0.220318	958.808	0
+None	200-300%	Mobile Home	Owner	1940-59	0.594607	0.405393	0	0.484733	1870.37	0.000118929
+None	200-300%	Mobile Home	Owner	1960-79	0.462429	0.537571	0	3.94041	16606.2	0.00191656
+None	200-300%	Mobile Home	Owner	1980-99	0.461783	0.538217	0	6.8019	31788.8	0.00383625
+None	200-300%	Mobile Home	Owner	2000-09	0.5376	0.4624	0	2.48621	9525.12	0.00121374
+None	200-300%	Mobile Home	Owner	2010s	0.37904	0.62096	0	1.40729	6180.69	0.000365613
+None	200-300%	Mobile Home	Owner	<1940	0.610308	0.389692	0	0.156366	665.555	3.7333e-05
+None	200-300%	Mobile Home	Renter	1940-59	0.666356	0.333644	0	0.0168818	75.0064	4.50839e-05
+None	200-300%	Mobile Home	Renter	1960-79	0.539452	0.460548	0	0.137233	665.947	0.000621483
+None	200-300%	Mobile Home	Renter	1980-99	0.538806	0.461194	0	0.23689	1274.81	0.00136987
+None	200-300%	Mobile Home	Renter	2000-09	0.612869	0.387131	0	0.0865875	381.98	0.000436474
+None	200-300%	Mobile Home	Renter	2010s	0.453902	0.546098	0	0.0490118	247.86	0.000133204
+None	200-300%	Mobile Home	Renter	<1940	0.68077	0.31923	0	0.00544576	26.6903	1.30211e-05
+None	200-300%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	5.94629	16643.3	0
+None	200-300%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	5.45704	31406.5	0
+None	200-300%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	4.70434	28063.8	0
+None	200-300%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	1.69356	8474.51	0
+None	200-300%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	1.16668	5073.57	0
+None	200-300%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	4.53499	19870.8	0
+None	200-300%	Multi-Family with 2 - 4 Units	Owner	1940-59	0.449674	0.550326	0	0.108046	343.964	0.000287672
+None	200-300%	Multi-Family with 2 - 4 Units	Owner	1960-79	0.478453	0.521547	0	0.0991563	649.072	0.000427435
+None	200-300%	Multi-Family with 2 - 4 Units	Owner	1980-99	0.497105	0.502895	0	0.0854796	579.988	0.000352753
+None	200-300%	Multi-Family with 2 - 4 Units	Owner	2000-09	0.413546	0.586454	0	0.0307726	175.141	0.000102672
+None	200-300%	Multi-Family with 2 - 4 Units	Owner	2010s	0.424361	0.575639	0	0.0211989	104.854	3.03168e-05
+None	200-300%	Multi-Family with 2 - 4 Units	Owner	<1940	0.426501	0.573499	0	0.0824023	410.666	0.000549931
+None	200-300%	Multi-Family with 2 - 4 Units	Renter	1940-59	0.827502	0.172498	0	4.44793	12202	0.0014565
+None	200-300%	Multi-Family with 2 - 4 Units	Renter	1960-79	0.843403	0.156597	0	4.08196	23025.6	0.00262367
+None	200-300%	Multi-Family with 2 - 4 Units	Renter	1980-99	0.853013	0.146987	0	3.51893	20574.9	0.00233173
+None	200-300%	Multi-Family with 2 - 4 Units	Renter	2000-09	0.805446	0.194554	0	1.26681	6213.07	0.000746118
+None	200-300%	Multi-Family with 2 - 4 Units	Renter	2010s	0.812314	0.187686	0	0.872694	3719.67	0.000310121
+None	200-300%	Multi-Family with 2 - 4 Units	Renter	<1940	0.813645	0.186355	0	3.39225	14568.3	0.00235263
+None	200-300%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	6.78142	20833.2	0
+None	200-300%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	10.4116	63060.4	0
+None	200-300%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	9.45383	60910.7	0
+None	200-300%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	5.36026	30705.2	0
+None	200-300%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	5.39115	27245.3	0
+None	200-300%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	4.69602	21884.1	0
+None	200-300%	Multi-Family with 5+ Units	Owner	1940-59	0.715633	0.284367	0	0.101222	291.995	0.000229892
+None	200-300%	Multi-Family with 5+ Units	Owner	1960-79	0.719833	0.280167	0	0.155407	883.844	0.000806692
+None	200-300%	Multi-Family with 5+ Units	Owner	1980-99	0.721251	0.278749	0	0.141111	853.714	0.000685989
+None	200-300%	Multi-Family with 5+ Units	Owner	2000-09	0.719255	0.280745	0	0.0800091	430.359	0.000215266
+None	200-300%	Multi-Family with 5+ Units	Owner	2010s	0.751455	0.248545	0	0.0804703	381.866	0.00010509
+None	200-300%	Multi-Family with 5+ Units	Owner	<1940	0.707775	0.292225	0	0.0700945	306.723	0.000168056
+None	200-300%	Multi-Family with 5+ Units	Renter	1940-59	0.877704	0.122296	0	5.22481	16192.4	0.00201136
+None	200-300%	Multi-Family with 5+ Units	Renter	1960-79	0.879912	0.120088	0	8.02168	49013	0.00711076
+None	200-300%	Multi-Family with 5+ Units	Renter	1980-99	0.880655	0.119345	0	7.28378	47342.2	0.00733899
+None	200-300%	Multi-Family with 5+ Units	Renter	2000-09	0.879609	0.120391	0	4.12986	23865.3	0.00287563
+None	200-300%	Multi-Family with 5+ Units	Renter	2010s	0.896075	0.103925	0	4.15366	21176.1	0.00162309
+None	200-300%	Multi-Family with 5+ Units	Renter	<1940	0.873534	0.126466	0	3.61809	17009.1	0.00210964
+None	200-300%	Single-Family Attached	Not Available	1940-59	0	0	1	5.47765	8571.47	0
+None	200-300%	Single-Family Attached	Not Available	1960-79	0	0	1	6.54021	18592.2	0
+None	200-300%	Single-Family Attached	Not Available	1980-99	0	0	1	10.021	27927.6	0
+None	200-300%	Single-Family Attached	Not Available	2000-09	0	0	1	5.99061	15267.1	0
+None	200-300%	Single-Family Attached	Not Available	2010s	0	0	1	3.53574	7618.04	0
+None	200-300%	Single-Family Attached	Not Available	<1940	0	0	1	3.93878	9832.41	0
+None	200-300%	Single-Family Attached	Owner	1940-59	0.592618	0.407382	0	2.01536	3006.36	0.000564502
+None	200-300%	Single-Family Attached	Owner	1960-79	0.472529	0.527471	0	2.40629	6521.03	0.000980981
+None	200-300%	Single-Family Attached	Owner	1980-99	0.376165	0.623835	0	3.68696	9795.34	0.00149272
+None	200-300%	Single-Family Attached	Owner	2000-09	0.251697	0.748303	0	2.20408	5354.79	0.000748021
+None	200-300%	Single-Family Attached	Owner	2010s	0.150148	0.849852	0	1.30088	2671.95	0.000185731
+None	200-300%	Single-Family Attached	Owner	<1940	0.639086	0.360914	0	1.44917	3448.62	0.000616613
+None	200-300%	Single-Family Attached	Renter	1940-59	0.761225	0.238775	0	0.845985	1425.21	0.000436281
+None	200-300%	Single-Family Attached	Renter	1960-79	0.662536	0.337464	0	1.01009	3091.39	0.000778681
+None	200-300%	Single-Family Attached	Renter	1980-99	0.569241	0.430759	0	1.54767	4643.64	0.00110349
+None	200-300%	Single-Family Attached	Renter	2000-09	0.424342	0.575658	0	0.925207	2538.52	0.00059169
+None	200-300%	Single-Family Attached	Renter	2010s	0.279121	0.720879	0	0.54607	1266.68	0.000196243
+None	200-300%	Single-Family Attached	Renter	<1940	0.795111	0.204889	0	0.608317	1634.87	0.000447034
+None	200-300%	Single-Family Detached	Not Available	1940-59	0	0	1	53.489	143308	0
+None	200-300%	Single-Family Detached	Not Available	1960-79	0	0	1	50.0731	196331	0
+None	200-300%	Single-Family Detached	Not Available	1980-99	0	0	1	48.9563	202199	0
+None	200-300%	Single-Family Detached	Not Available	2000-09	0	0	1	29.0683	104025	0
+None	200-300%	Single-Family Detached	Not Available	2010s	0	0	1	16.9812	57570.4	0
+None	200-300%	Single-Family Detached	Not Available	<1940	0	0	1	31.3675	102384	0
+None	200-300%	Single-Family Detached	Owner	1940-59	0.392442	0.607558	0	41.2851	108127	0.0143336
+None	200-300%	Single-Family Detached	Owner	1960-79	0.283779	0.716221	0	38.6485	148134	0.0183748
+None	200-300%	Single-Family Detached	Owner	1980-99	0.205613	0.794387	0	37.7865	152562	0.0146498
+None	200-300%	Single-Family Detached	Owner	2000-09	0.172779	0.827221	0	22.4362	78488.1	0.00771044
+None	200-300%	Single-Family Detached	Owner	2010s	0.143602	0.856398	0	13.1068	43437.5	0.00212896
+None	200-300%	Single-Family Detached	Owner	<1940	0.414	0.586	0	24.2108	77250.2	0.00943602
+None	200-300%	Single-Family Detached	Renter	1940-59	0.5561	0.4439	0	0.782969	2473.35	0.00340091
+None	200-300%	Single-Family Detached	Renter	1960-79	0.434532	0.565468	0	0.732967	3388.48	0.00436479
+None	200-300%	Single-Family Detached	Renter	1980-99	0.334218	0.665782	0	0.71662	3489.76	0.00393313
+None	200-300%	Single-Family Detached	Renter	2000-09	0.2883	0.7117	0	0.425501	1795.37	0.0023024
+None	200-300%	Single-Family Detached	Renter	2010s	0.245403	0.754597	0	0.248569	993.608	0.000671961
+None	200-300%	Single-Family Detached	Renter	<1940	0.578094	0.421906	0	0.459156	1767.05	0.00212183
+None	300-400%	Mobile Home	Not Available	1940-59	0	0	1	0.169641	717.06	0
+None	300-400%	Mobile Home	Not Available	1960-79	0	0	1	1.37902	6366.44	0
+None	300-400%	Mobile Home	Not Available	1980-99	0	0	1	2.38045	12187.1	0
+None	300-400%	Mobile Home	Not Available	2000-09	0	0	1	0.870097	3651.72	0
+None	300-400%	Mobile Home	Not Available	2010s	0	0	1	0.492508	2369.54	0
+None	300-400%	Mobile Home	Not Available	<1940	0	0	1	0.0547231	255.159	0
+None	300-400%	Mobile Home	Owner	1940-59	0.520693	0.479307	0	0.136249	591.083	6.96779e-05
+None	300-400%	Mobile Home	Owner	1960-79	0.389172	0.610828	0	1.10757	5247.95	0.00110132
+None	300-400%	Mobile Home	Owner	1980-99	0.388555	0.611445	0	1.91188	10046	0.00252657
+None	300-400%	Mobile Home	Owner	2000-09	0.462684	0.537316	0	0.698825	3010.16	0.000885804
+None	300-400%	Mobile Home	Owner	2010s	0.311343	0.688657	0	0.395561	1953.25	0.000286193
+None	300-400%	Mobile Home	Owner	<1940	0.537028	0.462972	0	0.0439512	210.331	2.72517e-05
+None	300-400%	Mobile Home	Renter	1940-59	0.481863	0.518137	0	0.00180243	6.08012	2.27466e-05
+None	300-400%	Mobile Home	Renter	1960-79	0.352929	0.647071	0	0.014652	53.9825	0.000306334
+None	300-400%	Mobile Home	Renter	1980-99	0.352335	0.647665	0	0.0252921	103.337	0.000714118
+None	300-400%	Mobile Home	Renter	2000-09	0.424351	0.575649	0	0.00924471	30.9638	0.000241562
+None	300-400%	Mobile Home	Renter	2010s	0.279037	0.720963	0	0.00523286	20.0919	8.13703e-05
+None	300-400%	Mobile Home	Renter	<1940	0.498247	0.501753	0	0.000581429	2.16355	6.80422e-06
+None	300-400%	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	2.44657	6891.45	0
+None	300-400%	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	2.24527	13004.4	0
+None	300-400%	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	1.93558	11620.3	0
+None	300-400%	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	0.696808	3509.02	0
+None	300-400%	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	0.480024	2100.8	0
+None	300-400%	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	1.8659	8227.87	0
+None	300-400%	Multi-Family with 2 - 4 Units	Owner	1940-59	0.548214	0.451786	0	0.0564053	138.221	0.000262872
+None	300-400%	Multi-Family with 2 - 4 Units	Owner	1960-79	0.57669	0.42331	0	0.0517643	260.829	0.000371842
+None	300-400%	Multi-Family with 2 - 4 Units	Owner	1980-99	0.594804	0.405196	0	0.0446244	233.067	0.000311407
+None	300-400%	Multi-Family with 2 - 4 Units	Owner	2000-09	0.511527	0.488473	0	0.0160648	70.3802	0.000102027
+None	300-400%	Multi-Family with 2 - 4 Units	Owner	2010s	0.522621	0.477379	0	0.0110669	42.1356	3.13793e-05
+None	300-400%	Multi-Family with 2 - 4 Units	Owner	<1940	0.524805	0.475195	0	0.0430179	165.026	0.000513558
+None	300-400%	Multi-Family with 2 - 4 Units	Renter	1940-59	0.7852	0.2148	0	1.75821	5077.7	0.000976667
+None	300-400%	Multi-Family with 2 - 4 Units	Renter	1960-79	0.804077	0.195923	0	1.61355	9581.81	0.00169014
+None	300-400%	Multi-Family with 2 - 4 Units	Renter	1980-99	0.815573	0.184427	0	1.39099	8561.97	0.00154079
+None	300-400%	Multi-Family with 2 - 4 Units	Renter	2000-09	0.759308	0.240692	0	0.500756	2585.49	0.000495321
+None	300-400%	Multi-Family with 2 - 4 Units	Renter	2010s	0.767334	0.232666	0	0.344965	1547.89	0.000212391
+None	300-400%	Multi-Family with 2 - 4 Units	Renter	<1940	0.768894	0.231106	0	1.34091	6062.39	0.00162777
+None	300-400%	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	3.39905	12345.3	0
+None	300-400%	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	5.21858	37368.3	0
+None	300-400%	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	4.73853	36094.5	0
+None	300-400%	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	2.68672	18195.3	0
+None	300-400%	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	2.7022	16145	0
+None	300-400%	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	2.35378	12968.1	0
+None	300-400%	Multi-Family with 5+ Units	Owner	1940-59	0.715633	0.284367	0	0.0764229	282.841	0.000203628
+None	300-400%	Multi-Family with 5+ Units	Owner	1960-79	0.719833	0.280167	0	0.117333	856.135	0.000709379
+None	300-400%	Multi-Family with 5+ Units	Owner	1980-99	0.721251	0.278749	0	0.106539	826.951	0.000614077
+None	300-400%	Multi-Family with 5+ Units	Owner	2000-09	0.719255	0.280745	0	0.0604071	416.867	0.000218707
+None	300-400%	Multi-Family with 5+ Units	Owner	2010s	0.751455	0.248545	0	0.0607553	369.894	0.000108
+None	300-400%	Multi-Family with 5+ Units	Owner	<1940	0.707775	0.292225	0	0.0529215	297.108	0.000170579
+None	300-400%	Multi-Family with 5+ Units	Renter	1940-59	0.877704	0.122296	0	2.45608	8890.93	0.00132275
+None	300-400%	Multi-Family with 5+ Units	Renter	1960-79	0.879912	0.120088	0	3.77084	26912.1	0.00474518
+None	300-400%	Multi-Family with 5+ Units	Renter	1980-99	0.880655	0.119345	0	3.42397	25994.7	0.005209
+None	300-400%	Multi-Family with 5+ Units	Renter	2000-09	0.879609	0.120391	0	1.94137	13104	0.00215697
+None	300-400%	Multi-Family with 5+ Units	Renter	2010s	0.896075	0.103925	0	1.95256	11627.4	0.00132959
+None	300-400%	Multi-Family with 5+ Units	Renter	<1940	0.873534	0.126466	0	1.70079	9339.4	0.00143892
+None	300-400%	Single-Family Attached	Not Available	1940-59	0	0	1	3.89437	6164.57	0
+None	300-400%	Single-Family Attached	Not Available	1960-79	0	0	1	4.6498	13371.4	0
+None	300-400%	Single-Family Attached	Not Available	1980-99	0	0	1	7.12448	20085.5	0
+None	300-400%	Single-Family Attached	Not Available	2000-09	0	0	1	4.25906	10980.1	0
+None	300-400%	Single-Family Attached	Not Available	2010s	0	0	1	2.51376	5478.87	0
+None	300-400%	Single-Family Attached	Not Available	<1940	0	0	1	2.8003	7071.43	0
+None	300-400%	Single-Family Attached	Owner	1940-59	0.590633	0.409367	0	1.5617	2426.94	0.000482141
+None	300-400%	Single-Family Attached	Owner	1960-79	0.470482	0.529518	0	1.86463	5264.22	0.000895764
+None	300-400%	Single-Family Attached	Owner	1980-99	0.374239	0.625761	0	2.85702	7907.48	0.00145745
+None	300-400%	Single-Family Attached	Owner	2000-09	0.250153	0.749847	0	1.70794	4322.76	0.000770624
+None	300-400%	Single-Family Attached	Owner	2010s	0.149103	0.850897	0	1.00805	2156.99	0.000212881
+None	300-400%	Single-Family Attached	Owner	<1940	0.63719	0.36281	0	1.12296	2783.97	0.000521065
+None	300-400%	Single-Family Attached	Renter	1940-59	0.696212	0.303788	0	0.523586	855.608	0.00028207
+None	300-400%	Single-Family Attached	Renter	1960-79	0.585291	0.414709	0	0.625151	1855.88	0.000547626
+None	300-400%	Single-Family Attached	Renter	1980-99	0.48717	0.51283	0	0.957864	2787.75	0.000831248
+None	300-400%	Single-Family Attached	Renter	2000-09	0.346364	0.653636	0	0.572617	1523.97	0.000480036
+None	300-400%	Single-Family Attached	Renter	2010s	0.217735	0.782265	0	0.337967	760.436	0.000161873
+None	300-400%	Single-Family Attached	Renter	<1940	0.736125	0.263875	0	0.376491	981.475	0.000292785
+None	300-400%	Single-Family Detached	Not Available	1940-59	0	0	1	44.0504	111784	0
+None	300-400%	Single-Family Detached	Not Available	1960-79	0	0	1	41.2373	153143	0
+None	300-400%	Single-Family Detached	Not Available	1980-99	0	0	1	40.3176	157721	0
+None	300-400%	Single-Family Detached	Not Available	2000-09	0	0	1	23.939	81142.2	0
+None	300-400%	Single-Family Detached	Not Available	2010s	0	0	1	13.9847	44906.4	0
+None	300-400%	Single-Family Detached	Not Available	<1940	0	0	1	25.8325	79862.4	0
+None	300-400%	Single-Family Detached	Owner	1940-59	0.293138	0.706862	0	37.2635	93780.1	0.0126183
+None	300-400%	Single-Family Detached	Owner	1960-79	0.202793	0.797207	0	34.8837	128478	0.0171211
+None	300-400%	Single-Family Detached	Owner	1980-99	0.142496	0.857504	0	34.1057	132318	0.0151232
+None	300-400%	Single-Family Detached	Owner	2000-09	0.118241	0.881759	0	20.2506	68073.6	0.00850082
+None	300-400%	Single-Family Detached	Owner	2010s	0.0971919	0.902808	0	11.83	37673.8	0.00251006
+None	300-400%	Single-Family Detached	Owner	<1940	0.312042	0.687958	0	21.8524	66999.9	0.00841402
+None	300-400%	Single-Family Detached	Renter	1940-59	0.524573	0.475427	0	0.283038	789.917	0.00225055
+None	300-400%	Single-Family Detached	Renter	1960-79	0.40363	0.59637	0	0.264963	1082.18	0.00299623
+None	300-400%	Single-Family Detached	Renter	1980-99	0.306583	0.693417	0	0.259053	1114.53	0.00288561
+None	300-400%	Single-Family Detached	Renter	2000-09	0.262962	0.737038	0	0.153816	573.389	0.00179237
+None	300-400%	Single-Family Detached	Renter	2010s	0.222656	0.777344	0	0.0898562	317.33	0.00054469
+None	300-400%	Single-Family Detached	Renter	<1940	0.546856	0.453144	0	0.165982	564.346	0.00138353
+None	400%+	Mobile Home	Not Available	1940-59	0	0	1	0.229034	981.737	0
+None	400%+	Mobile Home	Not Available	1960-79	0	0	1	1.86182	8716.38	0
+None	400%+	Mobile Home	Not Available	1980-99	0	0	1	3.21386	16685.6	0
+None	400%+	Mobile Home	Not Available	2000-09	0	0	1	1.17472	4999.62	0
+None	400%+	Mobile Home	Not Available	2010s	0	0	1	0.664937	3244.17	0
+None	400%+	Mobile Home	Not Available	<1940	0	0	1	0.0738819	349.342	0
+None	400%+	Mobile Home	Owner	1940-59	0.397711	0.602289	0	0.189128	814.351	0.000108229
+None	400%+	Mobile Home	Owner	1960-79	0.279161	0.720839	0	1.53743	7230.23	0.00134621
+None	400%+	Mobile Home	Owner	1980-99	0.278639	0.721361	0	2.65389	13840.7	0.00349695
+None	400%+	Mobile Home	Owner	2000-09	0.343582	0.656418	0	0.970043	4147.18	0.00138325
+None	400%+	Mobile Home	Owner	2010s	0.215569	0.784431	0	0.549081	2691.04	0.00048626
+None	400%+	Mobile Home	Owner	<1940	0.413516	0.586484	0	0.061009	289.779	5.41182e-05
+None	400%+	Mobile Home	Renter	1940-59	0.733347	0.266653	0	0.00190745	7.81679	2.4792e-05
+None	400%+	Mobile Home	Renter	1960-79	0.61729	0.38271	0	0.0155057	69.4016	0.000319024
+None	400%+	Mobile Home	Renter	1980-99	0.616675	0.383325	0	0.0267658	132.854	0.000716994
+None	400%+	Mobile Home	Renter	2000-09	0.685532	0.314468	0	0.00978337	39.808	0.000255
+None	400%+	Mobile Home	Renter	2010s	0.5337	0.4663	0	0.00553776	25.8308	0.000104306
+None	400%+	Mobile Home	Renter	<1940	0.745971	0.254029	0	0.000615306	2.78153	1.00248e-05
+None	400%+	Multi-Family with 2 - 4 Units	Not Available	1940-59	0	0	1	7.87504	28975.4	0
+None	400%+	Multi-Family with 2 - 4 Units	Not Available	1960-79	0	0	1	7.22709	54677.6	0
+None	400%+	Multi-Family with 2 - 4 Units	Not Available	1980-99	0	0	1	6.23025	48858	0
+None	400%+	Multi-Family with 2 - 4 Units	Not Available	2000-09	0	0	1	2.24289	14753.8	0
+None	400%+	Multi-Family with 2 - 4 Units	Not Available	2010s	0	0	1	1.5451	8832.9	0
+None	400%+	Multi-Family with 2 - 4 Units	Not Available	<1940	0	0	1	6.00596	34594.4	0
+None	400%+	Multi-Family with 2 - 4 Units	Owner	1940-59	0.638974	0.361026	0	0.348755	1321.04	0.000921254
+None	400%+	Multi-Family with 2 - 4 Units	Owner	1960-79	0.665223	0.334777	0	0.32006	2492.86	0.00123871
+None	400%+	Multi-Family with 2 - 4 Units	Owner	1980-99	0.681641	0.318359	0	0.275914	2227.53	0.00102795
+None	400%+	Multi-Family with 2 - 4 Units	Owner	2000-09	0.604338	0.395662	0	0.0993291	672.655	0.000410456
+None	400%+	Multi-Family with 2 - 4 Units	Owner	2010s	0.614912	0.385088	0	0.0684267	402.709	0.000151318
+None	400%+	Multi-Family with 2 - 4 Units	Owner	<1940	0.616983	0.383017	0	0.265981	1577.23	0.00209858
+None	400%+	Multi-Family with 2 - 4 Units	Renter	1940-59	0.736677	0.263323	0	4.90895	17922.6	0.0018709
+None	400%+	Multi-Family with 2 - 4 Units	Renter	1960-79	0.758507	0.241493	0	4.50505	33820.6	0.00295747
+None	400%+	Multi-Family with 2 - 4 Units	Renter	1980-99	0.771918	0.228082	0	3.88366	30221	0.00269225
+None	400%+	Multi-Family with 2 - 4 Units	Renter	2000-09	0.707117	0.292883	0	1.39812	9125.92	0.000927875
+None	400%+	Multi-Family with 2 - 4 Units	Renter	2010s	0.716234	0.283766	0	0.963149	5463.56	0.000437756
+None	400%+	Multi-Family with 2 - 4 Units	Renter	<1940	0.71801	0.28199	0	3.74385	21398.2	0.00375089
+None	400%+	Multi-Family with 5+ Units	Not Available	1940-59	0	0	1	29.4168	121272	0
+None	400%+	Multi-Family with 5+ Units	Not Available	1960-79	0	0	1	45.1638	367081	0
+None	400%+	Multi-Family with 5+ Units	Not Available	1980-99	0	0	1	41.0093	354567	0
+None	400%+	Multi-Family with 5+ Units	Not Available	2000-09	0	0	1	23.252	178738	0
+None	400%+	Multi-Family with 5+ Units	Not Available	2010s	0	0	1	23.386	158598	0
+None	400%+	Multi-Family with 5+ Units	Not Available	<1940	0	0	1	20.3706	127389	0
+None	400%+	Multi-Family with 5+ Units	Owner	1940-59	0.715633	0.284367	0	1.48349	6781.61	0.00102539
+None	400%+	Multi-Family with 5+ Units	Owner	1960-79	0.719833	0.280167	0	2.27761	20527.4	0.00287903
+None	400%+	Multi-Family with 5+ Units	Owner	1980-99	0.721251	0.278749	0	2.06809	19827.6	0.0026706
+None	400%+	Multi-Family with 5+ Units	Owner	2000-09	0.719255	0.280745	0	1.1726	9995.12	0.00150315
+None	400%+	Multi-Family with 5+ Units	Owner	2010s	0.751455	0.248545	0	1.17935	8868.87	0.000828785
+None	400%+	Multi-Family with 5+ Units	Owner	<1940	0.707775	0.292225	0	1.02729	7123.68	0.00159107
+None	400%+	Multi-Family with 5+ Units	Renter	1940-59	0.875714	0.124286	0	17.6706	70698.1	0.00304572
+None	400%+	Multi-Family with 5+ Units	Renter	1960-79	0.877953	0.122047	0	27.1298	213997	0.00974719
+None	400%+	Multi-Family with 5+ Units	Renter	1980-99	0.878706	0.121294	0	24.6342	206702	0.0110954
+None	400%+	Multi-Family with 5+ Units	Renter	2000-09	0.877646	0.122354	0	13.9674	104199	0.00586292
+None	400%+	Multi-Family with 5+ Units	Renter	2010s	0.894348	0.105652	0	14.0479	92457.7	0.00439369
+None	400%+	Multi-Family with 5+ Units	Renter	<1940	0.871485	0.128515	0	12.2366	74264.1	0.00415791
+None	400%+	Single-Family Attached	Not Available	1940-59	0	0	1	32.9683	69991.6	0
+None	400%+	Single-Family Attached	Not Available	1960-79	0	0	1	39.3635	151817	0
+None	400%+	Single-Family Attached	Not Available	1980-99	0	0	1	60.3133	228047	0
+None	400%+	Single-Family Attached	Not Available	2000-09	0	0	1	36.0556	124666	0
+None	400%+	Single-Family Attached	Not Available	2010s	0	0	1	21.2805	62206.2	0
+None	400%+	Single-Family Attached	Not Available	<1940	0	0	1	23.7063	80287.9	0
+None	400%+	Single-Family Attached	Owner	1940-59	0.466174	0.533826	0	19.9014	43292.4	0.00164816
+None	400%+	Single-Family Attached	Owner	1960-79	0.349712	0.650288	0	23.7618	93904.5	0.00321168
+None	400%+	Single-Family Attached	Owner	1980-99	0.265774	0.734226	0	36.4082	141056	0.00579188
+None	400%+	Single-Family Attached	Owner	2000-09	0.167996	0.832004	0	21.765	77110.4	0.00336371
+None	400%+	Single-Family Attached	Owner	2010s	0.09589	0.90411	0	12.846	38476.8	0.00126624
+None	400%+	Single-Family Attached	Owner	<1940	0.515268	0.484732	0	14.3103	49661	0.00210007
+None	400%+	Single-Family Attached	Renter	1940-59	0.608809	0.391191	0	1.63642	3191.23	0.000526672
+None	400%+	Single-Family Attached	Renter	1960-79	0.48938	0.51062	0	1.95385	6922.03	0.00109474
+None	400%+	Single-Family Attached	Renter	1980-99	0.392135	0.607865	0	2.99371	10397.7	0.00189058
+None	400%+	Single-Family Attached	Renter	2000-09	0.264624	0.735376	0	1.78966	5684.09	0.00122286
+None	400%+	Single-Family Attached	Renter	2010s	0.158968	0.841032	0	1.05628	2836.26	0.000452368
+None	400%+	Single-Family Attached	Renter	<1940	0.654507	0.345493	0	1.17669	3660.69	0.000634085
+None	400%+	Single-Family Detached	Not Available	1940-59	0	0	1	362.678	1.33791e+06	0
+None	400%+	Single-Family Detached	Not Available	1960-79	0	0	1	339.517	1.83292e+06	0
+None	400%+	Single-Family Detached	Not Available	1980-99	0	0	1	331.944	1.88771e+06	0
+None	400%+	Single-Family Detached	Not Available	2000-09	0	0	1	197.096	971167	0
+None	400%+	Single-Family Detached	Not Available	2010s	0	0	1	115.139	537471	0
+None	400%+	Single-Family Detached	Not Available	<1940	0	0	1	212.685	955849	0
+None	400%+	Single-Family Detached	Owner	1940-59	0.234978	0.765022	0	324.142	1.19312e+06	0.0378284
+None	400%+	Single-Family Detached	Owner	1960-79	0.158538	0.841462	0	303.442	1.63456e+06	0.0554004
+None	400%+	Single-Family Detached	Owner	1980-99	0.10959	0.89041	0	296.674	1.68342e+06	0.064276
+None	400%+	Single-Family Detached	Owner	2000-09	0.090346	0.909654	0	176.153	866066	0.0404959
+None	400%+	Single-Family Detached	Owner	2010s	0.0738469	0.926153	0	102.905	479306	0.0138289
+None	400%+	Single-Family Detached	Owner	<1940	0.251465	0.748535	0	190.086	852407	0.0264254
+None	400%+	Single-Family Detached	Renter	1940-59	0.457868	0.542132	0	1.08151	4144.76	0.00394199
+None	400%+	Single-Family Detached	Renter	1960-79	0.341264	0.658736	0	1.01245	5678.3	0.00531068
+None	400%+	Single-Family Detached	Renter	1980-99	0.252854	0.747146	0	0.989865	5848.02	0.00577954
+None	400%+	Single-Family Detached	Renter	2000-09	0.214513	0.785487	0	0.587743	3008.62	0.00395769
+None	400%+	Single-Family Detached	Renter	2010s	0.179821	0.820179	0	0.343348	1665.06	0.00132489
+None	400%+	Single-Family Detached	Renter	<1940	0.480179	0.519821	0	0.634231	2961.17	0.00240242
+None	Not Available	Mobile Home	Not Available	1940-59	0.626904	0.373096	0	14.6505	95272	0.000236424
+None	Not Available	Mobile Home	Not Available	1960-79	0.496336	0.503664	0	119.094	845875	0.00343192
+None	Not Available	Mobile Home	Not Available	1980-99	0.495687	0.504313	0	205.58	1.61924e+06	0.00668597
+None	Not Available	Mobile Home	Not Available	2000-09	0.571163	0.428837	0	75.1429	485185	0.00209333
+None	Not Available	Mobile Home	Not Available	2010s	0.411514	0.588486	0	42.5337	314828	0.00062413
+None	Not Available	Mobile Home	Not Available	<1940	0.642107	0.357893	0	4.72597	33901.7	7.67291e-05
+None	Not Available	Mobile Home	Owner	1940-59	0	0	1	9.07457	59098.1	0
+None	Not Available	Mobile Home	Owner	1960-79	0	0	1	73.7675	524704	0
+None	Not Available	Mobile Home	Owner	1980-99	0	0	1	127.337	1.00443e+06	0
+None	Not Available	Mobile Home	Owner	2000-09	0	0	1	46.5438	300964	0
+None	Not Available	Mobile Home	Owner	2010s	0	0	1	26.3455	195291	0
+None	Not Available	Mobile Home	Owner	<1940	0	0	1	2.92728	21029.5	0
+None	Not Available	Mobile Home	Renter	1940-59	0	0	1	0.664534	4298.19	0
+None	Not Available	Mobile Home	Renter	1960-79	0	0	1	5.40202	38161.6	0
+None	Not Available	Mobile Home	Renter	1980-99	0	0	1	9.32491	73051.9	0
+None	Not Available	Mobile Home	Renter	2000-09	0	0	1	3.40842	21889.1	0
+None	Not Available	Mobile Home	Renter	2010s	0	0	1	1.92929	14203.5	0
+None	Not Available	Mobile Home	Renter	<1940	0	0	1	0.214366	1529.47	0
+None	Not Available	Multi-Family with 2 - 4 Units	Not Available	1940-59	0.767556	0.232444	0	140.776	657796	0.00179945
+None	Not Available	Multi-Family with 2 - 4 Units	Not Available	1960-79	0.787564	0.212436	0	129.193	1.24128e+06	0.00291642
+None	Not Available	Multi-Family with 2 - 4 Units	Not Available	1980-99	0.799787	0.200213	0	111.374	1.10917e+06	0.00257634
+None	Not Available	Multi-Family with 2 - 4 Units	Not Available	2000-09	0.74024	0.25976	0	40.0945	334939	0.000896587
+None	Not Available	Multi-Family with 2 - 4 Units	Not Available	2010s	0.748692	0.251308	0	27.6206	200523	0.000366808
+None	Not Available	Multi-Family with 2 - 4 Units	Not Available	<1940	0.750336	0.249664	0	107.364	785358	0.00329423
+None	Not Available	Multi-Family with 2 - 4 Units	Owner	1940-59	0	0	1	2.05532	9666.96	0
+None	Not Available	Multi-Family with 2 - 4 Units	Owner	1960-79	0	0	1	1.88621	18241.9	0
+None	Not Available	Multi-Family with 2 - 4 Units	Owner	1980-99	0	0	1	1.62604	16300.3	0
+None	Not Available	Multi-Family with 2 - 4 Units	Owner	2000-09	0	0	1	0.585375	4922.27	0
+None	Not Available	Multi-Family with 2 - 4 Units	Owner	2010s	0	0	1	0.403259	2946.89	0
+None	Not Available	Multi-Family with 2 - 4 Units	Owner	<1940	0	0	1	1.56751	11541.6	0
+None	Not Available	Multi-Family with 2 - 4 Units	Renter	1940-59	0	0	1	108.811	507978	0
+None	Not Available	Multi-Family with 2 - 4 Units	Renter	1960-79	0	0	1	99.8585	958571	0
+None	Not Available	Multi-Family with 2 - 4 Units	Renter	1980-99	0	0	1	86.0849	856547	0
+None	Not Available	Multi-Family with 2 - 4 Units	Renter	2000-09	0	0	1	30.9906	258654	0
+None	Not Available	Multi-Family with 2 - 4 Units	Renter	2010s	0	0	1	21.3491	154853	0
+None	Not Available	Multi-Family with 2 - 4 Units	Renter	<1940	0	0	1	82.9859	606486	0
+None	Not Available	Multi-Family with 5+ Units	Not Available	1940-59	0.853739	0.146261	0	196.519	985960	0.0019351
+None	Not Available	Multi-Family with 5+ Units	Not Available	1960-79	0.856308	0.143692	0	301.718	2.98442e+06	0.00765114
+None	Not Available	Multi-Family with 5+ Units	Not Available	1980-99	0.857173	0.142827	0	273.963	2.88268e+06	0.00840392
+None	Not Available	Multi-Family with 5+ Units	Not Available	2000-09	0.855956	0.144044	0	155.335	1.45316e+06	0.00377609
+None	Not Available	Multi-Family with 5+ Units	Not Available	2010s	0.875197	0.124803	0	156.231	1.28942e+06	0.00197341
+None	Not Available	Multi-Family with 5+ Units	Not Available	<1940	0.848891	0.151109	0	136.086	1.03569e+06	0.00213945
+None	Not Available	Multi-Family with 5+ Units	Owner	1940-59	0	0	1	3.81389	19222.4	0
+None	Not Available	Multi-Family with 5+ Units	Owner	1960-79	0	0	1	5.85549	58184.6	0
+None	Not Available	Multi-Family with 5+ Units	Owner	1980-99	0	0	1	5.31685	56201.2	0
+None	Not Available	Multi-Family with 5+ Units	Owner	2000-09	0	0	1	3.01462	28331.1	0
+None	Not Available	Multi-Family with 5+ Units	Owner	2010s	0	0	1	3.032	25138.7	0
+None	Not Available	Multi-Family with 5+ Units	Owner	<1940	0	0	1	2.64105	20192	0
+None	Not Available	Multi-Family with 5+ Units	Renter	1940-59	0	0	1	145.579	729846	0
+None	Not Available	Multi-Family with 5+ Units	Renter	1960-79	0	0	1	223.509	2.20918e+06	0
+None	Not Available	Multi-Family with 5+ Units	Renter	1980-99	0	0	1	202.949	2.13387e+06	0
+None	Not Available	Multi-Family with 5+ Units	Renter	2000-09	0	0	1	115.07	1.07569e+06	0
+None	Not Available	Multi-Family with 5+ Units	Renter	2010s	0	0	1	115.734	954480	0
+None	Not Available	Multi-Family with 5+ Units	Renter	<1940	0	0	1	100.811	766660	0
+None	Not Available	Single-Family Attached	Not Available	1940-59	0.6284	0.3716	0	145.036	367471	0.000717772
+None	Not Available	Single-Family Attached	Not Available	1960-79	0.51014	0.48986	0	173.17	797072	0.00106035
+None	Not Available	Single-Family Attached	Not Available	1980-99	0.412098	0.587902	0	265.334	1.1973e+06	0.00163506
+None	Not Available	Single-Family Attached	Not Available	2000-09	0.281098	0.718902	0	158.618	654522	0.000937836
+None	Not Available	Single-Family Attached	Not Available	2010s	0.170388	0.829612	0	93.6187	326596	0.000291697
+None	Not Available	Single-Family Attached	Not Available	<1940	0.673039	0.326961	0	104.29	421529	0.00099199
+None	Not Available	Single-Family Attached	Owner	1940-59	0	0	1	57.2759	141584	0
+None	Not Available	Single-Family Attached	Owner	1960-79	0	0	1	68.3863	307108	0
+None	Not Available	Single-Family Attached	Owner	1980-99	0	0	1	104.782	461312	0
+None	Not Available	Single-Family Attached	Owner	2000-09	0	0	1	62.6395	252184	0
+None	Not Available	Single-Family Attached	Owner	2010s	0	0	1	36.9707	125836	0
+None	Not Available	Single-Family Attached	Owner	<1940	0	0	1	41.185	162413	0
+None	Not Available	Single-Family Attached	Renter	1940-59	0	0	1	20.0119	52861.6	0
+None	Not Available	Single-Family Attached	Renter	1960-79	0	0	1	23.8938	114661	0
+None	Not Available	Single-Family Attached	Renter	1980-99	0	0	1	36.6104	172234	0
+None	Not Available	Single-Family Attached	Renter	2000-09	0	0	1	21.8859	94154.7	0
+None	Not Available	Single-Family Attached	Renter	2010s	0	0	1	12.9174	46981.6	0
+None	Not Available	Single-Family Attached	Renter	<1940	0	0	1	14.3898	60637.9	0
+None	Not Available	Single-Family Detached	Not Available	1940-59	0.359499	0.640501	0	1294.47	5.70945e+06	0.0117929
+None	Not Available	Single-Family Detached	Not Available	1960-79	0.256112	0.743888	0	1211.8	7.82191e+06	0.016391
+None	Not Available	Single-Family Detached	Not Available	1980-99	0.183613	0.816387	0	1184.77	8.05571e+06	0.0157747
+None	Not Available	Single-Family Detached	Not Available	2000-09	0.153613	0.846387	0	703.472	4.1444e+06	0.00924473
+None	Not Available	Single-Family Detached	Not Available	2010s	0.127175	0.872825	0	410.955	2.29363e+06	0.00274979
+None	Not Available	Single-Family Detached	Not Available	<1940	0.38038	0.61962	0	759.114	4.07904e+06	0.00905168
+None	Not Available	Single-Family Detached	Owner	1940-59	0	0	1	1038.96	4.52278e+06	0
+None	Not Available	Single-Family Detached	Owner	1960-79	0	0	1	972.605	6.19619e+06	0
+None	Not Available	Single-Family Detached	Owner	1980-99	0	0	1	950.913	6.38139e+06	0
+None	Not Available	Single-Family Detached	Owner	2000-09	0	0	1	564.615	3.28302e+06	0
+None	Not Available	Single-Family Detached	Owner	2010s	0	0	1	329.837	1.81692e+06	0
+None	Not Available	Single-Family Detached	Owner	<1940	0	0	1	609.274	3.23124e+06	0
+None	Not Available	Single-Family Detached	Renter	1940-59	0	0	1	13.9819	69043.5	0
+None	Not Available	Single-Family Detached	Renter	1960-79	0	0	1	13.089	94589.1	0
+None	Not Available	Single-Family Detached	Renter	1980-99	0	0	1	12.797	97416.4	0
+None	Not Available	Single-Family Detached	Renter	2000-09	0	0	1	7.59838	50117.6	0
+None	Not Available	Single-Family Detached	Renter	2010s	0	0	1	4.43883	27736.5	0
+None	Not Available	Single-Family Detached	Renter	<1940	0	0	1	8.19938	49327.2	0
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The unit has an outlet within 20 feet of vehicle parking.
+# Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+# Assumption: RECS 2020 has Multi-Family 5+ units marked as Not Applicable. These units are replaced by data from the No Place Like Home Study (https://www.nrel.gov/docs/fy22osti/81065.pdf) Table 1 Scenario 2. Multi-Family 5+ units owners is assumed for 12% units having electrical access. This fraction is based on the average of mid-capacity apt and high-capacity apt. Multi-Family 5+ units owners is assumed for 28% units having electrical access.
+# Assumption: Units reported to have an L1 or L2 charger in the field EVCHRGTYPE are assumed to have outlet access.
+# Assumption: L1 chargers without outlet access are units with EVs, but report no outlet access within 20 ft of vehicle parking.
+# Assumption: Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The sub-tsvs have the following dependencies:
+# Assumption: Dwelling unit sub-tsv : deps=['Geometry Building Type RECS', 'Vintage ACS', 'Electric Vehicle Charger'] with the following fallback coarsening order
+# Assumption: [1] Vintage ACS to the National distribution
+# Assumption: [2] Combining Geometry Building Type RECS together into SFD+MF+SFA and MF 2-4+MF 5+ bins
+# Assumption:  Household sub-tsv : deps=['Geometry Building Type RECS', 'State' 'Tenure', 'Federal Poverty Level'] In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Vintage ACS', 'Electric Vehicle Charger'], ['Tenure', 'Federal Poverty Level']).

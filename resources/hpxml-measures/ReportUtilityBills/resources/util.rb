@@ -2,14 +2,14 @@
 
 # Object that stores collections of EnergyPlus meter names, units, and timeseries data.
 class Fuel
-  # @param meters [Array<String>] array of EnergyPlus meter names
-  # @param units [String] fuel units (HPXML::FuelTypeXXX)
-  def initialize(meters: [], units:)
-    @meters = meters
+  # @param meter [String] EnergyPlus meter name
+  # @param fuel [String] fuel type (HPXML::FuelTypeXXX)
+  def initialize(meter:, fuel:)
+    @meter = meter
     @timeseries = []
-    @units = units
+    @units = UtilityBills.get_fuel_units(fuel)
   end
-  attr_accessor(:meters, :timeseries, :units)
+  attr_accessor(:meter, :timeseries, :units)
 end
 
 # Object that stores collections of fixed monthly rates, marginal rates, real-time rates, minimum monthly/annual charges, net metering and feed-in tariff information, and detailed tariff file information.
@@ -52,8 +52,8 @@ module CalculateUtilityBill
   #
   # @param fuel_type [String] fuel type defined in the FT class
   # @param header [HPXML::Header] HPXML Header object (one per HPXML file)
-  # @param fuel_time_series [Array<Double>] reported timeseries data from the fuel meters
-  # @param is_production [Boolean] fuel meters are PV production or not
+  # @param fuel_time_series [Array<Double>] reported timeseries data from the fuel meter
+  # @param is_production [Boolean] fuel meter is PV production or not
   # @param rate [UtilityRate] UtilityRate object
   # @param bill [UtilityBill] UtilityBill object
   # @param net_elec [Double] net electricity production tallied by month
