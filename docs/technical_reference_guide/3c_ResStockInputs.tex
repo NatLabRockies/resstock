@@ -2124,7 +2124,7 @@ None.
 
 \subsection{PV}
 \subsubsection{Modeling Approach}
-ResStock models residential photovoltaic (PV) solar panels based on data from Lawrence Berkeley National Laboratory's (LBNL) 2020 Tracking the Sun report (\cite{LBNLTTS2019}) and a 2020 PV report by Wood Mackenzie (\cite{WoodsMackenzie2020}). However, the data excludes Alaska and Hawaii, the latter of which has one of the largest number of solar installations by state. ResStock only models rooftop solar for occupied single-family detached homes. This means ResStock does not model ground-mounted solar or solar installed in other building types, such as community solar shared among multifamily units, although that modeling capability exists in OpenStudio-HPXML. This also means ResStock, which estimates the rooftop solar penetration at less than 1\% of all housing units, is most likely underestimating the total installed capacity nationally. In addition to the presence of rooftop solar (Section \ref{sec:has_pv}), ResStock also characterizes the orientation (Section \ref{sec:pv_orientation}) and system capacity (Section \ref{sec:pv_system_size}), using LBNL's 2020 Tracking the Sun report. The system size or modeled capacity does not necessarily align with the available roof space of the housing units.
+ResStock models residential photovoltaic (PV) solar panels based on data from Lawrence Berkeley National Laboratory's (LBNL) 2020 Tracking the Sun report (\cite{LBNLTTS2019}) and a 2020 PV report by Wood Mackenzie (\cite{WoodsMackenzie2020}). However, the data excludes Alaska and Hawaii, the latter of which has one of the largest number of solar installations by state. Therefore, the PV penetration in Hawaii is added based on \href{https://www.eia.gov/electricity/data/eia861/}{EIA form 861}. ResStock only models rooftop solar for occupied single-family detached homes. This means ResStock does not model ground-mounted solar or solar installed in other building types, such as community solar shared among multifamily units, although that modeling capability exists in OpenStudio-HPXML. This also means ResStock, which estimates the rooftop solar penetration at less than 1\% of all housing units, is most likely underestimating the total installed capacity nationally. In addition to the presence of rooftop solar (Section \ref{sec:has_pv}), ResStock also characterizes the orientation (Section \ref{sec:pv_orientation}) and system capacity (Section \ref{sec:pv_system_size}), using LBNL's 2020 Tracking the Sun report. The system size or modeled capacity does not necessarily align with the available roof space of the housing units.
 
 The PV modeling capability and default inputs are primarily adopted from NREL's \href{https://pvwatts.nrel.gov/index.php}{PVWatts model}. ResStock calculates the energy production based on the solar irradiation information in the weather file and the characteristics of the PV array. In the ResStock baseline, all PV systems are modeled as roof-mounted, fixed-axis standard modules tilted at roof pitch with a 14\% overall derate factor and a 96\% inverter efficiency. The derate factor encompasses loss from soiling, shading, wiring, mismatch, degradation, and more according to the PVWatts documentation (\cite{pvwatts_doc}).
 
@@ -2133,8 +2133,7 @@ The PV modeling capability and default inputs are primarily adopted from NREL's 
 Presence of a rooftop photovoltaic system.
 
 \paragraph{Distribution Data Source(s)}
-Constructed using ACS population and data from \href{https://www.nrel.gov/analysis/dgen/}{dGen} on PV installation that combines LBNL's 2020 Tracking the Sun (\cite{LBNLTTS2019}) and Wood Mackenzie's 2020 Q4 PV report (\cite{WoodsMackenzie2020}; prepared on Jun 22, 2021). 
-The data for Hawaii is from EIA form 861 \href{https://www.eia.gov/electricity/data/eia861/}{EIA}.
+Constructed using ACS population and data from \href{https://www.nrel.gov/analysis/dgen/}{dGen} on PV installation that combines LBNL's 2020 Tracking the Sun (\cite{LBNLTTS2019}) and Wood Mackenzie's 2020 Q4 PV report (\cite{WoodsMackenzie2020}; prepared on Jun 22, 2021). The PV penetration in Hawaii is from \href{https://www.eia.gov/electricity/data/eia861/}{EIA form 861}.
 
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
@@ -2147,7 +2146,7 @@ The data for Hawaii is from EIA form 861 \href{https://www.eia.gov/electricity/d
 The options for Has PV are ``Yes'' if the housing unit has a rooftop PV system and ``No'' if the housing unit does not have a rooftop PV system.
 
 \paragraph{Distribution Assumption(s)}
-Imposed an upper bound of 14 kWDC, which contains 95\% of all installations. Counties with source\_count <10 are backfilled with aggregates at the state level. Distribution based on all installations is applied only to occupied single-family detached homes; actual distribution for single-family detached homes may be higher. PV is not modeled in AK and HI. No data have been identified. 
+Imposed an upper bound of 14 kWDC, which contains 95\% of all installations. Counties with source\_count <10 are backfilled with aggregates at the state level. Distribution based on all installations is applied only to occupied single-family detached homes; actual distribution for single-family detached homes may be higher. PV is not modeled in AK. No data have been identified. 
 
 \subsubsection{PV Orientation}  \label{sec:pv_orientation}
 \paragraph{Description}
@@ -2290,7 +2289,7 @@ is the total building maximum power output. \\
 
 \paragraph{Distribution Assumption(s)}
 Installations of unknown mount type are assumed to be rooftop. States without data are backfilled with aggregates at the Census Region. ``East South Central'' assumed the same distribution as ``West South Central.''
-PV is not modeled in AK and HI. The Option=None is set so that an error is thrown if PV is modeled as an argument.
+PV is not modeled in AK. The Option=None is set so that an error is thrown if PV is modeled as an argument.
 
 \subsection{Additional Capabilities}
 This section describes the additional modeling capabilities in OpenStudio-HPXML/ResStock that are not yet fully deployed in the ResStock baseline. These include batteries and dehumidifiers. These loads at present are not available in the baseline but can be modeled as upgrade measures. This is because their characteristic distribution is not yet fully characterized but is instead set to 100\% None.
