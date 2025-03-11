@@ -65,6 +65,8 @@ class HPXML < Object
   AtticTypeCathedral = 'CathedralCeiling'
   AtticTypeConditioned = 'ConditionedAttic'
   AtticTypeFlatRoof = 'FlatRoof'
+  AtticTypeOther = 'Other'
+  AtticTypeUnknown = 'UnknownAttic'
   AtticTypeUnvented = 'UnventedAttic'
   AtticTypeVented = 'VentedAttic'
   AtticWallTypeGable = 'gable'
@@ -132,10 +134,15 @@ class HPXML < Object
   FoundationTypeAmbient = 'Ambient'
   FoundationTypeBasementConditioned = 'ConditionedBasement'
   FoundationTypeBasementUnconditioned = 'UnconditionedBasement'
+  FoundationTypeBasementUnknown = 'UnknownBasement'
   FoundationTypeCrawlspaceConditioned = 'ConditionedCrawlspace'
   FoundationTypeCrawlspaceUnvented = 'UnventedCrawlspace'
+  FoundationTypeCrawlspaceUnknown = 'UnknownCrawlspace'
   FoundationTypeCrawlspaceVented = 'VentedCrawlspace'
   FoundationTypeBellyAndWing = 'BellyAndWing'
+  FoundationTypeGarage = 'Garage'
+  FoundationTypeOther = 'Other'
+  FoundationTypeRubbleStone = 'RubbleStone'
   FoundationTypeSlab = 'SlabOnGrade'
   FoundationWallTypeConcreteBlock = 'concrete block'
   FoundationWallTypeConcreteBlockFoamCore = 'concrete block foam core'
@@ -3451,12 +3458,15 @@ class HPXML < Object
       return if @attic_type.nil?
 
       case @attic_type
-      when AtticTypeCathedral, AtticTypeConditioned, AtticTypeFlatRoof, AtticTypeBelowApartment
+      when AtticTypeCathedral, AtticTypeConditioned,
+           AtticTypeFlatRoof, AtticTypeBelowApartment
         return LocationConditionedSpace
       when AtticTypeUnvented
         return LocationAtticUnvented
       when AtticTypeVented
         return LocationAtticVented
+      when AtticTypeUnknown, AtticTypeOther
+        return # Not currently used
       else
         fail "Unexpected attic type: '#{@attic_type}'."
       end
@@ -3515,9 +3525,15 @@ class HPXML < Object
         when AtticTypeConditioned
           attic_type_attic = XMLHelper.add_element(attic_type_el, 'Attic')
           XMLHelper.add_element(attic_type_attic, 'Conditioned', true, :boolean)
+        when AtticTypeUnknown
+          XMLHelper.add_element(attic_type_el, 'Attic')
+        when AtticTypeOther
+          XMLHelper.add_element(attic_type_el, @attic_type)
         else
           fail "Unhandled attic type '#{@attic_type}'."
         end
+      else
+        fail 'AtticType is a required element.'
       end
       XMLHelper.add_element(attic, 'WithinInfiltrationVolume', @within_infiltration_volume, :boolean, @within_infiltration_volume_isdefaulted) unless @within_infiltration_volume.nil?
       if not @attached_to_roof_idrefs.nil?
@@ -3554,12 +3570,16 @@ class HPXML < Object
         @attic_type = AtticTypeVented
       elsif XMLHelper.has_element(attic, "AtticType/Attic[Conditioned='true']")
         @attic_type = AtticTypeConditioned
+      elsif XMLHelper.has_element(attic, 'AtticType/Attic')
+        @attic_type = AtticTypeUnknown
       elsif XMLHelper.has_element(attic, 'AtticType/FlatRoof')
         @attic_type = AtticTypeFlatRoof
       elsif XMLHelper.has_element(attic, 'AtticType/CathedralCeiling')
         @attic_type = AtticTypeCathedral
       elsif XMLHelper.has_element(attic, 'AtticType/BelowApartment')
         @attic_type = AtticTypeBelowApartment
+      elsif XMLHelper.has_element(attic, 'AtticType/Other')
+        @attic_type = AtticTypeOther
       end
       if @attic_type == AtticTypeVented
         @vented_attic_sla = XMLHelper.get_value(attic, "VentilationRate[UnitofMeasure='#{UnitsSLA}']/Value", :float)
@@ -3710,6 +3730,12 @@ class HPXML < Object
         return LocationCrawlspaceConditioned
       when FoundationTypeBellyAndWing
         return LocationManufacturedHomeUnderBelly
+      when FoundationTypeBasementUnknown,
+           FoundationTypeCrawlspaceUnknown,
+           FoundationTypeGarage,
+           FoundationTypeRubbleStone,
+           FoundationTypeOther
+        return # Not currently used
       else
         fail "Unexpected foundation type: '#{@foundation_type}'."
       end
@@ -3776,6 +3802,8 @@ class HPXML < Object
         when FoundationTypeBasementUnconditioned
           basement = XMLHelper.add_element(foundation_type_el, 'Basement')
           XMLHelper.add_element(basement, 'Conditioned', false, :boolean)
+        when FoundationTypeBasementUnknown
+          XMLHelper.add_element(foundation_type_el, 'Basement')
         when FoundationTypeCrawlspaceVented
           crawlspace = XMLHelper.add_element(foundation_type_el, 'Crawlspace')
           XMLHelper.add_element(crawlspace, 'Vented', true, :boolean)
@@ -3790,12 +3818,22 @@ class HPXML < Object
         when FoundationTypeCrawlspaceConditioned
           crawlspace = XMLHelper.add_element(foundation_type_el, 'Crawlspace')
           XMLHelper.add_element(crawlspace, 'Conditioned', true, :boolean)
+        when FoundationTypeCrawlspaceUnknown
+          XMLHelper.add_element(foundation_type_el, 'Crawlspace')
         when FoundationTypeBellyAndWing
           belly_and_wing = XMLHelper.add_element(foundation_type_el, 'BellyAndWing')
           XMLHelper.add_element(belly_and_wing, 'SkirtPresent', @belly_wing_skirt_present, :boolean, @belly_wing_skirt_present_isdefaulted) unless @belly_wing_skirt_present.nil?
+        when FoundationTypeGarage
+          XMLHelper.add_element(foundation_type_el, 'Garage')
+        when FoundationTypeRubbleStone
+          XMLHelper.add_element(foundation_type_el, 'RubbleStone')
+        when FoundationTypeOther
+          XMLHelper.add_element(foundation_type_el, 'Other')
         else
           fail "Unhandled foundation type '#{@foundation_type}'."
         end
+      else
+        fail 'FoundationType is a required element.'
       end
       XMLHelper.add_element(foundation, 'WithinInfiltrationVolume', @within_infiltration_volume, :boolean) unless @within_infiltration_volume.nil?
       if not @attached_to_rim_joist_idrefs.nil?
@@ -3844,12 +3882,16 @@ class HPXML < Object
         @foundation_type = FoundationTypeBasementUnconditioned
       elsif XMLHelper.has_element(foundation, "FoundationType/Basement[Conditioned='true']")
         @foundation_type = FoundationTypeBasementConditioned
+      elsif XMLHelper.has_element(foundation, 'FoundationType/Basement')
+        @foundation_type = FoundationTypeBasementUnknown
       elsif XMLHelper.has_element(foundation, "FoundationType/Crawlspace[Vented='false']")
         @foundation_type = FoundationTypeCrawlspaceUnvented
       elsif XMLHelper.has_element(foundation, "FoundationType/Crawlspace[Vented='true']")
         @foundation_type = FoundationTypeCrawlspaceVented
       elsif XMLHelper.has_element(foundation, "FoundationType/Crawlspace[Conditioned='true']")
         @foundation_type = FoundationTypeCrawlspaceConditioned
+      elsif XMLHelper.has_element(foundation, 'FoundationType/Crawlspace')
+        @foundation_type = FoundationTypeCrawlspaceUnknown
       elsif XMLHelper.has_element(foundation, 'FoundationType/Ambient')
         @foundation_type = FoundationTypeAmbient
       elsif XMLHelper.has_element(foundation, 'FoundationType/AboveApartment')
@@ -3857,6 +3899,12 @@ class HPXML < Object
       elsif XMLHelper.has_element(foundation, 'FoundationType/BellyAndWing')
         @foundation_type = FoundationTypeBellyAndWing
         @belly_wing_skirt_present = XMLHelper.get_value(foundation, 'FoundationType/BellyAndWing/SkirtPresent', :boolean)
+      elsif XMLHelper.has_element(foundation, 'FoundationType/RubbleStone')
+        @foundation_type = FoundationTypeRubbleStone
+      elsif XMLHelper.has_element(foundation, 'FoundationType/Garage')
+        @foundation_type = FoundationTypeGarage
+      elsif XMLHelper.has_element(foundation, 'FoundationType/Other')
+        @foundation_type = FoundationTypeOther
       end
       if @foundation_type == FoundationTypeCrawlspaceVented
         @vented_crawlspace_sla = XMLHelper.get_value(foundation, "VentilationRate[UnitofMeasure='#{UnitsSLA}']/Value", :float)
@@ -11706,7 +11754,7 @@ class HPXML < Object
   def self.is_thermal_boundary(surface)
     interior_conditioned = conditioned_locations.include? surface.interior_adjacent_to
     exterior_conditioned = conditioned_locations.include? surface.exterior_adjacent_to
-    return (interior_conditioned != exterior_conditioned)
+    return (interior_conditioned && !exterior_conditioned)
   end
 
   # Returns whether the HPXML::Floor object represents a ceiling or floor

@@ -949,11 +949,11 @@ module Outputs
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param weather [WeatherFile] Weather object containing EPW information
   # @param debug [Boolean] If true, writes the OSM/EPW files to the output dir
   # @param output_dir [String] Path of the output files directory
-  # @param epw_path [String] Path to the EPW weather file
   # @return [nil]
-  def self.write_debug_files(runner, model, debug, output_dir, epw_path)
+  def self.write_debug_files(runner, model, weather, debug, output_dir)
     return unless debug
 
     # Write OSM file to run dir
@@ -963,7 +963,7 @@ module Outputs
 
     # Copy EPW file to run dir
     epw_output_path = File.join(output_dir, 'in.epw')
-    FileUtils.cp(epw_path, epw_output_path)
+    FileUtils.cp(weather.epw_path, epw_output_path)
   end
 
   # Calculates total HVAC capacities (across all HVAC systems) for a given HPXML Building.
