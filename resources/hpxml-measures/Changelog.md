@@ -1,6 +1,8 @@
 ## OpenStudio-HPXML v1.10.0
 
 __New Features__
+- HVAC modeling updates:
+  - **Breaking Change**: `CompressorType` required for central and mini-split air conditioners and heat pumps.
 - Electric vehicle enhancements:
   - Allows detailed modeling of electric vehicles (batteries and charging/discharging) using `Vehicles` as an alternative to the simple EV charging `PlugLoad`.
   - Adds EV driving unmet hours output.

@@ -339,6 +339,7 @@
               <HeatPumpFuel>electricity</HeatPumpFuel>
               <HeatingCapacity>18000.0</HeatingCapacity>
               <CoolingCapacity>18000.0</CoolingCapacity>
+              <CompressorType>variable speed</CompressorType>
               <CoolingSensibleHeatFraction>0.73</CoolingSensibleHeatFraction>
               <BackupType>separate</BackupType>
               <BackupSystem idref='HeatingSystem1'/>
