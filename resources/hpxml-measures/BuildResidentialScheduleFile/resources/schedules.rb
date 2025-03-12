@@ -170,30 +170,22 @@ class ScheduleGenerator
     if !@hpxml_bldg.dishwashers.to_a.empty?
       dw_hot_water_sch = generate_dishwasher_schedule(mkc_activity_schedules)
       dw_power_sch = generate_dishwasher_power_schedule(mkc_activity_schedules)
-      @schedules.merge!({
-                          SchedulesFile::Columns[:HotWaterDishwasher].name => random_shift_and_normalize(dw_hot_water_sch),
-                          SchedulesFile::Columns[:Dishwasher].name => random_shift_and_normalize(dw_power_sch)
-                        })
+      @schedules[SchedulesFile::Columns[:HotWaterDishwasher].name] = random_shift_and_normalize(dw_hot_water_sch)
+      @schedules[SchedulesFile::Columns[:Dishwasher].name] = random_shift_and_normalize(dw_power_sch)
     end
     if !@hpxml_bldg.clothes_washers.to_a.empty?
       cw_hot_water_sch = generate_clothes_washer_schedule(mkc_activity_schedules)
       cw_power_sch, cd_power_sch = generate_clothes_washer_dryer_power_schedules(mkc_activity_schedules)
-      @schedules.merge!({
-                          SchedulesFile::Columns[:HotWaterClothesWasher].name => random_shift_and_normalize(cw_hot_water_sch),
-                          SchedulesFile::Columns[:ClothesWasher].name => random_shift_and_normalize(cw_power_sch)
-                        })
+      @schedules[SchedulesFile::Columns[:HotWaterClothesWasher].name] = random_shift_and_normalize(cw_hot_water_sch)
+      @schedules[SchedulesFile::Columns[:ClothesWasher].name] = random_shift_and_normalize(cw_power_sch)
 
       if !@hpxml_bldg.clothes_dryers.to_a.empty?
-        @schedules.merge!({
-                            SchedulesFile::Columns[:ClothesDryer].name => random_shift_and_normalize(cd_power_sch)
-                          })
+        @schedules[SchedulesFile::Columns[:ClothesDryer].name] = random_shift_and_normalize(cd_power_sch)
       end
     end
     if !@hpxml_bldg.cooking_ranges.to_a.empty?
       cooking_power_sch = generate_cooking_power_schedule(mkc_activity_schedules)
-      @schedules.merge!({
-                          SchedulesFile::Columns[:CookingRange].name => random_shift_and_normalize(cooking_power_sch)
-                        })
+      @schedules[SchedulesFile::Columns[:CookingRange].name] = random_shift_and_normalize(cooking_power_sch)
     end
 
     showers = random_shift_and_normalize(shower_activity_sch)
@@ -287,13 +279,15 @@ class ScheduleGenerator
   # @return [Hash] Map of occupancy type ID to weekday/weekend initial probabilities
   def get_initial_probabilities()
     initial_probabilities = {}
+    weekday_file_path = "#{@resources_path}/weekday/mkv_chain_initial_prob.csv"
+    weekday_data = CSV.read(weekday_file_path)
+    weekend_file_path = "#{@resources_path}/weekend/mkv_chain_initial_prob.csv"
+    weekend_data = CSV.read(weekend_file_path)
     # get weekday/weekend initial probabilities for 4 occupancy types
     for occ_id in 0..3
       initial_probabilities[occ_id] = {}
-      init_prob_file_weekday_file_path = "#{@resources_path}/weekday/mkv_chain_initial_prob_cluster_#{occ_id}.csv"
-      initial_probabilities[occ_id][:weekday] = CSV.read(init_prob_file_weekday_file_path).map { |x| x[0].to_f }
-      init_prob_file_weekend_file_path = "#{@resources_path}/weekend/mkv_chain_initial_prob_cluster_#{occ_id}.csv"
-      initial_probabilities[occ_id][:weekend] = CSV.read(init_prob_file_weekend_file_path).map { |x| x[0].to_f }
+      initial_probabilities[occ_id][:weekday] = weekday_data.select { |x| x[0].to_i == occ_id }.map { |x| x[1].to_f }
+      initial_probabilities[occ_id][:weekend] = weekend_data.select { |x| x[0].to_i == occ_id }.map { |x| x[1].to_f }
     end
     return initial_probabilities
   end
@@ -303,13 +297,15 @@ class ScheduleGenerator
   # @return [Hash] Map of occupancy type ID to weekday/weekend transition matrices
   def get_transition_matrices()
     transition_matrices = {}
+    weekday_file_path = "#{@resources_path}/weekday/mkv_chain_transition_prob.csv"
+    weekday_data = CSV.read(weekday_file_path)
+    weekend_file_path = "#{@resources_path}/weekend/mkv_chain_transition_prob.csv"
+    weekend_data = CSV.read(weekend_file_path)
     # get weekday/weekend transition matrices for 4 occupancy types
     for occ_id in 0..3
       transition_matrices[occ_id] = {}
-      weekday_file_path = "#{@resources_path}/weekday/mkv_chain_transition_prob_cluster_#{occ_id}.csv"
-      transition_matrices[occ_id][:weekday] = CSV.read(weekday_file_path).map { |x| x.map { |y| y.to_f } }
-      weekend_file_path = "#{@resources_path}/weekend/mkv_chain_transition_prob_cluster_#{occ_id}.csv"
-      transition_matrices[occ_id][:weekend] = CSV.read(weekend_file_path).map { |x| x.map { |y| y.to_f } }
+      transition_matrices[occ_id][:weekday] = weekday_data.select { |x| x[0].to_i == occ_id }.map { |x| x[1..-1].map { |y| y.to_f } }
+      transition_matrices[occ_id][:weekend] = weekend_data.select { |x| x[0].to_i == occ_id }.map { |x| x[1..-1].map { |y| y.to_f } }
     end
     return transition_matrices
   end
@@ -456,14 +452,15 @@ class ScheduleGenerator
     time_of_days = ['morning', 'midday', 'evening']
     activity_names = ['shower', 'cooking', 'dishwashing', 'laundry']
     activity_duration_prob_map = {}
-    cluster_types.each do |cluster_type|
-      day_types.each do |day_type|
-        time_of_days.each do |time_of_day|
-          activity_names.each do |activity_name|
-            duration_file = @resources_path + "/#{day_type}/duration_probability/cluster_#{cluster_type}_#{activity_name}_#{time_of_day}_duration_probability.csv"
-            duration_probabilities = CSV.read(duration_file)
-            durations = duration_probabilities.map { |entry| entry[0].to_i }
-            probabilities = duration_probabilities.map { |entry| entry[1].to_f }
+    day_types.each do |day_type|
+      time_of_days.each do |time_of_day|
+        activity_names.each do |activity_name|
+          duration_file = @resources_path + "/#{day_type}/duration_probability/#{activity_name}_#{time_of_day}_duration_probability.csv"
+          duration_probabilities = CSV.read(duration_file)
+          cluster_types.each do |cluster_type|
+            cluster_type_duration_probabilities = duration_probabilities.select { |entry| entry[0] == cluster_type }
+            durations = cluster_type_duration_probabilities.map { |entry| entry[1].to_i }
+            probabilities = cluster_type_duration_probabilities.map { |entry| entry[2].to_f }
             activity_duration_prob_map["#{cluster_type}_#{activity_name}_#{day_type}_#{time_of_day}"] = [durations, probabilities]
           end
         end
