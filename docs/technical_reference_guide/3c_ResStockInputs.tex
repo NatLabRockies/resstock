@@ -1951,11 +1951,13 @@ Well pumps are used to extract potable water from a well. Well pumps are not wel
 
 \subsubsection{Misc Well Pump}
 \paragraph{Description}
-Presence and efficiency of well pump.
+Presence of well pump according to the use of well for domestic water source.
 
 \paragraph{Distribution Data Source(s)}
-Building America House Simulation Protocols (\cite{Wilson2014}); national average fraction used for saturation.
-
+\begin{itemize}
+	\item 2017 and 2019 American Housing Survey (AHS) microdata.
+	\item Core Based Statistical Area (CBSA) data based on the Feb 2013 CBSA delineation file.
+\end{itemize}
 \paragraph{Direct Conditional Dependencies}
 None.
 
@@ -2004,7 +2006,11 @@ reflect, e.g., high/low usage occupants. \\
 \end{longtable}
 
 \paragraph{Distribution Assumption(s)}
-None.
+\begin{itemize}
+	\item All well pumps are assumed to have typical efficiency.
+	\item Where the number of samples < 10, the Census Division is aggregated up to Census Region.
+	\item AHS has data for buildings up to 7 stories tall. Buildings with 8 or more stories are assumed not to have a well pump.
+\end{itemize}
 
 \subsection{Miscellaneous Gas Uses}
 \subsubsection{Modeling Approach}
