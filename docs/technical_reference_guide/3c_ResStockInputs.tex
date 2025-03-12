@@ -1729,7 +1729,11 @@ Due to the low sample count, the input file is constructed with the following fa
 The heating fuel of the pool heater if there is a pool.
 
 \paragraph{Distribution Data Source(s)}
-Constructed using U.S. EIA 2020 RECS microdata.
+\begin{itemize}
+	\item Constructed using U.S. EIA 2020 RECS microdata.
+	\item The California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata.
+\end{itemize}
+
 
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
@@ -1747,6 +1751,7 @@ The options for pool heaters are based on the fuel they use: electricity, natura
 \texttt{pool\_heater\_annual\_kwh} &
 \texttt{pool\_heater\_annual\_therm} &
 \texttt{pool\_heater\_usage\_multiplier}} 
+Electric Heat Pump & heat pump & auto & 0 & 1.0 \\
 Electricity & electric resistance & auto & 0 & 1.0 \\
 Natural Gas & gas fired & 0 & auto & 1.0 \\
 None & none & 0 & 0 & 0 \\
@@ -1781,7 +1786,9 @@ high/low usage occupants.  \\
 \end{longtable}
 
 \paragraph{Distribution Assumption(s)}
-None.
+\begin{itemize}
+	\item Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.
+\end{itemize}
 
 \subsubsection{Misc Pool Pump}
 \paragraph{Description}
