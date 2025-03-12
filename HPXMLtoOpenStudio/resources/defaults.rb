@@ -1924,13 +1924,13 @@ module Defaults
     hpxml_bldg.cooling_systems.each do |cooling_system|
       next unless cooling_system.compressor_type.nil?
 
-      cooling_system.compressor_type = get_hvac_compressor_type(cooling_system.cooling_system_type, cooling_system.cooling_efficiency_seer)
+      cooling_system.compressor_type = get_hvac_compressor_type(cooling_system.cooling_system_type)
       cooling_system.compressor_type_isdefaulted = true
     end
     hpxml_bldg.heat_pumps.each do |heat_pump|
       next unless heat_pump.compressor_type.nil?
 
-      heat_pump.compressor_type = get_hvac_compressor_type(heat_pump.heat_pump_type, heat_pump.cooling_efficiency_seer)
+      heat_pump.compressor_type = get_hvac_compressor_type(heat_pump.heat_pump_type)
       heat_pump.compressor_type_isdefaulted = true
     end
 
@@ -5830,22 +5830,9 @@ module Defaults
   # Gets the default compressor type for a HVAC system.
   #
   # @param hvac_type [String] The type of cooling system or heat pump (HPXML::HVACTypeXXX)
-  # @param seer [Double] Cooling efficiency
   # @return [String] Compressor type (HPXML::HVACCompressorTypeXXX)
-  def self.get_hvac_compressor_type(hvac_type, seer)
+  def self.get_hvac_compressor_type(hvac_type)
     case hvac_type
-    when HPXML::HVACTypeCentralAirConditioner,
-         HPXML::HVACTypeHeatPumpAirToAir
-      if seer <= 15
-        return HPXML::HVACCompressorTypeSingleStage
-      elsif seer <= 21
-        return HPXML::HVACCompressorTypeTwoStage
-      elsif seer > 21
-        return HPXML::HVACCompressorTypeVariableSpeed
-      end
-    when HPXML::HVACTypeMiniSplitAirConditioner,
-         HPXML::HVACTypeHeatPumpMiniSplit
-      return HPXML::HVACCompressorTypeVariableSpeed
     when HPXML::HVACTypePTAC,
          HPXML::HVACTypeHeatPumpPTHP,
          HPXML::HVACTypeHeatPumpRoom,
@@ -6155,7 +6142,9 @@ module Defaults
       elsif component.is_a?(HPXML::VentilationFan)
         return HPXML::ElectricPanelVoltage120
       elsif component.is_a?(HPXML::PlugLoad)
-        return HPXML::ElectricPanelVoltage120
+        if component.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging
+          return HPXML::ElectricPanelVoltage120
+        end
       end
       return HPXML::ElectricPanelVoltage240
     end

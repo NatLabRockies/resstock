@@ -1879,6 +1879,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                 cooling_efficiency_seer: 19,
                                 heating_capacity_17F: 4800 * 0.6,
                                 cooling_shr: 0.73,
+                                compressor_type: HPXML::HVACCompressorTypeVariableSpeed,
                                 primary_cooling_system: true,
                                 primary_heating_system: true)
     elsif ['base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-two-systems.xml'].include? hpxml_file
