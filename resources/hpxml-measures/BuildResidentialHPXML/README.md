@@ -1957,66 +1957,16 @@ The heating load served by the heating system.
 
 <br/>
 
-**Cooling System: Type**
+**Cooling System**
 
-The type of cooling system. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.
+The cooling system type, efficiency type, and efficiency. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.
 
-- **Name:** ``cooling_system_type``
+- **Name:** ``cooling_system``
 - **Type:** ``Choice``
 
 - **Required:** ``true``
 
-- **Choices:** `none`, `central air conditioner`, `room air conditioner`, `evaporative cooler`, `mini-split`, `packaged terminal air conditioner`
-
-<br/>
-
-**Cooling System: Efficiency Type**
-
-The efficiency type of the cooling system. System types central air conditioner and mini-split use SEER or SEER2. System types room air conditioner and packaged terminal air conditioner use EER or CEER. Ignored for system type evaporative cooler.
-
-- **Name:** ``cooling_system_cooling_efficiency_type``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `SEER`, `SEER2`, `EER`, `CEER`
-
-<br/>
-
-**Cooling System: Efficiency**
-
-The rated efficiency value of the cooling system. Ignored for evaporative cooler.
-
-- **Name:** ``cooling_system_cooling_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``true``
-
-<br/>
-
-**Cooling System: Cooling Compressor Type**
-
-The compressor type of the cooling system. Only applies to central air conditioner and mini-split. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner'>Central Air Conditioner</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner'>Mini-Split Air Conditioner</a>) is used.
-
-- **Name:** ``cooling_system_cooling_compressor_type``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `single stage`, `two stage`, `variable speed`
-
-<br/>
-
-**Cooling System: Cooling Sensible Heat Fraction**
-
-The sensible heat fraction of the cooling system. Ignored for evaporative cooler. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner'>Central Air Conditioner</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner'>Room Air Conditioner</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-air-conditioner'>Packaged Terminal Air Conditioner</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner'>Mini-Split Air Conditioner</a>) is used.
-
-- **Name:** ``cooling_system_cooling_sensible_heat_fraction``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``false``
+- **Choices:** `None`, `Central AC, SEER 8`, `Central AC, SEER 10`, `Central AC, SEER 13`, `Central AC, SEER 13, 25W Crankcase Heater`, `Central AC, SEER 13, 50W Crankcase Heater`, `Central AC, SEER 13, Two Stage `, `Central AC, SEER 13, Airflow Defect Ratio`, `Central AC, SEER2 12.4, SEER 13.05`, `Central AC, SEER 14`, `Central AC, SEER 15`, `Central AC, SEER 17.5, Variable Speed`, `Central AC, SEER 18`, `Central AC, SEER 18, Airflow Defect Ratio`, `Central AC, SEER 24`, `Central AC, SEER 24, Airflow Defect Ratio`, `Central AC, SEER 24.5`, `Central AC, SEER 24.5, 0.73 SHR`, `Room AC, EER 8.5`, `Room AC, EER 8.5, Electric Heating`, `Room AC, EER 8.5, 0.73 SHR`, `Room AC, EER 9.8`, `Room AC, EER 10.7`, `Room AC, EER 12.0`, `Room AC, CEER 8.4`, `Evaporative Cooler, EER 13`, `Ductless Evaporative Cooler, SEER 13`, `Ducted Evaporative Cooler, SEER 13`, `Fan Coil Cooling, SEER 13`, `Ducted Mini-Split AC, SEER 19`, `Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio`, `Ductless Mini-Split AC, SEER 19`, `Ductless Mini-Split AC, SEER 17`, `PTAC, EER 10.7`, `PTAC, EER 10.7, Electric Heating`, `PTAC, EER 10.7, Natural Gas Heating`
 
 <br/>
 
@@ -2067,82 +2017,6 @@ The cooling load served by the cooling system.
 - **Units:** ``Frac``
 
 - **Required:** ``true``
-
-<br/>
-
-**Cooling System: Is Ducted**
-
-Whether the cooling system is ducted or not. Only used for mini-split and evaporative cooler. It's assumed that central air conditioner is ducted, and room air conditioner and packaged terminal air conditioner are not ducted.
-
-- **Name:** ``cooling_system_is_ducted``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Cooling System: Airflow Defect Ratio**
-
-The airflow defect ratio, defined as (InstalledAirflow - DesignAirflow) / DesignAirflow, of the cooling system per ANSI/RESNET/ACCA Standard 310. A value of zero means no airflow defect. Applies only to central air conditioner and ducted mini-split. If not provided, assumes no defect.
-
-- **Name:** ``cooling_system_airflow_defect_ratio``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``false``
-
-<br/>
-
-**Cooling System: Charge Defect Ratio**
-
-The refrigerant charge defect ratio, defined as (InstalledCharge - DesignCharge) / DesignCharge, of the cooling system per ANSI/RESNET/ACCA Standard 310. A value of zero means no refrigerant charge defect. Applies only to central air conditioner and mini-split. If not provided, assumes no defect.
-
-- **Name:** ``cooling_system_charge_defect_ratio``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``false``
-
-<br/>
-
-**Cooling System: Crankcase Heater Power Watts**
-
-Cooling system crankcase heater power consumption in Watts. Applies only to central air conditioner, room air conditioner, packaged terminal air conditioner and mini-split. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner'>Central Air Conditioner</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner'>Room Air Conditioner</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-air-conditioner'>Packaged Terminal Air Conditioner</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner'>Mini-Split Air Conditioner</a>) is used.
-
-- **Name:** ``cooling_system_crankcase_heater_watts``
-- **Type:** ``Double``
-
-- **Units:** ``W``
-
-- **Required:** ``false``
-
-<br/>
-
-**Cooling System: Integrated Heating System Fuel Type**
-
-The fuel type of the heating system integrated into cooling system. Only used for packaged terminal air conditioner and room air conditioner.
-
-- **Name:** ``cooling_system_integrated_heating_system_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
-
-<br/>
-
-**Cooling System: Integrated Heating System Efficiency**
-
-The rated heating efficiency value of the heating system integrated into cooling system. Only used for packaged terminal air conditioner and room air conditioner.
-
-- **Name:** ``cooling_system_integrated_heating_system_efficiency_percent``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``false``
 
 <br/>
 

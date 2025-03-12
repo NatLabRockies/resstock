@@ -5317,6 +5317,7 @@ module HVAC
       cooling_system.cooling_efficiency_seer = seer_eq.round(2)
       cooling_system.cooling_efficiency_kw_per_ton = nil
       cooling_system.cooling_capacity = nil # Autosize the equipment
+      cooling_system.compressor_type = HPXML::HVACCompressorTypeSingleStage
       cooling_system.is_shared_system = false
       cooling_system.number_of_units_served = nil
       cooling_system.shared_loop_watts = nil

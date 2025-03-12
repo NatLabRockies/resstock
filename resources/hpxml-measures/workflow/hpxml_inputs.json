@@ -90,15 +90,14 @@
     "heating_system": "None",
     "heating_system_fuel": "natural gas",
     "heating_system_fraction_heat_load_served": 0,
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency_type": "SEER",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0,
     "heat_pump_type": "none",
     "heat_pump_heating_efficiency_type": "HSPF",
     "heat_pump_heating_efficiency": 0,
     "heat_pump_cooling_efficiency_type": "SEER",
     "heat_pump_cooling_efficiency": 0,
+    "heat_pump_cooling_compressor_type": "single stage",
     "heat_pump_fraction_heat_load_served": 0,
     "heat_pump_fraction_cool_load_served": 0,
     "heat_pump_backup_type": "none",
@@ -364,16 +363,14 @@
     "heating_system_fuel": "natural gas",
     "heating_system_heating_capacity": 56100,
     "heating_system_fraction_heat_load_served": 1.0,
-    "cooling_system_type": "central air conditioner",
+    "cooling_system": "Central AC, SEER 10",
     "cooling_system_cooling_capacity": 38300,
-    "cooling_system_cooling_efficiency": 10,
-    "cooling_system_cooling_efficiency_type": "SEER",
     "cooling_system_fraction_cool_load_served": 1,
     "hvac_blower_fan_watts_per_cfm": 0.5
   },
   "tests/HERS_HVAC/HVAC1b.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC1a.xml",
-    "cooling_system_cooling_efficiency": 13
+    "cooling_system": "Central AC, SEER 13"
   },
   "tests/HERS_HVAC/HVAC2a.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC1a.xml",
@@ -386,7 +383,7 @@
   "tests/HERS_HVAC/HVAC2c.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC2a.xml",
     "heating_system": "None",
-    "cooling_system_type": "none",
+    "cooling_system": "None",
     "heat_pump_type": "air-to-air",
     "heat_pump_cooling_capacity": 56100,
     "heat_pump_heating_capacity": 56100,
@@ -421,10 +418,8 @@
     "heating_system_heating_capacity": 46600,
     "heating_system": "Fuel Furnace, 78% AFUE",
     "heating_system_fraction_heat_load_served": 1.0,
-    "cooling_system_type": "central air conditioner",
+    "cooling_system": "Central AC, SEER 10",
     "cooling_system_cooling_capacity": 38400,
-    "cooling_system_cooling_efficiency": 10,
-    "cooling_system_cooling_efficiency_type": "SEER",
     "cooling_system_fraction_cool_load_served": 1,
     "hvac_blower_fan_watts_per_cfm": 0.5,
     "ducts_supply_insulation_r": 0,
@@ -458,10 +453,8 @@
     "heating_system_heating_capacity": 46600,
     "heating_system": "Fuel Furnace, 78% AFUE",
     "heating_system_fraction_heat_load_served": 1.0,
-    "cooling_system_type": "central air conditioner",
+    "cooling_system": "Central AC, SEER 10",
     "cooling_system_cooling_capacity": 38400,
-    "cooling_system_cooling_efficiency": 10,
-    "cooling_system_cooling_efficiency_type": "SEER",
     "cooling_system_fraction_cool_load_served": 1,
     "hvac_blower_fan_watts_per_cfm": 0.5,
     "ducts_supply_insulation_r": 0,
@@ -507,9 +500,7 @@
     "heating_system_fuel": "natural gas",
     "heating_system":"Fuel Furnace, 78% AFUE",
     "heating_system_fraction_heat_load_served": 1.0,
-    "cooling_system_type": "central air conditioner",
-    "cooling_system_cooling_efficiency": 13,
-    "cooling_system_cooling_efficiency_type": "SEER",
+    "cooling_system": "Central AC, SEER 13",
     "cooling_system_fraction_cool_load_served": 1,
     "water_heater_type": "storage water heater",
     "water_heater_fuel_type": "natural gas",
@@ -691,11 +682,7 @@
     "heating_system": "Fuel Furnace, 92% AFUE",
     "heating_system_heating_capacity": 36000,
     "heating_system_fraction_heat_load_served": 1,
-    "cooling_system_type": "central air conditioner",
-    "cooling_system_cooling_efficiency_type": "SEER",
-    "cooling_system_cooling_efficiency": 13,
-    "cooling_system_cooling_compressor_type": "single stage",
-    "cooling_system_cooling_sensible_heat_fraction": 0.73,
+    "cooling_system": "Central AC, SEER 13",
     "cooling_system_cooling_capacity": 24000,
     "cooling_system_fraction_cool_load_served": 1,
     "heat_pump_type": "none",
@@ -1147,7 +1134,7 @@
   "sample_files/base-bldgtype-mf-unit-adjacent-to-multiple-hvac-none.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-adjacent-to-multiple.xml",
     "heating_system": "None",
-    "cooling_system_type": "none"
+    "cooling_system": "None"
   },
   "sample_files/base-bldgtype-mf-unit-adjacent-to-other-housing-unit.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml"
@@ -1184,8 +1171,7 @@
   "sample_files/base-bldgtype-mf-unit-shared-boiler-chiller-baseboard.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
     "heating_system": "Fuel Boiler w/ Baseboard, 92% AFUE",
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
   },
   "sample_files/base-bldgtype-mf-unit-shared-boiler-chiller-fan-coil.xml": {
@@ -1204,9 +1190,12 @@
   "sample_files/base-bldgtype-mf-unit-shared-boiler-only-baseboard.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
     "heating_system": "Fuel Boiler w/ Baseboard, 92% AFUE",
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
+  },
+  "sample_files/base-bldgtype-mf-unit-shared-boiler-only-baseboard-combi-tankless.xml": {
+    "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-boiler-only-baseboard.xml",
+    "water_heater_type": "space-heating boiler with tankless coil"
   },
   "sample_files/base-bldgtype-mf-unit-shared-boiler-only-fan-coil.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-boiler-only-baseboard.xml",
@@ -1232,8 +1221,7 @@
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
     "heating_system": "None",
     "heating_system_fraction_heat_load_served": 0,
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
   },
   "sample_files/base-bldgtype-mf-unit-shared-chiller-only-fan-coil.xml": {
@@ -1255,8 +1243,7 @@
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
     "heating_system": "None",
     "heating_system_fraction_heat_load_served": 0,
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0,
     "heat_pump_type": "ground-to-air",
     "heat_pump_heating_efficiency_type": "COP",
@@ -2052,8 +2039,7 @@
     "parent_hpxml": "sample_files/base.xml",
     "heating_system": "None",
     "heating_system_fraction_heat_load_served": 0,
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0,
     "heat_pump_type": "air-to-air",
     "heat_pump_heating_efficiency": 7.7,
@@ -2272,8 +2258,7 @@
     "parent_hpxml": "sample_files/base.xml",
     "heating_system_fuel": "electricity",
     "heating_system": "Electric Boiler, 98% AFUE",
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
   },
   "sample_files/base-hvac-boiler-gas-central-ac-1-speed.xml": {
@@ -2283,8 +2268,7 @@
   "sample_files/base-hvac-boiler-gas-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "heating_system":"Fuel Boiler, 92% AFUE",
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
   },
   "sample_files/base-hvac-boiler-gas-only-pilot.xml": {
@@ -2315,20 +2299,16 @@
     "cooling_system_cooling_autosizing_limit": 37000
   },
   "sample_files/base-hvac-central-ac-only-1-speed-seer2.xml": {
-    "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
-    "cooling_system_cooling_efficiency_type": "SEER2",
-    "cooling_system_cooling_efficiency": 12.4
+    "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml", 
+    "cooling_system": "Central AC, SEER2 12.4, SEER 13.05"
   },
   "sample_files/base-hvac-central-ac-only-2-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
-    "cooling_system_cooling_efficiency": 18,
-    "cooling_system_cooling_compressor_type": "two stage"
+    "cooling_system": "Central AC, SEER 18"
   },
   "sample_files/base-hvac-central-ac-only-var-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
-    "cooling_system_cooling_efficiency": 24,
-    "cooling_system_cooling_compressor_type": "variable speed",
-    "cooling_system_cooling_sensible_heat_fraction": 0.78
+    "cooling_system": "Central AC, SEER 24"
   },
   "sample_files/base-hvac-central-ac-only-var-speed-max-power-ratio-schedule.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-var-speed.xml",
@@ -2336,8 +2316,7 @@
   },
   "sample_files/base-hvac-central-ac-only-var-speed-detailed-performance.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-var-speed.xml",
-    "cooling_system_cooling_compressor_type": "variable speed",
-    "cooling_system_cooling_efficiency": 17.5,
+    "cooling_system": "Central AC, SEER 17.5, Variable Speed",
     "cooling_system_cooling_capacity": 36000,
     "hvac_perf_data_capacity_type": "Absolute capacities",
     "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
@@ -2471,14 +2450,12 @@
     "parent_hpxml": "sample_files/base.xml",
     "heating_system_fuel": "electricity",
     "heating_system": "Electric Baseboard, 100% Efficiency",
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
   },
   "sample_files/base-hvac-evap-cooler-furnace-gas.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "cooling_system_type": "evaporative cooler",
-    "cooling_system_is_ducted": false
+    "cooling_system": "Ductless Evaporative Cooler, SEER 13"
   },
   "sample_files/base-hvac-evap-cooler-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-evap-cooler-furnace-gas.xml",
@@ -2487,7 +2464,7 @@
   },
   "sample_files/base-hvac-evap-cooler-only-ducted.xml": {
     "parent_hpxml": "sample_files/base-hvac-evap-cooler-only.xml",
-    "cooling_system_is_ducted": true,
+    "cooling_system": "Ducted Evaporative Cooler, SEER 13",
     "ducts_return_leakage_to_outside_value": 0
   },
   "sample_files/base-hvac-fireplace-wood-only.xml": {
@@ -2513,20 +2490,16 @@
     "parent_hpxml": "sample_files/base.xml",
     "heating_system_fuel": "electricity",
     "heating_system": "Electric Furnace, 98% AFUE", 
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
   },
   "sample_files/base-hvac-furnace-gas-central-ac-2-speed.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "cooling_system_cooling_efficiency": 18,
-    "cooling_system_cooling_compressor_type": "two stage"
+    "cooling_system": "Central AC, SEER 18"
   },
   "sample_files/base-hvac-furnace-gas-central-ac-var-speed.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "cooling_system_cooling_efficiency": 24,
-    "cooling_system_cooling_compressor_type": "variable speed",
-    "cooling_system_cooling_sensible_heat_fraction": 0.78
+    "cooling_system": "Central AC, SEER 24"
   },
   "sample_files/base-hvac-furnace-gas-central-ac-var-speed-max-power-ratio-schedule.xml": {
     "parent_hpxml": "sample_files/base-hvac-furnace-gas-central-ac-var-speed.xml",
@@ -2534,8 +2507,7 @@
   },
   "sample_files/base-hvac-furnace-gas-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
   },
   "sample_files/base-hvac-furnace-gas-only-autosize-factor.xml": {
@@ -2569,10 +2541,7 @@
   },
   "sample_files/base-hvac-furnace-gas-room-ac.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "cooling_system_type": "room air conditioner",
-    "cooling_system_cooling_efficiency_type": "EER",
-    "cooling_system_cooling_efficiency": 8.5,
-    "cooling_system_cooling_sensible_heat_fraction": 0.65
+    "cooling_system": "Room AC, EER 8.5"
   },
   "sample_files/base-hvac-furnace-oil-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-furnace-gas-only.xml",
@@ -2593,8 +2562,7 @@
     "parent_hpxml": "sample_files/base.xml",
     "heating_system": "None",
     "heating_system_fraction_heat_load_served": 0,
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0,
     "heat_pump_type": "ground-to-air",
     "heat_pump_heating_efficiency_type": "COP",
@@ -2676,22 +2644,19 @@
   "sample_files/base-hvac-install-quality-furnace-gas-central-ac-1-speed.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "heating_system": "Fuel Furnace, 92% AFUE, Airflow Defect Ratio",
-    "cooling_system_airflow_defect_ratio": -0.25,
-    "cooling_system_charge_defect_ratio": -0.25,
+    "cooling_system": "Central AC, SEER 13, Airflow Defect Ratio",
     "hvac_blower_fan_watts_per_cfm": 0.365
   },
   "sample_files/base-hvac-install-quality-furnace-gas-central-ac-2-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-furnace-gas-central-ac-2-speed.xml",
     "heating_system": "Fuel Furnace, 92% AFUE, Airflow Defect Ratio",
-    "cooling_system_airflow_defect_ratio": -0.25,
-    "cooling_system_charge_defect_ratio": -0.25,
+    "cooling_system": "Central AC, SEER 18, Airflow Defect Ratio",
     "hvac_blower_fan_watts_per_cfm": 0.365
   },
   "sample_files/base-hvac-install-quality-furnace-gas-central-ac-var-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-furnace-gas-central-ac-var-speed.xml",
     "heating_system": "Fuel Furnace, 92% AFUE, Airflow Defect Ratio",
-    "cooling_system_airflow_defect_ratio": -0.25,
-    "cooling_system_charge_defect_ratio": -0.25,
+    "cooling_system": "Central AC, SEER 24, Airflow Defect Ratio",
     "hvac_blower_fan_watts_per_cfm": 0.365
   },
   "sample_files/base-hvac-install-quality-furnace-gas-only.xml": {
@@ -2707,8 +2672,7 @@
   },
   "sample_files/base-hvac-install-quality-mini-split-air-conditioner-only-ducted.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-air-conditioner-only-ducted.xml",
-    "cooling_system_airflow_defect_ratio": -0.25,
-    "cooling_system_charge_defect_ratio": -0.25,
+    "cooling_system": "Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio",
     "hvac_blower_fan_watts_per_cfm": 0.365
   },
   "sample_files/base-hvac-install-quality-mini-split-heat-pump-ducted.xml": {
@@ -2721,10 +2685,7 @@
     "parent_hpxml": "sample_files/base.xml",
     "heating_system": "None",
     "heating_system_fraction_heat_load_served": 0,
-    "cooling_system_type": "mini-split",
-    "cooling_system_cooling_compressor_type": null,
-    "cooling_system_cooling_efficiency": 19,
-    "cooling_system_is_ducted": true,
+    "cooling_system": "Ducted Mini-Split AC, SEER 19",
     "ducts_supply_leakage_to_outside_value": 15,
     "ducts_return_leakage_to_outside_value": 5,
     "ducts_supply_insulation_r": 0,
@@ -2733,12 +2694,11 @@
   },
   "sample_files/base-hvac-mini-split-air-conditioner-only-ductless.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-air-conditioner-only-ducted.xml",
-    "cooling_system_is_ducted": false
+    "cooling_system": "Ductless Mini-Split AC, SEER 19"
   },
   "sample_files/base-hvac-mini-split-air-conditioner-only-ductless-detailed-performance.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-air-conditioner-only-ductless.xml",
-    "cooling_system_cooling_compressor_type": "variable speed",
-    "cooling_system_cooling_efficiency": 17.0,
+    "cooling_system": "Ductless Mini-Split AC, SEER 17",
     "cooling_system_cooling_capacity": 36000,
     "hvac_perf_data_capacity_type": "Absolute capacities",
     "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
@@ -2759,12 +2719,12 @@
     "parent_hpxml": "sample_files/base.xml",
     "heating_system": "None",
     "heating_system_fraction_heat_load_served": 0,
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0,
     "heat_pump_type": "mini-split",
     "heat_pump_heating_efficiency": 10,
     "heat_pump_cooling_efficiency": 19,
+    "heat_pump_cooling_compressor_type": "variable speed",
     "heat_pump_cooling_sensible_heat_fraction": 0.73,
     "heat_pump_heating_capacity": 36000,
     "heat_pump_heating_capacity_retention_fraction": 0.6,
@@ -2928,18 +2888,14 @@
     "parent_hpxml": "sample_files/base-location-honolulu-hi.xml",
     "heating_system": "None",
     "heating_system_fraction_heat_load_served": 0,
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
   },
   "sample_files/base-hvac-ptac.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "heating_system": "None",
     "heating_system_fraction_heat_load_served": 0,
-    "cooling_system_type": "packaged terminal air conditioner",
-    "cooling_system_cooling_efficiency_type": "EER",
-    "cooling_system_cooling_efficiency": 10.7,
-    "cooling_system_cooling_sensible_heat_fraction": 0.65
+    "cooling_system": "PTAC, EER 10.7"
   },
   "sample_files/base-hvac-ptac-cfis.xml": {
     "parent_hpxml": "sample_files/base-hvac-ptac.xml",
@@ -2953,15 +2909,13 @@
   },
   "sample_files/base-hvac-ptac-with-heating-electricity.xml": {
     "parent_hpxml": "sample_files/base-hvac-ptac.xml",
-    "cooling_system_integrated_heating_system_fuel": "electricity",
-    "cooling_system_integrated_heating_system_efficiency_percent": 1,
+    "cooling_system": "PTAC, EER 10.7, Electric Heating",
     "cooling_system_integrated_heating_system_capacity": 36000,
     "cooling_system_integrated_heating_system_fraction_heat_load_served": 1
   },
   "sample_files/base-hvac-ptac-with-heating-natural-gas.xml": {
     "parent_hpxml": "sample_files/base-hvac-ptac.xml",
-    "cooling_system_integrated_heating_system_fuel": "natural gas",
-    "cooling_system_integrated_heating_system_efficiency_percent": 0.8,
+    "cooling_system": "PTAC, EER 10.7, Natural Gas Heating",
     "cooling_system_integrated_heating_system_capacity": 36000,
     "cooling_system_integrated_heating_system_fraction_heat_load_served": 1
   },
@@ -2993,10 +2947,7 @@
     "parent_hpxml": "sample_files/base.xml",
     "heating_system": "None",
     "heating_system_fraction_heat_load_served": 0,
-    "cooling_system_type": "room air conditioner",
-    "cooling_system_cooling_efficiency_type": "EER",
-    "cooling_system_cooling_efficiency": 8.5,
-    "cooling_system_cooling_sensible_heat_fraction": 0.65
+    "cooling_system": "Room AC, EER 8.5"
   },
   "sample_files/base-hvac-room-ac-only-33percent.xml": {
     "parent_hpxml": "sample_files/base-hvac-room-ac-only.xml",
@@ -3005,13 +2956,11 @@
   },
   "sample_files/base-hvac-room-ac-only-ceer.xml": {
     "parent_hpxml": "sample_files/base-hvac-room-ac-only.xml",
-    "cooling_system_cooling_efficiency_type": "CEER",
-    "cooling_system_cooling_efficiency": 8.4
+    "cooling_system": "Room AC, CEER 8.4"
   },
   "sample_files/base-hvac-room-ac-with-heating.xml": {
     "parent_hpxml": "sample_files/base-hvac-room-ac-only.xml",
-    "cooling_system_integrated_heating_system_fuel": "electricity",
-    "cooling_system_integrated_heating_system_efficiency_percent": 1,
+    "cooling_system": "Room AC, EER 8.5, Electric Heating",
     "cooling_system_integrated_heating_system_capacity": 36000,
     "cooling_system_integrated_heating_system_fraction_heat_load_served": 1
   },
@@ -3057,16 +3006,14 @@
   "sample_files/base-hvac-space-heater-gas-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "heating_system": "Space Heater, 100% Efficiency", 
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
   },
   "sample_files/base-hvac-stove-oil-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "heating_system_fuel": "fuel oil",
     "heating_system": "Stove, 80% Efficiency",
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
   },
   "sample_files/base-hvac-stove-wood-pellets-only.xml": {
@@ -3084,8 +3031,7 @@
     "parent_hpxml": "sample_files/base.xml",
     "heating_system_fuel": "electricity",
     "heating_system": "Electric Wall Furnace, 98% AFUE",
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency": 0,
+    "cooling_system": "None",
     "cooling_system_fraction_cool_load_served": 0
   },
   "sample_files/base-lighting-ceiling-fans.xml": {
@@ -3408,8 +3354,6 @@
     "window_fraction_operable": null,
     "window_interior_shading_winter": null,
     "window_interior_shading_summer": null,
-    "cooling_system_cooling_compressor_type": null,
-    "cooling_system_cooling_sensible_heat_fraction": null,
     "hvac_control_heating_weekday_setpoint": null,
     "hvac_control_heating_weekend_setpoint": null,
     "hvac_control_cooling_weekday_setpoint": null,
@@ -3629,9 +3573,7 @@
     "window_area_left": 0,
     "window_area_right": 0,
     "door_area": 20,
-    "cooling_system_type": "room air conditioner",
-    "cooling_system_cooling_efficiency_type": "EER",
-    "cooling_system_cooling_efficiency": 8.5,
+    "cooling_system": "Room AC, EER 8.5, 0.73 SHR",
     "cooling_system_cooling_capacity": 12000,
     "heating_system_fuel": "electricity",
     "heating_system": "Electric Baseboard, 100% Efficiency",
@@ -3926,7 +3868,7 @@
   },
   "sample_files/base-zones-spaces.xml": {
     "parent_hpxml": "sample_files/base-enclosure-garage.xml",
-    "cooling_system_crankcase_heater_watts": 50
+    "cooling_system": "Central AC, SEER 13, 50W Crankcase Heater"
   },
   "sample_files/base-zones-spaces-multiple.xml": {
     "parent_hpxml": "sample_files/base-enclosure-garage.xml",
@@ -3934,7 +3876,7 @@
     "heating_system_fraction_heat_load_served": 0.5,
     "cooling_system_cooling_capacity": 12000,
     "cooling_system_fraction_cool_load_served": 0.5,
-    "cooling_system_crankcase_heater_watts": 25,
+    "cooling_system": "Central AC, SEER 13, 25W Crankcase Heater",
     "ducts_supply_leakage_to_outside_value": 37.5,
     "ducts_return_leakage_to_outside_value": 12.5,
     "ducts_supply_surface_area": 75,
