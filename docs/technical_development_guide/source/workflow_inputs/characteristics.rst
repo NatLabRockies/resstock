@@ -38434,7 +38434,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - central air conditioner
      - SEER
      - 8
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -38449,7 +38449,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - central air conditioner
      - SEER
      - 10
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -38464,7 +38464,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - central air conditioner
      - SEER
      - 13
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -38479,7 +38479,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - central air conditioner
      - SEER
      - 15
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -39437,7 +39437,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 6.2
      - SEER
      - 10
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -39482,7 +39482,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 7.7
      - SEER
      - 13
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -39527,7 +39527,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 8.5
      - SEER
      - 15
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -40157,7 +40157,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 8.2
      - SEER
      - 14.5
-     - auto
+     - variable speed
      - auto
      - auto
      - auto
@@ -40202,7 +40202,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 14
      - SEER
      - 29.3
-     - auto
+     - variable speed
      - auto
      - auto
      - auto
@@ -40995,6 +40995,12 @@ Arguments
      - Double
      -
      - The rated efficiency value of the cooling system. Ignored for evaporative cooler.
+   * - ``cooling_system_cooling_compressor_type``
+     - false
+     - 
+     - Choice
+     - auto, single stage, two stage, variable speed
+     - The compressor type of the cooling system. Only applies to central air conditioner and mini-split. If not provided, the OS-HPXML default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
    * - ``cooling_system_cooling_capacity``
      - false
      - Btu/hr
@@ -41208,6 +41214,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``cooling_system_type``
      - ``cooling_system_cooling_efficiency_type``
      - ``cooling_system_cooling_efficiency``
+     - ``cooling_system_cooling_compressor_type``
      - ``cooling_system_cooling_capacity``
      - ``cooling_system_cooling_autosizing_limit``
      - ``cooling_system_is_ducted``
@@ -41248,6 +41255,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - 1
+     - 
      - 
      - 
      - 
@@ -41296,6 +41304,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - 
      - 
+     - 
      - none
      - HSPF
      - 0
@@ -41335,6 +41344,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - mini-split
      - SEER
      - 13
+     - variable speed
      - auto
      - auto
      - false
@@ -41377,6 +41387,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - mini-split
      - SEER
      - 13
+     - variable speed
      - auto
      - 
      - false
@@ -41419,6 +41430,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - mini-split
      - SEER
      - 13
+     - variable speed
      - auto
      - 
      - false
@@ -41493,8 +41505,10 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - 
      - 
+     - 
    * - Void
      - 0%
+     - 
      - 
      - 
      - 
