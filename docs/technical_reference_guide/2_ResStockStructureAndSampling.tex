@@ -86,6 +86,10 @@ The next step in the workflow is converting ResStock arguments to the OpenStudio
 
 Throughout this translation process, in most cases, the ResStock arguments are the same as the final OpenStudio-HPXML arguments assigned in BuildResidentialHPXML. An example of an identical argument is \texttt{geometry\_unit\_num\_bedrooms}. However, there are some instances where the ResStock arguments intentionally differ from the OpenStudio-HPXML arguments and need further adjustment.  Another potential difference is combining and modifying ResStock arguments into one OpenStudio-HPXML argument. An example is using \texttt{air\_leakage\_percent\_reduction} as part of an envelope upgrade that reduces infiltration. In this scenario, the \texttt{air\_leakage\_value} is adjusted by the \texttt{air\_leakage\_percent\_reduction} argument.
 
+\subsection{Post OpenStudio--HPXML modifications}
+After the OpenStudio-HPXML files are returned, there is a final step before the OpenStudio and EnergyPlus model is simulated. The \texttt{ResStockArgumentsPostHPXML} measure is executed. This measure provides an opportunity to modify the returned OpenStudio--HXPML files before simulation. Currently, this measure is not used for the baseline stock. An example use of this measure would be modeling a schedule modification for demand flexibility during an upgrade.  
+
+
 \section{Batch Simulation}
 % BuildStock-Batch for the sampling, batch simulation, and post-processing
 % Introduce that some parallelization is needed. The computations can either be done on the a local machine, a high-performance computing machine, or even the cloud. A lot of data is produced, post-processing is the biggest memory process.
