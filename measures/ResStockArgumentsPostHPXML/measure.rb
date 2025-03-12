@@ -104,7 +104,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     doc_buildings.each_with_index do |building, index|
       hpmxl_bldg = hpxml.buildings[index]
       if skip_hvac_flexibility?(hpmxl_bldg)
-        runner.registerInfo('Skipping hvac flexibility for building #{index + 1} since it has no HVAC controls.')
+        runner.registerInfo("Skipping hvac flexibility for building #{index + 1} since it has no HVAC controls.")
         next
       end
       schedule = create_schedule(hpxml, hpxml_path, runner, index)

@@ -41,12 +41,18 @@ class HVACScheduleModifier
     raise 'heating_setpoint.length != cooling_setpoint.length' unless heating_setpoint.length == cooling_setpoint.length
 
     total_indices = heating_setpoint.length
+    # Initialize peak_period and pre_peak_period arrays with zeros
+    peak_period = Array.new(total_indices, 0)
+    pre_peak_period = Array.new(total_indices, 0)
+
     total_indices.times do |index|
       offset_times = _get_peak_times(index, flexibility_inputs)
       day_type = _get_day_type(index)
       index_in_day = index % (24 * @num_timesteps_per_hour)
+
       if offset_times.pre_peak_start_index <= index_in_day && index_in_day < offset_times.peak_start_index
-        # Preheating
+        # Preheating/Precooling period
+        pre_peak_period[index] = 1
         if day_type == 'preheating'
           heating_setpoint[index] += flexibility_inputs.pre_peak_offset
           heating_setpoint[index] = _clip_setpoints(heating_setpoint[index])
@@ -65,12 +71,19 @@ class HVACScheduleModifier
           end
         end
       elsif offset_times.peak_start_index <= index_in_day && index_in_day < offset_times.peak_end_index
-        # Peak
+        # Peak period
+        peak_period[index] = 1
         heating_setpoint[index] -= flexibility_inputs.peak_offset
         cooling_setpoint[index] += flexibility_inputs.peak_offset
       end
     end
-    { heating_setpoint: heating_setpoint, cooling_setpoint: cooling_setpoint }
+
+    {
+      heating_setpoint: heating_setpoint,
+      cooling_setpoint: cooling_setpoint,
+      peak_period: peak_period,
+      pre_peak_period: pre_peak_period
+    }
   end
 
   def _clip_setpoints(setpoint)

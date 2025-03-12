@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>6e33b463-4d0b-490f-b073-27a03e015f6d</version_id>
-  <version_modified>2025-02-04T22:20:01Z</version_modified>
+  <version_id>2515389b-b747-4482-baed-ad5f603ab1ca</version_id>
+  <version_modified>2025-03-12T23:42:26Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -26,7 +26,7 @@
       <type>Integer</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>2</default_value>
+      <default_value>0</default_value>
     </argument>
     <argument>
       <name>loadflex_pre_peak_duration_hours</name>
@@ -35,7 +35,7 @@
       <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>2</default_value>
+      <default_value>0</default_value>
     </argument>
     <argument>
       <name>loadflex_pre_peak_offset</name>
@@ -44,7 +44,7 @@
       <type>Integer</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>3</default_value>
+      <default_value>0</default_value>
     </argument>
     <argument>
       <name>loadflex_random_shift_minutes</name>
@@ -94,67 +94,37 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>09B9A9D2</checksum>
+      <checksum>604AB3DD</checksum>
     </file>
     <file>
       <filename>hvac_flexibility/detailed_schedule_generator.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1BAE8BA2</checksum>
+      <checksum>2685F1D7</checksum>
     </file>
     <file>
       <filename>hvac_flexibility/seasonal_shedding_peak_hours.json</filename>
       <filetype>json</filetype>
       <usage_type>resource</usage_type>
-      <checksum>921E1C64</checksum>
+      <checksum>5F914EFF</checksum>
     </file>
     <file>
       <filename>hvac_flexibility/seasonal_shifting_peak_hours.json</filename>
       <filetype>json</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9AE41613</checksum>
+      <checksum>055326E7</checksum>
     </file>
     <file>
       <filename>hvac_flexibility/setpoint_modifier.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>8CF0A2AE</checksum>
-    </file>
-    <file>
-      <filename>Upgrade_baseline.osw</filename>
-      <filetype>osw</filetype>
-      <usage_type>test</usage_type>
-      <checksum>A1448805</checksum>
-    </file>
-    <file>
-      <filename>Upgrade_baseline.xml</filename>
-      <filetype>xml</filetype>
-      <usage_type>test</usage_type>
-      <checksum>05162662</checksum>
-    </file>
-    <file>
-      <filename>Upgrade_baseline_dst_impacted.osw</filename>
-      <filetype>osw</filetype>
-      <usage_type>test</usage_type>
-      <checksum>1B44D724</checksum>
-    </file>
-    <file>
-      <filename>Upgrade_baseline_dst_impacted.xml</filename>
-      <filetype>xml</filetype>
-      <usage_type>test</usage_type>
-      <checksum>4115CC70</checksum>
+      <checksum>15CB393A</checksum>
     </file>
     <file>
       <filename>baseline.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
       <checksum>527B927D</checksum>
-    </file>
-    <file>
-      <filename>baseline.xml</filename>
-      <filetype>xml</filetype>
-      <usage_type>test</usage_type>
-      <checksum>9C524DCD</checksum>
     </file>
     <file>
       <filename>baseline_develop.osw</filename>
@@ -169,30 +139,6 @@
       <checksum>2C14E38A</checksum>
     </file>
     <file>
-      <filename>baseline_dst_impacted.xml</filename>
-      <filetype>xml</filetype>
-      <usage_type>test</usage_type>
-      <checksum>9DC32F78</checksum>
-    </file>
-    <file>
-      <filename>in.epw</filename>
-      <filetype>epw</filetype>
-      <usage_type>test</usage_type>
-      <checksum>E23378AA</checksum>
-    </file>
-    <file>
-      <filename>in.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>8D33424F</checksum>
-    </file>
-    <file>
-      <filename>in.xml</filename>
-      <filetype>xml</filetype>
-      <usage_type>test</usage_type>
-      <checksum>343BD81C</checksum>
-    </file>
-    <file>
       <filename>out.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
@@ -203,18 +149,6 @@
       <filetype>html</filetype>
       <usage_type>test</usage_type>
       <checksum>F1621D8F</checksum>
-    </file>
-    <file>
-      <filename>results_annual.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>B2C6D243</checksum>
-    </file>
-    <file>
-      <filename>results_design_load_details.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>15D0F211</checksum>
     </file>
     <file>
       <filename>run/baseline.xml</filename>
