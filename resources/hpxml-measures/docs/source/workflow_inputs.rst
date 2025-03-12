@@ -365,6 +365,31 @@ You can create an additional column in the CSV file to define another unavailabl
 
   It is not possible to eliminate all HVAC/DHW energy use (e.g. crankcase/defrost energy, water heater parasitics) in EnergyPlus during an unavailable period.
 
+.. _hpxml_electric_panel_calculations:
+
+HPXML Electric Panel Calculations
+*********************************
+
+One or more electric panel calculation types (e.g., 2023 NEC 220.83) can be entered in ``/HPXML/SoftwareInfo/extension/ElectricPanelCalculations/ServiceFeeders``.
+If not entered, electric panel loads will not be calculated.
+
+  ====================================  ========  =======  ================  ========  ================  ===========
+  Element                               Type      Units    Constraints       Required  Default           Description
+  ====================================  ========  =======  ================  ========  ================  ===========
+  ``Type``                              string             See [#]_          Yes                         Electric panel calculation vintage/method; multiple are allowed
+  ====================================  ========  =======  ================  ========  ================  ===========
+
+  .. [#] Type choices are "2023 Existing Dwelling Load-Based" and "2023 Existing Dwelling Meter-Based", and are described as follows:
+
+         \- **2023 Existing Dwelling Load-Based**: Using a load summing method based on Section 220.83 of the 2023 National Electrical Code.
+
+         \- **2023 Existing Dwelling Meter-Based**: Using a maximum demand method based on Section 220.87 of the 2023 National Electrical Code.
+
+         If running :ref:`bldg_type_whole_mf_buildings` with any "Dwelling Load-Based" calculation types, load calculations will be performed on each individual dwelling unit and then summed across units of the building.
+         Running :ref:`bldg_type_whole_mf_buildings` with any "Dwelling Meter-Based" calculation types is not supported.
+
+See :ref:`panel_outputs` for descriptions of how calculated loads appear in the output files.
+
 .. _hpxml_building:
 
 HPXML Building
@@ -2448,7 +2473,7 @@ Each central air conditioner is entered as a ``/HPXML/Building/BuildingDetails/S
   ``CoolingSystemType``                                             string                central air conditioner  Yes                       Type of cooling system
   ``CoolingSystemFuel``                                             string                electricity              Yes                       Fuel type
   ``CoolingCapacity``                                               double   Btu/hr       >= 0                     No        autosized [#]_  Cooling output capacity
-  ``CompressorType``                                                string                See [#]_                 No        See [#]_        Type of compressor
+  ``CompressorType``                                                string                See [#]_                 Yes                       Type of compressor
   ``FractionCoolLoadServed``                                        double   frac         >= 0, <= 1 [#]_          Yes                       Fraction of cooling load served
   ``AnnualCoolingEfficiency[Units="SEER" or Units="SEER2"]/Value``  double   Btu/Wh       > 0                      Yes                       Rated efficiency [#]_
   ``SensibleHeatFraction``                                          double   frac         > 0.5, <= 1              No        See [#]_        Sensible heat fraction
@@ -2473,7 +2498,6 @@ Each central air conditioner is entered as a ``/HPXML/Building/BuildingDetails/S
   .. [#] HVACDistribution type must be :ref:`hvac_distribution_air` (type: "regular velocity") or :ref:`hvac_distribution_dse`.
   .. [#] Cooling capacity autosized per ACCA Manual J/S based on cooling design load.
   .. [#] CompressorType choices are "single stage", "two stage", or "variable speed".
-  .. [#] If CompressorType not provided, defaults to "single stage" if SEER <= 15, else "two stage" if SEER <= 21, else "variable speed".
   .. [#] The sum of all ``FractionCoolLoadServed`` (across all HVAC systems) must be less than or equal to 1.
   .. [#] If SEER2 provided, converted to SEER using ANSI/RESNET/ICC 301-2022 Addendum C, where SEER = SEER2 / 0.95 (assumed to be a split system).
   .. [#] If SensibleHeatFraction not provided, defaults to 0.73 for single/two stage and 0.78 for variable speed.
@@ -2624,7 +2648,7 @@ Each mini-split air conditioner is entered as a ``/HPXML/Building/BuildingDetail
   ``CoolingSystemType``                                             string            mini-split       Yes                       Type of cooling system
   ``CoolingSystemFuel``                                             string            electricity      Yes                       Fuel type
   ``CoolingCapacity``                                               double    Btu/hr  >= 0             No        autosized [#]_  Cooling output capacity
-  ``CompressorType``                                                string            See [#]_         No        variable speed  Type of compressor
+  ``CompressorType``                                                string            variable speed   Yes                       Type of compressor
   ``FractionCoolLoadServed``                                        double    frac    >= 0, <= 1 [#]_  Yes                       Fraction of cooling load served
   ``AnnualCoolingEfficiency[Units="SEER" or Units="SEER2"]/Value``  double    Btu/Wh  > 0              Yes                       Rated cooling efficiency [#]_
   ``SensibleHeatFraction``                                          double    frac    > 0.5, <= 1      No        0.73            Sensible heat fraction
@@ -2648,7 +2672,6 @@ Each mini-split air conditioner is entered as a ``/HPXML/Building/BuildingDetail
          
   .. [#] If DistributionSystem provided, HVACDistribution type must be :ref:`hvac_distribution_air` (type: "regular velocity") or :ref:`hvac_distribution_dse`.
   .. [#] Cooling capacity autosized per ACCA Manual J/S based on cooling design load.
-  .. [#] CompressorType only choices is "variable speed" (i.e., they are assumed to be inverter driven).
   .. [#] The sum of all ``FractionCoolLoadServed`` (across all HVAC systems) must be less than or equal to 1.
   .. [#] If SEER2 provided, converted to SEER using ANSI/RESNET/ICC 301-2022 Addendum C, where SEER = SEER2 / 0.95 if ducted and SEER = SEER2 if ductless.
   .. [#] If CoolingDetailedPerformanceData is provided, see :ref:`clg_detailed_perf_data`.
@@ -2763,7 +2786,7 @@ Each air-to-air heat pump is entered as a ``/HPXML/Building/BuildingDetails/Syst
   ``HeatingCapacity``                                               double   Btu/hr    >= 0                      No        autosized [#]_  Heating output capacity (excluding any backup heating)
   ``HeatingCapacity17F``                                            double   Btu/hr    >= 0, <= HeatingCapacity  No                        Heating output capacity at 17F, if available
   ``CoolingCapacity``                                               double   Btu/hr    >= 0                      No        autosized [#]_  Cooling output capacity
-  ``CompressorType``                                                string             See [#]_                  No        See [#]_        Type of compressor
+  ``CompressorType``                                                string             See [#]_                  Yes                       Type of compressor
   ``CompressorLockoutTemperature``                                  double   F                                   No        See [#]_        Minimum outdoor temperature for compressor operation
   ``CoolingSensibleHeatFraction``                                   double   frac      > 0.5, <= 1               No        See [#]_        Sensible heat fraction
   ``BackupType``                                                    string             See [#]_                  No        <none>          Type of backup heating
@@ -2797,7 +2820,6 @@ Each air-to-air heat pump is entered as a ``/HPXML/Building/BuildingDetails/Syst
   .. [#] Heating capacity autosized per ACCA Manual J/S based on heating design load (unless a different HeatPumpSizingMethodology was selected in :ref:`hvac_sizing_control`).
   .. [#] Cooling capacity autosized per ACCA Manual J/S based on cooling design load (unless a different HeatPumpSizingMethodology was selected in :ref:`hvac_sizing_control`).
   .. [#] CompressorType choices are "single stage", "two stage", or "variable speed".
-  .. [#] If CompressorType not provided, defaults to "single stage" if SEER <= 15, else "two stage" if SEER <= 21, else "variable speed".
   .. [#] If neither CompressorLockoutTemperature nor BackupHeatingSwitchoverTemperature provided, CompressorLockoutTemperature defaults to 25F if fossil fuel backup otherwise -20F if CompressorType is "variable speed" otherwise 0F.
   .. [#] If SensibleHeatFraction not provided, defaults to 0.73 for single/two stage and 0.78 for variable speed.
   .. [#] BackupType choices are "integrated" or "separate".
@@ -2846,7 +2868,7 @@ Each ``HeatPump`` is expected to represent a single outdoor unit, whether connec
   ``HeatingCapacity``                                               double    Btu/hr    >= 0                      No        autosized [#]_  Heating output capacity (excluding any backup heating)
   ``HeatingCapacity17F``                                            double    Btu/hr    >= 0, <= HeatingCapacity  No                        Heating output capacity at 17F, if available
   ``CoolingCapacity``                                               double    Btu/hr    >= 0                      No        autosized [#]_  Cooling output capacity
-  ``CompressorType``                                                string              See [#]_                  No        variable speed  Type of compressor
+  ``CompressorType``                                                string              variable speed            Yes                       Type of compressor
   ``CompressorLockoutTemperature``                                  double    F                                   No        See [#]_        Minimum outdoor temperature for compressor operation
   ``CoolingSensibleHeatFraction``                                   double    frac      > 0.5, <= 1               No        0.73            Sensible heat fraction
   ``BackupType``                                                    string              See [#]_                  No        <none>          Type of backup heating
@@ -2879,7 +2901,6 @@ Each ``HeatPump`` is expected to represent a single outdoor unit, whether connec
   .. [#] If DistributionSystem provided, HVACDistribution type must be :ref:`hvac_distribution_air` (type: "regular velocity") or :ref:`hvac_distribution_dse`.
   .. [#] Heating capacity autosized per ACCA Manual J/S based on heating design load (unless a different HeatPumpSizingMethodology was selected in :ref:`hvac_sizing_control`).
   .. [#] Cooling capacity autosized per ACCA Manual J/S based on cooling design load (unless a different HeatPumpSizingMethodology was selected in :ref:`hvac_sizing_control`).
-  .. [#] CompressorType only choice is "variable speed" (i.e., they are assumed to be inverter driven).
   .. [#] If neither CompressorLockoutTemperature nor BackupHeatingSwitchoverTemperature provided, CompressorLockoutTemperature defaults to 25F if fossil fuel backup otherwise -20F.
   .. [#] BackupType choices are "integrated" or "separate".
          Heat pump backup will only operate during colder temperatures when the heat pump runs out of heating capacity or is disabled due to a switchover/lockout temperature.
@@ -4590,6 +4611,157 @@ In addition, the PVSystem must be connected to an inverter that is entered as a 
   =======================================================  =================  ================  ===================  ========  ========  ============================================
 
   .. [#] For homes with multiple inverters, all InverterEfficiency elements must have the same value.
+
+.. _hpxml_electric_panels:
+
+HPXML Electric Panels
+*********************
+
+A single electric panel can be entered as a ``/HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel``.
+
+  =======================================================================  =======  =========  =======================  ========  =============  ============================================
+  Element                                                                  Type     Units      Constraints              Required  Default        Notes
+  =======================================================================  =======  =========  =======================  ========  =============  ============================================
+  ``SystemIdentifier``                                                     id                                           Yes                      Unique identifier
+  ``Voltage``                                                              string   V          See [#]_                 No        240
+  ``MaxCurrentRating``                                                     double   A                                   No        200
+  ``Headroom`` or ``RatedTotalSpaces``                                     integer                                      No        See [#]_
+  ``BranchCircuits``                                                       element                                      No        See [#]_       Individual branch circuits
+  ``ServiceFeeders``                                                       element                                      No        See [#]_       Individual service feeders
+  =======================================================================  =======  =========  =======================  ========  =============  ============================================
+
+  .. [#] Voltage choices are "120" or "240".
+  .. [#] If neither Headroom nor RatedTotalSpaces provided, the following default value representing an electric panel with 3 open breaker spaces will be used: Headroom = 3.
+  .. [#] See :ref:`branch_circuits`.
+  .. [#] See :ref:`service_feeders`.
+
+See :ref:`panel_outputs` for descriptions of how breaker spaces and calculated loads appear in the output files.
+
+.. _branch_circuits:
+
+Branch Circuits
+~~~~~~~~~~~~~~~
+
+Individual branch circuits entered in ``BranchCircuits/BranchCircuit``.
+
+  ==============================================  ========  ==============  ===========  ========  =========  ==========================================
+  Element                                         Type      Units           Constraints  Required  Default    Notes
+  ==============================================  ========  ==============  ===========  ========  =========  ==========================================
+  ``Voltage``                                     string    V               See [#]_     No        See [#]_
+  ``MaxCurrentRating``                            double    A                            No        See [#]_
+  ``OccupiedSpaces``                              integer                                No        See [#]_   Number of occupied breaker spaces
+  ``AttachedToComponent``                         idref                                  No                   ID of attached component; multiple are allowed [#]_
+  ==============================================  ========  ==============  ===========  ========  =========  ==========================================
+
+  .. [#] Voltage choices are "120" or "240".
+  .. [#] If Voltage not provided, defaults based on optional referenced components as follows:
+         
+         \- **No referenced components, non-electric heating systems, room air conditioners, dishwashers, ventilation fans, plug loads**: 120
+         
+         \- **All other referenced components**: 240
+  
+  .. [#] If MaxCurrentRating not provided, defaults based on Voltage as follows:
+  
+         \- **120**: 20
+         
+         \- **240**: 50
+         
+  .. [#] If OccupiedSpaces not provided, then :ref:`panels_default` are used based on Voltage and properties of components referenced by AttachedToComponent.
+         If no corresponding Voltage is specified, the other Voltage classification will be used.
+         Occupied breaker spaces will be recalculated based on the new Voltage classification.
+         Occupied breaker spaces are calculated based on PowerRating, Voltage, and MaxCurrentRating as follows:
+         
+         RequiredAmperage = PowerRating / Voltage
+         
+         NumBranches = ceiling(RequiredAmperage / MaxCurrentRating)
+         
+         NumBreakers = NumBranches * (Voltage / 120)
+  
+  .. [#] Provide a AttachedToComponent element for each referenced component.
+
+.. _service_feeders:
+
+Service Feeders
+~~~~~~~~~~~~~~~
+
+Individual service feeders entered in ``ServiceFeeders/ServiceFeeder``.
+
+  ==============================================  ========  ==============  ===========  ========  =========  ==========================================
+  Element                                         Type      Units           Constraints  Required  Default    Notes
+  ==============================================  ========  ==============  ===========  ========  =========  ==========================================
+  ``LoadType``                                    string                    See [#]_     Yes
+  ``PowerRating``                                 double    W                            No        See [#]_
+  ``IsNewLoad``                                   boolean                                No        false      Whether, in the context of NEC calculations, the load is new
+  ``AttachedToComponent``                         idref                     See [#]_     See [#]_  See [#]_   ID of attached component; multiple are allowed [#]_
+  ==============================================  ========  ==============  ===========  ========  =========  ==========================================
+
+  .. [#] LoadType choices are "heating", "cooling", "hot water", "clothes dryer", "dishwasher", "range/oven", "mech vent", "permanent spa heater", "permanent spa pump", "pool heater", "pool pump", "well pump", "electric vehicle charging", "lighting", "kitchen", "laundry", and "other".
+  .. [#] If PowerRating not provided, then :ref:`panels_default` are used based on Voltage and properties of components referenced by AttachedToComponent.
+         If no corresponding Voltage is specified, the other Voltage classification will be used.
+  .. [#] Depending on the LoadType, AttachedToComponent must reference:
+
+         \- **heating**: ``HeatingSystem`` or ``HeatPump``
+
+         \- **cooling**: ``CoolingSystem`` or ``HeatPump``
+
+         \- **hot water**: ``WaterHeatingSystem``
+
+         \- **clothes dryer**: ``ClothesDryer``
+
+         \- **dishwasher**: ``Dishwasher``
+
+         \- **range/oven**: ``CookingRange``
+
+         \- **mech vent**: ``VentilationFan``
+
+         \- **permanent spa heater**: ``PermanentSpa/Heater``
+
+         \- **permanent spa pump**: ``PermanentSpa/Pumps/Pump``
+
+         \- **pool heater**: ``Pool/Heater``
+
+         \- **pool pump**: ``Pool/Pumps/Pump``
+
+         \- **well pump**: ``PlugLoad[PlugLoadType=”well pump”]``
+
+         \- **electric vehicle charging**: ``PlugLoad[PlugLoadType=”electric vehicle charging”]``
+
+  .. [#] Not allowed if LoadType is "lighting", "kitchen", "laundry", or "other"; otherwise, required.
+  .. [#] A service feeder is created for any electric component not already referenced by a service feeder.
+         Service feeders for the following load types are always created if they don't already exist:
+
+         \- **lighting**
+
+         \- **kitchen**
+
+         \- **laundry**
+
+         \- **other**
+  
+  .. [#] Provide a AttachedToComponent element for each referenced component.
+
+.. _panels_default:
+
+Default Panels
+~~~~~~~~~~~~~~
+
+If power rating or occupied breaker spaces are not provided, then they are defaulted.
+Default values may be based on power rating, voltage, amperage, component type, and other component properties such as number of bedrooms or bathrooms.
+They can also be found at ``HPXMLtoOpenStudio/resources/data/default_panels.csv``.
+
+.. csv-table::
+   :file: ../../HPXMLtoOpenStudio/resources/data/default_panels.csv
+   :header-rows: 1
+
+Mechanical ventilation loads may be assigned power ratings based on fan count and W (if available) otherwise 3000 W.
+Loads with power ratings of "auto" are calculated based on estimates for:
+
+- input capacities (using regressions involving rated output capacities and efficiencies if direct expansion)
+- blower fans (using fan W/cfm multiplied by airflow cfm)
+- hydronic pumps (using electric auxiliary energy kWh/yr divided by 2.08)
+
+Loads with occupied breaker spaces of "auto" vary based on calculated power ratings.
+Room air conditioners connected to a 120v branch circuit are assumed to occupy 0 breaker spaces.
 
 .. _hpxml_batteries:
 
