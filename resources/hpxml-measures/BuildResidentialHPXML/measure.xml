@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>160c53a7-6602-4ef2-aaa3-91a7754e5ef3</version_id>
-  <version_modified>2025-03-11T19:03:42Z</version_modified>
+  <version_id>320ac9d2-cd56-4854-972d-6c777225d9bc</version_id>
+  <version_modified>2025-03-12T02:52:44Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -8439,7 +8439,7 @@
       <filename>test_build_residential_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>BAC58C3D</checksum>
+      <checksum>8790CE3B</checksum>
     </file>
   </files>
 </measure>

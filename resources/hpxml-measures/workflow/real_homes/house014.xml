@@ -240,6 +240,7 @@
               <HeatingCapacity>18000.0</HeatingCapacity>
               <HeatingCapacity17F>10980.0</HeatingCapacity17F>
               <CoolingCapacity>18000.0</CoolingCapacity>
+              <CompressorType>single stage</CompressorType>
               <BackupType>integrated</BackupType>
               <BackupSystemFuel>electricity</BackupSystemFuel>
               <BackupAnnualHeatingEfficiency>
