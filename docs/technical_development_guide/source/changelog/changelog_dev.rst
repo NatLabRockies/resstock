@@ -8,7 +8,7 @@ Development Changelog
 
     .. change::
         :tags: docs, technical reference guide
-        :pullreq: 1347
+        :pullreq: 1361
 
         **Date**: 2025-03-12
 
@@ -21,7 +21,7 @@ Development Changelog
         Assignees: Anthony Fontanini
     .. change::
         :tags: workflow
-        :pullreq: 1347
+        :pullreq: 1353
 
         **Date**: 2025-03-11
 
