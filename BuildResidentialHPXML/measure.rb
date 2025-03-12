@@ -1166,20 +1166,16 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     heating_system_fuel_choices << HPXML::FuelTypeWoodPellets
     heating_system_fuel_choices << HPXML::FuelTypeCoal
 
-    cooling_system_type_choices = OpenStudio::StringVector.new
-    cooling_system_type_choices << Constants::None
-    cooling_system_type_choices << HPXML::HVACTypeCentralAirConditioner
-    cooling_system_type_choices << HPXML::HVACTypeRoomAirConditioner
-    cooling_system_type_choices << HPXML::HVACTypeEvaporativeCooler
-    cooling_system_type_choices << HPXML::HVACTypeMiniSplitAirConditioner
-    cooling_system_type_choices << HPXML::HVACTypePTAC
-
+    # TODO: delete after HP refactor
     cooling_efficiency_type_choices = OpenStudio::StringVector.new
     cooling_efficiency_type_choices << HPXML::UnitsSEER
     cooling_efficiency_type_choices << HPXML::UnitsSEER2
     cooling_efficiency_type_choices << HPXML::UnitsEER
     cooling_efficiency_type_choices << HPXML::UnitsCEER
 
+    # Need to keep compressor_type_choices, cooling_efficiency_type_choices until HP refactor
+
+    # TODO: delete after HP refactor
     compressor_type_choices = OpenStudio::StringVector.new
     compressor_type_choices << HPXML::HVACCompressorTypeSingleStage
     compressor_type_choices << HPXML::HVACCompressorTypeTwoStage
@@ -1223,33 +1219,12 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(1)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('cooling_system_type', cooling_system_type_choices, true)
-    arg.setDisplayName('Cooling System: Type')
-    arg.setDescription("The type of cooling system. Use '#{Constants::None}' if there is no cooling system or if there is a heat pump serving a cooling load.")
-    arg.setDefaultValue(HPXML::HVACTypeCentralAirConditioner)
-    args << arg
+    cooling_system_choices = get_option_names('cooling_system.tsv')
 
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('cooling_system_cooling_efficiency_type', cooling_efficiency_type_choices, true)
-    arg.setDisplayName('Cooling System: Efficiency Type')
-    arg.setDescription("The efficiency type of the cooling system. System types #{HPXML::HVACTypeCentralAirConditioner} and #{HPXML::HVACTypeMiniSplitAirConditioner} use #{HPXML::UnitsSEER} or #{HPXML::UnitsSEER2}. System types #{HPXML::HVACTypeRoomAirConditioner} and #{HPXML::HVACTypePTAC} use #{HPXML::UnitsEER} or #{HPXML::UnitsCEER}. Ignored for system type #{HPXML::HVACTypeEvaporativeCooler}.")
-    arg.setDefaultValue(HPXML::UnitsSEER)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_efficiency', true)
-    arg.setDisplayName('Cooling System: Efficiency')
-    arg.setDescription("The rated efficiency value of the cooling system. Ignored for #{HPXML::HVACTypeEvaporativeCooler}.")
-    arg.setDefaultValue(13.0)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('cooling_system_cooling_compressor_type', compressor_type_choices, false)
-    arg.setDisplayName('Cooling System: Cooling Compressor Type')
-    arg.setDescription("The compressor type of the cooling system. Only applies to #{HPXML::HVACTypeCentralAirConditioner} and #{HPXML::HVACTypeMiniSplitAirConditioner}. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#central-air-conditioner'>Central Air Conditioner</a>, <a href='#{docs_base_url}#mini-split-air-conditioner'>Mini-Split Air Conditioner</a>) is used.")
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_sensible_heat_fraction', false)
-    arg.setDisplayName('Cooling System: Cooling Sensible Heat Fraction')
-    arg.setDescription("The sensible heat fraction of the cooling system. Ignored for #{HPXML::HVACTypeEvaporativeCooler}. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#central-air-conditioner'>Central Air Conditioner</a>, <a href='#{docs_base_url}#room-air-conditioner'>Room Air Conditioner</a>, <a href='#{docs_base_url}#packaged-terminal-air-conditioner'>Packaged Terminal Air Conditioner</a>, <a href='#{docs_base_url}#mini-split-air-conditioner'>Mini-Split Air Conditioner</a>) is used.")
-    arg.setUnits('Frac')
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('cooling_system', cooling_system_choices, true)
+    arg.setDisplayName('Cooling System')
+    arg.setDescription("The cooling system type, efficiency type, and efficiency. Use '#{Constants::None}' if there is no cooling system or if there is a heat pump serving a cooling load.")
+    arg.setDefaultValue('Central AC, SEER 13')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_capacity', false)
@@ -1274,41 +1249,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The cooling load served by the cooling system.')
     arg.setUnits('Frac')
     arg.setDefaultValue(1)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('cooling_system_is_ducted', false)
-    arg.setDisplayName('Cooling System: Is Ducted')
-    arg.setDescription("Whether the cooling system is ducted or not. Only used for #{HPXML::HVACTypeMiniSplitAirConditioner} and #{HPXML::HVACTypeEvaporativeCooler}. It's assumed that #{HPXML::HVACTypeCentralAirConditioner} is ducted, and #{HPXML::HVACTypeRoomAirConditioner} and #{HPXML::HVACTypePTAC} are not ducted.")
-    arg.setDefaultValue(false)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_airflow_defect_ratio', false)
-    arg.setDisplayName('Cooling System: Airflow Defect Ratio')
-    arg.setDescription("The airflow defect ratio, defined as (InstalledAirflow - DesignAirflow) / DesignAirflow, of the cooling system per ANSI/RESNET/ACCA Standard 310. A value of zero means no airflow defect. Applies only to #{HPXML::HVACTypeCentralAirConditioner} and ducted #{HPXML::HVACTypeMiniSplitAirConditioner}. If not provided, assumes no defect.")
-    arg.setUnits('Frac')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_charge_defect_ratio', false)
-    arg.setDisplayName('Cooling System: Charge Defect Ratio')
-    arg.setDescription("The refrigerant charge defect ratio, defined as (InstalledCharge - DesignCharge) / DesignCharge, of the cooling system per ANSI/RESNET/ACCA Standard 310. A value of zero means no refrigerant charge defect. Applies only to #{HPXML::HVACTypeCentralAirConditioner} and #{HPXML::HVACTypeMiniSplitAirConditioner}. If not provided, assumes no defect.")
-    arg.setUnits('Frac')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_crankcase_heater_watts', false)
-    arg.setDisplayName('Cooling System: Crankcase Heater Power Watts')
-    arg.setDescription("Cooling system crankcase heater power consumption in Watts. Applies only to #{HPXML::HVACTypeCentralAirConditioner}, #{HPXML::HVACTypeRoomAirConditioner}, #{HPXML::HVACTypePTAC} and #{HPXML::HVACTypeMiniSplitAirConditioner}. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#central-air-conditioner'>Central Air Conditioner</a>, <a href='#{docs_base_url}#room-air-conditioner'>Room Air Conditioner</a>, <a href='#{docs_base_url}#packaged-terminal-air-conditioner'>Packaged Terminal Air Conditioner</a>, <a href='#{docs_base_url}#mini-split-air-conditioner'>Mini-Split Air Conditioner</a>) is used.")
-    arg.setUnits('W')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('cooling_system_integrated_heating_system_fuel', heating_system_fuel_choices, false)
-    arg.setDisplayName('Cooling System: Integrated Heating System Fuel Type')
-    arg.setDescription("The fuel type of the heating system integrated into cooling system. Only used for #{HPXML::HVACTypePTAC} and #{HPXML::HVACTypeRoomAirConditioner}.")
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_integrated_heating_system_efficiency_percent', false)
-    arg.setDisplayName('Cooling System: Integrated Heating System Efficiency')
-    arg.setUnits('Frac')
-    arg.setDescription("The rated heating efficiency value of the heating system integrated into cooling system. Only used for #{HPXML::HVACTypePTAC} and #{HPXML::HVACTypeRoomAirConditioner}.")
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_integrated_heating_system_capacity', false)
@@ -3705,7 +3645,11 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   def argument_errors(args)
     errors = []
 
+    get_option_properties(args, 'roof_material.tsv', args[:enclosure_roof_material])
+    # TODO: uncomment
+    # get_option_properties(args, 'wall_siding.tsv', args[:enclosure_wall_siding])
     get_option_properties(args, 'heating_system.tsv', args[:heating_system])
+    get_option_properties(args, 'cooling_system.tsv', args[:cooling_system])
 
     error = (args[:heating_system_type] != Constants::None) && (args[:heat_pump_type] != Constants::None) && (args[:heating_system_fraction_heat_load_served] > 0) && (args[:heat_pump_fraction_heat_load_served] > 0)
     errors << 'Multiple central heating systems are not currently supported.' if error
@@ -3744,7 +3688,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     error = (args[:geometry_unit_num_floors_above_grade] == 1 && args[:geometry_attic_type] == HPXML::AtticTypeConditioned)
     errors << 'Units with a conditioned attic must have at least two above-grade floors.' if error
 
-    error = ((args[:water_heater_type] == HPXML::WaterHeaterTypeCombiStorage) || (args[:water_heater_type] == HPXML::WaterHeaterTypeCombiTankless)) && (args[:heating_system_type] != HPXML::HVACTypeBoiler)
+    error = [HPXML::WaterHeaterTypeCombiStorage, HPXML::WaterHeaterTypeCombiTankless].include?(args[:water_heater_type]) && !args[:heating_system_type].include?(HPXML::HVACTypeBoiler)
     errors << 'Must specify a boiler when modeling an indirect water heater type.' if error
 
     error = [HPXML::ResidentialTypeSFD].include?(args[:geometry_unit_type]) && args[:heating_system_type].include?('Shared')
@@ -4899,8 +4843,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
         azimuth = Geometry.get_surface_azimuth(surface, args[:geometry_unit_orientation])
       end
 
-      get_option_properties(args, 'roof_material.tsv', args[:enclosure_roof_material])
-
       hpxml_bldg.roofs.add(id: "Roof#{hpxml_bldg.roofs.size + 1}",
                            interior_adjacent_to: Geometry.get_surface_adjacent_to(surface),
                            azimuth: azimuth,
@@ -4958,9 +4900,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
           exterior_adjacent_to = Geometry.get_surface_adjacent_to(adjacent_surface)
         end
       end
-
-      # TODO: wall color + wall siding type --> enclosure_wall_siding
-      # get_option_properties(args, 'wall_siding.tsv', args[:enclosure_wall_siding])
 
       if exterior_adjacent_to == HPXML::LocationOutside
         siding = args[:wall_siding_type]
@@ -5032,9 +4971,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       if attic_locations.include? interior_adjacent_to
         wall_type = HPXML::WallTypeWoodStud
       end
-
-      # wall color + wall siding type --> enclosure_wall_siding
-      # get_option_properties(args, 'wall_siding.tsv', args[:enclosure_wall_siding])
 
       if exterior_adjacent_to == HPXML::LocationOutside && (not args[:wall_siding_type].nil?)
         if (attic_locations.include? interior_adjacent_to) && (args[:wall_siding_type] == HPXML::SidingTypeNone)

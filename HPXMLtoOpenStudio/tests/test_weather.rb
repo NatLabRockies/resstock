@@ -74,6 +74,53 @@ class HPXMLtoOpenStudioWeatherTest < Minitest::Test
     assert_equal(0, runner.result.stepWarnings.size)
   end
 
+  def test_miami
+    runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+    weather = WeatherFile.new(epw_path: File.join(weather_dir, 'USA_FL_Miami.Intl.AP.722020_TMY3.epw'), runner: runner)
+
+    # Check data
+    assert_in_delta(76.1, weather.data.AnnualAvgDrybulb, 0.1)
+    assert_in_delta(76.1, weather.data.ShallowGroundAnnualTemp, 0.1)
+    assert_in_delta(77.2, weather.data.DeepGroundAnnualTemp, 0.1)
+    assert_in_delta(82.1, weather.data.MainsAnnualTemp, 0.1)
+    assert_in_delta(9531.0, weather.data.CDD50F, 0.1)
+    assert_in_delta(4195.7, weather.data.CDD65F, 0.1)
+    assert_in_delta(0.0, weather.data.HDD50F, 0.1)
+    assert_in_delta(139.7, weather.data.HDD65F, 0.1)
+    assert_equal(0.41, weather.data.WSF)
+    [67.0, 69.6, 70.8, 75.4, 79.5, 81.8, 82.6, 82.4, 81.5, 79.4, 74.5, 68.5].each_with_index do |monthly_temp, i|
+      assert_in_delta(monthly_temp, weather.data.MonthlyAvgDrybulbs[i], 0.1)
+    end
+    [74.5, 77.7, 77.3, 81.7, 86.0, 87.0, 90.4, 88.5, 87.9, 85.9, 80.0, 75.4].each_with_index do |monthly_temp, i|
+      assert_in_delta(monthly_temp, weather.data.MonthlyAvgDailyHighDrybulbs[i], 0.1)
+    end
+    [59.8, 61.7, 64.2, 69.7, 74.2, 76.7, 76.3, 77.1, 75.8, 74.0, 67.9, 61.8].each_with_index do |monthly_temp, i|
+      assert_in_delta(monthly_temp, weather.data.MonthlyAvgDailyLowDrybulbs[i], 0.1)
+    end
+    [73.5, 72.3, 72.2, 72.8, 75.1, 77.3, 79.3, 80.6, 80.7, 79.6, 77.7, 75.5].each_with_index do |monthly_temp, i|
+      assert_in_delta(monthly_temp, weather.data.ShallowGroundMonthlyTemps[i], 0.1)
+    end
+    [76.5, 77.1, 79.0, 81.7, 84.5, 86.7, 87.7, 87.3, 85.5, 82.8, 79.9, 77.6].each_with_index do |monthly_temp, i|
+      assert_in_delta(monthly_temp, weather.data.MainsMonthlyTemps[i], 0.1)
+    end
+
+    # Check design
+    assert_in_delta(51.6, weather.design.HeatingDrybulb, 0.1)
+    assert_in_delta(90.7, weather.design.CoolingDrybulb, 0.1)
+    assert_in_delta(0.0173, weather.design.CoolingHumidityRatio, 0.0001)
+    assert_in_delta(12.1, weather.design.DailyTemperatureRange, 0.1)
+
+    # Check ground temps
+    assert_equal(UnitConversions.convert(4.3, 'deltac', 'deltaf'), weather.data.DeepGroundSurfTempAmp1)
+    assert_equal(UnitConversions.convert(0.7, 'deltac', 'deltaf'), weather.data.DeepGroundSurfTempAmp2)
+    assert_equal(30, weather.data.DeepGroundPhaseShiftTempAmp1)
+    assert_equal(12, weather.data.DeepGroundPhaseShiftTempAmp2)
+
+    # Check runner
+    assert_equal(0, runner.result.stepErrors.size)
+    assert_equal(0, runner.result.stepWarnings.size)
+  end
+
   def test_honolulu
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     weather = WeatherFile.new(epw_path: File.join(weather_dir, 'USA_HI_Honolulu.Intl.AP.911820_TMY3.epw'), runner: runner)
@@ -181,7 +228,7 @@ class HPXMLtoOpenStudioWeatherTest < Minitest::Test
     assert_in_delta(609.1, weather.data.CDD65F, 0.1)
     assert_in_delta(2863.0, weather.data.HDD50F, 0.1)
     assert_in_delta(6328.3, weather.data.HDD65F, 0.1)
-    assert_equal(0.53, weather.data.WSF)
+    assert_equal(0.58, weather.data.WSF)
     [30.8, 26.4, 43.0, 49.4, 56.8, 71.1, 71.2, 70.4, 60.8, 45.3, 39.6, 27.0].each_with_index do |monthly_temp, i|
       assert_in_delta(monthly_temp, weather.data.MonthlyAvgDrybulbs[i], 0.1)
     end

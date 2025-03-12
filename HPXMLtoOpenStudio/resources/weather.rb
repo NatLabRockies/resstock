@@ -191,11 +191,27 @@ class WeatherFile
   end
 
   # Calculates the ASHRAE 62.2 Weather and Shielding Factor (WSF) value per report
-  # LBNL-5795E "Infiltration as Ventilation: Weather-Induced Dilution".
+  # LBNL-5795E "Infiltration as Ventilation: Weather-Induced Dilution" if the value is
+  # not available in the ashrae622_wsf.csv resource file.
   #
   # @param rowdata [Array<Hash>] Weather data for each EPW record
   # @return [Double] WSF value
   def calc_ashrae_622_wsf(rowdata)
+    # First look in CSV
+    wsf = nil
+    csv_path = File.join(File.dirname(__FILE__), 'data', 'ashrae622_wsf.csv')
+    File.readlines(csv_path).each do |row|
+      row = row.split(',')
+      next if row[0] != header.WMONumber
+
+      wsf = Float(row[1])
+    end
+    if not wsf.nil?
+      return wsf.round(2)
+    end
+
+    # If not found, calculate from weather data
+
     # Constants
     c_d = 1.0       # discharge coefficient for ELA (at 4 Pa) (unitless)
     t_indoor = 22.0 # indoor setpoint year-round (C)

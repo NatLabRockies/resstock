@@ -1921,13 +1921,13 @@ module Defaults
     hpxml_bldg.cooling_systems.each do |cooling_system|
       next unless cooling_system.compressor_type.nil?
 
-      cooling_system.compressor_type = get_hvac_compressor_type(cooling_system.cooling_system_type, cooling_system.cooling_efficiency_seer)
+      cooling_system.compressor_type = get_hvac_compressor_type(cooling_system.cooling_system_type)
       cooling_system.compressor_type_isdefaulted = true
     end
     hpxml_bldg.heat_pumps.each do |heat_pump|
       next unless heat_pump.compressor_type.nil?
 
-      heat_pump.compressor_type = get_hvac_compressor_type(heat_pump.heat_pump_type, heat_pump.cooling_efficiency_seer)
+      heat_pump.compressor_type = get_hvac_compressor_type(heat_pump.heat_pump_type)
       heat_pump.compressor_type_isdefaulted = true
     end
 
@@ -4496,7 +4496,7 @@ module Defaults
 
     if $weather_lookup_cache[:csv_data].nil?
       # Note: We don't use the CSV library here because it's slow for large files
-      $weather_lookup_cache[:csv_data] = File.readlines(zipcode_csv_filepath).map(&:strip)
+      $weather_lookup_cache[:csv_data] = File.readlines(zipcode_csv_filepath).map { |r| r.strip.split(',') }
     end
 
     return $weather_lookup_cache[:csv_data]
@@ -4527,13 +4527,11 @@ module Defaults
     col_names = nil
     zip_csv_data.each_with_index do |row, i|
       if i == 0 # header
-        col_names = row.split(',').map { |x| x.to_sym }
+        col_names = row.map { |x| x.to_sym }
         next
       end
-      next if row.nil?
-      next unless row.start_with?(zipcode3) # Only allow match if first 3 digits are the same
-
-      row = row.split(',')
+      next if row.nil? || row.empty?
+      next unless row[0].start_with?(zipcode3) # Only allow match if first 3 digits are the same
 
       if row[0].size != 5
         fail "Zip code '#{row[0]}' in zipcode_weather_stations.csv does not have 5 digits."
@@ -4578,13 +4576,11 @@ module Defaults
     wmo_idx = nil
     zip_csv_data.each_with_index do |row, i|
       if i == 0 # header
-        col_names = row.split(',').map { |x| x.to_sym }
+        col_names = row.map { |x| x.to_sym }
         wmo_idx = col_names.index(:station_wmo)
         next
       end
-      next if row.nil?
-
-      row = row.split(',')
+      next if row.nil? || row.empty?
 
       next unless row[wmo_idx] == wmo
 
@@ -5450,22 +5446,9 @@ module Defaults
   # Gets the default compressor type for a HVAC system.
   #
   # @param hvac_type [String] The type of cooling system or heat pump (HPXML::HVACTypeXXX)
-  # @param seer [Double] Cooling efficiency
   # @return [String] Compressor type (HPXML::HVACCompressorTypeXXX)
-  def self.get_hvac_compressor_type(hvac_type, seer)
+  def self.get_hvac_compressor_type(hvac_type)
     case hvac_type
-    when HPXML::HVACTypeCentralAirConditioner,
-         HPXML::HVACTypeHeatPumpAirToAir
-      if seer <= 15
-        return HPXML::HVACCompressorTypeSingleStage
-      elsif seer <= 21
-        return HPXML::HVACCompressorTypeTwoStage
-      elsif seer > 21
-        return HPXML::HVACCompressorTypeVariableSpeed
-      end
-    when HPXML::HVACTypeMiniSplitAirConditioner,
-         HPXML::HVACTypeHeatPumpMiniSplit
-      return HPXML::HVACCompressorTypeVariableSpeed
     when HPXML::HVACTypePTAC,
          HPXML::HVACTypeHeatPumpPTHP,
          HPXML::HVACTypeHeatPumpRoom,
