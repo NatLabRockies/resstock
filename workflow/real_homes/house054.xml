@@ -415,6 +415,7 @@
               <HeatPumpFuel>electricity</HeatPumpFuel>
               <HeatingCapacity>30000.0</HeatingCapacity>
               <CoolingCapacity>30000.0</CoolingCapacity>
+              <CompressorType>single stage</CompressorType>
               <FractionHeatLoadServed>0.75</FractionHeatLoadServed>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
