@@ -7,6 +7,24 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: workflow, feature, outputs
+        :pullreq: 1359
+
+        **Date**: 2025-03-13
+
+        Title:
+        Latest OS-HPXML
+
+        Description:
+        Pulls in the ability to do electric panel NEC calculations.
+        Update AC/ASHP/MSHP options in lookup since CompressorType is now required for central and mini-split air conditioners and heat pumps.
+
+        OpenStudio-HPXML: `pull request 1946 <https://github.com/NREL/OpenStudio-HPXML/pull/1946>`_, `pull request 1949 <https://github.com/NREL/OpenStudio-HPXML/pull/1949>`_
+
+        Assignees: Joe Robertson, Scott Horowitz
+
+
+    .. change::
         :tags: characteristics, feature, docs, technical reference guide, outputs
         :pullreq: 1299
 
