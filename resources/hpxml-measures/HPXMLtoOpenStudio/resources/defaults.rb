@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-$zip_csv_data = nil
+$weather_lookup_cache = {}
 
 # Collection of methods related to defaulting optional inputs in the HPXML
 # that were not provided.
@@ -935,7 +935,7 @@ module Defaults
   def self.apply_climate_and_risk_zones(hpxml_bldg, weather, unit_num)
     if (not weather.nil?) && hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.empty?
       weather_data = lookup_weather_data_from_wmo(weather.header.WMONumber)
-      if not weather_data.nil?
+      if not weather_data.empty?
         hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.add(zone: weather_data[:zipcode_iecc_zone],
                                                                  year: 2006,
                                                                  zone_isdefaulted: true,
@@ -4494,12 +4494,12 @@ module Defaults
   def self.get_weather_station_csv_data
     zipcode_csv_filepath = File.join(File.dirname(__FILE__), 'data', 'zipcode_weather_stations.csv')
 
-    if $zip_csv_data.nil?
+    if $weather_lookup_cache[:csv_data].nil?
       # Note: We don't use the CSV library here because it's slow for large files
-      $zip_csv_data = File.readlines(zipcode_csv_filepath).map(&:strip)
+      $weather_lookup_cache[:csv_data] = File.readlines(zipcode_csv_filepath).map { |r| r.strip.split(',') }
     end
 
-    return $zip_csv_data
+    return $weather_lookup_cache[:csv_data]
   end
 
   # Gets the default TMY3 EPW weather station for the specified zipcode. If the exact
@@ -4508,6 +4508,11 @@ module Defaults
   # @param zipcode [String] Zipcode of interest
   # @return [Hash] Mapping with keys for every column name in zipcode_weather_stations.csv
   def self.lookup_weather_data_from_zipcode(zipcode)
+    if not $weather_lookup_cache["zipcode_#{zipcode}"].nil?
+      # Use cache
+      return $weather_lookup_cache["zipcode_#{zipcode}"]
+    end
+
     begin
       zipcode3 = zipcode[0, 3]
       zipcode_int = Integer(Float(zipcode[0, 5])) # Convert to 5-digit integer
@@ -4522,13 +4527,11 @@ module Defaults
     col_names = nil
     zip_csv_data.each_with_index do |row, i|
       if i == 0 # header
-        col_names = row.split(',').map { |x| x.to_sym }
+        col_names = row.map { |x| x.to_sym }
         next
       end
-      next if row.nil?
-      next unless row.start_with?(zipcode3) # Only allow match if first 3 digits are the same
-
-      row = row.split(',')
+      next if row.nil? || row.empty?
+      next unless row[0].start_with?(zipcode3) # Only allow match if first 3 digits are the same
 
       if row[0].size != 5
         fail "Zip code '#{row[0]}' in zipcode_weather_stations.csv does not have 5 digits."
@@ -4542,15 +4545,17 @@ module Defaults
           weather_station[col_name] = row[j]
         end
       end
-      if distance == 0
-        return weather_station # Exact match
-      end
+      next unless distance == 0
+
+      $weather_lookup_cache["zipcode_#{zipcode}"] = weather_station
+      return weather_station # Exact match
     end
 
     if weather_station.empty?
       fail "Zip code '#{zipcode}' could not be found in zipcode_weather_stations.csv"
     end
 
+    $weather_lookup_cache["zipcode_#{zipcode}"] = weather_station
     return weather_station
   end
 
@@ -4559,30 +4564,34 @@ module Defaults
   # @param wmo [String] Weather station World Meteorological Organization (WMO) number
   # @return [Hash or nil] Mapping with keys for every column name in zipcode_weather_stations.csv if WMO is found, otherwise nil
   def self.lookup_weather_data_from_wmo(wmo)
+    if not $weather_lookup_cache["wmo_#{wmo}"].nil?
+      # Use cache
+      return $weather_lookup_cache["wmo_#{wmo}"]
+    end
+
     zip_csv_data = get_weather_station_csv_data()
 
+    weather_station = {}
     col_names = nil
     wmo_idx = nil
     zip_csv_data.each_with_index do |row, i|
       if i == 0 # header
-        col_names = row.split(',').map { |x| x.to_sym }
+        col_names = row.map { |x| x.to_sym }
         wmo_idx = col_names.index(:station_wmo)
         next
       end
-      next if row.nil?
-
-      row = row.split(',')
+      next if row.nil? || row.empty?
 
       next unless row[wmo_idx] == wmo
 
-      weather_station = {}
       col_names.each_with_index do |col_name, j|
         weather_station[col_name] = row[j]
       end
-      return weather_station
+      break
     end
 
-    return
+    $weather_lookup_cache["wmo_#{wmo}"] = weather_station
+    return weather_station
   end
 
   # Gets the default number of bathrooms in the dwelling unit.

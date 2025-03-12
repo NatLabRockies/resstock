@@ -54,7 +54,7 @@
         <extension>
           <AdditionalProperties>
             <HeatPump>YORK HMH7</HeatPump>
-            <HeatPumpAHRICert>208613158</HeatPumpAHRICert>
+            <HeatPumpAHRICert>206921308</HeatPumpAHRICert>
           </AdditionalProperties>
         </extension>
       </BuildingSummary>
@@ -335,17 +335,17 @@
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
                 <Units>SEER</Units>
-                <Value>17.25</Value>
+                <Value>17.5</Value>
               </AnnualCoolingEfficiency>
               <SensibleHeatFraction>0.78</SensibleHeatFraction>
               <CoolingDetailedPerformanceData>
                 <PerformanceDataPoint>
                   <OutdoorTemperature>95.0</OutdoorTemperature>
-                  <Capacity>11700.0</Capacity>
+                  <Capacity>11900.0</Capacity>
                   <CapacityDescription>minimum</CapacityDescription>
                   <Efficiency>
                     <Units>COP</Units>
-                    <Value>4.57</Value>
+                    <Value>4.47</Value>
                   </Efficiency>
                 </PerformanceDataPoint>
                 <PerformanceDataPoint>
@@ -354,25 +354,25 @@
                   <CapacityDescription>maximum</CapacityDescription>
                   <Efficiency>
                     <Units>COP</Units>
-                    <Value>2.71</Value>
+                    <Value>2.64</Value>
                   </Efficiency>
                 </PerformanceDataPoint>
                 <PerformanceDataPoint>
                   <OutdoorTemperature>82.0</OutdoorTemperature>
-                  <Capacity>13200.0</Capacity>
+                  <Capacity>13400.0</Capacity>
                   <CapacityDescription>minimum</CapacityDescription>
                   <Efficiency>
                     <Units>COP</Units>
-                    <Value>6.34</Value>
+                    <Value>6.33</Value>
                   </Efficiency>
                 </PerformanceDataPoint>
                 <PerformanceDataPoint>
                   <OutdoorTemperature>82.0</OutdoorTemperature>
-                  <Capacity>40000.0</Capacity>
+                  <Capacity>40500.0</Capacity>
                   <CapacityDescription>maximum</CapacityDescription>
                   <Efficiency>
                     <Units>COP</Units>
-                    <Value>3.53</Value>
+                    <Value>3.46</Value>
                   </Efficiency>
                 </PerformanceDataPoint>
               </CoolingDetailedPerformanceData>
