@@ -154,7 +154,7 @@ Outside & other exterior \\
 Unheated Basement & basement---unconditioned \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_loc}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_loc}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.9cm}|p{3.5cm}|} \caption{The ResStock argument definitions set in the Water Heater Location characteristic} \label{table:hc_arg_def_water_heater_loc}  \\
 \toprule\noalign{}
@@ -240,16 +240,17 @@ The efficiency and type of the water heater by heating fuel.
 Water Heater Efficiency options define the technical details of the standalone water heaters, from fuel type to the presence of flue (Table \ref{table:hc_opt_water_heater_eff}).  The following arguments are constant across the options:
 
 \begin{itemize}
-    \item \texttt{water\_heater\_usage\_bin}: auto
-    \item \texttt{water\_heater\_heating\_capacity}: auto
-    \item \texttt{water\_heater\_standby\_loss}: 0
-    \item \texttt{water\_heater\_jacket\_rvalue}: 0
-    \item \texttt{water\_heater\_setpoint\_temperature}: 125
-    \item \texttt{water\_heater\_num\_bedrooms\_served}: auto
-    \item \texttt{water\_heater\_uses\_desuperheater}: auto
-    \item \texttt{water\_heater\_tank\_model\_type}: auto
-    \item \texttt{water\_heater\_operating\_mode}: auto
+    \item \texttt{water\_heater\_backup\_heating\_capacity}: auto
     \item \texttt{water\_heater\_has\_flue\_or\_chimney}: auto.
+    \item \texttt{water\_heater\_heating\_capacity}: auto
+    \item \texttt{water\_heater\_jacket\_rvalue}: 0
+    \item \texttt{water\_heater\_num\_bedrooms\_served}: auto
+    \item \texttt{water\_heater\_operating\_mode}: auto
+    \item \texttt{water\_heater\_setpoint\_temperature}: 125
+    \item \texttt{water\_heater\_standby\_loss}: 0
+    \item \texttt{water\_heater\_tank\_model\_type}: auto
+    \item \texttt{water\_heater\_usage\_bin}: auto
+    \item \texttt{water\_heater\_uses\_desuperheater}: auto
 \end{itemize}
 
 For heat pump water heaters the \texttt{water\_heater\_efficiency\_type} UniformEnergyFactor is used for heat pump water heaters; EnergyFactor is currently used for all other water heaters.
@@ -285,7 +286,7 @@ Propane Standard & storage water heater & propane & auto & 0.59 & 0.76 \\ \hline
 Propane Tankless & instantaneous water heater & propane & 0 & 0.82 & 0 \\
 \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_eff}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_eff}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{2.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4.5cm}|} {The ResStock argument definitions set in the Water Heater Efficiency characteristic} {table:hc_arg_def_water_heater_eff}  
 {Name & Required & Units & Type & Choices & Description} 
@@ -300,9 +301,10 @@ natural gas, fuel oil, propane, wood, coal & The fuel type of water
 heater. Ignored for heat pump water heater. \\
 \hline
 \texttt{water\_heater\_tank\_volume} & false & gal & Double & auto &
-Nominal volume of water heater tank. Only applies to storage water
-heater, heat pump water heater, and space-heating boiler with storage
-tank.\\
+Nominal volume of water heater tank. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#conventional-storage}{Conventional Storage}, \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#heat-pump}{Heat Pump} is used.) \\
+\hline
+\texttt{water\_backup\_heaing\_efficiency} & false & Btu/hr & Double &
+auto & Backup heating capacity for a heat pump water heater. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#heat-pump}{Heat Pump}.)\\
 \hline
 \texttt{water\_heater\_efficiency\_type} & true & & Choice &
 EnergyFactor, UniformEnergyFactor & The efficiency type of water heater.
@@ -323,7 +325,7 @@ of the fuel consumed by the water heater. Only used for non-electric
 storage water heaters.  \\
 \hline
 \texttt{water\_heater\_heating\_capacity} & false & Btu/hr & Double &
-auto & Heating capacity. Only applies to storage water heater.  \\
+auto & Heating capacity. Only applies to storage water heater and heat pump water heater (compressor). If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#conventional-storage}{Conventional Storage}, \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#heat-pump}{Heat Pump} is used.) \\
 \hline
 \texttt{water\_heater\_standby\_loss} & false & deg-F/hr & Double & auto
 & The standby loss of water heater. Only applies to space-heating
@@ -406,7 +408,7 @@ Presence, size, orientation, and location of solar hot water system.
 No dependency.
 
 \paragraph{Options}
-The only option is ``None,'' which means no Solar Hot Water systems are modeled in the ResStock baseline. For the argument definitions, see Table \ref{table:hc_arg_def_solar_hot_water}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
+The only option is ``None,'' which means no Solar Hot Water systems are modeled in the ResStock baseline. For the argument definitions, see Table \ref{table:hc_arg_def_solar_hot_water}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{2.9cm}|p{4cm}|} {The ResStock argument definitions set in the Solar Hot Water characteristic} {table:hc_arg_def_solar_hot_water} 
 {Name & Required & Units & Type & Choices & Description} 
@@ -455,7 +457,7 @@ No assumptions are made.
 
 % ##################
 \subsection{Hot Water Distribution}
-ResStock follows the OpenStudio-HPXML default assumptions when modeling hot water distribution, see the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation. Pipes are not explicitly modeled for any distribution systems, and correlations are instead used for determining the amount of hot water waste and heat gains in the living space depending on  the hot water distribution system type and insulation. For a recirculation distribution system, the pipe length is calculated differently and additional inputs (e.g., power rating, control type) are used to specify the recirculation pump and pipe loop length. While recirculation options are available, all housing units in the baseline are assumed to have uninsulated trunk and branch hot water distribution system with copper pipes and without recirculation or drain water heat recovery. The inputs are captured in a single housing characteristic Hot Water Distribution.
+ResStock follows the OpenStudio-HPXML default assumptions when modeling hot water distribution, see the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation. Pipes are not explicitly modeled for any distribution systems, and correlations are instead used for determining the amount of hot water waste and heat gains in the living space depending on  the hot water distribution system type and insulation. For a recirculation distribution system, the pipe length is calculated differently and additional inputs (e.g., power rating, control type) are used to specify the recirculation pump and pipe loop length. While recirculation options are available, all housing units in the baseline are assumed to have uninsulated trunk and branch hot water distribution system with copper pipes and without recirculation or drain water heat recovery. The inputs are captured in a single housing characteristic Hot Water Distribution.
 
 \subsubsection{Hot Water Distribution}\label{hot_water_distribution}
 \paragraph{Description}
@@ -481,7 +483,7 @@ For the ResStock baseline baseline, all Hot Water Distribution is assumed to be 
     \item \texttt{dwhr\_efficiency} = 0.0.
 \end{itemize}
 
-For retrofit upgrades, other options are available and can be defined using the following arguments. For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_dist}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation for the available HPXML schema elements, default values, and constraints.
+For retrofit upgrades, other options are available and can be defined using the following arguments. For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_dist}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.9cm}|p{5cm}|} {The ResStock argument definitions set in the Hot Water Distribution characteristic} {table:hc_arg_def_hot_water_dist} 
 {Name & Required & Units & Type & Choices & Description} 
@@ -505,7 +507,7 @@ of the recirculation piping.  \\
 false & ft & Double & auto & If the distribution system is
 Recirculation, the length of the recirculation branch piping. If not
 provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#recirculation-in-unit}{Recirculation
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#recirculation-in-unit}{Recirculation
 (In-Unit)}) is used. \\
 \hline
 \texttt{hot\_water\_distribution\_recirc\_pump\_power} & false & W &
@@ -555,10 +557,10 @@ Hot water fixture usage and flow levels.
 \end{itemize}
 
 \paragraph{Options}
-The Hot Water Fixtures options are usage bins ranging from ``40\% Usage'' to ``200\% Usage'' at 10\% increments. For the ResStock baseline, the options are log-normally distributed between 40\% and 200\%, with the peak at 80\%. All options have both \texttt{water\_fixtures\_shower\_low\_flow} and
+The Hot Water Fixtures options are usage bins ranging from ``50\% Usage'' to ``200\% Usage'' at 10\% increments. For the ResStock baseline, the options are log-normally distributed between 40\% and 200\%, with the peak at 80\%. All options have both \texttt{water\_fixtures\_shower\_low\_flow} and
 \texttt{water\_fixtures\_sink\_low\_flow} set to false. \texttt{water\_fixtures\_usage\_multiplier} is set according to their option names.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_fix}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-water-fixtures}{Water Fixtures} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_fix}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-fixtures}{Water Fixtures} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.9cm}|p{5cm}|} \caption{The ResStock argument definitions set in the Hot Water Fixtures characteristic} \label{table:hc_arg_def_hot_water_fix} \\
 \toprule\noalign{}
@@ -584,12 +586,11 @@ occupants. \\
   A log-normal distribution was shown to match the distribution of annual
   energy consumption.
 \item
-  For the log-normal distribution, the average multiplier is 0.8 and the
-  standard deviation is 0.2.
+  The data shows appoximately a log-normal distribution. From the data, the average multiplier is 0.8 and the
+  standard deviation is 0.2. The average multiplier was mean-shifted from 0.8 to 1 average usage.
 \item
   Low, Medium, and High usage is assigned based on the lower 25th
-  percent, middle 50th percent, and upper 25th percent. The bins do not
-  align perfectly with these bins so the lower users are a total of 25\%, the medium users are 47\%, and the high users are 28\% of the stock.
+  percent, middle 50th percent, and upper 25th percent.
 \end{itemize}
 
 
@@ -664,7 +665,7 @@ EF 21.9 & true &  348 \\
 None & false &  0 \\
 \end{longtable}
 
-For the argument definitions, see \ref{table:hc_arg_def_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see \ref{table:hc_arg_def_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -677,7 +678,7 @@ space, basement---conditioned, basement---unconditioned, garage, other
 housing unit, other heated space, other multifamily buffer space, other
 non-freezing space & The space type for the refrigerator location. If
 not provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-refrigerators}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-refrigerators}{HPXML
 Refrigerators}) is used. \\
 \hline
 \texttt{refrigerator\_rated\_annual\_kwh} & false & kWh/yr & Double &
@@ -735,7 +736,7 @@ Option name &
 105\% Usage & 1.05 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_refrigerator_usage_level}. %See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_refrigerator_usage_level}. %See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 %arguments table
 \begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
 \caption{The ResStock argument definitions set in the Refrigerator Usage Level characteristic} \label{table:hc_arg_def_refrigerator_usage_level}\\
@@ -798,7 +799,7 @@ EF 21.9 & true & 348  \\
 None & false  & 0  \\
 \end{longtable}
 
-For the argument definitions, see \ref{table:hc_arg_def_misc_extra_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see \ref{table:hc_arg_def_misc_extra_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -882,7 +883,7 @@ EF 12, National Average & true & auto & 935 & 0.342 \\
 None & false & auto & 0 & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_freezer}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-freezers}{OpenStudio-HPXML Freezers} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_misc_freezer}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-freezers}{OpenStudio-HPXML Freezers} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -918,7 +919,7 @@ Due to the low sample count, the input file is constructed with the following co
 
 \subsection{Cooking}
 \subsubsection{Modeling Approach}
-ResStock models all cooking units as ranges with an integrated (non-convection) oven located in the conditioned space. Housing units can have no cooking units. The fuel options include electric induction, electric resistance, gas, and propane, although more fuel options are available in OpenStudio-HPXML, see \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-cooking-range-oven}{Cooling Range/Oven}. The annual energy used for cooking is calculated per the Energy Rating Rated Home in ANSI/RESNET/ICC 301-2019 (\cite{ansi_resnet_301_2019}) and is further adjusted by a Cooking Range Usage Level multiplier; see Section \ref{cooking_range_usage_level}. The annual energy is multiplied with a stochastically generated detailed cooking schedule based on ATUS to produce the cooking end-use load profile. See Section \ref{occupancy_model} for details on schedule generation.
+ResStock models all cooking units as ranges with an integrated (non-convection) oven located in the conditioned space. Housing units can have no cooking units. The fuel options include electric induction, electric resistance, gas, and propane, although more fuel options are available in OpenStudio-HPXML, see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooking-range-oven}{Cooling Range/Oven}. The annual energy used for cooking is calculated per the Energy Rating Rated Home in ANSI/RESNET/ICC 301-2019 (\cite{ansi_resnet_301_2019}) and is further adjusted by a Cooking Range Usage Level multiplier; see Section \ref{cooking_range_usage_level}. The annual energy is multiplied with a stochastically generated detailed cooking schedule based on ATUS to produce the cooking end-use load profile. See Section \ref{occupancy_model} for details on schedule generation.
 
 ResStock also models the use of a range hood for cooking. However, the range hood operation does not use the cooking schedule. Instead, the range operates for one hour every day with a starting hour sampled by the Range Spot Vent Hour characteristic distribution; see Section \ref{range_spot_vent_hour}.
 
@@ -961,7 +962,7 @@ Gas & true & natural gas & false \\\hline
 None & false & natural gas & false \\\hline
 Propane & true & propane & false \\
 \end{customLongTable}
-For the argument definitions, see Table \ref{table:hc_arg_def_cooking_range}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-cooking-range-oven}{Cooking Range/Oven} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_cooking_range}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooking-range-oven}{Cooking Range/Oven} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -1045,7 +1046,7 @@ Option name &
 120\% Usage & 1.2 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_cooking_range_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_cooking_range_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 %arguments table
 \begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
 \caption{The ResStock argument definitions set in the Cooking Range characteristic} \label{table:hc_arg_def_cooking_range_usage_level} \\
@@ -1104,7 +1105,7 @@ The ResStock baseline has two dishwasher options, one at 290 rated kWh and one a
 None & 0 & 0 \\
 \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_dishwasher}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-dishwasher}{Dishwasher} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_dishwasher}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-dishwasher}{Dishwasher} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{2.5cm}|p{1.5cm}|p{2.5cm}|p{1.1cm}|p{2.9cm}|p{3cm}| }
@@ -1241,7 +1242,7 @@ None & 0 & 0 & 0 & 0 \\
 Standard &  0.95 & 387 & 24  & 3.5 \\
 \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_clothes washer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-clothes-washer}{Clothes Washer} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_clothes washer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-washer}{Clothes Washer} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -1262,7 +1263,7 @@ auto & The annual energy consumed by the clothes washer, as rated,
 obtained from the EnergyGuide label. This includes both the appliance
 electricity consumption and the energy required for water heating. If
 not provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-clothes-washer}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-clothes-washer}{HPXML
 Clothes Washer}) is used. \\ \hline
 \texttt{clothes\_washer\_label\_electric\_rate} & false & \$/kWh &
 Double & auto & The annual energy consumed by the clothes washer, as
@@ -1274,7 +1275,7 @@ auto & The annual energy consumed by the clothes washer, as rated,
 obtained from the EnergyGuide label. This includes both the appliance
 electricity consumption and the energy required for water heating. If
 not provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-clothes-washer}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-clothes-washer}{HPXML
 Clothes Washer}) is used. \\ \hline
 \texttt{clothes\_washer\_label\_annual\_gas\_cost} & false & \$ & Double
 & auto & The annual cost of using the system under test conditions.
@@ -1482,7 +1483,7 @@ None & false & natural gas & 2.70 \\
 Propane & true & propane & 2.39 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-clothes-dryer}{Clothes Dryer} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-dryer}{Clothes Dryer} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -1566,7 +1567,7 @@ Option name &
 120\% Usage & 1.2 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 %arguments table
 
 \begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -1622,7 +1623,7 @@ Standard Efficiency & auto & 70.4 \\
 Standard Efficiency, No usage & auto & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ceiling_fans}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-ceiling-fans}{Ceiling Fans} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_ceiling_fans}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-ceiling-fans}{Ceiling Fans} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -1633,13 +1634,13 @@ Whether there are any ceiling fans. \\ \hline
 \texttt{ceiling\_fan\_label\_energy\_use} & false & W & Double & auto &
 The label average energy use of the ceiling fan(s). If neither
 Efficiency nor Label Energy Use provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-ceiling-fans}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-ceiling-fans}{HPXML
 Ceiling Fans}) is used. \\ \hline
 \texttt{ceiling\_fan\_efficiency} & false & CFM/W & Double & auto & The
 efficiency rating of the ceiling fan(s) at medium speed. Only used if
 Label Energy Use not provided. If neither Efficiency nor Label Energy
 Use provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-ceiling-fans}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-ceiling-fans}{HPXML
 Ceiling Fans}) is used. \\ \hline
 \texttt{ceiling\_fan\_quantity} & false & \# & Integer & auto & Total
 number of ceiling fans.  \\ \hline
@@ -1691,7 +1692,7 @@ Has Pool & true \\
 None & false \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pool}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-pools}{Pools} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_pool}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-pools}{Pools} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
 \caption{The ResStock argument definitions set in the Misc Pool characteristic} \label{table:hc_arg_def_pool} \\
@@ -1749,6 +1750,7 @@ There are five options for pool heaters: Electricity, Electric Heat Pump, Natura
 \texttt{pool\_heater\_annual\_kwh} &
 \texttt{pool\_heater\_annual\_therm} &
 \texttt{pool\_heater\_usage\_multiplier}} 
+Electric Heat Pump & heat pump & auto & 0 & 1.0 \\
 Electricity & electric resistance & auto & 0 & 1.0 \\
 Electric Heat Pump & heat pump & auto & 0 & 1.0 \\
 Natural Gas & gas fired & 0 & auto & 1.0 \\
@@ -1758,7 +1760,7 @@ Other Fuel & none & 0 & 0 & 0 \\
 
 The ``Other Fuel'' option is assigned the same arguments as ``None,'' and will result in no energy consumption.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pool_heat}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#pool-heater}{Pool Heater} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_pool_heat}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-heater}{Pool Heater} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 \caption{The ResStock argument definitions set in the Pool Heater characteristic} \label{table:hc_arg_def_pool_heat} \\
@@ -1784,7 +1786,9 @@ high/low usage occupants.  \\
 \end{longtable}
 
 \paragraph{Distribution Assumption(s)}
-Within electric pool heaters, the proportion of heat pump electric pool heating versus non-heat pump electric pool heating was derived from RASS.
+\begin{itemize}
+    \item Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.
+\end{itemize}
 
 \subsubsection{Misc Pool Pump}
 \paragraph{Description}
@@ -1813,7 +1817,7 @@ None & 0 & 0 \\
 1.0 HP Pump & auto & 1.0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pool_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#pool-pump}{ Pool Pump} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_pool_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-pump}{ Pool Pump} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 \caption{The ResStock argument definitions set in the Misc Pool Pump characteristic} \label{table:hc_arg_def_pool_pump} \\
@@ -1878,7 +1882,7 @@ None & false & none \\
 Other Fuel & false & none \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hot_tub}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-permanent-spas}{Permanent Spas} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_hot_tub}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-permanent-spas}{Permanent Spas} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 {The ResStock argument definitions set in the Misc Hot Tub Spa characteristic} {table:hc_arg_def_hot_tub} 
@@ -1889,7 +1893,7 @@ Whether there is a permanent spa. \\
 \texttt{permanent\_spa\_pump\_annual\_kwh} & false & kWh/yr & Double &
 auto & The annual energy consumption of the permanent spa pump. If not
 provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#permanent-spa-pump}{Permanent
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#permanent-spa-pump}{Permanent
 Spa Pump}) is used. \\
 \hline
 \texttt{permanent\_spa\_pump\_usage\_multiplier} & false & & Double &
@@ -1947,11 +1951,14 @@ Well pumps are used to extract potable water from a well. The 2017-2019 American
 
 \subsubsection{Misc Well Pump}
 \paragraph{Description}
-Presence and efficiency of well pump.
+Presence of well pump according to the use of well for domestic water source.
 
 \paragraph{Distribution Data Source(s)}
-2017 - 2019 American Housing Survey
 
+\begin{itemize}
+    \item 2017 and 2019 American Housing Survey (AHS) microdata.
+    \item Core Based Statistical Area (CBSA) data based on the Feb 2013 CBSA delineation file.
+\end{itemize}
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
     \item Census Division
@@ -1978,7 +1985,7 @@ Typical Efficiency & true & auto \\
 None & false & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_well_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-misc-loads}{Misc Loads} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_well_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-misc-loads}{Misc Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 \caption{The ResStock argument definitions set in the Misc Well Pump characteristic} \label{table:hc_arg_def_well_pump} \\\toprule\noalign{}
@@ -2004,7 +2011,11 @@ reflect, e.g., high/low usage occupants. \\
 \end{longtable}
 
 \paragraph{Distribution Assumption(s)}
-None.
+\begin{itemize}
+	\item All well pumps are assumed to have typical efficiency.
+	\item Where the number of samples < 10, the Census Division is aggregated up to Census Region.
+	\item AHS has data for buildings up to 7 stories tall. Buildings with 8 or more stories are assumed not to have a well pump.
+\end{itemize}
 
 \subsection{Miscellaneous Gas Uses}
 \subsubsection{Modeling Approach}
@@ -2041,7 +2052,7 @@ Gas Fireplace & true & auto & 1.0 \\
 None & false & 0 & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_gas_fireplace}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hvac-heating-fireplaces}{Fireplace} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_gas_fireplace}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hvac-heating-fireplaces}{Fireplace} documentation for the available HPXML schema elements, default values, and constraints.
 
 
 \begin{customLongTable}{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
@@ -2062,7 +2073,7 @@ fireplace. \\
 Double & auto & Fraction of fireplace residual fuel
 loads' internal gains that are sensible. If not
 provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-fuel-loads}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-fuel-loads}{HPXML
 Fuel Loads}) is used. \\
 \hline
 \texttt{misc\_fuel\_loads\_fireplace\_frac\_latent} & false & Frac &
@@ -2106,7 +2117,7 @@ Gas Grill & true & auto & 1.0 \\
 None & false & 0 & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_gas_grill}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-fuel-loads}{Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_gas_grill}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-fuel-loads}{Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 {The ResStock argument definitions set in the Misc Gas Grill characteristic} {table:hc_arg_def_gas_grill} 
@@ -2189,7 +2200,7 @@ Southwest & 225 \\
 West & 270 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pv_orient}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_pv_orient}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{2.4cm}|p{5.5cm}|}
 {The ResStock argument definitions set in the PV Orientation characteristic} {table:hc_arg_def_pv_orient} 
@@ -2240,7 +2251,7 @@ The following arguments are set to auto: \texttt{pv\_system\_module\_type}, \tex
 None & false & 0 \\
 \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pv_size}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_pv_size}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 {The ResStock argument definitions set in the PV System Size characteristic} {table:hc_arg_def_pv_size} 
@@ -2454,7 +2465,7 @@ Option name & Interior argument & Exterior argument & Garage argument\\
 100\% LED & \textit{lighting\_interior\_fraction\_led} = 1 &\textit{lighting\_exterior\_fraction\_led} = 1 & \textit{lighting\_garage\_fraction\_led} = 1 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{ |p{4.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.5cm}|p{4.4cm}|}
 {The ResStock arguments set in the Lighting characteristic} {table:hc_arg_def_lighting} 
@@ -2552,7 +2563,7 @@ Gas Lighting & 1.2\% & true &  auto & 1.0 \\
 None & 98.8\% & false &  0 & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_gas_light}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-fuel-loads}{Misc Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_misc_gas_light}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-fuel-loads}{Misc Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock arguments set in the Misc Gas Lighting characteristic} \label{table:hc_arg_def_misc_gas_light}  \\
 \toprule\noalign{}
@@ -2603,7 +2614,7 @@ Option name & \texttt{holiday\_lighting\_present} &
 No Exterior Use & false & 0 & auto \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_holiday_light}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#exterior-holiday-lighting}{Exterior Holiday Lighting} documentation for the available HPXML schema elements, default values, and constraints. 
+For the argument definitions, see Table \ref{table:hc_arg_def_holiday_light}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#exterior-holiday-lighting}{Exterior Holiday Lighting} documentation for the available HPXML schema elements, default values, and constraints. 
 
 \begin{customLongTable}{|p{4.0cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{1.5cm}|p{4.cm}|} {The ResStock arguments set in the Holiday Lighting characteristic} {table:hc_arg_def_holiday_light}  
 {Name & Required & Units & Type & Choices & Description} 
@@ -2662,7 +2673,7 @@ None.
 \paragraph{Options}
 All buildings are assigned the option \textit{100\% Usage}, which sets the ResStock arguments \textit{lighting\_exterior\_usage\_multiplier} and \textit{lighting\_garage\_usage\_multiplier}  to 1 (the OS-HPXML default).
 
-For the argument definitions, see Table \ref{table:hc_arg_def_light_oth_use}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints. 
+For the argument definitions, see Table \ref{table:hc_arg_def_light_oth_use}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints. 
 
 \begin{longtable}[]{ |p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|} \caption{The ResStock arguments set in the Lighting Interior Use characteristic} \label{table:hc_arg_def_light_oth_use}  \\
 \toprule\noalign{}
@@ -2763,7 +2774,7 @@ ResStock provides a range of percentages for plug load usage that are multiplier
 166\% & 1.66 &  1.66 \\
 \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_plug_load}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_plug_load}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{1.3cm}|p{3.5cm}|} {The ResStock arguments set in the Plug Loads Use characteristic} {table:hc_arg_def_plug_load} 
 {Name & Required & Units & Type & Choices & Description} 
@@ -2831,7 +2842,7 @@ Option name &
 100\% & 1.0 & 1.0 \\
 200\% & 2.0 & 2.0 \\
 \end{longtable}
-For the argument definitions, see Table \ref{table:hc_arg_def_plug_load_diversity}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_plug_load_diversity}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{4.cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{1.cm}|p{4.cm}|} \caption{The ResStock arguments set in the Plug Load Diversity Use characteristic} \label{table:hc_arg_def_plug_load_diversity}  \\
 \toprule\noalign{}

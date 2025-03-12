@@ -10,8 +10,6 @@ Most national ResStock data releases have approximately one sample for every 250
 Note that ResStock assigns certain characteristics that are not always used. Two examples of this are \textit{cooling setpoint} in housing units with no cooling system, and \textit{clothes washer usage level} in housing units with no clothes washer. This doesn't impact the building energy models, this is merely a mechanism that allows for variability in probability distributions if the schedules are used for an upgrade. These characteristics, however, can lead to confusion because they're preserved in the metadata as being assigned even if they're not modeled. For further discussion see the the BuildStock Batch \href{https://buildstockbatch.readthedocs.io/en/v2023.10.0/project_defn.html#upgrade-scenarios}{Upgrade Scenario} documentation.
 
 
-%%TODO - updated to 2024.2
-
 \begin{customLongTable}{ |p{6cm}|p{9cm}| }
 {ResStock building characteristic output field names and descriptions} {table:hc_output_fields} 
 {\textbf{Field Name} & \textbf{Field Description}} 
@@ -41,6 +39,7 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.cooling\_setpoint\_has\_offset & Presence of cooling setpoint offset \\ \hline
         in.cooling\_setpoint\_offset\_magnitude & The magnitude of cooling setpoint offset \\ \hline
         in.cooling\_setpoint\_offset\_period & The period during which the cooling setpoint offset is applied \\ \hline
+        in.cooling\_unavailable\_days & The number of days in a year the cooling system is unavailable. \\ \hline
         in.corridor & Type of corridor \\ \hline
         in.county & County GISJOIN identifier \\ \hline
         in.county\_and\_puma & The GISJOIN identifier for the County and the PUMA that the sample is located \\ \hline
@@ -89,6 +88,7 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.heating\_setpoint\_has\_offset & Presence of heating setpoint offset \\ \hline
         in.heating\_setpoint\_offset\_magnitude & The magnitude of heating setpoint offset \\ \hline
         in.heating\_setpoint\_offset\_period & The period during which the heating setpoint offset is applied \\ \hline
+        in.heating\_unavailable\_days & The number of days in a year the heating system is unavailable. \\ \hline
         in.holiday\_lighting & Presence, energy usage, and schedule of holiday lighting \\ \hline
         in.hot\_water\_distribution & Hot water piping material and insulation level \\ \hline
         in.hot\_water\_fixtures & Hot water fixture usage and flow levels \\ \hline
@@ -383,6 +383,32 @@ ResStock results can also be used as inputs to calculate utility bills using oth
 Energy burden is calculated as the ratio of two values from ResStock data. The first is the energy bill, which is calculated for each individual housing unit model in an analysis as described in the above section. The second is the representative household income, which is converted from income bin and other household characteristics described in Section \ref{resstock_input_energy_burden}. The energy burden is the energy bill total divided by the representative household income, typically expressed as a percentage. As the utility bill does not account for financial assistance such as LIHEAP, energy burden may be overestimated for low-income households who may qualify for those assistance. Additionally, the representative income is in 2019 USD, reflecting the vintage of PUMS used to derived the data. The dollar value of the utility bill is typically more recent and thus may not align with that of the income denominator.
 
 When this field is available in public datasets, it begins with ``out.energy\_burden.``
+
+\section{Schedules}
+ResStock optionally outputs schedules into the timeseries files. These schedules include energy use schedules as fractions (0-1) and unavailable period schedules from HVAC, power outage, and vacancy periods.
+
+\begin{customLongTable}{ |p{6.cm}|p{1.8cm}|p{8.2cm}| }
+{ResStock schedule output field names, units, and descriptions} {tab:schedule_outputs} 
+{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}} 
+out.schedules\_ceiling\_fan & frac & Ceiling fan energy use schedule. \\ \hline
+out.schedules\_clothes\_dryer & frac & Clothes dryer energy use schedule. \\ \hline
+out.schedules\_clothes\_washer & frac & Clothes washer energy use schedule. \\ \hline
+out.schedules\_cooking\_range & frac & Cooking range and oven energy use schedule. \\ \hline
+out.schedules\_dishwasher & frac & Dishwasher energy use schedule. \\ \hline
+out.schedules\_hot\_water\_clothes\_washer & frac & Clothes washer hot water use schedule. \\ \hline
+out.schedules\_hot\_water\_dishwasher & frac & Dishwasher hot water use schedule. \\ \hline
+out.schedules\_hot\_water\_fixtures & frac & Fixtures (sinks, showers, baths) hot water use schedule. \\ \hline
+out.schedules\_lighting\_garage & frac & Garage lighting energy use schedule. \\ \hline
+out.schedules\_lighting\_interior & frac & Interior lighting energy use schedule. \\ \hline
+out.schedules\_no\_space\_cooling & 0,1 & Cooling unavailable period. \\ \hline
+out.schedules\_no\_space\_heating & 0,1 &  Heating unavailable period. \\ \hline
+out.schedules\_occupants & frac & Occupant heat gain schedule. \\ \hline
+out.schedules\_plug\_loads\_other & frac & Other plug load energy use schedule. \\ \hline
+out.schedules\_plug\_loads\_tv & frac & Television plug load energy use schedule. \\  \hline
+out.schedules\_power\_outage & 0,1 & Power outage unavailable period. \\ \hline
+out.schedules\_vacancy & 0,1 & Vacancy unavailable period. \\
+\end{customLongTable}
+
 \section{Electrical Panels} \label{sec:output_panels}
 For electrical panel, occupied capacity and breaker spaces are tabulated by end use. The total occupied capacity and spaces are calculated as well as their headroom, or the amount of capacity or space left unused.  In public ResStock datasets, these fields are prefixed with ``out.electric\_panel`` and described in \ref{tab:panels}. 
 For capacity, the total occupied load (W) can be calculated using different methods and will be labeled accordingly. In the public datasets, results are available for the 2023 load-based (NEC 220.83) and meter-based (NEC 220.87) methods for existing dwellings. See Section \ref{sec:input_panels} for the method description. The occupied capacity (A) is converted from occupied load (W) by dividing by 240V, the panel voltage, and then subtracted from the input field ``in.electrical\_panel\_service\_rating``'' (A) to get the headroom capacity (A). Users can use the headroom capacity to estimate the number of homes that may require an electrical intervention, such as a panel or service upsizing, for a given upgrade. If the headroom capacity value is negative, then the panel is considered capacity-constrained, and an intervention may be required. If the headroom is positive, no mitigation is necessary. Headroom capacity is also calculated for the baseline and a negative value, while uncommon, can be interpreted as the home already being capacity-constrained prior to any upgrade. This is consistent with anecdotal observations that some homes do in fact trip their breakers often, an indication of a capacity shortfall. However, it's important to interpret any electrical panel outcomes as modeled estimates and that results with negative capacity headroom in the baseline have the same degree of uncertainty as those with positive capacity headroom.  
@@ -426,9 +452,8 @@ For breaker spaces, headroom count is labeled as an output metric but is actuall
                 out.electric\_panel\_breaker\_spaces.other.count & count & Sum of other electric load occupied spaces \\
 \end{customLongTable}
 
-% \section{PRIORITY B Costs?}
 \section{Other Outputs}
-% \ stuff like loads, unmet hours, hot water, etc.
+
 The ResStock workflow can optionally output any variable available in EnergyPlus. We regularly use this capability for a variety of purposes, including modeling improvement and validation, debugging, special purpose variables for specific projects, and additional variables to publish as part of public datasets. 
 
 Table \ref{tab:other_outputs} shows a list of output variables that are not covered in other headings in this section but that we have typically included in many of our recent public datasets, where they begin with ``out.x.''
@@ -436,8 +461,10 @@ Table \ref{tab:other_outputs} shows a list of output variables that are not cove
 \begin{customLongTable}{ |p{6cm}|p{1.5cm}|p{7.5cm}| }
 {Other ResStock results output field names, units, and descriptions} {tab:other_outputs} 
 {\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}} 
+        out.cooling\_unavailable\_period & & Cooling unavailable period. \\ \hline
         out.electricity.summer.peak.kw & kW & Maximum power value in Jun/Jul/Aug \\ \hline
         out.electricity.winter.peak.kw & kW & Maximum power value in Dec/Jan/Feb \\ \hline
+        out.heating\_unavailable\_period & & Heating unavailable period. \\ \hline
         out.hot\_water.clothes\_washer.gal & gal & Hot water consumed by clothes washer \\ \hline
         out.hot\_water.dishwasher.gal & gal & Hot water consumed by dishwasher \\ \hline
         out.hot\_water.distribution\_waste.gal & gal & Hot water consumed by water distribution system (water remaining in the pipe) \\ \hline
