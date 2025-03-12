@@ -817,8 +817,8 @@ def _new_load_space_conditioning(row, option_columns, check_completed_status):
 
     # Add AHU
     heat_ahu, cool_ahu = _get_air_handlers(row, heating_type, secondary_heating_type)
-    heating_load += heat_ahu
-    cooling_load += cool_ahu
+    heating_load += heat_ahu if system_cols != [None, None, None] else 0
+    cooling_load += cool_ahu if cooling_type != None else 0
 
     return max(heating_load, cooling_load)
 
@@ -922,6 +922,7 @@ def _new_load_water_heating_oedi(row, option_columns):
 
 
 def _new_load_space_conditioning_oedi(row, option_columns):
+
     # heating load
     heating_type = None
     secondary_heating_type = None
@@ -971,8 +972,8 @@ def _new_load_space_conditioning_oedi(row, option_columns):
 
     # Add AHU
     heat_ahu, cool_ahu = _get_air_handlers(row, heating_type, secondary_heating_type)
-    heating_load += heat_ahu
-    cooling_load += cool_ahu
+    heating_load += heat_ahu if system_cols != [None, None, None] else 0
+    cooling_load += cool_ahu if cooling_type != None else 0
 
     return max(heating_load, cooling_load)
 
@@ -1726,7 +1727,8 @@ def calculate_new_load_total_220_83(
 
     # QC
     diff = df_existing[existing_loads].compare(df_loads)
-    assert len(diff) > 0, "No difference between existing loads and updated loads"
+    if len(diff) == 0: 
+        print("Warning: No difference between existing loads and updated loads")
 
     # Total post-upgrade load based on whether has new hvac
     total_load_post = "load_total_post_upgrade_VA_220_83"

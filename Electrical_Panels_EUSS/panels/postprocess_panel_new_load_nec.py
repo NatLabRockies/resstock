@@ -717,8 +717,8 @@ def _new_load_space_conditioning(row, option_columns):
 
     # Add AHU
     heat_ahu, cool_ahu = _get_air_handlers(row, heating_type, secondary_heating_type)
-    heating_load += heat_ahu
-    cooling_load += cool_ahu
+    heating_load += heat_ahu if system_cols != [None, None, None] else 0
+    cooling_load += cool_ahu if cooling_type != None else 0
 
     return max(heating_load, cooling_load)
 

@@ -47,7 +47,7 @@ def convert_files(file_dir: Path):
     for file in file_list:
         df = read_file(file)
         file_name = parse_filename(file)
-        df.to_csv(out_dir / (file_name+".csv"))
+        df.to_csv(out_dir / (file_name+".csv"), index=False)
         print(f" - Converted: {file_name}")
 
     print(f"Files saved to: {out_dir}")
