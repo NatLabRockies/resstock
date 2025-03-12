@@ -6,6 +6,7 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+
     .. change::
         :tags: docs, technical reference guide
         :pullreq: 1361
@@ -19,8 +20,10 @@ Development Changelog
         Update the Technical Reference Guide based on the PRs from the split-off point of ResStock Release 3.3.0 to current develop.
 
         Assignees: Anthony Fontanini
+
+
     .. change::
-        :tags: workflow
+        :tags: workflow, feature
         :pullreq: 1353
 
         **Date**: 2025-03-11
@@ -31,9 +34,8 @@ Development Changelog
         Description:
         All OpenStudio-HPXML changes, no required ResStock changes. Updates to NEEP ASHP sample files, fix possible HVAC sizing error, HPXML class update for attic/foundation types, Speed up weather processing, combi boiler error fix, smooth shcedule EV plugload, shift all schedules in sync and fix occupancy aggregation.
 
-        OpenStudio-HPXML: `pull request 1918 <https://github.com/NREL/OpenStudio-HPXML/pull/1918>`_, `pull request 1930 <https://github.com/NREL/OpenStudio-HPXML/pull/1930>`_
-
         Assignees: Joe Robertson
+
 
     .. change::
         :tags: characteristics, feature, docs, technical reference guide, outputs
