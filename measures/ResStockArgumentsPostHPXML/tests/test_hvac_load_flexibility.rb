@@ -10,7 +10,7 @@ require_relative '../resources/hvac_flexibility/setpoint_modifier.rb'
 require_relative '../measure.rb'
 require 'pathname'
 
-class ResStockArgumentsPostHPXMLTest < Minitest::Test
+class HVACFlexibilityTest < Minitest::Test
   def setup
     @runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     parent_path = File.expand_path('../../../../', __FILE__)
