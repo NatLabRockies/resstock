@@ -1153,7 +1153,7 @@ upgrades:
 
   - upgrade_name: HVAC Flexibility - Load Shedding (4hr, 2deg)
     package_apply_logic: &has_cooling_or_heating
-      - or:
+      - or:  # apply if there is either a cooling or a heating system
         - not: HVAC Cooling Type|None
         - not: HVAC Heating Type|None
     options:
