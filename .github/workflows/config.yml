@@ -9,9 +9,8 @@ on:
 
 # Add concurrency to cancel in-progress jobs when a new commit is pushed to the PR
 concurrency:
-  # Use the workflow name and PR number (or branch name for non-PR events) as the concurrency group
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   # Cancel in-progress runs when a new workflow with the same concurrency group is queued
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 env:
