@@ -251,10 +251,6 @@ class TestBuildStockBatch < Minitest::Test
     puts "#{ts_col}, actual - expected: #{actual_extras}" if !actual_extras.empty?
     assert_equal(0, actual_extras.size)
 
-    # expected_extras = expected_timeseries_names - actual_timeseries_names
-    # puts "#{ts_col}, expected - actual: #{expected_extras}" if !expected_extras.empty?
-    # assert_equal(0, expected_extras.size) # allow
-
     tol = 0.001
     sums_to_indexes = expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
     sums_to_indexes.each do |sums_to_ix|

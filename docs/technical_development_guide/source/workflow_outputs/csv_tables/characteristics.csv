@@ -39,7 +39,6 @@ build_existing_model.doors,:ref:`doors`
 build_existing_model.duct_leakage_and_insulation,:ref:`duct_leakage_and_insulation`
 build_existing_model.duct_location,:ref:`duct_location`
 build_existing_model.eaves,:ref:`eaves`
-build_existing_model.electric_vehicle,:ref:`electric_vehicle`
 build_existing_model.energystar_climate_zone_2023,:ref:`energystar_climate_zone_2023`
 build_existing_model.federal_poverty_level,:ref:`federal_poverty_level`
 build_existing_model.generation_and_emissions_assessment_region,:ref:`generation_and_emissions_assessment_region`

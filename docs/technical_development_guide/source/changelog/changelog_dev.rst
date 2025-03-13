@@ -6,6 +6,70 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+
+    .. change::
+        :tags: docs, technical reference guide
+        :pullreq: 1361
+
+        **Date**: 2025-03-12
+
+        Title:
+        Update Technical Reference Guide from 3.3.0 to develop
+
+        Description:
+        Update the Technical Reference Guide based on the PRs from the split-off point of ResStock Release 3.3.0 to current develop.
+
+        Assignees: Anthony Fontanini
+
+
+    .. change::
+        :tags: workflow, feature
+        :pullreq: 1353
+
+        **Date**: 2025-03-11
+
+        Title:
+        Latest OS-HPXML
+
+        Description:
+        All OpenStudio-HPXML changes, no required ResStock changes. Updates to NEEP ASHP sample files, fix possible HVAC sizing error, HPXML class update for attic/foundation types, Speed up weather processing, combi boiler error fix, smooth shcedule EV plugload, shift all schedules in sync and fix occupancy aggregation.
+
+        Assignees: Joe Robertson
+
+
+    .. change::
+        :tags: workflow, feature, outputs
+        :pullreq: 1359
+
+        **Date**: 2025-03-13
+
+        Title:
+        Latest OS-HPXML
+
+        Description:
+        Pulls in the ability to do electric panel NEC calculations.
+        Update AC/ASHP/MSHP options in lookup since CompressorType is now required for central and mini-split air conditioners and heat pumps.
+
+        OpenStudio-HPXML: `pull request 1946 <https://github.com/NREL/OpenStudio-HPXML/pull/1946>`_, `pull request 1949 <https://github.com/NREL/OpenStudio-HPXML/pull/1949>`_
+
+        Assignees: Joe Robertson, Scott Horowitz
+
+
+    .. change::
+        :tags: characteristics, feature, docs, technical reference guide, outputs
+        :pullreq: 1299
+
+        **Date**: 2025-02-28
+
+        Title:
+        Electric Vehicles
+
+        Description:
+        Introduce EVs, including vehicle and charging stock characterization and assignment of EV battery modeling arguments.
+
+        Assignees: Andrew Speake, Anthony Fontanini, Rajendra Adhikari
+
+
     .. change::
         :tags: workflow, feature, outputs
         :pullreq: 1347

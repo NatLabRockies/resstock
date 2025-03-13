@@ -86,6 +86,10 @@ The next step in the workflow is converting ResStock arguments to the OpenStudio
 
 Throughout this translation process, in most cases, the ResStock arguments are the same as the final OpenStudio-HPXML arguments assigned in BuildResidentialHPXML. An example of an identical argument is \texttt{geometry\_unit\_num\_bedrooms}. However, there are some instances where the ResStock arguments intentionally differ from the OpenStudio-HPXML arguments and need further adjustment.  Another potential difference is combining and modifying ResStock arguments into one OpenStudio-HPXML argument. An example is using \texttt{air\_leakage\_percent\_reduction} as part of an envelope upgrade that reduces infiltration. In this scenario, the \texttt{air\_leakage\_value} is adjusted by the \texttt{air\_leakage\_percent\_reduction} argument.
 
+\subsection{Post OpenStudio--HPXML modifications}
+After the OpenStudio-HPXML files are returned, there is a final step before the OpenStudio and EnergyPlus model is simulated. The \texttt{ResStockArgumentsPostHPXML} measure is executed. This measure provides an opportunity to modify the returned OpenStudio--HPXML files before simulation. Currently, this measure is not used for the baseline stock. An example use of this measure would be modeling a schedule modification for demand flexibility during an upgrade.  
+
+
 \section{Batch Simulation}
 % BuildStock-Batch for the sampling, batch simulation, and post-processing
 % Introduce that some parallelization is needed. The computations can either be done on the a local machine, a high-performance computing machine, or even the cloud. A lot of data is produced, post-processing is the biggest memory process.
@@ -193,39 +197,42 @@ In addition to the housing characteristic input files, occupant and energy use s
     \hline
     Schedule Name & Unit & Description & Stochastic? \\
     \hline
-    \texttt{occupants} & frac & Occupant heat gain schedule & Stochastic \\
-    \texttt{lighting\_interior} & frac & Interior lighting energy use schedule & Stochastic \\
-    \texttt{lighting\_exterior} & frac & Exterior lighting energy use schedule & Non-Stochastic \\ 
-    \texttt{lighting\_garage} & frac & Garage lighting energy use schedule & Stochastic \\
-    % \texttt{lighting\_exterior\_holiday} & frac & Exterior holiday lighting energy use schedule. & Non-Stochastic \\
+    % \texttt{battery} & frac & Battery schedule. Positive for charging, negative for discharging. & Non-Stochastic \\    
+    \texttt{ceiling\_fan} & frac & Ceiling fan energy use schedule & Stochastic \\
+    \texttt{clothes\_dryer} & frac & Clothes dryer energy use schedule & Stochastic \\
+    \texttt{clothes\_washer} & frac & Clothes washer energy use schedule & Stochastic \\
     \texttt{cooking\_range} & frac & Cooking range \& oven energy use schedule & Stochastic \\
-    \texttt{refrigerator} & frac & Primary refrigerator energy use schedule & Non-Stochastic \\
+    \texttt{cooling\_setpoint} & $\deg$ F & Thermostat cooling setpoint schedule & Non-Stochastic \\    
+    \texttt{dishwasher} & frac & Dishwasher energy use schedule & Stochastic \\
+    \texttt{electric\_vehicle\_charging} & frac & Availability schedule for electric vehicle charging. & Stochastic \\
+    \texttt{electric\_vehicle\_discharging} & frac & Availability schedule for electric vehicle discharging. & Stochastic \\
     \texttt{extra\_refrigerator} & frac & Non-primary refrigerator energy use schedule & Non-Stochastic \\
     \texttt{freezer} & frac & Freezer energy use schedule & Non-Stochastic \\
-    \texttt{dishwasher} & frac & Dishwasher energy use schedule & Stochastic \\
-    \texttt{clothes\_washer} & frac & Clothes washer energy use schedule & Stochastic \\
-    \texttt{clothes\_dryer} & frac & Clothes dryer energy use schedule & Stochastic \\
-    \texttt{ceiling\_fan} & frac & Ceiling fan energy use schedule & Stochastic \\
+    \texttt{fuel\_loads\_grill} & frac & Grill fuel load energy use schedule & Non-Stochastic \\
+    \texttt{fuel\_loads\_lighting} & frac & Lighting fuel load energy use schedule & Non-Stochastic \\
+    \texttt{fuel\_loads\_fireplace} & frac & Fireplace fuel load energy use schedule & Non-Stochastic \\
+    \texttt{heating\_setpoint} & $\deg$ F & Thermostat heating setpoint schedule & Non-Stochastic \\
+    \texttt{hot\_tub\_pump} & frac & Hot tub pump energy use schedule & Non-Stochastic \\
+    \texttt{hot\_tub\_heater} & frac & Hot tub heater energy use schedule & Non-Stochastic \\
+    \texttt{hot\_water\_clothes\_washer} & frac & Clothes washer hot water use schedule & Stochastic \\     
+    \texttt{hot\_water\_dishwasher} & frac & Dishwasher hot water use schedule & Stochastic \\
+    \texttt{hot\_water\_fixtures} & frac & Fixtures (sinks, showers, baths) hot water use schedule & Stochastic \\    
+    \texttt{lighting\_interior} & frac & Interior lighting energy use schedule & Stochastic \\    
+    \texttt{lighting\_exterior} & frac & Exterior lighting energy use schedule & Non-Stochastic \\ 
+    % \texttt{lighting\_exterior\_holiday} & frac & Exterior holiday lighting energy use schedule. & Non-Stochastic \\    
+    \texttt{lighting\_garage} & frac & Garage lighting energy use schedule & Stochastic \\
+    \texttt{occupants} & frac & Occupant heat gain schedule & Stochastic \\
+    %\texttt{outage} & 0/1 & Power outage schedule. 0=power. 1=no power. Automatically overrides other columns. & N/A \\
     \texttt{plug\_loads\_other} & frac & Other plug load energy use schedule & Stochastic \\
     \texttt{plug\_loads\_tv} & frac & Television plug load energy use schedule & Stochastic \\
     %\texttt{plug\_loads\_vehicle} & frac & Electric vehicle plug load energy use schedule. & No \\
     \texttt{plug\_loads\_well\_pump} & frac & Well pump plug load energy use schedule & Non-Stochastic \\
-    \texttt{fuel\_loads\_grill} & frac & Grill fuel load energy use schedule & Non-Stochastic \\
-    \texttt{fuel\_loads\_lighting} & frac & Lighting fuel load energy use schedule & Non-Stochastic \\
-    \texttt{fuel\_loads\_fireplace} & frac & Fireplace fuel load energy use schedule & Non-Stochastic \\
-    \texttt{pool\_pump} & frac & Pool pump energy use schedule & Non-Stochastic \\
     \texttt{pool\_heater} & frac & Pool heater energy use schedule & Non-Stochastic \\
-    \texttt{hot\_tub\_pump} & frac & Hot tub pump energy use schedule & Non-Stochastic \\
-    \texttt{hot\_tub\_heater} & frac & Hot tub heater energy use schedule & Non-Stochastic \\
-    \texttt{hot\_water\_dishwasher} & frac & Dishwasher hot water use schedule & Stochastic \\
-    \texttt{hot\_water\_clothes\_washer} & frac & Clothes washer hot water use schedule & Stochastic \\ \texttt{hot\_water\_fixtures} & frac & Fixtures (sinks, showers, baths) hot water use schedule & Stochastic \\
-    \texttt{heating\_setpoint} & $\deg$ F & Thermostat heating setpoint schedule & Non-Stochastic \\
-    \texttt{cooling\_setpoint} & $\deg$ F & Thermostat cooling setpoint schedule & Non-Stochastic \\
+    \texttt{pool\_pump} & frac & Pool pump energy use schedule & Non-Stochastic \\
+    \texttt{refrigerator} & frac & Primary refrigerator energy use schedule & Non-Stochastic \\
     \texttt{water\_heater\_setpoint} & $\deg$ F & Water heater setpoint schedule & Non-Stochastic \\
     \texttt{water\_heater\_operating\_mode} & 0/1 & Heat pump water heater operating mode schedule. 0=hybrid/auto, 1=heat pump only. & Non-Stochastic \\
-    % \texttt{battery} & frac & Battery schedule. Positive for charging, negative for discharging. & Non-Stochastic \\
     \texttt{vacancy} & 0/1 & Vacancy schedule. 0=occupied, 1=vacant. Automatically overrides other columns. & Non-Stochastic \\
-    %\texttt{outage} & 0/1 & Power outage schedule. 0=power. 1=no power. Automatically overrides other columns. & N/A \\
     \hline
     \end{tabular}
     \caption{Modeled schedules in ResStock}
