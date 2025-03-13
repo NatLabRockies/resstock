@@ -1151,7 +1151,7 @@ upgrades:
       - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
       - *infiltration_30pct_reduction
 
-  - upgrade_name: HVAC Flexibility - Peak Only 4hr 2deg
+  - upgrade_name: HVAC Flexibility - Load Shedding (4hr, 2deg)
     package_apply_logic: &has_cooling_or_heating
       - or:
         - not: HVAC Cooling Type|None
@@ -1159,22 +1159,22 @@ upgrades:
     options:
       - option: HVACFlexibility|peak_only_4hr_2deg
 
-  - upgrade_name: HVAC Flexibility - Pre Only 4hr 2deg
+  - upgrade_name: HVAC Flexibility - Load Shifting (4hr, 2deg)
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: HVACFlexibility|pre_only_4hr_2deg
 
-  - upgrade_name: HVAC Flexibility - Peak Only 4hr 4deg
+  - upgrade_name: HVAC Flexibility - Load Shedding (4hr, 4deg)
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: HVACFlexibility|peak_only_4hr_4deg
 
-  - upgrade_name: HVAC Flexibility - Pre Only 4hr 4deg
+  - upgrade_name: HVAC Flexibility - Load Shifting (4hr, 4deg)
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: HVACFlexibility|pre_only_4hr_4deg
 
-  - upgrade_name: HVAC Flexibility - Pre Only 1hr 2deg
+  - upgrade_name: HVAC Flexibility - Load Shifting (1hr, 2deg)
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: HVACFlexibility|pre_only_1hr_2deg
