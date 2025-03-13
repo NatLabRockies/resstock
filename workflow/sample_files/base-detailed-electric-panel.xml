@@ -459,7 +459,7 @@
             <SystemIdentifier id='ElectricPanel1'/>
             <Voltage>240</Voltage>
             <MaxCurrentRating>100.0</MaxCurrentRating>
-            <Headroom>5</Headroom>
+            <HeadroomSpaces>5</HeadroomSpaces>
             <BranchCircuits>
               <BranchCircuit>
                 <SystemIdentifier id='BranchCircuit1'/>

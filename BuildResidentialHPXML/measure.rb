@@ -7259,7 +7259,7 @@ module HPXMLFile
     hpxml_bldg.electric_panels.add(id: "ElectricPanel#{hpxml_bldg.electric_panels.size + 1}",
                                    voltage: args[:electric_panel_service_voltage],
                                    max_current_rating: args[:electric_panel_service_rating],
-                                   headroom: headroom_breaker_spaces,
+                                   headroom_spaces: headroom_breaker_spaces,
                                    rated_total_spaces: total_breaker_spaces)
 
     electric_panel = hpxml_bldg.electric_panels[0]

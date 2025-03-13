@@ -214,7 +214,7 @@ module ElectricPanel
     if !electric_panel.rated_total_spaces.nil?
       total = electric_panel.rated_total_spaces
     else
-      total = occupied + electric_panel.headroom
+      total = occupied + electric_panel.headroom_spaces
     end
 
     service_feeders.BreakerSpaces_Total = total

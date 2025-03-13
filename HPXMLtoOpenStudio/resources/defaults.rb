@@ -3544,9 +3544,9 @@ module Defaults
         electric_panel.max_current_rating = electric_panel_default_values[:max_current_rating]
         electric_panel.max_current_rating_isdefaulted = true
       end
-      if electric_panel.headroom.nil? && electric_panel.rated_total_spaces.nil?
-        electric_panel.headroom = electric_panel_default_values[:headroom]
-        electric_panel.headroom_isdefaulted = true
+      if electric_panel.headroom_spaces.nil? && electric_panel.rated_total_spaces.nil?
+        electric_panel.headroom_spaces = electric_panel_default_values[:headroom_spaces]
+        electric_panel.headroom_spaces_isdefaulted = true
       end
 
       ElectricPanel.calculate(hpxml_header, hpxml_bldg, electric_panel)
@@ -6120,7 +6120,7 @@ module Defaults
   def self.get_electric_panel_values()
     return { panel_voltage: HPXML::ElectricPanelVoltage240,
              max_current_rating: 200.0, # A
-             headroom: 3 }
+             headroom_spaces: 3 }
   end
 
   # Gets the default voltage for a branch circuit based on attached component.

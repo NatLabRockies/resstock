@@ -4625,13 +4625,13 @@ A single electric panel can be entered as a ``/HPXML/Building/BuildingDetails/Sy
   ``SystemIdentifier``                                                     id                                           Yes                      Unique identifier
   ``Voltage``                                                              string   V          See [#]_                 No        240
   ``MaxCurrentRating``                                                     double   A                                   No        200
-  ``Headroom`` or ``RatedTotalSpaces``                                     integer                                      No        See [#]_
+  ``HeadroomSpaces`` or ``RatedTotalSpaces``                               integer                                      No        See [#]_
   ``BranchCircuits``                                                       element                                      No        See [#]_       Individual branch circuits
   ``ServiceFeeders``                                                       element                                      No        See [#]_       Individual service feeders
   =======================================================================  =======  =========  =======================  ========  =============  ============================================
 
   .. [#] Voltage choices are "120" or "240".
-  .. [#] If neither Headroom nor RatedTotalSpaces provided, the following default value representing an electric panel with 3 open breaker spaces will be used: Headroom = 3.
+  .. [#] If neither HeadroomSpaces nor RatedTotalSpaces provided, the following default value representing an electric panel with 3 open breaker spaces will be used: HeadroomSpaces = 3.
   .. [#] See :ref:`branch_circuits`.
   .. [#] See :ref:`service_feeders`.
 
