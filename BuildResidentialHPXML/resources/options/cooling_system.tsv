@@ -27,7 +27,7 @@ None	none
 "Evaporative Cooler, EER 13"	evaporative cooler	EER	13								
 "Ductless Evaporative Cooler, SEER 13"	evaporative cooler	SEER	13			FALSE					
 "Ducted Evaporative Cooler, SEER 13"	evaporative cooler	SEER	13			TRUE					
-"Fan Coil Cooling, SEER 13"	mini-split	SEER	13			FALSE					
+"Fan Coil Cooling, SEER 13"	mini-split	SEER	13	variable speed		FALSE					
 "Ducted Mini-Split AC, SEER 19"	mini-split	SEER	19	variable speed	0.73	TRUE					
 "Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio"	mini-split	SEER	19	variable speed	0.73	TRUE	-0.25	-0.25			
 "Ductless Mini-Split AC, SEER 19"	mini-split	SEER	19	variable speed	0.73	FALSE					
