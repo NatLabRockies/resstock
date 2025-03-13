@@ -9831,7 +9831,7 @@ class HPXML < Object
     ATTRS = [:id,                      # [String] SystemIdentifier/@id
              :voltage,                 # [String] Voltage
              :max_current_rating,      # [Double] MaxCurrentRating
-             :headroom,                # [Integer] Headroom
+             :headroom_spaces,         # [Integer] HeadroomSpaces
              :rated_total_spaces,      # [Integer] RatedTotalSpaces
              :capacity_types,          # [Array<String>] extension/Outputs/Capacity/Type
              :capacity_total_watts,    # [Array<Double>] extension/Outputs/Capacity/TotalWatts
@@ -9888,7 +9888,7 @@ class HPXML < Object
       XMLHelper.add_attribute(sys_id, 'id', @id)
       XMLHelper.add_element(electric_panel, 'Voltage', @voltage, :string, @voltage_isdefaulted) unless @voltage.nil?
       XMLHelper.add_element(electric_panel, 'MaxCurrentRating', @max_current_rating, :float, @max_current_rating_isdefaulted) unless @max_current_rating.nil?
-      XMLHelper.add_element(electric_panel, 'Headroom', @headroom, :integer, @headroom_isdefaulted) unless @headroom.nil?
+      XMLHelper.add_element(electric_panel, 'HeadroomSpaces', @headroom_spaces, :integer, @headroom_spaces_isdefaulted) unless @headroom_spaces.nil?
       XMLHelper.add_element(electric_panel, 'RatedTotalSpaces', @rated_total_spaces, :integer, @rated_total_spaces_isdefaulted) unless @rated_total_spaces.nil?
       @branch_circuits.to_doc(electric_panel)
       @service_feeders.to_doc(electric_panel)
@@ -9925,7 +9925,7 @@ class HPXML < Object
       @id = HPXML::get_id(electric_panel)
       @voltage = XMLHelper.get_value(electric_panel, 'Voltage', :string)
       @max_current_rating = XMLHelper.get_value(electric_panel, 'MaxCurrentRating', :float)
-      @headroom = XMLHelper.get_value(electric_panel, 'Headroom', :integer)
+      @headroom_spaces = XMLHelper.get_value(electric_panel, 'HeadroomSpaces', :integer)
       @rated_total_spaces = XMLHelper.get_value(electric_panel, 'RatedTotalSpaces', :integer)
       @branch_circuits.from_doc(electric_panel)
       @service_feeders.from_doc(electric_panel)

@@ -90,7 +90,7 @@
 		</xs:attribute>
 		<xs:attribute name="sameas" type="xs:IDREF">
 			<xs:annotation>
-				<xs:documentation>Use to reference the id of the same object on the base building where the object has not been replaced.</xs:documentation>
+				<xs:documentation>A reference to the id of the identical object on another Building element. For example, this could be used to indicate a building component like a water heater has not changed between the base Building and the post-upgrade Building, or that a building component like a central boiler is shared between two Buildings (dwelling units) in a multifamily building. Note that when a building component does change as part of an upgrade, the sameas attribute should be omitted and a Measure should be used to reference the relationship between components.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="dataSource" type="DataSource"/>
@@ -2303,9 +2303,9 @@
 													<xs:complexType>
 														<xs:sequence>
 															<xs:element minOccurs="0" name="Battery" type="VehicleBattery"/>
-															<xs:element minOccurs="0" name="FractionChargedLocation">
+															<xs:element minOccurs="0" name="FractionChargedLocation" maxOccurs="unbounded">
 																<xs:annotation>
-																	<xs:documentation>The percentage of charging energy provided at a certain location.</xs:documentation>
+																	<xs:documentation>The percentage of charging energy provided at different locations.</xs:documentation>
 																</xs:annotation>
 																<xs:complexType>
 																	<xs:sequence>
@@ -2328,9 +2328,9 @@
 													<xs:complexType>
 														<xs:sequence>
 															<xs:element minOccurs="0" name="Battery" type="VehicleBattery"/>
-															<xs:element minOccurs="0" name="FractionChargedLocation">
+															<xs:element minOccurs="0" name="FractionChargedLocation" maxOccurs="unbounded">
 																<xs:annotation>
-																	<xs:documentation>The percentage of charging energy provided at a certain location.</xs:documentation>
+																	<xs:documentation>The percentage of charging energy provided at different locations.</xs:documentation>
 																</xs:annotation>
 																<xs:complexType>
 																	<xs:sequence>
@@ -6625,7 +6625,7 @@
 					<xs:documentation>[A]</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="Headroom" type="IntegerGreaterThanOrEqualToZero">
+			<xs:element minOccurs="0" name="HeadroomSpaces" type="IntegerGreaterThanOrEqualToZero">
 				<xs:annotation>
 					<xs:documentation>The number of open breaker spaces.</xs:documentation>
 				</xs:annotation>
@@ -6690,7 +6690,7 @@
 		<xs:sequence>
 			<xs:group ref="SystemInfo"/>
 			<xs:element minOccurs="0" name="LoadType" type="ServiceFeederLoadType"/>
-			<xs:element minOccurs="0" name="PowerRating" type="HPXMLDouble">
+			<xs:element minOccurs="0" name="PowerRating" type="HPXMLDoubleGreaterThanZero">
 				<xs:annotation>
 					<xs:documentation>[W]</xs:documentation>
 				</xs:annotation>

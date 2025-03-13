@@ -14,6 +14,7 @@ __New Features__
 - Output updates:
   - **Breaking change**: Adds generator electricity produced to *total* fuel/energy use; previously it was only included in *net* values.
   - Adds new outputs for *net* peak electricity (summer/winter/annual); same as *total* peak electricity outputs but subtracts power produced by PV.
+- Allows arbitrary columns to be present in a detailed schedule csv file with warning.
 - Electric panel calculations:
   - Allows optional `ElectricPanel` inputs for describing branch circuits and service feeders
   - Optionally reports breaker spaces and calculated loads for specified NEC calculation types
