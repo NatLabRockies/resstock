@@ -39,9 +39,9 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     assert_in_epsilon(9444.2, electric_panel.capacity_total_watts[0], 0.01)
     assert_in_epsilon(9444.2 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_total_amps[0], 0.01)
     assert_in_epsilon(electric_panel.max_current_rating - 9444.2 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_headroom_amps[0], 0.01)
-    assert_in_epsilon(5625.0, electric_panel.capacity_total_watts[1], 0.01)
-    assert_in_epsilon(5625.0 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_total_amps[1], 0.01)
-    assert_in_epsilon(electric_panel.max_current_rating - 5625.0 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_headroom_amps[1], 0.01)
+    assert_in_epsilon(1.25 * 4500.0, electric_panel.capacity_total_watts[1], 0.01)
+    assert_in_epsilon(1.25 * 4500.0 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_total_amps[1], 0.01)
+    assert_in_epsilon(electric_panel.max_current_rating - (1.25 * 4500.0) / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_headroom_amps[1], 0.01)
 
     # Upgrade
     # Not adding new HVAC
@@ -140,12 +140,12 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     branch_circuits.add(id: 'Laundry', occupied_spaces: 1)
     branch_circuits.add(id: 'Other', occupied_spaces: 1)
     service_feeders = hpxml_bldg.electric_panels[0].service_feeders
-    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeHeating, power: 1, component_idrefs: [hpxml_bldg.heating_systems[0].id]) # 1
-    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeCooling, power: 5, component_idrefs: [hpxml_bldg.cooling_systems[0].id]) # 2
-    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeWaterHeater, power: 10, component_idrefs: [hpxml_bldg.water_heating_systems[0].id]) # 2
-    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeClothesDryer, power: 0.1, component_idrefs: [hpxml_bldg.clothes_dryers[0].id]) # 2
-    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeDishwasher, power: 0.01, component_idrefs: [hpxml_bldg.dishwashers[0].id]) # 1
-    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeRangeOven, power: 0.001, component_idrefs: [hpxml_bldg.cooking_ranges[0].id]) # 2
+    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeHeating, power: 0, component_idrefs: [hpxml_bldg.heating_systems[0].id])
+    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeCooling, power: 0, component_idrefs: [hpxml_bldg.cooling_systems[0].id])
+    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeWaterHeater, power: 0, component_idrefs: [hpxml_bldg.water_heating_systems[0].id])
+    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeClothesDryer, power: 0, component_idrefs: [hpxml_bldg.clothes_dryers[0].id])
+    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeDishwasher, power: 0, component_idrefs: [hpxml_bldg.dishwashers[0].id])
+    service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeRangeOven, power: 0, component_idrefs: [hpxml_bldg.cooking_ranges[0].id])
     service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeLighting, power: 500) # 0
     service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeKitchen, power: 1000) # 2
     service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeLaundry, power: 1500) # 1
@@ -155,15 +155,15 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
     electric_panel = hpxml_bldg.electric_panels[0]
 
-    assert_equal(4 + 10 + 3, electric_panel.breaker_spaces_total)
-    assert_equal(14, electric_panel.breaker_spaces_occupied)
+    assert_equal(4 + 3, electric_panel.breaker_spaces_total)
+    assert_equal(4, electric_panel.breaker_spaces_occupied)
     assert_equal(3, electric_panel.breaker_spaces_headroom)
-    assert_in_epsilon(5015.1, electric_panel.capacity_total_watts[0], 0.001)
-    assert_in_epsilon(5015.1 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_total_amps[0], 0.01)
-    assert_in_epsilon(electric_panel.max_current_rating - 5015.1 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_headroom_amps[0], 0.01)
-    assert_in_epsilon(5625.0, electric_panel.capacity_total_watts[1], 0.001)
-    assert_in_epsilon(5625.0 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_total_amps[1], 0.01)
-    assert_in_epsilon(electric_panel.max_current_rating - 5625.0 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_headroom_amps[1], 0.01)
+    assert_in_epsilon(5000.0, electric_panel.capacity_total_watts[0], 0.001)
+    assert_in_epsilon(5000.0 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_total_amps[0], 0.01)
+    assert_in_epsilon(electric_panel.max_current_rating - 5000.0 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_headroom_amps[0], 0.01)
+    assert_in_epsilon(1.25 * 4500.0, electric_panel.capacity_total_watts[1], 0.001)
+    assert_in_epsilon(1.25 * 4500.0 / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_total_amps[1], 0.01)
+    assert_in_epsilon(electric_panel.max_current_rating - (1.25 * 4500.0) / Float(HPXML::ElectricPanelVoltage240), electric_panel.capacity_headroom_amps[1], 0.01)
   end
 
   def test_hvac_configurations
