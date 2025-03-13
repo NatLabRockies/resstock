@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 # Add concurrency to cancel in-progress jobs when a new commit is pushed to the PR
-# This avoids CI jobs "staking up" for the same PR
+# This avoids CI jobs "stacking up" for the same PR
 concurrency:
   # Cancel in-progress runs when a new workflow with the same concurrency group is queued
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
