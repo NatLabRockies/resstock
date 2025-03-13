@@ -11,7 +11,7 @@ Dir["#{File.dirname(__FILE__)}/../../../../resources/hpxml-measures/HPXMLtoOpenS
   require resource_file
 end
 
-FlexibilityInputs = Struct.new(:peak_offset, :pre_peak_duration_steps, :pre_peak_offset, :random_shift_steps, keyword_init: true)
+HVACFlexibilityInputs = Struct.new(:peak_offset, :pre_peak_duration_steps, :pre_peak_offset, :random_shift_steps, keyword_init: true)
 DailyPeakIndices = Struct.new(:pre_peak_start_index, :peak_start_index, :peak_end_index)
 DSTInfo = Struct.new(:dst_begin_month, :dst_begin_day, :dst_end_month, :dst_end_day)
 

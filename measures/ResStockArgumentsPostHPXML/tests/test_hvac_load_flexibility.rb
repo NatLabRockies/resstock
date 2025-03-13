@@ -70,7 +70,7 @@ class HVACFlexibilityTest < Minitest::Test
       heating_setpoint: [71] * 365 * 24 * 4,
       cooling_setpoint: [78] * 365 * 24 * 4
     }
-    flexibility_inputs = FlexibilityInputs.new(
+    flexibility_inputs = HVACFlexibilityInputs.new(
       random_shift_steps: 0,
       pre_peak_duration_steps: 4 * 4,
       pre_peak_offset: 3,
@@ -98,7 +98,7 @@ class HVACFlexibilityTest < Minitest::Test
     assert_equal(78 - 3, modified_setpoints_15[:cooling_setpoint][summer_midnight + summer_peak - 1]) # pre-peak offset
     assert_equal(71, modified_setpoints_15[:heating_setpoint][summer_midnight + summer_peak - 1]) # pre-peak offset
 
-    flexibility_inputs = FlexibilityInputs.new(
+    flexibility_inputs = HVACFlexibilityInputs.new(
       random_shift_steps: 2,
       pre_peak_duration_steps: 4 * 4,
       pre_peak_offset: 3,
@@ -120,7 +120,7 @@ class HVACFlexibilityTest < Minitest::Test
     assert_equal(78 - 0, modified_setpoints_15[:cooling_setpoint][summer_midnight + summer_peak + 2 - 4 * 4 - 1])  # before pre-peak period
     assert_equal(71, modified_setpoints_15[:heating_setpoint][summer_midnight + summer_peak + 2 + pds]) # after peak period
 
-    flexibility_inputs = FlexibilityInputs.new(
+    flexibility_inputs = HVACFlexibilityInputs.new(
       random_shift_steps: -2,
       pre_peak_duration_steps: 0,
       pre_peak_offset: 3, # unused since pre_peak_duration_steps is 0
@@ -157,7 +157,7 @@ class HVACFlexibilityTest < Minitest::Test
   end
 
   def test_get_peak_times
-    flexibility_inputs = FlexibilityInputs.new(
+    flexibility_inputs = HVACFlexibilityInputs.new(
       random_shift_steps: 0,
       pre_peak_duration_steps: 4 * 4,
       pre_peak_offset: 3,

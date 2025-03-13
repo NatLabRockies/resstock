@@ -32,26 +32,26 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Absolute/relative path of the HPXML file.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('loadflex_peak_offset', false)
-    arg.setDisplayName('Load Flexibility: Peak Offset (deg F)')
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('hvac_flex_peak_offset', false)
+    arg.setDisplayName('HVAC Load Flexibility: Peak Offset (deg F)')
     arg.setDescription('Offset of the peak period in degrees Fahrenheit.')
     arg.setDefaultValue(0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeDoubleArgument('loadflex_pre_peak_duration_hours', false)
-    arg.setDisplayName('Load Flexibility: Pre-Peak Duration (hours)')
+    arg = OpenStudio::Measure::OSArgument.makeDoubleArgument('hvac_flex_pre_peak_duration_hours', false)
+    arg.setDisplayName('HVAC Load Flexibility: Pre-Peak Duration (hours)')
     arg.setDescription('Duration of the pre-peak period in hours.')
     arg.setDefaultValue(0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('loadflex_pre_peak_offset', false)
-    arg.setDisplayName('Load Flexibility: Pre-Peak Offset (deg F)')
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('hvac_flex_pre_peak_offset', false)
+    arg.setDisplayName('HVAC Load Flexibility: Pre-Peak Offset (deg F)')
     arg.setDescription('Offset of the pre-peak period in degrees Fahrenheit.')
     arg.setDefaultValue(0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('loadflex_random_shift_minutes', false)
-    arg.setDisplayName('Load Flexibility: Random Shift (minutes)')
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('hvac_flex_random_shift_minutes', false)
+    arg.setDisplayName('HVAC Load Flexibility: Random Shift (minutes)')
     arg.setDescription('Number of minutes to randomly shift the peak period. If minutes less than timestep, will be assumed to be 0.')
     arg.setDefaultValue(0)
     args << arg
@@ -81,7 +81,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     # assign the user inputs to variables
     args = runner.getArgumentValues(arguments(model), user_arguments)
     if skip_load_flexibility?(args)
-      runner.registerInfo('Skipping ResStockArgumentsPostHPXML since load flexibility inputs are 0.')
+      runner.registerInfo('Skipping ResStockArgumentsPostHPXML')
       return true
     end
 
@@ -120,11 +120,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   end
 
   def skip_load_flexibility?(args)
-    args[:loadflex_peak_offset] == 0 && args[:loadflex_pre_peak_duration_hours] == 0
+    skip_hvac_flexibility?(args)
   end
 
   def skip_hvac_flexibility?(hpxml_bldg)
-    hpxml_bldg.hvac_controls.to_a.length == 0
+    return true if (args[:hvac_flex_peak_offset] == 0 && args[:hvac_flex_pre_peak_duration_hours] == 0)
+    return true if hpxml_bldg.hvac_controls.to_a.length == 0
   end
 
   def create_schedule(hpxml, hpxml_path, runner, building_index)
@@ -144,25 +145,25 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                            dst_begin_day: hpxml_bldg.dst_begin_day,
                            dst_end_month: hpxml_bldg.dst_end_month,
                            dst_end_day: hpxml_bldg.dst_end_day)
-    schedule_modifier = HVACScheduleModifier.new(state: state,
+    hvac_schedule_modifier = HVACScheduleModifier.new(state: state,
                                                  sim_year: sim_year,
                                                  weather: weather,
                                                  epw_path: epw_path,
                                                  minutes_per_step: minutes_per_step,
                                                  runner: runner,
                                                  dst_info: dst_info)
-    flexibility_inputs = get_flexibility_inputs(args, minutes_per_step, building_id)
-    schedule_modifier.modify_setpoints(schedule, flexibility_inputs)
+    hvac_flexibility_inputs = get_hvac_hvac_flexibility_inputs(args, minutes_per_step, building_id)
+    hvac_schedule_modifier.modify_setpoints(schedule, hvac_flexibility_inputs)
   end
 
-  def get_flexibility_inputs(args, minutes_per_step, building_id)
+  def get_hvac_hvac_flexibility_inputs(args, minutes_per_step, building_id)
     srand(building_id)
-    max_random_shift_steps = (args[:loadflex_random_shift_minutes] / minutes_per_step).to_i
+    max_random_shift_steps = (args[:hvac_flex_random_shift_minutes] / minutes_per_step).to_i
     random_shift_steps = rand(-max_random_shift_steps..max_random_shift_steps)
-    FlexibilityInputs.new(
-      peak_offset: args[:loadflex_peak_offset],
-      pre_peak_duration_steps: (args[:loadflex_pre_peak_duration_hours] * 60 / minutes_per_step).to_i,
-      pre_peak_offset: args[:loadflex_pre_peak_offset],
+    HVACFlexibilityInputs.new(
+      peak_offset: args[:hvac_flex_peak_offset],
+      pre_peak_duration_steps: (args[:hvac_flex_pre_peak_duration_hours] * 60 / minutes_per_step).to_i,
+      pre_peak_offset: args[:hvac_flex_pre_peak_offset],
       random_shift_steps: random_shift_steps
     )
   end

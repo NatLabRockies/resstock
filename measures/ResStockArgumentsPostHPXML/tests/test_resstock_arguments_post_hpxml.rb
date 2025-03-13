@@ -84,7 +84,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     existing_path = File.join(this_dir, osw_file.gsub('osw', 'xml'))
     _existing_hpxml = HPXML.new(hpxml_path: existing_path)
 
-    # Upgraded with load flexibility measure
+    # Upgraded with HVAC Load Flexibility measure
     upgrade_osw_file = "Upgrade_#{osw_file}"
     upgrade_osw = File.absolute_path("#{this_dir}/#{upgrade_osw_file}")
     FileUtils.cp(osw, upgrade_osw)
