@@ -4625,7 +4625,7 @@ A single electric panel can be entered as a ``/HPXML/Building/BuildingDetails/Sy
   ``SystemIdentifier``                                                     id                                           Yes                      Unique identifier
   ``Voltage``                                                              string   V          See [#]_                 No        240
   ``MaxCurrentRating``                                                     double   A                                   No        200
-  ``HeadroomSpaces`` or ``RatedTotalSpaces``                               integer                                      No        See [#]_
+  ``HeadroomSpaces`` or ``RatedTotalSpaces``                               integer             >= 0 or > 0              No        See [#]_
   ``BranchCircuits``                                                       element                                      No        See [#]_       Individual branch circuits
   ``ServiceFeeders``                                                       element                                      No        See [#]_       Individual service feeders
   =======================================================================  =======  =========  =======================  ========  =============  ============================================
@@ -4649,7 +4649,7 @@ Individual branch circuits entered in ``BranchCircuits/BranchCircuit``.
   ==============================================  ========  ==============  ===========  ========  =========  ==========================================
   ``Voltage``                                     string    V               See [#]_     No        See [#]_
   ``MaxCurrentRating``                            double    A                            No        See [#]_
-  ``OccupiedSpaces``                              integer                                No        See [#]_   Number of occupied breaker spaces
+  ``OccupiedSpaces``                              integer                   See [#]_     No        See [#]_   Number of occupied breaker spaces
   ``AttachedToComponent``                         idref                                  No                   ID of attached component; multiple are allowed [#]_
   ==============================================  ========  ==============  ===========  ========  =========  ==========================================
 
@@ -4659,13 +4659,14 @@ Individual branch circuits entered in ``BranchCircuits/BranchCircuit``.
          \- **No referenced components, non-electric heating systems, room air conditioners, dishwashers, ventilation fans, plug loads**: 120
          
          \- **All other referenced components**: 240
-  
+
   .. [#] If MaxCurrentRating not provided, defaults based on Voltage as follows:
   
          \- **120**: 20
          
          \- **240**: 50
-         
+
+  .. [#] OccupiedSpaces choices are 0.0, 0.5, 1.0, or 2.0.
   .. [#] If OccupiedSpaces not provided, then :ref:`panels_default` are used based on Voltage and properties of components referenced by AttachedToComponent.
          If no corresponding Voltage is specified, the other Voltage classification will be used.
          Occupied breaker spaces will be recalculated based on the new Voltage classification.
@@ -4676,7 +4677,7 @@ Individual branch circuits entered in ``BranchCircuits/BranchCircuit``.
          NumBranches = ceiling(RequiredAmperage / MaxCurrentRating)
          
          NumBreakers = NumBranches * (Voltage / 120)
-  
+
   .. [#] Provide a AttachedToComponent element for each referenced component.
 
 .. _service_feeders:
@@ -4690,7 +4691,7 @@ Individual service feeders entered in ``ServiceFeeders/ServiceFeeder``.
   Element                                         Type      Units           Constraints  Required  Default    Notes
   ==============================================  ========  ==============  ===========  ========  =========  ==========================================
   ``LoadType``                                    string                    See [#]_     Yes
-  ``PowerRating``                                 double    W                            No        See [#]_
+  ``PowerRating``                                 double    W               >= 0         No        See [#]_
   ``IsNewLoad``                                   boolean                                No        false      Whether, in the context of NEC calculations, the load is new
   ``AttachedToComponent``                         idref                     See [#]_     See [#]_  See [#]_   ID of attached component; multiple are allowed [#]_
   ==============================================  ========  ==============  ===========  ========  =========  ==========================================
