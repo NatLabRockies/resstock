@@ -3197,6 +3197,7 @@ module Defaults
       service_feeders = electric_panel.service_feeders
 
       hpxml_bldg.heating_systems.each do |heating_system|
+        next if heating_system.is_shared_system
         next if heating_system.fraction_heat_load_served == 0
         next unless heating_system.service_feeders.empty?
 
@@ -3208,6 +3209,7 @@ module Defaults
       end
 
       hpxml_bldg.cooling_systems.each do |cooling_system|
+        next if cooling_system.is_shared_system
         next if cooling_system.fraction_cool_load_served == 0
         next unless cooling_system.service_feeders.empty?
 
@@ -3377,15 +3379,17 @@ module Defaults
         end
       end
 
-      if service_feeders.count { |pl| pl.type == HPXML::ElectricPanelLoadTypeOther } == 0
-        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
-                            type: HPXML::ElectricPanelLoadTypeOther,
-                            type_isdefaulted: true,
-                            component_idrefs: [])
-        (1..get_default_panels_value(runner, default_panels_csv_data, 'other', 'BreakerSpaces', HPXML::ElectricPanelVoltage120)).each do |_i|
-          branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
-                              occupied_spaces: 1,
-                              occupied_spaces_isdefaulted: true)
+      if hpxml_bldg.has_location(HPXML::LocationGarage)
+        if service_feeders.count { |pl| pl.type == HPXML::ElectricPanelLoadTypeOther } == 0
+          service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
+                              type: HPXML::ElectricPanelLoadTypeOther,
+                              type_isdefaulted: true,
+                              component_idrefs: [])
+          (1..get_default_panels_value(runner, default_panels_csv_data, 'other', 'BreakerSpaces', HPXML::ElectricPanelVoltage120)).each do |_i|
+            branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
+                                occupied_spaces: 1,
+                                occupied_spaces_isdefaulted: true)
+          end
         end
       end
 
