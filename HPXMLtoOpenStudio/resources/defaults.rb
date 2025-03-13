@@ -3379,17 +3379,15 @@ module Defaults
         end
       end
 
-      if hpxml_bldg.has_location(HPXML::LocationGarage)
-        if service_feeders.count { |pl| pl.type == HPXML::ElectricPanelLoadTypeOther } == 0
-          service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
-                              type: HPXML::ElectricPanelLoadTypeOther,
-                              type_isdefaulted: true,
-                              component_idrefs: [])
-          (1..get_default_panels_value(runner, default_panels_csv_data, 'other', 'BreakerSpaces', HPXML::ElectricPanelVoltage120)).each do |_i|
-            branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
-                                occupied_spaces: 1,
-                                occupied_spaces_isdefaulted: true)
-          end
+      if service_feeders.count { |pl| pl.type == HPXML::ElectricPanelLoadTypeOther } == 0
+        service_feeders.add(id: get_id('ServiceFeeder', service_feeders, unit_num),
+                            type: HPXML::ElectricPanelLoadTypeOther,
+                            type_isdefaulted: true,
+                            component_idrefs: [])
+        (1..get_default_panels_value(runner, default_panels_csv_data, 'other', 'BreakerSpaces', HPXML::ElectricPanelVoltage120)).each do |_i|
+          branch_circuits.add(id: get_id('BranchCircuit', branch_circuits, unit_num),
+                              occupied_spaces: 1,
+                              occupied_spaces_isdefaulted: true)
         end
       end
 

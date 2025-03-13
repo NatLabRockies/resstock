@@ -6690,7 +6690,7 @@
 		<xs:sequence>
 			<xs:group ref="SystemInfo"/>
 			<xs:element minOccurs="0" name="LoadType" type="ServiceFeederLoadType"/>
-			<xs:element minOccurs="0" name="PowerRating" type="HPXMLDoubleGreaterThanZero">
+			<xs:element minOccurs="0" name="PowerRating" type="HPXMLDoubleGreaterThanOrEqualToZero">
 				<xs:annotation>
 					<xs:documentation>[W]</xs:documentation>
 				</xs:annotation>
