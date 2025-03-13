@@ -8,6 +8,21 @@ Development Changelog
 
 
     .. change::
+        :tags: workflow, feature, outputs
+        :pullreq: 1319
+
+        **Date**: 2025-03-13
+
+        Title:
+        Electric panel
+
+        Description:
+        Support electric panel NEC calculations.
+
+        Assignees: Lixi Liu, Yingli Lou, Joe Robertson
+
+
+    .. change::
         :tags: docs, technical reference guide
         :pullreq: 1361
 
