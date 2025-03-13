@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>875b8915-fa52-4655-bd43-3d5a5aaf2b87</version_id>
-  <version_modified>2025-03-04T21:22:10Z</version_modified>
+  <version_id>cc4e47c9-e34a-4e19-ad90-7ec5570258ab</version_id>
+  <version_modified>2025-03-12T19:56:03Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -2584,111 +2584,159 @@
       <default_value>1</default_value>
     </argument>
     <argument>
-      <name>cooling_system_type</name>
-      <display_name>Cooling System: Type</display_name>
-      <description>The type of cooling system. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.</description>
+      <name>cooling_system</name>
+      <display_name>Cooling System</display_name>
+      <description>The cooling system type, efficiency type, and efficiency. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.</description>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>central air conditioner</default_value>
+      <default_value>Central AC, SEER 13</default_value>
       <choices>
         <choice>
-          <value>none</value>
-          <display_name>none</display_name>
+          <value>None</value>
+          <display_name>None</display_name>
         </choice>
         <choice>
-          <value>central air conditioner</value>
-          <display_name>central air conditioner</display_name>
+          <value>Central AC, SEER 8</value>
+          <display_name>Central AC, SEER 8</display_name>
         </choice>
         <choice>
-          <value>room air conditioner</value>
-          <display_name>room air conditioner</display_name>
+          <value>Central AC, SEER 10</value>
+          <display_name>Central AC, SEER 10</display_name>
         </choice>
         <choice>
-          <value>evaporative cooler</value>
-          <display_name>evaporative cooler</display_name>
+          <value>Central AC, SEER 13</value>
+          <display_name>Central AC, SEER 13</display_name>
         </choice>
         <choice>
-          <value>mini-split</value>
-          <display_name>mini-split</display_name>
+          <value>Central AC, SEER 13, 25W Crankcase Heater</value>
+          <display_name>Central AC, SEER 13, 25W Crankcase Heater</display_name>
         </choice>
         <choice>
-          <value>packaged terminal air conditioner</value>
-          <display_name>packaged terminal air conditioner</display_name>
+          <value>Central AC, SEER 13, 50W Crankcase Heater</value>
+          <display_name>Central AC, SEER 13, 50W Crankcase Heater</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 13, Two Stage </value>
+          <display_name>Central AC, SEER 13, Two Stage </display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 13, Airflow Defect Ratio</value>
+          <display_name>Central AC, SEER 13, Airflow Defect Ratio</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER2 12.4, SEER 13.05</value>
+          <display_name>Central AC, SEER2 12.4, SEER 13.05</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 14</value>
+          <display_name>Central AC, SEER 14</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 15</value>
+          <display_name>Central AC, SEER 15</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 17.5, Variable Speed</value>
+          <display_name>Central AC, SEER 17.5, Variable Speed</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 18</value>
+          <display_name>Central AC, SEER 18</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 18, Airflow Defect Ratio</value>
+          <display_name>Central AC, SEER 18, Airflow Defect Ratio</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 24</value>
+          <display_name>Central AC, SEER 24</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 24, Airflow Defect Ratio</value>
+          <display_name>Central AC, SEER 24, Airflow Defect Ratio</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 24.5</value>
+          <display_name>Central AC, SEER 24.5</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 24.5, 0.73 SHR</value>
+          <display_name>Central AC, SEER 24.5, 0.73 SHR</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, EER 8.5</value>
+          <display_name>Room AC, EER 8.5</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, EER 8.5, Electric Heating</value>
+          <display_name>Room AC, EER 8.5, Electric Heating</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, EER 8.5, 0.73 SHR</value>
+          <display_name>Room AC, EER 8.5, 0.73 SHR</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, EER 9.8</value>
+          <display_name>Room AC, EER 9.8</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, EER 10.7</value>
+          <display_name>Room AC, EER 10.7</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, EER 12.0</value>
+          <display_name>Room AC, EER 12.0</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, CEER 8.4</value>
+          <display_name>Room AC, CEER 8.4</display_name>
+        </choice>
+        <choice>
+          <value>Evaporative Cooler, EER 13</value>
+          <display_name>Evaporative Cooler, EER 13</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Evaporative Cooler, SEER 13</value>
+          <display_name>Ductless Evaporative Cooler, SEER 13</display_name>
+        </choice>
+        <choice>
+          <value>Ducted Evaporative Cooler, SEER 13</value>
+          <display_name>Ducted Evaporative Cooler, SEER 13</display_name>
+        </choice>
+        <choice>
+          <value>Fan Coil Cooling, SEER 13</value>
+          <display_name>Fan Coil Cooling, SEER 13</display_name>
+        </choice>
+        <choice>
+          <value>Ducted Mini-Split AC, SEER 19</value>
+          <display_name>Ducted Mini-Split AC, SEER 19</display_name>
+        </choice>
+        <choice>
+          <value>Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio</value>
+          <display_name>Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split AC, SEER 19</value>
+          <display_name>Ductless Mini-Split AC, SEER 19</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split AC, SEER 17</value>
+          <display_name>Ductless Mini-Split AC, SEER 17</display_name>
+        </choice>
+        <choice>
+          <value>PTAC, EER 10.7</value>
+          <display_name>PTAC, EER 10.7</display_name>
+        </choice>
+        <choice>
+          <value>PTAC, EER 10.7, Electric Heating</value>
+          <display_name>PTAC, EER 10.7, Electric Heating</display_name>
+        </choice>
+        <choice>
+          <value>PTAC, EER 10.7, Natural Gas Heating</value>
+          <display_name>PTAC, EER 10.7, Natural Gas Heating</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>cooling_system_cooling_efficiency_type</name>
-      <display_name>Cooling System: Efficiency Type</display_name>
-      <description>The efficiency type of the cooling system. System types central air conditioner and mini-split use SEER or SEER2. System types room air conditioner and packaged terminal air conditioner use EER or CEER. Ignored for system type evaporative cooler.</description>
-      <type>Choice</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>SEER</default_value>
-      <choices>
-        <choice>
-          <value>SEER</value>
-          <display_name>SEER</display_name>
-        </choice>
-        <choice>
-          <value>SEER2</value>
-          <display_name>SEER2</display_name>
-        </choice>
-        <choice>
-          <value>EER</value>
-          <display_name>EER</display_name>
-        </choice>
-        <choice>
-          <value>CEER</value>
-          <display_name>CEER</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>cooling_system_cooling_efficiency</name>
-      <display_name>Cooling System: Efficiency</display_name>
-      <description>The rated efficiency value of the cooling system. Ignored for evaporative cooler.</description>
-      <type>Double</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>13</default_value>
-    </argument>
-    <argument>
-      <name>cooling_system_cooling_compressor_type</name>
-      <display_name>Cooling System: Cooling Compressor Type</display_name>
-      <description>The compressor type of the cooling system. Only applies to central air conditioner and mini-split. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner'&gt;Central Air Conditioner&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner'&gt;Mini-Split Air Conditioner&lt;/a&gt;) is used.</description>
-      <type>Choice</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>auto</value>
-          <display_name>auto</display_name>
-        </choice>
-        <choice>
-          <value>single stage</value>
-          <display_name>single stage</display_name>
-        </choice>
-        <choice>
-          <value>two stage</value>
-          <display_name>two stage</display_name>
-        </choice>
-        <choice>
-          <value>variable speed</value>
-          <display_name>variable speed</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>cooling_system_cooling_sensible_heat_fraction</name>
-      <display_name>Cooling System: Cooling Sensible Heat Fraction</display_name>
-      <description>The sensible heat fraction of the cooling system. Ignored for evaporative cooler. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner'&gt;Central Air Conditioner&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner'&gt;Room Air Conditioner&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-air-conditioner'&gt;Packaged Terminal Air Conditioner&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner'&gt;Mini-Split Air Conditioner&lt;/a&gt;) is used.</description>
-      <type>String</type>
-      <units>Frac</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>cooling_system_cooling_capacity</name>
@@ -2726,90 +2774,6 @@
       <required>true</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
-    </argument>
-    <argument>
-      <name>cooling_system_is_ducted</name>
-      <display_name>Cooling System: Is Ducted</display_name>
-      <description>Whether the cooling system is ducted or not. Only used for mini-split and evaporative cooler. It's assumed that central air conditioner is ducted, and room air conditioner and packaged terminal air conditioner are not ducted.</description>
-      <type>Choice</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>auto</value>
-          <display_name>auto</display_name>
-        </choice>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>cooling_system_crankcase_heater_watts</name>
-      <display_name>Cooling System: Crankcase Heater Power Watts</display_name>
-      <description>Cooling system crankcase heater power consumption in Watts. Applies only to central air conditioner, room air conditioner, packaged terminal air conditioner and mini-split. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner'&gt;Central Air Conditioner&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner'&gt;Room Air Conditioner&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-air-conditioner'&gt;Packaged Terminal Air Conditioner&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner'&gt;Mini-Split Air Conditioner&lt;/a&gt;) is used.</description>
-      <type>String</type>
-      <units>W</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>cooling_system_integrated_heating_system_fuel</name>
-      <display_name>Cooling System: Integrated Heating System Fuel Type</display_name>
-      <description>The fuel type of the heating system integrated into cooling system. Only used for packaged terminal air conditioner and room air conditioner.</description>
-      <type>Choice</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>auto</value>
-          <display_name>auto</display_name>
-        </choice>
-        <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
-        </choice>
-        <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
-        </choice>
-        <choice>
-          <value>wood</value>
-          <display_name>wood</display_name>
-        </choice>
-        <choice>
-          <value>wood pellets</value>
-          <display_name>wood pellets</display_name>
-        </choice>
-        <choice>
-          <value>coal</value>
-          <display_name>coal</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>cooling_system_integrated_heating_system_efficiency_percent</name>
-      <display_name>Cooling System: Integrated Heating System Efficiency</display_name>
-      <description>The rated heating efficiency value of the heating system integrated into cooling system. Only used for packaged terminal air conditioner and room air conditioner.</description>
-      <type>String</type>
-      <units>Frac</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>cooling_system_integrated_heating_system_capacity</name>
@@ -7894,7 +7858,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>E036144C</checksum>
+      <checksum>7F317C5F</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7923,7 +7887,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1A7E9D76</checksum>
+      <checksum>67942C2A</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>
