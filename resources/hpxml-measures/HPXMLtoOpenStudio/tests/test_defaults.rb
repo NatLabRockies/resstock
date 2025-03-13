@@ -3554,7 +3554,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     electric_panel = hpxml_bldg.electric_panels[0]
     electric_panel.voltage = HPXML::ElectricPanelVoltage120
     electric_panel.max_current_rating = 200.0
-    electric_panel.headroom = 5
+    electric_panel.headroom_spaces = 5
 
     # Test branch circuit inputs not overriden by defaults
     branch_circuits = electric_panel.branch_circuits
@@ -3643,7 +3643,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeOther }, 11000, true)
 
     # Test w/ RatedTotalSpaces instead of Headroom
-    hpxml_bldg.electric_panels[0].headroom = nil
+    hpxml_bldg.electric_panels[0].headroom_spaces = nil
     hpxml_bldg.electric_panels[0].rated_total_spaces = 12
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
@@ -3654,7 +3654,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     electric_panel = hpxml_bldg.electric_panels[0]
     electric_panel.voltage = nil
     electric_panel.max_current_rating = nil
-    electric_panel.headroom = nil
+    electric_panel.headroom_spaces = nil
     electric_panel.rated_total_spaces = nil
     electric_panel.branch_circuits.each do |branch_circuit|
       branch_circuit.voltage = nil
@@ -6026,13 +6026,13 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     end
   end
 
-  def _test_default_electric_panel_values(electric_panel, voltage, max_current_rating, headroom, rated_total_spaces)
+  def _test_default_electric_panel_values(electric_panel, voltage, max_current_rating, headroom_spaces, rated_total_spaces)
     assert_equal(voltage, electric_panel.voltage)
     assert_equal(max_current_rating, electric_panel.max_current_rating)
-    if headroom.nil?
-      assert_nil(electric_panel.headroom)
+    if headroom_spaces.nil?
+      assert_nil(electric_panel.headroom_spaces)
     else
-      assert_equal(headroom, electric_panel.headroom)
+      assert_equal(headroom_spaces, electric_panel.headroom_spaces)
     end
     if rated_total_spaces.nil?
       assert_nil(electric_panel.rated_total_spaces)

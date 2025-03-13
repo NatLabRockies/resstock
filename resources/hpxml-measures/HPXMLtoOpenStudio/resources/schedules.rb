@@ -1045,7 +1045,7 @@ class SchedulesFile
     return if schedules_paths.empty?
 
     @year = year
-    import(schedules_paths)
+    import(runner, schedules_paths)
     create_battery_charging_discharging_schedules
     expand_schedules
     @tmp_schedules = Marshal.load(Marshal.dump(@schedules)) # make a deep copy because we use unmodified schedules downstream
@@ -1080,11 +1080,13 @@ class SchedulesFile
     return false
   end
 
-  # Assemble schedules from all detailed schedule CSVs into a hash.
+  # Assemble schedules from all detailed schedule CSVs into a hash and perform various
+  # error-checks and data validation.
   #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param schedules_paths [Array<String>] array of file paths pointing to detailed schedule CSVs
   # @return [nil]
-  def import(schedules_paths)
+  def import(runner, schedules_paths)
     num_hrs_in_year = Calendar.num_hours_in_year(@year)
     @schedules = {}
     schedules_paths.each do |schedules_path|
@@ -1093,7 +1095,11 @@ class SchedulesFile
       columns.each do |col|
         col_name = col[0]
         column = Columns.values.find { |c| c.name == col_name }
-
+        if column.nil?
+          @schedules[col_name] = col[1..-1]
+          runner.registerWarning("Unknown column found in schedule file: #{col_name}. [context: #{schedules_path}]")
+          next
+        end
         values = col[1..-1].reject { |v| v.nil? }
 
         begin
