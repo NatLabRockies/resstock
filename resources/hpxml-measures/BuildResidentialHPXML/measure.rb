@@ -7267,6 +7267,9 @@ module HPXMLFile
     service_feeders = electric_panel.service_feeders
 
     hpxml_bldg.heating_systems.each do |heating_system|
+      next if heating_system.is_shared_system
+      next if heating_system.fraction_heat_load_served == 0
+
       if heating_system.primary_system
         service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
                             type: HPXML::ElectricPanelLoadTypeHeating,
@@ -7283,6 +7286,9 @@ module HPXMLFile
     end
 
     hpxml_bldg.cooling_systems.each do |cooling_system|
+      next if cooling_system.is_shared_system
+      next if cooling_system.fraction_cool_load_served == 0
+
       service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
                           type: HPXML::ElectricPanelLoadTypeCooling,
                           power: args[:electric_panel_load_cooling_system_power],
@@ -7296,11 +7302,15 @@ module HPXMLFile
                             voltage: args[:electric_panel_load_heat_pump_voltage],
                             component_idrefs: [heat_pump.id])
       end
-      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
-                          type: HPXML::ElectricPanelLoadTypeHeating,
-                          power: args[:electric_panel_load_heat_pump_heating_power],
-                          is_new_load: args[:electric_panel_load_heat_pump_addition],
-                          component_idrefs: [heat_pump.id])
+      if heat_pump.fraction_heat_load_served != 0
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                            type: HPXML::ElectricPanelLoadTypeHeating,
+                            power: args[:electric_panel_load_heat_pump_heating_power],
+                            is_new_load: args[:electric_panel_load_heat_pump_addition],
+                            component_idrefs: [heat_pump.id])
+      end
+      next unless heat_pump.fraction_cool_load_served != 0
+
       service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
                           type: HPXML::ElectricPanelLoadTypeCooling,
                           power: args[:electric_panel_load_heat_pump_cooling_power],
