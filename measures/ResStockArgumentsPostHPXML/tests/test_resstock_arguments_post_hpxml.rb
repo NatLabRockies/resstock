@@ -48,10 +48,10 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     assert(success)
   end
 
-  def _upgrade_osw(osw, loadflex_peak_offset, loadflex_pre_peak_duration_hours, loadflex_pre_peak_offset)
-    upgrades = { 'loadflex_peak_offset' => loadflex_peak_offset,
-                 'loadflex_pre_peak_duration_hours' => loadflex_pre_peak_duration_hours,
-                 'loadflex_pre_peak_offset' => loadflex_pre_peak_offset }
+  def _upgrade_osw(osw, hvac_flex_peak_offset, hvac_flex_pre_peak_duration_hours, hvac_flex_pre_peak_offset)
+    upgrades = { 'hvac_flex_peak_offset' => hvac_flex_peak_offset,
+                 'hvac_flex_pre_peak_duration_hours' => hvac_flex_pre_peak_duration_hours,
+                 'hvac_flex_pre_peak_offset' => hvac_flex_pre_peak_offset }
     puts upgrades
 
     osw_hash = JSON.parse(File.read(osw))
@@ -89,11 +89,11 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     upgrade_osw = File.absolute_path("#{this_dir}/#{upgrade_osw_file}")
     FileUtils.cp(osw, upgrade_osw)
 
-    loadflex_peak_offset = 2
-    loadflex_pre_peak_duration_hours = 2
-    loadflex_pre_peak_offset = 3
+    hvac_flex_peak_offset = 2
+    hvac_flex_pre_peak_duration_hours = 2
+    hvac_flex_pre_peak_offset = 3
 
-    _upgrade_osw(upgrade_osw, loadflex_peak_offset, loadflex_pre_peak_duration_hours, loadflex_pre_peak_offset)
+    _upgrade_osw(upgrade_osw, hvac_flex_peak_offset, hvac_flex_pre_peak_duration_hours, hvac_flex_pre_peak_offset)
     _run_osw(model, upgrade_osw)
 
     upgraded_path = File.join(this_dir, upgrade_osw_file.gsub('osw', 'xml'))
@@ -152,14 +152,14 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     cooling_setpoint_on_peak = celsius_to_fahrenheit(cooling_rows[3]['cooling_setpoint'].to_f)
 
     puts 'Testing heating pre peak setpoint offset'
-    assert_equal(loadflex_pre_peak_offset, heating_setpoint_pre_peak - heating_setpoint_base)
+    assert_equal(hvac_flex_pre_peak_offset, heating_setpoint_pre_peak - heating_setpoint_base)
     puts 'Testing heating on peak setpoint offset'
-    assert_equal(loadflex_peak_offset, heating_setpoint_base - heating_setpoint_on_peak)
+    assert_equal(hvac_flex_peak_offset, heating_setpoint_base - heating_setpoint_on_peak)
 
     puts 'Testing cooling pre peak setpoint offset'
-    assert_equal(loadflex_pre_peak_offset, cooling_setpoint_base - cooling_setpoint_pre_peak)
+    assert_equal(hvac_flex_pre_peak_offset, cooling_setpoint_base - cooling_setpoint_pre_peak)
     puts 'Testing cooling on peak setpoint offset'
-    assert_equal(loadflex_peak_offset, cooling_setpoint_on_peak - cooling_setpoint_base)
+    assert_equal(hvac_flex_peak_offset, cooling_setpoint_on_peak - cooling_setpoint_base)
 
     # Clean up
     File.delete(File.join(File.dirname(__FILE__), osw_file.gsub('.osw', '.xml')))

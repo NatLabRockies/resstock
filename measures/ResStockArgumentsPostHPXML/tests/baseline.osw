@@ -312,10 +312,10 @@
             "measure_dir_name": "ResStockArgumentsPostHPXML",
             "arguments": {
                 "hpxml_path": "tests/baseline.xml",
-                "loadflex_peak_offset": 0,
-                "loadflex_pre_peak_duration_hours": 0,
-                "loadflex_pre_peak_offset": 0,
-                "loadflex_random_shift_minutes": 0,
+                "hvac_flex_peak_offset": 0,
+                "hvac_flex_pre_peak_duration_hours": 0,
+                "hvac_flex_pre_peak_offset": 0,
+                "hvac_flex_random_shift_minutes": 0,
                 "output_csv_path": "tests",
                 "building_id": 1
             }
