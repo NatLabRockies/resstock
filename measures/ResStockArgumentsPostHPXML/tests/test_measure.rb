@@ -131,12 +131,24 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
       end
     end
 
+    assert_equal(0, heating_rows[0]['peak_period'].to_f)
+    assert_equal(0, heating_rows[0]['pre_peak_period'].to_f)
     heating_setpoint_base = celsius_to_fahrenheit(heating_rows[0]['heating_setpoint'].to_f)
+    assert_equal(1, heating_rows[1]['pre_peak_period'].to_f)
+    assert_equal(0, heating_rows[1]['peak_period'].to_f)
     heating_setpoint_pre_peak = celsius_to_fahrenheit(heating_rows[1]['heating_setpoint'].to_f)
+    assert_equal(0, heating_rows[3]['pre_peak_period'].to_f)
+    assert_equal(1, heating_rows[3]['peak_period'].to_f)
     heating_setpoint_on_peak = celsius_to_fahrenheit(heating_rows[3]['heating_setpoint'].to_f)
 
+    assert_equal(0, cooling_rows[0]['pre_peak_period'].to_f)
+    assert_equal(0, cooling_rows[0]['peak_period'].to_f)
     cooling_setpoint_base = celsius_to_fahrenheit(cooling_rows[0]['cooling_setpoint'].to_f)
+    assert_equal(1, cooling_rows[1]['pre_peak_period'].to_f)
+    assert_equal(0, cooling_rows[1]['peak_period'].to_f)
     cooling_setpoint_pre_peak = celsius_to_fahrenheit(cooling_rows[1]['cooling_setpoint'].to_f)
+    assert_equal(0, cooling_rows[3]['pre_peak_period'].to_f)
+    assert_equal(1, cooling_rows[3]['peak_period'].to_f)
     cooling_setpoint_on_peak = celsius_to_fahrenheit(cooling_rows[3]['cooling_setpoint'].to_f)
 
     puts 'Testing heating pre peak setpoint offset'
