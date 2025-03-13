@@ -14,6 +14,7 @@ __New Features__
 - Output updates:
   - **Breaking change**: Adds generator electricity produced to *total* fuel/energy use; previously it was only included in *net* values.
   - Adds new outputs for *net* peak electricity (summer/winter/annual); same as *total* peak electricity outputs but subtracts power produced by PV.
+- Allows arbitrary columns to be present in a detailed schedule csv file with warning.
 
 __Bugfixes__
 - Fixes zero occupants specified for one unit in a whole MF building from being treated like zero occupants for every unit.
