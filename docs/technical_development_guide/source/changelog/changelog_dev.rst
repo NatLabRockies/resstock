@@ -6,6 +6,19 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+    .. change::
+        :tags: feature, docs, technical reference guide, outputs
+        :pullreq: 1259
+
+        **Date**: 2025-03-14
+
+        Title:
+        HVAC Load Flexibility
+
+        Description:
+        Introduce HVAC load flexibility capability to ResStockArgumentsPostHPXML measure. The measure, when asked for, modifies the heating and cooling setpoint to reduce heating and cooling load during peak period to reduce HVAC energy use.
+
+        Assignees: Rajendra Adhikari
 
     .. change::
         :tags: docs, technical reference guide

@@ -42,3 +42,5 @@ Electricity:Facility,electricity_facility__j,J,"Any user-specified EnergyPlus ou
 ,schedules_vacancy,,Unavailable period.
 ,schedules_electric_vehicle_charging,frac,availability schedule for electric vehicle charging.
 ,schedules_electric_vehicle_discharging,frac,availability schedule for electric vehicle discharging.
+,schedules_pre_peak_period,frac,1 during pre-peak period, 0 otherwise. Will only appear when calling load flexibility measure.
+,schedules_peak_period,frac,1 during peak period, 0 otherwise. Will only appear when calling load flexibility measure.
