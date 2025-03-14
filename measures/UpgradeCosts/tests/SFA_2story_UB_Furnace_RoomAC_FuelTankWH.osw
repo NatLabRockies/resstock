@@ -40,7 +40,7 @@
         "cooking_range_oven_usage_multiplier": 1.0,
         "cooling_system_cooling_capacity": 36000.0,
         "cooling_system_fraction_cool_load_served": 1,
-        "cooling_system_type": "Room AC, EER 8.5, 0.73 SHR",
+        "cooling_system": "Room AC, EER 8.5, 0.73 SHR",
         "dehumidifier_capacity": 40,
         "dehumidifier_efficiency": 1.8,
         "dehumidifier_efficiency_type": "EnergyFactor",
