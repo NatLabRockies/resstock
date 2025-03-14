@@ -11,10 +11,10 @@ end
 def create_hpxmls
   this_dir = File.dirname(__FILE__)
   workflow_dir = File.join(this_dir, 'workflow')
-  hpxml_inputs_tsv_path = File.join(workflow_dir, 'hpxml_inputs.json')
+  hpxml_inputs_json_path = File.join(workflow_dir, 'hpxml_inputs.json')
 
   require 'json'
-  json_inputs = JSON.parse(File.read(hpxml_inputs_tsv_path))
+  json_inputs = JSON.parse(File.read(hpxml_inputs_json_path))
   abs_hpxml_files = []
   dirs = json_inputs.keys.map { |file_path| File.dirname(file_path) }.uniq
 
@@ -68,14 +68,14 @@ def create_hpxmls
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
 
     num_apply_measures = 1
-    if hpxml_path.include?('base-bldgtype-mf-whole-building.xml') || hpxml_path.include?('base-bldgtype-mf-whole-building-detailed-electric-panel.xml')
+    if hpxml_path.include?('base-bldgtype-mf-whole-building.xml')
       num_apply_measures = 6
     end
 
     for i in 1..num_apply_measures
       build_residential_hpxml = measures['BuildResidentialHPXML'][0]
       build_residential_hpxml['existing_hpxml_path'] = hpxml_path if i > 1
-      if hpxml_path.include?('base-bldgtype-mf-whole-building.xml') || hpxml_path.include?('base-bldgtype-mf-whole-building-detailed-electric-panel.xml')
+      if hpxml_path.include?('base-bldgtype-mf-whole-building.xml')
         suffix = "_#{i}" if i > 1
         build_residential_hpxml['schedules_filepaths'] = "../../HPXMLtoOpenStudio/resources/schedule_files/#{stochastic_sched_basename}-mf-unit#{suffix}.csv"
         build_residential_hpxml['geometry_foundation_type'] = (i <= 2 ? 'UnconditionedBasement' : 'AboveApartment')
@@ -157,7 +157,6 @@ def create_hpxmls
   dirs.each do |dir|
     Dir["#{workflow_dir}/#{dir}/*.xml"].each do |hpxml|
       next if abs_hpxml_files.include? File.absolute_path(hpxml)
-      next if dir == 'real_homes'
 
       puts "Warning: Extra HPXML file found at #{File.absolute_path(hpxml)}"
     end
@@ -273,6 +272,12 @@ def apply_hpxml_modification_hers_hvac_dse(hpxml_path, hpxml)
                                       distribution_system_type: HPXML::HVACDistributionTypeDSE,
                                       annual_heating_dse: 1.0,
                                       annual_cooling_dse: 1.0)
+    # set cooling SHR as default (blank) to maintain HERS_HVAC sample files,
+    # since cooling_system_cooling_sensible_heat_fraction is specified explicitly
+    # in cooling_system.tsv for Option = Central AC, SEER 13
+    if !hpxml_bldg.cooling_systems[0].nil?
+      hpxml_bldg.cooling_systems[0].cooling_shr = nil
+    end
   end
   if hpxml_path.include? 'HERS_DSE'
     # For DSE tests, use effective R-values instead of nominal R-values to match the test specs.
@@ -314,6 +319,12 @@ def apply_hpxml_modification_hers_hot_water(hpxml)
                                     distribution_system_type: HPXML::HVACDistributionTypeDSE,
                                     annual_heating_dse: 1.0,
                                     annual_cooling_dse: 1.0)
+  # set cooling SHR as default (blank) to maintain HERS_Hot_Water sample files,
+  # since cooling_system_cooling_sensible_heat_fraction is specified explicitly
+  # in cooling_system.tsv for Option = Central AC, SEER 13
+  if !hpxml_bldg.cooling_systems[0].nil?
+    hpxml_bldg.cooling_systems[0].cooling_shr = nil
+  end
 end
 
 def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
@@ -378,6 +389,9 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     elsif ['base-misc-defaults.xml'].include? hpxml_file
       hpxml_bldg.building_construction.average_ceiling_height = nil
       hpxml_bldg.building_construction.conditioned_building_volume = nil
+      hpxml_bldg.cooling_systems[0].cooling_shr = nil
+    elsif ['base-residents-5-5.xml'].include? hpxml_file
+      hpxml_bldg.cooling_systems[0].cooling_shr = nil
     elsif ['base-atticroof-cathedral.xml'].include? hpxml_file
       hpxml_bldg.building_construction.number_of_conditioned_floors = 2
       hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade = 1

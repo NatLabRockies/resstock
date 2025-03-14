@@ -1,0 +1,52 @@
+Option Name	wall_siding_type	wall_color
+"Aluminum, Dark"	aluminum siding	dark
+"Aluminum, Medium"	aluminum siding	medium
+"Aluminum, Medium Dark"	aluminum siding	medium dark
+"Aluminum, Light"	aluminum siding	light
+"Aluminum, Reflective"	aluminum siding	reflective
+"Brick, Dark"	brick veneer	dark
+"Brick, Medium"	brick veneer	medium
+"Brick, Medium Dark"	brick veneer	medium dark
+"Brick, Light"	brick veneer	light
+"Brick, Reflective"	brick veneer	reflective
+"Fiber-Cement, Dark"	fiber cement siding	dark
+"Fiber-Cement, Medium"	fiber cement siding	medium
+"Fiber-Cement, Medium Dark"	fiber cement siding	medium dark
+"Fiber-Cement, Light"	fiber cement siding	light
+"Fiber-Cement, Reflective"	fiber cement siding	reflective
+"Shingle, Asbestos, Dark"	asbestos siding	dark
+"Shingle, Asbestos, Medium"	asbestos siding	medium
+"Shingle, Asbestos, Medium Dark"	asbestos siding	medium dark
+"Shingle, Asbestos, Light"	asbestos siding	light
+"Shingle, Asbestos, Reflective"	asbestos siding	reflective
+"Shingle, Composition, Dark"	composite shingle siding	dark
+"Shingle, Composition, Medium"	composite shingle siding	medium
+"Shingle, Composition, Medium Dark"	composite shingle siding	medium dark
+"Shingle, Composition, Light"	composite shingle siding	light
+"Shingle, Composition, Reflective"	composite shingle siding	reflective
+"Stucco, Dark"	stucco	dark
+"Stucco, Medium"	stucco	medium
+"Stucco, Medium Dark"	stucco	medium dark
+"Stucco, Light"	stucco	light
+"Stucco, Reflective"	stucco	reflective
+"Vinyl, Dark"	vinyl siding	dark
+"Vinyl, Medium"	vinyl siding	medium
+"Vinyl, Medium Dark"	vinyl siding	medium dark
+"Vinyl, Light"	vinyl siding	light
+"Vinyl, Reflective"	vinyl siding	reflective
+"Wood, Dark"	wood siding	dark
+"Wood, Medium"	wood siding	medium
+"Wood, Medium Dark"	wood siding	medium dark
+"Wood, Light"	wood siding	light
+"Wood, Reflective"	wood siding	reflective
+"Synthetic Stucco, Dark"	synthetic stucco	dark
+"Synthetic Stucco, Medium"	synthetic stucco	medium
+"Synthetic Stucco, Medium Dark"	synthetic stucco	medium dark
+"Synthetic Stucco, Light"	synthetic stucco	light
+"Synthetic Stucco, Reflective"	synthetic stucco	reflective
+"Masonite, Dark"	masonite siding	dark
+"Masonite, Medium"	masonite siding	medium
+"Masonite, Medium Dark"	masonite siding	medium dark
+"Masonite, Light"	masonite siding	light
+"Masonite, Reflective"	masonite siding	reflective
+None	none	medium
