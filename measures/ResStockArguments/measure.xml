@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>cc4e47c9-e34a-4e19-ad90-7ec5570258ab</version_id>
-  <version_modified>2025-03-12T19:56:03Z</version_modified>
+  <version_id>feb54839-bbf4-48e1-aecb-cb6debde9dd9</version_id>
+  <version_modified>2025-03-14T21:57:09Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -2617,8 +2617,8 @@
           <display_name>Central AC, SEER 13, 50W Crankcase Heater</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 13, Two Stage </value>
-          <display_name>Central AC, SEER 13, Two Stage </display_name>
+          <value>Central AC, SEER 13, Two Stage</value>
+          <display_name>Central AC, SEER 13, Two Stage</display_name>
         </choice>
         <choice>
           <value>Central AC, SEER 13, Airflow Defect Ratio</value>
@@ -7961,7 +7961,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>7F317C5F</checksum>
+      <checksum>BCF2EB47</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
