@@ -5,7 +5,7 @@ None	none
 "Central AC, SEER 13"	central air conditioner	SEER	13	single stage	0.73						
 "Central AC, SEER 13, 25W Crankcase Heater"	central air conditioner	SEER	13	single stage	0.73				25		
 "Central AC, SEER 13, 50W Crankcase Heater"	central air conditioner	SEER	13	single stage	0.73				50		
-"Central AC, SEER 13, Two Stage "	central air conditioner	SEER	13	two stage							
+"Central AC, SEER 13, Two Stage"	central air conditioner	SEER	13	two stage							
 "Central AC, SEER 13, Airflow Defect Ratio"	central air conditioner	SEER	13	single stage	0.73		-0.25	-0.25			
 "Central AC, SEER2 12.4, SEER 13.05"	central air conditioner	SEER2	12.4	single stage	0.73						
 "Central AC, SEER 14"	central air conditioner	SEER	14	single stage							
