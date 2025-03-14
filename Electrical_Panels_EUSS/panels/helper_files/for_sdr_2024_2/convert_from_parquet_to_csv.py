@@ -40,14 +40,21 @@ def save_to_file(df, file):
         return
     raise ValueError(f"Unsupported {suffix=}")
 
-def convert_files(file_dir: Path):
-    out_dir = file_dir.parent / (file_dir.stem + "_csv")
+def convert_files(file_dir: Path, gzip: bool=False):
+    out_folder = file_dir.stem + "_csv"
+    if gzip:
+        print("Compress csv with gzip...")
+        out_folder += "_gz"
+    out_dir = file_dir.parent / out_folder
     out_dir.mkdir(parents=True, exist_ok=True)
     file_list = sorted(file_dir.glob("*.parquet"))
     for file in file_list:
         df = read_file(file)
         file_name = parse_filename(file)
-        df.to_csv(out_dir / (file_name+".csv"), index=False)
+        if gzip:
+            df.to_csv(out_dir / (file_name+".csv.gz"), index=False, compression='gzip')
+        else:
+            df.to_csv(out_dir / (file_name+".csv"), index=False)
         print(f" - Converted: {file_name}")
 
     print(f"Files saved to: {out_dir}")
@@ -60,8 +67,16 @@ if __name__ == "__main__":
         action="store",
         help="Path to oedi-formatted resstock results directory"
         )
+    parser.add_argument(
+        "-z",
+        "--gzip",
+        action="store_true",
+        default=False,
+        help="If true, gzip individual csv files",
+    )
+
 
     args = parser.parse_args()
     file_dir = Path(args.file_dir)
 
-    convert_files(file_dir)
+    convert_files(file_dir, gzip=args.gzip)
