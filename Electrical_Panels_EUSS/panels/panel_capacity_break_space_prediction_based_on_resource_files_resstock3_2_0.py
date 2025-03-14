@@ -4,6 +4,7 @@ resstock resource files stored in:
 
 
 by: Yingli.Lou@nrel.gov
+updated by: Lixi.Liu@nrel.gov
 updated: 01/13/2025
 
 """
@@ -278,7 +279,7 @@ def panel_amp_unbin(df_panel):
                 ]
             )
         ),
-        "predicted_panel_amp",
+        "electric_panel_service_rating",
     ] = 250
     df_panel.loc[
         (df_panel["electric_panel_service_rating_bin"] == "201+")
@@ -519,6 +520,7 @@ def capacity_prediction(dfb):
     ]
     dfb_sf_e = dfb_sf.loc[dfb_sf["heating_fuel"] == "electricity"]
     dfb_sf_ne = dfb_sf.loc[dfb_sf["heating_fuel"] == "non-electricity"]
+    assert len(dfb) == len(dfb_sf_e) + len(dfb_sf_ne) + len(dfb_mf)
 
     for index, row in dfb_sf_e.iterrows():
         dfb_sf_e.at[index, "electric_panel_service_rating_bin"] = (
@@ -533,8 +535,14 @@ def capacity_prediction(dfb):
             sample_rated_capacity_bin(df_prob_table_mf, row, "multi-family")
         )
 
-    df_capacity = pd.concat([dfb_sf_e, dfb_sf_ne, dfb_mf], ignore_index=True)
+    df_capacity = pd.concat(
+        [dfb_sf_e, dfb_sf_ne, dfb_mf], ignore_index=True
+    ).sort_values(by="building_id", ignore_index=True)
     df_capacity = panel_amp_unbin(df_capacity)
+
+    assert len(dfb) == len(df_capacity)
+    assert df_capacity["electric_panel_service_rating_bin"].isna().sum() == 0
+    assert df_capacity["electric_panel_service_rating"].isna().sum() == 0
 
     return df_capacity
 
@@ -548,6 +556,7 @@ def breaker_space_prediction(dfb):
         dfb.at[index, "breaker_spaces_headroom"] = sample_breaker_space_headroom(
             df_prob_table, row
         )
+    assert dfb["breaker_spaces_headroom"].isna().sum() == 0
     return dfb
 
 
@@ -596,6 +605,7 @@ def main(
     output_dir.mkdir(parents=True, exist_ok=True)
 
     dfb = read_file(filename, low_memory=False)
+    n_dfb = len(dfb)
     if buildstock_csv:
         print("process data for buildstock csv data format")
         dfb = buildstock_csv_column_renaming(dfb)
@@ -641,6 +651,7 @@ def main(
     else:
         dfb = results_column_renaming(dfb, retain_columns=cols)
 
+    assert len(dfb) == n_dfb
     output_filename = output_dir / (
         filename.stem + "__panel_characteristics" + ext + ".csv"
     )
