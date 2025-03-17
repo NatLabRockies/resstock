@@ -1110,7 +1110,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _default_hpxml, default_hpxml_bldg = _test_measure()
     _test_default_window_values(default_hpxml_bldg.windows[0], 0.44, 0.55, 0.66, 0.77, 0.5, 123, HPXML::LocationInterior, 0.19, 0.28, 0.37, 0.46)
 
-    # Test defaults after 301-2022 Addendum C
+    # Test defaults w/ 301-2022 Addendum C
     hpxml_bldg.windows[0].fraction_operable = nil
     hpxml_bldg.windows[0].exterior_shading_factor_summer = nil
     hpxml_bldg.windows[0].exterior_shading_factor_winter = nil

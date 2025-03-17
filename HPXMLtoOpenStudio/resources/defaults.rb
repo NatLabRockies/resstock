@@ -4759,8 +4759,8 @@ module Defaults
       HPXML::ExteriorShadingTypeDeciduousTree => 0.0, # Assume fully opaque
       HPXML::ExteriorShadingTypeEvergreenTree => 0.0, # Assume fully opaque
       HPXML::ExteriorShadingTypeOther => 0.5, # Assume half opaque
-      HPXML::ExteriorShadingTypeSolarFilm => 0.3, # Based on MulTEA engineering manual
-      HPXML::ExteriorShadingTypeSolarScreens => 0.7, # Based on MulTEA engineering manual
+      HPXML::ExteriorShadingTypeSolarFilm => 0.7, # Based on MulTEA engineering manual
+      HPXML::ExteriorShadingTypeSolarScreens => 0.3, # Based on MulTEA engineering manual
     }
 
     ext_sf_summer = c_map[window.exterior_shading_type]
