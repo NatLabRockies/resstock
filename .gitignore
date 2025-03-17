@@ -21,5 +21,4 @@
 buildstockbatch_crash_details.log
 **/.ipynb_checkpoints/*
 **/data/*
-!/resources/data/dictionary/outputs.csv
-!/resources/data/dictionary/inputs.csv
+!/resources/data/dictionary/
