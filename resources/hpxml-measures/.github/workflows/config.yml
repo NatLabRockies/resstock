@@ -7,6 +7,13 @@ on:
     types: [ synchronize, opened ]
   workflow_dispatch:
 
+# Cancel in-progress jobs when a new commit is pushed to the PR
+# This avoids CI jobs "stacking up" for the same PR
+# This won't stop existing job if new commit is pushed with [ci skip].
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run-unit-tests:
     runs-on: ubuntu-22.04

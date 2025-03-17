@@ -1674,9 +1674,9 @@ Either winter/summer shading coefficients can be directly provided, or they can 
   
          \- **external overhangs** or **awnings**: C1=0.0 (unless :ref:`window_overhangs` are specified, in which case geometric shading is explicitly modeled)
          
-         \- **solar screens**: C1=0.7
+         \- **solar screens**: C1=0.3 (Based on Table A.3.4 of `MulTEA Engineering Manual Version 1 <https://weatherization.ornl.gov/wp-content/uploads/2018/08/MulTEAEngineeringManualORNLTM2018-813.pdf>`_)
          
-         \- **solar film**: C1=0.3
+         \- **solar film**: C1=0.7 (Based on Table A.3.4 of `MulTEA Engineering Manual Version 1 <https://weatherization.ornl.gov/wp-content/uploads/2018/08/MulTEAEngineeringManualORNLTM2018-813.pdf>`_)
          
          \- **deciduous tree** or **evergreen tree**: C1=0.0
          
