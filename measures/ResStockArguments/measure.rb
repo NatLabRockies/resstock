@@ -665,24 +665,30 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # HVAC Faults
+    # TODO: HVAC System Single Speed ASHP Airflow/Charge.tsv and HVAC System Single Speed AC Airflow/Charge.tsv
+    # currently sample systems that have faults (non-zero probability in above tsvs)...including options that cover all possible sampled combinations 
+    # of cooling_system_actual_cfm_per_ton, cooling_system_frac_manufacturer_charge, heat_pump_actual_cfm_per_ton, and heat_pump_frac_manufacturer_charge 
+    # will make the dropdowns in heat_pump.tsv and cooling_system.tsv prohibitively long. Is there a way to get the airflow/charge defect inputs into the xml created by BuildResidentialHPXML without going through OS-HXPML?
+    # Use ResStockArgumentsPostHPXML? Ideally edits to accommodate the faulty systems would happen only in ResStock, not OS-HPXML.
+    
     if !args[:heating_system_rated_cfm_per_ton].nil? && !args[:heating_system_actual_cfm_per_ton].nil?
       args[:heating_system_airflow_defect_ratio] = (args[:heating_system_actual_cfm_per_ton] - args[:heating_system_rated_cfm_per_ton]) / args[:heating_system_rated_cfm_per_ton]
     end
 
     if !args[:cooling_system_rated_cfm_per_ton].nil? && !args[:cooling_system_actual_cfm_per_ton].nil?
-      args[:cooling_system_airflow_defect_ratio] = (args[:cooling_system_actual_cfm_per_ton] - args[:cooling_system_rated_cfm_per_ton]) / args[:cooling_system_rated_cfm_per_ton]
+      # args[:cooling_system_airflow_defect_ratio] = (args[:cooling_system_actual_cfm_per_ton] - args[:cooling_system_rated_cfm_per_ton]) / args[:cooling_system_rated_cfm_per_ton]
     end
 
     if !args[:cooling_system_frac_manufacturer_charge].nil?
-      args[:cooling_system_charge_defect_ratio] = args[:cooling_system_frac_manufacturer_charge] - 1.0
+      # args[:cooling_system_charge_defect_ratio] = args[:cooling_system_frac_manufacturer_charge] - 1.0
     end
 
     if !args[:heat_pump_rated_cfm_per_ton].nil? && !args[:heat_pump_actual_cfm_per_ton].nil?
-      args[:heat_pump_airflow_defect_ratio] = (args[:heat_pump_actual_cfm_per_ton] - args[:heat_pump_rated_cfm_per_ton]) / args[:heat_pump_rated_cfm_per_ton]
+      # args[:heat_pump_airflow_defect_ratio] = (args[:heat_pump_actual_cfm_per_ton] - args[:heat_pump_rated_cfm_per_ton]) / args[:heat_pump_rated_cfm_per_ton]
     end
 
     if !args[:heat_pump_frac_manufacturer_charge].nil?
-      args[:heat_pump_charge_defect_ratio] = args[:heat_pump_frac_manufacturer_charge] - 1.0
+      # args[:heat_pump_charge_defect_ratio] = args[:heat_pump_frac_manufacturer_charge] - 1.0
     end
 
     # Error check geometry inputs

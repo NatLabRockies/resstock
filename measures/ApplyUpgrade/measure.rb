@@ -393,7 +393,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       # the lines below would throw an error as BuildResidentialHPXML measure.xml no longer expects these args
 
       # all HVAC options in resstock currently use a default heating_system_airflow_defect_ratio
-      # TODO: when refactoring, check that cooling_system_airflow_defect_ratio, cooling_system_charge_defect_ratio, heat_pump_airflow_defect_ratio, heat_pump_charge_defect_ratio are also defaulted
+      # However, some ResStock options sample Single Stage ASHP and AC that DO have airflow/charge defects
       # per Joe Robertson, if ResStock doesn't use these args, the lines below can be commented out without any issue
 
       # measures['BuildResidentialHPXML'][0]['heating_system_airflow_defect_ratio'] = defect_ratios['heating_system_airflow_defect_ratio']
