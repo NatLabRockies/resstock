@@ -6455,8 +6455,14 @@ module Defaults
         next if !component_ids.include?(cooking_range.id)
         next if cooking_range.fuel_type != HPXML::FuelTypeElectricity
 
-        cooking_range.branch_circuits.each do |branch_circuit|
-          watts += get_default_panels_value(runner, default_panels_csv_data, 'rangeoven', 'PowerRating', branch_circuit.voltage)
+        if cooking_range.is_induction
+          cooking_range.branch_circuits.each do |branch_circuit|
+            watts += get_default_panels_value(runner, default_panels_csv_data, 'rangeoven_induction', 'PowerRating', branch_circuit.voltage)
+          end
+        else # resistance
+          cooking_range.branch_circuits.each do |branch_circuit|
+            watts += get_default_panels_value(runner, default_panels_csv_data, 'rangeoven', 'PowerRating', branch_circuit.voltage)
+          end
         end
       end
     elsif type == HPXML::ElectricPanelLoadTypeMechVent
@@ -6618,8 +6624,13 @@ module Defaults
       next if !component_ids.include?(cooking_range.id)
       next if cooking_range.fuel_type != HPXML::FuelTypeElectricity
 
+      if cooking_range.is_induction
+        load_name = 'rangeoven_induction'
+      else # resistance
+        load_name = 'rangeoven'
+      end
       watts = cooking_range.service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeRangeOven }.map { |sf| sf.power }.sum(0.0)
-      breaker_spaces += get_default_panels_value(runner, default_panels_csv_data, 'rangeoven', 'BreakerSpaces', voltage, watts, max_current_rating)
+      breaker_spaces += get_default_panels_value(runner, default_panels_csv_data, load_name, 'BreakerSpaces', voltage, watts, max_current_rating)
     end
 
     hpxml_bldg.ventilation_fans.each do |ventilation_fan|

@@ -18,6 +18,7 @@ dryer_hp,240,860,W,2,clothes dryer,240V heat pump clothes dryer.
 dishwasher,120,1200,W,1,dishwasher,Dishwasher.
 rangeoven,120,1800,W,1,range/oven,120V range-oven.
 rangeoven,240,12000,W,2,range/oven,240V range-oven.
+rangeoven_induction,240,10000,W,2,range/oven,240V induction range-oven.
 wh_tankless1,240,18000,W,4,hot water,Tankless water heater - one bathroom.
 wh_tankless2,240,24000,W,4,hot water,Tankless water heater - two bathrooms.
 wh_tankless3,240,36000,W,6,hot water,Tankless water heater - three or more bathrooms.
