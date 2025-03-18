@@ -1,5 +1,5 @@
 Load Name,Voltage,Power Rating,Units,Breaker Spaces,Load Type,Notes
-lighting,120,3,W/sqft,0,lighting,Multiplier for conditioned floor area to account  for capacity impacts of general lighting.
+lighting,120,3,W/sqft,2,lighting,Multiplier for conditioned floor area to account  for capacity impacts of general lighting.
 kitchen,120,3000,W,2,kitchen,Two kitchen small appliance circuits at 1.5 kVA.
 laundry,120,1500,W,1,laundry,One laundry circuit at 1.5 kVA.
 ev_level,120,1650,W,1,electric vehicle charging,Level 1 - 120V EV charger. Assumes dedicated circuit.

@@ -1404,9 +1404,9 @@ class ReportSimulationOutputTest < Minitest::Test
     _annual_csv, _timeseries_csv, _run_log, panel_csv = _test_measure(args_hash)
     assert(File.exist?(panel_csv))
     actual_panel_rows = _get_annual_values(panel_csv)
-    assert_equal(14, actual_panel_rows['Electric Panel Breaker Spaces: Total Count'])
-    assert_equal(9, actual_panel_rows['Electric Panel Breaker Spaces: Occupied Count'])
-    assert_equal(14 - 9, actual_panel_rows['Electric Panel Breaker Spaces: Headroom Count'])
+    assert_equal(16, actual_panel_rows['Electric Panel Breaker Spaces: Total Count'])
+    assert_equal(11, actual_panel_rows['Electric Panel Breaker Spaces: Occupied Count'])
+    assert_equal(16 - 11, actual_panel_rows['Electric Panel Breaker Spaces: Headroom Count'])
     assert_equal(9444.2, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Total Load (W)'])
     assert_equal(39.4, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Total Capacity (A)'])
     assert_in_epsilon(100.0 - 39.4, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Headroom Capacity (A)'], 0.01)
@@ -1417,7 +1417,7 @@ class ReportSimulationOutputTest < Minitest::Test
     # Upgrade
     hpxml_bldg = hpxml.buildings[0]
     electric_panel = hpxml_bldg.electric_panels[0]
-    electric_panel.rated_total_spaces = 14
+    electric_panel.rated_total_spaces = 16
     branch_circuits = electric_panel.branch_circuits
     service_feeders = electric_panel.service_feeders
     sf = service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeHeating }
@@ -1471,9 +1471,9 @@ class ReportSimulationOutputTest < Minitest::Test
     _annual_csv, _timeseries_csv, _run_log, panel_csv = _test_measure(args_hash)
     assert(File.exist?(panel_csv))
     actual_panel_rows = _get_annual_values(panel_csv)
-    assert_equal(14, actual_panel_rows['Electric Panel Breaker Spaces: Total Count'])
-    assert_equal(18, actual_panel_rows['Electric Panel Breaker Spaces: Occupied Count'])
-    assert_equal(14 - 18, actual_panel_rows['Electric Panel Breaker Spaces: Headroom Count'])
+    assert_equal(16, actual_panel_rows['Electric Panel Breaker Spaces: Total Count'])
+    assert_equal(20, actual_panel_rows['Electric Panel Breaker Spaces: Occupied Count'])
+    assert_equal(16 - 20, actual_panel_rows['Electric Panel Breaker Spaces: Headroom Count'])
     assert_equal(34827.2, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Total Load (W)'])
     assert_equal(145.1, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Total Capacity (A)'])
     assert_in_epsilon(100.0 - 145.1, actual_panel_rows['Electric Panel Load: 2023 Existing Dwelling Load-Based: Headroom Capacity (A)'], 0.01)
