@@ -7458,6 +7458,39 @@ module HPXMLFile
       end
     end
 
+    hpxml_bldg.ev_chargers.each do |ev_charger|
+      if not args[:electric_panel_load_misc_plug_loads_vehicle_voltage].nil?
+        voltage = args[:electric_panel_load_misc_plug_loads_vehicle_voltage]
+      elsif not ev_charger.charging_level.nil?
+        voltage = { 1 => HPXML::ElectricPanelVoltage120,
+                    2 => HPXML::ElectricPanelVoltage240,
+                    3 => HPXML::ElectricPanelVoltage240 }[ev_charger.charging_level]
+      end
+
+      if not args[:electric_panel_load_misc_plug_loads_vehicle_power].nil?
+        power = args[:electric_panel_load_misc_plug_loads_vehicle_power]
+      elsif not ev_charger.charging_power.nil?
+        power = ev_charger.charging_power
+      end
+
+      if voltage.nil? && !power.nil?
+        voltage = HPXML::ElectricPanelVoltage120
+        if power > 2400 # 120v, 20A breaker?
+          voltage = HPXML::ElectricPanelVoltage240
+        end
+      end
+
+      branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
+                          voltage: voltage,
+                          component_idrefs: [ev_charger.id])
+
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypeElectricVehicleCharging,
+                          power: power,
+                          is_new_load: args[:electric_panel_load_misc_plug_loads_vehicle_addition],
+                          component_idrefs: [ev_charger.id])
+    end
+
     if !args[:electric_panel_load_other_power].nil? || !args[:electric_panel_load_other_addition].nil?
       branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
                           occupied_spaces: 1,

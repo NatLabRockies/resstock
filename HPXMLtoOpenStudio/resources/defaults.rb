@@ -6147,6 +6147,8 @@ module Defaults
         if component.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging
           return HPXML::ElectricPanelVoltage120
         end
+      elsif component.is_a?(HPXML::ElectricVehicleCharger)
+        return HPXML::ElectricPanelVoltage120
       end
       return HPXML::ElectricPanelVoltage240
     end
@@ -6550,6 +6552,14 @@ module Defaults
           watts += get_default_panels_value(runner, default_panels_csv_data, 'ev_level', 'PowerRating', branch_circuit.voltage)
         end
       end
+
+      hpxml_bldg.ev_chargers.each do |ev_charger|
+        next if !component_ids.include?(ev_charger.id)
+
+        ev_charger.branch_circuits.each do |branch_circuit|
+          watts += get_default_panels_value(runner, default_panels_csv_data, 'ev_level', 'PowerRating', branch_circuit.voltage)
+        end
+      end
     elsif type == HPXML::ElectricPanelLoadTypeLighting
       watts += get_default_panels_value(runner, default_panels_csv_data, 'lighting', 'PowerRating', HPXML::ElectricPanelVoltage120) * hpxml_bldg.building_construction.conditioned_floor_area
     elsif type == HPXML::ElectricPanelLoadTypeKitchen
@@ -6695,6 +6705,13 @@ module Defaults
       next if !component_ids.include?(plug_load.id)
 
       watts = plug_load.service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeElectricVehicleCharging }.map { |sf| sf.power }.sum(0.0)
+      breaker_spaces += get_default_panels_value(runner, default_panels_csv_data, 'ev_level', 'BreakerSpaces', voltage, watts, max_current_rating)
+    end
+
+    hpxml_bldg.ev_chargers.each do |ev_charger|
+      next if !component_ids.include?(ev_charger.id)
+
+      watts = ev_charger.service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeElectricVehicleCharging }.map { |sf| sf.power }.sum(0.0)
       breaker_spaces += get_default_panels_value(runner, default_panels_csv_data, 'ev_level', 'BreakerSpaces', voltage, watts, max_current_rating)
     end
 
