@@ -3795,17 +3795,6 @@ Maximum power output of the second PV system. For a shared system, this is the t
 
 <br/>
 
-**Electric Panel: Cooking Range/Oven Power**
-
-Specifies the panel load cooking range/oven power. Only applies to electric cooking range/oven. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
-
-- **Name:** ``electric_panel_load_cooking_range_power``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
 **Battery: Present**
 
 Whether there is a lithium ion battery present.

@@ -70,7 +70,7 @@ module Constants
                                    'electric_panel_load_water_heater_power',
                                    'electric_panel_load_clothes_dryer_power',
                                    'electric_panel_load_dishwasher_power',
-                                   # 'electric_panel_load_cooking_range_power',
+                                   'electric_panel_load_cooking_range_power',
                                    'electric_panel_load_misc_plug_loads_well_pump_power',
                                    'electric_panel_load_misc_plug_loads_vehicle_power',
                                    'electric_panel_load_pool_pump_power',
