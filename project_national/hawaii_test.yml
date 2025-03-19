@@ -70,7 +70,7 @@ workflow_generator:
       - measure_dir_name: QOIReport
 
     server_directory_cleanup:
-      retain_schedules_csv: false
+      retain_schedules_csv: true
 
 baseline:
   n_buildings_represented:  539053 #556937 #Hawaii state # 139647020 #American Community Survey 2021 5-year, B25001, does not include territories
