@@ -514,6 +514,11 @@
             <BranchCircuits>
               <BranchCircuit>
                 <SystemIdentifier id='BranchCircuit1'/>
+                <Voltage>240</Voltage>
+                <AttachedToComponent idref='EVCharger1'/>
+              </BranchCircuit>
+              <BranchCircuit>
+                <SystemIdentifier id='BranchCircuit2'/>
                 <OccupiedSpaces>1.0</OccupiedSpaces>
               </BranchCircuit>
             </BranchCircuits>
@@ -567,7 +572,7 @@
                 <SystemIdentifier id='ServiceFeeder8'/>
                 <LoadType>electric vehicle charging</LoadType>
                 <PowerRating>3300.0</PowerRating>
-                <AttachedToComponent idref='PlugLoad3'/>
+                <AttachedToComponent idref='EVCharger1'/>
               </ServiceFeeder>
               <ServiceFeeder>
                 <SystemIdentifier id='ServiceFeeder9'/>
@@ -583,6 +588,16 @@
             <BatteryType>Li-ion</BatteryType>
           </Battery>
         </Batteries>
+        <Vehicles>
+          <Vehicle>
+            <SystemIdentifier id='Vehicle1'/>
+            <VehicleType>
+              <BatteryElectricVehicle>
+                <ConnectedCharger idref='EVCharger1'/>
+              </BatteryElectricVehicle>
+            </VehicleType>
+          </Vehicle>
+        </Vehicles>
         <ElectricVehicleChargers>
           <ElectricVehicleCharger>
             <SystemIdentifier id='EVCharger1'/>
@@ -732,10 +747,6 @@
             <FracSensible>0.855</FracSensible>
             <FracLatent>0.045</FracLatent>
           </extension>
-        </PlugLoad>
-        <PlugLoad>
-          <SystemIdentifier id='PlugLoad3'/>
-          <PlugLoadType>electric vehicle charging</PlugLoadType>
         </PlugLoad>
         <FuelLoad>
           <SystemIdentifier id='FuelLoad1'/>
