@@ -131,6 +131,12 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     arg.setDefaultValue(true)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_panel_summary', false)
+    arg.setDisplayName('Generate Annual Output: Electric Panel Summary')
+    arg.setDescription('Generates electric panel breaker spaces and loads.')
+    arg.setDefaultValue(true)
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_resilience', false)
     arg.setDisplayName('Generate Annual Output: Resilience')
     arg.setDescription('Generates annual resilience outputs.')
@@ -278,6 +284,11 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('annual_output_file_name', false)
     arg.setDisplayName('Annual Output File Name')
     arg.setDescription("If not provided, defaults to 'results_annual.csv' (or 'results_annual.json' or 'results_annual.msgpack').")
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeStringArgument('electric_panel_output_file_name', false)
+    arg.setDisplayName('Electric Panel Output File Name')
+    arg.setDescription("If not provided, defaults to 'results_panel.csv' (or 'results_panel.json' or 'results_panel.msgpack').")
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('timeseries_output_file_name', false)
@@ -617,6 +628,11 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     else
       annual_output_path = File.join(output_dir, "results_annual.#{args[:output_format]}")
     end
+    if not args[:electric_panel_output_file_name].nil?
+      electric_panel_output_path = File.join(output_dir, args[:electric_panel_output_file_name])
+    else
+      electric_panel_output_path = File.join(output_dir, "results_panel.#{args[:output_format]}")
+    end
     if not args[:timeseries_output_file_name].nil?
       timeseries_output_path = File.join(output_dir, args[:timeseries_output_file_name])
     else
@@ -635,7 +651,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     end
 
     # Write/report results
-    report_runperiod_output_results(runner, args, annual_output_path)
+    report_runperiod_output_results(runner, args, annual_output_path, electric_panel_output_path)
     report_timeseries_output_results(runner, timeseries_output_path, args, timestamps_dst, timestamps_utc)
 
     return true
@@ -1497,7 +1513,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
   # @param args [Hash] Map of :argument_name => value
   # @param annual_output_path [TODO] TODO
   # @return [TODO] TODO
-  def report_runperiod_output_results(runner, args, annual_output_path)
+  def report_runperiod_output_results(runner, args, annual_output_path, electric_panel_output_path)
     # Set rounding precision for run period (e.g., annual) outputs.
     if args[:output_format] == 'msgpack'
       # No need to round; no file size penalty to storing full precision
@@ -1656,6 +1672,17 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
 
     Outputs.write_results_out_to_file(results_out, args[:output_format], annual_output_path)
     runner.registerInfo("Wrote annual output results to #{annual_output_path}.")
+
+    # Panel data
+    if args[:include_annual_panel_summary] && @hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.electric_panels.size }.sum > 0
+      electric_panel_results_out = []
+      Outputs.append_panel_results(@hpxml_header, @hpxml_bldgs, electric_panel_results_out)
+
+      Outputs.write_results_out_to_file(electric_panel_results_out, args[:output_format], electric_panel_output_path)
+      runner.registerInfo("Wrote panel output results to #{electric_panel_output_path}.")
+
+      results_out += electric_panel_results_out
+    end
 
     results_out.each do |name, value|
       next if name.nil? || value.nil?
