@@ -28,6 +28,15 @@ See the OpenStudio-HPXML Workflow Outputs sections on `Annual Outputs <https://o
    :file: csv_tables/simulation_outputs.csv
    :header-rows: 1
 
+.. _panel-costs:
+
+Electric Panel Outputs
+**********************
+
+.. csv-table::
+   :file: csv_tables/panel_outputs.csv
+   :header-rows: 1
+
 .. _upgrade-costs:
 
 Upgrade Costs

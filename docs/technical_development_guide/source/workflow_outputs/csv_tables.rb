@@ -9,6 +9,7 @@ csv_tables = {
   'characteristics.csv' => { 'annual' => false, 'timeseries' => false, 'kws' => ['build_existing_model.'], 'usecols' => ['Input Name', 'Input Description'] },
   'other_outputs.csv' => { 'annual' => false, 'timeseries' => false, 'kws' => ['build_existing_model.'], 'usecols' => ['Input Name', 'Input Description'] },
   'simulation_outputs.csv' => { 'annual' => true, 'timeseries' => true, 'kws' => ['.end_use_', '.energy_use_', 'fuel_use_', '.hot_water_', '.hvac_capacity_', '.hvac_design_', '.load_', '.peak_', '.resilience_', '.unmet_hours_'], 'usecols' => ['Annual Name', 'Annual Units', 'Timeseries ResStock Name', 'Timeseries BuildStockBatch Name', 'Timeseries Units', 'Notes'] },
+  'panel_outputs.csv' => { 'annual' => true, 'timeseries' => true, 'kws' => ['.electric_panel_'], 'usecols' => ['Annual Name', 'Annual Units', 'Notes'] },
   'cost_multipliers.csv' => { 'annual' => true, 'timeseries' => false, 'kws' => ['upgrade_costs.'], 'usecols' => ['Annual Name', 'Annual Units', 'Notes'] },
   'component_loads.csv' => { 'annual' => true, 'timeseries' => true, 'kws' => ['.component_load_'], 'usecols' => ['Annual Name', 'Annual Units', 'Timeseries ResStock Name', 'Timeseries BuildStockBatch Name', 'Timeseries Units', 'Notes'] },
   'emissions.csv' => { 'annual' => true, 'timeseries' => true, 'kws' => ['.emissions_'], 'usecols' => ['Annual Name', 'Annual Units', 'Timeseries ResStock Name', 'Timeseries BuildStockBatch Name', 'Timeseries Units', 'Notes'] },
