@@ -316,201 +316,238 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 315,,report_simulation_output.unmet_hours_cooling_hr,hr,Unmet Hours: Cooling,unmet_hours__cooling__hr,hr,Number of hours where the cooling setpoint is not maintained.
 316,,report_simulation_output.unmet_hours_heating_hr,hr,Unmet Hours: Heating,unmet_hours__heating__hr,hr,Number of hours where the heating setpoint is not maintained.
 317,,report_simulation_output.unmet_hours_ev_driving_hr,hr,Unmet Hours: EV Driving,unmet_hours__ev_driving__hr,hr,Number of hours where the EV driving demand is not met.
-318,320,report_utility_bills.<scenario_name>_coal_energy_usd,$,,,,Scenario annual energy charges for coal.
-319,320,report_utility_bills.<scenario_name>_coal_fixed_usd,$,,,,Scenario annual fixed charges for coal.
-320,394,report_utility_bills.<scenario_name>_coal_total_usd,$,,,,Scenario annual total charges for coal.
-321,,report_utility_bills.<scenario_name>_coal_total_usd_2007_01_01,$,,,,Scenario January total charges for coal.
-322,,report_utility_bills.<scenario_name>_coal_total_usd_2007_02_01,$,,,,Scenario February total charges for coal.
-323,,report_utility_bills.<scenario_name>_coal_total_usd_2007_03_01,$,,,,Scenario March total charges for coal.
-324,,report_utility_bills.<scenario_name>_coal_total_usd_2007_04_01,$,,,,Scenario April total charges for coal.
-325,,report_utility_bills.<scenario_name>_coal_total_usd_2007_05_01,$,,,,Scenario May total charges for coal.
-326,,report_utility_bills.<scenario_name>_coal_total_usd_2007_06_01,$,,,,Scenario June total charges for coal.
-327,,report_utility_bills.<scenario_name>_coal_total_usd_2007_07_01,$,,,,Scenario July total charges for coal.
-328,,report_utility_bills.<scenario_name>_coal_total_usd_2007_08_01,$,,,,Scenario August total charges for coal.
-329,,report_utility_bills.<scenario_name>_coal_total_usd_2007_09_01,$,,,,Scenario September total charges for coal.
-330,,report_utility_bills.<scenario_name>_coal_total_usd_2007_10_01,$,,,,Scenario October total charges for coal.
-331,,report_utility_bills.<scenario_name>_coal_total_usd_2007_11_01,$,,,,Scenario November total charges for coal.
-332,,report_utility_bills.<scenario_name>_coal_total_usd_2007_12_01,$,,,,Scenario December total charges for coal.
-333,336,report_utility_bills.<scenario_name>_electricity_energy_usd,$,,,,Scenario annual energy charges for electricity.
-334,336,report_utility_bills.<scenario_name>_electricity_fixed_usd,$,,,,Scenario annual fixed charges for electricity.
-335,336,report_utility_bills.<scenario_name>_electricity_pv_credit_usd,$,,,,Scenario annual production credit (negative value) for PV.
-336,394,report_utility_bills.<scenario_name>_electricity_total_usd,$,,,,Scenario annual total charges for electricity.
-337,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_01_01,$,,,,Scenario January total charges for electricity.
-338,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_02_01,$,,,,Scenario February total charges for electricity.
-339,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_03_01,$,,,,Scenario March total charges for electricity.
-340,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_04_01,$,,,,Scenario April total charges for electricity.
-341,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_05_01,$,,,,Scenario May total charges for electricity.
-342,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_06_01,$,,,,Scenario June total charges for electricity.
-343,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_07_01,$,,,,Scenario July total charges for electricity.
-344,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_08_01,$,,,,Scenario August total charges for electricity.
-345,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_09_01,$,,,,Scenario September total charges for electricity.
-346,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_10_01,$,,,,Scenario October total charges for electricity.
-347,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_11_01,$,,,,Scenario November total charges for electricity.
-348,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_12_01,$,,,,Scenario December total charges for electricity.
-349,351,report_utility_bills.<scenario_name>_fuel_oil_energy_usd,$,,,,Scenario annual energy charges for fuel oil.
-350,351,report_utility_bills.<scenario_name>_fuel_oil_fixed_usd,$,,,,Scenario annual fixed charges for fuel oil.
-351,394,report_utility_bills.<scenario_name>_fuel_oil_total_usd,$,,,,Scenario annual total charges for fuel oil.
-352,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_01_01,$,,,,Scenario January total charges for fuel oil.
-353,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_02_01,$,,,,Scenario February total charges for fuel oil.
-354,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_03_01,$,,,,Scenario March total charges for fuel oil.
-355,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_04_01,$,,,,Scenario April total charges for fuel oil.
-356,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_05_01,$,,,,Scenario May total charges for fuel oil.
-357,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_06_01,$,,,,Scenario June total charges for fuel oil.
-358,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_07_01,$,,,,Scenario July total charges for fuel oil.
-359,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_08_01,$,,,,Scenario August total charges for fuel oil.
-360,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_09_01,$,,,,Scenario September total charges for fuel oil.
-361,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_10_01,$,,,,Scenario October total charges for fuel oil.
-362,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_11_01,$,,,,Scenario November total charges for fuel oil.
-363,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_12_01,$,,,,Scenario December total charges for fuel oil.
-364,366,report_utility_bills.<scenario_name>_natural_gas_energy_usd,$,,,,Scenario annual energy charges for natural gas.
-365,366,report_utility_bills.<scenario_name>_natural_gas_fixed_usd,$,,,,Scenario annual fixed charges for natural gas.
-366,394,report_utility_bills.<scenario_name>_natural_gas_total_usd,$,,,,Scenario annual total charges for natural gas.
-367,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_01_01,$,,,,Scenario January total charges for natural gas.
-368,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_02_01,$,,,,Scenario February total charges for natural gas.
-369,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_03_01,$,,,,Scenario March total charges for natural gas.
-370,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_04_01,$,,,,Scenario April total charges for natural gas.
-371,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_05_01,$,,,,Scenario May total charges for natural gas.
-372,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_06_01,$,,,,Scenario June total charges for natural gas.
-373,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_07_01,$,,,,Scenario July total charges for natural gas.
-374,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_08_01,$,,,,Scenario August total charges for natural gas.
-375,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_09_01,$,,,,Scenario September total charges for natural gas.
-376,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_10_01,$,,,,Scenario October total charges for natural gas.
-377,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_11_01,$,,,,Scenario November total charges for natural gas.
-378,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_12_01,$,,,,Scenario December total charges for natural gas.
-379,381,report_utility_bills.<scenario_name>_propane_energy_usd,$,,,,Scenario annual energy charges for propane.
-380,381,report_utility_bills.<scenario_name>_propane_fixed_usd,$,,,,Scenario annual fixed charges for propane.
-381,394,report_utility_bills.<scenario_name>_propane_total_usd,$,,,,Scenario annual total charges for propane.
-382,,report_utility_bills.<scenario_name>_propane_total_usd_2007_01_01,$,,,,Scenario January total charges for propane.
-383,,report_utility_bills.<scenario_name>_propane_total_usd_2007_02_01,$,,,,Scenario February total charges for propane.
-384,,report_utility_bills.<scenario_name>_propane_total_usd_2007_03_01,$,,,,Scenario March total charges for propane.
-385,,report_utility_bills.<scenario_name>_propane_total_usd_2007_04_01,$,,,,Scenario April total charges for propane.
-386,,report_utility_bills.<scenario_name>_propane_total_usd_2007_05_01,$,,,,Scenario May total charges for propane.
-387,,report_utility_bills.<scenario_name>_propane_total_usd_2007_06_01,$,,,,Scenario June total charges for propane.
-388,,report_utility_bills.<scenario_name>_propane_total_usd_2007_07_01,$,,,,Scenario July total charges for propane.
-389,,report_utility_bills.<scenario_name>_propane_total_usd_2007_08_01,$,,,,Scenario August total charges for propane.
-390,,report_utility_bills.<scenario_name>_propane_total_usd_2007_09_01,$,,,,Scenario September total charges for propane.
-391,,report_utility_bills.<scenario_name>_propane_total_usd_2007_10_01,$,,,,Scenario October total charges for propane.
-392,,report_utility_bills.<scenario_name>_propane_total_usd_2007_11_01,$,,,,Scenario November total charges for propane.
-393,,report_utility_bills.<scenario_name>_propane_total_usd_2007_12_01,$,,,,Scenario December total charges for propane.
-394,,report_utility_bills.<scenario_name>_total_usd,$,,,,Scenario annual total charges.
-395,,report_utility_bills.<scenario_name>_total_usd_2007_01_01,$,,,,Scenario January total charges.
-396,,report_utility_bills.<scenario_name>_total_usd_2007_02_01,$,,,,Scenario February total charges.
-397,,report_utility_bills.<scenario_name>_total_usd_2007_03_01,$,,,,Scenario March total charges.
-398,,report_utility_bills.<scenario_name>_total_usd_2007_04_01,$,,,,Scenario April total charges.
-399,,report_utility_bills.<scenario_name>_total_usd_2007_05_01,$,,,,Scenario May total charges.
-400,,report_utility_bills.<scenario_name>_total_usd_2007_06_01,$,,,,Scenario June total charges.
-401,,report_utility_bills.<scenario_name>_total_usd_2007_07_01,$,,,,Scenario July total charges.
-402,,report_utility_bills.<scenario_name>_total_usd_2007_08_01,$,,,,Scenario August total charges.
-403,,report_utility_bills.<scenario_name>_total_usd_2007_09_01,$,,,,Scenario September total charges.
-404,,report_utility_bills.<scenario_name>_total_usd_2007_10_01,$,,,,Scenario October total charges.
-405,,report_utility_bills.<scenario_name>_total_usd_2007_11_01,$,,,,Scenario November total charges.
-406,,report_utility_bills.<scenario_name>_total_usd_2007_12_01,$,,,,Scenario December total charges.
-407,409,report_utility_bills.<scenario_name>_wood_cord_energy_usd,$,,,,Scenario annual energy charges for wood cord.
-408,409,report_utility_bills.<scenario_name>_wood_cord_fixed_usd,$,,,,Scenario annual fixed charges for wood cord.
-409,394,report_utility_bills.<scenario_name>_wood_cord_total_usd,$,,,,Scenario annual total charges for wood cord.
-410,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_01_01,$,,,,Scenario January total charges for wood cord.
-411,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_02_01,$,,,,Scenario February total charges for wood cord.
-412,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_03_01,$,,,,Scenario March total charges for wood cord.
-413,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_04_01,$,,,,Scenario April total charges for wood cord.
-414,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_05_01,$,,,,Scenario May total charges for wood cord.
-415,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_06_01,$,,,,Scenario June total charges for wood cord.
-416,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_07_01,$,,,,Scenario July total charges for wood cord.
-417,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_08_01,$,,,,Scenario August total charges for wood cord.
-418,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_09_01,$,,,,Scenario September total charges for wood cord.
-419,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_10_01,$,,,,Scenario October total charges for wood cord.
-420,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_11_01,$,,,,Scenario November total charges for wood cord.
-421,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_12_01,$,,,,Scenario December total charges for wood cord.
-422,424,report_utility_bills.<scenario_name>_wood_pellets_energy_usd,$,,,,Scenario annual energy charges for wood pellets.
-423,424,report_utility_bills.<scenario_name>_wood_pellets_fixed_usd,$,,,,Scenario annual fixed charges for wood pellets.
-424,394,report_utility_bills.<scenario_name>_wood_pellets_total_usd,$,,,,Scenario annual total charges for wood pellets.
-425,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_01_01,$,,,,Scenario January total charges for wood pellets.
-426,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_02_01,$,,,,Scenario February total charges for wood pellets.
-427,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_03_01,$,,,,Scenario March total charges for wood pellets.
-428,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_04_01,$,,,,Scenario April total charges for wood pellets.
-429,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_05_01,$,,,,Scenario May total charges for wood pellets.
-430,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_06_01,$,,,,Scenario June total charges for wood pellets.
-431,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_07_01,$,,,,Scenario July total charges for wood pellets.
-432,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_08_01,$,,,,Scenario August total charges for wood pellets.
-433,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_09_01,$,,,,Scenario September total charges for wood pellets.
-434,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_10_01,$,,,,Scenario October total charges for wood pellets.
-435,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_11_01,$,,,,Scenario November total charges for wood pellets.
-436,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_12_01,$,,,,Scenario December total charges for wood pellets.
-437,,upgrade_costs.door_area_ft_2,ft^2,,,,Door Area
-438,,upgrade_costs.duct_unconditioned_surface_area_ft_2,ft^2,,,,Duct Unconditioned Surface Area
-439,,upgrade_costs.floor_area_attic_ft_2,ft^2,,,,"Floor Area, Attic"
-440,,upgrade_costs.floor_area_attic_insulation_increase_ft_2_delta_r_value,ft^2 * Delta R-value,,,,"Floor Area, Attic * Insulation Increase"
-441,,upgrade_costs.floor_area_conditioned_ft_2,ft^2,,,,"Floor Area, Conditioned"
-442,,upgrade_costs.floor_area_conditioned_infiltration_reduction_ft_2_delta_ach_50,ft^2 * Delta ACH50,,,,"Floor Area, Conditioned * Infiltration Reduction"
-443,,upgrade_costs.floor_area_foundation_ft_2,ft^2,,,,"Floor Area, Foundation"
-444,,upgrade_costs.floor_area_lighting_ft_2,ft^2,,,,"Floor Area, Lighting"
-445,,upgrade_costs.flow_rate_mechanical_ventilation_cfm,cfm,,,,"Flow Rate, Mechanical Ventilation"
-446,,upgrade_costs.rim_joist_area_above_grade_exterior_ft_2,ft^2,,,,"Rim Joist Area, Above-Grade, Exterior"
-447,,upgrade_costs.roof_area_ft_2,ft^2,,,,Roof Area
-448,,upgrade_costs.size_cooling_system_primary_k_btu_h,kBtu/h,,,,"Size, Cooling System Primary"
-449,,upgrade_costs.size_heat_pump_backup_primary_k_btu_h,kBtu/h,,,,"Size, Heat Pump Backup Primary"
-450,,upgrade_costs.size_heating_system_primary_k_btu_h,kBtu/h,,,,"Size, Heating System Primary"
-451,,upgrade_costs.size_heating_system_secondary_k_btu_h,kBtu/h,,,,"Size, Heating System Secondary"
-452,,upgrade_costs.size_water_heater_gal,gal,,,,"Size, Water Heater"
-453,,upgrade_costs.slab_perimeter_exposed_conditioned_ft,ft,,,,"Slab Perimeter, Exposed, Conditioned"
-454,,upgrade_costs.wall_area_above_grade_conditioned_ft_2,ft^2,,,,"Wall Area, Above-Grade, Conditioned"
-455,,upgrade_costs.wall_area_above_grade_exterior_ft_2,ft^2,,,,"Wall Area, Above-Grade, Exterior"
-456,,upgrade_costs.wall_area_below_grade_ft_2,ft^2,,,,"Wall Area, Below-Grade"
-457,,upgrade_costs.window_area_ft_2,ft^2,,,,Window Area
-458,,qoi_report.qoi_average_maximum_daily_timing_cooling_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the cooling season.
-459,,qoi_report.qoi_average_maximum_daily_timing_heating_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the heating season.
-460,,qoi_report.qoi_average_maximum_daily_timing_overlap_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the overlap season.
-461,,qoi_report.qoi_average_maximum_daily_use_cooling_kw,kW,,,,The total site electricity average maximum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
-462,,qoi_report.qoi_average_maximum_daily_use_heating_kw,kW,,,,The total site electricity average maximum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
-463,,qoi_report.qoi_average_maximum_daily_use_overlap_kw,kW,,,,The total site electricity average maximum daily use during the overlap season (days with average outdoor air drybulb temperature between 55F and 70F).
-464,,qoi_report.qoi_average_minimum_daily_use_cooling_kw,kW,,,,The total site electricity average minimum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
-465,,qoi_report.qoi_average_minimum_daily_use_heating_kw,kW,,,,The total site electricity average minimum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
-466,,qoi_report.qoi_average_minimum_daily_use_overlap_kw,kW,,,,The total site electricity average minimum daily use during the overlap season (days with average outdoor air drybulb temperature between 55F and 70F).
-467,,qoi_report.qoi_average_of_top_ten_highest_peaks_timing_cooling_hour,hr,,,,The average hour (average daily index) for which the total site electricity average of top 10 maximum daily use occurs during the cooling season.
-468,,qoi_report.qoi_average_of_top_ten_highest_peaks_timing_heating_hour,hr,,,,The average hour (average daily index) for which the total site electricity average of top 10 maximum daily use occurs during the heating season.
-469,,qoi_report.qoi_average_of_top_ten_highest_peaks_use_cooling_kw,kW,,,,The total site electricity average of top 10 maximum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
-470,,qoi_report.qoi_average_of_top_ten_highest_peaks_use_heating_kw,kW,,,,The total site electricity average of top 10 maximum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
-471,,qoi_report.qoi_hourly_peak_magnitude_timing_hour,hr,,,,The hour (annual index) for which the total site electricity annual peak use occurs.
-472,,qoi_report.qoi_hourly_peak_magnitude_use_kw,kW,,,,The total site electricity annual peak use (maximum value).
-473,,,,Time,time,,Local clock.
-474,,,,TimeDST,timedst,,Local clock daylight saving time.
-475,,,,TimeUTC,timeutc,,Local clock coordinated universal time.
-476,,,,Temperature: Attic - Unvented,temperature__attic_-_unvented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-477,,,,Temperature: Attic - Vented,temperature__attic_-_vented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-478,,,,Temperature: Basement - Unconditioned,temperature__basement_-_unconditioned__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-479,,,,Temperature: Crawlspace - Unvented,temperature__crawlspace_-_unvented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-480,,,,Temperature: Crawlspace - Vented,temperature__crawlspace_-_vented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-481,,,,Temperature: Garage,temperature__garage__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-482,,,,Temperature: Conditioned Space,temperature__conditioned_space__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-483,,,,Temperature: Other Heated Space,temperature__other_heated_space__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-484,,,,Temperature: Heating Setpoint,temperature__heating_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-485,,,,Temperature: Cooling Setpoint,temperature__cooling_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-486,,,,Airflow: Infiltration,airflow__infiltration__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
-487,,,,Airflow: Mechanical Ventilation,airflow__mechanical_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
-488,,,,Airflow: Natural Ventilation,airflow__natural_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
-489,,,,Weather: Drybulb Temperature,weather__drybulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-490,,,,Weather: Wetbulb Temperature,weather__wetbulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-491,,,,Weather: Relative Humidity,weather__relative_humidity__%,%,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-492,,,,Weather: Wind Speed,weather__wind_speed__mph,mph,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-493,,,,Weather: Diffuse Solar Radiation,weather__diffuse_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-494,,,,Weather: Direct Solar Radiation,weather__direct_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-495,,,,Zone People Occupant Count: Conditioned Space,zone_people_occupant_count__conditioned_space,,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
-496,,,,Electricity:Facility,electricity_facility__j,J,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
-497,,,,,schedules_ceiling_fan,frac,Ceiling fan energy use schedule.
-498,,,,,schedules_clothes_dryer,frac,Clothes dryer energy use schedule.
-499,,,,,schedules_clothes_washer,frac,Clothes washer energy use schedule.
-500,,,,,schedules_cooking_range,frac,Cooking range & oven energy use schedule.
-501,,,,,schedules_dishwasher,frac,Dishwasher energy use schedule.
-502,,,,,schedules_hot_water_clothes_washer,frac,Clothes washer hot water use schedule.
-503,,,,,schedules_hot_water_dishwasher,frac,Dishwasher hot water use schedule.
-504,,,,,schedules_hot_water_fixtures,frac,"Fixtures (sinks, showers, baths) hot water use schedule."
-505,,,,,schedules_lighting_garage,frac,Garage lighting energy use schedule.
-506,,,,,schedules_lighting_interior,frac,Interior lighting energy use schedule.
-507,,,,,schedules_no_space_cooling,,Unavailable period.
-508,,,,,schedules_no_space_heating,,Unavailable period.
-509,,,,,schedules_occupants,frac,Occupant heat gain schedule.
-510,,,,,schedules_plug_loads_other,frac,Other plug load energy use schedule.
-511,,,,,schedules_plug_loads_tv,frac,Television plug load energy use schedule.
-512,,,,,schedules_power_outage,,Unavailable period.
-513,,,,,schedules_vacancy,,Unavailable period.
-514,,,,,schedules_electric_vehicle_charging,frac,availability schedule for electric vehicle charging.
-515,,,,,schedules_electric_vehicle_discharging,frac,availability schedule for electric vehicle discharging.
+318,,report_simulation_output.electric_panel_breaker_spaces_clothes_dryer_count,#,,,,
+319,,report_simulation_output.electric_panel_breaker_spaces_cooling_count,#,,,,
+320,,report_simulation_output.electric_panel_breaker_spaces_dishwasher_count,#,,,,
+321,,report_simulation_output.electric_panel_breaker_spaces_electric_vehicle_charging_count,#,,,,
+322,,report_simulation_output.electric_panel_breaker_spaces_heating_count,#,,,,
+323,,report_simulation_output.electric_panel_breaker_spaces_hot_water_count,#,,,,
+324,,report_simulation_output.electric_panel_breaker_spaces_mech_vent_count,#,,,,
+325,,report_simulation_output.electric_panel_breaker_spaces_other_count,#,,,,
+326,,report_simulation_output.electric_panel_breaker_spaces_permanent_spa_heater_count,#,,,,
+327,,report_simulation_output.electric_panel_breaker_spaces_permanent_spa_pump_count,#,,,,
+328,,report_simulation_output.electric_panel_breaker_spaces_pool_heater_count,#,,,,
+329,,report_simulation_output.electric_panel_breaker_spaces_pool_pump_count,#,,,,
+330,,report_simulation_output.electric_panel_breaker_spaces_range_oven_count,#,,,,
+331,,report_simulation_output.electric_panel_breaker_spaces_well_pump_count,#,,,,
+332,,report_simulation_output.electric_panel_breaker_spaces_headroom_count,#,,,,
+333,,report_simulation_output.electric_panel_breaker_spaces_occupied_count,#,,,,
+334,,report_simulation_output.electric_panel_breaker_spaces_total_count,#,,,,
+335,,report_simulation_output.electric_panel_load_clothes_dryer_w,W,,,,
+336,,report_simulation_output.electric_panel_load_cooling_w,W,,,,
+337,,report_simulation_output.electric_panel_load_dishwasher_w,W,,,,
+338,,report_simulation_output.electric_panel_load_electric_vehicle_charging_w,W,,,,
+339,,report_simulation_output.electric_panel_load_heating_w,W,,,,
+340,,report_simulation_output.electric_panel_load_hot_water_w,W,,,,
+341,,report_simulation_output.electric_panel_load_mech_vent_w,W,,,,
+342,,report_simulation_output.electric_panel_load_other_w,W,,,,
+343,,report_simulation_output.electric_panel_load_permanent_spa_heater_w,W,,,,
+344,,report_simulation_output.electric_panel_load_permanent_spa_pump_w,W,,,,
+345,,report_simulation_output.electric_panel_load_pool_heater_w,W,,,,
+346,,report_simulation_output.electric_panel_load_pool_pump_w,W,,,,
+347,,report_simulation_output.electric_panel_load_range_oven_w,W,,,,
+348,,report_simulation_output.electric_panel_load_well_pump_w,W,,,,
+349,,report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based_headroom_capacity_a,A,,,,
+350,,report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based_total_capacity_a,A,,,,
+351,,report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based_total_load_w,W,,,,
+352,,report_simulation_output.electric_panel_load_2023_existing_dwelling_meter_based_headroom_capacity_a,A,,,,
+353,,report_simulation_output.electric_panel_load_2023_existing_dwelling_meter_based_total_capacity_a,A,,,,
+354,,report_simulation_output.electric_panel_load_2023_existing_dwelling_meter_based_total_load_w,W,,,,
+355,357,report_utility_bills.<scenario_name>_coal_energy_usd,$,,,,Scenario annual energy charges for coal.
+356,357,report_utility_bills.<scenario_name>_coal_fixed_usd,$,,,,Scenario annual fixed charges for coal.
+357,431,report_utility_bills.<scenario_name>_coal_total_usd,$,,,,Scenario annual total charges for coal.
+358,,report_utility_bills.<scenario_name>_coal_total_usd_2007_01_01,$,,,,Scenario January total charges for coal.
+359,,report_utility_bills.<scenario_name>_coal_total_usd_2007_02_01,$,,,,Scenario February total charges for coal.
+360,,report_utility_bills.<scenario_name>_coal_total_usd_2007_03_01,$,,,,Scenario March total charges for coal.
+361,,report_utility_bills.<scenario_name>_coal_total_usd_2007_04_01,$,,,,Scenario April total charges for coal.
+362,,report_utility_bills.<scenario_name>_coal_total_usd_2007_05_01,$,,,,Scenario May total charges for coal.
+363,,report_utility_bills.<scenario_name>_coal_total_usd_2007_06_01,$,,,,Scenario June total charges for coal.
+364,,report_utility_bills.<scenario_name>_coal_total_usd_2007_07_01,$,,,,Scenario July total charges for coal.
+365,,report_utility_bills.<scenario_name>_coal_total_usd_2007_08_01,$,,,,Scenario August total charges for coal.
+366,,report_utility_bills.<scenario_name>_coal_total_usd_2007_09_01,$,,,,Scenario September total charges for coal.
+367,,report_utility_bills.<scenario_name>_coal_total_usd_2007_10_01,$,,,,Scenario October total charges for coal.
+368,,report_utility_bills.<scenario_name>_coal_total_usd_2007_11_01,$,,,,Scenario November total charges for coal.
+369,,report_utility_bills.<scenario_name>_coal_total_usd_2007_12_01,$,,,,Scenario December total charges for coal.
+370,373,report_utility_bills.<scenario_name>_electricity_energy_usd,$,,,,Scenario annual energy charges for electricity.
+371,373,report_utility_bills.<scenario_name>_electricity_fixed_usd,$,,,,Scenario annual fixed charges for electricity.
+372,373,report_utility_bills.<scenario_name>_electricity_pv_credit_usd,$,,,,Scenario annual production credit (negative value) for PV.
+373,431,report_utility_bills.<scenario_name>_electricity_total_usd,$,,,,Scenario annual total charges for electricity.
+374,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_01_01,$,,,,Scenario January total charges for electricity.
+375,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_02_01,$,,,,Scenario February total charges for electricity.
+376,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_03_01,$,,,,Scenario March total charges for electricity.
+377,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_04_01,$,,,,Scenario April total charges for electricity.
+378,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_05_01,$,,,,Scenario May total charges for electricity.
+379,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_06_01,$,,,,Scenario June total charges for electricity.
+380,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_07_01,$,,,,Scenario July total charges for electricity.
+381,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_08_01,$,,,,Scenario August total charges for electricity.
+382,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_09_01,$,,,,Scenario September total charges for electricity.
+383,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_10_01,$,,,,Scenario October total charges for electricity.
+384,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_11_01,$,,,,Scenario November total charges for electricity.
+385,,report_utility_bills.<scenario_name>_electricity_total_usd_2007_12_01,$,,,,Scenario December total charges for electricity.
+386,388,report_utility_bills.<scenario_name>_fuel_oil_energy_usd,$,,,,Scenario annual energy charges for fuel oil.
+387,388,report_utility_bills.<scenario_name>_fuel_oil_fixed_usd,$,,,,Scenario annual fixed charges for fuel oil.
+388,431,report_utility_bills.<scenario_name>_fuel_oil_total_usd,$,,,,Scenario annual total charges for fuel oil.
+389,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_01_01,$,,,,Scenario January total charges for fuel oil.
+390,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_02_01,$,,,,Scenario February total charges for fuel oil.
+391,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_03_01,$,,,,Scenario March total charges for fuel oil.
+392,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_04_01,$,,,,Scenario April total charges for fuel oil.
+393,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_05_01,$,,,,Scenario May total charges for fuel oil.
+394,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_06_01,$,,,,Scenario June total charges for fuel oil.
+395,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_07_01,$,,,,Scenario July total charges for fuel oil.
+396,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_08_01,$,,,,Scenario August total charges for fuel oil.
+397,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_09_01,$,,,,Scenario September total charges for fuel oil.
+398,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_10_01,$,,,,Scenario October total charges for fuel oil.
+399,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_11_01,$,,,,Scenario November total charges for fuel oil.
+400,,report_utility_bills.<scenario_name>_fuel_oil_total_usd_2007_12_01,$,,,,Scenario December total charges for fuel oil.
+401,403,report_utility_bills.<scenario_name>_natural_gas_energy_usd,$,,,,Scenario annual energy charges for natural gas.
+402,403,report_utility_bills.<scenario_name>_natural_gas_fixed_usd,$,,,,Scenario annual fixed charges for natural gas.
+403,431,report_utility_bills.<scenario_name>_natural_gas_total_usd,$,,,,Scenario annual total charges for natural gas.
+404,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_01_01,$,,,,Scenario January total charges for natural gas.
+405,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_02_01,$,,,,Scenario February total charges for natural gas.
+406,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_03_01,$,,,,Scenario March total charges for natural gas.
+407,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_04_01,$,,,,Scenario April total charges for natural gas.
+408,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_05_01,$,,,,Scenario May total charges for natural gas.
+409,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_06_01,$,,,,Scenario June total charges for natural gas.
+410,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_07_01,$,,,,Scenario July total charges for natural gas.
+411,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_08_01,$,,,,Scenario August total charges for natural gas.
+412,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_09_01,$,,,,Scenario September total charges for natural gas.
+413,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_10_01,$,,,,Scenario October total charges for natural gas.
+414,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_11_01,$,,,,Scenario November total charges for natural gas.
+415,,report_utility_bills.<scenario_name>_natural_gas_total_usd_2007_12_01,$,,,,Scenario December total charges for natural gas.
+416,418,report_utility_bills.<scenario_name>_propane_energy_usd,$,,,,Scenario annual energy charges for propane.
+417,418,report_utility_bills.<scenario_name>_propane_fixed_usd,$,,,,Scenario annual fixed charges for propane.
+418,431,report_utility_bills.<scenario_name>_propane_total_usd,$,,,,Scenario annual total charges for propane.
+419,,report_utility_bills.<scenario_name>_propane_total_usd_2007_01_01,$,,,,Scenario January total charges for propane.
+420,,report_utility_bills.<scenario_name>_propane_total_usd_2007_02_01,$,,,,Scenario February total charges for propane.
+421,,report_utility_bills.<scenario_name>_propane_total_usd_2007_03_01,$,,,,Scenario March total charges for propane.
+422,,report_utility_bills.<scenario_name>_propane_total_usd_2007_04_01,$,,,,Scenario April total charges for propane.
+423,,report_utility_bills.<scenario_name>_propane_total_usd_2007_05_01,$,,,,Scenario May total charges for propane.
+424,,report_utility_bills.<scenario_name>_propane_total_usd_2007_06_01,$,,,,Scenario June total charges for propane.
+425,,report_utility_bills.<scenario_name>_propane_total_usd_2007_07_01,$,,,,Scenario July total charges for propane.
+426,,report_utility_bills.<scenario_name>_propane_total_usd_2007_08_01,$,,,,Scenario August total charges for propane.
+427,,report_utility_bills.<scenario_name>_propane_total_usd_2007_09_01,$,,,,Scenario September total charges for propane.
+428,,report_utility_bills.<scenario_name>_propane_total_usd_2007_10_01,$,,,,Scenario October total charges for propane.
+429,,report_utility_bills.<scenario_name>_propane_total_usd_2007_11_01,$,,,,Scenario November total charges for propane.
+430,,report_utility_bills.<scenario_name>_propane_total_usd_2007_12_01,$,,,,Scenario December total charges for propane.
+431,,report_utility_bills.<scenario_name>_total_usd,$,,,,Scenario annual total charges.
+432,,report_utility_bills.<scenario_name>_total_usd_2007_01_01,$,,,,Scenario January total charges.
+433,,report_utility_bills.<scenario_name>_total_usd_2007_02_01,$,,,,Scenario February total charges.
+434,,report_utility_bills.<scenario_name>_total_usd_2007_03_01,$,,,,Scenario March total charges.
+435,,report_utility_bills.<scenario_name>_total_usd_2007_04_01,$,,,,Scenario April total charges.
+436,,report_utility_bills.<scenario_name>_total_usd_2007_05_01,$,,,,Scenario May total charges.
+437,,report_utility_bills.<scenario_name>_total_usd_2007_06_01,$,,,,Scenario June total charges.
+438,,report_utility_bills.<scenario_name>_total_usd_2007_07_01,$,,,,Scenario July total charges.
+439,,report_utility_bills.<scenario_name>_total_usd_2007_08_01,$,,,,Scenario August total charges.
+440,,report_utility_bills.<scenario_name>_total_usd_2007_09_01,$,,,,Scenario September total charges.
+441,,report_utility_bills.<scenario_name>_total_usd_2007_10_01,$,,,,Scenario October total charges.
+442,,report_utility_bills.<scenario_name>_total_usd_2007_11_01,$,,,,Scenario November total charges.
+443,,report_utility_bills.<scenario_name>_total_usd_2007_12_01,$,,,,Scenario December total charges.
+444,446,report_utility_bills.<scenario_name>_wood_cord_energy_usd,$,,,,Scenario annual energy charges for wood cord.
+445,446,report_utility_bills.<scenario_name>_wood_cord_fixed_usd,$,,,,Scenario annual fixed charges for wood cord.
+446,431,report_utility_bills.<scenario_name>_wood_cord_total_usd,$,,,,Scenario annual total charges for wood cord.
+447,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_01_01,$,,,,Scenario January total charges for wood cord.
+448,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_02_01,$,,,,Scenario February total charges for wood cord.
+449,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_03_01,$,,,,Scenario March total charges for wood cord.
+450,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_04_01,$,,,,Scenario April total charges for wood cord.
+451,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_05_01,$,,,,Scenario May total charges for wood cord.
+452,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_06_01,$,,,,Scenario June total charges for wood cord.
+453,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_07_01,$,,,,Scenario July total charges for wood cord.
+454,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_08_01,$,,,,Scenario August total charges for wood cord.
+455,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_09_01,$,,,,Scenario September total charges for wood cord.
+456,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_10_01,$,,,,Scenario October total charges for wood cord.
+457,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_11_01,$,,,,Scenario November total charges for wood cord.
+458,,report_utility_bills.<scenario_name>_wood_cord_total_usd_2007_12_01,$,,,,Scenario December total charges for wood cord.
+459,461,report_utility_bills.<scenario_name>_wood_pellets_energy_usd,$,,,,Scenario annual energy charges for wood pellets.
+460,461,report_utility_bills.<scenario_name>_wood_pellets_fixed_usd,$,,,,Scenario annual fixed charges for wood pellets.
+461,431,report_utility_bills.<scenario_name>_wood_pellets_total_usd,$,,,,Scenario annual total charges for wood pellets.
+462,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_01_01,$,,,,Scenario January total charges for wood pellets.
+463,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_02_01,$,,,,Scenario February total charges for wood pellets.
+464,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_03_01,$,,,,Scenario March total charges for wood pellets.
+465,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_04_01,$,,,,Scenario April total charges for wood pellets.
+466,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_05_01,$,,,,Scenario May total charges for wood pellets.
+467,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_06_01,$,,,,Scenario June total charges for wood pellets.
+468,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_07_01,$,,,,Scenario July total charges for wood pellets.
+469,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_08_01,$,,,,Scenario August total charges for wood pellets.
+470,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_09_01,$,,,,Scenario September total charges for wood pellets.
+471,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_10_01,$,,,,Scenario October total charges for wood pellets.
+472,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_11_01,$,,,,Scenario November total charges for wood pellets.
+473,,report_utility_bills.<scenario_name>_wood_pellets_total_usd_2007_12_01,$,,,,Scenario December total charges for wood pellets.
+474,,upgrade_costs.door_area_ft_2,ft^2,,,,Door Area
+475,,upgrade_costs.duct_unconditioned_surface_area_ft_2,ft^2,,,,Duct Unconditioned Surface Area
+476,,upgrade_costs.floor_area_attic_ft_2,ft^2,,,,"Floor Area, Attic"
+477,,upgrade_costs.floor_area_attic_insulation_increase_ft_2_delta_r_value,ft^2 * Delta R-value,,,,"Floor Area, Attic * Insulation Increase"
+478,,upgrade_costs.floor_area_conditioned_ft_2,ft^2,,,,"Floor Area, Conditioned"
+479,,upgrade_costs.floor_area_conditioned_infiltration_reduction_ft_2_delta_ach_50,ft^2 * Delta ACH50,,,,"Floor Area, Conditioned * Infiltration Reduction"
+480,,upgrade_costs.floor_area_foundation_ft_2,ft^2,,,,"Floor Area, Foundation"
+481,,upgrade_costs.floor_area_lighting_ft_2,ft^2,,,,"Floor Area, Lighting"
+482,,upgrade_costs.flow_rate_mechanical_ventilation_cfm,cfm,,,,"Flow Rate, Mechanical Ventilation"
+483,,upgrade_costs.rim_joist_area_above_grade_exterior_ft_2,ft^2,,,,"Rim Joist Area, Above-Grade, Exterior"
+484,,upgrade_costs.roof_area_ft_2,ft^2,,,,Roof Area
+485,,upgrade_costs.size_cooling_system_primary_k_btu_h,kBtu/h,,,,"Size, Cooling System Primary"
+486,,upgrade_costs.size_heat_pump_backup_primary_k_btu_h,kBtu/h,,,,"Size, Heat Pump Backup Primary"
+487,,upgrade_costs.size_heating_system_primary_k_btu_h,kBtu/h,,,,"Size, Heating System Primary"
+488,,upgrade_costs.size_heating_system_secondary_k_btu_h,kBtu/h,,,,"Size, Heating System Secondary"
+489,,upgrade_costs.size_water_heater_gal,gal,,,,"Size, Water Heater"
+490,,upgrade_costs.slab_perimeter_exposed_conditioned_ft,ft,,,,"Slab Perimeter, Exposed, Conditioned"
+491,,upgrade_costs.wall_area_above_grade_conditioned_ft_2,ft^2,,,,"Wall Area, Above-Grade, Conditioned"
+492,,upgrade_costs.wall_area_above_grade_exterior_ft_2,ft^2,,,,"Wall Area, Above-Grade, Exterior"
+493,,upgrade_costs.wall_area_below_grade_ft_2,ft^2,,,,"Wall Area, Below-Grade"
+494,,upgrade_costs.window_area_ft_2,ft^2,,,,Window Area
+495,,qoi_report.qoi_average_maximum_daily_timing_cooling_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the cooling season.
+496,,qoi_report.qoi_average_maximum_daily_timing_heating_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the heating season.
+497,,qoi_report.qoi_average_maximum_daily_timing_overlap_hour,hr,,,,The average hour (average daily index) for which the total site electricity maximum daily use occurs during the overlap season.
+498,,qoi_report.qoi_average_maximum_daily_use_cooling_kw,kW,,,,The total site electricity average maximum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
+499,,qoi_report.qoi_average_maximum_daily_use_heating_kw,kW,,,,The total site electricity average maximum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
+500,,qoi_report.qoi_average_maximum_daily_use_overlap_kw,kW,,,,The total site electricity average maximum daily use during the overlap season (days with average outdoor air drybulb temperature between 55F and 70F).
+501,,qoi_report.qoi_average_minimum_daily_use_cooling_kw,kW,,,,The total site electricity average minimum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
+502,,qoi_report.qoi_average_minimum_daily_use_heating_kw,kW,,,,The total site electricity average minimum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
+503,,qoi_report.qoi_average_minimum_daily_use_overlap_kw,kW,,,,The total site electricity average minimum daily use during the overlap season (days with average outdoor air drybulb temperature between 55F and 70F).
+504,,qoi_report.qoi_average_of_top_ten_highest_peaks_timing_cooling_hour,hr,,,,The average hour (average daily index) for which the total site electricity average of top 10 maximum daily use occurs during the cooling season.
+505,,qoi_report.qoi_average_of_top_ten_highest_peaks_timing_heating_hour,hr,,,,The average hour (average daily index) for which the total site electricity average of top 10 maximum daily use occurs during the heating season.
+506,,qoi_report.qoi_average_of_top_ten_highest_peaks_use_cooling_kw,kW,,,,The total site electricity average of top 10 maximum daily use during the cooling season (days with average outdoor air drybulb temperature greater than 70F).
+507,,qoi_report.qoi_average_of_top_ten_highest_peaks_use_heating_kw,kW,,,,The total site electricity average of top 10 maximum daily use during the heating season (days with average outdoor air drybulb temperature less than 55F).
+508,,qoi_report.qoi_hourly_peak_magnitude_timing_hour,hr,,,,The hour (annual index) for which the total site electricity annual peak use occurs.
+509,,qoi_report.qoi_hourly_peak_magnitude_use_kw,kW,,,,The total site electricity annual peak use (maximum value).
+510,,,,Time,time,,Local clock.
+511,,,,TimeDST,timedst,,Local clock daylight saving time.
+512,,,,TimeUTC,timeutc,,Local clock coordinated universal time.
+513,,,,Temperature: Attic - Unvented,temperature__attic_-_unvented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+514,,,,Temperature: Attic - Vented,temperature__attic_-_vented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+515,,,,Temperature: Basement - Unconditioned,temperature__basement_-_unconditioned__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+516,,,,Temperature: Crawlspace - Unvented,temperature__crawlspace_-_unvented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+517,,,,Temperature: Crawlspace - Vented,temperature__crawlspace_-_vented__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+518,,,,Temperature: Garage,temperature__garage__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+519,,,,Temperature: Conditioned Space,temperature__conditioned_space__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+520,,,,Temperature: Other Heated Space,temperature__other_heated_space__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+521,,,,Temperature: Heating Setpoint,temperature__heating_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+522,,,,Temperature: Cooling Setpoint,temperature__cooling_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+523,,,,Airflow: Infiltration,airflow__infiltration__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
+524,,,,Airflow: Mechanical Ventilation,airflow__mechanical_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
+525,,,,Airflow: Natural Ventilation,airflow__natural_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
+526,,,,Weather: Drybulb Temperature,weather__drybulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+527,,,,Weather: Wetbulb Temperature,weather__wetbulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+528,,,,Weather: Relative Humidity,weather__relative_humidity__%,%,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+529,,,,Weather: Wind Speed,weather__wind_speed__mph,mph,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+530,,,,Weather: Diffuse Solar Radiation,weather__diffuse_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+531,,,,Weather: Direct Solar Radiation,weather__direct_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+532,,,,Zone People Occupant Count: Conditioned Space,zone_people_occupant_count__conditioned_space,,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
+533,,,,Electricity:Facility,electricity_facility__j,J,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
+534,,,,,schedules_ceiling_fan,frac,Ceiling fan energy use schedule.
+535,,,,,schedules_clothes_dryer,frac,Clothes dryer energy use schedule.
+536,,,,,schedules_clothes_washer,frac,Clothes washer energy use schedule.
+537,,,,,schedules_cooking_range,frac,Cooking range & oven energy use schedule.
+538,,,,,schedules_dishwasher,frac,Dishwasher energy use schedule.
+539,,,,,schedules_hot_water_clothes_washer,frac,Clothes washer hot water use schedule.
+540,,,,,schedules_hot_water_dishwasher,frac,Dishwasher hot water use schedule.
+541,,,,,schedules_hot_water_fixtures,frac,"Fixtures (sinks, showers, baths) hot water use schedule."
+542,,,,,schedules_lighting_garage,frac,Garage lighting energy use schedule.
+543,,,,,schedules_lighting_interior,frac,Interior lighting energy use schedule.
+544,,,,,schedules_no_space_cooling,,Unavailable period.
+545,,,,,schedules_no_space_heating,,Unavailable period.
+546,,,,,schedules_occupants,frac,Occupant heat gain schedule.
+547,,,,,schedules_plug_loads_other,frac,Other plug load energy use schedule.
+548,,,,,schedules_plug_loads_tv,frac,Television plug load energy use schedule.
+549,,,,,schedules_power_outage,,Unavailable period.
+550,,,,,schedules_vacancy,,Unavailable period.
+551,,,,,schedules_electric_vehicle_charging,frac,availability schedule for electric vehicle charging.
+552,,,,,schedules_electric_vehicle_discharging,frac,availability schedule for electric vehicle discharging.

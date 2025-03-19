@@ -51,6 +51,8 @@ build_existing_model.weather_file_latitude,Latitude from the EPW weather file.
 build_existing_model.weather_file_longitude,Longitude from the EPW weather file.
 build_existing_model.heating_unavailable_period,Heating unavailable period.
 build_existing_model.cooling_unavailable_period,Cooling unavailable period.
+build_existing_model.electric_panel_service_rating,The service rating capacity value corresponding to the bin.
+build_existing_model.electric_panel_service_rating_bin,The sampled service rating capacity bin of the electric panel.
 build_existing_model.unit_height_above_grade,Height of the lowest conditioned floor above grade for the unit.
 apply_upgrade.applicable,The measure was applied to the workflow.
 apply_upgrade.upgrade_name,User-specificed name that describes the upgrade.

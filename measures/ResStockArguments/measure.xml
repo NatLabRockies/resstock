@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>806dfc0f-25c3-4276-a028-085320886160</version_id>
-  <version_modified>2025-03-18T21:30:14Z</version_modified>
+  <version_id>686387c3-89fd-4b17-9f88-a811cf1c7e53</version_id>
+  <version_modified>2025-03-18T21:31:24Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -7804,13 +7804,43 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>0C90D8FD</checksum>
+      <checksum>75637F6F</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F54903F9</checksum>
+      <checksum>518A24F2</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>E902477F</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_rated_capacity__multi_family.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>49D707DF</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_rated_capacity__single_family_electric_heating.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>AAC795D7</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_rated_capacity__single_family_nonelectric_heating.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>FFF0B8A5</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>57678570</checksum>
     </file>
     <file>
       <filename>measure.txt</filename>
