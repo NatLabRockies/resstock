@@ -12733,8 +12733,8 @@ Level,Parameter,Option,Saturation
 6,Ceiling Fan,None,0.28
 6,Ceiling Fan,Standard Efficiency,0.632508
 6,Ceiling Fan,"Standard Efficiency, No usage",0.0874922
-6,Has PV,No,0.990058
-6,Has PV,Yes,0.00994237
+6,Has PV,No,0.989958
+6,Has PV,Yes,0.0100425
 6,Tenure,Not Available,0.121517
 6,Tenure,Owner,0.559043
 6,Tenure,Renter,0.31944
@@ -12775,23 +12775,23 @@ Level,Parameter,Option,Saturation
 7,Battery,"20 kWh, Outside",0
 7,Battery,"20 kWh, Garage",0
 7,Battery,"20 kWh, 80% Round Trip Efficiency",0
-7,PV Orientation,East,0.00157374
-7,PV Orientation,None,0.990058
-7,PV Orientation,North,0.000166244
-7,PV Orientation,Northeast,0.000144675
-7,PV Orientation,Northwest,9.82668e-05
-7,PV Orientation,South,0.00446835
-7,PV Orientation,Southeast,0.00142221
-7,PV Orientation,Southwest,0.0012033
-7,PV Orientation,West,0.000865584
-7,PV System Size,1.0 kWDC,0.000268917
-7,PV System Size,3.0 kWDC,0.0019758
-7,PV System Size,5.0 kWDC,0.00296422
-7,PV System Size,7.0 kWDC,0.00221376
-7,PV System Size,9.0 kWDC,0.00143743
-7,PV System Size,11.0 kWDC,0.000769446
-7,PV System Size,13.0 kWDC,0.000312789
-7,PV System Size,None,0.990058
+7,PV Orientation,East,0.00158958
+7,PV Orientation,None,0.989958
+7,PV Orientation,North,0.000167918
+7,PV Orientation,Northeast,0.000146132
+7,PV Orientation,Northwest,9.9256e-05
+7,PV Orientation,South,0.00451333
+7,PV Orientation,Southeast,0.00143652
+7,PV Orientation,Southwest,0.00121542
+7,PV Orientation,West,0.000874298
+7,PV System Size,1.0 kWDC,0.000272094
+7,PV System Size,3.0 kWDC,0.00200103
+7,PV System Size,5.0 kWDC,0.00299626
+7,PV System Size,7.0 kWDC,0.00223481
+7,PV System Size,9.0 kWDC,0.00144877
+7,PV System Size,11.0 kWDC,0.00077465
+7,PV System Size,13.0 kWDC,0.000314848
+7,PV System Size,None,0.989958
 7,Income,<10000,0.0536329
 7,Income,10000-14999,0.0379308
 7,Income,15000-19999,0.0385917
