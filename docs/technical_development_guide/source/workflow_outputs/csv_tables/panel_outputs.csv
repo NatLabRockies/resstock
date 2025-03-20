@@ -30,9 +30,6 @@ report_simulation_output.electric_panel_load_pool_heater_w,W,Sum of pool heater 
 report_simulation_output.electric_panel_load_pool_pump_w,W,Sum of pool pump demand loads
 report_simulation_output.electric_panel_load_range_oven_w,W,Sum of range/oven demand loads
 report_simulation_output.electric_panel_load_well_pump_w,W,Sum of well pump demand loads
-report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based_headroom_capacity_a,A,Panel max current rating (A) minus Total Capacity (A)
-report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based_total_capacity_a,A,Total Load (W) divided by panel voltage
-report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based_total_load_w,W,Calculated NEC demand load capacity
-report_simulation_output.electric_panel_load_2023_existing_dwelling_meter_based_headroom_capacity_a,A,Panel max current rating (A) minus Total Capacity (A)
-report_simulation_output.electric_panel_load_2023_existing_dwelling_meter_based_total_capacity_a,A,Total Load (W) divided by panel voltage
-report_simulation_output.electric_panel_load_2023_existing_dwelling_meter_based_total_load_w,W,Calculated NEC demand load capacity
+report_simulation_output.electric_panel_load_<type>_headroom_capacity_a,A,Panel max current rating (A) minus Total Capacity (A)
+report_simulation_output.electric_panel_load_<type>_total_capacity_a,A,Total Load (W) divided by panel voltage
+report_simulation_output.electric_panel_load_<type>_total_load_w,W,Calculated NEC demand load capacity
