@@ -2046,19 +2046,21 @@ If the skylight has a shaft, additional information is entered in ``Skylight``.
 HPXML Doors
 ***********
 
-Each opaque door is entered as a ``/HPXML/Building/BuildingDetails/Enclosure/Doors/Door``.
+Each door with opaque area is entered as a ``/HPXML/Building/BuildingDetails/Enclosure/Doors/Door``.
 
   ============================================  =================  ============  ========================  ========  =========  ==============================
   Element                                       Type               Units         Constraints               Required  Default    Notes
   ============================================  =================  ============  ========================  ========  =========  ==============================
   ``SystemIdentifier``                          id                                                         Yes                  Unique identifier
   ``AttachedToWall``                            idref                            See [#]_                  Yes                  ID of attached wall
-  ``Area``                                      double             ft2           > 0                       Yes                  Total area
+  ``Area``                                      double             ft2           > 0                       Yes                  Total opaque area [#]_
   ``Azimuth`` or ``Orientation``                integer or string  deg           >= 0, <= 359 or See [#]_  No        See [#]_   Direction (clockwise from North)
   ``RValue``                                    double             F-ft2-hr/Btu  > 0                       Yes                  R-value [#]_
   ============================================  =================  ============  ========================  ========  =========  ==============================
 
   .. [#] AttachedToWall must reference a ``Wall`` or ``FoundationWall``.
+  .. [#] Any *glass* area in the door should be modeled using :ref:`windowinputs`.
+         For example, if a 30 ft2 door has 10 ft2 of glass, the door area should be entered as 20 ft2 (with a separate ``Window`` for the remaining 10 ft2).
   .. [#] Orientation choices are "northeast", "east", "southeast", "south", "southwest", "west", "northwest", or "north"
   .. [#] If neither Azimuth nor Orientation nor AttachedToWall azimuth provided, defaults to the azimuth with the largest surface area defined in the HPXML file.
   .. [#] RValue includes interior/exterior air films and presence of any storm door.
@@ -4876,13 +4878,10 @@ A single electric vehicle charger can be entered as a ``/HPXML/Building/Building
   Element               Type     Units  Constraints  Required  Default   Notes
   ====================  =======  =====  ===========  ========  ========  ============================================
   ``SystemIdentifier``  id                           Yes                 Unique identifier
-  ``Location``          string          See [#]_     No        See [#]_  Location of charger and attached EV when at home
   ``ChargingLevel``     integer         >= 1, <= 3   No        See [#]_  Charger power level
   ``ChargingPower``     double   W      > 0          No        See [#]_  Charger power output
   ====================  =======  =====  ===========  ========  ========  ============================================
 
-  .. [#] Location choices are "garage" or "outside".
-  .. [#] If Location not provided, defaults to "garage" if a garage is present, otherwise "outside".
   .. [#] If neither ChargingLevel nor ChargingPower provided, defaults to level 2.
   .. [#] If ChargingPower not provided, defaults to 1600 W if a level 1 charger, otherwise 5690 W per `EV Watts Public Database <https://www.osti.gov/biblio/1970735>`_.
 

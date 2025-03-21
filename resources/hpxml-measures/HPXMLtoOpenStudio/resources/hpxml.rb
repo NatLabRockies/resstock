@@ -9575,7 +9575,6 @@ class HPXML < Object
   # Object for /HPXML/Building/BuildingDetails/Systems/ElectricVehicleChargers/ElectricVehicleCharger.
   class ElectricVehicleCharger < BaseElement
     ATTRS = [:id,             # [String] SystemIdentifier/@id
-             :location,       # [String] Location (HPXML::LocationXXX)
              :charging_level, # [Integer] ChargingLevel (1-3)
              :charging_power] # [Double] ChargingPower (W)
     attr_accessor(*ATTRS)
@@ -9640,7 +9639,6 @@ class HPXML < Object
       charger = XMLHelper.add_element(chargers, 'ElectricVehicleCharger')
       sys_id = XMLHelper.add_element(charger, 'SystemIdentifier')
       XMLHelper.add_attribute(sys_id, 'id', @id)
-      XMLHelper.add_element(charger, 'Location', @location, :string, @location_isdefaulted) unless @location.nil?
       XMLHelper.add_element(charger, 'ChargingLevel', @charging_level, :integer, @charging_level_isdefaulted) unless @charging_level.nil?
       XMLHelper.add_element(charger, 'ChargingPower', @charging_power, :float, @charging_power_isdefaulted) unless @charging_power.nil?
     end
@@ -9653,7 +9651,6 @@ class HPXML < Object
       return if charger.nil?
 
       @id = HPXML::get_id(charger)
-      @location = XMLHelper.get_value(charger, 'Location', :string)
       @charging_level = XMLHelper.get_value(charger, 'ChargingLevel', :integer)
       @charging_power = XMLHelper.get_value(charger, 'ChargingPower', :float)
     end

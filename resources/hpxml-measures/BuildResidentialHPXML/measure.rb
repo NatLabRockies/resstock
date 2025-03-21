@@ -3056,15 +3056,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setUnits('W')
     args << arg
 
-    ev_charger_location_choices = OpenStudio::StringVector.new
-    ev_charger_location_choices << HPXML::LocationGarage
-    ev_charger_location_choices << HPXML::LocationOutside
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('ev_charger_location', ev_charger_location_choices, false)
-    arg.setDisplayName('Electric Vehicle Charger: Location')
-    arg.setDescription("The space type for the EV charger. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-electric-vehicle-chargers'>HPXML Electric Vehicle Chargers</a>) is used.")
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('lighting_present', true)
     arg.setDisplayName('Lighting: Present')
     arg.setDescription('Whether there is lighting energy use.')
@@ -7544,7 +7535,6 @@ module HPXMLFile
   # - hours driven per week
   # - fraction charged at home
   # - EV charger reference
-  # - EV charger location
   # - EV charger charging power
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
@@ -7557,7 +7547,6 @@ module HPXMLFile
     if args[:ev_charger_present]
       charger_id = "EVCharger#{hpxml_bldg.ev_chargers.size + 1}"
       hpxml_bldg.ev_chargers.add(id: charger_id,
-                                 location: args[:ev_charger_location],
                                  charging_level: args[:ev_charger_level],
                                  charging_power: args[:ev_charger_power])
     end

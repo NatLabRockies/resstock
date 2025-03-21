@@ -5279,19 +5279,6 @@ The rated power output of the EV charger. If not provided, the OS-HPXML default 
 
 <br/>
 
-**Electric Vehicle Charger: Location**
-
-The space type for the EV charger. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'>HPXML Electric Vehicle Chargers</a>) is used.
-
-- **Name:** ``ev_charger_location``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `garage`, `outside`
-
-<br/>
-
 **Lighting: Present**
 
 Whether there is lighting energy use.

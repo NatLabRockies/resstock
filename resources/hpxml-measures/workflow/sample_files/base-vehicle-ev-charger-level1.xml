@@ -541,7 +541,6 @@
         <ElectricVehicleChargers>
           <ElectricVehicleCharger>
             <SystemIdentifier id='EVCharger1'/>
-            <Location>garage</Location>
             <ChargingLevel>1</ChargingLevel>
           </ElectricVehicleCharger>
         </ElectricVehicleChargers>
