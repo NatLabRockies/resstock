@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>686387c3-89fd-4b17-9f88-a811cf1c7e53</version_id>
-  <version_modified>2025-03-18T21:31:24Z</version_modified>
+  <version_id>6cbe6a42-3f46-473a-b560-ff53f3663f4e</version_id>
+  <version_modified>2025-03-21T20:25:24Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -5520,29 +5520,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>ev_charger_location</name>
-      <display_name>Electric Vehicle Charger: Location</display_name>
-      <description>The space type for the EV charger. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'&gt;HPXML Electric Vehicle Chargers&lt;/a&gt;) is used.</description>
-      <type>Choice</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>auto</value>
-          <display_name>auto</display_name>
-        </choice>
-        <choice>
-          <value>garage</value>
-          <display_name>garage</display_name>
-        </choice>
-        <choice>
-          <value>outside</value>
-          <display_name>outside</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
       <name>lighting_present</name>
       <display_name>Lighting: Present</display_name>
       <description>Whether there is lighting energy use.</description>
@@ -7787,7 +7764,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>50C43737</checksum>
+      <checksum>013AFE98</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7846,7 +7823,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>75D24F51</checksum>
+      <checksum>C2CE2C03</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>

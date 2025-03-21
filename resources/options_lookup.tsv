@@ -9263,8 +9263,8 @@ Electric Vehicle Charge At Home	20-39%	ResStockArguments	vehicle_fraction_charge
 Electric Vehicle Charge At Home	40-59%	ResStockArguments	vehicle_fraction_charged_home=0.50
 Electric Vehicle Charge At Home	60-79%	ResStockArguments	vehicle_fraction_charged_home=0.70
 Electric Vehicle Charge At Home	80-99%	ResStockArguments	vehicle_fraction_charged_home=0.90
-Electric Vehicle Charger	Level 1 charger	ResStockArguments	ev_charger_present=true	ev_charger_power=1600	ev_charger_location=auto
-Electric Vehicle Charger	Level 2 charger	ResStockArguments	ev_charger_present=true	ev_charger_power=5690	ev_charger_location=auto
+Electric Vehicle Charger	Level 1 charger	ResStockArguments	ev_charger_present=true	ev_charger_power=1600
+Electric Vehicle Charger	Level 2 charger	ResStockArguments	ev_charger_present=true	ev_charger_power=5690
 Electric Vehicle Charger	None	ResStockArguments	ev_charger_present=false
 Electric Vehicle Charger	Void	ResStockArguments	ev_charger_present=false
 Electric Vehicle Efficiency Increase	15%	ResStockArguments	ev_efficiency_percent_increase=0.15
