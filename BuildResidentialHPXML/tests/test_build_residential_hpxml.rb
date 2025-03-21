@@ -944,7 +944,6 @@ class BuildResidentialHPXMLTest < Minitest::Test
     when 'extra-vehicle-ev.xml'
       args['vehicle_type'] = HPXML::VehicleTypeBEV
       args['ev_charger_present'] = true
-      args['ev_charger_location'] = HPXML::LocationGarage
     when 'extra-two-batteries.xml'
       args['vehicle_type'] = HPXML::VehicleTypeBEV
       args['battery_present'] = true

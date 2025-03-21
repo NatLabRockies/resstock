@@ -1299,8 +1299,7 @@
     "vehicle_fuel_economy_units": "kWh/mile",
     "vehicle_fraction_charged_home": 0.75,
     "ev_charger_present": true,
-    "ev_charger_power": 7000,
-    "ev_charger_location": "garage"
+    "ev_charger_power": 7000
   },
   "sample_files/base-vehicle-ev-charger-level1.xml": {
     "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml",
@@ -1341,7 +1340,6 @@
     "parent_hpxml": "sample_files/base-pv-battery.xml",
     "vehicle_type": "BatteryElectricVehicle",
     "ev_charger_present": true,
-    "ev_charger_location": "outside",
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/vehicle-ev.csv"
   },
   "sample_files/base-bldgtype-sfa-unit.xml": {

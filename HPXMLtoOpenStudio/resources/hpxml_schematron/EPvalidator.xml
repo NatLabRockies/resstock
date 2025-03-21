@@ -2602,8 +2602,6 @@
     <sch:pattern>
     <sch:title>[ElectricVehicleCharger]</sch:title>
     <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:ElectricVehicleChargers/h:ElectricVehicleCharger'>
-      <sch:assert role='ERROR' test='count(h:Location) &lt;= 1'>Expected 0 or 1 element(s) for xpath: Location</sch:assert>
-      <sch:assert role='ERROR' test='h:Location[text()="garage" or text()="outside"] or not(h:Location)'>Expected Location to be 'garage' or 'outside'</sch:assert>
       <sch:assert role='ERROR' test='count(h:ChargingLevel) &lt;= 1'>Expected 0 or 1 element(s) for xpath: ChargingLevel</sch:assert>
       <sch:assert role='ERROR' test='count(h:ChargingPower) &lt;= 1'>Expected 0 or 1 element(s) for xpath: ChargingPower</sch:assert>
     </sch:rule>
