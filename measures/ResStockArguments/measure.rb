@@ -521,13 +521,13 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # HVAC Setpoints
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
       [Constants::Weekday, Constants::Weekend].each do |wkdy_or_wked|
-        setpoints = [args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_temp".to_sym]] * 24
+        schedule = [args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_temp".to_sym]] * 24
 
         hvac_control_setpoint_offset_magnitude = args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_offset_magnitude".to_sym]
         hvac_control_setpoint_schedule = args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_schedule".to_sym].split(',').map { |i| Float(i) }
-        setpoints = modify_setpoint_schedule(setpoints, hvac_control_setpoint_offset_magnitude, hvac_control_setpoint_schedule)
+        schedule = modify_setpoint_schedule(schedule, hvac_control_setpoint_offset_magnitude, hvac_control_setpoint_schedule)
 
-        args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint".to_sym] = setpoints.join(', ')
+        args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint".to_sym] = schedule.join(', ')
       end
     end
 
