@@ -3056,15 +3056,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setUnits('W')
     args << arg
 
-    ev_charger_location_choices = OpenStudio::StringVector.new
-    ev_charger_location_choices << HPXML::LocationGarage
-    ev_charger_location_choices << HPXML::LocationOutside
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('ev_charger_location', ev_charger_location_choices, false)
-    arg.setDisplayName('Electric Vehicle Charger: Location')
-    arg.setDescription("The space type for the EV charger. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-electric-vehicle-chargers'>HPXML Electric Vehicle Chargers</a>) is used.")
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('lighting_present', true)
     arg.setDisplayName('Lighting: Present')
     arg.setDescription('Whether there is lighting energy use.')
@@ -7458,6 +7449,39 @@ module HPXMLFile
       end
     end
 
+    hpxml_bldg.ev_chargers.each do |ev_charger|
+      if not args[:electric_panel_load_misc_plug_loads_vehicle_voltage].nil?
+        voltage = args[:electric_panel_load_misc_plug_loads_vehicle_voltage]
+      elsif not ev_charger.charging_level.nil?
+        voltage = { 1 => HPXML::ElectricPanelVoltage120,
+                    2 => HPXML::ElectricPanelVoltage240,
+                    3 => HPXML::ElectricPanelVoltage240 }[ev_charger.charging_level]
+      end
+
+      if not args[:electric_panel_load_misc_plug_loads_vehicle_power].nil?
+        power = args[:electric_panel_load_misc_plug_loads_vehicle_power]
+      elsif not ev_charger.charging_power.nil?
+        power = ev_charger.charging_power
+      end
+
+      if voltage.nil? && !power.nil?
+        voltage = HPXML::ElectricPanelVoltage120
+        if power > 2400 # 120v, 20A breaker?
+          voltage = HPXML::ElectricPanelVoltage240
+        end
+      end
+
+      branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
+                          voltage: voltage,
+                          component_idrefs: [ev_charger.id])
+
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypeElectricVehicleCharging,
+                          power: power,
+                          is_new_load: args[:electric_panel_load_misc_plug_loads_vehicle_addition],
+                          component_idrefs: [ev_charger.id])
+    end
+
     if !args[:electric_panel_load_other_power].nil? || !args[:electric_panel_load_other_addition].nil?
       branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
                           occupied_spaces: 1,
@@ -7511,7 +7535,6 @@ module HPXMLFile
   # - hours driven per week
   # - fraction charged at home
   # - EV charger reference
-  # - EV charger location
   # - EV charger charging power
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
@@ -7524,7 +7547,6 @@ module HPXMLFile
     if args[:ev_charger_present]
       charger_id = "EVCharger#{hpxml_bldg.ev_chargers.size + 1}"
       hpxml_bldg.ev_chargers.add(id: charger_id,
-                                 location: args[:ev_charger_location],
                                  charging_level: args[:ev_charger_level],
                                  charging_power: args[:ev_charger_power])
     end

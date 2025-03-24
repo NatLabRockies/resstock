@@ -9575,10 +9575,43 @@ class HPXML < Object
   # Object for /HPXML/Building/BuildingDetails/Systems/ElectricVehicleChargers/ElectricVehicleCharger.
   class ElectricVehicleCharger < BaseElement
     ATTRS = [:id,             # [String] SystemIdentifier/@id
-             :location,       # [String] Location (HPXML::LocationXXX)
              :charging_level, # [Integer] ChargingLevel (1-3)
              :charging_power] # [Double] ChargingPower (W)
     attr_accessor(*ATTRS)
+
+    # Returns any branch circuits that the component may be attached to.
+    #
+    # @return [Array<HPXML::BranchCircuit>] List of branch circuit objects
+    def branch_circuits
+      list = []
+      @parent_object.electric_panels.each do |electric_panel|
+        electric_panel.branch_circuits.each do |branch_circuit|
+          next if branch_circuit.component_idrefs.nil? || branch_circuit.component_idrefs.empty?
+          next unless branch_circuit.component_idrefs.include?(@id)
+
+          list << branch_circuit
+        end
+      end
+
+      return list
+    end
+
+    # Returns any service feeders that the component may be attached to.
+    #
+    # @return [Array<HPXML::ServiceFeeder>] List of service feeder objects
+    def service_feeders
+      list = []
+      @parent_object.electric_panels.each do |electric_panel|
+        electric_panel.service_feeders.each do |service_feeder|
+          next if service_feeder.component_idrefs.empty?
+          next unless service_feeder.component_idrefs.include?(@id)
+
+          list << service_feeder
+        end
+      end
+
+      return list
+    end
 
     # Deletes the current object from the array.
     #
@@ -9606,7 +9639,6 @@ class HPXML < Object
       charger = XMLHelper.add_element(chargers, 'ElectricVehicleCharger')
       sys_id = XMLHelper.add_element(charger, 'SystemIdentifier')
       XMLHelper.add_attribute(sys_id, 'id', @id)
-      XMLHelper.add_element(charger, 'Location', @location, :string, @location_isdefaulted) unless @location.nil?
       XMLHelper.add_element(charger, 'ChargingLevel', @charging_level, :integer, @charging_level_isdefaulted) unless @charging_level.nil?
       XMLHelper.add_element(charger, 'ChargingPower', @charging_power, :float, @charging_power_isdefaulted) unless @charging_power.nil?
     end
@@ -9619,7 +9651,6 @@ class HPXML < Object
       return if charger.nil?
 
       @id = HPXML::get_id(charger)
-      @location = XMLHelper.get_value(charger, 'Location', :string)
       @charging_level = XMLHelper.get_value(charger, 'ChargingLevel', :integer)
       @charging_power = XMLHelper.get_value(charger, 'ChargingPower', :float)
     end
@@ -9991,8 +10022,9 @@ class HPXML < Object
       pool_heaters = @parent_object.pools.select { |pool| @component_idrefs.include? pool.heater_id }
       plug_load_well_pumps = @parent_object.plug_loads.select { |plug_load| @component_idrefs.include?(plug_load.id) && plug_load.plug_load_type == HPXML::PlugLoadTypeWellPump }
       plug_load_vehicles = @parent_object.plug_loads.select { |plug_load| @component_idrefs.include?(plug_load.id) && plug_load.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging }
+      ev_chargers = @parent_object.ev_chargers.select { |ev_charger| @component_idrefs.include?(ev_charger.id) }
 
-      list = heating_systems + cooling_systems + heat_pumps + water_heating_systems + clothes_dryers + dishwashers + cooking_ranges + ventilation_fans + permanent_spa_pumps + permanent_spa_heaters + pool_pumps + pool_heaters + plug_load_well_pumps + plug_load_vehicles
+      list = heating_systems + cooling_systems + heat_pumps + water_heating_systems + clothes_dryers + dishwashers + cooking_ranges + ventilation_fans + permanent_spa_pumps + permanent_spa_heaters + pool_pumps + pool_heaters + plug_load_well_pumps + plug_load_vehicles + ev_chargers
       if @component_idrefs.size > list.size
         fail "One or more referenced components '#{@component_idrefs.join("', '")}' not found for branch circuit '#{@id}'."
       end
@@ -10125,6 +10157,7 @@ class HPXML < Object
       pool_heaters = @parent_object.pools.select { |pool| @component_idrefs.include? pool.heater_id }
       plug_load_well_pumps = @parent_object.plug_loads.select { |plug_load| @component_idrefs.include?(plug_load.id) && plug_load.plug_load_type == HPXML::PlugLoadTypeWellPump }
       plug_load_vehicles = @parent_object.plug_loads.select { |plug_load| @component_idrefs.include?(plug_load.id) && plug_load.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging }
+      ev_chargers = @parent_object.ev_chargers.select { |ev_charger| @component_idrefs.include?(ev_charger.id) }
 
       if !heating_systems.empty?
         fail "One or more referenced components '#{@component_idrefs.join("', '")}' not valid for service feeder '#{@id}'" if ![HPXML::ElectricPanelLoadTypeHeating].include?(@type)
@@ -10168,8 +10201,11 @@ class HPXML < Object
       if !plug_load_vehicles.empty?
         fail "One or more referenced components '#{@component_idrefs.join("', '")}' not valid for service feeder '#{@id}'" if ![HPXML::ElectricPanelLoadTypeElectricVehicleCharging].include?(@type)
       end
+      if !ev_chargers.empty?
+        fail "One or more referenced components '#{@component_idrefs.join("', '")}' not valid for service feeder '#{@id}'" if ![HPXML::ElectricPanelLoadTypeElectricVehicleCharging].include?(@type)
+      end
 
-      list = heating_systems + cooling_systems + heat_pumps + water_heating_systems + clothes_dryers + dishwashers + cooking_ranges + ventilation_fans + permanent_spa_pumps + permanent_spa_heaters + pool_pumps + pool_heaters + plug_load_well_pumps + plug_load_vehicles
+      list = heating_systems + cooling_systems + heat_pumps + water_heating_systems + clothes_dryers + dishwashers + cooking_ranges + ventilation_fans + permanent_spa_pumps + permanent_spa_heaters + pool_pumps + pool_heaters + plug_load_well_pumps + plug_load_vehicles + ev_chargers
       if @component_idrefs.size > list.size
         fail "One or more referenced components '#{@component_idrefs.join("', '")}' not found for service feeder '#{@id}'."
       end

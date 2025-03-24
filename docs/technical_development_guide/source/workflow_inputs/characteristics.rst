@@ -35711,12 +35711,6 @@ Arguments
      - Double
      - auto
      - The rated power output of the EV charger. If not provided, the OS-HPXML default (see `HPXML Electric Vehicle Chargers <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>`_) is used.
-   * - ``ev_charger_location``
-     - false
-     - 
-     - Choice
-     - auto, garage, outside
-     - The space type for the EV charger. If not provided, the OS-HPXML default (see `HPXML Electric Vehicle Chargers <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>`_) is used.
 
 Options
 *******
@@ -35732,27 +35726,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - Stock saturation
      - ``ev_charger_present``
      - ``ev_charger_power``
-     - ``ev_charger_location``
 
    * - Level 1 charger
      - 0.86%
      - true
      - 1600
-     - auto
    * - Level 2 charger
      - 0.59%
      - true
      - 5690
-     - auto
    * - None
      - 99%
      - false
      - 
-     - 
    * - Void
      - 0%
      - false
-     - 
      - 
 
 .. _electric_vehicle_miles_traveled:

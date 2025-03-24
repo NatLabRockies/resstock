@@ -1,5 +1,5 @@
 Load Name,Voltage,Power Rating,Units,Breaker Spaces,Load Type,Notes
-lighting,120,3,W/sqft,0,lighting,Multiplier for conditioned floor area to account  for capacity impacts of general lighting.
+lighting,120,3,W/sqft,2,lighting,Multiplier for conditioned floor area to account  for capacity impacts of general lighting.
 kitchen,120,3000,W,2,kitchen,Two kitchen small appliance circuits at 1.5 kVA.
 laundry,120,1500,W,1,laundry,One laundry circuit at 1.5 kVA.
 ev_level,120,1650,W,1,electric vehicle charging,Level 1 - 120V EV charger. Assumes dedicated circuit.
@@ -18,6 +18,7 @@ dryer_hp,240,860,W,2,clothes dryer,240V heat pump clothes dryer.
 dishwasher,120,1200,W,1,dishwasher,Dishwasher.
 rangeoven,120,1800,W,1,range/oven,120V range-oven.
 rangeoven,240,12000,W,2,range/oven,240V range-oven.
+rangeoven_induction,240,10000,W,2,range/oven,240V induction range-oven.
 wh_tankless1,240,18000,W,4,hot water,Tankless water heater - one bathroom.
 wh_tankless2,240,24000,W,4,hot water,Tankless water heater - two bathrooms.
 wh_tankless3,240,36000,W,6,hot water,Tankless water heater - three or more bathrooms.

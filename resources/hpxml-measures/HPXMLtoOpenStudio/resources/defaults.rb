@@ -3623,30 +3623,24 @@ module Defaults
 
       next if vehicle.ev_charger.nil?
 
-      apply_ev_charger(hpxml_bldg, vehicle.ev_charger)
+      apply_ev_charger(vehicle.ev_charger)
     end
   end
 
   # Assigns default values for omitted optional inputs in the HPXML::ElectricVehicleCharger objects
   #
-  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param ev_charger [HPXML::ElectricVehicleCharger] Object that defines a single electric vehicle charger
   # @return [nil]
-  def self.apply_ev_charger(hpxml_bldg, ev_charger)
-    default_values = get_ev_charger_values(hpxml_bldg.has_location(HPXML::LocationGarage))
-    if ev_charger.location.nil?
-      ev_charger.location = default_values[:location]
-      ev_charger.location_isdefaulted = true
-    end
+  def self.apply_ev_charger(ev_charger)
     if ev_charger.charging_level.nil? && ev_charger.charging_power.nil?
-      ev_charger.charging_level = default_values[:charging_level]
+      ev_charger.charging_level = 2
       ev_charger.charging_level_isdefaulted = true
     end
     if ev_charger.charging_power.nil?
       if ev_charger.charging_level == 1
-        ev_charger.charging_power = default_values[:level1_charging_power]
+        ev_charger.charging_power = 1600.0
       elsif ev_charger.charging_level >= 2
-        ev_charger.charging_power = default_values[:level2_charging_power]
+        ev_charger.charging_power = 5690.0
       end
       ev_charger.charging_power_isdefaulted = true
     end
@@ -4759,8 +4753,8 @@ module Defaults
       HPXML::ExteriorShadingTypeDeciduousTree => 0.0, # Assume fully opaque
       HPXML::ExteriorShadingTypeEvergreenTree => 0.0, # Assume fully opaque
       HPXML::ExteriorShadingTypeOther => 0.5, # Assume half opaque
-      HPXML::ExteriorShadingTypeSolarFilm => 0.3, # Based on MulTEA engineering manual
-      HPXML::ExteriorShadingTypeSolarScreens => 0.7, # Based on MulTEA engineering manual
+      HPXML::ExteriorShadingTypeSolarFilm => 0.7, # Based on MulTEA engineering manual
+      HPXML::ExteriorShadingTypeSolarScreens => 0.3, # Based on MulTEA engineering manual
     }
 
     ext_sf_summer = c_map[window.exterior_shading_type]
@@ -6147,6 +6141,8 @@ module Defaults
         if component.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging
           return HPXML::ElectricPanelVoltage120
         end
+      elsif component.is_a?(HPXML::ElectricVehicleCharger)
+        return HPXML::ElectricPanelVoltage120
       end
       return HPXML::ElectricPanelVoltage240
     end
@@ -6455,8 +6451,14 @@ module Defaults
         next if !component_ids.include?(cooking_range.id)
         next if cooking_range.fuel_type != HPXML::FuelTypeElectricity
 
-        cooking_range.branch_circuits.each do |branch_circuit|
-          watts += get_default_panels_value(runner, default_panels_csv_data, 'rangeoven', 'PowerRating', branch_circuit.voltage)
+        if cooking_range.is_induction
+          cooking_range.branch_circuits.each do |branch_circuit|
+            watts += get_default_panels_value(runner, default_panels_csv_data, 'rangeoven_induction', 'PowerRating', branch_circuit.voltage)
+          end
+        else # resistance
+          cooking_range.branch_circuits.each do |branch_circuit|
+            watts += get_default_panels_value(runner, default_panels_csv_data, 'rangeoven', 'PowerRating', branch_circuit.voltage)
+          end
         end
       end
     elsif type == HPXML::ElectricPanelLoadTypeMechVent
@@ -6544,6 +6546,14 @@ module Defaults
           watts += get_default_panels_value(runner, default_panels_csv_data, 'ev_level', 'PowerRating', branch_circuit.voltage)
         end
       end
+
+      hpxml_bldg.ev_chargers.each do |ev_charger|
+        next if !component_ids.include?(ev_charger.id)
+
+        ev_charger.branch_circuits.each do |branch_circuit|
+          watts += get_default_panels_value(runner, default_panels_csv_data, 'ev_level', 'PowerRating', branch_circuit.voltage)
+        end
+      end
     elsif type == HPXML::ElectricPanelLoadTypeLighting
       watts += get_default_panels_value(runner, default_panels_csv_data, 'lighting', 'PowerRating', HPXML::ElectricPanelVoltage120) * hpxml_bldg.building_construction.conditioned_floor_area
     elsif type == HPXML::ElectricPanelLoadTypeKitchen
@@ -6618,8 +6628,13 @@ module Defaults
       next if !component_ids.include?(cooking_range.id)
       next if cooking_range.fuel_type != HPXML::FuelTypeElectricity
 
+      if cooking_range.is_induction
+        load_name = 'rangeoven_induction'
+      else # resistance
+        load_name = 'rangeoven'
+      end
       watts = cooking_range.service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeRangeOven }.map { |sf| sf.power }.sum(0.0)
-      breaker_spaces += get_default_panels_value(runner, default_panels_csv_data, 'rangeoven', 'BreakerSpaces', voltage, watts, max_current_rating)
+      breaker_spaces += get_default_panels_value(runner, default_panels_csv_data, load_name, 'BreakerSpaces', voltage, watts, max_current_rating)
     end
 
     hpxml_bldg.ventilation_fans.each do |ventilation_fan|
@@ -6687,6 +6702,13 @@ module Defaults
       breaker_spaces += get_default_panels_value(runner, default_panels_csv_data, 'ev_level', 'BreakerSpaces', voltage, watts, max_current_rating)
     end
 
+    hpxml_bldg.ev_chargers.each do |ev_charger|
+      next if !component_ids.include?(ev_charger.id)
+
+      watts = ev_charger.service_feeders.select { |sf| sf.type == HPXML::ElectricPanelLoadTypeElectricVehicleCharging }.map { |sf| sf.power }.sum(0.0)
+      breaker_spaces += get_default_panels_value(runner, default_panels_csv_data, 'ev_level', 'BreakerSpaces', voltage, watts, max_current_rating)
+    end
+
     return breaker_spaces
   end
 
@@ -6723,24 +6745,6 @@ module Defaults
              fuel_economy_units: HPXML::UnitsKwhPerMile,
              fraction_charged_home: 0.8,
              usable_fraction: 0.8 } # Fraction of usable capacity to nominal capacity
-  end
-
-  # Get default location, charging power, and charging level for an electric vehicle charger.
-  # The default location is the garage if one is present.
-  #
-  # @param has_garage [Boolean] whether the HPXML Building object has a garage
-  # @return [Hash] map of electric vehicle charger properties to default values
-  def self.get_ev_charger_values(has_garage = false)
-    if has_garage
-      location = HPXML::LocationGarage
-    else
-      location = HPXML::LocationOutside
-    end
-
-    return { location: location,
-             charging_level: 2,
-             level1_charging_power: 1600,
-             level2_charging_power: 5690 } # Median L2 charging rate in EVWatts
   end
 
   # Gets the default values for a dehumidifier
