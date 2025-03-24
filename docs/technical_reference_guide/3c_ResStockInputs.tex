@@ -1730,10 +1730,9 @@ The heating fuel of the pool heater if there is a pool.
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
-	\item Constructed using U.S. EIA 2020 RECS microdata.
-	\item The California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata.
-\end{itemize}
-
+    \item Constructed using U.S. EIA 2020 RECS microdata.
+    \item Constructed using the California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata 
+\end{itemize} 
 
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
@@ -1743,7 +1742,7 @@ The heating fuel of the pool heater if there is a pool.
 
 \paragraph{Options}
 
-The options for pool heaters are based on the fuel they use: electricity, natural gas, none, and other fuel. The characteristic assigns the \texttt{pool\_heater\_type}, \texttt{pool\_heater\_annual\_kwh}, \texttt{pool\_heater\_annual\_therm}, and \texttt{pool\_heater\_usage\_multiplier} ResStock arguments (Table \ref{table:opt_def_pool_heat}).
+There are five options for pool heaters: Electricity, Electric Heat Pump, Natural Gas, None, and Other Fuel. The Electricity option defines a traditional electric resistance pool heater, whereas the Electric Heat Pump option uses heat pump technology for heating the pool. The “Other Fuel” pool heater option currently is currently not modeled in ResStock. The ResStock arguments assigned for each of these options is given in Table \ref{table:opt_def_pool_heat}.
 
 \begin{customLongTable}{ |p{2.5cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}| }
 {Pool Heater options and arguments that vary for each option} {table:opt_def_pool_heat} 
@@ -1753,6 +1752,7 @@ The options for pool heaters are based on the fuel they use: electricity, natura
 \texttt{pool\_heater\_usage\_multiplier}} 
 Electric Heat Pump & heat pump & auto & 0 & 1.0 \\
 Electricity & electric resistance & auto & 0 & 1.0 \\
+Electric Heat Pump & heat pump & auto & 0 & 1.0 \\
 Natural Gas & gas fired & 0 & auto & 1.0 \\
 None & none & 0 & 0 & 0 \\
 Other Fuel & none & 0 & 0 & 0 \\
@@ -1787,7 +1787,7 @@ high/low usage occupants.  \\
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
-	\item Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.
+    \item Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.
 \end{itemize}
 
 \subsubsection{Misc Pool Pump}
@@ -1947,19 +1947,24 @@ In combining the housing unit sub-input file and household sub-input file, the c
 
 \subsection{Well Pump}
 \subsubsection{Modeling Approach}
-Well pumps are used to extract potable water from a well. Well pumps are not well characterized in existing studies. The 2014 Building America House Simulation Protocols (\cite{Wilson2014}) estimated that 13\% of U.S.~homes have a well pump, and the study is used to construct the characteristic distribution, which has no dependency. This means a well pump is randomly assigned to housing units in ResStock where it is modeled as a type of plug load that does not provide any latent or sensible heat to the housing units. The annual energy for well pumping is estimated based on conditioned floor area and number of bedrooms converted from occupants using an equation from 2014 Building America House Simulation Protocols (\cite{Wilson2014}) and can be adjusted by a usage multiplier. The annual energy is then multiplied by a default simple schedule to produce the end-use load profile.
+Well pumps are used to extract potable water from a well. The 2017-2019 American Housing Surveys ({\cite{ahs}}) estimated that 11\% of US homes have a well pump, and that data is used to construct the characteristic distribution, which has a dependency to Census Division, PUMA Metro Status, and Geometry Building Type Height. Well pumps are also more common outside the metro areas than in metro areas, particularly within a principal city. A well pump in ResStock is modeled as a type of plug load that does not provide any latent or sensible heat to the housing units. The annual energy for well pumping is estimated based on conditioned floor area and number of bedrooms converted from occupants using an equation from 2014 Building America House Simulation Protocols (BAHSP) (\cite{Wilson2014}) and can be adjusted by a usage multiplier. The annual energy is then multiplied by a default simple schedule to produce the end-use load profile.
 
 \subsubsection{Misc Well Pump}
 \paragraph{Description}
 Presence of well pump according to the use of well for domestic water source.
 
 \paragraph{Distribution Data Source(s)}
+
 \begin{itemize}
-	\item 2017 and 2019 American Housing Survey (AHS) microdata.
-	\item Core Based Statistical Area (CBSA) data based on the Feb 2013 CBSA delineation file.
+    \item 2017 and 2019 American Housing Survey (AHS) microdata.
+    \item Core Based Statistical Area (CBSA) data based on the Feb 2013 CBSA delineation file.
 \end{itemize}
 \paragraph{Direct Conditional Dependencies}
-None.
+\begin{itemize}
+    \item Census Division
+    \item PUMA Metro Status
+    \item Geometry Building Type Height
+\end{itemize}
 
 \paragraph{Options}
 The options for the Misc Well Pump characteristic are Typical Efficiency if there is a well pump and None if there is no well pump. The characteristic sets the \texttt{misc\_plug\_loads\_well\_pump\_present}, \texttt{misc\_plug\_loads\_well\_pump\_usage\_multiplier}, \texttt{misc\_plug\_loads\_well\_pump\_2\_usage\_multiplier}, and \texttt{misc\_plug\_loads\_well\_pump\_annual\_kwh} ResStock arguments (Table \ref{table:hc_opt_def_well_pump}). 
@@ -2862,6 +2867,13 @@ reflect, e.g., high/low usage occupants. \\
 \paragraph{Distribution Assumption(s)}
 None.
 
+
+
+
+
+
+
+
 \section{Electric Vehicles}
 
 \subsection{Modeling Approach}
@@ -3172,8 +3184,123 @@ Charging and discharging schedules provide the time periods when the EV can char
   \caption{Illustration of EV battery discharge schedule generation.}
   \label{fig:ev_discharge}
 \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Electrical Panels} \label{sec:input_panels}
+The electrical panel is a breaker box that distributes power from the utility pole to the connected appliances and receptacles while protecting them from overload, short circuit, or ground fault. Inside the panel, electric appliances are organized into branch circuits that are each protected by an overcurrent protection device (A.K.A. breaker). Two bus bars each carrying 120V service along with a neutral bus bar run down the breaker slots to supply power at either 120V or 240V. 120V circuits use single-pole breakers that take up one space while 240V require two-space double-pole breakers to draw the 240V potential between the two hot wires. Some breakers, such as tandem breakers, can serve multiple circuits without taking up more space. The panel service rating refers to the maximum amps of current the panel can safely handle to power the circuits. This is often the same as the ampacity rating of the service entrance disconnect, which limits the amount of power entering the panel, though it is possible to have a panel rated larger than its service disconnect, and vice versa. 
 
+\subsection{Overview}
+The electrical panel service load and breaker space calculations are used to assess whether the electrical panel has a capacity and a space constraint, respectively, during a home electrification. As new electric loads are introduced into the home, the panel may need to be reconfigured, extended, or replaced due to insufficient capacity or insufficient breaker space. For example, homes that are not already using electricity for heating and cooking are more likely to have capacity constraints, thus requiring an upgrade, load controls, or other interventions. A panel with all slots occupied cannot accommodate new circuits unless space-saving breakers are used, or a subpanel is added. When the panel is being upsized for capacity, an electrical service upgrade may also be required to upsize the service entrance wiring from the pole to the service disconnect. By estimating the panel capacity constraints, the service load calculation can serve as an upper bound estimate for service upgrades when applied to the housing stock. 
+
+To evaluate potential panel constraints, we first characterize the panel service rating and the number of available breaker spaces on the panels for the US housing stock using best available data. Then we perform service load calculations based on code to get the required capacity for a given upgrade scenario. The calculated value is compared with the rating of the panel to determine the capacity constraint. For the breaker space calculation, the number of occupied breaker spaces on the panel is estimated by tabulating from each appliance for a given modeled home. This pre-upgrade occupied space estimate is combined with the available breaker space input to determine the rated total number of spaces on the panel. Then the number of occupied breaker spaces is calculated for the modeled home post-upgrade and subtracted from the rated number of spaces to determine the space constraint for a given upgrade scenario. The following sections provide more detail on each of the two calculations. The electrical panel outputs can be found in Section \ref{sec:output_panels}.
+
+\subsection{Input Characteristics}
+We derived the electrical panel service rating (A) and the breaker space headroom using a limited set of survey data. For single-family attached and detached dwellings, the data was used to train machine-learning models, which were then used to generate the distribution of the panel attributes. For multi-family, the characteristic distributions were derived directly from the data due to insufficient samples to support model training. As the dataset does not contain high-fidelity samples for mobile homes, we use the distributions for single-family detached to approximate mobile homes.
+
+79\% of the survey data comes from the Pacific regions via: TECH Clean California, Bay Area Renewable Energy Network, Home Energy Analytics, and Northwest Energy Efficiency Alliance Residential Building Stock Assessment, while 20\% comes from the Minnesota Center for Energy and the Environment and 1\% from LBL Citizen Science survey, which is administered nationally. 
+Due to the data bias towards the Pacific states, where gas heating is dominant, separate model is used for electrically heated and fuel heated single-family dwellings. Table \ref{tab:panel_deps} outlines the dependencies for each of the distributions generated for assigning the panel characteristics. The field values for electrical panel service rating (A) are: <100, 100, 101-124, 125, 126-199, 200, 201+. The availale breaker space options (count) range from 0 to 31.
+% TODO reference Task 1 paper when ready
+% TODO reference OS-HPXML documentation when available
+
+\begin{customLongTable}{ |p{3cm}|p{4cm}|p{7cm}| }
+  {Dependencies for the distributions of electrical panel service rating and breaker space.} {tab:panel_deps} 
+  {\textbf{Electrical Panel Input} & \textbf{Housing Segment} & \textbf{Dependencies}} 
+    Service rating & Single-Family, electric heat & Building type, floor area, vintage, water heater fuel, cooling type, clothes dryer, cooking range\\ \hline
+    Service rating & Single-Family, fuel heat & Building type, floor area, vintage\\ \hline
+    Service rating & Multi-Family & Floor area, vintage, heating fuel\\ \hline
+    Breaker space headroom & Single-Family & Service rating, major electric load count, floor area\\ \hline
+    Breaker space headroom & Multi-Family & Service rating, major electric load count\\
+\end{customLongTable}
+
+\subsection{Service Load Calculations}
+The service and feeder load calculation refers to a type of load calculation used to size the service entrance wires (between the utility poles and the meter or service disconnect) or the feeder wires (between panels, such as those between a building’s main panel and subpanel in each apartment unit) according to Section 220 of the National Electrical Code (NEC). This calculation also applies to the sizing of panels to ensure electrical safety. The NEC updates every three years, and the adoption of NEC varies by municipality. Instead of capturing every NEC version currently in practice, which is impractical, we implemented the load calculations per the latest NEC release, 2023, which represents the best practice adoptable. For 2023, the service load calculation is different for new constructions and existing buildings undergoing an upgrade. Two methods are available for existing buildings, and both are implemented in ResStock: load-based and metered-based. The calculated loads (W) represent the total occuied load from installed electrical equipment and are converted to total occupied capacity (A) by dividing by 240V, the panel voltage. The occupied capacity is compared with the panel service rating to calculate headroom capacity and assess NEC compliance.
+
+\subsubsection{Load-based Method}
+The service rating of the panel is generally not the sum of individual branch circuit ratings because not all equipment is expected to be operating at full load simultaneously. Instead, there is some diversity in the loads expected to make up the coincidence peak, even at a worst-case scenario. Following this idea, NEC Section 220.83 provides guidance on estimating this peak from the bottom-up to assess whether a panel has sufficient capacity to serve new loads. Table \ref{tab:panel_load_method} below summarizes the load-based method, and the assumptions made in ResStock to perform this calculation.
+
+\begin{customLongTable}{ |p{3cm}|p{6cm}|p{6cm}| }
+  {Summary of load-based method per 2023 NEC 220.83} {tab:panel_load_method} 
+  {\textbf{Load Type} & \textbf{Load Amount} & \textbf{ResStock Assumptions}} 
+          General lighting / receptacle load & 3 W/sqft & Uses conditioned floor area \\ \hline
+          Kitchen small appliance circuits & Min two branches at 1500 W each & Two branches per dwelling unit \\ \hline
+          Laundry circuits & Min one branch at 1500 W & One branch per dwelling unit \\ \hline
+          Major electric loads & 
+            Nameplate rating of: 
+            \begin{itemize}
+              \item HVAC (larger of heating and cooling)
+              \item Water heaters
+              \item Clothes dryers (not already on laundry circuits)
+              \item Cooking ranges/ovens
+              \item All other appliances that are "fastened in place, permanently connected, or located to be on a specific circuit" 
+            \end{itemize} & 
+            All other appliances include: 
+            \begin{itemize}
+              \item Hot tub/spa
+              \item Pool heaters and pumps
+              \item Well pumps
+              \item Electric vehicle supply equipment (EVSE)
+              \item Dishwashers
+              \item Spot ventilations
+              \item Selected plug loads: microwaves, garbage disposal, garage doors
+              \item Low-power (120V) appliances: water heaters, cooktops (not yet modeled) 
+            \end{itemize} \\ \hline
+          Demand factors and summation & 
+            Demand factors apply to both existing and new loads, depends on whether new HVAC is being installed:
+            \begin{itemize}
+              \item (a) If not adding new HVAC, take the first 8 kVA of all loads at 100\% and remainder loads at 40\%.
+              \item (b) If adding new HVAC, take HVAC load at 100\%, first 8 kVA of all other loads at 100\%, and remainder loads at 40\%.
+            \end{itemize}
+           & Total occupied capacity in the baseline is calculated using (a) \\ \hline
+\end{customLongTable}
+
+Of note, we accounted for selected plug loads in the load-based calculation that we do not explicitly model in terms of energy for which plug loads is a single end use category. We assumed all dwelling units have a microwave, 52\% homes have a garage disposal (per AHS 2013), and one garage door opener for homes with an attached garage. Additionally, the demand factors applied to sum up the loads vary depending on whether new HVAC load is being introduced by an upgrade. If all or part of the HVAC load is considered new, a more conservative approach (part (b)) is taken by taking the HVAC load (maximum of either heating or cooling) at 100\% instead of lumping it with all other loads to undergo adjustment by demand tiers. For the baseline load calculation, the total occupied load is calculated using part (a) as no new load is introduced yet.
+
+\subsubsection{Meter-based Method}
+The second method, metered-based, is a top-down approach by using the metered electricity peak of the preceding year to baseline the existing loading of the panel. Per NEC section 220.87, the total capacity needed for an upgrade is calculated as 1.25 of the baseline peak electricity plus any new loads at 100\%. In ResStock, the annual electricity peak is used in place of the metered data and the new loads that are counted are the same as those outlined in the load-based method. 
+
+For a given upgrade, the load-based method is generally more conservative than the metered-based at estimating the number of homes with a panel capacity constraint. However, this may not be the case for homes that have high equipment utilization factors or setpoints that drive up HVAC use. Additionally, as the metered-based method does not account for the removal of any legacy loads, the method may be more conservative for certain upgrade scenarios. For example, for a home that is upgrading an electric boiler to a heat pump with integrated heat strip, the heating load is being counted twice, from the incumbent equipment as part of the annual electric peak and the new equipment.
+
+\subsection{Breaker Space Calculations}
+The breaker space calculation is broken out into two parts. First the total rated breaker space is determined for the panel in the baseline home. This is done by summing the number of available breaker spaces (probabilistically assigned based on housing characteristics) and the estimated total occupied spaces by major electric equipment. Table \ref{tab:breaker_spaces} below lists the electric equipment considered and their associated voltage and breaker space requirement. Generally 120V-rated equipment take up one breaker space and 240V-rated equipment take up two spaces in order to make contact with two live bus bars to get the 240V service. While space-saving breakers, such as tandem, tri, and quad breakers, are available, they are not currently modeled in ResStock.
+
+\begin{customLongTable}{ |p{3cm}|p{1.5cm}|p{1.5cm}|p{8cm}| }
+  {Default voltage and breaker space by load type.} {tab:breaker_spaces} 
+  {\textbf{Load Name} & \textbf{Voltage} & \textbf{Breaker Spaces} & \textbf{Notes}} 
+  lighting & 120 & 0 & 	 \\ \hline
+  kitchen & 120 & 2 & Two kitchen small appliance circuits. \\ \hline
+  laundry & 120 & 1 & One laundry circuit. \\ \hline
+  electric vehicle charging & 120 & 1 & Level 1 - 120V EV charger. Assumes dedicated circuit. \\ \hline
+  electric vehicle charging & 240 &	2	& Level 2 - 240V EV charger. \\ \hline
+  well pump & 240 & 2	& \\ \hline
+  pool pump & 240 & 2 & 2 HP pool pump capacity. \\ \hline
+  pool heater & 240 & 6 & Electric resistance pool heater. Three 50A circuit breaker. \\ \hline
+  pool heater & 240 & 2 & Heat pump pool heater. \\ \hline
+  permanent spa heater & 240 & 2 & Electric resistance hot tub heater. \\ \hline
+  permanent spa heater & 240 & 2 & Heat pump hot tub heater. \\ \hline
+  permanent spa pump & 240 & 2 & Hot tub pump. \\ \hline
+  clothes dryer & 240 & 2 & Electric clothes dryer. \\ \hline
+  clothes dryer & 120 & 1 & 120V heat pump clothes dryer. \\ \hline
+  clothes dryer & 240 & 2 & 240V heat pump clothes dryer. \\ \hline
+  dishwasher & 120 & 1 & Dishwasher. \\ \hline
+  range/oven & 120 & 1 & 120V range-oven. \\ \hline
+  range/oven & 240 & 2 & 240V range-oven. \\ \hline
+  hot water & 240 & 4 & Tankless water heater - one bathroom. The default power rating is 1800W. Two 50A circuit breaker. \\ \hline
+  hot water & 240 & 4 & Tankless water heater - two bathrooms. The default power rating is 2400W. Two 50A circuit breaker. \\ \hline
+  hot water & 240 & 6 & Tankless water heater - three or more bathrooms. The default power rating is 3600W. Three 50A circuit breaker. \\ \hline
+  hot water &	240 &	auto & Storage water heater. The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
+  hot water & 120 & auto & 120V heat pump water heater. Assumes dedicated circuit. The default power rating is auto sized. The number of breaker space = (power rating in W/240V/15A).ceil. \\ \hline
+  hot water & 240 &	auto & 240V heat pump water heater. The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
+  heating & 240 & auto & The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
+  cooling	& 240 &	auto & The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
+  mechanical ventilation & 120 & 1	&  \\ \hline
+  other	& 120 &	1	& Only assumes 1 garage door opener if a garage is present and does not account for other permanent appliances (e.g. garbage disposal). \\
+\end{customLongTable}
+
+% TODO Add heat pump breaker space table
+
+Once the total rated breaker space is calculated, it is used to calculate the headroom breaker space in an upgrade simulation by subtracting from it the new total spaces occupied by electric loads in the upgraded home. Note, although the headroom breaker space for the baseline is an input characteristic, all space-related metrics are listed as output metrics to avoid confusion.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Household Characteristics}
 
 In addition to the physical characteristics of the housing units, ResStock defines the saturation of some attributes of the households. They are income and derivatives of income, tenure (renter/owner status), occupants, presence of Tribal persons, and vacancy status. All household attributes come from the 2019 5-year American Community Survey (ACS) Public Use Microdata Samples. The ACS is the premier census data source on the American population in addition to housing information. The survey collects data on all residents of sampled housing unit addresses. This means housing data such as building type and vacancy are tabulated by \textit{household\_id}, while population attributes such as age, race, and gender are tabulated by \textit{person\_id}. The ACS is also used to develop DOE’s \href{https://www.energy.gov/scep/slsc/lead-tool}{Low-Income Energy Affordability Data} tool.

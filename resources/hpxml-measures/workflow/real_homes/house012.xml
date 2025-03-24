@@ -227,6 +227,7 @@
               <HeatingCapacity>23400.0</HeatingCapacity>
               <HeatingCapacity17F>14274.0</HeatingCapacity17F>
               <CoolingCapacity>23200.0</CoolingCapacity>
+              <CompressorType>single stage</CompressorType>
               <FractionHeatLoadServed>1.0</FractionHeatLoadServed>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
