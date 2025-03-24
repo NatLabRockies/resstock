@@ -42063,7 +42063,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - No
      - 99%
    * - Yes
-     - 0.99%
+     - 1%
 
 .. _heating_fuel:
 
@@ -60785,11 +60785,11 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 0
      - 0
    * - Northeast
-     - 0.014%
+     - 0.015%
      - 45
      - 0
    * - Northwest
-     - 0.0098%
+     - 0.0099%
      - 315
      - 0
    * - South
