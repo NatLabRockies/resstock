@@ -5,22 +5,21 @@
 
 require_relative 'resources/hvac_flexibility/detailed_schedule_generator'
 require_relative 'resources/hvac_flexibility/setpoint_modifier'
-
 # start the measure
 class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   # human readable name
   def name
-    return 'ResStock Arguments Post-HPXML'
+    'ResStock Arguments Post-HPXML'
   end
 
   # human readable description
   def description
-    return 'Measure that post-processes the output of the BuildResidentialHPXML and BuildResidentialScheduleFile measures.'
+    'Measure that post-processes the output of the BuildResidentialHPXML and BuildResidentialScheduleFile measures.'
   end
 
   # human readable description of modeling approach
   def modeler_description
-    return 'Passes in all ResStockArgumentsPostHPXML arguments from the options lookup, processes them, and then modifies output of other measures.'
+    'Passes in all ResStockArgumentsPostHPXML arguments from the options lookup, processes them, and then modifies output of other measures.'
   end
 
   # define the arguments that the user will input
@@ -50,28 +49,26 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('hvac_flex_random_shift_minutes', false)
-    arg.setDisplayName('HVAC Load Flexibility: Random Shift (minutes)')
-    arg.setDescription('Number of minutes to randomly shift the peak period. If minutes less than timestep, will be assumed to be 0.')
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('flex_random_shift_minutes', false)
+    arg.setDisplayName('Load Flexibility: Random Shift (minutes)')
+    arg.setDescription('Number of minutes to randomly shift the peak period. If minutes is less than timestep, it will be assumed to be 0.')
     arg.setDefaultValue(0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('building_id', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('building_id', false)
     arg.setDisplayName('Building Unit ID')
     arg.setDescription('The building unit number (between 1 and the number of samples).')
     args << arg
 
-    return args
+    args
   end
 
   # define what happens when the measure is run
   def run(model, runner, user_arguments)
     super(model, runner, user_arguments)
-
+    @runner = runner
     # use the built-in error checking
-    if !runner.validateUserArguments(arguments(model), user_arguments)
-      return false
-    end
+    return false unless runner.validateUserArguments(arguments(model), user_arguments)
 
     # assign the user inputs to variables
     args = runner.getArgumentValues(arguments(model), user_arguments)
@@ -79,56 +76,41 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       runner.registerInfo('Skipping ResStockArgumentsPostHPXML')
       return true
     end
+    @args = args
 
-    @prngs = get_random_number_generators(args[:building_id].to_i)
+    @hpxml_path = args[:hpxml_path]
+    @hpxml_path = File.expand_path(@hpxml_path) unless (Pathname.new @hpxml_path).absolute?
+    raise "'#{@hpxml_path}' does not exist or is not an .xml file." unless File.exist?(@hpxml_path) && @hpxml_path.downcase.end_with?('.xml')
 
-    hpxml_path = args[:hpxml_path]
-    unless (Pathname.new hpxml_path).absolute?
-      hpxml_path = File.expand_path(hpxml_path)
-    end
+    output_csv_path = File.dirname(@hpxml_path)
 
-    unless File.exist?(hpxml_path) && hpxml_path.downcase.end_with?('.xml')
-      fail "'#{hpxml_path}' does not exist or is not an .xml file."
-    end
-    output_csv_path = File.dirname(hpxml_path)
-
-    hpxml = HPXML.new(hpxml_path: hpxml_path)
+    @hpxml = HPXML.new(hpxml_path: @hpxml_path)
+    @prng = Random.new(args[:building_id].to_i)
+    @minutes_per_step = @hpxml.header.timestep
+    max_random_shift_steps = (args[:flex_random_shift_minutes] / @minutes_per_step).to_i
+    @random_shift_steps = @prng.rand(-max_random_shift_steps..max_random_shift_steps)
 
     # Parse the HPXML document
-    doc = XMLHelper.parse_file(hpxml_path)
+    doc = XMLHelper.parse_file(@hpxml_path)
     hpxml_doc = XMLHelper.get_element(doc, '/HPXML')
     doc_buildings = XMLHelper.get_elements(hpxml_doc, 'Building')
 
     # Process each building
     doc_buildings.each_with_index do |building, index|
-      hpxml_bldg = hpxml.buildings[index]
+      hpxml_bldg = @hpxml.buildings[index]
       if hpxml_bldg.hvac_controls.to_a.length == 0
         runner.registerInfo("Skipping hvac flexibility for building #{index + 1} since it has no HVAC controls.")
         next
       end
-      hvac_schedule = create_hvac_schedule(hpxml, hpxml_path, runner, index)
-      modified_schedule = modify_hvac_schedule(hpxml, index, args, runner, hvac_schedule)
+      hvac_schedule = create_hvac_schedule(index)
+      modified_schedule = modify_hvac_schedule(index, hvac_schedule)
       write_schedule(modified_schedule, building, index, output_csv_path)
     end
 
     # Write out the modified hpxml
-    XMLHelper.write_file(doc, hpxml_path)
-    runner.registerInfo("Wrote file: #{hpxml_path} with modified schedules.")
+    XMLHelper.write_file(doc, @hpxml_path)
+    runner.registerInfo("Wrote file: #{@hpxml_path} with modified schedules.")
     true
-  end
-
-  # Creates random number generators for the main program and each end use
-  # @param seed [Integer] The seed value for random number generation
-  # @return [Hash] Hash containing random number generators for main program and each end use
-  def get_random_number_generators(seed)
-    generators = {}
-    generators[:main] = Random.new(seed)
-    seed_generator = Random.new(seed)
-    enduse_types = [:hvac]
-    enduse_types.each do |key|
-      generators[key] = Random.new(seed_generator.rand(2**32))
-    end
-    generators
   end
 
   def skip_post_hpxml?(args)
@@ -136,25 +118,22 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   end
 
   def skip_hvac_flexibility?(args)
-    return true if (args[:hvac_flex_peak_offset] == 0 && args[:hvac_flex_pre_peak_duration_hours] == 0)
+    true if args[:hvac_flex_peak_offset] == 0 && args[:hvac_flex_pre_peak_duration_hours] == 0
   end
 
-  def create_hvac_schedule(hpxml, hpxml_path, runner, building_index)
-    generator = HVACScheduleGenerator.new(hpxml, hpxml_path, runner, building_index)
+  def create_hvac_schedule(building_index)
+    generator = HVACScheduleGenerator.new(@hpxml, @hpxml_path, @runner, building_index)
     generator.get_heating_cooling_setpoint_schedule
   end
 
-  def get_schedule_modifier(hpxml, building_index, args, runner, modifier_class)
-    unless modifier_class < ScheduleModifier
-      raise ArgumentError, "#{modifier_class} must be a subclass of ScheduleModifier"
-    end
+  def get_schedule_modifier(building_index, modifier_class)
+    raise ArgumentError, "#{modifier_class} must be a subclass of ScheduleModifier" unless modifier_class < ScheduleModifier
 
-    minutes_per_step = hpxml.header.timestep
-    hpxml_bldg = hpxml.buildings[building_index]
+    hpxml_bldg = @hpxml.buildings[building_index]
     state = hpxml_bldg.state_code
-    sim_year = hpxml.header.sim_calendar_year
-    epw_path = Location.get_epw_path(hpxml_bldg, args[:hpxml_path])
-    weather = WeatherFile.new(epw_path: epw_path, runner: runner)
+    sim_year = @hpxml.header.sim_calendar_year
+    epw_path = Location.get_epw_path(hpxml_bldg, @hpxml_path)
+    weather = WeatherFile.new(epw_path: epw_path, runner: @runner)
     dst_info = DSTInfo.new(dst_begin_month: hpxml_bldg.dst_begin_month,
                            dst_begin_day: hpxml_bldg.dst_begin_day,
                            dst_end_month: hpxml_bldg.dst_end_month,
@@ -163,27 +142,20 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                        sim_year: sim_year,
                        weather: weather,
                        epw_path: epw_path,
-                       minutes_per_step: minutes_per_step,
-                       runner: runner,
+                       minutes_per_step: @minutes_per_step,
+                       runner: @runner,
                        dst_info: dst_info)
   end
 
-  def modify_hvac_schedule(hpxml, building_index, args, runner, schedule)
-    hvac_schedule_modifier = get_schedule_modifier(hpxml, building_index, args, runner, HVACScheduleModifier)
-    hvac_flexibility_inputs = get_hvac_hvac_flexibility_inputs(args, hpxml)
-    hvac_schedule_modifier.modify_shedule(schedule, hvac_flexibility_inputs)
-  end
-
-  def get_hvac_hvac_flexibility_inputs(args, hpxml)
-    minutes_per_step = hpxml.header.timestep
-    max_random_shift_steps = (args[:hvac_flex_random_shift_minutes] / minutes_per_step).to_i
-    random_shift_steps = @prngs[:hvac].rand(-max_random_shift_steps..max_random_shift_steps)
-    FlexibilityInputs.new(
-      peak_offset: args[:hvac_flex_peak_offset],
-      pre_peak_duration_steps: (args[:hvac_flex_pre_peak_duration_hours] * 60 / minutes_per_step).to_i,
-      pre_peak_offset: args[:hvac_flex_pre_peak_offset],
-      random_shift_steps: random_shift_steps
+  def modify_hvac_schedule(building_index, schedule)
+    hvac_schedule_modifier = get_schedule_modifier(building_index, HVACScheduleModifier)
+    hvac_flexibility_inputs = FlexibilityInputs.new(
+      peak_offset: @args[:hvac_flex_peak_offset],
+      pre_peak_duration_steps: (@args[:hvac_flex_pre_peak_duration_hours] * 60 / @minutes_per_step).to_i,
+      pre_peak_offset: @args[:hvac_flex_pre_peak_offset],
+      random_shift_steps: @random_shift_steps
     )
+    hvac_schedule_modifier.modify_shedule(schedule, hvac_flexibility_inputs)
   end
 
   def write_schedule(schedule, building, index, output_csv_path)
@@ -225,17 +197,17 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         data.each { |row| csv << row }
       end
     end
-    return schedule_file
+    schedule_file
   end
 
   def get_existing_schedule_filepath(building)
-    building_extension = XMLHelper.create_elements_as_needed(building, ['BuildingDetails', 'BuildingSummary', 'extension'])
+    building_extension = XMLHelper.create_elements_as_needed(building, %w[BuildingDetails BuildingSummary extension])
     existing_schedules_filepaths = XMLHelper.get_values(building_extension, 'SchedulesFilePath', :string)
     existing_schedules_filepaths.first
   end
 
   def update_hpxml_schedule_filepath(building, new_schedule_filepath)
-    building_extension = XMLHelper.create_elements_as_needed(building, ['BuildingDetails', 'BuildingSummary', 'extension'])
+    building_extension = XMLHelper.create_elements_as_needed(building, %w[BuildingDetails BuildingSummary extension])
     XMLHelper.add_element(building_extension, 'SchedulesFilePath', new_schedule_filepath, :string)
   end
 end

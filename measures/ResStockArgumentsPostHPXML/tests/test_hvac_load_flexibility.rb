@@ -6,14 +6,14 @@ require 'openstudio'
 require_relative '../../../resources/buildstock'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/hpxml'
-require_relative '../resources/hvac_flexibility/setpoint_modifier.rb'
-require_relative '../measure.rb'
+require_relative '../resources/hvac_flexibility/setpoint_modifier'
+require_relative '../measure'
 require 'pathname'
 
 class HVACFlexibilityTest < Minitest::Test
   def setup
     @runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
-    parent_path = File.expand_path('../../../../', __FILE__)
+    parent_path = File.expand_path('../../..', __dir__)
     epw_path = File.join(parent_path, 'resources/hpxml-measures/weather/USA_CO_Denver.Intl.AP.725650_TMY3.epw')
     weather = WeatherFile.new(epw_path: epw_path, runner: nil)
     dst_info = DSTInfo.new(dst_begin_month: 3,

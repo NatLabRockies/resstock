@@ -65,7 +65,7 @@ class ScheduleModifier
     peak_times.peak_start_index = (peak_hour_start * @num_timesteps_per_hour) + random_shift_steps
     peak_times.peak_end_index = (peak_hour_end * @num_timesteps_per_hour) + random_shift_steps
     peak_times.pre_peak_start_index = peak_times.peak_start_index - flexibility_inputs.pre_peak_duration_steps
-    return peak_times
+    peak_times
   end
 
   # Gets the month and day for a given timestep index
@@ -76,7 +76,7 @@ class ScheduleModifier
     index_date = start_of_year + (index.to_f / @num_timesteps_per_hour / 24)
     index_date.month
     index_date.day
-    return index_date.month, index_date.day
+    [index_date.month, index_date.day]
   end
 
   # Gets the peak hour start and end times based on month and pre-peak duration
@@ -84,17 +84,17 @@ class ScheduleModifier
   # @param month [Integer] Month (1-12)
   # @return [Array<Integer>] Array containing [peak_hour_start, peak_hour_end]
   def _get_peak_hour(pre_peak_duration, month:)
-    if pre_peak_duration == 0
-      peak_hours = @peak_hours_dict_shed[@state]
-    else
-      peak_hours = @peak_hours_dict_shift[@state]
-    end
+    peak_hours = if pre_peak_duration == 0
+                   @peak_hours_dict_shed[@state]
+                 else
+                   @peak_hours_dict_shift[@state]
+                 end
     if [6, 7, 8, 9].include?(month)
-      return peak_hours['summer_peak_start'][11..12].to_i, peak_hours['summer_peak_end'][11..12].to_i
+      [peak_hours['summer_peak_start'][11..12].to_i, peak_hours['summer_peak_end'][11..12].to_i]
     elsif [1, 2, 3, 12].include?(month)
-      return peak_hours['winter_peak_start'][11..12].to_i, peak_hours['winter_peak_end'][11..12].to_i
+      [peak_hours['winter_peak_start'][11..12].to_i, peak_hours['winter_peak_end'][11..12].to_i]
     else
-      return peak_hours['intermediate_peak_start'][11..12].to_i, peak_hours['intermediate_peak_end'][11..12].to_i
+      [peak_hours['intermediate_peak_start'][11..12].to_i, peak_hours['intermediate_peak_end'][11..12].to_i]
     end
   end
 
@@ -103,16 +103,15 @@ class ScheduleModifier
   # @param day [Integer] Day of month
   # @return [Integer] DST adjustment (0 or 1)
   def _dst_ajustment(month, day)
-    if month > @dst_info.dst_begin_month &&  month < @dst_info.dst_end_month
-      dst_adjust_hour = 1
+    if month > @dst_info.dst_begin_month && month < @dst_info.dst_end_month
+      1
     elsif month == @dst_info.dst_begin_month && day >= @dst_info.dst_begin_day # double check
-      dst_adjust_hour = 1
+      1
     elsif month == @dst_info.dst_end_month && day < @dst_info.dst_end_day # double check
-      dst_adjust_hour = 1
+      1
     else
-      dst_adjust_hour = 0
+      0
     end
-    return dst_adjust_hour
   end
 
   # Determines the day type based on the average daily temperature
@@ -123,11 +122,11 @@ class ScheduleModifier
   def _get_day_type(index)
     day = index / @steps_in_day
     if @daily_avg_temps[day] < 50.0
-      return 'preheating'
+      'preheating'
     elsif @daily_avg_temps[day] > 68.0
-      return 'precooling'
+      'precooling'
     else
-      return 'prenothing' # Neither preheating nor precooling
+      'prenothing' # Neither preheating nor precooling
     end
   end
 
@@ -140,8 +139,8 @@ class ScheduleModifier
     epw_file.data.each_with_index do |epwdata, rownum|
       begin
         db_temp = epwdata.dryBulbTemperature.get
-      rescue
-        fail "Cannot retrieve dryBulbTemperature from the EPW for hour #{rownum + 1}."
+      rescue StandardError
+        raise "Cannot retrieve dryBulbTemperature from the EPW for hour #{rownum + 1}."
       end
       hourly_temps << db_temp
       if (rownum + 1) % (24 * epw_file.recordsPerHour) == 0

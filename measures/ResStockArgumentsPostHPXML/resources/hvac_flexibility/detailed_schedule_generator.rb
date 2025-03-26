@@ -32,7 +32,7 @@ class HVACScheduleGenerator
     @steps_in_day = 24 * 60 / @minutes_per_step
   end
 
-  def get_heating_cooling_setpoint_schedule()
+  def get_heating_cooling_setpoint_schedule
     @runner.registerInfo("Creating heating and cooling setpoint schedules for building #{@hpxml_path}")
     clg_weekday_setpoints, clg_weekend_setpoints, htg_weekday_setpoints, htg_weekend_setpoints = get_heating_cooling_weekday_weekend_setpoints
 
@@ -55,7 +55,7 @@ class HVACScheduleGenerator
         cooling_setpoint << cooling_setpoint_sch[day][hour]
       end
     end
-    return { heating_setpoint: heating_setpoint, cooling_setpoint: cooling_setpoint }
+    { heating_setpoint: heating_setpoint, cooling_setpoint: cooling_setpoint }
   end
 
   def c2f(setpoint_sch)
@@ -72,7 +72,7 @@ class HVACScheduleGenerator
     clg_weekday_setpoints, clg_weekend_setpoints = HVAC.get_cooling_setpoints(@hpxml_bldg, hvac_control, has_ceiling_fan, @sim_year, @weather, onoff_thermostat_ddb)
 
     htg_weekday_setpoints, htg_weekend_setpoints, clg_weekday_setpoints, clg_weekend_setpoints = HVAC.create_setpoint_schedules(@runner, htg_weekday_setpoints, htg_weekend_setpoints, clg_weekday_setpoints, clg_weekend_setpoints, @sim_year, hvac_season_days)
-    return c2f(clg_weekday_setpoints), c2f(clg_weekend_setpoints), c2f(htg_weekday_setpoints), c2f(htg_weekend_setpoints)
+    [c2f(clg_weekday_setpoints), c2f(clg_weekend_setpoints), c2f(htg_weekday_setpoints), c2f(htg_weekend_setpoints)]
   end
 
   def get_heating_cooling_days(hvac_control)
@@ -86,7 +86,7 @@ class HVACScheduleGenerator
     clg_end_day = hvac_control.seasons_cooling_end_day || 31
     heating_days = Calendar.get_daily_season(@sim_year, htg_start_month, htg_start_day, htg_end_month, htg_end_day)
     cooling_days = Calendar.get_daily_season(@sim_year, clg_start_month, clg_start_day, clg_end_month, clg_end_day)
-    return { :clg => cooling_days, :htg => heating_days }
+    { clg: cooling_days, htg: heating_days }
   end
 
   def main(hpxml_path)

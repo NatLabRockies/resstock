@@ -44,17 +44,13 @@ class HVACScheduleModifier < ScheduleModifier
           heating_setpoint[index] = _clip_setpoints(heating_setpoint[index])
           # If the offset causes the set points to be inverted, adjust the cooling setpoint to correct it
           # This can happen during pre-heating if originally the cooling and heating setpoints were the same
-          if heating_setpoint[index] > cooling_setpoint[index]
-            cooling_setpoint[index] = heating_setpoint[index]
-          end
+          cooling_setpoint[index] = heating_setpoint[index] if heating_setpoint[index] > cooling_setpoint[index]
         elsif day_type == 'precooling'
           cooling_setpoint[index] -= flexibility_inputs.pre_peak_offset
           cooling_setpoint[index] = _clip_setpoints(cooling_setpoint[index])
           # If the offset causes the set points to be inverted, adjust the heating setpoint to correct it
           # This can happen during precooling if originally the cooling and heating setpoints were the same
-          if heating_setpoint[index] > cooling_setpoint[index]
-            heating_setpoint[index] = cooling_setpoint[index]
-          end
+          heating_setpoint[index] = cooling_setpoint[index] if heating_setpoint[index] > cooling_setpoint[index]
         end
       elsif offset_times.peak_start_index <= index_in_day && index_in_day < offset_times.peak_end_index
         # Peak period

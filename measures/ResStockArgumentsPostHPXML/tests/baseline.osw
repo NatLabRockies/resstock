@@ -315,7 +315,7 @@
                 "hvac_flex_peak_offset": 2,
                 "hvac_flex_pre_peak_duration_hours": 2,
                 "hvac_flex_pre_peak_offset": 3,
-                "hvac_flex_random_shift_minutes": 0,
+                "flex_random_shift_minutes": 0,
                 "building_id": "1"
             }
     },

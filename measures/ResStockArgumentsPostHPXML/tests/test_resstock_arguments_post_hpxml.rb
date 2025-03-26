@@ -2,8 +2,8 @@
 
 require 'openstudio'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
-require_relative '../../../resources/buildstock.rb'
-require_relative '../measure.rb'
+require_relative '../../../resources/buildstock'
+require_relative '../measure'
 
 class ResStockArgumentsPostHPXMLTest < Minitest::Test
   def test_load_flexibility_measure
@@ -65,22 +65,16 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
 
     # if daylight savings is impacted, add 1 hour to on-peak start and end time
     # the on-peak hour in CO in summer starts from 16:00:00, but it should start from 17:00:00 due to daylight savings
-    if osw_file.include?('dst_impacted')
-      cooling_indices = cooling_indices.map { |num| num + 1 }
-    end
+    cooling_indices = cooling_indices.map { |num| num + 1 } if osw_file.include?('dst_impacted')
 
     heating_rows = []
     cooling_rows = []
 
     CSV.foreach(schedule_file_path, headers: true).with_index do |row, index|
-      if heating_indices.include?(index)
-        heating_rows << row.to_h
-      end
+      heating_rows << row.to_h if heating_indices.include?(index)
     end
     CSV.foreach(schedule_file_path, headers: true).with_index do |row, index|
-      if cooling_indices.include?(index)
-        cooling_rows << row.to_h
-      end
+      cooling_rows << row.to_h if cooling_indices.include?(index)
     end
 
     assert_equal(0, heating_rows[0]['peak_period'].to_f)
@@ -118,6 +112,6 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
 
   def celsius_to_fahrenheit(celsius)
     fahrenheit = (celsius * 9.0 / 5.0) + 32
-    return fahrenheit.round
+    fahrenheit.round
   end
 end
