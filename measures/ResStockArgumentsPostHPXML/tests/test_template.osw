@@ -307,7 +307,15 @@
         "window_ufactor": 0.33
       },
       "measure_dir_name": "BuildResidentialHPXML"
-    },
+  },
+  {
+      "arguments": {
+        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
+        "output_csv_path": "stochastic.csv",
+        "hpxml_output_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml"
+      },
+      "measure_dir_name": "BuildResidentialScheduleFile"
+  },
 	{
             "measure_dir_name": "ResStockArgumentsPostHPXML",
             "arguments": {

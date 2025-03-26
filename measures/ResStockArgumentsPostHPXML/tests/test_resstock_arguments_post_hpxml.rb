@@ -4,27 +4,37 @@ require 'openstudio'
 require_relative '../../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/minitest_helper'
 require_relative '../../../resources/buildstock'
 require_relative '../measure'
-require 'byebug'
 
 class ResStockArgumentsPostHPXMLTest < Minitest::Test
   def test_hvac_load_flexibility_measure
-    puts 'Testing Load Flexibility'
-    curdir = File.dirname(__FILE__)
-    osw_hash = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
-    _run_osw(osw_hash)
-    schedule = _get_schedule(curdir)
-    _verify_peak_period(dst_enabled: false, schedule: schedule)
-    _verify_hvac_schedule(dst_enabled: false, schedule: schedule)
-  end
+    puts 'Testing HVAC Load Flexibility'
 
-  def test_hvac_load_flexibility_measure_dst_impacted
-    puts 'Testing Load Flexibility with DST Impacted'
-    curdir = File.dirname(__FILE__)
-    osw_hash = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
-    osw_hash['steps'][0]['arguments']['simulation_control_daylight_saving_enabled'] = true
-    _run_osw(osw_hash)
-    schedule = _get_schedule(curdir)
-    _verify_hvac_schedule(dst_enabled: true, schedule: schedule)
+    # Define test parameters
+    test_cases = [
+      { dst_enabled: false, existing_schedule: false, name: 'without DST' },
+      { dst_enabled: true, existing_schedule: false, name: 'with DST enabled' },
+      { dst_enabled: false, existing_schedule: true, name: 'without DST with existing schedule' },
+      { dst_enabled: true, existing_schedule: true, name: 'with DST enabled with existing schedule' }
+    ]
+
+    test_cases.each do |params|
+      puts "Testing #{params[:name]}"
+      curdir = File.dirname(__FILE__)
+      osw_hash = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
+
+      # Set DST parameter if needed
+      osw_hash['steps'][0]['arguments']['simulation_control_daylight_saving_enabled'] = true if params[:dst_enabled]
+
+      # remove BuildResidentialScheduleFile from the steps if existing_schedule is false
+      osw_hash['steps'].reject! { |step| step['measure_dir_name'] == 'BuildResidentialScheduleFile' } unless params[:existing_schedule]
+
+      _run_osw(osw_hash)
+      schedule = _get_schedule(curdir)
+      _verify_peak_period(dst_enabled: params[:dst_enabled], schedule: schedule) unless params[:dst_enabled]
+      _verify_hvac_schedule(dst_enabled: params[:dst_enabled], schedule: schedule)
+      # remove the run folder
+      FileUtils.rm_rf(File.join(curdir, 'run'))
+    end
   end
 
   private
