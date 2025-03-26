@@ -61,11 +61,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The building unit number (between 1 and the number of samples).')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('output_csv_path', false)
-    arg.setDisplayName('Schedules: Output CSV Path')
-    arg.setDescription('Absolute/relative path of the csv file containing occupancy schedules. Relative paths are relative to the HPXML output path.')
-    args << arg
-
     return args
   end
 
@@ -89,11 +84,13 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     hpxml_path = args[:hpxml_path]
     unless (Pathname.new hpxml_path).absolute?
-      hpxml_path = File.expand_path(File.join(File.dirname(__FILE__), hpxml_path))
+      hpxml_path = File.expand_path(hpxml_path)
     end
+
     unless File.exist?(hpxml_path) && hpxml_path.downcase.end_with?('.xml')
       fail "'#{hpxml_path}' does not exist or is not an .xml file."
     end
+    output_csv_path = File.dirname(hpxml_path)
 
     hpxml = HPXML.new(hpxml_path: hpxml_path)
 
@@ -111,7 +108,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       end
       hvac_schedule = create_hvac_schedule(hpxml, hpxml_path, runner, index)
       modified_schedule = modify_hvac_schedule(hpxml, index, args, runner, hvac_schedule)
-      write_schedule(modified_schedule, building, index)
+      write_schedule(modified_schedule, building, index, output_csv_path)
     end
 
     # Write out the modified hpxml
@@ -189,11 +186,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     )
   end
 
-  def write_schedule(schedule, building, index)
+  def write_schedule(schedule, building, index, output_csv_path)
     schedule_file = get_existing_schedule_filepath(building)
     if schedule_file.nil?
       # Create a new schedule file
-      schedule_file = "schedule_#{index}.csv"
+      schedule_file = File.join(output_csv_path, "schedule_#{index}.csv")
       CSV.open(schedule_file, 'w') do |csv|
         headers = schedule.keys.map(&:to_s)
         csv << headers

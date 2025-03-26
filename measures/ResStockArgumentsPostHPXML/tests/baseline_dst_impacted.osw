@@ -311,12 +311,11 @@
 	{
             "measure_dir_name": "ResStockArgumentsPostHPXML",
             "arguments": {
-                "hpxml_path": "tests/run/baseline_dst_impacted.xml",
+                "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/baseline_dst_impacted.xml",
                 "hvac_flex_peak_offset": 2,
                 "hvac_flex_pre_peak_duration_hours": 2,
                 "hvac_flex_pre_peak_offset": 3,
                 "hvac_flex_random_shift_minutes": 0,
-                "output_csv_path": "tests",
                 "building_id": "1"
             }
     },
