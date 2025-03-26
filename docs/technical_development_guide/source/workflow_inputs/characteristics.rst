@@ -63810,13 +63810,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - electricity
      - auto
      - EnergyFactor
-     - 0.92
+     - 0.97
+     - auto
+     - 0.98
+     - auto
      - auto
      - 0
-     - auto
-     - auto
-     - 0
-     - 0
+     - 6.2
      - 125
      - auto
      - auto
