@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_schedule_file</name>
   <uid>f770b2db-1a9f-4e99-99a7-7f3161a594b1</uid>
-  <version_id>acfa3ed7-ca05-472e-832b-19f86cabf04b</version_id>
-  <version_modified>2025-02-18T03:57:10Z</version_modified>
+  <version_id>547aff6f-ced8-41de-91c6-35b5dc5ad4cd</version_id>
+  <version_modified>2025-03-12T01:27:36Z</version_modified>
   <xml_checksum>03F02484</xml_checksum>
   <class_name>BuildResidentialScheduleFile</class_name>
   <display_name>Schedule File Builder</display_name>
@@ -133,13 +133,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9163B41C</checksum>
+      <checksum>5EB9E0D7</checksum>
     </file>
     <file>
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7060BE69</checksum>
+      <checksum>9334FB8E</checksum>
     </file>
     <file>
       <filename>clothes_dryer_consumption_dist.csv</filename>
@@ -229,7 +229,7 @@
       <filename>schedules.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F51BA6CF</checksum>
+      <checksum>BA9C5FE8</checksum>
     </file>
     <file>
       <filename>shower_cluster_size_probability.csv</filename>
@@ -244,340 +244,88 @@
       <checksum>F8A366F2</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_cooking_evening_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/cooking_evening_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4986DD68</checksum>
+      <checksum>AF4411FF</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_cooking_midday_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/cooking_midday_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>FBF76CFC</checksum>
+      <checksum>04FF0ED3</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_cooking_morning_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/cooking_morning_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C54497C3</checksum>
+      <checksum>63229A33</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_dishwashing_evening_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/dishwashing_evening_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7C95D22E</checksum>
+      <checksum>60A36F71</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_dishwashing_midday_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/dishwashing_midday_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>05C8905F</checksum>
+      <checksum>4BF34FEF</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_dishwashing_morning_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/dishwashing_morning_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>DDD537E9</checksum>
+      <checksum>66C538C7</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_laundry_evening_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/laundry_evening_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C3A5357C</checksum>
+      <checksum>F0DF1701</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_laundry_midday_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/laundry_midday_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CA0C9069</checksum>
+      <checksum>44FA981D</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_laundry_morning_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/laundry_morning_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>8CDCA30E</checksum>
+      <checksum>7A1C0ACA</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_shower_evening_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/shower_evening_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>54EB60DE</checksum>
+      <checksum>25136CBA</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_shower_midday_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/shower_midday_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1AD7139F</checksum>
+      <checksum>221706F7</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_0_shower_morning_duration_probability.csv</filename>
+      <filename>weekday/duration_probability/shower_morning_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>8300EB00</checksum>
+      <checksum>45263159</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_1_cooking_evening_duration_probability.csv</filename>
+      <filename>weekday/mkv_chain_initial_prob.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>B817132C</checksum>
+      <checksum>01FFA25A</checksum>
     </file>
     <file>
-      <filename>weekday/duration_probability/cluster_1_cooking_midday_duration_probability.csv</filename>
+      <filename>weekday/mkv_chain_transition_prob.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D45A9584</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_1_cooking_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>407A312C</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_1_dishwashing_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>652AD618</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_1_dishwashing_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>018B32BA</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_1_dishwashing_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>F3A0A48E</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_1_laundry_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>56010915</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_1_laundry_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>9843CD4C</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_1_laundry_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>746D40E8</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_1_shower_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>AE9ED85B</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_1_shower_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>D4FBDE56</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_1_shower_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>D897D4A1</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_cooking_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>8E88C92D</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_cooking_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>2244D290</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_cooking_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>0E99EBF7</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_dishwashing_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>379A086A</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_dishwashing_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>F9891815</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_dishwashing_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>23E18003</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_laundry_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>B250D83A</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_laundry_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>ACB5BCD2</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_laundry_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>26CFB684</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_shower_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>1CCBCB69</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_shower_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>41C774DB</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_2_shower_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>84737EBC</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_cooking_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>6F2B7686</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_cooking_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>34A7D406</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_cooking_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>615CD1D7</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_dishwashing_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>DACA45E5</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_dishwashing_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>D119B4D0</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_dishwashing_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>120B9428</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_laundry_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>267E8883</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_laundry_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>C3A5DA8B</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_laundry_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>D614AB97</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_shower_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>7FFBFD68</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_shower_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>8C62CEDB</checksum>
-    </file>
-    <file>
-      <filename>weekday/duration_probability/cluster_3_shower_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>E3A10BE2</checksum>
-    </file>
-    <file>
-      <filename>weekday/mkv_chain_initial_prob_cluster_0.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>0AC88E84</checksum>
-    </file>
-    <file>
-      <filename>weekday/mkv_chain_initial_prob_cluster_1.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>AE298C53</checksum>
-    </file>
-    <file>
-      <filename>weekday/mkv_chain_initial_prob_cluster_2.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>42FB1588</checksum>
-    </file>
-    <file>
-      <filename>weekday/mkv_chain_initial_prob_cluster_3.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>5AAC2E9E</checksum>
-    </file>
-    <file>
-      <filename>weekday/mkv_chain_transition_prob_cluster_0.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>1BCCAC5C</checksum>
-    </file>
-    <file>
-      <filename>weekday/mkv_chain_transition_prob_cluster_1.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>BBB50EE1</checksum>
-    </file>
-    <file>
-      <filename>weekday/mkv_chain_transition_prob_cluster_2.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>7DBA15B4</checksum>
-    </file>
-    <file>
-      <filename>weekday/mkv_chain_transition_prob_cluster_3.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>CAC5CB5F</checksum>
+      <checksum>6A5EC126</checksum>
     </file>
     <file>
       <filename>weekday/state_and_monthly_schedule_shift.csv</filename>
@@ -586,340 +334,88 @@
       <checksum>FFDA057E</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_cooking_evening_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/cooking_evening_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F6CB80B1</checksum>
+      <checksum>4C4742B7</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_cooking_midday_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/cooking_midday_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>3CFFA67D</checksum>
+      <checksum>56F52E8B</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_cooking_morning_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/cooking_morning_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>44F4FB7B</checksum>
+      <checksum>2E85BB03</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_dishwashing_evening_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/dishwashing_evening_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>AB0BE66C</checksum>
+      <checksum>0050EB87</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_dishwashing_midday_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/dishwashing_midday_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9120E2FD</checksum>
+      <checksum>23B4779E</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_dishwashing_morning_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/dishwashing_morning_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>A4EB422A</checksum>
+      <checksum>F84B72AD</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_laundry_evening_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/laundry_evening_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>8ABEC58D</checksum>
+      <checksum>4D02122E</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_laundry_midday_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/laundry_midday_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>80C3640C</checksum>
+      <checksum>85465025</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_laundry_morning_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/laundry_morning_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>6DA7C30F</checksum>
+      <checksum>FC157744</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_shower_evening_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/shower_evening_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>ED525953</checksum>
+      <checksum>5E615AA9</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_shower_midday_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/shower_midday_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>332088E2</checksum>
+      <checksum>F5F19D42</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_0_shower_morning_duration_probability.csv</filename>
+      <filename>weekend/duration_probability/shower_morning_duration_probability.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>86F7DFDE</checksum>
+      <checksum>8E9F37C4</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_1_cooking_evening_duration_probability.csv</filename>
+      <filename>weekend/mkv_chain_initial_prob.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2209A5BF</checksum>
+      <checksum>9A653A81</checksum>
     </file>
     <file>
-      <filename>weekend/duration_probability/cluster_1_cooking_midday_duration_probability.csv</filename>
+      <filename>weekend/mkv_chain_transition_prob.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>768859FF</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_1_cooking_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>2927CF95</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_1_dishwashing_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>B304EB88</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_1_dishwashing_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>5E7982A4</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_1_dishwashing_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>58BCE2B4</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_1_laundry_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>9FEF76FF</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_1_laundry_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>63F777DC</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_1_laundry_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>E731D060</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_1_shower_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>3E947E31</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_1_shower_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>FE78DD0B</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_1_shower_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>C6D1F192</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_cooking_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>26C904EC</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_cooking_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>51CF51D3</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_cooking_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>34855051</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_dishwashing_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>479CD610</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_dishwashing_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>29AAEE1E</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_dishwashing_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>F3A11DE1</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_laundry_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>EA68360B</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_laundry_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>78DC5051</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_laundry_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>1D1FB07E</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_shower_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>829DBC41</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_shower_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>E97FEBA7</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_2_shower_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>2DDD3D0B</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_cooking_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>EC70F74E</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_cooking_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>7C8976F3</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_cooking_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>5825338A</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_dishwashing_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>37B5AF9C</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_dishwashing_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>EDD63C21</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_dishwashing_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>99F23B28</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_laundry_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>C3963FF9</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_laundry_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>0B329C66</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_laundry_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>1761FEF6</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_shower_evening_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>35AD8E7F</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_shower_midday_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>DAF2049F</checksum>
-    </file>
-    <file>
-      <filename>weekend/duration_probability/cluster_3_shower_morning_duration_probability.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>C2CA1416</checksum>
-    </file>
-    <file>
-      <filename>weekend/mkv_chain_initial_prob_cluster_0.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>3F16AE89</checksum>
-    </file>
-    <file>
-      <filename>weekend/mkv_chain_initial_prob_cluster_1.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>49FEAE44</checksum>
-    </file>
-    <file>
-      <filename>weekend/mkv_chain_initial_prob_cluster_2.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>B48A47D6</checksum>
-    </file>
-    <file>
-      <filename>weekend/mkv_chain_initial_prob_cluster_3.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>B47E790B</checksum>
-    </file>
-    <file>
-      <filename>weekend/mkv_chain_transition_prob_cluster_0.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>E4089705</checksum>
-    </file>
-    <file>
-      <filename>weekend/mkv_chain_transition_prob_cluster_1.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>25700CD2</checksum>
-    </file>
-    <file>
-      <filename>weekend/mkv_chain_transition_prob_cluster_2.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>032B846A</checksum>
-    </file>
-    <file>
-      <filename>weekend/mkv_chain_transition_prob_cluster_3.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>F0F0F886</checksum>
+      <checksum>E98A98A3</checksum>
     </file>
     <file>
       <filename>weekend/state_and_monthly_schedule_shift.csv</filename>
@@ -931,7 +427,7 @@
       <filename>test_build_residential_schedule_file.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>9C469A27</checksum>
+      <checksum>AF58D77B</checksum>
     </file>
   </files>
 </measure>

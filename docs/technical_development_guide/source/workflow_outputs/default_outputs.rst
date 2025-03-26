@@ -3,7 +3,7 @@
 Default Outputs
 ===============
 
-The default set of outputs include sampled housing characteristics, annual simulation outputs, and upgrade cost information.
+The default set of outputs include sampled housing characteristics, annual simulation outputs, electric panel breaker spaces and loads, and upgrade cost information.
 
 Specifying any timeseries frequency other than "none" results in, by default, end use consumptions and total loads timeseries output requests.
 See the `Residential HPXML Workflow Generator <https://buildstockbatch.readthedocs.io/en/latest/workflow_generators/residential_hpxml.html>`_ documentation page (i.e., ``simulation_output_report`` section) for more information on how to request various timeseries outputs (or override default requests).
@@ -26,6 +26,27 @@ See the OpenStudio-HPXML Workflow Outputs sections on `Annual Outputs <https://o
 
 .. csv-table::
    :file: csv_tables/simulation_outputs.csv
+   :header-rows: 1
+
+.. _panel-costs:
+
+Electric Panel Outputs
+**********************
+
+Electric panel breaker space counts are available as listed below.
+End use categories (e.g., Heating, Cooling, Hot Water) report occupied spaces for dedicated circuits except for Other which reports otherwise uncategorized or shared circuits.
+
+Electric panel loads, as well as calculated total loads and capacities for each calculation type, are available as listed below.
+In the table below, "<type>" refers to the calculation type (e.g., 2023 NEC 220.83).
+Calculation types "2023 Existing Dwelling Load-Based" and "2023 Existing Dwelling Meter-Based" are shown as "2023_existing_dwelling_load_based" and "2023_existing_dwelling_meter_based", respectively.
+
+.. note::
+
+  Headroom is calculated as the panel's total rated breaker spaces (or maximum current rating) minus occupied breaker spaces (or calculated capacity).
+  A positive value indicates panel availability whereas a negative value indicates panel constraint.
+
+.. csv-table::
+   :file: csv_tables/panel_outputs.csv
    :header-rows: 1
 
 .. _upgrade-costs:

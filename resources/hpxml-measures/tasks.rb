@@ -68,14 +68,14 @@ def create_hpxmls
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
 
     num_apply_measures = 1
-    if hpxml_path.include?('base-bldgtype-mf-whole-building.xml')
+    if hpxml_path.include?('base-bldgtype-mf-whole-building.xml') || hpxml_path.include?('base-bldgtype-mf-whole-building-detailed-electric-panel.xml')
       num_apply_measures = 6
     end
 
     for i in 1..num_apply_measures
       build_residential_hpxml = measures['BuildResidentialHPXML'][0]
       build_residential_hpxml['existing_hpxml_path'] = hpxml_path if i > 1
-      if hpxml_path.include?('base-bldgtype-mf-whole-building.xml')
+      if hpxml_path.include?('base-bldgtype-mf-whole-building.xml') || hpxml_path.include?('base-bldgtype-mf-whole-building-detailed-electric-panel.xml')
         suffix = "_#{i}" if i > 1
         build_residential_hpxml['schedules_filepaths'] = "../../HPXMLtoOpenStudio/resources/schedule_files/#{stochastic_sched_basename}-mf-unit#{suffix}.csv"
         build_residential_hpxml['geometry_foundation_type'] = (i <= 2 ? 'UnconditionedBasement' : 'AboveApartment')
@@ -157,6 +157,7 @@ def create_hpxmls
   dirs.each do |dir|
     Dir["#{workflow_dir}/#{dir}/*.xml"].each do |hpxml|
       next if abs_hpxml_files.include? File.absolute_path(hpxml)
+      next if dir == 'real_homes'
 
       puts "Warning: Extra HPXML file found at #{File.absolute_path(hpxml)}"
     end
@@ -619,14 +620,15 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     if ['base-bldgtype-mf-unit-adjacent-to-multifamily-buffer-space.xml',
         'base-bldgtype-mf-unit-adjacent-to-non-freezing-space.xml',
         'base-bldgtype-mf-unit-adjacent-to-other-heated-space.xml',
-        'base-bldgtype-mf-unit-adjacent-to-other-housing-unit.xml'].include? hpxml_file
-      if hpxml_file == 'base-bldgtype-mf-unit-adjacent-to-multifamily-buffer-space.xml'
+        'base-bldgtype-mf-unit-adjacent-to-other-housing-unit.xml',
+        'base-bldgtype-mf-unit-adjacent-to-other-housing-unit-basement.xml'].include? hpxml_file
+      if hpxml_file.include? 'multifamily-buffer-space'
         adjacent_to = HPXML::LocationOtherMultifamilyBufferSpace
-      elsif hpxml_file == 'base-bldgtype-mf-unit-adjacent-to-non-freezing-space.xml'
+      elsif hpxml_file.include? 'non-freezing-space'
         adjacent_to = HPXML::LocationOtherNonFreezingSpace
-      elsif hpxml_file == 'base-bldgtype-mf-unit-adjacent-to-other-heated-space.xml'
+      elsif hpxml_file.include? 'other-heated-space'
         adjacent_to = HPXML::LocationOtherHeatedSpace
-      elsif hpxml_file == 'base-bldgtype-mf-unit-adjacent-to-other-housing-unit.xml'
+      elsif hpxml_file.include? 'other-housing-unit'
         adjacent_to = HPXML::LocationOtherHousingUnit
       end
       wall = hpxml_bldg.walls.select { |w|
@@ -634,10 +636,13 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                  w.exterior_adjacent_to == HPXML::LocationOtherHousingUnit
              }[0]
       wall.exterior_adjacent_to = adjacent_to
-      hpxml_bldg.floors[0].exterior_adjacent_to = adjacent_to
       hpxml_bldg.floors[1].exterior_adjacent_to = adjacent_to
-      if hpxml_file != 'base-bldgtype-mf-unit-adjacent-to-other-housing-unit.xml'
+      if hpxml_file.include? 'basement'
+        hpxml_bldg.rim_joists[1].exterior_adjacent_to = adjacent_to
+        hpxml_bldg.foundation_walls[1].exterior_adjacent_to = adjacent_to
+      elsif !hpxml_file.include? 'other-housing-unit'
         wall.insulation_assembly_r_value = 23
+        hpxml_bldg.floors[0].exterior_adjacent_to = adjacent_to
         hpxml_bldg.floors[0].insulation_assembly_r_value = 18.7
         hpxml_bldg.floors[1].insulation_assembly_r_value = 18.7
       end
@@ -1874,6 +1879,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                 cooling_efficiency_seer: 19,
                                 heating_capacity_17F: 4800 * 0.6,
                                 cooling_shr: 0.73,
+                                compressor_type: HPXML::HVACCompressorTypeVariableSpeed,
                                 primary_cooling_system: true,
                                 primary_heating_system: true)
     elsif ['base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-two-systems.xml'].include? hpxml_file
