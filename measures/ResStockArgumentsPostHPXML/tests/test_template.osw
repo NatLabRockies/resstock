@@ -8,7 +8,7 @@
       "arguments": {
         "apply_defaults": true,
         "site_state_code" : "CO",
-        "simulation_control_daylight_saving_enabled": true,
+        "simulation_control_daylight_saving_enabled": false,
         "air_leakage_house_pressure": 50,
         "site_shielding_of_home": "normal",
         "air_leakage_units": "ACH",
@@ -159,7 +159,7 @@
         "permanent_spa_heater_usage_multiplier": 1.0,
         "permanent_spa_present": false,
         "permanent_spa_pump_usage_multiplier": 1.0,
-        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/baseline_dst_impacted.xml",
+        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
         "kitchen_fans_quantity": 0,
         "lighting_present": true,
         "lighting_exterior_fraction_cfl": 0.4,
@@ -311,7 +311,7 @@
 	{
             "measure_dir_name": "ResStockArgumentsPostHPXML",
             "arguments": {
-                "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/baseline_dst_impacted.xml",
+                "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
                 "hvac_flex_peak_offset": 2,
                 "hvac_flex_pre_peak_duration_hours": 2,
                 "hvac_flex_pre_peak_offset": 3,
@@ -321,7 +321,7 @@
     },
     {
       "arguments": {
-        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/baseline_dst_impacted.xml",
+        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
         "output_dir": "measures/ResStockArgumentsPostHPXML/tests/run",
         "debug": "true"
       },
