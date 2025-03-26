@@ -224,8 +224,8 @@
         "pv_system_2_present": false,
         "pv_system_array_azimuth": 180,
         "pv_system_2_array_azimuth": 180,
-        "pv_system_array_tilt": 20,
-        "pv_system_2_array_tilt": 20,
+        "pv_system_array_tilt": "20",
+        "pv_system_2_array_tilt": "20",
         "pv_system_inverter_efficiency": 0.96,
         "pv_system_max_power_output": 4000,
         "pv_system_2_max_power_output": 4000,
@@ -266,7 +266,7 @@
         "solar_thermal_collector_loop_type": "liquid direct",
         "solar_thermal_collector_rated_optical_efficiency": 0.5,
         "solar_thermal_collector_rated_thermal_losses": 0.2799,
-        "solar_thermal_collector_tilt": 20,
+        "solar_thermal_collector_tilt": "20",
         "solar_thermal_collector_type": "evacuated tube",
         "solar_thermal_solar_fraction": 0,
         "solar_thermal_system_type": "none",
@@ -317,7 +317,7 @@
                 "hvac_flex_pre_peak_offset": 3,
                 "hvac_flex_random_shift_minutes": 0,
                 "output_csv_path": "tests",
-                "building_id": 1
+                "building_id": "1"
             }
     },
     {
