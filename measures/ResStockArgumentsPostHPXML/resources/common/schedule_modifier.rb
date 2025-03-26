@@ -62,8 +62,8 @@ class ScheduleModifier
 
     peak_times = DailyPeakIndices.new
     random_shift_steps = flexibility_inputs.random_shift_steps
-    peak_times.peak_start_index = peak_hour_start * @num_timesteps_per_hour + random_shift_steps
-    peak_times.peak_end_index = peak_hour_end * @num_timesteps_per_hour + random_shift_steps
+    peak_times.peak_start_index = (peak_hour_start * @num_timesteps_per_hour) + random_shift_steps
+    peak_times.peak_end_index = (peak_hour_end * @num_timesteps_per_hour) + random_shift_steps
     peak_times.pre_peak_start_index = peak_times.peak_start_index - flexibility_inputs.pre_peak_duration_steps
     return peak_times
   end
@@ -127,7 +127,7 @@ class ScheduleModifier
     elsif @daily_avg_temps[day] > 68.0
       return 'precooling'
     else
-      return 'prenothing'  # Neither preheating nor precooling
+      return 'prenothing' # Neither preheating nor precooling
     end
   end
 
@@ -145,7 +145,7 @@ class ScheduleModifier
       end
       hourly_temps << db_temp
       if (rownum + 1) % (24 * epw_file.recordsPerHour) == 0
-        daily_avg_temps << hourly_temps.sum / hourly_temps.length
+        daily_avg_temps << (hourly_temps.sum / hourly_temps.length)
         hourly_temps = []
       end
     end

@@ -32,36 +32,14 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     end
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
 
-    # Apply measure
-    cdir = File.expand_path('.')
     success = apply_measures(measures_dirs, measures, runner, model)
-    Dir.chdir(cdir) # we need this because of Dir.chdir in HPXMLtoOS
-
-    # Report warnings/errors
     runner.result.stepWarnings.each do |s|
       puts "Warning: #{s}"
     end
     runner.result.stepErrors.each do |s|
       puts "Error: #{s}"
     end
-
     assert(success)
-  end
-
-  def _upgrade_osw(osw, hvac_flex_peak_offset, hvac_flex_pre_peak_duration_hours, hvac_flex_pre_peak_offset)
-    upgrades = { 'hvac_flex_peak_offset' => hvac_flex_peak_offset,
-                 'hvac_flex_pre_peak_duration_hours' => hvac_flex_pre_peak_duration_hours,
-                 'hvac_flex_pre_peak_offset' => hvac_flex_pre_peak_offset }
-    puts upgrades
-
-    osw_hash = JSON.parse(File.read(osw))
-    osw_hash['steps'].each do |step|
-      step['arguments']['hpxml_path'] = step['arguments']['hpxml_path'].gsub('tests/', 'tests/Upgrade_')
-      if step['measure_dir_name'] == 'ResStockArgumentsPostHPXML'
-        step['arguments'].update(upgrades)
-      end
-    end
-    File.open(osw, 'w') { |json| json.write(JSON.pretty_generate(osw_hash)) }
   end
 
   def _test_measure(osw_file)
@@ -71,39 +49,13 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     puts "\nTesting #{osw_file}..."
     this_dir = File.dirname(__FILE__)
 
-    _values = { 'hpxml_output' => {} }
-
     # Existing
     model = OpenStudio::Model::Model.new
     osw = File.absolute_path("#{this_dir}/#{osw_file}")
     _run_osw(model, osw)
 
-    hpxml_path = File.join(this_dir, 'in.xml')
-    _hpxml_in = HPXML.new(hpxml_path: hpxml_path)
-
-    existing_path = File.join(this_dir, osw_file.gsub('osw', 'xml'))
-    _existing_hpxml = HPXML.new(hpxml_path: existing_path)
-
-    # Upgraded with HVAC Load Flexibility measure
-    upgrade_osw_file = "Upgrade_#{osw_file}"
-    upgrade_osw = File.absolute_path("#{this_dir}/#{upgrade_osw_file}")
-    FileUtils.cp(osw, upgrade_osw)
-
-    hvac_flex_peak_offset = 2
-    hvac_flex_pre_peak_duration_hours = 2
-    hvac_flex_pre_peak_offset = 3
-
-    _upgrade_osw(upgrade_osw, hvac_flex_peak_offset, hvac_flex_pre_peak_duration_hours, hvac_flex_pre_peak_offset)
-    _run_osw(model, upgrade_osw)
-
-    upgraded_path = File.join(this_dir, upgrade_osw_file.gsub('osw', 'xml'))
-    _upgraded_hpxml = HPXML.new(hpxml_path: upgraded_path)
-
-    # Create instance of the measures
-    _load_flexibility = ResStockArgumentsPostHPXML.new
-
     # validate setpoint temperature is modified according to measure
-    schedule_file_path = File.join(this_dir, 'in.schedules.csv')
+    schedule_file_path = File.join(this_dir, 'run', 'in.schedules.csv')
     # indices for setpint 01-01 14:00:00-15:00:00, 15:00:00-16:00:00, 17:00:00-18:00:00
     # the on-peak hour in CO in winter starts from 17:00:00
     heating_indices = [14, 15, 16, 17]
@@ -152,21 +104,16 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     cooling_setpoint_on_peak = celsius_to_fahrenheit(cooling_rows[3]['cooling_setpoint'].to_f)
 
     puts 'Testing heating pre peak setpoint offset'
-    assert_equal(hvac_flex_pre_peak_offset, heating_setpoint_pre_peak - heating_setpoint_base)
+    assert_equal(3, heating_setpoint_pre_peak - heating_setpoint_base)
     puts 'Testing heating on peak setpoint offset'
-    assert_equal(hvac_flex_peak_offset, heating_setpoint_base - heating_setpoint_on_peak)
+    assert_equal(2, heating_setpoint_base - heating_setpoint_on_peak)
 
     puts 'Testing cooling pre peak setpoint offset'
-    assert_equal(hvac_flex_pre_peak_offset, cooling_setpoint_base - cooling_setpoint_pre_peak)
+    assert_equal(3, cooling_setpoint_base - cooling_setpoint_pre_peak)
     puts 'Testing cooling on peak setpoint offset'
-    assert_equal(hvac_flex_peak_offset, cooling_setpoint_on_peak - cooling_setpoint_base)
+    assert_equal(2, cooling_setpoint_on_peak - cooling_setpoint_base)
 
-    # Clean up
-    File.delete(File.join(File.dirname(__FILE__), osw_file.gsub('.osw', '.xml')))
-    File.delete(File.join(File.dirname(__FILE__), upgrade_osw_file))
-    File.delete(File.join(File.dirname(__FILE__), upgrade_osw_file.gsub('.osw', '.xml')))
-    Dir.glob(File.join(File.dirname(__FILE__), 'in.*')).each { |f| File.delete(f) }
-    Dir.glob(File.join(File.dirname(__FILE__), '*.csv')).each { |f| File.delete(f) }
+    FileUtils.rm_rf(File.join(this_dir, 'run'))
   end
 
   def celsius_to_fahrenheit(celsius)

@@ -159,7 +159,7 @@
         "permanent_spa_heater_usage_multiplier": 1.0,
         "permanent_spa_present": false,
         "permanent_spa_pump_usage_multiplier": 1.0,
-        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/baseline.xml",
+        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/baseline.xml",
         "kitchen_fans_quantity": 0,
         "lighting_present": true,
         "lighting_exterior_fraction_cfl": 0.4,
@@ -311,10 +311,10 @@
 	{
             "measure_dir_name": "ResStockArgumentsPostHPXML",
             "arguments": {
-                "hpxml_path": "tests/baseline.xml",
-                "hvac_flex_peak_offset": 0,
-                "hvac_flex_pre_peak_duration_hours": 0,
-                "hvac_flex_pre_peak_offset": 0,
+                "hpxml_path": "tests/run/baseline.xml",
+                "hvac_flex_peak_offset": 2,
+                "hvac_flex_pre_peak_duration_hours": 2,
+                "hvac_flex_pre_peak_offset": 3,
                 "hvac_flex_random_shift_minutes": 0,
                 "output_csv_path": "tests",
                 "building_id": 1
@@ -322,8 +322,8 @@
     },
     {
       "arguments": {
-        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/baseline.xml",
-        "output_dir": "measures/ResStockArgumentsPostHPXML/tests",
+        "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/baseline.xml",
+        "output_dir": "measures/ResStockArgumentsPostHPXML/tests/run",
         "debug": "true"
       },
       "measure_dir_name": "HPXMLtoOpenStudio"

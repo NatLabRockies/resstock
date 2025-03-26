@@ -86,7 +86,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     end
 
     @prngs = get_random_number_generators(args[:building_id].to_i)
-  
+
     hpxml_path = args[:hpxml_path]
     unless (Pathname.new hpxml_path).absolute?
       hpxml_path = File.expand_path(File.join(File.dirname(__FILE__), hpxml_path))
@@ -147,11 +147,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     generator.get_heating_cooling_setpoint_schedule
   end
 
-
   def get_schedule_modifier(hpxml, building_index, args, runner, modifier_class)
     unless modifier_class < ScheduleModifier
       raise ArgumentError, "#{modifier_class} must be a subclass of ScheduleModifier"
     end
+
     minutes_per_step = hpxml.header.timestep
     hpxml_bldg = hpxml.buildings[building_index]
     state = hpxml_bldg.state_code
@@ -211,7 +211,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       schedule.each do |column_name, values|
         string_column_name = column_name.to_s
         column_index = headers.index { |h| h.to_s == string_column_name }
-        
+
         if column_index
           data.each_with_index do |row, i|
             row[column_index] = values[i]

@@ -54,12 +54,12 @@ class HVACFlexibilityTest < Minitest::Test
   end
 
   def test_get_month_day
-    assert_equal([2, 29], @schedule_modifier_15._get_month_day(index: 31 * 24 * 4 + 28 * 24 * 4 + 1)) # First 15 minutes of Feb 29
-    assert_equal([2, 29], @schedule_modifier_60._get_month_day(index: 31 * 24 + 28 * 24 + 1)) # First 1 hour of Feb 29
-    assert_equal([3, 1], @non_leap_modifier._get_month_day(index: 31 * 24 * 4 + 28 * 24 * 4 + 1)) # First 15 minutes of March 1
+    assert_equal([2, 29], @schedule_modifier_15._get_month_day(index: (31 * 24 * 4) + (28 * 24 * 4) + 1)) # First 15 minutes of Feb 29
+    assert_equal([2, 29], @schedule_modifier_60._get_month_day(index: (31 * 24) + (28 * 24) + 1)) # First 1 hour of Feb 29
+    assert_equal([3, 1], @non_leap_modifier._get_month_day(index: (31 * 24 * 4) + (28 * 24 * 4) + 1)) # First 15 minutes of March 1
 
-    assert_equal([12, 31], @schedule_modifier_15._get_month_day(index: 366 * 24 * 4 - 1))
-    assert_equal([12, 31], @non_leap_modifier._get_month_day(index: 365 * 24 * 4 - 1))
+    assert_equal([12, 31], @schedule_modifier_15._get_month_day(index: (366 * 24 * 4) - 1))
+    assert_equal([12, 31], @non_leap_modifier._get_month_day(index: (365 * 24 * 4) - 1))
 
     assert_equal([1, 1], @schedule_modifier_15._get_month_day(index: 0))
     assert_equal([1, 1], @non_leap_modifier._get_month_day(index: 0))
@@ -82,7 +82,7 @@ class HVACFlexibilityTest < Minitest::Test
     winter_peak = 4 * @schedule_modifier_15._get_peak_hour(flexibility_inputs.pre_peak_duration_steps, month: 1)[0]
     summer_peak = 4 * @schedule_modifier_15._get_peak_hour(flexibility_inputs.pre_peak_duration_steps, month: 7)[0]
     summer_peak += 4 # daylight saving time
-    summer_midnight = 3 * 31 * 24 * 4 + 29 * 24 * 4 + 3 * 30 * 24 * 4 # index from Jan to Jun
+    summer_midnight = (3 * 31 * 24 * 4) + (29 * 24 * 4) + (3 * 30 * 24 * 4) # index from Jan to Jun
 
     assert_equal(71, modified_setpoints_15[:heating_setpoint][0])
     assert_equal(78, modified_setpoints_15[:cooling_setpoint][0])
@@ -109,15 +109,15 @@ class HVACFlexibilityTest < Minitest::Test
     assert_equal(78, modified_setpoints_15[:cooling_setpoint][0])
     assert_equal(78 + 4, modified_setpoints_15[:cooling_setpoint][winter_peak + 2])  # peak offset
     assert_equal(71 - 4, modified_setpoints_15[:heating_setpoint][winter_peak + 2])  # peak offset
-    assert_equal(78, modified_setpoints_15[:cooling_setpoint][winter_peak + 2 - 4 * 4])  # start of pre-peak offset
-    assert_equal(71 + 3, modified_setpoints_15[:heating_setpoint][winter_peak + 2 - 1])  # end of pre-peak offset
+    assert_equal(78, modified_setpoints_15[:cooling_setpoint][winter_peak + 2 - (4 * 4)]) # start of pre-peak offset
+    assert_equal(71 + 3, modified_setpoints_15[:heating_setpoint][winter_peak + 2 - 1]) # end of pre-peak offset
 
     assert_equal(71, modified_setpoints_15[:heating_setpoint][summer_midnight])
     assert_equal(78, modified_setpoints_15[:cooling_setpoint][summer_midnight])
     assert_equal(78 + 4, modified_setpoints_15[:cooling_setpoint][summer_midnight + summer_peak + 2]) # start of peak period
     assert_equal(78 - 3, modified_setpoints_15[:cooling_setpoint][summer_midnight + summer_peak + 2 - 1]) # End of pre-peak period
-    assert_equal(71 - 4, modified_setpoints_15[:heating_setpoint][summer_midnight + summer_peak + 2 + 2 * 4 - 1])  # end of peak period
-    assert_equal(78 - 0, modified_setpoints_15[:cooling_setpoint][summer_midnight + summer_peak + 2 - 4 * 4 - 1])  # before pre-peak period
+    assert_equal(71 - 4, modified_setpoints_15[:heating_setpoint][summer_midnight + summer_peak + 2 + (2 * 4) - 1])  # end of peak period
+    assert_equal(78 - 0, modified_setpoints_15[:cooling_setpoint][summer_midnight + summer_peak + 2 - (4 * 4) - 1])  # before pre-peak period
     assert_equal(71, modified_setpoints_15[:heating_setpoint][summer_midnight + summer_peak + 2 + pds]) # after peak period
 
     flexibility_inputs = FlexibilityInputs.new(
@@ -169,10 +169,10 @@ class HVACFlexibilityTest < Minitest::Test
     assert_equal(21 * 4, peak_times.peak_end_index)
     assert_equal(13 * 4, peak_times.pre_peak_start_index)
 
-    peak_times = @schedule_modifier_15._get_peak_times((30 * 4 + 15) * 24 * 4, flexibility_inputs) # peak time in May
+    peak_times = @schedule_modifier_15._get_peak_times(((30 * 4) + 15) * 24 * 4, flexibility_inputs) # peak time in May
     # +4 because of the daylight saving time
-    assert_equal(16 * 4 + 4, peak_times.peak_start_index)
-    assert_equal(20 * 4 + 4, peak_times.peak_end_index)
-    assert_equal(12 * 4 + 4, peak_times.pre_peak_start_index)
+    assert_equal((16 * 4) + 4, peak_times.peak_start_index)
+    assert_equal((20 * 4) + 4, peak_times.peak_end_index)
+    assert_equal((12 * 4) + 4, peak_times.pre_peak_start_index)
   end
 end

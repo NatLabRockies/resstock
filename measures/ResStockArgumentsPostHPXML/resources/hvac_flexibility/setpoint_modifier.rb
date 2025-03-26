@@ -12,7 +12,6 @@ Dir["#{File.dirname(__FILE__)}/../../../../resources/hpxml-measures/HPXMLtoOpenS
   require resource_file
 end
 
-
 # HVACScheduleModifier extends ScheduleModifier to provide functionality for modifying HVAC setpoints
 # based on flexibility inputs such as peak offsets and pre-peak durations.
 # It implements methods to adjust heating and cooling setpoints during peak and pre-peak periods.
