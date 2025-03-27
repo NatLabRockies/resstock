@@ -154,7 +154,7 @@ Outside & other exterior \\
 Unheated Basement & basement---unconditioned \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_loc}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_loc}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.9cm}|p{3.5cm}|} \caption{The ResStock argument definitions set in the Water Heater Location characteristic} \label{table:hc_arg_def_water_heater_loc}  \\
 \toprule\noalign{}
@@ -240,16 +240,17 @@ The efficiency and type of the water heater by heating fuel.
 Water Heater Efficiency options define the technical details of the standalone water heaters, from fuel type to the presence of flue (Table \ref{table:hc_opt_water_heater_eff}).  The following arguments are constant across the options:
 
 \begin{itemize}
-    \item \texttt{water\_heater\_usage\_bin}: auto
-    \item \texttt{water\_heater\_heating\_capacity}: auto
-    \item \texttt{water\_heater\_standby\_loss}: 0
-    \item \texttt{water\_heater\_jacket\_rvalue}: 0
-    \item \texttt{water\_heater\_setpoint\_temperature}: 125
-    \item \texttt{water\_heater\_num\_bedrooms\_served}: auto
-    \item \texttt{water\_heater\_uses\_desuperheater}: auto
-    \item \texttt{water\_heater\_tank\_model\_type}: auto
-    \item \texttt{water\_heater\_operating\_mode}: auto
+    \item \texttt{water\_heater\_backup\_heating\_capacity}: auto
     \item \texttt{water\_heater\_has\_flue\_or\_chimney}: auto.
+    \item \texttt{water\_heater\_heating\_capacity}: auto
+    \item \texttt{water\_heater\_jacket\_rvalue}: 0
+    \item \texttt{water\_heater\_num\_bedrooms\_served}: auto
+    \item \texttt{water\_heater\_operating\_mode}: auto
+    \item \texttt{water\_heater\_setpoint\_temperature}: 125
+    \item \texttt{water\_heater\_standby\_loss}: 0
+    \item \texttt{water\_heater\_tank\_model\_type}: auto
+    \item \texttt{water\_heater\_usage\_bin}: auto
+    \item \texttt{water\_heater\_uses\_desuperheater}: auto
 \end{itemize}
 
 For heat pump water heaters the \texttt{water\_heater\_efficiency\_type} UniformEnergyFactor is used for heat pump water heaters; EnergyFactor is currently used for all other water heaters.
@@ -285,7 +286,7 @@ Propane Standard & storage water heater & propane & auto & 0.59 & 0.76 \\ \hline
 Propane Tankless & instantaneous water heater & propane & 0 & 0.82 & 0 \\
 \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_eff}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_eff}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{2.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4.5cm}|} {The ResStock argument definitions set in the Water Heater Efficiency characteristic} {table:hc_arg_def_water_heater_eff}  
 {Name & Required & Units & Type & Choices & Description} 
@@ -300,9 +301,10 @@ natural gas, fuel oil, propane, wood, coal & The fuel type of water
 heater. Ignored for heat pump water heater. \\
 \hline
 \texttt{water\_heater\_tank\_volume} & false & gal & Double & auto &
-Nominal volume of water heater tank. Only applies to storage water
-heater, heat pump water heater, and space-heating boiler with storage
-tank.\\
+Nominal volume of water heater tank. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#conventional-storage}{Conventional Storage}, \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#heat-pump}{Heat Pump} is used.) \\
+\hline
+\texttt{water\_backup\_heaing\_efficiency} & false & Btu/hr & Double &
+auto & Backup heating capacity for a heat pump water heater. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#heat-pump}{Heat Pump}.)\\
 \hline
 \texttt{water\_heater\_efficiency\_type} & true & & Choice &
 EnergyFactor, UniformEnergyFactor & The efficiency type of water heater.
@@ -323,7 +325,7 @@ of the fuel consumed by the water heater. Only used for non-electric
 storage water heaters.  \\
 \hline
 \texttt{water\_heater\_heating\_capacity} & false & Btu/hr & Double &
-auto & Heating capacity. Only applies to storage water heater.  \\
+auto & Heating capacity. Only applies to storage water heater and heat pump water heater (compressor). If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#conventional-storage}{Conventional Storage}, \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#heat-pump}{Heat Pump} is used.) \\
 \hline
 \texttt{water\_heater\_standby\_loss} & false & deg-F/hr & Double & auto
 & The standby loss of water heater. Only applies to space-heating
@@ -406,7 +408,7 @@ Presence, size, orientation, and location of solar hot water system.
 No dependency.
 
 \paragraph{Options}
-The only option is ``None,'' which means no Solar Hot Water systems are modeled in the ResStock baseline. For the argument definitions, see Table \ref{table:hc_arg_def_solar_hot_water}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
+The only option is ``None,'' which means no Solar Hot Water systems are modeled in the ResStock baseline. For the argument definitions, see Table \ref{table:hc_arg_def_solar_hot_water}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{2.9cm}|p{4cm}|} {The ResStock argument definitions set in the Solar Hot Water characteristic} {table:hc_arg_def_solar_hot_water} 
 {Name & Required & Units & Type & Choices & Description} 
@@ -455,7 +457,7 @@ No assumptions are made.
 
 % ##################
 \subsection{Hot Water Distribution}
-ResStock follows the OpenStudio-HPXML default assumptions when modeling hot water distribution, see the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation. Pipes are not explicitly modeled for any distribution systems, and correlations are instead used for determining the amount of hot water waste and heat gains in the living space depending on  the hot water distribution system type and insulation. For a recirculation distribution system, the pipe length is calculated differently and additional inputs (e.g., power rating, control type) are used to specify the recirculation pump and pipe loop length. While recirculation options are available, all housing units in the baseline are assumed to have uninsulated trunk and branch hot water distribution system with copper pipes and without recirculation or drain water heat recovery. The inputs are captured in a single housing characteristic Hot Water Distribution.
+ResStock follows the OpenStudio-HPXML default assumptions when modeling hot water distribution, see the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation. Pipes are not explicitly modeled for any distribution systems, and correlations are instead used for determining the amount of hot water waste and heat gains in the living space depending on  the hot water distribution system type and insulation. For a recirculation distribution system, the pipe length is calculated differently and additional inputs (e.g., power rating, control type) are used to specify the recirculation pump and pipe loop length. While recirculation options are available, all housing units in the baseline are assumed to have uninsulated trunk and branch hot water distribution system with copper pipes and without recirculation or drain water heat recovery. The inputs are captured in a single housing characteristic Hot Water Distribution.
 
 \subsubsection{Hot Water Distribution}\label{hot_water_distribution}
 \paragraph{Description}
@@ -481,7 +483,7 @@ For the ResStock baseline baseline, all Hot Water Distribution is assumed to be 
     \item \texttt{dwhr\_efficiency} = 0.0.
 \end{itemize}
 
-For retrofit upgrades, other options are available and can be defined using the following arguments. For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_dist}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation for the available HPXML schema elements, default values, and constraints.
+For retrofit upgrades, other options are available and can be defined using the following arguments. For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_dist}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-hot-water-distribution}{Hot Water Distribution} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.9cm}|p{5cm}|} {The ResStock argument definitions set in the Hot Water Distribution characteristic} {table:hc_arg_def_hot_water_dist} 
 {Name & Required & Units & Type & Choices & Description} 
@@ -505,7 +507,7 @@ of the recirculation piping.  \\
 false & ft & Double & auto & If the distribution system is
 Recirculation, the length of the recirculation branch piping. If not
 provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#recirculation-in-unit}{Recirculation
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#recirculation-in-unit}{Recirculation
 (In-Unit)}) is used. \\
 \hline
 \texttt{hot\_water\_distribution\_recirc\_pump\_power} & false & W &
@@ -555,10 +557,10 @@ Hot water fixture usage and flow levels.
 \end{itemize}
 
 \paragraph{Options}
-The Hot Water Fixtures options are usage bins ranging from ``40\% Usage'' to ``200\% Usage'' at 10\% increments. For the ResStock baseline, the options are log-normally distributed between 40\% and 200\%, with the peak at 80\%. All options have both \texttt{water\_fixtures\_shower\_low\_flow} and
+The Hot Water Fixtures options are usage bins ranging from ``50\% Usage'' to ``200\% Usage'' at 10\% increments. For the ResStock baseline, the options are log-normally distributed between 40\% and 200\%, with the peak at 80\%. All options have both \texttt{water\_fixtures\_shower\_low\_flow} and
 \texttt{water\_fixtures\_sink\_low\_flow} set to false. \texttt{water\_fixtures\_usage\_multiplier} is set according to their option names.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_fix}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-water-fixtures}{Water Fixtures} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_fix}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-fixtures}{Water Fixtures} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.9cm}|p{5cm}|} \caption{The ResStock argument definitions set in the Hot Water Fixtures characteristic} \label{table:hc_arg_def_hot_water_fix} \\
 \toprule\noalign{}
@@ -584,12 +586,11 @@ occupants. \\
   A log-normal distribution was shown to match the distribution of annual
   energy consumption.
 \item
-  For the log-normal distribution, the average multiplier is 0.8 and the
-  standard deviation is 0.2.
+  The data shows appoximately a log-normal distribution. From the data, the average multiplier is 0.8 and the
+  standard deviation is 0.2. The average multiplier was mean-shifted from 0.8 to 1 average usage.
 \item
   Low, Medium, and High usage is assigned based on the lower 25th
-  percent, middle 50th percent, and upper 25th percent. The bins do not
-  align perfectly with these bins so the lower users are a total of 25\%, the medium users are 47\%, and the high users are 28\% of the stock.
+  percent, middle 50th percent, and upper 25th percent.
 \end{itemize}
 
 
@@ -664,7 +665,7 @@ EF 21.9 & true &  348 \\
 None & false &  0 \\
 \end{longtable}
 
-For the argument definitions, see \ref{table:hc_arg_def_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see \ref{table:hc_arg_def_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -677,7 +678,7 @@ space, basement---conditioned, basement---unconditioned, garage, other
 housing unit, other heated space, other multifamily buffer space, other
 non-freezing space & The space type for the refrigerator location. If
 not provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-refrigerators}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-refrigerators}{HPXML
 Refrigerators}) is used. \\
 \hline
 \texttt{refrigerator\_rated\_annual\_kwh} & false & kWh/yr & Double &
@@ -735,7 +736,7 @@ Option name &
 105\% Usage & 1.05 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_refrigerator_usage_level}. %See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_refrigerator_usage_level}. %See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 %arguments table
 \begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
 \caption{The ResStock argument definitions set in the Refrigerator Usage Level characteristic} \label{table:hc_arg_def_refrigerator_usage_level}\\
@@ -798,7 +799,7 @@ EF 21.9 & true & 348  \\
 None & false  & 0  \\
 \end{longtable}
 
-For the argument definitions, see \ref{table:hc_arg_def_misc_extra_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see \ref{table:hc_arg_def_misc_extra_refrigerator}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -882,7 +883,7 @@ EF 12, National Average & true & auto & 935 & 0.342 \\
 None & false & auto & 0 & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_freezer}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-freezers}{OpenStudio-HPXML Freezers} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_misc_freezer}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-freezers}{OpenStudio-HPXML Freezers} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -918,7 +919,7 @@ Due to the low sample count, the input file is constructed with the following co
 
 \subsection{Cooking}
 \subsubsection{Modeling Approach}
-ResStock models all cooking units as ranges with an integrated (non-convection) oven located in the conditioned space. Housing units can have no cooking units. The fuel options include electric induction, electric resistance, gas, and propane, although more fuel options are available in OpenStudio-HPXML, see \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-cooking-range-oven}{Cooling Range/Oven}. The annual energy used for cooking is calculated per the Energy Rating Rated Home in ANSI/RESNET/ICC 301-2019 (\cite{ansi_resnet_301_2019}) and is further adjusted by a Cooking Range Usage Level multiplier; see Section \ref{cooking_range_usage_level}. The annual energy is multiplied with a stochastically generated detailed cooking schedule based on ATUS to produce the cooking end-use load profile. See Section \ref{occupancy_model} for details on schedule generation.
+ResStock models all cooking units as ranges with an integrated (non-convection) oven located in the conditioned space. Housing units can have no cooking units. The fuel options include electric induction, electric resistance, gas, and propane, although more fuel options are available in OpenStudio-HPXML, see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooking-range-oven}{Cooling Range/Oven}. The annual energy used for cooking is calculated per the Energy Rating Rated Home in ANSI/RESNET/ICC 301-2019 (\cite{ansi_resnet_301_2019}) and is further adjusted by a Cooking Range Usage Level multiplier; see Section \ref{cooking_range_usage_level}. The annual energy is multiplied with a stochastically generated detailed cooking schedule based on ATUS to produce the cooking end-use load profile. See Section \ref{occupancy_model} for details on schedule generation.
 
 ResStock also models the use of a range hood for cooking. However, the range hood operation does not use the cooking schedule. Instead, the range operates for one hour every day with a starting hour sampled by the Range Spot Vent Hour characteristic distribution; see Section \ref{range_spot_vent_hour}.
 
@@ -961,7 +962,7 @@ Gas & true & natural gas & false \\\hline
 None & false & natural gas & false \\\hline
 Propane & true & propane & false \\
 \end{customLongTable}
-For the argument definitions, see Table \ref{table:hc_arg_def_cooking_range}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-cooking-range-oven}{Cooking Range/Oven} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_cooking_range}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-cooking-range-oven}{Cooking Range/Oven} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -1045,7 +1046,7 @@ Option name &
 120\% Usage & 1.2 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_cooking_range_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_cooking_range_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 %arguments table
 \begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
 \caption{The ResStock argument definitions set in the Cooking Range characteristic} \label{table:hc_arg_def_cooking_range_usage_level} \\
@@ -1104,7 +1105,7 @@ The ResStock baseline has two dishwasher options, one at 290 rated kWh and one a
 None & 0 & 0 \\
 \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_dishwasher}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-dishwasher}{Dishwasher} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_dishwasher}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-dishwasher}{Dishwasher} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{2.5cm}|p{1.5cm}|p{2.5cm}|p{1.1cm}|p{2.9cm}|p{3cm}| }
@@ -1241,7 +1242,7 @@ None & 0 & 0 & 0 & 0 \\
 Standard &  0.95 & 387 & 24  & 3.5 \\
 \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_clothes washer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-clothes-washer}{Clothes Washer} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_clothes washer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-washer}{Clothes Washer} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -1262,7 +1263,7 @@ auto & The annual energy consumed by the clothes washer, as rated,
 obtained from the EnergyGuide label. This includes both the appliance
 electricity consumption and the energy required for water heating. If
 not provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-clothes-washer}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-clothes-washer}{HPXML
 Clothes Washer}) is used. \\ \hline
 \texttt{clothes\_washer\_label\_electric\_rate} & false & \$/kWh &
 Double & auto & The annual energy consumed by the clothes washer, as
@@ -1274,7 +1275,7 @@ auto & The annual energy consumed by the clothes washer, as rated,
 obtained from the EnergyGuide label. This includes both the appliance
 electricity consumption and the energy required for water heating. If
 not provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-clothes-washer}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-clothes-washer}{HPXML
 Clothes Washer}) is used. \\ \hline
 \texttt{clothes\_washer\_label\_annual\_gas\_cost} & false & \$ & Double
 & auto & The annual cost of using the system under test conditions.
@@ -1482,7 +1483,7 @@ None & false & natural gas & 2.70 \\
 Propane & true & propane & 2.39 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-clothes-dryer}{Clothes Dryer} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-clothes-dryer}{Clothes Dryer} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -1566,7 +1567,7 @@ Option name &
 120\% Usage & 1.2 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 %arguments table
 
 \begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -1622,7 +1623,7 @@ Standard Efficiency & auto & 70.4 \\
 Standard Efficiency, No usage & auto & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ceiling_fans}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-ceiling-fans}{Ceiling Fans} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_ceiling_fans}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-ceiling-fans}{Ceiling Fans} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
@@ -1633,13 +1634,13 @@ Whether there are any ceiling fans. \\ \hline
 \texttt{ceiling\_fan\_label\_energy\_use} & false & W & Double & auto &
 The label average energy use of the ceiling fan(s). If neither
 Efficiency nor Label Energy Use provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-ceiling-fans}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-ceiling-fans}{HPXML
 Ceiling Fans}) is used. \\ \hline
 \texttt{ceiling\_fan\_efficiency} & false & CFM/W & Double & auto & The
 efficiency rating of the ceiling fan(s) at medium speed. Only used if
 Label Energy Use not provided. If neither Efficiency nor Label Energy
 Use provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-ceiling-fans}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-ceiling-fans}{HPXML
 Ceiling Fans}) is used. \\ \hline
 \texttt{ceiling\_fan\_quantity} & false & \# & Integer & auto & Total
 number of ceiling fans.  \\ \hline
@@ -1691,7 +1692,7 @@ Has Pool & true \\
 None & false \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pool}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-pools}{Pools} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_pool}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-pools}{Pools} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
 \caption{The ResStock argument definitions set in the Misc Pool characteristic} \label{table:hc_arg_def_pool} \\
@@ -1728,7 +1729,10 @@ Due to the low sample count, the input file is constructed with the following fa
 The heating fuel of the pool heater if there is a pool.
 
 \paragraph{Distribution Data Source(s)}
-Constructed using U.S. EIA 2020 RECS microdata.
+\begin{itemize}
+    \item Constructed using U.S. EIA 2020 RECS microdata.
+    \item Constructed using the California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata 
+\end{itemize} 
 
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
@@ -1738,7 +1742,7 @@ Constructed using U.S. EIA 2020 RECS microdata.
 
 \paragraph{Options}
 
-The options for pool heaters are based on the fuel they use: electricity, natural gas, none, and other fuel. The characteristic assigns the \texttt{pool\_heater\_type}, \texttt{pool\_heater\_annual\_kwh}, \texttt{pool\_heater\_annual\_therm}, and \texttt{pool\_heater\_usage\_multiplier} ResStock arguments (Table \ref{table:opt_def_pool_heat}).
+There are five options for pool heaters: Electricity, Electric Heat Pump, Natural Gas, None, and Other Fuel. The Electricity option defines a traditional electric resistance pool heater, whereas the Electric Heat Pump option uses heat pump technology for heating the pool. The “Other Fuel” pool heater option currently is currently not modeled in ResStock. The ResStock arguments assigned for each of these options is given in Table \ref{table:opt_def_pool_heat}.
 
 \begin{customLongTable}{ |p{2.5cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}| }
 {Pool Heater options and arguments that vary for each option} {table:opt_def_pool_heat} 
@@ -1746,7 +1750,9 @@ The options for pool heaters are based on the fuel they use: electricity, natura
 \texttt{pool\_heater\_annual\_kwh} &
 \texttt{pool\_heater\_annual\_therm} &
 \texttt{pool\_heater\_usage\_multiplier}} 
+Electric Heat Pump & heat pump & auto & 0 & 1.0 \\
 Electricity & electric resistance & auto & 0 & 1.0 \\
+Electric Heat Pump & heat pump & auto & 0 & 1.0 \\
 Natural Gas & gas fired & 0 & auto & 1.0 \\
 None & none & 0 & 0 & 0 \\
 Other Fuel & none & 0 & 0 & 0 \\
@@ -1754,7 +1760,7 @@ Other Fuel & none & 0 & 0 & 0 \\
 
 The ``Other Fuel'' option is assigned the same arguments as ``None,'' and will result in no energy consumption.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pool_heat}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#pool-heater}{Pool Heater} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_pool_heat}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-heater}{Pool Heater} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 \caption{The ResStock argument definitions set in the Pool Heater characteristic} \label{table:hc_arg_def_pool_heat} \\
@@ -1780,7 +1786,9 @@ high/low usage occupants.  \\
 \end{longtable}
 
 \paragraph{Distribution Assumption(s)}
-None.
+\begin{itemize}
+    \item Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.
+\end{itemize}
 
 \subsubsection{Misc Pool Pump}
 \paragraph{Description}
@@ -1809,7 +1817,7 @@ None & 0 & 0 \\
 1.0 HP Pump & auto & 1.0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pool_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#pool-pump}{ Pool Pump} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_pool_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#pool-pump}{ Pool Pump} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 \caption{The ResStock argument definitions set in the Misc Pool Pump characteristic} \label{table:hc_arg_def_pool_pump} \\
@@ -1874,7 +1882,7 @@ None & false & none \\
 Other Fuel & false & none \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_hot_tub}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-permanent-spas}{Permanent Spas} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_hot_tub}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-permanent-spas}{Permanent Spas} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 {The ResStock argument definitions set in the Misc Hot Tub Spa characteristic} {table:hc_arg_def_hot_tub} 
@@ -1885,7 +1893,7 @@ Whether there is a permanent spa. \\
 \texttt{permanent\_spa\_pump\_annual\_kwh} & false & kWh/yr & Double &
 auto & The annual energy consumption of the permanent spa pump. If not
 provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#permanent-spa-pump}{Permanent
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#permanent-spa-pump}{Permanent
 Spa Pump}) is used. \\
 \hline
 \texttt{permanent\_spa\_pump\_usage\_multiplier} & false & & Double &
@@ -1939,17 +1947,24 @@ In combining the housing unit sub-input file and household sub-input file, the c
 
 \subsection{Well Pump}
 \subsubsection{Modeling Approach}
-Well pumps are used to extract potable water from a well. Well pumps are not well characterized in existing studies. The 2014 Building America House Simulation Protocols (\cite{Wilson2014}) estimated that 13\% of U.S.~homes have a well pump, and the study is used to construct the characteristic distribution, which has no dependency. This means a well pump is randomly assigned to housing units in ResStock where it is modeled as a type of plug load that does not provide any latent or sensible heat to the housing units. The annual energy for well pumping is estimated based on conditioned floor area and number of bedrooms converted from occupants using an equation from 2014 Building America House Simulation Protocols (\cite{Wilson2014}) and can be adjusted by a usage multiplier. The annual energy is then multiplied by a default simple schedule to produce the end-use load profile.
+Well pumps are used to extract potable water from a well. The 2017-2019 American Housing Surveys ({\cite{ahs}}) estimated that 11\% of US homes have a well pump, and that data is used to construct the characteristic distribution, which has a dependency to Census Division, PUMA Metro Status, and Geometry Building Type Height. Well pumps are also more common outside the metro areas than in metro areas, particularly within a principal city. A well pump in ResStock is modeled as a type of plug load that does not provide any latent or sensible heat to the housing units. The annual energy for well pumping is estimated based on conditioned floor area and number of bedrooms converted from occupants using an equation from 2014 Building America House Simulation Protocols (BAHSP) (\cite{Wilson2014}) and can be adjusted by a usage multiplier. The annual energy is then multiplied by a default simple schedule to produce the end-use load profile.
 
 \subsubsection{Misc Well Pump}
 \paragraph{Description}
-Presence and efficiency of well pump.
+Presence of well pump according to the use of well for domestic water source.
 
 \paragraph{Distribution Data Source(s)}
-Building America House Simulation Protocols (\cite{Wilson2014}); national average fraction used for saturation.
 
+\begin{itemize}
+    \item 2017 and 2019 American Housing Survey (AHS) microdata.
+    \item Core Based Statistical Area (CBSA) data based on the Feb 2013 CBSA delineation file.
+\end{itemize}
 \paragraph{Direct Conditional Dependencies}
-None.
+\begin{itemize}
+    \item Census Division
+    \item PUMA Metro Status
+    \item Geometry Building Type Height
+\end{itemize}
 
 \paragraph{Options}
 The options for the Misc Well Pump characteristic are Typical Efficiency if there is a well pump and None if there is no well pump. The characteristic sets the \texttt{misc\_plug\_loads\_well\_pump\_present}, \texttt{misc\_plug\_loads\_well\_pump\_usage\_multiplier}, \texttt{misc\_plug\_loads\_well\_pump\_2\_usage\_multiplier}, and \texttt{misc\_plug\_loads\_well\_pump\_annual\_kwh} ResStock arguments (Table \ref{table:hc_opt_def_well_pump}). 
@@ -1970,7 +1985,7 @@ Typical Efficiency & true & auto \\
 None & false & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_well_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-misc-loads}{Misc Loads} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_well_pump}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-misc-loads}{Misc Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 \caption{The ResStock argument definitions set in the Misc Well Pump characteristic} \label{table:hc_arg_def_well_pump} \\\toprule\noalign{}
@@ -1996,7 +2011,11 @@ reflect, e.g., high/low usage occupants. \\
 \end{longtable}
 
 \paragraph{Distribution Assumption(s)}
-None.
+\begin{itemize}
+	\item All well pumps are assumed to have typical efficiency.
+	\item Where the number of samples < 10, the Census Division is aggregated up to Census Region.
+	\item AHS has data for buildings up to 7 stories tall. Buildings with 8 or more stories are assumed not to have a well pump.
+\end{itemize}
 
 \subsection{Miscellaneous Gas Uses}
 \subsubsection{Modeling Approach}
@@ -2033,7 +2052,7 @@ Gas Fireplace & true & auto & 1.0 \\
 None & false & 0 & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_gas_fireplace}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hvac-heating-fireplaces}{Fireplace} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_gas_fireplace}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hvac-heating-fireplaces}{Fireplace} documentation for the available HPXML schema elements, default values, and constraints.
 
 
 \begin{customLongTable}{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
@@ -2054,7 +2073,7 @@ fireplace. \\
 Double & auto & Fraction of fireplace residual fuel
 loads' internal gains that are sensible. If not
 provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html\#hpxml-fuel-loads}{HPXML
+\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-fuel-loads}{HPXML
 Fuel Loads}) is used. \\
 \hline
 \texttt{misc\_fuel\_loads\_fireplace\_frac\_latent} & false & Frac &
@@ -2098,7 +2117,7 @@ Gas Grill & true & auto & 1.0 \\
 None & false & 0 & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_gas_grill}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-fuel-loads}{Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_gas_grill}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-fuel-loads}{Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 {The ResStock argument definitions set in the Misc Gas Grill characteristic} {table:hc_arg_def_gas_grill} 
@@ -2124,7 +2143,7 @@ None.
 
 \subsection{PV}
 \subsubsection{Modeling Approach}
-ResStock models residential photovoltaic (PV) solar panels based on data from Lawrence Berkeley National Laboratory's (LBNL) 2020 Tracking the Sun report (\cite{LBNLTTS2019}) and a 2020 PV report by Wood Mackenzie (\cite{WoodsMackenzie2020}). However, the data excludes Alaska and Hawaii, the latter of which has one of the largest number of solar installations by state. ResStock only models rooftop solar for occupied single-family detached homes. This means ResStock does not model ground-mounted solar or solar installed in other building types, such as community solar shared among multifamily units, although that modeling capability exists in OpenStudio-HPXML. This also means ResStock, which estimates the rooftop solar penetration at less than 1\% of all housing units, is most likely underestimating the total installed capacity nationally. In addition to the presence of rooftop solar (Section \ref{sec:has_pv}), ResStock also characterizes the orientation (Section \ref{sec:pv_orientation}) and system capacity (Section \ref{sec:pv_system_size}), using LBNL's 2020 Tracking the Sun report. The system size or modeled capacity does not necessarily align with the available roof space of the housing units.
+ResStock models residential photovoltaic (PV) solar panels based on data from Lawrence Berkeley National Laboratory's (LBNL) 2020 Tracking the Sun report (\cite{LBNLTTS2019}) and a 2020 PV report by Wood Mackenzie (\cite{WoodsMackenzie2020}). However, the data excludes Alaska and Hawaii, the latter of which has one of the largest number of solar installations by state. Therefore, the PV penetration in Hawaii is added based on \href{https://www.eia.gov/electricity/data/eia861/}{EIA form 861}. ResStock only models rooftop solar for occupied single-family detached homes. This means ResStock does not model ground-mounted solar or solar installed in other building types, such as community solar shared among multifamily units, although that modeling capability exists in OpenStudio-HPXML. This also means ResStock, which estimates the rooftop solar penetration at less than 1\% of all housing units, is most likely underestimating the total installed capacity nationally. In addition to the presence of rooftop solar (Section \ref{sec:has_pv}), ResStock also characterizes the orientation (Section \ref{sec:pv_orientation}) and system capacity (Section \ref{sec:pv_system_size}), using LBNL's 2020 Tracking the Sun report. The system size or modeled capacity does not necessarily align with the available roof space of the housing units.
 
 The PV modeling capability and default inputs are primarily adopted from NREL's \href{https://pvwatts.nrel.gov/index.php}{PVWatts model}. ResStock calculates the energy production based on the solar irradiation information in the weather file and the characteristics of the PV array. In the ResStock baseline, all PV systems are modeled as roof-mounted, fixed-axis standard modules tilted at roof pitch with a 14\% overall derate factor and a 96\% inverter efficiency. The derate factor encompasses loss from soiling, shading, wiring, mismatch, degradation, and more according to the PVWatts documentation (\cite{pvwatts_doc}).
 
@@ -2133,7 +2152,7 @@ The PV modeling capability and default inputs are primarily adopted from NREL's 
 Presence of a rooftop photovoltaic system.
 
 \paragraph{Distribution Data Source(s)}
-Constructed using ACS population and data from \href{https://www.nrel.gov/analysis/dgen/}{dGen} on PV installation that combines LBNL's 2020 Tracking the Sun (\cite{LBNLTTS2019}) and Wood Mackenzie's 2020 Q4 PV report (\cite{WoodsMackenzie2020}; prepared on Jun 22, 2021). 
+Constructed using ACS population and data from \href{https://www.nrel.gov/analysis/dgen/}{dGen} on PV installation that combines LBNL's 2020 Tracking the Sun (\cite{LBNLTTS2019}) and Wood Mackenzie's 2020 Q4 PV report (\cite{WoodsMackenzie2020}; prepared on Jun 22, 2021). The PV penetration in Hawaii is from \href{https://www.eia.gov/electricity/data/eia861/}{EIA form 861}. 
 
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
@@ -2146,7 +2165,9 @@ Constructed using ACS population and data from \href{https://www.nrel.gov/analys
 The options for Has PV are ``Yes'' if the housing unit has a rooftop PV system and ``No'' if the housing unit does not have a rooftop PV system.
 
 \paragraph{Distribution Assumption(s)}
-Imposed an upper bound of 14 kWDC, which contains 95\% of all installations. Counties with source\_count <10 are backfilled with aggregates at the state level. Distribution based on all installations is applied only to occupied single-family detached homes; actual distribution for single-family detached homes may be higher. PV is not modeled in AK and HI. No data have been identified. 
+Imposed an upper bound of 14 kWDC, which contains 95\% of all installations. Counties with source\_count <10 are backfilled with aggregates at the state level. Distribution based on all installations is applied only to occupied single-family detached homes; actual distribution for single-family detached homes may be higher. PV is not modeled in AK. No data have been identified. 
+
+For Hawaii, EIA Form 861 reports the number of residential utility customers with rooftop PV in $Net_Metering_2018.xlsx$ worksheet and the total number of residnetial utility customers in $Sales_Ult_Cust_2018.xlsx$. Taking the ratio of these two gives us the fraction of homes with rooftop PV. We place the additional constraint that all of these rooftop PV customers are in single-family detached homes. Because Hawaii is composed of multiple islands, the four electric utilities in Hawaii (and which report to EIA Form 861) approximately align with the county boundaries with Hawaii, Honolulu, and Kauai having one county for one electric utility, and both Maui and Kalawao mapping to the same electric utility, so we we develop distinct PV saturation rates for each county in Hawaii (note Kalawao has population 81 people and is located on the island of Maui).
 
 \subsubsection{PV Orientation}  \label{sec:pv_orientation}
 \paragraph{Description}
@@ -2181,7 +2202,7 @@ Southwest & 225 \\
 West & 270 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pv_orient}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_pv_orient}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{2.4cm}|p{5.5cm}|}
 {The ResStock argument definitions set in the PV Orientation characteristic} {table:hc_arg_def_pv_orient} 
@@ -2232,7 +2253,7 @@ The following arguments are set to auto: \texttt{pv\_system\_module\_type}, \tex
 None & false & 0 \\
 \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_pv_size}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_pv_size}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-photovoltaics}{Photovoltaics} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{2.4cm}|p{4.5cm}|}
 {The ResStock argument definitions set in the PV System Size characteristic} {table:hc_arg_def_pv_size} 
@@ -2289,7 +2310,7 @@ is the total building maximum power output. \\
 
 \paragraph{Distribution Assumption(s)}
 Installations of unknown mount type are assumed to be rooftop. States without data are backfilled with aggregates at the Census Region. ``East South Central'' assumed the same distribution as ``West South Central.''
-PV is not modeled in AK and HI. The Option=None is set so that an error is thrown if PV is modeled as an argument.
+PV is not modeled in AK. The Option=None is set so that an error is thrown if PV is modeled as an argument.
 
 \subsection{Additional Capabilities}
 This section describes the additional modeling capabilities in OpenStudio-HPXML/ResStock that are not yet fully deployed in the ResStock baseline. These include batteries and dehumidifiers. These loads at present are not available in the baseline but can be modeled as upgrade measures. This is because their characteristic distribution is not yet fully characterized but is instead set to 100\% None.
@@ -2446,7 +2467,7 @@ Option name & Interior argument & Exterior argument & Garage argument\\
 100\% LED & \textit{lighting\_interior\_fraction\_led} = 1 &\textit{lighting\_exterior\_fraction\_led} = 1 & \textit{lighting\_garage\_fraction\_led} = 1 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{ |p{4.cm}|p{1.5cm}|p{1.5cm}|p{1.1cm}|p{1.5cm}|p{4.4cm}|}
 {The ResStock arguments set in the Lighting characteristic} {table:hc_arg_def_lighting} 
@@ -2544,7 +2565,7 @@ Gas Lighting & 1.2\% & true &  auto & 1.0 \\
 None & 98.8\% & false &  0 & 0 \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_misc_gas_light}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-fuel-loads}{Misc Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_misc_gas_light}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-fuel-loads}{Misc Fuel Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock arguments set in the Misc Gas Lighting characteristic} \label{table:hc_arg_def_misc_gas_light}  \\
 \toprule\noalign{}
@@ -2595,7 +2616,7 @@ Option name & \texttt{holiday\_lighting\_present} &
 No Exterior Use & false & 0 & auto \\
 \end{longtable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_holiday_light}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#exterior-holiday-lighting}{Exterior Holiday Lighting} documentation for the available HPXML schema elements, default values, and constraints. 
+For the argument definitions, see Table \ref{table:hc_arg_def_holiday_light}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#exterior-holiday-lighting}{Exterior Holiday Lighting} documentation for the available HPXML schema elements, default values, and constraints. 
 
 \begin{customLongTable}{|p{4.0cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{1.5cm}|p{4.cm}|} {The ResStock arguments set in the Holiday Lighting characteristic} {table:hc_arg_def_holiday_light}  
 {Name & Required & Units & Type & Choices & Description} 
@@ -2654,7 +2675,7 @@ None.
 \paragraph{Options}
 All buildings are assigned the option \textit{100\% Usage}, which sets the ResStock arguments \textit{lighting\_exterior\_usage\_multiplier} and \textit{lighting\_garage\_usage\_multiplier}  to 1 (the OS-HPXML default).
 
-For the argument definitions, see Table \ref{table:hc_arg_def_light_oth_use}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints. 
+For the argument definitions, see Table \ref{table:hc_arg_def_light_oth_use}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints. 
 
 \begin{longtable}[]{ |p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{5.5cm}|} \caption{The ResStock arguments set in the Lighting Interior Use characteristic} \label{table:hc_arg_def_light_oth_use}  \\
 \toprule\noalign{}
@@ -2755,7 +2776,7 @@ ResStock provides a range of percentages for plug load usage that are multiplier
 166\% & 1.66 &  1.66 \\
 \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_plug_load}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_plug_load}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{1.3cm}|p{3.5cm}|} {The ResStock arguments set in the Plug Loads Use characteristic} {table:hc_arg_def_plug_load} 
 {Name & Required & Units & Type & Choices & Description} 
@@ -2823,7 +2844,7 @@ Option name &
 100\% & 1.0 & 1.0 \\
 200\% & 2.0 & 2.0 \\
 \end{longtable}
-For the argument definitions, see Table \ref{table:hc_arg_def_plug_load_diversity}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.8.1/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_plug_load_diversity}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-plug-loads}{Plug Loads} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{longtable}[]{|p{4.cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{1.cm}|p{4.cm}|} \caption{The ResStock arguments set in the Plug Load Diversity Use characteristic} \label{table:hc_arg_def_plug_load_diversity}  \\
 \toprule\noalign{}
@@ -2845,6 +2866,13 @@ reflect, e.g., high/low usage occupants. \\
 
 \paragraph{Distribution Assumption(s)}
 None.
+
+
+
+
+
+
+
 
 \section{Electric Vehicles}
 
@@ -3156,8 +3184,123 @@ Charging and discharging schedules provide the time periods when the EV can char
   \caption{Illustration of EV battery discharge schedule generation.}
   \label{fig:ev_discharge}
 \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Electrical Panels} \label{sec:input_panels}
+The electrical panel is a breaker box that distributes power from the utility pole to the connected appliances and receptacles while protecting them from overload, short circuit, or ground fault. Inside the panel, electric appliances are organized into branch circuits that are each protected by an overcurrent protection device (A.K.A. breaker). Two bus bars each carrying 120V service along with a neutral bus bar run down the breaker slots to supply power at either 120V or 240V. 120V circuits use single-pole breakers that take up one space while 240V require two-space double-pole breakers to draw the 240V potential between the two hot wires. Some breakers, such as tandem breakers, can serve multiple circuits without taking up more space. The panel service rating refers to the maximum amps of current the panel can safely handle to power the circuits. This is often the same as the ampacity rating of the service entrance disconnect, which limits the amount of power entering the panel, though it is possible to have a panel rated larger than its service disconnect, and vice versa. 
 
+\subsection{Overview}
+The electrical panel service load and breaker space calculations are used to assess whether the electrical panel has a capacity and a space constraint, respectively, during a home electrification. As new electric loads are introduced into the home, the panel may need to be reconfigured, extended, or replaced due to insufficient capacity or insufficient breaker space. For example, homes that are not already using electricity for heating and cooking are more likely to have capacity constraints, thus requiring an upgrade, load controls, or other interventions. A panel with all slots occupied cannot accommodate new circuits unless space-saving breakers are used, or a subpanel is added. When the panel is being upsized for capacity, an electrical service upgrade may also be required to upsize the service entrance wiring from the pole to the service disconnect. By estimating the panel capacity constraints, the service load calculation can serve as an upper bound estimate for service upgrades when applied to the housing stock. 
+
+To evaluate potential panel constraints, we first characterize the panel service rating and the number of available breaker spaces on the panels for the US housing stock using best available data. Then we perform service load calculations based on code to get the required capacity for a given upgrade scenario. The calculated value is compared with the rating of the panel to determine the capacity constraint. For the breaker space calculation, the number of occupied breaker spaces on the panel is estimated by tabulating from each appliance for a given modeled home. This pre-upgrade occupied space estimate is combined with the available breaker space input to determine the rated total number of spaces on the panel. Then the number of occupied breaker spaces is calculated for the modeled home post-upgrade and subtracted from the rated number of spaces to determine the space constraint for a given upgrade scenario. The following sections provide more detail on each of the two calculations. The electrical panel outputs can be found in Section \ref{sec:output_panels}.
+
+\subsection{Input Characteristics}
+We derived the electrical panel service rating (A) and the breaker space headroom using a limited set of survey data. For single-family attached and detached dwellings, the data was used to train machine-learning models, which were then used to generate the distribution of the panel attributes. For multi-family, the characteristic distributions were derived directly from the data due to insufficient samples to support model training. As the dataset does not contain high-fidelity samples for mobile homes, we use the distributions for single-family detached to approximate mobile homes.
+
+79\% of the survey data comes from the Pacific regions via: TECH Clean California, Bay Area Renewable Energy Network, Home Energy Analytics, and Northwest Energy Efficiency Alliance Residential Building Stock Assessment, while 20\% comes from the Minnesota Center for Energy and the Environment and 1\% from LBL Citizen Science survey, which is administered nationally. 
+Due to the data bias towards the Pacific states, where gas heating is dominant, separate model is used for electrically heated and fuel heated single-family dwellings. Table \ref{tab:panel_deps} outlines the dependencies for each of the distributions generated for assigning the panel characteristics. The field values for electrical panel service rating (A) are: <100, 100, 101-124, 125, 126-199, 200, 201+. The availale breaker space options (count) range from 0 to 31.
+% TODO reference Task 1 paper when ready
+% TODO reference OS-HPXML documentation when available
+
+\begin{customLongTable}{ |p{3cm}|p{4cm}|p{7cm}| }
+  {Dependencies for the distributions of electrical panel service rating and breaker space.} {tab:panel_deps} 
+  {\textbf{Electrical Panel Input} & \textbf{Housing Segment} & \textbf{Dependencies}} 
+    Service rating & Single-Family, electric heat & Building type, floor area, vintage, water heater fuel, cooling type, clothes dryer, cooking range\\ \hline
+    Service rating & Single-Family, fuel heat & Building type, floor area, vintage\\ \hline
+    Service rating & Multi-Family & Floor area, vintage, heating fuel\\ \hline
+    Breaker space headroom & Single-Family & Service rating, major electric load count, floor area\\ \hline
+    Breaker space headroom & Multi-Family & Service rating, major electric load count\\
+\end{customLongTable}
+
+\subsection{Service Load Calculations}
+The service and feeder load calculation refers to a type of load calculation used to size the service entrance wires (between the utility poles and the meter or service disconnect) or the feeder wires (between panels, such as those between a building’s main panel and subpanel in each apartment unit) according to Section 220 of the National Electrical Code (NEC). This calculation also applies to the sizing of panels to ensure electrical safety. The NEC updates every three years, and the adoption of NEC varies by municipality. Instead of capturing every NEC version currently in practice, which is impractical, we implemented the load calculations per the latest NEC release, 2023, which represents the best practice adoptable. For 2023, the service load calculation is different for new constructions and existing buildings undergoing an upgrade. Two methods are available for existing buildings, and both are implemented in ResStock: load-based and metered-based. The calculated loads (W) represent the total occuied load from installed electrical equipment and are converted to total occupied capacity (A) by dividing by 240V, the panel voltage. The occupied capacity is compared with the panel service rating to calculate headroom capacity and assess NEC compliance.
+
+\subsubsection{Load-based Method}
+The service rating of the panel is generally not the sum of individual branch circuit ratings because not all equipment is expected to be operating at full load simultaneously. Instead, there is some diversity in the loads expected to make up the coincidence peak, even at a worst-case scenario. Following this idea, NEC Section 220.83 provides guidance on estimating this peak from the bottom-up to assess whether a panel has sufficient capacity to serve new loads. Table \ref{tab:panel_load_method} below summarizes the load-based method, and the assumptions made in ResStock to perform this calculation.
+
+\begin{customLongTable}{ |p{3cm}|p{6cm}|p{6cm}| }
+  {Summary of load-based method per 2023 NEC 220.83} {tab:panel_load_method} 
+  {\textbf{Load Type} & \textbf{Load Amount} & \textbf{ResStock Assumptions}} 
+          General lighting / receptacle load & 3 W/sqft & Uses conditioned floor area \\ \hline
+          Kitchen small appliance circuits & Min two branches at 1500 W each & Two branches per dwelling unit \\ \hline
+          Laundry circuits & Min one branch at 1500 W & One branch per dwelling unit \\ \hline
+          Major electric loads & 
+            Nameplate rating of: 
+            \begin{itemize}
+              \item HVAC (larger of heating and cooling)
+              \item Water heaters
+              \item Clothes dryers (not already on laundry circuits)
+              \item Cooking ranges/ovens
+              \item All other appliances that are "fastened in place, permanently connected, or located to be on a specific circuit" 
+            \end{itemize} & 
+            All other appliances include: 
+            \begin{itemize}
+              \item Hot tub/spa
+              \item Pool heaters and pumps
+              \item Well pumps
+              \item Electric vehicle supply equipment (EVSE)
+              \item Dishwashers
+              \item Spot ventilations
+              \item Selected plug loads: microwaves, garbage disposal, garage doors
+              \item Low-power (120V) appliances: water heaters, cooktops (not yet modeled) 
+            \end{itemize} \\ \hline
+          Demand factors and summation & 
+            Demand factors apply to both existing and new loads, depends on whether new HVAC is being installed:
+            \begin{itemize}
+              \item (a) If not adding new HVAC, take the first 8 kVA of all loads at 100\% and remainder loads at 40\%.
+              \item (b) If adding new HVAC, take HVAC load at 100\%, first 8 kVA of all other loads at 100\%, and remainder loads at 40\%.
+            \end{itemize}
+           & Total occupied capacity in the baseline is calculated using (a) \\ \hline
+\end{customLongTable}
+
+Of note, we accounted for selected plug loads in the load-based calculation that we do not explicitly model in terms of energy for which plug loads is a single end use category. We assumed all dwelling units have a microwave, 52\% homes have a garage disposal (per AHS 2013), and one garage door opener for homes with an attached garage. Additionally, the demand factors applied to sum up the loads vary depending on whether new HVAC load is being introduced by an upgrade. If all or part of the HVAC load is considered new, a more conservative approach (part (b)) is taken by taking the HVAC load (maximum of either heating or cooling) at 100\% instead of lumping it with all other loads to undergo adjustment by demand tiers. For the baseline load calculation, the total occupied load is calculated using part (a) as no new load is introduced yet.
+
+\subsubsection{Meter-based Method}
+The second method, metered-based, is a top-down approach by using the metered electricity peak of the preceding year to baseline the existing loading of the panel. Per NEC section 220.87, the total capacity needed for an upgrade is calculated as 1.25 of the baseline peak electricity plus any new loads at 100\%. In ResStock, the annual electricity peak is used in place of the metered data and the new loads that are counted are the same as those outlined in the load-based method. 
+
+For a given upgrade, the load-based method is generally more conservative than the metered-based at estimating the number of homes with a panel capacity constraint. However, this may not be the case for homes that have high equipment utilization factors or setpoints that drive up HVAC use. Additionally, as the metered-based method does not account for the removal of any legacy loads, the method may be more conservative for certain upgrade scenarios. For example, for a home that is upgrading an electric boiler to a heat pump with integrated heat strip, the heating load is being counted twice, from the incumbent equipment as part of the annual electric peak and the new equipment.
+
+\subsection{Breaker Space Calculations}
+The breaker space calculation is broken out into two parts. First the total rated breaker space is determined for the panel in the baseline home. This is done by summing the number of available breaker spaces (probabilistically assigned based on housing characteristics) and the estimated total occupied spaces by major electric equipment. Table \ref{tab:breaker_spaces} below lists the electric equipment considered and their associated voltage and breaker space requirement. Generally 120V-rated equipment take up one breaker space and 240V-rated equipment take up two spaces in order to make contact with two live bus bars to get the 240V service. While space-saving breakers, such as tandem, tri, and quad breakers, are available, they are not currently modeled in ResStock.
+
+\begin{customLongTable}{ |p{3cm}|p{1.5cm}|p{1.5cm}|p{8cm}| }
+  {Default voltage and breaker space by load type.} {tab:breaker_spaces} 
+  {\textbf{Load Name} & \textbf{Voltage} & \textbf{Breaker Spaces} & \textbf{Notes}} 
+  lighting & 120 & 0 & 	 \\ \hline
+  kitchen & 120 & 2 & Two kitchen small appliance circuits. \\ \hline
+  laundry & 120 & 1 & One laundry circuit. \\ \hline
+  electric vehicle charging & 120 & 1 & Level 1 - 120V EV charger. Assumes dedicated circuit. \\ \hline
+  electric vehicle charging & 240 &	2	& Level 2 - 240V EV charger. \\ \hline
+  well pump & 240 & 2	& \\ \hline
+  pool pump & 240 & 2 & 2 HP pool pump capacity. \\ \hline
+  pool heater & 240 & 6 & Electric resistance pool heater. Three 50A circuit breaker. \\ \hline
+  pool heater & 240 & 2 & Heat pump pool heater. \\ \hline
+  permanent spa heater & 240 & 2 & Electric resistance hot tub heater. \\ \hline
+  permanent spa heater & 240 & 2 & Heat pump hot tub heater. \\ \hline
+  permanent spa pump & 240 & 2 & Hot tub pump. \\ \hline
+  clothes dryer & 240 & 2 & Electric clothes dryer. \\ \hline
+  clothes dryer & 120 & 1 & 120V heat pump clothes dryer. \\ \hline
+  clothes dryer & 240 & 2 & 240V heat pump clothes dryer. \\ \hline
+  dishwasher & 120 & 1 & Dishwasher. \\ \hline
+  range/oven & 120 & 1 & 120V range-oven. \\ \hline
+  range/oven & 240 & 2 & 240V range-oven. \\ \hline
+  hot water & 240 & 4 & Tankless water heater - one bathroom. The default power rating is 1800W. Two 50A circuit breaker. \\ \hline
+  hot water & 240 & 4 & Tankless water heater - two bathrooms. The default power rating is 2400W. Two 50A circuit breaker. \\ \hline
+  hot water & 240 & 6 & Tankless water heater - three or more bathrooms. The default power rating is 3600W. Three 50A circuit breaker. \\ \hline
+  hot water &	240 &	auto & Storage water heater. The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
+  hot water & 120 & auto & 120V heat pump water heater. Assumes dedicated circuit. The default power rating is auto sized. The number of breaker space = (power rating in W/240V/15A).ceil. \\ \hline
+  hot water & 240 &	auto & 240V heat pump water heater. The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
+  heating & 240 & auto & The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
+  cooling	& 240 &	auto & The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
+  mechanical ventilation & 120 & 1	&  \\ \hline
+  other	& 120 &	1	& Only assumes 1 garage door opener if a garage is present and does not account for other permanent appliances (e.g. garbage disposal). \\
+\end{customLongTable}
+
+% TODO Add heat pump breaker space table
+
+Once the total rated breaker space is calculated, it is used to calculate the headroom breaker space in an upgrade simulation by subtracting from it the new total spaces occupied by electric loads in the upgraded home. Note, although the headroom breaker space for the baseline is an input characteristic, all space-related metrics are listed as output metrics to avoid confusion.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Household Characteristics}
 
 In addition to the physical characteristics of the housing units, ResStock defines the saturation of some attributes of the households. They are income and derivatives of income, tenure (renter/owner status), occupants, presence of Tribal persons, and vacancy status. All household attributes come from the 2019 5-year American Community Survey (ACS) Public Use Microdata Samples. The ACS is the premier census data source on the American population in addition to housing information. The survey collects data on all residents of sampled housing unit addresses. This means housing data such as building type and vacancy are tabulated by \textit{household\_id}, while population attributes such as age, race, and gender are tabulated by \textit{person\_id}. The ACS is also used to develop DOE’s \href{https://www.energy.gov/scep/slsc/lead-tool}{Low-Income Energy Affordability Data} tool.

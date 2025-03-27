@@ -53,16 +53,16 @@ class BuildResidentialScheduleFileTest < Minitest::Test
 
     expected_values = {
       Occupants: 6689,
-      LightingInterior: 2086,
+      LightingInterior: 2102.7,
       CookingRange: 300.9,
       Dishwasher: 161.5,
       ClothesWasher: 67.7,
       ClothesDryer: 114.0,
-      PlugLoadsOther: 5388,
-      PlugLoadsTV: 1517,
+      PlugLoadsOther: 5424.3,
+      PlugLoadsTV: 1542.2,
       HotWaterDishwasher: 287.3,
       HotWaterClothesWasher: 322.6,
-      HotWaterFixtures: 981.2,
+      HotWaterFixtures: 1090.49,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
@@ -138,16 +138,16 @@ class BuildResidentialScheduleFileTest < Minitest::Test
 
     expected_values = {
       Occupants: 6689,
-      LightingInterior: 1992,
+      LightingInterior: 2002.2,
       CookingRange: 300.9,
       Dishwasher: 161.5,
       ClothesWasher: 67.7,
       ClothesDryer: 114.0,
-      PlugLoadsOther: 5388,
-      PlugLoadsTV: 1517,
+      PlugLoadsOther: 5424.3,
+      PlugLoadsTV: 1542.2,
       HotWaterDishwasher: 287.3,
       HotWaterClothesWasher: 322.6,
-      HotWaterFixtures: 981.2,
+      HotWaterFixtures: 1090.49,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
@@ -178,18 +178,17 @@ class BuildResidentialScheduleFileTest < Minitest::Test
 
     expected_values = {
       Occupants: 6689,
-      LightingInterior: 2086,
+      LightingInterior: 2102.7,
       CookingRange: 300.9,
       Dishwasher: 161.5,
       ClothesWasher: 67.7,
       ClothesDryer: 114.0,
-      PlugLoadsOther: 5388,
-      PlugLoadsTV: 1517,
+      PlugLoadsOther: 5424.3,
+      PlugLoadsTV: 1542.2,
       HotWaterDishwasher: 287.3,
       HotWaterClothesWasher: 322.6,
-      HotWaterFixtures: 981.2,
-      Sleeping: 3067,
-      PresentOccupants: 46402,
+      HotWaterFixtures: 1090.49,
+      Sleeping: 3101.7,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
   end
@@ -223,17 +222,16 @@ class BuildResidentialScheduleFileTest < Minitest::Test
       Dishwasher: 161,
       ClothesWasher: 64,
       ClothesDryer: 113.9,
-      PlugLoadsOther: 5388,
+      PlugLoadsOther: 5425.6,
       PlugLoadsTV: 1517,
       HotWaterDishwasher: 304,
       HotWaterClothesWasher: 322,
-      HotWaterFixtures: 936,
+      HotWaterFixtures: 1146.15,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
 
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:EVOccupant].name))
-    assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:PresentOccupants].name))
 
     @args_hash['schedules_random_seed'] = 2
     hpxml, result = _test_measure()
@@ -254,16 +252,16 @@ class BuildResidentialScheduleFileTest < Minitest::Test
                            output_path: @tmp_schedule_file_path)
     expected_values = {
       Occupants: 6072,
-      LightingInterior: 1753,
+      LightingInterior: 1767.5,
       CookingRange: 336,
       Dishwasher: 297,
       ClothesWasher: 116,
       ClothesDryer: 188,
-      PlugLoadsOther: 5292,
+      PlugLoadsOther: 5336.9,
       PlugLoadsTV: 1205,
       HotWaterDishwasher: 243,
       HotWaterClothesWasher: 263,
-      HotWaterFixtures: 1049,
+      HotWaterFixtures: 966.11,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
   end
@@ -301,7 +299,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
       PlugLoadsTV: 1505,
       HotWaterDishwasher: 155.9,
       HotWaterClothesWasher: 138.4,
-      HotWaterFixtures: 280.2,
+      HotWaterFixtures: 345.7,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
@@ -350,7 +348,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     sf = SchedulesFile.new(schedules_paths: hpxml.buildings[0].header.schedules_filepaths,
                            year: @year,
                            output_path: @tmp_schedule_file_path)
-    assert_in_epsilon(5890, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ElectricVehicleCharging].name, schedules: sf.tmp_schedules), @tol)
+    assert_in_epsilon(5762, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ElectricVehicleCharging].name, schedules: sf.tmp_schedules), @tol)
     assert_in_epsilon(729.9, sf.annual_equivalent_full_load_hrs(col_name: SchedulesFile::Columns[:ElectricVehicleDischarging].name, schedules: sf.tmp_schedules), @tol)
   end
 
@@ -386,15 +384,15 @@ class BuildResidentialScheduleFileTest < Minitest::Test
         assert(hpxml_bldg.header.schedules_filepaths[0].include? 'occupancy-stochastic.csv')
         expected_values = {
           Occupants: 6689,
-          LightingInterior: 2086,
+          LightingInterior: 2102.7,
           CookingRange: 300.9,
           Dishwasher: 161.5,
           ClothesWasher: 67.7,
-          PlugLoadsOther: 5388,
-          PlugLoadsTV: 1517,
+          PlugLoadsOther: 5424.3,
+          PlugLoadsTV: 1542.2,
           HotWaterDishwasher: 287.3,
           HotWaterClothesWasher: 322.6,
-          HotWaterFixtures: 981.2,
+          HotWaterFixtures: 1090.49,
         }
         assert_full_load_hrs_match(sf, expected_values, @tol)
       elsif hpxml_bldg.building_id == 'MyBuilding_2'
@@ -406,11 +404,11 @@ class BuildResidentialScheduleFileTest < Minitest::Test
           CookingRange: 336.4,
           Dishwasher: 297.4,
           ClothesWasher: 116.3,
-          PlugLoadsOther: 5292,
+          PlugLoadsOther: 5336.8,
           PlugLoadsTV: 1205,
           HotWaterDishwasher: 229.8,
           HotWaterClothesWasher: 246.5,
-          HotWaterFixtures: 956.4,
+          HotWaterFixtures: 948.79,
         }
         assert_full_load_hrs_match(sf, expected_values, @tol)
       elsif hpxml_bldg.building_id == 'MyBuilding_3'
@@ -418,15 +416,15 @@ class BuildResidentialScheduleFileTest < Minitest::Test
         assert(hpxml_bldg.header.schedules_filepaths[0].include? 'occupancy-stochastic_3.csv')
         expected_values = {
           Occupants: 6045,
-          LightingInterior: 1745,
+          LightingInterior: 1816.3,
           CookingRange: 358.5,
           Dishwasher: 207.2,
           ClothesWasher: 126.4,
-          PlugLoadsOther: 5314,
-          PlugLoadsTV: 1162,
+          PlugLoadsOther: 5359.8,
+          PlugLoadsTV: 1182.2,
           HotWaterDishwasher: 232.1,
           HotWaterClothesWasher: 206.8,
-          HotWaterFixtures: 857.1,
+          HotWaterFixtures: 955.2,
         }
         assert_full_load_hrs_match(sf, expected_values, @tol)
       end
@@ -471,11 +469,11 @@ class BuildResidentialScheduleFileTest < Minitest::Test
           CookingRange: 336.4,
           Dishwasher: 297.4,
           ClothesWasher: 116.3,
-          PlugLoadsOther: 5292,
+          PlugLoadsOther: 5336.8,
           PlugLoadsTV: 1205,
           HotWaterDishwasher: 229.8,
           HotWaterClothesWasher: 246.5,
-          HotWaterFixtures: 956.4,
+          HotWaterFixtures: 948.79,
         }
         assert_full_load_hrs_match(sf, expected_values, @tol)
         assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
@@ -631,7 +629,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
           next
         end
 
-        puts "      :#{col_name} => #{suggested_values[col_name]},"
+        puts "      #{col_name}: #{suggested_values[col_name]},"
       end
       puts '    }'
       assert(false)

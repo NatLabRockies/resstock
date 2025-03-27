@@ -43,7 +43,7 @@ To support that, several pre-generated set of files are used, contained in the f
 
 These two folders contain the Markov chain initial probability, Markov chain transition and also appliance duration probabilities CSV files.
 The appliance duration probabilities here are used during the Markov chain simulation to determine duration of various appliances.
-The files are divided into four clusters (cluster0 to cluster3), for 4 occupant behavior types.
+The first column of each file indicates the four clusters (0 to 3), for 4 occupant behavior types.
 
 The following sections describe the remaining files found in the schedule generator resources folder.
 

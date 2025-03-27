@@ -142,7 +142,7 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
 
       if epw_path.nil?
         epw_path = Location.get_epw_path(hpxml_bldg, hpxml_path)
-        weather = WeatherFile.new(epw_path: epw_path, runner: runner, hpxml: hpxml)
+        weather = WeatherFile.new(epw_path: epw_path, runner: runner)
       end
       # deterministically vary schedules across building units
       args[:random_seed] *= (i + 1)
