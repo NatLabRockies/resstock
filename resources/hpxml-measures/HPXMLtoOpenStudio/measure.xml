@@ -1,10 +1,10 @@
-<?xml version="1.0"?>
+'<?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>32de2cef-2381-4f59-83d6-68aa71e42a49</version_id>
-  <version_modified>2025-03-13T00:04:23Z</version_modified>
+  <version_id>35354a31-2a67-4306-a5e7-59157923d8f1</version_id>
+  <version_modified>2025-03-26T22:01:33Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -264,6 +264,12 @@
       <checksum>FC171B98</checksum>
     </file>
     <file>
+      <filename>data/default_panels.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>02E3F5B6</checksum>
+    </file>
+    <file>
       <filename>data/default_schedules.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
@@ -321,7 +327,7 @@
       <filename>data/unavailable_periods.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>3FBE7B42</checksum>
+      <checksum>2DE72980</checksum>
     </file>
     <file>
       <filename>data/zipcode_weather_stations.csv</filename>
@@ -333,7 +339,13 @@
       <filename>defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CFE01CCD</checksum>
+      <checksum>A6FA67AD</checksum>
+    </file>
+    <file>
+      <filename>electric_panel.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>8365E56D</checksum>
     </file>
     <file>
       <filename>energyplus.rb</filename>
@@ -363,13 +375,13 @@
       <filename>hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>38DA3B96</checksum>
+      <checksum>BA21F815</checksum>
     </file>
     <file>
       <filename>hpxml_schema/HPXML.xsd</filename>
       <filetype>xsd</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E36727BB</checksum>
+      <checksum>7F241E64</checksum>
     </file>
     <file>
       <filename>hpxml_schema/README.md</filename>
@@ -381,7 +393,7 @@
       <filename>hpxml_schematron/EPvalidator.xml</filename>
       <filetype>xml</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D20E31C9</checksum>
+      <checksum>BACA6CDB</checksum>
     </file>
     <file>
       <filename>hpxml_schematron/iso-schematron.xsd</filename>
@@ -393,7 +405,7 @@
       <filename>hvac.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>FB9ACEF1</checksum>
+      <checksum>16FD93ED</checksum>
     </file>
     <file>
       <filename>hvac_sizing.rb</filename>
@@ -459,7 +471,7 @@
       <filename>output.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F1DAFE41</checksum>
+      <checksum>14E19FAB</checksum>
     </file>
     <file>
       <filename>psychrometrics.rb</filename>
@@ -498,58 +510,10 @@
       <checksum>FA81E518</checksum>
     </file>
     <file>
-      <filename>schedule_files/occupancy-stochastic-10-mins.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>55BEFF64</checksum>
-    </file>
-    <file>
-      <filename>schedule_files/occupancy-stochastic-30-mins.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>55BEFF64</checksum>
-    </file>
-    <file>
       <filename>schedule_files/occupancy-stochastic-ev-charger.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
       <checksum>FEDC5979</checksum>
-    </file>
-    <file>
-      <filename>schedule_files/occupancy-stochastic-mf-unit.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>F464930F</checksum>
-    </file>
-    <file>
-      <filename>schedule_files/occupancy-stochastic-mf-unit_2.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>C504DB69</checksum>
-    </file>
-    <file>
-      <filename>schedule_files/occupancy-stochastic-mf-unit_3.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>BBE33CAE</checksum>
-    </file>
-    <file>
-      <filename>schedule_files/occupancy-stochastic-mf-unit_4.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>1975BB7D</checksum>
-    </file>
-    <file>
-      <filename>schedule_files/occupancy-stochastic-mf-unit_5.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>AFC15AEC</checksum>
-    </file>
-    <file>
-      <filename>schedule_files/occupancy-stochastic-mf-unit_6.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>5563187E</checksum>
     </file>
     <file>
       <filename>schedule_files/occupancy-stochastic.csv</filename>
@@ -663,7 +627,7 @@
       <filename>vehicle.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D6349216</checksum>
+      <checksum>4243554F</checksum>
     </file>
     <file>
       <filename>version.rb</filename>
@@ -675,7 +639,7 @@
       <filename>waterheater.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>A8560A5A</checksum>
+      <checksum>A8BC990D</checksum>
     </file>
     <file>
       <filename>weather.rb</filename>
@@ -711,7 +675,13 @@
       <filename>test_defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>F1AC47B0</checksum>
+      <checksum>8F66B350</checksum>
+    </file>
+    <file>
+      <filename>test_electric_panel.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>E15C08FB</checksum>
     </file>
     <file>
       <filename>test_enclosure.rb</filename>
@@ -783,13 +753,13 @@
       <filename>test_validation.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>F43A4E45</checksum>
+      <checksum>C5186FA6</checksum>
     </file>
     <file>
       <filename>test_vehicle.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>F29DE25D</checksum>
+      <checksum>B1C7EE56</checksum>
     </file>
     <file>
       <filename>test_water_heater.rb</filename>
