@@ -2168,7 +2168,7 @@ The type, fuel type, and efficiency of the heat pump backup. Use 'none' if there
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Electricity, Integrated, 100% Efficiency`, `Electricity, Integrated, 100% Efficiency, 35F Lockout`, `Natural Gas, Integrated, 95% AFUE, 30F Lockout`, `Natural Gas, Integrated, 95% AFUE, 45F Lockout`, `Separate`, `Separate, 30F Lockout`
+- **Choices:** `None`, `Electricity, Integrated, 100% Efficiency`, `Electricity, Integrated, 100% Efficiency, 35F Lockout`, `Natural Gas, Integrated, 95% AFUE, 30F Lockout`, `Natural Gas, Integrated, 60% AFUE, 40F Lockout`, `Natural Gas, Integrated, 76% AFUE, 40F Lockout`, `Natural Gas, Integrated, 80% AFUE, 40F Lockout`, `Natural Gas, Integrated, 92.5% AFUE, 40F Lockout`, `Natural Gas, Integrated, 95% AFUE, 40F Lockout`, `Natural Gas, Integrated, 95% AFUE, 45F Lockout`, `Fuel Oil, Integrated, 60% AFUE, 40F Lockout`, `Fuel Oil, Integrated, 76% AFUE, 40F Lockout`, `Fuel Oil, Integrated, 80% AFUE, 40F Lockout`, `Fuel Oil, Integrated, 92.5% AFUE, 40F Lockout`, `Propane, Integrated, 60% AFUE, 40F Lockout`, `Propane, Integrated, 76% AFUE, 40F Lockout`, `Propane, Integrated, 80% AFUE, 40F Lockout`, `Propane, Integrated, 92.5% AFUE, 40F Lockout`, `Separate`, `Separate, 30F Lockout`
 
 <br/>
 

@@ -6967,7 +6967,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param args [Hash] Map of :argument_name => value
   # @return [nil]
-  def self.set_electric_panel(hpxml_bldg, args)
+  def set_electric_panel(hpxml_bldg, args)
     return if args[:electric_panel_service_feeders_load_calculation_types].nil?
 
     if args[:electric_panel_breaker_spaces_type] == 'total'

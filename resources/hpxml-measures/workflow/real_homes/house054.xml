@@ -416,6 +416,7 @@
               <HeatingCapacity>30000.0</HeatingCapacity>
               <CoolingCapacity>30000.0</CoolingCapacity>
               <CompressorType>single stage</CompressorType>
+              <CoolingSensibleHeatFraction>0.73</CoolingSensibleHeatFraction>
               <FractionHeatLoadServed>0.75</FractionHeatLoadServed>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>

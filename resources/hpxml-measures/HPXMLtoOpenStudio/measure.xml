@@ -1,10 +1,10 @@
-'<?xml version="1.0"?>
+<?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>35354a31-2a67-4306-a5e7-59157923d8f1</version_id>
-  <version_modified>2025-03-26T22:01:33Z</version_modified>
+  <version_id>110c1abf-7e83-47af-bb74-d0c539d75107</version_id>
+  <version_modified>2025-03-27T17:42:14Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -508,18 +508,6 @@
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
       <checksum>FA81E518</checksum>
-    </file>
-    <file>
-      <filename>schedule_files/occupancy-stochastic-ev-charger.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>FEDC5979</checksum>
-    </file>
-    <file>
-      <filename>schedule_files/occupancy-stochastic.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>375096F7</checksum>
     </file>
     <file>
       <filename>schedule_files/print_diff.py</filename>
