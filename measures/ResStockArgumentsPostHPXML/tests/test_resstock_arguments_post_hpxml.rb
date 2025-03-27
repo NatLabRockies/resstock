@@ -17,21 +17,54 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
       { dst_enabled: true, existing_schedule: true, name: 'with DST enabled with existing schedule' }
     ]
 
+    curdir = File.dirname(__FILE__)
+    osw_hash_orgi = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
+    # find the index of the ResStockArgumentsPostHPXML measure in the steps and set ev_flex_enabled to false
+    resstock_measure_index = osw_hash_orgi['steps'].find_index { |step| step['measure_dir_name'] == 'ResStockArgumentsPostHPXML' }
+    osw_hash_orgi['steps'][resstock_measure_index]['arguments']['ev_flex_enabled'] = false
+    osw_hash_orgi['steps'][0]['arguments']['ev_charger_present'] = false
+
     test_cases.each do |params|
       puts "Testing #{params[:name]}"
-      curdir = File.dirname(__FILE__)
-      osw_hash = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
-
+      osw_hash = Marshal.load(Marshal.dump(osw_hash_orgi))
       # Set DST parameter if needed
       osw_hash['steps'][0]['arguments']['simulation_control_daylight_saving_enabled'] = true if params[:dst_enabled]
 
       # remove BuildResidentialScheduleFile from the steps if existing_schedule is false
       osw_hash['steps'].reject! { |step| step['measure_dir_name'] == 'BuildResidentialScheduleFile' } unless params[:existing_schedule]
+      
+      _run_osw(osw_hash)
+      schedule = _get_schedule(curdir)
+      _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule) unless params[:dst_enabled]
+      _verify_hvac_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule)
+      # remove the run folder
+      FileUtils.rm_rf(File.join(curdir, 'run'))
+    end
+  end
+  def test_ev_load_flexibility_measure
+    puts 'Testing EV Load Flexibility'
+    # Define test parameters
+    test_cases = [
+      { dst_enabled: false, name: 'without DST' },
+      { dst_enabled: true, name: 'with DST enabled' }
+    ]
+
+    curdir = File.dirname(__FILE__)
+    osw_hash_orgi = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
+    # find the index of the ResStockArgumentsPostHPXML measure in the steps and set ev_flex_enabled to false
+    measure_index = osw_hash_orgi['steps'].find_index { |step| step['measure_dir_name'] == 'ResStockArgumentsPostHPXML' }
+    osw_hash_orgi['steps'][measure_index]['arguments']['hvac_flex_peak_offset'] = 0
+    osw_hash_orgi['steps'][measure_index]['arguments']['hvac_flex_pre_peak_duration_hours'] = 0
+
+    test_cases.each do |params|
+      puts "Testing #{params[:name]}"
+      osw_hash = Marshal.load(Marshal.dump(osw_hash_orgi))
+      # Set DST parameter if needed
+      osw_hash['steps'][0]['arguments']['simulation_control_daylight_saving_enabled'] = true if params[:dst_enabled]
 
       _run_osw(osw_hash)
       schedule = _get_schedule(curdir)
-      _verify_peak_period(dst_enabled: params[:dst_enabled], schedule: schedule) unless params[:dst_enabled]
-      _verify_hvac_schedule(dst_enabled: params[:dst_enabled], schedule: schedule)
+      _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shed', schedule: schedule) unless params[:dst_enabled]
       # remove the run folder
       FileUtils.rm_rf(File.join(curdir, 'run'))
     end
@@ -69,11 +102,12 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     rows_by_index
   end
 
-  def _winter_test_indices
+  def _winter_test_indices(peak_type:)
     # indices for setpint 01-01 14:00:00-15:00:00, 15:00:00-16:00:00, 16:00:00-17:00:00, 17:00:00-18:00:00
-    # the on-peak hour in CO in winter starts from 17:00:00
+    # the on-peak hour in CO in winter starts from 17:00:00 for shift and 18:00 for shed
     # before pre_peak, pre_peak, pre_peak, peak, peak, peak, peak, none
     indices = [14, 15, 16, 17, 18, 19, 20, 21]
+    indices = indices.map { |num| num + 1 } if peak_type == 'shed'
     {
       indices[0] => 'none',
       indices[1] => 'pre_peak',
@@ -86,12 +120,13 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     }
   end
 
-  def _summer_test_indices(dst_enabled:)
+  def _summer_test_indices(dst_enabled:, peak_type:)
     # indices for 05-09 13:00:00-14:00:00, 14:00:00-15:00:00, 15:00:00-16:00:00, 16:00:00-17:00:00,
-    # the on-peak hour in CO in summer starts from 16:00:00
+    # the on-peak hour in CO in summer starts from 16:00:00 for shift and 18:00 for shed
     # before pre_peak, pre_peak, pre_peak, peak, peak, peak, peak, none
     indices = [3085, 3086, 3087, 3088, 3089, 3090, 3091, 3092]
     indices = indices.map { |num| num + 1 } if dst_enabled
+    indices = indices.map { |num| num + 2 } if peak_type == 'shed'
     {
       indices[0] => 'none',
       indices[1] => 'pre_peak',
@@ -104,9 +139,9 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     }
   end
 
-  def _verify_peak_period(dst_enabled:, schedule:)
-    winter_indices = _winter_test_indices
-    summer_indices = _summer_test_indices(dst_enabled: dst_enabled)
+  def _verify_peak_period(dst_enabled:, peak_type:, schedule:)
+    winter_indices = _winter_test_indices(peak_type: peak_type)
+    summer_indices = _summer_test_indices(peak_type: peak_type, dst_enabled: dst_enabled)
     # Check winter indices
     winter_indices.each do |index, value|
       if value == 'none'
@@ -136,9 +171,9 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     end
   end
 
-  def _verify_hvac_schedule(dst_enabled:, schedule:)
-    winter_indices = _winter_test_indices
-    summer_indices = _summer_test_indices(dst_enabled: dst_enabled)
+  def _verify_hvac_schedule(dst_enabled:, peak_type:, schedule:)
+    winter_indices = _winter_test_indices(peak_type: peak_type)
+    summer_indices = _summer_test_indices(peak_type: peak_type, dst_enabled: dst_enabled)
 
     # Get base setpoints for winter
     winter_base_index = winter_indices.find { |_index, value| value == 'none' }[0]

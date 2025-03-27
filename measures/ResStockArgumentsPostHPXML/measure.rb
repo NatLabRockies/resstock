@@ -5,6 +5,8 @@
 
 require_relative 'resources/hvac_flexibility/detailed_schedule_generator'
 require_relative 'resources/hvac_flexibility/setpoint_modifier'
+require_relative 'resources/ev_flexibility/ev_schedule_modifier'
+require 'byebug'
 # start the measure
 class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   # human readable name
@@ -55,6 +57,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(0)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('ev_flex_enabled', false)
+    arg.setDisplayName('EV Flexibility Enabled')
+    arg.setDescription('Whether to enable EV flexibility.')
+    arg.setDefaultValue(true)
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('building_id', false)
     arg.setDisplayName('Building Unit ID')
     arg.setDescription('The building unit number (between 1 and the number of samples).')
@@ -98,13 +106,17 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     # Process each building
     doc_buildings.each_with_index do |building, index|
       hpxml_bldg = @hpxml.buildings[index]
-      if hpxml_bldg.hvac_controls.to_a.length == 0
-        runner.registerInfo("Skipping hvac flexibility for building #{index + 1} since it has no HVAC controls.")
-        next
+      if hpxml_bldg.hvac_controls.to_a.length != 0 && !skip_hvac_flexibility?(args)
+        hvac_schedule = create_hvac_schedule(index)
+        modified_schedule = modify_hvac_schedule(index, hvac_schedule)
+        write_schedule(modified_schedule, building, index, output_csv_path)
       end
-      hvac_schedule = create_hvac_schedule(index)
-      modified_schedule = modify_hvac_schedule(index, hvac_schedule)
-      write_schedule(modified_schedule, building, index, output_csv_path)
+      if args[:ev_flex_enabled] && !skip_ev_flexibility?(args)
+        ev_schedule = get_ev_schedule(building)
+        next if ev_schedule.nil?
+        modified_schedule = modify_ev_schedule(index, ev_schedule)
+        write_schedule(modified_schedule, building, index, output_csv_path)
+      end
     end
 
     # Write out the modified hpxml
@@ -114,11 +126,26 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   end
 
   def skip_post_hpxml?(args)
-    skip_hvac_flexibility?(args)
+    skip_hvac_flexibility?(args) && skip_ev_flexibility?(args)
   end
 
   def skip_hvac_flexibility?(args)
     true if args[:hvac_flex_peak_offset] == 0 && args[:hvac_flex_pre_peak_duration_hours] == 0
+  end
+
+  def skip_ev_flexibility?(args)
+    true if !args[:ev_flex_enabled]
+  end
+
+  def get_ev_schedule(building)
+    schedule_file = get_existing_schedule_filepath(building)
+    return nil if schedule_file.nil?
+    schedule = CSV.read(schedule_file, headers: true)
+    ev_schedule = {}
+    ev_column = "electric_vehicle"
+    return nil unless schedule.headers.include?(ev_column)
+    ev_schedule[ev_column.to_sym] = schedule[ev_column].map(&:to_f)
+    ev_schedule
   end
 
   def create_hvac_schedule(building_index)
@@ -156,6 +183,17 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       random_shift_steps: @random_shift_steps
     )
     hvac_schedule_modifier.modify_shedule(schedule, hvac_flexibility_inputs)
+  end
+
+  def modify_ev_schedule(building_index, schedule)
+    ev_schedule_modifier = get_schedule_modifier(building_index, EVScheduleModifier)
+    ev_flexibility_inputs = FlexibilityInputs.new(
+      peak_offset: 0,
+      pre_peak_duration_steps: 0,
+      pre_peak_offset: 0,
+      random_shift_steps: @random_shift_steps
+    )
+    ev_schedule_modifier.modify_schedule(schedule, ev_flexibility_inputs)
   end
 
   def write_schedule(schedule, building, index, output_csv_path)
