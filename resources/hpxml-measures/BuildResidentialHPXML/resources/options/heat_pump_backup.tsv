@@ -19,3 +19,4 @@ None	none
 "Propane, Integrated, 92.5% AFUE, 40F Lockout"	integrated	propane	0.925	40
 Separate	separate			
 "Separate, 30F Lockout"	separate			30
+"Separate, -20F Lockout"	separate			-20
