@@ -1178,3 +1178,8 @@ upgrades:
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: HVACFlexibility|pre_only_1hr_2deg
+
+  - upgrade_name: EV for all with load flexibility
+    options:
+      - option: Electric Vehicle Ownership|Yes
+      - option: EVFlexibility|enabled

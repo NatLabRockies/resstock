@@ -59,7 +59,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument.makeBoolArgument('ev_flex_enabled', false)
     arg.setDisplayName('EV Flexibility Enabled')
     arg.setDescription('Whether to enable EV flexibility.')
-    arg.setDefaultValue(true)
+    arg.setDefaultValue(false)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('building_id', false)
