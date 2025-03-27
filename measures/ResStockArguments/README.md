@@ -1598,7 +1598,7 @@ The cooling system type, efficiency type, and efficiency. Use 'none' if there is
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Central AC, SEER 8`, `Central AC, SEER 10`, `Central AC, SEER 13`, `Central AC, SEER 13, 25W Crankcase Heater`, `Central AC, SEER 13, 50W Crankcase Heater`, `Central AC, SEER 13, Two Stage`, `Central AC, SEER 13, Airflow Defect Ratio`, `Central AC, SEER2 12.4, SEER 13.05`, `Central AC, SEER 14`, `Central AC, SEER 15`, `Central AC, SEER 17.5, Variable Speed`, `Central AC, SEER 18`, `Central AC, SEER 18, Airflow Defect Ratio`, `Central AC, SEER 24`, `Central AC, SEER 24, Airflow Defect Ratio`, `Central AC, SEER 24.5`, `Central AC, SEER 24.5, 0.73 SHR`, `Room AC, EER 8.5`, `Room AC, EER 8.5, Electric Heating`, `Room AC, EER 8.5, 0.73 SHR`, `Room AC, EER 9.8`, `Room AC, EER 10.7`, `Room AC, EER 12.0`, `Room AC, CEER 8.4`, `Evaporative Cooler, EER 13`, `Ductless Evaporative Cooler, SEER 13`, `Ducted Evaporative Cooler, SEER 13`, `Fan Coil Cooling, SEER 13`, `Ducted Mini-Split AC, SEER 19`, `Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio`, `Ductless Mini-Split AC, SEER 19`, `Ductless Mini-Split AC, SEER 17`, `PTAC, EER 10.7`, `PTAC, EER 10.7, Electric Heating`, `PTAC, EER 10.7, Natural Gas Heating`
+- **Choices:** `None`, `Central AC, SEER 8`, `Central AC, SEER 10`, `Central AC, SEER 13`, `Central AC, SEER 13, 25W Crankcase Heater`, `Central AC, SEER 13, 50W Crankcase Heater`, `Central AC, SEER 13, Two Stage`, `Central AC, SEER 13, Airflow Defect Ratio`, `Central AC, SEER2 12.4, SEER 13.05`, `Central AC, SEER 14`, `Central AC, SEER 15`, `Central AC, SEER 17.5, Variable Speed`, `Central AC, SEER 17.5, Detailed Performance`, `Central AC, SEER 17.5, Normalized Capacity Fractions`, `Central AC, SEER 18`, `Central AC, SEER 18, Airflow Defect Ratio`, `Central AC, SEER 24`, `Central AC, SEER 24, Airflow Defect Ratio`, `Central AC, SEER 24.5`, `Central AC, SEER 24.5, 0.73 SHR`, `Room AC, EER 8.5`, `Room AC, EER 8.5, Electric Heating`, `Room AC, EER 8.5, 0.73 SHR`, `Room AC, EER 9.8`, `Room AC, EER 10.7`, `Room AC, EER 12.0`, `Room AC, CEER 8.4`, `Evaporative Cooler, EER 13`, `Ductless Evaporative Cooler, SEER 13`, `Ducted Evaporative Cooler, SEER 13`, `Fan Coil Cooling, SEER 13`, `Ducted Mini-Split AC, SEER 19`, `Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio`, `Ductless Mini-Split AC, SEER 19`, `Ductless Mini-Split AC, SEER 17`, `Ductless Mini-Split AC, SEER 17, Detailed Performance`, `Ductless Mini-Split AC, SEER 17, Normalized Capacity Fractions`, `PTAC, EER 10.7`, `PTAC, EER 10.7, Electric Heating`, `PTAC, EER 10.7, Natural Gas Heating`
 
 <br/>
 
@@ -1670,88 +1670,16 @@ The heating load served by the heating system integrated into cooling system. On
 
 <br/>
 
-**Heat Pump: Type**
+**Heat Pump**
 
-The type of heat pump. Use 'none' if there is no heat pump.
+The heat pump type/efficiency.
 
-- **Name:** ``heat_pump_type``
+- **Name:** ``heat_pump``
 - **Type:** ``Choice``
 
 - **Required:** ``true``
 
-- **Choices:** `none`, `air-to-air`, `mini-split`, `ground-to-air`, `packaged terminal heat pump`, `room air conditioner with reverse cycle`
-
-<br/>
-
-**Heat Pump: Heating Efficiency Type**
-
-The heating efficiency type of heat pump. System types air-to-air and mini-split use HSPF or HSPF2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use COP.
-
-- **Name:** ``heat_pump_heating_efficiency_type``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `HSPF`, `HSPF2`, `COP`
-
-<br/>
-
-**Heat Pump: Heating Efficiency**
-
-The rated heating efficiency value of the heat pump.
-
-- **Name:** ``heat_pump_heating_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``true``
-
-<br/>
-
-**Heat Pump: Cooling Efficiency Type**
-
-The cooling efficiency type of heat pump. System types air-to-air and mini-split use SEER or SEER2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use EER.
-
-- **Name:** ``heat_pump_cooling_efficiency_type``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `SEER`, `SEER2`, `EER`, `CEER`
-
-<br/>
-
-**Heat Pump: Cooling Efficiency**
-
-The rated cooling efficiency value of the heat pump.
-
-- **Name:** ``heat_pump_cooling_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``true``
-
-<br/>
-
-**Heat Pump: Cooling Compressor Type**
-
-The compressor type of the heat pump. Only applies to air-to-air and mini-split. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'>Air-to-Air Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'>Mini-Split Heat Pump</a>) is used.
-
-- **Name:** ``heat_pump_cooling_compressor_type``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `auto`, `single stage`, `two stage`, `variable speed`
-
-<br/>
-
-**Heat Pump: Cooling Sensible Heat Fraction**
-
-The sensible heat fraction of the heat pump. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'>Air-to-Air Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'>Mini-Split Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'>Packaged Terminal Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'>Room Air Conditioner w/ Reverse Cycle</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#ground-to-air-heat-pump'>Ground-to-Air Heat Pump</a>) is used.
-
-- **Name:** ``heat_pump_cooling_sensible_heat_fraction``
-- **Type:** ``String``
-
-- **Required:** ``false``
+- **Choices:** `None`, `ASHP, SEER 10, 6.2 HSPF`, `ASHP, SEER 10, 6.8 HSPF`, `ASHP, SEER 10.3, 7.0 HSPF`, `ASHP, SEER 11.5, 7.5 HSPF`, `ASHP, SEER 13, 7.7 HSPF`, `ASHP, SEER 13, 7.7 HSPF, Heating Capacity 17F`, `ASHP, SEER 13, 7.7 HSPF, Airflow Defect Ratio`, `ASHP, SEER 13, 7.7 HSPF, 5F Compressor Lockout`, `ASHP, SEER 13, 7.7 HSPF, 25F Compressor Lockout`, `ASHP, SEER 13, 7.7 HSPF, 30F Compressor Lockout`, `ASHP, SEER2 12.4, HSPF2 6.5, Heating Capacity 17F`, `ASHP, SEER 13, 7.7 HSPF, Lockout Temperatures`, `ASHP, SEER 13, 8.0 HSPF`, `ASHP, SEER 13, 9.85 HSPF`, `ASHP, SEER 14, 8.2 HSPF`, `ASHP, SEER 14.3, 8.5 HSPF`, `ASHP, SEER 15, 8.5 HSPF`, `ASHP, SEER 15, 9.0 HSPF`, `ASHP, SEER 16, 9.0 HSPF`, `ASHP, SEER 16, 9.2 HSPF, Heating Capacity 5F`, `ASHP, SEER 16, 9.2 HSPF, -20F Compressor Lockout`, `ASHP, SEER 17, 8.7 HSPF`, `ASHP, SEER 18, 9.3 HSPF`, `ASHP, SEER 18, 9.3 HSPF, Airflow Defect Ratio`, `ASHP, SEER 18, 9.3 HSPF, 30F Compressor Lockout`, `ASHP, SEER 20, 11 HSPF`, `ASHP, SEER 20, 11 HSPF, Heating Capacity 5F`, `ASHP, SEER 22, 10 HSPF`, `ASHP, SEER 22, 10 HSPF, Default Capacity Retention`, `ASHP, SEER 22, 10 HSPF, Airflow Defect Ratio`, `ASHP, SEER 22, 10 HSPF, Heating Capacity 17F`, `ASHP, SEER 22, 10 HSPF, 30F Compressor Lockout`, `ASHP, SEER 17.25, 10 HPSF, Normalized Capacity Fractions`, `ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance`, `ASHP, SEER 17.5, 9.5 HSPF, Normalized Capacity Fractions`, `ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance, Airflow Defect Ratio`, `ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance Heating Only`, `ASHP, SEER 24, 13 HSPF`, `ASHP, SEER 24, 13 HSPF, Heating Capacity 5F`, `GSHP, EER 16.6, COP 3.6`, `GSHP, EER 16.6, COP 3.6, Airflow Defect Ratio`, `GSHP, EER 20.2, COP 4.2`, `GSHP, EER 20.5, COP 4.0`, `MSHP, SEER 14.5, 8.2 HSPF`, `MSHP, SEER 14.5, 8.2 HSPF, Ducted`, `MSHP, SEER 16, 9.2 HSPF`, `MSHP, SEER 16.7, 11.3 HSPF, Detailed Performance`, `MSHP, SEER 16.7, 11.3 HSPF, Normalized Capacity Fractions`, `MSHP, SEER 17, 9.5 HSPF`, `MSHP, SEER 17, 9.5 HSPF, Ducted`, `MSHP, SEER 17, 10 HSPF, Ductless, Detailed Performance`, `MSHP, SEER 17, 10 HSPF, Ductless, Normalized Capacity Fractions`, `MSHP, SEER 18.0, 9.6 HSPF`, `MSHP, SEER 18.0, 9.6 HSPF, Ducted`, `MSHP, SEER 19, 10 HSPF, Ducted`, `MSHP, SEER 19, 10 HSPF, Airflow Defect Ratio`, `MSHP, SEER 19, 10 HSPF, 30F Compressor Lockout`, `MSHP, SEER 19, 10 HSPF, Ductless`, `MSHP, SEER 19, 10 HSPF, Ductless, Detailed Performance`, `MSHP, SEER 20, 11 HSPF`, `MSHP, SEER 24, 13 HSPF`, `MSHP, SEER 25, 12.7 HSPF`, `MSHP, SEER 25, 12.7 HSPF, Ducted`, `MSHP, SEER 29.3, 14 HSPF`, `MSHP, SEER 29.3, 14 HSPF, Ducted`, `MSHP, SEER 33, 13.3 HSPF`, `MSHP, SEER 33, 13.3 HSPF, Ducted`, `PTHP, EER 11.4, COP 3.6`, `Room AC w/ Reverse Cycle, EER 11.4`
 
 <br/>
 
@@ -1782,28 +1710,6 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
 
 - **Name:** ``heat_pump_heating_autosizing_limit``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**Heat Pump: Heating Capacity Retention Fraction**
-
-The output heating capacity of the heat pump at a user-specified temperature (e.g., 17F or 5F) divided by the above nominal heating capacity. Applies to all heat pump types except ground-to-air. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'>Air-to-Air Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'>Mini-Split Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'>Packaged Terminal Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'>Room Air Conditioner w/ Reverse Cycle</a>) is used.
-
-- **Name:** ``heat_pump_heating_capacity_retention_fraction``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**Heat Pump: Heating Capacity Retention Temperature**
-
-The user-specified temperature (e.g., 17F or 5F) for the above heating capacity retention fraction. Applies to all heat pump types except ground-to-air. Required if the Heating Capacity Retention Fraction is provided.
-
-- **Name:** ``heat_pump_heating_capacity_retention_temp``
 - **Type:** ``String``
 
 - **Required:** ``false``
@@ -1869,27 +1775,16 @@ The cooling load served by the heat pump.
 
 <br/>
 
-**Heat Pump: Compressor Lockout Temperature**
-
-The temperature below which the heat pump compressor is disabled. If both this and Backup Heating Lockout Temperature are provided and use the same value, it essentially defines a switchover temperature (for, e.g., a dual-fuel heat pump). Applies to all heat pump types other than ground-to-air. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'>Air-to-Air Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'>Mini-Split Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'>Packaged Terminal Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'>Room Air Conditioner w/ Reverse Cycle</a>) is used.
-
-- **Name:** ``heat_pump_compressor_lockout_temp``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
 **Heat Pump: Backup Type**
 
-The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating.
+The type, fuel type, and efficiency of the heat pump backup. Use 'none' if there is no backup heating. If Backup Type is 'separate', Heating System 2 is used to specify the backup.
 
-- **Name:** ``heat_pump_backup_type``
+- **Name:** ``heat_pump_backup``
 - **Type:** ``Choice``
 
 - **Required:** ``true``
 
-- **Choices:** `none`, `integrated`, `separate`
+- **Choices:** `None`, `Electricity, Integrated, 100% Efficiency`, `Electricity, Integrated, 100% Efficiency, 35F Lockout`, `Natural Gas, Integrated, 95% AFUE, 30F Lockout`, `Natural Gas, Integrated, 60% AFUE, 40F Lockout`, `Natural Gas, Integrated, 76% AFUE, 40F Lockout`, `Natural Gas, Integrated, 80% AFUE, 40F Lockout`, `Natural Gas, Integrated, 92.5% AFUE, 40F Lockout`, `Natural Gas, Integrated, 95% AFUE, 40F Lockout`, `Natural Gas, Integrated, 95% AFUE, 45F Lockout`, `Fuel Oil, Integrated, 60% AFUE, 40F Lockout`, `Fuel Oil, Integrated, 76% AFUE, 40F Lockout`, `Fuel Oil, Integrated, 80% AFUE, 40F Lockout`, `Fuel Oil, Integrated, 92.5% AFUE, 40F Lockout`, `Propane, Integrated, 60% AFUE, 40F Lockout`, `Propane, Integrated, 76% AFUE, 40F Lockout`, `Propane, Integrated, 80% AFUE, 40F Lockout`, `Propane, Integrated, 92.5% AFUE, 40F Lockout`, `Separate`, `Separate, 30F Lockout`
 
 <br/>
 
@@ -1915,46 +1810,11 @@ The maximum capacity limit applied to the auto-sizing methodology if Backup Type
 
 <br/>
 
-**Heat Pump: Backup Fuel Type**
-
-The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'.
-
-- **Name:** ``heat_pump_backup_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`
-
-<br/>
-
-**Heat Pump: Backup Rated Efficiency**
-
-The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'.
-
-- **Name:** ``heat_pump_backup_heating_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``true``
-
-<br/>
-
 **Heat Pump: Backup Heating Capacity**
 
 The backup output heating capacity of the heat pump. If not provided, the OS-HPXML autosized default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#backup'>Backup</a>) is used. Only applies if Backup Type is 'integrated'.
 
 - **Name:** ``heat_pump_backup_heating_capacity``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**Heat Pump: Backup Heating Lockout Temperature**
-
-The temperature above which the heat pump backup system is disabled. If both this and Compressor Lockout Temperature are provided and use the same value, it essentially defines a switchover temperature (for, e.g., a dual-fuel heat pump). Applies for both Backup Type of 'integrated' and 'separate'. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#backup'>Backup</a>) is used.
-
-- **Name:** ``heat_pump_backup_heating_lockout_temp``
 - **Type:** ``String``
 
 - **Required:** ``false``
@@ -1984,153 +1844,6 @@ The auto-sizing methodology to use when the heat pump backup capacity is not pro
 - **Required:** ``false``
 
 - **Choices:** `auto`, `emergency`, `supplemental`
-
-<br/>
-
-**Heat Pump: Is Ducted**
-
-Whether the heat pump is ducted or not. Only used for mini-split. It's assumed that air-to-air and ground-to-air are ducted, and packaged terminal heat pump and room air conditioner with reverse cycle are not ducted. If not provided, assumes not ducted.
-
-- **Name:** ``heat_pump_is_ducted``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `auto`, `true`, `false`
-
-<br/>
-
-**Heat Pump: Crankcase Heater Power Watts**
-
-Heat Pump crankcase heater power consumption in Watts. Applies only to air-to-air, mini-split, packaged terminal heat pump and room air conditioner with reverse cycle. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'>Air-to-Air Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'>Mini-Split Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'>Packaged Terminal Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'>Room Air Conditioner w/ Reverse Cycle</a>) is used.
-
-- **Name:** ``heat_pump_crankcase_heater_watts``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Capacity Type**
-
-Type of capacity values for detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps).
-
-- **Name:** ``hvac_perf_data_capacity_type``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `auto`, `Absolute capacities`, `Normalized capacity fractions`
-
-<br/>
-
-**HVAC Detailed Performance Data: Heating Outdoor Temperatures**
-
-Outdoor temperatures of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). One of the outdoor temperatures must be 47 F. At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_heating_outdoor_temperatures``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Heating Minimum Speed Capacities**
-
-Minimum speed capacities of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_heating_min_speed_capacities``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Heating Maximum Speed Capacities**
-
-Maximum speed capacities of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_heating_max_speed_capacities``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Heating Minimum Speed COPs**
-
-Minimum speed efficiency COP values of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_heating_min_speed_cops``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Heating Maximum Speed COPs**
-
-Maximum speed efficiency COP values of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_heating_max_speed_cops``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Cooling Outdoor Temperatures**
-
-Outdoor temperatures of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). One of the outdoor temperatures must be 95 F. At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_cooling_outdoor_temperatures``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Cooling Minimum Speed Capacities**
-
-Minimum speed capacities of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_cooling_min_speed_capacities``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Cooling Maximum Speed Capacities**
-
-Maximum speed capacities of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_cooling_max_speed_capacities``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Cooling Minimum Speed COPs**
-
-Minimum speed efficiency COP values of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_cooling_min_speed_cops``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Cooling Maximum Speed COPs**
-
-Maximum speed efficiency COP values of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_cooling_max_speed_cops``
-- **Type:** ``String``
-
-- **Required:** ``false``
 
 <br/>
 
@@ -3819,19 +3532,6 @@ The rated power output of the EV charger. If not provided, the OS-HPXML default 
 - **Type:** ``String``
 
 - **Required:** ``false``
-
-<br/>
-
-**Electric Vehicle Charger: Location**
-
-The space type for the EV charger. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'>HPXML Electric Vehicle Chargers</a>) is used.
-
-- **Name:** ``ev_charger_location``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `auto`, `garage`, `outside`
 
 <br/>
 
