@@ -1966,7 +1966,7 @@ The cooling system type, efficiency type, and efficiency. Use 'none' if there is
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Central AC, SEER 8`, `Central AC, SEER 10`, `Central AC, SEER 13`, `Central AC, SEER 13, 25W Crankcase Heater`, `Central AC, SEER 13, 50W Crankcase Heater`, `Central AC, SEER 13, Two Stage `, `Central AC, SEER 13, Airflow Defect Ratio`, `Central AC, SEER2 12.4, SEER 13.05`, `Central AC, SEER 14`, `Central AC, SEER 15`, `Central AC, SEER 17.5, Variable Speed`, `Central AC, SEER 18`, `Central AC, SEER 18, Airflow Defect Ratio`, `Central AC, SEER 24`, `Central AC, SEER 24, Airflow Defect Ratio`, `Central AC, SEER 24.5`, `Central AC, SEER 24.5, 0.73 SHR`, `Room AC, EER 8.5`, `Room AC, EER 8.5, Electric Heating`, `Room AC, EER 8.5, 0.73 SHR`, `Room AC, EER 9.8`, `Room AC, EER 10.7`, `Room AC, EER 12.0`, `Room AC, CEER 8.4`, `Evaporative Cooler, EER 13`, `Ductless Evaporative Cooler, SEER 13`, `Ducted Evaporative Cooler, SEER 13`, `Fan Coil Cooling, SEER 13`, `Ducted Mini-Split AC, SEER 19`, `Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio`, `Ductless Mini-Split AC, SEER 19`, `Ductless Mini-Split AC, SEER 17`, `PTAC, EER 10.7`, `PTAC, EER 10.7, Electric Heating`, `PTAC, EER 10.7, Natural Gas Heating`
+- **Choices:** `None`, `Central AC, SEER 8`, `Central AC, SEER 10`, `Central AC, SEER 13`, `Central AC, SEER 13, 25W Crankcase Heater`, `Central AC, SEER 13, 50W Crankcase Heater`, `Central AC, SEER 13, Two Stage`, `Central AC, SEER 13, Airflow Defect Ratio`, `Central AC, SEER2 12.4, SEER 13.05`, `Central AC, SEER 14`, `Central AC, SEER 15`, `Central AC, SEER 17.5, Variable Speed`, `Central AC, SEER 17.5, Detailed Performance`, `Central AC, SEER 17.5, Normalized Capacity Fractions`, `Central AC, SEER 18`, `Central AC, SEER 18, Airflow Defect Ratio`, `Central AC, SEER 24`, `Central AC, SEER 24, Airflow Defect Ratio`, `Central AC, SEER 24.5`, `Central AC, SEER 24.5, 0.73 SHR`, `Room AC, EER 8.5`, `Room AC, EER 8.5, Electric Heating`, `Room AC, EER 8.5, 0.73 SHR`, `Room AC, EER 9.8`, `Room AC, EER 10.7`, `Room AC, EER 12.0`, `Room AC, CEER 8.4`, `Evaporative Cooler, EER 13`, `Ductless Evaporative Cooler, SEER 13`, `Ducted Evaporative Cooler, SEER 13`, `Fan Coil Cooling, SEER 13`, `Ducted Mini-Split AC, SEER 19`, `Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio`, `Ductless Mini-Split AC, SEER 19`, `Ductless Mini-Split AC, SEER 17`, `Ductless Mini-Split AC, SEER 17, Detailed Performance`, `Ductless Mini-Split AC, SEER 17, Normalized Capacity Fractions`, `PTAC, EER 10.7`, `PTAC, EER 10.7, Electric Heating`, `PTAC, EER 10.7, Natural Gas Heating`
 
 <br/>
 
@@ -2046,90 +2046,16 @@ The heating load served by the heating system integrated into cooling system. On
 
 <br/>
 
-**Heat Pump: Type**
+**Heat Pump**
 
-The type of heat pump. Use 'none' if there is no heat pump.
+The heat pump type/efficiency.
 
-- **Name:** ``heat_pump_type``
+- **Name:** ``heat_pump``
 - **Type:** ``Choice``
 
 - **Required:** ``true``
 
-- **Choices:** `none`, `air-to-air`, `mini-split`, `ground-to-air`, `packaged terminal heat pump`, `room air conditioner with reverse cycle`
-
-<br/>
-
-**Heat Pump: Heating Efficiency Type**
-
-The heating efficiency type of heat pump. System types air-to-air and mini-split use HSPF or HSPF2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use COP.
-
-- **Name:** ``heat_pump_heating_efficiency_type``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `HSPF`, `HSPF2`, `COP`
-
-<br/>
-
-**Heat Pump: Heating Efficiency**
-
-The rated heating efficiency value of the heat pump.
-
-- **Name:** ``heat_pump_heating_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``true``
-
-<br/>
-
-**Heat Pump: Cooling Efficiency Type**
-
-The cooling efficiency type of heat pump. System types air-to-air and mini-split use SEER or SEER2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use EER.
-
-- **Name:** ``heat_pump_cooling_efficiency_type``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `SEER`, `SEER2`, `EER`, `CEER`
-
-<br/>
-
-**Heat Pump: Cooling Efficiency**
-
-The rated cooling efficiency value of the heat pump.
-
-- **Name:** ``heat_pump_cooling_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``true``
-
-<br/>
-
-**Heat Pump: Cooling Compressor Type**
-
-The compressor type of the heat pump. Only applies to air-to-air and mini-split. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'>Air-to-Air Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'>Mini-Split Heat Pump</a>) is used.
-
-- **Name:** ``heat_pump_cooling_compressor_type``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `single stage`, `two stage`, `variable speed`
-
-<br/>
-
-**Heat Pump: Cooling Sensible Heat Fraction**
-
-The sensible heat fraction of the heat pump. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'>Air-to-Air Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'>Mini-Split Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'>Packaged Terminal Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'>Room Air Conditioner w/ Reverse Cycle</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#ground-to-air-heat-pump'>Ground-to-Air Heat Pump</a>) is used.
-
-- **Name:** ``heat_pump_cooling_sensible_heat_fraction``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``false``
+- **Choices:** `None`, `ASHP, SEER 10, 6.2 HSPF`, `ASHP, SEER 10, 6.8 HSPF`, `ASHP, SEER 10.3, 7.0 HSPF`, `ASHP, SEER 11.5, 7.5 HSPF`, `ASHP, SEER 13, 7.7 HSPF`, `ASHP, SEER 13, 7.7 HSPF, Heating Capacity 17F`, `ASHP, SEER 13, 7.7 HSPF, Airflow Defect Ratio`, `ASHP, SEER 13, 7.7 HSPF, 5F Compressor Lockout`, `ASHP, SEER 13, 7.7 HSPF, 25F Compressor Lockout`, `ASHP, SEER 13, 7.7 HSPF, 30F Compressor Lockout`, `ASHP, SEER2 12.4, HSPF2 6.5, Heating Capacity 17F`, `ASHP, SEER 13, 7.7 HSPF, Lockout Temperatures`, `ASHP, SEER 13, 8.0 HSPF`, `ASHP, SEER 13, 9.85 HSPF`, `ASHP, SEER 14, 8.2 HSPF`, `ASHP, SEER 14.3, 8.5 HSPF`, `ASHP, SEER 15, 8.5 HSPF`, `ASHP, SEER 15, 9.0 HSPF`, `ASHP, SEER 16, 9.0 HSPF`, `ASHP, SEER 16, 9.2 HSPF, Heating Capacity 5F`, `ASHP, SEER 16, 9.2 HSPF, -20F Compressor Lockout`, `ASHP, SEER 17, 8.7 HSPF`, `ASHP, SEER 18, 9.3 HSPF`, `ASHP, SEER 18, 9.3 HSPF, Airflow Defect Ratio`, `ASHP, SEER 18, 9.3 HSPF, 30F Compressor Lockout`, `ASHP, SEER 20, 11 HSPF`, `ASHP, SEER 20, 11 HSPF, Heating Capacity 5F`, `ASHP, SEER 22, 10 HSPF`, `ASHP, SEER 22, 10 HSPF, Default Capacity Retention`, `ASHP, SEER 22, 10 HSPF, Airflow Defect Ratio`, `ASHP, SEER 22, 10 HSPF, Heating Capacity 17F`, `ASHP, SEER 22, 10 HSPF, 30F Compressor Lockout`, `ASHP, SEER 17.25, 10 HPSF, Normalized Capacity Fractions`, `ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance`, `ASHP, SEER 17.5, 9.5 HSPF, Normalized Capacity Fractions`, `ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance, Airflow Defect Ratio`, `ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance Heating Only`, `ASHP, SEER 24, 13 HSPF`, `ASHP, SEER 24, 13 HSPF, Heating Capacity 5F`, `GSHP, EER 16.6, COP 3.6`, `GSHP, EER 16.6, COP 3.6, Airflow Defect Ratio`, `GSHP, EER 20.2, COP 4.2`, `GSHP, EER 20.5, COP 4.0`, `MSHP, SEER 14.5, 8.2 HSPF`, `MSHP, SEER 14.5, 8.2 HSPF, Ducted`, `MSHP, SEER 16, 9.2 HSPF`, `MSHP, SEER 16.7, 11.3 HSPF, Detailed Performance`, `MSHP, SEER 16.7, 11.3 HSPF, Normalized Capacity Fractions`, `MSHP, SEER 17, 9.5 HSPF`, `MSHP, SEER 17, 9.5 HSPF, Ducted`, `MSHP, SEER 17, 10 HSPF, Ductless, Detailed Performance`, `MSHP, SEER 17, 10 HSPF, Ductless, Normalized Capacity Fractions`, `MSHP, SEER 18.0, 9.6 HSPF`, `MSHP, SEER 18.0, 9.6 HSPF, Ducted`, `MSHP, SEER 19, 10 HSPF, Ducted`, `MSHP, SEER 19, 10 HSPF, Airflow Defect Ratio`, `MSHP, SEER 19, 10 HSPF, 30F Compressor Lockout`, `MSHP, SEER 19, 10 HSPF, Ductless`, `MSHP, SEER 19, 10 HSPF, Ductless, Detailed Performance`, `MSHP, SEER 20, 11 HSPF`, `MSHP, SEER 24, 13 HSPF`, `MSHP, SEER 25, 12.7 HSPF`, `MSHP, SEER 25, 12.7 HSPF, Ducted`, `MSHP, SEER 29.3, 14 HSPF`, `MSHP, SEER 29.3, 14 HSPF, Ducted`, `MSHP, SEER 33, 13.3 HSPF`, `MSHP, SEER 33, 13.3 HSPF, Ducted`, `PTHP, EER 11.4, COP 3.6`, `Room AC w/ Reverse Cycle, EER 11.4`
 
 <br/>
 
@@ -2165,32 +2091,6 @@ The maximum capacity limit applied to the auto-sizing methodology. If not provid
 - **Type:** ``Double``
 
 - **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
-**Heat Pump: Heating Capacity Retention Fraction**
-
-The output heating capacity of the heat pump at a user-specified temperature (e.g., 17F or 5F) divided by the above nominal heating capacity. Applies to all heat pump types except ground-to-air. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'>Air-to-Air Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'>Mini-Split Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'>Packaged Terminal Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'>Room Air Conditioner w/ Reverse Cycle</a>) is used.
-
-- **Name:** ``heat_pump_heating_capacity_retention_fraction``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``false``
-
-<br/>
-
-**Heat Pump: Heating Capacity Retention Temperature**
-
-The user-specified temperature (e.g., 17F or 5F) for the above heating capacity retention fraction. Applies to all heat pump types except ground-to-air. Required if the Heating Capacity Retention Fraction is provided.
-
-- **Name:** ``heat_pump_heating_capacity_retention_temp``
-- **Type:** ``Double``
-
-- **Units:** ``F``
 
 - **Required:** ``false``
 
@@ -2259,29 +2159,16 @@ The cooling load served by the heat pump.
 
 <br/>
 
-**Heat Pump: Compressor Lockout Temperature**
-
-The temperature below which the heat pump compressor is disabled. If both this and Backup Heating Lockout Temperature are provided and use the same value, it essentially defines a switchover temperature (for, e.g., a dual-fuel heat pump). Applies to all heat pump types other than ground-to-air. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'>Air-to-Air Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'>Mini-Split Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'>Packaged Terminal Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'>Room Air Conditioner w/ Reverse Cycle</a>) is used.
-
-- **Name:** ``heat_pump_compressor_lockout_temp``
-- **Type:** ``Double``
-
-- **Units:** ``F``
-
-- **Required:** ``false``
-
-<br/>
-
 **Heat Pump: Backup Type**
 
-The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating.
+The type, fuel type, and efficiency of the heat pump backup. Use 'none' if there is no backup heating. If Backup Type is 'separate', Heating System 2 is used to specify the backup.
 
-- **Name:** ``heat_pump_backup_type``
+- **Name:** ``heat_pump_backup``
 - **Type:** ``Choice``
 
 - **Required:** ``true``
 
-- **Choices:** `none`, `integrated`, `separate`
+- **Choices:** `None`, `Electricity, Integrated, 100% Efficiency`, `Electricity, Integrated, 100% Efficiency, 35F Lockout`, `Natural Gas, Integrated, 95% AFUE, 30F Lockout`, `Natural Gas, Integrated, 95% AFUE, 45F Lockout`, `Separate`, `Separate, 30F Lockout`
 
 <br/>
 
@@ -2309,30 +2196,6 @@ The maximum capacity limit applied to the auto-sizing methodology if Backup Type
 
 <br/>
 
-**Heat Pump: Backup Fuel Type**
-
-The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'.
-
-- **Name:** ``heat_pump_backup_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`
-
-<br/>
-
-**Heat Pump: Backup Rated Efficiency**
-
-The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'.
-
-- **Name:** ``heat_pump_backup_heating_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``true``
-
-<br/>
-
 **Heat Pump: Backup Heating Capacity**
 
 The backup output heating capacity of the heat pump. If not provided, the OS-HPXML autosized default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#backup'>Backup</a>) is used. Only applies if Backup Type is 'integrated'.
@@ -2341,19 +2204,6 @@ The backup output heating capacity of the heat pump. If not provided, the OS-HPX
 - **Type:** ``Double``
 
 - **Units:** ``Btu/hr``
-
-- **Required:** ``false``
-
-<br/>
-
-**Heat Pump: Backup Heating Lockout Temperature**
-
-The temperature above which the heat pump backup system is disabled. If both this and Compressor Lockout Temperature are provided and use the same value, it essentially defines a switchover temperature (for, e.g., a dual-fuel heat pump). Applies for both Backup Type of 'integrated' and 'separate'. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#backup'>Backup</a>) is used.
-
-- **Name:** ``heat_pump_backup_heating_lockout_temp``
-- **Type:** ``Double``
-
-- **Units:** ``F``
 
 - **Required:** ``false``
 
@@ -2382,179 +2232,6 @@ The auto-sizing methodology to use when the heat pump backup capacity is not pro
 - **Required:** ``false``
 
 - **Choices:** `emergency`, `supplemental`
-
-<br/>
-
-**Heat Pump: Is Ducted**
-
-Whether the heat pump is ducted or not. Only used for mini-split. It's assumed that air-to-air and ground-to-air are ducted, and packaged terminal heat pump and room air conditioner with reverse cycle are not ducted. If not provided, assumes not ducted.
-
-- **Name:** ``heat_pump_is_ducted``
-- **Type:** ``Boolean``
-
-- **Required:** ``false``
-
-<br/>
-
-**Heat Pump: Airflow Defect Ratio**
-
-The airflow defect ratio, defined as (InstalledAirflow - DesignAirflow) / DesignAirflow, of the heat pump per ANSI/RESNET/ACCA Standard 310. A value of zero means no airflow defect. Applies only to air-to-air, ducted mini-split, and ground-to-air. If not provided, assumes no defect.
-
-- **Name:** ``heat_pump_airflow_defect_ratio``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``false``
-
-<br/>
-
-**Heat Pump: Charge Defect Ratio**
-
-The refrigerant charge defect ratio, defined as (InstalledCharge - DesignCharge) / DesignCharge, of the heat pump per ANSI/RESNET/ACCA Standard 310. A value of zero means no refrigerant charge defect. Applies to all heat pump types. If not provided, assumes no defect.
-
-- **Name:** ``heat_pump_charge_defect_ratio``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``false``
-
-<br/>
-
-**Heat Pump: Crankcase Heater Power Watts**
-
-Heat Pump crankcase heater power consumption in Watts. Applies only to air-to-air, mini-split, packaged terminal heat pump and room air conditioner with reverse cycle. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'>Air-to-Air Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'>Mini-Split Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'>Packaged Terminal Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'>Room Air Conditioner w/ Reverse Cycle</a>) is used.
-
-- **Name:** ``heat_pump_crankcase_heater_watts``
-- **Type:** ``Double``
-
-- **Units:** ``W``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Capacity Type**
-
-Type of capacity values for detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps).
-
-- **Name:** ``hvac_perf_data_capacity_type``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `Absolute capacities`, `Normalized capacity fractions`
-
-<br/>
-
-**HVAC Detailed Performance Data: Heating Outdoor Temperatures**
-
-Outdoor temperatures of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). One of the outdoor temperatures must be 47 F. At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_heating_outdoor_temperatures``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Heating Minimum Speed Capacities**
-
-Minimum speed capacities of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_heating_min_speed_capacities``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Heating Maximum Speed Capacities**
-
-Maximum speed capacities of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_heating_max_speed_capacities``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Heating Minimum Speed COPs**
-
-Minimum speed efficiency COP values of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_heating_min_speed_cops``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Heating Maximum Speed COPs**
-
-Maximum speed efficiency COP values of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_heating_max_speed_cops``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Cooling Outdoor Temperatures**
-
-Outdoor temperatures of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). One of the outdoor temperatures must be 95 F. At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_cooling_outdoor_temperatures``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Cooling Minimum Speed Capacities**
-
-Minimum speed capacities of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_cooling_min_speed_capacities``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Cooling Maximum Speed Capacities**
-
-Maximum speed capacities of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_cooling_max_speed_capacities``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Cooling Minimum Speed COPs**
-
-Minimum speed efficiency COP values of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_cooling_min_speed_cops``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Detailed Performance Data: Cooling Maximum Speed COPs**
-
-Maximum speed efficiency COP values of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.
-
-- **Name:** ``hvac_perf_data_cooling_max_speed_cops``
-- **Type:** ``String``
-
-- **Required:** ``false``
 
 <br/>
 
@@ -4243,6 +3920,640 @@ Maximum power output of the second PV system. For a shared system, this is the t
 
 <br/>
 
+**Electric Panel: Service/Feeders Load Calculation Types**
+
+Types of electric panel service/feeder load calculations. Possible types are: 2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based. If multiple types, use a comma-separated list. If not provided, no electric panel loads are calculated.
+
+- **Name:** ``electric_panel_service_feeders_load_calculation_types``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Peak Electricity Power**
+
+Specifies the baseline peak electricity. Used for 2023 Existing Dwelling Meter-Based.
+
+- **Name:** ``electric_panel_baseline_peak_electricity_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Service Voltage**
+
+The service voltage of the electric panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-panels'>HPXML Electric Panels</a>) is used.
+
+- **Name:** ``electric_panel_service_voltage``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `120`, `240`
+
+<br/>
+
+**Electric Panel: Service Rating**
+
+The service rating of the electric panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-panels'>HPXML Electric Panels</a>) is used.
+
+- **Name:** ``electric_panel_service_rating``
+- **Type:** ``Double``
+
+- **Units:** ``A``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Breaker Spaces Type**
+
+The breaker spaces specification type of the electric panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-panels'>HPXML Electric Panels</a>) is used.
+
+- **Name:** ``electric_panel_breaker_spaces_type``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `total`, `headroom`
+
+<br/>
+
+**Electric Panel: Breaker Spaces**
+
+The total, or unoccupied, number of breaker spaces on the electric panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-panels'>HPXML Electric Panels</a>) is used.
+
+- **Name:** ``electric_panel_breaker_spaces``
+- **Type:** ``Integer``
+
+- **Units:** ``#``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Heating System Power**
+
+Specifies the panel load heating system power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_heating_system_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Heating System Addition**
+
+Whether the heating system is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_heating_system_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Cooling System Power**
+
+Specifies the panel load cooling system power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_cooling_system_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Cooling System Addition**
+
+Whether the cooling system is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_cooling_system_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Heat Pump Heating Power**
+
+Specifies the panel load heating power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_heat_pump_heating_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Heat Pump Cooling Power**
+
+Specifies the panel load heat pump cooling power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_heat_pump_cooling_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Heat Pump Voltage**
+
+Specifies the panel load heat pump voltage. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_heat_pump_voltage``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `120`, `240`
+
+<br/>
+
+**Electric Panel: Heat Pump Addition**
+
+Whether the heat pump is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_heat_pump_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Heating System 2 Power**
+
+Specifies the panel load second heating system power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_heating_system_2_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Heating System 2 Addition**
+
+Whether the second heating system is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_heating_system_2_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Mechanical Ventilation Power**
+
+Specifies the panel load mechanical ventilation power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_mech_vent_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Mechanical Ventilation Addition**
+
+Whether the mechanical ventilation is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_mech_vent_fan_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Mechanical Ventilation 2 Power**
+
+Specifies the panel load second mechanical ventilation power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_mech_vent_2_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Mechanical Ventilation 2 Addition**
+
+Whether the second mechanical ventilation is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_mech_vent_2_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Whole House Fan Power**
+
+Specifies the panel load whole house fan power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_whole_house_fan_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Whole House Fan Addition**
+
+Whether the whole house fan is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_whole_house_fan_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Kitchen Fans Power**
+
+Specifies the panel load kitchen fans power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_kitchen_fans_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Kitchen Fans Addition**
+
+Whether the kitchen fans is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_kitchen_fans_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Bathroom Fans Power**
+
+Specifies the panel load bathroom fans power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_bathroom_fans_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Bathroom Fans Addition**
+
+Whether the bathroom fans is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_bathroom_fans_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Water Heater Power**
+
+Specifies the panel load water heater power. Only applies to electric water heater. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_water_heater_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Water Heater Voltage**
+
+Specifies the panel load water heater voltage. Only applies to heat pump water heater (compressor). If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_water_heater_voltage``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `120`, `240`
+
+<br/>
+
+**Electric Panel: Water Heater Addition**
+
+Whether the water heater is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_water_heater_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Clothes Dryer Power**
+
+Specifies the panel load power. Only applies to electric clothes dryer. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_clothes_dryer_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Clothes Dryer Voltage**
+
+Specifies the panel load voltage. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_clothes_dryer_voltage``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `120`, `240`
+
+<br/>
+
+**Electric Panel: Clothes Dryer Addition**
+
+Whether the clothes dryer is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_clothes_dryer_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Dishwasher Power**
+
+Specifies the panel load dishwasher power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_dishwasher_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Dishwasher Addition**
+
+Whether the dishwasher is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_dishwasher_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Cooking Range/Oven Power**
+
+Specifies the panel load cooking range/oven power. Only applies to electric cooking range/oven. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_cooking_range_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Cooking Range/Oven Voltage**
+
+Specifies the panel load cooking range/oven voltage. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_cooking_range_voltage``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `120`, `240`
+
+<br/>
+
+**Electric Panel: Cooking Range/Oven Addition**
+
+Whether the cooking range is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_cooking_range_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Misc Plug Loads Well Pump Power**
+
+Specifies the panel load well pump power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_misc_plug_loads_well_pump_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Misc Plug Loads Well Pump Addition**
+
+Whether the well pump is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_misc_plug_loads_well_pump_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Misc Plug Loads Vehicle Power**
+
+Specifies the panel load electric vehicle power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_misc_plug_loads_vehicle_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Misc Plug Loads Vehicle Voltage**
+
+Specifies the panel load electric vehicle voltage. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_misc_plug_loads_vehicle_voltage``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `120`, `240`
+
+<br/>
+
+**Electric Panel: Misc Plug Loads Vehicle Addition**
+
+Whether the electric vehicle is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_misc_plug_loads_vehicle_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Pool Pump Power**
+
+Specifies the panel load pool pump power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_pool_pump_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Pool Pump Addition**
+
+Whether the pool pump is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_pool_pump_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Pool Heater Power**
+
+Specifies the panel load pool heater power. Only applies to electric pool heater. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_pool_heater_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Pool Heater Addition**
+
+Whether the pool heater is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_pool_heater_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Permanent Spa Pump Power**
+
+Specifies the panel load permanent spa pump power. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_permanent_spa_pump_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Permanent Spa Pump Addition**
+
+Whether the spa pump is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_permanent_spa_pump_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Permanent Spa Heater Power**
+
+Specifies the panel load permanent spa heater power. Only applies to electric permanent spa heater. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_permanent_spa_heater_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Permanent Spa Heater Addition**
+
+Whether the spa heater is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_permanent_spa_heater_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Other Power**
+
+Specifies the panel load other power. This represents the total of all other electric loads that are fastened in place, permanently connected, or located on a specific circuit. For example, garbage disposal, built-in microwave. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_other_power``
+- **Type:** ``Double``
+
+- **Units:** ``W``
+
+- **Required:** ``false``
+
+<br/>
+
+**Electric Panel: Other Addition**
+
+Whether the other load is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#panel-loads'>Panel Loads</a>) is used.
+
+- **Name:** ``electric_panel_load_other_addition``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
 **Battery: Present**
 
 Whether there is a lithium ion battery present.
@@ -4464,19 +4775,6 @@ The rated power output of the EV charger. If not provided, the OS-HPXML default 
 - **Units:** ``W``
 
 - **Required:** ``false``
-
-<br/>
-
-**Electric Vehicle Charger: Location**
-
-The space type for the EV charger. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'>HPXML Electric Vehicle Chargers</a>) is used.
-
-- **Name:** ``ev_charger_location``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `garage`, `outside`
 
 <br/>
 

@@ -115,7 +115,6 @@ class HPXMLtoOpenStudioVehicleTest < Minitest::Test
       ev_battery = ev_batteries[0]
 
       # Check object
-      assert_equal(HPXML::LocationGarage, ev_battery.thermalZone.get.name.get)
       assert_equal(0.0, ev_battery.radiativeFraction)
       assert_equal(HPXML::BatteryLifetimeModelNone, ev_battery.lifetimeModel)
       assert_in_epsilon(15, ev_battery.numberofCellsinSeries, 0.01)
@@ -154,7 +153,6 @@ class HPXMLtoOpenStudioVehicleTest < Minitest::Test
       ev_battery = ev_batteries[0]
 
       # Check object
-      assert_equal(HPXML::LocationGarage, ev_battery.thermalZone.get.name.get)
       assert_equal(0.0, ev_battery.radiativeFraction)
       assert_equal(HPXML::BatteryLifetimeModelNone, ev_battery.lifetimeModel)
       assert_in_epsilon(15, ev_battery.numberofCellsinSeries, 0.01)

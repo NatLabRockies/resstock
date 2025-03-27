@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>report_simulation_output</name>
   <uid>df9d170c-c21a-4130-866d-0d46b06073fd</uid>
-  <version_id>8b5a1812-c7f9-4efd-b090-2fe0d74f0bcb</version_id>
-  <version_modified>2025-02-18T17:50:35Z</version_modified>
+  <version_id>ad1aa48f-db1c-4970-b703-513ef327fd78</version_id>
+  <version_modified>2025-03-18T21:25:44Z</version_modified>
   <xml_checksum>9BF1E6AC</xml_checksum>
   <class_name>ReportSimulationOutput</class_name>
   <display_name>HPXML Simulation Output Report</display_name>
@@ -289,6 +289,25 @@
       <name>include_annual_hvac_summary</name>
       <display_name>Generate Annual Output: HVAC Summary</display_name>
       <description>Generates HVAC capacities, design temperatures, and design loads.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>true</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>include_annual_panel_summary</name>
+      <display_name>Generate Annual Output: Electric Panel Summary</display_name>
+      <description>Generates electric panel breaker spaces and loads.</description>
       <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -724,6 +743,14 @@
       <name>annual_output_file_name</name>
       <display_name>Annual Output File Name</display_name>
       <description>If not provided, defaults to 'results_annual.csv' (or 'results_annual.json' or 'results_annual.msgpack').</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_output_file_name</name>
+      <display_name>Electric Panel Output File Name</display_name>
+      <description>If not provided, defaults to 'results_panel.csv' (or 'results_panel.json' or 'results_panel.msgpack').</description>
       <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -1955,7 +1982,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>5BD99B0E</checksum>
+      <checksum>403BC6A3</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -1972,13 +1999,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>8BAA16E7</checksum>
+      <checksum>C7A7E2B3</checksum>
     </file>
     <file>
       <filename>test_report_sim_output.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>97D742B1</checksum>
+      <checksum>BA45C804</checksum>
     </file>
   </files>
 </measure>
