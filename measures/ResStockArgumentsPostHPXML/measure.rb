@@ -6,7 +6,6 @@
 require_relative 'resources/hvac_flexibility/detailed_schedule_generator'
 require_relative 'resources/hvac_flexibility/setpoint_modifier'
 require_relative 'resources/ev_flexibility/ev_schedule_modifier'
-require 'byebug'
 # start the measure
 class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   # human readable name
@@ -114,8 +113,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       if args[:ev_flex_enabled] && !skip_ev_flexibility?(args)
         ev_schedule = get_ev_schedule(building)
         next if ev_schedule.nil?
-        modified_schedule = modify_ev_schedule(index, ev_schedule)
-        write_schedule(modified_schedule, building, index, output_csv_path)
+        modified_ev_schedule = modify_ev_schedule(index, ev_schedule)
+        write_schedule(modified_ev_schedule, building, index, output_csv_path)
       end
     end
 

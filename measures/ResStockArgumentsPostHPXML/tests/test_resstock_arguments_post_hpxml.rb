@@ -65,7 +65,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
       _run_osw(osw_hash)
       schedule = _get_schedule(curdir)
       _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shed', schedule: schedule) unless params[:dst_enabled]
-      # remove the run folder
+      _verify_ev_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shed', schedule: schedule)
       FileUtils.rm_rf(File.join(curdir, 'run'))
     end
   end
@@ -106,6 +106,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     # indices for setpint 01-01 14:00:00-15:00:00, 15:00:00-16:00:00, 16:00:00-17:00:00, 17:00:00-18:00:00
     # the on-peak hour in CO in winter starts from 17:00:00 for shift and 18:00 for shed
     # before pre_peak, pre_peak, pre_peak, peak, peak, peak, peak, none
+    #           n  pp  pp  pk  pk  pk  pk   n
     indices = [14, 15, 16, 17, 18, 19, 20, 21]
     indices = indices.map { |num| num + 1 } if peak_type == 'shed'
     {
@@ -121,10 +122,12 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
   end
 
   def _summer_test_indices(dst_enabled:, peak_type:)
-    # indices for 05-09 13:00:00-14:00:00, 14:00:00-15:00:00, 15:00:00-16:00:00, 16:00:00-17:00:00,
+    # indices for 06-09 (day 159) 13:00:00-14:00:00, 14:00:00-15:00:00, 15:00:00-16:00:00, 16:00:00-17:00:00,
+    # The daily avg temp for this day in CO is 63.4F, so, there is no precooling or preheating
     # the on-peak hour in CO in summer starts from 16:00:00 for shift and 18:00 for shed
     # before pre_peak, pre_peak, pre_peak, peak, peak, peak, peak, none
-    indices = [3085, 3086, 3087, 3088, 3089, 3090, 3091, 3092]
+    #           n     pp    pp    pk    pk    pk    pk    n
+    indices = [3829, 3830, 3831, 3832, 3833, 3834, 3835, 3836]
     indices = indices.map { |num| num + 1 } if dst_enabled
     indices = indices.map { |num| num + 2 } if peak_type == 'shed'
     {
@@ -141,7 +144,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
 
   def _verify_peak_period(dst_enabled:, peak_type:, schedule:)
     winter_indices = _winter_test_indices(peak_type: peak_type)
-    summer_indices = _summer_test_indices(peak_type: peak_type, dst_enabled: dst_enabled)
+    summer_indices = _summer_test_indices(dst_enabled: dst_enabled, peak_type: peak_type)
     # Check winter indices
     winter_indices.each do |index, value|
       if value == 'none'
@@ -210,12 +213,24 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
         assert_equal(summer_cooling_setpoint_base, cooling_setpoint)
         assert_equal(summer_heating_setpoint_base, heating_setpoint)
       elsif value == 'pre_peak'
-        assert_equal(summer_cooling_setpoint_base - 3, cooling_setpoint)
+        assert_equal(summer_cooling_setpoint_base, cooling_setpoint)  # No precooling because daily avg temp is 63.4F
         assert_equal(summer_heating_setpoint_base, heating_setpoint)
       elsif value == 'peak'
         assert_equal(summer_cooling_setpoint_base + 2, cooling_setpoint)
         assert_equal(summer_heating_setpoint_base - 2, heating_setpoint)
       end
+    end
+  end
+
+  def _verify_ev_schedule(dst_enabled:, peak_type:, schedule:)
+    winter_indices = _winter_test_indices(peak_type: peak_type)
+    summer_indices = _summer_test_indices(peak_type: peak_type, dst_enabled: dst_enabled)
+    # EV cannot be charging during peak period. It could be discharging.
+    winter_indices.each do |index, value|
+      assert schedule[index]['electric_vehicle'].to_f <= 0 if value == 'peak'
+    end
+    summer_indices.each do |index, value|
+      assert schedule[index]['electric_vehicle'].to_f <= 0 if value == 'peak'
     end
   end
 
