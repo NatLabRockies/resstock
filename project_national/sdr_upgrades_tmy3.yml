@@ -1182,4 +1182,5 @@ upgrades:
   - upgrade_name: EV for all with load flexibility
     options:
       - option: Electric Vehicle Ownership|Yes
+      - option: Electric Vehicle Charger|Level 1 charger
       - option: EVFlexibility|enabled
