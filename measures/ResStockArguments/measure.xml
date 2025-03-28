@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>2a672e98-8443-4ad4-9991-091b7af6ade3</version_id>
-  <version_modified>2025-03-27T19:19:10Z</version_modified>
+  <version_id>778b911c-1d66-4c61-8188-0b1ef5115ae7</version_id>
+  <version_modified>2025-03-28T00:05:04Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -3262,6 +3262,10 @@
         <choice>
           <value>Separate, 30F Lockout</value>
           <display_name>Separate, 30F Lockout</display_name>
+        </choice>
+        <choice>
+          <value>Separate, -20F Lockout</value>
+          <display_name>Separate, -20F Lockout</display_name>
         </choice>
       </choices>
     </argument>
@@ -7957,7 +7961,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>04820E87</checksum>
+      <checksum>61165A69</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7974,7 +7978,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>0CD01EAB</checksum>
+      <checksum>54CDD6BE</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
