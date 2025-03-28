@@ -119,7 +119,7 @@
         "geometry_unit_right_wall_is_adiabatic": false,
         "geometry_unit_front_wall_is_adiabatic": false,
         "geometry_unit_back_wall_is_adiabatic": false,
-        "heat_pump_backup_type": "Electricity, Integrated, 100% Efficiency",
+        "heat_pump_backup": "Electricity, Integrated, 100% Efficiency",
         "heat_pump_backup_heating_capacity": 100000.0,
         "heat_pump_cooling_capacity": 60000.0,
         "heat_pump_fraction_cool_load_served": 1,
