@@ -300,7 +300,7 @@ if __name__ == '__main__':
       compare.results(args.aggregate_column, args.aggregate_function, excludes, enum_maps)
     elif action == 'visualize':
       excludes = ['buildstock.csv', 'results_characteristics.csv']
-      categories = ['.component_load_', '.emissions_', '.end_use_', '.energy_use_', '.fuel_use_', '.hot_water_', '.hvac_', '.load_', '.peak_', '.resilience_', '.unmet_hours_', 'report_utility_bills.', 'upgrade_costs.', 'qoi_report.']
+      categories = ['.component_load_', '.emissions_', '.end_use_', '.energy_use_', '.fuel_use_', '.hot_water_', '.hvac_', '.load_', '.peak_', '.resilience_', '.unmet_hours_', '.electric_panel_', 'report_utility_bills.', 'upgrade_costs.', 'qoi_report.']
       for category in categories:
         export_file, ext = args.export_file.split('.')
         export_file = '{}_{}.{}'.format(export_file, category.strip('.').rstrip('_'), ext)

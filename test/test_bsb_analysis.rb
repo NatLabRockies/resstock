@@ -73,10 +73,12 @@ class TestBuildStockBatch < Minitest::Test
 
     expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
+    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
     expected_annual_names = expected_outputs['Annual Name'].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join(@testing_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.electric_panel_load_2023_existing_dwelling_meter_based_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_2_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_3_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('server_directory_cleanup.') }
@@ -97,10 +99,12 @@ class TestBuildStockBatch < Minitest::Test
 
     expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
+    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
     expected_annual_names = expected_outputs['Annual Name'].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join(@national_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.electric_panel_load_2023_existing_dwelling_meter_based_') }
     actual_names = actual_outputs.headers - expected_annual_names
 
     actual_extras = actual_names - expected_names
@@ -118,10 +122,12 @@ class TestBuildStockBatch < Minitest::Test
 
     expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
+    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
     expected_annual_names = expected_outputs['Annual Name'].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join(@testing_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.electric_panel_load_2023_existing_dwelling_meter_based_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_2_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_3_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('server_directory_cleanup.') }
@@ -159,10 +165,12 @@ class TestBuildStockBatch < Minitest::Test
 
     expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
+    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
     expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
     expected_annual_names = expected_outputs['Annual Name'].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join(@national_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
+    actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_simulation_output.electric_panel_load_2023_existing_dwelling_meter_based_') }
     actual_annual_names = actual_outputs.headers - expected_names
 
     actual_extras = actual_annual_names - expected_annual_names

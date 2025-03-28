@@ -7980,7 +7980,37 @@
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F54903F9</checksum>
+      <checksum>518A24F2</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>E902477F</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_rated_capacity__multi_family.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>49D707DF</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_rated_capacity__single_family_electric_heating.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>AAC795D7</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_rated_capacity__single_family_nonelectric_heating.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>FFF0B8A5</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>57678570</checksum>
     </file>
     <file>
       <filename>measure.txt</filename>

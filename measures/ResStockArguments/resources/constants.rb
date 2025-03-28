@@ -154,15 +154,19 @@ module Constants
                                           'building_id']
 
   # Exclude these ResStockArguments from being required in options_lookup.tsv
+  # These are arguments added to ResStockArguments not in BuildResidentialHPXML
   OtherExcludes = ['building_id',
                    'heating_system_actual_cfm_per_ton',
                    'heating_system_rated_cfm_per_ton']
 
   # List of ResStockArguments arguments; reported as build_existing_model.<argument_name>, ...
   ArgumentsToRegister = ['heating_unavailable_period',
-                         'cooling_unavailable_period']
+                         'cooling_unavailable_period',
+                         'electric_panel_service_rating_bin',
+                         'electric_panel_service_rating']
 
   # List of ResStockArguments arguments; will not be passed into BuildResidentialHPXML
   ArgumentsToExclude = ['heating_unavailable_period',
-                        'cooling_unavailable_period']
+                        'cooling_unavailable_period',
+                        'electric_panel_service_rating_bin']
 end

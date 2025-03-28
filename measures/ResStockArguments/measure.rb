@@ -5,6 +5,7 @@
 
 require 'openstudio'
 require_relative 'resources/constants'
+require_relative 'resources/electrical_panel'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
 
 # start the measure
@@ -871,6 +872,60 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       args[:vehicle_fuel_economy_combined] = args[:vehicle_fuel_economy_combined] / (1 + args[:ev_efficiency_percent_increase])
     end
 
+    # Electric Panel
+    args[:electric_panel_service_feeders_load_calculation_types] = "#{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased}, #{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingMeterBased}"
+
+    panel_sampler = ElectricalPanelSampler.new(runner: runner, **args)
+    cap_bin, cap_val = panel_sampler.assign_rated_capacity(args: args)
+
+    args[:electric_panel_service_rating_bin] = cap_bin
+    args[:electric_panel_service_rating] = cap_val
+
+    breaker_spaces_headroom = panel_sampler.assign_breaker_space_headroom(args: args)
+    args[:electric_panel_breaker_spaces_type] = 'headroom'
+    args[:electric_panel_breaker_spaces] = breaker_spaces_headroom
+
+    # Assign miscellaneous permanently connected appliance loads
+    if args[:electric_panel_load_other_power].nil?
+      args[:electric_panel_load_other_power] = 0
+    end
+    # Assume all homes have a microwave
+    if args[:geometry_unit_num_bedrooms] <= 2
+      microwave_power = 900 # W, small, <= 0.9 cu ft, 1-2 ppl
+    elsif args[:geometry_unit_num_bedrooms] <= 4
+      microwave_power = 1100 # W, medium, <= 1.6 cu ft, 3-4 ppl
+    else
+      microwave_power = 1250 # W, large, 1.7-2.2 cu ft, 5+ ppl
+    end
+
+    garbage_disposal_ownership = 0.52 # AHS 2013
+    if Random.new(args[:building_id]).rand > garbage_disposal_ownership
+      garbage_disposal_power = 0
+    else
+      # Power estimated from avg load amp not HP rating, from InSinkErators
+      if args[:geometry_unit_num_bedrooms] <= 1
+        garbage_disposal_power = 672 # W, 1/3 HP, avg load 5.6A, 1-2 ppl
+      elsif args[:geometry_unit_num_bedrooms] <= 3
+        garbage_disposal_power = 756 # W, 1/2 HP, avg load 6.3A, 2-4 ppl
+      elsif args[:geometry_unit_num_bedrooms] <= 4
+        garbage_disposal_power = 1140 # W, 3/4 HP, avg load 9.5A, 3-5 ppl
+      else
+        garbage_disposal_power = 1224 # W, 1 HP, avg load 10.2A, 4+ ppl
+      end
+    end
+
+    if args[:geometry_garage_width] == 0 && args[:geometry_garage_depth] == 0
+      garage_door_power = 0
+    else
+      # Assume one automatic door opener if has garage, regardless of no. garages
+      garage_door_power = 373 # W, 1/2 HP (1 mech HP = 745.7 W)
+    end
+
+    args[:electric_panel_load_other_power] += microwave_power
+    args[:electric_panel_load_other_power] += garbage_disposal_power
+    args[:electric_panel_load_other_power] += garage_door_power
+
+    # Register values to runner
     args.each do |arg_name, arg_value|
       if args_to_delete.include?(arg_name) || (arg_value == Constants::Auto)
         arg_value = '' # don't assign these to BuildResidentialHPXML or BuildResidentialScheduleFile
