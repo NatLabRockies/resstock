@@ -550,6 +550,7 @@ module HVAC
   # @param ground_diffusivity [TODO] TODO
   # @param hvac_unavailable_periods [Hash] Map of htg/clg => HPXML::UnavailablePeriods for heating/cooling
   # @param unit_multiplier [Integer] Number of similar dwelling units
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @return [OpenStudio::Model::AirLoopHVAC] The newly created air loop hvac object
   def self.apply_ground_to_air_heat_pump(runner, model, weather, heat_pump, hvac_sequential_load_fracs,
                                          control_zone, ground_conductivity, ground_diffusivity,
@@ -882,7 +883,7 @@ module HVAC
     # Unitary System
     air_loop_unitary = create_air_loop_unitary_system(model, obj_name, fan, htg_coil, clg_coil, htg_supp_coil, htg_cfm, clg_cfm, 40.0)
     add_pump_power_ems_program(model, pump, air_loop_unitary, heat_pump)
-    add_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil, heat_pump)
+    add_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil, heat_pump, hpxml_header)
 
     if heat_pump.is_shared_system
       # Shared pump power per ANSI/RESNET/ICC 301-2022 Section 4.4.5.1 (pump runs 8760)
@@ -2749,11 +2750,13 @@ module HVAC
   # TODO
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param pump_w [TODO] TODO
   # @param pump [TODO] TODO
-  # @param heating_object [TODO] TODO
+  # @param control_zone [TODO] TODO
+  # @param htg_coil [TODO] TODO
+  # @param clg_coil [TODO] TODO
+  # @param hpxml_header [HPXML::Header] HPXML Header object (one per HPXML file)
   # @return [nil]
-  def self.add_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil, heat_pump)
+  def self.add_pump_mass_flow_rate_ems_program(model, pump, control_zone, htg_coil, clg_coil, heat_pump, hpxml_header)
     # EMS is used to set the pump power.
     # Without EMS, the pump power will vary according to the plant loop part load ratio
     # (based on flow rate) rather than the boiler part load ratio (based on load).
