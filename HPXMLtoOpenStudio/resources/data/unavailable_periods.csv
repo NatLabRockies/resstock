@@ -33,8 +33,8 @@ dehumidifier,0,1,0,0
 house_fan,0,1,0,0
 kitchen_fan,1,1,0,0
 bath_fan,1,1,0,0
-whole_house_fan,0,1,0,0
+whole_house_fan,1,1,0,0
 battery_charging,0,1,0,0
 battery_discharging,0,1,0,0
-electric_vehicle_charging,0,1,0,0
-electric_vehicle_discharging,0,1,0,0
+electric_vehicle_charging,1,1,0,0
+electric_vehicle_discharging,1,1,0,0

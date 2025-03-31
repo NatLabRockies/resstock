@@ -530,7 +530,7 @@ module Airflow
     max_flow_rate = max_rate * infil_values[:volume] / UnitConversions.convert(1.0, 'hr', 'min')
     neutral_level = 0.5
     hor_lk_frac = 0.0
-    c_w, c_s = calc_wind_stack_coeffs(hpxml_bldg, hor_lk_frac, neutral_level, conditioned_space, infil_values[:height])
+    c_w, c_s = calc_wind_stack_coeffs(hpxml_bldg, hor_lk_frac, neutral_level, HPXML::LocationConditionedSpace, infil_values[:height])
     max_oa_hr = 0.0115 # From ANSI/RESNET/ICC 301-2022
 
     # Program
@@ -1712,7 +1712,7 @@ module Airflow
     neutral_level = 0.5 # DOE-2 Default
     sla = get_infiltration_SLA_from_ACH50(ach50, volume / area)
     ela = sla * area
-    c_w_SG, c_s_SG = calc_wind_stack_coeffs(hpxml_bldg, hor_lk_frac, neutral_level, space)
+    c_w_SG, c_s_SG = calc_wind_stack_coeffs(hpxml_bldg, hor_lk_frac, neutral_level, HPXML::LocationGarage)
     apply_infiltration_to_unconditioned_space(model, space, nil, ela, c_w_SG, c_s_SG, duct_lk_imbals)
   end
 
@@ -1743,7 +1743,7 @@ module Airflow
 
     vented_crawl = hpxml_bldg.foundations.find { |foundation| foundation.foundation_type == HPXML::FoundationTypeCrawlspaceVented }
     space = spaces[HPXML::LocationCrawlspaceVented]
-    height = Geometry.get_space_height(space)
+    height = Geometry.calculate_zone_height(hpxml_bldg, HPXML::LocationCrawlspaceVented)
     sla = vented_crawl.vented_crawlspace_sla
     ach = get_infiltration_ACH_from_SLA(sla, height, ReferenceHeight, weather)
     apply_infiltration_to_unconditioned_space(model, space, ach, nil, nil, nil, duct_lk_imbals)
@@ -1797,7 +1797,7 @@ module Airflow
       neutral_level = 0.5 # DOE-2 Default
       sla = vented_attic_sla
       ela = sla * vented_attic_area
-      c_w_SG, c_s_SG = calc_wind_stack_coeffs(hpxml_bldg, hor_lk_frac, neutral_level, space)
+      c_w_SG, c_s_SG = calc_wind_stack_coeffs(hpxml_bldg, hor_lk_frac, neutral_level, HPXML::LocationAtticVented)
       apply_infiltration_to_unconditioned_space(model, space, nil, ela, c_w_SG, c_s_SG, duct_lk_imbals)
     elsif not vented_attic_const_ach.nil?
       ach = vented_attic_const_ach
@@ -2841,16 +2841,26 @@ module Airflow
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param hor_lk_frac [Double] Fraction of leakage that is in the floor and ceiling
   # @param neutral_level [Double] Fraction of space height at which the indoor-outdoor pressure difference due to stack effect is zero
-  # @param space [OpenStudio::Model::Space] an OpenStudio::Model::Space object
+  # @param location [String] The location of interest (HPXML::LocationXXX)
   # @param space_height [Double] Height of the space (ft)
   # @return [Array<Double, Double>] Wind and stack coefficients
-  def self.calc_wind_stack_coeffs(hpxml_bldg, hor_lk_frac, neutral_level, space, space_height = nil)
+  def self.calc_wind_stack_coeffs(hpxml_bldg, hor_lk_frac, neutral_level, location, space_height = nil)
     site_ap = hpxml_bldg.site.additional_properties
     if space_height.nil?
-      space_height = Geometry.get_space_height(space)
+      space_height = Geometry.calculate_zone_height(hpxml_bldg, location)
     end
-    coord_z = Geometry.get_z_origin_for_zone(space.thermalZone.get)
-    f_t_SG = site_ap.site_terrain_multiplier * ((space_height + coord_z) / 32.8)**site_ap.site_terrain_exponent / (site_ap.terrain_multiplier * (site_ap.height / 32.8)**site_ap.terrain_exponent)
+
+    # Get distance above ground for the space
+    walls_top, foundation_top = Geometry.get_foundation_and_walls_top(hpxml_bldg)
+    if [HPXML::LocationConditionedSpace, HPXML::LocationGarage].include? location
+      space_height_ag = foundation_top
+    elsif [HPXML::LocationAtticVented].include? location
+      space_height_ag = walls_top
+    else
+      fail "Unexpected location: #{location}"
+    end
+
+    f_t_SG = site_ap.site_terrain_multiplier * ((space_height + space_height_ag) / 32.8)**site_ap.site_terrain_exponent / (site_ap.terrain_multiplier * (site_ap.height / 32.8)**site_ap.terrain_exponent)
     f_s_SG = 2.0 / 3.0 * (1 + hor_lk_frac / 2.0) * (2.0 * neutral_level * (1.0 - neutral_level))**0.5 / (neutral_level**0.5 + (1.0 - neutral_level)**0.5)
     f_w_SG = site_ap.s_g_shielding_coef * (1.0 - hor_lk_frac)**(1.0 / 3.0) * f_t_SG
     c_s_SG = f_s_SG**2.0 * Gravity * space_height / UnitConversions.convert(AssumedInsideTemp, 'F', 'R')

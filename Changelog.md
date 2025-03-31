@@ -29,6 +29,8 @@ __Bugfixes__
 - Fixes possible error if there's a surface w/ interior unconditioned space and exterior "other housing unit".
 - Fixes default shading coefficients for window solar screens and solar film.
 - Fixes `SolarFraction` documentation/error-checking for solar thermal systems; must now be <= 0.99.
+- Fixes whole house fans so that they are unavailable during vacancies.
+- Fixes error if there's a vented attic with zero roof pitch.
 - BuildResidentialHPXML measure: Fixes error when specifying a combi boiler as the water heater type and a *shared* boiler as the heating system type.
 - BuildResidentialScheduleFile measure: Fixes out-of-sync shifting of occupancy and end use schedule resulting in activities even when there is no occupancy.
 - BuildResidentialScheduleFile measure: Fixes a small bug in sink schedule generation resulting in more concentrated schedule.
