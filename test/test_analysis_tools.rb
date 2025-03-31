@@ -13,7 +13,7 @@ class TestTools < Minitest::Test
       buildstockbatch_path = File.join(@buildstock_directory, "buildstockbatch/project_#{project}/#{project}_baseline/results_csvs/results_up00.csv")
       buildstockbatch = CSV.read(buildstockbatch_path, headers: true)
 
-      run_analysis_path = File.join(@buildstock_directory, "run_analysis/project_#{project}#{project}_baseline/results-Baseline.csv")
+      run_analysis_path = File.join(@buildstock_directory, "run_analysis/project_#{project}/#{project}_baseline/results-Baseline.csv")
       run_analysis = CSV.read(run_analysis_path, headers: true)
 
       buildstockbatch_extras = buildstockbatch.headers - run_analysis.headers
@@ -70,7 +70,7 @@ class TestTools < Minitest::Test
       buildstockbatch_path = File.join(@buildstock_directory, "buildstockbatch/project_#{project}/#{project}_baseline/results_csvs/results_up00.csv")
       buildstockbatch = CSV.read(buildstockbatch_path, headers: true)
 
-      run_analysis_path = File.join(@buildstock_directory, "run_analysis/project_#{project}#{project}_baseline/results-Baseline.csv")
+      run_analysis_path = File.join(@buildstock_directory, "run_analysis/project_#{project}/#{project}_baseline/results-Baseline.csv")
       run_analysis = CSV.read(run_analysis_path, headers: true)
 
       columns.each do |col|
