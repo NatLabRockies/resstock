@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'csv'
+require_relative '../../../resources/hpxml-measures/BuildResidentialHPXML/measure'
 
 # HPXML declared values: https://github.com/NREL/OpenStudio-HPXML/blob/master/HPXMLtoOpenStudio/resources/hpxml.rb
 class ElectricalPanelSampler
@@ -9,8 +10,20 @@ class ElectricalPanelSampler
                  **)
     @runner = runner
     @prng = Random.new(building_id) # initialize a random number generator
+    @buildreshpxml = BuildResidentialHPXML.new
   end
 
+  def update_args_hash_with_detailed_properties(args:)
+    # update ResStockArguments args hash w/ OS-HPXML detailed properties based on choice dropdown for options based arguments
+    # makes detailed properties available in the args hash
+    # TODO: may need to have more calls of get_option_properties() as more OS-HPXML BuildResidentialHPXML measure arguments are consolidated
+    @buildreshpxml.get_option_properties(args, 'heating_system.tsv', args[:heating_system])
+    @buildreshpxml.get_option_properties(args, 'cooling_system.tsv', args[:cooling_system])
+    @buildreshpxml.get_option_properties(args, 'heat_pump.tsv', args[:heat_pump])
+    @buildreshpxml.get_option_properties(args, 'heat_pump_backup.tsv', args[:heat_pump_backup])
+    return args
+  end
+  
   def assign_rated_capacity(args:)
     # load probability distribution csv
     capacity_prob_map = read_rated_capacity_probs(args[:geometry_unit_type], args[:heating_system_fuel])

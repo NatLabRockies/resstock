@@ -440,6 +440,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
     args_to_delete = args.keys - arg_names # these are the extra ones added in the arguments section
 
+    panel_sampler = ElectricalPanelSampler.new(runner: runner, **args)
+    args = panel_sampler.update_args_hash_with_detailed_properties(args: args)
+    # Calling panel_sampler.update_args_hash_with_detailed_properties() up front 
+    # in case any other detailed properties (args[:xxx]) from resource tsvs are needed in ResStockArguments run method
+
     # Conditioned floor area
     if args[:geometry_unit_cfa] == Constants::Auto
       # TODO: Disaggregate detached and mobile home
@@ -875,7 +880,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # Electric Panel
     args[:electric_panel_service_feeders_load_calculation_types] = "#{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased}, #{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingMeterBased}"
 
-    panel_sampler = ElectricalPanelSampler.new(runner: runner, **args)
     cap_bin, cap_val = panel_sampler.assign_rated_capacity(args: args)
 
     args[:electric_panel_service_rating_bin] = cap_bin
