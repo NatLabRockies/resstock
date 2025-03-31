@@ -343,7 +343,7 @@
               </AnnualCoolingEfficiency>
               <AnnualHeatingEfficiency>
                 <Units>COP</Units>
-                <Value>3.6</Value>
+                <Value>3.8</Value>
               </AnnualHeatingEfficiency>
             </HeatPump>
           </HVACPlant>

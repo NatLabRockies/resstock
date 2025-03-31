@@ -2939,7 +2939,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
           return { [to_ft[fuel], EUT::Heating] => ["Heating Coil #{fuel} Energy", "Heating Coil Ancillary #{fuel} Energy"] }
         end
 
-      elsif object.to_CoilHeatingWaterToAirHeatPumpEquationFit.is_initialized
+      elsif object.to_CoilHeatingWaterToAirHeatPumpEquationFit.is_initialized || object.to_CoilHeatingWaterToAirHeatPumpVariableSpeedEquationFit.is_initialized
         return { [FT::Elec, EUT::Heating] => ["Heating Coil #{EPlus::FuelTypeElectricity} Energy"] }
 
       elsif object.to_ZoneHVACBaseboardConvectiveElectric.is_initialized
@@ -2988,7 +2988,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         end
         return vars
 
-      elsif object.to_CoilCoolingWaterToAirHeatPumpEquationFit.is_initialized
+      elsif object.to_CoilCoolingWaterToAirHeatPumpEquationFit.is_initialized || object.to_CoilCoolingWaterToAirHeatPumpVariableSpeedEquationFit.is_initialized
         return { [FT::Elec, EUT::Cooling] => ["Cooling Coil #{EPlus::FuelTypeElectricity} Energy"] }
 
       elsif object.to_EvaporativeCoolerDirectResearchSpecial.is_initialized
