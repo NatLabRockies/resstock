@@ -72,6 +72,23 @@ Development Changelog
 
 
     .. change::
+        :tags: characteristics
+        :pullreq: 1358
+
+        **Date**: 2025-03-10
+
+        Title:
+        Add PV in Hawaii 
+
+        Description:
+        Add PV saturation for Hawaii based on EIA form861.
+
+        resstock-estimation: `pull request 445 <https://github.com/NREL/resstock-estimation/pull/445>`
+
+        Assignees: Yingli Lou
+    
+
+    .. change::
         :tags: characteristics, feature, docs, technical reference guide, outputs
         :pullreq: 1299
 
