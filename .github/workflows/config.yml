@@ -140,10 +140,10 @@ jobs:
         with:
           name: run_analysis_results_csvs
           path: |
-            national_baseline/results-Baseline.csv
-            testing_baseline/results-Baseline.csv
-            sdr_upgrades_tmy3/results-Baseline.csv
-            sdr_upgrades_tmy3/results-EnvelopeOnlyLightTouchEnvelope.csv
+            project_national/national_baseline/results-Baseline.csv
+            project_testing/testing_baseline/results-Baseline.csv
+            project_national/sdr_upgrades_tmy3/results-Baseline.csv
+            project_national/sdr_upgrades_tmy3/results-EnvelopeOnlyLightTouchEnvelope.csv
           if-no-files-found: error
 
   integration-tests:
