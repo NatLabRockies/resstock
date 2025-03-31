@@ -1,0 +1,213 @@
+schema_version: '0.4'
+os_version: 3.9.0
+os_sha: c77fbb9569
+buildstock_directory: ../ # Relative to this file or absolute
+project_directory: project_national # Relative to buildstock_directory
+output_directory: ghps
+weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+# weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
+# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
+# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
+
+# Baseline number of units
+baseline:
+  n_buildings_represented: 139647020 # American Community Survey 2021 5-year, B25001, does not include territories
+
+# Sampler type and number of data points per baseline or upgrade
+sampler:
+  type: residential_quota
+  args:
+    n_datapoints: 100 # For CI
+    # n_datapoints: 550000 # For production run
+
+# NREL High Performance Computing machine configuration
+# Not used if running buildstock_local (local tests and CI)
+kestrel:
+  n_jobs: 600
+  minutes_per_sim: 10
+  account: <account>
+  postprocessing:
+    time: 800
+    n_workers: 20
+    n_procs: 20
+  sampling:
+    time: 60
+
+# Post proccessing and Amazon Web Services
+postprocessing:
+  # Post simulation partitioning
+  keep_individual_timeseries: true
+  partition_columns:
+    - State
+    - County
+  # AWS upload bucket and athena setup (uncomment during production and testing runs)
+  # aws:
+  #  region_name: us-west-2
+  #  s3:
+  #    bucket: sdr_resstock
+  #    prefix: production_runs
+  #  athena:
+  #    glue_service_role: service-role/AWSGlueServiceRole-default
+  #    database_name: sdr_resstock
+  #    max_crawling_time: 1200
+
+# Workflow generator
+workflow_generator:
+  # ResStock HPXML workflow generator
+  type: residential_hpxml
+  version: 2025.02.05
+
+  args:
+    # Annual simulation and timestep
+    build_existing_model:
+      simulation_control_timestep: 15
+      simulation_control_run_period_begin_month: 1
+      simulation_control_run_period_begin_day_of_month: 1
+      simulation_control_run_period_end_month: 12
+      simulation_control_run_period_end_day_of_month: 31
+      simulation_control_run_period_calendar_year: 2018
+
+    # Emissions scenarios
+    emissions:
+      - scenario_name: LRMER_LowRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2022/LRMER_LowRECost_15
+      - scenario_name: LRMER_MidCase_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_15
+      - scenario_name: LRMER_HighRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2022/LRMER_HighRECost_15
+      - scenario_name: LRMER_MidCase_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_25
+
+    # Utility bill rates
+    utility_bills:
+      - scenario_name: Utility Rates - Fixed + Variable
+        simple_filepath: data/utility_bills/sdr_rates/State.tsv
+
+    # Outputs to include
+    simulation_output_report:
+      timeseries_frequency: timestep
+      include_timeseries_total_consumptions: true
+      include_timeseries_fuel_consumptions: true
+      include_timeseries_end_use_consumptions: true
+      include_timeseries_emissions: true
+      include_timeseries_emission_fuels: true
+      include_timeseries_emission_end_uses: true
+      include_timeseries_hot_water_uses: true
+      include_timeseries_total_loads: true
+      include_timeseries_component_loads: true
+      include_timeseries_unmet_hours: true
+      include_timeseries_zone_temperatures: true
+      include_timeseries_airflows: true
+      include_timeseries_weather: true
+      include_timeseries_resilience: true
+      output_variables:
+        - name: Site Outdoor Air Drybulb Temperature
+        - name: Zone Mean Air Temperature
+        - name: Zone Air Relative Humidity
+        - name: People Sensible Heating Rate
+        - name: People Total Heating Rate
+        - name: Site Outdoor Air Humidity Ratio
+
+    # Other reporting measures to run
+    reporting_measures:
+      - measure_dir_name: QOIReport
+      - measure_dir_name: ServerDirectoryCleanup # tack this on so we can save some disk space (when using debug: true)
+
+    # Files to keep
+    server_directory_cleanup:
+      retain_in_idf: true
+      retain_schedules_csv: true
+      retain_in_osm: true
+
+    debug: true
+
+### -- Upgrades --
+# Standard Data Release - Residential
+
+### -- Heat Pumps -- ###
+upgrades:
+  - upgrade_name: GHPSingleSpeedSimple
+    
+    package_apply_logic: &remove_shared_heating_cooling_ghp
+      - not: Heating Fuel|Wood
+      - not: Heating Fuel|Other Fuel
+      - not: Heating Fuel|None
+      - HVAC Has Ducts|Yes      
+      - not:
+        - or:
+          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+          - HVAC Shared Efficiencies|Fan Coil Cooling Only
+    options:
+        ### -- GTHP applies to all dwellings with ducts
+      - option: HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8, Single Stage Simple
+        apply_logic: &ducted_ASHP_apply_logic
+          - HVAC Has Ducts|Yes
+          - not:
+            - or:
+              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+              - HVAC Shared Efficiencies|Fan Coil Cooling Only
+        costs: &costs_GTHP
+        #### costs not accurate or final, need to find GTHP costs + adjust to inflation - PRW 1/2/2024 ####
+          - value: 999
+            multiplier: Fixed (1)
+          - value: 999
+            multiplier: Size, Heating System Primary (kBtu/h)
+        lifetime: &lifetime_ducted_GTHP 15
+
+      - &HP_cooling_efficiency_ducted
+        option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *ducted_ASHP_apply_logic
+
+      - &100_percent_conditioned_ducts_only
+        option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: &yes_has_ducts_apply_logic
+          - HVAC Has Ducts|Yes
+
+  - upgrade_name: GHPSingleSpeedAdvanced
+    
+    package_apply_logic: *remove_shared_heating_cooling_ghp
+
+    options:
+      - option: HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8, Single Stage Advanced
+        apply_logic: *ducted_ASHP_apply_logic
+        costs: *costs_GTHP
+        lifetime: *lifetime_ducted_GTHP
+
+      - *HP_cooling_efficiency_ducted
+      - *100_percent_conditioned_ducts_only
+
+  - upgrade_name: GHPTwoSpeed
+    
+    package_apply_logic: *remove_shared_heating_cooling_ghp
+
+    options:
+      - option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0, Two Stage
+        apply_logic: *ducted_ASHP_apply_logic
+        costs: *costs_GTHP
+        lifetime: *lifetime_ducted_GTHP
+
+      - *HP_cooling_efficiency_ducted
+      - *100_percent_conditioned_ducts_only
+
+  - upgrade_name: GHPVariableSpeed
+    
+    package_apply_logic: *remove_shared_heating_cooling_ghp
+
+    options:
+      - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4, Variable Speed
+        apply_logic: *ducted_ASHP_apply_logic
+        costs: *costs_GTHP
+        lifetime: *lifetime_ducted_GTHP
+
+      - *HP_cooling_efficiency_ducted
+      - *100_percent_conditioned_ducts_only

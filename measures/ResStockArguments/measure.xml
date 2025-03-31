@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>6cbe6a42-3f46-473a-b560-ff53f3663f4e</version_id>
-  <version_modified>2025-03-21T20:25:24Z</version_modified>
+  <version_id>557dcaf2-4e3e-4811-8217-451eab073c04</version_id>
+  <version_modified>2025-03-31T19:49:19Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -31,6 +31,29 @@
         <choice>
           <value>false</value>
           <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>simulation_control_geothermal_model_type</name>
+      <display_name>Simulation Control: Geothermal Model Type</display_name>
+      <description>Research feature to select the type of geothermal model. Use simple for simple E+ geothermal coil modeling. Use advanced for an improved model that better accounts for coil staging; using advanced may impact simulation runtime. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-simulation-control'&gt;HPXML Simulation Control&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>simple</value>
+          <display_name>simple</display_name>
+        </choice>
+        <choice>
+          <value>advanced</value>
+          <display_name>advanced</display_name>
         </choice>
       </choices>
     </argument>
@@ -2447,7 +2470,7 @@
     <argument>
       <name>cooling_system_cooling_compressor_type</name>
       <display_name>Cooling System: Cooling Compressor Type</display_name>
-      <description>The compressor type of the cooling system. Only applies to central air conditioner and mini-split. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner'&gt;Central Air Conditioner&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner'&gt;Mini-Split Air Conditioner&lt;/a&gt;) is used.</description>
+      <description>The compressor type of the cooling system. Only applies to central air conditioner and mini-split.</description>
       <type>Choice</type>
       <units></units>
       <required>false</required>
@@ -2725,7 +2748,7 @@
     <argument>
       <name>heat_pump_cooling_compressor_type</name>
       <display_name>Heat Pump: Cooling Compressor Type</display_name>
-      <description>The compressor type of the heat pump. Only applies to air-to-air and mini-split. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'&gt;Air-to-Air Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'&gt;Mini-Split Heat Pump&lt;/a&gt;) is used.</description>
+      <description>The compressor type of the heat pump. Only applies to air-to-air, mini-split and ground-to-air.</description>
       <type>Choice</type>
       <units></units>
       <required>false</required>
@@ -7764,7 +7787,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>013AFE98</checksum>
+      <checksum>54FE2AE7</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7823,7 +7846,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C2CE2C03</checksum>
+      <checksum>68BCB6DB</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>
