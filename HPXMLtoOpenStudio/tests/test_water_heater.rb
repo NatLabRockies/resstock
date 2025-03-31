@@ -436,7 +436,7 @@ class HPXMLtoOpenStudioWaterHeaterTest < Minitest::Test
 
   def test_dsh_gshp
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(sample_files_dir, 'base-dhw-desuperheater-gshp.xml'))
+    args_hash['hpxml_path'] = File.absolute_path(File.join(sample_files_dir, 'base-dhw-desuperheater-ghp.xml'))
     model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     # Get HPXML values

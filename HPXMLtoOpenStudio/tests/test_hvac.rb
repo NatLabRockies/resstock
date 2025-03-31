@@ -1041,7 +1041,7 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
 
   def test_ground_to_air_heat_pump
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-ground-to-air-heat-pump.xml'))
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-ground-to-air-heat-pump-1-speed.xml'))
     model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     # Get HPXML values
@@ -1052,13 +1052,13 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     # Check cooling coil
     assert_equal(1, model.getCoilCoolingWaterToAirHeatPumpEquationFits.size)
     clg_coil = model.getCoilCoolingWaterToAirHeatPumpEquationFits[0]
-    assert_in_epsilon(5.84, clg_coil.ratedCoolingCoefficientofPerformance, 0.01)
+    assert_in_epsilon(6.68, clg_coil.ratedCoolingCoefficientofPerformance, 0.01)
     assert_in_epsilon(clg_capacity, clg_coil.ratedTotalCoolingCapacity.get, 0.01)
 
     # Check heating coil
     assert_equal(1, model.getCoilHeatingWaterToAirHeatPumpEquationFits.size)
     htg_coil = model.getCoilHeatingWaterToAirHeatPumpEquationFits[0]
-    assert_in_epsilon(3.94, htg_coil.ratedHeatingCoefficientofPerformance, 0.01)
+    assert_in_epsilon(4.19, htg_coil.ratedHeatingCoefficientofPerformance, 0.01)
     assert_in_epsilon(htg_capacity, htg_coil.ratedHeatingCapacity.get, 0.01)
 
     # Check EMS
@@ -1099,13 +1099,13 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     # Check cooling coil
     assert_equal(1, model.getCoilCoolingWaterToAirHeatPumpEquationFits.size)
     clg_coil = model.getCoilCoolingWaterToAirHeatPumpEquationFits[0]
-    assert_in_epsilon(5.84, clg_coil.ratedCoolingCoefficientofPerformance, 0.01)
+    assert_in_epsilon(6.68, clg_coil.ratedCoolingCoefficientofPerformance, 0.01)
     assert_in_epsilon(clg_capacity, clg_coil.ratedTotalCoolingCapacity.get, 0.01)
 
     # Check heating coil
     assert_equal(1, model.getCoilHeatingWaterToAirHeatPumpEquationFits.size)
     htg_coil = model.getCoilHeatingWaterToAirHeatPumpEquationFits[0]
-    assert_in_epsilon(3.94, htg_coil.ratedHeatingCoefficientofPerformance, 0.01)
+    assert_in_epsilon(4.19, htg_coil.ratedHeatingCoefficientofPerformance, 0.01)
     assert_in_epsilon(htg_capacity, htg_coil.ratedHeatingCapacity.get, 0.01)
 
     # Check supp heating coil
@@ -1495,7 +1495,7 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
 
   def test_install_quality_ground_to_air_heat_pump
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-install-quality-ground-to-air-heat-pump.xml'))
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-install-quality-ground-to-air-heat-pump-1-speed.xml'))
     model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     # Get HPXML values

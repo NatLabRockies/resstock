@@ -388,7 +388,7 @@ module Model
   # @param name [String] Name for the OpenStudio object
   # @param rated_power [Double] Design power consumption (W)
   # @return [OpenStudio::Model::PumpVariableSpeed] The model object
-  def self.add_pump_variable_speed(model, name:, rated_power:)
+  def self.add_pump_variable_speed(model, name:, rated_power:, control_type: EPlus::PumpControlTypeIntermittent)
     pump = OpenStudio::Model::PumpVariableSpeed.new(model)
     pump.setName(name)
     pump.setMotorEfficiency(0.85)
@@ -408,7 +408,7 @@ module Model
     pump.setCoefficient3ofthePartLoadPerformanceCurve(0)
     pump.setCoefficient4ofthePartLoadPerformanceCurve(0)
     pump.setMinimumFlowRate(0)
-    pump.setPumpControlType('Intermittent')
+    pump.setPumpControlType(control_type)
     return pump
   end
 

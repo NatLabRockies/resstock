@@ -3,6 +3,8 @@
 __New Features__
 - HVAC modeling updates:
   - **Breaking Change**: `CompressorType` required for central and mini-split air conditioners and heat pumps.
+  - Allows modeling two-speed and variable-speed geothermal heat pumps with `CompressorType` to be "two stage" or "variable speed".
+  - Optional input `h:SimulationControl/AdvancedResearchFeatures/GeothermalModelType` to choose the "simple" or "advanced" geothermal heat pump models, "advanced" geothermal model uses E+ variable speed coils.
 - Electric vehicle enhancements:
   - Allows detailed modeling of electric vehicles (batteries and charging/discharging) using `Vehicles` as an alternative to the simple EV charging `PlugLoad`.
   - Adds EV driving unmet hours output.
@@ -186,7 +188,7 @@ __New Features__
   - Adds new optional arguments for registering (with the OpenStudio runner) annual or monthly utility bills.
 - Advanced research features:
   - **Breaking change**: Replaces `SimulationControl/TemperatureCapacitanceMultiplier` with `SimulationControl/AdvancedResearchFeatures/TemperatureCapacitanceMultiplier`.
-  - Allows an optional boolean input `SimulationControl/AdvancedResearchFeatures/DefrostModelType` for heat pump advanced defrost model.
+  - Allows an optional input `SimulationControl/AdvancedResearchFeatures/DefrostModelType` for heat pump advanced defrost model.
   - Adds maximum power ratio detailed schedule for variable-speed HVAC systems to model shedding controls per [AHRI 1380](https://www.ahrinet.org/search-standards/ahri-1380-i-p-demand-response-through-variable-capacity-hvac-systems-residential-and-small).
 
 __Bugfixes__

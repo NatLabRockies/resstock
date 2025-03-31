@@ -10,6 +10,9 @@
     <extension>
       <SimulationControl>
         <Timestep>60</Timestep>
+        <AdvancedResearchFeatures>
+          <GeothermalModelType>advanced</GeothermalModelType>
+        </AdvancedResearchFeatures>
       </SimulationControl>
       <UtilityBillScenarios>
         <UtilityBillScenario>
@@ -322,33 +325,25 @@
             </PrimarySystems>
             <HeatPump>
               <SystemIdentifier id='HeatPump1'/>
-              <HeatPumpType>room air conditioner with reverse cycle</HeatPumpType>
+              <DistributionSystem idref='HVACDistribution1'/>
+              <HeatPumpType>ground-to-air</HeatPumpType>
               <HeatPumpFuel>electricity</HeatPumpFuel>
               <HeatingCapacity>36000.0</HeatingCapacity>
               <CoolingCapacity>36000.0</CoolingCapacity>
-              <CoolingSensibleHeatFraction>0.65</CoolingSensibleHeatFraction>
-              <BackupType>integrated</BackupType>
-              <BackupSystemFuel>electricity</BackupSystemFuel>
-              <BackupAnnualHeatingEfficiency>
-                <Units>Percent</Units>
-                <Value>1.0</Value>
-              </BackupAnnualHeatingEfficiency>
-              <BackupHeatingCapacity>36000.0</BackupHeatingCapacity>
+              <CompressorType>two stage</CompressorType>
+              <CoolingSensibleHeatFraction>0.73</CoolingSensibleHeatFraction>
               <FractionHeatLoadServed>1.0</FractionHeatLoadServed>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
                 <Units>EER</Units>
-                <Value>11.4</Value>
+                <Value>20.5</Value>
               </AnnualCoolingEfficiency>
               <AnnualHeatingEfficiency>
                 <Units>COP</Units>
-                <Value>3.8</Value>
+                <Value>4.0</Value>
               </AnnualHeatingEfficiency>
               <extension>
-                <HeatingCapacityRetention>
-                  <Fraction>0.6</Fraction>
-                  <Temperature>17.0</Temperature>
-                </HeatingCapacityRetention>
+                <PumpPowerWattsPerTon>100.0</PumpPowerWattsPerTon>
               </extension>
             </HeatPump>
           </HVACPlant>
@@ -357,6 +352,44 @@
             <SetpointTempHeatingSeason>68.0</SetpointTempHeatingSeason>
             <SetpointTempCoolingSeason>78.0</SetpointTempCoolingSeason>
           </HVACControl>
+          <HVACDistribution>
+            <SystemIdentifier id='HVACDistribution1'/>
+            <DistributionSystemType>
+              <AirDistribution>
+                <AirDistributionType>regular velocity</AirDistributionType>
+                <DuctLeakageMeasurement>
+                  <DuctType>supply</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>75.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <DuctLeakageMeasurement>
+                  <DuctType>return</DuctType>
+                  <DuctLeakage>
+                    <Units>CFM25</Units>
+                    <Value>25.0</Value>
+                    <TotalOrToOutside>to outside</TotalOrToOutside>
+                  </DuctLeakage>
+                </DuctLeakageMeasurement>
+                <Ducts>
+                  <SystemIdentifier id='Ducts1'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>4.0</DuctInsulationRValue>
+                  <DuctLocation>attic - unvented</DuctLocation>
+                  <DuctSurfaceArea>150.0</DuctSurfaceArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts2'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>attic - unvented</DuctLocation>
+                  <DuctSurfaceArea>50.0</DuctSurfaceArea>
+                </Ducts>
+              </AirDistribution>
+            </DistributionSystemType>
+          </HVACDistribution>
         </HVAC>
         <WaterHeating>
           <WaterHeatingSystem>
