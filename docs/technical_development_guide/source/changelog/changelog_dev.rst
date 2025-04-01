@@ -23,6 +23,21 @@ Development Changelog
 
 
     .. change::
+        :tags: outputs, standard data release
+        :pullreq: 1371
+
+        **Date**: 2025-04-01
+
+        Title:
+        Remove end-use emissions from SDR YAML outputs
+
+        Description:
+        ResStock SDR currently do not publish end-use emissions. ResStock SDR only publish totals and totals by fuel. In an effort to reduce the number of outputs, end-use emissions outputs have been removed from the SDR raw outputs. The end-use emissions can still be called out for testing purposes using.
+
+        Assignees: Anthony Fontanini
+
+
+    .. change::
         :tags: workflow, feature
         :pullreq: 1353
 
