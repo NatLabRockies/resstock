@@ -8,21 +8,6 @@ Development Changelog
 
 
     .. change::
-        :tags: docs, technical reference guide
-        :pullreq: 1361
-
-        **Date**: 2025-03-12
-
-        Title:
-        Update Technical Reference Guide from 3.3.0 to develop
-
-        Description:
-        Update the Technical Reference Guide based on the PRs from the split-off point of ResStock Release 3.3.0 to current develop.
-
-        Assignees: Anthony Fontanini
-
-
-    .. change::
         :tags: outputs, standard data release
         :pullreq: 1371
 
@@ -33,6 +18,21 @@ Development Changelog
 
         Description:
         ResStock SDR currently do not publish end-use emissions. ResStock SDR only publish totals and totals by fuel. In an effort to reduce the number of outputs, end-use emissions outputs have been removed from the SDR raw outputs. The end-use emissions can still be called out for testing purposes using.
+
+        Assignees: Anthony Fontanini
+
+
+    .. change::
+        :tags: docs, technical reference guide
+        :pullreq: 1361
+
+        **Date**: 2025-03-12
+
+        Title:
+        Update Technical Reference Guide from 3.3.0 to develop
+
+        Description:
+        Update the Technical Reference Guide based on the PRs from the split-off point of ResStock Release 3.3.0 to current develop.
 
         Assignees: Anthony Fontanini
 
