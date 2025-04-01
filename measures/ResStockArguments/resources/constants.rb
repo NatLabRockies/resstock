@@ -51,6 +51,58 @@ module Constants
                                    'misc_plug_loads_vehicle_2_usage_multiplier',
                                    'misc_plug_loads_vehicle_annual_kwh',
                                    'misc_plug_loads_vehicle_present',
+                                   'electric_panel_service_feeders_load_calculation_types',
+                                   'electric_panel_baseline_peak_electricity_power',
+                                   'electric_panel_service_voltage',
+                                   'electric_panel_service_rating',
+                                   'electric_panel_breaker_spaces_type',
+                                   'electric_panel_breaker_spaces',
+                                   'electric_panel_load_heating_system_power',
+                                   'electric_panel_load_cooling_system_power',
+                                   'electric_panel_load_heat_pump_heating_power',
+                                   'electric_panel_load_heat_pump_cooling_power',
+                                   'electric_panel_load_heating_system_2_power',
+                                   'electric_panel_load_mech_vent_power',
+                                   'electric_panel_load_mech_vent_2_power',
+                                   'electric_panel_load_whole_house_fan_power',
+                                   'electric_panel_load_kitchen_fans_power',
+                                   'electric_panel_load_bathroom_fans_power',
+                                   'electric_panel_load_water_heater_power',
+                                   'electric_panel_load_clothes_dryer_power',
+                                   'electric_panel_load_dishwasher_power',
+                                   'electric_panel_load_cooking_range_power',
+                                   'electric_panel_load_misc_plug_loads_well_pump_power',
+                                   'electric_panel_load_misc_plug_loads_vehicle_power',
+                                   'electric_panel_load_pool_pump_power',
+                                   'electric_panel_load_pool_heater_power',
+                                   'electric_panel_load_permanent_spa_pump_power',
+                                   'electric_panel_load_permanent_spa_heater_power',
+                                   'electric_panel_load_other_power',
+                                   'electric_panel_load_heat_pump_voltage',
+                                   'electric_panel_load_water_heater_voltage',
+                                   'electric_panel_load_clothes_dryer_voltage',
+                                   'electric_panel_load_cooking_range_voltage',
+                                   'electric_panel_load_misc_plug_loads_vehicle_voltage',
+                                   'electric_panel_load_heating_system_addition',
+                                   'electric_panel_load_cooling_system_addition',
+                                   'electric_panel_load_heat_pump_addition',
+                                   'electric_panel_load_heating_system_2_addition',
+                                   'electric_panel_load_mech_vent_fan_addition',
+                                   'electric_panel_load_mech_vent_2_addition',
+                                   'electric_panel_load_whole_house_fan_addition',
+                                   'electric_panel_load_kitchen_fans_addition',
+                                   'electric_panel_load_bathroom_fans_addition',
+                                   'electric_panel_load_water_heater_addition',
+                                   'electric_panel_load_clothes_dryer_addition',
+                                   'electric_panel_load_dishwasher_addition',
+                                   'electric_panel_load_cooking_range_addition',
+                                   'electric_panel_load_misc_plug_loads_well_pump_addition',
+                                   'electric_panel_load_misc_plug_loads_vehicle_addition',
+                                   'electric_panel_load_pool_pump_addition',
+                                   'electric_panel_load_pool_heater_addition',
+                                   'electric_panel_load_permanent_spa_pump_addition',
+                                   'electric_panel_load_permanent_spa_heater_addition',
+                                   'electric_panel_load_other_addition',
                                    'emissions_scenario_names',
                                    'emissions_types',
                                    'emissions_electricity_units',
@@ -102,15 +154,19 @@ module Constants
                                           'building_id']
 
   # Exclude these ResStockArguments from being required in options_lookup.tsv
+  # These are arguments added to ResStockArguments not in BuildResidentialHPXML
   OtherExcludes = ['building_id',
                    'heating_system_actual_cfm_per_ton',
                    'heating_system_rated_cfm_per_ton']
 
   # List of ResStockArguments arguments; reported as build_existing_model.<argument_name>, ...
   ArgumentsToRegister = ['heating_unavailable_period',
-                         'cooling_unavailable_period']
+                         'cooling_unavailable_period',
+                         'electric_panel_service_rating_bin',
+                         'electric_panel_service_rating']
 
   # List of ResStockArguments arguments; will not be passed into BuildResidentialHPXML
   ArgumentsToExclude = ['heating_unavailable_period',
-                        'cooling_unavailable_period']
+                        'cooling_unavailable_period',
+                        'electric_panel_service_rating_bin']
 end

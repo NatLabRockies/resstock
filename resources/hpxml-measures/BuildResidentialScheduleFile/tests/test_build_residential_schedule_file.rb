@@ -62,7 +62,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
       PlugLoadsTV: 1542.2,
       HotWaterDishwasher: 287.3,
       HotWaterClothesWasher: 322.6,
-      HotWaterFixtures: 981.2,
+      HotWaterFixtures: 1090.49,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
@@ -147,7 +147,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
       PlugLoadsTV: 1542.2,
       HotWaterDishwasher: 287.3,
       HotWaterClothesWasher: 322.6,
-      HotWaterFixtures: 981.2,
+      HotWaterFixtures: 1090.49,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
@@ -187,7 +187,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
       PlugLoadsTV: 1542.2,
       HotWaterDishwasher: 287.3,
       HotWaterClothesWasher: 322.6,
-      HotWaterFixtures: 981.2,
+      HotWaterFixtures: 1090.49,
       Sleeping: 3101.7,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
@@ -226,7 +226,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
       PlugLoadsTV: 1517,
       HotWaterDishwasher: 304,
       HotWaterClothesWasher: 322,
-      HotWaterFixtures: 936,
+      HotWaterFixtures: 1146.15,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
 
@@ -261,7 +261,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
       PlugLoadsTV: 1205,
       HotWaterDishwasher: 243,
       HotWaterClothesWasher: 263,
-      HotWaterFixtures: 1049,
+      HotWaterFixtures: 966.11,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
   end
@@ -299,7 +299,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
       PlugLoadsTV: 1505,
       HotWaterDishwasher: 155.9,
       HotWaterClothesWasher: 138.4,
-      HotWaterFixtures: 280.2,
+      HotWaterFixtures: 345.7,
     }
     assert_full_load_hrs_match(sf, expected_values, @tol)
     assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
@@ -392,7 +392,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
           PlugLoadsTV: 1542.2,
           HotWaterDishwasher: 287.3,
           HotWaterClothesWasher: 322.6,
-          HotWaterFixtures: 981.2,
+          HotWaterFixtures: 1090.49,
         }
         assert_full_load_hrs_match(sf, expected_values, @tol)
       elsif hpxml_bldg.building_id == 'MyBuilding_2'
@@ -408,7 +408,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
           PlugLoadsTV: 1205,
           HotWaterDishwasher: 229.8,
           HotWaterClothesWasher: 246.5,
-          HotWaterFixtures: 956.4,
+          HotWaterFixtures: 948.79,
         }
         assert_full_load_hrs_match(sf, expected_values, @tol)
       elsif hpxml_bldg.building_id == 'MyBuilding_3'
@@ -424,7 +424,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
           PlugLoadsTV: 1182.2,
           HotWaterDishwasher: 232.1,
           HotWaterClothesWasher: 206.8,
-          HotWaterFixtures: 857.1,
+          HotWaterFixtures: 955.2,
         }
         assert_full_load_hrs_match(sf, expected_values, @tol)
       end
@@ -473,7 +473,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
           PlugLoadsTV: 1205,
           HotWaterDishwasher: 229.8,
           HotWaterClothesWasher: 246.5,
-          HotWaterFixtures: 956.4,
+          HotWaterFixtures: 948.79,
         }
         assert_full_load_hrs_match(sf, expected_values, @tol)
         assert(!sf.schedules.keys.include?(SchedulesFile::Columns[:Sleeping].name))
