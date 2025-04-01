@@ -9885,52 +9885,8 @@ HVAC Shared Efficiencies	"Fan Coil Heating and Cooling, Fuel"	ResStockArguments	
 HVAC Shared Efficiencies	Fan Coil Cooling Only	ResStockArguments	cooling_system=Fan Coil Cooling, SEER 13	cooling_system_cooling_capacity=auto	cooling_system_cooling_autosizing_limit=auto
 HVAC Shared Efficiencies	None
 HVAC Shared Efficiencies	Void
-HVAC System Is Faulted	No
-HVAC System Is Faulted	Yes
 HVAC System Is Scaled	No
 HVAC System Is Scaled	Yes
-HVAC System Single Speed AC Airflow	154.8 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=154.8
-HVAC System Single Speed AC Airflow	204.4 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=204.4
-HVAC System Single Speed AC Airflow	254.0 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=254.0
-HVAC System Single Speed AC Airflow	303.5 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=303.5
-HVAC System Single Speed AC Airflow	353.1 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=353.1
-HVAC System Single Speed AC Airflow	402.7 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=402.7
-HVAC System Single Speed AC Airflow	452.3 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=452.3
-HVAC System Single Speed AC Airflow	501.9 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=501.9
-HVAC System Single Speed AC Airflow	551.5 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=551.5
-HVAC System Single Speed AC Airflow	601.0 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=601.0
-HVAC System Single Speed AC Airflow	650.6 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=650.6
-HVAC System Single Speed AC Airflow	700.2 cfm/ton	ResStockArguments	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=700.2
-HVAC System Single Speed AC Airflow	None
-HVAC System Single Speed AC Charge	0.570 Charge Frac	ResStockArguments	cooling_system_frac_manufacturer_charge=0.570
-HVAC System Single Speed AC Charge	0.709 Charge Frac	ResStockArguments	cooling_system_frac_manufacturer_charge=0.709
-HVAC System Single Speed AC Charge	0.848 Charge Frac	ResStockArguments	cooling_system_frac_manufacturer_charge=0.848
-HVAC System Single Speed AC Charge	0.988 Charge Frac	ResStockArguments	cooling_system_frac_manufacturer_charge=0.988
-HVAC System Single Speed AC Charge	1.127 Charge Frac	ResStockArguments	cooling_system_frac_manufacturer_charge=1.127
-HVAC System Single Speed AC Charge	1.266 Charge Frac	ResStockArguments	cooling_system_frac_manufacturer_charge=1.266
-HVAC System Single Speed AC Charge	1.405 Charge Frac	ResStockArguments	cooling_system_frac_manufacturer_charge=1.405
-HVAC System Single Speed AC Charge	None
-HVAC System Single Speed ASHP Airflow	154.8 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=154.8
-HVAC System Single Speed ASHP Airflow	204.4 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=204.4
-HVAC System Single Speed ASHP Airflow	254.0 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=254.0
-HVAC System Single Speed ASHP Airflow	303.5 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=303.5
-HVAC System Single Speed ASHP Airflow	353.1 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=353.1
-HVAC System Single Speed ASHP Airflow	402.7 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=402.7
-HVAC System Single Speed ASHP Airflow	452.3 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=452.3
-HVAC System Single Speed ASHP Airflow	501.9 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=501.9
-HVAC System Single Speed ASHP Airflow	551.5 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=551.5
-HVAC System Single Speed ASHP Airflow	601.0 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=601.0
-HVAC System Single Speed ASHP Airflow	650.6 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=650.6
-HVAC System Single Speed ASHP Airflow	700.2 cfm/ton	ResStockArguments	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=700.2
-HVAC System Single Speed ASHP Airflow	None
-HVAC System Single Speed ASHP Charge	0.570 Charge Frac	ResStockArguments	heat_pump_frac_manufacturer_charge=0.570
-HVAC System Single Speed ASHP Charge	0.709 Charge Frac	ResStockArguments	heat_pump_frac_manufacturer_charge=0.709
-HVAC System Single Speed ASHP Charge	0.848 Charge Frac	ResStockArguments	heat_pump_frac_manufacturer_charge=0.848
-HVAC System Single Speed ASHP Charge	0.988 Charge Frac	ResStockArguments	heat_pump_frac_manufacturer_charge=0.988
-HVAC System Single Speed ASHP Charge	1.127 Charge Frac	ResStockArguments	heat_pump_frac_manufacturer_charge=1.127
-HVAC System Single Speed ASHP Charge	1.266 Charge Frac	ResStockArguments	heat_pump_frac_manufacturer_charge=1.266
-HVAC System Single Speed ASHP Charge	1.405 Charge Frac	ResStockArguments	heat_pump_frac_manufacturer_charge=1.405
-HVAC System Single Speed ASHP Charge	None
 Has PV	No
 Has PV	Yes
 Heat Pump Backup	Use Existing System	ResStockArguments	heat_pump_backup_use_existing_system=true

@@ -7,6 +7,7 @@ require 'openstudio'
 require_relative 'resources/constants'
 require_relative 'resources/electrical_panel'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
+require_relative '../../resources/hpxml-measures/BuildResidentialHPXML/measure'
 
 # start the measure
 class ResStockArguments < OpenStudio::Measure::ModelMeasure
@@ -346,54 +347,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(Constants::Auto)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_rated_cfm_per_ton', false)
-    arg.setDisplayName('Heating System: Rated CFM Per Ton')
-    arg.setDescription('The rated cfm per ton of the heating system.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_actual_cfm_per_ton', false)
-    arg.setDisplayName('Heating System: Actual CFM Per Ton')
-    arg.setDescription('The actual cfm per ton of the heating system.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_rated_cfm_per_ton', false)
-    arg.setDisplayName('Cooling System: Rated CFM Per Ton')
-    arg.setDescription('The rated cfm per ton of the cooling system.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_actual_cfm_per_ton', false)
-    arg.setDisplayName('Cooling System: Actual CFM Per Ton')
-    arg.setDescription('The actual cfm per ton of the cooling system.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_frac_manufacturer_charge', false)
-    arg.setDisplayName('Cooling System: Fraction of Manufacturer Recommended Charge')
-    arg.setDescription('The fraction of manufacturer recommended charge of the cooling system.')
-    arg.setUnits('Frac')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_rated_cfm_per_ton', false)
-    arg.setDisplayName('Heat Pump: Rated CFM Per Ton')
-    arg.setDescription('The rated cfm per ton of the heat pump.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_actual_cfm_per_ton', false)
-    arg.setDisplayName('Heat Pump: Actual CFM Per Ton')
-    arg.setDescription('The actual cfm per ton of the heat pump.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_frac_manufacturer_charge', false)
-    arg.setDisplayName('Heat Pump: Fraction of Manufacturer Recommended Charge')
-    arg.setDescription('The fraction of manufacturer recommended charge of the heat pump.')
-    arg.setUnits('Frac')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('heat_pump_backup_use_existing_system', false)
     arg.setDisplayName('Heat Pump: Backup Use Existing System')
     arg.setDescription('Whether the heat pump uses the existing system as backup.')
@@ -440,10 +393,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
     args_to_delete = args.keys - arg_names # these are the extra ones added in the arguments section
 
-    panel_sampler = ElectricalPanelSampler.new(runner: runner, **args)
-    args = panel_sampler.update_args_hash_with_detailed_properties(args: args)
-    # Calling panel_sampler.update_args_hash_with_detailed_properties() up front 
-    # in case any other detailed properties (args[:xxx]) from resource tsvs are needed in ResStockArguments run method
+    new_arg_keys = update_args_hash_with_detailed_properties(args: args)
 
     # Conditioned floor area
     if args[:geometry_unit_cfa] == Constants::Auto
@@ -670,33 +620,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    # HVAC Faults
-    # TODO: HVAC System Single Speed ASHP Airflow/Charge.tsv and HVAC System Single Speed AC Airflow/Charge.tsv
-    # currently sample systems that have faults (non-zero probability in above tsvs)...including options that cover all possible sampled combinations
-    # of cooling_system_actual_cfm_per_ton, cooling_system_frac_manufacturer_charge, heat_pump_actual_cfm_per_ton, and heat_pump_frac_manufacturer_charge
-    # will make the dropdowns in heat_pump.tsv and cooling_system.tsv prohibitively long. Is there a way to get the airflow/charge defect inputs into the xml created by BuildResidentialHPXML without going through OS-HXPML?
-    # Use ResStockArgumentsPostHPXML? Ideally edits to accommodate the faulty systems would happen only in ResStock, not OS-HPXML.
-
-    if !args[:heating_system_rated_cfm_per_ton].nil? && !args[:heating_system_actual_cfm_per_ton].nil?
-      args[:heating_system_airflow_defect_ratio] = (args[:heating_system_actual_cfm_per_ton] - args[:heating_system_rated_cfm_per_ton]) / args[:heating_system_rated_cfm_per_ton]
-    end
-
-    if !args[:cooling_system_rated_cfm_per_ton].nil? && !args[:cooling_system_actual_cfm_per_ton].nil?
-      # args[:cooling_system_airflow_defect_ratio] = (args[:cooling_system_actual_cfm_per_ton] - args[:cooling_system_rated_cfm_per_ton]) / args[:cooling_system_rated_cfm_per_ton]
-    end
-
-    if !args[:cooling_system_frac_manufacturer_charge].nil?
-      # args[:cooling_system_charge_defect_ratio] = args[:cooling_system_frac_manufacturer_charge] - 1.0
-    end
-
-    if !args[:heat_pump_rated_cfm_per_ton].nil? && !args[:heat_pump_actual_cfm_per_ton].nil?
-      # args[:heat_pump_airflow_defect_ratio] = (args[:heat_pump_actual_cfm_per_ton] - args[:heat_pump_rated_cfm_per_ton]) / args[:heat_pump_rated_cfm_per_ton]
-    end
-
-    if !args[:heat_pump_frac_manufacturer_charge].nil?
-      # args[:heat_pump_charge_defect_ratio] = args[:heat_pump_frac_manufacturer_charge] - 1.0
-    end
-
     # Error check geometry inputs
     corridor_width = args[:geometry_corridor_width]
     corridor_position = args[:geometry_corridor_position]
@@ -880,6 +803,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # Electric Panel
     args[:electric_panel_service_feeders_load_calculation_types] = "#{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased}, #{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingMeterBased}"
 
+    panel_sampler = ElectricalPanelSampler.new(runner: runner, **args)
     cap_bin, cap_val = panel_sampler.assign_rated_capacity(args: args)
 
     args[:electric_panel_service_rating_bin] = cap_bin
@@ -931,6 +855,8 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
     # Register values to runner
     args.each do |arg_name, arg_value|
+      next if new_arg_keys.include?(arg_name)
+
       if args_to_delete.include?(arg_name) || (arg_value == Constants::Auto)
         arg_value = '' # don't assign these to BuildResidentialHPXML or BuildResidentialScheduleFile
       end
@@ -1000,6 +926,22 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       end
     end
     return args
+  end
+
+  def update_args_hash_with_detailed_properties(args:)
+    # update ResStockArguments args hash w/ OS-HPXML detailed properties based on choice dropdown for options based arguments
+    # makes detailed properties available in the args hash
+    # TODO: may need to have more calls of get_option_properties() as more OS-HPXML BuildResidentialHPXML measure arguments are consolidated
+    orig_args = args.dup
+
+    buildreshpxml = BuildResidentialHPXML.new
+    buildreshpxml.get_option_properties(args, 'heating_system.tsv', args[:heating_system])
+    buildreshpxml.get_option_properties(args, 'cooling_system.tsv', args[:cooling_system])
+    buildreshpxml.get_option_properties(args, 'heat_pump.tsv', args[:heat_pump])
+    buildreshpxml.get_option_properties(args, 'heat_pump_backup.tsv', args[:heat_pump_backup])
+
+    new_arg_keys = args.keys - orig_args.keys
+    return new_arg_keys
   end
 end
 

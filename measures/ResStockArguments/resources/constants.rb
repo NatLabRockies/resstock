@@ -33,11 +33,6 @@ module Constants
                                    'geometry_unit_back_wall_is_adiabatic',
                                    'geometry_unit_num_floors_above_grade',
                                    'air_leakage_has_flue_or_chimney_in_conditioned_space',
-                                   'heating_system_airflow_defect_ratio',
-                                   'cooling_system_airflow_defect_ratio',
-                                   'cooling_system_charge_defect_ratio',
-                                   'heat_pump_airflow_defect_ratio',
-                                   'heat_pump_charge_defect_ratio',
                                    'hvac_control_heating_weekday_setpoint',
                                    'hvac_control_heating_weekend_setpoint',
                                    'hvac_control_cooling_weekday_setpoint',
@@ -155,9 +150,7 @@ module Constants
 
   # Exclude these ResStockArguments from being required in options_lookup.tsv
   # These are arguments added to ResStockArguments not in BuildResidentialHPXML
-  OtherExcludes = ['building_id',
-                   'heating_system_actual_cfm_per_ton',
-                   'heating_system_rated_cfm_per_ton']
+  OtherExcludes = ['building_id']
 
   # List of ResStockArguments arguments; reported as build_existing_model.<argument_name>, ...
   ArgumentsToRegister = ['heating_unavailable_period',

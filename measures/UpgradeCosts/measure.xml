@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>upgrade_costs</name>
   <uid>ef51212c-acc4-48d7-9b29-cf2a5c6c4449</uid>
-  <version_id>36816cdc-8889-4210-888c-d9a0adfec343</version_id>
-  <version_modified>2025-03-27T23:20:52Z</version_modified>
+  <version_id>4f1f05e0-14d1-4787-9720-d75e96414e1a</version_id>
+  <version_modified>2025-03-31T23:53:51Z</version_modified>
   <xml_checksum>B1F14CB4</xml_checksum>
   <class_name>UpgradeCosts</class_name>
   <display_name>Upgrade Costs</display_name>
@@ -189,7 +189,7 @@
       <filename>SFD_2story_FB_UA_GRG_GSHP_ElecTanklessWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>85F58CDC</checksum>
+      <checksum>63C306AD</checksum>
     </file>
     <file>
       <filename>SFD_2story_PB_UA_ElecFurnace_ElecTankWH.osw</filename>
