@@ -7,7 +7,7 @@ require 'openstudio'
 require_relative 'resources/constants'
 require_relative 'resources/electrical_panel'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
-require_relative '../../resources/hpxml-measures/BuildResidentialHPXML/measure'
+require_relative '../../resources/hpxml-measures/BuildResidentialHPXML/resources/options'
 
 # start the measure
 class ResStockArguments < OpenStudio::Measure::ModelMeasure
@@ -934,12 +934,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # TODO: may need to have more calls of get_option_properties() as more OS-HPXML BuildResidentialHPXML measure arguments are consolidated
     orig_args = args.dup
 
-    buildreshpxml = BuildResidentialHPXML.new
-    buildreshpxml.get_option_properties(args, 'heating_system.tsv', args[:heating_system])
-    buildreshpxml.get_option_properties(args, 'cooling_system.tsv', args[:cooling_system])
-    buildreshpxml.get_option_properties(args, 'heat_pump.tsv', args[:heat_pump])
-    buildreshpxml.get_option_properties(args, 'heat_pump_backup.tsv', args[:heat_pump_backup])
-    buildreshpxml.get_option_properties(args, 'heating_system_2.tsv', args[:heating_system_2])
+    get_option_properties(args, 'heating_system.tsv', args[:heating_system])
+    get_option_properties(args, 'cooling_system.tsv', args[:cooling_system])
+    get_option_properties(args, 'heat_pump.tsv', args[:heat_pump])
+    get_option_properties(args, 'heat_pump_backup.tsv', args[:heat_pump_backup])
+    get_option_properties(args, 'heating_system_2.tsv', args[:heating_system_2])
 
     new_arg_keys = args.keys - orig_args.keys
     return new_arg_keys
