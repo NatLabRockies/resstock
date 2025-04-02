@@ -63115,9 +63115,9 @@ Assumption
 
 - \Default efficiency of HPWH: Electric Heat Pump, 50 gal, 3.45 UEF.
 
-- \Default efficiency of solar thermal: 40 sqft, South, Roof Pitch
+- \Default solar thermal collector assumed: 40 sqft, Roof Pitch,
 
-- \Solar thermal backup system is informed by secondary water heater fuel type. If a solar thermal system has no secondary water heater or has a second solar thermal system, they are assumed to have electric backup. Due to low sample sizes, fallback rules applied with lumping of:
+- \Solar thermal backup is informed by secondary water heater fuel type. Solar collector orientation is based on rooftop solar orientation for electric backup and assumed south-facing for fuel backup. If a solar thermal system has no secondary water heater or has a second solar thermal system, they are assumed to have electric backup. Due to low sample sizes, fallback rules applied with lumping of:
 
   - \[1] State: Census Division RECS
 
@@ -63804,8 +63804,66 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - 0
      - auto
+   * - Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup
+     - 0.037%
+     - storage water heater
+     - electricity
+     - auto
+     - EnergyFactor
+     - 0.97
+     - auto
+     - 0.98
+     - auto
+     - auto
+     - 0
+     - 6.2
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - hot water
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 90
+     - roofpitch
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
+   * - Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup
+     - 0.004%
+     - storage water heater
+     - electricity
+     - auto
+     - EnergyFactor
+     - 0.97
+     - auto
+     - 0.98
+     - auto
+     - auto
+     - 0
+     - 6.2
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - hot water
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - roofpitch
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
    * - Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup
-     - 0.16%
+     - 0.093%
      - storage water heater
      - electricity
      - auto
@@ -63914,6 +63972,35 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - liquid indirect
      - single glazing black
      - 180
+     - roofpitch
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
+   * - Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup
+     - 0.022%
+     - storage water heater
+     - electricity
+     - auto
+     - EnergyFactor
+     - 0.97
+     - auto
+     - 0.98
+     - auto
+     - auto
+     - 0
+     - 6.2
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - hot water
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 270
      - roofpitch
      - 0.77
      - 0.793
