@@ -8,36 +8,18 @@ Development Changelog
 
 
     .. change::
-        :tags: workflow, feature, outputs
-        :pullreq: 1319
+        :tags: outputs, standard data release
+        :pullreq: 1371
 
-        **Date**: 2025-03-19
-
-        Title:
-        Electric panel
-
-        Description:
-        Support electric panel NEC calculations.
-
-        Assignees: Lixi Liu, Yingli Lou, Joe Robertson
-
-
-    .. change::
-        :tags: workflow, feature
-        :pullreq: 1359
-
-        **Date**: 2025-03-19
+        **Date**: 2025-04-01
 
         Title:
-        Latest OS-HPXML
+        Remove end-use emissions from SDR YAML outputs
 
         Description:
-        Pulls in the ability to do electric panel NEC calculations.
-        Update AC/ASHP/MSHP options in lookup since CompressorType is now required for central and mini-split air conditioners and heat pumps.
+        ResStock SDR currently do not publish end-use emissions. ResStock SDR only publish totals and totals by fuel. In an effort to reduce the number of outputs, end-use emissions outputs have been removed from the SDR raw outputs. The end-use emissions can still be called out for testing purposes using.
 
-        OpenStudio-HPXML: `pull request 1946 <https://github.com/NREL/OpenStudio-HPXML/pull/1946>`_, `pull request 1949 <https://github.com/NREL/OpenStudio-HPXML/pull/1949>`_
-
-        Assignees: Joe Robertson, Scott Horowitz
+        Assignees: Anthony Fontanini
 
 
     .. change::
@@ -56,7 +38,7 @@ Development Changelog
 
 
     .. change::
-        :tags: workflow, bugfix
+        :tags: workflow, feature
         :pullreq: 1353
 
         **Date**: 2025-03-11
@@ -65,28 +47,10 @@ Development Changelog
         Latest OS-HPXML
 
         Description:
-        All OpenStudio-HPXML changes, no required ResStock changes.
-        Updates to NEEP ASHP sample files, fix possible HVAC sizing error, HPXML class update for attic/foundation types, speed up weather processing, combi boiler error fix, smooth schedule EV plugload, shift all schedules in sync and fix occupancy aggregation.
+        All OpenStudio-HPXML changes, no required ResStock changes. Updates to NEEP ASHP sample files, fix possible HVAC sizing error, HPXML class update for attic/foundation types, Speed up weather processing, combi boiler error fix, smooth shcedule EV plugload, shift all schedules in sync and fix occupancy aggregation.
 
         Assignees: Joe Robertson
 
-
-    .. change::
-        :tags: characteristics
-        :pullreq: 1358
-
-        **Date**: 2025-03-10
-
-        Title:
-        Add PV in Hawaii 
-
-        Description:
-        Add PV saturation for Hawaii based on EIA form861.
-
-        resstock-estimation: `pull request 445 <https://github.com/NREL/resstock-estimation/pull/445>`
-
-        Assignees: Yingli Lou
-    
 
     .. change::
         :tags: characteristics, feature, docs, technical reference guide, outputs
