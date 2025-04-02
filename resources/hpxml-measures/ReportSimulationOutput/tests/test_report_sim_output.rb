@@ -1350,6 +1350,18 @@ class ReportSimulationOutputTest < Minitest::Test
     assert(File.readlines(run_log).any? { |line| line.include?("Request for output variable 'Foo'") })
   end
 
+  def test_timeseries_energyplus_output_variables_freq_none
+    args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), '../../workflow/sample_files/base.xml'),
+                  'skip_validation' => true,
+                  'add_component_loads' => true,
+                  'timeseries_frequency' => 'none',
+                  'user_output_variables' => 'Zone People Occupant Count, Zone People Total Heating Energy, Foo, Surface Construction Index' }
+    annual_csv, timeseries_csv, run_log = _test_measure(args_hash)
+    assert(File.exist?(annual_csv))
+    assert(!File.exist?(timeseries_csv))
+    assert(!File.readlines(run_log).any? { |line| line.include?("Request for output variable 'Foo'") })
+  end
+
   def test_timeseries_energyplus_output_meters
     args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), '../../workflow/sample_files/base.xml'),
                   'skip_validation' => true,

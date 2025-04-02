@@ -55,7 +55,7 @@ Run ``openstudio workflow/run_simulation.rb -h`` to see all available commands/a
 
 Advanced Run
 ~~~~~~~~~~~~
- 
+
 If additional flexibility is desired (e.g., specifying individual measure arguments, including additional OpenStudio measures to run alongside this measure in a workflow, etc.), create an `OpenStudio Workflow (OSW) <https://nrel.github.io/OpenStudio-user-documentation/reference/command_line_interface/#osw-structure>`_ file.
 The OSW is a JSON file that will specify all the OpenStudio measures (and their arguments) to be run sequentially.
 A template OSW that simply runs the HPXMLtoOpenStudio, ReportSimulationOutput, and ReportUtilityBills measures on the ``workflow/sample_files/base.xml`` file can be found at ``workflow/template-run-hpxml.osw``.
@@ -71,6 +71,9 @@ A template OSW that simply runs the HPXMLtoOpenStudio, ReportSimulationOutput, a
 | And another example:
 | ``openstudio run -w workflow/template-build-and-run-hpxml-with-stochastic-occupancy.osw``
 | This workflow builds an HPXML file on the fly from building description inputs in the OSW, then automatically generates and uses a CSV file with stochastic occupancy schedules, and finally runs the EnergyPlus simulation.
+
+| And here's an example of just creating an HPXML file and not creating/running the EnergyPlus model:
+| ``openstudio run -m -w workflow/template-build-hpxml.osw``
 
 Outputs
 ~~~~~~~
