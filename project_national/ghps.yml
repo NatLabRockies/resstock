@@ -3,7 +3,7 @@ os_version: 3.9.0
 os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: ghps
+output_directory: ghps2
 # weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
@@ -34,12 +34,12 @@ kestrel:
     time: 60
 
 # Post proccessing and Amazon Web Services
-postprocessing:
+# postprocessing:
   # Post simulation partitioning
-  keep_individual_timeseries: true
-  partition_columns:
-    - State
-    - County
+  # keep_individual_timeseries: true
+  # partition_columns:
+    # - State
+    # - County
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
   # aws:
   #  region_name: us-west-2
@@ -60,7 +60,7 @@ workflow_generator:
   args:
     # Annual simulation and timestep
     build_existing_model:
-      simulation_control_timestep: 15
+      simulation_control_timestep: 60
       simulation_control_run_period_begin_month: 1
       simulation_control_run_period_begin_day_of_month: 1
       simulation_control_run_period_end_month: 12
@@ -72,15 +72,15 @@ workflow_generator:
       - scenario_name: LRMER_LowRECost_15
         type: CO2e
         elec_folder: data/emissions/cambium/2022/LRMER_LowRECost_15
-      - scenario_name: LRMER_MidCase_15
-        type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_15
-      - scenario_name: LRMER_HighRECost_15
-        type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_HighRECost_15
-      - scenario_name: LRMER_MidCase_25
-        type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_25
+      # - scenario_name: LRMER_MidCase_15
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2022/LRMER_MidCase_15
+      # - scenario_name: LRMER_HighRECost_15
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2022/LRMER_HighRECost_15
+      # - scenario_name: LRMER_MidCase_25
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2022/LRMER_MidCase_25
 
     # Utility bill rates
     utility_bills:
@@ -89,7 +89,7 @@ workflow_generator:
 
     # Outputs to include
     simulation_output_report:
-      timeseries_frequency: timestep
+      timeseries_frequency: none
       include_timeseries_total_consumptions: true
       include_timeseries_fuel_consumptions: true
       include_timeseries_end_use_consumptions: true
@@ -115,15 +115,15 @@ workflow_generator:
     # Other reporting measures to run
     reporting_measures:
       - measure_dir_name: QOIReport
-      - measure_dir_name: ServerDirectoryCleanup # tack this on so we can save some disk space (when using debug: true)
+      # - measure_dir_name: ServerDirectoryCleanup # tack this on so we can save some disk space (when using debug: true)
 
     # Files to keep
     server_directory_cleanup:
-      retain_in_idf: true
-      retain_schedules_csv: true
-      retain_in_osm: true
+      # retain_in_idf: true
+      retain_schedules_csv: false
+      # retain_in_osm: true
 
-    debug: true
+    # debug: true
 
 ### -- Upgrades --
 # Standard Data Release - Residential
