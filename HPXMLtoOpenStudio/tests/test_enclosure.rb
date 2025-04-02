@@ -6,6 +6,7 @@ require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require_relative '../measure.rb'
 require_relative '../resources/util.rb'
+require_relative '../../BuildResidentialHPXML/resources/geometry.rb'
 require_relative 'util.rb'
 
 class HPXMLtoOpenStudioEnclosureTest < Minitest::Test

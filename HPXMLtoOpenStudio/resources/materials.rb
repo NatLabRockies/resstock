@@ -231,15 +231,6 @@ class Material
 
   # TODO
   #
-  # @param roof_pitch [TODO] TODO
-  # @return [TODO] TODO
-  def self.AirFilmRoofRadiantBarrier(roof_pitch)
-    rvalue = (self.AirFilmSlopeEnhancedReflective(roof_pitch).rvalue + self.AirFilmSlopeReducedReflective(roof_pitch).rvalue) / 2.0 # hr-ft-F/Btu
-    return self.AirFilm(rvalue)
-  end
-
-  # TODO
-  #
   # @return [TODO] TODO
   def self.AirFilmRoofASHRAE140
     return self.AirFilm(0.752)

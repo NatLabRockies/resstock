@@ -1427,34 +1427,18 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setUnits('in')
     args << arg
 
-    heating_system_2_type_choices = OpenStudio::StringVector.new
-    heating_system_2_type_choices << Constants::None
-    heating_system_2_type_choices << HPXML::HVACTypeFurnace
-    heating_system_2_type_choices << HPXML::HVACTypeWallFurnace
-    heating_system_2_type_choices << HPXML::HVACTypeFloorFurnace
-    heating_system_2_type_choices << HPXML::HVACTypeBoiler
-    heating_system_2_type_choices << HPXML::HVACTypeElectricResistance
-    heating_system_2_type_choices << HPXML::HVACTypeStove
-    heating_system_2_type_choices << HPXML::HVACTypeSpaceHeater
-    heating_system_2_type_choices << HPXML::HVACTypeFireplace
+    heating_system_2_choices = get_option_names('heating_system_2.tsv')
 
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heating_system_2_type', heating_system_2_type_choices, true)
-    arg.setDisplayName('Heating System 2: Type')
-    arg.setDescription("The type of the second heating system. If a heat pump is specified and the backup type is '#{HPXML::HeatPumpBackupTypeSeparate}', this heating system represents '#{HPXML::HeatPumpBackupTypeSeparate}' backup heating. For ducted heat pumps where the backup heating system is a '#{HPXML::HVACTypeFurnace}', the backup would typically be characterized as '#{HPXML::HeatPumpBackupTypeIntegrated}' in that the furnace and heat pump share the same distribution system and blower fan; a '#{HPXML::HVACTypeFurnace}' as '#{HPXML::HeatPumpBackupTypeSeparate}' backup to a ducted heat pump is not supported.")
-    arg.setDefaultValue(Constants::None)
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heating_system_2', heating_system_2_choices, true)
+    arg.setDisplayName('Heating System 2')
+    arg.setDescription("The type/efficiency of the second heating system. Efficiency is Rated AFUE or Percent as a Fraction. If a heat pump is specified and the backup type is '#{HPXML::HeatPumpBackupTypeSeparate}', this heating system represents '#{HPXML::HeatPumpBackupTypeSeparate}' backup heating.")
+    arg.setDefaultValue('None')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heating_system_2_fuel', heating_system_fuel_choices, true)
     arg.setDisplayName('Heating System 2: Fuel Type')
     arg.setDescription("The fuel type of the second heating system. Ignored for #{HPXML::HVACTypeElectricResistance}.")
     arg.setDefaultValue(HPXML::FuelTypeElectricity)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_efficiency', true)
-    arg.setDisplayName('Heating System 2: Rated AFUE or Percent')
-    arg.setUnits('Frac')
-    arg.setDescription('The rated heating efficiency value of the second heating system.')
-    arg.setDefaultValue(1.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_capacity', false)
@@ -3745,6 +3729,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     get_option_properties(args, 'cooling_system.tsv', args[:cooling_system])
     get_option_properties(args, 'heat_pump.tsv', args[:heat_pump])
     get_option_properties(args, 'heat_pump_backup.tsv', args[:heat_pump_backup])
+    get_option_properties(args, 'heating_system_2.tsv', args[:heating_system_2])
 
     error = (args[:heating_system_type] != Constants::None) && (args[:heat_pump_type] != Constants::None) && (args[:heating_system_fraction_heat_load_served] > 0) && (args[:heat_pump_fraction_heat_load_served] > 0)
     errors << 'Multiple central heating systems are not currently supported.' if error
