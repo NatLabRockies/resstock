@@ -939,6 +939,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     buildreshpxml.get_option_properties(args, 'cooling_system.tsv', args[:cooling_system])
     buildreshpxml.get_option_properties(args, 'heat_pump.tsv', args[:heat_pump])
     buildreshpxml.get_option_properties(args, 'heat_pump_backup.tsv', args[:heat_pump_backup])
+    buildreshpxml.get_option_properties(args, 'heating_system_2.tsv', args[:heating_system_2])
 
     new_arg_keys = args.keys - orig_args.keys
     return new_arg_keys
