@@ -2716,7 +2716,7 @@ module HVAC
         pump_program.addLine("Set cooling_fraction_time_#{i} = 0.0")
       end
       pump_program.addLine("If #{cooling_usl_sensor.name} == 1")
-      pump_program.addLine("  Set cooling_fraction_time_1 = #{heating_plr_sensor.name}")
+      pump_program.addLine("  Set cooling_fraction_time_1 = #{cooling_plr_sensor.name}")
       (1..(clg_coil.speeds.size - 1)).each do |i|
         pump_program.addLine("ElseIf (#{cooling_usl_sensor.name}) == #{i + 1}")
         pump_program.addLine("  Set cooling_fraction_time_#{i} = 1.0 - #{cooling_nsl_sensor.name}")
