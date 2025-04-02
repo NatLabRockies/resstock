@@ -2726,7 +2726,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription("Whether the second heating system is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#panel-loads'>Panel Loads</a>) is used.")
     args << arg
 
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('electric_panel_load_mech_vent_power', false)
     arg.setDisplayName('Electric Panel: Mechanical Ventilation Power')
     arg.setDescription("Specifies the panel load mechanical ventilation power. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#panel-loads'>Panel Loads</a>) is used.")

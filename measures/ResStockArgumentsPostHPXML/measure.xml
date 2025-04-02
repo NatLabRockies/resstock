@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>2515389b-b747-4482-baed-ad5f603ab1ca</version_id>
-  <version_modified>2025-03-12T23:42:26Z</version_modified>
+  <version_id>d44dcd7f-3838-4ae7-bd0a-17b3bb14ffaf</version_id>
+  <version_modified>2025-04-02T21:24:10Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -20,8 +20,8 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>loadflex_peak_offset</name>
-      <display_name>Load Flexibility: Peak Offset (deg F)</display_name>
+      <name>hvac_flex_peak_offset</name>
+      <display_name>HVAC Load Flexibility: Peak Offset (deg F)</display_name>
       <description>Offset of the peak period in degrees Fahrenheit.</description>
       <type>Integer</type>
       <required>false</required>
@@ -29,8 +29,8 @@
       <default_value>0</default_value>
     </argument>
     <argument>
-      <name>loadflex_pre_peak_duration_hours</name>
-      <display_name>Load Flexibility: Pre-Peak Duration (hours)</display_name>
+      <name>hvac_flex_pre_peak_duration_hours</name>
+      <display_name>HVAC Load Flexibility: Pre-Peak Duration (hours)</display_name>
       <description>Duration of the pre-peak period in hours.</description>
       <type>Double</type>
       <required>false</required>
@@ -38,8 +38,8 @@
       <default_value>0</default_value>
     </argument>
     <argument>
-      <name>loadflex_pre_peak_offset</name>
-      <display_name>Load Flexibility: Pre-Peak Offset (deg F)</display_name>
+      <name>hvac_flex_pre_peak_offset</name>
+      <display_name>HVAC Load Flexibility: Pre-Peak Offset (deg F)</display_name>
       <description>Offset of the pre-peak period in degrees Fahrenheit.</description>
       <type>Integer</type>
       <required>false</required>
@@ -47,9 +47,9 @@
       <default_value>0</default_value>
     </argument>
     <argument>
-      <name>loadflex_random_shift_minutes</name>
+      <name>flex_random_shift_minutes</name>
       <display_name>Load Flexibility: Random Shift (minutes)</display_name>
-      <description>Number of minutes to randomly shift the peak period. If minutes less than timestep, will be assumed to be 0.</description>
+      <description>Number of minutes to randomly shift the peak period. If minutes is less than timestep, it will be assumed to be 0.</description>
       <type>Integer</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -59,14 +59,6 @@
       <name>building_id</name>
       <display_name>Building Unit ID</display_name>
       <description>The building unit number (between 1 and the number of samples).</description>
-      <type>String</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>output_csv_path</name>
-      <display_name>Schedules: Output CSV Path</display_name>
-      <description>Absolute/relative path of the csv file containing occupancy schedules. Relative paths are relative to the HPXML output path.</description>
       <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -94,277 +86,55 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>604AB3DD</checksum>
+      <checksum>728D68CD</checksum>
     </file>
     <file>
-      <filename>hvac_flexibility/detailed_schedule_generator.rb</filename>
+      <filename>common/schedule_modifier.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2685F1D7</checksum>
+      <checksum>AF0E72CB</checksum>
     </file>
     <file>
-      <filename>hvac_flexibility/seasonal_shedding_peak_hours.json</filename>
+      <filename>common/seasonal_shedding_peak_hours.json</filename>
       <filetype>json</filetype>
       <usage_type>resource</usage_type>
       <checksum>5F914EFF</checksum>
     </file>
     <file>
-      <filename>hvac_flexibility/seasonal_shifting_peak_hours.json</filename>
+      <filename>common/seasonal_shifting_peak_hours.json</filename>
       <filetype>json</filetype>
       <usage_type>resource</usage_type>
       <checksum>055326E7</checksum>
     </file>
     <file>
+      <filename>hvac_flexibility/detailed_schedule_generator.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>0B142F52</checksum>
+    </file>
+    <file>
       <filename>hvac_flexibility/setpoint_modifier.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>15CB393A</checksum>
-    </file>
-    <file>
-      <filename>baseline.osw</filename>
-      <filetype>osw</filetype>
-      <usage_type>test</usage_type>
-      <checksum>527B927D</checksum>
-    </file>
-    <file>
-      <filename>baseline_develop.osw</filename>
-      <filetype>osw</filetype>
-      <usage_type>test</usage_type>
-      <checksum>7DDE9B81</checksum>
-    </file>
-    <file>
-      <filename>baseline_dst_impacted.osw</filename>
-      <filetype>osw</filetype>
-      <usage_type>test</usage_type>
-      <checksum>2C14E38A</checksum>
-    </file>
-    <file>
-      <filename>out.osw</filename>
-      <filetype>osw</filetype>
-      <usage_type>test</usage_type>
-      <checksum>B3AFBC95</checksum>
-    </file>
-    <file>
-      <filename>reports/eplustbl.html</filename>
-      <filetype>html</filetype>
-      <usage_type>test</usage_type>
-      <checksum>F1621D8F</checksum>
-    </file>
-    <file>
-      <filename>run/baseline.xml</filename>
-      <filetype>xml</filetype>
-      <usage_type>test</usage_type>
-      <checksum>E7F7794A</checksum>
-    </file>
-    <file>
-      <filename>run/data_point.zip</filename>
-      <filetype>zip</filetype>
-      <usage_type>test</usage_type>
-      <checksum>92436A23</checksum>
-    </file>
-    <file>
-      <filename>run/data_point_out.json</filename>
-      <filetype>json</filetype>
-      <usage_type>test</usage_type>
-      <checksum>FBF73E6A</checksum>
-    </file>
-    <file>
-      <filename>run/eplusmtr.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>8B8BF97C</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.audit</filename>
-      <filetype>audit</filetype>
-      <usage_type>test</usage_type>
-      <checksum>886D6BCC</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.bnd</filename>
-      <filetype>bnd</filetype>
-      <usage_type>test</usage_type>
-      <checksum>A24F2593</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>9C034D7F</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.eio</filename>
-      <filetype>eio</filetype>
-      <usage_type>test</usage_type>
-      <checksum>7EFA1D89</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.end</filename>
-      <filetype>end</filetype>
-      <usage_type>test</usage_type>
-      <checksum>C1D45EDF</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.err</filename>
-      <filetype>err</filetype>
-      <usage_type>test</usage_type>
-      <checksum>AA047683</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.eso</filename>
-      <filetype>eso</filetype>
-      <usage_type>test</usage_type>
-      <checksum>6FBB959B</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.json</filename>
-      <filetype>json</filetype>
-      <usage_type>test</usage_type>
-      <checksum>EFA0FFC6</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.mdd</filename>
-      <filetype>mdd</filetype>
-      <usage_type>test</usage_type>
-      <checksum>7963A9A6</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.msgpack</filename>
-      <filetype>msgpack</filetype>
-      <usage_type>test</usage_type>
-      <checksum>C4BEC781</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.mtd</filename>
-      <filetype>mtd</filetype>
-      <usage_type>test</usage_type>
-      <checksum>32D37B99</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.rdd</filename>
-      <filetype>rdd</filetype>
-      <usage_type>test</usage_type>
-      <checksum>A3659112</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.shd</filename>
-      <filetype>shd</filetype>
-      <usage_type>test</usage_type>
-      <checksum>3152016D</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout.sql</filename>
-      <filetype>sql</filetype>
-      <usage_type>test</usage_type>
-      <checksum>F5B9498F</checksum>
-    </file>
-    <file>
-      <filename>run/eplusout_perflog.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>962E0C34</checksum>
-    </file>
-    <file>
-      <filename>run/eplustbl.htm</filename>
-      <filetype>htm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>F1621D8F</checksum>
-    </file>
-    <file>
-      <filename>run/finished.job</filename>
-      <filetype>job</filetype>
-      <usage_type>test</usage_type>
-      <checksum>BD2A288D</checksum>
-    </file>
-    <file>
-      <filename>run/in.idf</filename>
-      <filetype>idf</filetype>
-      <usage_type>test</usage_type>
-      <checksum>CCD5AE80</checksum>
-    </file>
-    <file>
-      <filename>run/in.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>4AF06CCE</checksum>
-    </file>
-    <file>
-      <filename>run/in.xml</filename>
-      <filetype>xml</filetype>
-      <usage_type>test</usage_type>
-      <checksum>4B5BEE82</checksum>
-    </file>
-    <file>
-      <filename>run/measure_attributes.json</filename>
-      <filetype>json</filetype>
-      <usage_type>test</usage_type>
-      <checksum>FBF73E6A</checksum>
-    </file>
-    <file>
-      <filename>run/pre-preprocess.idf</filename>
-      <filetype>idf</filetype>
-      <usage_type>test</usage_type>
-      <checksum>6650975F</checksum>
-    </file>
-    <file>
-      <filename>run/results.json</filename>
-      <filetype>json</filetype>
-      <usage_type>test</usage_type>
-      <checksum>FBF73E6A</checksum>
-    </file>
-    <file>
-      <filename>run/results_annual.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>B2C6D243</checksum>
-    </file>
-    <file>
-      <filename>run/results_design_load_details.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>B0DBEF23</checksum>
-    </file>
-    <file>
-      <filename>run/run.log</filename>
-      <filetype>log</filetype>
-      <usage_type>test</usage_type>
-      <checksum>6F935361</checksum>
-    </file>
-    <file>
-      <filename>run/sqlite.err</filename>
-      <filetype>err</filetype>
-      <usage_type>test</usage_type>
-      <checksum>D834FBC1</checksum>
-    </file>
-    <file>
-      <filename>run/started.job</filename>
-      <filetype>job</filetype>
-      <usage_type>test</usage_type>
-      <checksum>138A99DF</checksum>
-    </file>
-    <file>
-      <filename>run/stdout-energyplus</filename>
-      <filetype></filetype>
-      <usage_type>test</usage_type>
-      <checksum>C2CDD73E</checksum>
+      <checksum>9E3BEAF7</checksum>
     </file>
     <file>
       <filename>test_hvac_load_flexibility.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>841C81AD</checksum>
-    </file>
-    <file>
-      <filename>test_measure.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>4EFB5B92</checksum>
+      <checksum>DBD41A05</checksum>
     </file>
     <file>
       <filename>test_resstock_arguments_post_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>31C4A0A8</checksum>
+      <checksum>0A84481E</checksum>
+    </file>
+    <file>
+      <filename>test_template.osw</filename>
+      <filetype>osw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>B71A1941</checksum>
     </file>
   </files>
 </measure>

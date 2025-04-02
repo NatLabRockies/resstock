@@ -204,7 +204,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     building_extension = XMLHelper.create_elements_as_needed(building, %w[BuildingDetails BuildingSummary extension])
     existing_schedules_filepaths = XMLHelper.get_values(building_extension, 'SchedulesFilePath', :string)
     schedule_file = existing_schedules_filepaths.first
-    return nil if schedule_file.nil?
+    return if schedule_file.nil?
+
     if !Pathname.new(schedule_file).absolute?
       schedule_file = File.join(File.dirname(@hpxml_path), schedule_file)
     end
