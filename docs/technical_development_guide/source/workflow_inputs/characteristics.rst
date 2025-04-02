@@ -63362,8 +63362,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63391,8 +63391,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63420,8 +63420,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63449,8 +63449,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63478,8 +63478,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63507,8 +63507,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63536,8 +63536,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63565,8 +63565,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63594,8 +63594,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63623,8 +63623,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63652,8 +63652,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63681,8 +63681,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63710,8 +63710,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63739,8 +63739,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63768,8 +63768,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
@@ -63797,8 +63797,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 40
      - liquid indirect
      - single glazing black
-     - 180
-     - roofpitch
+     - 0
+     - 0
      - 0.77
      - 0.793
      - auto
