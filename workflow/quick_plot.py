@@ -6,8 +6,12 @@ import plotly.express as px
 
 columns = [
     'report_simulation_output.energy_use_total_m_btu',
-    # 'report_simulation_output.fuel_use_electricity_total_m_btu',
-    # 'report_simulation_output.fuel_use_natural_gas_total_m_btu'
+    'report_simulation_output.fuel_use_electricity_total_m_btu',
+    # 'report_simulation_output.fuel_use_natural_gas_total_m_btu',
+    'report_simulation_output.end_use_electricity_heating_m_btu',
+    'report_simulation_output.end_use_electricity_heating_fans_pumps_m_btu',
+    'report_simulation_output.end_use_electricity_cooling_m_btu',
+    'report_simulation_output.end_use_electricity_cooling_fans_pumps_m_btu',
 ]
 
 def read_csv(csv_file_path, **kwargs) -> pd.DataFrame:
@@ -28,6 +32,7 @@ def quick_plot(folder):
                 u = df[['apply_upgrade.upgrade_name'] + columns]
                 us.append(u)
 
+    outputs = []
     for col in columns:
         dfs = []    
         for u in us:
@@ -37,10 +42,15 @@ def quick_plot(folder):
             dfs.append(df)
 
         df = pd.concat(dfs)
-        df.groupby('apply_upgrade.upgrade_name').mean().to_csv(os.path.join(folder, '{}.csv'.format(col)))
+        o = df.groupby('apply_upgrade.upgrade_name').mean()
+        o['output'] = col
+        outputs.append(o)
+        # df.groupby('apply_upgrade.upgrade_name').mean().to_csv(os.path.join(folder, '{}.csv'.format(col)))
         fig = px.scatter(df, x='Baseline', y='Upgrade', color='apply_upgrade.upgrade_name', template='plotly_white')
         fig.update_layout(title={'text': col})
         plotly.offline.plot(fig, filename=os.path.join(folder, '{}.html'.format(col)), auto_open=False)
+
+    pd.concat(outputs).to_csv(os.path.join(folder, 'outputs.csv'))
 
 if __name__ == '__main__':
 
