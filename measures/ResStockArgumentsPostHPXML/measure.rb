@@ -3,26 +3,28 @@
 # see the URL below for information on how to write OpenStudio measures
 # http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
 
+# Load required dependencies for HVAC flexibility processing
 require_relative 'resources/hvac_flexibility/detailed_schedule_generator'
 require_relative 'resources/hvac_flexibility/setpoint_modifier'
-# start the measure
+
+# OpenStudio Measure class to process ResStock arguments after HPXML generation
 class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
-  # human readable name
+  # Define human readable name
   def name
     'ResStock Arguments Post-HPXML'
   end
 
-  # human readable description
+  # Brief human readable description of the measure
   def description
     'Measure that post-processes the output of the BuildResidentialHPXML and BuildResidentialScheduleFile measures.'
   end
 
-  # human readable description of modeling approach
+  # Detailed human readable description of modeling approach
   def modeler_description
     'Passes in all ResStockArgumentsPostHPXML arguments from the options lookup, processes them, and then modifies output of other measures.'
   end
 
-  # define the arguments that the user will input
+  # Define user input arguments
   def arguments(model) # rubocop:disable Lint/UnusedMethodArgument
     args = OpenStudio::Measure::OSArgumentVector.new
 
@@ -63,14 +65,14 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     args
   end
 
-  # define what happens when the measure is run
+  # Run the measure
   def run(model, runner, user_arguments)
     super(model, runner, user_arguments)
     @runner = runner
-    # use the built-in error checking
+    # Use the built-in error checking
     return false unless runner.validateUserArguments(arguments(model), user_arguments)
 
-    # assign the user inputs to variables
+    # Parse user arguments and assign to variables
     args = runner.getArgumentValues(arguments(model), user_arguments)
     if skip_post_hpxml?(args)
       runner.registerInfo('Skipping ResStockArgumentsPostHPXML')
@@ -84,6 +86,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     output_csv_path = File.dirname(@hpxml_path)
 
+    # Load HPXML
     @hpxml = HPXML.new(hpxml_path: @hpxml_path)
     @prng = Random.new(args[:building_id].to_i)
     @minutes_per_step = @hpxml.header.timestep
@@ -113,20 +116,26 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     true
   end
 
+  # Determines if the post-processing step for HPXML should be skipped
   def skip_post_hpxml?(args)
     skip_hvac_flexibility?(args)
   end
 
+  # Determines if HVAC flexibility modifications should be skipped
+  # Skips if both peak offset and pre-peak duration are set to 0
   def skip_hvac_flexibility?(args)
     true if args[:hvac_flex_peak_offset] == 0 && args[:hvac_flex_pre_peak_duration_hours] == 0
   end
 
+  # Generates the HVAC schedule for a given building index
   def create_hvac_schedule(building_index)
     generator = HVACScheduleGenerator.new(@hpxml, @hpxml_path, @runner, building_index)
     generator.get_heating_cooling_setpoint_schedule
   end
 
+  # Retrieves an appropriate schedule modifier for a given building index
   def get_schedule_modifier(building_index, modifier_class)
+    # Ensure the provided class is a subclass of ScheduleModifier
     raise ArgumentError, "#{modifier_class} must be a subclass of ScheduleModifier" unless modifier_class < ScheduleModifier
 
     hpxml_bldg = @hpxml.buildings[building_index]
@@ -134,10 +143,14 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     sim_year = @hpxml.header.sim_calendar_year
     epw_path = Location.get_epw_path(hpxml_bldg, @hpxml_path)
     weather = WeatherFile.new(epw_path: epw_path, runner: @runner)
+
+    # Get daylight saving time information
     dst_info = DSTInfo.new(dst_begin_month: hpxml_bldg.dst_begin_month,
                            dst_begin_day: hpxml_bldg.dst_begin_day,
                            dst_end_month: hpxml_bldg.dst_end_month,
                            dst_end_day: hpxml_bldg.dst_end_day)
+
+    # Create and return the modifier instance
     modifier_class.new(state: state,
                        sim_year: sim_year,
                        weather: weather,
@@ -147,21 +160,28 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                        dst_info: dst_info)
   end
 
+  # Modifies the HVAC schedule based on flexibility inputs
   def modify_hvac_schedule(building_index, schedule)
     hvac_schedule_modifier = get_schedule_modifier(building_index, HVACScheduleModifier)
+
+    # Define flexibility inputs
     hvac_flexibility_inputs = FlexibilityInputs.new(
       peak_offset: @args[:hvac_flex_peak_offset],
       pre_peak_duration_steps: (@args[:hvac_flex_pre_peak_duration_hours] * 60 / @minutes_per_step).to_i,
       pre_peak_offset: @args[:hvac_flex_pre_peak_offset],
       random_shift_steps: @random_shift_steps
     )
+
+    # Apply modifications to the schedule
     hvac_schedule_modifier.modify_shedule(schedule, hvac_flexibility_inputs)
   end
 
+  # Writes the HVAC schedule to a CSV file
   def write_schedule(schedule, building, index, output_csv_path)
     schedule_file = get_existing_schedule_filepath(building)
+
     if schedule_file.nil?
-      # Create a new schedule file
+      # Create a new schedule file if one does not exist
       schedule_file = File.join(output_csv_path, "schedule_#{index}.csv")
       CSV.open(schedule_file, 'w') do |csv|
         headers = schedule.keys.map(&:to_s)
@@ -174,9 +194,10 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       end
       update_hpxml_schedule_filepath(building, schedule_file)
     else
-      # Process existing file
+      # Process existing schedule file and update values
       data = CSV.read(schedule_file, headers: true)
       headers = data.headers
+
       schedule.each do |column_name, values|
         string_column_name = column_name.to_s
         column_index = headers.index { |h| h.to_s == string_column_name }
@@ -192,26 +213,32 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           end
         end
       end
+
+      # Write the updated schedule back to the CSV file
       CSV.open(schedule_file, 'w') do |csv|
         csv << headers
         data.each { |row| csv << row }
       end
     end
+
     schedule_file
   end
 
+  # Retrieves the existing schedule file path from the HPXML file
   def get_existing_schedule_filepath(building)
     building_extension = XMLHelper.create_elements_as_needed(building, %w[BuildingDetails BuildingSummary extension])
     existing_schedules_filepaths = XMLHelper.get_values(building_extension, 'SchedulesFilePath', :string)
     schedule_file = existing_schedules_filepaths.first
     return if schedule_file.nil?
 
+    # Ensure the path is absolute
     if !Pathname.new(schedule_file).absolute?
       schedule_file = File.join(File.dirname(@hpxml_path), schedule_file)
     end
     schedule_file
   end
 
+  # Updates the HPXML file with the new schedule file path
   def update_hpxml_schedule_filepath(building, new_schedule_filepath)
     building_extension = XMLHelper.create_elements_as_needed(building, %w[BuildingDetails BuildingSummary extension])
     XMLHelper.add_element(building_extension, 'SchedulesFilePath', new_schedule_filepath, :string)
