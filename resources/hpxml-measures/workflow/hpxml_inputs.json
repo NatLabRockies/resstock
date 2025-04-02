@@ -96,9 +96,8 @@
     "heat_pump_fraction_heat_load_served": 0,
     "heat_pump_fraction_cool_load_served": 0,
     "heat_pump_backup": "None",
-    "heating_system_2_type": "none",
+    "heating_system_2": "None",
     "heating_system_2_fuel": "electricity",
-    "heating_system_2_heating_efficiency": 0,
     "heating_system_2_fraction_heat_load_served": 0,
     "hvac_control_heating_weekday_setpoint": 68,
     "hvac_control_heating_weekend_setpoint": 68,
@@ -677,9 +676,8 @@
     "heat_pump_heating_capacity": 30000,
     "heat_pump_cooling_capacity": 30000,
     "heat_pump_backup": "None",
-    "heating_system_2_type": "ElectricResistance",
+    "heating_system_2": "Electric Baseboard, 100% Efficiency",
     "heating_system_2_fuel": "electricity",
-    "heating_system_2_heating_efficiency": 1,
     "heating_system_2_fraction_heat_load_served": 0.25,
     "hvac_control_heating_weekday_setpoint": 68,
     "hvac_control_heating_weekend_setpoint": 68,
@@ -935,9 +933,8 @@
     "heat_pump_fraction_heat_load_served": 0,
     "heat_pump_fraction_cool_load_served": 0,
     "heat_pump_backup": "None",
-    "heating_system_2_type": "none",
+    "heating_system_2": "None",
     "heating_system_2_fuel": "electricity",
-    "heating_system_2_heating_efficiency": 0,
     "heating_system_2_fraction_heat_load_served": 0,
     "hvac_control_heating_weekday_setpoint": 68,
     "hvac_control_heating_weekend_setpoint": 68,
@@ -1442,8 +1439,7 @@
   "sample_files/base-bldgtype-mf-unit-shared-boiler-only-fan-coil-fireplace-elec.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-boiler-only-fan-coil.xml",
     "heating_system_fraction_heat_load_served": 0.75,
-    "heating_system_2_type": "Fireplace",
-    "heating_system_2_heating_efficiency": 1.0,
+    "heating_system_2": "Fuel Fireplace, 100% Efficiency",
     "heating_system_2_fraction_heat_load_served": 0.25
   },
   "sample_files/base-bldgtype-mf-unit-shared-boiler-only-fan-coil-ducted.xml": {
@@ -2393,9 +2389,8 @@
     "heat_pump_heating_capacity": 18000,
     "heat_pump_cooling_capacity": 18000,
     "heat_pump_backup": "Separate",
-    "heating_system_2_type": "Boiler",
+    "heating_system_2": "Fuel Boiler, 80% AFUE",
     "heating_system_2_fuel": "natural gas",
-    "heating_system_2_heating_efficiency": 0.8,
     "heating_system_2_heating_capacity": 60000
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler-advanced-defrost.xml": {
@@ -2620,8 +2615,7 @@
   "sample_files/base-hvac-ducts-defaults.xml": {
     "parent_hpxml": "sample_files/base-hvac-furnace-gas-room-ac.xml",
     "heating_system_fraction_heat_load_served": 0.75,
-    "heating_system_2_type": "Fireplace",
-    "heating_system_2_heating_efficiency": 1.0,
+    "heating_system_2": "Fuel Fireplace, 100% Efficiency",
     "heating_system_2_fraction_heat_load_served": 0.25,
     "ducts_supply_location": null,
     "ducts_supply_surface_area": null,
@@ -2773,9 +2767,8 @@
   "sample_files/base-hvac-ground-to-air-heat-pump-backup-stove.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump.xml",
     "heat_pump_backup": "Separate",
-    "heating_system_2_type": "Stove",
+    "heating_system_2": "Stove, 60% Efficiency",
     "heating_system_2_fuel": "fuel oil",
-    "heating_system_2_heating_efficiency": 0.6,
     "heating_system_2_heating_capacity": 60000
   },
   "sample_files/base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml": {
@@ -2974,16 +2967,14 @@
     "heat_pump_heating_capacity": 18000,
     "heat_pump_cooling_capacity": 18000,
     "heat_pump_backup": "Separate",
-    "heating_system_2_type": "Stove",
+    "heating_system_2": "Stove, 60% Efficiency",
     "heating_system_2_fuel": "fuel oil",
-    "heating_system_2_heating_efficiency": 0.6,
     "heating_system_2_heating_capacity": 60000
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-baseboard.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-stove.xml",
-    "heating_system_2_type": "ElectricResistance",
-    "heating_system_2_fuel": "electricity",
-    "heating_system_2_heating_efficiency": 1
+    "heating_system_2": "Electric Baseboard, 100% Efficiency",
+    "heating_system_2_fuel": "electricity"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-advanced-defrost.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-advanced-defrost.xml",
@@ -2992,9 +2983,8 @@
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-stove.xml",
-    "heating_system_2_type": "Furnace",
-    "heating_system_2_fuel": "natural gas",
-    "heating_system_2_heating_efficiency": 0.8
+    "heating_system_2": "Fuel Furnace, 80% AFUE",
+    "heating_system_2_fuel": "natural gas"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace-ducts-defaults.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace.xml",

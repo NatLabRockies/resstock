@@ -79,11 +79,9 @@ module Constructions
     if not mat_int_finish.nil?
       constr.add_layer(mat_int_finish)
     end
-
     if not mat_rb.nil?
       constr.add_layer(mat_rb)
     end
-
     constr.add_layer(inside_film)
 
     constr.set_exterior_material_properties(solar_absorptance, emittance)
@@ -184,11 +182,9 @@ module Constructions
     if not mat_int_finish.nil?
       constr.add_layer(mat_int_finish)
     end
-
     if not mat_rb.nil?
       constr.add_layer(mat_rb)
     end
-
     constr.add_layer(inside_film)
 
     constr.set_exterior_material_properties(solar_absorptance, emittance)
@@ -288,7 +284,6 @@ module Constructions
     if not mat_rb.nil?
       constr.add_layer(mat_rb)
     end
-
     constr.add_layer(inside_film)
 
     constr.set_exterior_material_properties(solar_absorptance, emittance)
@@ -366,7 +361,6 @@ module Constructions
     if not mat_int_finish.nil?
       constr.add_layer(mat_int_finish)
     end
-
     if not mat_rb.nil?
       constr.add_layer(mat_rb)
     end
@@ -454,11 +448,9 @@ module Constructions
     if not mat_int_finish.nil?
       constr.add_layer(mat_int_finish)
     end
-
     if not mat_rb.nil?
       constr.add_layer(mat_rb)
     end
-
     constr.add_layer(inside_film)
 
     constr.set_exterior_material_properties(solar_absorptance, emittance)
@@ -547,11 +539,9 @@ module Constructions
     if not mat_int_finish.nil?
       constr.add_layer(mat_int_finish)
     end
-
     if not mat_rb.nil?
       constr.add_layer(mat_rb)
     end
-
     constr.add_layer(inside_film)
 
     constr.set_exterior_material_properties(solar_absorptance, emittance)
@@ -648,7 +638,6 @@ module Constructions
     if not mat_rb.nil?
       constr.add_layer(mat_rb)
     end
-
     constr.add_layer(inside_film)
 
     constr.set_exterior_material_properties(solar_absorptance, emittance)
@@ -2164,20 +2153,9 @@ module Constructions
   # @param solar_absorptance [TODO] TODO
   # @param emittance [TODO] TODO
   # @return [TODO] TODO
-  def self.apply_wall_construction(runner,
-                                   model,
-                                   surfaces,
-                                   wall_id,
-                                   wall_type,
-                                   assembly_r,
-                                   mat_int_finish,
-                                   has_radiant_barrier,
-                                   inside_film,
-                                   outside_film,
-                                   radiant_barrier_grade,
-                                   mat_ext_finish,
-                                   solar_absorptance,
-                                   emittance)
+  def self.apply_wall_construction(runner, model, surfaces, wall_id, wall_type, assembly_r, mat_int_finish,
+                                   has_radiant_barrier, inside_film, outside_film, radiant_barrier_grade,
+                                   mat_ext_finish, solar_absorptance, emittance)
 
     if mat_ext_finish.nil?
       fallback_mat_ext_finish = nil
@@ -2204,24 +2182,11 @@ module Constructions
       ]
       match, constr_set, cavity_r = pick_wood_stud_construction_set(assembly_r, constr_sets, inside_film, outside_film)
 
-      apply_wood_stud_wall(model,
-                           surfaces,
-                           "#{wall_id} construction",
-                           cavity_r,
-                           install_grade,
-                           constr_set.stud.thick_in,
-                           cavity_filled,
-                           constr_set.framing_factor,
-                           constr_set.mat_int_finish,
-                           constr_set.osb_thick_in,
-                           constr_set.rigid_r,
-                           constr_set.mat_ext_finish,
-                           has_radiant_barrier,
-                           inside_film,
-                           outside_film,
-                           radiant_barrier_grade,
-                           solar_absorptance,
-                           emittance)
+      apply_wood_stud_wall(model, surfaces, "#{wall_id} construction", cavity_r, install_grade,
+                           constr_set.stud.thick_in, cavity_filled, constr_set.framing_factor,
+                           constr_set.mat_int_finish, constr_set.osb_thick_in, constr_set.rigid_r,
+                           constr_set.mat_ext_finish, has_radiant_barrier, inside_film,
+                           outside_film, radiant_barrier_grade, solar_absorptance, emittance)
     when HPXML::WallTypeSteelStud
       install_grade = 1
       cavity_filled = true

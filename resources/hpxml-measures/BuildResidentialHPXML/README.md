@@ -2365,16 +2365,16 @@ Pipe diameter of the geothermal loop. Only applies to ground-to-air heat pump ty
 
 <br/>
 
-**Heating System 2: Type**
+**Heating System 2**
 
-The type of the second heating system. If a heat pump is specified and the backup type is 'separate', this heating system represents 'separate' backup heating. For ducted heat pumps where the backup heating system is a 'Furnace', the backup would typically be characterized as 'integrated' in that the furnace and heat pump share the same distribution system and blower fan; a 'Furnace' as 'separate' backup to a ducted heat pump is not supported.
+The type/efficiency of the second heating system. Efficiency is Rated AFUE or Percent as a Fraction. If a heat pump is specified and the backup type is 'separate', this heating system represents 'separate' backup heating.
 
-- **Name:** ``heating_system_2_type``
+- **Name:** ``heating_system_2``
 - **Type:** ``Choice``
 
 - **Required:** ``true``
 
-- **Choices:** `none`, `Furnace`, `WallFurnace`, `FloorFurnace`, `Boiler`, `ElectricResistance`, `Stove`, `SpaceHeater`, `Fireplace`
+- **Choices:** `Electric Baseboard, 100% Efficiency`, `Electric Portable Heater, 100% Efficiency`, `Fuel Boiler, 60% AFUE`, `Fuel Boiler, 76% AFUE`, `Fuel Boiler, 80% AFUE`, `Fuel Boiler, 90% AFUE`, `Fuel Boiler, 92.5% AFUE`, `Fuel Boiler, 100% AFUE`, `Fuel Fireplace, 60% Efficiency`, `Fuel Fireplace, 100% Efficiency`, `Fuel Furnace, 60% AFUE`, `Fuel Furnace, 76% AFUE`, `Fuel Furnace, 80% AFUE`, `Fuel Furnace, 92.5% AFUE`, `Fuel Furnace, 100% AFUE`, `Fuel Wall Furnace, 60% AFUE`, `Fuel Wall Furnace, 68% AFUE`, `Fuel Floor Furnace, 60% AFUE`, `Fuel Floor Furnace, 68% AFUE`, `Stove, 60% Efficiency`, `Stove, 68% Efficiency`, `None`
 
 <br/>
 
@@ -2388,19 +2388,6 @@ The fuel type of the second heating system. Ignored for ElectricResistance.
 - **Required:** ``true``
 
 - **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
-
-<br/>
-
-**Heating System 2: Rated AFUE or Percent**
-
-The rated heating efficiency value of the second heating system.
-
-- **Name:** ``heating_system_2_heating_efficiency``
-- **Type:** ``Double``
-
-- **Units:** ``Frac``
-
-- **Required:** ``true``
 
 <br/>
 

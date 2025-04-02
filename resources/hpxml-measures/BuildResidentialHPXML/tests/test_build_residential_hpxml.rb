@@ -515,9 +515,8 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['ducts_supply_surface_area'] = 150.0
       args['ducts_return_surface_area'] = 50.0
       args['ducts_number_of_return_registers'] = 2
-      args['heating_system_2_type'] = Constants::None
+      args['heating_system_2'] = 'None'
       args['heating_system_2_fuel'] = HPXML::FuelTypeElectricity
-      args['heating_system_2_heating_efficiency'] = 1.0
       args['heating_system_2_fraction_heat_load_served'] = 0.25
       args['mech_vent_fan_type'] = Constants::None
       args['mech_vent_flow_rate'] = 110
@@ -762,7 +761,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['ducts_return_leakage_to_outside_value'] = 0.0
       args['ducts_supply_location'] = HPXML::LocationConditionedSpace
       args['ducts_return_location'] = HPXML::LocationConditionedSpace
-      args['heating_system_2_type'] = HPXML::HVACTypeSpaceHeater
+      args['heating_system_2'] = 'Electric Portable Heater, 100% Efficiency'
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-fireplace-to-heating-system.xml'
       args['heating_system_fuel'] = HPXML::FuelTypeElectricity
@@ -770,12 +769,12 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['heating_system_heating_capacity'] = 48000.0
       args['heating_system_fraction_heat_load_served'] = 0.75
       args['cooling_system'] = 'None'
-      args['heating_system_2_type'] = HPXML::HVACTypeFireplace
+      args['heating_system_2'] = 'Fuel Fireplace, 100% Efficiency'
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-boiler-to-heating-system.xml'
       args['heating_system'] = 'Fuel Boiler, 92% AFUE'
       args['heating_system_fraction_heat_load_served'] = 0.75
-      args['heating_system_2_type'] = HPXML::HVACTypeBoiler
+      args['heating_system_2'] = 'Fuel Boiler, 100% AFUE'
     when 'extra-second-heating-system-portable-heater-to-heat-pump.xml'
       args['heating_system'] = 'None'
       args['cooling_system'] = 'None'
@@ -787,7 +786,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['ducts_return_leakage_to_outside_value'] = 0.0
       args['ducts_supply_location'] = HPXML::LocationConditionedSpace
       args['ducts_return_location'] = HPXML::LocationConditionedSpace
-      args['heating_system_2_type'] = HPXML::HVACTypeSpaceHeater
+      args['heating_system_2'] = 'Electric Portable Heater, 100% Efficiency'
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-fireplace-to-heat-pump.xml'
       args['heating_system'] = 'None'
@@ -795,7 +794,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['heat_pump'] = 'MSHP, SEER 19, 10 HSPF, Ducted'
       args['heat_pump_heating_capacity'] = 48000.0
       args['heat_pump_fraction_heat_load_served'] = 0.75
-      args['heating_system_2_type'] = HPXML::HVACTypeFireplace
+      args['heating_system_2'] = 'Fuel Fireplace, 100% Efficiency'
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-boiler-to-heat-pump.xml'
       args['heating_system'] = 'None'
@@ -803,7 +802,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['heat_pump'] = 'GSHP, EER 16.6, COP 3.6'
       args['heat_pump_backup'] = 'Electricity, Integrated, 100% Efficiency'
       args['heat_pump_fraction_heat_load_served'] = 0.75
-      args['heating_system_2_type'] = HPXML::HVACTypeBoiler
+      args['heating_system_2'] = 'Fuel Boiler, 100% AFUE'
     when 'extra-enclosure-windows-shading.xml'
       args['window_interior_shading_winter'] = 0.99
       args['window_interior_shading_summer'] = 0.01
@@ -1114,13 +1113,13 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args.delete('foundation_wall_insulation_distance_to_bottom')
     when 'error-second-heating-system-but-no-primary-heating.xml'
       args['heating_system'] = 'None'
-      args['heating_system_2_type'] = HPXML::HVACTypeFireplace
+      args['heating_system_2'] = 'Fuel Fireplace, 100% Efficiency'
     when 'error-second-heating-system-ducted-with-ducted-primary-heating.xml'
       args['heating_system'] = 'None'
       args['cooling_system'] = 'None'
       args['heat_pump'] = 'MSHP, SEER 14.5, 8.2 HSPF, Ducted'
       args['heat_pump_backup'] = 'Separate'
-      args['heating_system_2_type'] = HPXML::HVACTypeFurnace
+      args['heating_system_2'] = 'Fuel Furnace, 100% AFUE'
     when 'error-sfa-no-building-num-units.xml'
       args.delete('geometry_building_num_units')
     when 'error-sfa-above-apartment.xml'

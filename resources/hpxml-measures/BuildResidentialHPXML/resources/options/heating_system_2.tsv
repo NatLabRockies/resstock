@@ -1,0 +1,23 @@
+Option Name	heating_system_2_type	heating_system_2_heating_efficiency
+"Electric Baseboard, 100% Efficiency"	ElectricResistance	1
+"Electric Portable Heater, 100% Efficiency"	SpaceHeater	1
+"Fuel Boiler, 60% AFUE"	Boiler	0.6
+"Fuel Boiler, 76% AFUE"	Boiler	0.76
+"Fuel Boiler, 80% AFUE"	Boiler	0.8
+"Fuel Boiler, 90% AFUE"	Boiler	0.9
+"Fuel Boiler, 92.5% AFUE"	Boiler	0.925
+"Fuel Boiler, 100% AFUE"	Boiler	1
+"Fuel Fireplace, 60% Efficiency"	Fireplace	0.6
+"Fuel Fireplace, 100% Efficiency"	Fireplace	1
+"Fuel Furnace, 60% AFUE"	Furnace	0.6
+"Fuel Furnace, 76% AFUE"	Furnace	0.76
+"Fuel Furnace, 80% AFUE"	Furnace	0.8
+"Fuel Furnace, 92.5% AFUE"	Furnace	0.925
+"Fuel Furnace, 100% AFUE"	Furnace	1
+"Fuel Wall Furnace, 60% AFUE"	WallFurnace	0.6
+"Fuel Wall Furnace, 68% AFUE"	WallFurnace	0.68
+"Fuel Floor Furnace, 60% AFUE"	FloorFurnace	0.6
+"Fuel Floor Furnace, 68% AFUE"	FloorFurnace	0.68
+"Stove, 60% Efficiency"	Stove	0.6
+"Stove, 68% Efficiency"	Stove	0.68
+None	none	
