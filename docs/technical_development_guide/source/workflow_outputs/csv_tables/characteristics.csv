@@ -95,12 +95,7 @@ build_existing_model.hvac_secondary_heating_fuel,:ref:`hvac_secondary_heating_fu
 build_existing_model.hvac_secondary_heating_partial_space_conditioning,:ref:`hvac_secondary_heating_partial_space_conditioning`
 build_existing_model.hvac_secondary_heating_type,:ref:`hvac_secondary_heating_type`
 build_existing_model.hvac_shared_efficiencies,:ref:`hvac_shared_efficiencies`
-build_existing_model.hvac_system_is_faulted,:ref:`hvac_system_is_faulted`
 build_existing_model.hvac_system_is_scaled,:ref:`hvac_system_is_scaled`
-build_existing_model.hvac_system_single_speed_ac_airflow,:ref:`hvac_system_single_speed_ac_airflow`
-build_existing_model.hvac_system_single_speed_ac_charge,:ref:`hvac_system_single_speed_ac_charge`
-build_existing_model.hvac_system_single_speed_ashp_airflow,:ref:`hvac_system_single_speed_ashp_airflow`
-build_existing_model.hvac_system_single_speed_ashp_charge,:ref:`hvac_system_single_speed_ashp_charge`
 build_existing_model.income,:ref:`income`
 build_existing_model.income_recs_2015,:ref:`income_recs2015`
 build_existing_model.income_recs_2020,:ref:`income_recs2020`

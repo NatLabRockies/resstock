@@ -42,7 +42,7 @@ build_existing_model.utility_bill_pv_monthly_grid_connection_fee_units,"Utility 
 build_existing_model.utility_bill_pv_monthly_grid_connection_fees,"Utility bill PV monthly grid connection fees. If multiple scenarios, use a comma-separated list."
 build_existing_model.utility_bill_pv_net_metering_annual_excess_sellback_rate_types,"Utility bill PV net metering annual excess sellback rate types. Only applies if the PV compensation type is 'NetMetering'. If multiple scenarios, use a comma-separated list."
 build_existing_model.utility_bill_pv_net_metering_annual_excess_sellback_rates,"Utility bill PV net metering annual excess sellback rates. Only applies if the PV compensation type is 'NetMetering' and the PV annual excess sellback rate type is 'User-Specified'. If multiple scenarios, use a comma-separated list."
-build_existing_model.utility_bill_scenario_names,"Names of utility bill scenarios. If multiple scenarios, use a comma-separated list. If multiple scenarios, use a comma-separated list."
+build_existing_model.utility_bill_scenario_names,"Names of utility bill scenarios. If multiple scenarios, use a comma-separated list."
 build_existing_model.utility_bill_simple_filepaths,"Relative paths of simple utility rates. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. Files must contain the name of the Parameter as the column header."
 build_existing_model.utility_bill_wood_fixed_charges,"Wood utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list."
 build_existing_model.utility_bill_wood_marginal_rates,"Wood utility bill marginal rates. If multiple scenarios, use a comma-separated list."
