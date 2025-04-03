@@ -9690,7 +9690,7 @@ Ground Thermal Conductivity	0.8	ResStockArguments	site_ground_conductivity=0.8	s
 Ground Thermal Conductivity	1.1	ResStockArguments	site_ground_conductivity=1.1	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto																																							
 Ground Thermal Conductivity	1.4	ResStockArguments	site_ground_conductivity=1.4	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto																																							
 Ground Thermal Conductivity	1.7	ResStockArguments	site_ground_conductivity=1.7	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto																																							
-Ground Thermal Conductivity	2	ResStockArguments	site_ground_conductivity=2.0	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto																																							
+Ground Thermal Conductivity	2.0	ResStockArguments	site_ground_conductivity=2.0	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto																																							
 Ground Thermal Conductivity	2.3	ResStockArguments	site_ground_conductivity=2.3	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto																																							
 Ground Thermal Conductivity	2.6	ResStockArguments	site_ground_conductivity=2.6	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto																																							
 HVAC Cooling Autosizing Factor	40% Oversized	ResStockArguments	cooling_system_cooling_autosizing_factor=1.4	heat_pump_cooling_autosizing_factor=auto																																								
