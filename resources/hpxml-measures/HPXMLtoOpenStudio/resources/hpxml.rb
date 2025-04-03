@@ -1780,7 +1780,7 @@ class HPXML < Object
 
     # Returns whether the building has a given location.
     #
-    # @param location [String] Location (HPXML::LocationXXX)
+    # @param location [String] The location of interest (HPXML::LocationXXX)
     # @return [Boolean] True if location is used by the building
     def has_location(location)
       # Search for surfaces attached to this location
