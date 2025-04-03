@@ -1179,8 +1179,15 @@ upgrades:
     options:
       - option: HVACFlexibility|pre_only_1hr_2deg
 
-  - upgrade_name: EV for all with load flexibility
+  - upgrade_name: EV + L2 Charger + DF
     options:
       - option: Electric Vehicle Ownership|Yes
-      - option: Electric Vehicle Charger|Level 1 charger
+      - option: Electric Vehicle Charger|Level 2 charger
+      - option: EVFlexibility|enabled
+
+  - upgrade_name: Efficienct EV + L2 Charger + DF
+    options:
+      - option: Electric Vehicle Ownership|Yes
+      - option: Electric Vehicle Charger|Level 2 charger
+      - option: Electric Vehicle Efficiency Increase|15%
       - option: EVFlexibility|enabled
