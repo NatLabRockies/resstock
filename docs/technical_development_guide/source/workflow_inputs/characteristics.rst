@@ -42052,7 +42052,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - No
      - 99%
    * - Yes
-     - 0.94%
+     - 1%
 
 .. _heating_fuel:
 
@@ -60762,7 +60762,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``pv_system_2_array_azimuth``
 
    * - East
-     - 0.15%
+     - 0.16%
      - 90
      - 0
    * - None
@@ -60770,31 +60770,31 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 180
      - 0
    * - North
-     - 0.016%
+     - 0.017%
      - 0
      - 0
    * - Northeast
-     - 0.014%
+     - 0.015%
      - 45
      - 0
    * - Northwest
-     - 0.0093%
+     - 0.0099%
      - 315
      - 0
    * - South
-     - 0.42%
+     - 0.45%
      - 180
      - 0
    * - Southeast
-     - 0.13%
+     - 0.14%
      - 135
      - 0
    * - Southwest
-     - 0.11%
+     - 0.12%
      - 225
      - 0
    * - West
-     - 0.082%
+     - 0.087%
      - 270
      - 0
 
@@ -60953,7 +60953,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``pv_system_2_max_power_output``
 
    * - 1.0 kWDC
-     - 0.025%
+     - 0.027%
      - true
      - auto
      - roof
@@ -60969,7 +60969,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 3.0 kWDC
-     - 0.18%
+     - 0.2%
      - true
      - auto
      - roof
@@ -60985,7 +60985,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 5.0 kWDC
-     - 0.28%
+     - 0.3%
      - true
      - auto
      - roof
@@ -61001,7 +61001,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 7.0 kWDC
-     - 0.21%
+     - 0.22%
      - true
      - auto
      - roof
@@ -61033,7 +61033,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 11.0 kWDC
-     - 0.074%
+     - 0.077%
      - true
      - auto
      - roof
@@ -61049,7 +61049,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 13.0 kWDC
-     - 0.03%
+     - 0.031%
      - true
      - auto
      - roof
