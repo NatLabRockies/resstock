@@ -1151,30 +1151,30 @@ upgrades:
       - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
       - *infiltration_30pct_reduction
 
-  - upgrade_name: HVAC Flexibility - Load Shedding (4hr, 2deg)
+  - upgrade_name: HVAC Flexibility - On-peak Load Shedding, 2F Offset
     package_apply_logic: &has_cooling_or_heating
       - or:  # apply if there is either a cooling or a heating system
         - not: HVAC Cooling Type|None
         - not: HVAC Heating Type|None
     options:
-      - option: HVACFlexibility|peak_only_4hr_2deg
+      - option: HVACFlexibility|On-peak Load Shedding, 2F Offset
 
-  - upgrade_name: HVAC Flexibility - Load Shifting (4hr, 2deg)
+  - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVACFlexibility|pre_only_4hr_2deg
+      - option: HVACFlexibility|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
 
-  - upgrade_name: HVAC Flexibility - Load Shedding (4hr, 4deg)
+  - upgrade_name: HVAC Flexibility - On-peak Load Shedding, 4F Offset
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVACFlexibility|peak_only_4hr_4deg
+      - option: HVACFlexibility|On-peak Load Shedding, 4F Offset
 
-  - upgrade_name: HVAC Flexibility - Load Shifting (4hr, 4deg)
+  - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVACFlexibility|pre_only_4hr_4deg
+      - option: HVACFlexibility|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
 
-  - upgrade_name: HVAC Flexibility - Load Shifting (1hr, 2deg)
+  - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVACFlexibility|pre_only_1hr_2deg
+      - option: HVACFlexibility|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
