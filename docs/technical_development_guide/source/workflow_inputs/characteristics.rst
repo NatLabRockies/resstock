@@ -38313,36 +38313,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``cooling_system_type``
+   * - ``cooling_system``
      - true
      - 
      - Choice
-     - none, central air conditioner, room air conditioner, evaporative cooler, mini-split, packaged terminal air conditioner
-     - The type of cooling system. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.
-   * - ``cooling_system_cooling_efficiency_type``
-     - true
-     - 
-     - Choice
-     - SEER, SEER2, EER, CEER
-     - The efficiency type of the cooling system. System types central air conditioner and mini-split use SEER or SEER2. System types room air conditioner and packaged terminal air conditioner use EER or CEER. Ignored for system type evaporative cooler.
-   * - ``cooling_system_cooling_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated efficiency value of the cooling system. Ignored for evaporative cooler.
-   * - ``cooling_system_cooling_compressor_type``
-     - false
-     - 
-     - Choice
-     - auto, single stage, two stage, variable speed
-     - The compressor type of the cooling system. Only applies to central air conditioner and mini-split. If not provided, the OS-HPXML default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
-   * - ``cooling_system_cooling_sensible_heat_fraction``
-     - false
-     - Frac
-     - Double
-     - auto
-     - The sensible heat fraction of the cooling system. Ignored for evaporative cooler. If not provided, the OS-HPXML default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner>`_, `Room Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner>`_, `Packaged Terminal Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-air-conditioner>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
+     - None, Central AC, SEER 8, Central AC, SEER 10, Central AC, SEER 13, Central AC, SEER 13, 25W Crankcase Heater, Central AC, SEER 13, 50W Crankcase Heater, Central AC, SEER 13, Two Stage, Central AC, SEER 13, Airflow Defect Ratio, Central AC, SEER2 12.4, SEER 13.05, Central AC, SEER 14, Central AC, SEER 15, Central AC, SEER 17.5, Variable Speed, Central AC, SEER 17.5, Detailed Performance, Central AC, SEER 17.5, Normalized Capacity Fractions, Central AC, SEER 18, Central AC, SEER 18, Airflow Defect Ratio, Central AC, SEER 24, Central AC, SEER 24, Airflow Defect Ratio, Central AC, SEER 24.5, Central AC, SEER 24.5, 0.73 SHR, Room AC, EER 8.5, Room AC, EER 8.5, Electric Heating, Room AC, EER 8.5, 0.73 SHR, Room AC, EER 9.8, Room AC, EER 10.7, Room AC, EER 12.0, Room AC, CEER 8.4, Evaporative Cooler, EER 13, Ductless Evaporative Cooler, SEER 13, Ducted Evaporative Cooler, SEER 13, Fan Coil Cooling, SEER 13, Ducted Mini-Split AC, SEER 19, Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio, Ductless Mini-Split AC, SEER 19, Ductless Mini-Split AC, SEER 17, Ductless Mini-Split AC, SEER 17, Detailed Performance, Ductless Mini-Split AC, SEER 17, Normalized Capacity Fractions, PTAC, EER 10.7, PTAC, EER 10.7, Electric Heating, PTAC, EER 10.7, Natural Gas Heating
+     - The cooling system type, efficiency type, and efficiency. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.
    * - ``cooling_system_cooling_capacity``
      - false
      - Btu/hr
@@ -38355,30 +38331,6 @@ Arguments
      - Double
      -
      - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``cooling_system_is_ducted``
-     - false
-     - 
-     - Boolean
-     - auto, true, false
-     - Whether the cooling system is ducted or not. Only used for mini-split and evaporative cooler. It's assumed that central air conditioner is ducted, and room air conditioner and packaged terminal air conditioner are not ducted.
-   * - ``cooling_system_crankcase_heater_watts``
-     - false
-     - W
-     - Double
-     - auto
-     - Cooling system crankcase heater power consumption in Watts. Applies only to central air conditioner, room air conditioner, packaged terminal air conditioner and mini-split. If not provided, the OS-HPXML default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner>`_, `Room Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner>`_, `Packaged Terminal Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-air-conditioner>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
-   * - ``cooling_system_integrated_heating_system_fuel``
-     - false
-     - 
-     - Choice
-     - auto, electricity, natural gas, fuel oil, propane, wood, wood pellets, coal
-     - The fuel type of the heating system integrated into cooling system. Only used for packaged terminal air conditioner and room air conditioner.
-   * - ``cooling_system_integrated_heating_system_efficiency_percent``
-     - false
-     - Frac
-     - Double
-     -
-     - The rated heating efficiency value of the heating system integrated into cooling system. Only used for packaged terminal air conditioner and room air conditioner.
    * - ``cooling_system_integrated_heating_system_capacity``
      - false
      - Btu/hr
@@ -38404,195 +38356,91 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``cooling_system_type``
-     - ``cooling_system_cooling_efficiency_type``
-     - ``cooling_system_cooling_efficiency``
-     - ``cooling_system_cooling_compressor_type``
-     - ``cooling_system_cooling_sensible_heat_fraction``
+     - ``cooling_system``
      - ``cooling_system_cooling_capacity``
      - ``cooling_system_cooling_autosizing_limit``
-     - ``cooling_system_is_ducted``
-     - ``cooling_system_crankcase_heater_watts``
-     - ``cooling_system_integrated_heating_system_fuel``
-     - ``cooling_system_integrated_heating_system_efficiency_percent``
      - ``cooling_system_integrated_heating_system_capacity``
      - ``cooling_system_integrated_heating_system_fraction_heat_load_served``
 
    * - AC, SEER 8
      - 0.9%
-     - central air conditioner
-     - SEER
-     - 8
-     - single stage
-     - auto
-     - auto
-     - auto
-     - false
-     - auto
+     - Central AC, SEER 8
      - auto
      - auto
      - auto
      - auto
    * - AC, SEER 10
      - 6%
-     - central air conditioner
-     - SEER
-     - 10
-     - single stage
-     - auto
-     - auto
-     - auto
-     - false
-     - auto
+     - Central AC, SEER 10
      - auto
      - auto
      - auto
      - auto
    * - AC, SEER 13
      - 29%
-     - central air conditioner
-     - SEER
-     - 13
-     - single stage
-     - auto
-     - auto
-     - auto
-     - false
-     - auto
+     - Central AC, SEER 13
      - auto
      - auto
      - auto
      - auto
    * - AC, SEER 15
      - 13%
-     - central air conditioner
-     - SEER
-     - 15
-     - single stage
-     - auto
-     - auto
-     - auto
-     - false
-     - auto
+     - Central AC, SEER 15
      - auto
      - auto
      - auto
      - auto
    * - Ducted Heat Pump
      - 15%
-     - none
-     - SEER
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - auto
+     - None
      - auto
      - auto
      - auto
      - auto
    * - Non-Ducted Heat Pump
      - 0.97%
-     - none
-     - SEER
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - auto
+     - None
      - auto
      - auto
      - auto
      - auto
    * - None
      - 11%
-     - none
-     - SEER
-     - 0
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - auto
+     - None
      - auto
      - auto
      - auto
      - auto
    * - Room AC, EER 8.5
      - 0.43%
-     - room air conditioner
-     - EER
-     - 8.5
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - auto
+     - Room AC, EER 8.5
      - auto
      - auto
      - auto
      - auto
    * - Room AC, EER 9.8
      - 2.6%
-     - room air conditioner
-     - EER
-     - 9.8
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - auto
+     - Room AC, EER 9.8
      - auto
      - auto
      - auto
      - auto
    * - Room AC, EER 10.7
      - 9.6%
-     - room air conditioner
-     - EER
-     - 10.7
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - auto
+     - Room AC, EER 10.7
      - auto
      - auto
      - auto
      - auto
    * - Room AC, EER 12.0
      - 7.4%
-     - room air conditioner
-     - EER
-     - 12
-     - auto
-     - auto
-     - auto
-     - auto
-     - false
-     - auto
+     - Room AC, EER 12.0
      - auto
      - auto
      - auto
      - auto
    * - Shared Cooling
      - 3.8%
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
      - 
      - 
@@ -39098,18 +38946,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``heating_system_type``
+   * - ``heating_system``
      - true
      - 
      - Choice
-     - none, Furnace, WallFurnace, FloorFurnace, Boiler, ElectricResistance, Stove, SpaceHeater, Fireplace, Shared Boiler w/ Baseboard, Shared Boiler w/ Ductless Fan Coil
-     - The type of heating system. Use 'none' if there is no heating system or if there is a heat pump serving a heating load.
-   * - ``heating_system_heating_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The rated heating efficiency value of the heating system.
+     - Electric Furnace, 98% AFUE, Electric Furnace, 100% AFUE, Electric Baseboard, 100% Efficiency, Electric Boiler, 98% AFUE, Electric Boiler, 100% AFUE, Electric Wall Furnace, 100% AFUE, Fuel Boiler, 72% AFUE, Fuel Boiler, 76% AFUE, Fuel Boiler, 80% AFUE, Fuel Boiler, 82% AFUE, Fuel Boiler, 85% AFUE, Fuel Boiler, 90% AFUE, Fuel Boiler, 92% AFUE, Fuel Boiler, 92% AFUE, 600 BTUh Pilot Light, Fuel Boiler, 95% AFUE, Fuel Boiler, 96% AFUE, Fuel Furnace, 60% AFUE, Fuel Furnace, 68% AFUE, Fuel Furnace, 72% AFUE, Fuel Furnace, 76% AFUE, Fuel Furnace, 78% AFUE, Fuel Furnace, 80% AFUE, Fuel Furnace, 85% AFUE, Fuel Furnace, 90% AFUE, Fuel Furnace, 92% AFUE, Fuel Furnace, 92% AFUE, Airflow Defect Ratio, Fuel Furnace, 92% AFUE, 600 BTUh Pilot Light, Fuel Furnace, 92.5% AFUE, Fuel Furnace, 96% AFUE, Fuel Wall Furnace, 60% AFUE, Fuel Wall Furnace, 68% AFUE, Electric Wall Furnace, 98% AFUE, Electric Wall Furnace, 100% AFUE, None, Fuel Boiler w/ Baseboard, 78% AFUE, Fuel Boiler w/ Baseboard, 92% AFUE, Electric Boiler w/ Baseboard, 100% AFUE, Fuel Fan Coil Heating, 78% AFUE, Fuel Fan Coil Heating, 92% AFUE, Electric Fan Coil Heating, 100% AFUE, Fireplace, 80% Efficiency, Stove, 80% Efficiency, Fuel Floor Furnace, 80% AFUE, 600 BTUh Pilot Light, Space Heater, 100% Efficiency, Space Heater, 92% Efficiency
+     - The heating system type/efficiency. Efficiency is Rated AFUE or Percent as a Fraction. Use 'none' if there is no heating system or if there is a heat pump serving a heating load.
    * - ``heating_system_heating_capacity``
      - false
      - Btu/hr
@@ -39128,54 +38970,12 @@ Arguments
      - Double
      -
      - The heating load served by the heating system.
-   * - ``heating_system_pilot_light``
-     - false
-     - Btuh
-     - Double
-     -
-     - The fuel usage of the pilot light. Applies only to Furnace, WallFurnace, FloorFurnace, Stove, Boiler, and Fireplace with non-electric fuel type. If not provided, assumes no pilot light.
-   * - ``heat_pump_type``
+   * - ``heat_pump``
      - true
      - 
      - Choice
-     - none, air-to-air, mini-split, ground-to-air, packaged terminal heat pump, room air conditioner with reverse cycle
-     - The type of heat pump. Use 'none' if there is no heat pump.
-   * - ``heat_pump_heating_efficiency_type``
-     - true
-     - 
-     - Choice
-     - HSPF, HSPF2, COP
-     - The heating efficiency type of heat pump. System types air-to-air and mini-split use HSPF or HSPF2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use COP.
-   * - ``heat_pump_heating_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated heating efficiency value of the heat pump.
-   * - ``heat_pump_cooling_efficiency_type``
-     - true
-     - 
-     - Choice
-     - SEER, SEER2, EER, CEER
-     - The cooling efficiency type of heat pump. System types air-to-air and mini-split use SEER or SEER2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use EER.
-   * - ``heat_pump_cooling_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated cooling efficiency value of the heat pump.
-   * - ``heat_pump_cooling_compressor_type``
-     - false
-     - 
-     - Choice
-     - auto, single stage, two stage, variable speed
-     - The compressor type of the heat pump. Only applies to air-to-air and mini-split. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_) is used.
-   * - ``heat_pump_cooling_sensible_heat_fraction``
-     - false
-     - Frac
-     - Double
-     - auto
-     - The sensible heat fraction of the heat pump. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_, `Ground-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#ground-to-air-heat-pump>`_) is used.
+     - None, ASHP, SEER 10, 6.2 HSPF, ASHP, SEER 10, 6.8 HSPF, ASHP, SEER 10.3, 7.0 HSPF, ASHP, SEER 11.5, 7.5 HSPF, ASHP, SEER 13, 7.7 HSPF, ASHP, SEER 13, 7.7 HSPF, Heating Capacity 17F, ASHP, SEER 13, 7.7 HSPF, Airflow Defect Ratio, ASHP, SEER 13, 7.7 HSPF, 5F Compressor Lockout, ASHP, SEER 13, 7.7 HSPF, 25F Compressor Lockout, ASHP, SEER 13, 7.7 HSPF, 30F Compressor Lockout, ASHP, SEER2 12.4, HSPF2 6.5, Heating Capacity 17F, ASHP, SEER 13, 7.7 HSPF, Lockout Temperatures, ASHP, SEER 13, 8.0 HSPF, ASHP, SEER 13, 9.85 HSPF, ASHP, SEER 14, 8.2 HSPF, ASHP, SEER 14.3, 8.5 HSPF, ASHP, SEER 15, 8.5 HSPF, ASHP, SEER 15, 9.0 HSPF, ASHP, SEER 16, 9.0 HSPF, ASHP, SEER 16, 9.2 HSPF, Heating Capacity 5F, ASHP, SEER 16, 9.2 HSPF, -20F Compressor Lockout, ASHP, SEER 17, 8.7 HSPF, ASHP, SEER 18, 9.3 HSPF, ASHP, SEER 18, 9.3 HSPF, Airflow Defect Ratio, ASHP, SEER 18, 9.3 HSPF, 30F Compressor Lockout, ASHP, SEER 20, 11 HSPF, ASHP, SEER 20, 11 HSPF, Heating Capacity 5F, ASHP, SEER 22, 10 HSPF, ASHP, SEER 22, 10 HSPF, Default Capacity Retention, ASHP, SEER 22, 10 HSPF, Airflow Defect Ratio, ASHP, SEER 22, 10 HSPF, Heating Capacity 17F, ASHP, SEER 22, 10 HSPF, 30F Compressor Lockout, ASHP, SEER 17.25, 10 HPSF, Normalized Capacity Fractions, ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance, ASHP, SEER 17.5, 9.5 HSPF, Normalized Capacity Fractions, ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance, Airflow Defect Ratio, ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance Heating Only, ASHP, SEER 24, 13 HSPF, ASHP, SEER 24, 13 HSPF, Heating Capacity 5F, GSHP, EER 16.6, COP 3.6, GSHP, EER 16.6, COP 3.6, Airflow Defect Ratio, GSHP, EER 20.2, COP 4.2, GSHP, EER 20.5, COP 4.0, MSHP, SEER 14.5, 8.2 HSPF, MSHP, SEER 14.5, 8.2 HSPF, Ducted, MSHP, SEER 16, 9.2 HSPF, MSHP, SEER 16.7, 11.3 HSPF, Detailed Performance, MSHP, SEER 16.7, 11.3 HSPF, Normalized Capacity Fractions, MSHP, SEER 17, 9.5 HSPF, MSHP, SEER 17, 9.5 HSPF, Ducted, MSHP, SEER 17, 10 HSPF, Ductless, Detailed Performance, MSHP, SEER 17, 10 HSPF, Ductless, Normalized Capacity Fractions, MSHP, SEER 18.0, 9.6 HSPF, MSHP, SEER 18.0, 9.6 HSPF, Ducted, MSHP, SEER 19, 10 HSPF, Ducted, MSHP, SEER 19, 10 HSPF, Airflow Defect Ratio, MSHP, SEER 19, 10 HSPF, 30F Compressor Lockout, MSHP, SEER 19, 10 HSPF, Ductless, MSHP, SEER 19, 10 HSPF, Ductless, Detailed Performance, MSHP, SEER 20, 11 HSPF, MSHP, SEER 24, 13 HSPF, MSHP, SEER 25, 12.7 HSPF, MSHP, SEER 25, 12.7 HSPF, Ducted, MSHP, SEER 29.3, 14 HSPF, MSHP, SEER 29.3, 14 HSPF, Ducted, MSHP, SEER 33, 13.3 HSPF, MSHP, SEER 33, 13.3 HSPF, Ducted, PTHP, EER 11.4, COP 3.6, Room AC w/ Reverse Cycle, EER 11.4
+     - The heat pump type/efficiency.
    * - ``heat_pump_heating_capacity``
      - false
      - Btu/hr
@@ -39188,18 +38988,6 @@ Arguments
      - Double
      -
      - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``heat_pump_heating_capacity_retention_fraction``
-     - false
-     - Frac
-     - Double
-     - auto
-     - The output heating capacity of the heat pump at a user-specified temperature (e.g., 17F or 5F) divided by the above nominal heating capacity. Applies to all heat pump types except ground-to-air. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_) is used.
-   * - ``heat_pump_heating_capacity_retention_temp``
-     - false
-     - F
-     - Double
-     -
-     - The user-specified temperature (e.g., 17F or 5F) for the above heating capacity retention fraction. Applies to all heat pump types except ground-to-air. Required if the Heating Capacity Retention Fraction is provided.
    * - ``heat_pump_cooling_capacity``
      - false
      - Btu/hr
@@ -39224,48 +39012,24 @@ Arguments
      - Double
      -
      - The cooling load served by the heat pump.
-   * - ``heat_pump_compressor_lockout_temp``
-     - false
-     - F
-     - Double
-     - auto
-     - The temperature below which the heat pump compressor is disabled. If both this and Backup Heating Lockout Temperature are provided and use the same value, it essentially defines a switchover temperature (for, e.g., a dual-fuel heat pump). Applies to all heat pump types other than ground-to-air. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_) is used.
-   * - ``heat_pump_backup_type``
+   * - ``heat_pump_backup``
      - true
      - 
      - Choice
-     - none, integrated, separate
-     - The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating.
+     - None, Electricity, Integrated, 100% Efficiency, Electricity, Integrated, 100% Efficiency, 35F Lockout, Natural Gas, Integrated, 95% AFUE, 30F Lockout, Natural Gas, Integrated, 60% AFUE, 40F Lockout, Natural Gas, Integrated, 76% AFUE, 40F Lockout, Natural Gas, Integrated, 80% AFUE, 40F Lockout, Natural Gas, Integrated, 92.5% AFUE, 40F Lockout, Natural Gas, Integrated, 95% AFUE, 40F Lockout, Natural Gas, Integrated, 95% AFUE, 45F Lockout, Fuel Oil, Integrated, 60% AFUE, 40F Lockout, Fuel Oil, Integrated, 76% AFUE, 40F Lockout, Fuel Oil, Integrated, 80% AFUE, 40F Lockout, Fuel Oil, Integrated, 92.5% AFUE, 40F Lockout, Propane, Integrated, 60% AFUE, 40F Lockout, Propane, Integrated, 76% AFUE, 40F Lockout, Propane, Integrated, 80% AFUE, 40F Lockout, Propane, Integrated, 92.5% AFUE, 40F Lockout, Separate, Separate, 30F Lockout, Separate, -20F Lockout
+     - The type, fuel type, and efficiency of the heat pump backup. Use 'none' if there is no backup heating. If Backup Type is 'separate', Heating System 2 is used to specify the backup.
    * - ``heat_pump_backup_heating_autosizing_limit``
      - false
      - Btu/hr
      - Double
      -
      - The maximum capacity limit applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, no limit is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Limit.
-   * - ``heat_pump_backup_fuel``
-     - true
-     - 
-     - Choice
-     - electricity, natural gas, fuel oil, propane
-     - The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'.
-   * - ``heat_pump_backup_heating_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'.
    * - ``heat_pump_backup_heating_capacity``
      - false
      - Btu/hr
      - Double
      -
      - The backup output heating capacity of the heat pump. If not provided, the OS-HPXML autosized default (see `Backup <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#backup>`_) is used. Only applies if Backup Type is 'integrated'.
-   * - ``heat_pump_backup_heating_lockout_temp``
-     - false
-     - F
-     - Double
-     - auto
-     - The temperature above which the heat pump backup system is disabled. If both this and Compressor Lockout Temperature are provided and use the same value, it essentially defines a switchover temperature (for, e.g., a dual-fuel heat pump). Applies for both Backup Type of 'integrated' and 'separate'. If not provided, the OS-HPXML default (see `Backup <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#backup>`_) is used.
    * - ``heat_pump_sizing_methodology``
      - false
      - 
@@ -39278,18 +39042,6 @@ Arguments
      - Choice
      - auto, emergency, supplemental
      - The auto-sizing methodology to use when the heat pump backup capacity is not provided. If not provided, the OS-HPXML default (see `HPXML HVAC Sizing Control <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-hvac-sizing-control>`_) is used.
-   * - ``heat_pump_is_ducted``
-     - false
-     - 
-     - Boolean
-     - auto, true, false
-     - Whether the heat pump is ducted or not. Only used for mini-split. It's assumed that air-to-air and ground-to-air are ducted, and packaged terminal heat pump and room air conditioner with reverse cycle are not ducted. If not provided, assumes not ducted.
-   * - ``heat_pump_crankcase_heater_watts``
-     - false
-     - W
-     - Double
-     - auto
-     - Heat Pump crankcase heater power consumption in Watts. Applies only to air-to-air, mini-split, packaged terminal heat pump and room air conditioner with reverse cycle. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_) is used.
    * - ``geothermal_loop_configuration``
      - false
      - 
@@ -39369,38 +39121,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``heating_system_type``
-     - ``heating_system_heating_efficiency``
+     - ``heating_system``
      - ``heating_system_heating_capacity``
      - ``heating_system_heating_autosizing_limit``
      - ``heating_system_fraction_heat_load_served``
-     - ``heating_system_pilot_light``
-     - ``heat_pump_type``
-     - ``heat_pump_heating_efficiency_type``
-     - ``heat_pump_heating_efficiency``
-     - ``heat_pump_cooling_efficiency_type``
-     - ``heat_pump_cooling_efficiency``
-     - ``heat_pump_cooling_compressor_type``
-     - ``heat_pump_cooling_sensible_heat_fraction``
+     - ``heat_pump``
      - ``heat_pump_heating_capacity``
      - ``heat_pump_heating_autosizing_limit``
-     - ``heat_pump_heating_capacity_retention_fraction``
-     - ``heat_pump_heating_capacity_retention_temp``
      - ``heat_pump_cooling_capacity``
      - ``heat_pump_cooling_autosizing_limit``
      - ``heat_pump_fraction_heat_load_served``
      - ``heat_pump_fraction_cool_load_served``
-     - ``heat_pump_compressor_lockout_temp``
-     - ``heat_pump_backup_type``
+     - ``heat_pump_backup``
      - ``heat_pump_backup_heating_autosizing_limit``
-     - ``heat_pump_backup_fuel``
-     - ``heat_pump_backup_heating_efficiency``
      - ``heat_pump_backup_heating_capacity``
-     - ``heat_pump_backup_heating_lockout_temp``
      - ``heat_pump_sizing_methodology``
      - ``heat_pump_backup_sizing_methodology``
-     - ``heat_pump_is_ducted``
-     - ``heat_pump_crankcase_heater_watts``
      - ``geothermal_loop_configuration``
      - ``geothermal_loop_borefield_configuration``
      - ``geothermal_loop_loop_flow``
@@ -39415,37 +39151,21 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - ASHP, SEER 10, 6.2 HSPF
      - 0.72%
-     - none
-     - 0
+     - None
      - auto
      - auto
      - 1
-     - 
-     - air-to-air
-     - HSPF
-     - 6.2
-     - SEER
-     - 10
-     - single stage
-     - auto
-     - auto
-     - auto
+     - ASHP, SEER 10, 6.2 HSPF
      - auto
      - auto
      - auto
      - auto
      - 1
      - 1
-     - auto
-     - integrated
-     - auto
-     - electricity
-     - 1
+     - Electricity, Integrated, 100% Efficiency
      - auto
      - auto
      - ACCA
-     - auto
-     - 
      - auto
      - none
      - auto
@@ -39460,37 +39180,21 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - ASHP, SEER 13, 7.7 HSPF
      - 7.4%
-     - none
-     - 0
+     - None
      - auto
      - auto
      - 1
-     - 
-     - air-to-air
-     - HSPF
-     - 7.7
-     - SEER
-     - 13
-     - single stage
-     - auto
-     - auto
-     - auto
+     - ASHP, SEER 13, 7.7 HSPF
      - auto
      - auto
      - auto
      - auto
      - 1
      - 1
-     - auto
-     - integrated
-     - auto
-     - electricity
-     - 1
+     - Electricity, Integrated, 100% Efficiency
      - auto
      - auto
      - ACCA
-     - auto
-     - 
      - auto
      - none
      - auto
@@ -39505,37 +39209,21 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - ASHP, SEER 15, 8.5 HSPF
      - 7.2%
-     - none
-     - 0
+     - None
      - auto
      - auto
      - 1
-     - 
-     - air-to-air
-     - HSPF
-     - 8.5
-     - SEER
-     - 15
-     - single stage
-     - auto
-     - auto
-     - auto
+     - ASHP, SEER 15, 8.5 HSPF
      - auto
      - auto
      - auto
      - auto
      - 1
      - 1
-     - auto
-     - integrated
-     - auto
-     - electricity
-     - 1
+     - Electricity, Integrated, 100% Efficiency
      - auto
      - auto
      - ACCA
-     - auto
-     - 
      - auto
      - none
      - auto
@@ -39550,38 +39238,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Electric Baseboard, 100% Efficiency
      - 6.3%
-     - ElectricResistance
-     - 1
+     - Electric Baseboard, 100% Efficiency
      - auto
      - auto
      - 1
-     - 
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -39595,38 +39267,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Electric Boiler, 100% AFUE
      - 0.21%
-     - Boiler
-     - 1
+     - Electric Boiler, 100% AFUE
      - auto
      - auto
      - 1
-     - 
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -39640,38 +39296,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Electric Furnace, 100% AFUE
      - 11%
-     - Furnace
-     - 1
+     - Electric Furnace, 100% AFUE
      - auto
      - auto
      - 1
-     - 
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -39685,38 +39325,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Electric Wall Furnace, 100% AFUE
      - 1.1%
-     - WallFurnace
-     - 1
+     - Electric Wall Furnace, 100% AFUE
      - auto
      - auto
      - 1
-     - 
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -39730,38 +39354,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Boiler, 76% AFUE
      - 0.89%
-     - Boiler
-     - 0.76
+     - Fuel Boiler, 76% AFUE
      - auto
      - auto
      - 1
-     - auto
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -39775,38 +39383,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Boiler, 80% AFUE
      - 3.3%
-     - Boiler
-     - 0.8
+     - Fuel Boiler, 80% AFUE
      - auto
      - auto
      - 1
-     - auto
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -39820,38 +39412,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Boiler, 90% AFUE
      - 0.49%
-     - Boiler
-     - 0.9
+     - Fuel Boiler, 90% AFUE
      - auto
      - auto
      - 1
-     - auto
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -39865,38 +39441,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Furnace, 60% AFUE
      - 0.49%
-     - Furnace
-     - 0.6
+     - Fuel Furnace, 60% AFUE
      - auto
      - auto
      - 1
-     - auto
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -39910,38 +39470,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Furnace, 76% AFUE
      - 2.8%
-     - Furnace
-     - 0.76
+     - Fuel Furnace, 76% AFUE
      - auto
      - auto
      - 1
-     - auto
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -39955,38 +39499,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Furnace, 80% AFUE
      - 25%
-     - Furnace
-     - 0.8
+     - Fuel Furnace, 80% AFUE
      - auto
      - auto
      - 1
-     - auto
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -40000,38 +39528,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Furnace, 92.5% AFUE
      - 15%
-     - Furnace
-     - 0.925
+     - Fuel Furnace, 92.5% AFUE
      - auto
      - auto
      - 1
-     - auto
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -40045,38 +39557,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Wall/Floor Furnace, 60% AFUE
      - 3.2%
-     - WallFurnace
-     - 0.6
+     - Fuel Wall Furnace, 60% AFUE
      - auto
      - auto
      - 1
-     - auto
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -40090,38 +39586,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Wall/Floor Furnace, 68% AFUE
      - 2.8%
-     - WallFurnace
-     - 0.68
+     - Fuel Wall Furnace, 68% AFUE
      - auto
      - auto
      - 1
-     - auto
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -40135,37 +39615,21 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - MSHP, SEER 14.5, 8.2 HSPF
      - 0.96%
-     - none
-     - 0
+     - None
      - auto
      - auto
      - 1
-     - 
-     - mini-split
-     - HSPF
-     - 8.2
-     - SEER
-     - 14.5
-     - variable speed
+     - MSHP, SEER 14.5, 8.2 HSPF
      - auto
      - auto
-     - auto
-     - 0.25
-     - -5
      - auto
      - auto
      - 1
      - 1
-     - auto
-     - integrated
-     - auto
-     - electricity
-     - 1
+     - Electricity, Integrated, 100% Efficiency
      - auto
      - auto
      - ACCA
-     - auto
-     - false
      - auto
      - none
      - auto
@@ -40180,37 +39644,21 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - MSHP, SEER 29.3, 14 HSPF
      - 0.015%
-     - none
-     - 0
+     - None
      - auto
      - auto
      - 1
-     - 
-     - mini-split
-     - HSPF
-     - 14
-     - SEER
-     - 29.3
-     - variable speed
+     - MSHP, SEER 29.3, 14 HSPF
      - auto
      - auto
-     - auto
-     - 0.5
-     - -15
      - auto
      - auto
      - 1
      - 1
-     - auto
-     - integrated
-     - auto
-     - electricity
-     - 1
+     - Electricity, Integrated, 100% Efficiency
      - auto
      - auto
      - ACCA
-     - auto
-     - false
      - auto
      - none
      - auto
@@ -40225,38 +39673,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - None
      - 1.1%
-     - none
-     - 0
+     - None
      - auto
      - auto
      - 1
-     - 
-     - none
-     - HSPF
-     - 6.2
-     - SEER
-     - 10
-     - 
-     - 
+     - None
      - auto
      - auto
-     - 
-     - 
      - auto
      - auto
      - 1
      - 1
-     - 
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
-     - 
      - ACCA
      - auto
-     - 
-     - 
      - none
      - auto
      - auto
@@ -40297,40 +39729,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - Void
      - 0%
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
      - 
      - 
@@ -40549,18 +39949,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``heating_system_2_type``
+   * - ``heating_system_2``
      - true
      - 
      - Choice
-     - none, Furnace, WallFurnace, FloorFurnace, Boiler, ElectricResistance, Stove, SpaceHeater, Fireplace
-     - The type of the second heating system. If a heat pump is specified and the backup type is 'separate', this heating system represents 'separate' backup heating. For ducted heat pumps where the backup heating system is a 'Furnace', the backup would typically be characterized as 'integrated' in that the furnace and heat pump share the same distribution system and blower fan; a 'Furnace' as 'separate' backup to a ducted heat pump is not supported.
-   * - ``heating_system_2_heating_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The rated heating efficiency value of the second heating system.
+     - Electric Baseboard, 100% Efficiency, Electric Portable Heater, 100% Efficiency, Fuel Boiler, 60% AFUE, Fuel Boiler, 76% AFUE, Fuel Boiler, 80% AFUE, Fuel Boiler, 90% AFUE, Fuel Boiler, 92.5% AFUE, Fuel Boiler, 100% AFUE, Fuel Fireplace, 60% Efficiency, Fuel Fireplace, 100% Efficiency, Fuel Furnace, 60% AFUE, Fuel Furnace, 76% AFUE, Fuel Furnace, 80% AFUE, Fuel Furnace, 92.5% AFUE, Fuel Furnace, 100% AFUE, Fuel Wall Furnace, 60% AFUE, Fuel Wall Furnace, 68% AFUE, Fuel Floor Furnace, 60% AFUE, Fuel Floor Furnace, 68% AFUE, Stove, 60% Efficiency, Stove, 68% Efficiency, None
+     - The type/efficiency of the second heating system. Efficiency is Rated AFUE or Percent as a Fraction. If a heat pump is specified and the backup type is 'separate', this heating system represents 'separate' backup heating.
    * - ``heating_system_2_heating_capacity``
      - false
      - Btu/hr
@@ -40592,78 +39986,67 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``heating_system_2_type``
-     - ``heating_system_2_heating_efficiency``
+     - ``heating_system_2``
      - ``heating_system_2_heating_capacity``
      - ``heating_system_2_heating_autosizing_limit``
      - ``heating_system_2_has_flue_or_chimney``
 
    * - Fuel Boiler, 76% AFUE
      - 0.018%
-     - Boiler
-     - 0.76
+     - Fuel Boiler, 76% AFUE
      - auto
      - auto
      - auto
    * - Fuel Boiler, 80% AFUE
      - 0.015%
-     - Boiler
-     - 0.8
+     - Fuel Boiler, 80% AFUE
      - auto
      - auto
      - auto
    * - Fuel Boiler, 90% AFUE
      - 0.0024%
-     - Boiler
-     - 0.90
+     - Fuel Boiler, 90% AFUE
      - auto
      - auto
      - auto
    * - Fuel Furnace, 60% AFUE
      - 3.9e-05%
-     - Furnace
-     - 0.6
+     - Fuel Furnace, 60% AFUE
      - auto
      - auto
      - auto
    * - Fuel Furnace, 76% AFUE
      - 0.00053%
-     - Furnace
-     - 0.76
+     - Fuel Furnace, 76% AFUE
      - auto
      - auto
      - auto
    * - Fuel Furnace, 80% AFUE
      - 0.0015%
-     - Furnace
-     - 0.8
+     - Fuel Furnace, 80% AFUE
      - auto
      - auto
      - auto
    * - Fuel Furnace, 92.5% AFUE
      - 0.00082%
-     - Furnace
-     - 0.925
+     - Fuel Furnace, 92.5% AFUE
      - auto
      - auto
      - auto
    * - None
      - 1e+02%
-     - none
-     - 0
+     - None
      - auto
      - auto
      - auto
    * - Shared Heating
      - 0%
-     - none
-     - 0
+     - None
      - auto
      - auto
      - auto
    * - Void
      - 0%
-     - 
      - 
      - 
      - 
@@ -40936,18 +40319,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``heating_system_type``
+   * - ``heating_system``
      - true
      - 
      - Choice
-     - none, Furnace, WallFurnace, FloorFurnace, Boiler, ElectricResistance, Stove, SpaceHeater, Fireplace, Shared Boiler w/ Baseboard, Shared Boiler w/ Ductless Fan Coil
-     - The type of heating system. Use 'none' if there is no heating system or if there is a heat pump serving a heating load.
-   * - ``heating_system_heating_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The rated heating efficiency value of the heating system.
+     - Electric Furnace, 98% AFUE, Electric Furnace, 100% AFUE, Electric Baseboard, 100% Efficiency, Electric Boiler, 98% AFUE, Electric Boiler, 100% AFUE, Electric Wall Furnace, 100% AFUE, Fuel Boiler, 72% AFUE, Fuel Boiler, 76% AFUE, Fuel Boiler, 80% AFUE, Fuel Boiler, 82% AFUE, Fuel Boiler, 85% AFUE, Fuel Boiler, 90% AFUE, Fuel Boiler, 92% AFUE, Fuel Boiler, 92% AFUE, 600 BTUh Pilot Light, Fuel Boiler, 95% AFUE, Fuel Boiler, 96% AFUE, Fuel Furnace, 60% AFUE, Fuel Furnace, 68% AFUE, Fuel Furnace, 72% AFUE, Fuel Furnace, 76% AFUE, Fuel Furnace, 78% AFUE, Fuel Furnace, 80% AFUE, Fuel Furnace, 85% AFUE, Fuel Furnace, 90% AFUE, Fuel Furnace, 92% AFUE, Fuel Furnace, 92% AFUE, Airflow Defect Ratio, Fuel Furnace, 92% AFUE, 600 BTUh Pilot Light, Fuel Furnace, 92.5% AFUE, Fuel Furnace, 96% AFUE, Fuel Wall Furnace, 60% AFUE, Fuel Wall Furnace, 68% AFUE, Electric Wall Furnace, 98% AFUE, Electric Wall Furnace, 100% AFUE, None, Fuel Boiler w/ Baseboard, 78% AFUE, Fuel Boiler w/ Baseboard, 92% AFUE, Electric Boiler w/ Baseboard, 100% AFUE, Fuel Fan Coil Heating, 78% AFUE, Fuel Fan Coil Heating, 92% AFUE, Electric Fan Coil Heating, 100% AFUE, Fireplace, 80% Efficiency, Stove, 80% Efficiency, Fuel Floor Furnace, 80% AFUE, 600 BTUh Pilot Light, Space Heater, 100% Efficiency, Space Heater, 92% Efficiency
+     - The heating system type/efficiency. Efficiency is Rated AFUE or Percent as a Fraction. Use 'none' if there is no heating system or if there is a heat pump serving a heating load.
    * - ``heating_system_heating_capacity``
      - false
      - Btu/hr
@@ -40966,30 +40343,12 @@ Arguments
      - Double
      -
      - The heating load served by the heating system.
-   * - ``cooling_system_type``
+   * - ``cooling_system``
      - true
      - 
      - Choice
-     - none, central air conditioner, room air conditioner, evaporative cooler, mini-split, packaged terminal air conditioner
-     - The type of cooling system. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.
-   * - ``cooling_system_cooling_efficiency_type``
-     - true
-     - 
-     - Choice
-     - SEER, SEER2, EER, CEER
-     - The efficiency type of the cooling system. System types central air conditioner and mini-split use SEER or SEER2. System types room air conditioner and packaged terminal air conditioner use EER or CEER. Ignored for system type evaporative cooler.
-   * - ``cooling_system_cooling_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated efficiency value of the cooling system. Ignored for evaporative cooler.
-   * - ``cooling_system_cooling_compressor_type``
-     - false
-     - 
-     - Choice
-     - auto, single stage, two stage, variable speed
-     - The compressor type of the cooling system. Only applies to central air conditioner and mini-split. If not provided, the OS-HPXML default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
+     - None, Central AC, SEER 8, Central AC, SEER 10, Central AC, SEER 13, Central AC, SEER 13, 25W Crankcase Heater, Central AC, SEER 13, 50W Crankcase Heater, Central AC, SEER 13, Two Stage, Central AC, SEER 13, Airflow Defect Ratio, Central AC, SEER2 12.4, SEER 13.05, Central AC, SEER 14, Central AC, SEER 15, Central AC, SEER 17.5, Variable Speed, Central AC, SEER 17.5, Detailed Performance, Central AC, SEER 17.5, Normalized Capacity Fractions, Central AC, SEER 18, Central AC, SEER 18, Airflow Defect Ratio, Central AC, SEER 24, Central AC, SEER 24, Airflow Defect Ratio, Central AC, SEER 24.5, Central AC, SEER 24.5, 0.73 SHR, Room AC, EER 8.5, Room AC, EER 8.5, Electric Heating, Room AC, EER 8.5, 0.73 SHR, Room AC, EER 9.8, Room AC, EER 10.7, Room AC, EER 12.0, Room AC, CEER 8.4, Evaporative Cooler, EER 13, Ductless Evaporative Cooler, SEER 13, Ducted Evaporative Cooler, SEER 13, Fan Coil Cooling, SEER 13, Ducted Mini-Split AC, SEER 19, Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio, Ductless Mini-Split AC, SEER 19, Ductless Mini-Split AC, SEER 17, Ductless Mini-Split AC, SEER 17, Detailed Performance, Ductless Mini-Split AC, SEER 17, Normalized Capacity Fractions, PTAC, EER 10.7, PTAC, EER 10.7, Electric Heating, PTAC, EER 10.7, Natural Gas Heating
+     - The cooling system type, efficiency type, and efficiency. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.
    * - ``cooling_system_cooling_capacity``
      - false
      - Btu/hr
@@ -41002,42 +40361,12 @@ Arguments
      - Double
      -
      - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``cooling_system_is_ducted``
-     - false
-     - 
-     - Boolean
-     - auto, true, false
-     - Whether the cooling system is ducted or not. Only used for mini-split and evaporative cooler. It's assumed that central air conditioner is ducted, and room air conditioner and packaged terminal air conditioner are not ducted.
-   * - ``heat_pump_type``
+   * - ``heat_pump``
      - true
      - 
      - Choice
-     - none, air-to-air, mini-split, ground-to-air, packaged terminal heat pump, room air conditioner with reverse cycle
-     - The type of heat pump. Use 'none' if there is no heat pump.
-   * - ``heat_pump_heating_efficiency_type``
-     - true
-     - 
-     - Choice
-     - HSPF, HSPF2, COP
-     - The heating efficiency type of heat pump. System types air-to-air and mini-split use HSPF or HSPF2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use COP.
-   * - ``heat_pump_heating_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated heating efficiency value of the heat pump.
-   * - ``heat_pump_cooling_efficiency_type``
-     - true
-     - 
-     - Choice
-     - SEER, SEER2, EER, CEER
-     - The cooling efficiency type of heat pump. System types air-to-air and mini-split use SEER or SEER2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use EER.
-   * - ``heat_pump_cooling_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The rated cooling efficiency value of the heat pump.
+     - None, ASHP, SEER 10, 6.2 HSPF, ASHP, SEER 10, 6.8 HSPF, ASHP, SEER 10.3, 7.0 HSPF, ASHP, SEER 11.5, 7.5 HSPF, ASHP, SEER 13, 7.7 HSPF, ASHP, SEER 13, 7.7 HSPF, Heating Capacity 17F, ASHP, SEER 13, 7.7 HSPF, Airflow Defect Ratio, ASHP, SEER 13, 7.7 HSPF, 5F Compressor Lockout, ASHP, SEER 13, 7.7 HSPF, 25F Compressor Lockout, ASHP, SEER 13, 7.7 HSPF, 30F Compressor Lockout, ASHP, SEER2 12.4, HSPF2 6.5, Heating Capacity 17F, ASHP, SEER 13, 7.7 HSPF, Lockout Temperatures, ASHP, SEER 13, 8.0 HSPF, ASHP, SEER 13, 9.85 HSPF, ASHP, SEER 14, 8.2 HSPF, ASHP, SEER 14.3, 8.5 HSPF, ASHP, SEER 15, 8.5 HSPF, ASHP, SEER 15, 9.0 HSPF, ASHP, SEER 16, 9.0 HSPF, ASHP, SEER 16, 9.2 HSPF, Heating Capacity 5F, ASHP, SEER 16, 9.2 HSPF, -20F Compressor Lockout, ASHP, SEER 17, 8.7 HSPF, ASHP, SEER 18, 9.3 HSPF, ASHP, SEER 18, 9.3 HSPF, Airflow Defect Ratio, ASHP, SEER 18, 9.3 HSPF, 30F Compressor Lockout, ASHP, SEER 20, 11 HSPF, ASHP, SEER 20, 11 HSPF, Heating Capacity 5F, ASHP, SEER 22, 10 HSPF, ASHP, SEER 22, 10 HSPF, Default Capacity Retention, ASHP, SEER 22, 10 HSPF, Airflow Defect Ratio, ASHP, SEER 22, 10 HSPF, Heating Capacity 17F, ASHP, SEER 22, 10 HSPF, 30F Compressor Lockout, ASHP, SEER 17.25, 10 HPSF, Normalized Capacity Fractions, ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance, ASHP, SEER 17.5, 9.5 HSPF, Normalized Capacity Fractions, ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance, Airflow Defect Ratio, ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance Heating Only, ASHP, SEER 24, 13 HSPF, ASHP, SEER 24, 13 HSPF, Heating Capacity 5F, GSHP, EER 16.6, COP 3.6, GSHP, EER 16.6, COP 3.6, Airflow Defect Ratio, GSHP, EER 20.2, COP 4.2, GSHP, EER 20.5, COP 4.0, MSHP, SEER 14.5, 8.2 HSPF, MSHP, SEER 14.5, 8.2 HSPF, Ducted, MSHP, SEER 16, 9.2 HSPF, MSHP, SEER 16.7, 11.3 HSPF, Detailed Performance, MSHP, SEER 16.7, 11.3 HSPF, Normalized Capacity Fractions, MSHP, SEER 17, 9.5 HSPF, MSHP, SEER 17, 9.5 HSPF, Ducted, MSHP, SEER 17, 10 HSPF, Ductless, Detailed Performance, MSHP, SEER 17, 10 HSPF, Ductless, Normalized Capacity Fractions, MSHP, SEER 18.0, 9.6 HSPF, MSHP, SEER 18.0, 9.6 HSPF, Ducted, MSHP, SEER 19, 10 HSPF, Ducted, MSHP, SEER 19, 10 HSPF, Airflow Defect Ratio, MSHP, SEER 19, 10 HSPF, 30F Compressor Lockout, MSHP, SEER 19, 10 HSPF, Ductless, MSHP, SEER 19, 10 HSPF, Ductless, Detailed Performance, MSHP, SEER 20, 11 HSPF, MSHP, SEER 24, 13 HSPF, MSHP, SEER 25, 12.7 HSPF, MSHP, SEER 25, 12.7 HSPF, Ducted, MSHP, SEER 29.3, 14 HSPF, MSHP, SEER 29.3, 14 HSPF, Ducted, MSHP, SEER 33, 13.3 HSPF, MSHP, SEER 33, 13.3 HSPF, Ducted, PTHP, EER 11.4, COP 3.6, Room AC w/ Reverse Cycle, EER 11.4
+     - The heat pump type/efficiency.
    * - ``heat_pump_heating_capacity``
      - false
      - Btu/hr
@@ -41074,30 +40403,18 @@ Arguments
      - Double
      -
      - The cooling load served by the heat pump.
-   * - ``heat_pump_backup_type``
+   * - ``heat_pump_backup``
      - true
      - 
      - Choice
-     - none, integrated, separate
-     - The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating.
+     - None, Electricity, Integrated, 100% Efficiency, Electricity, Integrated, 100% Efficiency, 35F Lockout, Natural Gas, Integrated, 95% AFUE, 30F Lockout, Natural Gas, Integrated, 60% AFUE, 40F Lockout, Natural Gas, Integrated, 76% AFUE, 40F Lockout, Natural Gas, Integrated, 80% AFUE, 40F Lockout, Natural Gas, Integrated, 92.5% AFUE, 40F Lockout, Natural Gas, Integrated, 95% AFUE, 40F Lockout, Natural Gas, Integrated, 95% AFUE, 45F Lockout, Fuel Oil, Integrated, 60% AFUE, 40F Lockout, Fuel Oil, Integrated, 76% AFUE, 40F Lockout, Fuel Oil, Integrated, 80% AFUE, 40F Lockout, Fuel Oil, Integrated, 92.5% AFUE, 40F Lockout, Propane, Integrated, 60% AFUE, 40F Lockout, Propane, Integrated, 76% AFUE, 40F Lockout, Propane, Integrated, 80% AFUE, 40F Lockout, Propane, Integrated, 92.5% AFUE, 40F Lockout, Separate, Separate, 30F Lockout, Separate, -20F Lockout
+     - The type, fuel type, and efficiency of the heat pump backup. Use 'none' if there is no backup heating. If Backup Type is 'separate', Heating System 2 is used to specify the backup.
    * - ``heat_pump_backup_heating_autosizing_limit``
      - false
      - Btu/hr
      - Double
      -
      - The maximum capacity limit applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, no limit is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Limit.
-   * - ``heat_pump_backup_fuel``
-     - true
-     - 
-     - Choice
-     - electricity, natural gas, fuel oil, propane
-     - The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'.
-   * - ``heat_pump_backup_heating_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'.
    * - ``heat_pump_backup_heating_capacity``
      - false
      - Btu/hr
@@ -41195,33 +40512,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``heating_system_type``
-     - ``heating_system_heating_efficiency``
+     - ``heating_system``
      - ``heating_system_heating_capacity``
      - ``heating_system_heating_autosizing_limit``
      - ``heating_system_fraction_heat_load_served``
-     - ``cooling_system_type``
-     - ``cooling_system_cooling_efficiency_type``
-     - ``cooling_system_cooling_efficiency``
-     - ``cooling_system_cooling_compressor_type``
+     - ``cooling_system``
      - ``cooling_system_cooling_capacity``
      - ``cooling_system_cooling_autosizing_limit``
-     - ``cooling_system_is_ducted``
-     - ``heat_pump_type``
-     - ``heat_pump_heating_efficiency_type``
-     - ``heat_pump_heating_efficiency``
-     - ``heat_pump_cooling_efficiency_type``
-     - ``heat_pump_cooling_efficiency``
+     - ``heat_pump``
      - ``heat_pump_heating_capacity``
      - ``heat_pump_heating_autosizing_limit``
      - ``heat_pump_cooling_capacity``
      - ``heat_pump_cooling_autosizing_limit``
      - ``heat_pump_fraction_heat_load_served``
      - ``heat_pump_fraction_cool_load_served``
-     - ``heat_pump_backup_type``
+     - ``heat_pump_backup``
      - ``heat_pump_backup_heating_autosizing_limit``
-     - ``heat_pump_backup_fuel``
-     - ``heat_pump_backup_heating_efficiency``
      - ``heat_pump_backup_heating_capacity``
      - ``heat_pump_sizing_methodology``
      - ``heat_pump_backup_sizing_methodology``
@@ -41239,33 +40545,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Boiler Baseboards Heating Only, Electricity
      - 2.8%
-     - Shared Boiler w/ Baseboard
-     - 1
+     - Electric Boiler w/ Baseboard, 100% AFUE
      - auto
      - auto
      - 1
      - 
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
+     - None
      - auto
      - auto
      - auto
      - auto
      - 1
      - 1
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
      - ACCA
      - auto
@@ -41282,33 +40577,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Boiler Baseboards Heating Only, Fuel
      - 4.4%
-     - Shared Boiler w/ Baseboard
-     - 0.78
+     - Fuel Boiler w/ Baseboard, 78% AFUE
      - auto
      - auto
      - 1
      - 
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
+     - None
      - auto
      - auto
      - auto
      - auto
      - 1
      - 1
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
      - ACCA
      - auto
@@ -41329,20 +40613,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - 
      - 
-     - 
-     - mini-split
-     - SEER
-     - 13
-     - variable speed
+     - Fan Coil Cooling, SEER 13
      - auto
      - auto
-     - false
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
      - 
      - 
@@ -41368,33 +40641,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
    * - Fan Coil Heating and Cooling, Electricity
      - 1.3%
-     - Shared Boiler w/ Ductless Fan Coil
-     - 1
+     - Electric Fan Coil Heating, 100% AFUE
      - auto
      - auto
      - 1
-     - mini-split
-     - SEER
-     - 13
-     - variable speed
+     - Fan Coil Cooling, SEER 13
      - auto
      - 
-     - false
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
+     - None
      - auto
      - auto
      - auto
      - auto
      - 1
      - 1
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
      - ACCA
      - auto
@@ -41411,33 +40673,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fan Coil Heating and Cooling, Fuel
      - 1.1%
-     - Shared Boiler w/ Ductless Fan Coil
-     - 0.78
+     - Fuel Fan Coil Heating, 78% AFUE
      - auto
      - auto
      - 1
-     - mini-split
-     - SEER
-     - 13
-     - variable speed
+     - Fan Coil Cooling, SEER 13
      - auto
      - 
-     - false
-     - none
-     - HSPF
-     - 0
-     - SEER
-     - 0
+     - None
      - auto
      - auto
      - auto
      - auto
      - 1
      - 1
-     - none
+     - None
      - auto
-     - electricity
-     - 1
      - auto
      - ACCA
      - auto
@@ -41484,30 +40735,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - 
      - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
    * - Void
      - 0%
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
-     - 
      - 
      - 
      - 
@@ -41638,32 +40867,6 @@ Source
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
 
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``cooling_system_rated_cfm_per_ton``
-     - false
-     - cfm/ton
-     - Double
-     -
-     - The rated cfm per ton of the cooling system.
-   * - ``cooling_system_actual_cfm_per_ton``
-     - false
-     - cfm/ton
-     - Double
-     -
-     - The actual cfm per ton of the cooling system.
-
 Options
 *******
 
@@ -41676,61 +40879,33 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``cooling_system_rated_cfm_per_ton``
-     - ``cooling_system_actual_cfm_per_ton``
 
    * - 154.8 cfm/ton
      - 0%
-     - 400.0
-     - 154.8
    * - 204.4 cfm/ton
      - 0%
-     - 400.0
-     - 204.4
    * - 254.0 cfm/ton
      - 0%
-     - 400.0
-     - 254.0
    * - 303.5 cfm/ton
      - 0%
-     - 400.0
-     - 303.5
    * - 353.1 cfm/ton
      - 0%
-     - 400.0
-     - 353.1
    * - 402.7 cfm/ton
      - 0%
-     - 400.0
-     - 402.7
    * - 452.3 cfm/ton
      - 0%
-     - 400.0
-     - 452.3
    * - 501.9 cfm/ton
      - 0%
-     - 400.0
-     - 501.9
    * - 551.5 cfm/ton
      - 0%
-     - 400.0
-     - 551.5
    * - 601.0 cfm/ton
      - 0%
-     - 400.0
-     - 601.0
    * - 650.6 cfm/ton
      - 0%
-     - 400.0
-     - 650.6
    * - 700.2 cfm/ton
      - 0%
-     - 400.0
-     - 700.2
    * - None
      - 100%
-     - 
-     - 
 
 .. _hvac_system_single_speed_ac_charge:
 
@@ -41753,26 +40928,6 @@ Source
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
 
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``cooling_system_frac_manufacturer_charge``
-     - false
-     - Frac
-     - Double
-     -
-     - The fraction of manufacturer recommended charge of the cooling system.
-
 Options
 *******
 
@@ -41785,32 +40940,23 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``cooling_system_frac_manufacturer_charge``
 
    * - 0.570 Charge Frac
      - 0%
-     - 0.570
    * - 0.709 Charge Frac
      - 0%
-     - 0.709
    * - 0.848 Charge Frac
      - 0%
-     - 0.848
    * - 0.988 Charge Frac
      - 0%
-     - 0.988
    * - 1.127 Charge Frac
      - 0%
-     - 1.127
    * - 1.266 Charge Frac
      - 0%
-     - 1.266
    * - 1.405 Charge Frac
      - 0%
-     - 1.405
    * - None
      - 100%
-     - 
 
 .. _hvac_system_single_speed_ashp_airflow:
 
@@ -41833,32 +40979,6 @@ Source
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
 
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``heat_pump_rated_cfm_per_ton``
-     - false
-     - cfm/ton
-     - Double
-     -
-     - The rated cfm per ton of the heat pump.
-   * - ``heat_pump_actual_cfm_per_ton``
-     - false
-     - cfm/ton
-     - Double
-     -
-     - The actual cfm per ton of the heat pump.
-
 Options
 *******
 
@@ -41871,61 +40991,33 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``heat_pump_rated_cfm_per_ton``
-     - ``heat_pump_actual_cfm_per_ton``
 
    * - 154.8 cfm/ton
      - 0%
-     - 400.0
-     - 154.8
    * - 204.4 cfm/ton
      - 0%
-     - 400.0
-     - 204.4
    * - 254.0 cfm/ton
      - 0%
-     - 400.0
-     - 254.0
    * - 303.5 cfm/ton
      - 0%
-     - 400.0
-     - 303.5
    * - 353.1 cfm/ton
      - 0%
-     - 400.0
-     - 353.1
    * - 402.7 cfm/ton
      - 0%
-     - 400.0
-     - 402.7
    * - 452.3 cfm/ton
      - 0%
-     - 400.0
-     - 452.3
    * - 501.9 cfm/ton
      - 0%
-     - 400.0
-     - 501.9
    * - 551.5 cfm/ton
      - 0%
-     - 400.0
-     - 551.5
    * - 601.0 cfm/ton
      - 0%
-     - 400.0
-     - 601.0
    * - 650.6 cfm/ton
      - 0%
-     - 400.0
-     - 650.6
    * - 700.2 cfm/ton
      - 0%
-     - 400.0
-     - 700.2
    * - None
      - 100%
-     - 
-     - 
 
 .. _hvac_system_single_speed_ashp_charge:
 
@@ -41948,26 +41040,6 @@ Source
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
 
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``heat_pump_frac_manufacturer_charge``
-     - false
-     - Frac
-     - Double
-     -
-     - The fraction of manufacturer recommended charge of the heat pump.
-
 Options
 *******
 
@@ -41980,32 +41052,23 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``heat_pump_frac_manufacturer_charge``
 
    * - 0.570 Charge Frac
      - 0%
-     - 0.570
    * - 0.709 Charge Frac
      - 0%
-     - 0.709
    * - 0.848 Charge Frac
      - 0%
-     - 0.848
    * - 0.988 Charge Frac
      - 0%
-     - 0.988
    * - 1.127 Charge Frac
      - 0%
-     - 1.127
    * - 1.266 Charge Frac
      - 0%
-     - 1.266
    * - 1.405 Charge Frac
      - 0%
-     - 1.405
    * - None
      - 100%
-     - 
 
 .. _has_pv:
 
@@ -62441,18 +61504,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``roof_material_type``
+   * - ``enclosure_roof_material``
      - false
      - 
      - Choice
-     - auto, asphalt or fiberglass shingles, concrete, cool roof, slate or tile shingles, expanded polystyrene sheathing, metal surfacing, plastic/rubber/synthetic sheeting, shingles, wood shingles or shakes
-     - The material type of the roof. If not provided, the OS-HPXML default (see `HPXML Roofs <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roofs>`_) is used.
-   * - ``roof_color``
-     - false
-     - 
-     - Choice
-     - auto, dark, light, medium, medium dark, reflective
-     - The color of the roof. If not provided, the OS-HPXML default (see `HPXML Roofs <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roofs>`_) is used.
+     - auto, Asphalt/Fiberglass Shingles, Dark, Asphalt/Fiberglass Shingles, Medium Dark, Asphalt/Fiberglass Shingles, Medium, Asphalt/Fiberglass Shingles, Light, Asphalt/Fiberglass Shingles, Reflective, Tile/Slate, Dark, Tile/Slate, Medium Dark, Tile/Slate, Medium, Tile/Slate, Light, Tile/Slate, Reflective, Metal, Dark, Metal, Medium Dark, Metal, Medium, Metal, Light, Metal, Reflective, Wood Shingles/Shakes, Dark, Wood Shingles/Shakes, Medium Dark, Wood Shingles/Shakes, Medium, Wood Shingles/Shakes, Light, Wood Shingles/Shakes, Reflective, Shingles, Dark, Shingles, Medium Dark, Shingles, Medium, Shingles, Light, Shingles, Reflective, Synthetic Sheeting, Dark, Synthetic Sheeting, Medium Dark, Synthetic Sheeting, Medium, Synthetic Sheeting, Light, Synthetic Sheeting, Reflective, EPS Sheathing, Dark, EPS Sheathing, Medium Dark, EPS Sheathing, Medium, EPS Sheathing, Light, EPS Sheathing, Reflective, Concrete, Dark, Concrete, Medium Dark, Concrete, Medium, Concrete, Light, Concrete, Reflective, Cool Roof
+     - The material type/color of the roof. If not provided, the OS-HPXML default (see `HPXML Roofs <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roofs>`_) is used.
 
 Options
 *******
@@ -62466,37 +61523,29 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``roof_material_type``
-     - ``roof_color``
+     - ``enclosure_roof_material``
 
    * - Asphalt Shingles, Medium
      - 45%
-     - asphalt or fiberglass shingles
-     - medium
+     - Asphalt/Fiberglass Shingles, Medium
    * - Composition Shingles
      - 36%
-     - asphalt or fiberglass shingles
-     - medium
+     - Asphalt/Fiberglass Shingles, Medium
    * - Metal, Dark
      - 8.4%
-     - metal surfacing
-     - dark
+     - Metal, Dark
    * - Slate
      - 1.2%
-     - slate or tile shingles
-     - medium
+     - Tile/Slate, Medium
    * - Tile, Clay or Ceramic
      - 3.8%
-     - slate or tile shingles
-     - medium
+     - Tile/Slate, Medium
    * - Tile, Concrete
      - 1.7%
-     - slate or tile shingles
-     - medium
+     - Tile/Slate, Medium
    * - Wood Shingles
      - 4.2%
-     - wood shingles or shakes
-     - medium
+     - Wood Shingles/Shakes, Medium
 
 .. _solar_hot_water:
 
