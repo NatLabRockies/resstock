@@ -4,7 +4,7 @@ Ducted Heat Pump	0	0	0	0.03	0.11	0.86	0	0	1.30296	3028.83	0.000136095
 Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
 Non-Ducted Heat Pump	0	0.21	0.12	0.54	0.09	0.04	0	0	1.30296	366.719	2.28252e-06
 None	0	0	0	0	0	0	1	0	1.3026	366.719	1.5211e-05
-Room AC	0.04	0.45	0.18	0.21	0.06	0.05	1	0	0.143323	399.018	1.5211e-05
+Room AC	0.04	0.45	0.18	0.21	0.06	0.05	0	0	0.143323	399.018	1.5211e-05
 # Created by: sources\recs\recs2009\tsv_maker.py
 # Description: The fraction of the finished floor area that the cooling system provides cooling.
 # Source: Constructed using U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.
