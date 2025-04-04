@@ -3,24 +3,28 @@
 # see the URL below for information on how to write OpenStudio measures
 # http://nrel.github.io/OpenStudio-user-documentation/reference/measure_writing_guide/
 
-# start the measure
+# Load required dependencies for HVAC flexibility processing
+require_relative 'resources/hvac_flexibility/detailed_schedule_generator'
+require_relative 'resources/hvac_flexibility/setpoint_modifier'
+
+# OpenStudio Measure class to process ResStock arguments after HPXML generation
 class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
-  # human readable name
+  # Define human readable name
   def name
-    return 'ResStock Arguments Post-HPXML'
+    'ResStock Arguments Post-HPXML'
   end
 
-  # human readable description
+  # Brief human readable description of the measure
   def description
-    return 'Measure that post-processes the output of the BuildResidentialHPXML and BuildResidentialScheduleFile measures.'
+    'Measure that post-processes the output of the BuildResidentialHPXML and BuildResidentialScheduleFile measures.'
   end
 
-  # human readable description of modeling approach
+  # Detailed human readable description of modeling approach
   def modeler_description
-    return 'Passes in all ResStockArgumentsPostHPXML arguments from the options lookup, processes them, and then modifies output of other measures.'
+    'Passes in all ResStockArgumentsPostHPXML arguments from the options lookup, processes them, and then modifies output of other measures.'
   end
 
-  # define the arguments that the user will input
+  # Define user input arguments
   def arguments(model) # rubocop:disable Lint/UnusedMethodArgument
     args = OpenStudio::Measure::OSArgumentVector.new
 
@@ -29,76 +33,215 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Absolute/relative path of the HPXML file.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('building_id', false)
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('hvac_flex_peak_offset', false)
+    arg.setDisplayName('HVAC Load Flexibility: Peak Offset (deg F)')
+    arg.setDescription('Offset of the peak period in degrees Fahrenheit.')
+    arg.setDefaultValue(0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeDoubleArgument('hvac_flex_pre_peak_duration_hours', false)
+    arg.setDisplayName('HVAC Load Flexibility: Pre-Peak Duration (hours)')
+    arg.setDescription('Duration of the pre-peak period in hours.')
+    arg.setDefaultValue(0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('hvac_flex_pre_peak_offset', false)
+    arg.setDisplayName('HVAC Load Flexibility: Pre-Peak Offset (deg F)')
+    arg.setDescription('Offset of the pre-peak period in degrees Fahrenheit.')
+    arg.setDefaultValue(0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('flex_random_shift_minutes', false)
+    arg.setDisplayName('Load Flexibility: Random Shift (minutes)')
+    arg.setDescription('Number of minutes to randomly shift the peak period. If minutes is less than timestep, it will be assumed to be 0.')
+    arg.setDefaultValue(0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('building_id', false)
     arg.setDisplayName('Building Unit ID')
     arg.setDescription('The building unit number (between 1 and the number of samples).')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('output_csv_path', false)
-    arg.setDisplayName('Schedules: Output CSV Path')
-    arg.setDescription('Absolute/relative path of the csv file containing occupancy schedules. Relative paths are relative to the HPXML output path.')
-    args << arg
-
-    return args
+    args
   end
 
-  # define what happens when the measure is run
+  # Run the measure
   def run(model, runner, user_arguments)
     super(model, runner, user_arguments)
+    @runner = runner
+    # Use the built-in error checking
+    return false unless runner.validateUserArguments(arguments(model), user_arguments)
 
-    # use the built-in error checking
-    if !runner.validateUserArguments(arguments(model), user_arguments)
-      return false
-    end
-
-    # assign the user inputs to variables
+    # Parse user arguments and assign to variables
     args = runner.getArgumentValues(arguments(model), user_arguments)
-
-    hpxml_path = args[:hpxml_path]
-    unless (Pathname.new hpxml_path).absolute?
-      hpxml_path = File.expand_path(File.join(File.dirname(__FILE__), hpxml_path))
+    if skip_post_hpxml?(args)
+      runner.registerInfo('Skipping ResStockArgumentsPostHPXML')
+      return true
     end
-    unless File.exist?(hpxml_path) && hpxml_path.downcase.end_with?('.xml')
-      fail "'#{hpxml_path}' does not exist or is not an .xml file."
+    @args = args
+
+    @hpxml_path = args[:hpxml_path]
+    @hpxml_path = File.expand_path(@hpxml_path) unless (Pathname.new @hpxml_path).absolute?
+    raise "'#{@hpxml_path}' does not exist or is not an .xml file." unless File.exist?(@hpxml_path) && @hpxml_path.downcase.end_with?('.xml')
+
+    output_csv_path = File.dirname(@hpxml_path)
+
+    # Load HPXML
+    @hpxml = HPXML.new(hpxml_path: @hpxml_path)
+    @prng = Random.new(args[:building_id].to_i)
+    @minutes_per_step = @hpxml.header.timestep
+    max_random_shift_steps = (args[:flex_random_shift_minutes] / @minutes_per_step).to_i
+    @random_shift_steps = @prng.rand(-max_random_shift_steps..max_random_shift_steps)
+
+    # Parse the HPXML document
+    doc = XMLHelper.parse_file(@hpxml_path)
+    hpxml_doc = XMLHelper.get_element(doc, '/HPXML')
+    doc_buildings = XMLHelper.get_elements(hpxml_doc, 'Building')
+
+    # Process each building
+    doc_buildings.each_with_index do |building, index|
+      hpxml_bldg = @hpxml.buildings[index]
+      if hpxml_bldg.hvac_controls.to_a.length == 0
+        runner.registerInfo("Skipping hvac flexibility for building #{index + 1} since it has no HVAC controls.")
+        next
+      end
+      hvac_schedule = create_hvac_schedule(index)
+      modified_schedule = modify_hvac_schedule(index, hvac_schedule)
+      write_schedule(modified_schedule, building, index, output_csv_path)
     end
 
-    _hpxml = HPXML.new(hpxml_path: hpxml_path)
-
-    # init
-    new_schedules = {}
-
-    # TODO: populate new_schedules
-
-    # return if not writing schedules
-    return true if new_schedules.empty?
-
-    # write schedules
-    schedules_filepath = File.join(File.dirname(args[:output_csv_path].get), 'schedules2.csv')
-    write_new_schedules(new_schedules, schedules_filepath)
-
-    # modify the hpxml with the schedules path
-    doc = XMLHelper.parse_file(hpxml_path)
-    extension = XMLHelper.create_elements_as_needed(XMLHelper.get_element(doc, '/HPXML'), ['SoftwareInfo', 'extension'])
-    schedules_filepaths = XMLHelper.get_values(extension, 'SchedulesFilePath', :string)
-    if !schedules_filepaths.include?(schedules_filepath)
-      XMLHelper.add_element(extension, 'SchedulesFilePath', schedules_filepath, :string)
-
-      # write out the modified hpxml
-      XMLHelper.write_file(doc, hpxml_path)
-      runner.registerInfo("Wrote file: #{hpxml_path}")
-    end
-
-    return true
+    # Write out the modified hpxml
+    XMLHelper.write_file(doc, @hpxml_path)
+    runner.registerInfo("Wrote file: #{@hpxml_path} with modified schedules.")
+    true
   end
 
-  def write_new_schedules(schedules, schedules_filepath)
-    CSV.open(schedules_filepath, 'w') do |csv|
-      csv << schedules.keys
-      rows = schedules.values.transpose
-      rows.each do |row|
-        csv << row.map { |x| '%.3g' % x }
+  # Determines if the post-processing step for HPXML should be skipped
+  def skip_post_hpxml?(args)
+    skip_hvac_flexibility?(args)
+  end
+
+  # Determines if HVAC flexibility modifications should be skipped
+  # Skips if both peak offset and pre-peak duration are set to 0
+  def skip_hvac_flexibility?(args)
+    true if args[:hvac_flex_peak_offset] == 0 && args[:hvac_flex_pre_peak_duration_hours] == 0
+  end
+
+  # Generates the HVAC schedule for a given building index
+  def create_hvac_schedule(building_index)
+    generator = HVACScheduleGenerator.new(@hpxml, @hpxml_path, @runner, building_index)
+    generator.get_heating_cooling_setpoint_schedule
+  end
+
+  # Retrieves an appropriate schedule modifier for a given building index
+  def get_schedule_modifier(building_index, modifier_class)
+    # Ensure the provided class is a subclass of ScheduleModifier
+    raise ArgumentError, "#{modifier_class} must be a subclass of ScheduleModifier" unless modifier_class < ScheduleModifier
+
+    hpxml_bldg = @hpxml.buildings[building_index]
+    state = hpxml_bldg.state_code
+    sim_year = @hpxml.header.sim_calendar_year
+    epw_path = Location.get_epw_path(hpxml_bldg, @hpxml_path)
+    weather = WeatherFile.new(epw_path: epw_path, runner: @runner)
+
+    # Get daylight saving time information
+    dst_info = DSTInfo.new(dst_begin_month: hpxml_bldg.dst_begin_month,
+                           dst_begin_day: hpxml_bldg.dst_begin_day,
+                           dst_end_month: hpxml_bldg.dst_end_month,
+                           dst_end_day: hpxml_bldg.dst_end_day)
+
+    # Create and return the modifier instance
+    modifier_class.new(state: state,
+                       sim_year: sim_year,
+                       weather: weather,
+                       epw_path: epw_path,
+                       minutes_per_step: @minutes_per_step,
+                       runner: @runner,
+                       dst_info: dst_info)
+  end
+
+  # Modifies the HVAC schedule based on flexibility inputs
+  def modify_hvac_schedule(building_index, schedule)
+    hvac_schedule_modifier = get_schedule_modifier(building_index, HVACScheduleModifier)
+
+    # Define flexibility inputs
+    hvac_flexibility_inputs = FlexibilityInputs.new(
+      peak_offset: @args[:hvac_flex_peak_offset],
+      pre_peak_duration_steps: (@args[:hvac_flex_pre_peak_duration_hours] * 60 / @minutes_per_step).to_i,
+      pre_peak_offset: @args[:hvac_flex_pre_peak_offset],
+      random_shift_steps: @random_shift_steps
+    )
+
+    # Apply modifications to the schedule
+    hvac_schedule_modifier.modify_shedule(schedule, hvac_flexibility_inputs)
+  end
+
+  # Writes the HVAC schedule to a CSV file
+  def write_schedule(schedule, building, index, output_csv_path)
+    schedule_file = get_existing_schedule_filepath(building)
+
+    if schedule_file.nil?
+      # Create a new schedule file if one does not exist
+      schedule_file = File.join(output_csv_path, "schedule_#{index}.csv")
+      CSV.open(schedule_file, 'w') do |csv|
+        headers = schedule.keys.map(&:to_s)
+        csv << headers
+        row_count = schedule.values.first.length
+        (0...row_count).each do |i|
+          row = headers.map { |h| schedule[h.to_sym][i] }
+          csv << row
+        end
+      end
+      update_hpxml_schedule_filepath(building, schedule_file)
+    else
+      # Process existing schedule file and update values
+      data = CSV.read(schedule_file, headers: true)
+      headers = data.headers
+
+      schedule.each do |column_name, values|
+        string_column_name = column_name.to_s
+        column_index = headers.index { |h| h.to_s == string_column_name }
+
+        if column_index
+          data.each_with_index do |row, i|
+            row[column_index] = values[i]
+          end
+        else
+          headers << string_column_name
+          data.each_with_index do |row, i|
+            row[string_column_name] = values[i]
+          end
+        end
+      end
+
+      # Write the updated schedule back to the CSV file
+      CSV.open(schedule_file, 'w') do |csv|
+        csv << headers
+        data.each { |row| csv << row }
       end
     end
+
+    schedule_file
+  end
+
+  # Retrieves the existing schedule file path from the HPXML file
+  def get_existing_schedule_filepath(building)
+    building_extension = XMLHelper.create_elements_as_needed(building, %w[BuildingDetails BuildingSummary extension])
+    existing_schedules_filepaths = XMLHelper.get_values(building_extension, 'SchedulesFilePath', :string)
+    schedule_file = existing_schedules_filepaths.first
+    return if schedule_file.nil?
+
+    # Ensure the path is absolute
+    if !Pathname.new(schedule_file).absolute?
+      schedule_file = File.join(File.dirname(@hpxml_path), schedule_file)
+    end
+    schedule_file
+  end
+
+  # Updates the HPXML file with the new schedule file path
+  def update_hpxml_schedule_filepath(building, new_schedule_filepath)
+    building_extension = XMLHelper.create_elements_as_needed(building, %w[BuildingDetails BuildingSummary extension])
+    XMLHelper.add_element(building_extension, 'SchedulesFilePath', new_schedule_filepath, :string)
   end
 end
 

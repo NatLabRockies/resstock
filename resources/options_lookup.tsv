@@ -9931,6 +9931,11 @@ HVAC System Single Speed ASHP Charge	1.127 Charge Frac	ResStockArguments	heat_pu
 HVAC System Single Speed ASHP Charge	1.266 Charge Frac	ResStockArguments	heat_pump_frac_manufacturer_charge=1.266
 HVAC System Single Speed ASHP Charge	1.405 Charge Frac	ResStockArguments	heat_pump_frac_manufacturer_charge=1.405
 HVAC System Single Speed ASHP Charge	None
+HVACFlexibility	On-peak Load Shedding, 2F Offset	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=2	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0	flex_random_shift_minutes=30
+HVACFlexibility	On-peak Load Shedding, 4F Offset	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=4	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0	flex_random_shift_minutes=30
+HVACFlexibility	Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=1	hvac_flex_pre_peak_offset=2	flex_random_shift_minutes=30
+HVACFlexibility	Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=2	flex_random_shift_minutes=30
+HVACFlexibility	Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=4	flex_random_shift_minutes=30
 Has PV	No
 Has PV	Yes
 Heat Pump Backup	Use Existing System	ResStockArguments	heat_pump_backup_use_existing_system=true

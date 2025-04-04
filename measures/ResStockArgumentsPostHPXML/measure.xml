@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>6566f1b1-977e-47da-9d62-b4cd3fae0553</version_id>
-  <version_modified>2025-02-04T21:19:03Z</version_modified>
+  <version_id>af53ca34-177b-43f8-946c-b9ae88a896de</version_id>
+  <version_modified>2025-04-02T22:42:00Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -20,17 +20,45 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>hvac_flex_peak_offset</name>
+      <display_name>HVAC Load Flexibility: Peak Offset (deg F)</display_name>
+      <description>Offset of the peak period in degrees Fahrenheit.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0</default_value>
+    </argument>
+    <argument>
+      <name>hvac_flex_pre_peak_duration_hours</name>
+      <display_name>HVAC Load Flexibility: Pre-Peak Duration (hours)</display_name>
+      <description>Duration of the pre-peak period in hours.</description>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0</default_value>
+    </argument>
+    <argument>
+      <name>hvac_flex_pre_peak_offset</name>
+      <display_name>HVAC Load Flexibility: Pre-Peak Offset (deg F)</display_name>
+      <description>Offset of the pre-peak period in degrees Fahrenheit.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0</default_value>
+    </argument>
+    <argument>
+      <name>flex_random_shift_minutes</name>
+      <display_name>Load Flexibility: Random Shift (minutes)</display_name>
+      <description>Number of minutes to randomly shift the peak period. If minutes is less than timestep, it will be assumed to be 0.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0</default_value>
+    </argument>
+    <argument>
       <name>building_id</name>
       <display_name>Building Unit ID</display_name>
       <description>The building unit number (between 1 and the number of samples).</description>
-      <type>String</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>output_csv_path</name>
-      <display_name>Schedules: Output CSV Path</display_name>
-      <description>Absolute/relative path of the csv file containing occupancy schedules. Relative paths are relative to the HPXML output path.</description>
       <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -58,13 +86,61 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>A81E9245</checksum>
+      <checksum>8FA012C5</checksum>
+    </file>
+    <file>
+      <filename>common/README.md</filename>
+      <filetype>md</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>DE2C6722</checksum>
+    </file>
+    <file>
+      <filename>common/schedule_modifier.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>AF0E72CB</checksum>
+    </file>
+    <file>
+      <filename>common/seasonal_shedding_peak_hours.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>5F914EFF</checksum>
+    </file>
+    <file>
+      <filename>common/seasonal_shifting_peak_hours.json</filename>
+      <filetype>json</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>055326E7</checksum>
+    </file>
+    <file>
+      <filename>hvac_flexibility/detailed_schedule_generator.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>0B142F52</checksum>
+    </file>
+    <file>
+      <filename>hvac_flexibility/setpoint_modifier.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>9E3BEAF7</checksum>
+    </file>
+    <file>
+      <filename>test_hvac_load_flexibility.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>DBD41A05</checksum>
     </file>
     <file>
       <filename>test_resstock_arguments_post_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>31C4A0A8</checksum>
+      <checksum>0A84481E</checksum>
+    </file>
+    <file>
+      <filename>test_template.osw</filename>
+      <filetype>osw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>B71A1941</checksum>
     </file>
   </files>
 </measure>
