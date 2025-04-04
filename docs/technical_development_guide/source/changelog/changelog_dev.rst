@@ -6,11 +6,12 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+
     .. change::
         :tags: characteristics
         :pullreq: 1374
 
-        **Date**: 2025-04-03
+        **Date**: 2025-04-04
 
         Title:
         Differentiate Hawaii in IECC Climate Zone 1A
@@ -19,6 +20,7 @@ Development Changelog
         Split out HI and FL in Climate Zone 1A to support Hawaii differentiation
 
         Assignees: Janet Reyna
+
 
     .. change::
         :tags: outputs, standard data release
