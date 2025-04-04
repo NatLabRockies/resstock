@@ -8,7 +8,7 @@ Development Changelog
 
 
     .. change::
-        :tags: characteristics
+        :tags: characteristics, docs
         :pullreq: 1374
 
         **Date**: 2025-04-04
