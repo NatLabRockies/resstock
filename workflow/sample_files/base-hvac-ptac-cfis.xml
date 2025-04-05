@@ -330,7 +330,6 @@
                 <Units>EER</Units>
                 <Value>10.7</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.65</SensibleHeatFraction>
             </CoolingSystem>
           </HVACPlant>
           <HVACControl>

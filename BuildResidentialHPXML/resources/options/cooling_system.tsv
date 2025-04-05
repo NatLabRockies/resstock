@@ -1,41 +1,42 @@
-Option Name	cooling_system_type	cooling_system_cooling_efficiency_type	cooling_system_cooling_efficiency	cooling_system_cooling_compressor_type	cooling_system_cooling_sensible_heat_fraction	cooling_system_is_ducted	cooling_system_airflow_defect_ratio	cooling_system_charge_defect_ratio	cooling_system_crankcase_heater_watts	cooling_system_integrated_heating_system_fuel	cooling_system_integrated_heating_system_efficiency_percent	cooling_system_perf_data_capacity_type	cooling_system_perf_data_cooling_outdoor_temperatures	cooling_system_perf_data_cooling_min_speed_capacities	cooling_system_perf_data_cooling_max_speed_capacities	cooling_system_perf_data_cooling_min_speed_cops	cooling_system_perf_data_cooling_max_speed_cops
-None	none																
-"Central AC, SEER 8"	central air conditioner	SEER	8	single stage													
-"Central AC, SEER 10"	central air conditioner	SEER	10	single stage													
-"Central AC, SEER 13"	central air conditioner	SEER	13	single stage	0.73												
-"Central AC, SEER 13, 25W Crankcase Heater"	central air conditioner	SEER	13	single stage	0.73				25								
-"Central AC, SEER 13, 50W Crankcase Heater"	central air conditioner	SEER	13	single stage	0.73				50								
-"Central AC, SEER 13, Two Stage"	central air conditioner	SEER	13	two stage													
-"Central AC, SEER 13, Airflow Defect Ratio"	central air conditioner	SEER	13	single stage	0.73		-0.25	-0.25									
-"Central AC, SEER2 12.4, SEER 13.05"	central air conditioner	SEER2	12.4	single stage	0.73												
-"Central AC, SEER 14"	central air conditioner	SEER	14	single stage													
-"Central AC, SEER 15"	central air conditioner	SEER	15	single stage													
-"Central AC, SEER 17.5, Variable Speed"	central air conditioner	SEER	17.5	variable speed	0.78												
-"Central AC, SEER 17.5, Detailed Performance"	central air conditioner	SEER	17.5	variable speed	0.78							Absolute capacities	"95.0, 82.0"	"11900, 13400"	"36000, 40500"	"4.47, 6.33"	"2.64, 3.46"
-"Central AC, SEER 17.5, Normalized Capacity Fractions"	central air conditioner	SEER	17.5	variable speed	0.78							Normalized capacity fractions	"95.0, 82.0"	"0.325, 0.37"	"1.0, 1.11"	"4.47, 6.33"	"2.64, 3.46"
-"Central AC, SEER 18"	central air conditioner	SEER	18	two stage	0.73												
-"Central AC, SEER 18, Airflow Defect Ratio"	central air conditioner	SEER	18	two stage	0.73		-0.25	-0.25									
-"Central AC, SEER 24"	central air conditioner	SEER	24	variable speed	0.78												
-"Central AC, SEER 24, Airflow Defect Ratio"	central air conditioner	SEER	24	variable speed	0.78		-0.25	-0.25									
-"Central AC, SEER 24.5"	central air conditioner	SEER	24.5	variable speed													
-"Central AC, SEER 24.5, 0.73 SHR"	central air conditioner	SEER	24.5	variable speed	0.73												
-"Room AC, EER 8.5"	room air conditioner	EER	8.5		0.65												
-"Room AC, EER 8.5, Electric Heating"	room air conditioner	EER	8.5		0.65					electricity	1						
-"Room AC, EER 8.5, 0.73 SHR"	room air conditioner	EER	8.5		0.73												
-"Room AC, EER 9.8"	room air conditioner	EER	9.8		0.65												
-"Room AC, EER 10.7"	room air conditioner	EER	10.7		0.65												
-"Room AC, EER 12.0"	room air conditioner	EER	12		0.65												
-"Room AC, CEER 8.4"	room air conditioner	CEER	8.4		0.65												
-"Evaporative Cooler, EER 13"	evaporative cooler	EER	13														
-"Ductless Evaporative Cooler, SEER 13"	evaporative cooler	SEER	13			FALSE											
-"Ducted Evaporative Cooler, SEER 13"	evaporative cooler	SEER	13			TRUE											
-"Fan Coil Cooling, SEER 13"	mini-split	SEER	13	variable speed		FALSE											
-"Ducted Mini-Split AC, SEER 19"	mini-split	SEER	19	variable speed	0.73	TRUE											
-"Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio"	mini-split	SEER	19	variable speed	0.73	TRUE	-0.25	-0.25									
-"Ductless Mini-Split AC, SEER 19"	mini-split	SEER	19	variable speed	0.73	FALSE											
-"Ductless Mini-Split AC, SEER 17"	mini-split	SEER	17	variable speed	0.73	FALSE											
-"Ductless Mini-Split AC, SEER 17, Detailed Performance"	mini-split	SEER	17	variable speed	0.73	FALSE						Absolute capacities	"95.0, 82.0"	"9100, 9900"	"36400, 43300"	"3.76, 4.61"	"2.45, 3.51"
-"Ductless Mini-Split AC, SEER 17, Normalized Capacity Fractions"	mini-split	SEER	17	variable speed	0.73	FALSE						Normalized capacity fractions	"95.0, 82.0"	"0.25, 0.28"	"1.01, 1.20"	"3.76, 4.61"	"2.45, 3.51"
-"PTAC, EER 10.7"	packaged terminal air conditioner	EER	10.7		0.65												
-"PTAC, EER 10.7, Electric Heating"	packaged terminal air conditioner	EER	10.7		0.65					electricity	1						
-"PTAC, EER 10.7, Natural Gas Heating"	packaged terminal air conditioner	EER	10.7		0.65					natural gas	0.8						
+Option Name	type	cooling_efficiency_type	cooling_efficiency	cooling_compressor_type	cooling_sensible_heat_fraction	is_ducted	airflow_defect_ratio	charge_defect_ratio	crankcase_heater_watts	integrated_heating_system_fuel	integrated_heating_system_efficiency_percent	perf_data_capacity_type	perf_data_cooling_outdoor_temperatures	perf_data_cooling_min_speed_capacities	perf_data_cooling_max_speed_capacities	perf_data_cooling_min_speed_cops	perf_data_cooling_max_speed_cops
+None	none
+"Central AC, SEER 8"	central air conditioner	SEER	8	single stage
+"Central AC, SEER 10"	central air conditioner	SEER	10	single stage
+"Central AC, SEER 13"	central air conditioner	SEER	13	single stage
+"Central AC, SEER 13, Grade 3 Installation"	central air conditioner	SEER	13	single stage			-0.25	-0.25
+"Central AC, SEER 14"	central air conditioner	SEER	14	single stage
+"Central AC, SEER 15"	central air conditioner	SEER	15	single stage
+"Central AC, SEER 16"	central air conditioner	SEER	16	two stage
+"Central AC, SEER 17"	central air conditioner	SEER	17	two stage
+"Central AC, SEER 17.5, Normalized Detailed Performance"	central air conditioner	SEER	17.5	variable speed								Normalized capacity fractions	"95.0, 82.0"	"0.325, 0.37"	"1.0, 1.11"	"4.47, 6.33"	"2.64, 3.46"
+"Central AC, SEER 17.5, Absolute Detailed Performance"	central air conditioner	SEER	17.5	variable speed								Absolute capacities	"95.0, 82.0"	"11900, 13400"	"36000, 40500"	"4.47, 6.33"	"2.64, 3.46"
+"Central AC, SEER 18"	central air conditioner	SEER	18	two stage
+"Central AC, SEER 18, Grade 3 Installation"	central air conditioner	SEER	18	two stage			-0.25	-0.25
+"Central AC, SEER 21"	central air conditioner	SEER	21	variable speed
+"Central AC, SEER 24"	central air conditioner	SEER	24	variable speed
+"Central AC, SEER 24, Grade 3 Installation"	central air conditioner	SEER	24	variable speed			-0.25	-0.25
+"Central AC, SEER 24.5"	central air conditioner	SEER	24.5	variable speed
+"Central AC, SEER 27"	central air conditioner	SEER	27	variable speed
+"Central AC, SEER2 12.4"	central air conditioner	SEER2	12.4	single stage
+"Mini-Split AC, SEER 13"	mini-split	SEER	13	variable speed
+"Mini-Split AC, SEER 17"	mini-split	SEER	17	variable speed
+"Mini-Split AC, SEER 17, Normalized Detailed Performance"	mini-split	SEER	17	variable speed								Normalized capacity fractions	"95.0, 82.0"	"0.25, 0.28"	"1.01, 1.20"	"3.76, 4.61"	"2.45, 3.51"
+"Mini-Split AC, SEER 17, Absolute Detailed Performance"	mini-split	SEER	17	variable speed								Absolute capacities	"95.0, 82.0"	"9100, 9900"	"36400, 43300"	"3.76, 4.61"	"2.45, 3.51"
+"Mini-Split AC, SEER 19"	mini-split	SEER	19	variable speed
+"Mini-Split AC, SEER 19, Ducted"	mini-split	SEER	19	variable speed		TRUE
+"Mini-Split AC, SEER 19, Ducted, Grade 3 Installation"	mini-split	SEER	19	variable speed		TRUE	-0.25	-0.25
+"Mini-Split AC, SEER 24"	mini-split	SEER	24	variable speed
+"Mini-Split AC, SEER 25"	mini-split	SEER	25	variable speed
+"Mini-Split AC, SEER 29.3"	mini-split	SEER	29.3	variable speed
+"Mini-Split AC, SEER 33"	mini-split	SEER	33	variable speed
+"Room AC, EER 8.5"	room air conditioner	EER	8.5
+"Room AC, EER 8.5, Electric Heating"	room air conditioner	EER	8.5							electricity	1
+"Room AC, EER 9.8"	room air conditioner	EER	9.8
+"Room AC, EER 10.7"	room air conditioner	EER	10.7
+"Room AC, EER 12.0"	room air conditioner	EER	12
+"Room AC, CEER 8.4"	room air conditioner	CEER	8.4
+"Packaged Terminal AC, EER 10.7"	packaged terminal air conditioner	EER	10.7
+"Packaged Terminal AC, EER 10.7, Electric Heating"	packaged terminal air conditioner	EER	10.7							electricity	1
+"Packaged Terminal AC, EER 10.7, 80% AFUE Gas Heating"	packaged terminal air conditioner	EER	10.7							natural gas	0.8
+Evaporative Cooler	evaporative cooler
+"Evaporative Cooler, Ducted"	evaporative cooler					TRUE

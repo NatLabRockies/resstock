@@ -1,46 +1,58 @@
-Option Name	heating_system_type	heating_system_heating_efficiency	heating_system_pilot_light	heating_system_airflow_defect_ratio
-"Electric Furnace, 98% AFUE"	Furnace	0.98		
-"Electric Furnace, 100% AFUE"	Furnace	1		
-"Electric Baseboard, 100% Efficiency"	ElectricResistance	1		
-"Electric Boiler, 98% AFUE"	Boiler	0.98		
-"Electric Boiler, 100% AFUE"	Boiler	1		
-"Electric Wall Furnace, 100% AFUE"	WallFurnace	1		
-"Fuel Boiler, 72% AFUE"	Boiler	0.72		
-"Fuel Boiler, 76% AFUE"	Boiler	0.76		
-"Fuel Boiler, 80% AFUE"	Boiler	0.8		
-"Fuel Boiler, 82% AFUE"	Boiler	0.82		
-"Fuel Boiler, 85% AFUE"	Boiler	0.85		
-"Fuel Boiler, 90% AFUE"	Boiler	0.9		
-"Fuel Boiler, 92% AFUE"	Boiler	0.92		
-"Fuel Boiler, 92% AFUE, 600 BTUh Pilot Light"	Boiler	0.92	600	
-"Fuel Boiler, 95% AFUE"	Boiler	0.95		
-"Fuel Boiler, 96% AFUE"	Boiler	0.96		
-"Fuel Furnace, 60% AFUE"	Furnace	0.6		
-"Fuel Furnace, 68% AFUE"	Furnace	0.68		
-"Fuel Furnace, 72% AFUE"	Furnace	0.72		
-"Fuel Furnace, 76% AFUE"	Furnace	0.76		
-"Fuel Furnace, 78% AFUE"	Furnace	0.78		
-"Fuel Furnace, 80% AFUE"	Furnace	0.8		
-"Fuel Furnace, 85% AFUE"	Furnace	0.85		
-"Fuel Furnace, 90% AFUE"	Furnace	0.9		
-"Fuel Furnace, 92% AFUE"	Furnace	0.92		
-"Fuel Furnace, 92% AFUE, Airflow Defect Ratio"	Furnace	0.92		-0.25
-"Fuel Furnace, 92% AFUE, 600 BTUh Pilot Light"	Furnace	0.92	600	
-"Fuel Furnace, 92.5% AFUE"	Furnace	0.925		
-"Fuel Furnace, 96% AFUE"	Furnace	0.96		
-"Fuel Wall Furnace, 60% AFUE"	WallFurnace	0.6		
-"Fuel Wall Furnace, 68% AFUE"	WallFurnace	0.68		
-"Electric Wall Furnace, 98% AFUE"	WallFurnace	0.98		
-"Electric Wall Furnace, 100% AFUE"	WallFurnace	1		
+Option Name	type	heating_efficiency	pilot_light	airflow_defect_ratio
 None	none			
-"Fuel Boiler w/ Baseboard, 78% AFUE"	Shared Boiler w/ Baseboard	0.78		
-"Fuel Boiler w/ Baseboard, 92% AFUE"	Shared Boiler w/ Baseboard	0.92		
-"Electric Boiler w/ Baseboard, 100% AFUE"	Shared Boiler w/ Baseboard	1		
-"Fuel Fan Coil Heating, 78% AFUE"	Shared Boiler w/ Ductless Fan Coil	0.78		
-"Fuel Fan Coil Heating, 92% AFUE"	Shared Boiler w/ Ductless Fan Coil	0.92		
-"Electric Fan Coil Heating, 100% AFUE"	Shared Boiler w/ Ductless Fan Coil	1		
-"Fireplace, 80% Efficiency"	Fireplace	0.8		
+Electric Resistance	ElectricResistance	1		
+"Central Furnace, 60% AFUE"	Furnace	0.6		
+"Central Furnace, 64% AFUE"	Furnace	0.64		
+"Central Furnace, 68% AFUE"	Furnace	0.68		
+"Central Furnace, 72% AFUE"	Furnace	0.72		
+"Central Furnace, 76% AFUE"	Furnace	0.76		
+"Central Furnace, 78% AFUE"	Furnace	0.78		
+"Central Furnace, 80% AFUE"	Furnace	0.8		
+"Central Furnace, 85% AFUE"	Furnace	0.85		
+"Central Furnace, 90% AFUE"	Furnace	0.9		
+"Central Furnace, 92% AFUE"	Furnace	0.92		
+"Central Furnace, 92% AFUE, Pilot Light"	Furnace	0.92	600	
+"Central Furnace, 92% AFUE, Grade 3 Installation"	Furnace	0.92		-0.25
+"Central Furnace, 92.5% AFUE"	Furnace	0.925		
+"Central Furnace, 96% AFUE"	Furnace	0.96		
+"Central Furnace, 98% AFUE"	Furnace	0.98		
+"Central Furnace, 100% AFUE"	Furnace	1		
+"Wall Furnace, 60% AFUE"	WallFurnace	0.6		
+"Wall Furnace, 68% AFUE"	WallFurnace	0.68		
+"Wall Furnace, 82% AFUE"	WallFurnace	0.82		
+"Wall Furnace, 98% AFUE"	WallFurnace	0.98		
+"Wall Furnace, 100% AFUE"	WallFurnace	1		
+"Floor Furnace, 60% AFUE"	FloorFurnace	0.6		
+"Floor Furnace, 70% AFUE"	FloorFurnace	0.7		
+"Floor Furnace, 80% AFUE"	FloorFurnace	0.8		
+"Floor Furnace, 80% AFUE, Pilot Light"	FloorFurnace	0.8	600	
+"Boiler, 72% AFUE"	Boiler	0.72		
+"Boiler, 76% AFUE"	Boiler	0.76		
+"Boiler, 80% AFUE"	Boiler	0.8		
+"Boiler, 82% AFUE"	Boiler	0.82		
+"Boiler, 85% AFUE"	Boiler	0.85		
+"Boiler, 90% AFUE"	Boiler	0.9		
+"Boiler, 92% AFUE"	Boiler	0.92		
+"Boiler, 92% AFUE, Pilot Light"	Boiler	0.92	600	
+"Boiler, 95% AFUE"	Boiler	0.95		
+"Boiler, 96% AFUE"	Boiler	0.96		
+"Boiler, 98% AFUE"	Boiler	0.98		
+"Boiler, 100% AFUE"	Boiler	1		
+"Shared Boiler w/ Baseboard, 78% AFUE"	Shared Shared Boiler w/ Baseboard	0.78		
+"Shared Boiler w/ Baseboard, 92% AFUE"	Shared Shared Boiler w/ Baseboard	0.92		
+"Shared Boiler w/ Baseboard, 100% AFUE"	Shared Shared Boiler w/ Baseboard	1		
+"Shared Boiler w/ Fan Coil, 78% AFUE"	Shared Boiler w/ Ductless Fan Coil	0.78		
+"Shared Boiler w/ Fan Coil, 92% AFUE"	Shared Boiler w/ Ductless Fan Coil	0.92		
+"Shared Boiler w/ Fan Coil, 100% AFUE"	Shared Boiler w/ Ductless Fan Coil	1		
+"Stove, 60% Efficiency"	Stove	0.6		
+"Stove, 70% Efficiency"	Stove	0.7		
 "Stove, 80% Efficiency"	Stove	0.8		
-"Fuel Floor Furnace, 80% AFUE, 600 BTUh Pilot Light"	FloorFurnace	0.8	600	
-"Space Heater, 100% Efficiency"	SpaceHeater	1		
+"Space Heater, 60% Efficiency"	SpaceHeater	0.6		
+"Space Heater, 70% Efficiency"	SpaceHeater	0.7		
+"Space Heater, 80% Efficiency"	SpaceHeater	0.8		
 "Space Heater, 92% Efficiency"	SpaceHeater	0.92		
+"Space Heater, 100% Efficiency"	SpaceHeater	1		
+"Fireplace, 60% Efficiency"	Fireplace	0.6		
+"Fireplace, 70% Efficiency"	Fireplace	0.7		
+"Fireplace, 80% Efficiency"	Fireplace	0.8		
+"Fireplace, 100% Efficiency"	Fireplace	1		

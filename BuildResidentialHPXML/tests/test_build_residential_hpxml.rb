@@ -446,8 +446,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['neighbor_left_distance'] = 0
       args['neighbor_right_distance'] = 0
       args['wall_type'] = HPXML::WallTypeWoodStud
-      args['wall_siding_type'] = HPXML::SidingTypeWood
-      args['wall_color'] = HPXML::ColorMedium
+      args['enclosure_wall_siding'] = 'Wood, Medium'
       args['wall_assembly_r'] = 23
       args['window_front_wwr'] = 0
       args['window_back_wwr'] = 0
@@ -487,7 +486,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['air_leakage_house_pressure'] = 50
       args['air_leakage_value'] = 3
       args['heating_system_fuel'] = HPXML::FuelTypeNaturalGas
-      args['heating_system'] = 'Fuel Furnace, 92% AFUE'
+      args['heating_system'] = 'Central Furnace, 92% AFUE'
       args['heating_system_heating_capacity'] = 36000.0
       args['heating_system_fraction_heat_load_served'] = 1
       args['cooling_system'] = 'Central AC, SEER 13'
@@ -498,9 +497,9 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['heat_pump_cooling_capacity'] = 36000.0
       args['heat_pump_fraction_heat_load_served'] = 1
       args['heat_pump_fraction_cool_load_served'] = 1
-      args['heat_pump_backup'] = 'Electricity, Integrated, 100% Efficiency'
+      args['heat_pump_backup'] = 'Integrated, Electricity, 100% Efficiency'
       args['heat_pump_backup_heating_capacity'] = 36000.0
-      args['geothermal_loop_configuration'] = Constants::None
+      args['geothermal_loop'] = 'None'
       args['hvac_control_heating_weekday_setpoint'] = 68
       args['hvac_control_heating_weekend_setpoint'] = 68
       args['hvac_control_cooling_weekday_setpoint'] = 78
@@ -761,48 +760,48 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['ducts_return_leakage_to_outside_value'] = 0.0
       args['ducts_supply_location'] = HPXML::LocationConditionedSpace
       args['ducts_return_location'] = HPXML::LocationConditionedSpace
-      args['heating_system_2'] = 'Electric Portable Heater, 100% Efficiency'
+      args['heating_system_2'] = 'Space Heater, 100% Efficiency'
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-fireplace-to-heating-system.xml'
       args['heating_system_fuel'] = HPXML::FuelTypeElectricity
-      args['heating_system'] = 'Electric Baseboard, 100% Efficiency'
+      args['heating_system'] = 'Electric Resistance'
       args['heating_system_heating_capacity'] = 48000.0
       args['heating_system_fraction_heat_load_served'] = 0.75
       args['cooling_system'] = 'None'
-      args['heating_system_2'] = 'Fuel Fireplace, 100% Efficiency'
+      args['heating_system_2'] = 'Fireplace, 100% Efficiency'
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-boiler-to-heating-system.xml'
-      args['heating_system'] = 'Fuel Boiler, 92% AFUE'
+      args['heating_system'] = 'Boiler, 92% AFUE'
       args['heating_system_fraction_heat_load_served'] = 0.75
-      args['heating_system_2'] = 'Fuel Boiler, 100% AFUE'
+      args['heating_system_2'] = 'Boiler, 100% AFUE'
     when 'extra-second-heating-system-portable-heater-to-heat-pump.xml'
       args['heating_system'] = 'None'
       args['cooling_system'] = 'None'
-      args['heat_pump'] = 'ASHP, SEER 10, 6.2 HSPF'
-      args['heat_pump_backup'] = 'Electricity, Integrated, 100% Efficiency'
+      args['heat_pump'] = 'Central HP, SEER 10, 6.2 HSPF'
+      args['heat_pump_backup'] = 'Integrated, Electricity, 100% Efficiency'
       args['heat_pump_heating_capacity'] = 48000.0
       args['heat_pump_fraction_heat_load_served'] = 0.75
       args['ducts_supply_leakage_to_outside_value'] = 0.0
       args['ducts_return_leakage_to_outside_value'] = 0.0
       args['ducts_supply_location'] = HPXML::LocationConditionedSpace
       args['ducts_return_location'] = HPXML::LocationConditionedSpace
-      args['heating_system_2'] = 'Electric Portable Heater, 100% Efficiency'
+      args['heating_system_2'] = 'Space Heater, 100% Efficiency'
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-fireplace-to-heat-pump.xml'
       args['heating_system'] = 'None'
       args['cooling_system'] = 'None'
-      args['heat_pump'] = 'MSHP, SEER 19, 10 HSPF, Ducted'
+      args['heat_pump'] = 'Mini-Split HP, SEER 19, 10 HSPF, Ducted'
       args['heat_pump_heating_capacity'] = 48000.0
       args['heat_pump_fraction_heat_load_served'] = 0.75
-      args['heating_system_2'] = 'Fuel Fireplace, 100% Efficiency'
+      args['heating_system_2'] = 'Fireplace, 100% Efficiency'
       args['heating_system_2_heating_capacity'] = 16000.0
     when 'extra-second-heating-system-boiler-to-heat-pump.xml'
       args['heating_system'] = 'None'
       args['cooling_system'] = 'None'
-      args['heat_pump'] = 'GSHP, EER 16.6, COP 3.6'
-      args['heat_pump_backup'] = 'Electricity, Integrated, 100% Efficiency'
+      args['heat_pump'] = 'Geothermal HP, EER 16.6, COP 3.6'
+      args['heat_pump_backup'] = 'Integrated, Electricity, 100% Efficiency'
       args['heat_pump_fraction_heat_load_served'] = 0.75
-      args['heating_system_2'] = 'Fuel Boiler, 100% AFUE'
+      args['heating_system_2'] = 'Boiler, 100% AFUE'
     when 'extra-enclosure-windows-shading.xml'
       args['window_interior_shading_winter'] = 0.99
       args['window_interior_shading_summer'] = 0.01
@@ -916,7 +915,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
     when 'extra-detailed-performance-autosize.xml'
       args['heating_system'] = 'None'
       args['cooling_system'] = 'None'
-      args['heat_pump'] = 'ASHP, SEER 17.25, 10 HPSF, Normalized Capacity Fractions'
+      args['heat_pump'] = 'Central HP, SEER 17.25, 10 HPSF, Normalized Detailed Performance'
       args.delete('heat_pump_heating_capacity')
       args.delete('heat_pump_cooling_capacity')
     when 'extra-power-outage-periods.xml'
@@ -1093,10 +1092,10 @@ class BuildResidentialHPXMLTest < Minitest::Test
     case hpxml_file
     when 'error-heating-system-and-heat-pump.xml'
       args['cooling_system'] = 'None'
-      args['heat_pump'] = 'ASHP, SEER 10, 6.2 HSPF'
+      args['heat_pump'] = 'Central HP, SEER 10, 6.2 HSPF'
     when 'error-cooling-system-and-heat-pump.xml'
       args['heating_system'] = 'None'
-      args['heat_pump'] = 'ASHP, SEER 10, 6.2 HSPF'
+      args['heat_pump'] = 'Central HP, SEER 10, 6.2 HSPF'
     when 'error-sfd-conditioned-basement-zero-foundation-height.xml'
       args['geometry_foundation_height'] = 0.0
       args.delete('foundation_wall_insulation_distance_to_bottom')
@@ -1113,13 +1112,13 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args.delete('foundation_wall_insulation_distance_to_bottom')
     when 'error-second-heating-system-but-no-primary-heating.xml'
       args['heating_system'] = 'None'
-      args['heating_system_2'] = 'Fuel Fireplace, 100% Efficiency'
+      args['heating_system_2'] = 'Fireplace, 100% Efficiency'
     when 'error-second-heating-system-ducted-with-ducted-primary-heating.xml'
       args['heating_system'] = 'None'
       args['cooling_system'] = 'None'
-      args['heat_pump'] = 'MSHP, SEER 14.5, 8.2 HSPF, Ducted'
+      args['heat_pump'] = 'Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted'
       args['heat_pump_backup'] = 'Separate'
-      args['heating_system_2'] = 'Fuel Furnace, 100% AFUE'
+      args['heating_system_2'] = 'Central Furnace, 100% AFUE'
     when 'error-sfa-no-building-num-units.xml'
       args.delete('geometry_building_num_units')
     when 'error-sfa-above-apartment.xml'
@@ -1148,7 +1147,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['geometry_attic_type'] = HPXML::AtticTypeConditioned
       args['ceiling_assembly_r'] = 0.0
     when 'error-sfd-with-shared-system.xml'
-      args['heating_system'] = 'Fuel Boiler w/ Baseboard, 92% AFUE'
+      args['heating_system'] = 'Shared Boiler w/ Baseboard, 92% AFUE'
     when 'error-rim-joist-height-but-no-assembly-r.xml'
       args.delete('rim_joist_assembly_r')
     when 'error-rim-joist-assembly-r-but-no-height.xml'
@@ -1282,7 +1281,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['ducts_supply_location'] = HPXML::LocationConditionedSpace
       args['ducts_return_location'] = HPXML::LocationConditionedSpace
     when 'warning-geothermal-loop-but-no-gshp.xml'
-      args['geothermal_loop_configuration'] = HPXML::GeothermalLoopLoopConfigurationVertical
+      args['geothermal_loop'] = 'Vertical Loop, Default'
     end
   end
 

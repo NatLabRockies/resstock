@@ -1,4 +1,4 @@
-Option Name	wall_siding_type	wall_color
+Option Name	type	color
 "Aluminum, Dark"	aluminum siding	dark
 "Aluminum, Medium"	aluminum siding	medium
 "Aluminum, Medium Dark"	aluminum siding	medium dark
@@ -14,16 +14,16 @@ Option Name	wall_siding_type	wall_color
 "Fiber-Cement, Medium Dark"	fiber cement siding	medium dark
 "Fiber-Cement, Light"	fiber cement siding	light
 "Fiber-Cement, Reflective"	fiber cement siding	reflective
-"Shingle, Asbestos, Dark"	asbestos siding	dark
-"Shingle, Asbestos, Medium"	asbestos siding	medium
-"Shingle, Asbestos, Medium Dark"	asbestos siding	medium dark
-"Shingle, Asbestos, Light"	asbestos siding	light
-"Shingle, Asbestos, Reflective"	asbestos siding	reflective
-"Shingle, Composition, Dark"	composite shingle siding	dark
-"Shingle, Composition, Medium"	composite shingle siding	medium
-"Shingle, Composition, Medium Dark"	composite shingle siding	medium dark
-"Shingle, Composition, Light"	composite shingle siding	light
-"Shingle, Composition, Reflective"	composite shingle siding	reflective
+"Asbestos, Dark"	asbestos siding	dark
+"Asbestos, Medium"	asbestos siding	medium
+"Asbestos, Medium Dark"	asbestos siding	medium dark
+"Asbestos, Light"	asbestos siding	light
+"Asbestos, Reflective"	asbestos siding	reflective
+"Composition Shingle, Dark"	composite shingle siding	dark
+"Composition Shingle, Medium"	composite shingle siding	medium
+"Composition Shingle, Medium Dark"	composite shingle siding	medium dark
+"Composition Shingle, Light"	composite shingle siding	light
+"Composition Shingle, Reflective"	composite shingle siding	reflective
 "Stucco, Dark"	stucco	dark
 "Stucco, Medium"	stucco	medium
 "Stucco, Medium Dark"	stucco	medium dark

@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>997f87b4-30f8-4ef8-ba64-df14fd7af467</version_id>
-  <version_modified>2025-04-02T20:39:57Z</version_modified>
+  <version_id>33598405-ec91-4a54-9ac7-f9e859c40b85</version_id>
+  <version_modified>2025-04-05T02:14:41Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -1792,86 +1792,216 @@
       </choices>
     </argument>
     <argument>
-      <name>wall_siding_type</name>
-      <display_name>Wall: Siding Type</display_name>
-      <description>The siding type of the walls. Also applies to rim joists. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls'&gt;HPXML Walls&lt;/a&gt;) is used.</description>
+      <name>enclosure_wall_siding</name>
+      <display_name>Enclosure: Wall Siding</display_name>
+      <description>The siding type/color of the walls. Also applies to rim joists. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls'&gt;HPXML Walls&lt;/a&gt;) is used.</description>
       <type>Choice</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
       <choices>
         <choice>
-          <value>aluminum siding</value>
-          <display_name>aluminum siding</display_name>
+          <value>Aluminum, Dark</value>
+          <display_name>Aluminum, Dark</display_name>
         </choice>
         <choice>
-          <value>asbestos siding</value>
-          <display_name>asbestos siding</display_name>
+          <value>Aluminum, Medium</value>
+          <display_name>Aluminum, Medium</display_name>
         </choice>
         <choice>
-          <value>brick veneer</value>
-          <display_name>brick veneer</display_name>
+          <value>Aluminum, Medium Dark</value>
+          <display_name>Aluminum, Medium Dark</display_name>
         </choice>
         <choice>
-          <value>composite shingle siding</value>
-          <display_name>composite shingle siding</display_name>
+          <value>Aluminum, Light</value>
+          <display_name>Aluminum, Light</display_name>
         </choice>
         <choice>
-          <value>fiber cement siding</value>
-          <display_name>fiber cement siding</display_name>
+          <value>Aluminum, Reflective</value>
+          <display_name>Aluminum, Reflective</display_name>
         </choice>
         <choice>
-          <value>masonite siding</value>
-          <display_name>masonite siding</display_name>
+          <value>Brick, Dark</value>
+          <display_name>Brick, Dark</display_name>
         </choice>
         <choice>
-          <value>none</value>
-          <display_name>none</display_name>
+          <value>Brick, Medium</value>
+          <display_name>Brick, Medium</display_name>
         </choice>
         <choice>
-          <value>stucco</value>
-          <display_name>stucco</display_name>
+          <value>Brick, Medium Dark</value>
+          <display_name>Brick, Medium Dark</display_name>
         </choice>
         <choice>
-          <value>synthetic stucco</value>
-          <display_name>synthetic stucco</display_name>
+          <value>Brick, Light</value>
+          <display_name>Brick, Light</display_name>
         </choice>
         <choice>
-          <value>vinyl siding</value>
-          <display_name>vinyl siding</display_name>
+          <value>Brick, Reflective</value>
+          <display_name>Brick, Reflective</display_name>
         </choice>
         <choice>
-          <value>wood siding</value>
-          <display_name>wood siding</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>wall_color</name>
-      <display_name>Wall: Color</display_name>
-      <description>The color of the walls. Also applies to rim joists. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls'&gt;HPXML Walls&lt;/a&gt;) is used.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>dark</value>
-          <display_name>dark</display_name>
+          <value>Fiber-Cement, Dark</value>
+          <display_name>Fiber-Cement, Dark</display_name>
         </choice>
         <choice>
-          <value>light</value>
-          <display_name>light</display_name>
+          <value>Fiber-Cement, Medium</value>
+          <display_name>Fiber-Cement, Medium</display_name>
         </choice>
         <choice>
-          <value>medium</value>
-          <display_name>medium</display_name>
+          <value>Fiber-Cement, Medium Dark</value>
+          <display_name>Fiber-Cement, Medium Dark</display_name>
         </choice>
         <choice>
-          <value>medium dark</value>
-          <display_name>medium dark</display_name>
+          <value>Fiber-Cement, Light</value>
+          <display_name>Fiber-Cement, Light</display_name>
         </choice>
         <choice>
-          <value>reflective</value>
-          <display_name>reflective</display_name>
+          <value>Fiber-Cement, Reflective</value>
+          <display_name>Fiber-Cement, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Asbestos, Dark</value>
+          <display_name>Asbestos, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Asbestos, Medium</value>
+          <display_name>Asbestos, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Asbestos, Medium Dark</value>
+          <display_name>Asbestos, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Asbestos, Light</value>
+          <display_name>Asbestos, Light</display_name>
+        </choice>
+        <choice>
+          <value>Asbestos, Reflective</value>
+          <display_name>Asbestos, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Composition Shingle, Dark</value>
+          <display_name>Composition Shingle, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Composition Shingle, Medium</value>
+          <display_name>Composition Shingle, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Composition Shingle, Medium Dark</value>
+          <display_name>Composition Shingle, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Composition Shingle, Light</value>
+          <display_name>Composition Shingle, Light</display_name>
+        </choice>
+        <choice>
+          <value>Composition Shingle, Reflective</value>
+          <display_name>Composition Shingle, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Stucco, Dark</value>
+          <display_name>Stucco, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Stucco, Medium</value>
+          <display_name>Stucco, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Stucco, Medium Dark</value>
+          <display_name>Stucco, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Stucco, Light</value>
+          <display_name>Stucco, Light</display_name>
+        </choice>
+        <choice>
+          <value>Stucco, Reflective</value>
+          <display_name>Stucco, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Vinyl, Dark</value>
+          <display_name>Vinyl, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Vinyl, Medium</value>
+          <display_name>Vinyl, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Vinyl, Medium Dark</value>
+          <display_name>Vinyl, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Vinyl, Light</value>
+          <display_name>Vinyl, Light</display_name>
+        </choice>
+        <choice>
+          <value>Vinyl, Reflective</value>
+          <display_name>Vinyl, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Wood, Dark</value>
+          <display_name>Wood, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Wood, Medium</value>
+          <display_name>Wood, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Wood, Medium Dark</value>
+          <display_name>Wood, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Wood, Light</value>
+          <display_name>Wood, Light</display_name>
+        </choice>
+        <choice>
+          <value>Wood, Reflective</value>
+          <display_name>Wood, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Synthetic Stucco, Dark</value>
+          <display_name>Synthetic Stucco, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Synthetic Stucco, Medium</value>
+          <display_name>Synthetic Stucco, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Synthetic Stucco, Medium Dark</value>
+          <display_name>Synthetic Stucco, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Synthetic Stucco, Light</value>
+          <display_name>Synthetic Stucco, Light</display_name>
+        </choice>
+        <choice>
+          <value>Synthetic Stucco, Reflective</value>
+          <display_name>Synthetic Stucco, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>Masonite, Dark</value>
+          <display_name>Masonite, Dark</display_name>
+        </choice>
+        <choice>
+          <value>Masonite, Medium</value>
+          <display_name>Masonite, Medium</display_name>
+        </choice>
+        <choice>
+          <value>Masonite, Medium Dark</value>
+          <display_name>Masonite, Medium Dark</display_name>
+        </choice>
+        <choice>
+          <value>Masonite, Light</value>
+          <display_name>Masonite, Light</display_name>
+        </choice>
+        <choice>
+          <value>Masonite, Reflective</value>
+          <display_name>Masonite, Reflective</display_name>
+        </choice>
+        <choice>
+          <value>None</value>
+          <display_name>None</display_name>
         </choice>
       </choices>
     </argument>
@@ -2506,187 +2636,234 @@
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>Fuel Furnace, 78% AFUE</default_value>
       <choices>
-        <choice>
-          <value>Electric Furnace, 98% AFUE</value>
-          <display_name>Electric Furnace, 98% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Electric Furnace, 100% AFUE</value>
-          <display_name>Electric Furnace, 100% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Electric Baseboard, 100% Efficiency</value>
-          <display_name>Electric Baseboard, 100% Efficiency</display_name>
-        </choice>
-        <choice>
-          <value>Electric Boiler, 98% AFUE</value>
-          <display_name>Electric Boiler, 98% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Electric Boiler, 100% AFUE</value>
-          <display_name>Electric Boiler, 100% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Electric Wall Furnace, 100% AFUE</value>
-          <display_name>Electric Wall Furnace, 100% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Boiler, 72% AFUE</value>
-          <display_name>Fuel Boiler, 72% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Boiler, 76% AFUE</value>
-          <display_name>Fuel Boiler, 76% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Boiler, 80% AFUE</value>
-          <display_name>Fuel Boiler, 80% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Boiler, 82% AFUE</value>
-          <display_name>Fuel Boiler, 82% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Boiler, 85% AFUE</value>
-          <display_name>Fuel Boiler, 85% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Boiler, 90% AFUE</value>
-          <display_name>Fuel Boiler, 90% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Boiler, 92% AFUE</value>
-          <display_name>Fuel Boiler, 92% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Boiler, 92% AFUE, 600 BTUh Pilot Light</value>
-          <display_name>Fuel Boiler, 92% AFUE, 600 BTUh Pilot Light</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Boiler, 95% AFUE</value>
-          <display_name>Fuel Boiler, 95% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Boiler, 96% AFUE</value>
-          <display_name>Fuel Boiler, 96% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 60% AFUE</value>
-          <display_name>Fuel Furnace, 60% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 68% AFUE</value>
-          <display_name>Fuel Furnace, 68% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 72% AFUE</value>
-          <display_name>Fuel Furnace, 72% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 76% AFUE</value>
-          <display_name>Fuel Furnace, 76% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 78% AFUE</value>
-          <display_name>Fuel Furnace, 78% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 80% AFUE</value>
-          <display_name>Fuel Furnace, 80% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 85% AFUE</value>
-          <display_name>Fuel Furnace, 85% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 90% AFUE</value>
-          <display_name>Fuel Furnace, 90% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 92% AFUE</value>
-          <display_name>Fuel Furnace, 92% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 92% AFUE, Airflow Defect Ratio</value>
-          <display_name>Fuel Furnace, 92% AFUE, Airflow Defect Ratio</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 92% AFUE, 600 BTUh Pilot Light</value>
-          <display_name>Fuel Furnace, 92% AFUE, 600 BTUh Pilot Light</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 92.5% AFUE</value>
-          <display_name>Fuel Furnace, 92.5% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Furnace, 96% AFUE</value>
-          <display_name>Fuel Furnace, 96% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Wall Furnace, 60% AFUE</value>
-          <display_name>Fuel Wall Furnace, 60% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Fuel Wall Furnace, 68% AFUE</value>
-          <display_name>Fuel Wall Furnace, 68% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Electric Wall Furnace, 98% AFUE</value>
-          <display_name>Electric Wall Furnace, 98% AFUE</display_name>
-        </choice>
-        <choice>
-          <value>Electric Wall Furnace, 100% AFUE</value>
-          <display_name>Electric Wall Furnace, 100% AFUE</display_name>
-        </choice>
         <choice>
           <value>None</value>
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Fuel Boiler w/ Baseboard, 78% AFUE</value>
-          <display_name>Fuel Boiler w/ Baseboard, 78% AFUE</display_name>
+          <value>Electric Resistance</value>
+          <display_name>Electric Resistance</display_name>
         </choice>
         <choice>
-          <value>Fuel Boiler w/ Baseboard, 92% AFUE</value>
-          <display_name>Fuel Boiler w/ Baseboard, 92% AFUE</display_name>
+          <value>Central Furnace, 60% AFUE</value>
+          <display_name>Central Furnace, 60% AFUE</display_name>
         </choice>
         <choice>
-          <value>Electric Boiler w/ Baseboard, 100% AFUE</value>
-          <display_name>Electric Boiler w/ Baseboard, 100% AFUE</display_name>
+          <value>Central Furnace, 64% AFUE</value>
+          <display_name>Central Furnace, 64% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Fan Coil Heating, 78% AFUE</value>
-          <display_name>Fuel Fan Coil Heating, 78% AFUE</display_name>
+          <value>Central Furnace, 68% AFUE</value>
+          <display_name>Central Furnace, 68% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Fan Coil Heating, 92% AFUE</value>
-          <display_name>Fuel Fan Coil Heating, 92% AFUE</display_name>
+          <value>Central Furnace, 72% AFUE</value>
+          <display_name>Central Furnace, 72% AFUE</display_name>
         </choice>
         <choice>
-          <value>Electric Fan Coil Heating, 100% AFUE</value>
-          <display_name>Electric Fan Coil Heating, 100% AFUE</display_name>
+          <value>Central Furnace, 76% AFUE</value>
+          <display_name>Central Furnace, 76% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fireplace, 80% Efficiency</value>
-          <display_name>Fireplace, 80% Efficiency</display_name>
+          <value>Central Furnace, 78% AFUE</value>
+          <display_name>Central Furnace, 78% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 80% AFUE</value>
+          <display_name>Central Furnace, 80% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 85% AFUE</value>
+          <display_name>Central Furnace, 85% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 90% AFUE</value>
+          <display_name>Central Furnace, 90% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 92% AFUE</value>
+          <display_name>Central Furnace, 92% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 92% AFUE, Pilot Light</value>
+          <display_name>Central Furnace, 92% AFUE, Pilot Light</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 92% AFUE, Grade 3 Installation</value>
+          <display_name>Central Furnace, 92% AFUE, Grade 3 Installation</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 92.5% AFUE</value>
+          <display_name>Central Furnace, 92.5% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 96% AFUE</value>
+          <display_name>Central Furnace, 96% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 98% AFUE</value>
+          <display_name>Central Furnace, 98% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 100% AFUE</value>
+          <display_name>Central Furnace, 100% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Wall Furnace, 60% AFUE</value>
+          <display_name>Wall Furnace, 60% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Wall Furnace, 68% AFUE</value>
+          <display_name>Wall Furnace, 68% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Wall Furnace, 82% AFUE</value>
+          <display_name>Wall Furnace, 82% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Wall Furnace, 98% AFUE</value>
+          <display_name>Wall Furnace, 98% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Wall Furnace, 100% AFUE</value>
+          <display_name>Wall Furnace, 100% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Floor Furnace, 60% AFUE</value>
+          <display_name>Floor Furnace, 60% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Floor Furnace, 70% AFUE</value>
+          <display_name>Floor Furnace, 70% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Floor Furnace, 80% AFUE</value>
+          <display_name>Floor Furnace, 80% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Floor Furnace, 80% AFUE, Pilot Light</value>
+          <display_name>Floor Furnace, 80% AFUE, Pilot Light</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 72% AFUE</value>
+          <display_name>Boiler, 72% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 76% AFUE</value>
+          <display_name>Boiler, 76% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 80% AFUE</value>
+          <display_name>Boiler, 80% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 82% AFUE</value>
+          <display_name>Boiler, 82% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 85% AFUE</value>
+          <display_name>Boiler, 85% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 90% AFUE</value>
+          <display_name>Boiler, 90% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 92% AFUE</value>
+          <display_name>Boiler, 92% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 92% AFUE, Pilot Light</value>
+          <display_name>Boiler, 92% AFUE, Pilot Light</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 95% AFUE</value>
+          <display_name>Boiler, 95% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 96% AFUE</value>
+          <display_name>Boiler, 96% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 98% AFUE</value>
+          <display_name>Boiler, 98% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 100% AFUE</value>
+          <display_name>Boiler, 100% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Baseboard, 78% AFUE</value>
+          <display_name>Shared Boiler w/ Baseboard, 78% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Baseboard, 92% AFUE</value>
+          <display_name>Shared Boiler w/ Baseboard, 92% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Baseboard, 100% AFUE</value>
+          <display_name>Shared Boiler w/ Baseboard, 100% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Fan Coil, 78% AFUE</value>
+          <display_name>Shared Boiler w/ Fan Coil, 78% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Fan Coil, 92% AFUE</value>
+          <display_name>Shared Boiler w/ Fan Coil, 92% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Fan Coil, 100% AFUE</value>
+          <display_name>Shared Boiler w/ Fan Coil, 100% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Stove, 60% Efficiency</value>
+          <display_name>Stove, 60% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Stove, 70% Efficiency</value>
+          <display_name>Stove, 70% Efficiency</display_name>
         </choice>
         <choice>
           <value>Stove, 80% Efficiency</value>
           <display_name>Stove, 80% Efficiency</display_name>
         </choice>
         <choice>
-          <value>Fuel Floor Furnace, 80% AFUE, 600 BTUh Pilot Light</value>
-          <display_name>Fuel Floor Furnace, 80% AFUE, 600 BTUh Pilot Light</display_name>
+          <value>Space Heater, 60% Efficiency</value>
+          <display_name>Space Heater, 60% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Space Heater, 70% Efficiency</value>
+          <display_name>Space Heater, 70% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Space Heater, 80% Efficiency</value>
+          <display_name>Space Heater, 80% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Space Heater, 92% Efficiency</value>
+          <display_name>Space Heater, 92% Efficiency</display_name>
         </choice>
         <choice>
           <value>Space Heater, 100% Efficiency</value>
           <display_name>Space Heater, 100% Efficiency</display_name>
         </choice>
         <choice>
-          <value>Space Heater, 92% Efficiency</value>
-          <display_name>Space Heater, 92% Efficiency</display_name>
+          <value>Fireplace, 60% Efficiency</value>
+          <display_name>Fireplace, 60% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Fireplace, 70% Efficiency</value>
+          <display_name>Fireplace, 70% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Fireplace, 80% Efficiency</value>
+          <display_name>Fireplace, 80% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Fireplace, 100% Efficiency</value>
+          <display_name>Fireplace, 100% Efficiency</display_name>
         </choice>
       </choices>
     </argument>
@@ -2791,24 +2968,8 @@
           <display_name>Central AC, SEER 13</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 13, 25W Crankcase Heater</value>
-          <display_name>Central AC, SEER 13, 25W Crankcase Heater</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER 13, 50W Crankcase Heater</value>
-          <display_name>Central AC, SEER 13, 50W Crankcase Heater</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER 13, Two Stage</value>
-          <display_name>Central AC, SEER 13, Two Stage</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER 13, Airflow Defect Ratio</value>
-          <display_name>Central AC, SEER 13, Airflow Defect Ratio</display_name>
-        </choice>
-        <choice>
-          <value>Central AC, SEER2 12.4, SEER 13.05</value>
-          <display_name>Central AC, SEER2 12.4, SEER 13.05</display_name>
+          <value>Central AC, SEER 13, Grade 3 Installation</value>
+          <display_name>Central AC, SEER 13, Grade 3 Installation</display_name>
         </choice>
         <choice>
           <value>Central AC, SEER 14</value>
@@ -2819,40 +2980,96 @@
           <display_name>Central AC, SEER 15</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 17.5, Variable Speed</value>
-          <display_name>Central AC, SEER 17.5, Variable Speed</display_name>
+          <value>Central AC, SEER 16</value>
+          <display_name>Central AC, SEER 16</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 17.5, Detailed Performance</value>
-          <display_name>Central AC, SEER 17.5, Detailed Performance</display_name>
+          <value>Central AC, SEER 17</value>
+          <display_name>Central AC, SEER 17</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 17.5, Normalized Capacity Fractions</value>
-          <display_name>Central AC, SEER 17.5, Normalized Capacity Fractions</display_name>
+          <value>Central AC, SEER 17.5, Normalized Detailed Performance</value>
+          <display_name>Central AC, SEER 17.5, Normalized Detailed Performance</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 17.5, Absolute Detailed Performance</value>
+          <display_name>Central AC, SEER 17.5, Absolute Detailed Performance</display_name>
         </choice>
         <choice>
           <value>Central AC, SEER 18</value>
           <display_name>Central AC, SEER 18</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 18, Airflow Defect Ratio</value>
-          <display_name>Central AC, SEER 18, Airflow Defect Ratio</display_name>
+          <value>Central AC, SEER 18, Grade 3 Installation</value>
+          <display_name>Central AC, SEER 18, Grade 3 Installation</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER 21</value>
+          <display_name>Central AC, SEER 21</display_name>
         </choice>
         <choice>
           <value>Central AC, SEER 24</value>
           <display_name>Central AC, SEER 24</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 24, Airflow Defect Ratio</value>
-          <display_name>Central AC, SEER 24, Airflow Defect Ratio</display_name>
+          <value>Central AC, SEER 24, Grade 3 Installation</value>
+          <display_name>Central AC, SEER 24, Grade 3 Installation</display_name>
         </choice>
         <choice>
           <value>Central AC, SEER 24.5</value>
           <display_name>Central AC, SEER 24.5</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 24.5, 0.73 SHR</value>
-          <display_name>Central AC, SEER 24.5, 0.73 SHR</display_name>
+          <value>Central AC, SEER 27</value>
+          <display_name>Central AC, SEER 27</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER2 12.4</value>
+          <display_name>Central AC, SEER2 12.4</display_name>
+        </choice>
+        <choice>
+          <value>Mini-Split AC, SEER 13</value>
+          <display_name>Mini-Split AC, SEER 13</display_name>
+        </choice>
+        <choice>
+          <value>Mini-Split AC, SEER 17</value>
+          <display_name>Mini-Split AC, SEER 17</display_name>
+        </choice>
+        <choice>
+          <value>Mini-Split AC, SEER 17, Normalized Detailed Performance</value>
+          <display_name>Mini-Split AC, SEER 17, Normalized Detailed Performance</display_name>
+        </choice>
+        <choice>
+          <value>Mini-Split AC, SEER 17, Absolute Detailed Performance</value>
+          <display_name>Mini-Split AC, SEER 17, Absolute Detailed Performance</display_name>
+        </choice>
+        <choice>
+          <value>Mini-Split AC, SEER 19</value>
+          <display_name>Mini-Split AC, SEER 19</display_name>
+        </choice>
+        <choice>
+          <value>Mini-Split AC, SEER 19, Ducted</value>
+          <display_name>Mini-Split AC, SEER 19, Ducted</display_name>
+        </choice>
+        <choice>
+          <value>Mini-Split AC, SEER 19, Ducted, Grade 3 Installation</value>
+          <display_name>Mini-Split AC, SEER 19, Ducted, Grade 3 Installation</display_name>
+        </choice>
+        <choice>
+          <value>Mini-Split AC, SEER 24</value>
+          <display_name>Mini-Split AC, SEER 24</display_name>
+        </choice>
+        <choice>
+          <value>Mini-Split AC, SEER 25</value>
+          <display_name>Mini-Split AC, SEER 25</display_name>
+        </choice>
+        <choice>
+          <value>Mini-Split AC, SEER 29.3</value>
+          <display_name>Mini-Split AC, SEER 29.3</display_name>
+        </choice>
+        <choice>
+          <value>Mini-Split AC, SEER 33</value>
+          <display_name>Mini-Split AC, SEER 33</display_name>
         </choice>
         <choice>
           <value>Room AC, EER 8.5</value>
@@ -2861,10 +3078,6 @@
         <choice>
           <value>Room AC, EER 8.5, Electric Heating</value>
           <display_name>Room AC, EER 8.5, Electric Heating</display_name>
-        </choice>
-        <choice>
-          <value>Room AC, EER 8.5, 0.73 SHR</value>
-          <display_name>Room AC, EER 8.5, 0.73 SHR</display_name>
         </choice>
         <choice>
           <value>Room AC, EER 9.8</value>
@@ -2883,56 +3096,24 @@
           <display_name>Room AC, CEER 8.4</display_name>
         </choice>
         <choice>
-          <value>Evaporative Cooler, EER 13</value>
-          <display_name>Evaporative Cooler, EER 13</display_name>
+          <value>Packaged Terminal AC, EER 10.7</value>
+          <display_name>Packaged Terminal AC, EER 10.7</display_name>
         </choice>
         <choice>
-          <value>Ductless Evaporative Cooler, SEER 13</value>
-          <display_name>Ductless Evaporative Cooler, SEER 13</display_name>
+          <value>Packaged Terminal AC, EER 10.7, Electric Heating</value>
+          <display_name>Packaged Terminal AC, EER 10.7, Electric Heating</display_name>
         </choice>
         <choice>
-          <value>Ducted Evaporative Cooler, SEER 13</value>
-          <display_name>Ducted Evaporative Cooler, SEER 13</display_name>
+          <value>Packaged Terminal AC, EER 10.7, 80% AFUE Gas Heating</value>
+          <display_name>Packaged Terminal AC, EER 10.7, 80% AFUE Gas Heating</display_name>
         </choice>
         <choice>
-          <value>Fan Coil Cooling, SEER 13</value>
-          <display_name>Fan Coil Cooling, SEER 13</display_name>
+          <value>Evaporative Cooler</value>
+          <display_name>Evaporative Cooler</display_name>
         </choice>
         <choice>
-          <value>Ducted Mini-Split AC, SEER 19</value>
-          <display_name>Ducted Mini-Split AC, SEER 19</display_name>
-        </choice>
-        <choice>
-          <value>Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio</value>
-          <display_name>Ducted Mini-Split AC, SEER 19, Airflow Defect Ratio</display_name>
-        </choice>
-        <choice>
-          <value>Ductless Mini-Split AC, SEER 19</value>
-          <display_name>Ductless Mini-Split AC, SEER 19</display_name>
-        </choice>
-        <choice>
-          <value>Ductless Mini-Split AC, SEER 17</value>
-          <display_name>Ductless Mini-Split AC, SEER 17</display_name>
-        </choice>
-        <choice>
-          <value>Ductless Mini-Split AC, SEER 17, Detailed Performance</value>
-          <display_name>Ductless Mini-Split AC, SEER 17, Detailed Performance</display_name>
-        </choice>
-        <choice>
-          <value>Ductless Mini-Split AC, SEER 17, Normalized Capacity Fractions</value>
-          <display_name>Ductless Mini-Split AC, SEER 17, Normalized Capacity Fractions</display_name>
-        </choice>
-        <choice>
-          <value>PTAC, EER 10.7</value>
-          <display_name>PTAC, EER 10.7</display_name>
-        </choice>
-        <choice>
-          <value>PTAC, EER 10.7, Electric Heating</value>
-          <display_name>PTAC, EER 10.7, Electric Heating</display_name>
-        </choice>
-        <choice>
-          <value>PTAC, EER 10.7, Natural Gas Heating</value>
-          <display_name>PTAC, EER 10.7, Natural Gas Heating</display_name>
+          <value>Evaporative Cooler, Ducted</value>
+          <display_name>Evaporative Cooler, Ducted</display_name>
         </choice>
       </choices>
     </argument>
@@ -3004,280 +3185,276 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 10, 6.2 HSPF</value>
-          <display_name>ASHP, SEER 10, 6.2 HSPF</display_name>
+          <value>Central HP, SEER 8, 6.0 HSPF</value>
+          <display_name>Central HP, SEER 8, 6.0 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 10, 6.8 HSPF</value>
-          <display_name>ASHP, SEER 10, 6.8 HSPF</display_name>
+          <value>Central HP, SEER 10, 6.2 HSPF</value>
+          <display_name>Central HP, SEER 10, 6.2 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 10.3, 7.0 HSPF</value>
-          <display_name>ASHP, SEER 10.3, 7.0 HSPF</display_name>
+          <value>Central HP, SEER 10, 6.8 HSPF</value>
+          <display_name>Central HP, SEER 10, 6.8 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 11.5, 7.5 HSPF</value>
-          <display_name>ASHP, SEER 11.5, 7.5 HSPF</display_name>
+          <value>Central HP, SEER 10.3, 7.0 HSPF</value>
+          <display_name>Central HP, SEER 10.3, 7.0 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 13, 7.7 HSPF</value>
-          <display_name>ASHP, SEER 13, 7.7 HSPF</display_name>
+          <value>Central HP, SEER 11.5, 7.5 HSPF</value>
+          <display_name>Central HP, SEER 11.5, 7.5 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 13, 7.7 HSPF, Heating Capacity 17F</value>
-          <display_name>ASHP, SEER 13, 7.7 HSPF, Heating Capacity 17F</display_name>
+          <value>Central HP, SEER 13, 7.7 HSPF</value>
+          <display_name>Central HP, SEER 13, 7.7 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 13, 7.7 HSPF, Airflow Defect Ratio</value>
-          <display_name>ASHP, SEER 13, 7.7 HSPF, Airflow Defect Ratio</display_name>
+          <value>Central HP, SEER 13, 7.7 HSPF, 5F Compressor Lockout</value>
+          <display_name>Central HP, SEER 13, 7.7 HSPF, 5F Compressor Lockout</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 13, 7.7 HSPF, 5F Compressor Lockout</value>
-          <display_name>ASHP, SEER 13, 7.7 HSPF, 5F Compressor Lockout</display_name>
+          <value>Central HP, SEER 13, 7.7 HSPF, 25F Compressor Lockout</value>
+          <display_name>Central HP, SEER 13, 7.7 HSPF, 25F Compressor Lockout</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 13, 7.7 HSPF, 25F Compressor Lockout</value>
-          <display_name>ASHP, SEER 13, 7.7 HSPF, 25F Compressor Lockout</display_name>
+          <value>Central HP, SEER 13, 7.7 HSPF, 30F Compressor Lockout</value>
+          <display_name>Central HP, SEER 13, 7.7 HSPF, 30F Compressor Lockout</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 13, 7.7 HSPF, 30F Compressor Lockout</value>
-          <display_name>ASHP, SEER 13, 7.7 HSPF, 30F Compressor Lockout</display_name>
+          <value>Central HP, SEER 13, 7.7 HSPF, Heating Capacity 17F</value>
+          <display_name>Central HP, SEER 13, 7.7 HSPF, Heating Capacity 17F</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER2 12.4, HSPF2 6.5, Heating Capacity 17F</value>
-          <display_name>ASHP, SEER2 12.4, HSPF2 6.5, Heating Capacity 17F</display_name>
+          <value>Central HP, SEER 13, 7.7 HSPF, Grade 3 Installation</value>
+          <display_name>Central HP, SEER 13, 7.7 HSPF, Grade 3 Installation</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 13, 7.7 HSPF, Lockout Temperatures</value>
-          <display_name>ASHP, SEER 13, 7.7 HSPF, Lockout Temperatures</display_name>
+          <value>Central HP, SEER 13, 8.0 HSPF</value>
+          <display_name>Central HP, SEER 13, 8.0 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 13, 8.0 HSPF</value>
-          <display_name>ASHP, SEER 13, 8.0 HSPF</display_name>
+          <value>Central HP, SEER 13, 9.85 HSPF</value>
+          <display_name>Central HP, SEER 13, 9.85 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 13, 9.85 HSPF</value>
-          <display_name>ASHP, SEER 13, 9.85 HSPF</display_name>
+          <value>Central HP, SEER 14, 8.2 HSPF</value>
+          <display_name>Central HP, SEER 14, 8.2 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 14, 8.2 HSPF</value>
-          <display_name>ASHP, SEER 14, 8.2 HSPF</display_name>
+          <value>Central HP, SEER 14.3, 8.5 HSPF</value>
+          <display_name>Central HP, SEER 14.3, 8.5 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 14.3, 8.5 HSPF</value>
-          <display_name>ASHP, SEER 14.3, 8.5 HSPF</display_name>
+          <value>Central HP, SEER 15, 8.5 HSPF</value>
+          <display_name>Central HP, SEER 15, 8.5 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 15, 8.5 HSPF</value>
-          <display_name>ASHP, SEER 15, 8.5 HSPF</display_name>
+          <value>Central HP, SEER 15, 9.0 HSPF</value>
+          <display_name>Central HP, SEER 15, 9.0 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 15, 9.0 HSPF</value>
-          <display_name>ASHP, SEER 15, 9.0 HSPF</display_name>
+          <value>Central HP, SEER 16, 9.0 HSPF</value>
+          <display_name>Central HP, SEER 16, 9.0 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 16, 9.0 HSPF</value>
-          <display_name>ASHP, SEER 16, 9.0 HSPF</display_name>
+          <value>Central HP, SEER 16, 9.2 HSPF, -20F Compressor Lockout</value>
+          <display_name>Central HP, SEER 16, 9.2 HSPF, -20F Compressor Lockout</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 16, 9.2 HSPF, Heating Capacity 5F</value>
-          <display_name>ASHP, SEER 16, 9.2 HSPF, Heating Capacity 5F</display_name>
+          <value>Central HP, SEER 16, 9.2 HSPF, Heating Capacity 5F</value>
+          <display_name>Central HP, SEER 16, 9.2 HSPF, Heating Capacity 5F</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 16, 9.2 HSPF, -20F Compressor Lockout</value>
-          <display_name>ASHP, SEER 16, 9.2 HSPF, -20F Compressor Lockout</display_name>
+          <value>Central HP, SEER 17, 8.7 HSPF</value>
+          <display_name>Central HP, SEER 17, 8.7 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 17, 8.7 HSPF</value>
-          <display_name>ASHP, SEER 17, 8.7 HSPF</display_name>
+          <value>Central HP, SEER 17.25, 10 HPSF, Normalized Detailed Performance</value>
+          <display_name>Central HP, SEER 17.25, 10 HPSF, Normalized Detailed Performance</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 18, 9.3 HSPF</value>
-          <display_name>ASHP, SEER 18, 9.3 HSPF</display_name>
+          <value>Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance</value>
+          <display_name>Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 18, 9.3 HSPF, Airflow Defect Ratio</value>
-          <display_name>ASHP, SEER 18, 9.3 HSPF, Airflow Defect Ratio</display_name>
+          <value>Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance</value>
+          <display_name>Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 18, 9.3 HSPF, 30F Compressor Lockout</value>
-          <display_name>ASHP, SEER 18, 9.3 HSPF, 30F Compressor Lockout</display_name>
+          <value>Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance, Grade 3 Installation</value>
+          <display_name>Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance, Grade 3 Installation</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 20, 11 HSPF</value>
-          <display_name>ASHP, SEER 20, 11 HSPF</display_name>
+          <value>Central HP, SEER 18, 9.3 HSPF</value>
+          <display_name>Central HP, SEER 18, 9.3 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 20, 11 HSPF, Heating Capacity 5F</value>
-          <display_name>ASHP, SEER 20, 11 HSPF, Heating Capacity 5F</display_name>
+          <value>Central HP, SEER 18, 9.3 HSPF, 30F Compressor Lockout</value>
+          <display_name>Central HP, SEER 18, 9.3 HSPF, 30F Compressor Lockout</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 22, 10 HSPF</value>
-          <display_name>ASHP, SEER 22, 10 HSPF</display_name>
+          <value>Central HP, SEER 18, 9.3 HSPF, Grade 3 Installation</value>
+          <display_name>Central HP, SEER 18, 9.3 HSPF, Grade 3 Installation</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 22, 10 HSPF, Default Capacity Retention</value>
-          <display_name>ASHP, SEER 22, 10 HSPF, Default Capacity Retention</display_name>
+          <value>Central HP, SEER 20, 11 HSPF</value>
+          <display_name>Central HP, SEER 20, 11 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 22, 10 HSPF, Airflow Defect Ratio</value>
-          <display_name>ASHP, SEER 22, 10 HSPF, Airflow Defect Ratio</display_name>
+          <value>Central HP, SEER 20, 11 HSPF, Heating Capacity 5F</value>
+          <display_name>Central HP, SEER 20, 11 HSPF, Heating Capacity 5F</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 22, 10 HSPF, Heating Capacity 17F</value>
-          <display_name>ASHP, SEER 22, 10 HSPF, Heating Capacity 17F</display_name>
+          <value>Central HP, SEER 22, 10 HSPF</value>
+          <display_name>Central HP, SEER 22, 10 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 22, 10 HSPF, 30F Compressor Lockout</value>
-          <display_name>ASHP, SEER 22, 10 HSPF, 30F Compressor Lockout</display_name>
+          <value>Central HP, SEER 22, 10 HSPF, Grade 3 Installation</value>
+          <display_name>Central HP, SEER 22, 10 HSPF, Grade 3 Installation</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 17.25, 10 HPSF, Normalized Capacity Fractions</value>
-          <display_name>ASHP, SEER 17.25, 10 HPSF, Normalized Capacity Fractions</display_name>
+          <value>Central HP, SEER 22, 10 HSPF, 30F Compressor Lockout</value>
+          <display_name>Central HP, SEER 22, 10 HSPF, 30F Compressor Lockout</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance</value>
-          <display_name>ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance</display_name>
+          <value>Central HP, SEER 24, 13 HSPF</value>
+          <display_name>Central HP, SEER 24, 13 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 17.5, 9.5 HSPF, Normalized Capacity Fractions</value>
-          <display_name>ASHP, SEER 17.5, 9.5 HSPF, Normalized Capacity Fractions</display_name>
+          <value>Central HP, SEER 24, 13 HSPF, Heating Capacity 5F</value>
+          <display_name>Central HP, SEER 24, 13 HSPF, Heating Capacity 5F</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance, Airflow Defect Ratio</value>
-          <display_name>ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance, Airflow Defect Ratio</display_name>
+          <value>Central HP, SEER2 12.4, HSPF2 6.5, Heating Capacity 17F</value>
+          <display_name>Central HP, SEER2 12.4, HSPF2 6.5, Heating Capacity 17F</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance Heating Only</value>
-          <display_name>ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance Heating Only</display_name>
+          <value>Mini-Split HP, SEER 14.5, 8.2 HSPF</value>
+          <display_name>Mini-Split HP, SEER 14.5, 8.2 HSPF</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 24, 13 HSPF</value>
-          <display_name>ASHP, SEER 24, 13 HSPF</display_name>
+          <value>Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted</value>
+          <display_name>Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted</display_name>
         </choice>
         <choice>
-          <value>ASHP, SEER 24, 13 HSPF, Heating Capacity 5F</value>
-          <display_name>ASHP, SEER 24, 13 HSPF, Heating Capacity 5F</display_name>
+          <value>Mini-Split HP, SEER 16, 9.2 HSPF</value>
+          <display_name>Mini-Split HP, SEER 16, 9.2 HSPF</display_name>
         </choice>
         <choice>
-          <value>GSHP, EER 16.6, COP 3.6</value>
-          <display_name>GSHP, EER 16.6, COP 3.6</display_name>
+          <value>Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance</value>
+          <display_name>Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance</display_name>
         </choice>
         <choice>
-          <value>GSHP, EER 16.6, COP 3.6, Airflow Defect Ratio</value>
-          <display_name>GSHP, EER 16.6, COP 3.6, Airflow Defect Ratio</display_name>
+          <value>Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance</value>
+          <display_name>Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance</display_name>
         </choice>
         <choice>
-          <value>GSHP, EER 20.2, COP 4.2</value>
-          <display_name>GSHP, EER 20.2, COP 4.2</display_name>
+          <value>Mini-Split HP, SEER 17, 9.5 HSPF</value>
+          <display_name>Mini-Split HP, SEER 17, 9.5 HSPF</display_name>
         </choice>
         <choice>
-          <value>GSHP, EER 20.5, COP 4.0</value>
-          <display_name>GSHP, EER 20.5, COP 4.0</display_name>
+          <value>Mini-Split HP, SEER 17, 9.5 HSPF, Ducted</value>
+          <display_name>Mini-Split HP, SEER 17, 9.5 HSPF, Ducted</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 14.5, 8.2 HSPF</value>
-          <display_name>MSHP, SEER 14.5, 8.2 HSPF</display_name>
+          <value>Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance</value>
+          <display_name>Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 14.5, 8.2 HSPF, Ducted</value>
-          <display_name>MSHP, SEER 14.5, 8.2 HSPF, Ducted</display_name>
+          <value>Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance</value>
+          <display_name>Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 16, 9.2 HSPF</value>
-          <display_name>MSHP, SEER 16, 9.2 HSPF</display_name>
+          <value>Mini-Split HP, SEER 18.0, 9.6 HSPF</value>
+          <display_name>Mini-Split HP, SEER 18.0, 9.6 HSPF</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 16.7, 11.3 HSPF, Detailed Performance</value>
-          <display_name>MSHP, SEER 16.7, 11.3 HSPF, Detailed Performance</display_name>
+          <value>Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted</value>
+          <display_name>Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 16.7, 11.3 HSPF, Normalized Capacity Fractions</value>
-          <display_name>MSHP, SEER 16.7, 11.3 HSPF, Normalized Capacity Fractions</display_name>
+          <value>Mini-Split HP, SEER 19, 10 HSPF, Ducted</value>
+          <display_name>Mini-Split HP, SEER 19, 10 HSPF, Ducted</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 17, 9.5 HSPF</value>
-          <display_name>MSHP, SEER 17, 9.5 HSPF</display_name>
+          <value>Mini-Split HP, SEER 19, 10 HSPF, Grade 3 Installation</value>
+          <display_name>Mini-Split HP, SEER 19, 10 HSPF, Grade 3 Installation</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 17, 9.5 HSPF, Ducted</value>
-          <display_name>MSHP, SEER 17, 9.5 HSPF, Ducted</display_name>
+          <value>Mini-Split HP, SEER 19, 10 HSPF, 30F Compressor Lockout</value>
+          <display_name>Mini-Split HP, SEER 19, 10 HSPF, 30F Compressor Lockout</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 17, 10 HSPF, Ductless, Detailed Performance</value>
-          <display_name>MSHP, SEER 17, 10 HSPF, Ductless, Detailed Performance</display_name>
+          <value>Mini-Split HP, SEER 19, 10 HSPF</value>
+          <display_name>Mini-Split HP, SEER 19, 10 HSPF</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 17, 10 HSPF, Ductless, Normalized Capacity Fractions</value>
-          <display_name>MSHP, SEER 17, 10 HSPF, Ductless, Normalized Capacity Fractions</display_name>
+          <value>Mini-Split HP, SEER 19, 10 HSPF, Absolute Detailed Performance</value>
+          <display_name>Mini-Split HP, SEER 19, 10 HSPF, Absolute Detailed Performance</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 18.0, 9.6 HSPF</value>
-          <display_name>MSHP, SEER 18.0, 9.6 HSPF</display_name>
+          <value>Mini-Split HP, SEER 20, 11 HSPF</value>
+          <display_name>Mini-Split HP, SEER 20, 11 HSPF</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 18.0, 9.6 HSPF, Ducted</value>
-          <display_name>MSHP, SEER 18.0, 9.6 HSPF, Ducted</display_name>
+          <value>Mini-Split HP, SEER 24, 13 HSPF</value>
+          <display_name>Mini-Split HP, SEER 24, 13 HSPF</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 19, 10 HSPF, Ducted</value>
-          <display_name>MSHP, SEER 19, 10 HSPF, Ducted</display_name>
+          <value>Mini-Split HP, SEER 25, 12.7 HSPF</value>
+          <display_name>Mini-Split HP, SEER 25, 12.7 HSPF</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 19, 10 HSPF, Airflow Defect Ratio</value>
-          <display_name>MSHP, SEER 19, 10 HSPF, Airflow Defect Ratio</display_name>
+          <value>Mini-Split HP, SEER 25, 12.7 HSPF, Ducted</value>
+          <display_name>Mini-Split HP, SEER 25, 12.7 HSPF, Ducted</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 19, 10 HSPF, 30F Compressor Lockout</value>
-          <display_name>MSHP, SEER 19, 10 HSPF, 30F Compressor Lockout</display_name>
+          <value>Mini-Split HP, SEER 29.3, 14 HSPF</value>
+          <display_name>Mini-Split HP, SEER 29.3, 14 HSPF</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 19, 10 HSPF, Ductless</value>
-          <display_name>MSHP, SEER 19, 10 HSPF, Ductless</display_name>
+          <value>Mini-Split HP, SEER 29.3, 14 HSPF, Ducted</value>
+          <display_name>Mini-Split HP, SEER 29.3, 14 HSPF, Ducted</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 19, 10 HSPF, Ductless, Detailed Performance</value>
-          <display_name>MSHP, SEER 19, 10 HSPF, Ductless, Detailed Performance</display_name>
+          <value>Mini-Split HP, SEER 33, 13.3 HSPF</value>
+          <display_name>Mini-Split HP, SEER 33, 13.3 HSPF</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 20, 11 HSPF</value>
-          <display_name>MSHP, SEER 20, 11 HSPF</display_name>
+          <value>Mini-Split HP, SEER 33, 13.3 HSPF, Ducted</value>
+          <display_name>Mini-Split HP, SEER 33, 13.3 HSPF, Ducted</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 24, 13 HSPF</value>
-          <display_name>MSHP, SEER 24, 13 HSPF</display_name>
+          <value>Geothermal HP, EER 16.6, COP 3.6</value>
+          <display_name>Geothermal HP, EER 16.6, COP 3.6</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 25, 12.7 HSPF</value>
-          <display_name>MSHP, SEER 25, 12.7 HSPF</display_name>
+          <value>Geothermal HP, EER 16.6, COP 3.6, Grade 3 Installation</value>
+          <display_name>Geothermal HP, EER 16.6, COP 3.6, Grade 3 Installation</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 25, 12.7 HSPF, Ducted</value>
-          <display_name>MSHP, SEER 25, 12.7 HSPF, Ducted</display_name>
+          <value>Geothermal HP, EER 18.2, COP 3.7</value>
+          <display_name>Geothermal HP, EER 18.2, COP 3.7</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 29.3, 14 HSPF</value>
-          <display_name>MSHP, SEER 29.3, 14 HSPF</display_name>
+          <value>Geothermal HP, EER 19.4, COP 3.8</value>
+          <display_name>Geothermal HP, EER 19.4, COP 3.8</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 29.3, 14 HSPF, Ducted</value>
-          <display_name>MSHP, SEER 29.3, 14 HSPF, Ducted</display_name>
+          <value>Geothermal HP, EER 20.2, COP 4.2</value>
+          <display_name>Geothermal HP, EER 20.2, COP 4.2</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 33, 13.3 HSPF</value>
-          <display_name>MSHP, SEER 33, 13.3 HSPF</display_name>
+          <value>Geothermal HP, EER 20.5, COP 4.0</value>
+          <display_name>Geothermal HP, EER 20.5, COP 4.0</display_name>
         </choice>
         <choice>
-          <value>MSHP, SEER 33, 13.3 HSPF, Ducted</value>
-          <display_name>MSHP, SEER 33, 13.3 HSPF, Ducted</display_name>
+          <value>Packaged Terminal HP, EER 11.4, COP 3.6</value>
+          <display_name>Packaged Terminal HP, EER 11.4, COP 3.6</display_name>
         </choice>
         <choice>
-          <value>PTHP, EER 11.4, COP 3.6</value>
-          <display_name>PTHP, EER 11.4, COP 3.6</display_name>
-        </choice>
-        <choice>
-          <value>Room AC w/ Reverse Cycle, EER 11.4</value>
-          <display_name>Room AC w/ Reverse Cycle, EER 11.4</display_name>
+          <value>Room AC w/ Reverse Cycle, EER 11.4, COP 3.6</value>
+          <display_name>Room AC w/ Reverse Cycle, EER 11.4, COP 3.6</display_name>
         </choice>
       </choices>
     </argument>
@@ -3360,79 +3537,79 @@
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>Electricity, Integrated, 100% Efficiency</default_value>
+      <default_value>Integrated, Electricity, 100% Efficiency</default_value>
       <choices>
         <choice>
           <value>None</value>
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Electricity, Integrated, 100% Efficiency</value>
-          <display_name>Electricity, Integrated, 100% Efficiency</display_name>
+          <value>Integrated, Electricity, 100% Efficiency</value>
+          <display_name>Integrated, Electricity, 100% Efficiency</display_name>
         </choice>
         <choice>
-          <value>Electricity, Integrated, 100% Efficiency, 35F Lockout</value>
-          <display_name>Electricity, Integrated, 100% Efficiency, 35F Lockout</display_name>
+          <value>Integrated, Electricity, 100% Efficiency, 35F Lockout</value>
+          <display_name>Integrated, Electricity, 100% Efficiency, 35F Lockout</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Integrated, 95% AFUE, 30F Lockout</value>
-          <display_name>Natural Gas, Integrated, 95% AFUE, 30F Lockout</display_name>
+          <value>Integrated, Natural Gas, 95% AFUE, 30F Lockout</value>
+          <display_name>Integrated, Natural Gas, 95% AFUE, 30F Lockout</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Integrated, 60% AFUE, 40F Lockout</value>
-          <display_name>Natural Gas, Integrated, 60% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Natural Gas, 60% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Natural Gas, 60% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Integrated, 76% AFUE, 40F Lockout</value>
-          <display_name>Natural Gas, Integrated, 76% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Natural Gas, 76% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Natural Gas, 76% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Integrated, 80% AFUE, 40F Lockout</value>
-          <display_name>Natural Gas, Integrated, 80% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Natural Gas, 80% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Natural Gas, 80% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Integrated, 92.5% AFUE, 40F Lockout</value>
-          <display_name>Natural Gas, Integrated, 92.5% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Natural Gas, 92.5% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Natural Gas, 92.5% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Integrated, 95% AFUE, 40F Lockout</value>
-          <display_name>Natural Gas, Integrated, 95% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Natural Gas, 95% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Natural Gas, 95% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Integrated, 95% AFUE, 45F Lockout</value>
-          <display_name>Natural Gas, Integrated, 95% AFUE, 45F Lockout</display_name>
+          <value>Integrated, Natural Gas, 95% AFUE, 45F Lockout</value>
+          <display_name>Integrated, Natural Gas, 95% AFUE, 45F Lockout</display_name>
         </choice>
         <choice>
-          <value>Fuel Oil, Integrated, 60% AFUE, 40F Lockout</value>
-          <display_name>Fuel Oil, Integrated, 60% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Fuel Oil, 60% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Fuel Oil, 60% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Fuel Oil, Integrated, 76% AFUE, 40F Lockout</value>
-          <display_name>Fuel Oil, Integrated, 76% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Fuel Oil, 76% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Fuel Oil, 76% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Fuel Oil, Integrated, 80% AFUE, 40F Lockout</value>
-          <display_name>Fuel Oil, Integrated, 80% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Fuel Oil, 80% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Fuel Oil, 80% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Fuel Oil, Integrated, 92.5% AFUE, 40F Lockout</value>
-          <display_name>Fuel Oil, Integrated, 92.5% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Fuel Oil, 92.5% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Fuel Oil, 92.5% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Propane, Integrated, 60% AFUE, 40F Lockout</value>
-          <display_name>Propane, Integrated, 60% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Propane, 60% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Propane, 60% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Propane, Integrated, 76% AFUE, 40F Lockout</value>
-          <display_name>Propane, Integrated, 76% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Propane, 76% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Propane, 76% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Propane, Integrated, 80% AFUE, 40F Lockout</value>
-          <display_name>Propane, Integrated, 80% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Propane, 80% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Propane, 80% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
-          <value>Propane, Integrated, 92.5% AFUE, 40F Lockout</value>
-          <display_name>Propane, Integrated, 92.5% AFUE, 40F Lockout</display_name>
+          <value>Integrated, Propane, 92.5% AFUE, 40F Lockout</value>
+          <display_name>Integrated, Propane, 92.5% AFUE, 40F Lockout</display_name>
         </choice>
         <choice>
           <value>Separate</value>
@@ -3515,158 +3692,60 @@
       </choices>
     </argument>
     <argument>
-      <name>geothermal_loop_configuration</name>
-      <display_name>Geothermal Loop: Configuration</display_name>
-      <description>Configuration of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#ground-to-air-heat-pump'&gt;Ground-to-Air Heat Pump&lt;/a&gt;) is used.</description>
+      <name>geothermal_loop</name>
+      <display_name>Geothermal Loop</display_name>
+      <description>The geothermal loop configuration (only vertical is currently supported), borefield configuration, grout/pipe type, and other numerical inputs that specify a detailed geothermal loop.</description>
       <type>Choice</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
       <choices>
         <choice>
-          <value>none</value>
-          <display_name>none</display_name>
+          <value>None</value>
+          <display_name>None</display_name>
         </choice>
         <choice>
-          <value>vertical</value>
-          <display_name>vertical</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>geothermal_loop_borefield_configuration</name>
-      <display_name>Geothermal Loop: Borefield Configuration</display_name>
-      <description>Borefield configuration of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-geothermal-loops'&gt;HPXML Geothermal Loops&lt;/a&gt;) is used.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>Rectangle</value>
-          <display_name>Rectangle</display_name>
+          <value>Vertical Loop, Default</value>
+          <display_name>Vertical Loop, Default</display_name>
         </choice>
         <choice>
-          <value>Open Rectangle</value>
-          <display_name>Open Rectangle</display_name>
+          <value>Vertical Loop, Default, Specified Loop Flow</value>
+          <display_name>Vertical Loop, Default, Specified Loop Flow</display_name>
         </choice>
         <choice>
-          <value>C</value>
-          <display_name>C</display_name>
+          <value>Vertical Loop, Default, Specified Borehole Count</value>
+          <display_name>Vertical Loop, Default, Specified Borehole Count</display_name>
         </choice>
         <choice>
-          <value>L</value>
-          <display_name>L</display_name>
+          <value>Vertical Loop, Default, Specified Borehole Length</value>
+          <display_name>Vertical Loop, Default, Specified Borehole Length</display_name>
         </choice>
         <choice>
-          <value>U</value>
-          <display_name>U</display_name>
+          <value>Vertical Loop, Default, Specified Loop Flow and Borehole Count</value>
+          <display_name>Vertical Loop, Default, Specified Loop Flow and Borehole Count</display_name>
         </choice>
         <choice>
-          <value>Lopsided U</value>
-          <display_name>Lopsided U</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>geothermal_loop_loop_flow</name>
-      <display_name>Geothermal Loop: Loop Flow</display_name>
-      <description>Water flow rate through the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML autosized default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-geothermal-loops'&gt;HPXML Geothermal Loops&lt;/a&gt;) is used.</description>
-      <type>Double</type>
-      <units>gpm</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>geothermal_loop_boreholes_count</name>
-      <display_name>Geothermal Loop: Boreholes Count</display_name>
-      <description>Number of boreholes. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML autosized default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-geothermal-loops'&gt;HPXML Geothermal Loops&lt;/a&gt;) is used.</description>
-      <type>Integer</type>
-      <units>#</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>geothermal_loop_boreholes_length</name>
-      <display_name>Geothermal Loop: Boreholes Length</display_name>
-      <description>Average length of each borehole (vertical). Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML autosized default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-geothermal-loops'&gt;HPXML Geothermal Loops&lt;/a&gt;) is used.</description>
-      <type>Double</type>
-      <units>ft</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>geothermal_loop_boreholes_spacing</name>
-      <display_name>Geothermal Loop: Boreholes Spacing</display_name>
-      <description>Distance between bores. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-geothermal-loops'&gt;HPXML Geothermal Loops&lt;/a&gt;) is used.</description>
-      <type>Double</type>
-      <units>ft</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>geothermal_loop_boreholes_diameter</name>
-      <display_name>Geothermal Loop: Boreholes Diameter</display_name>
-      <description>Diameter of bores. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-geothermal-loops'&gt;HPXML Geothermal Loops&lt;/a&gt;) is used.</description>
-      <type>Double</type>
-      <units>in</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>geothermal_loop_grout_type</name>
-      <display_name>Geothermal Loop: Grout Type</display_name>
-      <description>Grout type of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-geothermal-loops'&gt;HPXML Geothermal Loops&lt;/a&gt;) is used.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>standard</value>
-          <display_name>standard</display_name>
+          <value>Vertical Loop, Default, Specified Borehole Count and Length</value>
+          <display_name>Vertical Loop, Default, Specified Borehole Count and Length</display_name>
         </choice>
         <choice>
-          <value>thermally enhanced</value>
-          <display_name>thermally enhanced</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>geothermal_loop_pipe_type</name>
-      <display_name>Geothermal Loop: Pipe Type</display_name>
-      <description>Pipe type of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-geothermal-loops'&gt;HPXML Geothermal Loops&lt;/a&gt;) is used.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>standard</value>
-          <display_name>standard</display_name>
+          <value>Vertical Loop, Default, Specified Loop Flow and Borehole Length</value>
+          <display_name>Vertical Loop, Default, Specified Loop Flow and Borehole Length</display_name>
         </choice>
         <choice>
-          <value>thermally enhanced</value>
-          <display_name>thermally enhanced</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>geothermal_loop_pipe_diameter</name>
-      <display_name>Geothermal Loop: Pipe Diameter</display_name>
-      <description>Pipe diameter of the geothermal loop. Only applies to ground-to-air heat pump type. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-geothermal-loops'&gt;HPXML Geothermal Loops&lt;/a&gt;) is used.</description>
-      <type>Choice</type>
-      <units>in</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>3/4" pipe</value>
-          <display_name>3/4" pipe</display_name>
+          <value>Vertical Loop, Default, Thermally Enhanced Grout</value>
+          <display_name>Vertical Loop, Default, Thermally Enhanced Grout</display_name>
         </choice>
         <choice>
-          <value>1" pipe</value>
-          <display_name>1" pipe</display_name>
+          <value>Vertical Loop, Default, Thermally Enhanced Pipe</value>
+          <display_name>Vertical Loop, Default, Thermally Enhanced Pipe</display_name>
         </choice>
         <choice>
-          <value>1-1/4" pipe</value>
-          <display_name>1-1/4" pipe</display_name>
+          <value>Vertical Loop, Lopsided U Borefield, Detailed</value>
+          <display_name>Vertical Loop, Lopsided U Borefield, Detailed</display_name>
+        </choice>
+        <choice>
+          <value>Vertical Loop, Rectangular Borefield, Detailed</value>
+          <display_name>Vertical Loop, Rectangular Borefield, Detailed</display_name>
         </choice>
       </choices>
     </argument>
@@ -3680,92 +3759,232 @@
       <default_value>None</default_value>
       <choices>
         <choice>
-          <value>Electric Baseboard, 100% Efficiency</value>
-          <display_name>Electric Baseboard, 100% Efficiency</display_name>
+          <value>None</value>
+          <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Electric Portable Heater, 100% Efficiency</value>
-          <display_name>Electric Portable Heater, 100% Efficiency</display_name>
+          <value>Electric Resistance</value>
+          <display_name>Electric Resistance</display_name>
         </choice>
         <choice>
-          <value>Fuel Boiler, 60% AFUE</value>
-          <display_name>Fuel Boiler, 60% AFUE</display_name>
+          <value>Central Furnace, 60% AFUE</value>
+          <display_name>Central Furnace, 60% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Boiler, 76% AFUE</value>
-          <display_name>Fuel Boiler, 76% AFUE</display_name>
+          <value>Central Furnace, 64% AFUE</value>
+          <display_name>Central Furnace, 64% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Boiler, 80% AFUE</value>
-          <display_name>Fuel Boiler, 80% AFUE</display_name>
+          <value>Central Furnace, 68% AFUE</value>
+          <display_name>Central Furnace, 68% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Boiler, 90% AFUE</value>
-          <display_name>Fuel Boiler, 90% AFUE</display_name>
+          <value>Central Furnace, 72% AFUE</value>
+          <display_name>Central Furnace, 72% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Boiler, 92.5% AFUE</value>
-          <display_name>Fuel Boiler, 92.5% AFUE</display_name>
+          <value>Central Furnace, 76% AFUE</value>
+          <display_name>Central Furnace, 76% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Boiler, 100% AFUE</value>
-          <display_name>Fuel Boiler, 100% AFUE</display_name>
+          <value>Central Furnace, 78% AFUE</value>
+          <display_name>Central Furnace, 78% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Fireplace, 60% Efficiency</value>
-          <display_name>Fuel Fireplace, 60% Efficiency</display_name>
+          <value>Central Furnace, 80% AFUE</value>
+          <display_name>Central Furnace, 80% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Fireplace, 100% Efficiency</value>
-          <display_name>Fuel Fireplace, 100% Efficiency</display_name>
+          <value>Central Furnace, 85% AFUE</value>
+          <display_name>Central Furnace, 85% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Furnace, 60% AFUE</value>
-          <display_name>Fuel Furnace, 60% AFUE</display_name>
+          <value>Central Furnace, 90% AFUE</value>
+          <display_name>Central Furnace, 90% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Furnace, 76% AFUE</value>
-          <display_name>Fuel Furnace, 76% AFUE</display_name>
+          <value>Central Furnace, 92% AFUE</value>
+          <display_name>Central Furnace, 92% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Furnace, 80% AFUE</value>
-          <display_name>Fuel Furnace, 80% AFUE</display_name>
+          <value>Central Furnace, 92% AFUE, Pilot Light</value>
+          <display_name>Central Furnace, 92% AFUE, Pilot Light</display_name>
         </choice>
         <choice>
-          <value>Fuel Furnace, 92.5% AFUE</value>
-          <display_name>Fuel Furnace, 92.5% AFUE</display_name>
+          <value>Central Furnace, 92% AFUE, Grade 3 Installation</value>
+          <display_name>Central Furnace, 92% AFUE, Grade 3 Installation</display_name>
         </choice>
         <choice>
-          <value>Fuel Furnace, 100% AFUE</value>
-          <display_name>Fuel Furnace, 100% AFUE</display_name>
+          <value>Central Furnace, 92.5% AFUE</value>
+          <display_name>Central Furnace, 92.5% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Wall Furnace, 60% AFUE</value>
-          <display_name>Fuel Wall Furnace, 60% AFUE</display_name>
+          <value>Central Furnace, 96% AFUE</value>
+          <display_name>Central Furnace, 96% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Wall Furnace, 68% AFUE</value>
-          <display_name>Fuel Wall Furnace, 68% AFUE</display_name>
+          <value>Central Furnace, 98% AFUE</value>
+          <display_name>Central Furnace, 98% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Floor Furnace, 60% AFUE</value>
-          <display_name>Fuel Floor Furnace, 60% AFUE</display_name>
+          <value>Central Furnace, 100% AFUE</value>
+          <display_name>Central Furnace, 100% AFUE</display_name>
         </choice>
         <choice>
-          <value>Fuel Floor Furnace, 68% AFUE</value>
-          <display_name>Fuel Floor Furnace, 68% AFUE</display_name>
+          <value>Wall Furnace, 60% AFUE</value>
+          <display_name>Wall Furnace, 60% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Wall Furnace, 68% AFUE</value>
+          <display_name>Wall Furnace, 68% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Wall Furnace, 82% AFUE</value>
+          <display_name>Wall Furnace, 82% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Wall Furnace, 98% AFUE</value>
+          <display_name>Wall Furnace, 98% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Wall Furnace, 100% AFUE</value>
+          <display_name>Wall Furnace, 100% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Floor Furnace, 60% AFUE</value>
+          <display_name>Floor Furnace, 60% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Floor Furnace, 70% AFUE</value>
+          <display_name>Floor Furnace, 70% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Floor Furnace, 80% AFUE</value>
+          <display_name>Floor Furnace, 80% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Floor Furnace, 80% AFUE, Pilot Light</value>
+          <display_name>Floor Furnace, 80% AFUE, Pilot Light</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 72% AFUE</value>
+          <display_name>Boiler, 72% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 76% AFUE</value>
+          <display_name>Boiler, 76% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 80% AFUE</value>
+          <display_name>Boiler, 80% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 82% AFUE</value>
+          <display_name>Boiler, 82% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 85% AFUE</value>
+          <display_name>Boiler, 85% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 90% AFUE</value>
+          <display_name>Boiler, 90% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 92% AFUE</value>
+          <display_name>Boiler, 92% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 92% AFUE, Pilot Light</value>
+          <display_name>Boiler, 92% AFUE, Pilot Light</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 95% AFUE</value>
+          <display_name>Boiler, 95% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 96% AFUE</value>
+          <display_name>Boiler, 96% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 98% AFUE</value>
+          <display_name>Boiler, 98% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 100% AFUE</value>
+          <display_name>Boiler, 100% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Baseboard, 78% AFUE</value>
+          <display_name>Shared Boiler w/ Baseboard, 78% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Baseboard, 92% AFUE</value>
+          <display_name>Shared Boiler w/ Baseboard, 92% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Baseboard, 100% AFUE</value>
+          <display_name>Shared Boiler w/ Baseboard, 100% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Fan Coil, 78% AFUE</value>
+          <display_name>Shared Boiler w/ Fan Coil, 78% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Fan Coil, 92% AFUE</value>
+          <display_name>Shared Boiler w/ Fan Coil, 92% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Shared Boiler w/ Fan Coil, 100% AFUE</value>
+          <display_name>Shared Boiler w/ Fan Coil, 100% AFUE</display_name>
         </choice>
         <choice>
           <value>Stove, 60% Efficiency</value>
           <display_name>Stove, 60% Efficiency</display_name>
         </choice>
         <choice>
-          <value>Stove, 68% Efficiency</value>
-          <display_name>Stove, 68% Efficiency</display_name>
+          <value>Stove, 70% Efficiency</value>
+          <display_name>Stove, 70% Efficiency</display_name>
         </choice>
         <choice>
-          <value>None</value>
-          <display_name>None</display_name>
+          <value>Stove, 80% Efficiency</value>
+          <display_name>Stove, 80% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Space Heater, 60% Efficiency</value>
+          <display_name>Space Heater, 60% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Space Heater, 70% Efficiency</value>
+          <display_name>Space Heater, 70% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Space Heater, 80% Efficiency</value>
+          <display_name>Space Heater, 80% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Space Heater, 92% Efficiency</value>
+          <display_name>Space Heater, 92% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Space Heater, 100% Efficiency</value>
+          <display_name>Space Heater, 100% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Fireplace, 60% Efficiency</value>
+          <display_name>Fireplace, 60% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Fireplace, 70% Efficiency</value>
+          <display_name>Fireplace, 70% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Fireplace, 80% Efficiency</value>
+          <display_name>Fireplace, 80% Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Fireplace, 100% Efficiency</value>
+          <display_name>Fireplace, 100% Efficiency</display_name>
         </choice>
       </choices>
     </argument>
@@ -8607,7 +8826,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>7426FE45</checksum>
+      <checksum>849206C5</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -8624,7 +8843,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>84330C89</checksum>
+      <checksum>4D438990</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
@@ -8642,49 +8861,55 @@
       <filename>options/cooling_system.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>23024EC3</checksum>
+      <checksum>1FB80585</checksum>
+    </file>
+    <file>
+      <filename>options/geothermal_loop.tsv</filename>
+      <filetype>tsv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>2FD92A2A</checksum>
     </file>
     <file>
       <filename>options/heat_pump.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>DCB5A616</checksum>
+      <checksum>B7AB42A6</checksum>
     </file>
     <file>
       <filename>options/heat_pump_backup.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>6FC509AB</checksum>
+      <checksum>69EE4454</checksum>
     </file>
     <file>
       <filename>options/heating_system.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>DAF2DDBB</checksum>
+      <checksum>ABE88D20</checksum>
     </file>
     <file>
       <filename>options/heating_system_2.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>8959AE86</checksum>
+      <checksum>ABE88D20</checksum>
     </file>
     <file>
       <filename>options/roof_material.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1DE7CA79</checksum>
+      <checksum>5D6AC221</checksum>
     </file>
     <file>
       <filename>options/wall_siding.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>B1730110</checksum>
+      <checksum>83CC06A8</checksum>
     </file>
     <file>
       <filename>options.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F3942011</checksum>
+      <checksum>DA17B0D3</checksum>
     </file>
     <file>
       <filename>version.txt</filename>
@@ -8696,7 +8921,7 @@
       <filename>test_build_residential_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>D54CEBC9</checksum>
+      <checksum>0FF22B79</checksum>
     </file>
   </files>
 </measure>

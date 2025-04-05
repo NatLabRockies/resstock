@@ -751,43 +751,11 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(HPXML::WallTypeWoodStud)
     args << arg
 
-    # TODO: wall color + wall siding type --> enclosure_wall_siding
+    enclosure_wall_siding_choices = get_option_names('wall_siding.tsv')
 
-    # enclosure_wall_siding_choices = get_option_names('wall_siding.tsv')
-
-    # arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('enclosure_wall_siding', enclosure_wall_siding_choices, false)
-    # arg.setDisplayName('Enclosure: Wall Siding')
-    # arg.setDescription("The siding type/color of the walls. Also applies to rim joists. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-walls'>HPXML Walls</a>) is used.")
-    # args << arg
-
-    wall_siding_type_choices = OpenStudio::StringVector.new
-    wall_siding_type_choices << HPXML::SidingTypeAluminum
-    wall_siding_type_choices << HPXML::SidingTypeAsbestos
-    wall_siding_type_choices << HPXML::SidingTypeBrick
-    wall_siding_type_choices << HPXML::SidingTypeCompositeShingle
-    wall_siding_type_choices << HPXML::SidingTypeFiberCement
-    wall_siding_type_choices << HPXML::SidingTypeMasonite
-    wall_siding_type_choices << HPXML::SidingTypeNone
-    wall_siding_type_choices << HPXML::SidingTypeStucco
-    wall_siding_type_choices << HPXML::SidingTypeSyntheticStucco
-    wall_siding_type_choices << HPXML::SidingTypeVinyl
-    wall_siding_type_choices << HPXML::SidingTypeWood
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('wall_siding_type', wall_siding_type_choices, false)
-    arg.setDisplayName('Wall: Siding Type')
-    arg.setDescription("The siding type of the walls. Also applies to rim joists. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-walls'>HPXML Walls</a>) is used.")
-    args << arg
-
-    color_choices = OpenStudio::StringVector.new
-    color_choices << HPXML::ColorDark
-    color_choices << HPXML::ColorLight
-    color_choices << HPXML::ColorMedium
-    color_choices << HPXML::ColorMediumDark
-    color_choices << HPXML::ColorReflective
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('wall_color', color_choices, false)
-    arg.setDisplayName('Wall: Color')
-    arg.setDescription("The color of the walls. Also applies to rim joists. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-walls'>HPXML Walls</a>) is used.")
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('enclosure_wall_siding', enclosure_wall_siding_choices, false)
+    arg.setDisplayName('Enclosure: Wall Siding')
+    arg.setDescription("The siding type/color of the walls. Also applies to rim joists. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-walls'>HPXML Walls</a>) is used.")
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('wall_assembly_r', true)
@@ -1319,7 +1287,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup', heat_pump_backup_choices, true)
     arg.setDisplayName('Heat Pump: Backup Type')
     arg.setDescription("The type, fuel type, and efficiency of the heat pump backup. Use '#{Constants::None}' if there is no backup heating. If Backup Type is '#{HPXML::HeatPumpBackupTypeSeparate}', Heating System 2 is used to specify the backup.")
-    arg.setDefaultValue('Electricity, Integrated, 100% Efficiency')
+    arg.setDefaultValue('Integrated, Electricity, 100% Efficiency')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_autosizing_factor', false)
@@ -1349,82 +1317,11 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription("The auto-sizing methodology to use when the heat pump backup capacity is not provided. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-hvac-sizing-control'>HPXML HVAC Sizing Control</a>) is used.")
     args << arg
 
-    geothermal_loop_configuration_choices = OpenStudio::StringVector.new
-    geothermal_loop_configuration_choices << Constants::None
-    # geothermal_loop_configuration_choices << HPXML::GeothermalLoopLoopConfigurationDiagonal
-    # geothermal_loop_configuration_choices << HPXML::GeothermalLoopLoopConfigurationHorizontal
-    # geothermal_loop_configuration_choices << HPXML::GeothermalLoopLoopConfigurationOther
-    geothermal_loop_configuration_choices << HPXML::GeothermalLoopLoopConfigurationVertical
+    geothermal_loop_choices = get_option_names('geothermal_loop.tsv')
 
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('geothermal_loop_configuration', geothermal_loop_configuration_choices, false)
-    arg.setDisplayName('Geothermal Loop: Configuration')
-    arg.setDescription("Configuration of the geothermal loop. Only applies to #{HPXML::HVACTypeHeatPumpGroundToAir} heat pump type. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#ground-to-air-heat-pump'>Ground-to-Air Heat Pump</a>) is used.")
-    args << arg
-
-    geothermal_loop_borefield_configuration_choices = OpenStudio::StringVector.new
-    valid_bore_configs = HVACSizing.get_geothermal_loop_valid_configurations
-    valid_bore_configs.keys.each do |valid_bore_config|
-      geothermal_loop_borefield_configuration_choices << valid_bore_config
-    end
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('geothermal_loop_borefield_configuration', geothermal_loop_borefield_configuration_choices, false)
-    arg.setDisplayName('Geothermal Loop: Borefield Configuration')
-    arg.setDescription("Borefield configuration of the geothermal loop. Only applies to #{HPXML::HVACTypeHeatPumpGroundToAir} heat pump type. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-geothermal-loops'>HPXML Geothermal Loops</a>) is used.")
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('geothermal_loop_loop_flow', false)
-    arg.setDisplayName('Geothermal Loop: Loop Flow')
-    arg.setDescription("Water flow rate through the geothermal loop. Only applies to #{HPXML::HVACTypeHeatPumpGroundToAir} heat pump type. If not provided, the OS-HPXML autosized default (see <a href='#{docs_base_url}#hpxml-geothermal-loops'>HPXML Geothermal Loops</a>) is used.")
-    arg.setUnits('gpm')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('geothermal_loop_boreholes_count', false)
-    arg.setDisplayName('Geothermal Loop: Boreholes Count')
-    arg.setDescription("Number of boreholes. Only applies to #{HPXML::HVACTypeHeatPumpGroundToAir} heat pump type. If not provided, the OS-HPXML autosized default (see <a href='#{docs_base_url}#hpxml-geothermal-loops'>HPXML Geothermal Loops</a>) is used.")
-    arg.setUnits('#')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('geothermal_loop_boreholes_length', false)
-    arg.setDisplayName('Geothermal Loop: Boreholes Length')
-    arg.setDescription("Average length of each borehole (vertical). Only applies to #{HPXML::HVACTypeHeatPumpGroundToAir} heat pump type. If not provided, the OS-HPXML autosized default (see <a href='#{docs_base_url}#hpxml-geothermal-loops'>HPXML Geothermal Loops</a>) is used.")
-    arg.setUnits('ft')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('geothermal_loop_boreholes_spacing', false)
-    arg.setDisplayName('Geothermal Loop: Boreholes Spacing')
-    arg.setDescription("Distance between bores. Only applies to #{HPXML::HVACTypeHeatPumpGroundToAir} heat pump type. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-geothermal-loops'>HPXML Geothermal Loops</a>) is used.")
-    arg.setUnits('ft')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('geothermal_loop_boreholes_diameter', false)
-    arg.setDisplayName('Geothermal Loop: Boreholes Diameter')
-    arg.setDescription("Diameter of bores. Only applies to #{HPXML::HVACTypeHeatPumpGroundToAir} heat pump type. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-geothermal-loops'>HPXML Geothermal Loops</a>) is used.")
-    arg.setUnits('in')
-    args << arg
-
-    geothermal_loop_grout_or_pipe_type_choices = OpenStudio::StringVector.new
-    geothermal_loop_grout_or_pipe_type_choices << HPXML::GeothermalLoopGroutOrPipeTypeStandard
-    geothermal_loop_grout_or_pipe_type_choices << HPXML::GeothermalLoopGroutOrPipeTypeThermallyEnhanced
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('geothermal_loop_grout_type', geothermal_loop_grout_or_pipe_type_choices, false)
-    arg.setDisplayName('Geothermal Loop: Grout Type')
-    arg.setDescription("Grout type of the geothermal loop. Only applies to #{HPXML::HVACTypeHeatPumpGroundToAir} heat pump type. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-geothermal-loops'>HPXML Geothermal Loops</a>) is used.")
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('geothermal_loop_pipe_type', geothermal_loop_grout_or_pipe_type_choices, false)
-    arg.setDisplayName('Geothermal Loop: Pipe Type')
-    arg.setDescription("Pipe type of the geothermal loop. Only applies to #{HPXML::HVACTypeHeatPumpGroundToAir} heat pump type. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-geothermal-loops'>HPXML Geothermal Loops</a>) is used.")
-    args << arg
-
-    geothermal_loop_pipe_diameter_choices = OpenStudio::StringVector.new
-    geothermal_loop_pipe_diameter_choices << '3/4" pipe'
-    geothermal_loop_pipe_diameter_choices << '1" pipe'
-    geothermal_loop_pipe_diameter_choices << '1-1/4" pipe'
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('geothermal_loop_pipe_diameter', geothermal_loop_pipe_diameter_choices, false)
-    arg.setDisplayName('Geothermal Loop: Pipe Diameter')
-    arg.setDescription("Pipe diameter of the geothermal loop. Only applies to #{HPXML::HVACTypeHeatPumpGroundToAir} heat pump type. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-geothermal-loops'>HPXML Geothermal Loops</a>) is used.")
-    arg.setUnits('in')
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('geothermal_loop', geothermal_loop_choices, false)
+    arg.setDisplayName('Geothermal Loop')
+    arg.setDescription("The geothermal loop configuration (only #{HPXML::GeothermalLoopLoopConfigurationVertical} is currently supported), borefield configuration, grout/pipe type, and other numerical inputs that specify a detailed geothermal loop.")
     args << arg
 
     heating_system_2_choices = get_option_names('heating_system_2.tsv')
@@ -3683,6 +3580,11 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   def argument_warnings(args)
     warnings = []
 
+    # need to update the args hash w/ detailed geothermal loop info here
+    # b.c. argument_warnings is called BEFORE argument_errors in validate_arguments
+    # and argument_warnings requires the detailed geothermal loop info
+    get_option_properties(args, 'geothermal_loop.tsv', args[:geothermal_loop])
+
     max_uninsulated_floor_rvalue = 6.0
     max_uninsulated_ceiling_rvalue = 3.0
     max_uninsulated_roof_rvalue = 3.0
@@ -3723,8 +3625,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     errors = []
 
     get_option_properties(args, 'roof_material.tsv', args[:enclosure_roof_material])
-    # TODO: uncomment
-    # get_option_properties(args, 'wall_siding.tsv', args[:enclosure_wall_siding])
+    get_option_properties(args, 'wall_siding.tsv', args[:enclosure_wall_siding])
     get_option_properties(args, 'heating_system.tsv', args[:heating_system])
     get_option_properties(args, 'cooling_system.tsv', args[:cooling_system])
     get_option_properties(args, 'heat_pump.tsv', args[:heat_pump])
@@ -3807,39 +3708,39 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    hp_perf_data_heating_args_initialized = [!args[:hp_perf_data_heating_outdoor_temperatures].nil?,
-                                             !args[:hp_perf_data_heating_min_speed_capacities].nil?,
-                                             !args[:hp_perf_data_heating_max_speed_capacities].nil?,
-                                             !args[:hp_perf_data_heating_min_speed_cops].nil?,
-                                             !args[:hp_perf_data_heating_max_speed_cops].nil?]
+    hp_perf_data_heating_args_initialized = [!args[:heat_pump_perf_data_heating_outdoor_temperatures].nil?,
+                                             !args[:heat_pump_perf_data_heating_min_speed_capacities].nil?,
+                                             !args[:heat_pump_perf_data_heating_max_speed_capacities].nil?,
+                                             !args[:heat_pump_perf_data_heating_min_speed_cops].nil?,
+                                             !args[:heat_pump_perf_data_heating_max_speed_cops].nil?]
     error = (hp_perf_data_heating_args_initialized.uniq.size != 1)
     errors << 'Did not specify all required heating detailed performance data arguments.' if error
 
     if hp_perf_data_heating_args_initialized.uniq.size == 1 && hp_perf_data_heating_args_initialized.uniq[0]
-      heating_data_points_lengths = [args[:hp_perf_data_heating_outdoor_temperatures].count(','),
-                                     args[:hp_perf_data_heating_min_speed_capacities].count(','),
-                                     args[:hp_perf_data_heating_max_speed_capacities].count(','),
-                                     args[:hp_perf_data_heating_min_speed_cops].count(','),
-                                     args[:hp_perf_data_heating_max_speed_cops].count(',')]
+      heating_data_points_lengths = [args[:heat_pump_perf_data_heating_outdoor_temperatures].count(','),
+                                     args[:heat_pump_perf_data_heating_min_speed_capacities].count(','),
+                                     args[:heat_pump_perf_data_heating_max_speed_capacities].count(','),
+                                     args[:heat_pump_perf_data_heating_min_speed_cops].count(','),
+                                     args[:heat_pump_perf_data_heating_max_speed_cops].count(',')]
 
       error = (heating_data_points_lengths.uniq.size != 1)
       errors << 'One or more detailed heating performance data arguments does not have enough comma-separated elements specified.' if error
     end
 
-    hp_perf_data_cooling_args_initialized = [!args[:hp_perf_data_cooling_outdoor_temperatures].nil?,
-                                             !args[:hp_perf_data_cooling_min_speed_capacities].nil?,
-                                             !args[:hp_perf_data_cooling_max_speed_capacities].nil?,
-                                             !args[:hp_perf_data_cooling_min_speed_cops].nil?,
-                                             !args[:hp_perf_data_cooling_max_speed_cops].nil?]
+    hp_perf_data_cooling_args_initialized = [!args[:heat_pump_perf_data_cooling_outdoor_temperatures].nil?,
+                                             !args[:heat_pump_perf_data_cooling_min_speed_capacities].nil?,
+                                             !args[:heat_pump_perf_data_cooling_max_speed_capacities].nil?,
+                                             !args[:heat_pump_perf_data_cooling_min_speed_cops].nil?,
+                                             !args[:heat_pump_perf_data_cooling_max_speed_cops].nil?]
     error = (hp_perf_data_cooling_args_initialized.uniq.size != 1)
     errors << 'Did not specify all required cooling detailed performance data arguments.' if error
 
     if hp_perf_data_cooling_args_initialized.uniq.size == 1 && hp_perf_data_cooling_args_initialized.uniq[0]
-      hp_cooling_data_points_lengths = [args[:hp_perf_data_cooling_outdoor_temperatures].count(','),
-                                        args[:hp_perf_data_cooling_min_speed_capacities].count(','),
-                                        args[:hp_perf_data_cooling_max_speed_capacities].count(','),
-                                        args[:hp_perf_data_cooling_min_speed_cops].count(','),
-                                        args[:hp_perf_data_cooling_max_speed_cops].count(',')]
+      hp_cooling_data_points_lengths = [args[:heat_pump_perf_data_cooling_outdoor_temperatures].count(','),
+                                        args[:heat_pump_perf_data_cooling_min_speed_capacities].count(','),
+                                        args[:heat_pump_perf_data_cooling_max_speed_capacities].count(','),
+                                        args[:heat_pump_perf_data_cooling_min_speed_cops].count(','),
+                                        args[:heat_pump_perf_data_cooling_max_speed_cops].count(',')]
 
       error = (hp_cooling_data_points_lengths.uniq.size != 1)
       errors << 'One or more detailed cooling performance data arguments does not have enough comma-separated elements specified.' if error
@@ -4960,7 +4861,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                            azimuth: azimuth,
                            area: UnitConversions.convert(surface.grossArea, 'm^2', 'ft^2'),
                            roof_type: args[:roof_material_type],
-                           roof_color: args[:roof_color],
+                           roof_color: args[:roof_material_color],
                            pitch: args[:geometry_roof_pitch],
                            insulation_assembly_r_value: args[:roof_assembly_r])
       @surface_ids[surface.name.to_s] = hpxml_bldg.roofs[-1].id
@@ -5031,7 +4932,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                 azimuth: azimuth,
                                 area: UnitConversions.convert(surface.grossArea, 'm^2', 'ft^2'),
                                 siding: siding,
-                                color: args[:wall_color],
+                                color: args[:wall_siding_color],
                                 insulation_assembly_r_value: insulation_assembly_r_value)
       @surface_ids[surface.name.to_s] = hpxml_bldg.rim_joists[-1].id
     end
@@ -5101,7 +5002,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                            wall_type: wall_type,
                            attic_wall_type: attic_wall_type,
                            siding: siding,
-                           color: args[:wall_color],
+                           color: args[:wall_siding_color],
                            area: UnitConversions.convert(surface.grossArea, 'm^2', 'ft^2'))
       @surface_ids[surface.name.to_s] = hpxml_bldg.walls[-1].id
 
@@ -5935,13 +5836,13 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                               primary_cooling_system: args[:heat_pump_fraction_cool_load_served] > 0)
 
     if [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpMiniSplit].include?(heat_pump_type) && compressor_type == HPXML::HVACCompressorTypeVariableSpeed
-      if not args[:hp_perf_data_heating_outdoor_temperatures].nil?
-        hp_perf_data_capacity_type = args[:hp_perf_data_capacity_type]
-        hp_perf_data_heating_outdoor_temperatures = args[:hp_perf_data_heating_outdoor_temperatures].split(',').map(&:strip)
-        hp_perf_data_heating_min_speed_capacities = args[:hp_perf_data_heating_min_speed_capacities].split(',').map(&:strip)
-        hp_perf_data_heating_max_speed_capacities = args[:hp_perf_data_heating_max_speed_capacities].split(',').map(&:strip)
-        hp_perf_data_heating_min_speed_cops = args[:hp_perf_data_heating_min_speed_cops].split(',').map(&:strip)
-        hp_perf_data_heating_max_speed_cops = args[:hp_perf_data_heating_max_speed_cops].split(',').map(&:strip)
+      if (not args[:heat_pump_perf_data_heating_outdoor_temperatures].nil?) && (args[:heat_pump_fraction_heat_load_served] > 0)
+        hp_perf_data_capacity_type = args[:heat_pump_perf_data_capacity_type]
+        hp_perf_data_heating_outdoor_temperatures = args[:heat_pump_perf_data_heating_outdoor_temperatures].split(',').map(&:strip)
+        hp_perf_data_heating_min_speed_capacities = args[:heat_pump_perf_data_heating_min_speed_capacities].split(',').map(&:strip)
+        hp_perf_data_heating_max_speed_capacities = args[:heat_pump_perf_data_heating_max_speed_capacities].split(',').map(&:strip)
+        hp_perf_data_heating_min_speed_cops = args[:heat_pump_perf_data_heating_min_speed_cops].split(',').map(&:strip)
+        hp_perf_data_heating_max_speed_cops = args[:heat_pump_perf_data_heating_max_speed_cops].split(',').map(&:strip)
 
         htg_perf_data = hpxml_bldg.heat_pumps[0].heating_detailed_performance_data
         heating_perf_data_data_points = hp_perf_data_heating_outdoor_temperatures.zip(hp_perf_data_heating_min_speed_capacities,
@@ -5973,13 +5874,13 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
         end
       end
 
-      if not args[:hp_perf_data_cooling_outdoor_temperatures].nil?
-        hp_perf_data_capacity_type = args[:hp_perf_data_capacity_type]
-        hp_perf_data_cooling_outdoor_temperatures = args[:hp_perf_data_cooling_outdoor_temperatures].split(',').map(&:strip)
-        hp_perf_data_cooling_min_speed_capacities = args[:hp_perf_data_cooling_min_speed_capacities].split(',').map(&:strip)
-        hp_perf_data_cooling_max_speed_capacities = args[:hp_perf_data_cooling_max_speed_capacities].split(',').map(&:strip)
-        hp_perf_data_cooling_min_speed_cops = args[:hp_perf_data_cooling_min_speed_cops].split(',').map(&:strip)
-        hp_perf_data_cooling_max_speed_cops = args[:hp_perf_data_cooling_max_speed_cops].split(',').map(&:strip)
+      if (not args[:heat_pump_perf_data_cooling_outdoor_temperatures].nil?) && (args[:heat_pump_fraction_cool_load_served] > 0)
+        hp_perf_data_capacity_type = args[:heat_pump_perf_data_capacity_type]
+        hp_perf_data_cooling_outdoor_temperatures = args[:heat_pump_perf_data_cooling_outdoor_temperatures].split(',').map(&:strip)
+        hp_perf_data_cooling_min_speed_capacities = args[:heat_pump_perf_data_cooling_min_speed_capacities].split(',').map(&:strip)
+        hp_perf_data_cooling_max_speed_capacities = args[:heat_pump_perf_data_cooling_max_speed_capacities].split(',').map(&:strip)
+        hp_perf_data_cooling_min_speed_cops = args[:heat_pump_perf_data_cooling_min_speed_cops].split(',').map(&:strip)
+        hp_perf_data_cooling_max_speed_cops = args[:heat_pump_perf_data_cooling_max_speed_cops].split(',').map(&:strip)
 
         hp_clg_perf_data = hpxml_bldg.heat_pumps[0].cooling_detailed_performance_data
         hp_cooling_perf_data_data_points = hp_perf_data_cooling_outdoor_temperatures.zip(hp_perf_data_cooling_min_speed_capacities,
