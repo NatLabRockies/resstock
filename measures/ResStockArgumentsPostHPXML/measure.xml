@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
+  <error>cannot load such file -- matrix</error>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>af53ca34-177b-43f8-946c-b9ae88a896de</version_id>
-  <version_modified>2025-04-02T22:42:00Z</version_modified>
+  <version_id>1a97684b-fe57-4fc1-9646-a8b218becde1</version_id>
+  <version_modified>2025-04-05T04:31:20Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -140,7 +141,7 @@
       <filename>test_template.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>B71A1941</checksum>
+      <checksum>B0CD7BDC</checksum>
     </file>
   </files>
 </measure>

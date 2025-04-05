@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>upgrade_costs</name>
   <uid>ef51212c-acc4-48d7-9b29-cf2a5c6c4449</uid>
-  <version_id>04085b93-3ab2-456a-90d6-cb73a9ce83b4</version_id>
-  <version_modified>2025-04-05T03:01:56Z</version_modified>
+  <version_id>e2ccd52c-8614-40e0-bf3a-c5dd3117bb85</version_id>
+  <version_modified>2025-04-05T04:31:24Z</version_modified>
   <xml_checksum>B1F14CB4</xml_checksum>
   <class_name>UpgradeCosts</class_name>
   <display_name>Upgrade Costs</display_name>
@@ -214,18 +214,6 @@
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
       <checksum>6A5B09D3</checksum>
-    </file>
-    <file>
-      <filename>results_annual.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>FF3311B0</checksum>
-    </file>
-    <file>
-      <filename>results_design_load_details.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>20C55691</checksum>
     </file>
     <file>
       <filename>upgrade_costs_test.rb</filename>
