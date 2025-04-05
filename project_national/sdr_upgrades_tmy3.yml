@@ -95,7 +95,7 @@ workflow_generator:
       include_timeseries_end_use_consumptions: true
       include_timeseries_emissions: true
       include_timeseries_emission_fuels: true
-      include_timeseries_emission_end_uses: true
+      include_timeseries_emission_end_uses: false
       include_timeseries_hot_water_uses: true
       include_timeseries_total_loads: true
       include_timeseries_component_loads: true
@@ -1150,3 +1150,31 @@ upgrades:
       - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
       - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
       - *infiltration_30pct_reduction
+
+  - upgrade_name: HVAC Flexibility - On-peak Load Shedding, 2F Offset
+    package_apply_logic: &has_cooling_or_heating
+      - or:  # apply if there is either a cooling or a heating system
+        - not: HVAC Cooling Type|None
+        - not: HVAC Heating Type|None
+    options:
+      - option: HVACFlexibility|On-peak Load Shedding, 2F Offset
+
+  - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
+    package_apply_logic: *has_cooling_or_heating
+    options:
+      - option: HVACFlexibility|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
+
+  - upgrade_name: HVAC Flexibility - On-peak Load Shedding, 4F Offset
+    package_apply_logic: *has_cooling_or_heating
+    options:
+      - option: HVACFlexibility|On-peak Load Shedding, 4F Offset
+
+  - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
+    package_apply_logic: *has_cooling_or_heating
+    options:
+      - option: HVACFlexibility|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
+
+  - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
+    package_apply_logic: *has_cooling_or_heating
+    options:
+      - option: HVACFlexibility|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration

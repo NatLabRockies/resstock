@@ -40,5 +40,7 @@ Electricity:Facility,electricity_facility__j,J,"Any user-specified EnergyPlus ou
 ,schedules_plug_loads_tv,frac,Television plug load energy use schedule.
 ,schedules_power_outage,,Unavailable period.
 ,schedules_vacancy,,Unavailable period.
-,schedules_electric_vehicle_charging,frac,availability schedule for electric vehicle charging.
-,schedules_electric_vehicle_discharging,frac,availability schedule for electric vehicle discharging.
+,schedules_electric_vehicle_charging,frac,Availability schedule for electric vehicle charging.
+,schedules_electric_vehicle_discharging,frac,Availability schedule for electric vehicle discharging.
+,schedules_peak_period,frac,Load flexibility measure ouput that indicates when the system is in the peak demand period.
+,schedules_pre_peak_period,frac,Load flexibility measure ouput that identifies when the system is in the period leading up to the peak demand period.

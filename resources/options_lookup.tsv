@@ -9887,6 +9887,11 @@ HVAC Shared Efficiencies	None
 HVAC Shared Efficiencies	Void
 HVAC System Is Scaled	No
 HVAC System Is Scaled	Yes
+HVACFlexibility	On-peak Load Shedding, 2F Offset	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=2	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0	flex_random_shift_minutes=30
+HVACFlexibility	On-peak Load Shedding, 4F Offset	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=4	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0	flex_random_shift_minutes=30
+HVACFlexibility	Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=1	hvac_flex_pre_peak_offset=2	flex_random_shift_minutes=30
+HVACFlexibility	Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=2	flex_random_shift_minutes=30
+HVACFlexibility	Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=4	flex_random_shift_minutes=30
 Has PV	No
 Has PV	Yes
 Heat Pump Backup	Use Existing System	ResStockArguments	heat_pump_backup_use_existing_system=true

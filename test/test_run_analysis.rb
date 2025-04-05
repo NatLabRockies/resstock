@@ -476,6 +476,8 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, "Both 'lighting_garage' schedule file and weekday fractions provided; the latter will be ignored.")
       next if _expected_warning_message(message, "Both 'lighting_garage' schedule file and weekend fractions provided; the latter will be ignored.")
       next if _expected_warning_message(message, "Both 'lighting_garage' schedule file and monthly multipliers provided; the latter will be ignored.")
+      next if _expected_warning_message(message, "Both 'cooling_setpoint' schedule file and cooling setpoint temperature provided; the latter will be ignored.")
+      next if _expected_warning_message(message, "Both 'heating_setpoint' schedule file and heating setpoint temperature provided; the latter will be ignored.")
       next if _expected_warning_message(message, 'Could not find state average propane rate based on')
       next if _expected_warning_message(message, 'Could not find state average fuel oil rate based on')
       next if _expected_warning_message(message, "Specified incompatible corridor; setting corridor position to 'Single Exterior (Front)'.")
@@ -502,6 +504,8 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, "Both schedule file and weekday fractions provided for 'electric_vehicle'; weekday fractions will be ignored.")
       next if _expected_warning_message(message, "Both schedule file and weekend fractions provided for 'electric_vehicle'; weekend fractions will be ignored.")
       next if _expected_warning_message(message, "Both schedule file and monthly multipliers provided for 'electric_vehicle'; monthly multipliers will be ignored.")
+      next if _expected_warning_message(message, 'Unknown column found in schedule file: peak_period')
+      next if _expected_warning_message(message, 'Unknown column found in schedule file: pre_peak_period')
 
       # For the EV minutes warning try replacing the number of minutes as a string rather than a number.
       new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? '(<number of minutes>)' : match }
