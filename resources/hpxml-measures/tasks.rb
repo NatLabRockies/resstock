@@ -273,12 +273,6 @@ def apply_hpxml_modification_hers_hvac_dse(hpxml_path, hpxml)
                                       distribution_system_type: HPXML::HVACDistributionTypeDSE,
                                       annual_heating_dse: 1.0,
                                       annual_cooling_dse: 1.0)
-    # set cooling SHR as default (blank) to maintain HERS_HVAC sample files,
-    # since cooling_system_cooling_sensible_heat_fraction is specified explicitly
-    # in cooling_system.tsv for Option = Central AC, SEER 13
-    if !hpxml_bldg.cooling_systems[0].nil?
-      hpxml_bldg.cooling_systems[0].cooling_shr = nil
-    end
   end
   if hpxml_path.include? 'HERS_DSE'
     # For DSE tests, use effective R-values instead of nominal R-values to match the test specs.
@@ -320,12 +314,6 @@ def apply_hpxml_modification_hers_hot_water(hpxml)
                                     distribution_system_type: HPXML::HVACDistributionTypeDSE,
                                     annual_heating_dse: 1.0,
                                     annual_cooling_dse: 1.0)
-  # set cooling SHR as default (blank) to maintain HERS_Hot_Water sample files,
-  # since cooling_system_cooling_sensible_heat_fraction is specified explicitly
-  # in cooling_system.tsv for Option = Central AC, SEER 13
-  if !hpxml_bldg.cooling_systems[0].nil?
-    hpxml_bldg.cooling_systems[0].cooling_shr = nil
-  end
 end
 
 def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
@@ -390,9 +378,6 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     elsif ['base-misc-defaults.xml'].include? hpxml_file
       hpxml_bldg.building_construction.average_ceiling_height = nil
       hpxml_bldg.building_construction.conditioned_building_volume = nil
-      hpxml_bldg.cooling_systems[0].cooling_shr = nil
-    elsif ['base-residents-5-5.xml'].include? hpxml_file
-      hpxml_bldg.cooling_systems[0].cooling_shr = nil
     elsif ['base-atticroof-cathedral.xml'].include? hpxml_file
       hpxml_bldg.building_construction.number_of_conditioned_floors = 2
       hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade = 1
@@ -1837,15 +1822,13 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                      cooling_system_fuel: HPXML::FuelTypeElectricity,
                                      cooling_capacity: 9600,
                                      fraction_cool_load_served: 0.1333,
-                                     cooling_efficiency_eer: 8.5,
-                                     cooling_shr: 0.65)
+                                     cooling_efficiency_eer: 8.5)
       hpxml_bldg.cooling_systems.add(id: "CoolingSystem#{hpxml_bldg.cooling_systems.size + 1}",
                                      cooling_system_type: HPXML::HVACTypePTAC,
                                      cooling_system_fuel: HPXML::FuelTypeElectricity,
                                      cooling_capacity: 9600,
                                      fraction_cool_load_served: 0.1333,
-                                     cooling_efficiency_eer: 10.7,
-                                     cooling_shr: 0.65)
+                                     cooling_efficiency_eer: 10.7)
       hpxml_bldg.heat_pumps.add(id: "HeatPump#{hpxml_bldg.heat_pumps.size + 1}",
                                 distribution_system_idref: hpxml_bldg.hvac_distributions[4].id,
                                 heat_pump_type: HPXML::HVACTypeHeatPumpAirToAir,
@@ -1861,7 +1844,6 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                 heating_efficiency_hspf: 7.7,
                                 cooling_efficiency_seer: 13,
                                 heating_capacity_17F: 4800 * 0.6,
-                                cooling_shr: 0.73,
                                 compressor_type: HPXML::HVACCompressorTypeSingleStage)
       hpxml_bldg.heat_pumps.add(id: "HeatPump#{hpxml_bldg.heat_pumps.size + 1}",
                                 distribution_system_idref: hpxml_bldg.hvac_distributions[5].id,
@@ -1877,7 +1859,6 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                 fraction_cool_load_served: 0.2,
                                 heating_efficiency_cop: 3.6,
                                 cooling_efficiency_eer: 16.6,
-                                cooling_shr: 0.73,
                                 pump_watts_per_ton: 100.0)
       hpxml_bldg.heat_pumps.add(id: "HeatPump#{hpxml_bldg.heat_pumps.size + 1}",
                                 heat_pump_type: HPXML::HVACTypeHeatPumpMiniSplit,
@@ -1893,7 +1874,6 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                 heating_efficiency_hspf: 10,
                                 cooling_efficiency_seer: 19,
                                 heating_capacity_17F: 4800 * 0.6,
-                                cooling_shr: 0.73,
                                 compressor_type: HPXML::HVACCompressorTypeVariableSpeed,
                                 primary_cooling_system: true,
                                 primary_heating_system: true)

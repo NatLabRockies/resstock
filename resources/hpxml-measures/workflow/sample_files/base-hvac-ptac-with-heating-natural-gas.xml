@@ -329,7 +329,6 @@
                 <Units>EER</Units>
                 <Value>10.7</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.65</SensibleHeatFraction>
               <IntegratedHeatingSystemFuel>natural gas</IntegratedHeatingSystemFuel>
               <IntegratedHeatingSystemCapacity>36000.0</IntegratedHeatingSystemCapacity>
               <IntegratedHeatingSystemAnnualEfficiency>

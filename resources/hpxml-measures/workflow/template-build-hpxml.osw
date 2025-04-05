@@ -47,7 +47,7 @@
         "geometry_unit_back_wall_is_adiabatic": false,
         "heating_system_fuel": "natural gas",
         "heating_system_heating_capacity": 36000.0,
-        "heating_system": "Fuel Furnace, 92% AFUE",
+        "heating_system": "Central Furnace, 92% AFUE",
         "hpxml_path": "../built.xml",
         "hvac_control_cooling_weekday_setpoint": "78",
         "hvac_control_cooling_weekend_setpoint": "78",

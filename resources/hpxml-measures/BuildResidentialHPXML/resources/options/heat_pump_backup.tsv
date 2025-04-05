@@ -1,22 +1,22 @@
-Option Name	heat_pump_backup_type	heat_pump_backup_fuel	heat_pump_backup_heating_efficiency	heat_pump_backup_heating_lockout_temp
+Option Name	type	fuel	heating_efficiency	heating_lockout_temp
 None	none			
-"Electricity, Integrated, 100% Efficiency"	integrated	electricity	1	
-"Electricity, Integrated, 100% Efficiency, 35F Lockout"	integrated	electricity	1	35
-"Natural Gas, Integrated, 95% AFUE, 30F Lockout"	integrated	natural gas	0.95	30
-"Natural Gas, Integrated, 60% AFUE, 40F Lockout"	integrated	natural gas	0.6	40
-"Natural Gas, Integrated, 76% AFUE, 40F Lockout"	integrated	natural gas	0.76	40
-"Natural Gas, Integrated, 80% AFUE, 40F Lockout"	integrated	natural gas	0.8	40
-"Natural Gas, Integrated, 92.5% AFUE, 40F Lockout"	integrated	natural gas	0.925	40
-"Natural Gas, Integrated, 95% AFUE, 40F Lockout"	integrated	natural gas	0.95	40
-"Natural Gas, Integrated, 95% AFUE, 45F Lockout"	integrated	natural gas	0.95	45
-"Fuel Oil, Integrated, 60% AFUE, 40F Lockout"	integrated	fuel oil	0.6	40
-"Fuel Oil, Integrated, 76% AFUE, 40F Lockout"	integrated	fuel oil	0.76	40
-"Fuel Oil, Integrated, 80% AFUE, 40F Lockout"	integrated	fuel oil	0.8	40
-"Fuel Oil, Integrated, 92.5% AFUE, 40F Lockout"	integrated	fuel oil	0.925	40
-"Propane, Integrated, 60% AFUE, 40F Lockout"	integrated	propane	0.6	40
-"Propane, Integrated, 76% AFUE, 40F Lockout"	integrated	propane	0.76	40
-"Propane, Integrated, 80% AFUE, 40F Lockout"	integrated	propane	0.8	40
-"Propane, Integrated, 92.5% AFUE, 40F Lockout"	integrated	propane	0.925	40
+"Integrated, Electricity, 100% Efficiency"	integrated	electricity	1	
+"Integrated, Electricity, 100% Efficiency, 35F Lockout"	integrated	electricity	1	35
+"Integrated, Natural Gas, 95% AFUE, 30F Lockout"	integrated	natural gas	0.95	30
+"Integrated, Natural Gas, 60% AFUE, 40F Lockout"	integrated	natural gas	0.6	40
+"Integrated, Natural Gas, 76% AFUE, 40F Lockout"	integrated	natural gas	0.76	40
+"Integrated, Natural Gas, 80% AFUE, 40F Lockout"	integrated	natural gas	0.8	40
+"Integrated, Natural Gas, 92.5% AFUE, 40F Lockout"	integrated	natural gas	0.925	40
+"Integrated, Natural Gas, 95% AFUE, 40F Lockout"	integrated	natural gas	0.95	40
+"Integrated, Natural Gas, 95% AFUE, 45F Lockout"	integrated	natural gas	0.95	45
+"Integrated, Fuel Oil, 60% AFUE, 40F Lockout"	integrated	fuel oil	0.6	40
+"Integrated, Fuel Oil, 76% AFUE, 40F Lockout"	integrated	fuel oil	0.76	40
+"Integrated, Fuel Oil, 80% AFUE, 40F Lockout"	integrated	fuel oil	0.8	40
+"Integrated, Fuel Oil, 92.5% AFUE, 40F Lockout"	integrated	fuel oil	0.925	40
+"Integrated, Propane, 60% AFUE, 40F Lockout"	integrated	propane	0.6	40
+"Integrated, Propane, 76% AFUE, 40F Lockout"	integrated	propane	0.76	40
+"Integrated, Propane, 80% AFUE, 40F Lockout"	integrated	propane	0.8	40
+"Integrated, Propane, 92.5% AFUE, 40F Lockout"	integrated	propane	0.925	40
 Separate	separate			
 "Separate, 30F Lockout"	separate			30
 "Separate, -20F Lockout"	separate			-20

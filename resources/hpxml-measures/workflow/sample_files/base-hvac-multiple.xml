@@ -434,7 +434,6 @@
                 <Units>SEER</Units>
                 <Value>13.0</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.73</SensibleHeatFraction>
             </CoolingSystem>
             <CoolingSystem>
               <SystemIdentifier id='CoolingSystem2'/>
@@ -446,7 +445,6 @@
                 <Units>EER</Units>
                 <Value>8.5</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.65</SensibleHeatFraction>
             </CoolingSystem>
             <CoolingSystem>
               <SystemIdentifier id='CoolingSystem3'/>
@@ -458,7 +456,6 @@
                 <Units>EER</Units>
                 <Value>10.7</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.65</SensibleHeatFraction>
             </CoolingSystem>
             <HeatPump>
               <SystemIdentifier id='HeatPump1'/>
@@ -469,7 +466,6 @@
               <HeatingCapacity17F>2880.0</HeatingCapacity17F>
               <CoolingCapacity>4800.0</CoolingCapacity>
               <CompressorType>single stage</CompressorType>
-              <CoolingSensibleHeatFraction>0.73</CoolingSensibleHeatFraction>
               <BackupType>integrated</BackupType>
               <BackupSystemFuel>electricity</BackupSystemFuel>
               <BackupAnnualHeatingEfficiency>
@@ -495,7 +491,6 @@
               <HeatPumpFuel>electricity</HeatPumpFuel>
               <HeatingCapacity>4800.0</HeatingCapacity>
               <CoolingCapacity>4800.0</CoolingCapacity>
-              <CoolingSensibleHeatFraction>0.73</CoolingSensibleHeatFraction>
               <BackupType>integrated</BackupType>
               <BackupSystemFuel>electricity</BackupSystemFuel>
               <BackupAnnualHeatingEfficiency>
@@ -525,7 +520,6 @@
               <HeatingCapacity17F>2880.0</HeatingCapacity17F>
               <CoolingCapacity>4800.0</CoolingCapacity>
               <CompressorType>variable speed</CompressorType>
-              <CoolingSensibleHeatFraction>0.73</CoolingSensibleHeatFraction>
               <BackupType>integrated</BackupType>
               <BackupSystemFuel>electricity</BackupSystemFuel>
               <BackupAnnualHeatingEfficiency>

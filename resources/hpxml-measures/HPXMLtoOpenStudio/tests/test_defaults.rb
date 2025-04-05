@@ -2370,14 +2370,14 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     # Test defaults
     hpxml_bldg.geothermal_loops[0].loop_flow = nil # autosized
     hpxml_bldg.geothermal_loops[0].num_bore_holes = nil # autosized
-    hpxml_bldg.geothermal_loops[0].bore_spacing = nil # 16.4
+    hpxml_bldg.geothermal_loops[0].bore_spacing = nil # 16.4 ft
     hpxml_bldg.geothermal_loops[0].bore_length = nil # autosized
-    hpxml_bldg.geothermal_loops[0].bore_diameter = nil # 5.0
+    hpxml_bldg.geothermal_loops[0].bore_diameter = nil # 5.0 in
     hpxml_bldg.geothermal_loops[0].grout_type = nil # standard
-    hpxml_bldg.geothermal_loops[0].grout_conductivity = nil # 0.4
+    hpxml_bldg.geothermal_loops[0].grout_conductivity = nil # 0.75 Btu/hr-ft-F
     hpxml_bldg.geothermal_loops[0].pipe_type = nil # standard
-    hpxml_bldg.geothermal_loops[0].pipe_conductivity = nil # 0.23
-    hpxml_bldg.geothermal_loops[0].pipe_diameter = nil # 1.25
+    hpxml_bldg.geothermal_loops[0].pipe_conductivity = nil # 0.23 Btu/hr-ft-F
+    hpxml_bldg.geothermal_loops[0].pipe_diameter = nil # 1.25 in
     hpxml_bldg.geothermal_loops[0].shank_spacing = nil # 2.63
     hpxml_bldg.geothermal_loops[0].bore_config = nil # rectangle
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)

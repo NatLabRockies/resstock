@@ -1,71 +1,70 @@
-Option Name	heat_pump_type	heat_pump_heating_efficiency_type	heat_pump_heating_efficiency	heat_pump_cooling_efficiency_type	heat_pump_cooling_efficiency	heat_pump_cooling_compressor_type	heat_pump_cooling_sensible_heat_fraction	heat_pump_heating_capacity_retention_fraction	heat_pump_heating_capacity_retention_temp	heat_pump_compressor_lockout_temp	heat_pump_is_ducted	heat_pump_airflow_defect_ratio	heat_pump_charge_defect_ratio	heat_pump_crankcase_heater_watts	hp_perf_data_capacity_type	hp_perf_data_heating_outdoor_temperatures	hp_perf_data_heating_min_speed_capacities	hp_perf_data_heating_max_speed_capacities	hp_perf_data_heating_min_speed_cops	hp_perf_data_heating_max_speed_cops	hp_perf_data_cooling_outdoor_temperatures	hp_perf_data_cooling_min_speed_capacities	hp_perf_data_cooling_max_speed_capacities	hp_perf_data_cooling_min_speed_cops	hp_perf_data_cooling_max_speed_cops
+Option Name	type	cooling_efficiency_type	cooling_efficiency	cooling_compressor_type	cooling_sensible_heat_fraction	heating_efficiency_type	heating_efficiency	heating_capacity_retention_fraction	heating_capacity_retention_temp	compressor_lockout_temp	is_ducted	airflow_defect_ratio	charge_defect_ratio	crankcase_heater_watts	perf_data_capacity_type	perf_data_heating_outdoor_temperatures	perf_data_heating_min_speed_capacities	perf_data_heating_max_speed_capacities	perf_data_heating_min_speed_cops	perf_data_heating_max_speed_cops	perf_data_cooling_outdoor_temperatures	perf_data_cooling_min_speed_capacities	perf_data_cooling_max_speed_capacities	perf_data_cooling_min_speed_cops	perf_data_cooling_max_speed_cops
 None	none																								
-"ASHP, SEER 10, 6.2 HSPF"	air-to-air	HSPF	6.2	SEER	10	single stage																			
-"ASHP, SEER 10, 6.8 HSPF"	air-to-air	HSPF	6.8	SEER	10	single stage																			
-"ASHP, SEER 10.3, 7.0 HSPF"	air-to-air	HSPF	7	SEER	10.3	single stage																			
-"ASHP, SEER 11.5, 7.5 HSPF"	air-to-air	HSPF	7.5	SEER	11.5	single stage																			
-"ASHP, SEER 13, 7.7 HSPF"	air-to-air	HSPF	7.7	SEER	13	single stage	0.73																		
-"ASHP, SEER 13, 7.7 HSPF, Heating Capacity 17F"	air-to-air	HSPF	7.7	SEER	13	single stage	0.73	0.6	17																
-"ASHP, SEER 13, 7.7 HSPF, Airflow Defect Ratio"	air-to-air	HSPF	7.7	SEER	13	single stage	0.73	0.6	17			-0.25	-0.25												
-"ASHP, SEER 13, 7.7 HSPF, 5F Compressor Lockout"	air-to-air	HSPF	7.7	SEER	13	single stage	0.73	0.6	17	5															
-"ASHP, SEER 13, 7.7 HSPF, 25F Compressor Lockout"	air-to-air	HSPF	7.7	SEER	13	single stage	0.73	0.6	17	25															
-"ASHP, SEER 13, 7.7 HSPF, 30F Compressor Lockout"	air-to-air	HSPF	7.7	SEER	13	single stage	0.73	0.6	17	30															
-"ASHP, SEER2 12.4, HSPF2 6.5, Heating Capacity 17F"	air-to-air	HSPF2	6.5	SEER2	12.4	single stage	0.73	0.6	17																
-"ASHP, SEER 13, 7.7 HSPF, Lockout Temperatures"	air-to-air	HSPF	7.7	SEER	13	single stage	0.73	0.6	17	5															
-"ASHP, SEER 13, 8.0 HSPF"	air-to-air	HSPF	8	SEER	13	single stage																			
-"ASHP, SEER 13, 9.85 HSPF"	air-to-air	HSPF	9.85	SEER	13	single stage																			
-"ASHP, SEER 14, 8.2 HSPF"	air-to-air	HSPF	8.2	SEER	14	single stage		0.5	5	5															
-"ASHP, SEER 14.3, 8.5 HSPF"	air-to-air	HSPF	8.5	SEER	14.3	single stage																			
-"ASHP, SEER 15, 8.5 HSPF"	air-to-air	HSPF	8.5	SEER	15	single stage																			
-"ASHP, SEER 15, 9.0 HSPF"	air-to-air	HSPF	9	SEER	15	single stage																			
-"ASHP, SEER 16, 9.0 HSPF"	air-to-air	HSPF	9	SEER	16	single stage																			
-"ASHP, SEER 16, 9.2 HSPF, Heating Capacity 5F"	air-to-air	HSPF	9.2	SEER	16	single stage		0.5	5	5	TRUE														
-"ASHP, SEER 16, 9.2 HSPF, -20F Compressor Lockout"	air-to-air	HSPF	9.2	SEER	16	single stage		0.5	5	-20	TRUE														
-"ASHP, SEER 17, 8.7 HSPF"	air-to-air	HSPF	8.7	SEER	17	two stage																			
-"ASHP, SEER 18, 9.3 HSPF"	air-to-air	HSPF	9.3	SEER	18	two stage	0.73	0.6	17																
-"ASHP, SEER 18, 9.3 HSPF, Airflow Defect Ratio"	air-to-air	HSPF	9.3	SEER	18	two stage	0.73	0.6	17			-0.25	-0.25												
-"ASHP, SEER 18, 9.3 HSPF, 30F Compressor Lockout"	air-to-air	HSPF	9.3	SEER	18	two stage	0.73	0.6	17	30															
-"ASHP, SEER 20, 11 HSPF"	air-to-air	HSPF	11	SEER	20	variable speed																			
-"ASHP, SEER 20, 11 HSPF, Heating Capacity 5F"	air-to-air	HSPF	11	SEER	20	variable speed		0.9	5		TRUE														
-"ASHP, SEER 22, 10 HSPF"	air-to-air	HSPF	10	SEER	22	variable speed	0.78	0.6	17																
-"ASHP, SEER 22, 10 HSPF, Default Capacity Retention"	air-to-air	HSPF	10	SEER	22	variable speed	0.78																		
-"ASHP, SEER 22, 10 HSPF, Airflow Defect Ratio"	air-to-air	HSPF	10	SEER	22	variable speed	0.78	0.6	17			-0.25	-0.25												
-"ASHP, SEER 22, 10 HSPF, Heating Capacity 17F"	air-to-air	HSPF	10	SEER	22	variable speed	0.78	0.6	17																
-"ASHP, SEER 22, 10 HSPF, 30F Compressor Lockout"	air-to-air	HSPF	10	SEER	22	variable speed	0.78	0.6	17	30															
-"ASHP, SEER 17.25, 10 HPSF, Normalized Capacity Fractions"	air-to-air	HSPF	10	SEER	17.25	variable speed	0.78								Normalized capacity fractions	"47.0, 17.0, 5.0"	"0.28, 0.12, 0.05"	"1.0, 0.69, 0.55"	"4.73, 1.84, 0.81"	"3.44, 2.66, 2.28"	"95.0, 82.0"	"0.325, 0.37"	"1.0, 1.11"	"4.47, 6.34"	"2.71, 3.53"
-"ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance"	air-to-air	HSPF	9.5	SEER	17.5	variable speed	0.78								Absolute capacities	"47.0, 17.0, 5.0"	"9900, 3600, 1100"	"35800, 24600, 19700"	"4.68, 1.57, 0.47"	"3.4, 2.58, 2.63"	"95.0, 82.0"	"11900, 13400"	"36000, 40500"	"4.47, 6.33"	"2.64, 3.46"
-"ASHP, SEER 17.5, 9.5 HSPF, Normalized Capacity Fractions"	air-to-air	HSPF	9.5	SEER	17.5	variable speed	0.78								Normalized capacity fractions	"47.0, 17.0, 5.0"	"0.28, 0.10, 0.03"	"0.99, 0.68, 0.55"	"4.68, 1.57, 0.47"	"3.4, 2.58, 2.63"	"95.0, 82.0"	"0.33, 0.37"	"1.0, 1.13"	"4.47, 6.33"	"2.64, 3.46"
-"ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance, Airflow Defect Ratio"	air-to-air	HSPF	9.5	SEER	17.5	variable speed	0.78					-0.25	-0.25		Absolute capacities	"47.0, 17.0, 5.0"	"9900, 3600, 1100"	"35800, 24600, 19700"	"4.68, 1.57, 0.47"	"3.4, 2.58, 2.63"	"95.0, 82.0"	"11900, 13400"	"36000, 40500"	"4.47, 6.33"	"2.64, 3.46"
-"ASHP, SEER 17.5, 9.5 HSPF, Detailed Performance Heating Only"	air-to-air	HSPF	9.5	SEER	17.5	variable speed	0.78								Absolute capacities	"47.0, 17.0, 5.0"	"9900, 3600, 1100"	"35800, 24600, 19700"	"4.68, 1.57, 0.47"	"3.4, 2.58, 2.63"					
-"ASHP, SEER 24, 13 HSPF"	air-to-air	HSPF	13	SEER	24	variable speed																			
-"ASHP, SEER 24, 13 HSPF, Heating Capacity 5F"	air-to-air	HSPF	13	SEER	24	variable speed		0.9	5		TRUE														
-"GSHP, EER 16.6, COP 3.6"	ground-to-air	COP	3.6	EER	16.6		0.73																		
-"GSHP, EER 16.6, COP 3.6, Airflow Defect Ratio"	ground-to-air	COP	3.6	EER	16.6		0.73					-0.25	-0.25												
-"GSHP, EER 20.2, COP 4.2"	ground-to-air	COP	4.2	EER	20.2																				
-"GSHP, EER 20.5, COP 4.0"	ground-to-air	COP	4	EER	20.5																				
-"MSHP, SEER 14.5, 8.2 HSPF"	mini-split	HSPF	8.2	SEER	14.5	variable speed		0.25	-5		FALSE														
-"MSHP, SEER 14.5, 8.2 HSPF, Ducted"	mini-split	HSPF	8.2	SEER	14.5	variable speed		0.25	-5		TRUE														
-"MSHP, SEER 16, 9.2 HSPF"	mini-split	HSPF	9.2	SEER	16	variable speed		0.5	5		FALSE														
-"MSHP, SEER 16.7, 11.3 HSPF, Detailed Performance"	mini-split	HSPF	11.3	SEER	16.7	variable speed	0.73				TRUE				Absolute capacities	"47.0, 17.0, 5.0, -5.0"	"9200, 7063, 6310, 5683"	"48000, 36800, 32920, 29640"	"4.35, 2.92, 2.60, 2.49"	"3.21, 2.15, 1.93, 1.82"	"95.0, 82.0"	"9600, 10224"	"39000, 41587"	"4.02, 4.61"	"2.86, 3.29"
-"MSHP, SEER 16.7, 11.3 HSPF, Normalized Capacity Fractions"	mini-split	HSPF	11.3	SEER	16.7	variable speed	0.73				TRUE				Normalized capacity fractions	"47.0, 17.0, 5.0, -5.0"	"0.26, 0.20, 0.18, 0.16"	"1.33, 1.02, 0.91, 0.82"	"4.35, 2.92, 2.60, 2.49"	"3.21, 2.15, 1.93, 1.82"	"95.0, 82.0"	"0.27, 0.28"	"1.08, 1.16"	"4.02, 4.61"	"2.86, 3.29"
-"MSHP, SEER 17, 9.5 HSPF"	mini-split	HSPF	9.5	SEER	17	variable speed		0.25	-5		FALSE														
-"MSHP, SEER 17, 9.5 HSPF, Ducted"	mini-split	HSPF	9.5	SEER	17	variable speed		0.25	-5		TRUE														
-"MSHP, SEER 17, 10 HSPF, Ductless, Detailed Performance"	mini-split	HSPF	10	SEER	17	variable speed	0.73				FALSE				Absolute capacities	"47.0, 17.0, 5.0, -13.0"	"11400, 5600, 3600, 2600"	"46500, 25000, 22000, 16000"	"3.48, 2.78, 1.88, 1.52"	"2.75, 2.11, 1.8, 1.31"	"95.0, 82.0"	"9100, 9900"	"36400, 43300"	"3.76, 4.61"	"2.45, 3.51"
-"MSHP, SEER 17, 10 HSPF, Ductless, Normalized Capacity Fractions"	mini-split	HSPF	10	SEER	17	variable speed	0.73				FALSE				Normalized capacity fractions	"47.0, 17.0, 5.0, -13.0"	"0.30, 0.15, 0.09, 0.07"	"1.22, 0.66, 0.58, 0.42"	"3.48, 2.78, 1.88, 1.52"	"2.75, 2.11, 1.8, 1.31"	"95.0, 82.0"	"0.25, 0.28"	"1.01, 1.20"	"3.76, 4.61"	"2.45, 3.51"
-"MSHP, SEER 18.0, 9.6 HSPF"	mini-split	HSPF	9.6	SEER	18	variable speed		0.25	-5		FALSE														
-"MSHP, SEER 18.0, 9.6 HSPF, Ducted"	mini-split	HSPF	9.6	SEER	18	variable speed		0.25	-5		TRUE														
-"MSHP, SEER 19, 10 HSPF, Ducted"	mini-split	HSPF	10	SEER	19	variable speed	0.73	0.6	17		TRUE														
-"MSHP, SEER 19, 10 HSPF, Airflow Defect Ratio"	mini-split	HSPF	10	SEER	19	variable speed	0.73	0.6	17		TRUE	-0.25	-0.25												
-"MSHP, SEER 19, 10 HSPF, 30F Compressor Lockout"	mini-split	HSPF	10	SEER	19	variable speed	0.73	0.6	17	30	TRUE														
-"MSHP, SEER 19, 10 HSPF, Ductless"	mini-split	HSPF	10	SEER	19	variable speed	0.73	0.6	17		FALSE														
-"MSHP, SEER 19, 10 HSPF, Ductless, Detailed Performance"	mini-split	HSPF	10	SEER	19	variable speed	0.73				FALSE				Absolute capacities	"47.0, 17.0, 5.0, -13.0"	"11400, 5600, 3600, 2600"	"46500, 25000, 22000, 16000"	"3.48, 2.78, 1.88, 1.52"	"2.75, 2.11, 1.8, 1.31"	"95.0, 82.0"	"9100, 9900"	"36400, 43300"	"3.76, 4.61"	"2.45, 3.51"
-"MSHP, SEER 20, 11 HSPF"	mini-split	HSPF	11	SEER	20	variable speed		0.9	5		FALSE														
-"MSHP, SEER 24, 13 HSPF"	mini-split	HSPF	13	SEER	24	variable speed		0.9	5		FALSE														
-"MSHP, SEER 25, 12.7 HSPF"	mini-split	HSPF	12.7	SEER	25	variable speed		0.5	-15		FALSE														
-"MSHP, SEER 25, 12.7 HSPF, Ducted"	mini-split	HSPF	12.7	SEER	25	variable speed		0.5	-15		TRUE														
-"MSHP, SEER 29.3, 14 HSPF"	mini-split	HSPF	14	SEER	29.3	variable speed		0.5	-15		FALSE														
-"MSHP, SEER 29.3, 14 HSPF, Ducted"	mini-split	HSPF	14	SEER	29.3	variable speed		0.5	-15		TRUE														
-"MSHP, SEER 33, 13.3 HSPF"	mini-split	HSPF	13.3	SEER	33	variable speed		0.5	-15		FALSE														
-"MSHP, SEER 33, 13.3 HSPF, Ducted"	mini-split	HSPF	13.3	SEER	33	variable speed		0.5	-15		TRUE														
-"PTHP, EER 11.4, COP 3.6"	packaged terminal heat pump	COP	3.6	EER	11.4		0.65	0.6	17																
-"Room AC w/ Reverse Cycle, EER 11.4"	room air conditioner with reverse cycle	COP	3.6	EER	11.4		0.65	0.6	17																
+"Central HP, SEER 8, 6.0 HSPF"	air-to-air	SEER	8	single stage		HSPF	6																		
+"Central HP, SEER 10, 6.2 HSPF"	air-to-air	SEER	10	single stage		HSPF	6.2																		
+"Central HP, SEER 10, 6.8 HSPF"	air-to-air	SEER	10	single stage		HSPF	6.8																		
+"Central HP, SEER 10.3, 7.0 HSPF"	air-to-air	SEER	10.3	single stage		HSPF	7																		
+"Central HP, SEER 11.5, 7.5 HSPF"	air-to-air	SEER	11.5	single stage		HSPF	7.5																		
+"Central HP, SEER 13, 7.7 HSPF"	air-to-air	SEER	13	single stage		HSPF	7.7																		
+"Central HP, SEER 13, 7.7 HSPF, 5F Compressor Lockout"	air-to-air	SEER	13	single stage		HSPF	7.7	0.6	17	5															
+"Central HP, SEER 13, 7.7 HSPF, 25F Compressor Lockout"	air-to-air	SEER	13	single stage		HSPF	7.7	0.6	17	25															
+"Central HP, SEER 13, 7.7 HSPF, 30F Compressor Lockout"	air-to-air	SEER	13	single stage		HSPF	7.7	0.6	17	30															
+"Central HP, SEER 13, 7.7 HSPF, Heating Capacity 17F"	air-to-air	SEER	13	single stage		HSPF	7.7	0.6	17																
+"Central HP, SEER 13, 7.7 HSPF, Grade 3 Installation"	air-to-air	SEER	13	single stage		HSPF	7.7	0.6	17			-0.25	-0.25												
+"Central HP, SEER 13, 8.0 HSPF"	air-to-air	SEER	13	single stage		HSPF	8																		
+"Central HP, SEER 13, 9.85 HSPF"	air-to-air	SEER	13	single stage		HSPF	9.85																		
+"Central HP, SEER 14, 8.2 HSPF"	air-to-air	SEER	14	single stage		HSPF	8.2	0.5	5	5															
+"Central HP, SEER 14.3, 8.5 HSPF"	air-to-air	SEER	14.3	single stage		HSPF	8.5																		
+"Central HP, SEER 15, 8.5 HSPF"	air-to-air	SEER	15	single stage		HSPF	8.5																		
+"Central HP, SEER 15, 9.0 HSPF"	air-to-air	SEER	15	single stage		HSPF	9																		
+"Central HP, SEER 16, 9.0 HSPF"	air-to-air	SEER	16	single stage		HSPF	9																		
+"Central HP, SEER 16, 9.2 HSPF, -20F Compressor Lockout"	air-to-air	SEER	16	single stage		HSPF	9.2	0.5	5	-20															
+"Central HP, SEER 16, 9.2 HSPF, Heating Capacity 5F"	air-to-air	SEER	16	single stage		HSPF	9.2	0.5	5	5															
+"Central HP, SEER 17, 8.7 HSPF"	air-to-air	SEER	17	two stage		HSPF	8.7																		
+"Central HP, SEER 17.25, 10 HPSF, Normalized Detailed Performance"	air-to-air	SEER	17.25	variable speed		HSPF	10								Normalized capacity fractions	"47.0, 17.0, 5.0"	"0.28, 0.12, 0.05"	"1.0, 0.69, 0.55"	"4.73, 1.84, 0.81"	"3.44, 2.66, 2.28"	"95.0, 82.0"	"0.325, 0.37"	"1.0, 1.11"	"4.47, 6.34"	"2.71, 3.53"
+"Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance"	air-to-air	SEER	17.5	variable speed		HSPF	9.5								Normalized capacity fractions	"47.0, 17.0, 5.0"	"0.28, 0.10, 0.03"	"0.99, 0.68, 0.55"	"4.68, 1.57, 0.47"	"3.4, 2.58, 2.63"	"95.0, 82.0"	"0.33, 0.37"	"1.0, 1.13"	"4.47, 6.33"	"2.64, 3.46"
+"Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance"	air-to-air	SEER	17.5	variable speed		HSPF	9.5								Absolute capacities	"47.0, 17.0, 5.0"	"9900, 3600, 1100"	"35800, 24600, 19700"	"4.68, 1.57, 0.47"	"3.4, 2.58, 2.63"	"95.0, 82.0"	"11900, 13400"	"36000, 40500"	"4.47, 6.33"	"2.64, 3.46"
+"Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance, Grade 3 Installation"	air-to-air	SEER	17.5	variable speed		HSPF	9.5					-0.25	-0.25		Absolute capacities	"47.0, 17.0, 5.0"	"9900, 3600, 1100"	"35800, 24600, 19700"	"4.68, 1.57, 0.47"	"3.4, 2.58, 2.63"	"95.0, 82.0"	"11900, 13400"	"36000, 40500"	"4.47, 6.33"	"2.64, 3.46"
+"Central HP, SEER 18, 9.3 HSPF"	air-to-air	SEER	18	two stage		HSPF	9.3	0.6	17																
+"Central HP, SEER 18, 9.3 HSPF, 30F Compressor Lockout"	air-to-air	SEER	18	two stage		HSPF	9.3	0.6	17	30															
+"Central HP, SEER 18, 9.3 HSPF, Grade 3 Installation"	air-to-air	SEER	18	two stage		HSPF	9.3	0.6	17			-0.25	-0.25												
+"Central HP, SEER 20, 11 HSPF"	air-to-air	SEER	20	variable speed		HSPF	11																		
+"Central HP, SEER 20, 11 HSPF, Heating Capacity 5F"	air-to-air	SEER	20	variable speed		HSPF	11	0.9	5																
+"Central HP, SEER 22, 10 HSPF"	air-to-air	SEER	22	variable speed		HSPF	10	0.6	17																
+"Central HP, SEER 22, 10 HSPF, Grade 3 Installation"	air-to-air	SEER	22	variable speed		HSPF	10	0.6	17			-0.25	-0.25												
+"Central HP, SEER 22, 10 HSPF, 30F Compressor Lockout"	air-to-air	SEER	22	variable speed		HSPF	10	0.6	17	30															
+"Central HP, SEER 24, 13 HSPF"	air-to-air	SEER	24	variable speed		HSPF	13																		
+"Central HP, SEER 24, 13 HSPF, Heating Capacity 5F"	air-to-air	SEER	24	variable speed		HSPF	13	0.9	5																
+"Central HP, SEER2 12.4, HSPF2 6.5, Heating Capacity 17F"	air-to-air	SEER2	12.4	single stage		HSPF2	6.5	0.6	17																
+"Mini-Split HP, SEER 14.5, 8.2 HSPF"	mini-split	SEER	14.5	variable speed		HSPF	8.2	0.25	-5																
+"Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted"	mini-split	SEER	14.5	variable speed		HSPF	8.2	0.25	-5		TRUE														
+"Mini-Split HP, SEER 16, 9.2 HSPF"	mini-split	SEER	16	variable speed		HSPF	9.2	0.5	5																
+"Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance"	mini-split	SEER	16.7	variable speed		HSPF	11.3				TRUE				Absolute capacities	"47.0, 17.0, 5.0, -5.0"	"9200, 7063, 6310, 5683"	"48000, 36800, 32920, 29640"	"4.35, 2.92, 2.60, 2.49"	"3.21, 2.15, 1.93, 1.82"	"95.0, 82.0"	"9600, 10224"	"39000, 41587"	"4.02, 4.61"	"2.86, 3.29"
+"Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance"	mini-split	SEER	16.7	variable speed		HSPF	11.3				TRUE				Normalized capacity fractions	"47.0, 17.0, 5.0, -5.0"	"0.26, 0.20, 0.18, 0.16"	"1.33, 1.02, 0.91, 0.82"	"4.35, 2.92, 2.60, 2.49"	"3.21, 2.15, 1.93, 1.82"	"95.0, 82.0"	"0.27, 0.28"	"1.08, 1.16"	"4.02, 4.61"	"2.86, 3.29"
+"Mini-Split HP, SEER 17, 9.5 HSPF"	mini-split	SEER	17	variable speed		HSPF	9.5	0.25	-5																
+"Mini-Split HP, SEER 17, 9.5 HSPF, Ducted"	mini-split	SEER	17	variable speed		HSPF	9.5	0.25	-5		TRUE														
+"Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance"	mini-split	SEER	17	variable speed		HSPF	10								Absolute capacities	"47.0, 17.0, 5.0, -13.0"	"11400, 5600, 3600, 2600"	"46500, 25000, 22000, 16000"	"3.48, 2.78, 1.88, 1.52"	"2.75, 2.11, 1.8, 1.31"	"95.0, 82.0"	"9100, 9900"	"36400, 43300"	"3.76, 4.61"	"2.45, 3.51"
+"Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance"	mini-split	SEER	17	variable speed		HSPF	10								Normalized capacity fractions	"47.0, 17.0, 5.0, -13.0"	"0.30, 0.15, 0.09, 0.07"	"1.22, 0.66, 0.58, 0.42"	"3.48, 2.78, 1.88, 1.52"	"2.75, 2.11, 1.8, 1.31"	"95.0, 82.0"	"0.25, 0.28"	"1.01, 1.20"	"3.76, 4.61"	"2.45, 3.51"
+"Mini-Split HP, SEER 18.0, 9.6 HSPF"	mini-split	SEER	18	variable speed		HSPF	9.6	0.25	-5																
+"Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted"	mini-split	SEER	18	variable speed		HSPF	9.6	0.25	-5		TRUE														
+"Mini-Split HP, SEER 19, 10 HSPF, Ducted"	mini-split	SEER	19	variable speed		HSPF	10	0.6	17		TRUE														
+"Mini-Split HP, SEER 19, 10 HSPF, Grade 3 Installation"	mini-split	SEER	19	variable speed		HSPF	10	0.6	17		TRUE	-0.25	-0.25												
+"Mini-Split HP, SEER 19, 10 HSPF, 30F Compressor Lockout"	mini-split	SEER	19	variable speed		HSPF	10	0.6	17	30	TRUE														
+"Mini-Split HP, SEER 19, 10 HSPF"	mini-split	SEER	19	variable speed		HSPF	10	0.6	17																
+"Mini-Split HP, SEER 19, 10 HSPF, Absolute Detailed Performance"	mini-split	SEER	19	variable speed		HSPF	10								Absolute capacities	"47.0, 17.0, 5.0, -13.0"	"11400, 5600, 3600, 2600"	"46500, 25000, 22000, 16000"	"3.48, 2.78, 1.88, 1.52"	"2.75, 2.11, 1.8, 1.31"	"95.0, 82.0"	"9100, 9900"	"36400, 43300"	"3.76, 4.61"	"2.45, 3.51"
+"Mini-Split HP, SEER 20, 11 HSPF"	mini-split	SEER	20	variable speed		HSPF	11	0.9	5																
+"Mini-Split HP, SEER 24, 13 HSPF"	mini-split	SEER	24	variable speed		HSPF	13	0.9	5																
+"Mini-Split HP, SEER 25, 12.7 HSPF"	mini-split	SEER	25	variable speed		HSPF	12.7	0.5	-15																
+"Mini-Split HP, SEER 25, 12.7 HSPF, Ducted"	mini-split	SEER	25	variable speed		HSPF	12.7	0.5	-15		TRUE														
+"Mini-Split HP, SEER 29.3, 14 HSPF"	mini-split	SEER	29.3	variable speed		HSPF	14	0.5	-15																
+"Mini-Split HP, SEER 29.3, 14 HSPF, Ducted"	mini-split	SEER	29.3	variable speed		HSPF	14	0.5	-15		TRUE														
+"Mini-Split HP, SEER 33, 13.3 HSPF"	mini-split	SEER	33	variable speed		HSPF	13.3	0.5	-15																
+"Mini-Split HP, SEER 33, 13.3 HSPF, Ducted"	mini-split	SEER	33	variable speed		HSPF	13.3	0.5	-15		TRUE														
+"Geothermal HP, EER 16.6, COP 3.6"	ground-to-air	EER	16.6			COP	3.6																		
+"Geothermal HP, EER 16.6, COP 3.6, Grade 3 Installation"	ground-to-air	EER	16.6			COP	3.6					-0.25	-0.25												
+"Geothermal HP, EER 18.2, COP 3.7"	ground-to-air	EER	18.2			COP	3.7																		
+"Geothermal HP, EER 19.4, COP 3.8"	ground-to-air	EER	19.4			COP	3.8																		
+"Geothermal HP, EER 20.2, COP 4.2"	ground-to-air	EER	20.2			COP	4.2																		
+"Geothermal HP, EER 20.5, COP 4.0"	ground-to-air	EER	20.5			COP	4																		
+"Packaged Terminal HP, EER 11.4, COP 3.6"	packaged terminal heat pump	EER	11.4			COP	3.6	0.6	17																
+"Room AC w/ Reverse Cycle, EER 11.4, COP 3.6"	room air conditioner with reverse cycle	EER	11.4			COP	3.6	0.6	17																
