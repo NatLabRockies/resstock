@@ -3,7 +3,7 @@ build_existing_model.ahs_region,:ref:`ahs_region`
 build_existing_model.aiannh_area,:ref:`aiannh_area`
 build_existing_model.area_median_income,:ref:`area_median_income`
 build_existing_model.ashrae_iecc_climate_zone_2004,:ref:`ashrae_iecc_climate_zone_2004`
-build_existing_model.ashrae_iecc_climate_zone_2004_2_a_split,:ref:`ashrae_iecc_climate_zone_2004___2_a_split`
+build_existing_model.ashrae_iecc_climate_zone_2004_sub_cz_split,:ref:`ashrae_iecc_climate_zone_2004___sub_cz_split`
 build_existing_model.bathroom_spot_vent_hour,:ref:`bathroom_spot_vent_hour`
 build_existing_model.battery,:ref:`battery`
 build_existing_model.bedrooms,:ref:`bedrooms`
@@ -169,7 +169,7 @@ completed_status,"Simulation Success, Fail, or Invalid."
 build_existing_model.air_leakage_to_outside_ach_50,Total infiltration to the dwelling unit adjusted by ratio of exterior envelope surface area to total envelope surface area.
 build_existing_model.applicable,The measure was applied to the workflow.
 build_existing_model.buildstock_csv_path,Absolute/relative path of the buildstock CSV file. Relative is compared to the 'lib/housing_characteristics' directory.
-build_existing_model.project_directory,The project directory containing the housing characteristics folder (e.g., project_national).
+build_existing_model.project_directory,The project directory containing the housing characteristics folder (e.g. project_national).
 build_existing_model.sample_weight,Number of buildings this simulation represents.
 build_existing_model.units_represented,The number of dwelling units this simulation represents. Should always be one.
 build_existing_model.emissions_electricity_folders,"Relative paths of electricity emissions factor schedule files with hourly values. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. File names must contain GEA region names."

@@ -42,24 +42,25 @@ ASHRAE IECC Climate Zone 2004	7A	ResStockArguments	site_iecc_zone=7	site_type=au
 ASHRAE IECC Climate Zone 2004	7AK	ResStockArguments	site_iecc_zone=7	site_type=auto
 ASHRAE IECC Climate Zone 2004	7B	ResStockArguments	site_iecc_zone=7	site_type=auto
 ASHRAE IECC Climate Zone 2004	8AK	ResStockArguments	site_iecc_zone=8	site_type=auto
-ASHRAE IECC Climate Zone 2004 - 2A Split	"2A - FL, GA, AL, MS"
-ASHRAE IECC Climate Zone 2004 - 2A Split	"2A - TX, LA"
-ASHRAE IECC Climate Zone 2004 - 2A Split	1A
-ASHRAE IECC Climate Zone 2004 - 2A Split	2B
-ASHRAE IECC Climate Zone 2004 - 2A Split	3A
-ASHRAE IECC Climate Zone 2004 - 2A Split	3B
-ASHRAE IECC Climate Zone 2004 - 2A Split	3C
-ASHRAE IECC Climate Zone 2004 - 2A Split	4A
-ASHRAE IECC Climate Zone 2004 - 2A Split	4B
-ASHRAE IECC Climate Zone 2004 - 2A Split	4C
-ASHRAE IECC Climate Zone 2004 - 2A Split	5A
-ASHRAE IECC Climate Zone 2004 - 2A Split	5B
-ASHRAE IECC Climate Zone 2004 - 2A Split	6A
-ASHRAE IECC Climate Zone 2004 - 2A Split	6B
-ASHRAE IECC Climate Zone 2004 - 2A Split	7A
-ASHRAE IECC Climate Zone 2004 - 2A Split	7AK
-ASHRAE IECC Climate Zone 2004 - 2A Split	7B
-ASHRAE IECC Climate Zone 2004 - 2A Split	8AK
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	"2A - FL, GA, AL, MS"
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	"2A - TX, LA"
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	1A - FL
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	1A - HI
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	2B
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	3A
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	3B
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	3C
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	4A
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	4B
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	4C
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	5A
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	5B
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	6A
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	6B
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	7A
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	7AK
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	7B
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	8AK
 Area Median Income	0-30%
 Area Median Income	100-120%
 Area Median Income	120-150%
