@@ -11,7 +11,7 @@ Development Changelog
         :tags: characteristics, docs
         :pullreq: 1374
 
-        **Date**: 2025-04-04
+        **Date**: 2025-04-05
 
         Title:
         Differentiate Hawaii in IECC Climate Zone 1A
