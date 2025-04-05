@@ -421,7 +421,7 @@ The options are either (1) In metro area, not/partially in principal city, (2) I
 This section of ResStock characteristics is a set of climate zone definitions. There are five input files to ResStock that specify climate zones:
 \begin{itemize}
     \item ASHRAE IECC Climate Zone 2004
-    \item ASHRAE IECC Climate Zone 2004---2A Split
+    \item ASHRAE IECC Climate Zone 2004---Sub-CZ Split
     \item Building America Climate Zones
     \item California Energy Commission (CEC) Climate Zones
     \item ENERGY STAR\textsuperscript{\textregistered} Climate Zone 2023.
@@ -466,9 +466,9 @@ the home address. \\
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.
 
-\subsubsection{ASHRAE IECC Climate Zone 2004---2A Split}
+\subsubsection{ASHRAE IECC Climate Zone 2004 -- Sub-CZ Split}
 \paragraph{Description}
-The climate zone, according to ASHRAE 169 in 2004 and IECC in 2012, where the sample is located. Climate zone where climate zone 2A is split between counties in (1) TX and LA, and (2) FL, GA, AL, and MS. See Figure \ref{fig:ashrae_169_2004_cz} for the climate zones and the climate zone 2A counties that are split between the states mentioned previously.
+The climate zone, according to ASHRAE 169 in 2004 and IECC in 2012, where the sample is located. Climate zone where climate zone 2A is split between counties in (1) TX and LA, and (2) FL, GA, AL, and MS. Climate zone where climate zone 1A is split between counties in (1) HI, and (2) FL. See Figure \ref{fig:ashrae_169_2004_cz} for the climate zones and the climate zone 2A counties that are split between the states mentioned previously.
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
@@ -488,6 +488,7 @@ A set of counties defines each climate and moisture zone. Climate zones range fr
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item This characteristic is used to better represent HVAC types in the 2A climate zone.
+    \item This characteristic is used to better represent partial conditioning in the 1A climate zone.
 \end{itemize}
 
 \subsubsection{Building America Climate Zones}
