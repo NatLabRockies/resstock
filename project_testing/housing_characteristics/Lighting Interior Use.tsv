@@ -1,9 +1,9 @@
 Dependency=Lighting	Option=None	Option=100% Usage	Option=95% Usage	sampling_probability
-100% Incandescent	0	0.5	0.5	0.166667
-60% CFL	0	0.5	0.5	0.166667
-100% CFL	0	0.5	0.5	0.166667
-100% LED	0	0.5	0.5	0.166667
-20% LED	0	0.5	0.5	0.166667
-None	1	0	0	0.166667
+100% Incandescent	0	0.5	0.5	0.333333
+60% CFL	0	0.5	0.5	0
+100% CFL	0	0.5	0.5	0.333333
+100% LED	0	0.5	0.5	0.333333
+20% LED	0	0.5	0.5	0
+None	1	0	0	0
 # Created by: manually created
 # Description: Interior lighting usage relative to the national average.

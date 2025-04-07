@@ -95,7 +95,7 @@ Insulation Roof,8.0,1.0,manually created,Finished roof insulation level.
 Insulation Slab,8.0,1.0,manually created,Slab insulation level.
 Insulation Wall,16.0,1.0,manually created,Wall construction type and insulation level.
 Interior Shading,5.0,0.0,manually created,Fraction of window shading in the summer and winter.
-Lighting,6.0,0.0,originally created by sources\recs\2015\tsv_maker.py. Manually updated during the HPXML transition.,Fraction of lighting types.
+Lighting,3.0,0.0,sources\recs\recs2020\tsv_maker.py,"Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options."
 Lighting Interior Use,3.0,1.0,manually created,Interior lighting usage relative to the national average.
 Lighting Other Use,3.0,1.0,manually created,Exterior and garage lighting usage relative to the national average.
 Mechanical Ventilation,5.0,0.0,manually created,Mechanical ventilation type and efficiency.
