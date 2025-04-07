@@ -6,6 +6,19 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+    .. change::
+        :tags: characteristics, docs
+        :pullreq: 1375
+
+        **Date**: 2025-04-07
+
+        Title:
+        Increase hot water fixture usage by 25% for Hawaii
+
+        Description:
+        Add IECC Cimate Zone as a dependency to Hot Water Fixtures so that the distribution for Hawaii can be increased independently. This is to increase the hot water electricity for Hawaii, which is lower than RECS due in part to the lower hot water demand per occupant in ResStock.
+
+        Assignees: Lixi Liu
 
     .. change::
         :tags: characteristics, docs

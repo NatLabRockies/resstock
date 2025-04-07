@@ -538,7 +538,8 @@ Following the OpenStudio-HPXML default assumption, ResStock models hot water fix
 
 %The total daily demand (in gallons per day) for hot water is calculated based on the number of bedrooms converted from occupants using \cite{parker2015_hot_water}.
 
-The fraction of low-flow fixtures adjusts the demand to account for fixture efficiency. The demand is also multiplied by a fixture usage multiplier to add diversity. The hot water fixture usage multiplier is given by a log-normal distribution of values ranging from 40\% to 200\% (with mean at 80\%\footnote{The 80\% average multiplier resulted in a lower than expected water usage and is addressed in a later version of ResStock.}) derived from the field data of 1,700 residential electric resistance water heaters in a demand management program in the U.S. Northeast census division.
+The fraction of low-flow fixtures adjusts the demand to account for fixture efficiency. The demand is also multiplied by a fixture usage multiplier to add diversity. The hot water fixture usage multiplier is derived from the field data of 1,700 residential electric resistance water heaters in a demand management program in the U.S. Northeast census division and is mean-centered to a weighed average of 1.
+For Hawaii, the distribution of the fixture usage multiplier is mean-shifted to 1.25 to account for higher usage in the state.
 
 \subsubsection{Hot Water Fixtures}\label{hot_water_fixtures}
 \paragraph{Description}
@@ -553,11 +554,12 @@ Hot water fixture usage and flow levels.
 
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
-\item Usage Level.
+  \item ASHRAE IECC Climate Zone 2004 - Sub-CZ Split
+  \item Usage Level
 \end{itemize}
 
 \paragraph{Options}
-The Hot Water Fixtures options are usage bins ranging from ``50\% Usage'' to ``200\% Usage'' at 10\% increments. For the ResStock baseline, the options are log-normally distributed between 40\% and 200\%, with the peak at 80\%. All options have both \texttt{water\_fixtures\_shower\_low\_flow} and
+The Hot Water Fixtures options are usage bins ranging from ``50\% Usage'' to ``200\% Usage'' at 10\% increments. For the ResStock baseline, the options are log-normally distributed between 40\% and 200\%, with the peak at 100\%. All options have both \texttt{water\_fixtures\_shower\_low\_flow} and
 \texttt{water\_fixtures\_sink\_low\_flow} set to false. \texttt{water\_fixtures\_usage\_multiplier} is set according to their option names.
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hot_water_fix}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-fixtures}{Water Fixtures} documentation for the available HPXML schema elements, default values, and constraints.
@@ -591,6 +593,8 @@ occupants. \\
 \item
   Low, Medium, and High usage is assigned based on the lower 25th
   percent, middle 50th percent, and upper 25th percent.
+\item
+  For IECC climate zone '1A - HI', a lognormal distribution (stdev: 0.239) was fitted to the fied data and the mean was then shifted to 125\%.
 \end{itemize}
 
 
