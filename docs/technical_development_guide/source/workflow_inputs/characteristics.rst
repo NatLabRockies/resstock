@@ -42980,6 +42980,10 @@ Source
 Assumption
 **********
 
+- \For ['1A - HI'], a lognormal distribution was fitted to the fied data and the mean was then shifted by 25%.
+
+- \The distribution has an average value of 1.250 when transformed and a standard deviation of 0.239.
+
 - \Low, Medium, and High usage is assigned based on the lower 25th percent, middle 50th percent, and upper 25th percent.
 
 
@@ -43087,27 +43091,27 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - false
      - 1.5
    * - 160% Usage
-     - 0.99%
+     - 1%
      - false
      - false
      - 1.6
    * - 170% Usage
-     - 0.73%
+     - 0.74%
      - false
      - false
      - 1.7
    * - 180% Usage
-     - 0.31%
+     - 0.32%
      - false
      - false
      - 1.8
    * - 190% Usage
-     - 0%
+     - 0.0077%
      - false
      - false
      - 1.9
    * - 200% Usage
-     - 0.1%
+     - 0.11%
      - false
      - false
      - 2.0
