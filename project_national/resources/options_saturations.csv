@@ -4686,22 +4686,6 @@ Level,Parameter,Option,Saturation
 1,Dishwasher Usage Level,80% Usage,0.25
 1,Dishwasher Usage Level,100% Usage,0.5
 1,Dishwasher Usage Level,120% Usage,0.25
-1,Hot Water Fixtures,50% Usage,0.00466805
-1,Hot Water Fixtures,60% Usage,0.036307
-1,Hot Water Fixtures,70% Usage,0.0990665
-1,Hot Water Fixtures,80% Usage,0.139523
-1,Hot Water Fixtures,90% Usage,0.167531
-1,Hot Water Fixtures,100% Usage,0.182054
-1,Hot Water Fixtures,110% Usage,0.134336
-1,Hot Water Fixtures,120% Usage,0.088693
-1,Hot Water Fixtures,130% Usage,0.067946
-1,Hot Water Fixtures,140% Usage,0.037863
-1,Hot Water Fixtures,150% Usage,0.0207469
-1,Hot Water Fixtures,160% Usage,0.00985477
-1,Hot Water Fixtures,170% Usage,0.0072614
-1,Hot Water Fixtures,180% Usage,0.00311203
-1,Hot Water Fixtures,190% Usage,0
-1,Hot Water Fixtures,200% Usage,0.00103735
 1,Plug Load Diversity,50%,0.25
 1,Plug Load Diversity,100%,0.5
 1,Plug Load Diversity,200%,0.25
@@ -12506,6 +12490,22 @@ Level,Parameter,Option,Saturation
 3,PUMA Metro Status,"In metro area, not/partially in principal city",0.639008
 3,PUMA Metro Status,"In metro area, principal city",0.13411
 3,PUMA Metro Status,Not/partially in metro area,0.226881
+4,Hot Water Fixtures,50% Usage,0.00465047
+4,Hot Water Fixtures,60% Usage,0.0361736
+4,Hot Water Fixtures,70% Usage,0.0987258
+4,Hot Water Fixtures,80% Usage,0.139119
+4,Hot Water Fixtures,90% Usage,0.16716
+4,Hot Water Fixtures,100% Usage,0.181769
+4,Hot Water Fixtures,110% Usage,0.134334
+4,Hot Water Fixtures,120% Usage,0.088894
+4,Hot Water Fixtures,130% Usage,0.0681872
+4,Hot Water Fixtures,140% Usage,0.0381423
+4,Hot Water Fixtures,150% Usage,0.0210001
+4,Hot Water Fixtures,160% Usage,0.0100626
+4,Hot Water Fixtures,170% Usage,0.007406
+4,Hot Water Fixtures,180% Usage,0.00321681
+4,Hot Water Fixtures,190% Usage,7.66775e-05
+4,Hot Water Fixtures,200% Usage,0.00108219
 4,County Metro Status,Metropolitan,0.833251
 4,County Metro Status,Non-Metropolitan,0.166749
 4,Generation And Emissions Assessment Region,AZNMc,0.0363015
