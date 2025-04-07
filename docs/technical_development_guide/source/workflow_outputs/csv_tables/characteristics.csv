@@ -3,7 +3,7 @@ build_existing_model.ahs_region,:ref:`ahs_region`
 build_existing_model.aiannh_area,:ref:`aiannh_area`
 build_existing_model.area_median_income,:ref:`area_median_income`
 build_existing_model.ashrae_iecc_climate_zone_2004,:ref:`ashrae_iecc_climate_zone_2004`
-build_existing_model.ashrae_iecc_climate_zone_2004_2_a_split,:ref:`ashrae_iecc_climate_zone_2004___2_a_split`
+build_existing_model.ashrae_iecc_climate_zone_2004_sub_cz_split,:ref:`ashrae_iecc_climate_zone_2004___sub_cz_split`
 build_existing_model.bathroom_spot_vent_hour,:ref:`bathroom_spot_vent_hour`
 build_existing_model.battery,:ref:`battery`
 build_existing_model.bedrooms,:ref:`bedrooms`
