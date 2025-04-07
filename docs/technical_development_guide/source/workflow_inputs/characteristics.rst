@@ -298,15 +298,15 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - 8
 
-.. _ashrae_iecc_climate_zone_2004___2_a_split:
+.. _ashrae_iecc_climate_zone_2004___sub_cz_split:
 
-ASHRAE IECC Climate Zone 2004 - 2A Split
-----------------------------------------
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split
+--------------------------------------------
 
 Description
 ***********
 
-Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MS
+Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MSClimate zone where climate zone 1A is split between counties in FL and HI
 
 Created by
 **********
@@ -326,13 +326,13 @@ Source
 Assumption
 **********
 
-- \This characteristic is used to better represent HVAC types in the 2A climate zone.
+- \This characteristic is used to better represent HVAC types in the 2A climate zone.This characteristic is used to better represent partial conditioning in the 1A climate zone.
 
 
 Options
 *******
 
-From ``project_national`` the list of options, option stock sturation, and option arguments for the **ASHRAE IECC Climate Zone 2004 - 2A Split** characteristic.
+From ``project_national`` the list of options, option stock sturation, and option arguments for the **ASHRAE IECC Climate Zone 2004 - Sub-CZ Split** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -342,8 +342,10 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Option name
      - Stock saturation
 
-   * - 1A
-     - 1.8%
+   * - 1A - FL
+     - 1.4%
+   * - 1A - HI
+     - 0.4%
    * - 2A - FL, GA, AL, MS
      - 6.2%
    * - 2A - TX, LA
