@@ -11350,24 +11350,25 @@ Level,Parameter,Option,Saturation
 3,AHS Region,Non-CBSA South Atlantic,0.150309
 3,AHS Region,Non-CBSA West North Central,0.0691843
 3,AHS Region,Non-CBSA West South Central,0.0775408
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,1A,0.0179403
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,"2A - FL, GA, AL, MS",0.0618566
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,"2A - TX, LA",0.0540783
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,2B,0.0197434
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,3A,0.13305
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,3B,0.0929123
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,3C,0.0234445
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,4A,0.215302
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,4B,0.0077307
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,4C,0.0288003
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,5A,0.225367
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,5B,0.037893
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,6A,0.0613171
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,6B,0.0092306
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,7A,0.00789633
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,7AK,0.00178684
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,7B,0.00113165
-3,ASHRAE IECC Climate Zone 2004 - 2A Split,8AK,0.000519458
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,1A - FL,0.0139845
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,1A - HI,0.00395575
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,"2A - FL, GA, AL, MS",0.0618566
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,"2A - TX, LA",0.0540783
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,2B,0.0197434
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,3A,0.13305
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,3B,0.0929123
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,3C,0.0234445
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,4A,0.215302
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,4B,0.0077307
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,4C,0.0288003
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,5A,0.225367
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,5B,0.037893
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,6A,0.0613171
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,6B,0.0092306
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,7A,0.00789633
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,7AK,0.00178684
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,7B,0.00113165
+3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,8AK,0.000519458
 3,Building America Climate Zone,Cold,0.33389
 3,Building America Climate Zone,Hot-Dry,0.11127
 3,Building America Climate Zone,Hot-Humid,0.18118
@@ -12733,8 +12734,8 @@ Level,Parameter,Option,Saturation
 6,Ceiling Fan,None,0.28
 6,Ceiling Fan,Standard Efficiency,0.632508
 6,Ceiling Fan,"Standard Efficiency, No usage",0.0874922
-6,Has PV,No,0.99062
-6,Has PV,Yes,0.00937984
+6,Has PV,No,0.989958
+6,Has PV,Yes,0.0100425
 6,Tenure,Not Available,0.121517
 6,Tenure,Owner,0.559043
 6,Tenure,Renter,0.31944
@@ -12775,23 +12776,23 @@ Level,Parameter,Option,Saturation
 7,Battery,"20 kWh, Outside",0
 7,Battery,"20 kWh, Garage",0
 7,Battery,"20 kWh, 80% Round Trip Efficiency",0
-7,PV Orientation,East,0.0014847
-7,PV Orientation,None,0.99062
-7,PV Orientation,North,0.000156838
-7,PV Orientation,Northeast,0.00013649
-7,PV Orientation,Northwest,9.27069e-05
-7,PV Orientation,South,0.00421553
-7,PV Orientation,Southeast,0.00134174
-7,PV Orientation,Southwest,0.00113522
-7,PV Orientation,West,0.00081661
-7,PV System Size,1.0 kWDC,0.00025106
-7,PV System Size,3.0 kWDC,0.00183402
-7,PV System Size,5.0 kWDC,0.00278418
-7,PV System Size,7.0 kWDC,0.00209545
-7,PV System Size,9.0 kWDC,0.00137372
-7,PV System Size,11.0 kWDC,0.000740201
-7,PV System Size,13.0 kWDC,0.000301214
-7,PV System Size,None,0.99062
+7,PV Orientation,East,0.00158958
+7,PV Orientation,None,0.989958
+7,PV Orientation,North,0.000167918
+7,PV Orientation,Northeast,0.000146132
+7,PV Orientation,Northwest,9.9256e-05
+7,PV Orientation,South,0.00451333
+7,PV Orientation,Southeast,0.00143652
+7,PV Orientation,Southwest,0.00121542
+7,PV Orientation,West,0.000874298
+7,PV System Size,1.0 kWDC,0.000272094
+7,PV System Size,3.0 kWDC,0.00200103
+7,PV System Size,5.0 kWDC,0.00299626
+7,PV System Size,7.0 kWDC,0.00223481
+7,PV System Size,9.0 kWDC,0.00144877
+7,PV System Size,11.0 kWDC,0.00077465
+7,PV System Size,13.0 kWDC,0.000314848
+7,PV System Size,None,0.989958
 7,Income,<10000,0.0536329
 7,Income,10000-14999,0.0379308
 7,Income,15000-19999,0.0385917

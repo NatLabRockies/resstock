@@ -298,15 +298,15 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - 8
 
-.. _ashrae_iecc_climate_zone_2004___2_a_split:
+.. _ashrae_iecc_climate_zone_2004___sub_cz_split:
 
-ASHRAE IECC Climate Zone 2004 - 2A Split
-----------------------------------------
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split
+--------------------------------------------
 
 Description
 ***********
 
-Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MS
+Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 that the sample is located. Climate zone where climate zone 2A is split between counties in TX, LA and FL, GA, AL, and MSClimate zone where climate zone 1A is split between counties in FL and HI
 
 Created by
 **********
@@ -326,13 +326,13 @@ Source
 Assumption
 **********
 
-- \This characteristic is used to better represent HVAC types in the 2A climate zone.
+- \This characteristic is used to better represent HVAC types in the 2A climate zone.This characteristic is used to better represent partial conditioning in the 1A climate zone.
 
 
 Options
 *******
 
-From ``project_national`` the list of options, option stock sturation, and option arguments for the **ASHRAE IECC Climate Zone 2004 - 2A Split** characteristic.
+From ``project_national`` the list of options, option stock sturation, and option arguments for the **ASHRAE IECC Climate Zone 2004 - Sub-CZ Split** characteristic.
 
 .. list-table::
    :header-rows: 1
@@ -342,8 +342,10 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Option name
      - Stock saturation
 
-   * - 1A
-     - 1.8%
+   * - 1A - FL
+     - 1.4%
+   * - 1A - HI
+     - 0.4%
    * - 2A - FL, GA, AL, MS
      - 6.2%
    * - 2A - TX, LA
@@ -38434,7 +38436,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - central air conditioner
      - SEER
      - 8
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -38449,7 +38451,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - central air conditioner
      - SEER
      - 10
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -38464,7 +38466,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - central air conditioner
      - SEER
      - 13
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -38479,7 +38481,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - central air conditioner
      - SEER
      - 15
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -39437,7 +39439,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 6.2
      - SEER
      - 10
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -39482,7 +39484,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 7.7
      - SEER
      - 13
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -39527,7 +39529,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 8.5
      - SEER
      - 15
-     - auto
+     - single stage
      - auto
      - auto
      - auto
@@ -40157,7 +40159,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 8.2
      - SEER
      - 14.5
-     - auto
+     - variable speed
      - auto
      - auto
      - auto
@@ -40202,7 +40204,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 14
      - SEER
      - 29.3
-     - auto
+     - variable speed
      - auto
      - auto
      - auto
@@ -40995,6 +40997,12 @@ Arguments
      - Double
      -
      - The rated efficiency value of the cooling system. Ignored for evaporative cooler.
+   * - ``cooling_system_cooling_compressor_type``
+     - false
+     - 
+     - Choice
+     - auto, single stage, two stage, variable speed
+     - The compressor type of the cooling system. Only applies to central air conditioner and mini-split. If not provided, the OS-HPXML default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
    * - ``cooling_system_cooling_capacity``
      - false
      - Btu/hr
@@ -41208,6 +41216,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``cooling_system_type``
      - ``cooling_system_cooling_efficiency_type``
      - ``cooling_system_cooling_efficiency``
+     - ``cooling_system_cooling_compressor_type``
      - ``cooling_system_cooling_capacity``
      - ``cooling_system_cooling_autosizing_limit``
      - ``cooling_system_is_ducted``
@@ -41248,6 +41257,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - 1
+     - 
      - 
      - 
      - 
@@ -41296,6 +41306,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - 
      - 
+     - 
      - none
      - HSPF
      - 0
@@ -41335,6 +41346,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - mini-split
      - SEER
      - 13
+     - variable speed
      - auto
      - auto
      - false
@@ -41377,6 +41389,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - mini-split
      - SEER
      - 13
+     - variable speed
      - auto
      - 
      - false
@@ -41419,6 +41432,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - mini-split
      - SEER
      - 13
+     - variable speed
      - auto
      - 
      - false
@@ -41493,8 +41507,10 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - 
      - 
+     - 
    * - Void
      - 0%
+     - 
      - 
      - 
      - 
@@ -42049,7 +42065,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - No
      - 99%
    * - Yes
-     - 0.94%
+     - 1%
 
 .. _heating_fuel:
 
@@ -60759,7 +60775,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``pv_system_2_array_azimuth``
 
    * - East
-     - 0.15%
+     - 0.16%
      - 90
      - 0
    * - None
@@ -60767,31 +60783,31 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 180
      - 0
    * - North
-     - 0.016%
+     - 0.017%
      - 0
      - 0
    * - Northeast
-     - 0.014%
+     - 0.015%
      - 45
      - 0
    * - Northwest
-     - 0.0093%
+     - 0.0099%
      - 315
      - 0
    * - South
-     - 0.42%
+     - 0.45%
      - 180
      - 0
    * - Southeast
-     - 0.13%
+     - 0.14%
      - 135
      - 0
    * - Southwest
-     - 0.11%
+     - 0.12%
      - 225
      - 0
    * - West
-     - 0.082%
+     - 0.087%
      - 270
      - 0
 
@@ -60950,7 +60966,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``pv_system_2_max_power_output``
 
    * - 1.0 kWDC
-     - 0.025%
+     - 0.027%
      - true
      - auto
      - roof
@@ -60966,7 +60982,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 3.0 kWDC
-     - 0.18%
+     - 0.2%
      - true
      - auto
      - roof
@@ -60982,7 +60998,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 5.0 kWDC
-     - 0.28%
+     - 0.3%
      - true
      - auto
      - roof
@@ -60998,7 +61014,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 7.0 kWDC
-     - 0.21%
+     - 0.22%
      - true
      - auto
      - roof
@@ -61030,7 +61046,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 11.0 kWDC
-     - 0.074%
+     - 0.077%
      - true
      - auto
      - roof
@@ -61046,7 +61062,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 13.0 kWDC
-     - 0.03%
+     - 0.031%
      - true
      - auto
      - roof

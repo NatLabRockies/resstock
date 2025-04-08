@@ -6,6 +6,67 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+
+    .. change::
+        :tags: characteristics, docs
+        :pullreq: 1374
+
+        **Date**: 2025-04-05
+
+        Title:
+        Differentiate Hawaii in IECC Climate Zone 1A
+
+        Description:
+        Split out HI and FL in Climate Zone 1A to support Hawaii differentiation
+
+        Assignees: Janet Reyna
+
+
+    .. change::
+        :tags: outputs, standard data release
+        :pullreq: 1371
+
+        **Date**: 2025-04-01
+
+        Title:
+        Remove end-use emissions from SDR YAML outputs
+
+        Description:
+        ResStock SDR currently do not publish end-use emissions. ResStock SDR only publish totals and totals by fuel. In an effort to reduce the number of outputs, end-use emissions outputs have been removed from the SDR raw outputs. The end-use emissions can still be called out for testing purposes using.
+
+        Assignees: Anthony Fontanini
+
+
+    .. change::
+        :tags: docs, technical reference guide
+        :pullreq: 1361
+
+        **Date**: 2025-03-12
+
+        Title:
+        Update Technical Reference Guide from 3.3.0 to develop
+
+        Description:
+        Update the Technical Reference Guide based on the PRs from the split-off point of ResStock Release 3.3.0 to current develop.
+
+        Assignees: Anthony Fontanini
+
+
+    .. change::
+        :tags: workflow, feature
+        :pullreq: 1353
+
+        **Date**: 2025-03-11
+
+        Title:
+        Latest OS-HPXML
+
+        Description:
+        All OpenStudio-HPXML changes, no required ResStock changes. Updates to NEEP ASHP sample files, fix possible HVAC sizing error, HPXML class update for attic/foundation types, Speed up weather processing, combi boiler error fix, smooth shcedule EV plugload, shift all schedules in sync and fix occupancy aggregation.
+
+        Assignees: Joe Robertson
+
+
     .. change::
         :tags: characteristics, feature, docs, technical reference guide, outputs
         :pullreq: 1299
