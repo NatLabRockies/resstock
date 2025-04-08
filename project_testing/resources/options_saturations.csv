@@ -146,6 +146,10 @@ Level,Parameter,Option,Saturation
 0,Ground Thermal Conductivity,2.0,0.125
 0,Ground Thermal Conductivity,2.3,0.125
 0,Ground Thermal Conductivity,2.6,0.125
+0,HVAC System Is Faulted,No,0.5
+0,HVAC System Is Faulted,Yes,0.5
+0,HVAC System Is Scaled,No,0.5
+0,HVAC System Is Scaled,Yes,0.5
 0,Has PV,No,0.5
 0,Has PV,Yes,0.5
 0,Heating Fuel,Electricity,0.142857
@@ -206,10 +210,6 @@ Level,Parameter,Option,Saturation
 0,Hot Water Fixtures,180% Usage,0.0625
 0,Hot Water Fixtures,190% Usage,0.0625
 0,Hot Water Fixtures,200% Usage,0.0625
-0,HVAC System Is Faulted,No,0.5
-0,HVAC System Is Faulted,Yes,0.5
-0,HVAC System Is Scaled,No,0.5
-0,HVAC System Is Scaled,Yes,0.5
 0,Infiltration,0.5 ACH50,0.037037
 0,Infiltration,0.25 ACH50,0.037037
 0,Infiltration,0.75 ACH50,0.037037
@@ -530,6 +530,52 @@ Level,Parameter,Option,Saturation
 1,Geometry Floor Area Bin,1500-2499,0.222222
 1,Geometry Floor Area Bin,2500-3999,0.222222
 1,Geometry Floor Area Bin,4000+,0.111111
+1,HVAC System Single Speed AC Airflow,154.8 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,204.4 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,254.0 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,303.5 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,353.1 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,402.7 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,452.3 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,501.9 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,551.5 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,601.0 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,650.6 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,700.2 cfm/ton,0.0416665
+1,HVAC System Single Speed AC Airflow,None,0.5
+1,HVAC System Single Speed AC Charge,0.570 Charge Frac,0.0714285
+1,HVAC System Single Speed AC Charge,0.709 Charge Frac,0.0714285
+1,HVAC System Single Speed AC Charge,0.848 Charge Frac,0.0714285
+1,HVAC System Single Speed AC Charge,0.988 Charge Frac,0.0714285
+1,HVAC System Single Speed AC Charge,1.127 Charge Frac,0.0714285
+1,HVAC System Single Speed AC Charge,1.266 Charge Frac,0.0714285
+1,HVAC System Single Speed AC Charge,1.405 Charge Frac,0.0714285
+1,HVAC System Single Speed AC Charge,None,0.5
+1,HVAC System Single Speed ASHP Airflow,154.8 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,204.4 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,254.0 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,303.5 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,353.1 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,402.7 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,452.3 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,501.9 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,551.5 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,601.0 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,650.6 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,700.2 cfm/ton,0.0416665
+1,HVAC System Single Speed ASHP Airflow,None,0.5
+1,HVAC System Single Speed ASHP Charge,0.570 Charge Frac,0.0714285
+1,HVAC System Single Speed ASHP Charge,0.709 Charge Frac,0.0714285
+1,HVAC System Single Speed ASHP Charge,0.848 Charge Frac,0.0714285
+1,HVAC System Single Speed ASHP Charge,0.988 Charge Frac,0.0714285
+1,HVAC System Single Speed ASHP Charge,1.127 Charge Frac,0.0714285
+1,HVAC System Single Speed ASHP Charge,1.266 Charge Frac,0.0714285
+1,HVAC System Single Speed ASHP Charge,1.405 Charge Frac,0.0714285
+1,HVAC System Single Speed ASHP Charge,None,0.5
+1,HVAC Cooling Autosizing Factor,None,0.5
+1,HVAC Cooling Autosizing Factor,40% Oversized,0.5
+1,HVAC Heating Autosizing Factor,None,0.5
+1,HVAC Heating Autosizing Factor,40% Oversized,0.5
 1,PV Orientation,East,0.0625
 1,PV Orientation,None,0.5
 1,PV Orientation,North,0.0625
@@ -590,52 +636,6 @@ Level,Parameter,Option,Saturation
 1,Heating Setpoint Offset Period,Night -4h,0.0151515
 1,Heating Setpoint Offset Period,Night -5h,0.0151515
 1,Heating Setpoint Offset Period,None,0.5
-1,HVAC System Single Speed AC Airflow,154.8 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,204.4 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,254.0 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,303.5 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,353.1 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,402.7 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,452.3 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,501.9 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,551.5 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,601.0 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,650.6 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,700.2 cfm/ton,0.0416665
-1,HVAC System Single Speed AC Airflow,None,0.5
-1,HVAC System Single Speed AC Charge,0.570 Charge Frac,0.0714285
-1,HVAC System Single Speed AC Charge,0.709 Charge Frac,0.0714285
-1,HVAC System Single Speed AC Charge,0.848 Charge Frac,0.0714285
-1,HVAC System Single Speed AC Charge,0.988 Charge Frac,0.0714285
-1,HVAC System Single Speed AC Charge,1.127 Charge Frac,0.0714285
-1,HVAC System Single Speed AC Charge,1.266 Charge Frac,0.0714285
-1,HVAC System Single Speed AC Charge,1.405 Charge Frac,0.0714285
-1,HVAC System Single Speed AC Charge,None,0.5
-1,HVAC System Single Speed ASHP Airflow,154.8 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,204.4 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,254.0 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,303.5 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,353.1 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,402.7 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,452.3 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,501.9 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,551.5 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,601.0 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,650.6 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,700.2 cfm/ton,0.0416665
-1,HVAC System Single Speed ASHP Airflow,None,0.5
-1,HVAC System Single Speed ASHP Charge,0.570 Charge Frac,0.0714285
-1,HVAC System Single Speed ASHP Charge,0.709 Charge Frac,0.0714285
-1,HVAC System Single Speed ASHP Charge,0.848 Charge Frac,0.0714285
-1,HVAC System Single Speed ASHP Charge,0.988 Charge Frac,0.0714285
-1,HVAC System Single Speed ASHP Charge,1.127 Charge Frac,0.0714285
-1,HVAC System Single Speed ASHP Charge,1.266 Charge Frac,0.0714285
-1,HVAC System Single Speed ASHP Charge,1.405 Charge Frac,0.0714285
-1,HVAC System Single Speed ASHP Charge,None,0.5
-1,HVAC Cooling Autosizing Factor,None,0.5
-1,HVAC Cooling Autosizing Factor,40% Oversized,0.5
-1,HVAC Heating Autosizing Factor,None,0.5
-1,HVAC Heating Autosizing Factor,40% Oversized,0.5
 1,Holiday Lighting,None,0
 1,Holiday Lighting,No Exterior Use,1
 1,Lighting Interior Use,None,0

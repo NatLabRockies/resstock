@@ -66,12 +66,12 @@ Level,Parameter,Option,Saturation
 0,Electric Vehicle Miles Traveled,27500,0.0283
 0,Electric Vehicle Miles Traveled,35000,0.0204
 0,Electric Vehicle Miles Traveled,45000,0.014
-0,Holiday Lighting,No Exterior Use,1
-0,Hot Water Distribution,Uninsulated,1
 0,HVAC System Is Faulted,No,1
 0,HVAC System Is Faulted,Yes,0
 0,HVAC System Is Scaled,No,1
 0,HVAC System Is Scaled,Yes,0
+0,Holiday Lighting,No Exterior Use,1
+0,Hot Water Distribution,Uninsulated,1
 0,Interior Shading,"Summer = 0.7, Winter = 0.85",1
 0,Lighting Interior Use,100% Usage,1
 0,Lighting Other Use,100% Usage,1
@@ -12739,10 +12739,10 @@ Level,Parameter,Option,Saturation
 6,Tenure,Not Available,0.121517
 6,Tenure,Owner,0.559043
 6,Tenure,Renter,0.31944
-6,HVAC Heating Type,Ducted Heat Pump,0.153754
-6,HVAC Heating Type,Ducted Heating,0.590106
-6,HVAC Heating Type,Non-Ducted Heat Pump,0.00973527
-6,HVAC Heating Type,Non-Ducted Heating,0.235065
+6,HVAC Heating Type,Ducted Heat Pump,0.153727
+6,HVAC Heating Type,Ducted Heating,0.589634
+6,HVAC Heating Type,Non-Ducted Heat Pump,0.00974977
+6,HVAC Heating Type,Non-Ducted Heating,0.23555
 6,HVAC Heating Type,None,0.0113391
 6,HVAC Secondary Heating Fuel,Electricity,0
 6,HVAC Secondary Heating Fuel,Fuel Oil,0.000103468
@@ -12751,11 +12751,11 @@ Level,Parameter,Option,Saturation
 6,HVAC Secondary Heating Fuel,Other Fuel,1.6855e-06
 6,HVAC Secondary Heating Fuel,Propane,1.31903e-05
 6,HVAC Secondary Heating Fuel,Wood,0.000229466
-6,Water Heater Fuel,Electricity,0.489054
-6,Water Heater Fuel,Fuel Oil,0.0247109
-6,Water Heater Fuel,Natural Gas,0.444791
-6,Water Heater Fuel,Other Fuel,0.00281103
-6,Water Heater Fuel,Propane,0.0386326
+6,Water Heater Fuel,Electricity,0.4889
+6,Water Heater Fuel,Fuel Oil,0.0248211
+6,Water Heater Fuel,Natural Gas,0.44488
+6,Water Heater Fuel,Other Fuel,0.00277156
+6,Water Heater Fuel,Propane,0.0386274
 6,Geometry Foundation Type,Ambient,0.0887587
 6,Geometry Foundation Type,Heated Basement,0.123976
 6,Geometry Foundation Type,Slab,0.393074
@@ -12813,31 +12813,31 @@ Level,Parameter,Option,Saturation
 7,Income,180000-199999,0.0175352
 7,Income,200000+,0.0688953
 7,Income,Not Available,0.121517
-7,HVAC Cooling Type,Central AC,0.531044
-7,HVAC Cooling Type,Ducted Heat Pump,0.153754
+7,HVAC Cooling Type,Central AC,0.530812
+7,HVAC Cooling Type,Ducted Heat Pump,0.153727
 7,HVAC Cooling Type,Evaporative or Swamp Cooler,0
-7,HVAC Cooling Type,Non-Ducted Heat Pump,0.00973527
-7,HVAC Cooling Type,None,0.105404
-7,HVAC Cooling Type,Room AC,0.200062
+7,HVAC Cooling Type,Non-Ducted Heat Pump,0.00974977
+7,HVAC Cooling Type,None,0.105864
+7,HVAC Cooling Type,Room AC,0.199847
 7,HVAC Secondary Heating Type,Ducted Heating,2.93623e-05
 7,HVAC Secondary Heating Type,Non-Ducted Heating,0.000357846
 7,HVAC Secondary Heating Type,None,0.999613
-7,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.003127
+7,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.00312622
 7,Water Heater Efficiency,"Electric Heat Pump, 66 gal, 3.35 UEF",0
 7,Water Heater Efficiency,"Electric Heat Pump, 80 gal, 3.45 UEF",0
-7,Water Heater Efficiency,Electric Premium,0.0997524
-7,Water Heater Efficiency,Electric Standard,0.365361
-7,Water Heater Efficiency,Electric Tankless,0.0208134
-7,Water Heater Efficiency,FIXME Fuel Oil Indirect,0.00683212
-7,Water Heater Efficiency,Fuel Oil Premium,0.00439142
-7,Water Heater Efficiency,Fuel Oil Standard,0.0134873
-7,Water Heater Efficiency,Natural Gas Premium,0.0827945
-7,Water Heater Efficiency,Natural Gas Standard,0.333091
-7,Water Heater Efficiency,Natural Gas Tankless,0.0289057
-7,Water Heater Efficiency,Other Fuel,0.00281103
-7,Water Heater Efficiency,Propane Premium,0.00622625
-7,Water Heater Efficiency,Propane Standard,0.0233821
-7,Water Heater Efficiency,Propane Tankless,0.00902428
+7,Water Heater Efficiency,Electric Premium,0.0997112
+7,Water Heater Efficiency,Electric Standard,0.36526
+7,Water Heater Efficiency,Electric Tankless,0.0208023
+7,Water Heater Efficiency,FIXME Fuel Oil Indirect,0.00685905
+7,Water Heater Efficiency,Fuel Oil Premium,0.00441187
+7,Water Heater Efficiency,Fuel Oil Standard,0.0135502
+7,Water Heater Efficiency,Natural Gas Premium,0.0828079
+7,Water Heater Efficiency,Natural Gas Standard,0.333153
+7,Water Heater Efficiency,Natural Gas Tankless,0.0289195
+7,Water Heater Efficiency,Other Fuel,0.00277156
+7,Water Heater Efficiency,Propane Premium,0.00622487
+7,Water Heater Efficiency,Propane Standard,0.0233796
+7,Water Heater Efficiency,Propane Tankless,0.00902298
 7,Insulation Floor,None,0.393074
 7,Insulation Floor,Uninsulated,0.479199
 7,Insulation Floor,Ceiling R-13,0.0478492
@@ -12874,20 +12874,20 @@ Level,Parameter,Option,Saturation
 8,Income RECS2020,Not Available,0.121517
 8,Cooling Setpoint,60F,0.031722
 8,Cooling Setpoint,62F,0.00982578
-8,Cooling Setpoint,65F,0.0408779
+8,Cooling Setpoint,65F,0.0407333
 8,Cooling Setpoint,67F,0.019834
-8,Cooling Setpoint,68F,0.115577
-8,Cooling Setpoint,70F,0.190083
-8,Cooling Setpoint,72F,0.197919
-8,Cooling Setpoint,75F,0.188253
-8,Cooling Setpoint,76F,0.0797387
+8,Cooling Setpoint,68F,0.115592
+8,Cooling Setpoint,70F,0.19015
+8,Cooling Setpoint,72F,0.198002
+8,Cooling Setpoint,75F,0.188297
+8,Cooling Setpoint,76F,0.0796636
 8,Cooling Setpoint,78F,0.0786843
-8,Cooling Setpoint,80F,0.0474846
+8,Cooling Setpoint,80F,0.0474957
 8,Cooling Setpoint,Void,0
-8,HVAC Has Shared System,Cooling Only,0.014091
-8,HVAC Has Shared System,Heating and Cooling,0.0242932
-8,HVAC Has Shared System,Heating Only,0.0719808
-8,HVAC Has Shared System,None,0.889635
+8,HVAC Has Shared System,Cooling Only,0.0140644
+8,HVAC Has Shared System,Heating and Cooling,0.0242578
+8,HVAC Has Shared System,Heating Only,0.0720271
+8,HVAC Has Shared System,None,0.889651
 8,HVAC Has Shared System,Void,0
 8,HVAC Secondary Heating Efficiency,"Fuel Boiler, 76% AFUE",0.000183306
 8,HVAC Secondary Heating Efficiency,"Fuel Boiler, 80% AFUE",0.000148701
@@ -12920,48 +12920,48 @@ Level,Parameter,Option,Saturation
 9,Geometry Floor Area,2500-2999,0.0654083
 9,Geometry Floor Area,3000-3999,0.0610651
 9,Geometry Floor Area,4000+,0.0302508
-9,HVAC Cooling Efficiency,"AC, SEER 8",0.00896124
-9,HVAC Cooling Efficiency,"AC, SEER 10",0.0600462
-9,HVAC Cooling Efficiency,"AC, SEER 13",0.289955
-9,HVAC Cooling Efficiency,"AC, SEER 15",0.133697
-9,HVAC Cooling Efficiency,Ducted Heat Pump,0.153754
-9,HVAC Cooling Efficiency,Non-Ducted Heat Pump,0.00973527
-9,HVAC Cooling Efficiency,None,0.105404
-9,HVAC Cooling Efficiency,"Room AC, EER 8.5",0.00426818
-9,HVAC Cooling Efficiency,"Room AC, EER 9.8",0.025734
-9,HVAC Cooling Efficiency,"Room AC, EER 10.7",0.0962442
-9,HVAC Cooling Efficiency,"Room AC, EER 12.0",0.0738159
-9,HVAC Cooling Efficiency,Shared Cooling,0.0383842
-9,HVAC Has Ducts,No,0.234576
-9,HVAC Has Ducts,Yes,0.765424
+9,HVAC Cooling Efficiency,"AC, SEER 8",0.00895804
+9,HVAC Cooling Efficiency,"AC, SEER 10",0.0600251
+9,HVAC Cooling Efficiency,"AC, SEER 13",0.289855
+9,HVAC Cooling Efficiency,"AC, SEER 15",0.133652
+9,HVAC Cooling Efficiency,Ducted Heat Pump,0.153727
+9,HVAC Cooling Efficiency,Non-Ducted Heat Pump,0.00974977
+9,HVAC Cooling Efficiency,None,0.105864
+9,HVAC Cooling Efficiency,"Room AC, EER 8.5",0.00426393
+9,HVAC Cooling Efficiency,"Room AC, EER 9.8",0.0257062
+9,HVAC Cooling Efficiency,"Room AC, EER 10.7",0.096141
+9,HVAC Cooling Efficiency,"Room AC, EER 12.0",0.0737363
+9,HVAC Cooling Efficiency,Shared Cooling,0.0383222
+9,HVAC Has Ducts,No,0.235004
+9,HVAC Has Ducts,Yes,0.764996
 9,HVAC Has Ducts,Void,0
-9,HVAC Heating Efficiency,"ASHP, SEER 10, 6.2 HSPF",0.00718157
-9,HVAC Heating Efficiency,"ASHP, SEER 13, 7.7 HSPF",0.0740898
-9,HVAC Heating Efficiency,"ASHP, SEER 15, 8.5 HSPF",0.0724829
-9,HVAC Heating Efficiency,"Electric Baseboard, 100% Efficiency",0.0627808
-9,HVAC Heating Efficiency,"Electric Boiler, 100% AFUE",0.00205463
-9,HVAC Heating Efficiency,"Electric Furnace, 100% AFUE",0.113349
-9,HVAC Heating Efficiency,"Electric Wall Furnace, 100% AFUE",0.0110763
-9,HVAC Heating Efficiency,"Fuel Boiler, 76% AFUE",0.00827866
-9,HVAC Heating Efficiency,"Fuel Boiler, 80% AFUE",0.0324116
-9,HVAC Heating Efficiency,"Fuel Boiler, 90% AFUE",0.00478169
-9,HVAC Heating Efficiency,"Fuel Furnace, 60% AFUE",0.004937
-9,HVAC Heating Efficiency,"Fuel Furnace, 76% AFUE",0.0277048
-9,HVAC Heating Efficiency,"Fuel Furnace, 80% AFUE",0.247427
-9,HVAC Heating Efficiency,"Fuel Furnace, 92.5% AFUE",0.153394
-9,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 60% AFUE",0.0321562
-9,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 68% AFUE",0.0285455
-9,HVAC Heating Efficiency,"MSHP, SEER 14.5, 8.2 HSPF",0.00959737
-9,HVAC Heating Efficiency,"MSHP, SEER 29.3, 14 HSPF",0.000137902
-9,HVAC Heating Efficiency,None,0.0113391
-9,HVAC Heating Efficiency,Shared Heating,0.0962741
+9,HVAC Heating Efficiency,"ASHP, SEER 10, 6.2 HSPF",0.00718034
+9,HVAC Heating Efficiency,"ASHP, SEER 13, 7.7 HSPF",0.0740766
+9,HVAC Heating Efficiency,"ASHP, SEER 15, 8.5 HSPF",0.0724697
+9,HVAC Heating Efficiency,"Electric Baseboard, 100% Efficiency",0.0628257
+9,HVAC Heating Efficiency,"Electric Boiler, 100% AFUE",0.00205738
+9,HVAC Heating Efficiency,"Electric Furnace, 100% AFUE",0.113321
+9,HVAC Heating Efficiency,"Electric Wall Furnace, 100% AFUE",0.0110709
+9,HVAC Heating Efficiency,"Fuel Boiler, 76% AFUE",0.00887696
+9,HVAC Heating Efficiency,"Fuel Boiler, 80% AFUE",0.0325257
+9,HVAC Heating Efficiency,"Fuel Boiler, 90% AFUE",0.00494728
+9,HVAC Heating Efficiency,"Fuel Furnace, 60% AFUE",0.0049303
+9,HVAC Heating Efficiency,"Fuel Furnace, 76% AFUE",0.0277536
+9,HVAC Heating Efficiency,"Fuel Furnace, 80% AFUE",0.247115
+9,HVAC Heating Efficiency,"Fuel Furnace, 92.5% AFUE",0.153317
+9,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 60% AFUE",0.0318916
+9,HVAC Heating Efficiency,"Fuel Wall/Floor Furnace, 68% AFUE",0.0282639
+9,HVAC Heating Efficiency,"MSHP, SEER 14.5, 8.2 HSPF",0.00959704
+9,HVAC Heating Efficiency,"MSHP, SEER 29.3, 14 HSPF",0.000152729
+9,HVAC Heating Efficiency,None,0.0113431
+9,HVAC Heating Efficiency,Shared Heating,0.0962846
 9,HVAC Heating Efficiency,Void,0
-9,HVAC Shared Efficiencies,"Boiler Baseboards Heating Only, Electricity",0.0281732
-9,HVAC Shared Efficiencies,"Boiler Baseboards Heating Only, Fuel",0.0438077
-9,HVAC Shared Efficiencies,Fan Coil Cooling Only,0.014091
-9,HVAC Shared Efficiencies,"Fan Coil Heating and Cooling, Electricity",0.0131148
-9,HVAC Shared Efficiencies,"Fan Coil Heating and Cooling, Fuel",0.0111784
-9,HVAC Shared Efficiencies,None,0.889635
+9,HVAC Shared Efficiencies,"Boiler Baseboards Heating Only, Electricity",0.028173
+9,HVAC Shared Efficiencies,"Boiler Baseboards Heating Only, Fuel",0.0438541
+9,HVAC Shared Efficiencies,Fan Coil Cooling Only,0.0140644
+9,HVAC Shared Efficiencies,"Fan Coil Heating and Cooling, Electricity",0.0131141
+9,HVAC Shared Efficiencies,"Fan Coil Heating and Cooling, Fuel",0.0111437
+9,HVAC Shared Efficiencies,None,0.889651
 9,HVAC Shared Efficiencies,Void,0
 10,Bedrooms,1,0.130281
 10,Bedrooms,2,0.265281
@@ -13010,35 +13010,35 @@ Level,Parameter,Option,Saturation
 10,HVAC System Single Speed AC Charge,1.266 Charge Frac,0
 10,HVAC System Single Speed AC Charge,1.405 Charge Frac,0
 10,HVAC System Single Speed AC Charge,None,1
-10,HVAC Has Zonal Electric Heating,Yes,0.0627808
-10,HVAC Has Zonal Electric Heating,No,0.937219
+10,HVAC Has Zonal Electric Heating,Yes,0.0628257
+10,HVAC Has Zonal Electric Heating,No,0.937174
 10,HVAC Heating Autosizing Factor,None,1
 10,HVAC Heating Autosizing Factor,40% Oversized,0
-10,HVAC Heating Type And Fuel,Electricity ASHP,0.153754
-10,HVAC Heating Type And Fuel,Electricity Baseboard,0.0627808
-10,HVAC Heating Type And Fuel,Electricity Electric Boiler,0.00205463
-10,HVAC Heating Type And Fuel,Electricity Electric Furnace,0.113349
-10,HVAC Heating Type And Fuel,Electricity Electric Wall Furnace,0.0110763
-10,HVAC Heating Type And Fuel,Electricity MSHP,0.00973527
-10,HVAC Heating Type And Fuel,Electricity Shared Heating,0.041288
-10,HVAC Heating Type And Fuel,Fuel Oil Fuel Boiler,0.0121094
-10,HVAC Heating Type And Fuel,Fuel Oil Fuel Furnace,0.0284085
-10,HVAC Heating Type And Fuel,Fuel Oil Fuel Wall/Floor Furnace,0.00301056
-10,HVAC Heating Type And Fuel,Fuel Oil Shared Heating,0.00506367
-10,HVAC Heating Type And Fuel,Natural Gas Fuel Boiler,0.0248772
-10,HVAC Heating Type And Fuel,Natural Gas Fuel Furnace,0.365471
-10,HVAC Heating Type And Fuel,Natural Gas Fuel Wall/Floor Furnace,0.031119
-10,HVAC Heating Type And Fuel,Natural Gas Shared Heating,0.0472011
+10,HVAC Heating Type And Fuel,Electricity ASHP,0.153727
+10,HVAC Heating Type And Fuel,Electricity Baseboard,0.0628257
+10,HVAC Heating Type And Fuel,Electricity Electric Boiler,0.00205738
+10,HVAC Heating Type And Fuel,Electricity Electric Furnace,0.113321
+10,HVAC Heating Type And Fuel,Electricity Electric Wall Furnace,0.0110709
+10,HVAC Heating Type And Fuel,Electricity MSHP,0.00974977
+10,HVAC Heating Type And Fuel,Electricity Shared Heating,0.0412871
+10,HVAC Heating Type And Fuel,Fuel Oil Fuel Boiler,0.0123633
+10,HVAC Heating Type And Fuel,Fuel Oil Fuel Furnace,0.0282486
+10,HVAC Heating Type And Fuel,Fuel Oil Fuel Wall/Floor Furnace,0.00291328
+10,HVAC Heating Type And Fuel,Fuel Oil Shared Heating,0.00506697
+10,HVAC Heating Type And Fuel,Natural Gas Fuel Boiler,0.025353
+10,HVAC Heating Type And Fuel,Natural Gas Fuel Furnace,0.365297
+10,HVAC Heating Type And Fuel,Natural Gas Fuel Wall/Floor Furnace,0.0308085
+10,HVAC Heating Type And Fuel,Natural Gas Shared Heating,0.0472091
 10,HVAC Heating Type And Fuel,None,0.0113391
-10,HVAC Heating Type And Fuel,Other Fuel Fuel Boiler,0.00449596
-10,HVAC Heating Type And Fuel,Other Fuel Fuel Furnace,0.0024263
-10,HVAC Heating Type And Fuel,Other Fuel Fuel Wall/Floor Furnace,0.0190609
-10,HVAC Heating Type And Fuel,Other Fuel Shared Heating,0.00109303
-10,HVAC Heating Type And Fuel,Propane Fuel Boiler,0.0039893
-10,HVAC Heating Type And Fuel,Propane Fuel Furnace,0.037157
-10,HVAC Heating Type And Fuel,Propane Fuel Wall/Floor Furnace,0.00751122
-10,HVAC Heating Type And Fuel,Propane Shared Heating,0.00162833
-10,HVAC Heating Type And Fuel,Void,0
+10,HVAC Heating Type And Fuel,Other Fuel Fuel Boiler,0.004628
+10,HVAC Heating Type And Fuel,Other Fuel Fuel Furnace,0.00242395
+10,HVAC Heating Type And Fuel,Other Fuel Fuel Wall/Floor Furnace,0.0189274
+10,HVAC Heating Type And Fuel,Other Fuel Shared Heating,0.00109288
+10,HVAC Heating Type And Fuel,Propane Fuel Boiler,0.00400569
+10,HVAC Heating Type And Fuel,Propane Fuel Furnace,0.0371453
+10,HVAC Heating Type And Fuel,Propane Fuel Wall/Floor Furnace,0.00750636
+10,HVAC Heating Type And Fuel,Propane Shared Heating,0.00162851
+10,HVAC Heating Type And Fuel,Void,3.94145e-06
 10,HVAC System Single Speed ASHP Airflow,154.8 cfm/ton,0
 10,HVAC System Single Speed ASHP Airflow,204.4 cfm/ton,0
 10,HVAC System Single Speed ASHP Airflow,254.0 cfm/ton,0
@@ -13089,27 +13089,27 @@ Level,Parameter,Option,Saturation
 11,Geometry Stories,20,0.00206217
 11,Geometry Stories,21,0.00660916
 11,Geometry Stories,35,0.00112057
-11,HVAC Cooling Partial Space Conditioning,<10% Conditioned,0.00458323
-11,HVAC Cooling Partial Space Conditioning,20% Conditioned,0.0633409
-11,HVAC Cooling Partial Space Conditioning,40% Conditioned,0.0584072
-11,HVAC Cooling Partial Space Conditioning,60% Conditioned,0.06517
-11,HVAC Cooling Partial Space Conditioning,80% Conditioned,0.0360869
-11,HVAC Cooling Partial Space Conditioning,100% Conditioned,0.667008
-11,HVAC Cooling Partial Space Conditioning,None,0.105404
+11,HVAC Cooling Partial Space Conditioning,<10% Conditioned,0.00457371
+11,HVAC Cooling Partial Space Conditioning,20% Conditioned,0.063203
+11,HVAC Cooling Partial Space Conditioning,40% Conditioned,0.0583625
+11,HVAC Cooling Partial Space Conditioning,60% Conditioned,0.0651472
+11,HVAC Cooling Partial Space Conditioning,80% Conditioned,0.0360721
+11,HVAC Cooling Partial Space Conditioning,100% Conditioned,0.666777
+11,HVAC Cooling Partial Space Conditioning,None,0.105864
 11,HVAC Cooling Partial Space Conditioning,Void,0
-11,Heating Setpoint Has Offset,No,0.561736
-11,Heating Setpoint Has Offset,Yes,0.438264
+11,Heating Setpoint Has Offset,No,0.561751
+11,Heating Setpoint Has Offset,Yes,0.438249
 11,Heating Setpoint,55F,0.121517
-11,Heating Setpoint,60F,0.0228658
-11,Heating Setpoint,62F,0.0110314
-11,Heating Setpoint,65F,0.058159
-11,Heating Setpoint,67F,0.0491397
-11,Heating Setpoint,68F,0.204465
-11,Heating Setpoint,70F,0.23251
-11,Heating Setpoint,72F,0.154665
-11,Heating Setpoint,75F,0.0944969
-11,Heating Setpoint,76F,0.0232748
-11,Heating Setpoint,78F,0.0175258
+11,Heating Setpoint,60F,0.0228655
+11,Heating Setpoint,62F,0.0110309
+11,Heating Setpoint,65F,0.0581613
+11,Heating Setpoint,67F,0.0491379
+11,Heating Setpoint,68F,0.204466
+11,Heating Setpoint,70F,0.232512
+11,Heating Setpoint,72F,0.154662
+11,Heating Setpoint,75F,0.0944965
+11,Heating Setpoint,76F,0.0232742
+11,Heating Setpoint,78F,0.0175268
 11,Heating Setpoint,80F,0.0103501
 12,Area Median Income,0-30%,0.128642
 12,Area Median Income,30-60%,0.142535
@@ -13171,44 +13171,44 @@ Level,Parameter,Option,Saturation
 12,Geometry Stories Low Rise,4+,0.0569459
 12,Geometry Story Bin,<8,0.979358
 12,Geometry Story Bin,8+,0.0206419
-12,Heating Setpoint Offset Magnitude,0F,0.561736
-12,Heating Setpoint Offset Magnitude,3F,0.267602
-12,Heating Setpoint Offset Magnitude,6F,0.121165
-12,Heating Setpoint Offset Magnitude,12F,0.0494967
-12,Heating Setpoint Offset Period,Day,0.0029525
-12,Heating Setpoint Offset Period,Day -1h,0.0029525
-12,Heating Setpoint Offset Period,Day -2h,0.0029525
-12,Heating Setpoint Offset Period,Day -3h,0.0029525
-12,Heating Setpoint Offset Period,Day -4h,0.0029525
-12,Heating Setpoint Offset Period,Day -5h,0.0029525
-12,Heating Setpoint Offset Period,Day +1h,0.0029525
-12,Heating Setpoint Offset Period,Day +2h,0.0029525
-12,Heating Setpoint Offset Period,Day +3h,0.0029525
-12,Heating Setpoint Offset Period,Day +4h,0.0029525
-12,Heating Setpoint Offset Period,Day +5h,0.0029525
-12,Heating Setpoint Offset Period,Day and Night,0.00440184
-12,Heating Setpoint Offset Period,Day and Night -1h,0.00440184
-12,Heating Setpoint Offset Period,Day and Night -2h,0.00440184
-12,Heating Setpoint Offset Period,Day and Night -3h,0.00440184
-12,Heating Setpoint Offset Period,Day and Night -4h,0.00440184
-12,Heating Setpoint Offset Period,Day and Night -5h,0.00440184
-12,Heating Setpoint Offset Period,Day and Night +1h,0.00440184
-12,Heating Setpoint Offset Period,Day and Night +2h,0.00440184
-12,Heating Setpoint Offset Period,Day and Night +3h,0.00440184
-12,Heating Setpoint Offset Period,Day and Night +4h,0.00440184
-12,Heating Setpoint Offset Period,Day and Night +5h,0.00440184
-12,Heating Setpoint Offset Period,Night,0.0324878
-12,Heating Setpoint Offset Period,Night -1h,0.0324878
-12,Heating Setpoint Offset Period,Night -2h,0.0324878
-12,Heating Setpoint Offset Period,Night -3h,0.0324878
-12,Heating Setpoint Offset Period,Night -4h,0.0324878
-12,Heating Setpoint Offset Period,Night -5h,0.0324878
-12,Heating Setpoint Offset Period,Night +1h,0.0324878
-12,Heating Setpoint Offset Period,Night +2h,0.0324878
-12,Heating Setpoint Offset Period,Night +3h,0.0324878
-12,Heating Setpoint Offset Period,Night +4h,0.0324878
-12,Heating Setpoint Offset Period,Night +5h,0.0324878
-12,Heating Setpoint Offset Period,None,0.561736
+12,Heating Setpoint Offset Magnitude,0F,0.561751
+12,Heating Setpoint Offset Magnitude,3F,0.267593
+12,Heating Setpoint Offset Magnitude,6F,0.12116
+12,Heating Setpoint Offset Magnitude,12F,0.0494957
+12,Heating Setpoint Offset Period,Day,0.00295263
+12,Heating Setpoint Offset Period,Day -1h,0.00295263
+12,Heating Setpoint Offset Period,Day -2h,0.00295263
+12,Heating Setpoint Offset Period,Day -3h,0.00295263
+12,Heating Setpoint Offset Period,Day -4h,0.00295263
+12,Heating Setpoint Offset Period,Day -5h,0.00295263
+12,Heating Setpoint Offset Period,Day +1h,0.00295263
+12,Heating Setpoint Offset Period,Day +2h,0.00295263
+12,Heating Setpoint Offset Period,Day +3h,0.00295263
+12,Heating Setpoint Offset Period,Day +4h,0.00295263
+12,Heating Setpoint Offset Period,Day +5h,0.00295263
+12,Heating Setpoint Offset Period,Day and Night,0.00440155
+12,Heating Setpoint Offset Period,Day and Night -1h,0.00440155
+12,Heating Setpoint Offset Period,Day and Night -2h,0.00440155
+12,Heating Setpoint Offset Period,Day and Night -3h,0.00440155
+12,Heating Setpoint Offset Period,Day and Night -4h,0.00440155
+12,Heating Setpoint Offset Period,Day and Night -5h,0.00440155
+12,Heating Setpoint Offset Period,Day and Night +1h,0.00440155
+12,Heating Setpoint Offset Period,Day and Night +2h,0.00440155
+12,Heating Setpoint Offset Period,Day and Night +3h,0.00440155
+12,Heating Setpoint Offset Period,Day and Night +4h,0.00440155
+12,Heating Setpoint Offset Period,Day and Night +5h,0.00440155
+12,Heating Setpoint Offset Period,Night,0.0324866
+12,Heating Setpoint Offset Period,Night -1h,0.0324866
+12,Heating Setpoint Offset Period,Night -2h,0.0324866
+12,Heating Setpoint Offset Period,Night -3h,0.0324866
+12,Heating Setpoint Offset Period,Night -4h,0.0324866
+12,Heating Setpoint Offset Period,Night -5h,0.0324866
+12,Heating Setpoint Offset Period,Night +1h,0.0324866
+12,Heating Setpoint Offset Period,Night +2h,0.0324866
+12,Heating Setpoint Offset Period,Night +3h,0.0324866
+12,Heating Setpoint Offset Period,Night +4h,0.0324866
+12,Heating Setpoint Offset Period,Night +5h,0.0324866
+12,Heating Setpoint Offset Period,None,0.561751
 13,State Metro Median Income,0-30%,0.112341
 13,State Metro Median Income,30-60%,0.146247
 13,State Metro Median Income,60-80%,0.0950353
@@ -13217,79 +13217,79 @@ Level,Parameter,Option,Saturation
 13,State Metro Median Income,120-150%,0.0945043
 13,State Metro Median Income,150%+,0.265818
 13,State Metro Median Income,Not Available,0.121648
-13,Clothes Washer Presence,None,0.162002
-13,Clothes Washer Presence,Yes,0.837998
+13,Clothes Washer Presence,None,0.16201
+13,Clothes Washer Presence,Yes,0.83799
 13,Clothes Washer Presence,Void,0
-13,Cooking Range,Electric Induction,0.028369
+13,Cooking Range,Electric Induction,0.0283653
 13,Cooking Range,Electric Resistance,0.595484
-13,Cooking Range,Gas,0.326648
-13,Cooking Range,None,0.000963007
-13,Cooking Range,Propane,0.0485359
+13,Cooking Range,Gas,0.326647
+13,Cooking Range,None,0.000963355
+13,Cooking Range,Propane,0.0485402
 13,Cooking Range,Void,0
-13,Cooling Unavailable Days,1 day,0.00640278
-13,Cooling Unavailable Days,1 month,0.00945257
-13,Cooling Unavailable Days,1 week,0.00870406
-13,Cooling Unavailable Days,2 weeks,0.00737082
-13,Cooling Unavailable Days,3 days,0.0108933
-13,Cooling Unavailable Days,3 months,0.00609865
-13,Cooling Unavailable Days,Never,0.948755
-13,Cooling Unavailable Days,Year round,0.00232326
+13,Cooling Unavailable Days,1 day,0.00640262
+13,Cooling Unavailable Days,1 month,0.00945455
+13,Cooling Unavailable Days,1 week,0.00870707
+13,Cooling Unavailable Days,2 weeks,0.00737229
+13,Cooling Unavailable Days,3 days,0.0108955
+13,Cooling Unavailable Days,3 months,0.00609988
+13,Cooling Unavailable Days,Never,0.948744
+13,Cooling Unavailable Days,Year round,0.00232387
 13,Cooling Unavailable Days,Void,0
-13,Dishwasher,290 Rated kWh,0.303728
-13,Dishwasher,318 Rated kWh,0.41936
-13,Dishwasher,None,0.276912
+13,Dishwasher,290 Rated kWh,0.303722
+13,Dishwasher,318 Rated kWh,0.419347
+13,Dishwasher,None,0.276931
 13,Dishwasher,Void,0
-13,Electric Vehicle Charge At Home,0-19%,0.130911
-13,Electric Vehicle Charge At Home,20-39%,0.0142609
-13,Electric Vehicle Charge At Home,40-59%,0.0186954
-13,Electric Vehicle Charge At Home,60-79%,0.0729643
-13,Electric Vehicle Charge At Home,80-99%,0.341388
-13,Electric Vehicle Charge At Home,100%,0.42178
+13,Electric Vehicle Charge At Home,0-19%,0.130877
+13,Electric Vehicle Charge At Home,20-39%,0.014261
+13,Electric Vehicle Charge At Home,40-59%,0.0190061
+13,Electric Vehicle Charge At Home,60-79%,0.0727869
+13,Electric Vehicle Charge At Home,80-99%,0.34108
+13,Electric Vehicle Charge At Home,100%,0.421989
 13,Electric Vehicle Ownership,No,0.985514
 13,Electric Vehicle Ownership,Yes,0.0144856
 13,Electric Vehicle Ownership,Void,0
 13,Household Has Tribal Persons,No,0.869433
 13,Household Has Tribal Persons,Not Available,0.121517
 13,Household Has Tribal Persons,Yes,0.00904983
-13,Misc Extra Refrigerator,EF 6.7,0.019131
-13,Misc Extra Refrigerator,EF 10.2,0.00307034
-13,Misc Extra Refrigerator,EF 10.5,0.00840387
-13,Misc Extra Refrigerator,EF 15.9,0.0449542
-13,Misc Extra Refrigerator,EF 17.6,0.109273
-13,Misc Extra Refrigerator,EF 19.9,0.0692197
-13,Misc Extra Refrigerator,EF 21.9,0.00467808
-13,Misc Extra Refrigerator,None,0.741269
+13,Misc Extra Refrigerator,EF 6.7,0.0191325
+13,Misc Extra Refrigerator,EF 10.2,0.00307059
+13,Misc Extra Refrigerator,EF 10.5,0.00840476
+13,Misc Extra Refrigerator,EF 15.9,0.0449603
+13,Misc Extra Refrigerator,EF 17.6,0.109276
+13,Misc Extra Refrigerator,EF 19.9,0.0692225
+13,Misc Extra Refrigerator,EF 21.9,0.0046793
+13,Misc Extra Refrigerator,None,0.741254
 13,Misc Extra Refrigerator,Void,0
-13,Misc Freezer,"EF 12, National Average",0.328372
-13,Misc Freezer,None,0.671628
+13,Misc Freezer,"EF 12, National Average",0.328404
+13,Misc Freezer,None,0.671596
 13,Misc Freezer,Void,0
-13,Misc Hot Tub Spa,Electricity,0.0349095
-13,Misc Hot Tub Spa,Natural Gas,0.0108648
-13,Misc Hot Tub Spa,None,0.950928
-13,Misc Hot Tub Spa,Other Fuel,0.00329792
+13,Misc Hot Tub Spa,Electricity,0.0349071
+13,Misc Hot Tub Spa,Natural Gas,0.0108767
+13,Misc Hot Tub Spa,None,0.95092
+13,Misc Hot Tub Spa,Other Fuel,0.00329656
 13,Misc Hot Tub Spa,Void,0
-13,Misc Pool,Has Pool,0.0712588
-13,Misc Pool,None,0.928741
+13,Misc Pool,Has Pool,0.0712545
+13,Misc Pool,None,0.928746
 13,Misc Pool,Void,0
-13,Refrigerator,EF 6.7,0.0263192
-13,Refrigerator,EF 10.2,0.00402073
-13,Refrigerator,EF 10.5,0.0115603
-13,Refrigerator,EF 15.9,0.0884185
-13,Refrigerator,EF 17.6,0.399568
-13,Refrigerator,EF 19.9,0.409543
-13,Refrigerator,EF 21.9,0.0474987
-13,Refrigerator,None,0.0130712
+13,Refrigerator,EF 6.7,0.0263212
+13,Refrigerator,EF 10.2,0.00402098
+13,Refrigerator,EF 10.5,0.0115611
+13,Refrigerator,EF 15.9,0.0884209
+13,Refrigerator,EF 17.6,0.399571
+13,Refrigerator,EF 19.9,0.409536
+13,Refrigerator,EF 21.9,0.0474978
+13,Refrigerator,None,0.0130709
 13,Refrigerator,Void,0
-13,Windows,"Double, Clear, Metal, Air",0.189734
-13,Windows,"Double, Clear, Metal, Air, Exterior Clear Storm",0.0149642
-13,Windows,"Double, Clear, Non-metal, Air",0.186056
-13,Windows,"Double, Clear, Non-metal, Air, Exterior Clear Storm",0.0347957
-13,Windows,"Double, Low-E, Non-metal, Air, M-Gain",0.224484
-13,Windows,"Single, Clear, Metal",0.140754
-13,Windows,"Single, Clear, Metal, Exterior Clear Storm",0.0099284
-13,Windows,"Single, Clear, Non-metal",0.166751
-13,Windows,"Single, Clear, Non-metal, Exterior Clear Storm",0.014522
-13,Windows,"Triple, Low-E, Non-metal, Air, L-Gain",0.0180095
+13,Windows,"Double, Clear, Metal, Air",0.189719
+13,Windows,"Double, Clear, Metal, Air, Exterior Clear Storm",0.0149637
+13,Windows,"Double, Clear, Non-metal, Air",0.186066
+13,Windows,"Double, Clear, Non-metal, Air, Exterior Clear Storm",0.0347972
+13,Windows,"Double, Low-E, Non-metal, Air, M-Gain",0.224495
+13,Windows,"Single, Clear, Metal",0.140816
+13,Windows,"Single, Clear, Metal, Exterior Clear Storm",0.00993125
+13,Windows,"Single, Clear, Non-metal",0.166685
+13,Windows,"Single, Clear, Non-metal, Exterior Clear Storm",0.0145183
+13,Windows,"Triple, Low-E, Non-metal, Air, L-Gain",0.0180094
 13,Windows,Void,0
 13,Geometry Building Horizontal Location MF,Left,0.0711251
 13,Geometry Building Horizontal Location MF,Middle,0.0799152
@@ -13317,34 +13317,34 @@ Level,Parameter,Option,Saturation
 13,Geometry Wall Type,Steel Frame,0.0363431
 13,Geometry Wall Type,Wood Frame,0.721394
 13,Geometry Wall Type,Void,0
-14,Clothes Dryer,Electric,0.668287
-14,Clothes Dryer,Gas,0.139965
-14,Clothes Dryer,None,0.180787
-14,Clothes Dryer,Propane,0.0109609
+14,Clothes Dryer,Electric,0.668259
+14,Clothes Dryer,Gas,0.139977
+14,Clothes Dryer,None,0.180808
+14,Clothes Dryer,Propane,0.0109562
 14,Clothes Dryer,Void,0
-14,Clothes Washer,EnergyStar,0.342983
-14,Clothes Washer,None,0.162002
-14,Clothes Washer,Standard,0.495015
+14,Clothes Washer,EnergyStar,0.34298
+14,Clothes Washer,None,0.16201
+14,Clothes Washer,Standard,0.49501
 14,Clothes Washer,Void,0
-14,Heating Unavailable Days,1 day,0.00818895
-14,Heating Unavailable Days,1 month,0.00349944
-14,Heating Unavailable Days,1 week,0.00615264
-14,Heating Unavailable Days,2 weeks,0.00434357
-14,Heating Unavailable Days,3 days,0.0112455
-14,Heating Unavailable Days,3 months,0.00354966
-14,Heating Unavailable Days,Never,0.960614
-14,Heating Unavailable Days,Year round,0.00240564
-14,Electric Vehicle Charger,Level 1 charger,0.00860279
-14,Electric Vehicle Charger,Level 2 charger,0.00588279
+14,Heating Unavailable Days,1 day,0.00819043
+14,Heating Unavailable Days,1 month,0.00350049
+14,Heating Unavailable Days,1 week,0.00615454
+14,Heating Unavailable Days,2 weeks,0.00434444
+14,Heating Unavailable Days,3 days,0.0112483
+14,Heating Unavailable Days,3 months,0.0035502
+14,Heating Unavailable Days,Never,0.960606
+14,Heating Unavailable Days,Year round,0.0024059
+14,Electric Vehicle Charger,Level 1 charger,0.00860465
+14,Electric Vehicle Charger,Level 2 charger,0.00588093
 14,Electric Vehicle Charger,None,0.985514
 14,Electric Vehicle Charger,Void,0
-14,Misc Pool Heater,Electric Heat Pump,0.00131113
-14,Misc Pool Heater,Electricity,0.00572113
-14,Misc Pool Heater,Natural Gas,0.0104089
-14,Misc Pool Heater,None,0.97601
-14,Misc Pool Heater,Other Fuel,0.00654841
-14,Misc Pool Pump,None,0.928741
-14,Misc Pool Pump,1.0 HP Pump,0.0712588
+14,Misc Pool Heater,Electric Heat Pump,0.00131093
+14,Misc Pool Heater,Electricity,0.0057206
+14,Misc Pool Heater,Natural Gas,0.0104085
+14,Misc Pool Heater,None,0.976012
+14,Misc Pool Heater,Other Fuel,0.00654785
+14,Misc Pool Pump,None,0.928746
+14,Misc Pool Pump,1.0 HP Pump,0.0712545
 14,Insulation Ceiling,None,0.571046
 14,Insulation Ceiling,Uninsulated,0.0119961
 14,Insulation Ceiling,R-7,0.0274485
@@ -13518,16 +13518,16 @@ Level,Parameter,Option,Saturation
 14,Insulation Wall,"Brick, 12-in, 3-wythe, R-15",0.0139701
 14,Insulation Wall,"Brick, 12-in, 3-wythe, R-19",0.0151591
 14,Insulation Wall,Void,0
-15,Electric Vehicle Outlet Access,No,0.435476
-15,Electric Vehicle Outlet Access,Yes,0.564524
+15,Electric Vehicle Outlet Access,No,0.435499
+15,Electric Vehicle Outlet Access,Yes,0.564501
 15,Electric Vehicle Outlet Access,Void,0
-15,Duct Location,Attic,0.170301
-15,Duct Location,Crawlspace,0.154327
-15,Duct Location,Garage,0.047854
-15,Duct Location,Heated Basement,0.106659
-15,Duct Location,Living Space,0.196203
-15,Duct Location,None,0.234576
-15,Duct Location,Unheated Basement,0.090081
+15,Duct Location,Attic,0.170261
+15,Duct Location,Crawlspace,0.154223
+15,Duct Location,Garage,0.047835
+15,Duct Location,Heated Basement,0.106559
+15,Duct Location,Living Space,0.196091
+15,Duct Location,None,0.235004
+15,Duct Location,Unheated Basement,0.0900273
 15,Water Heater Location,Attic,0.00874648
 15,Water Heater Location,Conditioned Mechanical Room,0.143277
 15,Water Heater Location,Crawlspace,0.00181447
@@ -13536,17 +13536,17 @@ Level,Parameter,Option,Saturation
 15,Water Heater Location,Living Space,0.431316
 15,Water Heater Location,Outside,0.0711681
 15,Water Heater Location,Unheated Basement,0.0868885
-16,Duct Leakage and Insulation,"0% Leakage to Outside, Uninsulated",0.302861
-16,Duct Leakage and Insulation,"10% Leakage to Outside, R-4",0.038968
-16,Duct Leakage and Insulation,"10% Leakage to Outside, R-6",0.00892758
-16,Duct Leakage and Insulation,"10% Leakage to Outside, R-8",0.0177523
-16,Duct Leakage and Insulation,"10% Leakage to Outside, Uninsulated",0.0546184
-16,Duct Leakage and Insulation,"20% Leakage to Outside, R-4",0.0704421
-16,Duct Leakage and Insulation,"20% Leakage to Outside, R-6",0.0161383
-16,Duct Leakage and Insulation,"20% Leakage to Outside, R-8",0.0320907
-16,Duct Leakage and Insulation,"20% Leakage to Outside, Uninsulated",0.0987333
-16,Duct Leakage and Insulation,"30% Leakage to Outside, R-4",0.0404668
-16,Duct Leakage and Insulation,"30% Leakage to Outside, R-6",0.00927094
-16,Duct Leakage and Insulation,"30% Leakage to Outside, R-8",0.0184351
-16,Duct Leakage and Insulation,"30% Leakage to Outside, Uninsulated",0.0567191
-16,Duct Leakage and Insulation,None,0.234576
+16,Duct Leakage and Insulation,"0% Leakage to Outside, Uninsulated",0.30265
+16,Duct Leakage and Insulation,"10% Leakage to Outside, R-4",0.0389558
+16,Duct Leakage and Insulation,"10% Leakage to Outside, R-6",0.00892031
+16,Duct Leakage and Insulation,"10% Leakage to Outside, R-8",0.017749
+16,Duct Leakage and Insulation,"10% Leakage to Outside, Uninsulated",0.0545849
+16,Duct Leakage and Insulation,"20% Leakage to Outside, R-4",0.0704202
+16,Duct Leakage and Insulation,"20% Leakage to Outside, R-6",0.0161252
+16,Duct Leakage and Insulation,"20% Leakage to Outside, R-8",0.0320848
+16,Duct Leakage and Insulation,"20% Leakage to Outside, Uninsulated",0.0986727
+16,Duct Leakage and Insulation,"30% Leakage to Outside, R-4",0.0404541
+16,Duct Leakage and Insulation,"30% Leakage to Outside, R-6",0.0092634
+16,Duct Leakage and Insulation,"30% Leakage to Outside, R-8",0.0184317
+16,Duct Leakage and Insulation,"30% Leakage to Outside, Uninsulated",0.0566843
+16,Duct Leakage and Insulation,None,0.235004
