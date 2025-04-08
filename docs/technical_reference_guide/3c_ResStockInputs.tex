@@ -2427,15 +2427,12 @@ Specifies the type of lighting technology used in the housing unit.
 \begin{itemize}
  
 \item
-  U.S. EIA 2015 RECS microdata.
-\item
-  2019 Energy Savings Forecast of Solid-State Lighting in General
-  Illumination Applications.\footnote{https://www.energy.gov/sites/prod/files/2019/12/f69/2019\_ssl-energy-savings-forecast.pdf}
+  U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
-    \item{Census Division RECS}
+    \item{State}
     \item{Geometry Building Type RECS}.
 \end{itemize}
 
@@ -2523,17 +2520,10 @@ specified as CFL, LFL, or LED is assumed to be incandescent. \\
   distributed to three options representing 100\% incandescent, 100\%
   CFl, and 100\% LED lamp type options.
 \item
-  Due to low sample sizes for some Building Types, Building Type data
-  are grouped into: (1) Single-Family Detached and Mobile Homes, (2)
-  Multifamily 2--4 units and Multifamily 5+ units, and (3) Single-Family
-  Attached.
-\item
-  Single-Family Attached units in the West South Central census division
-  has the same LED saturation as Multifamily.
-\item
-  LED saturation is adjusted to match the U.S. projected saturation in
-  the 2019 Energy Savings Forecast of Solid-State Lighting in General
-  Illumination Applications.
+Qualitative portion of inside light bulbs in 2020 RECS microdata is 
+mapped to quantative percentage as: 
+None: 0\%; Some: 20\%; About half: 50\%; Most: 80\%; All: 100\%. 
+Then the sum of three types of lighting options is normalized to 100\%.
 \end{itemize}
 
 \subsubsection{Miscellaneous Gas Lighting}\label{misc_gas_lighting}
