@@ -44,3 +44,20 @@ An example of this error is given below:
   ...
   Error executing argv: ["integrity_check_testing"]
   Error: ERROR: Required argument 'wall_assembly_r' not provided in C:/OpenStudio/resstock/test/../resources/options_lookup.tsv for measure 'ResStockArguments'.
+
+.. _committing-changes:
+
+Committing Changes to Options Lookup
+------------------------------------
+
+When committing changes to ``options_lookup.tsv``, sometimes the diff in the pull request will show that all the lines have changed. This is likely because all the endline characters have changed or that there are empty columns have been inserted. This behavior is common with editing in Microsoft Excel. Since it is convienient to modify the file in Excel, GitHub Actions automatically formats ``options_lookup.tsv``. If the tests pass, these changes will be committed.
+
+In the ``.github/workflows/config.yml`` there is a `task <https://github.com/NREL/resstock/blob/733f7279569b43b105efea1dc1bf8cc700b12f44/.github/workflows/config.yml#L25-L36>`_ that formats ``options_lookup.tsv``.
+
+.. code:: bash
+
+  sed -i -e 's/[[:space:]]*$//' resources/options_lookup.tsv # Remove whitespace
+  (sed -u 1q ; sort -k1 -k2) < resources/options_lookup.tsv > sorted_options_lookup.tsv
+  mv sorted_options_lookup.tsv resources/options_lookup.tsv # Sort on first two columns
+
+These lines removes any extra white space, and sorts the file on the parameter and option names. If the pull request diff is showing that all the lines are being updated. Run these three lines in the ``resstock`` directory, commit the changes, and push to the remote feature branch. At this point the diff should show only the changes made on the feature branch.
