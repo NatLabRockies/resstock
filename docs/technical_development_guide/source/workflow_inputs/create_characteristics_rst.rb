@@ -126,7 +126,7 @@ f.puts('.. [#] May be "true" or "false".')
 f.puts('.. [#] May be "String", "Double", "Integer", "Boolean", or "Choice".')
 f.puts
 f.puts('Furthermore, all *optional* Choice arguments include "auto" as one of the possible **Choices**.')
-f.puts('Most *optional* String/Double/Integer/Boolean arguments can also be assigned a value of "auto" (e.g., ``site_ground_conductivity``).')
+f.puts('Most *optional* String/Double/Integer/Boolean arguments can also be assigned a value of "auto" (e.g., ``geometry_unit_num_bathrooms``).')
 f.puts('Assigning "auto" means that downstream default values (e.g., from OpenStudio-HPXML) will be used (if applicable).')
 f.puts('When an argument is defaulted using OpenStudio-HPXML, the **Description** field will include link(s) to `OpenStudio-HPXML documentation <https://openstudio-hpxml.readthedocs.io/en/latest/?badge=latest>`_ describing these default values.')
 f.puts
