@@ -38630,7 +38630,7 @@ Created by
 Source
 ******
 
-- \U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.
+- \U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.Hawaii constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
 
 Assumption
@@ -38638,7 +38638,7 @@ Assumption
 
 - \Central AC systems need to serve at least 60 percent of the floor area.
 
-- \Heat pumps serve 100 percent of the floor area because the system serves 100 percent of the heated floor area.
+- \Heat pumps serve 100 percent of the floor area because the system serves 100 percent of the heated floor area, except for in Hawaii
 
 - \Due to low sample count, the tsv is constructed by downscaling a core sub-tsv with 3 sub-tsvs of different dependencies. The sub-tsvs have the following dependencies: tsv1 : 'HVAC Cooling Type', 'ASHRAE IECC Climate Zone 2004'
 
@@ -38682,10 +38682,10 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``cooling_system_fraction_cool_load_served``
 
    * - <10% Conditioned
-     - 0.46%
+     - 0.47%
      - .1
    * - 20% Conditioned
-     - 6.3%
+     - 6.4%
      - .2
    * - 40% Conditioned
      - 5.8%
