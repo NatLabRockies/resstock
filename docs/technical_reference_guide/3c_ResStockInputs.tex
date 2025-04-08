@@ -42,11 +42,11 @@ The water heater fuel type.
 \begin{itemize}
     \item Geometry Building Type RECS
     \item Heating Fuel
-    \item State.
+    \item State
 \end{itemize}
 
 \paragraph{Options}
-Water Heater Fuel has options of Electricity, Fuel Oil, Natural Gas, and Other Fuel. The characteristic does not set any ResStock arguments. Instead, it is a direct dependency for Water Heater Efficiency, where the heating fuel is assigned individually for each water heater option. Through this dependency, any changes to the distribution of water heater fuels will cascade to influence the water heater types.
+Water Heater Fuel has options of Electricity, Fuel Oil, Natural Gas, Solar Thermal, Wood, and Other Fuel. The characteristic does not set any ResStock arguments. Instead, it is a direct dependency for Water Heater Efficiency, where the heating fuel is assigned individually for each water heater option. Through this dependency, any changes to the distribution of water heater fuels will cascade to influence the water heater types. After conversations with EIA the Other Fuel water heater is typically composed of respondents saying they either do not have a water heater, coal, biomass, or district steam systems. ResStock does not model the energy associated with Other Fuel water heaters.
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -290,13 +290,12 @@ Fuel Oil Premium & storage water heater & fuel oil & auto & 0.68 & 0.9 \\ \hline
 Fuel Oil Standard & storage water heater & fuel oil & auto & 0.62 & 0.78 \\ \hline
 Natural Gas Premium & storage water heater & natural gas & auto & 0.67 & 0.78 \\ \hline
 Natural Gas Standard & storage water heater & natural gas & auto & 0.59 & 0.76 \\ \hline
-Natural Gas Tankless & instantaneous water heater & natural gas
-& 0 & 0.82 & 0 \\ \hline
-Other Fuel & storage water heater & wood & auto
-& 0.59 & 0.76 \\ \hline
+Natural Gas Tankless & instantaneous water heater & natural gas & 0 & 0.82 & 0 \\ \hline
+Other Fuel & & & & & \\ \hline
 Propane Premium & storage water heater & propane & auto & 0.67 & 0.78 \\ \hline
 Propane Standard & storage water heater & propane & auto & 0.59 & 0.76 \\ \hline
-Propane Tankless & instantaneous water heater & propane & 0 & 0.82 & 0 \\
+Propane Tankless & instantaneous water heater & propane & 0 & 0.82 & 0 \\ \hline
+Wood & storage water heater & wood & auto & 0.59 & 0.76 \\
 \end{customLongTable}
 
 Solar thermal water heaters are characterized by \texttt{solar\_thermal\_system\_type=hot water}. The following arguments are constant across the solar water heater options:
@@ -324,6 +323,8 @@ Solar thermal water heaters are characterized by \texttt{solar\_thermal\_system\
   \item \texttt{solar\_thermal\_solar\_fraction}: 0
 \end{itemize}
 
+The options for solar water heaters in ResStock are a combination of orientation and backup fuel, Table \ref{table:hc_opt_solar_water_heater_eff}. 
+
 \begin{customLongTable}{|p{3cm}|p{1.85cm}|p{1.85cm}|p{1.5cm}|p{1.95cm}|p{1.95cm}|p{1.5cm}|}{Water Heater Efficiency options and arguments that vary for each option of solar water heaters.}{table:hc_opt_solar_water_heater_eff} 
   {Option name &
   \texttt{solar\_thermal\_collector\_azimuth} &
@@ -332,28 +333,20 @@ Solar thermal water heaters are characterized by \texttt{solar\_thermal\_system\
   \texttt{water\_heater\_efficiency\_type} &
   \texttt{water\_heater\_recovery\_efficiency} &
   \texttt{water\_heater\_jacket\_rvalue}}
+  Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup &
+  90 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
   Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup &
   0 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
   Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup &
   180 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup &
-  90 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup &
-  270 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, North, Latitude - 15 degrees, Electric Standard Backup &
-  0 & latitude-15 & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, South, 10 degrees, Electric Standard Backup &
-  180 & 10 & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, East, Latitude + 15 degrees, Electric Standard Backup &
-  90 & latitude+15 & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, West, 70 degrees, Electric Standard Backup &
-  270 & 70 & electricity & 0.97 & 0.98 & 6.2 \\ \hline
   Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup &
   180 & roofpitch & fuel oil & 0.62 & 0.78 & 0 \\ \hline
   Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup &
   180 & roofpitch & natural gas & 0.59 & 0.76 & 0 \\ \hline
   Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup &
-  180 & roofpitch & propane & 0.59 & 0.76 & 0 \\
+  180 & roofpitch & propane & 0.59 & 0.76 & 0 \\ \hline
+  Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup &
+  270 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\
   \end{customLongTable}
 
 For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_eff} on storage and tankless water heaters and Table \ref{table:hc_arg_def_solar_hot_water} on solar water heaters. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
@@ -502,7 +495,7 @@ other solar thermal inputs. \\
   \item
     State: Census Region
     \item
-    State: National.
+    State: National
   \end{itemize}
 \end{itemize}
 
