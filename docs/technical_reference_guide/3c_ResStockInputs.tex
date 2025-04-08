@@ -46,7 +46,7 @@ The water heater fuel type.
 \end{itemize}
 
 \paragraph{Options}
-Water Heater Fuel has options of Electricity, Fuel Oil, Natural Gas, Solar Thermal, Wood, and Other Fuel. The characteristic does not set any ResStock arguments. Instead, it is a direct dependency for Water Heater Efficiency, where the heating fuel is assigned individually for each water heater option. Through this dependency, any changes to the distribution of water heater fuels will cascade to influence the water heater types. After conversations with EIA the Other Fuel water heater is typically composed of respondents saying they either do not have a water heater, coal, biomass, or district steam systems. ResStock does not model the energy associated with Other Fuel water heaters.
+Water Heater Fuel has options of Electricity, Fuel Oil, Natural Gas, Solar Thermal, Wood, and Other Fuel. The characteristic does not set any ResStock arguments. Instead, it is a direct dependency for Water Heater Efficiency, where the heating fuel is assigned individually for each water heater option. Through this dependency, any changes to the distribution of water heater fuels will cascade to influence the water heater types. After conversations with EIA the Other Fuel water heater is typically composed of respondents saying they either do not have a water heater, coal, biomass, or district steam systems. ResStock models the energy associated with Other Fuel water heaters as coal energy consumption.
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -291,7 +291,7 @@ Fuel Oil Standard & storage water heater & fuel oil & auto & 0.62 & 0.78 \\ \hli
 Natural Gas Premium & storage water heater & natural gas & auto & 0.67 & 0.78 \\ \hline
 Natural Gas Standard & storage water heater & natural gas & auto & 0.59 & 0.76 \\ \hline
 Natural Gas Tankless & instantaneous water heater & natural gas & 0 & 0.82 & 0 \\ \hline
-Other Fuel & & & & & \\ \hline
+Other Fuel & storage water heater & coal & auto & 0.59 & 0.76 \\
 Propane Premium & storage water heater & propane & auto & 0.67 & 0.78 \\ \hline
 Propane Standard & storage water heater & propane & auto & 0.59 & 0.76 \\ \hline
 Propane Tankless & instantaneous water heater & propane & 0 & 0.82 & 0 \\ \hline
