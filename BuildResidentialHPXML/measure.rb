@@ -160,39 +160,11 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription("Presence of nearby buildings, trees, obstructions for infiltration model. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-site'>HPXML Site</a>) is used.")
     args << arg
 
-    soil_types = [HPXML::SiteSoilTypeClay,
-                  HPXML::SiteSoilTypeGravel,
-                  HPXML::SiteSoilTypeLoam,
-                  HPXML::SiteSoilTypeSand,
-                  HPXML::SiteSoilTypeSilt,
-                  HPXML::SiteSoilTypeUnknown]
+    site_soil_type_choices = get_option_names('site_soil_type.tsv')
 
-    moisture_types = [HPXML::SiteSoilMoistureTypeDry,
-                      HPXML::SiteSoilMoistureTypeMixed,
-                      HPXML::SiteSoilMoistureTypeWet]
-
-    site_soil_and_moisture_type_choices = OpenStudio::StringVector.new
-    soil_types.each do |soil_type|
-      moisture_types.each do |moisture_type|
-        site_soil_and_moisture_type_choices << "#{soil_type}, #{moisture_type}"
-      end
-    end
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('site_soil_and_moisture_type', site_soil_and_moisture_type_choices, false)
-    arg.setDisplayName('Site: Soil and Moisture Type')
-    arg.setDescription("Type of soil and moisture. This is used to inform ground conductivity and diffusivity. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-site'>HPXML Site</a>) is used.")
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument.makeDoubleArgument('site_ground_conductivity', false)
-    arg.setDisplayName('Site: Ground Conductivity')
-    arg.setDescription('Conductivity of the ground soil. If provided, overrides the previous site and moisture type input.')
-    arg.setUnits('Btu/hr-ft-F')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument.makeDoubleArgument('site_ground_diffusivity', false)
-    arg.setDisplayName('Site: Ground Diffusivity')
-    arg.setDescription('Diffusivity of the ground soil. If provided, overrides the previous site and moisture type input.')
-    arg.setUnits('ft^2/hr')
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('site_soil_type', site_soil_type_choices, false)
+    arg.setDisplayName('Site: Soil Type')
+    arg.setDescription('The soil and moisture type, used to inform ground conductivity and diffusivity. Specific numerical inputs ([Btu/hr-ft-F] or [ft^2/hr]) override the soil and moisture type input.')
     args << arg
 
     site_iecc_zone_choices = OpenStudio::StringVector.new
@@ -3631,6 +3603,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     get_option_properties(args, 'heat_pump.tsv', args[:heat_pump])
     get_option_properties(args, 'heat_pump_backup.tsv', args[:heat_pump_backup])
     get_option_properties(args, 'heating_system_2.tsv', args[:heating_system_2])
+    get_option_properties(args, 'site_soil_type.tsv', args[:site_soil_type])
 
     error = (args[:heating_system_type] != Constants::None) && (args[:heat_pump_type] != Constants::None) && (args[:heating_system_fraction_heat_load_served] > 0) && (args[:heat_pump_fraction_heat_load_served] > 0)
     errors << 'Multiple central heating systems are not currently supported.' if error
@@ -4593,11 +4566,11 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   # @return [nil]
   def set_site(hpxml_bldg, args)
     hpxml_bldg.site.shielding_of_home = args[:site_shielding_of_home]
-    hpxml_bldg.site.ground_conductivity = args[:site_ground_conductivity]
-    hpxml_bldg.site.ground_diffusivity = args[:site_ground_diffusivity]
+    hpxml_bldg.site.ground_conductivity = args[:site_soil_type_ground_conductivity]
+    hpxml_bldg.site.ground_diffusivity = args[:site_soil_type_ground_diffusivity]
 
-    if not args[:site_soil_and_moisture_type].nil?
-      soil_type, moisture_type = args[:site_soil_and_moisture_type].split(', ')
+    if not args[:site_soil_type_soil_and_moisture_type].nil?
+      soil_type, moisture_type = args[:site_soil_type_soil_and_moisture_type].split(', ')
       hpxml_bldg.site.soil_type = soil_type
       hpxml_bldg.site.moisture_type = moisture_type
     end

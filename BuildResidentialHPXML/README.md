@@ -245,42 +245,16 @@ Presence of nearby buildings, trees, obstructions for infiltration model. If not
 
 <br/>
 
-**Site: Soil and Moisture Type**
+**Site: Soil Type**
 
-Type of soil and moisture. This is used to inform ground conductivity and diffusivity. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-site'>HPXML Site</a>) is used.
+The soil and moisture type, used to inform ground conductivity and diffusivity. Specific numerical inputs ([Btu/hr-ft-F] or [ft^2/hr]) override the soil and moisture type input.
 
-- **Name:** ``site_soil_and_moisture_type``
+- **Name:** ``site_soil_type``
 - **Type:** ``Choice``
 
 - **Required:** ``false``
 
-- **Choices:** `clay, dry`, `clay, mixed`, `clay, wet`, `gravel, dry`, `gravel, mixed`, `gravel, wet`, `loam, dry`, `loam, mixed`, `loam, wet`, `sand, dry`, `sand, mixed`, `sand, wet`, `silt, dry`, `silt, mixed`, `silt, wet`, `unknown, dry`, `unknown, mixed`, `unknown, wet`
-
-<br/>
-
-**Site: Ground Conductivity**
-
-Conductivity of the ground soil. If provided, overrides the previous site and moisture type input.
-
-- **Name:** ``site_ground_conductivity``
-- **Type:** ``Double``
-
-- **Units:** ``Btu/hr-ft-F``
-
-- **Required:** ``false``
-
-<br/>
-
-**Site: Ground Diffusivity**
-
-Diffusivity of the ground soil. If provided, overrides the previous site and moisture type input.
-
-- **Name:** ``site_ground_diffusivity``
-- **Type:** ``Double``
-
-- **Units:** ``ft^2/hr``
-
-- **Required:** ``false``
+- **Choices:** `Unknown`, `Clay, Dry`, `Clay, Mixed`, `Clay, Wet`, `Gravel, Dry`, `Gravel, Mixed`, `Gravel, Wet`, `Loam, Dry`, `Loam, Mixed`, `Loam, Wet`, `Sand, Dry`, `Sand, Mixed`, `Sand, Wet`, `Silt, Dry`, `Silt, Mixed`, `Silt, Wet`, `0.5 Conductivity`, `0.8 Conductivity`, `1.1 Conductivity`, `1.4 Conductivity`, `1.44 Conductivity`, `1.7 Conductivity`, `2.0 Conductivity`, `2.3 Conductivity`, `2.6 Conductivity`
 
 <br/>
 

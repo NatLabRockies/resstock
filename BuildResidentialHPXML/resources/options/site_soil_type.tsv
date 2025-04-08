@@ -1,0 +1,26 @@
+Option Name	soil_and_moisture_type	ground_conductivity	ground_diffusivity
+Unknown	"unknown, mixed"		
+"Clay, Dry"	"clay, dry"		
+"Clay, Mixed"	"clay, mixed"		
+"Clay, Wet"	"clay, wet"		
+"Gravel, Dry"	"gravel, dry"		
+"Gravel, Mixed"	"gravel, mixed"		
+"Gravel, Wet"	"gravel, wet"		
+"Loam, Dry"	"loam, dry"		
+"Loam, Mixed"	"loam, mixed"		
+"Loam, Wet"	"loam, wet"		
+"Sand, Dry"	"sand, dry"		
+"Sand, Mixed"	"sand, mixed"		
+"Sand, Wet"	"sand, wet"		
+"Silt, Dry"	"silt, dry"		
+"Silt, Mixed"	"silt, mixed"		
+"Silt, Wet"	"silt, wet"		
+0.5 Conductivity		0.5	
+0.8 Conductivity		0.8	
+1.1 Conductivity		1.1	
+1.4 Conductivity		1.4	
+1.44 Conductivity			0.03
+1.7 Conductivity		1.7	
+2.0 Conductivity		2	
+2.3 Conductivity		2.3	
+2.6 Conductivity		2.6	

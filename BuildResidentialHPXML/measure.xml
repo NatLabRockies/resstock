@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>33598405-ec91-4a54-9ac7-f9e859c40b85</version_id>
-  <version_modified>2025-04-05T02:14:41Z</version_modified>
+  <version_id>39bdeb8e-20f4-49ed-b958-c9fed0642948</version_id>
+  <version_modified>2025-04-08T03:36:33Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -234,104 +234,114 @@
       </choices>
     </argument>
     <argument>
-      <name>site_soil_and_moisture_type</name>
-      <display_name>Site: Soil and Moisture Type</display_name>
-      <description>Type of soil and moisture. This is used to inform ground conductivity and diffusivity. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-site'&gt;HPXML Site&lt;/a&gt;) is used.</description>
+      <name>site_soil_type</name>
+      <display_name>Site: Soil Type</display_name>
+      <description>The soil and moisture type, used to inform ground conductivity and diffusivity. Specific numerical inputs ([Btu/hr-ft-F] or [ft^2/hr]) override the soil and moisture type input.</description>
       <type>Choice</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
       <choices>
         <choice>
-          <value>clay, dry</value>
-          <display_name>clay, dry</display_name>
+          <value>Unknown</value>
+          <display_name>Unknown</display_name>
         </choice>
         <choice>
-          <value>clay, mixed</value>
-          <display_name>clay, mixed</display_name>
+          <value>Clay, Dry</value>
+          <display_name>Clay, Dry</display_name>
         </choice>
         <choice>
-          <value>clay, wet</value>
-          <display_name>clay, wet</display_name>
+          <value>Clay, Mixed</value>
+          <display_name>Clay, Mixed</display_name>
         </choice>
         <choice>
-          <value>gravel, dry</value>
-          <display_name>gravel, dry</display_name>
+          <value>Clay, Wet</value>
+          <display_name>Clay, Wet</display_name>
         </choice>
         <choice>
-          <value>gravel, mixed</value>
-          <display_name>gravel, mixed</display_name>
+          <value>Gravel, Dry</value>
+          <display_name>Gravel, Dry</display_name>
         </choice>
         <choice>
-          <value>gravel, wet</value>
-          <display_name>gravel, wet</display_name>
+          <value>Gravel, Mixed</value>
+          <display_name>Gravel, Mixed</display_name>
         </choice>
         <choice>
-          <value>loam, dry</value>
-          <display_name>loam, dry</display_name>
+          <value>Gravel, Wet</value>
+          <display_name>Gravel, Wet</display_name>
         </choice>
         <choice>
-          <value>loam, mixed</value>
-          <display_name>loam, mixed</display_name>
+          <value>Loam, Dry</value>
+          <display_name>Loam, Dry</display_name>
         </choice>
         <choice>
-          <value>loam, wet</value>
-          <display_name>loam, wet</display_name>
+          <value>Loam, Mixed</value>
+          <display_name>Loam, Mixed</display_name>
         </choice>
         <choice>
-          <value>sand, dry</value>
-          <display_name>sand, dry</display_name>
+          <value>Loam, Wet</value>
+          <display_name>Loam, Wet</display_name>
         </choice>
         <choice>
-          <value>sand, mixed</value>
-          <display_name>sand, mixed</display_name>
+          <value>Sand, Dry</value>
+          <display_name>Sand, Dry</display_name>
         </choice>
         <choice>
-          <value>sand, wet</value>
-          <display_name>sand, wet</display_name>
+          <value>Sand, Mixed</value>
+          <display_name>Sand, Mixed</display_name>
         </choice>
         <choice>
-          <value>silt, dry</value>
-          <display_name>silt, dry</display_name>
+          <value>Sand, Wet</value>
+          <display_name>Sand, Wet</display_name>
         </choice>
         <choice>
-          <value>silt, mixed</value>
-          <display_name>silt, mixed</display_name>
+          <value>Silt, Dry</value>
+          <display_name>Silt, Dry</display_name>
         </choice>
         <choice>
-          <value>silt, wet</value>
-          <display_name>silt, wet</display_name>
+          <value>Silt, Mixed</value>
+          <display_name>Silt, Mixed</display_name>
         </choice>
         <choice>
-          <value>unknown, dry</value>
-          <display_name>unknown, dry</display_name>
+          <value>Silt, Wet</value>
+          <display_name>Silt, Wet</display_name>
         </choice>
         <choice>
-          <value>unknown, mixed</value>
-          <display_name>unknown, mixed</display_name>
+          <value>0.5 Conductivity</value>
+          <display_name>0.5 Conductivity</display_name>
         </choice>
         <choice>
-          <value>unknown, wet</value>
-          <display_name>unknown, wet</display_name>
+          <value>0.8 Conductivity</value>
+          <display_name>0.8 Conductivity</display_name>
+        </choice>
+        <choice>
+          <value>1.1 Conductivity</value>
+          <display_name>1.1 Conductivity</display_name>
+        </choice>
+        <choice>
+          <value>1.4 Conductivity</value>
+          <display_name>1.4 Conductivity</display_name>
+        </choice>
+        <choice>
+          <value>1.44 Conductivity</value>
+          <display_name>1.44 Conductivity</display_name>
+        </choice>
+        <choice>
+          <value>1.7 Conductivity</value>
+          <display_name>1.7 Conductivity</display_name>
+        </choice>
+        <choice>
+          <value>2.0 Conductivity</value>
+          <display_name>2.0 Conductivity</display_name>
+        </choice>
+        <choice>
+          <value>2.3 Conductivity</value>
+          <display_name>2.3 Conductivity</display_name>
+        </choice>
+        <choice>
+          <value>2.6 Conductivity</value>
+          <display_name>2.6 Conductivity</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>site_ground_conductivity</name>
-      <display_name>Site: Ground Conductivity</display_name>
-      <description>Conductivity of the ground soil. If provided, overrides the previous site and moisture type input.</description>
-      <type>Double</type>
-      <units>Btu/hr-ft-F</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>site_ground_diffusivity</name>
-      <display_name>Site: Ground Diffusivity</display_name>
-      <description>Diffusivity of the ground soil. If provided, overrides the previous site and moisture type input.</description>
-      <type>Double</type>
-      <units>ft^2/hr</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>site_iecc_zone</name>
@@ -8826,7 +8836,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>849206C5</checksum>
+      <checksum>6184989C</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -8843,7 +8853,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>4D438990</checksum>
+      <checksum>ED3367E0</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
@@ -8898,6 +8908,12 @@
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
       <checksum>5D6AC221</checksum>
+    </file>
+    <file>
+      <filename>options/site_soil_type.tsv</filename>
+      <filetype>tsv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>E440E724</checksum>
     </file>
     <file>
       <filename>options/wall_siding.tsv</filename>
