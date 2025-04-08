@@ -1968,6 +1968,8 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     end
     if hpxml_file.include? 'base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml'
       hpxml_bldg.geothermal_loops[0].shank_spacing = 2.5
+      hpxml_bldg.site.soil_type = 'sand'
+      hpxml_bldg.site.moisture_type = 'dry'
     end
     hpxml_bldg.heating_systems.each do |heating_system|
       if heating_system.heating_system_type == HPXML::HVACTypeBoiler &&

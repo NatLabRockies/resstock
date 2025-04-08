@@ -49,6 +49,7 @@ Style/FrozenStringLiteralComment:
   Enabled: true
 Style/HashSyntax:
   Enabled: true
+  EnforcedShorthandSyntax: never
 Style/Next:
   Enabled: true
 Style/NilComparison:

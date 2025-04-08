@@ -622,8 +622,7 @@
     "radiant_barrier_grade": 2,
     "radiant_barrier_attic_location": "none",
     "wall_type": "ConcreteMasonryUnit",
-    "wall_siding_type": "stucco",
-    "wall_color": "light",
+    "enclosure_wall_siding": "Stucco, Light",
     "wall_assembly_r": 23,
     "window_front_wwr": 0,
     "window_back_wwr": 0,
@@ -669,13 +668,13 @@
     "cooling_system": "None",
     "cooling_system_cooling_capacity": 24000,
     "cooling_system_fraction_cool_load_served": 1,
-    "heat_pump": "ASHP, SEER 13, 7.7 HSPF",
+    "heat_pump": "Central HP, SEER 13, 7.7 HSPF",
     "heat_pump_fraction_heat_load_served": 0.75,
     "heat_pump_fraction_cool_load_served": 1,
     "heat_pump_heating_capacity": 30000,
     "heat_pump_cooling_capacity": 30000,
     "heat_pump_backup": "None",
-    "heating_system_2": "Electric Baseboard, 100% Efficiency",
+    "heating_system_2": "Electric Resistance",
     "heating_system_2_fuel": "electricity",
     "heating_system_2_fraction_heat_load_served": 0.25,
     "hvac_control_heating_weekday_setpoint": 68,
@@ -2768,8 +2767,7 @@
   "sample_files/base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump.xml",
     "geothermal_loop": "Vertical Loop, Lopsided U Borefield, Detailed",
-    "site_ground_diffusivity": 0.03,
-    "site_soil_and_moisture_type": "sand, dry"
+    "site_soil_type": "1.44 Conductivity"
   },
   "sample_files/base-hvac-ground-to-air-heat-pump-cooling-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump.xml",
@@ -3534,7 +3532,7 @@
   },
   "sample_files/base-misc-ground-conductivity.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "site_ground_conductivity": 0.8
+    "site_soil_type": "0.8 Conductivity"
   },
   "sample_files/base-misc-loads-large-uncommon.xml": {
     "parent_hpxml": "sample_files/base-schedules-simple.xml",
