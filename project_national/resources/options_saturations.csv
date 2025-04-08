@@ -11349,25 +11349,24 @@ Level,Parameter,Option,Saturation
 3,AHS Region,Non-CBSA South Atlantic,0.150309
 3,AHS Region,Non-CBSA West North Central,0.0691843
 3,AHS Region,Non-CBSA West South Central,0.0775408
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,1A - FL,0.0139845
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,1A - HI,0.00395575
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,"2A - FL, GA, AL, MS",0.0618566
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,"2A - TX, LA",0.0540783
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,2B,0.0197434
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,3A,0.13305
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,3B,0.0929123
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,3C,0.0234445
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,4A,0.215302
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,4B,0.0077307
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,4C,0.0288003
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,5A,0.225367
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,5B,0.037893
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,6A,0.0613171
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,6B,0.0092306
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,7A,0.00789633
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,7AK,0.00178684
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,7B,0.00113165
-3,ASHRAE IECC Climate Zone 2004 - Sub-CZ Split,8AK,0.000519458
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,1A,0.0179403
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,"2A - FL, GA, AL, MS",0.0618566
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,"2A - TX, LA",0.0540783
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,2B,0.0197434
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,3A,0.13305
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,3B,0.0929123
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,3C,0.0234445
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,4A,0.215302
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,4B,0.0077307
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,4C,0.0288003
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,5A,0.225367
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,5B,0.037893
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,6A,0.0613171
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,6B,0.0092306
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,7A,0.00789633
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,7AK,0.00178684
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,7B,0.00113165
+3,ASHRAE IECC Climate Zone 2004 - 2A Split,8AK,0.000519458
 3,Building America Climate Zone,Cold,0.33389
 3,Building America Climate Zone,Hot-Dry,0.11127
 3,Building America Climate Zone,Hot-Humid,0.18118
@@ -12750,12 +12749,13 @@ Level,Parameter,Option,Saturation
 6,HVAC Secondary Heating Fuel,Other Fuel,1.6855e-06
 6,HVAC Secondary Heating Fuel,Propane,1.31903e-05
 6,HVAC Secondary Heating Fuel,Wood,0.000229466
-6,Water Heater Fuel,Electricity,0.484804
-6,Water Heater Fuel,Fuel Oil,0.0261388
-6,Water Heater Fuel,Natural Gas,0.4468
-6,Water Heater Fuel,Other Fuel,0.0011983
-6,Water Heater Fuel,Propane,0.039427
-6,Water Heater Fuel,Solar Thermal,0.00163144
+6,Water Heater Fuel,Electricity,0.484959
+6,Water Heater Fuel,Fuel Oil,0.0260285
+6,Water Heater Fuel,Natural Gas,0.446711
+6,Water Heater Fuel,Other Fuel,0.000478624
+6,Water Heater Fuel,Propane,0.0394322
+6,Water Heater Fuel,Solar Thermal,0.00163259
+6,Water Heater Fuel,Wood,0.000757996
 6,Geometry Foundation Type,Ambient,0.0887587
 6,Geometry Foundation Type,Heated Basement,0.123976
 6,Geometry Foundation Type,Slab,0.393074
@@ -12822,29 +12822,30 @@ Level,Parameter,Option,Saturation
 7,HVAC Secondary Heating Type,Ducted Heating,2.93623e-05
 7,HVAC Secondary Heating Type,Non-Ducted Heating,0.000357846
 7,HVAC Secondary Heating Type,None,0.999613
-7,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.0031028
+7,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.00310357
 7,Water Heater Efficiency,"Electric Heat Pump, 66 gal, 3.35 UEF",0
 7,Water Heater Efficiency,"Electric Heat Pump, 80 gal, 3.45 UEF",0
-7,Water Heater Efficiency,Electric Premium,0.0989463
-7,Water Heater Efficiency,Electric Standard,0.362258
-7,Water Heater Efficiency,Electric Tankless,0.020497
-7,Water Heater Efficiency,FIXME Fuel Oil Indirect,0.00723476
-7,Water Heater Efficiency,Fuel Oil Premium,0.00465003
-7,Water Heater Efficiency,Fuel Oil Standard,0.014254
-7,Water Heater Efficiency,Natural Gas Premium,0.0832112
-7,Water Heater Efficiency,Natural Gas Standard,0.334571
-7,Water Heater Efficiency,Natural Gas Tankless,0.0290177
-7,Water Heater Efficiency,Other Fuel,0.0011983
-7,Water Heater Efficiency,Propane Premium,0.00631771
-7,Water Heater Efficiency,Propane Standard,0.023876
-7,Water Heater Efficiency,Propane Tankless,0.00923329
-7,Water Heater Efficiency,"Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup",0.000367099
-7,Water Heater Efficiency,"Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup",3.98135e-05
-7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup",0.000925687
+7,Water Heater Efficiency,Electric Premium,0.0989875
+7,Water Heater Efficiency,Electric Standard,0.36236
+7,Water Heater Efficiency,Electric Tankless,0.0205081
+7,Water Heater Efficiency,FIXME Fuel Oil Indirect,0.00720783
+7,Water Heater Efficiency,Fuel Oil Premium,0.00462957
+7,Water Heater Efficiency,Fuel Oil Standard,0.0141911
+7,Water Heater Efficiency,Natural Gas Premium,0.0831978
+7,Water Heater Efficiency,Natural Gas Standard,0.33451
+7,Water Heater Efficiency,Natural Gas Tankless,0.029004
+7,Water Heater Efficiency,Other Fuel,0.000478624
+7,Water Heater Efficiency,Propane Premium,0.0063191
+7,Water Heater Efficiency,Propane Standard,0.0238785
+7,Water Heater Efficiency,Propane Tankless,0.00923459
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup",0.000367359
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup",3.98417e-05
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup",0.000926343
 7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup",3.17514e-06
-7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup",1.99033e-05
-7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup",5.82416e-05
-7,Water Heater Efficiency,"Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup",0.000217518
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup",1.99198e-05
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup",5.82824e-05
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup",0.000217672
+7,Water Heater Efficiency,Wood,0.000757996
 7,Insulation Floor,None,0.393074
 7,Insulation Floor,Uninsulated,0.479199
 7,Insulation Floor,Ceiling R-13,0.0478492
