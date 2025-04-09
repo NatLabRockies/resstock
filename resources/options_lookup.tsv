@@ -10041,33 +10041,33 @@ Income RECS2020	40000-59999
 Income RECS2020	60000-99999
 Income RECS2020	<20000
 Income RECS2020	Not Available
-Infiltration	"7 ACH50, 0.5 Shelter Coefficient"	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=7	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	0.25 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=0.25	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	0.5 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=0.5	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	0.75 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=0.75	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	1 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=1	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	1.5 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=1.5	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	10 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=10	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	11.25 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=11.25	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	15 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=15	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	18.5 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=18.5	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	2 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=2	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	2.25 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=2.25	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	20 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=20	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	25 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=25	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	3 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=3	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	3.75 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=3.75	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	30 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=30	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	4 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=4	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	4.5 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=4.5	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	40 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=40	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	5 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=5	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	5.25 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=5.25	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	50 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=50	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	6 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=6	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	7 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=7	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	7.5 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=7.5	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration	8 ACH50	ResStockArguments	air_leakage_leakiness_description=auto	air_leakage_units=ACH	air_leakage_house_pressure=50	air_leakage_value=8	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	"7 ACH50, 0.5 Shelter Coefficient"	ResStockArguments	air_leakage=7 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	0.25 ACH50	ResStockArguments	air_leakage=0.25 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	0.5 ACH50	ResStockArguments	air_leakage=0.5 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	0.75 ACH50	ResStockArguments	air_leakage=0.75 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	1 ACH50	ResStockArguments	air_leakage=1 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	1.5 ACH50	ResStockArguments	air_leakage=1.5 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	10 ACH50	ResStockArguments	air_leakage=10 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	11.25 ACH50	ResStockArguments	air_leakage=11.25 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	15 ACH50	ResStockArguments	air_leakage=15 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	18.5 ACH50	ResStockArguments	air_leakage=18.5 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	2 ACH50	ResStockArguments	air_leakage=2 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	2.25 ACH50	ResStockArguments	air_leakage=2.25 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	20 ACH50	ResStockArguments	air_leakage=20 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	25 ACH50	ResStockArguments	air_leakage=25 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	3 ACH50	ResStockArguments	air_leakage=3 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	3.75 ACH50	ResStockArguments	air_leakage=3.75 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	30 ACH50	ResStockArguments	air_leakage=30 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	4 ACH50	ResStockArguments	air_leakage=4 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	4.5 ACH50	ResStockArguments	air_leakage=4.5 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	40 ACH50	ResStockArguments	air_leakage=40 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	5 ACH50	ResStockArguments	air_leakage=5 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	5.25 ACH50	ResStockArguments	air_leakage=5.25 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	50 ACH50	ResStockArguments	air_leakage=50 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	6 ACH50	ResStockArguments	air_leakage=6 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	7 ACH50	ResStockArguments	air_leakage=7 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	7.5 ACH50	ResStockArguments	air_leakage=7.5 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
+Infiltration	8 ACH50	ResStockArguments	air_leakage=8 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
 Infiltration Reduction	15%	ResStockArguments	air_leakage_percent_reduction=15
 Infiltration Reduction	20%	ResStockArguments	air_leakage_percent_reduction=20
 Infiltration Reduction	25%	ResStockArguments	air_leakage_percent_reduction=25
