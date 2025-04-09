@@ -1,0 +1,45 @@
+Option Name	leakiness_description	units	house_pressure	value
+Very Tight	very tight			
+Tight	tight			
+Average	average			
+Leaky	leaky			
+Very Leaky	very leaky			
+0.25 ACH50		ACH	50	0.25
+0.5 ACH50		ACH	50	0.5
+0.75 ACH50		ACH	50	0.75
+1 ACH50		ACH	50	1
+1.5 ACH50		ACH	50	1.5
+2 ACH50		ACH	50	2
+2.25 ACH50		ACH	50	2.25
+3 ACH50		ACH	50	3
+3.57 ACH50		ACH	50	3.57
+3.75 ACH50		ACH	50	3.75
+4 ACH50		ACH	50	4
+4.5 ACH50		ACH	50	4.5
+5 ACH50		ACH	50	5
+5.25 ACH50		ACH	50	5.25
+6 ACH50		ACH	50	6
+7 ACH50		ACH	50	7
+7.5 ACH50		ACH	50	7.5
+8 ACH50		ACH	50	8
+10 ACH50		ACH	50	10
+11.25 ACH50		ACH	50	11.25
+12.16 ACH50		ACH	50	12.16
+15 ACH50		ACH	50	15
+18.5 ACH50		ACH	50	18.5
+20 ACH50		ACH	50	20
+25 ACH50		ACH	50	25
+30 ACH50		ACH	50	30
+40 ACH50		ACH	50	40
+50 ACH50		ACH	50	50
+2.8 ACH45		ACH	45	2.8
+0.2 nACH		ACHnatural		0.2
+0.335 nACH		ACHnatural		0.335
+0.375 nACH		ACHnatural		0.375
+0.67 nACH		ACHnatural		0.67
+1.5 nACH		ACHnatural		1.5
+72 nCFM		CFMnatural		72
+79.8 sq. in. ELA		EffectiveLeakageArea		79.8
+123 sq. in. ELA		EffectiveLeakageArea		123
+1080 CFM50		CFM	50	1080
+1008.5 CFM45		CFM	45	1008.5

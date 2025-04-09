@@ -1048,40 +1048,11 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(4.4)
     args << arg
 
-    air_leakage_leakiness_description_choices = OpenStudio::StringVector.new
-    air_leakage_leakiness_description_choices << HPXML::LeakinessVeryTight
-    air_leakage_leakiness_description_choices << HPXML::LeakinessTight
-    air_leakage_leakiness_description_choices << HPXML::LeakinessAverage
-    air_leakage_leakiness_description_choices << HPXML::LeakinessLeaky
-    air_leakage_leakiness_description_choices << HPXML::LeakinessVeryLeaky
+    air_leakage_choices = get_option_names('air_leakage.tsv')
 
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('air_leakage_leakiness_description', air_leakage_leakiness_description_choices, false)
-    arg.setDisplayName('Air Leakage: Leakiness Description')
-    arg.setDescription('Qualitative description of infiltration. If provided, the Year Built of the home is required. Either provide this input or provide a numeric air leakage value below.')
-    arg.setDefaultValue(HPXML::LeakinessAverage)
-    args << arg
-
-    air_leakage_units_choices = OpenStudio::StringVector.new
-    air_leakage_units_choices << HPXML::UnitsACH
-    air_leakage_units_choices << HPXML::UnitsCFM
-    air_leakage_units_choices << HPXML::UnitsACHNatural
-    air_leakage_units_choices << HPXML::UnitsCFMNatural
-    air_leakage_units_choices << HPXML::UnitsELA
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('air_leakage_units', air_leakage_units_choices, false)
-    arg.setDisplayName('Air Leakage: Units')
-    arg.setDescription('The unit of measure for the air leakage if providing a numeric air leakage value.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('air_leakage_house_pressure', false)
-    arg.setDisplayName('Air Leakage: House Pressure')
-    arg.setUnits('Pa')
-    arg.setDescription("The house pressure relative to outside if providing a numeric air leakage value. Required when units are #{HPXML::UnitsACH} or #{HPXML::UnitsCFM}.")
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('air_leakage_value', false)
-    arg.setDisplayName('Air Leakage: Value')
-    arg.setDescription("Numeric air leakage value. For '#{HPXML::UnitsELA}', provide value in sq. in. If provided, overrides Leakiness Description input.")
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('air_leakage', air_leakage_choices, false)
+    arg.setDisplayName('Air Leakage')
+    arg.setDescription('The Leakiness Description (qualitative), or numeric air leakage value (ACH or CFM at specified pressure, nACH or nCFM, or ELA.')
     args << arg
 
     air_leakage_type_choices = OpenStudio::StringVector.new
@@ -3604,6 +3575,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     get_option_properties(args, 'heat_pump_backup.tsv', args[:heat_pump_backup])
     get_option_properties(args, 'heating_system_2.tsv', args[:heating_system_2])
     get_option_properties(args, 'site_soil_type.tsv', args[:site_soil_type])
+    get_option_properties(args, 'air_leakage.tsv', args[:air_leakage])
 
     error = (args[:heating_system_type] != Constants::None) && (args[:heat_pump_type] != Constants::None) && (args[:heating_system_fraction_heat_load_served] > 0) && (args[:heat_pump_fraction_heat_load_served] > 0)
     errors << 'Multiple central heating systems are not currently supported.' if error

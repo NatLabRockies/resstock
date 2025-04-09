@@ -1768,53 +1768,16 @@ R-value of the opaque door(s).
 
 <br/>
 
-**Air Leakage: Leakiness Description**
+**Air Leakage**
 
-Qualitative description of infiltration. If provided, the Year Built of the home is required. Either provide this input or provide a numeric air leakage value below.
+The Leakiness Description (qualitative), or numeric air leakage value (ACH or CFM at specified pressure, nACH or nCFM, or ELA.
 
-- **Name:** ``air_leakage_leakiness_description``
+- **Name:** ``air_leakage``
 - **Type:** ``Choice``
 
 - **Required:** ``false``
 
-- **Choices:** `very tight`, `tight`, `average`, `leaky`, `very leaky`
-
-<br/>
-
-**Air Leakage: Units**
-
-The unit of measure for the air leakage if providing a numeric air leakage value.
-
-- **Name:** ``air_leakage_units``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `ACH`, `CFM`, `ACHnatural`, `CFMnatural`, `EffectiveLeakageArea`
-
-<br/>
-
-**Air Leakage: House Pressure**
-
-The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM.
-
-- **Name:** ``air_leakage_house_pressure``
-- **Type:** ``Double``
-
-- **Units:** ``Pa``
-
-- **Required:** ``false``
-
-<br/>
-
-**Air Leakage: Value**
-
-Numeric air leakage value. For 'EffectiveLeakageArea', provide value in sq. in. If provided, overrides Leakiness Description input.
-
-- **Name:** ``air_leakage_value``
-- **Type:** ``Double``
-
-- **Required:** ``false``
+- **Choices:** `Very Tight`, `Tight`, `Average`, `Leaky`, `Very Leaky`, `0.25 ACH50`, `0.5 ACH50`, `0.75 ACH50`, `1 ACH50`, `1.5 ACH50`, `2 ACH50`, `2.25 ACH50`, `3 ACH50`, `3.57 ACH50`, `3.75 ACH50`, `4 ACH50`, `4.5 ACH50`, `5 ACH50`, `5.25 ACH50`, `6 ACH50`, `7 ACH50`, `7.5 ACH50`, `8 ACH50`, `10 ACH50`, `11.25 ACH50`, `12.16 ACH50`, `15 ACH50`, `18.5 ACH50`, `20 ACH50`, `25 ACH50`, `30 ACH50`, `40 ACH50`, `50 ACH50`, `2.8 ACH45`, `0.2 nACH`, `0.375 nACH`, `0.67 nACH`, `72 nCFM`, `79.8 sq. in. ELA`, `123 sq. in. ELA`, `1080 CFM50`, `1008.5 CFM45`
 
 <br/>
 

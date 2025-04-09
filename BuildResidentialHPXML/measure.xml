@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>39bdeb8e-20f4-49ed-b958-c9fed0642948</version_id>
-  <version_modified>2025-04-08T03:36:33Z</version_modified>
+  <version_id>9eb7f58f-8e15-450f-aa11-ced26587d330</version_id>
+  <version_modified>2025-04-08T23:44:06Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -2526,82 +2526,182 @@
       <default_value>4.4</default_value>
     </argument>
     <argument>
-      <name>air_leakage_leakiness_description</name>
-      <display_name>Air Leakage: Leakiness Description</display_name>
-      <description>Qualitative description of infiltration. If provided, the Year Built of the home is required. Either provide this input or provide a numeric air leakage value below.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <default_value>average</default_value>
-      <choices>
-        <choice>
-          <value>very tight</value>
-          <display_name>very tight</display_name>
-        </choice>
-        <choice>
-          <value>tight</value>
-          <display_name>tight</display_name>
-        </choice>
-        <choice>
-          <value>average</value>
-          <display_name>average</display_name>
-        </choice>
-        <choice>
-          <value>leaky</value>
-          <display_name>leaky</display_name>
-        </choice>
-        <choice>
-          <value>very leaky</value>
-          <display_name>very leaky</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>air_leakage_units</name>
-      <display_name>Air Leakage: Units</display_name>
-      <description>The unit of measure for the air leakage if providing a numeric air leakage value.</description>
+      <name>air_leakage</name>
+      <display_name>Air Leakage</display_name>
+      <description>The Leakiness Description (qualitative), or numeric air leakage value (ACH or CFM at specified pressure, nACH or nCFM, or ELA.</description>
       <type>Choice</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
       <choices>
         <choice>
-          <value>ACH</value>
-          <display_name>ACH</display_name>
+          <value>Very Tight</value>
+          <display_name>Very Tight</display_name>
         </choice>
         <choice>
-          <value>CFM</value>
-          <display_name>CFM</display_name>
+          <value>Tight</value>
+          <display_name>Tight</display_name>
         </choice>
         <choice>
-          <value>ACHnatural</value>
-          <display_name>ACHnatural</display_name>
+          <value>Average</value>
+          <display_name>Average</display_name>
         </choice>
         <choice>
-          <value>CFMnatural</value>
-          <display_name>CFMnatural</display_name>
+          <value>Leaky</value>
+          <display_name>Leaky</display_name>
         </choice>
         <choice>
-          <value>EffectiveLeakageArea</value>
-          <display_name>EffectiveLeakageArea</display_name>
+          <value>Very Leaky</value>
+          <display_name>Very Leaky</display_name>
+        </choice>
+        <choice>
+          <value>0.25 ACH50</value>
+          <display_name>0.25 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>0.5 ACH50</value>
+          <display_name>0.5 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>0.75 ACH50</value>
+          <display_name>0.75 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>1 ACH50</value>
+          <display_name>1 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>1.5 ACH50</value>
+          <display_name>1.5 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>2 ACH50</value>
+          <display_name>2 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>2.25 ACH50</value>
+          <display_name>2.25 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>3 ACH50</value>
+          <display_name>3 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>3.57 ACH50</value>
+          <display_name>3.57 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>3.75 ACH50</value>
+          <display_name>3.75 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>4 ACH50</value>
+          <display_name>4 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>4.5 ACH50</value>
+          <display_name>4.5 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>5 ACH50</value>
+          <display_name>5 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>5.25 ACH50</value>
+          <display_name>5.25 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>6 ACH50</value>
+          <display_name>6 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>7 ACH50</value>
+          <display_name>7 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>7.5 ACH50</value>
+          <display_name>7.5 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>8 ACH50</value>
+          <display_name>8 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>10 ACH50</value>
+          <display_name>10 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>11.25 ACH50</value>
+          <display_name>11.25 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>12.16 ACH50</value>
+          <display_name>12.16 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>15 ACH50</value>
+          <display_name>15 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>18.5 ACH50</value>
+          <display_name>18.5 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>20 ACH50</value>
+          <display_name>20 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>25 ACH50</value>
+          <display_name>25 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>30 ACH50</value>
+          <display_name>30 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>40 ACH50</value>
+          <display_name>40 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>50 ACH50</value>
+          <display_name>50 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>2.8 ACH45</value>
+          <display_name>2.8 ACH45</display_name>
+        </choice>
+        <choice>
+          <value>0.2 nACH</value>
+          <display_name>0.2 nACH</display_name>
+        </choice>
+        <choice>
+          <value>0.375 nACH</value>
+          <display_name>0.375 nACH</display_name>
+        </choice>
+        <choice>
+          <value>0.67 nACH</value>
+          <display_name>0.67 nACH</display_name>
+        </choice>
+        <choice>
+          <value>72 nCFM</value>
+          <display_name>72 nCFM</display_name>
+        </choice>
+        <choice>
+          <value>79.8 sq. in. ELA</value>
+          <display_name>79.8 sq. in. ELA</display_name>
+        </choice>
+        <choice>
+          <value>123 sq. in. ELA</value>
+          <display_name>123 sq. in. ELA</display_name>
+        </choice>
+        <choice>
+          <value>1080 CFM50</value>
+          <display_name>1080 CFM50</display_name>
+        </choice>
+        <choice>
+          <value>1008.5 CFM45</value>
+          <display_name>1008.5 CFM45</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>air_leakage_house_pressure</name>
-      <display_name>Air Leakage: House Pressure</display_name>
-      <description>The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM.</description>
-      <type>Double</type>
-      <units>Pa</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>air_leakage_value</name>
-      <display_name>Air Leakage: Value</display_name>
-      <description>Numeric air leakage value. For 'EffectiveLeakageArea', provide value in sq. in. If provided, overrides Leakiness Description input.</description>
-      <type>Double</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>air_leakage_type</name>
@@ -8836,7 +8936,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>6184989C</checksum>
+      <checksum>802716EC</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -8853,7 +8953,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>ED3367E0</checksum>
+      <checksum>5024A85F</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
@@ -8866,6 +8966,12 @@
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
       <checksum>D8A38780</checksum>
+    </file>
+    <file>
+      <filename>options/air_leakage.tsv</filename>
+      <filetype>tsv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>CBFD67E8</checksum>
     </file>
     <file>
       <filename>options/cooling_system.tsv</filename>

@@ -83,9 +83,7 @@
     "skylight_shgc": 0,
     "door_area": 40,
     "door_rvalue": 3.04,
-    "air_leakage_units": "ACHnatural",
-    "air_leakage_house_pressure": 50,
-    "air_leakage_value": 0.67,
+    "air_leakage": "0.67 nACH",
     "heating_system": "None",
     "heating_system_fuel": "natural gas",
     "heating_system_fraction_heat_load_served": 0,
@@ -200,7 +198,7 @@
   },
   "tests/ASHRAE_Standard_140/L110AC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
-    "air_leakage_value": 1.5
+    "air_leakage": "1.5 nACH"
   },
   "tests/ASHRAE_Standard_140/L120AC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
@@ -252,7 +250,7 @@
     "floor_over_foundation_assembly_r": 4.24,
     "ceiling_assembly_r": 11.75,
     "wall_assembly_r": 4.84,
-    "air_leakage_value": 1.5
+    "air_leakage": "1.5 nACH"
   },
   "tests/ASHRAE_Standard_140/L202AC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L200AC.xml",
@@ -274,7 +272,7 @@
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
     "geometry_unit_cfa": 3078,
     "geometry_foundation_type": "ConditionedBasement",
-    "air_leakage_value": 0.335
+    "air_leakage": "0.335 nACH"
   },
   "tests/ASHRAE_Standard_140/L324XC.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L322XC.xml",
@@ -289,7 +287,7 @@
   },
   "tests/ASHRAE_Standard_140/L110AL.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AL.xml",
-    "air_leakage_value": 1.5
+    "air_leakage": "1.5 nACH"
   },
   "tests/ASHRAE_Standard_140/L120AL.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AL.xml",
@@ -341,7 +339,7 @@
     "floor_over_foundation_assembly_r": 4.24,
     "ceiling_assembly_r": 11.75,
     "wall_assembly_r": 4.84,
-    "air_leakage_value": 1.5
+    "air_leakage": "1.5 nACH"
   },
   "tests/ASHRAE_Standard_140/L202AL.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L200AL.xml",
@@ -396,7 +394,7 @@
     "parent_hpxml": "tests/ASHRAE_Standard_140/L322XC.xml",
     "geometry_foundation_type": "UnconditionedBasement",
     "geometry_unit_cfa": 1539,
-    "air_leakage_value": 0.67,
+    "air_leakage": "0.67 nACH",
     "floor_over_foundation_assembly_r": 13.85,
     "heating_system_fuel": "natural gas",
     "heating_system_heating_capacity": 46600,
@@ -469,8 +467,7 @@
   "tests/HERS_Hot_Water/L100AD-HW-01.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AC.xml",
     "geometry_unit_num_occupants": null,
-    "air_leakage_units": "EffectiveLeakageArea",
-    "air_leakage_value": 79.8,
+    "air_leakage": "79.8 sq. in. ELA",
     "weather_station_epw_filepath": "USA_MN_Duluth.Intl.AP.727450_TMY3.epw",
     "geometry_unit_num_bedrooms": 2,
     "wall_assembly_r": 17.54,
@@ -916,9 +913,7 @@
     "skylight_shgc": 0.45,
     "door_area": 40,
     "door_rvalue": 4.4,
-    "air_leakage_units": "ACH",
-    "air_leakage_house_pressure": 50,
-    "air_leakage_value": 3,
+    "air_leakage": "3 ACH50",
     "heating_system_fuel": "natural gas",
     "heating_system": "Central Furnace, 92% AFUE",
     "heating_system_heating_capacity": 36000,
@@ -1319,7 +1314,7 @@
   },
   "sample_files/base-bldgtype-sfa-unit-infil-compartmentalization-test.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-sfa-unit.xml",
-    "air_leakage_value": 3.57,
+    "air_leakage": "3.57 ACH50",
     "air_leakage_type": "unit total"
   },
   "sample_files/base-bldgtype-mf-unit.xml": {
@@ -1378,15 +1373,13 @@
   },
   "sample_files/base-bldgtype-mf-unit-infil-compartmentalization-test.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
-    "air_leakage_value": 12.16,
+    "air_leakage": "12.16 ACH50",
     "air_leakage_type": "unit total"
   },
   "sample_files/base-bldgtype-mf-unit-infil-leakiness-description.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
-    "air_leakage_leakiness_description": "tight",
+    "air_leakage": "Tight",
     "year_built": 1990,
-    "air_leakage_value": null,
-    "air_leakage_units": null,
     "air_leakage_type": null
   },
   "sample_files/base-bldgtype-mf-unit-neighbor-shading.xml": {
@@ -1964,23 +1957,19 @@
   },
   "sample_files/base-enclosure-infil-ach-house-pressure.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "air_leakage_house_pressure": 45,
-    "air_leakage_value": 2.8
+    "air_leakage": "2.8 ACH45"
   },
   "sample_files/base-enclosure-infil-cfm-house-pressure.xml": {
     "parent_hpxml": "sample_files/base-enclosure-infil-cfm50.xml",
-    "air_leakage_house_pressure": 45,
-    "air_leakage_value": 1008.5
+    "air_leakage": "1008.5 CFM45"
   },
   "sample_files/base-enclosure-infil-cfm50.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "air_leakage_units": "CFM",
-    "air_leakage_value": 1080
+    "air_leakage": "1080 CFM50"
   },
   "sample_files/base-enclosure-infil-ela.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "air_leakage_units": "EffectiveLeakageArea",
-    "air_leakage_value": 123
+    "air_leakage": "123 sq. in. ELA"
   },
   "sample_files/base-enclosure-infil-flue.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1988,28 +1977,22 @@
   },
   "sample_files/base-enclosure-infil-natural-ach.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "air_leakage_units": "ACHnatural",
-    "air_leakage_value": 0.2
+    "air_leakage": "0.2 nACH"
   },
   "sample_files/base-enclosure-infil-natural-cfm.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "air_leakage_units": "CFMnatural",
-    "air_leakage_value": 72
+    "air_leakage": "72 nCFM"
   },
   "sample_files/base-enclosure-infil-leakiness-description.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "air_leakage_leakiness_description": "leaky",
+    "air_leakage": "Leaky",
     "year_built": 1988,
-    "air_leakage_value": null,
-    "air_leakage_units": null,
     "air_leakage_type": null
   },
   "sample_files/base-enclosure-2stories-infil-leakiness-description.xml": {
     "parent_hpxml": "sample_files/base-enclosure-2stories.xml",
-    "air_leakage_leakiness_description": "very tight",
+    "air_leakage": "Very Tight",
     "year_built": 1999,
-    "air_leakage_value": null,
-    "air_leakage_units": null,
     "air_leakage_type": null
   },
   "sample_files/base-enclosure-orientations.xml": {
@@ -3654,8 +3637,7 @@
     "geometry_building_num_units": 6,
     "floor_over_foundation_assembly_r": 22.84,
     "air_leakage_type": "unit exterior only",
-    "air_leakage_units": "ACHnatural",
-    "air_leakage_value": 0.375,
+    "air_leakage": "0.375 nACH",
     "window_front_wwr": 0.18,
     "window_back_wwr": 0.18,
     "window_left_wwr": 0.18,
