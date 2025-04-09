@@ -63110,7 +63110,11 @@ Assumption
 
 - \Default solar thermal collector assumed: 40 sqft, Roof Pitch,
 
-- \Solar thermal backup is informed by secondary water heater fuel type. Solar collector orientation is based on rooftop solar orientation for electric backup and assumed south-facing for fuel backup. If a solar thermal system has no secondary water heater or has a second solar thermal system, they are assumed to have electric backup. Due to low sample sizes, fallback rules applied with lumping of:
+- \Solar thermal backup is informed by secondary water heater fuel type. Solar collector orientation is based on rooftop solar orientation for electric backup and assumed south-facing for fuel backup. If a solar thermal system has no secondary water heater or has a second solar thermal system, they are assumed to have electric backup.
+
+- \Other Fuel water heater energy is modeled as coal
+
+- \Due to low sample sizes, fallback rules applied with lumping of:
 
   - \[1] State: Census Division RECS
 
@@ -63682,9 +63686,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 0
      - auto
    * - Other Fuel
-     - 0.12%
+     - 0.044%
      - storage water heater
-     - wood
+     - coal
      - auto
      - EnergyFactor
      - 0.59
@@ -64000,6 +64004,35 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - 0
      - auto
+   * - Wood
+     - 0.076%
+     - storage water heater
+     - wood
+     - auto
+     - EnergyFactor
+     - 0.59
+     - auto
+     - 0.76
+     - auto
+     - auto
+     - 0
+     - 0
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
 
 .. _water_heater_fuel:
 
@@ -64026,6 +64059,8 @@ Source
 
 Assumption
 **********
+
+- \After conversations with EIA, other fuel is a combination of units with no-water heater, biomass, coal, or district steam systems.
 
 - \Due to low sample sizes, fallback rules applied with lumping of:
 
@@ -64066,11 +64101,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Natural Gas
      - 45%
    * - Other Fuel
-     - 0.12%
+     - 0.044%
    * - Propane
      - 3.9%
    * - Solar Thermal
      - 0.16%
+   * - Wood
+     - 0.076%
 
 .. _water_heater_in_unit:
 
