@@ -52,20 +52,17 @@ Level,Parameter,Option,Saturation
 0,Electric Vehicle Battery,"Pickup, Battery Electric Vehicle, 300 mile range",0.00765117
 0,Electric Vehicle Battery,"SUV, Battery Electric Vehicle, 200 mile range",0.122608
 0,Electric Vehicle Battery,"SUV, Battery Electric Vehicle, 300 mile range",0.306398
-0,Electric Vehicle Miles Traveled,1000,0.0965
-0,Electric Vehicle Miles Traveled,3000,0.101
-0,Electric Vehicle Miles Traveled,5000,0.1188
-0,Electric Vehicle Miles Traveled,7000,0.118
-0,Electric Vehicle Miles Traveled,9000,0.1135
-0,Electric Vehicle Miles Traveled,11000,0.1013
-0,Electric Vehicle Miles Traveled,13000,0.0825
-0,Electric Vehicle Miles Traveled,15000,0.0652
-0,Electric Vehicle Miles Traveled,17000,0.0488
-0,Electric Vehicle Miles Traveled,19000,0.036
-0,Electric Vehicle Miles Traveled,22500,0.0557
-0,Electric Vehicle Miles Traveled,27500,0.0283
-0,Electric Vehicle Miles Traveled,35000,0.0204
-0,Electric Vehicle Miles Traveled,45000,0.014
+0,Electric Vehicle Miles Traveled,1000,0.1068
+0,Electric Vehicle Miles Traveled,3000,0.1113
+0,Electric Vehicle Miles Traveled,5000,0.1291
+0,Electric Vehicle Miles Traveled,7000,0.1284
+0,Electric Vehicle Miles Traveled,9000,0.1238
+0,Electric Vehicle Miles Traveled,11000,0.1116
+0,Electric Vehicle Miles Traveled,13000,0.0927
+0,Electric Vehicle Miles Traveled,15000,0.0754
+0,Electric Vehicle Miles Traveled,17000,0.059
+0,Electric Vehicle Miles Traveled,19000,0.0461
+0,Electric Vehicle Miles Traveled,22500,0.0157
 0,HVAC System Is Faulted,No,1
 0,HVAC System Is Faulted,Yes,0
 0,HVAC System Is Scaled,No,1
