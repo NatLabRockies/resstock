@@ -502,7 +502,7 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, "Both schedule file and weekday fractions provided for 'electric_vehicle'; weekday fractions will be ignored.")
       next if _expected_warning_message(message, "Both schedule file and weekend fractions provided for 'electric_vehicle'; weekend fractions will be ignored.")
       next if _expected_warning_message(message, "Both schedule file and monthly multipliers provided for 'electric_vehicle'; monthly multipliers will be ignored.")
-      next if _expected_warning_message(message, "Multiple heating systems found attached to distribution system 'HVACDistribution1'.")
+      next if _expected_warning_message(message, "Measure 'BuildExistingModel' reported an error with [Measure Failed with Error: Multiple heating systems found attached to distribution system 'HVACDistribution1")
 
       # For the EV minutes warning try replacing the number of minutes as a string rather than a number.
       new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? '(<number of minutes>)' : match }
