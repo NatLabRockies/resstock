@@ -6,9 +6,7 @@
   "steps": [
     {
       "arguments": {
-        "air_leakage_house_pressure": 50,
-        "air_leakage_units": "ACH",
-        "air_leakage_value": 3,
+        "air_leakage": "3 ACH50",
         "ceiling_assembly_r": 39.3,
         "cooling_system_cooling_capacity": 24000.0,
         "cooling_system": "Central AC, SEER 13",

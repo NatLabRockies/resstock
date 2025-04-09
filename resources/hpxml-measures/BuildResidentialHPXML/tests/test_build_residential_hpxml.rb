@@ -482,9 +482,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['skylight_shgc'] = 0.45
       args['door_area'] = 40.0
       args['door_rvalue'] = 4.4
-      args['air_leakage_units'] = HPXML::UnitsACH
-      args['air_leakage_house_pressure'] = 50
-      args['air_leakage_value'] = 3
+      args['air_leakage'] = '3 ACH50'
       args['heating_system_fuel'] = HPXML::FuelTypeNaturalGas
       args['heating_system'] = 'Central Furnace, 92% AFUE'
       args['heating_system_heating_capacity'] = 36000.0
