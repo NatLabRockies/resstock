@@ -35765,7 +35765,7 @@ Electric Vehicle Miles Traveled
 Description
 ***********
 
-The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
+The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.; Because EVs drive less miles/year than ICE (https://www.sciencedirect.com/science/article/pii/S254243512300404X?via%3Dihub#abs0015), the max value is capped at 22,500 miles/yr and the distribution is shifted to reduce the mean.
 
 Created by
 **********
@@ -35813,47 +35813,38 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``vehicle_miles_driven_per_year``
 
    * - 1000
-     - 9.6%
+     - 11%
      - 1000
    * - 3000
-     - 10%
+     - 11%
      - 3000
    * - 5000
-     - 12%
+     - 13%
      - 5000
    * - 7000
-     - 12%
+     - 13%
      - 7000
    * - 9000
-     - 11%
+     - 12%
      - 9000
    * - 11000
-     - 10%
+     - 11%
      - 11000
    * - 13000
-     - 8.2%
+     - 9.3%
      - 13000
    * - 15000
-     - 6.5%
+     - 7.5%
      - 15000
    * - 17000
-     - 4.9%
+     - 5.9%
      - 17000
    * - 19000
-     - 3.6%
+     - 4.6%
      - 19000
    * - 22500
-     - 5.6%
+     - 1.6%
      - 22500
-   * - 27500
-     - 2.8%
-     - 27500
-   * - 35000
-     - 2%
-     - 35000
-   * - 45000
-     - 1.4%
-     - 45000
 
 .. _electric_vehicle_outlet_access:
 
