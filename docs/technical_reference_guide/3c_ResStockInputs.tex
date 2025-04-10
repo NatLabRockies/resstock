@@ -17,10 +17,12 @@ Heat pump water heaters are storage water heaters that use a refrigerant cycle t
 
 %Because we model all housing unit living space as a single thermal zone, we currently use an interaction factor of 1.0 for heat pump water heaters located in the conditioned space. The interaction factor is the degree to which the cooling effect of the heat pump water heater is sensed by the heating system thermostat. Several studies have shown a lower value may be more correct, and that the interaction factor depends heavily on the location of the water heater in the home relative to the thermostat. Lower interaction factors would reduce the impact the heat pump water heater has on space heating and cooling, where the heat pump water heater increases heating energy use but decreases cooling energy use. We may change to use a lower interaction factor in the future. Heat pump water heaters are also currently assumed to be installed in a large enough space (or proper mitigation measures are taken) that it is able to achieve the nominal efficiency.
 
+\paragraph{Solar Thermal Water Heaters}
+A solar hot water heater is a system that uses the sun to heat water. Typically it has a rooftop collector to absorb solar energy, and water or antifreeze is circulated through the collector to a tank with a heat exchanger. The solar thermal model takes inputs that define the collector characteristics, such as system type, collector area, solar loop type, orientation, tilt, rated optical efficiency and thermal losses, and storage volume (for integrated collector storage units). In ResStock, all solar water heaters are integrated collector units with a secondary backup storage tank, i.e., two-tank systems. To model a typical solar water heater with a single tank that has backup heating elements, the secondary tank is given a R-6.2 jacket to reduce the standby loss of the secondary tank.
+
+
 \paragraph{Other Water Heaters}
 ResStock does not model building-level shared water heaters. Instead, ResStock models shared water heaters as equivalent in-unit style water heaters located in a heated common space outside the unit. This is due to ResStock’s current approach of modeling multifamily as singular housing units rather than as buildings consisting of multiple units, which limits the modeling of any shared systems. The out-of-unit location ensures that these water heaters do not generate tank losses that a housing unit's HVAC system must address. However, this proxy modeling approach does not account for the differences in piping and tank losses from central water heaters. In addition to systems shared by multiple units, ResStock does not model combination systems that provide other services such as space conditioning in addition to hot water.
-
-ResStock currently does not model solar water heaters in the baseline but has placeholder schema for defining their presence, size, and location. A solar hot water heater is a system that uses the sun to heat water. Typically it has a rooftop collector to absorb solar energy, and water or antifreeze is circulated through the collector to a tank with a heat exchanger. The solar thermal model takes inputs that define the collector characteristics, such as system type, collector area, solar loop type, orientation, tilt, rated optical efficiency and thermal losses, and storage volume (for integrated collector storage units). Solar water heaters are generally paired with a conventional storage tank that is used for backup when the solar system is unable to meet loads.
 
 \subsubsection{Water Heater Fuel}\label{water_heater_fuel}
 \paragraph{Description}
@@ -40,11 +42,11 @@ The water heater fuel type.
 \begin{itemize}
     \item Geometry Building Type RECS
     \item Heating Fuel
-    \item State.
+    \item State
 \end{itemize}
 
 \paragraph{Options}
-Water Heater Fuel has options of Electricity, Fuel Oil, Natural Gas, and Other Fuel. The characteristic does not set any ResStock arguments. Instead, it is a direct dependency for Water Heater Efficiency, where the heating fuel is assigned individually for each water heater option. Through this dependency, any changes to the distribution of water heater fuels will cascade to influence the water heater types.
+Water Heater Fuel has options of Electricity, Fuel Oil, Natural Gas, Solar Thermal, Wood, and Other Fuel. The characteristic does not set any ResStock arguments. Instead, it is a direct dependency for Water Heater Efficiency, where the heating fuel is assigned individually for each water heater option. Through this dependency, any changes to the distribution of water heater fuels will cascade to influence the water heater types. After conversations with EIA the Other Fuel water heater is typically composed of respondents saying they either do not have a water heater, coal, biomass, or district steam systems. ResStock models the energy associated with Other Fuel water heaters as coal energy consumption.
 
 \paragraph{Distribution Assumptions}
 \begin{itemize}
@@ -90,7 +92,7 @@ Presence of an individual water heater in the housing unit that solely serves th
 \begin{itemize}
     \item Geometry Building Type RECS
     \item State
-    \item Vintage ACS.
+    \item Vintage ACS
 \end{itemize}
 
 \paragraph{Options}
@@ -233,29 +235,40 @@ The efficiency and type of the water heater by heating fuel.
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
 \item State
-\item Water Heater Fuel.
+\item Water Heater Fuel
 \end{itemize}
 
 \paragraph{Options}
-Water Heater Efficiency options define the technical details of the standalone water heaters, from fuel type to the presence of flue (Table \ref{table:hc_opt_water_heater_eff}).  The following arguments are constant across the options:
+Water Heater Efficiency options define the technical details of the standalone water heaters and solar thermal water heaters with storage backup, from fuel type to the presence of flue (Table \ref{table:hc_opt_water_heater_eff}). 
+The following arguments are constant across the non-solar standalone water heater options. The arguments for solar water heater options are available further down. 
 
 \begin{itemize}
     \item \texttt{water\_heater\_backup\_heating\_capacity}: auto
-    \item \texttt{water\_heater\_has\_flue\_or\_chimney}: auto.
+    \item \texttt{water\_heater\_has\_flue\_or\_chimney}: auto
     \item \texttt{water\_heater\_heating\_capacity}: auto
-    \item \texttt{water\_heater\_jacket\_rvalue}: 0
     \item \texttt{water\_heater\_num\_bedrooms\_served}: auto
     \item \texttt{water\_heater\_operating\_mode}: auto
     \item \texttt{water\_heater\_setpoint\_temperature}: 125
     \item \texttt{water\_heater\_standby\_loss}: 0
+    \item \texttt{water\_heater\_jacket\_rvalue}: 0
     \item \texttt{water\_heater\_tank\_model\_type}: auto
     \item \texttt{water\_heater\_usage\_bin}: auto
     \item \texttt{water\_heater\_uses\_desuperheater}: auto
+    \item \texttt{solar\_thermal\_system\_type}: none	
+    \item \texttt{solar\_thermal\_collector\_area}: 40	
+    \item \texttt{solar\_thermal\_collector\_loop\_type}: liquid indirect	
+    \item \texttt{solar\_thermal\_collector\_type}: single glazing black	
+    \item \texttt{solar\_thermal\_collector\_azimuth}: 0
+    \item \texttt{solar\_thermal\_collector\_tilt}: 0	
+    \item \texttt{solar\_thermal\_collector\_rated\_optical\_efficiency}: 0.77
+    \item \texttt{solar\_thermal\_collector\_rated\_thermal\_losses}: 0.793	
+    \item \texttt{solar\_thermal\_storage\_volume}: auto	
+    \item \texttt{solar\_thermal\_solar\_fraction}: 0
 \end{itemize}
 
-For heat pump water heaters the \texttt{water\_heater\_efficiency\_type} UniformEnergyFactor is used for heat pump water heaters; EnergyFactor is currently used for all other water heaters.
+For heat pump water heaters the \texttt{water\_heater\_efficiency\_type} UniformEnergyFactor is used; EnergyFactor is currently used for all other water heaters.
 
-\begin{customLongTable}{|p{3cm}|p{2.25cm}|p{2cm}|p{1.75cm}|p{2.5cm}|p{2.25cm}|}{Water Heater Location options and arguments that vary for each option}{table:hc_opt_water_heater_eff} 
+\begin{customLongTable}{|p{3cm}|p{2.25cm}|p{2cm}|p{1.75cm}|p{2.5cm}|p{2.25cm}|}{Water Heater Efficiency options and arguments that vary for each option of storage and tankless water heaters.} {table:hc_opt_water_heater_eff} 
 {Option name &
 \texttt{water\_heater\_type} &
 \texttt{water\_heater\_fuel\_type} &
@@ -277,16 +290,66 @@ Fuel Oil Premium & storage water heater & fuel oil & auto & 0.68 & 0.9 \\ \hline
 Fuel Oil Standard & storage water heater & fuel oil & auto & 0.62 & 0.78 \\ \hline
 Natural Gas Premium & storage water heater & natural gas & auto & 0.67 & 0.78 \\ \hline
 Natural Gas Standard & storage water heater & natural gas & auto & 0.59 & 0.76 \\ \hline
-Natural Gas Tankless & instantaneous water heater & natural gas
-& 0 & 0.82 & 0 \\ \hline
-Other Fuel & storage water heater & wood & auto
-& 0.59 & 0.76 \\ \hline
+Natural Gas Tankless & instantaneous water heater & natural gas & 0 & 0.82 & 0 \\ \hline
+Other Fuel & storage water heater & coal & auto & 0.59 & 0.76 \\
 Propane Premium & storage water heater & propane & auto & 0.67 & 0.78 \\ \hline
 Propane Standard & storage water heater & propane & auto & 0.59 & 0.76 \\ \hline
-Propane Tankless & instantaneous water heater & propane & 0 & 0.82 & 0 \\
+Propane Tankless & instantaneous water heater & propane & 0 & 0.82 & 0 \\ \hline
+Wood & storage water heater & wood & auto & 0.59 & 0.76 \\
 \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_eff}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
+Solar thermal water heaters are characterized by \texttt{solar\_thermal\_system\_type=hot water}. The following arguments are constant across the solar water heater options:
+
+\begin{itemize}
+  \item \texttt{water\_heater\_type}: storage water heater
+  \item \texttt{water\_heater\_backup\_heating\_capacity}: auto
+  \item \texttt{water\_heater\_has\_flue\_or\_chimney}: auto
+  \item \texttt{water\_heater\_heating\_capacity}: auto
+  \item \texttt{water\_heater\_num\_bedrooms\_served}: auto
+  \item \texttt{water\_heater\_operating\_mode}: auto
+  \item \texttt{water\_heater\_setpoint\_temperature}: 125
+  \item \texttt{water\_heater\_standby\_loss}: 0
+  \item \texttt{water\_heater\_tank\_model\_type}: auto
+  \item \texttt{water\_heater\_tank\_volume}: auto
+  \item \texttt{water\_heater\_usage\_bin}: auto
+  \item \texttt{water\_heater\_uses\_desuperheater}: auto
+  \item \texttt{solar\_thermal\_system\_type}: hot water	
+  \item \texttt{solar\_thermal\_collector\_area}: 40	
+  \item \texttt{solar\_thermal\_collector\_loop\_type}: liquid indirect	
+  \item \texttt{solar\_thermal\_collector\_type}: single glazing black	
+  \item \texttt{solar\_thermal\_collector\_rated\_optical\_efficiency}: 0.77
+  \item \texttt{solar\_thermal\_collector\_rated\_thermal\_losses}: 0.793	
+  \item \texttt{solar\_thermal\_storage\_volume}: auto	
+  \item \texttt{solar\_thermal\_solar\_fraction}: 0
+\end{itemize}
+
+The options for solar water heaters in ResStock are a combination of orientation and backup fuel, Table \ref{table:hc_opt_solar_water_heater_eff}. 
+
+\begin{customLongTable}{|p{3cm}|p{1.85cm}|p{1.85cm}|p{1.5cm}|p{1.95cm}|p{1.95cm}|p{1.5cm}|}{Water Heater Efficiency options and arguments that vary for each option of solar water heaters.}{table:hc_opt_solar_water_heater_eff} 
+  {Option name &
+  \texttt{solar\_thermal\_collector\_azimuth} &
+  \texttt{solar\_thermal\_collector\_tilt} &
+  \texttt{water\_heater\_fuel\_type} &
+  \texttt{water\_heater\_efficiency\_type} &
+  \texttt{water\_heater\_recovery\_efficiency} &
+  \texttt{water\_heater\_jacket\_rvalue}}
+  Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup &
+  90 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
+  Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup &
+  0 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
+  Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup &
+  180 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
+  Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup &
+  180 & roofpitch & fuel oil & 0.62 & 0.78 & 0 \\ \hline
+  Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup &
+  180 & roofpitch & natural gas & 0.59 & 0.76 & 0 \\ \hline
+  Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup &
+  180 & roofpitch & propane & 0.59 & 0.76 & 0 \\ \hline
+  Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup &
+  270 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\
+  \end{customLongTable}
+
+For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_eff} on storage and tankless water heaters and Table \ref{table:hc_arg_def_solar_hot_water} on solar water heaters. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{2.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4.5cm}|} {The ResStock argument definitions set in the Water Heater Efficiency characteristic} {table:hc_arg_def_water_heater_eff}  
 {Name & Required & Units & Type & Choices & Description} 
@@ -369,46 +432,6 @@ only to heat pump water heater.  \\
 Whether the water heater has a flue or chimney. \\
 \end{customLongTable}
 
-\paragraph{Distribution Assumptions}\label{assumption-83}
-\begin{itemize}
-\item
-  Water heater blanket is used as a proxy for premium storage tank water
-  heaters.
-\item
-  Heat Pump Water Heaters are added in manually as they are not in the
-  survey.
-\item
-  Default efficiency of HPWH: Electric Heat Pump, 50 gal, 3.45 UEF.
-\item
-  Due to low sample sizes, fallback rules are applied, with lumping of:
-  
-  \begin{itemize}
-  \item
-    State: Census Division RECS
-  \item
-    State: Census Region
-    \item
-    State: National.
-  \end{itemize}
-\end{itemize}
-
-\subsubsection{Solar Hot Water}\label{solar_hot_water}
-\paragraph{Description}
-Presence, size, orientation, and location of solar hot water system. 
-
-\paragraph{Distribution Data Sources}
-\begin{itemize}
-\item
-  Not applicable
-\item
-  All homes are assumed to not have solar water heating.
-\end{itemize}
-
-\paragraph{Direct Conditional Dependencies}
-No dependency.
-
-\paragraph{Options}
-The only option is ``None,'' which means no Solar Hot Water systems are modeled in the ResStock baseline. For the argument definitions, see Table \ref{table:hc_arg_def_solar_hot_water}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{2.9cm}|p{4cm}|} {The ResStock argument definitions set in the Solar Hot Water characteristic} {table:hc_arg_def_solar_hot_water} 
 {Name & Required & Units & Type & Choices & Description} 
@@ -452,8 +475,30 @@ solar fraction of the solar thermal system. If provided, overrides all
 other solar thermal inputs. \\
 \end{customLongTable}
 
-\paragraph{Distribution Assumptions}
-No assumptions are made.
+
+\paragraph{Distribution Assumptions}\label{assumption-83}
+\begin{itemize}
+\item
+  Water heater blanket is used as a proxy for premium storage tank water
+  heaters.
+\item
+  Heat Pump Water Heaters are added in manually as they are not in the
+  survey; all have default efficiency: Electric Heat Pump, 50 gal, 3.45 UEF.
+\item
+  Solar thermal water heaters: backup is informed by secondary water heater fuel type; electric backup is assumed if no secondary water heating. All collectors are assumed 40 sqft, roof pitch; collector orientation diversity is based on rooftop solar PV orientation for those with electric backup; for fuel backup, it is assumed south-facing.
+\item
+  Due to low sample sizes, fallback rules are applied, with lumping of:
+  
+  \begin{itemize}
+  \item
+    State: Census Division RECS
+  \item
+    State: Census Region
+    \item
+    State: National
+  \end{itemize}
+\end{itemize}
+
 
 % ##################
 \subsection{Hot Water Distribution}

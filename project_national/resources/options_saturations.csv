@@ -113,7 +113,6 @@ Level,Parameter,Option,Saturation
 0,Range Spot Vent Hour,Hour21,0.025
 0,Range Spot Vent Hour,Hour22,0.016
 0,Range Spot Vent Hour,Hour23,0.011
-0,Solar Hot Water,None,1
 0,Usage Level,Low,0.25
 0,Usage Level,Medium,0.5
 0,Usage Level,High,0.25
@@ -12748,11 +12747,13 @@ Level,Parameter,Option,Saturation
 6,HVAC Secondary Heating Fuel,Other Fuel,1.6855e-06
 6,HVAC Secondary Heating Fuel,Propane,1.31903e-05
 6,HVAC Secondary Heating Fuel,Wood,0.000229466
-6,Water Heater Fuel,Electricity,0.4889
-6,Water Heater Fuel,Fuel Oil,0.0248211
-6,Water Heater Fuel,Natural Gas,0.44488
-6,Water Heater Fuel,Other Fuel,0.00277156
-6,Water Heater Fuel,Propane,0.0386274
+6,Water Heater Fuel,Electricity,0.484804
+6,Water Heater Fuel,Fuel Oil,0.0261388
+6,Water Heater Fuel,Natural Gas,0.4468
+6,Water Heater Fuel,Other Fuel,0.000440969
+6,Water Heater Fuel,Propane,0.039427
+6,Water Heater Fuel,Solar Thermal,0.00163144
+6,Water Heater Fuel,Wood,0.000757331
 6,Geometry Foundation Type,Ambient,0.0887587
 6,Geometry Foundation Type,Heated Basement,0.123976
 6,Geometry Foundation Type,Slab,0.393074
@@ -12819,22 +12820,30 @@ Level,Parameter,Option,Saturation
 7,HVAC Secondary Heating Type,Ducted Heating,2.93623e-05
 7,HVAC Secondary Heating Type,Non-Ducted Heating,0.000357846
 7,HVAC Secondary Heating Type,None,0.999613
-7,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.00312622
+7,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.0031028
 7,Water Heater Efficiency,"Electric Heat Pump, 66 gal, 3.35 UEF",0
 7,Water Heater Efficiency,"Electric Heat Pump, 80 gal, 3.45 UEF",0
-7,Water Heater Efficiency,Electric Premium,0.0997112
-7,Water Heater Efficiency,Electric Standard,0.36526
-7,Water Heater Efficiency,Electric Tankless,0.0208023
-7,Water Heater Efficiency,FIXME Fuel Oil Indirect,0.00685905
-7,Water Heater Efficiency,Fuel Oil Premium,0.00441187
-7,Water Heater Efficiency,Fuel Oil Standard,0.0135502
-7,Water Heater Efficiency,Natural Gas Premium,0.0828079
-7,Water Heater Efficiency,Natural Gas Standard,0.333153
-7,Water Heater Efficiency,Natural Gas Tankless,0.0289195
-7,Water Heater Efficiency,Other Fuel,0.00277156
-7,Water Heater Efficiency,Propane Premium,0.00622487
-7,Water Heater Efficiency,Propane Standard,0.0233796
-7,Water Heater Efficiency,Propane Tankless,0.00902298
+7,Water Heater Efficiency,Electric Premium,0.0989463
+7,Water Heater Efficiency,Electric Standard,0.362258
+7,Water Heater Efficiency,Electric Tankless,0.020497
+7,Water Heater Efficiency,FIXME Fuel Oil Indirect,0.00723476
+7,Water Heater Efficiency,Fuel Oil Premium,0.00465003
+7,Water Heater Efficiency,Fuel Oil Standard,0.014254
+7,Water Heater Efficiency,Natural Gas Premium,0.0832112
+7,Water Heater Efficiency,Natural Gas Standard,0.334571
+7,Water Heater Efficiency,Natural Gas Tankless,0.0290177
+7,Water Heater Efficiency,Other Fuel,0.000440969
+7,Water Heater Efficiency,Propane Premium,0.00631771
+7,Water Heater Efficiency,Propane Standard,0.023876
+7,Water Heater Efficiency,Propane Tankless,0.00923329
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup",0.000367099
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup",3.98135e-05
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup",0.000925687
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup",3.17514e-06
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup",1.99033e-05
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup",5.82416e-05
+7,Water Heater Efficiency,"Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup",0.000217518
+7,Water Heater Efficiency,Wood,0.000757331
 7,Insulation Floor,None,0.393074
 7,Insulation Floor,Uninsulated,0.479199
 7,Insulation Floor,Ceiling R-13,0.0478492
