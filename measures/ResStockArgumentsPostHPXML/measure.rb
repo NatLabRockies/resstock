@@ -62,6 +62,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The building unit number (between 1 and the number of samples).')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('air_leakage_percent_reduction', false)
+    arg.setDisplayName('Air Leakage: Value Reduction')
+    arg.setDescription('Reduction (%) on the air exchange rate value.')
+    args << arg
+
     args
   end
 
@@ -108,7 +113,22 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       hvac_schedule = create_hvac_schedule(index)
       modified_schedule = modify_hvac_schedule(index, hvac_schedule)
       write_schedule(modified_schedule, building, index, output_csv_path)
-    end
+
+      # Infiltration Reduction
+      # need to migrate air_leakage_percent_reduction value adjustment from ResStockArguments to ResStockArgumentsPostHPXML
+      # Why? b.c. BuildResHPXML no longer accepts air_leakage_value as an arg, and an updated (i.e. reduced) air_leakage_value 
+      # needs to be passed to the hpxml that is fed to HPXMLtoOpenStudio
+      # to capture the effects of air sealing if an air leakage value reduction is intended
+
+      if not args[:air_leakage_percent_reduction].nil?
+        # Get existing (prior to reduction) air leakage value
+        hpxml_bldg.air_infiltration_measurements[0].air_leakage *= (1.0 - args[:air_leakage_percent_reduction] / 100.0)
+        # Update existing value w/ percent reduction
+        # TODO update building (variable in the iteration)
+        # don't think updating hpxml_bldg will be enough
+        # TODO
+        
+      end
 
     # Write out the modified hpxml
     XMLHelper.write_file(doc, @hpxml_path)

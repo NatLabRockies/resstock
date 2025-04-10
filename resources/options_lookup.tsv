@@ -10068,10 +10068,10 @@ Infiltration	6 ACH50	ResStockArguments	air_leakage=6 ACH50	air_leakage_type=unit
 Infiltration	7 ACH50	ResStockArguments	air_leakage=7 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
 Infiltration	7.5 ACH50	ResStockArguments	air_leakage=7.5 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
 Infiltration	8 ACH50	ResStockArguments	air_leakage=8 ACH50	air_leakage_type=unit total	site_shielding_of_home=normal
-Infiltration Reduction	15%	ResStockArguments	air_leakage_percent_reduction=15
-Infiltration Reduction	20%	ResStockArguments	air_leakage_percent_reduction=20
-Infiltration Reduction	25%	ResStockArguments	air_leakage_percent_reduction=25
-Infiltration Reduction	30%	ResStockArguments	air_leakage_percent_reduction=30
+Infiltration Reduction	15%	ResStockArgumentsPostHPXML	air_leakage_percent_reduction=15
+Infiltration Reduction	20%	ResStockArgumentsPostHPXML	air_leakage_percent_reduction=20
+Infiltration Reduction	25%	ResStockArgumentsPostHPXML	air_leakage_percent_reduction=25
+Infiltration Reduction	30%	ResStockArgumentsPostHPXML	air_leakage_percent_reduction=30
 Insulation Ceiling	None	ResStockArguments	ceiling_assembly_r=0	ceiling_insulation_r=0
 Insulation Ceiling	R-13	ResStockArguments	ceiling_assembly_r=14.6	ceiling_insulation_r=13
 Insulation Ceiling	R-19	ResStockArguments	ceiling_assembly_r=20.6	ceiling_insulation_r=19

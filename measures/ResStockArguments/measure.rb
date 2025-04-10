@@ -715,6 +715,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # Infiltration Reduction
+    # TODO migrate this to PostHPXML
     if not args[:air_leakage_percent_reduction].nil?
       args[:air_leakage_value] *= (1.0 - args[:air_leakage_percent_reduction] / 100.0)
     end
