@@ -104,6 +104,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     doc_buildings = XMLHelper.get_elements(hpxml_doc, 'Building')
 
     # Process each building
+
+    air_leakage_reduction_applied = false
+    # assume air_leakage_value adjustment logic while processing
+    # each building isn't triggered until proven otherwise
+
     doc_buildings.each_with_index do |building, index|
       hpxml_bldg = @hpxml.buildings[index]
       if hpxml_bldg.hvac_controls.to_a.length == 0
@@ -115,24 +120,32 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       write_schedule(modified_schedule, building, index, output_csv_path)
 
       # Infiltration Reduction
-      # need to migrate air_leakage_percent_reduction value adjustment from ResStockArguments to ResStockArgumentsPostHPXML
-      # Why? b.c. BuildResHPXML no longer accepts air_leakage_value as an arg, and an updated (i.e. reduced) air_leakage_value 
-      # needs to be passed to the hpxml that is fed to HPXMLtoOpenStudio
-      # to capture the effects of air sealing if an air leakage value reduction is intended
+      # air_leakage_percent_reduction value adjustment migrated from ResStockArguments to ResStockArgumentsPostHPXML
+      # Why? b.c. BuildResHPXML no longer accepts air_leakage_value as an arg, and an updated (i.e. reduced) air_leakage_value
+      # needs to be passed to HPXMLtoOpenStudio to capture the effects of air sealing if an air leakage value reduction is intended
+      # Assumption: air_leakage_percent_reduction is applied to all <AirInfiltrationMeasurement> for a given <Building>
 
-      if not args[:air_leakage_percent_reduction].nil?
-        # Get existing (prior to reduction) air leakage value
-        hpxml_bldg.air_infiltration_measurements[0].air_leakage *= (1.0 - args[:air_leakage_percent_reduction] / 100.0)
-        # Update existing value w/ percent reduction
-        # TODO update building (variable in the iteration)
-        # don't think updating hpxml_bldg will be enough
-        # TODO
-        
+      next unless not args[:air_leakage_percent_reduction].nil? && hpxml_bldg.air_infiltration_measurements.size > 0
+
+      air_infil_measurement_nodes = XMLHelper.get_elements(building, 'BuildingDetails/Enclosure/AirInfiltration/AirInfiltrationMeasurement')
+
+      hpxml_bldg.air_infiltration_measurements.each_with_index do |air_infiltration_measurement, air_infil_index|
+        updated_air_leakage_value = air_infiltration_measurement.air_leakage * (1.0 - args[:air_leakage_percent_reduction] / 100.0)
+
+        # Update HPXML doc
+        building_air_leakage_node = XMLHelper.get_element(air_infil_measurement_nodes[air_infil_index], 'BuildingAirLeakage')
+        air_leakage_node = XMLHelper.get_element(building_air_leakage_node, 'AirLeakage')
+        XMLHelper.update_element_value(air_leakage_node, updated_air_leakage_value.to_s)
       end
 
+      air_leakage_reduction_applied = true
+    end
     # Write out the modified hpxml
     XMLHelper.write_file(doc, @hpxml_path)
     runner.registerInfo("Wrote file: #{@hpxml_path} with modified schedules.")
+    if air_leakage_reduction_applied
+      runner.registerInfo("Wrote file: #{@hpxml_path} with modified <AirLeakage>.")
+    end
     true
   end
 

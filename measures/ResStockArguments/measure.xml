@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>d9e3f57c-35c3-43bb-9c86-20c2a25e4598</version_id>
-  <version_modified>2025-04-09T03:31:25Z</version_modified>
+  <version_id>cadeb43e-b053-4612-8291-21bd46b3bef5</version_id>
+  <version_modified>2025-04-10T20:20:17Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -7970,14 +7970,6 @@
       <default_value>0</default_value>
     </argument>
     <argument>
-      <name>air_leakage_percent_reduction</name>
-      <display_name>Air Leakage: Value Reduction</display_name>
-      <description>Reduction (%) on the air exchange rate value.</description>
-      <type>Double</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>misc_plug_loads_television_2_usage_multiplier</name>
       <display_name>Plug Loads: Television Usage Multiplier 2</display_name>
       <description>Additional multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.</description>
@@ -8239,7 +8231,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>2F8504FB</checksum>
+      <checksum>4BEA52E4</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -8256,7 +8248,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>8156BDCC</checksum>
+      <checksum>D3823961</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

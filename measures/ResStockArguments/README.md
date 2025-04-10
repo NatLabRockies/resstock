@@ -4858,17 +4858,6 @@ Assembly R-value for the rim joist assembly interior insulation that runs perpen
 
 <br/>
 
-**Air Leakage: Value Reduction**
-
-Reduction (%) on the air exchange rate value.
-
-- **Name:** ``air_leakage_percent_reduction``
-- **Type:** ``Double``
-
-- **Required:** ``false``
-
-<br/>
-
 **Plug Loads: Television Usage Multiplier 2**
 
 Additional multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.

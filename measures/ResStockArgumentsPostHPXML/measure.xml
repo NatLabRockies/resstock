@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
-  <error>cannot load such file -- matrix</error>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>1a97684b-fe57-4fc1-9646-a8b218becde1</version_id>
-  <version_modified>2025-04-05T04:31:20Z</version_modified>
+  <version_id>d0f78429-380f-497e-a32b-83090afd4df7</version_id>
+  <version_modified>2025-04-10T20:34:43Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -64,6 +63,14 @@
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
+    <argument>
+      <name>air_leakage_percent_reduction</name>
+      <display_name>Air Leakage: Value Reduction</display_name>
+      <description>Reduction (%) on the air exchange rate value.</description>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
   </arguments>
   <outputs />
   <provenances />
@@ -87,7 +94,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>8FA012C5</checksum>
+      <checksum>CEC1426E</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

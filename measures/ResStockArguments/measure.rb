@@ -214,11 +214,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('air_leakage_percent_reduction', false)
-    arg.setDisplayName('Air Leakage: Value Reduction')
-    arg.setDescription('Reduction (%) on the air exchange rate value.')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_television_2_usage_multiplier', true)
     arg.setDisplayName('Plug Loads: Television Usage Multiplier 2')
     arg.setDescription('Additional multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.')
@@ -712,12 +707,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       elsif horiz_location == 'Right'
         args[:geometry_unit_left_wall_is_adiabatic] = true
       end
-    end
-
-    # Infiltration Reduction
-    # TODO migrate this to PostHPXML
-    if not args[:air_leakage_percent_reduction].nil?
-      args[:air_leakage_value] *= (1.0 - args[:air_leakage_percent_reduction] / 100.0)
     end
 
     # Num Floors
