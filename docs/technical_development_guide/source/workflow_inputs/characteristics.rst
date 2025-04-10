@@ -47195,12 +47195,6 @@ Arguments
      - Double
      - auto
      - The EnergyGuide rated annual energy consumption for an extra refrigerator. If not provided, the OS-HPXML default (see `HPXML Refrigerators <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators>`_) is used.
-   * - ``extra_refrigerator_usage_multiplier``
-     - false
-     - 
-     - Double
-     - auto
-     - Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Refrigerators <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators>`_) is used.
 
 Options
 *******
@@ -47217,59 +47211,49 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``extra_refrigerator_present``
      - ``extra_refrigerator_location``
      - ``extra_refrigerator_rated_annual_kwh``
-     - ``extra_refrigerator_usage_multiplier``
 
    * - EF 6.7
      - 1.9%
      - true
      - auto
      - 1139
-     - 1.0
    * - EF 10.2
      - 0.31%
      - true
      - auto
      - 748
-     - 1.0
    * - EF 10.5
      - 0.84%
      - true
      - auto
      - 727
-     - 1.0
    * - EF 15.9
      - 4.5%
      - true
      - auto
      - 480
-     - 1.0
    * - EF 17.6
      - 11%
      - true
      - auto
      - 433
-     - 1.0
    * - EF 19.9
      - 6.9%
      - true
      - auto
      - 383
-     - 1.0
    * - EF 21.9
      - 0.47%
      - true
      - auto
      - 348
-     - 1.0
    * - None
      - 74%
      - false
      - auto
      - 0
-     - 0
    * - Void
      - 0%
-     - 
      - 
      - 
      - 
@@ -47350,12 +47334,6 @@ Arguments
      - Double
      - auto
      - The EnergyGuide rated annual energy consumption for a freezer. If not provided, the OS-HPXML default (see `HPXML Freezers <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-freezers>`_) is used.
-   * - ``freezer_usage_multiplier``
-     - false
-     - 
-     - Double
-     - auto
-     - Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Freezers <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-freezers>`_) is used.
 
 Options
 *******
@@ -47372,23 +47350,19 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``freezer_present``
      - ``freezer_location``
      - ``freezer_rated_annual_kwh``
-     - ``freezer_usage_multiplier``
 
    * - EF 12, National Average
      - 33%
      - true
      - auto
      - 935
-     - 0.342
    * - None
      - 67%
      - false
      - auto
      - 0
-     - 0
    * - Void
      - 0%
-     - 
      - 
      - 
      - 
@@ -62677,6 +62651,18 @@ Arguments
      - Choice
      - auto, AK, AL, AR, AZ, CA, CO, CT, DC, DE, FL, GA, HI, IA, ID, IL, IN, KS, KY, LA, MA, MD, ME, MI, MN, MO, MS, MT, NC, ND, NE, NH, NJ, NM, NV, NY, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VA, VT, WA, WI, WV, WY
      - State code of the home address. If not provided, the OS-HPXML default (see `HPXML Site <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-site>`_) is used.
+   * - ``extra_refrigerator_usage_multiplier``
+     - false
+     - 
+     - Double
+     - auto
+     - Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Refrigerators <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators>`_) is used.
+   * - ``freezer_usage_multiplier``
+     - false
+     - 
+     - Double
+     - auto
+     - Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants. If not provided, the OS-HPXML default (see `HPXML Freezers <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-freezers>`_) is used.
 
 Options
 *******
@@ -62691,160 +62677,264 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Option name
      - Stock saturation
      - ``site_state_code``
+     - ``extra_refrigerator_usage_multiplier``
+     - ``freezer_usage_multiplier``
 
    * - AK
      - 0.23%
      - AK
+     - 1.80
+     - 1.80
    * - AL
      - 1.6%
      - AL
+     - 1.76
+     - 1.76
    * - AR
      - 1%
      - AR
+     - 1.90
+     - 1.90
    * - AZ
      - 2.2%
      - AZ
+     - 1.74
+     - 1.74
    * - CA
      - 10%
      - CA
+     - 1.86
+     - 1.86
    * - CO
      - 1.7%
      - CO
+     - 1.85
+     - 1.85
    * - CT
      - 1.1%
      - CT
+     - 1.96
+     - 1.96
    * - DC
      - 0.23%
      - DC
+     - 2.15
+     - 2.15
    * - DE
      - 0.31%
      - DE
+     - 1.68
+     - 1.68
    * - FL
      - 6.8%
      - FL
+     - 1.87
+     - 1.87
    * - GA
      - 3.1%
      - GA
+     - 1.74
+     - 1.74
    * - HI
      - 0.4%
      - HI
+     - 1.94
+     - 1.94
    * - IA
      - 1%
      - IA
+     - 1.77
+     - 1.77
    * - ID
      - 0.51%
      - ID
+     - 1.62
+     - 1.62
    * - IL
      - 4%
      - IL
+     - 1.82
+     - 1.82
    * - IN
      - 2.1%
      - IN
+     - 1.78
+     - 1.78
    * - KS
      - 0.93%
      - KS
+     - 1.77
+     - 1.77
    * - KY
      - 1.5%
      - KY
+     - 1.80
+     - 1.80
    * - LA
      - 1.5%
      - LA
+     - 1.88
+     - 1.88
    * - MA
      - 2.1%
      - MA
+     - 2.00
+     - 2.00
    * - MD
      - 1.8%
      - MD
+     - 1.94
+     - 1.94
    * - ME
      - 0.54%
      - ME
+     - 1.88
+     - 1.88
    * - MI
      - 3.4%
      - MI
+     - 1.73
+     - 1.73
    * - MN
      - 1.8%
      - MN
+     - 1.72
+     - 1.72
    * - MO
      - 2%
      - MO
+     - 1.76
+     - 1.76
    * - MS
      - 0.97%
      - MS
+     - 1.85
+     - 1.85
    * - MT
      - 0.37%
      - MT
+     - 1.69
+     - 1.69
    * - NC
      - 3.3%
      - NC
+     - 1.80
+     - 1.80
    * - ND
      - 0.26%
      - ND
+     - 1.73
+     - 1.73
    * - NE
      - 0.61%
      - NE
+     - 1.85
+     - 1.85
    * - NH
      - 0.46%
      - NH
+     - 1.90
+     - 1.90
    * - NJ
      - 2.7%
      - NJ
+     - 1.81
+     - 1.81
    * - NM
      - 0.68%
      - NM
+     - 1.90
+     - 1.90
    * - NV
      - 0.9%
      - NV
+     - 1.87
+     - 1.87
    * - NY
      - 6.1%
      - NY
+     - 1.91
+     - 1.91
    * - OH
      - 3.8%
      - OH
+     - 1.81
+     - 1.81
    * - OK
      - 1.3%
      - OK
+     - 1.86
+     - 1.86
    * - OR
      - 1.3%
      - OR
+     - 1.84
+     - 1.84
    * - PA
      - 4.2%
      - PA
+     - 1.73
+     - 1.73
    * - RI
      - 0.35%
      - RI
+     - 1.91
+     - 1.91
    * - SC
      - 1.6%
      - SC
+     - 1.83
+     - 1.83
    * - SD
      - 0.28%
      - SD
+     - 1.83
+     - 1.83
    * - TN
      - 2.1%
      - TN
+     - 1.86
+     - 1.86
    * - TX
      - 7.8%
      - TX
+     - 1.84
+     - 1.84
    * - UT
      - 0.76%
      - UT
+     - 1.78
+     - 1.78
    * - VA
      - 2.6%
      - VA
+     - 1.80
+     - 1.80
    * - VT
      - 0.24%
      - VT
+     - 1.82
+     - 1.82
    * - WA
      - 2.2%
      - WA
+     - 1.76
+     - 1.76
    * - WI
      - 2%
      - WI
+     - 1.74
+     - 1.74
    * - WV
      - 0.66%
      - WV
+     - 1.68
+     - 1.68
    * - WY
      - 0.2%
      - WY
+     - 1.80
+     - 1.80
 
 .. _state_metro_median_income:
 
