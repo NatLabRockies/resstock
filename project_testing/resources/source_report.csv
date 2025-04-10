@@ -31,7 +31,7 @@ Eaves,4.0,0.0,manually created,Depth of roof eaves.
 Electric Vehicle Battery,8.0,0.0,sources\tempo\tsv_maker.py,The type of electric vehicle and battery range in miles.
 Electric Vehicle Charge At Home,6.0,0.0,sources\recs\recs2020\tsv_maker.py,The percentage a household would or do charge their electric vehicle at home.
 Electric Vehicle Charger,3.0,1.0,sources\recs\recs2020\tsv_maker.py,Type of electric vehicle charger used at the dwelling unit
-Electric Vehicle Miles Traveled,14.0,0.0,manually created,The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
+Electric Vehicle Miles Traveled,11.0,0.0,manually created,The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
 Electric Vehicle Outlet Access,2.0,0.0,sources\recs\recs2020\tsv_maker.py,The unit has an outlet within 20 feet of vehicle parking.
 Electric Vehicle Ownership,2.0,0.0,sources\experian\tsv_maker.py,The dwelling unit owns an electric vehicle.
 Generation And Emissions Assessment Region,5.0,1.0,sources\spatial\tsv_maker.py,The generation and carbon emissions assessment region that the sample is located.
@@ -124,11 +124,10 @@ Range Spot Vent Hour,24.0,0.0,manually created,Range spot ventilation daily star
 Refrigerator,9.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of the primary refrigerator.
 Refrigerator Usage Level,3.0,0.0,sources\other\tsv_maker.py,Refrigerator energy usage level multiplier.
 Roof Material,7.0,1.0,sources\recs\recs2020\tsv_maker.py,Roof material and color.
-Solar Hot Water,7.0,1.0,manually created,"Presence, size, and location of solar hot water system (not modeled in project_national)."
 State,5.0,1.0,sources\spatial\tsv_maker.py,The U.S. State the sample is located.
 Tenure,3.0,1.0,sources\pums\pums2019_5yrs\tsv_maker.py,The tenancy (owner or renter) of the household occupying the dwelling unit.
 Vacancy Status,2.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The vacancy status (occupied or vacant) of the dwelling unit.
-Water Heater Efficiency,15.0,0.0,sources\recs\recs2020\tsv_maker.py,"The efficiency, type, and heating fuel of water heater."
+Water Heater Efficiency,21.0,0.0,sources\recs\recs2020\tsv_maker.py,"The efficiency, type, and heating fuel of water heater."
 Water Heater Location,8.0,2.0,sources\recs\recs2020\tsv_maker.py,location of water heater.
 Window Areas,9.0,1.0,sources\rbsa_II\tsv_maker.py,"Window to wall ratios of the front, back, left, and right walls."
 Windows,11.0,2.0,sources\recs\recs2020\tsv_maker.py,Construction type and efficiency levels of windows.

@@ -6,11 +6,12 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+
     .. change::
         :tags: characteristics, docs
         :pullreq: 1375
 
-        **Date**: 2025-04-07
+        **Date**: 2025-04-10
 
         Title:
         Increase hot water fixture usage by 25% for Hawaii
@@ -20,8 +21,24 @@ Development Changelog
 
         Assignees: Lixi Liu
 
+
     .. change::
-        :tags: characteristics, docs
+        :tags: characteristics, documentation, feature, technical reference guide, outputs
+        :pullreq: 1356
+
+        **Date**: 2025-04-10
+
+        Title:
+        Solar Hot Water
+
+        Description:
+        Break out Solar Thermal from Other Fuel for Water Heater Fuel, consolidate Solar Hot Water with Water Heater Efficiency, assign all solar hot water systems as south-facing roof pitch installed 40ft solar collectors.
+
+        Assignees: Lixi Liu, Anthony Fontanini, Jeff Maguire
+
+
+    .. change::
+        :tags: characteristics, documentation
         :pullreq: 1374
 
         **Date**: 2025-04-05
@@ -30,7 +47,7 @@ Development Changelog
         Differentiate Hawaii in IECC Climate Zone 1A
 
         Description:
-        Split out HI and FL in Climate Zone 1A to support Hawaii differentiation
+        Split out HI and FL in Climate Zone 1A to support Hawaii differentiation.
 
         Assignees: Janet Reyna
 
@@ -51,7 +68,7 @@ Development Changelog
 
 
     .. change::
-        :tags: docs, technical reference guide
+        :tags: documentation, technical reference guide
         :pullreq: 1361
 
         **Date**: 2025-03-12
@@ -81,7 +98,7 @@ Development Changelog
 
 
     .. change::
-        :tags: characteristics, feature, docs, technical reference guide, outputs
+        :tags: characteristics, feature, documentation, technical reference guide, outputs
         :pullreq: 1299
 
         **Date**: 2025-02-28
@@ -149,7 +166,7 @@ Development Changelog
 
 
     .. change::
-        :tags: docs, technical development guide
+        :tags: documentation, technical development guide
         :pullreq: 1330
 
         **Date**: 2025-01-29
@@ -181,7 +198,7 @@ Development Changelog
 
 
     .. change::
-        :tags: ci, docs, technical reference guide, technical development guide
+        :tags: ci, documentation, technical reference guide, technical development guide
         :pullreq: 1338
         :tickets: resstock-estimation 437
 
@@ -215,7 +232,7 @@ Development Changelog
 
 
     .. change::
-        :tags: characteristics, pool heater
+        :tags: characteristics, feature
         :pullreq: 1324
 
         **Date**: 2024-12-03

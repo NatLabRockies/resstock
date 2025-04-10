@@ -35765,7 +35765,7 @@ Electric Vehicle Miles Traveled
 Description
 ***********
 
-The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
+The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.; Because EVs drive less miles/year than ICE (https://www.sciencedirect.com/science/article/pii/S254243512300404X?via%3Dihub#abs0015), the max value is capped at 22,500 miles/yr and the distribution is shifted to reduce the mean.
 
 Created by
 **********
@@ -35813,47 +35813,38 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``vehicle_miles_driven_per_year``
 
    * - 1000
-     - 9.6%
+     - 11%
      - 1000
    * - 3000
-     - 10%
+     - 11%
      - 3000
    * - 5000
-     - 12%
+     - 13%
      - 5000
    * - 7000
-     - 12%
+     - 13%
      - 7000
    * - 9000
-     - 11%
+     - 12%
      - 9000
    * - 11000
-     - 10%
+     - 11%
      - 11000
    * - 13000
-     - 8.2%
+     - 9.3%
      - 13000
    * - 15000
-     - 6.5%
+     - 7.5%
      - 15000
    * - 17000
-     - 4.9%
+     - 5.9%
      - 17000
    * - 19000
-     - 3.6%
+     - 4.6%
      - 19000
    * - 22500
-     - 5.6%
+     - 1.6%
      - 22500
-   * - 27500
-     - 2.8%
-     - 27500
-   * - 35000
-     - 2%
-     - 35000
-   * - 45000
-     - 1.4%
-     - 45000
 
 .. _electric_vehicle_outlet_access:
 
@@ -62515,139 +62506,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - wood shingles or shakes
      - medium
 
-.. _solar_hot_water:
-
-Solar Hot Water
----------------
-
-Description
-***********
-
-Presence, size, and location of solar hot water system (not modeled in project_national).
-
-Created by
-**********
-
-manually created
-
-Source
-******
-
-- \Not applicable
-
-- \all homes are assumed to not have solar water heating.
-
-
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``solar_thermal_system_type``
-     - true
-     - 
-     - Choice
-     - none, hot water
-     - The type of solar thermal system. Use 'none' if there is no solar thermal system.
-   * - ``solar_thermal_collector_area``
-     - true
-     - ft^2
-     - Double
-     -
-     - The collector area of the solar thermal system.
-   * - ``solar_thermal_collector_loop_type``
-     - true
-     - 
-     - Choice
-     - liquid direct, liquid indirect, passive thermosyphon
-     - The collector loop type of the solar thermal system.
-   * - ``solar_thermal_collector_type``
-     - true
-     - 
-     - Choice
-     - evacuated tube, single glazing black, double glazing black, integrated collector storage
-     - The collector type of the solar thermal system.
-   * - ``solar_thermal_collector_azimuth``
-     - true
-     - degrees
-     - Double
-     -
-     - The collector azimuth of the solar thermal system. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
-   * - ``solar_thermal_collector_tilt``
-     - true
-     - degrees
-     - String
-     -
-     - The collector tilt of the solar thermal system. Can also enter, e.g., RoofPitch, RoofPitch+20, Latitude, Latitude-15, etc.
-   * - ``solar_thermal_collector_rated_optical_efficiency``
-     - true
-     - Frac
-     - Double
-     -
-     - The collector rated optical efficiency of the solar thermal system.
-   * - ``solar_thermal_collector_rated_thermal_losses``
-     - true
-     - Btu/hr-ft^2-R
-     - Double
-     -
-     - The collector rated thermal losses of the solar thermal system.
-   * - ``solar_thermal_storage_volume``
-     - false
-     - gal
-     - Double
-     - auto
-     - The storage volume of the solar thermal system. If not provided, the OS-HPXML default (see `Detailed Inputs <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-inputs>`_) is used.
-   * - ``solar_thermal_solar_fraction``
-     - true
-     - Frac
-     - Double
-     -
-     - The solar fraction of the solar thermal system. If provided, overrides all other solar thermal inputs.
-
-Options
-*******
-
-From ``project_national`` the list of options, option stock sturation, and option arguments for the **Solar Hot Water** characteristic.
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-   :widths: auto
-
-   * - Option name
-     - Stock saturation
-     - ``solar_thermal_system_type``
-     - ``solar_thermal_collector_area``
-     - ``solar_thermal_collector_loop_type``
-     - ``solar_thermal_collector_type``
-     - ``solar_thermal_collector_azimuth``
-     - ``solar_thermal_collector_tilt``
-     - ``solar_thermal_collector_rated_optical_efficiency``
-     - ``solar_thermal_collector_rated_thermal_losses``
-     - ``solar_thermal_storage_volume``
-     - ``solar_thermal_solar_fraction``
-
-   * - None
-     - 100%
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 180
-     - roofpitch
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-
 .. _state:
 
 State
@@ -63254,6 +63112,12 @@ Assumption
 
 - \Default efficiency of HPWH: Electric Heat Pump, 50 gal, 3.45 UEF.
 
+- \Default solar thermal collector assumed: 40 sqft, Roof Pitch,
+
+- \Solar thermal backup is informed by secondary water heater fuel type. Solar collector orientation is based on rooftop solar orientation for electric backup and assumed south-facing for fuel backup. If a solar thermal system has no secondary water heater or has a second solar thermal system, they are assumed to have electric backup.
+
+- \Other Fuel water heater energy is modeled as coal
+
 - \Due to low sample sizes, fallback rules applied with lumping of:
 
   - \[1] State: Census Division RECS
@@ -63370,6 +63234,66 @@ Arguments
      - Choice
      - auto, hybrid/auto, heat pump only
      - The water heater operating mode. The 'heat pump only' option only uses the heat pump, while 'hybrid/auto' allows the backup electric resistance to come on in high demand situations. This is ignored if a scheduled operating mode type is selected. Applies only to heat pump water heater. If not provided, the OS-HPXML default (see `Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#heat-pump>`_) is used.
+   * - ``solar_thermal_system_type``
+     - true
+     - 
+     - Choice
+     - none, hot water
+     - The type of solar thermal system. Use 'none' if there is no solar thermal system.
+   * - ``solar_thermal_collector_area``
+     - true
+     - ft^2
+     - Double
+     -
+     - The collector area of the solar thermal system.
+   * - ``solar_thermal_collector_loop_type``
+     - true
+     - 
+     - Choice
+     - liquid direct, liquid indirect, passive thermosyphon
+     - The collector loop type of the solar thermal system.
+   * - ``solar_thermal_collector_type``
+     - true
+     - 
+     - Choice
+     - evacuated tube, single glazing black, double glazing black, integrated collector storage
+     - The collector type of the solar thermal system.
+   * - ``solar_thermal_collector_azimuth``
+     - true
+     - degrees
+     - Double
+     -
+     - The collector azimuth of the solar thermal system. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).
+   * - ``solar_thermal_collector_tilt``
+     - true
+     - degrees
+     - String
+     -
+     - The collector tilt of the solar thermal system. Can also enter, e.g., RoofPitch, RoofPitch+20, Latitude, Latitude-15, etc.
+   * - ``solar_thermal_collector_rated_optical_efficiency``
+     - true
+     - Frac
+     - Double
+     -
+     - The collector rated optical efficiency of the solar thermal system.
+   * - ``solar_thermal_collector_rated_thermal_losses``
+     - true
+     - Btu/hr-ft^2-R
+     - Double
+     -
+     - The collector rated thermal losses of the solar thermal system.
+   * - ``solar_thermal_storage_volume``
+     - false
+     - gal
+     - Double
+     - auto
+     - The storage volume of the solar thermal system. If not provided, the OS-HPXML default (see `Detailed Inputs <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-inputs>`_) is used.
+   * - ``solar_thermal_solar_fraction``
+     - true
+     - Frac
+     - Double
+     -
+     - The solar fraction of the solar thermal system. If provided, overrides all other solar thermal inputs.
    * - ``water_heater_has_flue_or_chimney``
      - true
      - 
@@ -63405,6 +63329,16 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``water_heater_uses_desuperheater``
      - ``water_heater_tank_model_type``
      - ``water_heater_operating_mode``
+     - ``solar_thermal_system_type``
+     - ``solar_thermal_collector_area``
+     - ``solar_thermal_collector_loop_type``
+     - ``solar_thermal_collector_type``
+     - ``solar_thermal_collector_azimuth``
+     - ``solar_thermal_collector_tilt``
+     - ``solar_thermal_collector_rated_optical_efficiency``
+     - ``solar_thermal_collector_rated_thermal_losses``
+     - ``solar_thermal_storage_volume``
+     - ``solar_thermal_solar_fraction``
      - ``water_heater_has_flue_or_chimney``
 
    * - Electric Heat Pump, 50 gal, 3.45 UEF
@@ -63425,6 +63359,16 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Electric Heat Pump, 66 gal, 3.35 UEF
      - 0%
@@ -63444,6 +63388,16 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Electric Heat Pump, 80 gal, 3.45 UEF
      - 0%
@@ -63463,9 +63417,19 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Electric Premium
-     - 10%
+     - 9.9%
      - storage water heater
      - electricity
      - auto
@@ -63482,9 +63446,19 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Electric Standard
-     - 37%
+     - 36%
      - storage water heater
      - electricity
      - auto
@@ -63501,9 +63475,19 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Electric Tankless
-     - 2.1%
+     - 2%
      - instantaneous water heater
      - electricity
      - 0
@@ -63520,9 +63504,19 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - FIXME Fuel Oil Indirect
-     - 0.69%
+     - 0.72%
      - storage water heater
      - fuel oil
      - auto
@@ -63539,9 +63533,19 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Fuel Oil Premium
-     - 0.44%
+     - 0.47%
      - storage water heater
      - fuel oil
      - auto
@@ -63558,6 +63562,16 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Fuel Oil Standard
      - 1.4%
@@ -63577,6 +63591,16 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Natural Gas Premium
      - 8.3%
@@ -63596,6 +63620,16 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Natural Gas Standard
      - 33%
@@ -63615,6 +63649,16 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Natural Gas Tankless
      - 2.9%
@@ -63634,11 +63678,21 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Other Fuel
-     - 0.28%
+     - 0.044%
      - storage water heater
-     - wood
+     - coal
      - auto
      - EnergyFactor
      - 0.59
@@ -63653,9 +63707,19 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Propane Premium
-     - 0.62%
+     - 0.63%
      - storage water heater
      - propane
      - auto
@@ -63672,9 +63736,19 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Propane Standard
-     - 2.3%
+     - 2.4%
      - storage water heater
      - propane
      - auto
@@ -63691,9 +63765,19 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
    * - Propane Tankless
-     - 0.9%
+     - 0.92%
      - instantaneous water heater
      - propane
      - 0
@@ -63710,6 +63794,248 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
+   * - Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup
+     - 0.037%
+     - storage water heater
+     - electricity
+     - auto
+     - EnergyFactor
+     - 0.97
+     - auto
+     - 0.98
+     - auto
+     - auto
+     - 0
+     - 6.2
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - hot water
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 90
+     - roofpitch
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
+   * - Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup
+     - 0.004%
+     - storage water heater
+     - electricity
+     - auto
+     - EnergyFactor
+     - 0.97
+     - auto
+     - 0.98
+     - auto
+     - auto
+     - 0
+     - 6.2
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - hot water
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - roofpitch
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
+   * - Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup
+     - 0.093%
+     - storage water heater
+     - electricity
+     - auto
+     - EnergyFactor
+     - 0.97
+     - auto
+     - 0.98
+     - auto
+     - auto
+     - 0
+     - 6.2
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - hot water
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 180
+     - roofpitch
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
+   * - Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup
+     - 0.00032%
+     - storage water heater
+     - fuel oil
+     - auto
+     - EnergyFactor
+     - 0.62
+     - auto
+     - 0.78
+     - auto
+     - auto
+     - 0
+     - 0
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - hot water
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 180
+     - roofpitch
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
+   * - Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup
+     - 0.002%
+     - storage water heater
+     - natural gas
+     - auto
+     - EnergyFactor
+     - 0.59
+     - auto
+     - 0.76
+     - auto
+     - auto
+     - 0
+     - 0
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - hot water
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 180
+     - roofpitch
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
+   * - Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup
+     - 0.0058%
+     - storage water heater
+     - propane
+     - auto
+     - EnergyFactor
+     - 0.59
+     - auto
+     - 0.76
+     - auto
+     - auto
+     - 0
+     - 0
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - hot water
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 180
+     - roofpitch
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
+   * - Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup
+     - 0.022%
+     - storage water heater
+     - electricity
+     - auto
+     - EnergyFactor
+     - 0.97
+     - auto
+     - 0.98
+     - auto
+     - auto
+     - 0
+     - 6.2
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - hot water
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 270
+     - roofpitch
+     - 0.77
+     - 0.793
+     - auto
+     - 0
+     - auto
+   * - Wood
+     - 0.076%
+     - storage water heater
+     - wood
+     - auto
+     - EnergyFactor
+     - 0.59
+     - auto
+     - 0.76
+     - auto
+     - auto
+     - 0
+     - 0
+     - 125
+     - auto
+     - auto
+     - auto
+     - auto
+     - none
+     - 40
+     - liquid indirect
+     - single glazing black
+     - 0
+     - 0
+     - 0.77
+     - 0.793
+     - auto
+     - 0
      - auto
 
 .. _water_heater_fuel:
@@ -63738,15 +64064,19 @@ Source
 Assumption
 **********
 
+- \After conversations with EIA, other fuel is a combination of units with no-water heater, biomass, coal, or district steam systems.
+
 - \Due to low sample sizes, fallback rules applied with lumping of:
 
-  - \[1] State: Census Division RECS
+  - \[1] Geometry building SF: Mobile, Single family attached, Single family detached
 
-  - \[2] Geometry building SF: Mobile, Single family attached, Single family detached
+  - \[2] Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units
 
-  - \[3] Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units
+  - \[3] State: Census Division RECS
 
-  - \[4] State: Census Region[5] State: National
+  - \[4] State: Census Region
+
+  - \[5] State: National
 
 - \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
@@ -63769,15 +64099,19 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - Stock saturation
 
    * - Electricity
-     - 49%
+     - 48%
    * - Fuel Oil
-     - 2.5%
+     - 2.6%
    * - Natural Gas
-     - 44%
+     - 45%
    * - Other Fuel
-     - 0.28%
+     - 0.044%
    * - Propane
      - 3.9%
+   * - Solar Thermal
+     - 0.16%
+   * - Wood
+     - 0.076%
 
 .. _water_heater_in_unit:
 
