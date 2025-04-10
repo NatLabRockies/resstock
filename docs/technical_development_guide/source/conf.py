@@ -43,7 +43,7 @@ extensions = [
 ]
 
 # tags to sort sections
-changelog_sections = ["workflow", "characteristics", "software", "documentation"]
+changelog_sections = ["workflow", "characteristics", "outputs", "documentation", "software"]
 
 # tags to sort on inside of sections
 changelog_inner_tag_sort = ["feature", "changed", "removed", "bug", "moved"]

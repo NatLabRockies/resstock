@@ -2,28 +2,43 @@
 Development Changelog
 =====================
 
+
+.. change::
+    :tags: characteristics, documentation
+    :pullreq: 1377
+
+    **Date**: 2025-04-09
+
+    Title:
+    Update HVAC Cooling Partial Space Conditioning for Hawaii
+
+    Description:
+    Update of HVAC Cooling Partial Space Conditioning.tsv to separate Hawaii and Miami and to allow for more partial space conditioning in Hawai
+
+    Assignees: Janet Reyna
+
+
 .. changelog::
     :version: v3.5.0
     :released: pending
 
-
     .. change::
-        :tags: characteristics, docs
-        :pullreq: 1377
+        :tags: characteristics, documentation, feature, technical reference guide, outputs
+        :pullreq: 1356
 
-        **Date**: 2025-04-09
+        **Date**: 2025-04-06
 
         Title:
-        Update HVAC Cooling Partial Space Conditioning for Hawaii
+        Solar Hot Water
 
         Description:
-        Update of HVAC Cooling Partial Space Conditioning.tsv to separate Hawaii and Miami and to allow for more partial space conditioning in Hawai
+        Break out Solar Thermal from Other Fuel for Water Heater Fuel, consolidate Solar Hot Water with Water Heater Efficiency, assign all solar hot water systems as south-facing roof pitch installed 40ft solar collectors.
 
-        Assignees: Janet Reyna
+        Assignees: Lixi Liu, Anthony Fontanini, Jeff Maguire
 
 
    .. change::
-        :tags: characteristics, docs
+        :tags: characteristics, documentation
         :pullreq: 1374
 
         **Date**: 2025-04-05
@@ -32,7 +47,7 @@ Development Changelog
         Differentiate Hawaii in IECC Climate Zone 1A
 
         Description:
-        Split out HI and FL in Climate Zone 1A to support Hawaii differentiation
+        Split out HI and FL in Climate Zone 1A to support Hawaii differentiation.
 
         Assignees: Janet Reyna
 
@@ -53,7 +68,7 @@ Development Changelog
 
 
     .. change::
-        :tags: docs, technical reference guide
+        :tags: documentation, technical reference guide
         :pullreq: 1361
 
         **Date**: 2025-03-12
@@ -83,7 +98,7 @@ Development Changelog
 
 
     .. change::
-        :tags: characteristics, feature, docs, technical reference guide, outputs
+        :tags: characteristics, feature, documentation, technical reference guide, outputs
         :pullreq: 1299
 
         **Date**: 2025-02-28
@@ -151,7 +166,7 @@ Development Changelog
 
 
     .. change::
-        :tags: docs, technical development guide
+        :tags: documentation, technical development guide
         :pullreq: 1330
 
         **Date**: 2025-01-29
@@ -183,7 +198,7 @@ Development Changelog
 
 
     .. change::
-        :tags: ci, docs, technical reference guide, technical development guide
+        :tags: ci, documentation, technical reference guide, technical development guide
         :pullreq: 1338
         :tickets: resstock-estimation 437
 
@@ -217,7 +232,7 @@ Development Changelog
 
 
     .. change::
-        :tags: characteristics, pool heater
+        :tags: characteristics, feature
         :pullreq: 1324
 
         **Date**: 2024-12-03
