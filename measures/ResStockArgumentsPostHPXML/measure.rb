@@ -137,8 +137,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
         # Update HPXML doc
         building_air_leakage_node = XMLHelper.get_element(air_infil_measurement_nodes[air_infil_index], 'BuildingAirLeakage')
-        air_leakage_node = XMLHelper.get_element(building_air_leakage_node, 'AirLeakage')
-        XMLHelper.update_element_value(air_leakage_node, updated_air_leakage_value.to_s)
+        # Delete the existing AirLeakage element from the BuildingAirLeakage parent
+        XMLHelper.delete_element(building_air_leakage_node, 'AirLeakage')
+        # Reinsert the AirLeakage element w/ the reduced AirLeakage value
+        XMLHelper.add_element(building_air_leakage_node, 'AirLeakage', updated_air_leakage_value, :float)
+        # TODO fix formatting of added AirLeakage element (newline and indentation)
       end
 
       air_leakage_reduction_applied = true
