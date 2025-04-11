@@ -142,6 +142,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         # Reinsert the AirLeakage element w/ the reduced AirLeakage value
         XMLHelper.add_element(building_air_leakage_node, 'AirLeakage', updated_air_leakage_value, :float)
         # TODO fix formatting of added AirLeakage element (newline and indentation)
+        # newline and indentation shouldn't affect parsability of XML, or underlying data structure
       end
 
       air_leakage_reduction_applied = true
