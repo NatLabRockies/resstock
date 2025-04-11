@@ -651,7 +651,7 @@ class UpgradeCostsTest < Minitest::Test
 
   def _upgrade_osw(osw)
     upgrades = { 'ceiling_assembly_r' => 61.6,
-                 'air_leakage_value' => 2.25 }
+                 'air_leakage' => '2.25 ACH50' }
 
     osw_hash = JSON.parse(File.read(osw))
     osw_hash['steps'].each do |step|
