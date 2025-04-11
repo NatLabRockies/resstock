@@ -3,7 +3,7 @@ os_version: 3.9.0
 os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: /kfs2/projects/geostock/resstock/test_run_ghps_v1
+output_directory: /kfs2/projects/geostock/resstock/test_run_ghps_v2
 # weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
@@ -27,8 +27,8 @@ kestrel:
   minutes_per_sim: 10
   account: geostock
   postprocessing:
-    time: 800
-    n_workers: 20
+    time: 600
+    n_workers: 2
     n_procs: 20
   sampling:
     time: 60
@@ -44,11 +44,11 @@ postprocessing:
   aws:
     region_name: us-west-2
     s3:
-      bucket: sdr_resstock
-      prefix: test_run_ghp_v1
+      bucket: geostock
+      prefix: ghp_fy25_tests
     athena:
       glue_service_role: service-role/AWSGlueServiceRole-default
-      database_name: sdr_resstock
+      database_name: ghp_fy25_tests
       max_crawling_time: 1200
 
 # Workflow generator
@@ -120,7 +120,7 @@ workflow_generator:
     # Files to keep
     server_directory_cleanup:
       retain_in_idf: true
-      retain_schedules_csv: false
+      retain_schedules_csv: true
       retain_in_osm: true
 
     # debug: true
@@ -199,15 +199,15 @@ upgrades:
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
 
-#  - upgrade_name: GHPVariableSpeed
+  - upgrade_name: GHPVariableSpeed
     
-#    package_apply_logic: *remove_shared_heating_cooling_ghp
+    package_apply_logic: *remove_shared_heating_cooling_ghp
 
-#    options:
-#      - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4, Variable Speed
-#        apply_logic: *ducted_ASHP_apply_logic
-#        costs: *costs_GTHP
-#        lifetime: *lifetime_ducted_GTHP
-#
-#      - *HP_cooling_efficiency_ducted
-#      - *100_percent_conditioned_ducts_only
+    options:
+      - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4, Variable Speed
+        apply_logic: *ducted_ASHP_apply_logic
+        costs: *costs_GTHP
+        lifetime: *lifetime_ducted_GTHP
+
+      - *HP_cooling_efficiency_ducted
+      - *100_percent_conditioned_ducts_only
