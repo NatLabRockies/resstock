@@ -88,31 +88,32 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     # Load HPXML
     @hpxml = HPXML.new(hpxml_path: @hpxml_path)
 
+    # Infiltration Reduction
+    if not args[:air_leakage_percent_reduction].nil?
+      @hpxml.buildings.each do |hpxml_bldg|
+        hpxml_bldg.air_infiltration_measurements.each do |air_infiltration_measurement|
+          air_infiltration_measurement.air_leakage *= (1.0 - args[:air_leakage_percent_reduction] / 100.0)
+        end
+      end
+      runner.registerInfo("Wrote file: #{@hpxml_path} with modified <AirLeakage>.")
+    end
+
     # Parse the HPXML document
-    doc = XMLHelper.parse_file(@hpxml_path)
+    doc = @hpxml.to_doc()
     hpxml_doc = XMLHelper.get_element(doc, '/HPXML')
     doc_buildings = XMLHelper.get_elements(hpxml_doc, 'Building')
 
-    # Process each building
-
-    air_leakage_reduction_applied = false
-    # assume air_leakage_value adjustment logic while processing
-    # each <Building> isn't triggered until proven otherwise
-
-    skip_hvac_flexibility = skip_hvac_flexibility?(args)
-
-    if not skip_hvac_flexibility
+    if not skip_hvac_flexibility?(args)
       # define variables needed for hvac_flexibility adjustment
       output_csv_path = File.dirname(@hpxml_path)
       @prng = Random.new(args[:building_id].to_i)
       @minutes_per_step = @hpxml.header.timestep
       max_random_shift_steps = (args[:flex_random_shift_minutes] / @minutes_per_step).to_i
       @random_shift_steps = @prng.rand(-max_random_shift_steps..max_random_shift_steps)
-    end
 
-    doc_buildings.each_with_index do |building, index|
-      hpxml_bldg = @hpxml.buildings[index]
-      if not skip_hvac_flexibility
+      # Process each building
+      doc_buildings.each_with_index do |building, index|
+        hpxml_bldg = @hpxml.buildings[index]
         if hpxml_bldg.hvac_controls.to_a.length == 0
           runner.registerInfo("Skipping hvac flexibility for building #{index + 1} since it has no HVAC controls.")
           next
@@ -121,42 +122,13 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         modified_schedule = modify_hvac_schedule(index, hvac_schedule)
         write_schedule(modified_schedule, building, index, output_csv_path)
       end
-
-      # Infiltration Reduction
-      # air_leakage_percent_reduction value adjustment migrated from ResStockArguments to ResStockArgumentsPostHPXML
-      # Why? b.c. BuildResHPXML no longer accepts air_leakage_value as an arg, and an updated (i.e. reduced) air_leakage_value
-      # needs to be passed to HPXMLtoOpenStudio to capture the effects of air sealing if an air leakage value reduction is intended
-      # Assumption: air_leakage_percent_reduction is applied to all <AirInfiltrationMeasurement> for a given <Building>
-
-      next unless not args[:air_leakage_percent_reduction].nil? && hpxml_bldg.air_infiltration_measurements.size > 0
-
-      air_infil_measurement_nodes = XMLHelper.get_elements(building, 'BuildingDetails/Enclosure/AirInfiltration/AirInfiltrationMeasurement')
-
-      hpxml_bldg.air_infiltration_measurements.each_with_index do |air_infiltration_measurement, air_infil_index|
-        updated_air_leakage_value = air_infiltration_measurement.air_leakage * (1.0 - args[:air_leakage_percent_reduction] / 100.0)
-
-        # Update HPXML doc
-        building_air_leakage_node = XMLHelper.get_element(air_infil_measurement_nodes[air_infil_index], 'BuildingAirLeakage')
-        # Delete the existing AirLeakage element from the BuildingAirLeakage parent
-        XMLHelper.delete_element(building_air_leakage_node, 'AirLeakage')
-        # Reinsert the AirLeakage element w/ the reduced AirLeakage value
-        XMLHelper.add_element(building_air_leakage_node, 'AirLeakage', updated_air_leakage_value, :float)
-        # TODO fix formatting of added AirLeakage element (newline and indentation)
-        # newline and indentation shouldn't affect parsability of XML, or underlying data structure
-      end
-
-      air_leakage_reduction_applied = true
+      runner.registerInfo("Wrote file: #{@hpxml_path} with modified schedules.")
+    else
+      runner.registerInfo('Skipping hvac flexibility since hvac_flex_peak_offset and hvac_flex_pre_peak_duration_hours are both 0')
     end
+
     # Write out the modified hpxml
     XMLHelper.write_file(doc, @hpxml_path)
-    if skip_hvac_flexibility
-      runner.registerInfo('Skipping hvac flexibility since hvac_flex_peak_offset and hvac_flex_pre_peak_duration_hours are both 0')
-    else
-      runner.registerInfo("Wrote file: #{@hpxml_path} with modified schedules.")
-    end
-    if air_leakage_reduction_applied
-      runner.registerInfo("Wrote file: #{@hpxml_path} with modified <AirLeakage>.")
-    end
     true
   end
 
