@@ -25,7 +25,7 @@ Additionally, for each parameter an **Arguments** table is populated (if applica
 .. [#] May be "String", "Double", "Integer", "Boolean", or "Choice".
 
 Furthermore, all *optional* Choice arguments include "auto" as one of the possible **Choices**.
-Most *optional* String/Double/Integer/Boolean arguments can also be assigned a value of "auto" (e.g., ``site_ground_conductivity``).
+Most *optional* String/Double/Integer/Boolean arguments can also be assigned a value of "auto" (e.g., ``geometry_unit_num_bathrooms``).
 Assigning "auto" means that downstream default values (e.g., from OpenStudio-HPXML) will be used (if applicable).
 When an argument is defaulted using OpenStudio-HPXML, the **Description** field will include link(s) to `OpenStudio-HPXML documentation <https://openstudio-hpxml.readthedocs.io/en/latest/?badge=latest>`_ describing these default values.
 
@@ -38100,24 +38100,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``site_soil_and_moisture_type``
+   * - ``site_soil_type``
      - false
      - 
      - Choice
-     - auto, clay, dry, clay, mixed, clay, wet, gravel, dry, gravel, mixed, gravel, wet, loam, dry, loam, mixed, loam, wet, sand, dry, sand, mixed, sand, wet, silt, dry, silt, mixed, silt, wet, unknown, dry, unknown, mixed, unknown, wet
-     - Type of soil and moisture. This is used to inform ground conductivity and diffusivity. If not provided, the OS-HPXML default (see `HPXML Site <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-site>`_) is used.
-   * - ``site_ground_conductivity``
-     - false
-     - Btu/hr-ft-F
-     - Double
-     -
-     - Conductivity of the ground soil. If provided, overrides the previous site and moisture type input.
-   * - ``site_ground_diffusivity``
-     - false
-     - ft^2/hr
-     - Double
-     -
-     - Diffusivity of the ground soil. If provided, overrides the previous site and moisture type input.
+     - auto, Unknown, Clay, Dry, Clay, Mixed, Clay, Wet, Gravel, Dry, Gravel, Mixed, Gravel, Wet, Loam, Dry, Loam, Mixed, Loam, Wet, Sand, Dry, Sand, Mixed, Sand, Wet, Silt, Dry, Silt, Mixed, Silt, Wet, 0.5 Conductivity, 0.8 Conductivity, 1.1 Conductivity, 1.4 Conductivity, 1.44 Conductivity, 1.7 Conductivity, 2.0 Conductivity, 2.3 Conductivity, 2.6 Conductivity
+     - The soil and moisture type, used to inform ground conductivity and diffusivity. Specific numerical inputs ([Btu/hr-ft-F] or [ft^2/hr]) override the soil and moisture type input.
 
 Options
 *******
@@ -38131,50 +38119,32 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``site_soil_and_moisture_type``
-     - ``site_ground_conductivity``
-     - ``site_ground_diffusivity``
+     - ``site_soil_type``
 
    * - 0.5
      - 0.59%
-     - auto
-     - 0.5
-     - auto
+     - 0.5 Conductivity
    * - 0.8
      - 7%
-     - auto
-     - 0.8
-     - auto
+     - 0.8 Conductivity
    * - 1.1
      - 46%
-     - auto
-     - 1.1
-     - auto
+     - 1.1 Conductivity
    * - 1.4
      - 36%
-     - auto
-     - 1.4
-     - auto
+     - 1.4 Conductivity
    * - 1.7
      - 7.8%
-     - auto
-     - 1.7
-     - auto
+     - 1.7 Conductivity
    * - 2.0
      - 2.3%
-     - auto
-     - 2.0
-     - auto
+     - 2.0 Conductivity
    * - 2.3
      - 0.23%
-     - auto
-     - 2.3
-     - auto
+     - 2.3 Conductivity
    * - 2.6
      - 0.16%
-     - auto
-     - 2.6
-     - auto
+     - 2.6 Conductivity
 
 .. _hvac_cooling_autosizing_factor:
 
@@ -38543,7 +38513,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -38555,7 +38525,7 @@ Assumption
 
 - \Homes having non-ducted heat pump for heating is assumed to have non-ducted heat pumpfor cooling
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, we are not modelling any central and room AC.
 
@@ -38884,7 +38854,7 @@ Source
 
 - \Efficiency data based on expanded_HESC_HVAC_efficiencies.tsv combined with age of equipment data from RECS
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -38904,7 +38874,7 @@ Assumption
 
 - \For Other Fuel and Wood, the lowest efficiency systems are assumed.
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, electric space heaters are modelled as electric baseboards.
 
@@ -39509,7 +39479,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -39519,7 +39489,7 @@ Assumption
 
 - \1) Heating fuel lump: Fuel oil, Propane, Wood and Other Fuel2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs bins
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 
 Options
@@ -39649,13 +39619,13 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, electric space heaters are modelled as electric baseboards.
 
@@ -39800,13 +39770,13 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, all wood is modelled as cord wood.
 
@@ -39889,13 +39859,13 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, the fraction of the load served by the secondary heating system is calculated as the ratio of annual energy used by secondary fuel and annual energy used by secondary and primary fuel.
 
@@ -39974,13 +39944,13 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, all heat pumps are assumed to be non-ducted mini-splits.
 
@@ -40741,7 +40711,7 @@ Source
 
 - \2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -40751,7 +40721,7 @@ Assumption
 
 - \2. Remaining Mobile Homes < 10 are replaced by Single-Family Detached + Mobile Homes combined: [DE, RI, SD, VT, WY, and all DC].
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, all wood is modelled as cord wood.
 
@@ -42083,7 +42053,7 @@ Source
 
 - \Distributions are based on the cumulative distribution functions from the Residential Diagnostics Database (ResDB), http://resdb.lbl.gov/.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -42101,7 +42071,7 @@ Assumption
 
 - \ResStock models multi-family and SFA units with the unit total air leakage type. The unit total air leakage assume that some of the sampled ACH50 value goes to neighboring units. The model infiltration value to the exterior is a smaller infiltration value that what is sampled and is adjusted by the ratio of exterior envelope surface area to total envelope surface area. The modeled infiltration to the exterior is reported in the results.
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, Infiltration ACH50 values are calculated based on CFM50 from blower door test and estimated volume of the home.
 
@@ -42125,30 +42095,12 @@ Arguments
      - Choice
      - auto, exposed, normal, well-shielded
      - Presence of nearby buildings, trees, obstructions for infiltration model. If not provided, the OS-HPXML default (see `HPXML Site <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-site>`_) is used.
-   * - ``air_leakage_leakiness_description``
+   * - ``air_leakage``
      - false
      - 
      - Choice
-     - auto, very tight, tight, average, leaky, very leaky
-     - Qualitative description of infiltration. If provided, the Year Built of the home is required. Either provide this input or provide a numeric air leakage value below.
-   * - ``air_leakage_units``
-     - false
-     - 
-     - Choice
-     - auto, ACH, CFM, ACHnatural, CFMnatural, EffectiveLeakageArea
-     - The unit of measure for the air leakage if providing a numeric air leakage value.
-   * - ``air_leakage_house_pressure``
-     - false
-     - Pa
-     - Double
-     -
-     - The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM.
-   * - ``air_leakage_value``
-     - false
-     - 
-     - Double
-     -
-     - Numeric air leakage value. For 'EffectiveLeakageArea', provide value in sq. in. If provided, overrides Leakiness Description input.
+     - auto, Very Tight, Tight, Average, Leaky, Very Leaky, 0.25 ACH50, 0.5 ACH50, 0.75 ACH50, 1 ACH50, 1.5 ACH50, 2 ACH50, 2.25 ACH50, 3 ACH50, 3.57 ACH50, 3.75 ACH50, 4 ACH50, 4.5 ACH50, 5 ACH50, 5.25 ACH50, 6 ACH50, 7 ACH50, 7.5 ACH50, 8 ACH50, 10 ACH50, 11.25 ACH50, 12.16 ACH50, 15 ACH50, 18.5 ACH50, 20 ACH50, 25 ACH50, 30 ACH50, 40 ACH50, 50 ACH50, 2.8 ACH45, 0.2 nACH, 0.335 nACH, 0.375 nACH, 0.67 nACH, 1.5 nACH, 72 nCFM, 79.8 sq. in. ELA, 123 sq. in. ELA, 1080 CFM50, 1008.5 CFM45
+     - The Leakiness Description (qualitative), or numeric air leakage value (ACH or CFM at specified pressure, nACH or nCFM, or ELA.
    * - ``air_leakage_type``
      - false
      - 
@@ -42169,131 +42121,83 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Option name
      - Stock saturation
      - ``site_shielding_of_home``
-     - ``air_leakage_leakiness_description``
-     - ``air_leakage_units``
-     - ``air_leakage_house_pressure``
-     - ``air_leakage_value``
+     - ``air_leakage``
      - ``air_leakage_type``
 
    * - 1 ACH50
      - 0.064%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 1
+     - 1 ACH50
      - unit total
    * - 2 ACH50
      - 0.66%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 2
+     - 2 ACH50
      - unit total
    * - 3 ACH50
      - 1.4%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 3
+     - 3 ACH50
      - unit total
    * - 4 ACH50
      - 2.3%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 4
+     - 4 ACH50
      - unit total
    * - 5 ACH50
      - 3.4%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 5
+     - 5 ACH50
      - unit total
    * - 6 ACH50
      - 4.3%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 6
+     - 6 ACH50
      - unit total
    * - 7 ACH50
      - 4.9%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 7
+     - 7 ACH50
      - unit total
    * - 8 ACH50
      - 5.3%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 8
+     - 8 ACH50
      - unit total
    * - 10 ACH50
      - 11%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 10
+     - 10 ACH50
      - unit total
    * - 15 ACH50
      - 24%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 15
+     - 15 ACH50
      - unit total
    * - 20 ACH50
      - 17%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 20
+     - 20 ACH50
      - unit total
    * - 25 ACH50
      - 10%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 25
+     - 25 ACH50
      - unit total
    * - 30 ACH50
      - 6.1%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 30
+     - 30 ACH50
      - unit total
    * - 40 ACH50
      - 5.7%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 40
+     - 40 ACH50
      - unit total
    * - 50 ACH50
      - 3.2%
      - normal
-     - auto
-     - ACH
-     - 50
-     - 50
+     - 50 ACH50
      - unit total
 
 .. _insulation_ceiling:
@@ -62368,7 +62272,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -62384,7 +62288,7 @@ Assumption
 
   - \[4] State: Census Region[5] State: National
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, wood and coal heating is modeled as other fuel.
 
