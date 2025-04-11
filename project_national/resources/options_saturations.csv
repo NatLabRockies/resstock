@@ -13095,12 +13095,12 @@ Level,Parameter,Option,Saturation
 11,Geometry Stories,20,0.00206217
 11,Geometry Stories,21,0.00660916
 11,Geometry Stories,35,0.00112057
-11,HVAC Cooling Partial Space Conditioning,<10% Conditioned,0.00457371
-11,HVAC Cooling Partial Space Conditioning,20% Conditioned,0.063203
-11,HVAC Cooling Partial Space Conditioning,40% Conditioned,0.0583625
-11,HVAC Cooling Partial Space Conditioning,60% Conditioned,0.0651472
-11,HVAC Cooling Partial Space Conditioning,80% Conditioned,0.0360721
-11,HVAC Cooling Partial Space Conditioning,100% Conditioned,0.666777
+11,HVAC Cooling Partial Space Conditioning,<10% Conditioned,0.00467128
+11,HVAC Cooling Partial Space Conditioning,20% Conditioned,0.0636662
+11,HVAC Cooling Partial Space Conditioning,40% Conditioned,0.0584727
+11,HVAC Cooling Partial Space Conditioning,60% Conditioned,0.0654704
+11,HVAC Cooling Partial Space Conditioning,80% Conditioned,0.0363034
+11,HVAC Cooling Partial Space Conditioning,100% Conditioned,0.665552
 11,HVAC Cooling Partial Space Conditioning,None,0.105864
 11,HVAC Cooling Partial Space Conditioning,Void,0
 11,Heating Setpoint Has Offset,No,0.561751
