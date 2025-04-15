@@ -1,67 +1,67 @@
 Dependency=Duct Location	Dependency=Vintage	Option=0% Leakage to Outside, Uninsulated	Option=10% Leakage to Outside, R-4	Option=10% Leakage to Outside, R-6	Option=10% Leakage to Outside, R-8	Option=10% Leakage to Outside, Uninsulated	Option=20% Leakage to Outside, R-4	Option=20% Leakage to Outside, R-6	Option=20% Leakage to Outside, R-8	Option=20% Leakage to Outside, Uninsulated	Option=30% Leakage to Outside, R-4	Option=30% Leakage to Outside, R-6	Option=30% Leakage to Outside, R-8	Option=30% Leakage to Outside, Uninsulated	Option=None	sampling_probability
-Garage	<1940	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.000745819
-Garage	1940s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00120808
-Garage	1950s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00303698
-Garage	1960s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00529877
-Garage	1970s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00676907
-Garage	1980s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.0072355
-Garage	1990s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00822836
-Garage	2000s	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0.0116642
-Garage	2010s	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0.00364818
-Heated Basement	<1940	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.013044
-Heated Basement	1940s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00698726
-Heated Basement	1950s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0162545
-Heated Basement	1960s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0125232
-Heated Basement	1970s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0146926
-Heated Basement	1980s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0115705
-Heated Basement	1990s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0141856
-Heated Basement	2000s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0133802
-Heated Basement	2010s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00392064
-Living Space	<1940	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00912397
-Living Space	1940s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00485413
+Garage	<1940	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.000745974
+Garage	1940s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00120805
+Garage	1950s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00303707
+Garage	1960s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00529639
+Garage	1970s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00676647
+Garage	1980s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00723334
+Garage	1990s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00823148
+Garage	2000s	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0.0116349
+Garage	2010s	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0.00364048
+Heated Basement	<1940	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0130478
+Heated Basement	1940s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00699169
+Heated Basement	1950s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0162687
+Heated Basement	1960s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0125373
+Heated Basement	1970s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0147017
+Heated Basement	1980s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0115828
+Heated Basement	1990s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.014213
+Heated Basement	2000s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0133885
+Heated Basement	2010s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00392731
+Living Space	<1940	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00912277
+Living Space	1940s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00485367
 Living Space	1950s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0104609
-Living Space	1960s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0171717
-Living Space	1970s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0366159
-Living Space	1980s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0365306
-Living Space	1990s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.036568
-Living Space	2000s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0317317
-Living Space	2010s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0130341
-None	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0514727
-None	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0162091
-None	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0261939
-None	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0285857
-None	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0385339
-None	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0277783
-None	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.022713
-None	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0149416
-None	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.00857598
-Unheated Basement	<1940	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0275191
-Unheated Basement	1940s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00531645
-Unheated Basement	1950s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.012164
-Unheated Basement	1960s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00810151
-Unheated Basement	1970s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0094992
-Unheated Basement	1980s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00692444
-Unheated Basement	1990s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00821911
-Unheated Basement	2000s	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0.00929664
-Unheated Basement	2010s	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0.00298682
-Attic	<1940	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.0053805
-Attic	1940s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00543862
-Attic	1950s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.0136195
-Attic	1960s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.0175076
-Attic	1970s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.0230178
-Attic	1980s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.0253377
-Attic	1990s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.0270058
-Attic	2000s	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0.0399877
-Attic	2010s	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0.0129655
-Crawlspace	<1940	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0201092
-Crawlspace	1940s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00939302
-Crawlspace	1950s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0221113
-Crawlspace	1960s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.017452
-Crawlspace	1970s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0231938
-Crawlspace	1980s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0189561
-Crawlspace	1990s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0209826
-Crawlspace	2000s	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0.0164215
-Crawlspace	2010s	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0.00560396
+Living Space	1960s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0171611
+Living Space	1970s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0365954
+Living Space	1980s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0365562
+Living Space	1990s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0365742
+Living Space	2000s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0317041
+Living Space	2010s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.013018
+None	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0514644
+None	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0162021
+None	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0261676
+None	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0285822
+None	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0385391
+None	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0277138
+None	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0226308
+None	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0150433
+None	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0.00860142
+Unheated Basement	<1940	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0275242
+Unheated Basement	1940s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00531933
+Unheated Basement	1950s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0121737
+Unheated Basement	1960s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00810455
+Unheated Basement	1970s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00950492
+Unheated Basement	1980s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00693123
+Unheated Basement	1990s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0082274
+Unheated Basement	2000s	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0.00930353
+Unheated Basement	2010s	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0.00299099
+Attic	<1940	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00538068
+Attic	1940s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00543825
+Attic	1950s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.013619
+Attic	1960s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.0175031
+Attic	1970s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.023012
+Attic	1980s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.0253349
+Attic	1990s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.0270126
+Attic	2000s	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0.0399267
+Attic	2010s	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0.0129502
+Crawlspace	<1940	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0201095
+Crawlspace	1940s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00939365
+Crawlspace	1950s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0221141
+Crawlspace	1960s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0174559
+Crawlspace	1970s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0232027
+Crawlspace	1980s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0189808
+Crawlspace	1990s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.021013
+Crawlspace	2000s	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0.0164224
+Crawlspace	2010s	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0.00560677
 # Created by: sources\other\tsv_maker.py
 # Description: Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces
 # Source: Duct insulation as a function of location: IECC 2009

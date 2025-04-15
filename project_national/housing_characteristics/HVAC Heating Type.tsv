@@ -1,319 +1,319 @@
 Dependency=Geometry Building Type RECS	Dependency=Heating Fuel	Dependency=State	Dependency=Vintage	Option=Ducted Heat Pump	Option=Ducted Heating	Option=Non-Ducted Heat Pump	Option=Non-Ducted Heating	Option=None	source_count	source_weight	sampling_probability
-Mobile Home	Electricity	AK	1940s	0	0.1125	0.1375	0.75	0	160	0	5.19763e-08
-Mobile Home	Fuel Oil	AK	1940s	0	0.710411	0	0.289589	0	1143	2	7.18619e-07
-Mobile Home	Natural Gas	AK	1940s	0	0.966507	0	0.0334928	0	1254	2	4.88374e-08
-Mobile Home	None	AK	1940s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Mobile Home	Other Fuel	AK	1940s	0	0	0	1	0	2	0	1.95926e-09
-Mobile Home	Propane	AK	1940s	0	0.688525	0	0.311475	0	61	0	2.09001e-08
-Mobile Home	Wood	AK	1940s	0	0.00740741	0	0.992593	0	135	0	6.35693e-08
-Mobile Home	Electricity	AK	1950s	0	0.1125	0.1375	0.75	0	160	7	1.82068e-07
-Mobile Home	Fuel Oil	AK	1950s	0	0.307692	0	0.692308	0	13	13	1.45493e-06
-Mobile Home	Natural Gas	AK	1950s	0	0.884615	0	0.115385	0	26	26	1.29934e-06
-Mobile Home	None	AK	1950s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Mobile Home	Other Fuel	AK	1950s	0	0	0	1	0	2	0	1.43719e-09
-Mobile Home	Propane	AK	1950s	0	0.688525	0	0.311475	0	61	2	1.0171e-07
-Mobile Home	Wood	AK	1950s	0	0.00740741	0	0.992593	0	135	4	2.87202e-07
-Mobile Home	Electricity	AK	1960s	0	0.136364	0.136364	0.727273	0	22	22	5.7357e-07
-Mobile Home	Fuel Oil	AK	1960s	0	0.606061	0	0.393939	0	165	165	4.93268e-06
-Mobile Home	Natural Gas	AK	1960s	0	0.957944	0	0.0420561	0	214	214	6.86908e-06
-Mobile Home	None	AK	1960s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Mobile Home	Other Fuel	AK	1960s	0	0	0	1	0	2	0	3.14302e-09
-Mobile Home	Propane	AK	1960s	0	0.688525	0	0.311475	0	61	7	3.42149e-07
-Mobile Home	Wood	AK	1960s	0	0.0454545	0	0.954545	0	22	22	9.27129e-07
-Mobile Home	Electricity	AK	1970s	0	0.0289855	0.130435	0.84058	0	69	69	2.01923e-06
-Mobile Home	Fuel Oil	AK	1970s	0	0.733438	0	0.266562	0	634	634	2.71199e-05
-Mobile Home	Natural Gas	AK	1970s	0	0.968421	0	0.0315789	0	760	760	2.60329e-05
-Mobile Home	None	AK	1970s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Mobile Home	Other Fuel	AK	1970s	0	0	0	1	0	2	2	7.14751e-08
-Mobile Home	Propane	AK	1970s	0	0.608696	0	0.391304	0	23	23	8.99204e-07
-Mobile Home	Wood	AK	1970s	0	0	0	1	0	69	69	3.43021e-06
-Mobile Home	Electricity	AK	1980s	0	0.294118	0.147059	0.558824	0	34	34	9.28539e-07
-Mobile Home	Fuel Oil	AK	1980s	0	0.741379	0	0.258621	0	232	232	1.16164e-05
-Mobile Home	Natural Gas	AK	1980s	0	0.982659	0	0.017341	0	173	173	1.10005e-05
-Mobile Home	None	AK	1980s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Mobile Home	Other Fuel	AK	1980s	0	0	0	1	0	2	0	8.08351e-09
-Mobile Home	Propane	AK	1980s	0	0.8125	0	0.1875	0	16	16	4.50202e-07
-Mobile Home	Wood	AK	1980s	0	0	0	1	0	28	28	1.4052e-06
-Mobile Home	Electricity	AK	1990s	0	0.1125	0.1375	0.75	0	160	8	3.03939e-07
-Mobile Home	Fuel Oil	AK	1990s	0	0.878049	0	0.121951	0	41	41	3.5948e-06
-Mobile Home	Natural Gas	AK	1990s	0	0.98	0	0.02	0	50	50	1.43979e-06
-Mobile Home	None	AK	1990s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Mobile Home	Other Fuel	AK	1990s	0	0	0	1	0	2	0	5.31911e-09
-Mobile Home	Propane	AK	1990s	0	0.688525	0	0.311475	0	61	3	1.62847e-07
-Mobile Home	Wood	AK	1990s	0	0.00740741	0	0.992593	0	135	4	5.32079e-07
-Mobile Home	Electricity	AK	2000s	0	0.1125	0.1375	0.75	0	160	5	1.74268e-07
-Mobile Home	Fuel Oil	AK	2000s	0	0.75	0	0.25	0	12	12	2.12701e-06
-Mobile Home	Natural Gas	AK	2000s	0	0.966507	0	0.0334928	0	1254	7	1.32461e-06
-Mobile Home	None	AK	2000s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Mobile Home	Other Fuel	AK	2000s	0	0	0	1	0	2	0	4.21965e-09
-Mobile Home	Propane	AK	2000s	0	0.688525	0	0.311475	0	61	6	8.15678e-08
-Mobile Home	Wood	AK	2000s	0	0.00740741	0	0.992593	0	135	1	2.71137e-07
-Mobile Home	Electricity	AK	2010s	0	0.1125	0.1375	0.75	0	160	2	1.32013e-07
-Mobile Home	Fuel Oil	AK	2010s	0	0.710411	0	0.289589	0	1143	2	1.33548e-06
-Mobile Home	Natural Gas	AK	2010s	0	0.966507	0	0.0334928	0	1254	4	2.07078e-06
-Mobile Home	None	AK	2010s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Mobile Home	Other Fuel	AK	2010s	0	0	0	1	0	2	0	2.45696e-09
-Mobile Home	Propane	AK	2010s	0	0.688525	0	0.311475	0	61	1	8.72785e-08
-Mobile Home	Wood	AK	2010s	0	0.00740741	0	0.992593	0	135	0	2.1181e-07
-Mobile Home	Electricity	AK	<1940	0	0.0769231	0.0769231	0.846154	0	13	13	3.67075e-08
-Mobile Home	Fuel Oil	AK	<1940	0	0.571429	0	0.428571	0	42	42	3.24113e-07
-Mobile Home	Natural Gas	AK	<1940	0	0.888889	0	0.111111	0	18	18	1.77671e-07
-Mobile Home	None	AK	<1940	0.2	0.2	0.2	0.2	0.2	0	0	0
-Mobile Home	Other Fuel	AK	<1940	0	0	0	1	0	2	0	2.90251e-10
-Mobile Home	Propane	AK	<1940	0	0.688525	0	0.311475	0	61	3	2.4496e-08
-Mobile Home	Wood	AK	<1940	0	0.00740741	0	0.992593	0	135	7	6.64666e-08
-Multi-Family with 2 - 4 Units	Electricity	AK	1940s	0	0.00913242	0.255708	0.73516	0	219	0.9	3.19228e-07
-Multi-Family with 2 - 4 Units	Fuel Oil	AK	1940s	0	0.136364	0	0.863636	0	22	6.6	2.42893e-06
-Multi-Family with 2 - 4 Units	Natural Gas	AK	1940s	0	0.210526	0	0.789474	0	19	5.7	1.55515e-06
-Multi-Family with 2 - 4 Units	None	AK	1940s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 2 - 4 Units	Other Fuel	AK	1940s	0	0	0	1	0	4	0	1.67108e-09
-Multi-Family with 2 - 4 Units	Propane	AK	1940s	0	0.0232558	0	0.976744	0	43	0	5.63977e-08
-Multi-Family with 2 - 4 Units	Wood	AK	1940s	0	0.02	0	0.98	0	50	0	8.13593e-08
-Multi-Family with 2 - 4 Units	Electricity	AK	1950s	0	0	0.166667	0.833333	0	12	3.6	1.33685e-06
-Multi-Family with 2 - 4 Units	Fuel Oil	AK	1950s	0	0.22449	0	0.77551	0	49	14.7	7.88186e-06
-Multi-Family with 2 - 4 Units	Natural Gas	AK	1950s	0	0.125	0	0.875	0	88	26.4	9.76066e-06
-Multi-Family with 2 - 4 Units	None	AK	1950s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 2 - 4 Units	Other Fuel	AK	1950s	0	0	0	1	0	4	0	6.88773e-09
-Multi-Family with 2 - 4 Units	Propane	AK	1950s	0	0.0232558	0	0.976744	0	43	1.2	2.19746e-07
-Multi-Family with 2 - 4 Units	Wood	AK	1950s	0	0.02	0	0.98	0	50	0.6	3.97393e-07
-Multi-Family with 2 - 4 Units	Electricity	AK	1960s	0	0	0.1	0.9	0	10	3	6.63023e-07
-Multi-Family with 2 - 4 Units	Fuel Oil	AK	1960s	0	0.0416667	0	0.958333	0	72	21.6	6.05732e-06
-Multi-Family with 2 - 4 Units	Natural Gas	AK	1960s	0	0.102941	0	0.897059	0	204	61.2	1.6424e-05
-Multi-Family with 2 - 4 Units	None	AK	1960s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 2 - 4 Units	Other Fuel	AK	1960s	0	0	0	1	0	4	0.3	7.49262e-08
-Multi-Family with 2 - 4 Units	Propane	AK	1960s	0	0.0232558	0	0.976744	0	43	0.3	1.54862e-07
-Multi-Family with 2 - 4 Units	Wood	AK	1960s	0	0.02	0	0.98	0	50	2.4	6.83925e-07
-Multi-Family with 2 - 4 Units	Electricity	AK	1970s	0	0	0.09375	0.90625	0	32	9.6	2.88094e-06
-Multi-Family with 2 - 4 Units	Fuel Oil	AK	1970s	0	0.0566038	0	0.943396	0	212	63.6	2.06219e-05
-Multi-Family with 2 - 4 Units	Natural Gas	AK	1970s	0	0.0584551	0	0.941545	0	479	143.7	4.89606e-05
-Multi-Family with 2 - 4 Units	None	AK	1970s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 2 - 4 Units	Other Fuel	AK	1970s	0	0	0	1	0	4	0	1.2654e-08
-Multi-Family with 2 - 4 Units	Propane	AK	1970s	0	0.0232558	0	0.976744	0	43	0.6	4.28421e-07
-Multi-Family with 2 - 4 Units	Wood	AK	1970s	0	0	0	1	0	20	6	1.89626e-06
-Multi-Family with 2 - 4 Units	Electricity	AK	1980s	0	0.0222222	0.2	0.777778	0	45	13.5	3.1561e-06
-Multi-Family with 2 - 4 Units	Fuel Oil	AK	1980s	0	0.040404	0	0.959596	0	198	59.4	1.82574e-05
-Multi-Family with 2 - 4 Units	Natural Gas	AK	1980s	0	0.123209	0	0.876791	0	349	104.7	5.29758e-05
-Multi-Family with 2 - 4 Units	None	AK	1980s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 2 - 4 Units	Other Fuel	AK	1980s	0	0	0	1	0	4	0	1.33672e-08
-Multi-Family with 2 - 4 Units	Propane	AK	1980s	0	0.0232558	0	0.976744	0	43	0	3.25861e-07
-Multi-Family with 2 - 4 Units	Wood	AK	1980s	0	0.0555556	0	0.944444	0	18	5.4	2.52195e-06
-Multi-Family with 2 - 4 Units	Electricity	AK	1990s	0	0	0.416667	0.583333	0	12	3.6	1.46926e-06
-Multi-Family with 2 - 4 Units	Fuel Oil	AK	1990s	0	0.0487805	0	0.95122	0	82	24.6	1.01479e-05
-Multi-Family with 2 - 4 Units	Natural Gas	AK	1990s	0	0.18	0	0.82	0	50	15	1.73931e-05
-Multi-Family with 2 - 4 Units	None	AK	1990s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 2 - 4 Units	Other Fuel	AK	1990s	0	0	0	1	0	4	0.3	1.43794e-07
-Multi-Family with 2 - 4 Units	Propane	AK	1990s	0	0.0232558	0	0.976744	0	43	0.6	4.10883e-07
-Multi-Family with 2 - 4 Units	Wood	AK	1990s	0	0.02	0	0.98	0	50	0.6	4.66839e-07
-Multi-Family with 2 - 4 Units	Electricity	AK	2000s	0	0.00913242	0.255708	0.73516	0	219	1.8	1.43712e-06
-Multi-Family with 2 - 4 Units	Fuel Oil	AK	2000s	0	0.011236	0	0.988764	0	89	26.7	1.55494e-05
-Multi-Family with 2 - 4 Units	Natural Gas	AK	2000s	0	0.243243	0	0.756757	0	37	11.1	1.80905e-05
-Multi-Family with 2 - 4 Units	None	AK	2000s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 2 - 4 Units	Other Fuel	AK	2000s	0	0	0	1	0	4	0	1.08724e-08
-Multi-Family with 2 - 4 Units	Propane	AK	2000s	0	0.0232558	0	0.976744	0	43	0.9	2.76402e-07
-Multi-Family with 2 - 4 Units	Wood	AK	2000s	0	0.02	0	0.98	0	50	0	3.42029e-07
-Multi-Family with 2 - 4 Units	Electricity	AK	2010s	0	0	0.425	0.575	0	80	24	2.23842e-06
-Multi-Family with 2 - 4 Units	Fuel Oil	AK	2010s	0	0.0194175	0	0.980583	0	103	30.9	4.7069e-06
-Multi-Family with 2 - 4 Units	Natural Gas	AK	2010s	0	0.374194	0	0.625806	0	465	139.5	8.47603e-06
-Multi-Family with 2 - 4 Units	None	AK	2010s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 2 - 4 Units	Other Fuel	AK	2010s	0	0	0	1	0	4	0.6	6.95138e-08
-Multi-Family with 2 - 4 Units	Propane	AK	2010s	0	0	0	1	0	31	9.3	1.53183e-06
-Multi-Family with 2 - 4 Units	Wood	AK	2010s	0	0.02	0	0.98	0	50	0	1.28706e-07
-Multi-Family with 2 - 4 Units	Electricity	AK	<1940	0	0	0.105263	0.894737	0	19	5.7	4.70606e-07
-Multi-Family with 2 - 4 Units	Fuel Oil	AK	<1940	0	0.148936	0	0.851064	0	47	14.1	3.15483e-06
-Multi-Family with 2 - 4 Units	Natural Gas	AK	<1940	0	0.120482	0	0.879518	0	83	24.9	2.39042e-06
-Multi-Family with 2 - 4 Units	None	AK	<1940	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 2 - 4 Units	Other Fuel	AK	<1940	0	0	0	1	0	4	0	2.55349e-09
-Multi-Family with 2 - 4 Units	Propane	AK	<1940	0	0.0232558	0	0.976744	0	43	0	6.61192e-08
-Multi-Family with 2 - 4 Units	Wood	AK	<1940	0	0.02	0	0.98	0	50	0	8.6515e-08
-Multi-Family with 5+ Units	Electricity	AK	1940s	0	0.00913242	0.255708	0.73516	0	219	2.1	2.7996e-07
-Multi-Family with 5+ Units	Fuel Oil	AK	1940s	0	0.136364	0	0.863636	0	22	15.4	2.09846e-06
-Multi-Family with 5+ Units	Natural Gas	AK	1940s	0	0.210526	0	0.789474	0	19	13.3	2.45561e-06
-Multi-Family with 5+ Units	None	AK	1940s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 5+ Units	Other Fuel	AK	1940s	0	0	0	1	0	4	0	1.5752e-09
-Multi-Family with 5+ Units	Propane	AK	1940s	0	0.0232558	0	0.976744	0	43	0	4.34711e-08
-Multi-Family with 5+ Units	Wood	AK	1940s	0	0.02	0	0.98	0	50	0	6.69486e-08
-Multi-Family with 5+ Units	Electricity	AK	1950s	0	0	0.166667	0.833333	0	12	8.4	1.11606e-06
-Multi-Family with 5+ Units	Fuel Oil	AK	1950s	0	0.22449	0	0.77551	0	49	34.3	6.46055e-06
-Multi-Family with 5+ Units	Natural Gas	AK	1950s	0	0.125	0	0.875	0	88	61.6	5.78901e-06
-Multi-Family with 5+ Units	None	AK	1950s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 5+ Units	Other Fuel	AK	1950s	0	0	0	1	0	4	0	5.92128e-09
-Multi-Family with 5+ Units	Propane	AK	1950s	0	0.0232558	0	0.976744	0	43	2.8	1.36161e-07
-Multi-Family with 5+ Units	Wood	AK	1950s	0	0.02	0	0.98	0	50	1.4	2.91956e-07
-Multi-Family with 5+ Units	Electricity	AK	1960s	0	0	0.1	0.9	0	10	7	7.92743e-07
-Multi-Family with 5+ Units	Fuel Oil	AK	1960s	0	0.0416667	0	0.958333	0	72	50.4	8.00944e-06
-Multi-Family with 5+ Units	Natural Gas	AK	1960s	0	0.102941	0	0.897059	0	204	142.8	1.89837e-05
-Multi-Family with 5+ Units	None	AK	1960s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 5+ Units	Other Fuel	AK	1960s	0	0	0	1	0	4	0.7	1.11961e-07
-Multi-Family with 5+ Units	Propane	AK	1960s	0	0.0232558	0	0.976744	0	43	0.7	1.72479e-07
-Multi-Family with 5+ Units	Wood	AK	1960s	0	0.02	0	0.98	0	50	5.6	8.02566e-07
-Multi-Family with 5+ Units	Electricity	AK	1970s	0	0	0.09375	0.90625	0	32	22.4	2.75744e-06
-Multi-Family with 5+ Units	Fuel Oil	AK	1970s	0	0.0566038	0	0.943396	0	212	148.4	2.3574e-05
-Multi-Family with 5+ Units	Natural Gas	AK	1970s	0	0.0584551	0	0.941545	0	479	335.3	4.89903e-05
-Multi-Family with 5+ Units	None	AK	1970s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 5+ Units	Other Fuel	AK	1970s	0	0	0	1	0	4	0	1.67865e-08
-Multi-Family with 5+ Units	Propane	AK	1970s	0	0.0232558	0	0.976744	0	43	1.4	3.66078e-07
-Multi-Family with 5+ Units	Wood	AK	1970s	0	0	0	1	0	20	14	2.00341e-06
-Multi-Family with 5+ Units	Electricity	AK	1980s	0	0.0222222	0.2	0.777778	0	45	31.5	3.2246e-06
-Multi-Family with 5+ Units	Fuel Oil	AK	1980s	0	0.040404	0	0.959596	0	198	138.6	1.80968e-05
-Multi-Family with 5+ Units	Natural Gas	AK	1980s	0	0.123209	0	0.876791	0	349	244.3	5.4974e-05
-Multi-Family with 5+ Units	None	AK	1980s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 5+ Units	Other Fuel	AK	1980s	0	0	0	1	0	4	0	1.48782e-08
-Multi-Family with 5+ Units	Propane	AK	1980s	0	0.0232558	0	0.976744	0	43	0	2.48478e-07
-Multi-Family with 5+ Units	Wood	AK	1980s	0	0.0555556	0	0.944444	0	18	12.6	2.47532e-06
-Multi-Family with 5+ Units	Electricity	AK	1990s	0	0	0.416667	0.583333	0	12	8.4	1.10998e-06
-Multi-Family with 5+ Units	Fuel Oil	AK	1990s	0	0.0487805	0	0.95122	0	82	57.4	7.68378e-06
-Multi-Family with 5+ Units	Natural Gas	AK	1990s	0	0.18	0	0.82	0	50	35	2.0667e-05
-Multi-Family with 5+ Units	None	AK	1990s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 5+ Units	Other Fuel	AK	1990s	0	0	0	1	0	4	0.7	9.4955e-08
-Multi-Family with 5+ Units	Propane	AK	1990s	0	0.0232558	0	0.976744	0	43	1.4	3.18997e-07
-Multi-Family with 5+ Units	Wood	AK	1990s	0	0.02	0	0.98	0	50	1.4	3.53043e-07
-Multi-Family with 5+ Units	Electricity	AK	2000s	0	0.00913242	0.255708	0.73516	0	219	4.2	6.93727e-07
-Multi-Family with 5+ Units	Fuel Oil	AK	2000s	0	0.011236	0	0.988764	0	89	62.3	7.21894e-06
-Multi-Family with 5+ Units	Natural Gas	AK	2000s	0	0.243243	0	0.756757	0	37	25.9	1.09826e-05
-Multi-Family with 5+ Units	None	AK	2000s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 5+ Units	Other Fuel	AK	2000s	0	0	0	1	0	4	0	4.615e-09
-Multi-Family with 5+ Units	Propane	AK	2000s	0	0.0232558	0	0.976744	0	43	2.1	1.59231e-07
-Multi-Family with 5+ Units	Wood	AK	2000s	0	0.02	0	0.98	0	50	0	1.81958e-07
-Multi-Family with 5+ Units	Electricity	AK	2010s	0	0	0.425	0.575	0	80	56	1.68371e-06
-Multi-Family with 5+ Units	Fuel Oil	AK	2010s	0	0.0194175	0	0.980583	0	103	72.1	3.61033e-06
-Multi-Family with 5+ Units	Natural Gas	AK	2010s	0	0.374194	0	0.625806	0	465	325.5	5.26292e-06
-Multi-Family with 5+ Units	None	AK	2010s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 5+ Units	Other Fuel	AK	2010s	0	0	0	1	0	4	1.4	5.32813e-08
-Multi-Family with 5+ Units	Propane	AK	2010s	0	0	0	1	0	31	21.7	1.17073e-06
-Multi-Family with 5+ Units	Wood	AK	2010s	0	0.02	0	0.98	0	50	0	1.03778e-07
-Multi-Family with 5+ Units	Electricity	AK	<1940	0	0	0.105263	0.894737	0	19	13.3	3.86937e-07
-Multi-Family with 5+ Units	Fuel Oil	AK	<1940	0	0.148936	0	0.851064	0	47	32.9	2.67489e-06
-Multi-Family with 5+ Units	Natural Gas	AK	<1940	0	0.120482	0	0.879518	0	83	58.1	1.10738e-06
-Multi-Family with 5+ Units	None	AK	<1940	0.2	0.2	0.2	0.2	0.2	0	0	0
-Multi-Family with 5+ Units	Other Fuel	AK	<1940	0	0	0	1	0	4	0	2.20194e-09
-Multi-Family with 5+ Units	Propane	AK	<1940	0	0.0232558	0	0.976744	0	43	0	4.96899e-08
-Multi-Family with 5+ Units	Wood	AK	<1940	0	0.02	0	0.98	0	50	0	7.09509e-08
-Single-Family Attached	Electricity	AK	1940s	0	0.0296296	0.14963	0.820741	0	675	4	7.6468e-08
-Single-Family Attached	Fuel Oil	AK	1940s	0	0.166667	0	0.833333	0	18	18	4.16861e-07
-Single-Family Attached	Natural Gas	AK	1940s	0	0.181818	0	0.818182	0	11	11	2.83356e-08
-Single-Family Attached	None	AK	1940s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Attached	Other Fuel	AK	1940s	0	0.0243902	0	0.97561	0	41	0	2.34051e-08
-Single-Family Attached	Propane	AK	1940s	0	0.266667	0	0.733333	0	30	0	3.06569e-09
-Single-Family Attached	Wood	AK	1940s	0	0	0	1	0	225	2	1.9735e-08
-Single-Family Attached	Electricity	AK	1950s	0	0.0296296	0.14963	0.820741	0	675	4	2.14707e-07
-Single-Family Attached	Fuel Oil	AK	1950s	0	0.1875	0	0.8125	0	64	64	1.23064e-06
-Single-Family Attached	Natural Gas	AK	1950s	0	0.196078	0	0.803922	0	51	51	2.05818e-06
-Single-Family Attached	None	AK	1950s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Attached	Other Fuel	AK	1950s	0	0.0243902	0	0.97561	0	41	0	1.13002e-09
-Single-Family Attached	Propane	AK	1950s	0	0.266667	0	0.733333	0	30	1	4.35962e-09
-Single-Family Attached	Wood	AK	1950s	0	0	0	1	0	225	2	4.7917e-08
-Single-Family Attached	Electricity	AK	1960s	0	0	0	1	0	22	22	5.04675e-07
-Single-Family Attached	Fuel Oil	AK	1960s	0	0.101695	0	0.898305	0	59	59	2.6358e-06
-Single-Family Attached	Natural Gas	AK	1960s	0	0.206061	0	0.793939	0	165	165	2.94343e-06
-Single-Family Attached	None	AK	1960s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Attached	Other Fuel	AK	1960s	0	0.0243902	0	0.97561	0	41	3	1.56794e-07
-Single-Family Attached	Propane	AK	1960s	0	0.266667	0	0.733333	0	30	3	3.82985e-08
-Single-Family Attached	Wood	AK	1960s	0	0	0	1	0	225	3	1.45781e-07
-Single-Family Attached	Electricity	AK	1970s	0	0.00763359	0.0305344	0.961832	0	131	131	1.78664e-06
-Single-Family Attached	Fuel Oil	AK	1970s	0	0.0676692	0	0.932331	0	266	266	4.12275e-06
-Single-Family Attached	Natural Gas	AK	1970s	0	0.339181	0	0.660819	0	1368	1368	2.04455e-05
-Single-Family Attached	None	AK	1970s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Attached	Other Fuel	AK	1970s	0	0.0243902	0	0.97561	0	41	3	6.25213e-08
-Single-Family Attached	Propane	AK	1970s	0	0.266667	0	0.733333	0	30	9	7.67513e-08
-Single-Family Attached	Wood	AK	1970s	0	0	0	1	0	59	59	1.03349e-06
-Single-Family Attached	Electricity	AK	1980s	0	0.0614334	0.0307167	0.90785	0	293	293	4.20564e-06
-Single-Family Attached	Fuel Oil	AK	1980s	0	0.0693333	0	0.930667	0	375	375	1.53447e-05
-Single-Family Attached	Natural Gas	AK	1980s	0	0.493997	0	0.506003	0	2332	2332	3.39076e-05
-Single-Family Attached	None	AK	1980s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Attached	Other Fuel	AK	1980s	0	0.0243902	0	0.97561	0	41	1	5.5171e-08
-Single-Family Attached	Propane	AK	1980s	0	0.454545	0	0.545455	0	11	11	3.17588e-07
-Single-Family Attached	Wood	AK	1980s	0	0	0	1	0	146	146	2.74147e-06
-Single-Family Attached	Electricity	AK	1990s	0	0	0.166667	0.833333	0	30	30	8.84591e-07
-Single-Family Attached	Fuel Oil	AK	1990s	0	0.0437158	0	0.956284	0	183	183	5.88525e-06
-Single-Family Attached	Natural Gas	AK	1990s	0	0.29085	0	0.70915	0	306	306	1.37007e-05
-Single-Family Attached	None	AK	1990s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Attached	Other Fuel	AK	1990s	0	0.0243902	0	0.97561	0	41	1	2.22846e-07
-Single-Family Attached	Propane	AK	1990s	0	0.266667	0	0.733333	0	30	2	5.65444e-08
-Single-Family Attached	Wood	AK	1990s	0	0	0	1	0	225	6	5.74137e-07
-Single-Family Attached	Electricity	AK	2000s	0	0	0.105263	0.894737	0	19	19	8.98862e-07
-Single-Family Attached	Fuel Oil	AK	2000s	0	0	0	1	0	94	94	6.31351e-06
-Single-Family Attached	Natural Gas	AK	2000s	0	0.620332	0	0.379668	0	482	482	3.6036e-05
-Single-Family Attached	None	AK	2000s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Attached	Other Fuel	AK	2000s	0	0.0243902	0	0.97561	0	41	0	6.63353e-09
-Single-Family Attached	Propane	AK	2000s	0	0.266667	0	0.733333	0	30	0	5.8454e-08
-Single-Family Attached	Wood	AK	2000s	0	0	0	1	0	225	3	4.46569e-07
-Single-Family Attached	Electricity	AK	2010s	0	0	0.530612	0.469388	0	147	147	5.80748e-07
-Single-Family Attached	Fuel Oil	AK	2010s	0	0	0	1	0	37	37	9.39333e-07
-Single-Family Attached	Natural Gas	AK	2010s	0	0.708108	0	0.291892	0	1665	1665	5.13514e-06
-Single-Family Attached	None	AK	2010s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Attached	Other Fuel	AK	2010s	0	0	0	1	0	33	33	1.27047e-06
-Single-Family Attached	Propane	AK	2010s	0	0.266667	0	0.733333	0	30	1	5.96943e-08
-Single-Family Attached	Wood	AK	2010s	0	0	0	1	0	225	1	1.12749e-07
-Single-Family Attached	Electricity	AK	<1940	0	0.04	0.12	0.84	0	25	25	6.50587e-08
-Single-Family Attached	Fuel Oil	AK	<1940	0	0.142857	0	0.857143	0	35	35	1.95536e-07
-Single-Family Attached	Natural Gas	AK	<1940	0	0.495495	0	0.504505	0	111	111	5.6823e-07
-Single-Family Attached	None	AK	<1940	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Attached	Other Fuel	AK	<1940	0	0.0243902	0	0.97561	0	41	0	2.49625e-09
-Single-Family Attached	Propane	AK	<1940	0	0.266667	0	0.733333	0	30	3	2.63166e-09
-Single-Family Attached	Wood	AK	<1940	0	0	0	1	0	225	3	3.23429e-08
-Single-Family Detached	Electricity	AK	1940s	0	0.0117647	0.223529	0.764706	0	85	85	1.69161e-06
-Single-Family Detached	Fuel Oil	AK	1940s	0	0.292978	0	0.707022	0	413	413	1.19669e-05
-Single-Family Detached	Natural Gas	AK	1940s	0	0.346405	0	0.653595	0	306	306	4.7589e-06
-Single-Family Detached	None	AK	1940s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Detached	Other Fuel	AK	1940s	0	0.047619	0	0.952381	0	42	0	4.94468e-09
-Single-Family Detached	Propane	AK	1940s	0	0.263661	0	0.736339	0	732	6	1.29464e-07
-Single-Family Detached	Wood	AK	1940s	0	0.0294118	0	0.970588	0	68	68	2.18598e-06
-Single-Family Detached	Electricity	AK	1950s	0	0.0266667	0.226667	0.746667	0	150	150	3.01933e-06
-Single-Family Detached	Fuel Oil	AK	1950s	0	0.269127	0	0.730873	0	1111	1111	2.78164e-05
-Single-Family Detached	Natural Gas	AK	1950s	0	0.418192	0	0.581808	0	1748	1748	3.46614e-05
-Single-Family Detached	None	AK	1950s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Detached	Other Fuel	AK	1950s	0	0.047619	0	0.952381	0	42	5	1.25284e-07
-Single-Family Detached	Propane	AK	1950s	0	0.0833333	0	0.916667	0	12	12	3.02528e-07
-Single-Family Detached	Wood	AK	1950s	0	0	0	1	0	155	155	4.67907e-06
-Single-Family Detached	Electricity	AK	1960s	0	0.0216216	0.151351	0.827027	0	185	185	4.42814e-06
-Single-Family Detached	Fuel Oil	AK	1960s	0	0.145561	0	0.854439	0	1532	1532	4.08965e-05
-Single-Family Detached	Natural Gas	AK	1960s	0	0.16362	0	0.83638	0	3337	3337	5.64784e-05
-Single-Family Detached	None	AK	1960s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Detached	Other Fuel	AK	1960s	0	0.047619	0	0.952381	0	42	4	1.12724e-07
-Single-Family Detached	Propane	AK	1960s	0	0.0952381	0	0.904762	0	21	21	7.04838e-07
-Single-Family Detached	Wood	AK	1960s	0	0	0	1	0	332	332	9.14551e-06
-Single-Family Detached	Electricity	AK	1970s	0	0.035461	0.115839	0.8487	0	423	423	1.01494e-05
-Single-Family Detached	Fuel Oil	AK	1970s	0	0.151896	0	0.848104	0	4773	4773	0.000112171
-Single-Family Detached	Natural Gas	AK	1970s	0	0.216074	0	0.783926	0	8548	8548	0.00014972
-Single-Family Detached	None	AK	1970s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Detached	Other Fuel	AK	1970s	0	0.047619	0	0.952381	0	42	6	1.90208e-07
-Single-Family Detached	Propane	AK	1970s	0	0.215385	0	0.784615	0	65	65	1.53053e-06
-Single-Family Detached	Wood	AK	1970s	0	0.00262697	0	0.997373	0	1142	1142	2.51949e-05
-Single-Family Detached	Electricity	AK	1980s	0	0.0250896	0.11589	0.85902	0	837	837	2.36068e-05
-Single-Family Detached	Fuel Oil	AK	1980s	0	0.146744	0	0.853256	0	5513	5513	0.000139193
-Single-Family Detached	Natural Gas	AK	1980s	0	0.527933	0	0.472067	0	9111	9111	0.00016393
-Single-Family Detached	None	AK	1980s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Detached	Other Fuel	AK	1980s	0	0.047619	0	0.952381	0	42	9	2.45331e-07
-Single-Family Detached	Propane	AK	1980s	0	0.270073	0	0.729927	0	137	137	3.65388e-06
-Single-Family Detached	Wood	AK	1980s	0	0.00614912	0	0.993851	0	1301	1301	2.99037e-05
-Single-Family Detached	Electricity	AK	1990s	0	0.0422535	0.225352	0.732394	0	213	213	9.20921e-06
-Single-Family Detached	Fuel Oil	AK	1990s	0	0.0856783	0	0.914322	0	2381	2381	9.34304e-05
-Single-Family Detached	Natural Gas	AK	1990s	0	0.663979	0	0.336021	0	3101	3101	0.000104671
-Single-Family Detached	None	AK	1990s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Detached	Other Fuel	AK	1990s	0	0.047619	0	0.952381	0	42	3	1.27278e-07
-Single-Family Detached	Propane	AK	1990s	0	0.268293	0	0.731707	0	82	82	3.7412e-06
-Single-Family Detached	Wood	AK	1990s	0	0.00174216	0	0.998258	0	574	574	2.1028e-05
-Single-Family Detached	Electricity	AK	2000s	0	0.0243902	0.268293	0.707317	0	164	164	1.09223e-05
-Single-Family Detached	Fuel Oil	AK	2000s	0	0.0537153	0	0.946285	0	2234	2234	0.000101496
-Single-Family Detached	Natural Gas	AK	2000s	0	0.572159	0	0.427841	0	2543	2543	0.000134378
-Single-Family Detached	None	AK	2000s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Detached	Other Fuel	AK	2000s	0	0	0	1	0	11	11	5.17646e-07
-Single-Family Detached	Propane	AK	2000s	0	0.247788	0	0.752212	0	113	113	7.68731e-06
-Single-Family Detached	Wood	AK	2000s	0	0.00886918	0	0.991131	0	451	451	2.15877e-05
-Single-Family Detached	Electricity	AK	2010s	0	0.007109	0.390995	0.601896	0	422	422	5.20922e-06
-Single-Family Detached	Fuel Oil	AK	2010s	0	0.0334218	0	0.966578	0	1885	1885	1.83904e-05
-Single-Family Detached	Natural Gas	AK	2010s	0	0.505109	0	0.494891	0	7731	7731	3.50978e-05
-Single-Family Detached	None	AK	2010s	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Detached	Other Fuel	AK	2010s	0	0.047619	0	0.952381	0	42	1	1.84664e-08
-Single-Family Detached	Propane	AK	2010s	0	0.301115	0	0.698885	0	269	269	1.8462e-06
-Single-Family Detached	Wood	AK	2010s	0	0.00740741	0	0.992593	0	135	135	1.73224e-06
-Single-Family Detached	Electricity	AK	<1940	0	0.0254237	0.177966	0.79661	0	236	236	2.13781e-06
-Single-Family Detached	Fuel Oil	AK	<1940	0	0.189465	0	0.810535	0	1177	1177	2.01047e-05
-Single-Family Detached	Natural Gas	AK	<1940	0	0.437428	0	0.562572	0	871	871	2.52813e-06
-Single-Family Detached	None	AK	<1940	0.2	0.2	0.2	0.2	0.2	0	0	0
-Single-Family Detached	Other Fuel	AK	<1940	0	0.047619	0	0.952381	0	42	3	5.7293e-08
-Single-Family Detached	Propane	AK	<1940	0	0.259259	0	0.740741	0	27	27	2.42163e-07
-Single-Family Detached	Wood	AK	<1940	0	0.0104167	0	0.989583	0	192	192	2.26523e-06
+Mobile Home	Electricity	AK	1940s	0.0950003	0.179756	0.199096	0.526147	0	39	0	5.19763e-08
+Mobile Home	Fuel Oil	AK	1940s	0	0.709307	0	0.290693	0	11	0	7.18619e-07
+Mobile Home	Natural Gas	AK	1940s	0	0.89701	0	0.10299	0	137	0	4.88374e-08
+Mobile Home	None	AK	1940s	0	0	0	0	1	21	0	0
+Mobile Home	Other Fuel	AK	1940s	0	0.0292887	0	0.970711	0	14	0	1.95926e-09
+Mobile Home	Propane	AK	1940s	0	0.709307	0	0.290693	0	11	0	2.09001e-08
+Mobile Home	Wood	AK	1940s	0	0.0292887	0	0.970711	0	14	0	6.35693e-08
+Mobile Home	Electricity	AK	1950s	0.227094	0.208033	0.127123	0.43775	0	36	0	1.82068e-07
+Mobile Home	Fuel Oil	AK	1950s	0	0.572786	0	0.427214	0	31	0	1.45493e-06
+Mobile Home	Natural Gas	AK	1950s	0	0.846422	0	0.153578	0	135	802.902	1.29934e-06
+Mobile Home	None	AK	1950s	0	0	0	0	1	30	0	0
+Mobile Home	Other Fuel	AK	1950s	0	0	0	1	0	10	0	1.43719e-09
+Mobile Home	Propane	AK	1950s	0	0.572786	0	0.427214	0	31	0	1.0171e-07
+Mobile Home	Wood	AK	1950s	0	0	0	1	0	10	0	2.87202e-07
+Mobile Home	Electricity	AK	1960s	0.169355	0.20166	0.0557897	0.573196	0	37	0	5.7357e-07
+Mobile Home	Fuel Oil	AK	1960s	0	0.692169	0	0.307831	0	15	0	4.93268e-06
+Mobile Home	Natural Gas	AK	1960s	0	0.163098	0	0.836902	0	10	0	6.86908e-06
+Mobile Home	None	AK	1960s	0	0	0	0	1	35	0	0
+Mobile Home	Other Fuel	AK	1960s	0	0	0	1	0	12	0	3.14302e-09
+Mobile Home	Propane	AK	1960s	0	0.692169	0	0.307831	0	15	0	3.42149e-07
+Mobile Home	Wood	AK	1960s	0	0	0	1	0	12	0	9.27129e-07
+Mobile Home	Electricity	AK	1970s	0.313229	0.259588	0.0583193	0.368864	0	80	0	2.01923e-06
+Mobile Home	Fuel Oil	AK	1970s	0	0.196557	0	0.803443	0	13	1883.87	2.71199e-05
+Mobile Home	Natural Gas	AK	1970s	0	0.444095	0	0.555905	0	40	4694.51	2.60329e-05
+Mobile Home	None	AK	1970s	0	0	0	0	1	51	0	0
+Mobile Home	Other Fuel	AK	1970s	0	0	0	1	0	14	0	7.14751e-08
+Mobile Home	Propane	AK	1970s	0	0.470686	0	0.529314	0	23	931.675	8.99204e-07
+Mobile Home	Wood	AK	1970s	0	0	0	1	0	14	0	3.43021e-06
+Mobile Home	Electricity	AK	1980s	0.329161	0.41013	0.0214798	0.239229	0	45	0	9.28539e-07
+Mobile Home	Fuel Oil	AK	1980s	0	0.131715	0	0.868285	0	15	0	1.16164e-05
+Mobile Home	Natural Gas	AK	1980s	0	0.636695	0	0.363305	0	41	1281.42	1.10005e-05
+Mobile Home	None	AK	1980s	0	0	0	0	1	40	0	0
+Mobile Home	Other Fuel	AK	1980s	0	0	0	1	0	11	0	8.08351e-09
+Mobile Home	Propane	AK	1980s	0	0.751062	0	0.248938	0	22	0	4.50202e-07
+Mobile Home	Wood	AK	1980s	0	0	0	1	0	11	0	1.4052e-06
+Mobile Home	Electricity	AK	1990s	0.360685	0.313789	0.0115936	0.313933	0	51	0	3.03939e-07
+Mobile Home	Fuel Oil	AK	1990s	0	0.836653	0	0.163347	0	16	0	3.5948e-06
+Mobile Home	Natural Gas	AK	1990s	0	0.66177	0	0.33823	0	17	0	1.43979e-06
+Mobile Home	None	AK	1990s	0	0	0	0	1	37	0	0
+Mobile Home	Other Fuel	AK	1990s	0	0	0	1	0	10	0	5.31911e-09
+Mobile Home	Propane	AK	1990s	0	0.836653	0	0.163347	0	16	0	1.62847e-07
+Mobile Home	Wood	AK	1990s	0	0	0	1	0	10	0	5.32079e-07
+Mobile Home	Electricity	AK	2000s	0.331535	0.326132	0.0769314	0.265402	0	51	0	1.74268e-07
+Mobile Home	Fuel Oil	AK	2000s	0	0.194183	0	0.805817	0	17	0	2.12701e-06
+Mobile Home	Natural Gas	AK	2000s	0	0.64608	0	0.35392	0	29	0	1.32461e-06
+Mobile Home	None	AK	2000s	0	0	0	0	1	28	0	0
+Mobile Home	Other Fuel	AK	2000s	0	0	0	1	0	13	0	4.21965e-09
+Mobile Home	Propane	AK	2000s	0	0.850267	0	0.149733	0	24	0	8.15678e-08
+Mobile Home	Wood	AK	2000s	0	0	0	1	0	13	0	2.71137e-07
+Mobile Home	Electricity	AK	2010s	0.264721	0.463384	0.122897	0.148997	0	25	0	1.32013e-07
+Mobile Home	Fuel Oil	AK	2010s	0	0.621102	0	0.378898	0	10	944.437	1.33548e-06
+Mobile Home	Natural Gas	AK	2010s	0	0.639309	0	0.360691	0	19	967.128	2.07078e-06
+Mobile Home	None	AK	2010s	0	0	0	0	1	16	0	0
+Mobile Home	Other Fuel	AK	2010s	0	0	0	1	0	21	0	2.45696e-09
+Mobile Home	Propane	AK	2010s	0	0.621102	0	0.378898	0	10	0	8.72785e-08
+Mobile Home	Wood	AK	2010s	0	0	0	1	0	21	0	2.1181e-07
+Mobile Home	Electricity	AK	<1940	0.0950003	0.179756	0.199096	0.526147	0	39	0	3.67075e-08
+Mobile Home	Fuel Oil	AK	<1940	0	0.709307	0	0.290693	0	11	0	3.24113e-07
+Mobile Home	Natural Gas	AK	<1940	0	0.89701	0	0.10299	0	137	0	1.77671e-07
+Mobile Home	None	AK	<1940	0	0	0	0	1	21	0	0
+Mobile Home	Other Fuel	AK	<1940	0	0.0292887	0	0.970711	0	14	0	2.90251e-10
+Mobile Home	Propane	AK	<1940	0	0.709307	0	0.290693	0	11	0	2.4496e-08
+Mobile Home	Wood	AK	<1940	0	0.0292887	0	0.970711	0	14	0	6.64666e-08
+Multi-Family with 2 - 4 Units	Electricity	AK	1940s	0	0.0920464	0	0.907954	0	27	287.439	3.19228e-07
+Multi-Family with 2 - 4 Units	Fuel Oil	AK	1940s	0	0.397426	0	0.602574	0	12	0	2.42893e-06
+Multi-Family with 2 - 4 Units	Natural Gas	AK	1940s	0	0.473764	0	0.526236	0	17	0	1.55515e-06
+Multi-Family with 2 - 4 Units	None	AK	1940s	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Other Fuel	AK	1940s	0	0.290043	0	0.709957	0	75	0	1.67108e-09
+Multi-Family with 2 - 4 Units	Propane	AK	1940s	0	0.397426	0	0.602574	0	12	0	5.63977e-08
+Multi-Family with 2 - 4 Units	Wood	AK	1940s	0	0.290043	0	0.709957	0	75	0	8.13593e-08
+Multi-Family with 2 - 4 Units	Electricity	AK	1950s	0	0.315381	0	0.684619	0	11	1157.15	1.33685e-06
+Multi-Family with 2 - 4 Units	Fuel Oil	AK	1950s	0	0.397426	0	0.602574	0	12	0	7.88186e-06
+Multi-Family with 2 - 4 Units	Natural Gas	AK	1950s	0	0.564095	0	0.435905	0	16	0	9.76066e-06
+Multi-Family with 2 - 4 Units	None	AK	1950s	0	0	0	0	1	20	0	0
+Multi-Family with 2 - 4 Units	Other Fuel	AK	1950s	0	0.290043	0	0.709957	0	75	0	6.88773e-09
+Multi-Family with 2 - 4 Units	Propane	AK	1950s	0	0.397426	0	0.602574	0	12	0	2.19746e-07
+Multi-Family with 2 - 4 Units	Wood	AK	1950s	0	0.290043	0	0.709957	0	75	0	3.97393e-07
+Multi-Family with 2 - 4 Units	Electricity	AK	1960s	0.114439	0.286919	0	0.598641	0	29	2134.45	6.63023e-07
+Multi-Family with 2 - 4 Units	Fuel Oil	AK	1960s	0	0.397426	0	0.602574	0	12	1078.84	6.05732e-06
+Multi-Family with 2 - 4 Units	Natural Gas	AK	1960s	0	0.652987	0	0.347013	0	15	1005.49	1.6424e-05
+Multi-Family with 2 - 4 Units	None	AK	1960s	0	0	0	0	1	21	0	0
+Multi-Family with 2 - 4 Units	Other Fuel	AK	1960s	0	0.294574	0	0.705426	0	38	0	7.49262e-08
+Multi-Family with 2 - 4 Units	Propane	AK	1960s	0	0.397426	0	0.602574	0	12	0	1.54862e-07
+Multi-Family with 2 - 4 Units	Wood	AK	1960s	0	0.294574	0	0.705426	0	38	0	6.83925e-07
+Multi-Family with 2 - 4 Units	Electricity	AK	1970s	0.0700183	0.191436	0.0438963	0.694649	0	52	903.291	2.88094e-06
+Multi-Family with 2 - 4 Units	Fuel Oil	AK	1970s	0	0.397426	0	0.602574	0	12	0	2.06219e-05
+Multi-Family with 2 - 4 Units	Natural Gas	AK	1970s	0	0.731069	0	0.268931	0	28	3375.84	4.89606e-05
+Multi-Family with 2 - 4 Units	None	AK	1970s	0	0	0	0	1	36	0	0
+Multi-Family with 2 - 4 Units	Other Fuel	AK	1970s	0	0.294574	0	0.705426	0	38	0	1.2654e-08
+Multi-Family with 2 - 4 Units	Propane	AK	1970s	0	0.397426	0	0.602574	0	12	0	4.28421e-07
+Multi-Family with 2 - 4 Units	Wood	AK	1970s	0	0.294574	0	0.705426	0	38	0	1.89626e-06
+Multi-Family with 2 - 4 Units	Electricity	AK	1980s	0.0759909	0.236935	0.0765486	0.610525	0	38	1094.82	3.1561e-06
+Multi-Family with 2 - 4 Units	Fuel Oil	AK	1980s	0	0.397426	0	0.602574	0	12	2159.18	1.82574e-05
+Multi-Family with 2 - 4 Units	Natural Gas	AK	1980s	0	0.716403	0	0.283597	0	28	6785.48	5.29758e-05
+Multi-Family with 2 - 4 Units	None	AK	1980s	0	0	0	0	1	17	0	0
+Multi-Family with 2 - 4 Units	Other Fuel	AK	1980s	0	0.411695	0	0.588305	0	24	0	1.33672e-08
+Multi-Family with 2 - 4 Units	Propane	AK	1980s	0	0.397426	0	0.602574	0	12	0	3.25861e-07
+Multi-Family with 2 - 4 Units	Wood	AK	1980s	0	0.411695	0	0.588305	0	24	0	2.52195e-06
+Multi-Family with 2 - 4 Units	Electricity	AK	1990s	0.124713	0.159857	0.0385467	0.676883	0	27	987.261	1.46926e-06
+Multi-Family with 2 - 4 Units	Fuel Oil	AK	1990s	0	0.397426	0	0.602574	0	12	0	1.01479e-05
+Multi-Family with 2 - 4 Units	Natural Gas	AK	1990s	0	0.643499	0	0.356501	0	12	969.398	1.73931e-05
+Multi-Family with 2 - 4 Units	None	AK	1990s	0	0	0	0	1	22	0	0
+Multi-Family with 2 - 4 Units	Other Fuel	AK	1990s	0	0.411695	0	0.588305	0	24	0	1.43794e-07
+Multi-Family with 2 - 4 Units	Propane	AK	1990s	0	0.397426	0	0.602574	0	12	0	4.10883e-07
+Multi-Family with 2 - 4 Units	Wood	AK	1990s	0	0.411695	0	0.588305	0	24	0	4.66839e-07
+Multi-Family with 2 - 4 Units	Electricity	AK	2000s	0.186567	0.138732	0.0312814	0.64342	0	30	0	1.43712e-06
+Multi-Family with 2 - 4 Units	Fuel Oil	AK	2000s	0	0.397426	0	0.602574	0	12	0	1.55494e-05
+Multi-Family with 2 - 4 Units	Natural Gas	AK	2000s	0	0.834307	0	0.165693	0	17	1113.17	1.80905e-05
+Multi-Family with 2 - 4 Units	None	AK	2000s	0	0	0	0	1	18	0	0
+Multi-Family with 2 - 4 Units	Other Fuel	AK	2000s	0	0.468141	0	0.531859	0	21	0	1.08724e-08
+Multi-Family with 2 - 4 Units	Propane	AK	2000s	0	0.397426	0	0.602574	0	12	0	2.76402e-07
+Multi-Family with 2 - 4 Units	Wood	AK	2000s	0	0.468141	0	0.531859	0	21	0	3.42029e-07
+Multi-Family with 2 - 4 Units	Electricity	AK	2010s	0.159452	0.173925	0.0456759	0.620947	0	43	0	2.23842e-06
+Multi-Family with 2 - 4 Units	Fuel Oil	AK	2010s	0	0.397426	0	0.602574	0	12	898.59	4.7069e-06
+Multi-Family with 2 - 4 Units	Natural Gas	AK	2010s	0	0.738747	0	0.261253	0	19	1052.13	8.47603e-06
+Multi-Family with 2 - 4 Units	None	AK	2010s	0	0	0	0	1	13	0	0
+Multi-Family with 2 - 4 Units	Other Fuel	AK	2010s	0	0.468141	0	0.531859	0	21	0	6.95138e-08
+Multi-Family with 2 - 4 Units	Propane	AK	2010s	0	0.397426	0	0.602574	0	12	0	1.53183e-06
+Multi-Family with 2 - 4 Units	Wood	AK	2010s	0	0.468141	0	0.531859	0	21	0	1.28706e-07
+Multi-Family with 2 - 4 Units	Electricity	AK	<1940	0	0.0920464	0	0.907954	0	27	742.807	4.70606e-07
+Multi-Family with 2 - 4 Units	Fuel Oil	AK	<1940	0	0.397426	0	0.602574	0	12	0	3.15483e-06
+Multi-Family with 2 - 4 Units	Natural Gas	AK	<1940	0	0.473764	0	0.526236	0	17	0	2.39042e-06
+Multi-Family with 2 - 4 Units	None	AK	<1940	0	0	0	0	1	10	0	0
+Multi-Family with 2 - 4 Units	Other Fuel	AK	<1940	0	0.290043	0	0.709957	0	75	0	2.55349e-09
+Multi-Family with 2 - 4 Units	Propane	AK	<1940	0	0.397426	0	0.602574	0	12	0	6.61192e-08
+Multi-Family with 2 - 4 Units	Wood	AK	<1940	0	0.290043	0	0.709957	0	75	0	8.6515e-08
+Multi-Family with 5+ Units	Electricity	AK	1940s	0	0.0920464	0	0.907954	0	27	0	2.7996e-07
+Multi-Family with 5+ Units	Fuel Oil	AK	1940s	0	0.397426	0	0.602574	0	12	0	2.09846e-06
+Multi-Family with 5+ Units	Natural Gas	AK	1940s	0	0.473764	0	0.526236	0	17	0	2.45561e-06
+Multi-Family with 5+ Units	None	AK	1940s	0	0	0	0	1	10	0	0
+Multi-Family with 5+ Units	Other Fuel	AK	1940s	0	0.290043	0	0.709957	0	75	0	1.5752e-09
+Multi-Family with 5+ Units	Propane	AK	1940s	0	0.397426	0	0.602574	0	12	0	4.34711e-08
+Multi-Family with 5+ Units	Wood	AK	1940s	0	0.290043	0	0.709957	0	75	0	6.69486e-08
+Multi-Family with 5+ Units	Electricity	AK	1950s	0	0.315381	0	0.684619	0	11	2298.27	1.11606e-06
+Multi-Family with 5+ Units	Fuel Oil	AK	1950s	0	0.397426	0	0.602574	0	12	1104.88	6.46055e-06
+Multi-Family with 5+ Units	Natural Gas	AK	1950s	0	0.564095	0	0.435905	0	16	2065.89	5.78901e-06
+Multi-Family with 5+ Units	None	AK	1950s	0	0	0	0	1	20	0	0
+Multi-Family with 5+ Units	Other Fuel	AK	1950s	0	0.290043	0	0.709957	0	75	0	5.92128e-09
+Multi-Family with 5+ Units	Propane	AK	1950s	0	0.397426	0	0.602574	0	12	0	1.36161e-07
+Multi-Family with 5+ Units	Wood	AK	1950s	0	0.290043	0	0.709957	0	75	0	2.91956e-07
+Multi-Family with 5+ Units	Electricity	AK	1960s	0.114439	0.286919	0	0.598641	0	29	2510.94	7.92743e-07
+Multi-Family with 5+ Units	Fuel Oil	AK	1960s	0	0.397426	0	0.602574	0	12	0	8.00944e-06
+Multi-Family with 5+ Units	Natural Gas	AK	1960s	0	0.652987	0	0.347013	0	15	0	1.89837e-05
+Multi-Family with 5+ Units	None	AK	1960s	0	0	0	0	1	21	0	0
+Multi-Family with 5+ Units	Other Fuel	AK	1960s	0	0.294574	0	0.705426	0	38	0	1.11961e-07
+Multi-Family with 5+ Units	Propane	AK	1960s	0	0.397426	0	0.602574	0	12	0	1.72479e-07
+Multi-Family with 5+ Units	Wood	AK	1960s	0	0.294574	0	0.705426	0	38	0	8.02566e-07
+Multi-Family with 5+ Units	Electricity	AK	1970s	0.0700183	0.191436	0.0438963	0.694649	0	52	4302.8	2.75744e-06
+Multi-Family with 5+ Units	Fuel Oil	AK	1970s	0	0.397426	0	0.602574	0	12	0	2.3574e-05
+Multi-Family with 5+ Units	Natural Gas	AK	1970s	0	0.731069	0	0.268931	0	28	5932.12	4.89903e-05
+Multi-Family with 5+ Units	None	AK	1970s	0	0	0	0	1	36	0	0
+Multi-Family with 5+ Units	Other Fuel	AK	1970s	0	0.294574	0	0.705426	0	38	0	1.67865e-08
+Multi-Family with 5+ Units	Propane	AK	1970s	0	0.397426	0	0.602574	0	12	0	3.66078e-07
+Multi-Family with 5+ Units	Wood	AK	1970s	0	0.294574	0	0.705426	0	38	0	2.00341e-06
+Multi-Family with 5+ Units	Electricity	AK	1980s	0.0759909	0.236935	0.0765486	0.610525	0	38	4812.21	3.2246e-06
+Multi-Family with 5+ Units	Fuel Oil	AK	1980s	0	0.397426	0	0.602574	0	12	1184.54	1.80968e-05
+Multi-Family with 5+ Units	Natural Gas	AK	1980s	0	0.716403	0	0.283597	0	28	1145.49	5.4974e-05
+Multi-Family with 5+ Units	None	AK	1980s	0	0	0	0	1	17	0	0
+Multi-Family with 5+ Units	Other Fuel	AK	1980s	0	0.411695	0	0.588305	0	24	0	1.48782e-08
+Multi-Family with 5+ Units	Propane	AK	1980s	0	0.397426	0	0.602574	0	12	0	2.48478e-07
+Multi-Family with 5+ Units	Wood	AK	1980s	0	0.411695	0	0.588305	0	24	0	2.47532e-06
+Multi-Family with 5+ Units	Electricity	AK	1990s	0.124713	0.159857	0.0385467	0.676883	0	27	1098.22	1.10998e-06
+Multi-Family with 5+ Units	Fuel Oil	AK	1990s	0	0.397426	0	0.602574	0	12	0	7.68378e-06
+Multi-Family with 5+ Units	Natural Gas	AK	1990s	0	0.643499	0	0.356501	0	12	0	2.0667e-05
+Multi-Family with 5+ Units	None	AK	1990s	0	0	0	0	1	22	0	0
+Multi-Family with 5+ Units	Other Fuel	AK	1990s	0	0.411695	0	0.588305	0	24	0	9.4955e-08
+Multi-Family with 5+ Units	Propane	AK	1990s	0	0.397426	0	0.602574	0	12	0	3.18997e-07
+Multi-Family with 5+ Units	Wood	AK	1990s	0	0.411695	0	0.588305	0	24	0	3.53043e-07
+Multi-Family with 5+ Units	Electricity	AK	2000s	0.186567	0.138732	0.0312814	0.64342	0	30	0	6.93727e-07
+Multi-Family with 5+ Units	Fuel Oil	AK	2000s	0	0.397426	0	0.602574	0	12	0	7.21894e-06
+Multi-Family with 5+ Units	Natural Gas	AK	2000s	0	0.834307	0	0.165693	0	17	1938.94	1.09826e-05
+Multi-Family with 5+ Units	None	AK	2000s	0	0	0	0	1	18	1070.2	0
+Multi-Family with 5+ Units	Other Fuel	AK	2000s	0	0.468141	0	0.531859	0	21	0	4.615e-09
+Multi-Family with 5+ Units	Propane	AK	2000s	0	0.397426	0	0.602574	0	12	0	1.59231e-07
+Multi-Family with 5+ Units	Wood	AK	2000s	0	0.468141	0	0.531859	0	21	0	1.81958e-07
+Multi-Family with 5+ Units	Electricity	AK	2010s	0.159452	0.173925	0.0456759	0.620947	0	43	848.57	1.68371e-06
+Multi-Family with 5+ Units	Fuel Oil	AK	2010s	0	0.397426	0	0.602574	0	12	0	3.61033e-06
+Multi-Family with 5+ Units	Natural Gas	AK	2010s	0	0.738747	0	0.261253	0	19	995.93	5.26292e-06
+Multi-Family with 5+ Units	None	AK	2010s	0	0	0	0	1	13	915.055	0
+Multi-Family with 5+ Units	Other Fuel	AK	2010s	0	0.468141	0	0.531859	0	21	0	5.32813e-08
+Multi-Family with 5+ Units	Propane	AK	2010s	0	0.397426	0	0.602574	0	12	0	1.17073e-06
+Multi-Family with 5+ Units	Wood	AK	2010s	0	0.468141	0	0.531859	0	21	0	1.03778e-07
+Multi-Family with 5+ Units	Electricity	AK	<1940	0	0.0920464	0	0.907954	0	27	0	3.86937e-07
+Multi-Family with 5+ Units	Fuel Oil	AK	<1940	0	0.397426	0	0.602574	0	12	0	2.67489e-06
+Multi-Family with 5+ Units	Natural Gas	AK	<1940	0	0.473764	0	0.526236	0	17	0	1.10738e-06
+Multi-Family with 5+ Units	None	AK	<1940	0	0	0	0	1	10	0	0
+Multi-Family with 5+ Units	Other Fuel	AK	<1940	0	0.290043	0	0.709957	0	75	0	2.20194e-09
+Multi-Family with 5+ Units	Propane	AK	<1940	0	0.397426	0	0.602574	0	12	0	4.96899e-08
+Multi-Family with 5+ Units	Wood	AK	<1940	0	0.290043	0	0.709957	0	75	0	7.09509e-08
+Single-Family Attached	Electricity	AK	1940s	0.0950003	0.179756	0.199096	0.526147	0	39	0	7.6468e-08
+Single-Family Attached	Fuel Oil	AK	1940s	0	0.709307	0	0.290693	0	11	0	4.16861e-07
+Single-Family Attached	Natural Gas	AK	1940s	0	0.89701	0	0.10299	0	137	0	2.83356e-08
+Single-Family Attached	None	AK	1940s	0	0	0	0	1	21	0	0
+Single-Family Attached	Other Fuel	AK	1940s	0	0.0292887	0	0.970711	0	14	0	2.34051e-08
+Single-Family Attached	Propane	AK	1940s	0	0.709307	0	0.290693	0	11	0	3.06569e-09
+Single-Family Attached	Wood	AK	1940s	0	0.0292887	0	0.970711	0	14	0	1.9735e-08
+Single-Family Attached	Electricity	AK	1950s	0.227094	0.208033	0.127123	0.43775	0	36	0	2.14707e-07
+Single-Family Attached	Fuel Oil	AK	1950s	0	0.572786	0	0.427214	0	31	608.423	1.23064e-06
+Single-Family Attached	Natural Gas	AK	1950s	0	0.846422	0	0.153578	0	135	0	2.05818e-06
+Single-Family Attached	None	AK	1950s	0	0	0	0	1	30	0	0
+Single-Family Attached	Other Fuel	AK	1950s	0	0	0	1	0	10	0	1.13002e-09
+Single-Family Attached	Propane	AK	1950s	0	0.572786	0	0.427214	0	31	0	4.35962e-09
+Single-Family Attached	Wood	AK	1950s	0	0	0	1	0	10	0	4.7917e-08
+Single-Family Attached	Electricity	AK	1960s	0.169355	0.20166	0.0557897	0.573196	0	37	0	5.04675e-07
+Single-Family Attached	Fuel Oil	AK	1960s	0	0.692169	0	0.307831	0	15	0	2.6358e-06
+Single-Family Attached	Natural Gas	AK	1960s	0	0.163098	0	0.836902	0	10	530.718	2.94343e-06
+Single-Family Attached	None	AK	1960s	0	0	0	0	1	35	0	0
+Single-Family Attached	Other Fuel	AK	1960s	0	0	0	1	0	12	0	1.56794e-07
+Single-Family Attached	Propane	AK	1960s	0	0.692169	0	0.307831	0	15	0	3.82985e-08
+Single-Family Attached	Wood	AK	1960s	0	0	0	1	0	12	0	1.45781e-07
+Single-Family Attached	Electricity	AK	1970s	0.313229	0.259588	0.0583193	0.368864	0	80	1145.67	1.78664e-06
+Single-Family Attached	Fuel Oil	AK	1970s	0	0.139271	0	0.860729	0	11	497.425	4.12275e-06
+Single-Family Attached	Natural Gas	AK	1970s	0	0.630747	0	0.369253	0	11	5994.74	2.04455e-05
+Single-Family Attached	None	AK	1970s	0	0	0	0	1	51	0	0
+Single-Family Attached	Other Fuel	AK	1970s	0	0	0	1	0	14	0	6.25213e-08
+Single-Family Attached	Propane	AK	1970s	0	0.470686	0	0.529314	0	23	0	7.67513e-08
+Single-Family Attached	Wood	AK	1970s	0	0	0	1	0	14	0	1.03349e-06
+Single-Family Attached	Electricity	AK	1980s	0.329161	0.41013	0.0214798	0.239229	0	45	1082.85	4.20564e-06
+Single-Family Attached	Fuel Oil	AK	1980s	0	0.131715	0	0.868285	0	15	2496.47	1.53447e-05
+Single-Family Attached	Natural Gas	AK	1980s	0	0.742218	0	0.257782	0	11	6042.66	3.39076e-05
+Single-Family Attached	None	AK	1980s	0	0	0	0	1	40	673.015	0
+Single-Family Attached	Other Fuel	AK	1980s	0	0	0	1	0	11	0	5.5171e-08
+Single-Family Attached	Propane	AK	1980s	0	0.751062	0	0.248938	0	22	0	3.17588e-07
+Single-Family Attached	Wood	AK	1980s	0	0	0	1	0	11	0	2.74147e-06
+Single-Family Attached	Electricity	AK	1990s	0.360685	0.313789	0.0115936	0.313933	0	51	479.764	8.84591e-07
+Single-Family Attached	Fuel Oil	AK	1990s	0	0.836653	0	0.163347	0	16	0	5.88525e-06
+Single-Family Attached	Natural Gas	AK	1990s	0	0.66177	0	0.33823	0	17	1337.59	1.37007e-05
+Single-Family Attached	None	AK	1990s	0	0	0	0	1	37	0	0
+Single-Family Attached	Other Fuel	AK	1990s	0	0	0	1	0	10	0	2.22846e-07
+Single-Family Attached	Propane	AK	1990s	0	0.836653	0	0.163347	0	16	0	5.65444e-08
+Single-Family Attached	Wood	AK	1990s	0	0	0	1	0	10	0	5.74137e-07
+Single-Family Attached	Electricity	AK	2000s	0.331535	0.326132	0.0769314	0.265402	0	51	1092.84	8.98862e-07
+Single-Family Attached	Fuel Oil	AK	2000s	0	0.194183	0	0.805817	0	17	1051.4	6.31351e-06
+Single-Family Attached	Natural Gas	AK	2000s	0	0.64608	0	0.35392	0	29	1975.31	3.6036e-05
+Single-Family Attached	None	AK	2000s	0	0	0	0	1	28	0	0
+Single-Family Attached	Other Fuel	AK	2000s	0	0	0	1	0	13	0	6.63353e-09
+Single-Family Attached	Propane	AK	2000s	0	0.850267	0	0.149733	0	24	0	5.8454e-08
+Single-Family Attached	Wood	AK	2000s	0	0	0	1	0	13	0	4.46569e-07
+Single-Family Attached	Electricity	AK	2010s	0.264721	0.463384	0.122897	0.148997	0	25	1416.53	5.80748e-07
+Single-Family Attached	Fuel Oil	AK	2010s	0	0.621102	0	0.378898	0	10	0	9.39333e-07
+Single-Family Attached	Natural Gas	AK	2010s	0	0.60903	0	0.39097	0	18	2163.6	5.13514e-06
+Single-Family Attached	None	AK	2010s	0	0	0	0	1	16	0	0
+Single-Family Attached	Other Fuel	AK	2010s	0	0	0	1	0	21	0	1.27047e-06
+Single-Family Attached	Propane	AK	2010s	0	0.621102	0	0.378898	0	10	0	5.96943e-08
+Single-Family Attached	Wood	AK	2010s	0	0	0	1	0	21	0	1.12749e-07
+Single-Family Attached	Electricity	AK	<1940	0.0950003	0.179756	0.199096	0.526147	0	39	0	6.50587e-08
+Single-Family Attached	Fuel Oil	AK	<1940	0	0.709307	0	0.290693	0	11	0	1.95536e-07
+Single-Family Attached	Natural Gas	AK	<1940	0	0.89701	0	0.10299	0	137	0	5.6823e-07
+Single-Family Attached	None	AK	<1940	0	0	0	0	1	21	0	0
+Single-Family Attached	Other Fuel	AK	<1940	0	0.0292887	0	0.970711	0	14	0	2.49625e-09
+Single-Family Attached	Propane	AK	<1940	0	0.709307	0	0.290693	0	11	0	2.63166e-09
+Single-Family Attached	Wood	AK	<1940	0	0.0292887	0	0.970711	0	14	0	3.23429e-08
+Single-Family Detached	Electricity	AK	1940s	0.0950003	0.179756	0.199096	0.526147	0	39	295.22	1.69161e-06
+Single-Family Detached	Fuel Oil	AK	1940s	0	0.709307	0	0.290693	0	11	2014.14	1.19669e-05
+Single-Family Detached	Natural Gas	AK	1940s	0	0.89701	0	0.10299	0	137	0	4.7589e-06
+Single-Family Detached	None	AK	1940s	0	0	0	0	1	21	0	0
+Single-Family Detached	Other Fuel	AK	1940s	0	0.0292887	0	0.970711	0	14	0	4.94468e-09
+Single-Family Detached	Propane	AK	1940s	0	0.709307	0	0.290693	0	11	0	1.29464e-07
+Single-Family Detached	Wood	AK	1940s	0	0.0292887	0	0.970711	0	14	0	2.18598e-06
+Single-Family Detached	Electricity	AK	1950s	0.227094	0.208033	0.127123	0.43775	0	36	0	3.01933e-06
+Single-Family Detached	Fuel Oil	AK	1950s	0	0.572786	0	0.427214	0	31	1766.37	2.78164e-05
+Single-Family Detached	Natural Gas	AK	1950s	0	0.846422	0	0.153578	0	135	4096.81	3.46614e-05
+Single-Family Detached	None	AK	1950s	0	0	0	0	1	30	0	0
+Single-Family Detached	Other Fuel	AK	1950s	0	0	0	1	0	10	0	1.25284e-07
+Single-Family Detached	Propane	AK	1950s	0	0.572786	0	0.427214	0	31	0	3.02528e-07
+Single-Family Detached	Wood	AK	1950s	0	0	0	1	0	10	0	4.67907e-06
+Single-Family Detached	Electricity	AK	1960s	0.169355	0.20166	0.0557897	0.573196	0	37	0	4.42814e-06
+Single-Family Detached	Fuel Oil	AK	1960s	0	0.692169	0	0.307831	0	15	1744.91	4.08965e-05
+Single-Family Detached	Natural Gas	AK	1960s	0	0.163098	0	0.836902	0	10	7585.55	5.64784e-05
+Single-Family Detached	None	AK	1960s	0	0	0	0	1	35	0	0
+Single-Family Detached	Other Fuel	AK	1960s	0	0	0	1	0	12	0	1.12724e-07
+Single-Family Detached	Propane	AK	1960s	0	0.692169	0	0.307831	0	15	0	7.04838e-07
+Single-Family Detached	Wood	AK	1960s	0	0	0	1	0	12	0	9.14551e-06
+Single-Family Detached	Electricity	AK	1970s	0.313229	0.259588	0.0583193	0.368864	0	80	817.673	1.01494e-05
+Single-Family Detached	Fuel Oil	AK	1970s	0	0.146578	0	0.853422	0	10	9481.46	0.000112171
+Single-Family Detached	Natural Gas	AK	1970s	0	0.243328	0	0.756672	0	24	18571.9	0.00014972
+Single-Family Detached	None	AK	1970s	0	0	0	0	1	51	0	0
+Single-Family Detached	Other Fuel	AK	1970s	0	0	0	1	0	14	0	1.90208e-07
+Single-Family Detached	Propane	AK	1970s	0	0.470686	0	0.529314	0	23	1398.22	1.53053e-06
+Single-Family Detached	Wood	AK	1970s	0	0	0	1	0	14	0	2.51949e-05
+Single-Family Detached	Electricity	AK	1980s	0.329161	0.41013	0.0214798	0.239229	0	45	876.867	2.36068e-05
+Single-Family Detached	Fuel Oil	AK	1980s	0	0.167841	0	0.832159	0	11	9102.07	0.000139193
+Single-Family Detached	Natural Gas	AK	1980s	0	0.588655	0	0.411345	0	29	22963.7	0.00016393
+Single-Family Detached	None	AK	1980s	0	0	0	0	1	40	0	0
+Single-Family Detached	Other Fuel	AK	1980s	0	0	0	1	0	11	0	2.45331e-07
+Single-Family Detached	Propane	AK	1980s	0	0.751062	0	0.248938	0	22	0	3.65388e-06
+Single-Family Detached	Wood	AK	1980s	0	0	0	1	0	11	3057.45	2.99037e-05
+Single-Family Detached	Electricity	AK	1990s	0.360685	0.313789	0.0115936	0.313933	0	51	0	9.20921e-06
+Single-Family Detached	Fuel Oil	AK	1990s	0	0.836653	0	0.163347	0	16	6131.61	9.34304e-05
+Single-Family Detached	Natural Gas	AK	1990s	0	0.7313	0	0.2687	0	15	12731	0.000104671
+Single-Family Detached	None	AK	1990s	0	0	0	0	1	37	0	0
+Single-Family Detached	Other Fuel	AK	1990s	0	0	0	1	0	10	0	1.27278e-07
+Single-Family Detached	Propane	AK	1990s	0	0.836653	0	0.163347	0	16	858.051	3.7412e-06
+Single-Family Detached	Wood	AK	1990s	0	0	0	1	0	10	3292.92	2.1028e-05
+Single-Family Detached	Electricity	AK	2000s	0.331535	0.326132	0.0769314	0.265402	0	51	862.757	1.09223e-05
+Single-Family Detached	Fuel Oil	AK	2000s	0	0.123287	0	0.876713	0	15	11950.4	0.000101496
+Single-Family Detached	Natural Gas	AK	2000s	0	0.606985	0	0.393015	0	25	17882.4	0.000134378
+Single-Family Detached	None	AK	2000s	0	0	0	0	1	28	0	0
+Single-Family Detached	Other Fuel	AK	2000s	0	0	0	1	0	13	0	5.17646e-07
+Single-Family Detached	Propane	AK	2000s	0	0.850267	0	0.149733	0	24	0	7.68731e-06
+Single-Family Detached	Wood	AK	2000s	0	0	0	1	0	13	3467.16	2.15877e-05
+Single-Family Detached	Electricity	AK	2010s	0.264721	0.463384	0.122897	0.148997	0	25	595.645	5.20922e-06
+Single-Family Detached	Fuel Oil	AK	2010s	0	0.621102	0	0.378898	0	10	0	1.83904e-05
+Single-Family Detached	Natural Gas	AK	2010s	0	0.646773	0	0.353227	0	14	9356.79	3.50978e-05
+Single-Family Detached	None	AK	2010s	0	0	0	0	1	16	0	0
+Single-Family Detached	Other Fuel	AK	2010s	0	0	0	1	0	21	0	1.84664e-08
+Single-Family Detached	Propane	AK	2010s	0	0.621102	0	0.378898	0	10	1517.83	1.8462e-06
+Single-Family Detached	Wood	AK	2010s	0	0	0	1	0	21	741.797	1.73224e-06
+Single-Family Detached	Electricity	AK	<1940	0.0950003	0.179756	0.199096	0.526147	0	39	762.917	2.13781e-06
+Single-Family Detached	Fuel Oil	AK	<1940	0	0.709307	0	0.290693	0	11	5204.99	2.01047e-05
+Single-Family Detached	Natural Gas	AK	<1940	0	0.89701	0	0.10299	0	137	0	2.52813e-06
+Single-Family Detached	None	AK	<1940	0	0	0	0	1	21	0	0
+Single-Family Detached	Other Fuel	AK	<1940	0	0.0292887	0	0.970711	0	14	0	5.7293e-08
+Single-Family Detached	Propane	AK	<1940	0	0.709307	0	0.290693	0	11	0	2.42163e-07
+Single-Family Detached	Wood	AK	<1940	0	0.0292887	0	0.970711	0	14	0	2.26523e-06
 Mobile Home	Electricity	AL	1940s	0.495572	0.23818	0	0.266248	0	47	0	5.26423e-06
 Mobile Home	Fuel Oil	AL	1940s	0	0.577636	0	0.422364	0	12	0	0
 Mobile Home	Natural Gas	AL	1940s	0	0.897554	0	0.102446	0	72	0	1.23864e-07
@@ -16064,10 +16064,8 @@ Single-Family Detached	None	WY	<1940	0	0	0	0	1	23	0	7.9827e-07
 Single-Family Detached	Other Fuel	WY	<1940	0	0.0292887	0	0.970711	0	14	0	2.5951e-06
 Single-Family Detached	Propane	WY	<1940	0	0.5195	0	0.4805	0	11	1926.11	1.904e-05
 Single-Family Detached	Wood	WY	<1940	0	0.0292887	0	0.970711	0	14	945.182	1.10728e-05
-# Created by: sources\recs\recs2020\tsv_maker.py and sources\aris\tsv_maker.py
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence and type of the primary heating system in the dwelling unit.
-# Source: U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+# Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 # Assumption: Due to low sample sizes, fallback rules applied with lumping of
 # Assumption: 1) Heating fuel lump: Fuel oil, Propane, Wood and Other Fuel2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs bins
-# Assumption: For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.

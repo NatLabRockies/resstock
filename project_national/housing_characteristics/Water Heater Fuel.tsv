@@ -1,39 +1,9 @@
 Dependency=Geometry Building Type RECS	Dependency=Heating Fuel	Dependency=State	Option=Electricity	Option=Fuel Oil	Option=Natural Gas	Option=Other Fuel	Option=Propane	Option=Solar Thermal	Option=Wood	source_count	source_weight	sampling_probability
-Mobile Home	Electricity	AK	0.883117	0.0194805	0.025974	0.00649351	0.0649351	0	0	154	154	4.40231e-06
-Mobile Home	Fuel Oil	AK	0.778785	0.0752493	0.00181324	0.000906618	0.143246	0	0	1103	1103	5.3224e-05
-Mobile Home	Natural Gas	AK	0.2024	0	0.796	0	0.0016	0	0	1250	1250	5.02635e-05
-Mobile Home	None	AK	0.2	0.2	0.2	0.2	0.2	0	0	0	0	0
-Mobile Home	Other Fuel	AK	0.231707	0.231707	0	0.5	0.0365854	0	0	82	2	9.83841e-08
-Mobile Home	Propane	AK	0.355932	0.0338983	0.0169492	0.0169492	0.576271	0	0	59	59	2.17035e-06
-Mobile Home	Wood	AK	0.588235	0.092437	0.0588235	0.00840336	0.252101	0	0	119	119	7.19481e-06
-Multi-Family with 2 - 4 Units	Electricity	AK	0.789954	0.0410959	0.0456621	0	0.123288	0	0	219	65.7	1.39715e-05
-Multi-Family with 2 - 4 Units	Fuel Oil	AK	0.233871	0.751152	0	0.00115207	0.0138249	0	0	868	260.4	8.88065e-05
-Multi-Family with 2 - 4 Units	Natural Gas	AK	0.014681	0	0.983625	0	0.00169396	0	0	1771	531.3	0.000176026
-Multi-Family with 2 - 4 Units	None	AK	0.2	0.2	0.2	0.2	0.2	0	0	0	0	0
-Multi-Family with 2 - 4 Units	Other Fuel	AK	0.231707	0.231707	0	0.5	0.0365854	0	0	82	1.2	3.3624e-07
-Multi-Family with 2 - 4 Units	Propane	AK	0.0697674	0	0.0232558	0	0.906977	0	0	43	12.9	3.47053e-06
-Multi-Family with 2 - 4 Units	Wood	AK	0.22	0.18	0.6	0	0	0	0	50	15	6.60498e-06
-Multi-Family with 5+ Units	Electricity	AK	0.789954	0.0410959	0.0456621	0	0.123288	0	0	219	153.3	1.20452e-05
-Multi-Family with 5+ Units	Fuel Oil	AK	0.233871	0.751152	0	0.00115207	0.0138249	0	0	868	607.6	7.94272e-05
-Multi-Family with 5+ Units	Natural Gas	AK	0.014681	0	0.983625	0	0.00169396	0	0	1771	1239.7	0.000169213
-Multi-Family with 5+ Units	None	AK	0.2	0.2	0.2	0.2	0.2	0	0	0	0	0
-Multi-Family with 5+ Units	Other Fuel	AK	0.231707	0.231707	0	0.5	0.0365854	0	0	82	2.8	3.06176e-07
-Multi-Family with 5+ Units	Propane	AK	0.0697674	0	0.0232558	0	0.906977	0	0	43	30.1	2.66531e-06
-Multi-Family with 5+ Units	Wood	AK	0.22	0.18	0.6	0	0	0	0	50	35	6.34993e-06
-Single-Family Attached	Electricity	AK	0.885587	0.0193165	0.0668648	0	0.0282318	0	0	673	673	9.21738e-06
-Single-Family Attached	Fuel Oil	AK	0.277927	0.708668	0	0	0.0134048	0	0	1119	1119	3.70844e-05
-Single-Family Attached	Natural Gas	AK	0.0215949	0	0.977634	0.000462749	0.000308499	0	0	6483	6483	0.000114823
-Single-Family Attached	None	AK	0.2	0.2	0.2	0.2	0.2	0	0	0	0	0
-Single-Family Attached	Other Fuel	AK	0	0.0277778	0	0.944444	0.0277778	0	0	36	36	1.80147e-06
-Single-Family Attached	Propane	AK	0.333333	0.0333333	0.133333	0	0.5	0	0	30	30	6.17388e-07
-Single-Family Attached	Wood	AK	0.120536	0.0357143	0.84375	0	0	0	0	224	224	5.15419e-06
-Single-Family Detached	Electricity	AK	0.762775	0.0634092	0.073107	0.00149198	0.0992167	0	0	2681	2681	7.03738e-05
-Single-Family Detached	Fuel Oil	AK	0.286515	0.661332	0.00212046	0.000959257	0.0490736	0	0	19807	19807	0.000565465
-Single-Family Detached	Natural Gas	AK	0.0144675	0.000322096	0.98419	0.000187889	0.000832081	0	0	37256	37256	0.000686224
-Single-Family Detached	None	AK	0.2	0.2	0.2	0.2	0.2	0	0	0	0	0
-Single-Family Detached	Other Fuel	AK	0.425	0.45	0	0.075	0.05	0	0	40	40	1.39918e-06
-Single-Family Detached	Propane	AK	0.185028	0.0127119	0.0338983	0	0.768362	0	0	708	708	1.98381e-05
-Single-Family Detached	Wood	AK	0.315088	0.230342	0.317033	0.015282	0.122256	0	0	3599	3599	0.000117722
+Mobile Home	Electricity	AK	0.88117	0	0.0556567	0	0.0631733	0	0	14	0	4.40231e-06
+Multi-Family with 2 - 4 Units	Electricity	AK	0.928086	0	0.0353035	0	0	0.0366107	0	21	7307.22	1.39715e-05
+Multi-Family with 5+ Units	Electricity	AK	0.894976	0	0.0515577	0	0	0.0534667	0	14	15871	1.20452e-05
+Single-Family Attached	Electricity	AK	0.88117	0	0.0556567	0	0.0631733	0	0	14	5217.66	9.21738e-06
+Single-Family Detached	Electricity	AK	0.88117	0	0.0556567	0	0.0631733	0	0	14	4211.08	7.03738e-05
 Mobile Home	Electricity	AL	1	0	0	0	0	0	0	27	201882	0.00176362
 Multi-Family with 2 - 4 Units	Electricity	AL	0.762077	0	0.237923	0	0	0	0	14	116735	0.000608269
 Multi-Family with 5+ Units	Electricity	AL	1	0	0	0	0	0	0	11	124178	0.00167253
@@ -284,6 +254,11 @@ Multi-Family with 2 - 4 Units	Electricity	WY	0.770409	0	0.229591	0	0	0	0	72	1540
 Multi-Family with 5+ Units	Electricity	WY	0.770409	0	0.229591	0	0	0	0	72	16913.5	0.000100122
 Single-Family Attached	Electricity	WY	0.736885	0	0.201937	0	0.0611779	0	0	17	3422.78	3.80915e-05
 Single-Family Detached	Electricity	WY	0.676445	0	0.248324	0	0.075231	0	0	13	14900.4	0.000222661
+Mobile Home	Fuel Oil	AK	0.465126	0.464869	0	0.0281414	0.0418631	0	0	65	2828.31	5.3224e-05
+Multi-Family with 2 - 4 Units	Fuel Oil	AK	0.144632	0.654824	0.17136	0	0.0252294	0	0.00395454	115	4136.62	8.88065e-05
+Multi-Family with 5+ Units	Fuel Oil	AK	0.144632	0.654824	0.17136	0	0.0252294	0	0.00395454	115	2289.42	7.94272e-05
+Single-Family Attached	Fuel Oil	AK	0.454207	0.471985	0	0.0296706	0.0441379	0	0	62	4653.73	3.70844e-05
+Single-Family Detached	Fuel Oil	AK	0.470089	0.448855	0	0.0325839	0.0484717	0	0	54	47395.9	0.000565465
 Mobile Home	Fuel Oil	AL	0.872233	0.0938449	0.0166565	0	0.017266	0	0	78	0	8.07484e-06
 Multi-Family with 2 - 4 Units	Fuel Oil	AL	0.144632	0.654824	0.17136	0	0.0252294	0	0.00395454	115	0	3.26606e-07
 Multi-Family with 5+ Units	Fuel Oil	AL	0.144632	0.654824	0.17136	0	0.0252294	0	0.00395454	115	0	1.26572e-07
@@ -534,6 +509,11 @@ Multi-Family with 2 - 4 Units	Fuel Oil	WY	0.144632	0.654824	0.17136	0	0.0252294	
 Multi-Family with 5+ Units	Fuel Oil	WY	0.144632	0.654824	0.17136	0	0.0252294	0	0.00395454	115	0	3.45275e-07
 Single-Family Attached	Fuel Oil	WY	0.624164	0.277898	0.0560898	0.0168229	0.0250256	0	0	73	0	0
 Single-Family Detached	Fuel Oil	WY	0.624164	0.277898	0.0560898	0.0168229	0.0250256	0	0	73	0	2.85541e-06
+Mobile Home	Natural Gas	AK	0.0656804	0.0141532	0.920166	0	0	0	0	162	7745.95	5.02635e-05
+Multi-Family with 2 - 4 Units	Natural Gas	AK	0.168751	0	0.831249	0	0	0	0	13	14301.5	0.000176026
+Multi-Family with 5+ Units	Natural Gas	AK	0	0	1	0	0	0	0	11	12078.4	0.000169213
+Single-Family Attached	Natural Gas	AK	0.0995259	0	0.900474	0	0	0	0	33	18044.6	0.000114823
+Single-Family Detached	Natural Gas	AK	0.0561261	0.0180702	0.925804	0	0	0	0	121	93188.2	0.000686224
 Mobile Home	Natural Gas	AL	0.33276	0	0.66724	0	0	0	0	65	0	0.000109781
 Multi-Family with 2 - 4 Units	Natural Gas	AL	0.157086	0	0.842914	0	0	0	0	31	35824.4	0.000198552
 Multi-Family with 5+ Units	Natural Gas	AL	0.157086	0	0.842914	0	0	0	0	31	13569.5	0.000230335
@@ -784,6 +764,11 @@ Multi-Family with 2 - 4 Units	Natural Gas	WY	0.215074	0	0.784926	0	0	0	0	10	4945
 Multi-Family with 5+ Units	Natural Gas	WY	0.215074	0	0.784926	0	0	0	0	10	14180.6	7.3991e-05
 Single-Family Attached	Natural Gas	WY	0	0	1	0	0	0	0	10	8348.33	5.41466e-05
 Single-Family Detached	Natural Gas	WY	0.146961	0	0.853039	0	0	0	0	108	120973	0.000830279
+Mobile Home	None	AK	0.283741	0.0113069	0.597969	0	0.0361519	0.0708317	0	258	0	0
+Multi-Family with 2 - 4 Units	None	AK	0.368784	0.000879871	0.589624	0	0.0142603	0.026451	0	145	0	0
+Multi-Family with 5+ Units	None	AK	0.368784	0.000879871	0.589624	0	0.0142603	0.026451	0	145	1985.25	0
+Single-Family Attached	None	AK	0.283741	0.0113069	0.597969	0	0.0361519	0.0708317	0	258	673.015	0
+Single-Family Detached	None	AK	0.283741	0.0113069	0.597969	0	0.0361519	0.0708317	0	258	0	0
 Mobile Home	None	AL	0.820862	0	0.151432	0	0.0165446	0.00664635	0.00451467	167	7985.57	1.59429e-05
 Multi-Family with 2 - 4 Units	None	AL	0.84964	0.0136685	0.120469	0	0.00847089	0	0.00775168	102	0	3.84904e-06
 Multi-Family with 5+ Units	None	AL	0.84964	0.0136685	0.120469	0	0.00847089	0	0.00775168	102	12616.2	1.85246e-05
@@ -1034,6 +1019,11 @@ Multi-Family with 2 - 4 Units	None	WY	0.393584	0.000781981	0.554603	0.0148492	0.
 Multi-Family with 5+ Units	None	WY	0.393584	0.000781981	0.554603	0.0148492	0.0126738	0.0235082	0	163	0	4.41023e-06
 Single-Family Attached	None	WY	0.328719	0.00964258	0.560247	0	0.0409859	0.0604058	0	289	0	1.33004e-07
 Single-Family Detached	None	WY	0.328719	0.00964258	0.560247	0	0.0409859	0.0604058	0	289	0	2.88632e-06
+Mobile Home	Other Fuel	AK	1	0	0	0	0	0	0	7	0	9.83841e-08
+Multi-Family with 2 - 4 Units	Other Fuel	AK	1	0	0	0	0	0	0	1	0	3.3624e-07
+Multi-Family with 5+ Units	Other Fuel	AK	1	0	0	0	0	0	0	1	0	3.06176e-07
+Single-Family Attached	Other Fuel	AK	1	0	0	0	0	0	0	7	0	1.80147e-06
+Single-Family Detached	Other Fuel	AK	1	0	0	0	0	0	0	7	0	1.39918e-06
 Mobile Home	Other Fuel	AL	1	0	0	0	0	0	0	7	0	6.25589e-06
 Multi-Family with 2 - 4 Units	Other Fuel	AL	1	0	0	0	0	0	0	1	0	7.64908e-07
 Multi-Family with 5+ Units	Other Fuel	AL	1	0	0	0	0	0	0	1	0	1.81859e-06
@@ -1284,6 +1274,11 @@ Multi-Family with 2 - 4 Units	Other Fuel	WY	1	0	0	0	0	0	0	1	0	3.57878e-07
 Multi-Family with 5+ Units	Other Fuel	WY	1	0	0	0	0	0	0	1	0	3.80331e-06
 Single-Family Attached	Other Fuel	WY	1	0	0	0	0	0	0	7	0	9.88726e-07
 Single-Family Detached	Other Fuel	WY	1	0	0	0	0	0	0	7	0	1.80661e-05
+Mobile Home	Propane	AK	0.273017	0	0.034327	0	0.692656	0	0	46	931.675	2.17035e-06
+Multi-Family with 2 - 4 Units	Propane	AK	0.734571	0	0	0	0.265429	0	0	34	0	3.47053e-06
+Multi-Family with 5+ Units	Propane	AK	0.734571	0	0	0	0.265429	0	0	34	0	2.66531e-06
+Single-Family Attached	Propane	AK	0.273017	0	0.034327	0	0.692656	0	0	46	0	6.17388e-07
+Single-Family Detached	Propane	AK	0.273017	0	0.034327	0	0.692656	0	0	46	3774.1	1.98381e-05
 Mobile Home	Propane	AL	0.879345	0	0	0	0.120655	0	0	11	35598.1	0.000291202
 Multi-Family with 2 - 4 Units	Propane	AL	0.734571	0	0	0	0.265429	0	0	34	0	5.31037e-06
 Multi-Family with 5+ Units	Propane	AL	0.734571	0	0	0	0.265429	0	0	34	0	8.64747e-06
@@ -1534,6 +1529,11 @@ Multi-Family with 2 - 4 Units	Propane	WY	0.734571	0	0	0	0.265429	0	0	34	0	2.2181
 Multi-Family with 5+ Units	Propane	WY	0.734571	0	0	0	0.265429	0	0	34	0	2.16298e-06
 Single-Family Attached	Propane	WY	0.598646	0	0	0	0.401354	0	0	13	821.043	1.39741e-06
 Single-Family Detached	Propane	WY	0.5737	0	0	0	0.4263	0	0	12	13209.3	0.000154641
+Mobile Home	Wood	AK	0.270604	0.296168	0	0.167637	0.26559	0	0	11	0	7.19481e-06
+Multi-Family with 2 - 4 Units	Wood	AK	0.766575	0	0.119662	0	0.113762	0	0	8	0	6.60498e-06
+Multi-Family with 5+ Units	Wood	AK	0.766575	0	0.119662	0	0.113762	0	0	8	0	6.34993e-06
+Single-Family Attached	Wood	AK	0.270604	0.296168	0	0.167637	0.26559	0	0	11	0	5.15419e-06
+Single-Family Detached	Wood	AK	0.270604	0.296168	0	0.167637	0.26559	0	0	11	10559.3	0.000117722
 Mobile Home	Wood	AL	0.787659	0	0	0	0.212341	0	0	20	10005.5	3.66482e-05
 Multi-Family with 2 - 4 Units	Wood	AL	0.766575	0	0.119662	0	0.113762	0	0	8	0	1.56898e-07
 Multi-Family with 5+ Units	Wood	AL	0.766575	0	0.119662	0	0.113762	0	0	8	0	0
@@ -1784,10 +1784,9 @@ Multi-Family with 2 - 4 Units	Wood	WY	0.766575	0	0.119662	0	0.113762	0	0	8	0	6.0
 Multi-Family with 5+ Units	Wood	WY	0.766575	0	0.119662	0	0.113762	0	0	8	0	1.11054e-06
 Single-Family Attached	Wood	WY	0.757901	0	0.101732	0	0.140367	0	0	45	0	6.6444e-07
 Single-Family Detached	Wood	WY	0.757901	0	0.101732	0	0.140367	0	0	45	6549.95	8.01313e-05
-# Created by: sources\recs\recs2020\tsv_maker.py and sources\aris\tsv_maker.py
+# Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The water heater fuel type.
-# Source: U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+# Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 # Assumption: After conversations with EIA, other fuel is a combination of units with no-water heater, biomass, coal, or district steam systems.
 # Assumption: Due to low sample sizes, fallback rules applied with lumping of:
 # Assumption: [1] Geometry building SF: Mobile, Single family attached, Single family detached
@@ -1795,6 +1794,3 @@ Single-Family Detached	Wood	WY	0.757901	0	0.101732	0	0.140367	0	0	45	6549.95	8.0
 # Assumption: [3] State: Census Division RECS
 # Assumption: [4] State: Census Region
 # Assumption: [5] State: National
-# Assumption: For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
-# Assumption: For Alaska, wood and coal heating is modeled as other fuel.
-# Assumption: For Alaska, when a building uses more than one fuel for water heating, the fuel with highest consumption is considered the water heater fuel. Rest of the fuels are ignored.

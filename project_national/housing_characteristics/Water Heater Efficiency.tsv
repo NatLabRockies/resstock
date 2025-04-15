@@ -1,11 +1,11 @@
 Dependency=State	Dependency=Water Heater Fuel	Option=Electric Heat Pump, 50 gal, 3.45 UEF	Option=Electric Heat Pump, 66 gal, 3.35 UEF	Option=Electric Heat Pump, 80 gal, 3.45 UEF	Option=Electric Premium	Option=Electric Standard	Option=Electric Tankless	Option=FIXME Fuel Oil Indirect	Option=Fuel Oil Premium	Option=Fuel Oil Standard	Option=Natural Gas Premium	Option=Natural Gas Standard	Option=Natural Gas Tankless	Option=Other Fuel	Option=Propane Premium	Option=Propane Standard	Option=Propane Tankless	Option=Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup	Option=Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup	Option=Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup	Option=Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup	Option=Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup	Option=Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup	Option=Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup	Option=Wood	source_count	source_weight	sampling_probability
-AK	Electricity	0.005	0	0	0.266432	0.656716	0.0718516	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	80	73103.9	0.000417687
-AK	Fuel Oil	0	0	0	0	0	0	0.244164	0.185513	0.570323	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	43	36522.7	0.000568126
-AK	Natural Gas	0	0	0	0	0	0	0	0	0	0.150379	0.694737	0.154885	0	0	0	0	0	0	0	0	0	0	0	0	173	134790	0.00122639
-AK	Other Fuel	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	13	3314.48	5.17315e-06
-AK	Propane	0	0	0	0	0	0	0	0	0	0	0	0	0	0.265037	0.486353	0.248609	0	0	0	0	0	0	0	0	10	8613.51	8.89245e-05
-AK	Solar Thermal	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.225093	0.0244123	0.567602	0	0.0142406	0.0352778	0.133375	0	56	848.57	0
-AK	Wood	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	20	0	0
+AK	Electricity	0.005	0	0	0.266432	0.656716	0.0718516	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	80	73103.9	0.000572214
+AK	Fuel Oil	0	0	0	0	0	0	0.244164	0.185513	0.570323	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	43	36522.7	0.000457855
+AK	Natural Gas	0	0	0	0	0	0	0	0	0	0.150379	0.694737	0.154885	0	0	0	0	0	0	0	0	0	0	0	0	173	134790	0.00113743
+AK	Other Fuel	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	13	3314.48	4.28279e-05
+AK	Propane	0	0	0	0	0	0	0	0	0	0	0	0	0	0.265037	0.486353	0.248609	0	0	0	0	0	0	0	0	10	8613.51	9.41446e-05
+AK	Solar Thermal	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.225093	0.0244123	0.567602	0	0.0142406	0.0352778	0.133375	0	56	848.57	1.15552e-06
+AK	Wood	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	20	0	6.65287e-07
 AL	Electricity	0.005	0	0	0.211316	0.762202	0.0214822	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	172	1.36669e+06	0.0122452
 AL	Fuel Oil	0	0	0	0	0	0	0.0539114	0.0644831	0.881606	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	18	0	3.00676e-06
 AL	Natural Gas	0	0	0	0	0	0	0	0	0	0.095757	0.841587	0.0626562	0	0	0	0	0	0	0	0	0	0	0	0	64	488396	0.00392041

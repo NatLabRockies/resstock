@@ -1,12 +1,12 @@
 Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	Dependency=HVAC Has Zonal Electric Heating	Option=No	Option=Yes	source_count	source_weight	sampling_probability
 1A	Mobile Home	No	0.884742	0.115258	269	16405.8	0.000308661
-1A	Multi-Family with 2 - 4 Units	No	0.892181	0.107819	23	151857	0.00101014
-1A	Multi-Family with 5+ Units	No	0.889664	0.110336	98	804378	0.00654438
+1A	Multi-Family with 2 - 4 Units	No	0.892181	0.107819	23	151857	0.00101181
+1A	Multi-Family with 5+ Units	No	0.889664	0.110336	98	804378	0.00654243
 1A	Single-Family Attached	No	0.842326	0.157674	45	173615	0.00146317
 1A	Single-Family Detached	No	0.890721	0.109279	223	915387	0.00722209
 1A	Mobile Home	Yes	0.699614	0.300386	10	0	2.89752e-05
-1A	Multi-Family with 2 - 4 Units	Yes	0.699614	0.300386	10	0	0.000100007
-1A	Multi-Family with 5+ Units	Yes	0.699614	0.300386	10	43333.8	0.000547288
+1A	Multi-Family with 2 - 4 Units	Yes	0.699614	0.300386	10	0	9.83376e-05
+1A	Multi-Family with 5+ Units	Yes	0.699614	0.300386	10	43333.8	0.000549235
 1A	Single-Family Attached	Yes	0.699614	0.300386	10	1275.11	0.000143157
 1A	Single-Family Detached	Yes	0.699614	0.300386	10	43702.4	0.000572419
 2A	Mobile Home	No	0.645862	0.354138	87	998985	0.00984962
@@ -139,16 +139,16 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 7A	Multi-Family with 5+ Units	Yes	0.718799	0.281201	24	44706.1	0.000140906
 7A	Single-Family Attached	Yes	0.582662	0.417338	16	2470.83	1.24159e-05
 7A	Single-Family Detached	Yes	0.536656	0.463344	12	22413.8	0.000196294
-7AK	Mobile Home	No	0.625249	0.374751	11	10561.5	8.218e-05
-7AK	Multi-Family with 2 - 4 Units	No	0.780844	0.219156	17	18395.4	0.00022308
-7AK	Multi-Family with 5+ Units	No	0.685386	0.314614	17	18364.5	0.000209439
-7AK	Single-Family Attached	No	0.371613	0.628387	38	20588.5	0.000132387
-7AK	Single-Family Detached	No	0.508933	0.491067	154	121461	0.00106867
-7AK	Mobile Home	Yes	0.831062	0.168938	20	0	2.75857e-06
-7AK	Multi-Family with 2 - 4 Units	Yes	0.82384	0.17616	15	5182.15	5.34078e-06
-7AK	Multi-Family with 5+ Units	Yes	0.907589	0.0924108	10	11673.7	5.34499e-06
-7AK	Single-Family Attached	Yes	0.831062	0.168938	20	1625.43	7.5928e-06
-7AK	Single-Family Detached	Yes	0.831062	0.168938	20	1935	5.00477e-05
+7AK	Mobile Home	No	0.625249	0.374751	11	10561.5	8.37962e-05
+7AK	Multi-Family with 2 - 4 Units	No	0.780844	0.219156	17	18395.4	0.000224286
+7AK	Multi-Family with 5+ Units	No	0.685386	0.314614	17	18364.5	0.000210911
+7AK	Single-Family Attached	No	0.371613	0.628387	38	20588.5	0.000137809
+7AK	Single-Family Detached	No	0.508933	0.491067	154	121461	0.00110185
+7AK	Mobile Home	Yes	0.831062	0.168938	20	0	1.14242e-06
+7AK	Multi-Family with 2 - 4 Units	Yes	0.82384	0.17616	15	5182.15	4.13473e-06
+7AK	Multi-Family with 5+ Units	Yes	0.907589	0.0924108	10	11673.7	3.87259e-06
+7AK	Single-Family Attached	Yes	0.831062	0.168938	20	1625.43	2.17145e-06
+7AK	Single-Family Detached	Yes	0.831062	0.168938	20	1935	1.68626e-05
 7B	Mobile Home	No	0.573916	0.426084	5	0	8.60987e-05
 7B	Multi-Family with 2 - 4 Units	No	0.573916	0.426084	5	9139.16	5.69774e-05
 7B	Multi-Family with 5+ Units	No	0.573916	0.426084	5	0	0.000189328
@@ -159,16 +159,16 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 7B	Multi-Family with 5+ Units	Yes	0.49883	0.50117	2	0	3.72977e-05
 7B	Single-Family Attached	Yes	0.49883	0.50117	2	1028.56	7.69609e-06
 7B	Single-Family Detached	Yes	0.49883	0.50117	2	1033.39	3.91025e-05
-8AK	Mobile Home	No	0.575947	0.424053	46	944.437	3.20202e-05
-8AK	Multi-Family with 2 - 4 Units	No	0.592954	0.407046	50	2167.75	6.06744e-05
-8AK	Multi-Family with 5+ Units	No	0.592954	0.407046	50	2185.89	5.51147e-05
-8AK	Single-Family Attached	No	0.575947	0.424053	46	4358.93	2.85178e-05
-8AK	Single-Family Detached	No	0.545933	0.454067	38	34869.5	0.000339659
-8AK	Mobile Home	Yes	1	0	4	0	3.94469e-07
-8AK	Multi-Family with 2 - 4 Units	Yes	1	0	4	0	1.20696e-07
-8AK	Multi-Family with 5+ Units	Yes	1	0	4	0	1.07525e-07
-8AK	Single-Family Attached	Yes	1	0	4	2016.16	1.99863e-07
-8AK	Single-Family Detached	Yes	1	0	4	862.757	2.64924e-06
+8AK	Mobile Home	No	0.575947	0.424053	46	944.437	3.22535e-05
+8AK	Multi-Family with 2 - 4 Units	No	0.592954	0.407046	50	2167.75	6.07022e-05
+8AK	Multi-Family with 5+ Units	No	0.592954	0.407046	50	2185.89	5.51478e-05
+8AK	Single-Family Attached	No	0.575947	0.424053	46	4358.93	2.86617e-05
+8AK	Single-Family Detached	No	0.545933	0.454067	38	34869.5	0.000341224
+8AK	Mobile Home	Yes	1	0	4	0	1.61167e-07
+8AK	Multi-Family with 2 - 4 Units	Yes	1	0	4	0	9.28178e-08
+8AK	Multi-Family with 5+ Units	Yes	1	0	4	0	7.43752e-08
+8AK	Single-Family Attached	Yes	1	0	4	2016.16	5.59062e-08
+8AK	Single-Family Detached	Yes	1	0	4	862.757	1.08461e-06
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: Presence of a heating setpoint offset.
 # Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
