@@ -3,24 +3,10 @@ Development Changelog
 =====================
 
 
-.. change::
-    :tags: characteristics, documentation
-    :pullreq: 1377
-
-    **Date**: 2025-04-09
-
-    Title:
-    Update HVAC Cooling Partial Space Conditioning for Hawaii
-
-    Description:
-    Update of HVAC Cooling Partial Space Conditioning.tsv to separate Hawaii and Miami and to allow for more partial space conditioning in Hawai
-
-    Assignees: Janet Reyna
-
-
 .. changelog::
     :version: v3.5.0
     :released: pending
+
 
     .. change::
         :tags: characteristics, documentation, technical reference guide
@@ -35,6 +21,21 @@ Development Changelog
         Assign state level correction factors for freezer and secondary refrigeration to account for the fact that homes can have more than 1 freezer and 2 refrigerators. This also corrects the freezer usage, which was previously assigned to match the national saturation of freezers.
 
         Assignees: Lixi Liu, Anthony Fontanini
+
+
+    .. change::
+        :tags: characteristics, documentation
+        :pullreq: 1377
+
+        **Date**: 2025-04-09
+
+        Title:
+        Update HVAC Cooling Partial Space Conditioning for Hawaii
+
+        Description:
+        Update of HVAC Cooling Partial Space Conditioning.tsv to separate Hawaii and Miami and to allow for more partial space conditioning in Hawai
+
+        Assignees: Janet Reyna
 
 
     .. change::
