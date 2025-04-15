@@ -922,11 +922,12 @@ The fraction of cooling load served by the cooling system. This is approximately
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
 \item Constructed using U.S.~EIA 2009 RECS microdata.
+\item Hawaii constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 \end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
-    \item ASHRAE IECC Climate Zone 2004
+    \item ASHRAE IECC Climate Zone 2004---Sub-CZ Split
     \item Geometry Building Type RECS
     \item Geometry Floor Area Bin
     \item HVAC Cooling Type.
@@ -967,10 +968,10 @@ Double &  The cooling load served by the cooling system. \\
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item Central AC systems need to serve at least 60\% of the floor area.
-    \item Heat pumps serve 100\% of the floor area because the system serves 100\% of the heated floor area.
+    \item Heat pumps serve 100\% of the floor area because the system serves 100\% of the heated floor area, except in Hawaii.
     \item Due to low sample count, this input is constructed by downscaling a core sub-input file with 3 sub-input files of different dependencies. The sub-input files have the following dependencies: 
     \begin{itemize}
-        \item input1 : ‘HVAC Cooling Type’, ‘ASHRAE IECC Climate Zone 2004’
+        \item input1 : ‘HVAC Cooling Type’, ‘ASHRAE IECC Climate Zone 2004---Sub-CZ Split’
         \item input2 : ‘HVAC Cooling Type’, ‘Geometry Floor Area Bin’
         \item input3 : ‘HVAC Cooling Type’, ‘Geometry Building Type RECS’
     \end{itemize}

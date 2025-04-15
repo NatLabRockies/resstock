@@ -2,6 +2,22 @@
 Development Changelog
 =====================
 
+
+.. change::
+    :tags: characteristics, documentation
+    :pullreq: 1377
+
+    **Date**: 2025-04-09
+
+    Title:
+    Update HVAC Cooling Partial Space Conditioning for Hawaii
+
+    Description:
+    Update of HVAC Cooling Partial Space Conditioning.tsv to separate Hawaii and Miami and to allow for more partial space conditioning in Hawai
+
+    Assignees: Janet Reyna
+
+
 .. changelog::
     :version: v3.5.0
     :released: pending
@@ -36,7 +52,7 @@ Development Changelog
         Assignees: Lixi Liu, Anthony Fontanini, Jeff Maguire
 
 
-    .. change::
+   .. change::
         :tags: characteristics, documentation
         :pullreq: 1374
 
