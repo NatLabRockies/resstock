@@ -11,7 +11,7 @@ Clothes Washer,4.0,1.0,sources\recs\recs2020\tsv_maker.py,Presence and rated eff
 Clothes Washer Presence,3.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence of a clothes washer in the dwelling unit.
 Clothes Washer Usage Level,3.0,0.0,sources\other\tsv_maker.py,Clothes washer energy usage level multiplier.
 Cooking Range,6.0,1.0,sources\recs\recs2020\tsv_maker.py,Presence and fuel type of the cooking range.
-Cooking Range Usage Level,3.0,0.0,sources\other\tsv_maker.py,Cooling range energy usage level multiplier.
+Cooking Range Usage Level,3.0,0.0,sources\other\tsv_maker.py,Cooking range energy usage level multiplier.
 Cooling Setpoint,18.0,0.0,manually created,Baseline cooling setpoint with no offset applied.
 Cooling Setpoint Has Offset,2.0,0.0,manually created,Presence of a cooling setpoint offset.
 Cooling Setpoint Offset Magnitude,4.0,1.0,manually created,The magnitude of cooling setpoint offset.
