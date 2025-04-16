@@ -1,24 +1,24 @@
 Dependency=HVAC Heating Efficiency	Option=Yes	Option=No	sampling_probability
-ASHP, SEER 10, 6.2 HSPF	0	1	0.00718157
-ASHP, SEER 13, 7.7 HSPF	0	1	0.0740898
-ASHP, SEER 15, 8.5 HSPF	0	1	0.0724829
-Electric Baseboard, 100% Efficiency	1	0	0.0627811
-Electric Boiler, 100% AFUE	0	1	0.00205468
-Electric Furnace, 100% AFUE	0	1	0.113344
-Electric Wall Furnace, 100% AFUE	0	1	0.0110764
-Fuel Boiler, 76% AFUE	0	1	0.00827857
-Fuel Boiler, 80% AFUE	0	1	0.0324115
-Fuel Boiler, 90% AFUE	0	1	0.00478166
-Fuel Furnace, 60% AFUE	0	1	0.0049367
-Fuel Furnace, 76% AFUE	0	1	0.0277047
-Fuel Furnace, 80% AFUE	0	1	0.247426
-Fuel Furnace, 92.5% AFUE	0	1	0.153393
-Fuel Wall/Floor Furnace, 60% AFUE	0	1	0.0321561
-Fuel Wall/Floor Furnace, 68% AFUE	0	1	0.0285454
-MSHP, SEER 14.5, 8.2 HSPF	0	1	0.00959737
-MSHP, SEER 29.3, 14 HSPF	0	1	0.000137902
-None	0	1	0.0113391
-Shared Heating	0	1	0.0962815
+ASHP, SEER 10, 6.2 HSPF	0	1	0.00718034
+ASHP, SEER 13, 7.7 HSPF	0	1	0.0740766
+ASHP, SEER 15, 8.5 HSPF	0	1	0.0724697
+Electric Baseboard, 100% Efficiency	1	0	0.062826
+Electric Boiler, 100% AFUE	0	1	0.00205743
+Electric Furnace, 100% AFUE	0	1	0.113316
+Electric Wall Furnace, 100% AFUE	0	1	0.011071
+Fuel Boiler, 76% AFUE	0	1	0.00887687
+Fuel Boiler, 80% AFUE	0	1	0.0325257
+Fuel Boiler, 90% AFUE	0	1	0.00494725
+Fuel Furnace, 60% AFUE	0	1	0.00493
+Fuel Furnace, 76% AFUE	0	1	0.0277535
+Fuel Furnace, 80% AFUE	0	1	0.247114
+Fuel Furnace, 92.5% AFUE	0	1	0.153316
+Fuel Wall/Floor Furnace, 60% AFUE	0	1	0.0318915
+Fuel Wall/Floor Furnace, 68% AFUE	0	1	0.0282638
+MSHP, SEER 14.5, 8.2 HSPF	0	1	0.00959704
+MSHP, SEER 29.3, 14 HSPF	0	1	0.000152729
+None	0	1	0.0113431
+Shared Heating	0	1	0.096292
 Void	0	1	0
 # Created by: manually created
 # Description: Presence of electric baseboard heating

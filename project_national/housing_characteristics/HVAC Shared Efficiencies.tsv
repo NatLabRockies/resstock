@@ -1,32 +1,32 @@
-Dependency=Heating Fuel	Dependency=HVAC Has Shared System	Option=Boiler Baseboards Heating Only, Electricity	Option=Boiler Baseboards Heating Only, Fuel	Option=Fan Coil Cooling Only	Option=Fan Coil Heating and Cooling, Electricity	Option=Fan Coil Heating and Cooling, Fuel	Option=None	Option=Void	source_count	source_weight	sampling_probability
-Electricity	Cooling Only	0	0	1	0	0	0	0	161	1.60314e+06	0.00754375
-Fuel Oil	Cooling Only	0	0	1	0	0	0	0	0	0	0.000181976
-Natural Gas	Cooling Only	0	0	1	0	0	0	0	65	647299	0.0056027
-None	Cooling Only	0	0	1	0	0	0	0	49	521219	0.000482839
-Other Fuel	Cooling Only	0	0	1	0	0	0	0	2	0	7.34587e-05
-Propane	Cooling Only	0	0	1	0	0	0	0	2	25488.3	0.000156494
-Wood	Cooling Only	0	0	1	0	0	0	0	2	0	9.90364e-06
-Electricity	Heating Only	1	0	0	0	0	0	0	315	2.63761e+06	0.0281981
-Fuel Oil	Heating Only	0	1	0	0	0	0	0	85	595692	0.00463275
-Natural Gas	Heating Only	0	1	0	0	0	0	0	527	4.88373e+06	0.0369234
-None	Heating Only	0	0	0	0	0	0	1	0	0	0
-Other Fuel	Heating Only	0	1	0	0	0	0	0	28	0	0.0008249
-Propane	Heating Only	0	1	0	0	0	0	0	22	118515	0.0013492
-Wood	Heating Only	0	1	0	0	0	0	0	28	36874.9	8.21893e-05
-Electricity	Heating and Cooling	0	0	0	1	0	0	0	234	2.14233e+06	0.0130948
-Fuel Oil	Heating and Cooling	0	0	0	0	1	0	0	13	109612	0.000430938
-Natural Gas	Heating and Cooling	0	0	0	0	1	0	0	203	1.77971e+06	0.0102794
-None	Heating and Cooling	0	0	0	0	0	0	1	0	0	0
-Other Fuel	Heating and Cooling	0	0	0	0	1	0	0	5	0	0.000171861
-Propane	Heating and Cooling	0	0	0	0	1	0	0	5	13141.6	0.000279363
-Wood	Heating and Cooling	0	0	0	0	1	0	0	5	10363.4	1.45963e-05
-Electricity	None	0	0	0	0	0	1	0	4989	3.61909e+07	0.345202
-Fuel Oil	None	0	0	0	0	0	1	0	999	4.22964e+06	0.0433466
-Natural Gas	None	0	0	0	0	0	1	0	8800	5.54027e+07	0.415863
-None	None	0	0	0	0	0	1	0	702	5.26901e+06	0.0108563
-Other Fuel	None	0	0	0	0	0	1	0	1319	54510.4	0.00637062
-Propane	None	0	0	0	0	0	1	0	901	5.05448e+06	0.0485008
-Wood	None	0	0	0	0	0	1	0	410	2.20303e+06	0.0195287
+Dependency=Heating Fuel	Dependency=HVAC Has Shared System	Option=Boiler Baseboards Heating Only, Electricity	Option=Boiler Baseboards Heating Only, Fuel	Option=Fan Coil Cooling Only	Option=Fan Coil Heating and Cooling, Electricity	Option=Fan Coil Heating and Cooling, Fuel	Option=None	Option=Void	source_count	source_weight	fallback_count	fallback_weight
+Electricity	Cooling Only	0	0	1	0	0	0	0	161	1.60314e+06	161	1.60314e+06
+Fuel Oil	Cooling Only	0	0	1	0	0	0	0	0	0	0	0
+Natural Gas	Cooling Only	0	0	1	0	0	0	0	65	647299	65	647299
+None	Cooling Only	0	0	1	0	0	0	0	49	521219	49	521219
+Other Fuel	Cooling Only	0	0	1	0	0	0	0	0	0	2	25488.3
+Propane	Cooling Only	0	0	1	0	0	0	0	2	25488.3	2	25488.3
+Wood	Cooling Only	0	0	1	0	0	0	0	0	0	2	25488.3
+Electricity	Heating Only	1	0	0	0	0	0	0	315	2.63761e+06	315	2.63761e+06
+Fuel Oil	Heating Only	0	1	0	0	0	0	0	85	595692	85	595692
+Natural Gas	Heating Only	0	1	0	0	0	0	0	527	4.88373e+06	527	4.88373e+06
+None	Heating Only	0	0	0	0	0	0	1	0	0	0	0
+Other Fuel	Heating Only	0	1	0	0	0	0	0	0	0	28	155390
+Propane	Heating Only	0	1	0	0	0	0	0	22	118515	22	118515
+Wood	Heating Only	0	1	0	0	0	0	0	6	36874.9	28	155390
+Electricity	Heating and Cooling	0	0	0	1	0	0	0	234	2.14233e+06	234	2.14233e+06
+Fuel Oil	Heating and Cooling	0	0	0	0	1	0	0	13	109612	13	109612
+Natural Gas	Heating and Cooling	0	0	0	0	1	0	0	203	1.77971e+06	203	1.77971e+06
+None	Heating and Cooling	0	0	0	0	0	0	1	0	0	0	0
+Other Fuel	Heating and Cooling	0	0	0	0	1	0	0	0	0	5	23504.9
+Propane	Heating and Cooling	0	0	0	0	1	0	0	3	13141.6	5	23504.9
+Wood	Heating and Cooling	0	0	0	0	1	0	0	2	10363.4	5	23504.9
+Electricity	None	0	0	0	0	0	1	0	4989	3.61909e+07	4989	3.61909e+07
+Fuel Oil	None	0	0	0	0	0	1	0	999	4.22964e+06	999	4.22964e+06
+Natural Gas	None	0	0	0	0	0	1	0	8800	5.54027e+07	8800	5.54027e+07
+None	None	0	0	0	0	0	1	0	702	5.26901e+06	702	5.26901e+06
+Other Fuel	None	0	0	0	0	0	1	0	8	54510.4	1319	7.31201e+06
+Propane	None	0	0	0	0	0	1	0	901	5.05448e+06	901	5.05448e+06
+Wood	None	0	0	0	0	0	1	0	410	2.20303e+06	410	2.20303e+06
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence and efficiency of the shared HVAC system.
 # Source: The sample counts and sample weights are constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
