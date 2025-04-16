@@ -50,4 +50,4 @@ pip install sphinx-autobuild
 sphinx-autobuild -n -v -w _build/build_errors.txt source/ _build/
 ```
 
-4. The previous step will connect a server which can be opened in a browser. This server might look something like `http://127.0.0.1:8000`. Copy the address into your browser and the built documentation will show up. The `sphinx-autobuild` command will continue to check for changes to the documentation. So after future changes, the page in the browser should automatically reload to see changes to the source files.
+4. The previous step will connect a server which can be opened in a browser. This server might look something like `http://127.0.0.1:8000`. Copy the address into your browser and the built documentation will show up. The `sphinx-autobuild` command will continue to check for changes to the documentation. So after future changes, the page in the browser should automatically reload to see changes to the source files. Check the `_build/build_errors.txt` file for errors that will cause CI to fail.
