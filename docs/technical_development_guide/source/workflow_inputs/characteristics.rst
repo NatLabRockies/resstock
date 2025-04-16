@@ -5508,7 +5508,7 @@ Cooking Range Usage Level
 Description
 ***********
 
-Cooling range energy usage level multiplier.
+Cooking range energy usage level multiplier.
 
 Created by
 **********
