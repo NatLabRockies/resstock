@@ -1,4 +1,4 @@
 Option=80% Usage	Option=100% Usage	Option=120% Usage	sampling_probability
 0.333333	0.333333	0.333333	1
 # Created by: sources\other\tsv_maker.py
-# Description: Cooling range energy usage level multiplier.
+# Description: Cooking range energy usage level multiplier.
