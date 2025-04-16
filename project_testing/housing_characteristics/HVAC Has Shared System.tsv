@@ -1,153 +1,153 @@
-Dependency=Geometry Building Type RECS	Dependency=HVAC Cooling Type	Dependency=HVAC Heating Type	Option=Cooling Only	Option=Heating and Cooling	Option=Heating Only	Option=None	Option=Void	sampling_probability
-Mobile Home	Central AC	Ducted Heat Pump	0	0	0	0	1	0
-Mobile Home	Ducted Heat Pump	Ducted Heat Pump	0	0	0	1	0	0.00396826
-Mobile Home	Evaporative or Swamp Cooler	Ducted Heat Pump	0	0	0	0	1	0
-Mobile Home	Non-Ducted Heat Pump	Ducted Heat Pump	0	0	0	0	1	0
-Mobile Home	None	Ducted Heat Pump	0	0	0	0	1	0
-Mobile Home	Room AC	Ducted Heat Pump	0	0	0	0	1	0
-Mobile Home	Central AC	Ducted Heating	0	0	0	1	0	0.0145503
-Mobile Home	Ducted Heat Pump	Ducted Heating	0	0	0	0	1	0
-Mobile Home	Evaporative or Swamp Cooler	Ducted Heating	0	0	0	0	1	0
-Mobile Home	Non-Ducted Heat Pump	Ducted Heating	0	0	0	0	1	0
-Mobile Home	None	Ducted Heating	0	0	0	1	0	0.0145503
-Mobile Home	Room AC	Ducted Heating	0	0	0	1	0	0.0145503
-Mobile Home	Central AC	Non-Ducted Heat Pump	0	0	0	0	1	0
-Mobile Home	Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	0	1	0
-Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	0	0	0	0	1	0
-Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	1	0	0.00396826
-Mobile Home	None	Non-Ducted Heat Pump	0	0	0	0	1	0
-Mobile Home	Room AC	Non-Ducted Heat Pump	0	0	0	0	1	0
-Mobile Home	Central AC	Non-Ducted Heating	0	0	0	1	0	0.0145503
-Mobile Home	Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1	0
-Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heating	0	0	0	0	1	0
-Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1	0
-Mobile Home	None	Non-Ducted Heating	0	0	0	1	0	0.0145503
-Mobile Home	Room AC	Non-Ducted Heating	0	0	0	1	0	0.0145503
-Mobile Home	Central AC	None	0	0	0	1	0	0.005291
-Mobile Home	Ducted Heat Pump	None	0	0	0	0	1	0
-Mobile Home	Evaporative or Swamp Cooler	None	0	0	0	0	1	0
-Mobile Home	Non-Ducted Heat Pump	None	0	0	0	0	1	0
-Mobile Home	None	None	0	0	0	1	0	0.005291
-Mobile Home	Room AC	None	0	0	0	1	0	0.005291
-Multi-Family with 2 - 4 Units	Central AC	Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heat Pump	0	0	0	1	0	0.00793652
-Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	None	Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Room AC	Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Central AC	Ducted Heating	0.25	0.25	0.25	0.25	0	0.0291005
-Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heating	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heating	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heating	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	None	Ducted Heating	0	0	0.5	0.5	0	0.0291005
-Multi-Family with 2 - 4 Units	Room AC	Ducted Heating	0	0	0.5	0.5	0	0.0291005
-Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	1	0	0.00793652
-Multi-Family with 2 - 4 Units	None	Non-Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heating	0.25	0.25	0.25	0.25	0	0.0291005
-Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heating	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	None	Non-Ducted Heating	0	0	0.5	0.5	0	0.0291005
-Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heating	0	0	0.5	0.5	0	0.0291005
-Multi-Family with 2 - 4 Units	Central AC	None	0.5	0	0	0.5	0	0.010582
-Multi-Family with 2 - 4 Units	Ducted Heat Pump	None	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	None	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	None	0	0	0	0	1	0
-Multi-Family with 2 - 4 Units	None	None	0	0	0	1	0	0.010582
-Multi-Family with 2 - 4 Units	Room AC	None	0	0	0	1	0	0.010582
-Multi-Family with 5+ Units	Central AC	Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heat Pump	0	0	0	1	0	0.015873
-Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 5+ Units	None	Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 5+ Units	Room AC	Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 5+ Units	Central AC	Ducted Heating	0.25	0.25	0.25	0.25	0	0.0582011
-Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heating	0	0	0	0	1	0
-Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heating	0	0	0	0	1	0
-Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heating	0	0	0	0	1	0
-Multi-Family with 5+ Units	None	Ducted Heating	0	0	0.5	0.5	0	0.0582011
-Multi-Family with 5+ Units	Room AC	Ducted Heating	0	0	0.5	0.5	0	0.0582011
-Multi-Family with 5+ Units	Central AC	Non-Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	1	0	0.015873
-Multi-Family with 5+ Units	None	Non-Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 5+ Units	Room AC	Non-Ducted Heat Pump	0	0	0	0	1	0
-Multi-Family with 5+ Units	Central AC	Non-Ducted Heating	0.25	0.25	0.25	0.25	0	0.0582011
-Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1	0
-Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heating	0	0	0	0	1	0
-Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1	0
-Multi-Family with 5+ Units	None	Non-Ducted Heating	0	0	0.5	0.5	0	0.0582011
-Multi-Family with 5+ Units	Room AC	Non-Ducted Heating	0	0	0.5	0.5	0	0.0582011
-Multi-Family with 5+ Units	Central AC	None	0.5	0	0	0.5	0	0.021164
-Multi-Family with 5+ Units	Ducted Heat Pump	None	0	0	0	0	1	0
-Multi-Family with 5+ Units	Evaporative or Swamp Cooler	None	0	0	0	0	1	0
-Multi-Family with 5+ Units	Non-Ducted Heat Pump	None	0	0	0	0	1	0
-Multi-Family with 5+ Units	None	None	0	0	0	1	0	0.021164
-Multi-Family with 5+ Units	Room AC	None	0	0	0	1	0	0.021164
-Single-Family Attached	Central AC	Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Attached	Ducted Heat Pump	Ducted Heat Pump	0	0	0	1	0	0.00396826
-Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Attached	Non-Ducted Heat Pump	Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Attached	None	Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Attached	Room AC	Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Attached	Central AC	Ducted Heating	0.25	0.25	0.25	0.25	0	0.0145503
-Single-Family Attached	Ducted Heat Pump	Ducted Heating	0	0	0	0	1	0
-Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heating	0	0	0	0	1	0
-Single-Family Attached	Non-Ducted Heat Pump	Ducted Heating	0	0	0	0	1	0
-Single-Family Attached	None	Ducted Heating	0	0	0.5	0.5	0	0.0145503
-Single-Family Attached	Room AC	Ducted Heating	0	0	0.5	0.5	0	0.0145503
-Single-Family Attached	Central AC	Non-Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Attached	Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	1	0	0.00396826
-Single-Family Attached	None	Non-Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Attached	Room AC	Non-Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Attached	Central AC	Non-Ducted Heating	0.25	0.25	0.25	0.25	0	0.0145503
-Single-Family Attached	Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1	0
-Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heating	0	0	0	0	1	0
-Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1	0
-Single-Family Attached	None	Non-Ducted Heating	0	0	0.5	0.5	0	0.0145503
-Single-Family Attached	Room AC	Non-Ducted Heating	0	0	0.5	0.5	0	0.0145503
-Single-Family Attached	Central AC	None	0.5	0	0	0.5	0	0.005291
-Single-Family Attached	Ducted Heat Pump	None	0	0	0	0	1	0
-Single-Family Attached	Evaporative or Swamp Cooler	None	0	0	0	0	1	0
-Single-Family Attached	Non-Ducted Heat Pump	None	0	0	0	0	1	0
-Single-Family Attached	None	None	0	0	0	1	0	0.005291
-Single-Family Attached	Room AC	None	0	0	0	1	0	0.005291
-Single-Family Detached	Central AC	Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Detached	Ducted Heat Pump	Ducted Heat Pump	0	0	0	1	0	0.00396826
-Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Detached	Non-Ducted Heat Pump	Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Detached	None	Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Detached	Room AC	Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Detached	Central AC	Ducted Heating	0	0	0	1	0	0.0145503
-Single-Family Detached	Ducted Heat Pump	Ducted Heating	0	0	0	0	1	0
-Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heating	0	0	0	0	1	0
-Single-Family Detached	Non-Ducted Heat Pump	Ducted Heating	0	0	0	0	1	0
-Single-Family Detached	None	Ducted Heating	0	0	0	1	0	0.0145503
-Single-Family Detached	Room AC	Ducted Heating	0	0	0	1	0	0.0145503
-Single-Family Detached	Central AC	Non-Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Detached	Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	1	0	0.00396826
-Single-Family Detached	None	Non-Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Detached	Room AC	Non-Ducted Heat Pump	0	0	0	0	1	0
-Single-Family Detached	Central AC	Non-Ducted Heating	0	0	0	1	0	0.0145503
-Single-Family Detached	Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1	0
-Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heating	0	0	0	0	1	0
-Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1	0
-Single-Family Detached	None	Non-Ducted Heating	0	0	0	1	0	0.0145503
-Single-Family Detached	Room AC	Non-Ducted Heating	0	0	0	1	0	0.0145503
-Single-Family Detached	Central AC	None	0	0	0	1	0	0.005291
-Single-Family Detached	Ducted Heat Pump	None	0	0	0	0	1	0
-Single-Family Detached	Evaporative or Swamp Cooler	None	0	0	0	0	1	0
-Single-Family Detached	Non-Ducted Heat Pump	None	0	0	0	0	1	0
-Single-Family Detached	None	None	0	0	0	1	0	0.005291
-Single-Family Detached	Room AC	None	0	0	0	1	0	0.005291
+Dependency=Geometry Building Type RECS	Dependency=HVAC Cooling Type	Dependency=HVAC Heating Type	Option=Cooling Only	Option=Heating and Cooling	Option=Heating Only	Option=None	Option=Void
+Mobile Home	Central AC	Ducted Heat Pump	0	0	0	0	1
+Mobile Home	Ducted Heat Pump	Ducted Heat Pump	0	0	0	1	0
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heat Pump	0	0	0	0	1
+Mobile Home	Non-Ducted Heat Pump	Ducted Heat Pump	0	0	0	0	1
+Mobile Home	None	Ducted Heat Pump	0	0	0	0	1
+Mobile Home	Room AC	Ducted Heat Pump	0	0	0	0	1
+Mobile Home	Central AC	Ducted Heating	0	0	0	1	0
+Mobile Home	Ducted Heat Pump	Ducted Heating	0	0	0	0	1
+Mobile Home	Evaporative or Swamp Cooler	Ducted Heating	0	0	0	0	1
+Mobile Home	Non-Ducted Heat Pump	Ducted Heating	0	0	0	0	1
+Mobile Home	None	Ducted Heating	0	0	0	1	0
+Mobile Home	Room AC	Ducted Heating	0	0	0	1	0
+Mobile Home	Central AC	Non-Ducted Heat Pump	0	0	0	0	1
+Mobile Home	Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	0	1
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	0	0	0	0	1
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	1	0
+Mobile Home	None	Non-Ducted Heat Pump	0	0	0	0	1
+Mobile Home	Room AC	Non-Ducted Heat Pump	0	0	0	0	1
+Mobile Home	Central AC	Non-Ducted Heating	0	0	0	1	0
+Mobile Home	Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1
+Mobile Home	Evaporative or Swamp Cooler	Non-Ducted Heating	0	0	0	0	1
+Mobile Home	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1
+Mobile Home	None	Non-Ducted Heating	0	0	0	1	0
+Mobile Home	Room AC	Non-Ducted Heating	0	0	0	1	0
+Mobile Home	Central AC	None	0	0	0	1	0
+Mobile Home	Ducted Heat Pump	None	0	0	0	0	1
+Mobile Home	Evaporative or Swamp Cooler	None	0	0	0	0	1
+Mobile Home	Non-Ducted Heat Pump	None	0	0	0	0	1
+Mobile Home	None	None	0	0	0	1	0
+Mobile Home	Room AC	None	0	0	0	1	0
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heat Pump	0	0	0	1	0
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 2 - 4 Units	None	Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Central AC	Ducted Heating	0.25	0.25	0.25	0.25	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Ducted Heating	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Ducted Heating	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Ducted Heating	0	0	0	0	1
+Multi-Family with 2 - 4 Units	None	Ducted Heating	0	0	0.5	0.5	0
+Multi-Family with 2 - 4 Units	Room AC	Ducted Heating	0	0	0.5	0.5	0
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	1	0
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Central AC	Non-Ducted Heating	0.25	0.25	0.25	0.25	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	Non-Ducted Heating	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1
+Multi-Family with 2 - 4 Units	None	Non-Ducted Heating	0	0	0.5	0.5	0
+Multi-Family with 2 - 4 Units	Room AC	Non-Ducted Heating	0	0	0.5	0.5	0
+Multi-Family with 2 - 4 Units	Central AC	None	0.5	0	0	0.5	0
+Multi-Family with 2 - 4 Units	Ducted Heat Pump	None	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Evaporative or Swamp Cooler	None	0	0	0	0	1
+Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	None	0	0	0	0	1
+Multi-Family with 2 - 4 Units	None	None	0	0	0	1	0
+Multi-Family with 2 - 4 Units	Room AC	None	0	0	0	1	0
+Multi-Family with 5+ Units	Central AC	Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heat Pump	0	0	0	1	0
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 5+ Units	None	Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 5+ Units	Room AC	Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 5+ Units	Central AC	Ducted Heating	0.25	0.25	0.25	0.25	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Ducted Heating	0	0	0	0	1
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Ducted Heating	0	0	0	0	1
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Ducted Heating	0	0	0	0	1
+Multi-Family with 5+ Units	None	Ducted Heating	0	0	0.5	0.5	0
+Multi-Family with 5+ Units	Room AC	Ducted Heating	0	0	0.5	0.5	0
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	1	0
+Multi-Family with 5+ Units	None	Non-Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heat Pump	0	0	0	0	1
+Multi-Family with 5+ Units	Central AC	Non-Ducted Heating	0.25	0.25	0.25	0.25	0
+Multi-Family with 5+ Units	Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	Non-Ducted Heating	0	0	0	0	1
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1
+Multi-Family with 5+ Units	None	Non-Ducted Heating	0	0	0.5	0.5	0
+Multi-Family with 5+ Units	Room AC	Non-Ducted Heating	0	0	0.5	0.5	0
+Multi-Family with 5+ Units	Central AC	None	0.5	0	0	0.5	0
+Multi-Family with 5+ Units	Ducted Heat Pump	None	0	0	0	0	1
+Multi-Family with 5+ Units	Evaporative or Swamp Cooler	None	0	0	0	0	1
+Multi-Family with 5+ Units	Non-Ducted Heat Pump	None	0	0	0	0	1
+Multi-Family with 5+ Units	None	None	0	0	0	1	0
+Multi-Family with 5+ Units	Room AC	None	0	0	0	1	0
+Single-Family Attached	Central AC	Ducted Heat Pump	0	0	0	0	1
+Single-Family Attached	Ducted Heat Pump	Ducted Heat Pump	0	0	0	1	0
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heat Pump	0	0	0	0	1
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heat Pump	0	0	0	0	1
+Single-Family Attached	None	Ducted Heat Pump	0	0	0	0	1
+Single-Family Attached	Room AC	Ducted Heat Pump	0	0	0	0	1
+Single-Family Attached	Central AC	Ducted Heating	0.25	0.25	0.25	0.25	0
+Single-Family Attached	Ducted Heat Pump	Ducted Heating	0	0	0	0	1
+Single-Family Attached	Evaporative or Swamp Cooler	Ducted Heating	0	0	0	0	1
+Single-Family Attached	Non-Ducted Heat Pump	Ducted Heating	0	0	0	0	1
+Single-Family Attached	None	Ducted Heating	0	0	0.5	0.5	0
+Single-Family Attached	Room AC	Ducted Heating	0	0	0.5	0.5	0
+Single-Family Attached	Central AC	Non-Ducted Heat Pump	0	0	0	0	1
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	0	1
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	0	0	0	0	1
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	1	0
+Single-Family Attached	None	Non-Ducted Heat Pump	0	0	0	0	1
+Single-Family Attached	Room AC	Non-Ducted Heat Pump	0	0	0	0	1
+Single-Family Attached	Central AC	Non-Ducted Heating	0.25	0.25	0.25	0.25	0
+Single-Family Attached	Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1
+Single-Family Attached	Evaporative or Swamp Cooler	Non-Ducted Heating	0	0	0	0	1
+Single-Family Attached	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1
+Single-Family Attached	None	Non-Ducted Heating	0	0	0.5	0.5	0
+Single-Family Attached	Room AC	Non-Ducted Heating	0	0	0.5	0.5	0
+Single-Family Attached	Central AC	None	0.5	0	0	0.5	0
+Single-Family Attached	Ducted Heat Pump	None	0	0	0	0	1
+Single-Family Attached	Evaporative or Swamp Cooler	None	0	0	0	0	1
+Single-Family Attached	Non-Ducted Heat Pump	None	0	0	0	0	1
+Single-Family Attached	None	None	0	0	0	1	0
+Single-Family Attached	Room AC	None	0	0	0	1	0
+Single-Family Detached	Central AC	Ducted Heat Pump	0	0	0	0	1
+Single-Family Detached	Ducted Heat Pump	Ducted Heat Pump	0	0	0	1	0
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heat Pump	0	0	0	0	1
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heat Pump	0	0	0	0	1
+Single-Family Detached	None	Ducted Heat Pump	0	0	0	0	1
+Single-Family Detached	Room AC	Ducted Heat Pump	0	0	0	0	1
+Single-Family Detached	Central AC	Ducted Heating	0	0	0	1	0
+Single-Family Detached	Ducted Heat Pump	Ducted Heating	0	0	0	0	1
+Single-Family Detached	Evaporative or Swamp Cooler	Ducted Heating	0	0	0	0	1
+Single-Family Detached	Non-Ducted Heat Pump	Ducted Heating	0	0	0	0	1
+Single-Family Detached	None	Ducted Heating	0	0	0	1	0
+Single-Family Detached	Room AC	Ducted Heating	0	0	0	1	0
+Single-Family Detached	Central AC	Non-Ducted Heat Pump	0	0	0	0	1
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	0	1
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heat Pump	0	0	0	0	1
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heat Pump	0	0	0	1	0
+Single-Family Detached	None	Non-Ducted Heat Pump	0	0	0	0	1
+Single-Family Detached	Room AC	Non-Ducted Heat Pump	0	0	0	0	1
+Single-Family Detached	Central AC	Non-Ducted Heating	0	0	0	1	0
+Single-Family Detached	Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1
+Single-Family Detached	Evaporative or Swamp Cooler	Non-Ducted Heating	0	0	0	0	1
+Single-Family Detached	Non-Ducted Heat Pump	Non-Ducted Heating	0	0	0	0	1
+Single-Family Detached	None	Non-Ducted Heating	0	0	0	1	0
+Single-Family Detached	Room AC	Non-Ducted Heating	0	0	0	1	0
+Single-Family Detached	Central AC	None	0	0	0	1	0
+Single-Family Detached	Ducted Heat Pump	None	0	0	0	0	1
+Single-Family Detached	Evaporative or Swamp Cooler	None	0	0	0	0	1
+Single-Family Detached	Non-Ducted Heat Pump	None	0	0	0	0	1
+Single-Family Detached	None	None	0	0	0	1	0
+Single-Family Detached	Room AC	None	0	0	0	1	0
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence of an HVAC system shared between multiple dwelling units.

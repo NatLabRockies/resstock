@@ -1,4 +1,4 @@
-Option=1 day	Option=1 month	Option=1 week	Option=2 weeks	Option=3 days	Option=3 months	Option=Never	Option=Year round	sampling_probability
-0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125	1
+Option=1 day	Option=1 month	Option=1 week	Option=2 weeks	Option=3 days	Option=3 months	Option=Never	Option=Year round
+0.125	0.125	0.125	0.125	0.125	0.125	0.125	0.125
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: Number of days in a year the cooling system is unavailable.

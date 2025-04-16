@@ -1,5 +1,5 @@
-Dependency=Clothes Washer Presence	Option=EnergyStar	Option=None	Option=Standard	Option=Void	sampling_probability
-None	0	1	0	0	0.5
-Yes	0.5	0	0.5	0	0.5
+Dependency=Clothes Washer Presence	Option=EnergyStar	Option=None	Option=Standard	Option=Void
+None	0	1	0	0
+Yes	0.5	0	0.5	0
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: Presence and rated efficiency of the clothes washer.

@@ -1,8 +1,8 @@
-Dependency=Geometry Building Type RECS	Option=Electric	Option=Gas	Option=None	Option=Propane	Option=Void	sampling_probability
-Mobile Home	0.25	0.25	0.25	0.25	0	0.111111
-Multi-Family with 2 - 4 Units	0.25	0.25	0.25	0.25	0	0.222222
-Multi-Family with 5+ Units	0.25	0.25	0.25	0.25	0	0.444444
-Single-Family Attached	0.25	0.25	0.25	0.25	0	0.111111
-Single-Family Detached	0.25	0.25	0.25	0.25	0	0.111111
+Dependency=Geometry Building Type RECS	Option=Electric	Option=Gas	Option=None	Option=Propane	Option=Void
+Mobile Home	0.25	0.25	0.25	0.25	0
+Multi-Family with 2 - 4 Units	0.25	0.25	0.25	0.25	0
+Multi-Family with 5+ Units	0.25	0.25	0.25	0.25	0
+Single-Family Attached	0.25	0.25	0.25	0.25	0
+Single-Family Detached	0.25	0.25	0.25	0.25	0
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence, rated efficiency, and fuel type of the clothes dryer in a dwelling unit.
