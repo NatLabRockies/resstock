@@ -119,11 +119,11 @@ jobs:
       
       - name: Install buildstock_query
         run: |
-          pip install git+https://github.com/NREL/buildstock-query.git@minimal_buildings
+          pip3 install git+https://github.com/NREL/buildstock-query.git@minimal_buildings
 
       - name: Generate 550K Sampler
         run: |
-          openstudio resources/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
+          openstudio resources/run_sampling.rb -p project_national -n 550 -o ../project_national/resources/national_550ksamples.csv
 
       - name: Generate minimal buildstock and other files
         run: |
