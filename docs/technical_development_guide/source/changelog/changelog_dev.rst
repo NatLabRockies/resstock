@@ -6,6 +6,8 @@ Development Changelog
 .. changelog::
     :version: v3.5.0
     :released: pending
+
+    
     .. change::
         :tags: characteristics, documentation, technical reference guide
         :pullreq: 1380
@@ -19,7 +21,6 @@ Development Changelog
         Remove fallback rules from Hawaii and to match technology saturation from RECS2020
 
         Assignees: Janet Reyna
-
 
 
     .. change::
