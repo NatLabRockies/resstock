@@ -119,7 +119,7 @@ jobs:
       
       - name: Install buildstock_query
         run: |
-          pip install git+https://github.com/NREL/buildstock_query.git@minimal_buildings
+          pip install git+https://github.com/NREL/buildstock-query.git@minimal_buildings
 
       - name: Generate 550K Sampler
         run: |
