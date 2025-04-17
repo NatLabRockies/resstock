@@ -1,0 +1,311 @@
+upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
+1,ENERGY STAR heat pump with elec backup,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF",408964,74.4
+1,ENERGY STAR heat pump with elec backup,2,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Max Load",121399,22.1
+1,ENERGY STAR heat pump with elec backup,3,Cooling Setpoint Has Offset|No,121399,22.1
+1,ENERGY STAR heat pump with elec backup,4,Cooling Setpoint Offset Magnitude|0F,121399,22.1
+1,ENERGY STAR heat pump with elec backup,5,Cooling Setpoint Offset Period|None,121399,22.1
+1,ENERGY STAR heat pump with elec backup,6,Heating Setpoint Has Offset|No,121399,22.1
+1,ENERGY STAR heat pump with elec backup,7,Heating Setpoint Offset Magnitude|0F,121399,22.1
+1,ENERGY STAR heat pump with elec backup,8,Heating Setpoint Offset Period|None,121399,22.1
+1,ENERGY STAR heat pump with elec backup,9,HVAC Cooling Efficiency|Non-Ducted Heat Pump,121399,22.1
+1,ENERGY STAR heat pump with elec backup,10,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+1,ENERGY STAR heat pump with elec backup,11,HVAC Cooling Partial Space Conditioning|100% Conditioned,530363,96.4
+1,ENERGY STAR heat pump with elec backup,-1,All,530363,96.4
+2,High efficiency cold-climate heat pump with elec backup,1,"HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load",408964,74.4
+2,High efficiency cold-climate heat pump with elec backup,2,"HVAC Heating Efficiency|MSHP, SEER 20, 11 HSPF, CCHP, Max Load",121399,22.1
+2,High efficiency cold-climate heat pump with elec backup,3,Cooling Setpoint Has Offset|No,530363,96.4
+2,High efficiency cold-climate heat pump with elec backup,4,Cooling Setpoint Offset Magnitude|0F,530363,96.4
+2,High efficiency cold-climate heat pump with elec backup,5,Cooling Setpoint Offset Period|None,530363,96.4
+2,High efficiency cold-climate heat pump with elec backup,6,Heating Setpoint Has Offset|No,530363,96.4
+2,High efficiency cold-climate heat pump with elec backup,7,Heating Setpoint Offset Magnitude|0F,530363,96.4
+2,High efficiency cold-climate heat pump with elec backup,8,Heating Setpoint Offset Period|None,530363,96.4
+2,High efficiency cold-climate heat pump with elec backup,9,HVAC Cooling Efficiency|Non-Ducted Heat Pump,121399,22.1
+2,High efficiency cold-climate heat pump with elec backup,10,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+2,High efficiency cold-climate heat pump with elec backup,11,HVAC Cooling Partial Space Conditioning|100% Conditioned,530363,96.4
+2,High efficiency cold-climate heat pump with elec backup,-1,All,530363,96.4
+3,Ultra high efficiency heat pump with elec backup,1,"HVAC Heating Efficiency|ASHP, SEER 24, 13 HSPF, Max Load",408964,74.4
+3,Ultra high efficiency heat pump with elec backup,2,"HVAC Heating Efficiency|MSHP, SEER 24, 13 HSPF, Max Load",121399,22.1
+3,Ultra high efficiency heat pump with elec backup,3,Cooling Setpoint Has Offset|No,530363,96.4
+3,Ultra high efficiency heat pump with elec backup,4,Cooling Setpoint Offset Magnitude|0F,530363,96.4
+3,Ultra high efficiency heat pump with elec backup,5,Cooling Setpoint Offset Period|None,530363,96.4
+3,Ultra high efficiency heat pump with elec backup,6,Heating Setpoint Has Offset|No,530363,96.4
+3,Ultra high efficiency heat pump with elec backup,7,Heating Setpoint Offset Magnitude|0F,530363,96.4
+3,Ultra high efficiency heat pump with elec backup,8,Heating Setpoint Offset Period|None,530363,96.4
+3,Ultra high efficiency heat pump with elec backup,9,HVAC Cooling Efficiency|Non-Ducted Heat Pump,121399,22.1
+3,Ultra high efficiency heat pump with elec backup,10,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+3,Ultra high efficiency heat pump with elec backup,11,HVAC Cooling Partial Space Conditioning|100% Conditioned,530363,96.4
+3,Ultra high efficiency heat pump with elec backup,-1,All,530363,96.4
+4,ENERGY STAR heat pump with existing system as backup,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Separate Backup",11425,2.1
+4,ENERGY STAR heat pump with existing system as backup,2,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Separate Backup, Max Load",33047,6.0
+4,ENERGY STAR heat pump with existing system as backup,3,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 60% AFUE NG, 5F-40F switchover band",1450,0.3
+4,ENERGY STAR heat pump with existing system as backup,4,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 76% AFUE NG, 5F-40F switchover band",13474,2.4
+4,ENERGY STAR heat pump with existing system as backup,5,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 80% AFUE NG, 5F-40F switchover band",110398,20.1
+4,ENERGY STAR heat pump with existing system as backup,6,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 92.5% AFUE NG, 5F-40F switchover band",76739,14.0
+4,ENERGY STAR heat pump with existing system as backup,7,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 60% AFUE Propane, 5F-40F switchover band",97,0.0
+4,ENERGY STAR heat pump with existing system as backup,8,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 76% AFUE Propane, 5F-40F switchover band",1283,0.2
+4,ENERGY STAR heat pump with existing system as backup,9,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 80% AFUE Propane, 5F-40F switchover band",11675,2.1
+4,ENERGY STAR heat pump with existing system as backup,10,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 92.5% AFUE Propane, 5F-40F switchover band",5650,1.0
+4,ENERGY STAR heat pump with existing system as backup,11,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 60% AFUE Fuel Oil, 5F-40F switchover band",0,0.0
+4,ENERGY STAR heat pump with existing system as backup,12,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 76% AFUE Fuel Oil, 5F-40F switchover band",437,0.1
+4,ENERGY STAR heat pump with existing system as backup,13,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 80% AFUE Fuel Oil, 5F-40F switchover band",12798,2.3
+4,ENERGY STAR heat pump with existing system as backup,14,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 92.5% AFUE Fuel Oil, 5F-40F switchover band",1714,0.3
+4,ENERGY STAR heat pump with existing system as backup,15,HVAC Secondary Heating Fuel|Natural Gas,14027,2.6
+4,ENERGY STAR heat pump with existing system as backup,16,HVAC Secondary Heating Fuel|Propane,1831,0.3
+4,ENERGY STAR heat pump with existing system as backup,17,HVAC Secondary Heating Fuel|Fuel Oil,6614,1.2
+4,ENERGY STAR heat pump with existing system as backup,18,"HVAC Secondary Heating Efficiency|Fuel Boiler, 76% AFUE",2635,0.5
+4,ENERGY STAR heat pump with existing system as backup,19,"HVAC Secondary Heating Efficiency|Fuel Boiler, 80% AFUE",17405,3.2
+4,ENERGY STAR heat pump with existing system as backup,20,"HVAC Secondary Heating Efficiency|Fuel Boiler, 90% AFUE",2432,0.4
+4,ENERGY STAR heat pump with existing system as backup,21,HVAC Secondary Heating Fuel|Natural Gas,16970,3.1
+4,ENERGY STAR heat pump with existing system as backup,22,HVAC Secondary Heating Fuel|Propane,3479,0.6
+4,ENERGY STAR heat pump with existing system as backup,23,HVAC Secondary Heating Fuel|Fuel Oil,1551,0.3
+4,ENERGY STAR heat pump with existing system as backup,24,"HVAC Secondary Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE",7045,1.3
+4,ENERGY STAR heat pump with existing system as backup,25,"HVAC Secondary Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE",14955,2.7
+4,ENERGY STAR heat pump with existing system as backup,26,Cooling Setpoint Has Offset|No,33047,6.0
+4,ENERGY STAR heat pump with existing system as backup,27,Cooling Setpoint Offset Magnitude|0F,33047,6.0
+4,ENERGY STAR heat pump with existing system as backup,28,Cooling Setpoint Offset Period|None,33047,6.0
+4,ENERGY STAR heat pump with existing system as backup,29,Heating Setpoint Has Offset|No,33047,6.0
+4,ENERGY STAR heat pump with existing system as backup,30,Heating Setpoint Offset Magnitude|0F,33047,6.0
+4,ENERGY STAR heat pump with existing system as backup,31,Heating Setpoint Offset Period|None,33047,6.0
+4,ENERGY STAR heat pump with existing system as backup,32,HVAC Cooling Efficiency|Non-Ducted Heat Pump,33047,6.0
+4,ENERGY STAR heat pump with existing system as backup,33,HVAC Cooling Efficiency|Ducted Heat Pump,247140,44.9
+4,ENERGY STAR heat pump with existing system as backup,34,HVAC Cooling Partial Space Conditioning|100% Conditioned,280187,50.9
+4,ENERGY STAR heat pump with existing system as backup,-1,All,280187,50.9
+5,Geothermal heat pump,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",408964,74.4
+5,Geothermal heat pump,2,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+5,Geothermal heat pump,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,408964,74.4
+5,Geothermal heat pump,-1,All,408964,74.4
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF",408964,74.4
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,2,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Max Load",121399,22.1
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,3,Cooling Setpoint Has Offset|No,121399,22.1
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,4,Cooling Setpoint Offset Magnitude|0F,121399,22.1
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,5,Cooling Setpoint Offset Period|None,121399,22.1
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,6,Heating Setpoint Has Offset|No,121399,22.1
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,7,Heating Setpoint Offset Magnitude|0F,121399,22.1
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,8,Heating Setpoint Offset Period|None,121399,22.1
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,9,HVAC Cooling Efficiency|Non-Ducted Heat Pump,121399,22.1
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,10,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,11,HVAC Cooling Partial Space Conditioning|100% Conditioned,530363,96.4
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,12,Insulation Ceiling|R-30,1256,0.2
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,13,Insulation Ceiling|R-49,83386,15.2
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,14,Insulation Ceiling|R-60,124876,22.7
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,15,Infiltration Reduction|30%,352391,64.1
+6,ENERGY STAR heat pump with elec backup + Light Touch Envelope,-1,All,530363,96.4
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,1,"HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load",408964,74.4
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,2,"HVAC Heating Efficiency|MSHP, SEER 20, 11 HSPF, CCHP, Max Load",121399,22.1
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,3,Cooling Setpoint Has Offset|No,530363,96.4
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,4,Cooling Setpoint Offset Magnitude|0F,530363,96.4
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,5,Cooling Setpoint Offset Period|None,530363,96.4
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,6,Heating Setpoint Has Offset|No,530363,96.4
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,7,Heating Setpoint Offset Magnitude|0F,530363,96.4
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,8,Heating Setpoint Offset Period|None,530363,96.4
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,9,HVAC Cooling Efficiency|Non-Ducted Heat Pump,121399,22.1
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,10,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,11,HVAC Cooling Partial Space Conditioning|100% Conditioned,530363,96.4
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,12,Insulation Ceiling|R-30,1256,0.2
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,13,Insulation Ceiling|R-49,83386,15.2
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,14,Insulation Ceiling|R-60,124876,22.7
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,15,Infiltration Reduction|30%,352391,64.1
+7,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope,-1,All,530363,96.4
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,1,"HVAC Heating Efficiency|ASHP, SEER 24, 13 HSPF, Max Load",408964,74.4
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,2,"HVAC Heating Efficiency|MSHP, SEER 24, 13 HSPF, Max Load",121399,22.1
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,3,Cooling Setpoint Has Offset|No,530363,96.4
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,4,Cooling Setpoint Offset Magnitude|0F,530363,96.4
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,5,Cooling Setpoint Offset Period|None,530363,96.4
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,6,Heating Setpoint Has Offset|No,530363,96.4
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,7,Heating Setpoint Offset Magnitude|0F,530363,96.4
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,8,Heating Setpoint Offset Period|None,530363,96.4
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,9,HVAC Cooling Efficiency|Non-Ducted Heat Pump,121399,22.1
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,10,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,11,HVAC Cooling Partial Space Conditioning|100% Conditioned,530363,96.4
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,12,Insulation Ceiling|R-30,1256,0.2
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,13,Insulation Ceiling|R-49,83386,15.2
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,14,Insulation Ceiling|R-60,124876,22.7
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,15,Infiltration Reduction|30%,352391,64.1
+8,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,-1,All,530363,96.4
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Separate Backup",11425,2.1
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,2,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Separate Backup, Max Load",33047,6.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,3,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 60% AFUE NG, 5F-40F switchover band",1450,0.3
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,4,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 76% AFUE NG, 5F-40F switchover band",13474,2.4
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,5,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 80% AFUE NG, 5F-40F switchover band",110398,20.1
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,6,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 92.5% AFUE NG, 5F-40F switchover band",76739,14.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,7,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 60% AFUE Propane, 5F-40F switchover band",97,0.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,8,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 76% AFUE Propane, 5F-40F switchover band",1283,0.2
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,9,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 80% AFUE Propane, 5F-40F switchover band",11675,2.1
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,10,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 92.5% AFUE Propane, 5F-40F switchover band",5650,1.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,11,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 60% AFUE Fuel Oil, 5F-40F switchover band",0,0.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,12,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 76% AFUE Fuel Oil, 5F-40F switchover band",437,0.1
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,13,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 80% AFUE Fuel Oil, 5F-40F switchover band",12798,2.3
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,14,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 92.5% AFUE Fuel Oil, 5F-40F switchover band",1714,0.3
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,15,HVAC Secondary Heating Fuel|Natural Gas,14027,2.6
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,16,HVAC Secondary Heating Fuel|Propane,1831,0.3
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,17,HVAC Secondary Heating Fuel|Fuel Oil,6614,1.2
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,18,"HVAC Secondary Heating Efficiency|Fuel Boiler, 76% AFUE",2635,0.5
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,19,"HVAC Secondary Heating Efficiency|Fuel Boiler, 80% AFUE",17405,3.2
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,20,"HVAC Secondary Heating Efficiency|Fuel Boiler, 90% AFUE",2432,0.4
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,21,HVAC Secondary Heating Fuel|Natural Gas,16970,3.1
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,22,HVAC Secondary Heating Fuel|Propane,3479,0.6
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,23,HVAC Secondary Heating Fuel|Fuel Oil,1551,0.3
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,24,"HVAC Secondary Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE",7045,1.3
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,25,"HVAC Secondary Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE",14955,2.7
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,26,Cooling Setpoint Has Offset|No,33047,6.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,27,Cooling Setpoint Offset Magnitude|0F,33047,6.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,28,Cooling Setpoint Offset Period|None,33047,6.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,29,Heating Setpoint Has Offset|No,33047,6.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,30,Heating Setpoint Offset Magnitude|0F,33047,6.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,31,Heating Setpoint Offset Period|None,33047,6.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,32,HVAC Cooling Efficiency|Non-Ducted Heat Pump,33047,6.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,33,HVAC Cooling Efficiency|Ducted Heat Pump,247140,44.9
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,34,HVAC Cooling Partial Space Conditioning|100% Conditioned,280187,50.9
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,35,Insulation Ceiling|R-30,28,0.0
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,36,Insulation Ceiling|R-49,40488,7.4
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,37,Insulation Ceiling|R-60,96762,17.6
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,38,Infiltration Reduction|30%,180662,32.8
+9,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,-1,All,280187,50.9
+10,Geothermal heat pump + Light Touch Envelope,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",408964,74.4
+10,Geothermal heat pump + Light Touch Envelope,2,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+10,Geothermal heat pump + Light Touch Envelope,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,408964,74.4
+10,Geothermal heat pump + Light Touch Envelope,4,Insulation Ceiling|R-30,1136,0.2
+10,Geothermal heat pump + Light Touch Envelope,5,Insulation Ceiling|R-49,76742,14.0
+10,Geothermal heat pump + Light Touch Envelope,6,Insulation Ceiling|R-60,110909,20.2
+10,Geothermal heat pump + Light Touch Envelope,7,Infiltration Reduction|30%,261553,47.6
+10,Geothermal heat pump + Light Touch Envelope,-1,All,408964,74.4
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF",408964,74.4
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,2,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Max Load",121399,22.1
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,3,Cooling Setpoint Has Offset|No,121399,22.1
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,4,Cooling Setpoint Offset Magnitude|0F,121399,22.1
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,5,Cooling Setpoint Offset Period|None,121399,22.1
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,6,Heating Setpoint Has Offset|No,121399,22.1
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,7,Heating Setpoint Offset Magnitude|0F,121399,22.1
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,8,Heating Setpoint Offset Period|None,121399,22.1
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,9,HVAC Cooling Efficiency|Non-Ducted Heat Pump,121399,22.1
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,10,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,11,HVAC Cooling Partial Space Conditioning|100% Conditioned,530363,96.4
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,12,Insulation Ceiling|R-30,1256,0.2
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,13,Insulation Ceiling|R-49,83386,15.2
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,14,Insulation Ceiling|R-60,124876,22.7
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,15,Infiltration Reduction|30%,352391,64.1
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,16,Water Heater Fuel|Electricity,276911,50.3
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,17,"Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF",412055,74.9
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,18,"Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF",91604,16.7
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,19,"Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF",25405,4.6
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,20,"Clothes Dryer|Electric, Premium, EnergyStar",81720,14.9
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,21,Cooking Range|Electric Induction,196621,35.7
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,22,Misc Pool Heater|Electricity,5760,1.0
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,23,Misc Hot Tub Spa|Electricity,6030,1.1
+11,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,-1,All,530363,96.4
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,1,"HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load",408964,74.4
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,2,"HVAC Heating Efficiency|MSHP, SEER 20, 11 HSPF, CCHP, Max Load",121399,22.1
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,3,Cooling Setpoint Has Offset|No,530363,96.4
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,4,Cooling Setpoint Offset Magnitude|0F,530363,96.4
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,5,Cooling Setpoint Offset Period|None,530363,96.4
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,6,Heating Setpoint Has Offset|No,530363,96.4
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,7,Heating Setpoint Offset Magnitude|0F,530363,96.4
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,8,Heating Setpoint Offset Period|None,530363,96.4
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,9,HVAC Cooling Efficiency|Non-Ducted Heat Pump,121399,22.1
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,10,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,11,HVAC Cooling Partial Space Conditioning|100% Conditioned,530363,96.4
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,12,Insulation Ceiling|R-30,1256,0.2
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,13,Insulation Ceiling|R-49,83386,15.2
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,14,Insulation Ceiling|R-60,124876,22.7
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,15,Infiltration Reduction|30%,352391,64.1
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,16,Water Heater Fuel|Electricity,276911,50.3
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,17,"Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF",412055,74.9
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,18,"Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF",91604,16.7
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,19,"Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF",25405,4.6
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,20,"Clothes Dryer|Electric, Premium, EnergyStar",81720,14.9
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,21,Cooking Range|Electric Induction,196621,35.7
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,22,Misc Pool Heater|Electricity,5760,1.0
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,23,Misc Hot Tub Spa|Electricity,6030,1.1
+12,High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,-1,All,530363,96.4
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,1,"HVAC Heating Efficiency|ASHP, SEER 24, 13 HSPF, Max Load",408964,74.4
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,2,"HVAC Heating Efficiency|MSHP, SEER 24, 13 HSPF, Max Load",121399,22.1
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,3,Cooling Setpoint Has Offset|No,530363,96.4
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,4,Cooling Setpoint Offset Magnitude|0F,530363,96.4
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,5,Cooling Setpoint Offset Period|None,530363,96.4
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,6,Heating Setpoint Has Offset|No,530363,96.4
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,7,Heating Setpoint Offset Magnitude|0F,530363,96.4
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,8,Heating Setpoint Offset Period|None,530363,96.4
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,9,HVAC Cooling Efficiency|Non-Ducted Heat Pump,121399,22.1
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,10,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,11,HVAC Cooling Partial Space Conditioning|100% Conditioned,530363,96.4
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,12,Insulation Ceiling|R-30,1256,0.2
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,13,Insulation Ceiling|R-49,83386,15.2
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,14,Insulation Ceiling|R-60,124876,22.7
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,15,Infiltration Reduction|30%,352391,64.1
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,16,Water Heater Fuel|Electricity,276911,50.3
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,17,"Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF",412055,74.9
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,18,"Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF",91604,16.7
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,19,"Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF",25405,4.6
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,20,"Clothes Dryer|Electric, Premium, EnergyStar",81720,14.9
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,21,Cooking Range|Electric Induction,196621,35.7
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,22,Misc Pool Heater|Electricity,5760,1.0
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,23,Misc Hot Tub Spa|Electricity,6030,1.1
+13,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,-1,All,530363,96.4
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Separate Backup",11425,2.1
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,2,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Separate Backup, Max Load",33047,6.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,3,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 60% AFUE NG, 5F-40F switchover band",1450,0.3
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,4,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 76% AFUE NG, 5F-40F switchover band",13474,2.4
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,5,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 80% AFUE NG, 5F-40F switchover band",110398,20.1
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,6,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 92.5% AFUE NG, 5F-40F switchover band",76739,14.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,7,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 60% AFUE Propane, 5F-40F switchover band",97,0.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,8,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 76% AFUE Propane, 5F-40F switchover band",1283,0.2
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,9,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 80% AFUE Propane, 5F-40F switchover band",11675,2.1
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,10,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 92.5% AFUE Propane, 5F-40F switchover band",5650,1.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,11,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 60% AFUE Fuel Oil, 5F-40F switchover band",0,0.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,12,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 76% AFUE Fuel Oil, 5F-40F switchover band",437,0.1
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,13,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 80% AFUE Fuel Oil, 5F-40F switchover band",12798,2.3
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,14,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 92.5% AFUE Fuel Oil, 5F-40F switchover band",1714,0.3
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,15,HVAC Secondary Heating Fuel|Natural Gas,14027,2.6
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,16,HVAC Secondary Heating Fuel|Propane,1831,0.3
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,17,HVAC Secondary Heating Fuel|Fuel Oil,6614,1.2
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,18,"HVAC Secondary Heating Efficiency|Fuel Boiler, 76% AFUE",2635,0.5
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,19,"HVAC Secondary Heating Efficiency|Fuel Boiler, 80% AFUE",17405,3.2
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,20,"HVAC Secondary Heating Efficiency|Fuel Boiler, 90% AFUE",2432,0.4
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,21,HVAC Secondary Heating Fuel|Natural Gas,16970,3.1
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,22,HVAC Secondary Heating Fuel|Propane,3479,0.6
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,23,HVAC Secondary Heating Fuel|Fuel Oil,1551,0.3
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,24,"HVAC Secondary Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE",7045,1.3
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,25,"HVAC Secondary Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE",14955,2.7
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,26,Cooling Setpoint Has Offset|No,33047,6.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,27,Cooling Setpoint Offset Magnitude|0F,33047,6.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,28,Cooling Setpoint Offset Period|None,33047,6.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,29,Heating Setpoint Has Offset|No,33047,6.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,30,Heating Setpoint Offset Magnitude|0F,33047,6.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,31,Heating Setpoint Offset Period|None,33047,6.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,32,HVAC Cooling Efficiency|Non-Ducted Heat Pump,33047,6.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,33,HVAC Cooling Efficiency|Ducted Heat Pump,247140,44.9
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,34,HVAC Cooling Partial Space Conditioning|100% Conditioned,280187,50.9
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,35,Insulation Ceiling|R-30,28,0.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,36,Insulation Ceiling|R-49,40488,7.4
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,37,Insulation Ceiling|R-60,96762,17.6
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,38,Infiltration Reduction|30%,180662,32.8
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,39,Water Heater Fuel|Electricity,220773,40.1
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,40,"Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF",204141,37.1
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,41,"Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF",59074,10.7
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,42,"Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF",16704,3.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,43,"Clothes Dryer|Electric, Premium, EnergyStar",71190,12.9
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,44,Cooking Range|Electric Induction,148349,27.0
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,45,Misc Pool Heater|Electricity,4622,0.8
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,46,Misc Hot Tub Spa|Electricity,4770,0.9
+14,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,-1,All,280187,50.9
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",408964,74.4
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,2,HVAC Cooling Efficiency|Ducted Heat Pump,408964,74.4
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,408964,74.4
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,4,Insulation Ceiling|R-30,1136,0.2
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,5,Insulation Ceiling|R-49,76742,14.0
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,6,Insulation Ceiling|R-60,110909,20.2
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,7,Infiltration Reduction|30%,261553,47.6
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,8,Water Heater Fuel|Electricity,215776,39.2
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,9,"Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF",303269,55.1
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,10,"Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF",81799,14.9
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,11,"Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF",23002,4.2
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,12,"Clothes Dryer|Electric, Premium, EnergyStar",69489,12.6
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,13,Cooking Range|Electric Induction,151337,27.5
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,14,Misc Pool Heater|Electricity,5334,1.0
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,15,Misc Hot Tub Spa|Electricity,5194,0.9
+15,Geothermal heat pump + Light Touch Envelope + Full Appliance Electrification with Efficiency,-1,All,408964,74.4
+16,Envelope Only - Light Touch Envelope,1,Insulation Ceiling|R-30,1515,0.3
+16,Envelope Only - Light Touch Envelope,2,Insulation Ceiling|R-49,84381,15.3
+16,Envelope Only - Light Touch Envelope,3,Insulation Ceiling|R-60,129417,23.5
+16,Envelope Only - Light Touch Envelope,4,Infiltration Reduction|30%,366252,66.6
+16,Envelope Only - Light Touch Envelope,-1,All,445072,80.9
