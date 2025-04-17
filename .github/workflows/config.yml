@@ -123,7 +123,7 @@ jobs:
 
       - name: Generate 550K Sampler
         run: |
-          openstudio resources/run_sampling.rb -p project_national -n 550000 -o project_national/resources/national_550ksamples.csv
+          openstudio resources/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
 
       - name: Generate minimal buildstock and other files
         run: |
