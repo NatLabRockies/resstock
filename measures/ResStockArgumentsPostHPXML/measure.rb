@@ -113,7 +113,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         modified_schedule = modify_hvac_schedule(index, hvac_schedule)
         write_schedule(modified_schedule, building, index, output_csv_path)
       end
-      if args[:ev_flex_enabled] && !skip_ev_flexibility?(args)
+      if !skip_ev_flexibility?(args)
         ev_schedule = get_ev_schedule(building)
         next if ev_schedule.nil?
         modified_ev_schedule = modify_ev_schedule(index, ev_schedule)
