@@ -1178,3 +1178,27 @@ upgrades:
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: HVACFlexibility|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
+
+  - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
+    package_apply_logic:
+      - Electric Vehicle Ownership|No
+      - &Occupied_only
+          Vacancy Status|Occupied
+    options:
+      - &EV_Ownership_Yes
+        option: Electric Vehicle Ownership|Yes
+      - option: Electric Vehicle Charger|Level 1 charger
+
+  - upgrade_name: Electric Vehicle Adoption with Level 2 Charging
+    package_apply_logic: *Occupied_only
+    options:
+      - *EV_Ownership_Yes
+      - &L2_Charger
+        option: Electric Vehicle Charger|Level 2 charger
+
+  - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging
+    package_apply_logic: *Occupied_only
+    options:
+      - *EV_Ownership_Yes
+      - *L2_Charger
+      - option: Electric Vehicle Efficiency Increase|15%
