@@ -15,10 +15,11 @@ end
 
 class EVScheduleModifier < ScheduleModifier
 
-  # Modifies the EV schedule based on flexibility inputs
-  # @param ev_schedule [Array] Array of EV charging values (+ve is charging, -ve is discharging)
-  # @param flexibility_inputs [FlexibilityInputs] Inputs for schedule modification
-  # @return [Array] Modified EV schedule with charging (positive values) set to 0 during peak periods
+  # Modifies the EV charging schedule based on flexibility inputs
+  # Charging (positive values) is set to 0 during identified peak hours.
+  # @param ev_schedule [Hash] Hash containing :electric_vehicle key with an array of charging values (+ve is charging, -ve is discharging)
+  # @param flexibility_inputs [FlexibilityInputs] Configuration object specifying peak time schedule definitions
+  # @return [Hash] Hash with modified :electric_vehicle schedule and :peak_period array indicating peak periods (1 for peak, 0 otherwise)
   def modify_schedule(ev_schedule, flexibility_inputs)
     log_inputs(flexibility_inputs)
     modified_schedule = ev_schedule[:electric_vehicle].dup
