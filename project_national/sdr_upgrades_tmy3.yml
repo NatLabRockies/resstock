@@ -1158,27 +1158,27 @@ upgrades:
         - not: HVAC Cooling Type|None
         - not: HVAC Heating Type|None
     options:
-      - option: HVACFlexibility|On-peak Load Shedding, 2F Offset
+      - option: HVAC Flexibility|On-peak Load Shedding, 2F Offset
 
   - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVACFlexibility|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
+      - option: HVAC Flexibility|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
 
   - upgrade_name: HVAC Flexibility - On-peak Load Shedding, 4F Offset
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVACFlexibility|On-peak Load Shedding, 4F Offset
+      - option: HVAC Flexibility|On-peak Load Shedding, 4F Offset
 
   - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVACFlexibility|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
+      - option: HVAC Flexibility|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
 
   - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVACFlexibility|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
+      - option: HVAC Flexibility|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
 
 ### -- Electric Vehicles -- ###
   - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
