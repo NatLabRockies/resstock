@@ -51,7 +51,8 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
 
     curdir = File.dirname(__FILE__)
     osw_hash_orgi = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
-    # find the index of the ResStockArgumentsPostHPXML measure in the steps and set ev_flex_enabled to false
+    # Locate the ResStockArgumentsPostHPXML measure in the workflow steps and disable HVAC flexibility
+    # by setting both the peak offset and pre-peak duration arguments to 0
     measure_index = osw_hash_orgi['steps'].find_index { |step| step['measure_dir_name'] == 'ResStockArgumentsPostHPXML' }
     osw_hash_orgi['steps'][measure_index]['arguments']['hvac_flex_peak_offset'] = 0
     osw_hash_orgi['steps'][measure_index]['arguments']['hvac_flex_pre_peak_duration_hours'] = 0
