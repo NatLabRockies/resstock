@@ -1151,6 +1151,7 @@ upgrades:
       - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
       - *infiltration_30pct_reduction
 
+### -- Thermostat Demand Flexibility -- ###
   - upgrade_name: HVAC Flexibility - On-peak Load Shedding, 2F Offset
     package_apply_logic: &has_cooling_or_heating
       - or:  # apply if there is either a cooling or a heating system
@@ -1179,23 +1180,11 @@ upgrades:
     options:
       - option: HVACFlexibility|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
 
-  - upgrade_name: Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
-    options:
-      - option: Electric Vehicle Ownership|Yes
-      - option: Electric Vehicle Charger|Level 2 charger
-      - option: Electric Vehicle Flexibility|Enabled
-
-  - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
-    options:
-      - option: Electric Vehicle Ownership|Yes
-      - option: Electric Vehicle Charger|Level 2 charger
-      - option: Electric Vehicle Efficiency Increase|15%
-      - option: Electric Vehicle Flexibility|Enabled
-
+### -- Electric Vehicles -- ###
   - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
     package_apply_logic:
       - Electric Vehicle Ownership|No
-      - &Occupied_only
+      - &Occupied_Only
           Vacancy Status|Occupied
     options:
       - &EV_Ownership_Yes
@@ -1203,15 +1192,33 @@ upgrades:
       - option: Electric Vehicle Charger|Level 1 charger
 
   - upgrade_name: Electric Vehicle Adoption with Level 2 Charging
-    package_apply_logic: *Occupied_only
+    package_apply_logic: *Occupied_Only
     options:
       - *EV_Ownership_Yes
-      - &L2_Charger
+      - &EV_L2_Charger
         option: Electric Vehicle Charger|Level 2 charger
 
   - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging
-    package_apply_logic: *Occupied_only
+    package_apply_logic: *Occupied_Only
     options:
       - *EV_Ownership_Yes
-      - *L2_Charger
-      - option: Electric Vehicle Efficiency Increase|15%
+      - *EV_L2_Charger
+      - &EV_15perc_Efficiency
+        option: Electric Vehicle Efficiency Increase|15%
+
+  - upgrade_name: Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
+    options:
+      - option: *Occupied_Only
+      - option: *EV_Ownership_Yes
+      - option: *EV_L2_Charger
+      - &EV_Flexibility
+        option: Electric Vehicle Flexibility|Enabled
+
+  - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
+    options:
+      - option: *Occupied_Only
+      - option: *EV_Ownership_Yes
+      - option: *EV_L2_Charger
+      - option: *EV_15perc_Efficiency
+      - option: *EV_Flexibility
+
