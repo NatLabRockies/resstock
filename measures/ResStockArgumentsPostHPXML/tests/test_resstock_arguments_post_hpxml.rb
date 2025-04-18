@@ -11,19 +11,21 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
 
     # Define test parameters
     test_cases = [
-      { dst_enabled: false, existing_schedule: false, name: 'without DST' },
-      { dst_enabled: true, existing_schedule: false, name: 'with DST enabled' },
-      { dst_enabled: false, existing_schedule: true, name: 'without DST with existing schedule' },
-      { dst_enabled: true, existing_schedule: true, name: 'with DST enabled with existing schedule' }
+      { dst_enabled: false, existing_schedule: false, name: 'HVAC without DST' },
+      { dst_enabled: true, existing_schedule: false, name: 'HVAC with DST enabled' },
+      { dst_enabled: false, existing_schedule: true, name: 'HVAC without DST with existing schedule' },
+      { dst_enabled: true, existing_schedule: true, name: 'HVAC with DST enabled with existing schedule' }
     ]
 
     curdir = File.dirname(__FILE__)
     osw_hash_orgi = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
-    # find the index of the ResStockArgumentsPostHPXML measure in the steps and set ev_flex_enabled to false
+
+    # Find the index of the ResStockArgumentsPostHPXML measure in the steps and set ev_flex_enabled to false
     resstock_measure_index = osw_hash_orgi['steps'].find_index { |step| step['measure_dir_name'] == 'ResStockArgumentsPostHPXML' }
     osw_hash_orgi['steps'][resstock_measure_index]['arguments']['ev_flex_enabled'] = false
     osw_hash_orgi['steps'][0]['arguments']['ev_charger_present'] = false
 
+    # Check behavior with and without DST
     test_cases.each do |params|
       puts "Testing #{params[:name]}"
       osw_hash = Marshal.load(Marshal.dump(osw_hash_orgi))
@@ -45,18 +47,20 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     puts 'Testing EV Load Flexibility'
     # Define test parameters
     test_cases = [
-      { dst_enabled: false, name: 'without DST' },
-      { dst_enabled: true, name: 'with DST enabled' }
+      { dst_enabled: false, name: 'EV without DST' },
+      { dst_enabled: true, name: 'EV with DST enabled' }
     ]
 
     curdir = File.dirname(__FILE__)
     osw_hash_orgi = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
+    
     # Locate the ResStockArgumentsPostHPXML measure in the workflow steps and disable HVAC flexibility
     # by setting both the peak offset and pre-peak duration arguments to 0
     measure_index = osw_hash_orgi['steps'].find_index { |step| step['measure_dir_name'] == 'ResStockArgumentsPostHPXML' }
     osw_hash_orgi['steps'][measure_index]['arguments']['hvac_flex_peak_offset'] = 0
     osw_hash_orgi['steps'][measure_index]['arguments']['hvac_flex_pre_peak_duration_hours'] = 0
 
+    # Check behavior with and without DST
     test_cases.each do |params|
       puts "Testing #{params[:name]}"
       osw_hash = Marshal.load(Marshal.dump(osw_hash_orgi))
@@ -70,7 +74,49 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
       FileUtils.rm_rf(File.join(curdir, 'run'))
     end
   end
-
+  def test_combined_hvac_and_ev_flexibility
+    puts 'Testing Combined HVAC and EV Load Flexibility'
+  
+    test_cases = [
+      { dst_enabled: false, name: 'HVAC and EV without DST' },
+      { dst_enabled: true, name: 'HVAC and EV with DST enabled' }
+    ]
+  
+    curdir = File.dirname(__FILE__)
+    osw_hash_orgi = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
+  
+    # Locate the ResStockArgumentsPostHPXML measure in the workflow steps
+    resstock_measure_index = osw_hash_orgi['steps'].find_index { |step| step['measure_dir_name'] == 'ResStockArgumentsPostHPXML' }
+  
+    # Enable HVAC flexibility with typical values
+    osw_hash_orgi['steps'][resstock_measure_index]['arguments']['hvac_flex_peak_offset'] = 3
+    osw_hash_orgi['steps'][resstock_measure_index]['arguments']['hvac_flex_pre_peak_duration_hours'] = 2
+  
+    # Enable EV flexibility
+    osw_hash_orgi['steps'][resstock_measure_index]['arguments']['ev_flex_enabled'] = true
+    osw_hash_orgi['steps'][0]['arguments']['ev_charger_present'] = true
+  
+    # Check behavior with and without DST
+    test_cases.each do |params|
+      puts "Testing #{params[:name]}"
+      osw_hash = Marshal.load(Marshal.dump(osw_hash_orgi))
+  
+      # Set DST if applicable
+      osw_hash['steps'][0]['arguments']['simulation_control_daylight_saving_enabled'] = true if params[:dst_enabled]
+  
+      # Run the osw
+      _run_osw(osw_hash)
+      schedule = _get_schedule(curdir)
+  
+      # Verify a shift with HVAC and shed with EV
+      _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule) unless params[:dst_enabled]
+      _verify_hvac_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule)
+      _verify_ev_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shed', schedule: schedule)
+  
+      FileUtils.rm_rf(File.join(curdir, 'run'))
+    end
+  end
+  
   private
 
   def _run_osw(osw_hash)
@@ -104,7 +150,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
   end
 
   def _winter_test_indices(peak_type:)
-    # indices for setpint 01-01 14:00:00-15:00:00, 15:00:00-16:00:00, 16:00:00-17:00:00, 17:00:00-18:00:00
+    # indices for setpoint 01-01 14:00:00-15:00:00, 15:00:00-16:00:00, 16:00:00-17:00:00, 17:00:00-18:00:00
     # the on-peak hour in CO in winter starts from 17:00:00 for shift and 18:00 for shed
     # before pre_peak, pre_peak, pre_peak, peak, peak, peak, peak, none
     #           n  pp  pp  pk  pk  pk  pk   n
