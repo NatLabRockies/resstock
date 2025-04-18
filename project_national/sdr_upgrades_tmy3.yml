@@ -1152,33 +1152,40 @@ upgrades:
       - *infiltration_30pct_reduction
 
 ### -- Thermostat Demand Flexibility -- ###
-  - upgrade_name: HVAC Flexibility - On-peak Load Shedding, 2F Offset
+  - upgrade_name: HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset
     package_apply_logic: &has_cooling_or_heating
       - or:  # apply if there is either a cooling or a heating system
         - not: HVAC Cooling Type|None
         - not: HVAC Heating Type|None
     options:
-      - option: HVAC Flexibility|On-peak Load Shedding, 2F Offset
+      - option: Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset
+      - &Demand_Flexibility_30min_Random_Shift
+        option: Demand Flexibility Random Shift|30 minutes
 
-  - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
+  - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVAC Flexibility|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
+      - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
+      - option: *Demand_Flexibility_30min_Random_Shift
 
-  - upgrade_name: HVAC Flexibility - On-peak Load Shedding, 4F Offset
+  - upgrade_name: HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVAC Flexibility|On-peak Load Shedding, 4F Offset
+      - option: Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset
+      - option: *Demand_Flexibility_30min_Random_Shift
 
-  - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
+  # Demand Flexibility
+  - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVAC Flexibility|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
+      - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
+      - option: *Demand_Flexibility_30min_Random_Shift
 
-  - upgrade_name: HVAC Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
+  - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
-      - option: HVAC Flexibility|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
+      - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
+      - option: *Demand_Flexibility_30min_Random_Shift
 
 ### -- Electric Vehicles -- ###
   - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
@@ -1206,19 +1213,22 @@ upgrades:
       - &EV_15Percent_Efficiency
         option: Electric Vehicle Efficiency Increase|15%
 
+  # Demand Flexibility
   - upgrade_name: Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
+    package_apply_logic: *Occupied_Only
     options:
-      - option: *Occupied_Only
       - option: *EV_Ownership_Yes
       - option: *EV_L2_Charger
-      - &EV_Flexibility
-        option: Electric Vehicle Flexibility|Enabled
+      - &Demand_Flexibility_Electric_Vehicle
+        option: Demand Flexibility Electric Vehicle|Enabled
+      - option: *Demand_Flexibility_30min_Random_Shift
 
   - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
+    package_apply_logic: *Occupied_Only
     options:
-      - option: *Occupied_Only
       - option: *EV_Ownership_Yes
       - option: *EV_L2_Charger
       - option: *EV_15Percent_Efficiency
-      - option: *EV_Flexibility
+      - option: *Demand_Flexibility_Electric_Vehicle
+      - option: *Demand_Flexibility_30min_Random_Shift
 
