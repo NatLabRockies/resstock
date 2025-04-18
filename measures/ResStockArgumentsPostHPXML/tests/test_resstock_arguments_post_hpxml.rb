@@ -34,7 +34,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
 
       # remove BuildResidentialScheduleFile from the steps if existing_schedule is false
       osw_hash['steps'].reject! { |step| step['measure_dir_name'] == 'BuildResidentialScheduleFile' } unless params[:existing_schedule]
-      
+
       _run_osw(osw_hash)
       schedule = _get_schedule(curdir)
       _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule) unless params[:dst_enabled]
@@ -53,7 +53,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
 
     curdir = File.dirname(__FILE__)
     osw_hash_orgi = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
-    
+
     # Locate the ResStockArgumentsPostHPXML measure in the workflow steps and disable HVAC flexibility
     # by setting both the peak offset and pre-peak duration arguments to 0
     measure_index = osw_hash_orgi['steps'].find_index { |step| step['measure_dir_name'] == 'ResStockArgumentsPostHPXML' }
@@ -76,47 +76,38 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
   end
   def test_combined_hvac_and_ev_flexibility
     puts 'Testing Combined HVAC and EV Load Flexibility'
-  
+
     test_cases = [
       { dst_enabled: false, name: 'HVAC and EV without DST' },
       { dst_enabled: true, name: 'HVAC and EV with DST enabled' }
     ]
-  
+
     curdir = File.dirname(__FILE__)
     osw_hash_orgi = JSON.parse(File.read(File.join(curdir, 'test_template.osw')))
-  
-    # Locate the ResStockArgumentsPostHPXML measure in the workflow steps
-    resstock_measure_index = osw_hash_orgi['steps'].find_index { |step| step['measure_dir_name'] == 'ResStockArgumentsPostHPXML' }
-  
-    # Enable HVAC flexibility with typical values
-    osw_hash_orgi['steps'][resstock_measure_index]['arguments']['hvac_flex_peak_offset'] = 3
-    osw_hash_orgi['steps'][resstock_measure_index]['arguments']['hvac_flex_pre_peak_duration_hours'] = 2
-  
-    # Enable EV flexibility
-    osw_hash_orgi['steps'][resstock_measure_index]['arguments']['ev_flex_enabled'] = true
-    osw_hash_orgi['steps'][0]['arguments']['ev_charger_present'] = true
-  
+
+    # The template has both HVAC and EV flexibility enabled by default
+
     # Check behavior with and without DST
     test_cases.each do |params|
       puts "Testing #{params[:name]}"
       osw_hash = Marshal.load(Marshal.dump(osw_hash_orgi))
-  
+
       # Set DST if applicable
       osw_hash['steps'][0]['arguments']['simulation_control_daylight_saving_enabled'] = true if params[:dst_enabled]
-  
+
       # Run the osw
       _run_osw(osw_hash)
       schedule = _get_schedule(curdir)
-  
+
       # Verify a shift with HVAC and shed with EV
       _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule) unless params[:dst_enabled]
       _verify_hvac_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule)
-      _verify_ev_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shed', schedule: schedule)
-  
+      _verify_ev_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule)
+
       FileUtils.rm_rf(File.join(curdir, 'run'))
     end
   end
-  
+
   private
 
   def _run_osw(osw_hash)

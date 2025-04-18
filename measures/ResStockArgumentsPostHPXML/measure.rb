@@ -206,7 +206,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     ev_schedule_modifier = get_schedule_modifier(building_index, EVScheduleModifier)
     ev_flexibility_inputs = FlexibilityInputs.new(
       peak_offset: 0,
-      pre_peak_duration_steps: 0,
+      # Use hvac_flex_pre_peak_duration_hours so that shift/shed is the same as HVAC
+      pre_peak_duration_steps: (@args[:hvac_flex_pre_peak_duration_hours] * 60 / @minutes_per_step).to_i,
       pre_peak_offset: 0,
       random_shift_steps: @random_shift_steps
     )
