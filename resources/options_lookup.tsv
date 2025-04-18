@@ -9245,7 +9245,6 @@ Duct Location	Heated Basement	ResStockArguments	ducts_supply_location=basement -
 Duct Location	Living Space	ResStockArguments	ducts_supply_location=conditioned space	ducts_supply_surface_area=auto	ducts_supply_surface_area_fraction=auto	ducts_return_location=conditioned space	ducts_return_surface_area=auto	ducts_return_surface_area_fraction=auto	ducts_number_of_return_registers=auto
 Duct Location	None	ResStockArguments	ducts_supply_location=conditioned space	ducts_supply_surface_area=auto	ducts_supply_surface_area_fraction=auto	ducts_return_location=conditioned space	ducts_return_surface_area=auto	ducts_return_surface_area_fraction=auto	ducts_number_of_return_registers=0
 Duct Location	Unheated Basement	ResStockArguments	ducts_supply_location=basement - unconditioned	ducts_supply_surface_area=auto	ducts_supply_surface_area_fraction=auto	ducts_return_location=basement - unconditioned	ducts_return_surface_area=auto	ducts_return_surface_area_fraction=auto	ducts_number_of_return_registers=auto
-EVFlexibility	enabled	ResStockArgumentsPostHPXML	ev_flex_enabled=true	flex_random_shift_minutes=30
 Eaves	1 ft	ResStockArguments	geometry_eaves_depth=1
 Eaves	2 ft	ResStockArguments	geometry_eaves_depth=2
 Eaves	3 ft	ResStockArguments	geometry_eaves_depth=3
@@ -9269,6 +9268,7 @@ Electric Vehicle Charger	Level 2 charger	ResStockArguments	ev_charger_present=tr
 Electric Vehicle Charger	None	ResStockArguments	ev_charger_present=false
 Electric Vehicle Charger	Void	ResStockArguments	ev_charger_present=false
 Electric Vehicle Efficiency Increase	15%	ResStockArguments	ev_efficiency_percent_increase=0.15
+Electric Vehicle Flexibility	Enabled	ResStockArgumentsPostHPXML	ev_flex_enabled=true	flex_random_shift_minutes=30
 Electric Vehicle Miles Traveled	1000	ResStockArguments	vehicle_miles_driven_per_year=1000
 Electric Vehicle Miles Traveled	11000	ResStockArguments	vehicle_miles_driven_per_year=11000
 Electric Vehicle Miles Traveled	13000	ResStockArguments	vehicle_miles_driven_per_year=13000

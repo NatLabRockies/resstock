@@ -1183,11 +1183,11 @@ upgrades:
     options:
       - option: Electric Vehicle Ownership|Yes
       - option: Electric Vehicle Charger|Level 2 charger
-      - option: EVFlexibility|enabled
+      - option: Electric Vehicle Flexibility|Enabled
 
   - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
     options:
       - option: Electric Vehicle Ownership|Yes
       - option: Electric Vehicle Charger|Level 2 charger
       - option: Electric Vehicle Efficiency Increase|15%
-      - option: EVFlexibility|enabled
+      - option: Electric Vehicle Flexibility|Enabled
