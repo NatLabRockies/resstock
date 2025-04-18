@@ -1203,7 +1203,7 @@ upgrades:
     options:
       - *EV_Ownership_Yes
       - *EV_L2_Charger
-      - &EV_15perc_Efficiency
+      - &EV_15Percent_Efficiency
         option: Electric Vehicle Efficiency Increase|15%
 
   - upgrade_name: Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
@@ -1219,6 +1219,6 @@ upgrades:
       - option: *Occupied_Only
       - option: *EV_Ownership_Yes
       - option: *EV_L2_Charger
-      - option: *EV_15perc_Efficiency
+      - option: *EV_15Percent_Efficiency
       - option: *EV_Flexibility
 
