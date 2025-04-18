@@ -10,6 +10,21 @@ Development Changelog
 
     .. change::
         :tags: standard data release
+        :pullreq: 1369
+
+        **Date**: 2025-04-18
+
+        Title:
+        Add Electric Vehicle Demand Flexibility Upgrades
+
+        Description:
+        Add Electric Vehicle load flexibility upgrade measures to the Standard Data Release project file.
+
+        Assignees: Rajendra Adhikari, Andrew Speake, Anthony Fontanini
+
+
+    .. change::
+        :tags: standard data release
         :pullreq: 1362
 
         **Date**: 2025-04-17
@@ -34,6 +49,8 @@ Development Changelog
 
         Description:
         Assign state level correction factors for freezer and secondary refrigeration to account for the fact that homes can have more than 1 freezer and 2 refrigerators. This also corrects the freezer usage, which was previously assigned to match the national saturation of freezers.
+
+        resstock-estimation: `pull request 447 <https://github.com/NREL/resstock-estimation/pull/447>`_
 
         Assignees: Lixi Liu, Anthony Fontanini
 
@@ -67,8 +84,7 @@ Development Changelog
 
         Assignees: Lixi Liu, Anthony Fontanini, Jeff Maguire
 
-
-   .. change::
+    .. change::
         :tags: characteristics, documentation
         :pullreq: 1374
 
@@ -78,11 +94,13 @@ Development Changelog
         Differentiate Hawaii in IECC Climate Zone 1A
 
         Description:
-        Split out HI and FL in Climate Zone 1A to support Hawaii differentiation.
+        Split out Hawaii and Florida in Climate Zone 1A to support Hawaii differentiation.
+
+        resstock-estimation 
 
         Assignees: Janet Reyna
-
-
+        
+        
     .. change::
         :tags: standard data release, documentation, outputs, feature
         :pullreq: 1259
@@ -206,7 +224,7 @@ Development Changelog
         Description:
         Add Hawaii in all TSVs - includes a change to PV System Size.tsv to give samples to Hawaii in anticipation of adding to Hawaii to Has PV.tsv. Update TRG to include Hawaii.
 
-        resstock-estimation: `pull request 441 <https://github.com/NREL/resstock-estimation/pull/441>`
+        resstock-estimation: `pull request 441 <https://github.com/NREL/resstock-estimation/pull/441>`_
 
         Assignees: Janet Reyna
 
