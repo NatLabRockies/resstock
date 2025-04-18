@@ -24,6 +24,21 @@ Development Changelog
 
 
     .. change::
+        :tags: standard data release
+        :pullreq: 1362
+
+        **Date**: 2025-04-17
+
+        Title:
+        EE + Adoption meaure upgrades for EV SDR
+
+        Description:
+        Add electric vehicle addoption and electric vehicle efficiency upgrade measures to the SDR project file.
+
+        Assignees: Philip White, Andrew Speake
+
+
+    .. change::
         :tags: characteristics, documentation, technical reference guide
         :pullreq: 1379
 
@@ -84,7 +99,7 @@ Development Changelog
 
 
     .. change::
-        :tags: outputs, standard data release
+        :tags: standard data release, outputs
         :pullreq: 1371
 
         **Date**: 2025-04-01
