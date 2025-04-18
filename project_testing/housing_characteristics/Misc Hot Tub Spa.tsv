@@ -1,4 +1,4 @@
-Option=Electricity	Option=Natural Gas	Option=None	Option=Other Fuel
-0.25	0.25	0.25	0.25
+Option=Electricity	Option=Natural Gas	Option=None	Option=Other Fuel	sampling_probability
+0.25	0.25	0.25	0.25	1
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence and heating fuel of a hot tub/spa at the dwelling unit.

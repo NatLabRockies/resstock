@@ -1,31 +1,31 @@
-Dependency=Heating Fuel	Dependency=HVAC Has Shared System	Option=Boiler Baseboards Heating Only, Electricity	Option=Boiler Baseboards Heating Only, Fuel	Option=Fan Coil Cooling Only	Option=Fan Coil Heating and Cooling, Electricity	Option=Fan Coil Heating and Cooling, Fuel	Option=None	Option=Void
-Electricity	Cooling Only	0	0	1	0	0	0	0
-Fuel Oil	Cooling Only	0	0	1	0	0	0	0
-Natural Gas	Cooling Only	0	0	1	0	0	0	0
-None	Cooling Only	0	0	1	0	0	0	0
-Other Fuel	Cooling Only	0	0	1	0	0	0	0
-Propane	Cooling Only	0	0	1	0	0	0	0
-Wood	Cooling Only	0	0	1	0	0	0	0
-Electricity	Heating Only	1	0	0	0	0	0	0
-Fuel Oil	Heating Only	0	1	0	0	0	0	0
-Natural Gas	Heating Only	0	1	0	0	0	0	0
-None	Heating Only	0	0	0	0	0	0	1
-Other Fuel	Heating Only	0	1	0	0	0	0	0
-Propane	Heating Only	0	1	0	0	0	0	0
-Wood	Heating Only	0	1	0	0	0	0	0
-Electricity	Heating and Cooling	0	0	0	1	0	0	0
-Fuel Oil	Heating and Cooling	0	0	0	0	1	0	0
-Natural Gas	Heating and Cooling	0	0	0	0	1	0	0
-None	Heating and Cooling	0	0	0	0	0	0	1
-Other Fuel	Heating and Cooling	0	0	0	0	1	0	0
-Propane	Heating and Cooling	0	0	0	0	1	0	0
-Wood	Heating and Cooling	0	0	0	0	1	0	0
-Electricity	None	0	0	0	0	0	1	0
-Fuel Oil	None	0	0	0	0	0	1	0
-Natural Gas	None	0	0	0	0	0	1	0
-None	None	0	0	0	0	0	1	0
-Other Fuel	None	0	0	0	0	0	1	0
-Propane	None	0	0	0	0	0	1	0
-Wood	None	0	0	0	0	0	1	0
+Dependency=Heating Fuel	Dependency=HVAC Has Shared System	Option=Boiler Baseboards Heating Only, Electricity	Option=Boiler Baseboards Heating Only, Fuel	Option=Fan Coil Cooling Only	Option=Fan Coil Heating and Cooling, Electricity	Option=Fan Coil Heating and Cooling, Fuel	Option=None	Option=Void	sampling_probability
+Electricity	Cooling Only	0	0	1	0	0	0	0	0.00462963
+Fuel Oil	Cooling Only	0	0	1	0	0	0	0	0.00925926
+Natural Gas	Cooling Only	0	0	1	0	0	0	0	0.00925926
+None	Cooling Only	0	0	1	0	0	0	0	0.0185185
+Other Fuel	Cooling Only	0	0	1	0	0	0	0	0.00925926
+Propane	Cooling Only	0	0	1	0	0	0	0	0.00925926
+Wood	Cooling Only	0	0	1	0	0	0	0	0.00925926
+Electricity	Heating Only	1	0	0	0	0	0	0	0.0231481
+Fuel Oil	Heating Only	0	1	0	0	0	0	0	0.0462963
+Natural Gas	Heating Only	0	1	0	0	0	0	0	0.0462963
+None	Heating Only	0	0	0	0	0	0	1	0
+Other Fuel	Heating Only	0	1	0	0	0	0	0	0.0462963
+Propane	Heating Only	0	1	0	0	0	0	0	0.0462963
+Wood	Heating Only	0	1	0	0	0	0	0	0.0462963
+Electricity	Heating and Cooling	0	0	0	1	0	0	0	0.00462963
+Fuel Oil	Heating and Cooling	0	0	0	0	1	0	0	0.00925926
+Natural Gas	Heating and Cooling	0	0	0	0	1	0	0	0.00925926
+None	Heating and Cooling	0	0	0	0	0	0	1	0
+Other Fuel	Heating and Cooling	0	0	0	0	1	0	0	0.00925926
+Propane	Heating and Cooling	0	0	0	0	1	0	0	0.00925926
+Wood	Heating and Cooling	0	0	0	0	1	0	0	0.00925926
+Electricity	None	0	0	0	0	0	1	0	0.11045
+Fuel Oil	None	0	0	0	0	0	1	0	0.0780423
+Natural Gas	None	0	0	0	0	0	1	0	0.0780423
+None	None	0	0	0	0	0	1	0	0.124339
+Other Fuel	None	0	0	0	0	0	1	0	0.0780423
+Propane	None	0	0	0	0	0	1	0	0.0780423
+Wood	None	0	0	0	0	0	1	0	0.0780423
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence and efficiency of the shared HVAC system.
