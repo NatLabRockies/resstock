@@ -1166,25 +1166,25 @@ upgrades:
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
-      - option: *Demand_Flexibility_30min_Random_Shift
+      - *Demand_Flexibility_30min_Random_Shift
 
   - upgrade_name: HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset
-      - option: *Demand_Flexibility_30min_Random_Shift
+      - *Demand_Flexibility_30min_Random_Shift
 
   - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
-      - option: *Demand_Flexibility_30min_Random_Shift
+      - *Demand_Flexibility_30min_Random_Shift
 
   - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
-      - option: *Demand_Flexibility_30min_Random_Shift
+      - *Demand_Flexibility_30min_Random_Shift
 
 ### -- Electric Vehicles -- ###
   - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
@@ -1216,18 +1216,18 @@ upgrades:
   - upgrade_name: Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
     package_apply_logic: *Occupied_Only
     options:
-      - option: *EV_Ownership_Yes
-      - option: *EV_L2_Charger
+      - *EV_Ownership_Yes
+      - *EV_L2_Charger
       - &Demand_Flexibility_Electric_Vehicle
         option: Demand Flexibility Electric Vehicle|Enabled
-      - option: *Demand_Flexibility_30min_Random_Shift
+      - *Demand_Flexibility_30min_Random_Shift
 
   - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
     package_apply_logic: *Occupied_Only
     options:
-      - option: *EV_Ownership_Yes
-      - option: *EV_L2_Charger
-      - option: *EV_15Percent_Efficiency
-      - option: *Demand_Flexibility_Electric_Vehicle
-      - option: *Demand_Flexibility_30min_Random_Shift
+      - *EV_Ownership_Yes
+      - *EV_L2_Charger
+      - *EV_15Percent_Efficiency
+      - *Demand_Flexibility_Electric_Vehicle
+      - *Demand_Flexibility_30min_Random_Shift
 
