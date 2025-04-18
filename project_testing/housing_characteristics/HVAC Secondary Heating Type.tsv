@@ -1,17 +1,73 @@
-Dependency=Custom State	Dependency=HVAC Secondary Heating Fuel	Option=Ducted Heating	Option=Non-Ducted Heating	Option=None	sampling_probability
-AK	Electricity	0	0	1	0.0244898
-AK	Fuel Oil	0.333333	0.333333	0.333333	0.0244898
-AK	Natural Gas	0.333333	0.333333	0.333333	0.0244898
-AK	None	0	0	1	0.0530612
-AK	Other Fuel	0	1	0	0.0244898
-AK	Propane	0.333333	0.333333	0.333333	0.0244898
-AK	Wood	0.333333	0.333333	0.333333	0.0244898
-Others	Electricity	0	0	1	0
-Others	Fuel Oil	0	0	1	0
-Others	Natural Gas	0	0	1	0
-Others	None	0	0	1	0.8
-Others	Other Fuel	0	0	1	0
-Others	Propane	0	0	1	0
-Others	Wood	0	0	1	0
+Dependency=Custom State	Dependency=HVAC Heating Type	Dependency=HVAC Secondary Heating Fuel	Option=Ducted Heating	Option=Non-Ducted Heating	Option=None	sampling_probability
+AK	Ducted Heat Pump	Electricity	0	0	1	0.00102041
+AK	Ducted Heat Pump	Fuel Oil	0	0.5	0.5	0.00102041
+AK	Ducted Heat Pump	Natural Gas	0	0.5	0.5	0.00102041
+AK	Ducted Heat Pump	None	0	0	1	0.00102041
+AK	Ducted Heat Pump	Other Fuel	0	1	0	0.00102041
+AK	Ducted Heat Pump	Propane	0	0.5	0.5	0.00102041
+AK	Ducted Heat Pump	Wood	0	0.5	0.5	0.00102041
+AK	Ducted Heating	Electricity	0	0	1	0.0112245
+AK	Ducted Heating	Fuel Oil	0	0.5	0.5	0.0112245
+AK	Ducted Heating	Natural Gas	0	0.5	0.5	0.0112245
+AK	Ducted Heating	None	0	0	1	0.0112245
+AK	Ducted Heating	Other Fuel	0	1	0	0.0112245
+AK	Ducted Heating	Propane	0	0.5	0.5	0.0112245
+AK	Ducted Heating	Wood	0	0.5	0.5	0.0112245
+AK	Non-Ducted Heat Pump	Electricity	0	0	1	0.00102041
+AK	Non-Ducted Heat Pump	Fuel Oil	0.333333	0.333333	0.333333	0.00102041
+AK	Non-Ducted Heat Pump	Natural Gas	0.333333	0.333333	0.333333	0.00102041
+AK	Non-Ducted Heat Pump	None	0	0	1	0.00102041
+AK	Non-Ducted Heat Pump	Other Fuel	0	1	0	0.00102041
+AK	Non-Ducted Heat Pump	Propane	0.333333	0.333333	0.333333	0.00102041
+AK	Non-Ducted Heat Pump	Wood	0.333333	0.333333	0.333333	0.00102041
+AK	Non-Ducted Heating	Electricity	0	0	1	0.0112245
+AK	Non-Ducted Heating	Fuel Oil	0.333333	0.333333	0.333333	0.0112245
+AK	Non-Ducted Heating	Natural Gas	0.333333	0.333333	0.333333	0.0112245
+AK	Non-Ducted Heating	None	0	0	1	0.0112245
+AK	Non-Ducted Heating	Other Fuel	0	1	0	0.0112245
+AK	Non-Ducted Heating	Propane	0.333333	0.333333	0.333333	0.0112245
+AK	Non-Ducted Heating	Wood	0.333333	0.333333	0.333333	0.0112245
+AK	None	Electricity	0	0	1	0
+AK	None	Fuel Oil	0.333333	0.333333	0.333333	0
+AK	None	Natural Gas	0.333333	0.333333	0.333333	0
+AK	None	None	0	0	1	0.0285714
+AK	None	Other Fuel	0	1	0	0
+AK	None	Propane	0.333333	0.333333	0.333333	0
+AK	None	Wood	0.333333	0.333333	0.333333	0
+Others	Ducted Heat Pump	Electricity	0	0	1	0
+Others	Ducted Heat Pump	Fuel Oil	0	0	1	0
+Others	Ducted Heat Pump	Natural Gas	0	0	1	0
+Others	Ducted Heat Pump	None	0	0	1	0.0285714
+Others	Ducted Heat Pump	Other Fuel	0	0	1	0
+Others	Ducted Heat Pump	Propane	0	0	1	0
+Others	Ducted Heat Pump	Wood	0	0	1	0
+Others	Ducted Heating	Electricity	0	0	1	0
+Others	Ducted Heating	Fuel Oil	0	0	1	0
+Others	Ducted Heating	Natural Gas	0	0	1	0
+Others	Ducted Heating	None	0	0	1	0.314286
+Others	Ducted Heating	Other Fuel	0	0	1	0
+Others	Ducted Heating	Propane	0	0	1	0
+Others	Ducted Heating	Wood	0	0	1	0
+Others	Non-Ducted Heat Pump	Electricity	0	0	1	0
+Others	Non-Ducted Heat Pump	Fuel Oil	0	0	1	0
+Others	Non-Ducted Heat Pump	Natural Gas	0	0	1	0
+Others	Non-Ducted Heat Pump	None	0	0	1	0.0285714
+Others	Non-Ducted Heat Pump	Other Fuel	0	0	1	0
+Others	Non-Ducted Heat Pump	Propane	0	0	1	0
+Others	Non-Ducted Heat Pump	Wood	0	0	1	0
+Others	Non-Ducted Heating	Electricity	0	0	1	0
+Others	Non-Ducted Heating	Fuel Oil	0	0	1	0
+Others	Non-Ducted Heating	Natural Gas	0	0	1	0
+Others	Non-Ducted Heating	None	0	0	1	0.314286
+Others	Non-Ducted Heating	Other Fuel	0	0	1	0
+Others	Non-Ducted Heating	Propane	0	0	1	0
+Others	Non-Ducted Heating	Wood	0	0	1	0
+Others	None	Electricity	0	0	1	0
+Others	None	Fuel Oil	0	0	1	0
+Others	None	Natural Gas	0	0	1	0
+Others	None	None	0	0	1	0.114286
+Others	None	Other Fuel	0	0	1	0
+Others	None	Propane	0	0	1	0
+Others	None	Wood	0	0	1	0
 # Created by: sources\aris\tsv_maker.py
 # Description: The efficiency and type of the heating system.
