@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>876e7382-26de-4777-85fc-f2581d42a51e</version_id>
-  <version_modified>2025-03-21T20:22:03Z</version_modified>
+  <version_id>fa444ab9-08d2-42ec-a201-9297350189db</version_id>
+  <version_modified>2025-03-31T19:37:42Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -189,7 +189,7 @@
       <filename>airflow.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>23B7B4AC</checksum>
+      <checksum>C7584347</checksum>
     </file>
     <file>
       <filename>battery.rb</filename>
@@ -213,7 +213,7 @@
       <filename>constructions.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>75FBCCF4</checksum>
+      <checksum>7745F4F8</checksum>
     </file>
     <file>
       <filename>data/Xing_okstate_0664D_13659_Table_A-3.csv</filename>
@@ -327,7 +327,7 @@
       <filename>data/unavailable_periods.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>3FBE7B42</checksum>
+      <checksum>2DE72980</checksum>
     </file>
     <file>
       <filename>data/zipcode_weather_stations.csv</filename>
@@ -363,7 +363,7 @@
       <filename>geometry.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>B6CCA5A7</checksum>
+      <checksum>B9F6B522</checksum>
     </file>
     <file>
       <filename>hotwater_appliances.rb</filename>
@@ -375,7 +375,7 @@
       <filename>hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>BA21F815</checksum>
+      <checksum>CBF8E64D</checksum>
     </file>
     <file>
       <filename>hpxml_schema/HPXML.xsd</filename>
@@ -435,7 +435,7 @@
       <filename>materials.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>23B30F2C</checksum>
+      <checksum>0881326D</checksum>
     </file>
     <file>
       <filename>math.rb</filename>
@@ -711,7 +711,7 @@
       <filename>test_airflow.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>AF85CB1C</checksum>
+      <checksum>951B03C0</checksum>
     </file>
     <file>
       <filename>test_battery.rb</filename>
@@ -735,7 +735,7 @@
       <filename>test_enclosure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>9D653777</checksum>
+      <checksum>EA90A86D</checksum>
     </file>
     <file>
       <filename>test_generator.rb</filename>

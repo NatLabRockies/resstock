@@ -508,6 +508,7 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, 'Unknown column found in schedule file: pre_peak_period')
       next if _expected_warning_message(message, "Could not find row='peak_period' in unavailable_periods.csv")
       next if _expected_warning_message(message, "Could not find row='pre_peak_period' in unavailable_periods.csv")
+
       # For the EV minutes warning try replacing the number of minutes as a string rather than a number.
       new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? '(<number of minutes>)' : match }
       new_message = new_message.gsub(/Only \d+ minutes was used/, 'Only <minutes value> minutes was used')

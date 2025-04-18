@@ -1,8 +1,13 @@
+# Build directories
 /docs/technical_development_guide/_build
 /docs/technical_reference_guide/_build
 /lib
+
+# Measures and testing-related files
 /measures/UpgradeCosts/tests/in*
 /measures/UpgradeCosts/tests/*.xml
+
+# Project-specific files
 /project_national/national_baseline
 /project_national/sdr_upgrades_tmy3*
 /project_testing/testing_baseline
@@ -10,15 +15,25 @@
 /testing_baseline
 /sdr_upgrades_tmy3*
 /test_upgrade_name
+
+# CSV files
 /resources/buildstock.csv
 /project_*/**/*.csv
 !/project_*/resources/source_report.csv
 !/project_*/resources/options_saturations.csv
+!/resources/data/dictionary/outputs.csv
+
+# Log files
 /project_*/**/*.log
+buildstockbatch_crash_details.log
+
+# Weather data
 /weather
+
+# Development environment and system files
 .vscode/
 .DS_Store
-buildstockbatch_crash_details.log
 **/.ipynb_checkpoints/*
+
+# Data directories
 **/data/*
-!/resources/data/dictionary/outputs.csv
