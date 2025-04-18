@@ -38729,6 +38729,10 @@ Assumption
 
 - \Homes having non-ducted heat pump for heating is assumed to have non-ducted heat pumpfor cooling
 
+- \For Hawaii, central air conditioning saturation is from RECS 2020 by heating type, ignoring allother dependencies
+
+- \For Hawaii, Non-Ducted Heat Pump saturation is underestimated because ResStock does not currently allow cooling-only Non-Ducted Heat Pumps. These samples are modeled as Room ACs
+
 - \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, we are not modelling any central and room AC.
