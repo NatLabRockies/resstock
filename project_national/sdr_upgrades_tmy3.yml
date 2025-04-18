@@ -1174,7 +1174,6 @@ upgrades:
       - option: Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset
       - option: *Demand_Flexibility_30min_Random_Shift
 
-  # Demand Flexibility
   - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
