@@ -39086,7 +39086,7 @@ Assumption
 
 - \For Alaska, fireplace and stoves are not modeled.
 
-- \For Alaska, heat pumps are assumed to be non-ducted air source heat pumps.
+- \For Alaska, all heat pumps (including geothermal) are assumed to be non-ducted air source heat pumps.
 
 
 Arguments
@@ -40531,13 +40531,11 @@ Assumption
 
 - \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
-- \For Alaska, electric space heaters are modelled as electric baseboards.
+- \For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating efficiency.
 
 - \For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
 
 - \For Alaska, fireplace and stoves are not modeled.
-
-- \For Alaska, heat pumps are assumed to be non-ducted air source heat pumps.
 
 
 Arguments
@@ -40701,7 +40699,7 @@ Assumption
 
 - \For Alaska, all wood is modelled as cord wood.
 
-- \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary. Rest of the fuels are ignored.
+- \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary (i.e., secondary heating fuel cannot be electricity). Rest of the fuels are ignored.
 
 - \A unit without a primary heating system (heating fuel is None) cannot have a secondary heating system (secondary heating fuel is None).
 
@@ -40873,7 +40871,11 @@ Assumption
 
 - \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
+- \Ducted heating or heat pump cannot have ducted secondary heating.
+
 - \For Alaska, all heat pumps are assumed to be non-ducted mini-splits.
+
+- \For Alaska, all heat pumps are assumed to be non-ducted mini-splits. For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating type.
 
 
 Options
