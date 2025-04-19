@@ -1650,155 +1650,155 @@ Single-Family Detached	Non-Ducted Heat Pump	GA	<1940	0	0	0	1	0	0	35	8568.39	3.32
 Single-Family Detached	Non-Ducted Heating	GA	<1940	0.225133	0	0	0	0.147849	0.627018	43	26426.2	0.000191815
 Single-Family Detached	None	GA	<1940	0.590941	0	0	0	0.2541	0.154959	12	0	4.98164e-06
 Mobile Home	Ducted Heat Pump	HI	1940-59	0	1	0	0	0	0	13	0	2.63903e-08
-Mobile Home	Ducted Heating	HI	1940-59	0.572082	0	0	0	0.300078	0.127841	267	0	4.23708e-08
+Mobile Home	Ducted Heating	HI	1940-59	0.333526	0	0	0	0.246473	0.42	267	0	4.23708e-08
 Mobile Home	Non-Ducted Heat Pump	HI	1940-59	0	0	0	1	0	0	13	0	2.27549e-08
-Mobile Home	Non-Ducted Heating	HI	1940-59	0.183159	0	0	0	0.390064	0.426777	87	0	9.28531e-08
-Mobile Home	None	HI	1940-59	0.0166235	0	0	0	0.603866	0.379511	33	0	3.29378e-07
+Mobile Home	Non-Ducted Heating	HI	1940-59	0	0	0	0	0.452688	0.547312	87	0	9.28531e-08
+Mobile Home	None	HI	1940-59	0.0322174	0	0	0	0.497783	0.47	33	0	3.29378e-07
 Mobile Home	Ducted Heat Pump	HI	1960-79	0	1	0	0	0	0	31	0	1.40742e-07
-Mobile Home	Ducted Heating	HI	1960-79	0.67684	0	0	0	0.241947	0.0812136	297	0	3.61385e-07
+Mobile Home	Ducted Heating	HI	1960-79	0.333526	0	0	0	0.246473	0.42	297	0	3.61385e-07
 Mobile Home	Non-Ducted Heat Pump	HI	1960-79	0	0	0	1	0	0	10	0	3.08104e-08
-Mobile Home	Non-Ducted Heating	HI	1960-79	0.180075	0	0	0	0.485637	0.334288	143	0	3.63854e-07
-Mobile Home	None	HI	1960-79	0.0510182	0	0	0	0.518586	0.430396	62	0	5.82531e-07
+Mobile Home	Non-Ducted Heating	HI	1960-79	0	0	0	0	0.452688	0.547312	143	0	3.63854e-07
+Mobile Home	None	HI	1960-79	0.0322174	0	0	0	0.497783	0.47	62	0	5.82531e-07
 Mobile Home	Ducted Heat Pump	HI	1980-99	0	1	0	0	0	0	34	0	3.6578e-07
-Mobile Home	Ducted Heating	HI	1980-99	0.736221	0	0	0	0.209132	0.0546479	320	0	3.53182e-07
+Mobile Home	Ducted Heating	HI	1980-99	0.333526	0	0	0	0.246473	0.42	320	0	3.53182e-07
 Mobile Home	Non-Ducted Heat Pump	HI	1980-99	0	0	0	1	0	0	41	0	1.48362e-08
-Mobile Home	Non-Ducted Heating	HI	1980-99	0.337317	0	0	0	0.368267	0.294416	107	0	3.05016e-07
-Mobile Home	None	HI	1980-99	0.0440618	0	0	0	0.422033	0.533905	64	0	2.93664e-06
+Mobile Home	Non-Ducted Heating	HI	1980-99	0	0	0	0	0.452688	0.547312	107	0	3.05016e-07
+Mobile Home	None	HI	1980-99	0.0322174	0	0	0	0.497783	0.47	64	0	2.93664e-06
 Mobile Home	Ducted Heat Pump	HI	2000-09	0	1	0	0	0	0	16	0	1.60751e-07
-Mobile Home	Ducted Heating	HI	2000-09	0.775259	0	0	0	0.168207	0.056534	171	0	4.48658e-07
+Mobile Home	Ducted Heating	HI	2000-09	0.333526	0	0	0	0.246473	0.42	171	0	4.48658e-07
 Mobile Home	Non-Ducted Heat Pump	HI	2000-09	0	0	0	1	0	0	41	0	3.73017e-08
-Mobile Home	Non-Ducted Heating	HI	2000-09	0.416067	0	0	0	0.470148	0.113785	50	0	1.46711e-07
-Mobile Home	None	HI	2000-09	0.492626	0	0	0	0.281813	0.225561	21	0	1.51338e-06
+Mobile Home	Non-Ducted Heating	HI	2000-09	0	0	0	0	0.452688	0.547312	50	0	1.46711e-07
+Mobile Home	None	HI	2000-09	0.0322174	0	0	0	0.497783	0.47	21	0	1.51338e-06
 Mobile Home	Ducted Heat Pump	HI	2010s	0	1	0	0	0	0	22	0	5.2866e-08
-Mobile Home	Ducted Heating	HI	2010s	0.841363	0	0	0	0.12955	0.0290874	94	0	1.10675e-07
+Mobile Home	Ducted Heating	HI	2010s	0.333526	0	0	0	0.246473	0.42	94	0	1.10675e-07
 Mobile Home	Non-Ducted Heat Pump	HI	2010s	0	0	0	1	0	0	41	0	2.45431e-08
-Mobile Home	Non-Ducted Heating	HI	2010s	0.356822	0	0	0	0.552943	0.0902353	22	0	1.10329e-07
-Mobile Home	None	HI	2010s	0.570133	0	0	0	0.429867	0	14	0	4.28519e-07
+Mobile Home	Non-Ducted Heating	HI	2010s	0	0	0	0	0.452688	0.547312	22	0	1.10329e-07
+Mobile Home	None	HI	2010s	0.0322174	0	0	0	0.497783	0.47	14	0	4.28519e-07
 Mobile Home	Ducted Heat Pump	HI	<1940	0	1	0	0	0	0	13	0	1.06161e-08
-Mobile Home	Ducted Heating	HI	<1940	0.422178	0	0	0	0.431242	0.14658	138	0	4.36798e-08
+Mobile Home	Ducted Heating	HI	<1940	0.333526	0	0	0	0.246473	0.42	138	0	4.36798e-08
 Mobile Home	Non-Ducted Heat Pump	HI	<1940	0	0	0	1	0	0	13	0	2.22486e-08
-Mobile Home	Non-Ducted Heating	HI	<1940	0.0466972	0	0	0	0.573718	0.379585	44	0	7.60044e-08
-Mobile Home	None	HI	<1940	0.0618787	0	0	0	0.468874	0.469247	16	0	2.87958e-07
+Mobile Home	Non-Ducted Heating	HI	<1940	0	0	0	0	0.452688	0.547312	44	0	7.60044e-08
+Mobile Home	None	HI	<1940	0.0322174	0	0	0	0.497783	0.47	16	0	2.87958e-07
 Multi-Family with 2 - 4 Units	Ducted Heat Pump	HI	1940-59	0	1	0	0	0	0	52	0	0
-Multi-Family with 2 - 4 Units	Ducted Heating	HI	1940-59	0.165453	0	0	0	0.257724	0.576823	20	0	2.71431e-06
+Multi-Family with 2 - 4 Units	Ducted Heating	HI	1940-59	0.333526	0	0	0	0.246473	0.42	20	0	2.71431e-06
 Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	HI	1940-59	0	0	0	1	0	0	5	0	0
-Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	1940-59	0	0	0	0	0.586435	0.413565	52	0	5.77562e-06
-Multi-Family with 2 - 4 Units	None	HI	1940-59	0.110273	0	0	0	0.580989	0.308738	18	7654.04	1.75986e-05
+Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	1940-59	0	0	0	0	0.452688	0.547312	52	0	5.77562e-06
+Multi-Family with 2 - 4 Units	None	HI	1940-59	0.0322174	0	0	0	0.497783	0.47	18	7654.04	1.75986e-05
 Multi-Family with 2 - 4 Units	Ducted Heat Pump	HI	1960-79	0	1	0	0	0	0	17	0	2.65213e-06
-Multi-Family with 2 - 4 Units	Ducted Heating	HI	1960-79	0.453654	0	0	0	0.301838	0.244509	45	2116.42	9.51751e-06
+Multi-Family with 2 - 4 Units	Ducted Heating	HI	1960-79	0.333526	0	0	0	0.246473	0.42	45	2116.42	9.51751e-06
 Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	HI	1960-79	0	0	0	1	0	0	9	0	7.96144e-07
-Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	1960-79	0.121222	0	0	0	0.444899	0.433879	73	0	2.21126e-05
-Multi-Family with 2 - 4 Units	None	HI	1960-79	0.108753	0	0	0	0.54703	0.344217	36	5054.55	5.94167e-05
+Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	1960-79	0	0	0	0	0.452688	0.547312	73	0	2.21126e-05
+Multi-Family with 2 - 4 Units	None	HI	1960-79	0.0322174	0	0	0	0.497783	0.47	36	5054.55	5.94167e-05
 Multi-Family with 2 - 4 Units	Ducted Heat Pump	HI	1980-99	0	1	0	0	0	0	14	0	2.31789e-06
-Multi-Family with 2 - 4 Units	Ducted Heating	HI	1980-99	0.668197	0	0	0	0.294934	0.0368688	36	0	7.02286e-06
+Multi-Family with 2 - 4 Units	Ducted Heating	HI	1980-99	0.333526	0	0	0	0.246473	0.42	36	0	7.02286e-06
 Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	HI	1980-99	0	0	0	1	0	0	9	0	1.2399e-06
-Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	1980-99	0.130186	0	0	0	0.496703	0.373111	64	0	1.67986e-05
-Multi-Family with 2 - 4 Units	None	HI	1980-99	0.102905	0	0	0	0.543395	0.3537	18	11702.5	5.33362e-05
+Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	1980-99	0	0	0	0	0.452688	0.547312	64	0	1.67986e-05
+Multi-Family with 2 - 4 Units	None	HI	1980-99	0.0322174	0	0	0	0.497783	0.47	18	11702.5	5.33362e-05
 Multi-Family with 2 - 4 Units	Ducted Heat Pump	HI	2000-09	0	1	0	0	0	0	11	0	1.33973e-06
-Multi-Family with 2 - 4 Units	Ducted Heating	HI	2000-09	0.741732	0	0	0	0.219746	0.0385223	17	0	1.80544e-06
+Multi-Family with 2 - 4 Units	Ducted Heating	HI	2000-09	0.333526	0	0	0	0.246473	0.42	17	0	1.80544e-06
 Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	HI	2000-09	0	0	0	1	0	0	20	0	2.2463e-07
-Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	2000-09	0.43238	0	0	0	0.399992	0.167628	25	0	5.34999e-06
-Multi-Family with 2 - 4 Units	None	HI	2000-09	0.31569	0	0	0	0.541803	0.142507	18	0	2.02368e-05
+Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	2000-09	0	0	0	0	0.452688	0.547312	25	0	5.34999e-06
+Multi-Family with 2 - 4 Units	None	HI	2000-09	0.0322174	0	0	0	0.497783	0.47	18	0	2.02368e-05
 Multi-Family with 2 - 4 Units	Ducted Heat Pump	HI	2010s	0	1	0	0	0	0	11	0	1.77343e-07
-Multi-Family with 2 - 4 Units	Ducted Heating	HI	2010s	0.536764	0	0	0	0.306436	0.1568	14	0	7.63773e-07
+Multi-Family with 2 - 4 Units	Ducted Heating	HI	2010s	0.333526	0	0	0	0.246473	0.42	14	0	7.63773e-07
 Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	HI	2010s	0	0	0	1	0	0	20	0	5.08008e-08
-Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	2010s	0.238962	0	0	0	0.304529	0.456508	31	0	1.28785e-06
-Multi-Family with 2 - 4 Units	None	HI	2010s	0.539262	0	0	0	0.145654	0.315084	13	1802.26	9.90552e-06
+Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	2010s	0	0	0	0	0.452688	0.547312	31	0	1.28785e-06
+Multi-Family with 2 - 4 Units	None	HI	2010s	0.0322174	0	0	0	0.497783	0.47	13	1802.26	9.90552e-06
 Multi-Family with 2 - 4 Units	Ducted Heat Pump	HI	<1940	0	1	0	0	0	0	52	0	0
-Multi-Family with 2 - 4 Units	Ducted Heating	HI	<1940	0.251984	0	0	0	0.29547	0.452545	20	0	3.45937e-07
+Multi-Family with 2 - 4 Units	Ducted Heating	HI	<1940	0.333526	0	0	0	0.246473	0.42	20	0	3.45937e-07
 Multi-Family with 2 - 4 Units	Non-Ducted Heat Pump	HI	<1940	0	0	0	1	0	0	5	0	0
-Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	<1940	0	0	0	0	0.478242	0.521758	35	0	1.49943e-06
-Multi-Family with 2 - 4 Units	None	HI	<1940	0.366324	0	0	0	0.306718	0.326958	10	2998.94	4.42207e-06
+Multi-Family with 2 - 4 Units	Non-Ducted Heating	HI	<1940	0	0	0	0	0.452688	0.547312	35	0	1.49943e-06
+Multi-Family with 2 - 4 Units	None	HI	<1940	0.0322174	0	0	0	0.497783	0.47	10	2998.94	4.42207e-06
 Multi-Family with 5+ Units	Ducted Heat Pump	HI	1940-59	0	1	0	0	0	0	52	0	0
-Multi-Family with 5+ Units	Ducted Heating	HI	1940-59	0.165453	0	0	0	0.257724	0.576823	20	0	8.77261e-06
+Multi-Family with 5+ Units	Ducted Heating	HI	1940-59	0.333526	0	0	0	0.246473	0.42	20	0	8.77261e-06
 Multi-Family with 5+ Units	Non-Ducted Heat Pump	HI	1940-59	0	0	0	1	0	0	5	0	0
-Multi-Family with 5+ Units	Non-Ducted Heating	HI	1940-59	0	0	0	0	0.586435	0.413565	52	2375.37	2.00729e-05
-Multi-Family with 5+ Units	None	HI	1940-59	0.110273	0	0	0	0.580989	0.308738	18	3021.88	5.62341e-05
+Multi-Family with 5+ Units	Non-Ducted Heating	HI	1940-59	0	0	0	0	0.452688	0.547312	52	2375.37	2.00729e-05
+Multi-Family with 5+ Units	None	HI	1940-59	0.0322174	0	0	0	0.497783	0.47	18	3021.88	5.62341e-05
 Multi-Family with 5+ Units	Ducted Heat Pump	HI	1960-79	0	1	0	0	0	0	17	0	1.69797e-05
-Multi-Family with 5+ Units	Ducted Heating	HI	1960-79	0.453654	0	0	0	0.301838	0.244509	45	4367.68	5.97499e-05
+Multi-Family with 5+ Units	Ducted Heating	HI	1960-79	0.333526	0	0	0	0.246473	0.42	45	4367.68	5.97499e-05
 Multi-Family with 5+ Units	Non-Ducted Heat Pump	HI	1960-79	0	0	0	1	0	0	9	0	6.3789e-06
-Multi-Family with 5+ Units	Non-Ducted Heating	HI	1960-79	0.121222	0	0	0	0.444899	0.433879	73	0	0.000146182
-Multi-Family with 5+ Units	None	HI	1960-79	0.116174	0	0	0	0.516118	0.367708	34	74066.6	0.000418874
+Multi-Family with 5+ Units	Non-Ducted Heating	HI	1960-79	0	0	0	0	0.452688	0.547312	73	0	0.000146182
+Multi-Family with 5+ Units	None	HI	1960-79	0.0322174	0	0	0	0.497783	0.47	34	74066.6	0.000418874
 Multi-Family with 5+ Units	Ducted Heat Pump	HI	1980-99	0	1	0	0	0	0	14	0	1.27484e-05
-Multi-Family with 5+ Units	Ducted Heating	HI	1980-99	0.668197	0	0	0	0.294934	0.0368688	36	0	3.25577e-05
+Multi-Family with 5+ Units	Ducted Heating	HI	1980-99	0.333526	0	0	0	0.246473	0.42	36	0	3.25577e-05
 Multi-Family with 5+ Units	Non-Ducted Heat Pump	HI	1980-99	0	0	0	1	0	0	9	0	7.32533e-06
-Multi-Family with 5+ Units	Non-Ducted Heating	HI	1980-99	0.130186	0	0	0	0.496703	0.373111	64	0	8.64034e-05
-Multi-Family with 5+ Units	None	HI	1980-99	0.0689398	0	0	0	0.605361	0.3257	13	28138.5	0.00019853
+Multi-Family with 5+ Units	Non-Ducted Heating	HI	1980-99	0	0	0	0	0.452688	0.547312	64	0	8.64034e-05
+Multi-Family with 5+ Units	None	HI	1980-99	0.0322174	0	0	0	0.497783	0.47	13	28138.5	0.00019853
 Multi-Family with 5+ Units	Ducted Heat Pump	HI	2000-09	0	1	0	0	0	0	11	0	7.73139e-06
-Multi-Family with 5+ Units	Ducted Heating	HI	2000-09	0.741732	0	0	0	0.219746	0.0385223	17	0	8.45517e-06
+Multi-Family with 5+ Units	Ducted Heating	HI	2000-09	0.333526	0	0	0	0.246473	0.42	17	0	8.45517e-06
 Multi-Family with 5+ Units	Non-Ducted Heat Pump	HI	2000-09	0	0	0	1	0	0	20	0	1.29631e-06
-Multi-Family with 5+ Units	Non-Ducted Heating	HI	2000-09	0.43238	0	0	0	0.399992	0.167628	25	0	2.73505e-05
-Multi-Family with 5+ Units	None	HI	2000-09	0.31569	0	0	0	0.541803	0.142507	18	8009.57	5.87851e-05
+Multi-Family with 5+ Units	Non-Ducted Heating	HI	2000-09	0	0	0	0	0.452688	0.547312	25	0	2.73505e-05
+Multi-Family with 5+ Units	None	HI	2000-09	0.0322174	0	0	0	0.497783	0.47	18	8009.57	5.87851e-05
 Multi-Family with 5+ Units	Ducted Heat Pump	HI	2010s	0	1	0	0	0	0	11	0	3.67437e-06
-Multi-Family with 5+ Units	Ducted Heating	HI	2010s	0.536764	0	0	0	0.306436	0.1568	14	0	5.0406e-06
+Multi-Family with 5+ Units	Ducted Heating	HI	2010s	0.333526	0	0	0	0.246473	0.42	14	0	5.0406e-06
 Multi-Family with 5+ Units	Non-Ducted Heat Pump	HI	2010s	0	0	0	1	0	0	20	0	1.05254e-06
-Multi-Family with 5+ Units	Non-Ducted Heating	HI	2010s	0.238962	0	0	0	0.304529	0.456508	31	0	1.50873e-05
-Multi-Family with 5+ Units	None	HI	2010s	0.539262	0	0	0	0.145654	0.315084	13	10712.7	2.86843e-05
+Multi-Family with 5+ Units	Non-Ducted Heating	HI	2010s	0	0	0	0	0.452688	0.547312	31	0	1.50873e-05
+Multi-Family with 5+ Units	None	HI	2010s	0.0322174	0	0	0	0.497783	0.47	13	10712.7	2.86843e-05
 Multi-Family with 5+ Units	Ducted Heat Pump	HI	<1940	0	1	0	0	0	0	52	0	0
-Multi-Family with 5+ Units	Ducted Heating	HI	<1940	0.251984	0	0	0	0.29547	0.452545	20	0	7.82912e-07
+Multi-Family with 5+ Units	Ducted Heating	HI	<1940	0.333526	0	0	0	0.246473	0.42	20	0	7.82912e-07
 Multi-Family with 5+ Units	Non-Ducted Heat Pump	HI	<1940	0	0	0	1	0	0	5	0	0
-Multi-Family with 5+ Units	Non-Ducted Heating	HI	<1940	0	0	0	0	0.478242	0.521758	35	0	4.26838e-06
-Multi-Family with 5+ Units	None	HI	<1940	0.366324	0	0	0	0.306718	0.326958	10	2147.15	7.21626e-06
+Multi-Family with 5+ Units	Non-Ducted Heating	HI	<1940	0	0	0	0	0.452688	0.547312	35	0	4.26838e-06
+Multi-Family with 5+ Units	None	HI	<1940	0.0322174	0	0	0	0.497783	0.47	10	2147.15	7.21626e-06
 Single-Family Attached	Ducted Heat Pump	HI	1940-59	0	1	0	0	0	0	13	0	1.97347e-06
-Single-Family Attached	Ducted Heating	HI	1940-59	0.572082	0	0	0	0.300078	0.127841	267	0	3.65134e-06
+Single-Family Attached	Ducted Heating	HI	1940-59	0.333526	0	0	0	0.246473	0.42	267	0	3.65134e-06
 Single-Family Attached	Non-Ducted Heat Pump	HI	1940-59	0	0	0	1	0	0	13	0	1.46012e-06
-Single-Family Attached	Non-Ducted Heating	HI	1940-59	0.183159	0	0	0	0.390064	0.426777	87	0	7.14771e-06
-Single-Family Attached	None	HI	1940-59	0.0166235	0	0	0	0.603866	0.379511	33	4013.4	3.28604e-05
+Single-Family Attached	Non-Ducted Heating	HI	1940-59	0	0	0	0	0.452688	0.547312	87	0	7.14771e-06
+Single-Family Attached	None	HI	1940-59	0.0322174	0	0	0	0.497783	0.47	33	4013.4	3.28604e-05
 Single-Family Attached	Ducted Heat Pump	HI	1960-79	0	1	0	0	0	0	31	0	9.3833e-06
-Single-Family Attached	Ducted Heating	HI	1960-79	0.67684	0	0	0	0.241947	0.0812136	297	0	1.09536e-05
+Single-Family Attached	Ducted Heating	HI	1960-79	0.333526	0	0	0	0.246473	0.42	297	0	1.09536e-05
 Single-Family Attached	Non-Ducted Heat Pump	HI	1960-79	0	0	0	1	0	0	10	0	2.08051e-06
-Single-Family Attached	Non-Ducted Heating	HI	1960-79	0.180075	0	0	0	0.485637	0.334288	143	1275.11	2.06849e-05
-Single-Family Attached	None	HI	1960-79	0.104607	0	0	0	0.446413	0.44898	11	11418.2	6.92483e-05
+Single-Family Attached	Non-Ducted Heating	HI	1960-79	0	0	0	0	0.452688	0.547312	143	1275.11	2.06849e-05
+Single-Family Attached	None	HI	1960-79	0.0322174	0	0	0	0.497783	0.47	11	11418.2	6.92483e-05
 Single-Family Attached	Ducted Heat Pump	HI	1980-99	0	1	0	0	0	0	34	985.532	1.12953e-05
-Single-Family Attached	Ducted Heating	HI	1980-99	0.736221	0	0	0	0.209132	0.0546479	320	1262.77	1.50359e-05
+Single-Family Attached	Ducted Heating	HI	1980-99	0.333526	0	0	0	0.246473	0.42	320	1262.77	1.50359e-05
 Single-Family Attached	Non-Ducted Heat Pump	HI	1980-99	0	0	0	1	0	0	41	0	5.19796e-07
-Single-Family Attached	Non-Ducted Heating	HI	1980-99	0.337317	0	0	0	0.368267	0.294416	107	0	1.48644e-05
-Single-Family Attached	None	HI	1980-99	0.0440618	0	0	0	0.422033	0.533905	64	8968.85	5.23626e-05
+Single-Family Attached	Non-Ducted Heating	HI	1980-99	0	0	0	0	0.452688	0.547312	107	0	1.48644e-05
+Single-Family Attached	None	HI	1980-99	0.0322174	0	0	0	0.497783	0.47	64	8968.85	5.23626e-05
 Single-Family Attached	Ducted Heat Pump	HI	2000-09	0	1	0	0	0	0	16	0	7.04883e-06
-Single-Family Attached	Ducted Heating	HI	2000-09	0.775259	0	0	0	0.168207	0.056534	171	1248.76	9.24288e-06
+Single-Family Attached	Ducted Heating	HI	2000-09	0.333526	0	0	0	0.246473	0.42	171	1248.76	9.24288e-06
 Single-Family Attached	Non-Ducted Heat Pump	HI	2000-09	0	0	0	1	0	0	41	0	1.63565e-06
-Single-Family Attached	Non-Ducted Heating	HI	2000-09	0.416067	0	0	0	0.470148	0.113785	50	0	9.94499e-06
-Single-Family Attached	None	HI	2000-09	0.492626	0	0	0	0.281813	0.225561	21	972.773	3.80157e-05
+Single-Family Attached	Non-Ducted Heating	HI	2000-09	0	0	0	0	0.452688	0.547312	50	0	9.94499e-06
+Single-Family Attached	None	HI	2000-09	0.0322174	0	0	0	0.497783	0.47	21	972.773	3.80157e-05
 Single-Family Attached	Ducted Heat Pump	HI	2010s	0	1	0	0	0	0	22	0	3.39745e-06
-Single-Family Attached	Ducted Heating	HI	2010s	0.841363	0	0	0	0.12955	0.0290874	94	0	6.85763e-06
+Single-Family Attached	Ducted Heating	HI	2010s	0.333526	0	0	0	0.246473	0.42	94	0	6.85763e-06
 Single-Family Attached	Non-Ducted Heat Pump	HI	2010s	0	0	0	1	0	0	41	0	1.57727e-06
-Single-Family Attached	Non-Ducted Heating	HI	2010s	0.356822	0	0	0	0.552943	0.0902353	22	0	3.35882e-06
-Single-Family Attached	None	HI	2010s	0.570133	0	0	0	0.429867	0	14	3889.7	1.81747e-05
+Single-Family Attached	Non-Ducted Heating	HI	2010s	0	0	0	0	0.452688	0.547312	22	0	3.35882e-06
+Single-Family Attached	None	HI	2010s	0.0322174	0	0	0	0.497783	0.47	14	3889.7	1.81747e-05
 Single-Family Attached	Ducted Heat Pump	HI	<1940	0	1	0	0	0	0	13	0	3.56282e-07
-Single-Family Attached	Ducted Heating	HI	<1940	0.422178	0	0	0	0.431242	0.14658	138	0	1.12748e-06
+Single-Family Attached	Ducted Heating	HI	<1940	0.333526	0	0	0	0.246473	0.42	138	0	1.12748e-06
 Single-Family Attached	Non-Ducted Heat Pump	HI	<1940	0	0	0	1	0	0	13	0	7.46675e-07
-Single-Family Attached	Non-Ducted Heating	HI	<1940	0.0466972	0	0	0	0.573718	0.379585	44	0	2.47357e-06
-Single-Family Attached	None	HI	<1940	0.0618787	0	0	0	0.468874	0.469247	16	890.874	8.98635e-06
+Single-Family Attached	Non-Ducted Heating	HI	<1940	0	0	0	0	0.452688	0.547312	44	0	2.47357e-06
+Single-Family Attached	None	HI	<1940	0.0322174	0	0	0	0.497783	0.47	16	890.874	8.98635e-06
 Single-Family Detached	Ducted Heat Pump	HI	1940-59	0	1	0	0	0	0	13	0	1.74361e-05
-Single-Family Detached	Ducted Heating	HI	1940-59	0.572082	0	0	0	0.300078	0.127841	267	0	2.63063e-05
+Single-Family Detached	Ducted Heating	HI	1940-59	0.333526	0	0	0	0.246473	0.42	267	0	2.63063e-05
 Single-Family Detached	Non-Ducted Heat Pump	HI	1940-59	0	0	0	1	0	0	13	0	1.35999e-05
-Single-Family Detached	Non-Ducted Heating	HI	1940-59	0.183159	0	0	0	0.390064	0.426777	87	3125.69	5.74127e-05
-Single-Family Detached	None	HI	1940-59	0.0195697	0	0	0	0.710892	0.269539	29	27882.1	0.000203552
+Single-Family Detached	Non-Ducted Heating	HI	1940-59	0	0	0	0	0.452688	0.547312	87	3125.69	5.74127e-05
+Single-Family Detached	None	HI	1940-59	0.0322174	0	0	0	0.497783	0.47	29	27882.1	0.000203552
 Single-Family Detached	Ducted Heat Pump	HI	1960-79	0	1	0	0	0	0	31	0	4.63172e-05
-Single-Family Detached	Ducted Heating	HI	1960-79	0.67684	0	0	0	0.241947	0.0812136	297	1622.5	5.86338e-05
+Single-Family Detached	Ducted Heating	HI	1960-79	0.333526	0	0	0	0.246473	0.42	297	1622.5	5.86338e-05
 Single-Family Detached	Non-Ducted Heat Pump	HI	1960-79	0	0	0	1	0	0	10	0	1.09034e-05
-Single-Family Detached	Non-Ducted Heating	HI	1960-79	0.180075	0	0	0	0.485637	0.334288	143	3505.72	0.000128334
-Single-Family Detached	None	HI	1960-79	0.0417008	0	0	0	0.531135	0.427164	51	77564.4	0.000400962
+Single-Family Detached	Non-Ducted Heating	HI	1960-79	0	0	0	0	0.452688	0.547312	143	3505.72	0.000128334
+Single-Family Detached	None	HI	1960-79	0.0322174	0	0	0	0.497783	0.47	51	77564.4	0.000400962
 Single-Family Detached	Ducted Heat Pump	HI	1980-99	0	1	0	0	0	0	34	0	5.24022e-05
-Single-Family Detached	Ducted Heating	HI	1980-99	0.736221	0	0	0	0.209132	0.0546479	320	0	7.51585e-05
+Single-Family Detached	Ducted Heating	HI	1980-99	0.333526	0	0	0	0.246473	0.42	320	0	7.51585e-05
 Single-Family Detached	Non-Ducted Heat Pump	HI	1980-99	0	0	0	1	0	0	41	0	2.53795e-06
-Single-Family Detached	Non-Ducted Heating	HI	1980-99	0.337317	0	0	0	0.368267	0.294416	107	4213.85	8.59627e-05
-Single-Family Detached	None	HI	1980-99	0.0494333	0	0	0	0.423423	0.527144	57	92152.3	0.000411277
+Single-Family Detached	Non-Ducted Heating	HI	1980-99	0	0	0	0	0.452688	0.547312	107	4213.85	8.59627e-05
+Single-Family Detached	None	HI	1980-99	0.0322174	0	0	0	0.497783	0.47	57	92152.3	0.000411277
 Single-Family Detached	Ducted Heat Pump	HI	2000-09	0	1	0	0	0	0	16	0	2.73089e-05
-Single-Family Detached	Ducted Heating	HI	2000-09	0.775259	0	0	0	0.168207	0.056534	171	0	3.59709e-05
+Single-Family Detached	Ducted Heating	HI	2000-09	0.333526	0	0	0	0.246473	0.42	171	0	3.59709e-05
 Single-Family Detached	Non-Ducted Heat Pump	HI	2000-09	0	0	0	1	0	0	41	0	6.33691e-06
-Single-Family Detached	Non-Ducted Heating	HI	2000-09	0.416067	0	0	0	0.470148	0.113785	50	1333.02	4.78017e-05
-Single-Family Detached	None	HI	2000-09	0.474644	0	0	0	0.291801	0.233556	20	30085.4	0.000196487
+Single-Family Detached	Non-Ducted Heating	HI	2000-09	0	0	0	0	0.452688	0.547312	50	1333.02	4.78017e-05
+Single-Family Detached	None	HI	2000-09	0.0322174	0	0	0	0.497783	0.47	20	30085.4	0.000196487
 Single-Family Detached	Ducted Heat Pump	HI	2010s	0	1	0	0	0	0	22	0	6.12402e-06
-Single-Family Detached	Ducted Heating	HI	2010s	0.841363	0	0	0	0.12955	0.0290874	94	0	1.29091e-05
+Single-Family Detached	Ducted Heating	HI	2010s	0.333526	0	0	0	0.246473	0.42	94	0	1.29091e-05
 Single-Family Detached	Non-Ducted Heat Pump	HI	2010s	0	0	0	1	0	0	41	0	2.84308e-06
-Single-Family Detached	Non-Ducted Heating	HI	2010s	0.356822	0	0	0	0.552943	0.0902353	22	0	1.28094e-05
-Single-Family Detached	None	HI	2010s	0.488581	0	0	0	0.511419	0	10	13384	5.30826e-05
+Single-Family Detached	Non-Ducted Heating	HI	2010s	0	0	0	0	0.452688	0.547312	22	0	1.28094e-05
+Single-Family Detached	None	HI	2010s	0.0322174	0	0	0	0.497783	0.47	10	13384	5.30826e-05
 Single-Family Detached	Ducted Heat Pump	HI	<1940	0	1	0	0	0	0	13	0	2.3241e-06
-Single-Family Detached	Ducted Heating	HI	<1940	0.422178	0	0	0	0.431242	0.14658	138	0	9.54469e-06
+Single-Family Detached	Ducted Heating	HI	<1940	0.333526	0	0	0	0.246473	0.42	138	0	9.54469e-06
 Single-Family Detached	Non-Ducted Heat Pump	HI	<1940	0	0	0	1	0	0	13	0	4.87072e-06
-Single-Family Detached	Non-Ducted Heating	HI	<1940	0.0466972	0	0	0	0.573718	0.379585	44	0	1.67952e-05
-Single-Family Detached	None	HI	<1940	0.065008	0	0	0	0.492585	0.442407	15	20414.8	6.49013e-05
+Single-Family Detached	Non-Ducted Heating	HI	<1940	0	0	0	0	0.452688	0.547312	44	0	1.67952e-05
+Single-Family Detached	None	HI	<1940	0.0322174	0	0	0	0.497783	0.47	15	20414.8	6.49013e-05
 Mobile Home	Ducted Heat Pump	IA	1940-59	0	1	0	0	0	0	17	0	3.12684e-07
 Mobile Home	Ducted Heating	IA	1940-59	0.861096	0	0	0	0.0429788	0.095925	368	0	4.03767e-06
 Mobile Home	Non-Ducted Heat Pump	IA	1940-59	0	0	0	1	0	0	37	0	1.09508e-07
@@ -7656,6 +7656,8 @@ Single-Family Detached	None	WY	<1940	0.0802227	0	0	0	0.683634	0.236143	53	0	7.98
 # Assumption: Due to low sample sizes, fallback rules applied with lumping of
 # Assumption: 1) HVAC Heating type: Non-ducted heating and None2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs binsHomes having ducted heat pump for heating and electricity fuel is assumed to haveducted heat pump for cooling (seperating from central AC category)
 # Assumption: Homes having non-ducted heat pump for heating is assumed to have non-ducted heat pumpfor cooling
+# Assumption: For Hawaii, central air conditioning saturation is from RECS 2020 by heating type, ignoring allother dependencies
+# Assumption: For Hawaii, Non-Ducted Heat Pump saturation is underestimated because ResStock does not currently allow cooling-only Non-Ducted Heat Pumps. These samples are modeled as Room ACs
 # Assumption: For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 # Assumption: For Alaska, we are not modelling any central and room AC.
 # Assumption: For Alaska, cooling systems are never shared.
