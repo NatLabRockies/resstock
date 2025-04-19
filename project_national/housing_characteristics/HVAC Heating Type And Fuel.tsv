@@ -2,10 +2,10 @@ Dependency=Heating Fuel	Dependency=HVAC Heating Efficiency	Option=Electricity AS
 Electricity	ASHP, SEER 10, 6.2 HSPF	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	381	675635	0.00718034
 Electricity	ASHP, SEER 13, 7.7 HSPF	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2118	7.23609e+06	0.0740766
 Electricity	ASHP, SEER 15, 8.5 HSPF	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1951	7.29837e+06	0.0724697
-Electricity	Electric Baseboard, 100% Efficiency	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1179	7.7066e+06	0.0628257
-Electricity	Electric Boiler, 100% AFUE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	43	252101	0.00205738
-Electricity	Electric Furnace, 100% AFUE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1670	1.23059e+07	0.113321
-Electricity	Electric Wall Furnace, 100% AFUE	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	839	1.37009e+06	0.0110709
+Electricity	Electric Baseboard, 100% Efficiency	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1179	7.7066e+06	0.062826
+Electricity	Electric Boiler, 100% AFUE	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	43	252101	0.00205743
+Electricity	Electric Furnace, 100% AFUE	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1670	1.23059e+07	0.113316
+Electricity	Electric Wall Furnace, 100% AFUE	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	839	1.37009e+06	0.011071
 Electricity	Fuel Boiler, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Electricity	Fuel Boiler, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Electricity	Fuel Boiler, 90% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -18,7 +18,7 @@ Electricity	Fuel Wall/Floor Furnace, 68% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
 Electricity	MSHP, SEER 14.5, 8.2 HSPF	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	140	935721	0.00959704
 Electricity	MSHP, SEER 29.3, 14 HSPF	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	115	13568.4	0.000152729
 Electricity	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Electricity	Shared Heating	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	549	4.77994e+06	0.0412871
+Electricity	Shared Heating	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	549	4.77994e+06	0.0412921
 Fuel Oil	ASHP, SEER 10, 6.2 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Fuel Oil	ASHP, SEER 13, 7.7 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Fuel Oil	ASHP, SEER 15, 8.5 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -38,7 +38,7 @@ Fuel Oil	Fuel Wall/Floor Furnace, 68% AFUE	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0
 Fuel Oil	MSHP, SEER 14.5, 8.2 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Fuel Oil	MSHP, SEER 29.3, 14 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Fuel Oil	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Fuel Oil	Shared Heating	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	98	705304	0.00506697
+Fuel Oil	Shared Heating	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	98	705304	0.00506699
 Natural Gas	ASHP, SEER 10, 6.2 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Natural Gas	ASHP, SEER 13, 7.7 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Natural Gas	ASHP, SEER 15, 8.5 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -49,16 +49,16 @@ Natural Gas	Electric Wall Furnace, 100% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 Natural Gas	Fuel Boiler, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	414	280650	0.00395364
 Natural Gas	Fuel Boiler, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	414	1.60341e+06	0.0211656
 Natural Gas	Fuel Boiler, 90% AFUE	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00023369
-Natural Gas	Fuel Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	1250	353098	0.00261767
-Natural Gas	Fuel Furnace, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	3178	3.28293e+06	0.0243046
-Natural Gas	Fuel Furnace, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	7882	2.72236e+07	0.199626
+Natural Gas	Fuel Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	1250	353098	0.00261766
+Natural Gas	Fuel Furnace, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	3178	3.28293e+06	0.0243045
+Natural Gas	Fuel Furnace, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	7882	2.72236e+07	0.199625
 Natural Gas	Fuel Furnace, 92.5% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	7882	1.90971e+07	0.138749
-Natural Gas	Fuel Wall/Floor Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	328	795291	0.00995036
+Natural Gas	Fuel Wall/Floor Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	328	795291	0.00995035
 Natural Gas	Fuel Wall/Floor Furnace, 68% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	328	1.66944e+06	0.0208581
 Natural Gas	MSHP, SEER 14.5, 8.2 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Natural Gas	MSHP, SEER 29.3, 14 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Natural Gas	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Natural Gas	Shared Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	730	6.66344e+06	0.0472091
+Natural Gas	Shared Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	730	6.66344e+06	0.0472108
 None	ASHP, SEER 10, 6.2 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 None	ASHP, SEER 13, 7.7 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 None	ASHP, SEER 15, 8.5 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -86,19 +86,19 @@ Other Fuel	Electric Baseboard, 100% Efficiency	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 Other Fuel	Electric Boiler, 100% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Other Fuel	Electric Furnace, 100% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Other Fuel	Electric Wall Furnace, 100% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Other Fuel	Fuel Boiler, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	3	22908.5	0.00363641
-Other Fuel	Fuel Boiler, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0.000225139
-Other Fuel	Fuel Boiler, 90% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0.000225139
-Other Fuel	Fuel Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	3	15570	0.000472709
-Other Fuel	Fuel Furnace, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0.000101091
-Other Fuel	Fuel Furnace, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0.000101091
-Other Fuel	Fuel Furnace, 92.5% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0.000101091
-Other Fuel	Fuel Wall/Floor Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	2	16031.9	0.00135308
-Other Fuel	Fuel Wall/Floor Furnace, 68% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0.000225139
+Other Fuel	Fuel Boiler, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	3	22908.5	0.00363633
+Other Fuel	Fuel Boiler, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0.000225112
+Other Fuel	Fuel Boiler, 90% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0.000225112
+Other Fuel	Fuel Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	3	15570	0.000472429
+Other Fuel	Fuel Furnace, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0.00010108
+Other Fuel	Fuel Furnace, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0.00010108
+Other Fuel	Fuel Furnace, 92.5% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0.00010108
+Other Fuel	Fuel Wall/Floor Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	2	16031.9	0.00135305
+Other Fuel	Fuel Wall/Floor Furnace, 68% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0.000225112
 Other Fuel	MSHP, SEER 14.5, 8.2 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Other Fuel	MSHP, SEER 29.3, 14 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Other Fuel	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	3.94145e-06
-Other Fuel	Shared Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0.000996003
+Other Fuel	Shared Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0.000996511
 Propane	ASHP, SEER 10, 6.2 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Propane	ASHP, SEER 13, 7.7 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Propane	ASHP, SEER 15, 8.5 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -106,19 +106,19 @@ Propane	Electric Baseboard, 100% Efficiency	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
 Propane	Electric Boiler, 100% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Propane	Electric Furnace, 100% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Propane	Electric Wall Furnace, 100% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Propane	Fuel Boiler, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	16	6462.06	7.05698e-05
-Propane	Fuel Boiler, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	89	263406	0.00274339
-Propane	Fuel Boiler, 90% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	89	113537	0.00119173
-Propane	Fuel Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	116	20529.7	0.000191987
-Propane	Fuel Furnace, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	116	269686	0.00252321
-Propane	Fuel Furnace, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	690	2.49835e+06	0.0232004
+Propane	Fuel Boiler, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	16	6462.06	7.05696e-05
+Propane	Fuel Boiler, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	89	263406	0.00274337
+Propane	Fuel Boiler, 90% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	89	113537	0.00119172
+Propane	Fuel Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	116	20529.7	0.000191986
+Propane	Fuel Furnace, 76% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	116	269686	0.00252319
+Propane	Fuel Furnace, 80% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	690	2.49835e+06	0.0232003
 Propane	Fuel Furnace, 92.5% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	690	1.20911e+06	0.0112297
-Propane	Fuel Wall/Floor Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	124	217644	0.00233374
-Propane	Fuel Wall/Floor Furnace, 68% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	124	481236	0.00517262
+Propane	Fuel Wall/Floor Furnace, 60% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	124	217644	0.00233372
+Propane	Fuel Wall/Floor Furnace, 68% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	124	481236	0.00517258
 Propane	MSHP, SEER 14.5, 8.2 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Propane	MSHP, SEER 29.3, 14 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Propane	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Propane	Shared Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	25	131656	0.00162851
+Propane	Shared Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	25	131656	0.00162875
 Wood	ASHP, SEER 10, 6.2 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Wood	ASHP, SEER 13, 7.7 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Wood	ASHP, SEER 15, 8.5 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -138,7 +138,7 @@ Wood	Fuel Wall/Floor Furnace, 68% AFUE	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0
 Wood	MSHP, SEER 14.5, 8.2 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Wood	MSHP, SEER 29.3, 14 HSPF	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Wood	None	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Wood	Shared Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	8	47238.3	9.68722e-05
+Wood	Shared Heating	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	8	47238.3	9.68777e-05
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: The presence, type, and fuel of primary heating system.
 # Source: Calculated directly from other distributions

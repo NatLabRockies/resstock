@@ -790,14 +790,21 @@ The options of HVAC Cooling Type are Central AC, Ducted Heat Pump, Evaporative o
     \item Due to low sample sizes, fallback rules were applied, with coarsening of  (1) HVAC Heating type: Non-ducted heating and None, (2) Geometry building SF: Mobile, Single-family attached, Single-family detached, (3) Geometry building MF: Multifamily with 2--4 Units, Multifamily with 5+ Units, (4) Vintage Lump: 20-yr bins. 
     \item Homes having ducted heat pump for heating and electricity fuel are assumed to have ducted heat pump for cooling (separating from central AC category).
     \item Homes having non-ducted heat pump for heating are assumed to have non-ducted heat pump for cooling.
+    \item For Hawaii, central air conditioning saturation is from RECS 2020 by heating type, ignoring all other dependencies
+    \item For Hawaii, Non-Ducted Heat Pump saturation is underestimated because ResStock does not currently allow cooling-only Non-Ducted Heat Pumps. These samples are modeled as Room ACs
     \item For Alaska, we are using a field in ARIS that lumps multifamily 2--4 units and multifamily 5+ units buildings together. Data from the American Community Survey are used to distribute between these two building types.
     \item For Alaska, we are not modeling any central and room AC.
     \item For Alaska, cooling systems are never shared.
+    \item Hawaii does not follow the same fallback rules. All distributions are custom adjusted so that state-level central air-conditioning saturation matches the state-level saturation in RECS2020.
 \end{itemize}
  
 \subsubsection{HVAC Cooling Efficiency}
 \paragraph{Description}
-The presence and efficiency of primary cooling system in the housing unit.
+The presence and efficiency of primary cooling system in the housing unit. In the assumptions heat pumps (both ducted and non ducted) are assumed to 
+serve for both heating and cooling. In the RECS2020 survey that cooling and heating technologies are based on, it was recently discoved that some samples reported None for heating, but heat pump for cooling
+(especialy non-ducted heat pumps). This is especially prevalent in hot climates with low cooling saturation. In ResStock, those samples with None heating and non ducted heat pump cooling in the survey
+are currently not being counted as having heat pumps. This is a known issue that will be addressed in a future release. In Hawaii, where this issue is most prevalent, the Room AC saturation has been increased to account for the 
+undercounting of non-ducted heat pumps. 
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
