@@ -5716,7 +5716,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 78
      - false
    * - 80F
-     - 4.7%
+     - 4.8%
      - auto
      - 80
      - 80
@@ -38679,10 +38679,10 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 6.4%
      - .2
    * - 40% Conditioned
-     - 5.8%
+     - 5.9%
      - .4
    * - 60% Conditioned
-     - 6.5%
+     - 6.6%
      - .6
    * - 80% Conditioned
      - 3.6%
@@ -38728,6 +38728,10 @@ Assumption
 - \1) HVAC Heating type: Non-ducted heating and None2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs binsHomes having ducted heat pump for heating and electricity fuel is assumed to haveducted heat pump for cooling (seperating from central AC category)
 
 - \Homes having non-ducted heat pump for heating is assumed to have non-ducted heat pumpfor cooling
+
+- \For Hawaii, central air conditioning saturation is from RECS 2020 by heating type, ignoring allother dependencies
+
+- \For Hawaii, Non-Ducted Heat Pump saturation is underestimated because ResStock does not currently allow cooling-only Non-Ducted Heat Pumps. These samples are modeled as Room ACs
 
 - \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
