@@ -140,7 +140,7 @@ Level,Parameter,Option,Saturation
 0,Ground Thermal Conductivity,1.1,0.125
 0,Ground Thermal Conductivity,1.4,0.125
 0,Ground Thermal Conductivity,1.7,0.125
-0,Ground Thermal Conductivity,2.0,0.125
+0,Ground Thermal Conductivity,2,0.125
 0,Ground Thermal Conductivity,2.3,0.125
 0,Ground Thermal Conductivity,2.6,0.125
 0,HVAC System Is Faulted,No,0.5
@@ -642,9 +642,7 @@ Level,Parameter,Option,Saturation
 1,Heating Setpoint Offset Period,Night -4h,0.0151515
 1,Heating Setpoint Offset Period,Night -5h,0.0151515
 1,Heating Setpoint Offset Period,None,0.5
-1,Holiday Lighting,95% Usage,0.5
-1,Holiday Lighting,100% Usage,0.5
-1,Holiday Lighting,None,0
+1,Holiday Lighting,None,1
 1,Lighting Interior Use,95% Usage,0.5
 1,Lighting Interior Use,100% Usage,0.5
 1,Lighting Interior Use,None,0
@@ -986,7 +984,7 @@ Level,Parameter,Option,Saturation
 4,Geometry Space Combination,"Single-Family Detached, Ambient, Vented Attic, No Garage",0.00514404
 4,Geometry Space Combination,"Single-Family Detached, Heated Basement, Finished Attic, 1 Car Garage",0.000885917
 4,Geometry Space Combination,"Single-Family Detached, Heated Basement, Finished Attic, 2 Car Garage",0.000542981
-4,Geometry Space Combination,"Single-Family Detached, Heated Basement, Finished Attic, 3 Car Garage",8.5734e-05
+4,Geometry Space Combination,"Single-Family Detached, Heated Basement, Finished Attic, 3 Car Garage",8.57E-05
 4,Geometry Space Combination,"Single-Family Detached, Heated Basement, Finished Attic, No Garage",0.00157179
 4,Geometry Space Combination,"Single-Family Detached, Heated Basement, No Attic, 1 Car Garage",0.00170515
 4,Geometry Space Combination,"Single-Family Detached, Heated Basement, No Attic, 2 Car Garage",0.000904969
