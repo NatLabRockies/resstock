@@ -7,6 +7,21 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+    
+    .. change::
+        :tags: characteristics, documentation, technical reference guide
+        :pullreq: 1380
+
+        **Date**: 2025-04-15
+
+        Title:
+        Hawaii cooling saturation
+
+        Description:
+        Remove fallback rules from Hawaii and to match technology saturation from RECS2020
+
+        Assignees: Janet Reyna
+
 
     .. change::
         :tags: standard data release
