@@ -1150,3 +1150,27 @@ upgrades:
       - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
       - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
       - *infiltration_30pct_reduction
+
+  - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
+    package_apply_logic:
+      - Electric Vehicle Ownership|No
+      - &Occupied_only
+          Vacancy Status|Occupied
+    options:
+      - &EV_Ownership_Yes
+        option: Electric Vehicle Ownership|Yes
+      - option: Electric Vehicle Charger|Level 1 charger
+
+  - upgrade_name: Electric Vehicle Adoption with Level 2 Charging
+    package_apply_logic: *Occupied_only
+    options:
+      - *EV_Ownership_Yes
+      - &L2_Charger
+        option: Electric Vehicle Charger|Level 2 charger
+
+  - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging
+    package_apply_logic: *Occupied_only
+    options:
+      - *EV_Ownership_Yes
+      - *L2_Charger
+      - option: Electric Vehicle Efficiency Increase|15%
