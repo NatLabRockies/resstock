@@ -12816,7 +12816,7 @@ Level,Parameter,Option,Saturation
 7,HVAC Cooling Type,Evaporative or Swamp Cooler,0
 7,HVAC Cooling Type,Non-Ducted Heat Pump,0.00974977
 7,HVAC Cooling Type,None,0.105864
-7,HVAC Cooling Type,Room AC,0.199847
+7,HVAC Cooling Type,Room AC,0.200384
 7,HVAC Secondary Heating Type,Ducted Heating,1.95013e-05
 7,HVAC Secondary Heating Type,Non-Ducted Heating,0.000367707
 7,HVAC Secondary Heating Type,None,0.999613
@@ -13527,13 +13527,13 @@ Level,Parameter,Option,Saturation
 15,Electric Vehicle Outlet Access,No,0.435499
 15,Electric Vehicle Outlet Access,Yes,0.564501
 15,Electric Vehicle Outlet Access,Void,0
-15,Duct Location,Attic,0.170261
-15,Duct Location,Crawlspace,0.154223
-15,Duct Location,Garage,0.0478349
+15,Duct Location,Attic,0.170137
+15,Duct Location,Crawlspace,0.154195
+15,Duct Location,Garage,0.0477751
 15,Duct Location,Heated Basement,0.106558
-15,Duct Location,Living Space,0.196091
-15,Duct Location,None,0.235004
-15,Duct Location,Unheated Basement,0.0900273
+15,Duct Location,Living Space,0.195935
+15,Duct Location,None,0.235373
+15,Duct Location,Unheated Basement,0.0900261
 15,Water Heater Location,Attic,0.00874648
 15,Water Heater Location,Conditioned Mechanical Room,0.143277
 15,Water Heater Location,Crawlspace,0.00181447
@@ -13542,17 +13542,17 @@ Level,Parameter,Option,Saturation
 15,Water Heater Location,Living Space,0.431316
 15,Water Heater Location,Outside,0.0711681
 15,Water Heater Location,Unheated Basement,0.0868885
-16,Duct Leakage and Insulation,"0% Leakage to Outside, Uninsulated",0.30265
-16,Duct Leakage and Insulation,"10% Leakage to Outside, R-4",0.0389558
-16,Duct Leakage and Insulation,"10% Leakage to Outside, R-6",0.00892031
-16,Duct Leakage and Insulation,"10% Leakage to Outside, R-8",0.017749
-16,Duct Leakage and Insulation,"10% Leakage to Outside, Uninsulated",0.0545849
-16,Duct Leakage and Insulation,"20% Leakage to Outside, R-4",0.0704201
-16,Duct Leakage and Insulation,"20% Leakage to Outside, R-6",0.0161252
-16,Duct Leakage and Insulation,"20% Leakage to Outside, R-8",0.0320848
-16,Duct Leakage and Insulation,"20% Leakage to Outside, Uninsulated",0.0986726
-16,Duct Leakage and Insulation,"30% Leakage to Outside, R-4",0.0404541
-16,Duct Leakage and Insulation,"30% Leakage to Outside, R-6",0.0092634
-16,Duct Leakage and Insulation,"30% Leakage to Outside, R-8",0.0184317
-16,Duct Leakage and Insulation,"30% Leakage to Outside, Uninsulated",0.0566843
-16,Duct Leakage and Insulation,None,0.235004
+16,Duct Leakage and Insulation,"0% Leakage to Outside, Uninsulated",0.302493
+16,Duct Leakage and Insulation,"10% Leakage to Outside, R-4",0.0389408
+16,Duct Leakage and Insulation,"10% Leakage to Outside, R-6",0.00891689
+16,Duct Leakage and Insulation,"10% Leakage to Outside, R-8",0.0177164
+16,Duct Leakage and Insulation,"10% Leakage to Outside, Uninsulated",0.0545807
+16,Duct Leakage and Insulation,"20% Leakage to Outside, R-4",0.070393
+16,Duct Leakage and Insulation,"20% Leakage to Outside, R-6",0.016119
+16,Duct Leakage and Insulation,"20% Leakage to Outside, R-8",0.0320257
+16,Duct Leakage and Insulation,"20% Leakage to Outside, Uninsulated",0.0986652
+16,Duct Leakage and Insulation,"30% Leakage to Outside, R-4",0.0404386
+16,Duct Leakage and Insulation,"30% Leakage to Outside, R-6",0.00925985
+16,Duct Leakage and Insulation,"30% Leakage to Outside, R-8",0.0183978
+16,Duct Leakage and Insulation,"30% Leakage to Outside, Uninsulated",0.05668
+16,Duct Leakage and Insulation,None,0.235373

@@ -239,9 +239,12 @@ Level,Parameter,Option,Saturation
 0,Interior Shading,"Summer = 0.5, Winter = 0.7",0.2
 0,Interior Shading,"Summer = 0.7, Winter = 0.95",0.2
 0,Interior Shading,"Summer = 0.5, Winter = 0.95",0.2
-0,Lighting,100% CFL,0.333333
-0,Lighting,100% Incandescent,0.333333
-0,Lighting,100% LED,0.333333
+0,Lighting,20% LED,0.166667
+0,Lighting,60% CFL,0.166667
+0,Lighting,100% CFL,0.166667
+0,Lighting,100% Incandescent,0.166667
+0,Lighting,100% LED,0.166667
+0,Lighting,None,0.166667
 0,Mechanical Ventilation,None,0.2
 0,Mechanical Ventilation,Exhaust,0.2
 0,Mechanical Ventilation,Supply,0.2
@@ -639,14 +642,15 @@ Level,Parameter,Option,Saturation
 1,Heating Setpoint Offset Period,Night -4h,0.0151515
 1,Heating Setpoint Offset Period,Night -5h,0.0151515
 1,Heating Setpoint Offset Period,None,0.5
+1,Holiday Lighting,95% Usage,0.5
+1,Holiday Lighting,100% Usage,0.5
 1,Holiday Lighting,None,0
-1,Holiday Lighting,No Exterior Use,1
-1,Lighting Interior Use,None,0
-1,Lighting Interior Use,100% Usage,0.5
 1,Lighting Interior Use,95% Usage,0.5
-1,Lighting Other Use,None,0
-1,Lighting Other Use,100% Usage,0.5
+1,Lighting Interior Use,100% Usage,0.5
+1,Lighting Interior Use,None,0
 1,Lighting Other Use,95% Usage,0.5
+1,Lighting Other Use,100% Usage,0.5
+1,Lighting Other Use,None,0
 1,Occupants,0,0.5
 1,Occupants,1,0.05
 1,Occupants,2,0.05
