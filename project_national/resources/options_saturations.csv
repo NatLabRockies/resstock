@@ -12817,8 +12817,8 @@ Level,Parameter,Option,Saturation
 7,HVAC Cooling Type,Non-Ducted Heat Pump,0.00974977
 7,HVAC Cooling Type,None,0.105864
 7,HVAC Cooling Type,Room AC,0.200384
-7,HVAC Secondary Heating Type,Ducted Heating,2.93623e-05
-7,HVAC Secondary Heating Type,Non-Ducted Heating,0.000357846
+7,HVAC Secondary Heating Type,Ducted Heating,1.95013e-05
+7,HVAC Secondary Heating Type,Non-Ducted Heating,0.000367707
 7,HVAC Secondary Heating Type,None,0.999613
 7,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.0031028
 7,Water Heater Efficiency,"Electric Heat Pump, 66 gal, 3.35 UEF",0
@@ -12895,22 +12895,22 @@ Level,Parameter,Option,Saturation
 8,HVAC Has Shared System,Heating Only,0.0720568
 8,HVAC Has Shared System,None,0.889683
 8,HVAC Has Shared System,Void,0
-8,HVAC Secondary Heating Efficiency,"Fuel Boiler, 76% AFUE",0.000183306
-8,HVAC Secondary Heating Efficiency,"Fuel Boiler, 80% AFUE",0.000148701
-8,HVAC Secondary Heating Efficiency,"Fuel Boiler, 90% AFUE",2.41524e-05
-8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 60% AFUE",3.89049e-07
-8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 76% AFUE",5.33846e-06
-8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 80% AFUE",1.53861e-05
-8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 92.5% AFUE",8.24867e-06
+8,HVAC Secondary Heating Efficiency,"Fuel Boiler, 76% AFUE",0.00018716
+8,HVAC Secondary Heating Efficiency,"Fuel Boiler, 80% AFUE",0.000151088
+8,HVAC Secondary Heating Efficiency,"Fuel Boiler, 90% AFUE",2.7773e-05
+8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 60% AFUE",2.47622e-07
+8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 76% AFUE",3.62311e-06
+8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 80% AFUE",1.07489e-05
+8,HVAC Secondary Heating Efficiency,"Fuel Furnace, 92.5% AFUE",4.88172e-06
 8,HVAC Secondary Heating Efficiency,None,0.999614
 8,HVAC Secondary Heating Efficiency,Shared Heating,0
 8,HVAC Secondary Heating Efficiency,Void,0
 8,HVAC Secondary Heating Partial Space Conditioning,0%,0.999614
-8,HVAC Secondary Heating Partial Space Conditioning,10%,4.58528e-05
-8,HVAC Secondary Heating Partial Space Conditioning,20%,8.199e-05
-8,HVAC Secondary Heating Partial Space Conditioning,30%,0.000136386
-8,HVAC Secondary Heating Partial Space Conditioning,40%,6.09168e-05
-8,HVAC Secondary Heating Partial Space Conditioning,49%,6.03771e-05
+8,HVAC Secondary Heating Partial Space Conditioning,10%,4.55981e-05
+8,HVAC Secondary Heating Partial Space Conditioning,20%,8.20741e-05
+8,HVAC Secondary Heating Partial Space Conditioning,30%,0.000136533
+8,HVAC Secondary Heating Partial Space Conditioning,40%,6.10411e-05
+8,HVAC Secondary Heating Partial Space Conditioning,49%,6.02766e-05
 8,HVAC Secondary Heating Partial Space Conditioning,Void,0
 8,Insulation Rim Joist,None,0.481809
 8,Insulation Rim Joist,Uninsulated,0.473216
@@ -13530,10 +13530,10 @@ Level,Parameter,Option,Saturation
 15,Duct Location,Attic,0.170137
 15,Duct Location,Crawlspace,0.154195
 15,Duct Location,Garage,0.0477751
-15,Duct Location,Heated Basement,0.106559
+15,Duct Location,Heated Basement,0.106558
 15,Duct Location,Living Space,0.195935
 15,Duct Location,None,0.235373
-15,Duct Location,Unheated Basement,0.0900262
+15,Duct Location,Unheated Basement,0.0900261
 15,Water Heater Location,Attic,0.00874648
 15,Water Heater Location,Conditioned Mechanical Room,0.143277
 15,Water Heater Location,Crawlspace,0.00181447
@@ -13544,7 +13544,7 @@ Level,Parameter,Option,Saturation
 15,Water Heater Location,Unheated Basement,0.0868885
 16,Duct Leakage and Insulation,"0% Leakage to Outside, Uninsulated",0.302493
 16,Duct Leakage and Insulation,"10% Leakage to Outside, R-4",0.0389408
-16,Duct Leakage and Insulation,"10% Leakage to Outside, R-6",0.0089169
+16,Duct Leakage and Insulation,"10% Leakage to Outside, R-6",0.00891689
 16,Duct Leakage and Insulation,"10% Leakage to Outside, R-8",0.0177164
 16,Duct Leakage and Insulation,"10% Leakage to Outside, Uninsulated",0.0545807
 16,Duct Leakage and Insulation,"20% Leakage to Outside, R-4",0.070393
