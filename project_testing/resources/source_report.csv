@@ -11,7 +11,7 @@ Clothes Washer,4.0,1.0,sources\recs\recs2020\tsv_maker.py,Presence and rated eff
 Clothes Washer Presence,3.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence of a clothes washer in the dwelling unit.
 Clothes Washer Usage Level,3.0,0.0,sources\other\tsv_maker.py,Clothes washer energy usage level multiplier.
 Cooking Range,6.0,1.0,sources\recs\recs2020\tsv_maker.py,Presence and fuel type of the cooking range.
-Cooking Range Usage Level,3.0,0.0,sources\other\tsv_maker.py,Cooling range energy usage level multiplier.
+Cooking Range Usage Level,3.0,0.0,sources\other\tsv_maker.py,Cooking range energy usage level multiplier.
 Cooling Setpoint,18.0,0.0,manually created,Baseline cooling setpoint with no offset applied.
 Cooling Setpoint Has Offset,2.0,0.0,manually created,Presence of a cooling setpoint offset.
 Cooling Setpoint Offset Magnitude,4.0,1.0,manually created,The magnitude of cooling setpoint offset.
@@ -68,7 +68,7 @@ HVAC Heating Type And Fuel,25.0,2.0,sources\recs\recs2020\tsv_maker.py,"The pres
 HVAC Secondary Heating Efficiency,10.0,3.0,sources\aris\tsv_maker.py,The efficiency and type of the heating system.
 HVAC Secondary Heating Fuel,7.0,2.0,sources\aris\tsv_maker.py,Secondary Heating Fuel for the dwelling unit
 HVAC Secondary Heating Partial Space Conditioning,7.0,3.0,sources\aris\tsv_maker.py,The fraction of heating load served by secondary heating system
-HVAC Secondary Heating Type,3.0,2.0,sources\aris\tsv_maker.py,The efficiency and type of the heating system.
+HVAC Secondary Heating Type,3.0,3.0,sources\aris\tsv_maker.py,The efficiency and type of the heating system.
 HVAC Shared Efficiencies,7.0,2.0,sources\recs\recs2020\tsv_maker.py,The presence and efficiency of the shared HVAC system.
 HVAC System Is Faulted,2.0,0.0,manually created,The presence of the HVAC system having a fault (not used in project_national).
 HVAC System Is Scaled,2.0,0.0,manually created,Whether the HVAC system has been undersized or oversized (not used in project_national).
