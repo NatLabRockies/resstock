@@ -39090,7 +39090,7 @@ Assumption
 
 - \For Alaska, fireplace and stoves are not modeled.
 
-- \For Alaska, heat pumps are assumed to be non-ducted air source heat pumps.
+- \For Alaska, all heat pumps (including geothermal) are assumed to be non-ducted air source heat pumps.
 
 
 Arguments
@@ -40535,13 +40535,11 @@ Assumption
 
 - \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
-- \For Alaska, electric space heaters are modelled as electric baseboards.
+- \For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating efficiency.
 
 - \For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
 
 - \For Alaska, fireplace and stoves are not modeled.
-
-- \For Alaska, heat pumps are assumed to be non-ducted air source heat pumps.
 
 
 Arguments
@@ -40607,7 +40605,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``heating_system_2_has_flue_or_chimney``
 
    * - Fuel Boiler, 76% AFUE
-     - 0.018%
+     - 0.019%
      - Boiler
      - 0.76
      - auto
@@ -40621,35 +40619,35 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
    * - Fuel Boiler, 90% AFUE
-     - 0.0024%
+     - 0.0028%
      - Boiler
      - 0.90
      - auto
      - auto
      - auto
    * - Fuel Furnace, 60% AFUE
-     - 3.9e-05%
+     - 2.5e-05%
      - Furnace
      - 0.6
      - auto
      - auto
      - auto
    * - Fuel Furnace, 76% AFUE
-     - 0.00053%
+     - 0.00036%
      - Furnace
      - 0.76
      - auto
      - auto
      - auto
    * - Fuel Furnace, 80% AFUE
-     - 0.0015%
+     - 0.0011%
      - Furnace
      - 0.8
      - auto
      - auto
      - auto
    * - Fuel Furnace, 92.5% AFUE
-     - 0.00082%
+     - 0.00049%
      - Furnace
      - 0.925
      - auto
@@ -40705,7 +40703,7 @@ Assumption
 
 - \For Alaska, all wood is modelled as cord wood.
 
-- \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary. Rest of the fuels are ignored.
+- \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary (i.e., secondary heating fuel cannot be electricity). Rest of the fuels are ignored.
 
 - \A unit without a primary heating system (heating fuel is None) cannot have a secondary heating system (secondary heating fuel is None).
 
@@ -40877,7 +40875,11 @@ Assumption
 
 - \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
+- \Ducted heating or heat pump cannot have ducted secondary heating.
+
 - \For Alaska, all heat pumps are assumed to be non-ducted mini-splits.
+
+- \For Alaska, all heat pumps are assumed to be non-ducted mini-splits. For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating type.
 
 
 Options
@@ -40894,9 +40896,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - Stock saturation
 
    * - Ducted Heating
-     - 0.0029%
+     - 0.002%
    * - Non-Ducted Heating
-     - 0.036%
+     - 0.037%
    * - None
      - 1e+02%
 
