@@ -9,10 +9,10 @@ Garage	1990s	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0	0.00822303
 Garage	2000s	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0.0116326
 Garage	2010s	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0.00363821
 Heated Basement	<1940	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.013044
-Heated Basement	1940s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00698726
+Heated Basement	1940s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.00698727
 Heated Basement	1950s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0162545
 Heated Basement	1960s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0125232
-Heated Basement	1970s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0146926
+Heated Basement	1970s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0146925
 Heated Basement	1980s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0115705
 Heated Basement	1990s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0141856
 Heated Basement	2000s	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0133802
@@ -39,7 +39,7 @@ Unheated Basement	<1940	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.027519
 Unheated Basement	1940s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00531644
 Unheated Basement	1950s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.012164
 Unheated Basement	1960s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00810151
-Unheated Basement	1970s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.0094992
+Unheated Basement	1970s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00949919
 Unheated Basement	1980s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00692444
 Unheated Basement	1990s	0	0	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0.00821911
 Unheated Basement	2000s	0	0	0.26	0	0	0	0.47	0	0	0	0.27	0	0	0	0.00929589

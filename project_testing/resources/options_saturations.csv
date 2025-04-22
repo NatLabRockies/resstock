@@ -642,13 +642,14 @@ Level,Parameter,Option,Saturation
 1,Heating Setpoint Offset Period,Night -4h,0.0151515
 1,Heating Setpoint Offset Period,Night -5h,0.0151515
 1,Heating Setpoint Offset Period,None,0.5
-1,Holiday Lighting,None,1
-1,Lighting Interior Use,95% Usage,0.5
-1,Lighting Interior Use,100% Usage,0.5
-1,Lighting Interior Use,None,0
-1,Lighting Other Use,95% Usage,0.5
-1,Lighting Other Use,100% Usage,0.5
-1,Lighting Other Use,None,0
+1,Holiday Lighting,No Exterior Use,0.833333
+1,Holiday Lighting,None,0.166667
+1,Lighting Interior Use,95% Usage,0.416667
+1,Lighting Interior Use,100% Usage,0.416667
+1,Lighting Interior Use,None,0.166667
+1,Lighting Other Use,95% Usage,0.416667
+1,Lighting Other Use,100% Usage,0.416667
+1,Lighting Other Use,None,0.166667
 1,Occupants,0,0.5
 1,Occupants,1,0.05
 1,Occupants,2,0.05
