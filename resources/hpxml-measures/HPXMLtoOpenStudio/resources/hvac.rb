@@ -634,10 +634,10 @@ module HVAC
     elsif [HPXML::AdvancedResearchGeothermalModelTypeAdvanced].include? hpxml_header.geothermal_model_type
       num_speeds = hp_ap.cool_capacity_ratios.size
       if heat_pump.compressor_type == HPXML::HVACCompressorTypeVariableSpeed
-        plf_fplr_curve = Model.add_curve_quadratic(
+        plf_fplr_curve = Model.add_curve_cubic(
           model,
           name: 'Cool-PLF-fPLR',
-          coeff: [1, 0, 0],
+          coeff: [0.269, 2.6814, -3.3095, 1.3674],
           min_x: 0, max_x: 1, min_y: 0.7, max_y: 1
         )
       else
@@ -714,7 +714,7 @@ module HVAC
         plf_fplr_curve = Model.add_curve_quadratic(
           model,
           name: 'Heat-PLF-fPLR',
-          coeff: [1, 0, 0],
+          coeff: [0.269, 2.6814, -3.3095, 1.3674],
           min_x: 0, max_x: 1, min_y: 0.7, max_y: 1
         )
       else
