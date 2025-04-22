@@ -1,20 +1,20 @@
 Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	Dependency=Heating Setpoint Has Offset	Dependency=HVAC Has Zonal Electric Heating	Option=0F	Option=3F	Option=6F	Option=12F	source_count	source_weight	sampling_probability
 1A	Mobile Home	No	No	1	0	0	0	256	16405.8	0.000273086
 1A	Mobile Home	Yes	No	0	0.915674	0.0738632	0.0104627	13	0	3.55757e-05
-1A	Multi-Family with 2 - 4 Units	No	No	1	0	0	0	21	135484	0.000901227
-1A	Multi-Family with 2 - 4 Units	Yes	No	0	0.651225	0.283137	0.0656382	66	16373.1	0.000108912
-1A	Multi-Family with 5+ Units	No	No	1	0	0	0	92	715626	0.0058223
-1A	Multi-Family with 5+ Units	Yes	No	0	0.651225	0.283137	0.0656382	66	88751.7	0.000722081
+1A	Multi-Family with 2 - 4 Units	No	No	1	0	0	0	21	135484	0.000902717
+1A	Multi-Family with 2 - 4 Units	Yes	No	0	0.651225	0.283137	0.0656382	66	16373.1	0.000109092
+1A	Multi-Family with 5+ Units	No	No	1	0	0	0	92	715626	0.00582057
+1A	Multi-Family with 5+ Units	Yes	No	0	0.651225	0.283137	0.0656382	66	88751.7	0.000721866
 1A	Single-Family Attached	No	No	1	0	0	0	42	146241	0.00123246
 1A	Single-Family Attached	Yes	No	0	0.915674	0.0738632	0.0104627	13	27374.6	0.000230703
 1A	Single-Family Detached	No	No	1	0	0	0	213	815354	0.00643287
 1A	Single-Family Detached	Yes	No	0	0.96587	0.0208047	0.0133258	10	100033	0.000789223
 1A	Mobile Home	No	Yes	1	0	0	0	54	0	2.02715e-05
 1A	Mobile Home	Yes	Yes	0	0.599361	0.217245	0.183394	46	0	8.70375e-06
-1A	Multi-Family with 2 - 4 Units	No	Yes	1	0	0	0	25	0	6.99662e-05
-1A	Multi-Family with 2 - 4 Units	Yes	Yes	0	0.77356	0.22644	0	13	0	3.00406e-05
-1A	Multi-Family with 5+ Units	No	Yes	1	0	0	0	25	43333.8	0.000382891
-1A	Multi-Family with 5+ Units	Yes	Yes	0	0.77356	0.22644	0	13	0	0.000164398
+1A	Multi-Family with 2 - 4 Units	No	Yes	1	0	0	0	25	0	6.87984e-05
+1A	Multi-Family with 2 - 4 Units	Yes	Yes	0	0.77356	0.22644	0	13	0	2.95392e-05
+1A	Multi-Family with 5+ Units	No	Yes	1	0	0	0	25	43333.8	0.000384253
+1A	Multi-Family with 5+ Units	Yes	Yes	0	0.77356	0.22644	0	13	0	0.000164983
 1A	Single-Family Attached	No	Yes	1	0	0	0	54	0	0.000100154
 1A	Single-Family Attached	Yes	Yes	0	0.599361	0.217245	0.183394	46	1275.11	4.30022e-05
 1A	Single-Family Detached	No	Yes	1	0	0	0	54	18450	0.000400472

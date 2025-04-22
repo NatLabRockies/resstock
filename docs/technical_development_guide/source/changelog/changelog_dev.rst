@@ -3,24 +3,85 @@ Development Changelog
 =====================
 
 
-.. change::
-    :tags: characteristics, documentation
-    :pullreq: 1377
-
-    **Date**: 2025-04-09
-
-    Title:
-    Update HVAC Cooling Partial Space Conditioning for Hawaii
-
-    Description:
-    Update of HVAC Cooling Partial Space Conditioning.tsv to separate Hawaii and Miami and to allow for more partial space conditioning in Hawai
-
-    Assignees: Janet Reyna
-
-
 .. changelog::
     :version: v3.5.0
     :released: pending
+
+    
+    .. change::
+        :tags: characteristics, documentation, technical reference guide
+        :pullreq: 1380
+
+        **Date**: 2025-04-15
+
+        Title:
+        Hawaii cooling saturation
+
+        Description:
+        Remove fallback rules from Hawaii and to match technology saturation from RECS2020
+
+        Assignees: Janet Reyna
+
+
+    .. change::
+        :tags: bug fix
+        :pullreq: 1362
+
+        **Date**: 2025-04-18
+
+        Title:
+        Prevent ducted secondary heating when primary heating is ducted
+
+        Description:
+        OS-HPXML disallows multiple heating systems on a single distribution system and ResStock is not set up to have multiple distribution systems. Disallowing ducted secondary heating when primary heating is ducted will prevent this error.
+
+        Assignees: Yingli Lou, Lixi Liu, Anthony Fontanini
+
+
+    .. change::
+        :tags: standard data release
+        :pullreq: 1362
+
+        **Date**: 2025-04-17
+
+        Title:
+        EE + Adoption meaure upgrades for EV SDR
+
+        Description:
+        Add electric vehicle addoption and electric vehicle efficiency upgrade measures to the SDR project file.
+
+        Assignees: Philip White, Andrew Speake
+
+
+    .. change::
+        :tags: characteristics, documentation, technical reference guide
+        :pullreq: 1379
+
+        **Date**: 2025-04-06
+
+        Title:
+        Refrigeration correction factors
+
+        Description:
+        Assign state level correction factors for freezer and secondary refrigeration to account for the fact that homes can have more than 1 freezer and 2 refrigerators. This also corrects the freezer usage, which was previously assigned to match the national saturation of freezers.
+
+        Assignees: Lixi Liu, Anthony Fontanini
+
+
+    .. change::
+        :tags: characteristics, documentation
+        :pullreq: 1377
+
+        **Date**: 2025-04-09
+
+        Title:
+        Update HVAC Cooling Partial Space Conditioning for Hawaii
+
+        Description:
+        Update of HVAC Cooling Partial Space Conditioning.tsv to separate Hawaii and Miami and to allow for more partial space conditioning in Hawai
+
+        Assignees: Janet Reyna
+
 
     .. change::
         :tags: characteristics, documentation, feature, technical reference guide, outputs
@@ -32,7 +93,7 @@ Development Changelog
         Solar Hot Water
 
         Description:
-        Break out Solar Thermal from Other Fuel for Water Heater Fuel, consolidate Solar Hot Water with Water Heater Efficiency, assign all solar hot water systems as south-facing roof pitch installed 40ft solar collectors.
+        Break out Solar Thermal from Other Fuel for Water Heater Fuel, consolidate Solar Hot Water with Water Heater Efficiency, assign all solar hot water systems as roof pitch installed 40ft solar collectors with some orientation diversity.
 
         Assignees: Lixi Liu, Anthony Fontanini, Jeff Maguire
 
@@ -53,7 +114,7 @@ Development Changelog
 
 
     .. change::
-        :tags: outputs, standard data release
+        :tags: standard data release, outputs
         :pullreq: 1371
 
         **Date**: 2025-04-01
