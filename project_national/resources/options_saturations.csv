@@ -12608,9 +12608,9 @@ Level,Parameter,Option,Saturation
 5,Corridor,None,0
 5,Corridor,Single Exterior Front,0
 5,Corridor,Double Exterior,0
-5,Lighting,100% CFL,0.35642
-5,Lighting,100% Incandescent,0.370382
-5,Lighting,100% LED,0.273198
+5,Lighting,100% CFL,0.228368
+5,Lighting,100% Incandescent,0.253055
+5,Lighting,100% LED,0.518578
 5,Neighbors,Left/Right at 15ft,0.677233
 5,Neighbors,2,0.00187463
 5,Neighbors,4,0.0337369

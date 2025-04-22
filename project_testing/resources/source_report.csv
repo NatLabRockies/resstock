@@ -83,7 +83,7 @@ Heating Setpoint Has Offset,2.0,0.0,manually created,Presence of a heating setpo
 Heating Setpoint Offset Magnitude,4.0,1.0,manually created,Magnitude of the heating setpoint offset.
 Heating Setpoint Offset Period,34.0,1.0,manually created,The period and offset for the dwelling unit's heating setpoint. Default for the day is from 9am to 5pm and for the night is 10pm to 7am.
 Heating Unavailable Days,8.0,0.0,sources\recs\recs2020\tsv_maker.py,Number of days in a year the heating system is unavailable
-Holiday Lighting,2.0,1.0,manually created,Use of holiday lighting (not used in project_national).
+Holiday Lighting,2.0,1.0,sources\other\tsv_maker.py,Use of holiday lighting (not currently modeled separately from other exterior lighting).
 Hot Water Distribution,5.0,0.0,manually created,Hot water piping material and insulation level.
 Hot Water Fixtures,16.0,0.0,sources\other\tsv_maker.py,Hot water fixture usage and flow levels.
 Infiltration,27.0,0.0,sources\resdb\tsv_maker.py,Total infiltration to the dwelling unit.
@@ -95,9 +95,9 @@ Insulation Roof,8.0,1.0,manually created,Finished roof insulation level.
 Insulation Slab,8.0,1.0,manually created,Slab insulation level.
 Insulation Wall,16.0,1.0,manually created,Wall construction type and insulation level.
 Interior Shading,5.0,0.0,manually created,Fraction of window shading in the summer and winter.
-Lighting,6.0,0.0,originally created by sources\recs\2015\tsv_maker.py. Manually updated during the HPXML transition.,Fraction of lighting types.
-Lighting Interior Use,3.0,1.0,manually created,Interior lighting usage relative to the national average.
-Lighting Other Use,3.0,1.0,manually created,Exterior and garage lighting usage relative to the national average.
+Lighting,6.0,0.0,sources\recs\recs2020\tsv_maker.py,"Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options."
+Lighting Interior Use,3.0,1.0,sources\other\tsv_maker.py,Interior lighting usage relative to the national average.
+Lighting Other Use,3.0,1.0,sources\other\tsv_maker.py,Exterior and garage lighting usage relative to the national average.
 Mechanical Ventilation,5.0,0.0,manually created,Mechanical ventilation type and efficiency.
 Misc Extra Refrigerator,9.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of the secondary refrigerator.
 Misc Freezer,6.0,0.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of a standalone freezer.
