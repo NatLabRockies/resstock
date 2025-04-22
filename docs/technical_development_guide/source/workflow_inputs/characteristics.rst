@@ -42755,17 +42755,17 @@ Holiday Lighting
 Description
 ***********
 
-Use of holiday lighting (not used in project_national).
+Use of holiday lighting (not currently modeled separately from other exterior lighting).
 
 Created by
 **********
 
-manually created
+``sources/other/tsv_maker.py``
 
 Source
 ******
 
-- \Not applicable (holiday lighting is not currently modeled separate from other exterior lighting)
+- \n/a
 
 
 Arguments
@@ -44792,14 +44792,12 @@ Interior lighting usage relative to the national average.
 Created by
 **********
 
-manually created
+``sources/other/tsv_maker.py``
 
 Source
 ******
 
-- \Not applicable
-
-- \this parameter for adding diversity to lighting usage patterns is not currently used.
+- \n/a
 
 
 Arguments
@@ -44853,14 +44851,12 @@ Exterior and garage lighting usage relative to the national average.
 Created by
 **********
 
-manually created
+``sources/other/tsv_maker.py``
 
 Source
 ******
 
-- \Not applicable
-
-- \this parameter for adding diversity to lighting usage patterns is not currently used.
+- \n/a
 
 
 Arguments
