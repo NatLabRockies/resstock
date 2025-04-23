@@ -60763,15 +60763,15 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 45
      - 0
    * - Northwest
-     - 0.0099%
+     - 0.01%
      - 315
      - 0
    * - South
-     - 0.45%
+     - 0.46%
      - 180
      - 0
    * - Southeast
-     - 0.14%
+     - 0.15%
      - 135
      - 0
    * - Southwest
@@ -60779,7 +60779,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 225
      - 0
    * - West
-     - 0.087%
+     - 0.089%
      - 270
      - 0
 
@@ -60938,7 +60938,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``pv_system_2_max_power_output``
 
    * - 1.0 kWDC
-     - 0.027%
+     - 0.028%
      - true
      - auto
      - roof
@@ -60970,7 +60970,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 5.0 kWDC
-     - 0.3%
+     - 0.31%
      - true
      - auto
      - roof
@@ -60986,7 +60986,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 7.0 kWDC
-     - 0.22%
+     - 0.23%
      - true
      - auto
      - roof
@@ -61002,7 +61002,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 9.0 kWDC
-     - 0.14%
+     - 0.15%
      - true
      - auto
      - roof
@@ -61018,7 +61018,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 11.0 kWDC
-     - 0.077%
+     - 0.078%
      - true
      - auto
      - roof
@@ -61034,7 +61034,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 13.0 kWDC
-     - 0.031%
+     - 0.032%
      - true
      - auto
      - roof

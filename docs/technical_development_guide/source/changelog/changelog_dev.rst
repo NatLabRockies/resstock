@@ -10,6 +10,21 @@ Development Changelog
     
     .. change::
         :tags: characteristics, documentation, technical reference guide
+        :pullreq: 1385
+
+        **Date**: 2025-04-22
+
+        Title:
+        Update Hawaii PV 2023
+
+        Description:
+        Update PV data from EIA Form 861 2018 to 2023 to have latest information
+
+        Assignees: Janet Reyna
+
+
+.. change::
+        :tags: characteristics, documentation, technical reference guide
         :pullreq: 1380
 
         **Date**: 2025-04-15
@@ -22,7 +37,7 @@ Development Changelog
 
         Assignees: Janet Reyna
 
-
+ 
     .. change::
         :tags: bug fix
         :pullreq: 1362
