@@ -15,9 +15,9 @@ baseline:
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: precomputed
+  type: residential_quota
   args:
-    sample_file: resources/sdr_minimal_buildstock.csv
+    n_datapoints: 18 # For CI
     # n_datapoints: 550000 # For production run
 
 # NREL High Performance Computing machine configuration
