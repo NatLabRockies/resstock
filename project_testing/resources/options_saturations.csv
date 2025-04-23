@@ -239,11 +239,11 @@ Level,Parameter,Option,Saturation
 0,Interior Shading,"Summer = 0.5, Winter = 0.7",0.2
 0,Interior Shading,"Summer = 0.7, Winter = 0.95",0.2
 0,Interior Shading,"Summer = 0.5, Winter = 0.95",0.2
-0,Lighting,20% LED,0.166667
+0,Lighting,100% Incandescent,0.166667
 0,Lighting,60% CFL,0.166667
 0,Lighting,100% CFL,0.166667
-0,Lighting,100% Incandescent,0.166667
 0,Lighting,100% LED,0.166667
+0,Lighting,20% LED,0.166667
 0,Lighting,None,0.166667
 0,Mechanical Ventilation,None,0.2
 0,Mechanical Ventilation,Exhaust,0.2
@@ -642,14 +642,14 @@ Level,Parameter,Option,Saturation
 1,Heating Setpoint Offset Period,Night -4h,0.0151515
 1,Heating Setpoint Offset Period,Night -5h,0.0151515
 1,Heating Setpoint Offset Period,None,0.5
-1,Holiday Lighting,No Exterior Use,0.833333
 1,Holiday Lighting,None,0.166667
-1,Lighting Interior Use,95% Usage,0.416667
-1,Lighting Interior Use,100% Usage,0.416667
+1,Holiday Lighting,No Exterior Use,0.833333
 1,Lighting Interior Use,None,0.166667
-1,Lighting Other Use,95% Usage,0.416667
-1,Lighting Other Use,100% Usage,0.416667
+1,Lighting Interior Use,100% Usage,0.416667
+1,Lighting Interior Use,95% Usage,0.416667
 1,Lighting Other Use,None,0.166667
+1,Lighting Other Use,100% Usage,0.416667
+1,Lighting Other Use,95% Usage,0.416667
 1,Occupants,0,0.5
 1,Occupants,1,0.05
 1,Occupants,2,0.05
@@ -900,9 +900,9 @@ Level,Parameter,Option,Saturation
 3,HVAC Has Shared System,Heating Only,0.25463
 3,HVAC Has Shared System,None,0.625
 3,HVAC Has Shared System,Void,0
-4,HVAC Secondary Heating Type,Ducted Heating,0.0163265
-4,HVAC Secondary Heating Type,Non-Ducted Heating,0.0653061
-4,HVAC Secondary Heating Type,None,0.918367
+4,HVAC Secondary Heating Type,Ducted Heating,0.032653
+4,HVAC Secondary Heating Type,Non-Ducted Heating,0.0571428
+4,HVAC Secondary Heating Type,None,0.910204
 4,Insulation Rim Joist,None,0.337037
 4,Insulation Rim Joist,Uninsulated,0.132593
 4,Insulation Rim Joist,"R-5, Exterior",0.132593
@@ -1104,25 +1104,25 @@ Level,Parameter,Option,Saturation
 4,HVAC Shared Efficiencies,"Fan Coil Heating and Cooling, Fuel",0.0462963
 4,HVAC Shared Efficiencies,None,0.625
 4,HVAC Shared Efficiencies,Void,0
-5,HVAC Has Ducts,No,0.576339
-5,HVAC Has Ducts,Yes,0.423661
+5,HVAC Has Ducts,No,0.571488
+5,HVAC Has Ducts,Yes,0.428512
 5,HVAC Has Ducts,Void,0
-5,HVAC Secondary Heating Efficiency,"Fuel Boiler, 76% AFUE",0.0136054
-5,HVAC Secondary Heating Efficiency,"Fuel Boiler, 80% AFUE",0.0136054
-5,HVAC Secondary Heating Efficiency,"Fuel Boiler, 90% AFUE",0.0136054
-5,HVAC Secondary Heating Efficiency,"Fuel Furnace, 60% AFUE",0.00408163
-5,HVAC Secondary Heating Efficiency,"Fuel Furnace, 76% AFUE",0.00408163
-5,HVAC Secondary Heating Efficiency,"Fuel Furnace, 80% AFUE",0.00408163
-5,HVAC Secondary Heating Efficiency,"Fuel Furnace, 92.5% AFUE",0.00408163
-5,HVAC Secondary Heating Efficiency,None,0.942857
+5,HVAC Secondary Heating Efficiency,"Fuel Boiler, 76% AFUE",0.0108843
+5,HVAC Secondary Heating Efficiency,"Fuel Boiler, 80% AFUE",0.0108843
+5,HVAC Secondary Heating Efficiency,"Fuel Boiler, 90% AFUE",0.0108843
+5,HVAC Secondary Heating Efficiency,"Fuel Furnace, 60% AFUE",0.00816325
+5,HVAC Secondary Heating Efficiency,"Fuel Furnace, 76% AFUE",0.00816325
+5,HVAC Secondary Heating Efficiency,"Fuel Furnace, 80% AFUE",0.00816325
+5,HVAC Secondary Heating Efficiency,"Fuel Furnace, 92.5% AFUE",0.00816325
+5,HVAC Secondary Heating Efficiency,None,0.934694
 5,HVAC Secondary Heating Efficiency,Shared Heating,0
 5,HVAC Secondary Heating Efficiency,Void,0
-5,HVAC Secondary Heating Partial Space Conditioning,0%,0.952381
-5,HVAC Secondary Heating Partial Space Conditioning,10%,0.00952382
-5,HVAC Secondary Heating Partial Space Conditioning,20%,0.00952382
-5,HVAC Secondary Heating Partial Space Conditioning,30%,0.00952382
-5,HVAC Secondary Heating Partial Space Conditioning,40%,0.00952382
-5,HVAC Secondary Heating Partial Space Conditioning,49%,0.00952382
+5,HVAC Secondary Heating Partial Space Conditioning,0%,0.945578
+5,HVAC Secondary Heating Partial Space Conditioning,10%,0.0108844
+5,HVAC Secondary Heating Partial Space Conditioning,20%,0.0108844
+5,HVAC Secondary Heating Partial Space Conditioning,30%,0.0108844
+5,HVAC Secondary Heating Partial Space Conditioning,40%,0.0108844
+5,HVAC Secondary Heating Partial Space Conditioning,49%,0.0108844
 5,HVAC Secondary Heating Partial Space Conditioning,Void,0
 5,Water Heater Location,Attic,0.037634
 5,Water Heater Location,Conditioned Mechanical Room,0.337912
@@ -1157,24 +1157,24 @@ Level,Parameter,Option,Saturation
 5,HVAC Heating Type And Fuel,Propane Fuel Wall/Floor Furnace,0.0174603
 5,HVAC Heating Type And Fuel,Propane Shared Heating,0.0555556
 5,HVAC Heating Type And Fuel,Void,0
-6,Duct Location,Attic,0.0172691
-6,Duct Location,Crawlspace,0.0834064
+6,Duct Location,Attic,0.0173461
+6,Duct Location,Crawlspace,0.0844315
 6,Duct Location,Garage,0.00273372
-6,Duct Location,Heated Basement,0.0196311
-6,Duct Location,Living Space,0.258918
-6,Duct Location,None,0.576338
-6,Duct Location,Unheated Basement,0.0417032
-7,Duct Leakage and Insulation,"0% Leakage to Outside, Uninsulated",0.278549
-7,Duct Leakage and Insulation,"10% Leakage to Outside, R-4",0.0120927
-7,Duct Leakage and Insulation,"10% Leakage to Outside, R-6",0.0120927
-7,Duct Leakage and Insulation,"10% Leakage to Outside, R-8",0.0120927
-7,Duct Leakage and Insulation,"10% Leakage to Outside, Uninsulated",0.0120927
-7,Duct Leakage and Insulation,"20% Leakage to Outside, R-4",0.0120927
-7,Duct Leakage and Insulation,"20% Leakage to Outside, R-6",0.0120927
-7,Duct Leakage and Insulation,"20% Leakage to Outside, R-8",0.0120927
-7,Duct Leakage and Insulation,"20% Leakage to Outside, Uninsulated",0.0120927
-7,Duct Leakage and Insulation,"30% Leakage to Outside, R-4",0.0120927
-7,Duct Leakage and Insulation,"30% Leakage to Outside, R-6",0.0120927
-7,Duct Leakage and Insulation,"30% Leakage to Outside, R-8",0.0120927
-7,Duct Leakage and Insulation,"30% Leakage to Outside, Uninsulated",0.0120927
-7,Duct Leakage and Insulation,None,0.576338
+6,Duct Location,Heated Basement,0.0197697
+6,Duct Location,Living Space,0.262015
+6,Duct Location,None,0.571488
+6,Duct Location,Unheated Basement,0.0422158
+7,Duct Leakage and Insulation,"0% Leakage to Outside, Uninsulated",0.281784
+7,Duct Leakage and Insulation,"10% Leakage to Outside, R-4",0.0122273
+7,Duct Leakage and Insulation,"10% Leakage to Outside, R-6",0.0122273
+7,Duct Leakage and Insulation,"10% Leakage to Outside, R-8",0.0122273
+7,Duct Leakage and Insulation,"10% Leakage to Outside, Uninsulated",0.0122273
+7,Duct Leakage and Insulation,"20% Leakage to Outside, R-4",0.0122273
+7,Duct Leakage and Insulation,"20% Leakage to Outside, R-6",0.0122273
+7,Duct Leakage and Insulation,"20% Leakage to Outside, R-8",0.0122273
+7,Duct Leakage and Insulation,"20% Leakage to Outside, Uninsulated",0.0122273
+7,Duct Leakage and Insulation,"30% Leakage to Outside, R-4",0.0122273
+7,Duct Leakage and Insulation,"30% Leakage to Outside, R-6",0.0122273
+7,Duct Leakage and Insulation,"30% Leakage to Outside, R-8",0.0122273
+7,Duct Leakage and Insulation,"30% Leakage to Outside, Uninsulated",0.0122273
+7,Duct Leakage and Insulation,None,0.571488
