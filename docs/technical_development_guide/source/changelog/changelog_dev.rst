@@ -39,6 +39,21 @@ Development Changelog
 
  
     .. change::
+        :tags: bug fix
+        :pullreq: 1362
+
+        **Date**: 2025-04-18
+
+        Title:
+        Prevent ducted secondary heating when primary heating is ducted
+
+        Description:
+        OS-HPXML disallows multiple heating systems on a single distribution system and ResStock is not set up to have multiple distribution systems. Disallowing ducted secondary heating when primary heating is ducted will prevent this error.
+
+        Assignees: Yingli Lou, Lixi Liu, Anthony Fontanini
+
+
+    .. change::
         :tags: standard data release
         :pullreq: 1362
 
