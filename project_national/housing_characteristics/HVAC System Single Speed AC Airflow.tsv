@@ -11,18 +11,18 @@ Room AC, EER 9.8	Yes	0	0	0	0	0	0	0	0	0	0	0	0	1	0
 Room AC, EER 10.7	Yes	0	0	0	0	0	0	0	0	0	0	0	0	1	0
 Room AC, EER 12.0	Yes	0	0	0	0	0	0	0	0	0	0	0	0	1	0
 Shared Cooling	Yes	0	0	0	0	0	0	0	0	0	0	0	0	1	0
-AC, SEER 8	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.00895804
-AC, SEER 10	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0600251
-AC, SEER 13	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.289855
-AC, SEER 15	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.133652
+AC, SEER 8	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.00895125
+AC, SEER 10	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0599722
+AC, SEER 13	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.289571
+AC, SEER 15	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.133521
 Non-Ducted Heat Pump	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.00974977
 Ducted Heat Pump	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.153727
 None	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.105864
-Room AC, EER 8.5	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.00426393
-Room AC, EER 9.8	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0257062
-Room AC, EER 10.7	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.096141
-Room AC, EER 12.0	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0737362
-Shared Cooling	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0383222
+Room AC, EER 8.5	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.00427306
+Room AC, EER 9.8	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.025774
+Room AC, EER 10.7	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.096399
+Room AC, EER 12.0	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.0739384
+Shared Cooling	No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.03826
 # Created by: manually created
 # Description: Single speed central and room air conditioner actual air flow rates.
 # Source: Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020

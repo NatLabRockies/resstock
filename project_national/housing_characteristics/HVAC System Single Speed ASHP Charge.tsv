@@ -23,23 +23,23 @@ Void	Yes	0	0	0	0	0	0	0	1	0
 ASHP, SEER 10, 6.2 HSPF	No	0	0	0	0	0	0	0	1	0.00718034
 ASHP, SEER 13, 7.7 HSPF	No	0	0	0	0	0	0	0	1	0.0740766
 ASHP, SEER 15, 8.5 HSPF	No	0	0	0	0	0	0	0	1	0.0724697
-Electric Baseboard, 100% Efficiency	No	0	0	0	0	0	0	0	1	0.0628257
-Electric Boiler, 100% AFUE	No	0	0	0	0	0	0	0	1	0.00205738
-Electric Furnace, 100% AFUE	No	0	0	0	0	0	0	0	1	0.113321
-Electric Wall Furnace, 100% AFUE	No	0	0	0	0	0	0	0	1	0.0110709
-Fuel Boiler, 76% AFUE	No	0	0	0	0	0	0	0	1	0.00887696
+Electric Baseboard, 100% Efficiency	No	0	0	0	0	0	0	0	1	0.062826
+Electric Boiler, 100% AFUE	No	0	0	0	0	0	0	0	1	0.00205743
+Electric Furnace, 100% AFUE	No	0	0	0	0	0	0	0	1	0.113316
+Electric Wall Furnace, 100% AFUE	No	0	0	0	0	0	0	0	1	0.011071
+Fuel Boiler, 76% AFUE	No	0	0	0	0	0	0	0	1	0.00887687
 Fuel Boiler, 80% AFUE	No	0	0	0	0	0	0	0	1	0.0325257
-Fuel Boiler, 90% AFUE	No	0	0	0	0	0	0	0	1	0.00494728
-Fuel Furnace, 60% AFUE	No	0	0	0	0	0	0	0	1	0.0049303
-Fuel Furnace, 76% AFUE	No	0	0	0	0	0	0	0	1	0.0277536
-Fuel Furnace, 80% AFUE	No	0	0	0	0	0	0	0	1	0.247115
-Fuel Furnace, 92.5% AFUE	No	0	0	0	0	0	0	0	1	0.153317
-Fuel Wall/Floor Furnace, 60% AFUE	No	0	0	0	0	0	0	0	1	0.0318916
-Fuel Wall/Floor Furnace, 68% AFUE	No	0	0	0	0	0	0	0	1	0.0282639
+Fuel Boiler, 90% AFUE	No	0	0	0	0	0	0	0	1	0.00494725
+Fuel Furnace, 60% AFUE	No	0	0	0	0	0	0	0	1	0.00493
+Fuel Furnace, 76% AFUE	No	0	0	0	0	0	0	0	1	0.0277535
+Fuel Furnace, 80% AFUE	No	0	0	0	0	0	0	0	1	0.247114
+Fuel Furnace, 92.5% AFUE	No	0	0	0	0	0	0	0	1	0.153316
+Fuel Wall/Floor Furnace, 60% AFUE	No	0	0	0	0	0	0	0	1	0.0318915
+Fuel Wall/Floor Furnace, 68% AFUE	No	0	0	0	0	0	0	0	1	0.0282638
 MSHP, SEER 14.5, 8.2 HSPF	No	0	0	0	0	0	0	0	1	0.00959704
 MSHP, SEER 29.3, 14 HSPF	No	0	0	0	0	0	0	0	1	0.000152729
 None	No	0	0	0	0	0	0	0	1	0.0113431
-Shared Heating	No	0	0	0	0	0	0	0	1	0.0962845
+Shared Heating	No	0	0	0	0	0	0	0	1	0.096292
 Void	No	0	0	0	0	0	0	0	1	0
 # Created by: manually created
 # Description: Air source heat pump deviation between design/installed charge.

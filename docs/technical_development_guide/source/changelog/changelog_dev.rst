@@ -2,46 +2,134 @@
 Development Changelog
 =====================
 
+
 .. changelog::
     :version: v3.5.0
     :released: pending
 
-
+    
     .. change::
-        :tags: workflow, feature, outputs
-        :pullreq: 1319
+        :tags: characteristics, documentation, technical reference guide
+        :pullreq: 1380
 
-        **Date**: 2025-03-19
+        **Date**: 2025-04-15
 
         Title:
-        Electric panel
+        Hawaii cooling saturation
 
         Description:
-        Support electric panel NEC calculations.
+        Remove fallback rules from Hawaii and to match technology saturation from RECS2020
 
-        Assignees: Lixi Liu, Yingli Lou, Joe Robertson
+        Assignees: Janet Reyna
 
 
     .. change::
-        :tags: workflow, feature
-        :pullreq: 1359
+        :tags: bug fix
+        :pullreq: 1362
 
-        **Date**: 2025-03-19
+        **Date**: 2025-04-18
 
         Title:
-        Latest OS-HPXML
+        Prevent ducted secondary heating when primary heating is ducted
 
         Description:
-        Pulls in the ability to do electric panel NEC calculations.
-        Update AC/ASHP/MSHP options in lookup since CompressorType is now required for central and mini-split air conditioners and heat pumps.
+        OS-HPXML disallows multiple heating systems on a single distribution system and ResStock is not set up to have multiple distribution systems. Disallowing ducted secondary heating when primary heating is ducted will prevent this error.
 
-        OpenStudio-HPXML: `pull request 1946 <https://github.com/NREL/OpenStudio-HPXML/pull/1946>`_, `pull request 1949 <https://github.com/NREL/OpenStudio-HPXML/pull/1949>`_
-
-        Assignees: Joe Robertson, Scott Horowitz
+        Assignees: Yingli Lou, Lixi Liu, Anthony Fontanini
 
 
     .. change::
-        :tags: docs, technical reference guide
+        :tags: standard data release
+        :pullreq: 1362
+
+        **Date**: 2025-04-17
+
+        Title:
+        EE + Adoption meaure upgrades for EV SDR
+
+        Description:
+        Add electric vehicle addoption and electric vehicle efficiency upgrade measures to the SDR project file.
+
+        Assignees: Philip White, Andrew Speake
+
+
+    .. change::
+        :tags: characteristics, documentation, technical reference guide
+        :pullreq: 1379
+
+        **Date**: 2025-04-06
+
+        Title:
+        Refrigeration correction factors
+
+        Description:
+        Assign state level correction factors for freezer and secondary refrigeration to account for the fact that homes can have more than 1 freezer and 2 refrigerators. This also corrects the freezer usage, which was previously assigned to match the national saturation of freezers.
+
+        Assignees: Lixi Liu, Anthony Fontanini
+
+
+    .. change::
+        :tags: characteristics, documentation
+        :pullreq: 1377
+
+        **Date**: 2025-04-09
+
+        Title:
+        Update HVAC Cooling Partial Space Conditioning for Hawaii
+
+        Description:
+        Update of HVAC Cooling Partial Space Conditioning.tsv to separate Hawaii and Miami and to allow for more partial space conditioning in Hawai
+
+        Assignees: Janet Reyna
+
+
+    .. change::
+        :tags: characteristics, documentation, feature, technical reference guide, outputs
+        :pullreq: 1356
+
+        **Date**: 2025-04-06
+
+        Title:
+        Solar Hot Water
+
+        Description:
+        Break out Solar Thermal from Other Fuel for Water Heater Fuel, consolidate Solar Hot Water with Water Heater Efficiency, assign all solar hot water systems as roof pitch installed 40ft solar collectors with some orientation diversity.
+
+        Assignees: Lixi Liu, Anthony Fontanini, Jeff Maguire
+
+
+   .. change::
+        :tags: characteristics, documentation
+        :pullreq: 1374
+
+        **Date**: 2025-04-05
+
+        Title:
+        Differentiate Hawaii in IECC Climate Zone 1A
+
+        Description:
+        Split out HI and FL in Climate Zone 1A to support Hawaii differentiation.
+
+        Assignees: Janet Reyna
+
+
+    .. change::
+        :tags: standard data release, outputs
+        :pullreq: 1371
+
+        **Date**: 2025-04-01
+
+        Title:
+        Remove end-use emissions from SDR YAML outputs
+
+        Description:
+        ResStock SDR currently do not publish end-use emissions. ResStock SDR only publish totals and totals by fuel. In an effort to reduce the number of outputs, end-use emissions outputs have been removed from the SDR raw outputs. The end-use emissions can still be called out for testing purposes using.
+
+        Assignees: Anthony Fontanini
+
+
+    .. change::
+        :tags: documentation, technical reference guide
         :pullreq: 1361
 
         **Date**: 2025-03-12
@@ -56,7 +144,7 @@ Development Changelog
 
 
     .. change::
-        :tags: workflow, bugfix
+        :tags: workflow, feature
         :pullreq: 1353
 
         **Date**: 2025-03-11
@@ -65,31 +153,13 @@ Development Changelog
         Latest OS-HPXML
 
         Description:
-        All OpenStudio-HPXML changes, no required ResStock changes.
-        Updates to NEEP ASHP sample files, fix possible HVAC sizing error, HPXML class update for attic/foundation types, speed up weather processing, combi boiler error fix, smooth schedule EV plugload, shift all schedules in sync and fix occupancy aggregation.
+        All OpenStudio-HPXML changes, no required ResStock changes. Updates to NEEP ASHP sample files, fix possible HVAC sizing error, HPXML class update for attic/foundation types, Speed up weather processing, combi boiler error fix, smooth shcedule EV plugload, shift all schedules in sync and fix occupancy aggregation.
 
         Assignees: Joe Robertson
 
 
     .. change::
-        :tags: characteristics
-        :pullreq: 1358
-
-        **Date**: 2025-03-10
-
-        Title:
-        Add PV in Hawaii 
-
-        Description:
-        Add PV saturation for Hawaii based on EIA form861.
-
-        resstock-estimation: `pull request 445 <https://github.com/NREL/resstock-estimation/pull/445>`
-
-        Assignees: Yingli Lou
-    
-
-    .. change::
-        :tags: characteristics, feature, docs, technical reference guide, outputs
+        :tags: characteristics, feature, documentation, technical reference guide, outputs
         :pullreq: 1299
 
         **Date**: 2025-02-28
@@ -157,7 +227,7 @@ Development Changelog
 
 
     .. change::
-        :tags: docs, technical development guide
+        :tags: documentation, technical development guide
         :pullreq: 1330
 
         **Date**: 2025-01-29
@@ -189,7 +259,7 @@ Development Changelog
 
 
     .. change::
-        :tags: ci, docs, technical reference guide, technical development guide
+        :tags: ci, documentation, technical reference guide, technical development guide
         :pullreq: 1338
         :tickets: resstock-estimation 437
 
@@ -223,7 +293,7 @@ Development Changelog
 
 
     .. change::
-        :tags: characteristics, pool heater
+        :tags: characteristics, feature
         :pullreq: 1324
 
         **Date**: 2024-12-03

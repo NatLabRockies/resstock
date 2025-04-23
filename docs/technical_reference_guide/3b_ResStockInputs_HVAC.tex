@@ -462,7 +462,7 @@ None & none & 0 & \\
     \item For Alaska, electric space heaters are modeled as electric baseboards.
     \item For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
     \item For Alaska, fireplace and stoves are not modeled.
-    \item For Alaska, heat pumps are assumed to be non-ducted ASHPs.
+    \item For Alaska, all heat pumps (including geothermal) are assumed to be non-ducted ASHPs.
 \end{itemize}
  
 \subsubsection{HVAC Has Zonal Electric Heating}
@@ -537,7 +537,9 @@ No assumptions are made. The capability is not used.
 
 \subsection{Secondary Heating}
 \subsubsection{Modeling Approach}
-Many homes use a secondary heating source in addition to their primary heating source. Common examples include electric space heaters or a wood stove. ResStock has the capability to include these secondary heating sources in upgrade scenarios. Currently only Alaska is modeled with any use of secondary heating in the baseline. At any given time step the heating load needs to be met. A fraction of this load is assigned to the secondary system. This approach has some limitations. The secondary system is typically a second system supplying heating. They are often turned on during the coldest times of the coldest periods and may be off for a good portion of the year. We currently do not model this behavior in ResStock.
+Many homes use a secondary heating source in addition to their primary heating source. Common examples include electric space heaters or a wood stove. ResStock has the capability to include these secondary heating sources in upgrade scenarios. 
+Currently only Alaska is modeled with any use of secondary heating in the baseline. At any given time step the heating load needs to be met. A fraction of this load is assigned to the secondary system. 
+This approach has some limitations. The secondary system is typically a second system supplying heating. They are often turned on during the coldest times of the coldest periods and may be off for a good portion of the year. We currently do not model this behavior in ResStock.
 
 The next sections discuss the building stock characteristic distributions, their options, assumptions, conditional dependencies, arguments, and argument values assigned in these characteristics.
 
@@ -552,6 +554,7 @@ The efficiency and type of the secondary heating system.
 \begin{itemize}
     \item Custom State
     \item Geometry Building Type RECS
+    \item HVAC Heating Type
     \item HVAC Secondary Heating Fuel
     \item Vintage.
 \end{itemize}
@@ -561,7 +564,9 @@ Only homes in Alaska have secondary heating, so most housing units receive a ``N
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item For Alaska, we are using a field in ARIS that lumps multifamily 2--4 units and multifamily 5+ units buildings together. Data from the American Community Survey are used to distribute between these two building types.
-    \item For Alaska, all heat pumps are assumed to be non-ducted mini-splits.
+    \item Ducted heating or heat pump cannot have ducted secondary heating.
+    \item For Alaska, all heat pumps are assumed to be non-ducted mini-splits. 
+    \item For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating type. 
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -576,7 +581,7 @@ Secondary Heating Fuel for the housing unit.
 \begin{itemize}
     \item County
     \item Geometry Building Type RECS
-    \item Vintage.
+    \item Vintage
 \end{itemize}
 \paragraph{Options}
 The options for the secondary heating fuel are the fuels used in the secondary HVAC system (Table \ref{table:hc_opt_hvac_sec_heat_fuel}).
@@ -619,7 +624,7 @@ of the second heating system. Ignored for ElectricResistance. \\
 \begin{itemize}
     \item For Alaska, we are using a field in ARIS that lumps multifamily 2--4 units and multifamily 5+ units buildings together. Data from the American Community Survey are used to distribute between these two building types.
     \item For Alaska, all wood is modeled as cord wood.
-    \item For Alaska, when heating uses more than one fuel, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10\% of total energy use across all fuels) is considered secondary (heating) fuel---except in case of electric heating, which is always assumed as primary. The rest of the fuels are ignored.
+    \item For Alaska, when heating uses more than one fuel, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10\% of total energy use across all fuels) is considered secondary (heating) fuel---except in case of electric heating, which is always assumed as primary (i.e., secondary heating fuel cannot be electricity). The rest of the fuels are ignored.
 \end{itemize}
  
 
@@ -686,10 +691,9 @@ methodology. If not provided, no limit is used. \\
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item For Alaska, we are using a field in ARIS that lumps multifamily 2--4 units and multifamily 5+ units buildings together. Data from the American Community Survey are used to distribute between these two building types.
-    \item For Alaska, electric space heaters are modeled as electric baseboards.
+    \item For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating efficiency.
     \item For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
     \item For Alaska, fireplace and stoves are not modeled.
-    \item For Alaska, heat pumps are assumed to be non-ducted ASHPs.
 \end{itemize}
 
 \subsubsection{HVAC Secondary Heating Partial Space Conditioning}
@@ -790,14 +794,21 @@ The options of HVAC Cooling Type are Central AC, Ducted Heat Pump, Evaporative o
     \item Due to low sample sizes, fallback rules were applied, with coarsening of  (1) HVAC Heating type: Non-ducted heating and None, (2) Geometry building SF: Mobile, Single-family attached, Single-family detached, (3) Geometry building MF: Multifamily with 2--4 Units, Multifamily with 5+ Units, (4) Vintage Lump: 20-yr bins. 
     \item Homes having ducted heat pump for heating and electricity fuel are assumed to have ducted heat pump for cooling (separating from central AC category).
     \item Homes having non-ducted heat pump for heating are assumed to have non-ducted heat pump for cooling.
+    \item For Hawaii, central air conditioning saturation is from RECS 2020 by heating type, ignoring all other dependencies
+    \item For Hawaii, Non-Ducted Heat Pump saturation is underestimated because ResStock does not currently allow cooling-only Non-Ducted Heat Pumps. These samples are modeled as Room ACs
     \item For Alaska, we are using a field in ARIS that lumps multifamily 2--4 units and multifamily 5+ units buildings together. Data from the American Community Survey are used to distribute between these two building types.
     \item For Alaska, we are not modeling any central and room AC.
     \item For Alaska, cooling systems are never shared.
+    \item Hawaii does not follow the same fallback rules. All distributions are custom adjusted so that state-level central air-conditioning saturation matches the state-level saturation in RECS2020.
 \end{itemize}
  
 \subsubsection{HVAC Cooling Efficiency}
 \paragraph{Description}
-The presence and efficiency of primary cooling system in the housing unit.
+The presence and efficiency of primary cooling system in the housing unit. In the assumptions heat pumps (both ducted and non ducted) are assumed to 
+serve for both heating and cooling. In the RECS2020 survey that cooling and heating technologies are based on, it was recently discoved that some samples reported None for heating, but heat pump for cooling
+(especialy non-ducted heat pumps). This is especially prevalent in hot climates with low cooling saturation. In ResStock, those samples with None heating and non ducted heat pump cooling in the survey
+are currently not being counted as having heat pumps. This is a known issue that will be addressed in a future release. In Hawaii, where this issue is most prevalent, the Room AC saturation has been increased to account for the 
+undercounting of non-ducted heat pumps. 
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
@@ -922,11 +933,12 @@ The fraction of cooling load served by the cooling system. This is approximately
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
 \item Constructed using U.S.~EIA 2009 RECS microdata.
+\item Hawaii constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 \end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
-    \item ASHRAE IECC Climate Zone 2004
+    \item ASHRAE IECC Climate Zone 2004---Sub-CZ Split
     \item Geometry Building Type RECS
     \item Geometry Floor Area Bin
     \item HVAC Cooling Type.
@@ -967,10 +979,10 @@ Double &  The cooling load served by the cooling system. \\
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item Central AC systems need to serve at least 60\% of the floor area.
-    \item Heat pumps serve 100\% of the floor area because the system serves 100\% of the heated floor area.
+    \item Heat pumps serve 100\% of the floor area because the system serves 100\% of the heated floor area, except in Hawaii.
     \item Due to low sample count, this input is constructed by downscaling a core sub-input file with 3 sub-input files of different dependencies. The sub-input files have the following dependencies: 
     \begin{itemize}
-        \item input1 : ‘HVAC Cooling Type’, ‘ASHRAE IECC Climate Zone 2004’
+        \item input1 : ‘HVAC Cooling Type’, ‘ASHRAE IECC Climate Zone 2004---Sub-CZ Split’
         \item input2 : ‘HVAC Cooling Type’, ‘Geometry Floor Area Bin’
         \item input3 : ‘HVAC Cooling Type’, ‘Geometry Building Type RECS’
     \end{itemize}
