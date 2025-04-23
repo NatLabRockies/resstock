@@ -12,7 +12,9 @@ Dir["#{File.dirname(__FILE__)}/../../../../resources/hpxml-measures/HPXMLtoOpenS
   require resource_file
 end
 
+
 class EVScheduleModifier < ScheduleModifier
+
   # Modifies the EV charging schedule based on flexibility inputs
   # Charging (positive values) is set to 0 during identified peak hours.
   # @param ev_schedule [Hash] Hash containing :electric_vehicle key with an array of charging values (+ve is charging, -ve is discharging)
@@ -26,13 +28,13 @@ class EVScheduleModifier < ScheduleModifier
     peak_period = Array.new(total_indices, 0)
     total_indices.times do |index|
       offset_times = _get_peak_times(index, flexibility_inputs)
-      index_in_day = index % (24 * @num_timesteps_per_hour)
+      index_in_day = index % (24 * @num_timesteps_per_hour)   
       # Check if current time is within peak period
-      next unless offset_times.peak_start_index <= index_in_day && index_in_day < offset_times.peak_end_index
-
-      peak_period[index] = 1
-      if modified_schedule[index] > 0  # if charging, set to 0
-        modified_schedule[index] = 0
+      if offset_times.peak_start_index <= index_in_day && index_in_day < offset_times.peak_end_index
+        peak_period[index] = 1
+        if modified_schedule[index] > 0  # if charging, set to 0
+          modified_schedule[index] = 0
+        end
       end
     end
     return {
@@ -47,4 +49,5 @@ class EVScheduleModifier < ScheduleModifier
     @runner.registerInfo('Modifying EV schedule ...')
     @runner.registerInfo("random_shift_steps=#{inputs.random_shift_steps}")
   end
+
 end

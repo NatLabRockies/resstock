@@ -100,67 +100,71 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     max_random_shift_steps = (args[:flex_random_shift_minutes] / @minutes_per_step).to_i
     @random_shift_steps = @prng.rand(-max_random_shift_steps..max_random_shift_steps)
 
+    # Parse the HPXML document
+    doc = XMLHelper.parse_file(@hpxml_path)
+    hpxml_doc = XMLHelper.get_element(doc, '/HPXML')
+    doc_buildings = XMLHelper.get_elements(hpxml_doc, 'Building')
+
     # Process each building
-    @hpxml.buildings.each_with_index do |hpxml_bldg, index|
+    doc_buildings.each_with_index do |building, index|
+      hpxml_bldg = @hpxml.buildings[index]
       if hpxml_bldg.hvac_controls.to_a.length != 0 && !skip_hvac_flexibility?(args)
         hvac_schedule = create_hvac_schedule(index)
-        modified_schedule = modify_hvac_schedule(hpxml_bldg, hvac_schedule)
-        write_schedule(modified_schedule, hpxml_bldg, index, output_csv_path)
+        modified_schedule = modify_hvac_schedule(index, hvac_schedule)
+        write_schedule(modified_schedule, building, index, output_csv_path)
       end
-      next unless !skip_ev_flexibility?(args)
-
-      ev_schedule = get_ev_schedule(hpxml_bldg)
-      next if ev_schedule.nil?
-
-      modified_ev_schedule = modify_ev_schedule(hpxml_bldg, ev_schedule)
-      write_schedule(modified_ev_schedule, hpxml_bldg, index, output_csv_path)
+      if !skip_ev_flexibility?(args)
+        ev_schedule = get_ev_schedule(building)
+        next if ev_schedule.nil?
+        modified_ev_schedule = modify_ev_schedule(index, ev_schedule)
+        write_schedule(modified_ev_schedule, building, index, output_csv_path)
+      end
     end
 
     # Write out the modified hpxml
-    XMLHelper.write_file(@hpxml.to_doc(), @hpxml_path)
+    XMLHelper.write_file(doc, @hpxml_path)
     runner.registerInfo("Wrote file: #{@hpxml_path} with modified schedules.")
-    return true
+    true
   end
 
   # Determines if the post-processing step for HPXML should be skipped
   def skip_post_hpxml?(args)
-    return skip_hvac_flexibility?(args) && skip_ev_flexibility?(args)
+    skip_hvac_flexibility?(args) && skip_ev_flexibility?(args)
   end
 
   # Determines if HVAC flexibility modifications should be skipped
   # Skips if both peak offset and pre-peak duration are set to 0
   def skip_hvac_flexibility?(args)
-    return true if args[:hvac_flex_peak_offset] == 0 && args[:hvac_flex_pre_peak_duration_hours] == 0
+    true if args[:hvac_flex_peak_offset] == 0 && args[:hvac_flex_pre_peak_duration_hours] == 0
   end
 
   def skip_ev_flexibility?(args)
-    return true if !args[:ev_flex_enabled]
+    true if !args[:ev_flex_enabled]
   end
 
-  def get_ev_schedule(hpxml_bldg)
-    schedule_file = get_existing_schedule_filepath(hpxml_bldg)
-    return if schedule_file.nil?
-
+  def get_ev_schedule(building)
+    schedule_file = get_existing_schedule_filepath(building)
+    return nil if schedule_file.nil?
     schedule = CSV.read(schedule_file, headers: true)
     ev_schedule = {}
-    ev_column = 'electric_vehicle'
-    return unless schedule.headers.include?(ev_column)
-
+    ev_column = "electric_vehicle"
+    return nil unless schedule.headers.include?(ev_column)
     ev_schedule[ev_column.to_sym] = schedule[ev_column].map(&:to_f)
-    return ev_schedule
+    ev_schedule
   end
 
   # Generates the HVAC schedule for a given building index
   def create_hvac_schedule(building_index)
     generator = HVACScheduleGenerator.new(@hpxml, @hpxml_path, @runner, building_index)
-    return generator.get_heating_cooling_setpoint_schedule
+    generator.get_heating_cooling_setpoint_schedule
   end
 
-  # Retrieves an appropriate schedule modifier for a given building
-  def get_schedule_modifier(hpxml_bldg, modifier_class)
+  # Retrieves an appropriate schedule modifier for a given building index
+  def get_schedule_modifier(building_index, modifier_class)
     # Ensure the provided class is a subclass of ScheduleModifier
     raise ArgumentError, "#{modifier_class} must be a subclass of ScheduleModifier" unless modifier_class < ScheduleModifier
 
+    hpxml_bldg = @hpxml.buildings[building_index]
     state = hpxml_bldg.state_code
     sim_year = @hpxml.header.sim_calendar_year
     epw_path = Location.get_epw_path(hpxml_bldg, @hpxml_path)
@@ -173,18 +177,18 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                            dst_end_day: hpxml_bldg.dst_end_day)
 
     # Create and return the modifier instance
-    return modifier_class.new(state: state,
-                              sim_year: sim_year,
-                              weather: weather,
-                              epw_path: epw_path,
-                              minutes_per_step: @minutes_per_step,
-                              runner: @runner,
-                              dst_info: dst_info)
+    modifier_class.new(state: state,
+                       sim_year: sim_year,
+                       weather: weather,
+                       epw_path: epw_path,
+                       minutes_per_step: @minutes_per_step,
+                       runner: @runner,
+                       dst_info: dst_info)
   end
 
   # Modifies the HVAC schedule based on flexibility inputs
-  def modify_hvac_schedule(hpxml_bldg, schedule)
-    hvac_schedule_modifier = get_schedule_modifier(hpxml_bldg, HVACScheduleModifier)
+  def modify_hvac_schedule(building_index, schedule)
+    hvac_schedule_modifier = get_schedule_modifier(building_index, HVACScheduleModifier)
 
     # Define flexibility inputs
     hvac_flexibility_inputs = FlexibilityInputs.new(
@@ -195,11 +199,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     )
 
     # Apply modifications to the schedule
-    return hvac_schedule_modifier.modify_shedule(schedule, hvac_flexibility_inputs)
+    hvac_schedule_modifier.modify_shedule(schedule, hvac_flexibility_inputs)
   end
 
-  def modify_ev_schedule(hpxml_bldg, schedule)
-    ev_schedule_modifier = get_schedule_modifier(hpxml_bldg, EVScheduleModifier)
+  def modify_ev_schedule(building_index, schedule)
+    ev_schedule_modifier = get_schedule_modifier(building_index, EVScheduleModifier)
     ev_flexibility_inputs = FlexibilityInputs.new(
       peak_offset: 0,
       # Use hvac_flex_pre_peak_duration_hours so that shift/shed is the same as HVAC
@@ -207,12 +211,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       pre_peak_offset: 0,
       random_shift_steps: @random_shift_steps
     )
-    return ev_schedule_modifier.modify_schedule(schedule, ev_flexibility_inputs)
+    ev_schedule_modifier.modify_schedule(schedule, ev_flexibility_inputs)
   end
 
   # Writes the HVAC schedule to a CSV file
-  def write_schedule(schedule, hpxml_bldg, index, output_csv_path)
-    schedule_file = get_existing_schedule_filepath(hpxml_bldg)
+  def write_schedule(schedule, building, index, output_csv_path)
+    schedule_file = get_existing_schedule_filepath(building)
 
     if schedule_file.nil?
       # Create a new schedule file if one does not exist
@@ -226,7 +230,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           csv << row
         end
       end
-      hpxml_bldg.header.schedules_filepaths << schedule_file
+      update_hpxml_schedule_filepath(building, schedule_file)
     else
       # Process existing schedule file and update values
       data = CSV.read(schedule_file, headers: true)
@@ -255,19 +259,27 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    return schedule_file
+    schedule_file
   end
 
   # Retrieves the existing schedule file path from the HPXML file
-  def get_existing_schedule_filepath(hpxml_bldg)
-    schedule_file = hpxml_bldg.header.schedules_filepaths.first
+  def get_existing_schedule_filepath(building)
+    building_extension = XMLHelper.create_elements_as_needed(building, %w[BuildingDetails BuildingSummary extension])
+    existing_schedules_filepaths = XMLHelper.get_values(building_extension, 'SchedulesFilePath', :string)
+    schedule_file = existing_schedules_filepaths.first
     return if schedule_file.nil?
 
     # Ensure the path is absolute
     if !Pathname.new(schedule_file).absolute?
       schedule_file = File.join(File.dirname(@hpxml_path), schedule_file)
     end
-    return schedule_file
+    schedule_file
+  end
+
+  # Updates the HPXML file with the new schedule file path
+  def update_hpxml_schedule_filepath(building, new_schedule_filepath)
+    building_extension = XMLHelper.create_elements_as_needed(building, %w[BuildingDetails BuildingSummary extension])
+    XMLHelper.add_element(building_extension, 'SchedulesFilePath', new_schedule_filepath, :string)
   end
 end
 

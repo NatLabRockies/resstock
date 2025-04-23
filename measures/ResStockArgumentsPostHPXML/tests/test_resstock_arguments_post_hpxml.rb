@@ -43,7 +43,6 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
       FileUtils.rm_rf(File.join(curdir, 'run'))
     end
   end
-
   def test_ev_load_flexibility_measure
     puts 'Testing EV Load Flexibility'
     # Define test parameters
@@ -75,7 +74,6 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
       FileUtils.rm_rf(File.join(curdir, 'run'))
     end
   end
-
   def test_combined_hvac_and_ev_flexibility
     puts 'Testing Combined HVAC and EV Load Flexibility'
 
@@ -253,7 +251,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
         assert_equal(summer_cooling_setpoint_base, cooling_setpoint)
         assert_equal(summer_heating_setpoint_base, heating_setpoint)
       elsif value == 'pre_peak'
-        assert_equal(summer_cooling_setpoint_base, cooling_setpoint) # No precooling because daily avg temp is 63.4F
+        assert_equal(summer_cooling_setpoint_base, cooling_setpoint)  # No precooling because daily avg temp is 63.4F
         assert_equal(summer_heating_setpoint_base, heating_setpoint)
       elsif value == 'peak'
         assert_equal(summer_cooling_setpoint_base + 2, cooling_setpoint)

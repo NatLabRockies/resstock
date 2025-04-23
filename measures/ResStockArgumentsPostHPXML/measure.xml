@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
-  <error></error>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>498f2709-670e-44be-b35f-9d78a36dc841</version_id>
-  <version_modified>2025-04-21T17:09:55Z</version_modified>
+  <version_id>af53ca34-177b-43f8-946c-b9ae88a896de</version_id>
+  <version_modified>2025-04-02T22:42:00Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -87,7 +86,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>4D34E2BF</checksum>
+      <checksum>8FA012C5</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -114,12 +113,6 @@
       <checksum>055326E7</checksum>
     </file>
     <file>
-      <filename>ev_flexibility/ev_schedule_modifier.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>632986B4</checksum>
-    </file>
-    <file>
       <filename>hvac_flexibility/detailed_schedule_generator.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
@@ -141,13 +134,13 @@
       <filename>test_resstock_arguments_post_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>A4CE490F</checksum>
+      <checksum>0A84481E</checksum>
     </file>
     <file>
       <filename>test_template.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>4719AE8A</checksum>
+      <checksum>B71A1941</checksum>
     </file>
   </files>
 </measure>
