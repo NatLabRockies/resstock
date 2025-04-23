@@ -2536,4 +2536,4 @@ AK	Wood	None	None	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0
 # Assumption: For Alaska, electric space heaters are modelled as electric baseboards.
 # Assumption: For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
 # Assumption: For Alaska, fireplace and stoves are not modeled.
-# Assumption: For Alaska, all heat pumps (including geothermal) are assumed to be non-ducted air source heat pumps.
+# Assumption: For Alaska, heat pumps are assumed to be non-ducted air source heat pumps.
