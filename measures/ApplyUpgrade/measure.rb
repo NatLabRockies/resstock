@@ -223,6 +223,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
 
     measures = {}
+    upgrade_args_hash = nil
     resstock_arguments_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new) # we want only ResStockArguments registered argument values
     if apply_package_upgrade
       # Obtain measures and arguments to be called
@@ -271,13 +272,18 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         end
       end
 
+      # Check the size of the measures hash at this point, and halt the workflow if it's empty
       if halt_workflow(runner, measures)
         return false
       end
 
-      if !measures.keys.include?('ResStockArguments') # upgrade is via another measure
+      # Check if upgrade is via another measure
+      if !measures.keys.include?('ResStockArguments')
         measures['ResStockArguments'] = [{}]
       end
+
+      # Save the hash of applicable upgrade measure arguments
+      upgrade_args_hash = measures['ResStockArguments'][0].clone
 
       # Add measure arguments from existing building if needed
       parameters = get_parameters_ordered_from_options_lookup_tsv(lookup_csv_data, characteristics_dir)
@@ -326,16 +332,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
       unit_number += 1
 
-      hvac_system_upgrades = []
-      options.each do |_option_num, option|
-        parameter_name, option_name = option.split('|')
-
-        options_measure_args, _errors = get_measure_args_from_option_names(lookup_csv_data, [option_name], parameter_name, lookup_file, runner)
-        options_measure_args[option_name].each do |_measure_subdir, args_hash|
-          hvac_system_upgrades = get_hvac_system_upgrades(hpxml_bldg, hvac_system_upgrades, args_hash)
-        end
-      end
-
       measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
 
       # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
@@ -373,6 +369,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
       # Retain (calculated) HVAC capacities if upgrade is not HVAC system related
       # Do not retain HVAC autosizing factors and defect ratios if upgrade is HVAC system related
+      hvac_system_upgrades = get_hvac_system_upgrades(hpxml_bldg, upgrade_args_hash)
       capacities, autosizing_factors, defect_ratios = get_hvac_system_values(hpxml_bldg, hvac_system_upgrades)
 
       measures['BuildResidentialHPXML'][0]['heating_system_heating_capacity'] = capacities['heating_system_heating_capacity']
@@ -505,15 +502,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces_type'] = 'total'
       measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
 
-      panel_system_additions = {}
-      options.each do |_option_num, option|
-        parameter_name, option_name = option.split('|')
-
-        options_measure_args, _errors = get_measure_args_from_option_names(lookup_csv_data, [option_name], parameter_name, lookup_file, runner)
-        options_measure_args[option_name].each do |_measure_subdir, args_hash|
-          panel_system_additions = get_panel_system_additions(panel_system_additions, args_hash)
-        end
-      end
+      panel_system_additions = get_panel_system_additions(upgrade_args_hash)
       measures['BuildResidentialHPXML'][0].update(panel_system_additions)
 
       # Specify measures to run
@@ -632,7 +621,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     return values
   end
 
-  def get_hvac_system_upgrades(hpxml_bldg, hvac_system_upgrades, args_hash)
+  def get_hvac_system_upgrades(hpxml_bldg, args_hash)
+    hvac_system_upgrades = []
     args_hash.keys.each do |arg|
       # Detect whether we are upgrading the heating system
       if arg.start_with?('heating_system_') && (not arg.start_with?('heating_system_2_'))
@@ -739,7 +729,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     return capacities, autosizing_factors, defect_ratios
   end
 
-  def get_panel_system_additions(panel_system_additions, args_hash)
+  def get_panel_system_additions(args_hash)
+    panel_system_additions = {}
     args_hash.each do |arg_name, _value|
       if arg_name.start_with?('heating_system_') && (not arg_name.start_with?('heating_system_2_'))
         panel_system_additions['electric_panel_load_heating_system_addition'] = true
