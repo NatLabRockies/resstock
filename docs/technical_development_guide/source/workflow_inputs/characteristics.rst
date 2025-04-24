@@ -5716,7 +5716,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 78
      - false
    * - 80F
-     - 4.7%
+     - 4.8%
      - auto
      - 80
      - 80
@@ -38679,10 +38679,10 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 6.4%
      - .2
    * - 40% Conditioned
-     - 5.8%
+     - 5.9%
      - .4
    * - 60% Conditioned
-     - 6.5%
+     - 6.6%
      - .6
    * - 80% Conditioned
      - 3.6%
@@ -38728,6 +38728,10 @@ Assumption
 - \1) HVAC Heating type: Non-ducted heating and None2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs binsHomes having ducted heat pump for heating and electricity fuel is assumed to haveducted heat pump for cooling (seperating from central AC category)
 
 - \Homes having non-ducted heat pump for heating is assumed to have non-ducted heat pumpfor cooling
+
+- \For Hawaii, central air conditioning saturation is from RECS 2020 by heating type, ignoring allother dependencies
+
+- \For Hawaii, Non-Ducted Heat Pump saturation is underestimated because ResStock does not currently allow cooling-only Non-Ducted Heat Pumps. These samples are modeled as Room ACs
 
 - \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
@@ -39086,7 +39090,7 @@ Assumption
 
 - \For Alaska, fireplace and stoves are not modeled.
 
-- \For Alaska, heat pumps are assumed to be non-ducted air source heat pumps.
+- \For Alaska, all heat pumps (including geothermal) are assumed to be non-ducted air source heat pumps.
 
 
 Arguments
@@ -40531,13 +40535,11 @@ Assumption
 
 - \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
-- \For Alaska, electric space heaters are modelled as electric baseboards.
+- \For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating efficiency.
 
 - \For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
 
 - \For Alaska, fireplace and stoves are not modeled.
-
-- \For Alaska, heat pumps are assumed to be non-ducted air source heat pumps.
 
 
 Arguments
@@ -40603,7 +40605,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``heating_system_2_has_flue_or_chimney``
 
    * - Fuel Boiler, 76% AFUE
-     - 0.018%
+     - 0.019%
      - Boiler
      - 0.76
      - auto
@@ -40617,35 +40619,35 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
    * - Fuel Boiler, 90% AFUE
-     - 0.0024%
+     - 0.0028%
      - Boiler
      - 0.90
      - auto
      - auto
      - auto
    * - Fuel Furnace, 60% AFUE
-     - 3.9e-05%
+     - 2.5e-05%
      - Furnace
      - 0.6
      - auto
      - auto
      - auto
    * - Fuel Furnace, 76% AFUE
-     - 0.00053%
+     - 0.00036%
      - Furnace
      - 0.76
      - auto
      - auto
      - auto
    * - Fuel Furnace, 80% AFUE
-     - 0.0015%
+     - 0.0011%
      - Furnace
      - 0.8
      - auto
      - auto
      - auto
    * - Fuel Furnace, 92.5% AFUE
-     - 0.00082%
+     - 0.00049%
      - Furnace
      - 0.925
      - auto
@@ -40701,7 +40703,7 @@ Assumption
 
 - \For Alaska, all wood is modelled as cord wood.
 
-- \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary. Rest of the fuels are ignored.
+- \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary (i.e., secondary heating fuel cannot be electricity). Rest of the fuels are ignored.
 
 - \A unit without a primary heating system (heating fuel is None) cannot have a secondary heating system (secondary heating fuel is None).
 
@@ -40873,7 +40875,11 @@ Assumption
 
 - \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
+- \Ducted heating or heat pump cannot have ducted secondary heating.
+
 - \For Alaska, all heat pumps are assumed to be non-ducted mini-splits.
+
+- \For Alaska, all heat pumps are assumed to be non-ducted mini-splits. For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating type.
 
 
 Options
@@ -40890,9 +40896,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - Stock saturation
 
    * - Ducted Heating
-     - 0.0029%
+     - 0.002%
    * - Non-Ducted Heating
-     - 0.036%
+     - 0.037%
    * - None
      - 1e+02%
 
@@ -42749,17 +42755,17 @@ Holiday Lighting
 Description
 ***********
 
-Use of holiday lighting (not used in project_national).
+Use of holiday lighting (not currently modeled separately from other exterior lighting).
 
 Created by
 **********
 
-manually created
+``sources/other/tsv_maker.py``
 
 Source
 ******
 
-- \Not applicable (holiday lighting is not currently modeled separate from other exterior lighting)
+- \n/a
 
 
 Arguments
@@ -44609,29 +44615,34 @@ From ``project_national`` the list of options, option stock sturation, and optio
 Lighting
 --------
 
+Description
+***********
+
+Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.
+
 Created by
 **********
 
-``sources/recs/2015/tsv_maker.py``
+``sources/recs/recs2020/tsv_maker.py``
 
 Source
 ******
 
-- \U.S. EIA 2015 Residential Energy Consumption Survey (RECS) microdata.
-
-- \2019 Energy Savings Forecast of Solid-State Lighting in General Illumination Applications. https://www.energy.gov/sites/prod/files/2019/12/f69/2019_ssl-energy-savings-forecast.pdf
+- \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
 
 Assumption
 **********
 
-- \Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.
+- \Qualitative portion of inside light bulbs is mapped to quantative percentage as: None: 0%
 
-- \Due to low sample sizes for some Building Types, Building Type data are grouped into: 1) Single-Family Detached and Mobile Homes, and 2) Multifamily 2-4 units and Multifamily 5+ units, and 3) Single-Family Attached.
+- \Some: 20%
 
-- \Single-Family Attached units in the West South Central census division has the same LED saturation as Multi-Family
+- \About half: 50%
 
-- \LED saturation is adjusted to match the U.S. projected saturation in the 2019 Energy Savings Forecast of Solid-State Lighting in General Illumination Applications.
+- \Most: 80%
+
+- \All: 100%. Then the sum of three types of lighting options is normalized to 100%
 
 
 Arguments
@@ -44732,7 +44743,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``lighting_garage_fraction_led``
 
    * - 100% CFL
-     - 36%
+     - 23%
      - true
      - 1
      - 0
@@ -44744,7 +44755,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 0
      - 0
    * - 100% Incandescent
-     - 37%
+     - 25%
      - true
      - 0
      - 0
@@ -44756,7 +44767,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 0
      - 0
    * - 100% LED
-     - 27%
+     - 52%
      - true
      - 0
      - 0
@@ -44781,14 +44792,12 @@ Interior lighting usage relative to the national average.
 Created by
 **********
 
-manually created
+``sources/other/tsv_maker.py``
 
 Source
 ******
 
-- \Not applicable
-
-- \this parameter for adding diversity to lighting usage patterns is not currently used.
+- \n/a
 
 
 Arguments
@@ -44842,14 +44851,12 @@ Exterior and garage lighting usage relative to the national average.
 Created by
 **********
 
-manually created
+``sources/other/tsv_maker.py``
 
 Source
 ******
 
-- \Not applicable
-
-- \this parameter for adding diversity to lighting usage patterns is not currently used.
+- \n/a
 
 
 Arguments
@@ -60756,15 +60763,15 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 45
      - 0
    * - Northwest
-     - 0.0099%
+     - 0.01%
      - 315
      - 0
    * - South
-     - 0.45%
+     - 0.46%
      - 180
      - 0
    * - Southeast
-     - 0.14%
+     - 0.15%
      - 135
      - 0
    * - Southwest
@@ -60772,7 +60779,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 225
      - 0
    * - West
-     - 0.087%
+     - 0.089%
      - 270
      - 0
 
@@ -60931,7 +60938,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``pv_system_2_max_power_output``
 
    * - 1.0 kWDC
-     - 0.027%
+     - 0.028%
      - true
      - auto
      - roof
@@ -60963,7 +60970,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 5.0 kWDC
-     - 0.3%
+     - 0.31%
      - true
      - auto
      - roof
@@ -60979,7 +60986,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 7.0 kWDC
-     - 0.22%
+     - 0.23%
      - true
      - auto
      - roof
@@ -60995,7 +61002,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 9.0 kWDC
-     - 0.14%
+     - 0.15%
      - true
      - auto
      - roof
@@ -61011,7 +61018,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 11.0 kWDC
-     - 0.077%
+     - 0.078%
      - true
      - auto
      - roof
@@ -61027,7 +61034,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - roofpitch
      - 0
    * - 13.0 kWDC
-     - 0.031%
+     - 0.032%
      - true
      - auto
      - roof

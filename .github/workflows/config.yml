@@ -196,9 +196,10 @@ jobs:
         with:
           name: run_analysis_results_csvs
           path: |
-            project_national/results-Baseline.csv
-            project_testing/results-Baseline.csv
-            project_national/results-EnvelopeOnlyLightTouchEnvelope.csv
+            project_national/national_baseline/results-Baseline.csv
+            project_testing/testing_baseline/results-Baseline.csv
+            project_national/sdr_upgrades_tmy3/results-Baseline.csv
+            project_national/sdr_upgrades_tmy3/results-EnvelopeOnlyLightTouchEnvelope.csv
           if-no-files-found: error
 
   integration-tests:
@@ -266,6 +267,7 @@ jobs:
           path: |
             project_national/national_baseline/results_csvs/results_up00.csv
             project_testing/testing_baseline/results_csvs/results_up00.csv
+            project_national/sdr_upgrades_tmy3/results_csvs/results_up00.csv
             project_national/sdr_upgrades_tmy3/results_csvs/results_up16.csv
           if-no-files-found: error
 
