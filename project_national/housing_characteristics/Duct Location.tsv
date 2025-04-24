@@ -1,262 +1,262 @@
 Dependency=Geometry Space Combination	Dependency=HVAC Has Ducts	Option=Attic	Option=Crawlspace	Option=Garage	Option=Heated Basement	Option=Living Space	Option=None	Option=Unheated Basement	sampling_probability
-Mobile Home, Ambient, No Attic, No Garage	No	0	0	0	0	0	1	0	0.0096072
-Multi-Family with 2 - 4 Units Bottom Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00829871
-Multi-Family with 2 - 4 Units Bottom Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00862606
-Multi-Family with 2 - 4 Units Bottom Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000399042
-Multi-Family with 2 - 4 Units Bottom Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00744496
-Multi-Family with 2 - 4 Units Middle Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000838178
-Multi-Family with 2 - 4 Units Middle Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00114683
-Multi-Family with 2 - 4 Units Middle Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	2.19462e-05
-Multi-Family with 2 - 4 Units Middle Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000920994
-Multi-Family with 2 - 4 Units Top Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00614466
-Multi-Family with 2 - 4 Units Top Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00542515
-Multi-Family with 2 - 4 Units Top Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000314149
-Multi-Family with 2 - 4 Units Top Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00510711
-Multi-Family with 5+ Units Bottom Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.0164567
-Multi-Family with 5+ Units Bottom Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00752158
-Multi-Family with 5+ Units Bottom Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000961822
-Multi-Family with 5+ Units Bottom Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.0099746
-Multi-Family with 5+ Units Middle Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.0129969
-Multi-Family with 5+ Units Middle Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00789196
-Multi-Family with 5+ Units Middle Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000626344
-Multi-Family with 5+ Units Middle Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00912749
-Multi-Family with 5+ Units Top Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.0137091
-Multi-Family with 5+ Units Top Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00622247
-Multi-Family with 5+ Units Top Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000810614
-Multi-Family with 5+ Units Top Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00825794
-Single-Family Attached, Heated Basement, Finished Attic, No Garage	No	0	0	0	0	0	1	0	8.79943e-05
-Single-Family Attached, Heated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000915548
+Mobile Home, Ambient, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00960834
+Multi-Family with 2 - 4 Units Bottom Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00830934
+Multi-Family with 2 - 4 Units Bottom Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00862612
+Multi-Family with 2 - 4 Units Bottom Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000399139
+Multi-Family with 2 - 4 Units Bottom Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.0074464
+Multi-Family with 2 - 4 Units Middle Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000839024
+Multi-Family with 2 - 4 Units Middle Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00114684
+Multi-Family with 2 - 4 Units Middle Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	2.19519e-05
+Multi-Family with 2 - 4 Units Middle Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000921165
+Multi-Family with 2 - 4 Units Top Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00615292
+Multi-Family with 2 - 4 Units Top Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00542519
+Multi-Family with 2 - 4 Units Top Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000314226
+Multi-Family with 2 - 4 Units Top Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00510814
+Multi-Family with 5+ Units Bottom Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.0164836
+Multi-Family with 5+ Units Bottom Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00752167
+Multi-Family with 5+ Units Bottom Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000961956
+Multi-Family with 5+ Units Bottom Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00997798
+Multi-Family with 5+ Units Middle Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.0130239
+Multi-Family with 5+ Units Middle Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00789206
+Multi-Family with 5+ Units Middle Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000626439
+Multi-Family with 5+ Units Middle Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00913126
+Multi-Family with 5+ Units Top Unit, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.0137319
+Multi-Family with 5+ Units Top Unit, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00622254
+Multi-Family with 5+ Units Top Unit, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000810727
+Multi-Family with 5+ Units Top Unit, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00826078
+Single-Family Attached, Heated Basement, Finished Attic, No Garage	No	0	0	0	0	0	1	0	8.79942e-05
+Single-Family Attached, Heated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000915547
 Single-Family Attached, Heated Basement, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	4.8778e-05
-Single-Family Attached, Heated Basement, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.000575927
-Single-Family Attached, Slab, Finished Attic, No Garage	No	0	0	0	0	0	1	0	7.61498e-05
-Single-Family Attached, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00163407
-Single-Family Attached, Slab, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	0.000112847
-Single-Family Attached, Slab, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.000980594
-Single-Family Attached, Unheated Basement, Finished Attic, No Garage	No	0	0	0	0	0	1	0	0.000146761
-Single-Family Attached, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00108029
-Single-Family Attached, Unheated Basement, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	5.10635e-05
-Single-Family Attached, Unheated Basement, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.000605864
-Single-Family Attached, Unvented Crawlspace, Finished Attic, No Garage	No	0	0	0	0	0	1	0	2.11475e-06
-Single-Family Attached, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	5.6155e-05
-Single-Family Attached, Unvented Crawlspace, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	3.96986e-06
-Single-Family Attached, Unvented Crawlspace, Vented Attic, No Garage	No	0	0	0	0	0	1	0	4.46136e-05
-Single-Family Attached, Vented Crawlspace, Finished Attic, No Garage	No	0	0	0	0	0	1	0	9.32195e-05
-Single-Family Attached, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00131729
-Single-Family Attached, Vented Crawlspace, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	7.19681e-05
-Single-Family Attached, Vented Crawlspace, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.000724336
-Single-Family Detached, Ambient, Finished Attic, No Garage	No	0	0	0	0	0	1	0	6.49002e-05
-Single-Family Detached, Ambient, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00114939
-Single-Family Detached, Ambient, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	0.00016366
-Single-Family Detached, Ambient, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.00181905
+Single-Family Attached, Heated Basement, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.000575926
+Single-Family Attached, Slab, Finished Attic, No Garage	No	0	0	0	0	0	1	0	7.71822e-05
+Single-Family Attached, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00166114
+Single-Family Attached, Slab, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	0.000114443
+Single-Family Attached, Slab, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.00099455
+Single-Family Attached, Unheated Basement, Finished Attic, No Garage	No	0	0	0	0	0	1	0	0.000146766
+Single-Family Attached, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00108041
+Single-Family Attached, Unheated Basement, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	5.10699e-05
+Single-Family Attached, Unheated Basement, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.000605926
+Single-Family Attached, Unvented Crawlspace, Finished Attic, No Garage	No	0	0	0	0	0	1	0	2.11787e-06
+Single-Family Attached, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	5.62229e-05
+Single-Family Attached, Unvented Crawlspace, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	3.97455e-06
+Single-Family Attached, Unvented Crawlspace, Vented Attic, No Garage	No	0	0	0	0	0	1	0	4.46492e-05
+Single-Family Attached, Vented Crawlspace, Finished Attic, No Garage	No	0	0	0	0	0	1	0	9.33014e-05
+Single-Family Attached, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00131995
+Single-Family Attached, Vented Crawlspace, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	7.21134e-05
+Single-Family Attached, Vented Crawlspace, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.000725652
+Single-Family Detached, Ambient, Finished Attic, No Garage	No	0	0	0	0	0	1	0	6.50576e-05
+Single-Family Detached, Ambient, No Attic, No Garage	No	0	0	0	0	0	1	0	0.0011569
+Single-Family Detached, Ambient, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	0.000164333
+Single-Family Detached, Ambient, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.00182821
 Single-Family Detached, Heated Basement, Finished Attic, 1 Car Garage	No	0	0	0	0	0	1	0	5.40265e-05
-Single-Family Detached, Heated Basement, Finished Attic, 2 Car Garage	No	0	0	0	0	0	1	0	8.45161e-05
-Single-Family Detached, Heated Basement, Finished Attic, 3 Car Garage	No	0	0	0	0	0	1	0	3.3666e-06
+Single-Family Detached, Heated Basement, Finished Attic, 2 Car Garage	No	0	0	0	0	0	1	0	8.45164e-05
+Single-Family Detached, Heated Basement, Finished Attic, 3 Car Garage	No	0	0	0	0	0	1	0	3.36658e-06
 Single-Family Detached, Heated Basement, Finished Attic, No Garage	No	0	0	0	0	0	1	0	0.000207369
 Single-Family Detached, Heated Basement, No Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00126081
-Single-Family Detached, Heated Basement, No Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00124281
-Single-Family Detached, Heated Basement, No Attic, 3 Car Garage	No	0	0	0	0	0	1	0	3.51596e-05
-Single-Family Detached, Heated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00290824
-Single-Family Detached, Heated Basement, Unvented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00018491
-Single-Family Detached, Heated Basement, Unvented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.000122405
-Single-Family Detached, Heated Basement, Unvented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	3.0296e-06
+Single-Family Detached, Heated Basement, No Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00124283
+Single-Family Detached, Heated Basement, No Attic, 3 Car Garage	No	0	0	0	0	0	1	0	3.51595e-05
+Single-Family Detached, Heated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00290825
+Single-Family Detached, Heated Basement, Unvented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.000184911
+Single-Family Detached, Heated Basement, Unvented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.000122406
+Single-Family Detached, Heated Basement, Unvented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	3.02958e-06
 Single-Family Detached, Heated Basement, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	0.000427232
-Single-Family Detached, Heated Basement, Vented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00214078
-Single-Family Detached, Heated Basement, Vented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00203451
-Single-Family Detached, Heated Basement, Vented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	6.35731e-05
-Single-Family Detached, Heated Basement, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.0050163
-Single-Family Detached, Slab, Finished Attic, 1 Car Garage	No	0	0	0	0	0	1	0	7.16451e-05
-Single-Family Detached, Slab, Finished Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.000149877
-Single-Family Detached, Slab, Finished Attic, 3 Car Garage	No	0	0	0	0	0	1	0	2.83023e-05
-Single-Family Detached, Slab, Finished Attic, No Garage	No	0	0	0	0	0	1	0	0.000162501
-Single-Family Detached, Slab, No Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00198463
-Single-Family Detached, Slab, No Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00271477
-Single-Family Detached, Slab, No Attic, 3 Car Garage	No	0	0	0	0	0	1	0	0.000332011
-Single-Family Detached, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00373017
-Single-Family Detached, Slab, Unvented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.000252379
-Single-Family Detached, Slab, Unvented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00033936
-Single-Family Detached, Slab, Unvented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	3.60292e-05
-Single-Family Detached, Slab, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	0.000497587
-Single-Family Detached, Slab, Vented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00302994
-Single-Family Detached, Slab, Vented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00433279
-Single-Family Detached, Slab, Vented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	0.000500707
-Single-Family Detached, Slab, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.00572506
-Single-Family Detached, Unheated Basement, Finished Attic, 1 Car Garage	No	0	0	0	0	0	1	0	6.05994e-05
-Single-Family Detached, Unheated Basement, Finished Attic, 2 Car Garage	No	0	0	0	0	0	1	0	6.66272e-05
-Single-Family Detached, Unheated Basement, Finished Attic, 3 Car Garage	No	0	0	0	0	0	1	0	4.68071e-06
-Single-Family Detached, Unheated Basement, Finished Attic, No Garage	No	0	0	0	0	0	1	0	0.00032192
-Single-Family Detached, Unheated Basement, No Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00079115
-Single-Family Detached, Unheated Basement, No Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.000598251
-Single-Family Detached, Unheated Basement, No Attic, 3 Car Garage	No	0	0	0	0	0	1	0	5.21106e-05
-Single-Family Detached, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00278453
-Single-Family Detached, Unheated Basement, Unvented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.000150207
-Single-Family Detached, Unheated Basement, Unvented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	7.14069e-05
-Single-Family Detached, Unheated Basement, Unvented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	4.35388e-06
-Single-Family Detached, Unheated Basement, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	0.000567688
-Single-Family Detached, Unheated Basement, Vented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00153534
-Single-Family Detached, Unheated Basement, Vented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00104629
-Single-Family Detached, Unheated Basement, Vented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	8.60408e-05
-Single-Family Detached, Unheated Basement, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.00546722
-Single-Family Detached, Unvented Crawlspace, Finished Attic, 1 Car Garage	No	0	0	0	0	0	1	0	1.23381e-06
-Single-Family Detached, Unvented Crawlspace, Finished Attic, 2 Car Garage	No	0	0	0	0	0	1	0	7.35219e-06
-Single-Family Detached, Unvented Crawlspace, Finished Attic, 3 Car Garage	No	0	0	0	0	0	1	0	1.72006e-06
-Single-Family Detached, Unvented Crawlspace, Finished Attic, No Garage	No	0	0	0	0	0	1	0	2.93979e-06
-Single-Family Detached, Unvented Crawlspace, No Attic, 1 Car Garage	No	0	0	0	0	0	1	0	5.37709e-05
-Single-Family Detached, Unvented Crawlspace, No Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.000136296
-Single-Family Detached, Unvented Crawlspace, No Attic, 3 Car Garage	No	0	0	0	0	0	1	0	2.57836e-05
-Single-Family Detached, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000124172
-Single-Family Detached, Unvented Crawlspace, Unvented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	5.59062e-06
-Single-Family Detached, Unvented Crawlspace, Unvented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	1.45472e-05
-Single-Family Detached, Unvented Crawlspace, Unvented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	2.22966e-06
-Single-Family Detached, Unvented Crawlspace, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	1.21161e-05
-Single-Family Detached, Unvented Crawlspace, Vented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	7.78596e-05
-Single-Family Detached, Unvented Crawlspace, Vented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00023191
-Single-Family Detached, Unvented Crawlspace, Vented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	4.02993e-05
-Single-Family Detached, Unvented Crawlspace, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.000186488
-Single-Family Detached, Vented Crawlspace, Finished Attic, 1 Car Garage	No	0	0	0	0	0	1	0	8.24183e-05
-Single-Family Detached, Vented Crawlspace, Finished Attic, 2 Car Garage	No	0	0	0	0	0	1	0	9.449e-05
-Single-Family Detached, Vented Crawlspace, Finished Attic, 3 Car Garage	No	0	0	0	0	0	1	0	1.12674e-05
-Single-Family Detached, Vented Crawlspace, Finished Attic, No Garage	No	0	0	0	0	0	1	0	0.000281266
-Single-Family Detached, Vented Crawlspace, No Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.0014392
-Single-Family Detached, Vented Crawlspace, No Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00155041
-Single-Family Detached, Vented Crawlspace, No Attic, 3 Car Garage	No	0	0	0	0	0	1	0	0.000137776
-Single-Family Detached, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00417802
-Single-Family Detached, Vented Crawlspace, Unvented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.000196723
-Single-Family Detached, Vented Crawlspace, Unvented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.000167118
-Single-Family Detached, Vented Crawlspace, Unvented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	1.40737e-05
-Single-Family Detached, Vented Crawlspace, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	0.00065334
-Single-Family Detached, Vented Crawlspace, Vented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00215159
-Single-Family Detached, Vented Crawlspace, Vented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00226681
-Single-Family Detached, Vented Crawlspace, Vented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	0.000203406
-Single-Family Detached, Vented Crawlspace, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.00668755
-Mobile Home, Ambient, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0528825
-Multi-Family with 2 - 4 Units Bottom Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00941866
-Multi-Family with 2 - 4 Units Bottom Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	0	0	1	0.00423917
-Multi-Family with 2 - 4 Units Bottom Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.000462909
-Multi-Family with 2 - 4 Units Bottom Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00520244
-Multi-Family with 2 - 4 Units Middle Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000795006
-Multi-Family with 2 - 4 Units Middle Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000504935
-Multi-Family with 2 - 4 Units Middle Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	2.65612e-05
-Multi-Family with 2 - 4 Units Middle Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000548715
-Multi-Family with 2 - 4 Units Top Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00717026
-Multi-Family with 2 - 4 Units Top Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0028135
-Multi-Family with 2 - 4 Units Top Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000365323
-Multi-Family with 2 - 4 Units Top Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00374105
-Multi-Family with 5+ Units Bottom Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0210486
-Multi-Family with 5+ Units Bottom Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	0	0	1	0.00472564
-Multi-Family with 5+ Units Bottom Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00114375
-Multi-Family with 5+ Units Bottom Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00825437
-Multi-Family with 5+ Units Middle Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0145813
-Multi-Family with 5+ Units Middle Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00395816
-Multi-Family with 5+ Units Middle Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000705041
-Multi-Family with 5+ Units Middle Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00590677
-Multi-Family with 5+ Units Top Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0176219
-Multi-Family with 5+ Units Top Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00392037
-Multi-Family with 5+ Units Top Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000963624
-Multi-Family with 5+ Units Top Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00683964
+Single-Family Detached, Heated Basement, Vented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00214079
+Single-Family Detached, Heated Basement, Vented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00203453
+Single-Family Detached, Heated Basement, Vented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	6.3573e-05
+Single-Family Detached, Heated Basement, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.00501632
+Single-Family Detached, Slab, Finished Attic, 1 Car Garage	No	0	0	0	0	0	1	0	7.17708e-05
+Single-Family Detached, Slab, Finished Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.000150626
+Single-Family Detached, Slab, Finished Attic, 3 Car Garage	No	0	0	0	0	0	1	0	2.86316e-05
+Single-Family Detached, Slab, Finished Attic, No Garage	No	0	0	0	0	0	1	0	0.000162638
+Single-Family Detached, Slab, No Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00199996
+Single-Family Detached, Slab, No Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00274696
+Single-Family Detached, Slab, No Attic, 3 Car Garage	No	0	0	0	0	0	1	0	0.000343124
+Single-Family Detached, Slab, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00374464
+Single-Family Detached, Slab, Unvented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.000254114
+Single-Family Detached, Slab, Unvented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00034215
+Single-Family Detached, Slab, Unvented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	3.67779e-05
+Single-Family Detached, Slab, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	0.000498816
+Single-Family Detached, Slab, Vented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00304895
+Single-Family Detached, Slab, Vented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00437366
+Single-Family Detached, Slab, Vented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	0.000515362
+Single-Family Detached, Slab, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.00574217
+Single-Family Detached, Unheated Basement, Finished Attic, 1 Car Garage	No	0	0	0	0	0	1	0	6.06006e-05
+Single-Family Detached, Unheated Basement, Finished Attic, 2 Car Garage	No	0	0	0	0	0	1	0	6.663e-05
+Single-Family Detached, Unheated Basement, Finished Attic, 3 Car Garage	No	0	0	0	0	0	1	0	4.6821e-06
+Single-Family Detached, Unheated Basement, Finished Attic, No Garage	No	0	0	0	0	0	1	0	0.000321922
+Single-Family Detached, Unheated Basement, No Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.000791212
+Single-Family Detached, Unheated Basement, No Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.000598386
+Single-Family Detached, Unheated Basement, No Attic, 3 Car Garage	No	0	0	0	0	0	1	0	5.21666e-05
+Single-Family Detached, Unheated Basement, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00278461
+Single-Family Detached, Unheated Basement, Unvented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.000150214
+Single-Family Detached, Unheated Basement, Unvented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	7.14178e-05
+Single-Family Detached, Unheated Basement, Unvented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	4.3574e-06
+Single-Family Detached, Unheated Basement, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	0.000567697
+Single-Family Detached, Unheated Basement, Vented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00153543
+Single-Family Detached, Unheated Basement, Vented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00104647
+Single-Family Detached, Unheated Basement, Vented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	8.61189e-05
+Single-Family Detached, Unheated Basement, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.00546732
+Single-Family Detached, Unvented Crawlspace, Finished Attic, 1 Car Garage	No	0	0	0	0	0	1	0	1.23465e-06
+Single-Family Detached, Unvented Crawlspace, Finished Attic, 2 Car Garage	No	0	0	0	0	0	1	0	7.35577e-06
+Single-Family Detached, Unvented Crawlspace, Finished Attic, 3 Car Garage	No	0	0	0	0	0	1	0	1.72182e-06
+Single-Family Detached, Unvented Crawlspace, Finished Attic, No Garage	No	0	0	0	0	0	1	0	2.94037e-06
+Single-Family Detached, Unvented Crawlspace, No Attic, 1 Car Garage	No	0	0	0	0	0	1	0	5.38366e-05
+Single-Family Detached, Unvented Crawlspace, No Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.000136442
+Single-Family Detached, Unvented Crawlspace, No Attic, 3 Car Garage	No	0	0	0	0	0	1	0	2.58303e-05
+Single-Family Detached, Unvented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.000124246
+Single-Family Detached, Unvented Crawlspace, Unvented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	5.60107e-06
+Single-Family Detached, Unvented Crawlspace, Unvented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	1.45637e-05
+Single-Family Detached, Unvented Crawlspace, Unvented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	2.23387e-06
+Single-Family Detached, Unvented Crawlspace, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	1.21253e-05
+Single-Family Detached, Unvented Crawlspace, Vented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	7.79463e-05
+Single-Family Detached, Unvented Crawlspace, Vented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.000232086
+Single-Family Detached, Unvented Crawlspace, Vented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	4.03551e-05
+Single-Family Detached, Unvented Crawlspace, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.00018658
+Single-Family Detached, Vented Crawlspace, Finished Attic, 1 Car Garage	No	0	0	0	0	0	1	0	8.24536e-05
+Single-Family Detached, Vented Crawlspace, Finished Attic, 2 Car Garage	No	0	0	0	0	0	1	0	9.45636e-05
+Single-Family Detached, Vented Crawlspace, Finished Attic, 3 Car Garage	No	0	0	0	0	0	1	0	1.12962e-05
+Single-Family Detached, Vented Crawlspace, Finished Attic, No Garage	No	0	0	0	0	0	1	0	0.000281316
+Single-Family Detached, Vented Crawlspace, No Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00144032
+Single-Family Detached, Vented Crawlspace, No Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.00155316
+Single-Family Detached, Vented Crawlspace, No Attic, 3 Car Garage	No	0	0	0	0	0	1	0	0.000138613
+Single-Family Detached, Vented Crawlspace, No Attic, No Garage	No	0	0	0	0	0	1	0	0.00418094
+Single-Family Detached, Vented Crawlspace, Unvented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.000196851
+Single-Family Detached, Vented Crawlspace, Unvented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.000167334
+Single-Family Detached, Vented Crawlspace, Unvented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	1.41295e-05
+Single-Family Detached, Vented Crawlspace, Unvented Attic, No Garage	No	0	0	0	0	0	1	0	0.000653617
+Single-Family Detached, Vented Crawlspace, Vented Attic, 1 Car Garage	No	0	0	0	0	0	1	0	0.00215299
+Single-Family Detached, Vented Crawlspace, Vented Attic, 2 Car Garage	No	0	0	0	0	0	1	0	0.0022701
+Single-Family Detached, Vented Crawlspace, Vented Attic, 3 Car Garage	No	0	0	0	0	0	1	0	0.000204617
+Single-Family Detached, Vented Crawlspace, Vented Attic, No Garage	No	0	0	0	0	0	1	0	0.00669095
+Mobile Home, Ambient, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0528813
+Multi-Family with 2 - 4 Units Bottom Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00940803
+Multi-Family with 2 - 4 Units Bottom Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	0	0	1	0.00423912
+Multi-Family with 2 - 4 Units Bottom Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.000462812
+Multi-Family with 2 - 4 Units Bottom Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.005201
+Multi-Family with 2 - 4 Units Middle Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00079416
+Multi-Family with 2 - 4 Units Middle Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000504929
+Multi-Family with 2 - 4 Units Middle Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	2.65555e-05
+Multi-Family with 2 - 4 Units Middle Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000548543
+Multi-Family with 2 - 4 Units Top Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.007162
+Multi-Family with 2 - 4 Units Top Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00281346
+Multi-Family with 2 - 4 Units Top Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000365246
+Multi-Family with 2 - 4 Units Top Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00374001
+Multi-Family with 5+ Units Bottom Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0210216
+Multi-Family with 5+ Units Bottom Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	0	0	1	0.00472556
+Multi-Family with 5+ Units Bottom Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00114362
+Multi-Family with 5+ Units Bottom Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00825098
+Multi-Family with 5+ Units Middle Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0145543
+Multi-Family with 5+ Units Middle Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00395806
+Multi-Family with 5+ Units Middle Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000704946
+Multi-Family with 5+ Units Middle Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.005903
+Multi-Family with 5+ Units Top Unit, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0175991
+Multi-Family with 5+ Units Top Unit, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0039203
+Multi-Family with 5+ Units Top Unit, Unvented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00096351
+Multi-Family with 5+ Units Top Unit, Vented Crawlspace, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00683681
 Single-Family Attached, Heated Basement, Finished Attic, No Garage	Yes	0	0	0	1	0	0	0	0.000308042
 Single-Family Attached, Heated Basement, No Attic, No Garage	Yes	0	0	0	1	0	0	0	0.00537603
-Single-Family Attached, Heated Basement, Unvented Attic, No Garage	Yes	0	0	0	1	0	0	0	0.000414352
+Single-Family Attached, Heated Basement, Unvented Attic, No Garage	Yes	0	0	0	1	0	0	0	0.000414353
 Single-Family Attached, Heated Basement, Vented Attic, No Garage	Yes	0	0	0	1	0	0	0	0.00404497
-Single-Family Attached, Slab, Finished Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000490495
-Single-Family Attached, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0107344
-Single-Family Attached, Slab, Unvented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.00100265
-Single-Family Attached, Slab, Vented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.00842395
-Single-Family Attached, Unheated Basement, Finished Attic, No Garage	Yes	0	0	0	0	0	0	1	0.000342854
-Single-Family Attached, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	0	0	1	0.00397095
-Single-Family Attached, Unheated Basement, Unvented Attic, No Garage	Yes	0	0	0	0	0	0	1	0.000312561
-Single-Family Attached, Unheated Basement, Vented Attic, No Garage	Yes	0	0	0	0	0	0	1	0.00284666
-Single-Family Attached, Unvented Crawlspace, Finished Attic, No Garage	Yes	0	1	0	0	0	0	0	2.8429e-05
-Single-Family Attached, Unvented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.000688205
-Single-Family Attached, Unvented Crawlspace, Unvented Attic, No Garage	Yes	0	1	0	0	0	0	0	5.92557e-05
-Single-Family Attached, Unvented Crawlspace, Vented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00058555
-Single-Family Attached, Vented Crawlspace, Finished Attic, No Garage	Yes	0	1	0	0	0	0	0	0.000306977
-Single-Family Attached, Vented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00555661
-Single-Family Attached, Vented Crawlspace, Unvented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.000449723
-Single-Family Attached, Vented Crawlspace, Vented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00399202
-Single-Family Detached, Ambient, Finished Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000461874
-Single-Family Detached, Ambient, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00707257
-Single-Family Detached, Ambient, Unvented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.00125476
-Single-Family Detached, Ambient, Vented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.0142828
+Single-Family Attached, Slab, Finished Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000489463
+Single-Family Attached, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0107073
+Single-Family Attached, Slab, Unvented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.00100105
+Single-Family Attached, Slab, Vented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.00840999
+Single-Family Attached, Unheated Basement, Finished Attic, No Garage	Yes	0	0	0	0	0	0	1	0.000342849
+Single-Family Attached, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	0	0	1	0.00397082
+Single-Family Attached, Unheated Basement, Unvented Attic, No Garage	Yes	0	0	0	0	0	0	1	0.000312555
+Single-Family Attached, Unheated Basement, Vented Attic, No Garage	Yes	0	0	0	0	0	0	1	0.00284659
+Single-Family Attached, Unvented Crawlspace, Finished Attic, No Garage	Yes	0	1	0	0	0	0	0	2.84258e-05
+Single-Family Attached, Unvented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.000688137
+Single-Family Attached, Unvented Crawlspace, Unvented Attic, No Garage	Yes	0	1	0	0	0	0	0	5.9251e-05
+Single-Family Attached, Unvented Crawlspace, Vented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.000585514
+Single-Family Attached, Vented Crawlspace, Finished Attic, No Garage	Yes	0	1	0	0	0	0	0	0.000306895
+Single-Family Attached, Vented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00555395
+Single-Family Attached, Vented Crawlspace, Unvented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.000449577
+Single-Family Attached, Vented Crawlspace, Vented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00399071
+Single-Family Detached, Ambient, Finished Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000461716
+Single-Family Detached, Ambient, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.00706506
+Single-Family Detached, Ambient, Unvented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.00125409
+Single-Family Detached, Ambient, Vented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.0142736
 Single-Family Detached, Heated Basement, Finished Attic, 1 Car Garage	Yes	0	0	0	1	0	0	0	0.000202438
 Single-Family Detached, Heated Basement, Finished Attic, 2 Car Garage	Yes	0	0	0	1	0	0	0	0.000624598
-Single-Family Detached, Heated Basement, Finished Attic, 3 Car Garage	Yes	0	0	0	1	0	0	0	5.32641e-05
+Single-Family Detached, Heated Basement, Finished Attic, 3 Car Garage	Yes	0	0	0	1	0	0	0	5.32642e-05
 Single-Family Detached, Heated Basement, Finished Attic, No Garage	Yes	0	0	0	1	0	0	0	0.000855841
 Single-Family Detached, Heated Basement, No Attic, 1 Car Garage	Yes	0	0	0	1	0	0	0	0.00620299
 Single-Family Detached, Heated Basement, No Attic, 2 Car Garage	Yes	0	0	0	1	0	0	0	0.0102234
 Single-Family Detached, Heated Basement, No Attic, 3 Car Garage	Yes	0	0	0	1	0	0	0	0.000473717
-Single-Family Detached, Heated Basement, No Attic, No Garage	Yes	0	0	0	1	0	0	0	0.0150187
+Single-Family Detached, Heated Basement, No Attic, No Garage	Yes	0	0	0	1	0	0	0	0.0150186
 Single-Family Detached, Heated Basement, Unvented Attic, 1 Car Garage	Yes	0	0	0	1	0	0	0	0.000815363
 Single-Family Detached, Heated Basement, Unvented Attic, 2 Car Garage	Yes	0	0	0	1	0	0	0	0.00115233
-Single-Family Detached, Heated Basement, Unvented Attic, 3 Car Garage	Yes	0	0	0	1	0	0	0	5.5603e-05
+Single-Family Detached, Heated Basement, Unvented Attic, 3 Car Garage	Yes	0	0	0	1	0	0	0	5.56031e-05
 Single-Family Detached, Heated Basement, Unvented Attic, No Garage	Yes	0	0	0	1	0	0	0	0.00220116
 Single-Family Detached, Heated Basement, Vented Attic, 1 Car Garage	Yes	0	0	0	1	0	0	0	0.0106595
 Single-Family Detached, Heated Basement, Vented Attic, 2 Car Garage	Yes	0	0	0	1	0	0	0	0.0191442
-Single-Family Detached, Heated Basement, Vented Attic, 3 Car Garage	Yes	0	0	0	1	0	0	0	0.0009505
+Single-Family Detached, Heated Basement, Vented Attic, 3 Car Garage	Yes	0	0	0	1	0	0	0	0.000950501
 Single-Family Detached, Heated Basement, Vented Attic, No Garage	Yes	0	0	0	1	0	0	0	0.0277815
-Single-Family Detached, Slab, Finished Attic, 1 Car Garage	Yes	0	0	1	0	0	0	0	0.000445497
-Single-Family Detached, Slab, Finished Attic, 2 Car Garage	Yes	0	0	1	0	0	0	0	0.00218395
-Single-Family Detached, Slab, Finished Attic, 3 Car Garage	Yes	0	0	1	0	0	0	0	0.000558985
-Single-Family Detached, Slab, Finished Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000999759
-Single-Family Detached, Slab, No Attic, 1 Car Garage	Yes	0	0	1	0	0	0	0	0.012891
-Single-Family Detached, Slab, No Attic, 2 Car Garage	Yes	0	0	1	0	0	0	0	0.0270654
-Single-Family Detached, Slab, No Attic, 3 Car Garage	Yes	0	0	1	0	0	0	0	0.0046902
-Single-Family Detached, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0225201
-Single-Family Detached, Slab, Unvented Attic, 1 Car Garage	Yes	1	0	0	0	0	0	0	0.00197242
-Single-Family Detached, Slab, Unvented Attic, 2 Car Garage	Yes	1	0	0	0	0	0	0	0.00479861
-Single-Family Detached, Slab, Unvented Attic, 3 Car Garage	Yes	1	0	0	0	0	0	0	0.000718976
-Single-Family Detached, Slab, Unvented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.00358383
-Single-Family Detached, Slab, Vented Attic, 1 Car Garage	Yes	1	0	0	0	0	0	0	0.0240737
-Single-Family Detached, Slab, Vented Attic, 2 Car Garage	Yes	1	0	0	0	0	0	0	0.058619
-Single-Family Detached, Slab, Vented Attic, 3 Car Garage	Yes	1	0	0	0	0	0	0	0.00949646
-Single-Family Detached, Slab, Vented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.0420336
-Single-Family Detached, Unheated Basement, Finished Attic, 1 Car Garage	Yes	0	0	0	0	0	0	1	0.000202175
-Single-Family Detached, Unheated Basement, Finished Attic, 2 Car Garage	Yes	0	0	0	0	0	0	1	0.000388153
-Single-Family Detached, Unheated Basement, Finished Attic, 3 Car Garage	Yes	0	0	0	0	0	0	1	6.99397e-05
+Single-Family Detached, Slab, Finished Attic, 1 Car Garage	Yes	0	0	1	0	0	0	0	0.000445372
+Single-Family Detached, Slab, Finished Attic, 2 Car Garage	Yes	0	0	1	0	0	0	0	0.0021832
+Single-Family Detached, Slab, Finished Attic, 3 Car Garage	Yes	0	0	1	0	0	0	0	0.000558656
+Single-Family Detached, Slab, Finished Attic, No Garage	Yes	0	0	0	0	1	0	0	0.000999623
+Single-Family Detached, Slab, No Attic, 1 Car Garage	Yes	0	0	1	0	0	0	0	0.0128756
+Single-Family Detached, Slab, No Attic, 2 Car Garage	Yes	0	0	1	0	0	0	0	0.0270332
+Single-Family Detached, Slab, No Attic, 3 Car Garage	Yes	0	0	1	0	0	0	0	0.00467908
+Single-Family Detached, Slab, No Attic, No Garage	Yes	0	0	0	0	1	0	0	0.0225057
+Single-Family Detached, Slab, Unvented Attic, 1 Car Garage	Yes	1	0	0	0	0	0	0	0.00197069
+Single-Family Detached, Slab, Unvented Attic, 2 Car Garage	Yes	1	0	0	0	0	0	0	0.00479582
+Single-Family Detached, Slab, Unvented Attic, 3 Car Garage	Yes	1	0	0	0	0	0	0	0.000718228
+Single-Family Detached, Slab, Unvented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.0035826
+Single-Family Detached, Slab, Vented Attic, 1 Car Garage	Yes	1	0	0	0	0	0	0	0.0240547
+Single-Family Detached, Slab, Vented Attic, 2 Car Garage	Yes	1	0	0	0	0	0	0	0.0585781
+Single-Family Detached, Slab, Vented Attic, 3 Car Garage	Yes	1	0	0	0	0	0	0	0.0094818
+Single-Family Detached, Slab, Vented Attic, No Garage	Yes	1	0	0	0	0	0	0	0.0420164
+Single-Family Detached, Unheated Basement, Finished Attic, 1 Car Garage	Yes	0	0	0	0	0	0	1	0.000202174
+Single-Family Detached, Unheated Basement, Finished Attic, 2 Car Garage	Yes	0	0	0	0	0	0	1	0.00038815
+Single-Family Detached, Unheated Basement, Finished Attic, 3 Car Garage	Yes	0	0	0	0	0	0	1	6.99383e-05
 Single-Family Detached, Unheated Basement, Finished Attic, No Garage	Yes	0	0	0	0	0	0	1	0.00114883
-Single-Family Detached, Unheated Basement, No Attic, 1 Car Garage	Yes	0	0	0	0	0	0	1	0.00378711
-Single-Family Detached, Unheated Basement, No Attic, 2 Car Garage	Yes	0	0	0	0	0	0	1	0.00494245
-Single-Family Detached, Unheated Basement, No Attic, 3 Car Garage	Yes	0	0	0	0	0	0	1	0.000783631
-Single-Family Detached, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	0	0	1	0.0135968
-Single-Family Detached, Unheated Basement, Unvented Attic, 1 Car Garage	Yes	0	0	0	0	0	0	1	0.000593213
-Single-Family Detached, Unheated Basement, Unvented Attic, 2 Car Garage	Yes	0	0	0	0	0	0	1	0.000617948
-Single-Family Detached, Unheated Basement, Unvented Attic, 3 Car Garage	Yes	0	0	0	0	0	0	1	8.58254e-05
+Single-Family Detached, Unheated Basement, No Attic, 1 Car Garage	Yes	0	0	0	0	0	0	1	0.00378705
+Single-Family Detached, Unheated Basement, No Attic, 2 Car Garage	Yes	0	0	0	0	0	0	1	0.00494231
+Single-Family Detached, Unheated Basement, No Attic, 3 Car Garage	Yes	0	0	0	0	0	0	1	0.000783575
+Single-Family Detached, Unheated Basement, No Attic, No Garage	Yes	0	0	0	0	0	0	1	0.0135967
+Single-Family Detached, Unheated Basement, Unvented Attic, 1 Car Garage	Yes	0	0	0	0	0	0	1	0.000593206
+Single-Family Detached, Unheated Basement, Unvented Attic, 2 Car Garage	Yes	0	0	0	0	0	0	1	0.000617937
+Single-Family Detached, Unheated Basement, Unvented Attic, 3 Car Garage	Yes	0	0	0	0	0	0	1	8.58218e-05
 Single-Family Detached, Unheated Basement, Unvented Attic, No Garage	Yes	0	0	0	0	0	0	1	0.00244315
-Single-Family Detached, Unheated Basement, Vented Attic, 1 Car Garage	Yes	0	0	0	0	0	0	1	0.00710534
-Single-Family Detached, Unheated Basement, Vented Attic, 2 Car Garage	Yes	0	0	0	0	0	0	1	0.00963324
-Single-Family Detached, Unheated Basement, Vented Attic, 3 Car Garage	Yes	0	0	0	0	0	0	1	0.00151238
-Single-Family Detached, Unheated Basement, Vented Attic, No Garage	Yes	0	0	0	0	0	0	1	0.0266793
-Single-Family Detached, Unvented Crawlspace, Finished Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	1.20424e-05
-Single-Family Detached, Unvented Crawlspace, Finished Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	9.04836e-05
-Single-Family Detached, Unvented Crawlspace, Finished Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	2.4419e-05
-Single-Family Detached, Unvented Crawlspace, Finished Attic, No Garage	Yes	0	1	0	0	0	0	0	2.74245e-05
-Single-Family Detached, Unvented Crawlspace, No Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.000375996
-Single-Family Detached, Unvented Crawlspace, No Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.00145521
-Single-Family Detached, Unvented Crawlspace, No Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.000314263
-Single-Family Detached, Unvented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.000881433
-Single-Family Detached, Unvented Crawlspace, Unvented Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	5.17933e-05
-Single-Family Detached, Unvented Crawlspace, Unvented Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.000202045
-Single-Family Detached, Unvented Crawlspace, Unvented Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	3.30366e-05
-Single-Family Detached, Unvented Crawlspace, Unvented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.000120179
-Single-Family Detached, Unvented Crawlspace, Vented Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.000717191
-Single-Family Detached, Unvented Crawlspace, Vented Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.00303332
-Single-Family Detached, Unvented Crawlspace, Vented Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.000579878
-Single-Family Detached, Unvented Crawlspace, Vented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00171944
-Single-Family Detached, Vented Crawlspace, Finished Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.000324002
-Single-Family Detached, Vented Crawlspace, Finished Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.000753868
-Single-Family Detached, Vented Crawlspace, Finished Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.000133235
-Single-Family Detached, Vented Crawlspace, Finished Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00116079
-Single-Family Detached, Vented Crawlspace, No Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.00653542
-Single-Family Detached, Vented Crawlspace, No Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.0104801
-Single-Family Detached, Vented Crawlspace, No Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.00130211
-Single-Family Detached, Vented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.0208139
-Single-Family Detached, Vented Crawlspace, Unvented Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.00093281
-Single-Family Detached, Vented Crawlspace, Unvented Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.00148941
-Single-Family Detached, Vented Crawlspace, Unvented Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.000177188
-Single-Family Detached, Vented Crawlspace, Unvented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00341553
-Single-Family Detached, Vented Crawlspace, Vented Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.0108124
-Single-Family Detached, Vented Crawlspace, Vented Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.0197645
-Single-Family Detached, Vented Crawlspace, Vented Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.00249782
-Single-Family Detached, Vented Crawlspace, Vented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.0372618
+Single-Family Detached, Unheated Basement, Vented Attic, 1 Car Garage	Yes	0	0	0	0	0	0	1	0.00710526
+Single-Family Detached, Unheated Basement, Vented Attic, 2 Car Garage	Yes	0	0	0	0	0	0	1	0.00963306
+Single-Family Detached, Unheated Basement, Vented Attic, 3 Car Garage	Yes	0	0	0	0	0	0	1	0.0015123
+Single-Family Detached, Unheated Basement, Vented Attic, No Garage	Yes	0	0	0	0	0	0	1	0.0266792
+Single-Family Detached, Unvented Crawlspace, Finished Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	1.20416e-05
+Single-Family Detached, Unvented Crawlspace, Finished Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	9.048e-05
+Single-Family Detached, Unvented Crawlspace, Finished Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	2.44172e-05
+Single-Family Detached, Unvented Crawlspace, Finished Attic, No Garage	Yes	0	1	0	0	0	0	0	2.74239e-05
+Single-Family Detached, Unvented Crawlspace, No Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.00037593
+Single-Family Detached, Unvented Crawlspace, No Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.00145507
+Single-Family Detached, Unvented Crawlspace, No Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.000314217
+Single-Family Detached, Unvented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00088136
+Single-Family Detached, Unvented Crawlspace, Unvented Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	5.17828e-05
+Single-Family Detached, Unvented Crawlspace, Unvented Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.000202028
+Single-Family Detached, Unvented Crawlspace, Unvented Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	3.30324e-05
+Single-Family Detached, Unvented Crawlspace, Unvented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00012017
+Single-Family Detached, Unvented Crawlspace, Vented Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.000717104
+Single-Family Detached, Unvented Crawlspace, Vented Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.00303314
+Single-Family Detached, Unvented Crawlspace, Vented Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.000579822
+Single-Family Detached, Unvented Crawlspace, Vented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00171934
+Single-Family Detached, Vented Crawlspace, Finished Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.000323966
+Single-Family Detached, Vented Crawlspace, Finished Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.000753795
+Single-Family Detached, Vented Crawlspace, Finished Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.000133206
+Single-Family Detached, Vented Crawlspace, Finished Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00116074
+Single-Family Detached, Vented Crawlspace, No Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.0065343
+Single-Family Detached, Vented Crawlspace, No Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.0104773
+Single-Family Detached, Vented Crawlspace, No Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.00130128
+Single-Family Detached, Vented Crawlspace, No Attic, No Garage	Yes	0	1	0	0	0	0	0	0.020811
+Single-Family Detached, Vented Crawlspace, Unvented Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.000932683
+Single-Family Detached, Vented Crawlspace, Unvented Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.0014892
+Single-Family Detached, Vented Crawlspace, Unvented Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.000177133
+Single-Family Detached, Vented Crawlspace, Unvented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.00341525
+Single-Family Detached, Vented Crawlspace, Vented Attic, 1 Car Garage	Yes	0	1	0	0	0	0	0	0.0108111
+Single-Family Detached, Vented Crawlspace, Vented Attic, 2 Car Garage	Yes	0	1	0	0	0	0	0	0.0197613
+Single-Family Detached, Vented Crawlspace, Vented Attic, 3 Car Garage	Yes	0	1	0	0	0	0	0	0.00249661
+Single-Family Detached, Vented Crawlspace, Vented Attic, No Garage	Yes	0	1	0	0	0	0	0	0.0372584
 # Created by: sources\other\tsv_maker.py
 # Description: Location of Duct System
 # Source: OpenStudio-HPXML v1.6.0 and Wilson et al., 'Building America House Simulation Protocols', 2014

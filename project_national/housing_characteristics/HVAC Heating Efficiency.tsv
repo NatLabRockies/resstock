@@ -35,42 +35,42 @@ Others	Electricity	None	Ducted Heat Pump	1990s	0.0605441	0.478329	0.461127	0	0	0
 Others	Electricity	None	Ducted Heat Pump	2000s	0.0454811	0.551697	0.402822	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	427	1.33301e+06	0.028085
 Others	Electricity	None	Ducted Heat Pump	2010s	0	0.361361	0.638639	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	275	916488	0.0114939
 Others	Electricity	None	Ducted Heat Pump	<1940	0.0266339	0.522609	0.450757	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	104	253863	0.0051548
-Others	Electricity	Cooling Only	Ducted Heating	1940s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	102	111305	6.07772e-05
-Others	Electricity	Cooling Only	Ducted Heating	1950s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	70	305368	8.15931e-05
-Others	Electricity	Cooling Only	Ducted Heating	1960s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	86	330665	0.00027615
-Others	Electricity	Cooling Only	Ducted Heating	1970s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	291	1.06591e+06	0.000532252
-Others	Electricity	Cooling Only	Ducted Heating	1980s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	292	1.11574e+06	0.000786347
-Others	Electricity	Cooling Only	Ducted Heating	1990s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	234	917363	0.000739526
-Others	Electricity	Cooling Only	Ducted Heating	2000s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	348	1.19962e+06	0.00169085
-Others	Electricity	Cooling Only	Ducted Heating	2010s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	247	819330	0.000488885
-Others	Electricity	Cooling Only	Ducted Heating	<1940	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	102	287639	0.000157215
-Others	Electricity	Heating Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	15699.8	0.000229572
-Others	Electricity	Heating Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	68878	0.00074306
-Others	Electricity	Heating Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	90332.3	0.000763476
-Others	Electricity	Heating Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	21	182099	0.00171912
-Others	Electricity	Heating Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	13	123371	0.00100646
-Others	Electricity	Heating Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	20	62554	0.000921592
-Others	Electricity	Heating Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	70229.2	0.00087179
-Others	Electricity	Heating Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	57857	0.000405235
-Others	Electricity	Heating Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	40572	0.000734704
-Others	Electricity	Heating and Cooling	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	12	24368.2	0.000117102
-Others	Electricity	Heating and Cooling	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	12	42102.6	0.000386296
-Others	Electricity	Heating and Cooling	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	13	58714.2	0.000978295
-Others	Electricity	Heating and Cooling	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	13	65658.7	0.000998784
-Others	Electricity	Heating and Cooling	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	129428	0.00131734
-Others	Electricity	Heating and Cooling	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	13	128059	0.00112011
-Others	Electricity	Heating and Cooling	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	119277	0.0011591
-Others	Electricity	Heating and Cooling	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	21	168859	0.00132816
-Others	Electricity	Heating and Cooling	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	12	62973	0.000324325
-Others	Electricity	None	Ducted Heating	1940s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	102	111305	0.0028468
-Others	Electricity	None	Ducted Heating	1950s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	70	305368	0.00681866
-Others	Electricity	None	Ducted Heating	1960s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	86	330665	0.00655356
-Others	Electricity	None	Ducted Heating	1970s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	291	1.06591e+06	0.0186147
-Others	Electricity	None	Ducted Heating	1980s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	292	1.11574e+06	0.0196271
-Others	Electricity	None	Ducted Heating	1990s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	234	917363	0.0179003
-Others	Electricity	None	Ducted Heating	2000s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	348	1.19962e+06	0.0228921
-Others	Electricity	None	Ducted Heating	2010s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	247	819330	0.00823485
-Others	Electricity	None	Ducted Heating	<1940	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	102	287639	0.00501666
+Others	Electricity	Cooling Only	Ducted Heating	1940s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	102	111305	6.0792e-05
+Others	Electricity	Cooling Only	Ducted Heating	1950s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	70	305368	8.16976e-05
+Others	Electricity	Cooling Only	Ducted Heating	1960s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	86	330665	0.000275898
+Others	Electricity	Cooling Only	Ducted Heating	1970s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	291	1.06591e+06	0.000531986
+Others	Electricity	Cooling Only	Ducted Heating	1980s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	292	1.11574e+06	0.000785624
+Others	Electricity	Cooling Only	Ducted Heating	1990s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	234	917363	0.000739042
+Others	Electricity	Cooling Only	Ducted Heating	2000s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	348	1.19962e+06	0.00169019
+Others	Electricity	Cooling Only	Ducted Heating	2010s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	247	819330	0.000488783
+Others	Electricity	Cooling Only	Ducted Heating	<1940	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	102	287639	0.000157221
+Others	Electricity	Heating Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	15699.8	0.000229514
+Others	Electricity	Heating Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	68878	0.000742197
+Others	Electricity	Heating Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	90332.3	0.000764677
+Others	Electricity	Heating Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	21	182099	0.00172109
+Others	Electricity	Heating Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	13	123371	0.00100938
+Others	Electricity	Heating Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	20	62554	0.000923634
+Others	Electricity	Heating Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	70229.2	0.000873382
+Others	Electricity	Heating Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	57857	0.000405597
+Others	Electricity	Heating Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	40572	0.000734682
+Others	Electricity	Heating and Cooling	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	12	24368.2	0.000117129
+Others	Electricity	Heating and Cooling	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	12	42102.6	0.000386786
+Others	Electricity	Heating and Cooling	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	13	58714.2	0.000977373
+Others	Electricity	Heating and Cooling	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	13	65658.7	0.000998146
+Others	Electricity	Heating and Cooling	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	129428	0.00131612
+Others	Electricity	Heating and Cooling	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	13	128059	0.00111937
+Others	Electricity	Heating and Cooling	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	119277	0.00115865
+Others	Electricity	Heating and Cooling	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	21	168859	0.00132787
+Others	Electricity	Heating and Cooling	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	12	62973	0.000324336
+Others	Electricity	None	Ducted Heating	1940s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	102	111305	0.00284681
+Others	Electricity	None	Ducted Heating	1950s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	70	305368	0.00681893
+Others	Electricity	None	Ducted Heating	1960s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	86	330665	0.00655353
+Others	Electricity	None	Ducted Heating	1970s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	291	1.06591e+06	0.0186136
+Others	Electricity	None	Ducted Heating	1980s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	292	1.11574e+06	0.0196261
+Others	Electricity	None	Ducted Heating	1990s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	234	917363	0.0178995
+Others	Electricity	None	Ducted Heating	2000s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	348	1.19962e+06	0.0228916
+Others	Electricity	None	Ducted Heating	2010s	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	247	819330	0.00823488
+Others	Electricity	None	Ducted Heating	<1940	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	102	287639	0.00501667
 Others	Electricity	Cooling Only	Non-Ducted Heat Pump	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	26	23817.5	0
 Others	Electricity	Cooling Only	Non-Ducted Heat Pump	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	13	46000.6	0
 Others	Electricity	Cooling Only	Non-Ducted Heat Pump	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	12	40827.5	0
@@ -109,39 +109,39 @@ Others	Electricity	None	Non-Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 Others	Electricity	None	Non-Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.984363	0.0156373	0	0	0	26	61549.9	0.00131262
 Others	Electricity	Cooling Only	Non-Ducted Heating	1940s	0	0	0	0.860727	0.0247042	0	0.114569	0	0	0	0	0	0	0	0	0	0	0	0	0	0	147	189365	3.16151e-05
 Others	Electricity	Cooling Only	Non-Ducted Heating	1950s	0	0	0	0.859852	0.0275371	0	0.11261	0	0	0	0	0	0	0	0	0	0	0	0	0	0	86	352589	1.82598e-05
-Others	Electricity	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0.839912	0.00727882	0	0.152809	0	0	0	0	0	0	0	0	0	0	0	0	0	0	128	515620	0.00012054
-Others	Electricity	Cooling Only	Non-Ducted Heating	1970s	0	0	0	0.814489	0.0237715	0	0.161739	0	0	0	0	0	0	0	0	0	0	0	0	0	0	275	957504	0.000180772
-Others	Electricity	Cooling Only	Non-Ducted Heating	1980s	0	0	0	0.805872	0.0336043	0	0.160524	0	0	0	0	0	0	0	0	0	0	0	0	0	0	210	764591	0.000889392
-Others	Electricity	Cooling Only	Non-Ducted Heating	1990s	0	0	0	0.851594	0.0167827	0	0.131624	0	0	0	0	0	0	0	0	0	0	0	0	0	0	139	564639	0.000447126
-Others	Electricity	Cooling Only	Non-Ducted Heating	2000s	0	0	0	0.77894	0.0657439	0	0.155316	0	0	0	0	0	0	0	0	0	0	0	0	0	0	129	480709	0.000445309
-Others	Electricity	Cooling Only	Non-Ducted Heating	2010s	0	0	0	0.804318	0.0179587	0	0.177723	0	0	0	0	0	0	0	0	0	0	0	0	0	0	108	350017	0.000533929
+Others	Electricity	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0.839912	0.00727882	0	0.152809	0	0	0	0	0	0	0	0	0	0	0	0	0	0	128	515620	0.00012021
+Others	Electricity	Cooling Only	Non-Ducted Heating	1970s	0	0	0	0.814489	0.0237715	0	0.161739	0	0	0	0	0	0	0	0	0	0	0	0	0	0	275	957504	0.000180201
+Others	Electricity	Cooling Only	Non-Ducted Heating	1980s	0	0	0	0.805872	0.0336043	0	0.160524	0	0	0	0	0	0	0	0	0	0	0	0	0	0	210	764591	0.000887946
+Others	Electricity	Cooling Only	Non-Ducted Heating	1990s	0	0	0	0.851594	0.0167827	0	0.131624	0	0	0	0	0	0	0	0	0	0	0	0	0	0	139	564639	0.000446046
+Others	Electricity	Cooling Only	Non-Ducted Heating	2000s	0	0	0	0.77894	0.0657439	0	0.155316	0	0	0	0	0	0	0	0	0	0	0	0	0	0	129	480709	0.000443025
+Others	Electricity	Cooling Only	Non-Ducted Heating	2010s	0	0	0	0.804318	0.0179587	0	0.177723	0	0	0	0	0	0	0	0	0	0	0	0	0	0	108	350017	0.000532796
 Others	Electricity	Cooling Only	Non-Ducted Heating	<1940	0	0	0	0.860727	0.0247042	0	0.114569	0	0	0	0	0	0	0	0	0	0	0	0	0	0	147	489363	7.17884e-05
-Others	Electricity	Heating Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	26	75912	0.000949419
-Others	Electricity	Heating Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	82035.4	0.00196344
-Others	Electricity	Heating Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	22	180107	0.00299202
-Others	Electricity	Heating Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	38	285325	0.0044939
-Others	Electricity	Heating Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	28	200387	0.00287398
-Others	Electricity	Heating Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	21	160472	0.00236749
-Others	Electricity	Heating Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	15	108231	0.00131347
-Others	Electricity	Heating Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	15	99273.9	0.000727877
+Others	Electricity	Heating Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	26	75912	0.000949447
+Others	Electricity	Heating Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	82035.4	0.00196387
+Others	Electricity	Heating Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	22	180107	0.00299463
+Others	Electricity	Heating Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	38	285325	0.0044997
+Others	Electricity	Heating Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	28	200387	0.00287543
+Others	Electricity	Heating Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	21	160472	0.00236987
+Others	Electricity	Heating Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	15	108231	0.00131563
+Others	Electricity	Heating Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	15	99273.9	0.00072884
 Others	Electricity	Heating Only	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	26	196174	0.00308783
 Others	Electricity	Heating and Cooling	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	12	15116.5	5.60181e-05
 Others	Electricity	Heating and Cooling	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	12	65763.1	0.000228998
-Others	Electricity	Heating and Cooling	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	109946	0.000903877
-Others	Electricity	Heating and Cooling	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	156626	0.00155607
-Others	Electricity	Heating and Cooling	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	12	138916	0.000851052
-Others	Electricity	Heating and Cooling	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	115246	0.000797171
-Others	Electricity	Heating and Cooling	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	15	110435	0.000603982
-Others	Electricity	Heating and Cooling	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	98508.6	0.000262803
+Others	Electricity	Heating and Cooling	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	109946	0.000901213
+Others	Electricity	Heating and Cooling	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	156626	0.00154939
+Others	Electricity	Heating and Cooling	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	12	138916	0.000849655
+Others	Electricity	Heating and Cooling	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	115246	0.000795359
+Others	Electricity	Heating and Cooling	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	15	110435	0.000600836
+Others	Electricity	Heating and Cooling	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	98508.6	0.000262239
 Others	Electricity	Heating and Cooling	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	12	39064.6	0.000124607
-Others	Electricity	None	Non-Ducted Heating	1940s	0	0	0	0.860727	0.0247042	0	0.114569	0	0	0	0	0	0	0	0	0	0	0	0	0	0	147	189365	0.003601
-Others	Electricity	None	Non-Ducted Heating	1950s	0	0	0	0.859852	0.0275371	0	0.11261	0	0	0	0	0	0	0	0	0	0	0	0	0	0	86	352589	0.00619251
-Others	Electricity	None	Non-Ducted Heating	1960s	0	0	0	0.839912	0.00727882	0	0.152809	0	0	0	0	0	0	0	0	0	0	0	0	0	0	128	515620	0.00852275
-Others	Electricity	None	Non-Ducted Heating	1970s	0	0	0	0.814489	0.0237715	0	0.161739	0	0	0	0	0	0	0	0	0	0	0	0	0	0	275	957504	0.0157446
-Others	Electricity	None	Non-Ducted Heating	1980s	0	0	0	0.805872	0.0336043	0	0.160524	0	0	0	0	0	0	0	0	0	0	0	0	0	0	210	764591	0.0115011
-Others	Electricity	None	Non-Ducted Heating	1990s	0	0	0	0.851594	0.0167827	0	0.131624	0	0	0	0	0	0	0	0	0	0	0	0	0	0	139	564639	0.01024
-Others	Electricity	None	Non-Ducted Heating	2000s	0	0	0	0.77894	0.0657439	0	0.155316	0	0	0	0	0	0	0	0	0	0	0	0	0	0	129	480709	0.00750456
-Others	Electricity	None	Non-Ducted Heating	2010s	0	0	0	0.804318	0.0179587	0	0.177723	0	0	0	0	0	0	0	0	0	0	0	0	0	0	108	350017	0.00315075
+Others	Electricity	None	Non-Ducted Heating	1940s	0	0	0	0.860727	0.0247042	0	0.114569	0	0	0	0	0	0	0	0	0	0	0	0	0	0	147	189365	0.00360097
+Others	Electricity	None	Non-Ducted Heating	1950s	0	0	0	0.859852	0.0275371	0	0.11261	0	0	0	0	0	0	0	0	0	0	0	0	0	0	86	352589	0.00619208
+Others	Electricity	None	Non-Ducted Heating	1960s	0	0	0	0.839912	0.00727882	0	0.152809	0	0	0	0	0	0	0	0	0	0	0	0	0	0	128	515620	0.00852314
+Others	Electricity	None	Non-Ducted Heating	1970s	0	0	0	0.814489	0.0237715	0	0.161739	0	0	0	0	0	0	0	0	0	0	0	0	0	0	275	957504	0.0157461
+Others	Electricity	None	Non-Ducted Heating	1980s	0	0	0	0.805872	0.0336043	0	0.160524	0	0	0	0	0	0	0	0	0	0	0	0	0	0	210	764591	0.0115025
+Others	Electricity	None	Non-Ducted Heating	1990s	0	0	0	0.851594	0.0167827	0	0.131624	0	0	0	0	0	0	0	0	0	0	0	0	0	0	139	564639	0.0102405
+Others	Electricity	None	Non-Ducted Heating	2000s	0	0	0	0.77894	0.0657439	0	0.155316	0	0	0	0	0	0	0	0	0	0	0	0	0	0	129	480709	0.00750783
+Others	Electricity	None	Non-Ducted Heating	2010s	0	0	0	0.804318	0.0179587	0	0.177723	0	0	0	0	0	0	0	0	0	0	0	0	0	0	108	350017	0.00315148
 Others	Electricity	None	Non-Ducted Heating	<1940	0	0	0	0.860727	0.0247042	0	0.114569	0	0	0	0	0	0	0	0	0	0	0	0	0	0	147	489363	0.00667956
 Others	Electricity	Cooling Only	None	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Electricity	Cooling Only	None	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -216,36 +216,36 @@ Others	Fuel Oil	None	Ducted Heat Pump	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
 Others	Fuel Oil	None	Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Fuel Oil	None	Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Fuel Oil	Cooling Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0.0287583	0.873056	0.0981855	0	0	0	0	0	0	0	145	103246	8.72143e-06
-Others	Fuel Oil	Cooling Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0.0245082	0.845807	0.129685	0	0	0	0	0	0	0	131	360833	7.26756e-06
-Others	Fuel Oil	Cooling Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0.0307711	0.85587	0.113359	0	0	0	0	0	0	0	71	165076	1.45872e-05
-Others	Fuel Oil	Cooling Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0.0285237	0.835602	0.135874	0	0	0	0	0	0	0	107	207919	4.7542e-06
+Others	Fuel Oil	Cooling Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0.0245082	0.845807	0.129685	0	0	0	0	0	0	0	131	360833	7.26828e-06
+Others	Fuel Oil	Cooling Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0.0307711	0.85587	0.113359	0	0	0	0	0	0	0	71	165076	1.45865e-05
+Others	Fuel Oil	Cooling Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0.0285237	0.835602	0.135874	0	0	0	0	0	0	0	107	207919	4.75338e-06
 Others	Fuel Oil	Cooling Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0.034818	0.82919	0.135992	0	0	0	0	0	0	0	74	127578	7.54599e-06
-Others	Fuel Oil	Cooling Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0.034047	0.863356	0.102597	0	0	0	0	0	0	0	65	104147	4.94432e-06
+Others	Fuel Oil	Cooling Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0.034047	0.863356	0.102597	0	0	0	0	0	0	0	65	104147	4.94038e-06
 Others	Fuel Oil	Cooling Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0.0206058	0.890249	0.0891455	0	0	0	0	0	0	0	53	83046.4	1.189e-05
 Others	Fuel Oil	Cooling Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0.022304	0.880762	0.0969345	0	0	0	0	0	0	0	58	5762.34	2.77764e-06
 Others	Fuel Oil	Cooling Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0.0287583	0.873056	0.0981855	0	0	0	0	0	0	0	145	266812	2.3081e-05
 Others	Fuel Oil	Heating Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	35534.3	0.00011345
-Others	Fuel Oil	Heating Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	20	18386.2	0.000170879
-Others	Fuel Oil	Heating Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	16809.6	0.000124323
-Others	Fuel Oil	Heating Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	4967.5	6.44069e-05
+Others	Fuel Oil	Heating Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	20	18386.2	0.000170873
+Others	Fuel Oil	Heating Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	16809.6	0.000124326
+Others	Fuel Oil	Heating Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	4967.5	6.44137e-05
 Others	Fuel Oil	Heating Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	9904.73	4.76104e-05
-Others	Fuel Oil	Heating Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	3380.88	2.57604e-05
+Others	Fuel Oil	Heating Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	3380.88	2.57777e-05
 Others	Fuel Oil	Heating Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	12094.9	1.80926e-05
 Others	Fuel Oil	Heating Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	898.59	3.19836e-06
 Others	Fuel Oil	Heating Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	91828.8	0.000771097
 Others	Fuel Oil	Heating and Cooling	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.58032e-05
-Others	Fuel Oil	Heating and Cooling	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	3.4055e-05
-Others	Fuel Oil	Heating and Cooling	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	26239.6	5.40355e-05
-Others	Fuel Oil	Heating and Cooling	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	0	9.88011e-06
+Others	Fuel Oil	Heating and Cooling	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	3.40583e-05
+Others	Fuel Oil	Heating and Cooling	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	26239.6	5.40326e-05
+Others	Fuel Oil	Heating and Cooling	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	0	9.8777e-06
 Others	Fuel Oil	Heating and Cooling	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	16045.9	1.25226e-05
-Others	Fuel Oil	Heating and Cooling	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	15365.1	7.17352e-06
+Others	Fuel Oil	Heating and Cooling	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	15365.1	7.16717e-06
 Others	Fuel Oil	Heating and Cooling	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	7.60379e-06
 Others	Fuel Oil	Heating and Cooling	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	7.01691e-06
 Others	Fuel Oil	Heating and Cooling	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	5.63317e-05
 Others	Fuel Oil	None	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0.0287583	0.873056	0.0981855	0	0	0	0	0	0	0	145	103246	0.00201493
 Others	Fuel Oil	None	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0.0245082	0.845807	0.129685	0	0	0	0	0	0	0	131	360833	0.00554314
 Others	Fuel Oil	None	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0.0307711	0.85587	0.113359	0	0	0	0	0	0	0	71	165076	0.00323419
-Others	Fuel Oil	None	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0.0285237	0.835602	0.135874	0	0	0	0	0	0	0	107	207919	0.00404316
+Others	Fuel Oil	None	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0.0285237	0.835602	0.135874	0	0	0	0	0	0	0	107	207919	0.00404315
 Others	Fuel Oil	None	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0.034818	0.82919	0.135992	0	0	0	0	0	0	0	74	127578	0.00273071
 Others	Fuel Oil	None	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0.034047	0.863356	0.102597	0	0	0	0	0	0	0	65	104147	0.00223815
 Others	Fuel Oil	None	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0.0206058	0.890249	0.0891455	0	0	0	0	0	0	0	53	83046.4	0.00186132
@@ -289,35 +289,35 @@ Others	Fuel Oil	None	Non-Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
 Others	Fuel Oil	None	Non-Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Fuel Oil	Cooling Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0.036667	0.571754	0.22961	0	0	0	0	0.0504194	0.11155	0	0	0	0	0	66.2933	45047.6	5.74516e-06
 Others	Fuel Oil	Cooling Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0.0336372	0.497724	0.198603	0	0	0	0	0.0810107	0.189025	0	0	0	0	0	25.5962	75194.3	2.27435e-06
-Others	Fuel Oil	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0.0129105	0.525997	0.226717	0	0	0	0	0.073455	0.16092	0	0	0	0	0	28.5962	62065.8	5.97896e-06
-Others	Fuel Oil	Cooling Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.0380028	0.502506	0.197505	0	0	0	0	0.0805145	0.181471	0	0	0	0	0	41.2476	58905.9	4.59914e-06
+Others	Fuel Oil	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0.0129105	0.525997	0.226717	0	0	0	0	0.073455	0.16092	0	0	0	0	0	28.5962	62065.8	5.97835e-06
+Others	Fuel Oil	Cooling Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.0380028	0.502506	0.197505	0	0	0	0	0.0805145	0.181471	0	0	0	0	0	41.2476	58905.9	4.59853e-06
 Others	Fuel Oil	Cooling Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0.022777	0.572932	0.240468	0	0	0	0	0.0534739	0.110349	0	0	0	0	0	23.6971	40793.5	1.01448e-05
-Others	Fuel Oil	Cooling Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.034711	0.591779	0.240061	0	0	0	0	0.0422184	0.0912301	0	0	0	0	0	22.3486	34042.9	4.24385e-06
+Others	Fuel Oil	Cooling Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.034711	0.591779	0.240061	0	0	0	0	0.0422184	0.0912301	0	0	0	0	0	22.3486	34042.9	4.24061e-06
 Others	Fuel Oil	Cooling Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0.0179318	0.557117	0.236965	0	0	0	0	0.0595559	0.12843	0	0	0	0	0	23.2476	17059.5	9.32356e-06
 Others	Fuel Oil	Cooling Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0.016988	0.546017	0.23268	0	0	0	0	0.0642885	0.140027	0	0	0	0	0	25.1467	947.756	4.12767e-06
 Others	Fuel Oil	Cooling Only	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0.036667	0.571754	0.22961	0	0	0	0	0.0504194	0.11155	0	0	0	0	0	66.2933	116413	4.34507e-05
 Others	Fuel Oil	Heating Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	29	68665.7	0.000329401
-Others	Fuel Oil	Heating Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	36	37464.4	0.000449774
-Others	Fuel Oil	Heating Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	11	48721.8	0.000326875
-Others	Fuel Oil	Heating Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	11	32620.3	0.000223213
+Others	Fuel Oil	Heating Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	36	37464.4	0.000449776
+Others	Fuel Oil	Heating Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	11	48721.8	0.000326881
+Others	Fuel Oil	Heating Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	11	32620.3	0.000223223
 Others	Fuel Oil	Heating Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	6	16615.7	0.000119897
-Others	Fuel Oil	Heating Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	6	11442.4	6.43515e-05
+Others	Fuel Oil	Heating Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	6	11442.4	6.43592e-05
 Others	Fuel Oil	Heating Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	2	1583.86	3.90878e-05
 Others	Fuel Oil	Heating Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	2	7324.22	1.34635e-05
 Others	Fuel Oil	Heating Only	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	29	177448	0.00166708
 Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	2	2851.36	1.05033e-05
 Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	2	0	1.96439e-05
-Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	0	4.68508e-05
-Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	30953.7	3.45102e-05
+Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	0	4.68445e-05
+Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	30953.7	3.44989e-05
 Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	2	10788.3	9.77403e-06
-Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	2	0	7.20243e-06
+Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	2	0	7.19615e-06
 Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	9.81228e-06
 Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.98336e-06
 Others	Fuel Oil	Heating and Cooling	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	2	7368.57	7.8599e-05
 Others	Fuel Oil	None	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0.036667	0.571754	0.22961	0	0	0	0	0.0504194	0.11155	0	0	0	0	0	66.2933	45047.6	0.00125299
 Others	Fuel Oil	None	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0.0336372	0.497724	0.198603	0	0	0	0	0.0810107	0.189025	0	0	0	0	0	25.5962	75194.3	0.00185403
 Others	Fuel Oil	None	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0.0129105	0.525997	0.226717	0	0	0	0	0.073455	0.16092	0	0	0	0	0	28.5962	62065.8	0.00224186
-Others	Fuel Oil	None	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.0380028	0.502506	0.197505	0	0	0	0	0.0805145	0.181471	0	0	0	0	0	41.2476	58905.9	0.00187553
+Others	Fuel Oil	None	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.0380028	0.502506	0.197505	0	0	0	0	0.0805145	0.181471	0	0	0	0	0	41.2476	58905.9	0.00187554
 Others	Fuel Oil	None	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0.022777	0.572932	0.240468	0	0	0	0	0.0534739	0.110349	0	0	0	0	0	23.6971	40793.5	0.00141121
 Others	Fuel Oil	None	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.034711	0.591779	0.240061	0	0	0	0	0.0422184	0.0912301	0	0	0	0	0	22.3486	34042.9	0.00103979
 Others	Fuel Oil	None	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0.0179318	0.557117	0.236965	0	0	0	0	0.0595559	0.12843	0	0	0	0	0	23.2476	17059.5	0.000526778
@@ -395,40 +395,40 @@ Others	Natural Gas	None	Ducted Heat Pump	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 Others	Natural Gas	None	Ducted Heat Pump	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Natural Gas	None	Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Natural Gas	None	Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Others	Natural Gas	Cooling Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0.00773531	0.0706685	0.548305	0.373292	0	0	0	0	0	0	0	1141	1.18983e+06	0.000109695
-Others	Natural Gas	Cooling Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0.00736257	0.0689213	0.544503	0.379214	0	0	0	0	0	0	0	858	3.1637e+06	0.000113394
-Others	Natural Gas	Cooling Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0.00729883	0.0680497	0.545624	0.379027	0	0	0	0	0	0	0	866	2.84094e+06	0.000372117
-Others	Natural Gas	Cooling Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.00624593	0.0593531	0.540678	0.393723	0	0	0	0	0	0	0	1063	3.24804e+06	0.00058896
-Others	Natural Gas	Cooling Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0.00709617	0.0673023	0.540806	0.384795	0	0	0	0	0	0	0	875	2.68484e+06	0.000693736
-Others	Natural Gas	Cooling Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0.0131476	0.11408	0.514766	0.358007	0	0	0	0	0	0	0	1088	3.63205e+06	0.000638561
-Others	Natural Gas	Cooling Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0.00364781	0.0339582	0.599782	0.362612	0	0	0	0	0	0	0	1249	3.34422e+06	0.00140334
-Others	Natural Gas	Cooling Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0.000133897	0.015185	0.509548	0.475133	0	0	0	0	0	0	0	742	1.7999e+06	0.000370294
-Others	Natural Gas	Cooling Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0.00773531	0.0706685	0.548305	0.373292	0	0	0	0	0	0	0	1141	3.07481e+06	0.00041288
-Others	Natural Gas	Heating Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	59	164221	0.00119549
-Others	Natural Gas	Heating Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	19	171587	0.00156457
-Others	Natural Gas	Heating Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	32	282379	0.00200929
-Others	Natural Gas	Heating Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	44	380034	0.00329448
-Others	Natural Gas	Heating Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	27	221183	0.00141824
-Others	Natural Gas	Heating Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	98891.7	0.00110932
-Others	Natural Gas	Heating Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	130023	0.0011393
-Others	Natural Gas	Heating Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	11	103615	0.000411258
-Others	Natural Gas	Heating Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	59	424384	0.00521797
-Others	Natural Gas	Heating and Cooling	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	54468.6	0.000268893
-Others	Natural Gas	Heating and Cooling	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	26	91878.6	0.000542687
-Others	Natural Gas	Heating and Cooling	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	20	161564	0.00125393
-Others	Natural Gas	Heating and Cooling	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	23	213389	0.000996963
-Others	Natural Gas	Heating and Cooling	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	16	151388	0.00115311
-Others	Natural Gas	Heating and Cooling	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	107813	0.000943372
-Others	Natural Gas	Heating and Cooling	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	21	153776	0.000932687
-Others	Natural Gas	Heating and Cooling	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	35	248798	0.000961468
-Others	Natural Gas	Heating and Cooling	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	140759	0.00125615
+Others	Natural Gas	Cooling Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0.00773531	0.0706685	0.548305	0.373292	0	0	0	0	0	0	0	1141	1.18983e+06	0.000109707
+Others	Natural Gas	Cooling Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0.00736257	0.0689213	0.544503	0.379214	0	0	0	0	0	0	0	858	3.1637e+06	0.000113417
+Others	Natural Gas	Cooling Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0.00729883	0.0680497	0.545624	0.379027	0	0	0	0	0	0	0	866	2.84094e+06	0.00037206
+Others	Natural Gas	Cooling Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.00624593	0.0593531	0.540678	0.393723	0	0	0	0	0	0	0	1063	3.24804e+06	0.000588875
+Others	Natural Gas	Cooling Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0.00709617	0.0673023	0.540806	0.384795	0	0	0	0	0	0	0	875	2.68484e+06	0.000693551
+Others	Natural Gas	Cooling Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0.0131476	0.11408	0.514766	0.358007	0	0	0	0	0	0	0	1088	3.63205e+06	0.000638431
+Others	Natural Gas	Cooling Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0.00364781	0.0339582	0.599782	0.362612	0	0	0	0	0	0	0	1249	3.34422e+06	0.00140306
+Others	Natural Gas	Cooling Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0.000133897	0.015185	0.509548	0.475133	0	0	0	0	0	0	0	742	1.7999e+06	0.000370277
+Others	Natural Gas	Cooling Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0.00773531	0.0706685	0.548305	0.373292	0	0	0	0	0	0	0	1141	3.07481e+06	0.000412885
+Others	Natural Gas	Heating Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	59	164221	0.00119544
+Others	Natural Gas	Heating Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	19	171587	0.00156437
+Others	Natural Gas	Heating Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	32	282379	0.00200954
+Others	Natural Gas	Heating Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	44	380034	0.0032951
+Others	Natural Gas	Heating Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	27	221183	0.00141901
+Others	Natural Gas	Heating Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	98891.7	0.00110987
+Others	Natural Gas	Heating Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	130023	0.00113997
+Others	Natural Gas	Heating Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	11	103615	0.000411317
+Others	Natural Gas	Heating Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	59	424384	0.00521795
+Others	Natural Gas	Heating and Cooling	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	54468.6	0.000268923
+Others	Natural Gas	Heating and Cooling	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	26	91878.6	0.000542796
+Others	Natural Gas	Heating and Cooling	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	20	161564	0.00125372
+Others	Natural Gas	Heating and Cooling	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	23	213389	0.000996764
+Others	Natural Gas	Heating and Cooling	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	16	151388	0.0011528
+Others	Natural Gas	Heating and Cooling	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	107813	0.000943175
+Others	Natural Gas	Heating and Cooling	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	21	153776	0.000932492
+Others	Natural Gas	Heating and Cooling	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	35	248798	0.000961422
+Others	Natural Gas	Heating and Cooling	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	140759	0.00125616
 Others	Natural Gas	None	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0.00773531	0.0706685	0.548305	0.373292	0	0	0	0	0	0	0	1141	1.18983e+06	0.0204576
 Others	Natural Gas	None	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0.00736257	0.0689213	0.544503	0.379214	0	0	0	0	0	0	0	858	3.1637e+06	0.0492583
 Others	Natural Gas	None	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0.00729883	0.0680497	0.545624	0.379027	0	0	0	0	0	0	0	866	2.84094e+06	0.0419681
-Others	Natural Gas	None	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.00624593	0.0593531	0.540678	0.393723	0	0	0	0	0	0	0	1063	3.24804e+06	0.0479132
-Others	Natural Gas	None	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0.00709617	0.0673023	0.540806	0.384795	0	0	0	0	0	0	0	875	2.68484e+06	0.0385735
-Others	Natural Gas	None	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0.0131476	0.11408	0.514766	0.358007	0	0	0	0	0	0	0	1088	3.63205e+06	0.0485426
-Others	Natural Gas	None	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0.00364781	0.0339582	0.599782	0.362612	0	0	0	0	0	0	0	1249	3.34422e+06	0.0501377
+Others	Natural Gas	None	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.00624593	0.0593531	0.540678	0.393723	0	0	0	0	0	0	0	1063	3.24804e+06	0.0479129
+Others	Natural Gas	None	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0.00709617	0.0673023	0.540806	0.384795	0	0	0	0	0	0	0	875	2.68484e+06	0.0385732
+Others	Natural Gas	None	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0.0131476	0.11408	0.514766	0.358007	0	0	0	0	0	0	0	1088	3.63205e+06	0.0485423
+Others	Natural Gas	None	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0.00364781	0.0339582	0.599782	0.362612	0	0	0	0	0	0	0	1249	3.34422e+06	0.0501375
 Others	Natural Gas	None	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0.000133897	0.015185	0.509548	0.475133	0	0	0	0	0	0	0	742	1.7999e+06	0.0161946
 Others	Natural Gas	None	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0.00773531	0.0706685	0.548305	0.373292	0	0	0	0	0	0	0	1141	3.07481e+06	0.0471108
 Others	Natural Gas	Cooling Only	Non-Ducted Heat Pump	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -469,39 +469,39 @@ Others	Natural Gas	None	Non-Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 Others	Natural Gas	None	Non-Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Natural Gas	Cooling Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0.0934726	0.517838	0	0	0	0	0	0.126673	0.262016	0	0	0	0	0	230.623	227788	5.1541e-05
 Others	Natural Gas	Cooling Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0.0513843	0.319333	0	0	0	0	0	0.20433	0.424953	0	0	0	0	0	95.7429	361795	2.0356e-05
-Others	Natural Gas	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0.0617765	0.310826	0	0	0	0	0	0.204304	0.423094	0	0	0	0	0	87.8438	308675	5.96e-05
-Others	Natural Gas	Cooling Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.0477058	0.333308	0	0	0	0	0	0.201063	0.417923	0	0	0	0	0	79.0914	203384	6.2011e-05
-Others	Natural Gas	Cooling Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0.0335969	0.203798	0	0	0	0	0	0.244364	0.518241	0	0	0	0	0	59.9448	175557	0.000226158
-Others	Natural Gas	Cooling Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.0473967	0.242449	0	0	0	0	0	0.231402	0.478752	0	0	0	0	0	45.2476	142412	0.000120499
-Others	Natural Gas	Cooling Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0.0348735	0.249282	0	0	0	0	0	0.220663	0.495181	0	0	0	0	0	46.541	110519	8.00707e-05
-Others	Natural Gas	Cooling Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0.00261802	0.0322889	0	0	0	0	0	0.289528	0.675565	0	0	0	0	0	18.7981	55609.4	6.86266e-05
+Others	Natural Gas	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0.0617765	0.310826	0	0	0	0	0	0.204304	0.423094	0	0	0	0	0	87.8438	308675	5.95817e-05
+Others	Natural Gas	Cooling Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.0477058	0.333308	0	0	0	0	0	0.201063	0.417923	0	0	0	0	0	79.0914	203384	6.19923e-05
+Others	Natural Gas	Cooling Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0.0335969	0.203798	0	0	0	0	0	0.244364	0.518241	0	0	0	0	0	59.9448	175557	0.000226102
+Others	Natural Gas	Cooling Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.0473967	0.242449	0	0	0	0	0	0.231402	0.478752	0	0	0	0	0	45.2476	142412	0.000120461
+Others	Natural Gas	Cooling Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0.0348735	0.249282	0	0	0	0	0	0.220663	0.495181	0	0	0	0	0	46.541	110519	8.00312e-05
+Others	Natural Gas	Cooling Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0.00261802	0.0322889	0	0	0	0	0	0.289528	0.675565	0	0	0	0	0	18.7981	55609.4	6.86093e-05
 Others	Natural Gas	Cooling Only	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0.0934726	0.517838	0	0	0	0	0	0.126673	0.262016	0	0	0	0	0	230.623	588657	0.000193064
-Others	Natural Gas	Heating Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	109	321421	0.00188947
-Others	Natural Gas	Heating Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	45	429086	0.00325266
-Others	Natural Gas	Heating Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	46	433180	0.00269984
-Others	Natural Gas	Heating Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	44	367453	0.00174851
-Others	Natural Gas	Heating Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	29	256913	0.00127953
-Others	Natural Gas	Heating Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	164541	0.000952202
-Others	Natural Gas	Heating Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	76291.3	0.000346262
-Others	Natural Gas	Heating Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	27898.9	0.000179602
+Others	Natural Gas	Heating Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	109	321421	0.00188948
+Others	Natural Gas	Heating Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	45	429086	0.00325269
+Others	Natural Gas	Heating Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	46	433180	0.00269999
+Others	Natural Gas	Heating Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	44	367453	0.00174869
+Others	Natural Gas	Heating Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	29	256913	0.0012796
+Others	Natural Gas	Heating Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	17	164541	0.000952284
+Others	Natural Gas	Heating Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	10	76291.3	0.000346297
+Others	Natural Gas	Heating Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	27898.9	0.000179618
 Others	Natural Gas	Heating Only	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	109	830626	0.0071053
 Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	11	13980.8	9.09063e-05
 Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	11	56415.7	0.000194532
-Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	135298	0.000382236
-Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	20	40472.5	0.000426488
-Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	15	64204.8	0.000214624
-Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	15	72856.4	0.000200895
-Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	6	22523	9.1588e-05
-Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	6	13995.2	3.33814e-05
+Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	14	135298	0.000382078
+Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	20	40472.5	0.00042628
+Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	15	64204.8	0.000214572
+Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	15	72856.4	0.000200833
+Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	6	22523	9.15296e-05
+Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	6	13995.2	3.33728e-05
 Others	Natural Gas	Heating and Cooling	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	11	36129.5	0.000310863
-Others	Natural Gas	None	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0.0934726	0.517838	0	0	0	0	0	0.126673	0.262016	0	0	0	0	0	230.623	227788	0.0058912
-Others	Natural Gas	None	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0.0513843	0.319333	0	0	0	0	0	0.20433	0.424953	0	0	0	0	0	95.7429	361795	0.00792227
-Others	Natural Gas	None	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0.0617765	0.310826	0	0	0	0	0	0.204304	0.423094	0	0	0	0	0	87.8438	308675	0.00728738
-Others	Natural Gas	None	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.0477058	0.333308	0	0	0	0	0	0.201063	0.417923	0	0	0	0	0	79.0914	203384	0.00564844
-Others	Natural Gas	None	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0.0335969	0.203798	0	0	0	0	0	0.244364	0.518241	0	0	0	0	0	59.9448	175557	0.00407374
-Others	Natural Gas	None	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.0473967	0.242449	0	0	0	0	0	0.231402	0.478752	0	0	0	0	0	45.2476	142412	0.00335695
-Others	Natural Gas	None	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0.0348735	0.249282	0	0	0	0	0	0.220663	0.495181	0	0	0	0	0	46.541	110519	0.00286359
-Others	Natural Gas	None	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0.00261802	0.0322889	0	0	0	0	0	0.289528	0.675565	0	0	0	0	0	18.7981	55609.4	0.000886584
+Others	Natural Gas	None	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0.0934726	0.517838	0	0	0	0	0	0.126673	0.262016	0	0	0	0	0	230.623	227788	0.00589119
+Others	Natural Gas	None	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0.0513843	0.319333	0	0	0	0	0	0.20433	0.424953	0	0	0	0	0	95.7429	361795	0.00792224
+Others	Natural Gas	None	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0.0617765	0.310826	0	0	0	0	0	0.204304	0.423094	0	0	0	0	0	87.8438	308675	0.0072874
+Others	Natural Gas	None	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.0477058	0.333308	0	0	0	0	0	0.201063	0.417923	0	0	0	0	0	79.0914	203384	0.00564849
+Others	Natural Gas	None	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0.0335969	0.203798	0	0	0	0	0	0.244364	0.518241	0	0	0	0	0	59.9448	175557	0.00407378
+Others	Natural Gas	None	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.0473967	0.242449	0	0	0	0	0	0.231402	0.478752	0	0	0	0	0	45.2476	142412	0.00335697
+Others	Natural Gas	None	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0.0348735	0.249282	0	0	0	0	0	0.220663	0.495181	0	0	0	0	0	46.541	110519	0.00286365
+Others	Natural Gas	None	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0.00261802	0.0322889	0	0	0	0	0	0.289528	0.675565	0	0	0	0	0	18.7981	55609.4	0.000886594
 Others	Natural Gas	None	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0.0934726	0.517838	0	0	0	0	0	0.126673	0.262016	0	0	0	0	0	230.623	588657	0.0167319
 Others	Natural Gas	Cooling Only	None	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Natural Gas	Cooling Only	None	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -683,15 +683,15 @@ Others	None	None	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
 Others	None	None	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	None	None	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	None	None	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Others	None	Cooling Only	None	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	56	64207	5.92158e-06
-Others	None	Cooling Only	None	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	53	202038	1.18829e-05
-Others	None	Cooling Only	None	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	83	292766	4.75038e-05
-Others	None	Cooling Only	None	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	145	544821	7.80549e-05
-Others	None	Cooling Only	None	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	117	498829	0.000122267
-Others	None	Cooling Only	None	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	106	405331	3.69582e-05
-Others	None	Cooling Only	None	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	119	489577	8.09647e-05
-Others	None	Cooling Only	None	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	72	231621	6.33186e-05
-Others	None	Cooling Only	None	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	56	165926	6.52219e-05
+Others	None	Cooling Only	None	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	56	64207	5.8133e-06
+Others	None	Cooling Only	None	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	53	202038	1.15807e-05
+Others	None	Cooling Only	None	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	83	292766	4.45911e-05
+Others	None	Cooling Only	None	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	145	544821	7.19107e-05
+Others	None	Cooling Only	None	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	117	498829	0.000119871
+Others	None	Cooling Only	None	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	106	405331	3.58201e-05
+Others	None	Cooling Only	None	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	119	489577	7.3286e-05
+Others	None	Cooling Only	None	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	72	231621	5.57653e-05
+Others	None	Cooling Only	None	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	56	165926	6.42007e-05
 Others	None	Heating Only	None	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	None	Heating Only	None	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	None	Heating Only	None	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -710,15 +710,15 @@ Others	None	Heating and Cooling	None	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 Others	None	Heating and Cooling	None	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	None	Heating and Cooling	None	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	None	Heating and Cooling	None	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Others	None	None	None	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	56	64207	0.000664979
-Others	None	None	None	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	53	202038	0.00125518
-Others	None	None	None	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	83	292766	0.00150731
-Others	None	None	None	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	145	544821	0.00196562
-Others	None	None	None	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	117	498829	0.00139978
-Others	None	None	None	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	106	405331	0.0012421
-Others	None	None	None	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	119	489577	0.00107421
-Others	None	None	None	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	72	231621	0.00040905
-Others	None	None	None	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	56	165926	0.00130879
+Others	None	None	None	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	56	64207	0.000665087
+Others	None	None	None	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	53	202038	0.00125548
+Others	None	None	None	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	83	292766	0.00151023
+Others	None	None	None	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	145	544821	0.00197176
+Others	None	None	None	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	117	498829	0.00140218
+Others	None	None	None	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	106	405331	0.00124324
+Others	None	None	None	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	119	489577	0.00108189
+Others	None	None	None	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	72	231621	0.000416603
+Others	None	None	None	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	56	165926	0.00130981
 Others	Other Fuel	Cooling Only	Ducted Heat Pump	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Other Fuel	Cooling Only	Ducted Heat Pump	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Other Fuel	Cooling Only	Ducted Heat Pump	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -756,41 +756,41 @@ Others	Other Fuel	None	Ducted Heat Pump	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
 Others	Other Fuel	None	Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Other Fuel	None	Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Other Fuel	Cooling Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	2.3379e-06
-Others	Other Fuel	Cooling Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	2.15132e-06
-Others	Other Fuel	Cooling Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	4.51026e-06
-Others	Other Fuel	Cooling Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	3.62236e-06
-Others	Other Fuel	Cooling Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	2	2353.16	6.35507e-06
-Others	Other Fuel	Cooling Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	2	472.134	4.62351e-06
-Others	Other Fuel	Cooling Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	1	4959.72	9.79523e-06
-Others	Other Fuel	Cooling Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	1	0	3.49581e-06
-Others	Other Fuel	Cooling Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	7.77877e-06
+Others	Other Fuel	Cooling Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	2.15328e-06
+Others	Other Fuel	Cooling Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	4.50383e-06
+Others	Other Fuel	Cooling Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	3.61299e-06
+Others	Other Fuel	Cooling Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	2	2353.16	6.32543e-06
+Others	Other Fuel	Cooling Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	2	472.134	4.5985e-06
+Others	Other Fuel	Cooling Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	1	4959.72	9.74672e-06
+Others	Other Fuel	Cooling Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	1	0	3.4714e-06
+Others	Other Fuel	Cooling Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	7.77909e-06
 Others	Other Fuel	Heating Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.48421e-05
-Others	Other Fuel	Heating Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.52926e-05
-Others	Other Fuel	Heating Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.15383e-05
-Others	Other Fuel	Heating Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	3.11968e-05
-Others	Other Fuel	Heating Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.43507e-05
-Others	Other Fuel	Heating Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.11637e-05
-Others	Other Fuel	Heating Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	7.59304e-06
-Others	Other Fuel	Heating Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	4.20358e-06
-Others	Other Fuel	Heating Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	6.76113e-05
+Others	Other Fuel	Heating Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.52764e-05
+Others	Other Fuel	Heating Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.15705e-05
+Others	Other Fuel	Heating Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	3.12552e-05
+Others	Other Fuel	Heating Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.44871e-05
+Others	Other Fuel	Heating Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.126e-05
+Others	Other Fuel	Heating Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	7.70642e-06
+Others	Other Fuel	Heating Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	4.28204e-06
+Others	Other Fuel	Heating Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	6.76085e-05
 Others	Other Fuel	Heating and Cooling	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	3.83867e-06
-Others	Other Fuel	Heating and Cooling	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.00151e-05
-Others	Other Fuel	Heating and Cooling	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.67984e-05
-Others	Other Fuel	Heating and Cooling	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	8.40269e-06
-Others	Other Fuel	Heating and Cooling	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.0715e-05
-Others	Other Fuel	Heating and Cooling	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	7.07247e-06
-Others	Other Fuel	Heating and Cooling	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	6.80145e-06
-Others	Other Fuel	Heating and Cooling	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	9.61265e-06
-Others	Other Fuel	Heating and Cooling	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.43056e-05
+Others	Other Fuel	Heating and Cooling	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.00243e-05
+Others	Other Fuel	Heating and Cooling	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.67751e-05
+Others	Other Fuel	Heating and Cooling	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	8.38688e-06
+Others	Other Fuel	Heating and Cooling	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.06669e-05
+Others	Other Fuel	Heating and Cooling	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	7.03948e-06
+Others	Other Fuel	Heating and Cooling	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	6.77503e-06
+Others	Other Fuel	Heating and Cooling	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	9.56482e-06
+Others	Other Fuel	Heating and Cooling	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.43074e-05
 Others	Other Fuel	None	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	3.35001e-05
-Others	Other Fuel	None	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	4.60523e-05
-Others	Other Fuel	None	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	7.24018e-05
-Others	Other Fuel	None	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	9.04591e-05
-Others	Other Fuel	None	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	2	2353.16	0.000112478
-Others	Other Fuel	None	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	2	472.134	9.27322e-05
-Others	Other Fuel	None	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	1	4959.72	9.498e-05
-Others	Other Fuel	None	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	1	0	4.71581e-05
-Others	Other Fuel	None	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	0.000141551
+Others	Other Fuel	None	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	4.60573e-05
+Others	Other Fuel	None	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	7.23993e-05
+Others	Other Fuel	None	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	9.04259e-05
+Others	Other Fuel	None	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	2	2353.16	0.000112419
+Others	Other Fuel	None	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	2	472.134	9.26939e-05
+Others	Other Fuel	None	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	1	4959.72	9.49415e-05
+Others	Other Fuel	None	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	1	0	4.71519e-05
+Others	Other Fuel	None	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0.25	0.25	0.25	0.25	0	0	0	0	0	0	0	0	0	0.000141552
 Others	Other Fuel	Cooling Only	Non-Ducted Heat Pump	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Other Fuel	Cooling Only	Non-Ducted Heat Pump	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Other Fuel	Cooling Only	Non-Ducted Heat Pump	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -829,40 +829,40 @@ Others	Other Fuel	None	Non-Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
 Others	Other Fuel	None	Non-Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Other Fuel	Cooling Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0.329825	0	0	0	0	0	0	0.670175	0	0	0	0	0	0	3	2236.45	1.16075e-06
 Others	Other Fuel	Cooling Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0.329825	0	0	0	0	0	0	0.670175	0	0	0	0	0	0	3	3945.04	3.02834e-07
-Others	Other Fuel	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	2.48516e-06
-Others	Other Fuel	Cooling Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	3476.59	1.86907e-06
-Others	Other Fuel	Cooling Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	7.61383e-06
-Others	Other Fuel	Cooling Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	4032.61	3.82458e-06
-Others	Other Fuel	Cooling Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0	0	3.38056e-06
-Others	Other Fuel	Cooling Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0	0	4.17929e-06
+Others	Other Fuel	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	2.47518e-06
+Others	Other Fuel	Cooling Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	3476.59	1.85311e-06
+Others	Other Fuel	Cooling Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	7.58233e-06
+Others	Other Fuel	Cooling Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	4032.61	3.80701e-06
+Others	Other Fuel	Cooling Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0	0	3.32146e-06
+Others	Other Fuel	Cooling Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0	0	4.13237e-06
 Others	Other Fuel	Cooling Only	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0.329825	0	0	0	0	0	0	0.670175	0	0	0	0	0	0	3	5779.51	4.27106e-06
 Others	Other Fuel	Heating Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	5.55836e-05
-Others	Other Fuel	Heating Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	8.41001e-05
-Others	Other Fuel	Heating Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	9.68796e-05
-Others	Other Fuel	Heating Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	7.87612e-05
-Others	Other Fuel	Heating Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	3.4321e-05
-Others	Other Fuel	Heating Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.64129e-05
-Others	Other Fuel	Heating Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.25059e-05
-Others	Other Fuel	Heating Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	9.159e-06
-Others	Other Fuel	Heating Only	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0.000228211
+Others	Other Fuel	Heating Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	8.41092e-05
+Others	Other Fuel	Heating Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	9.69555e-05
+Others	Other Fuel	Heating Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	7.88578e-05
+Others	Other Fuel	Heating Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	3.43806e-05
+Others	Other Fuel	Heating Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.64427e-05
+Others	Other Fuel	Heating Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.25992e-05
+Others	Other Fuel	Heating Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	9.25684e-06
+Others	Other Fuel	Heating Only	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0.000228212
 Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.56629e-06
 Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	8.7394e-06
-Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.1653e-05
-Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.21265e-05
-Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	7.4081e-06
-Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	6.7028e-06
-Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	4.65888e-06
-Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.05788e-06
+Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.15768e-05
+Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.20362e-05
+Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	7.3822e-06
+Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	6.68528e-06
+Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	4.62299e-06
+Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.03664e-06
 Others	Other Fuel	Heating and Cooling	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	8.80131e-06
 Others	Other Fuel	None	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0.329825	0	0	0	0	0	0	0.670175	0	0	0	0	0	0	3	2236.45	0.000262772
-Others	Other Fuel	None	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0.329825	0	0	0	0	0	0	0.670175	0	0	0	0	0	0	3	3945.04	0.000467402
-Others	Other Fuel	None	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.000494277
-Others	Other Fuel	None	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	3476.59	0.000870108
-Others	Other Fuel	None	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.00073159
-Others	Other Fuel	None	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	4032.61	0.000744388
-Others	Other Fuel	None	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0	0	0.000783692
-Others	Other Fuel	None	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0	0	0.000334443
-Others	Other Fuel	None	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0.329825	0	0	0	0	0	0	0.670175	0	0	0	0	0	0	3	5779.51	0.000947153
+Others	Other Fuel	None	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0.329825	0	0	0	0	0	0	0.670175	0	0	0	0	0	0	3	3945.04	0.000467393
+Others	Other Fuel	None	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.000494287
+Others	Other Fuel	None	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	3476.59	0.000870117
+Others	Other Fuel	None	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.000731588
+Others	Other Fuel	None	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1	4032.61	0.000744393
+Others	Other Fuel	None	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0	0	0.000783693
+Others	Other Fuel	None	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0.2	0.2	0.2	0	0	0	0	0.2	0.2	0	0	0	0	0	0	0	0.000334414
+Others	Other Fuel	None	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0.329825	0	0	0	0	0	0	0.670175	0	0	0	0	0	0	3	5779.51	0.000947152
 Others	Other Fuel	Cooling Only	None	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Other Fuel	Cooling Only	None	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Other Fuel	Cooling Only	None	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -935,40 +935,40 @@ Others	Propane	None	Ducted Heat Pump	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 Others	Propane	None	Ducted Heat Pump	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Propane	None	Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Propane	None	Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
-Others	Propane	Cooling Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0.00365185	0.047972	0.638542	0.309834	0	0	0	0	0	0	0	106	95050.7	2.36559e-06
-Others	Propane	Cooling Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0.00190542	0.0250303	0.654543	0.318521	0	0	0	0	0	0	0	36	113761	2.41259e-06
-Others	Propane	Cooling Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0.00545514	0.0716607	0.622021	0.300863	0	0	0	0	0	0	0	50	132659	6.19606e-06
-Others	Propane	Cooling Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.00486124	0.063859	0.627462	0.303818	0	0	0	0	0	0	0	89	263706	8.17327e-06
-Others	Propane	Cooling Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0.00975965	0.128206	0.582584	0.27945	0	0	0	0	0	0	0	80	217298	1.26798e-05
-Others	Propane	Cooling Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0.00841487	0.110541	0.594904	0.28614	0	0	0	0	0	0	0	135	459346	1.33572e-05
-Others	Propane	Cooling Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0.00257618	0.0338416	0.648398	0.315185	0	0	0	0	0	0	0	121	315307	2.1135e-05
-Others	Propane	Cooling Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0.672	0.328	0	0	0	0	0	0	0	73	156079	6.24017e-06
-Others	Propane	Cooling Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0.00365185	0.047972	0.638542	0.309834	0	0	0	0	0	0	0	106	245633	7.09342e-06
-Others	Propane	Heating Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	410.007	2.66791e-05
-Others	Propane	Heating Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	4.60884e-05
-Others	Propane	Heating Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	0	4.21337e-05
-Others	Propane	Heating Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	12807.2	5.13958e-05
-Others	Propane	Heating Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	6671.25	3.40942e-05
-Others	Propane	Heating Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	2.78186e-05
-Others	Propane	Heating Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	1148	1.79298e-05
-Others	Propane	Heating Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	6.89465e-06
-Others	Propane	Heating Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	1059.55	0.000126075
-Others	Propane	Heating and Cooling	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	5.02932e-06
-Others	Propane	Heating and Cooling	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.14594e-05
-Others	Propane	Heating and Cooling	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	2.13656e-05
-Others	Propane	Heating and Cooling	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	3361.73	1.35481e-05
-Others	Propane	Heating and Cooling	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.0979e-05
-Others	Propane	Heating and Cooling	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.94908e-05
-Others	Propane	Heating and Cooling	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	1.38886e-05
-Others	Propane	Heating and Cooling	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	8631.07	1.61057e-05
-Others	Propane	Heating and Cooling	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.8454e-05
-Others	Propane	None	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0.00365185	0.047972	0.638542	0.309834	0	0	0	0	0	0	0	106	95050.7	0.00150864
-Others	Propane	None	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0.00190542	0.0250303	0.654543	0.318521	0	0	0	0	0	0	0	36	113761	0.00247111
+Others	Propane	Cooling Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0.00365185	0.047972	0.638542	0.309834	0	0	0	0	0	0	0	106	95050.7	2.37108e-06
+Others	Propane	Cooling Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0.00190542	0.0250303	0.654543	0.318521	0	0	0	0	0	0	0	36	113761	2.41836e-06
+Others	Propane	Cooling Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0.00545514	0.0716607	0.622021	0.300863	0	0	0	0	0	0	0	50	132659	6.19394e-06
+Others	Propane	Cooling Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.00486124	0.063859	0.627462	0.303818	0	0	0	0	0	0	0	89	263706	8.15963e-06
+Others	Propane	Cooling Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0.00975965	0.128206	0.582584	0.27945	0	0	0	0	0	0	0	80	217298	1.26589e-05
+Others	Propane	Cooling Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0.00841487	0.110541	0.594904	0.28614	0	0	0	0	0	0	0	135	459346	1.33471e-05
+Others	Propane	Cooling Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0.00257618	0.0338416	0.648398	0.315185	0	0	0	0	0	0	0	121	315307	2.1119e-05
+Others	Propane	Cooling Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0.672	0.328	0	0	0	0	0	0	0	73	156079	6.2356e-06
+Others	Propane	Cooling Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0.00365185	0.047972	0.638542	0.309834	0	0	0	0	0	0	0	106	245633	7.09495e-06
+Others	Propane	Heating Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	410.007	2.66582e-05
+Others	Propane	Heating Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	4.60421e-05
+Others	Propane	Heating Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	0	4.21509e-05
+Others	Propane	Heating Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	12807.2	5.14893e-05
+Others	Propane	Heating Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	6671.25	3.4185e-05
+Others	Propane	Heating Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	2.78592e-05
+Others	Propane	Heating Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	1148	1.79668e-05
+Others	Propane	Heating Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	6.91111e-06
+Others	Propane	Heating Only	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	1059.55	0.000126068
+Others	Propane	Heating and Cooling	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	5.03876e-06
+Others	Propane	Heating and Cooling	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.1486e-05
+Others	Propane	Heating and Cooling	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	2.13591e-05
+Others	Propane	Heating and Cooling	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	3361.73	1.352e-05
+Others	Propane	Heating and Cooling	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.09444e-05
+Others	Propane	Heating and Cooling	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.94765e-05
+Others	Propane	Heating and Cooling	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	1.38813e-05
+Others	Propane	Heating and Cooling	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	8631.07	1.60921e-05
+Others	Propane	Heating and Cooling	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.84578e-05
+Others	Propane	None	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0.00365185	0.047972	0.638542	0.309834	0	0	0	0	0	0	0	106	95050.7	0.00150865
+Others	Propane	None	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0.00190542	0.0250303	0.654543	0.318521	0	0	0	0	0	0	0	36	113761	0.00247112
 Others	Propane	None	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0.00545514	0.0716607	0.622021	0.300863	0	0	0	0	0	0	0	50	132659	0.00284673
-Others	Propane	None	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.00486124	0.063859	0.627462	0.303818	0	0	0	0	0	0	0	89	263706	0.00471016
-Others	Propane	None	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0.00975965	0.128206	0.582584	0.27945	0	0	0	0	0	0	0	80	217298	0.00469397
-Others	Propane	None	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0.00841487	0.110541	0.594904	0.28614	0	0	0	0	0	0	0	135	459346	0.00721566
-Others	Propane	None	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0.00257618	0.0338416	0.648398	0.315185	0	0	0	0	0	0	0	121	315307	0.00681394
+Others	Propane	None	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0.00486124	0.063859	0.627462	0.303818	0	0	0	0	0	0	0	89	263706	0.00471011
+Others	Propane	None	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0.00975965	0.128206	0.582584	0.27945	0	0	0	0	0	0	0	80	217298	0.00469394
+Others	Propane	None	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0.00841487	0.110541	0.594904	0.28614	0	0	0	0	0	0	0	135	459346	0.00721565
+Others	Propane	None	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0.00257618	0.0338416	0.648398	0.315185	0	0	0	0	0	0	0	121	315307	0.00681392
 Others	Propane	None	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0.672	0.328	0	0	0	0	0	0	0	73	156079	0.00163561
 Others	Propane	None	Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0.00365185	0.047972	0.638542	0.309834	0	0	0	0	0	0	0	106	245633	0.00516315
 Others	Propane	Cooling Only	Non-Ducted Heat Pump	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -1009,39 +1009,39 @@ Others	Propane	None	Non-Ducted Heat Pump	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 Others	Propane	None	Non-Ducted Heat Pump	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Propane	Cooling Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0.00575398	0.253222	0.109488	0	0	0	0	0.205727	0.42581	0	0	0	0	0	32	28240.7	1.93726e-06
 Others	Propane	Cooling Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0.010927	0.195986	0.0799264	0	0	0	0	0.221145	0.492016	0	0	0	0	0	16	53895.1	1.07263e-06
-Others	Propane	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0.00663536	0.300303	0.129985	0	0	0	0	0.179446	0.383632	0	0	0	0	0	21	69929.4	3.56721e-06
-Others	Propane	Cooling Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.00947296	0.26577	0.11236	0	0	0	0	0.183719	0.428678	0	0	0	0	0	37	94951.6	5.33317e-06
-Others	Propane	Cooling Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0.0015815	0.188223	0.083388	0	0	0	0	0.221794	0.505013	0	0	0	0	0	34	76146.7	1.84763e-05
-Others	Propane	Cooling Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.00907839	0.159589	0.0649489	0	0	0	0	0.240172	0.526212	0	0	0	0	0	29	63424.1	1.35398e-05
-Others	Propane	Cooling Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0.238826	0.107299	0	0	0	0	0.202482	0.451393	0	0	0	0	0	22	44870.7	1.41259e-05
-Others	Propane	Cooling Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0.38424	0.172629	0	0	0	0	0.132939	0.310192	0	0	0	0	0	22	36704	1.08474e-05
+Others	Propane	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0.00663536	0.300303	0.129985	0	0	0	0	0.179446	0.383632	0	0	0	0	0	21	69929.4	3.56424e-06
+Others	Propane	Cooling Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.00947296	0.26577	0.11236	0	0	0	0	0.183719	0.428678	0	0	0	0	0	37	94951.6	5.31979e-06
+Others	Propane	Cooling Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0.0015815	0.188223	0.083388	0	0	0	0	0.221794	0.505013	0	0	0	0	0	34	76146.7	1.84521e-05
+Others	Propane	Cooling Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.00907839	0.159589	0.0649489	0	0	0	0	0.240172	0.526212	0	0	0	0	0	29	63424.1	1.3532e-05
+Others	Propane	Cooling Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0.238826	0.107299	0	0	0	0	0.202482	0.451393	0	0	0	0	0	22	44870.7	1.40948e-05
+Others	Propane	Cooling Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0.38424	0.172629	0	0	0	0	0.132939	0.310192	0	0	0	0	0	22	36704	1.08248e-05
 Others	Propane	Cooling Only	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0.00575398	0.253222	0.109488	0	0	0	0	0.205727	0.42581	0	0	0	0	0	32	72980.4	7.78857e-06
-Others	Propane	Heating Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	3997.35	6.72351e-05
-Others	Propane	Heating Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	9404.07	0.00011967
-Others	Propane	Heating Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	5	1500.99	0.000111334
-Others	Propane	Heating Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	5	30498.9	0.000140465
-Others	Propane	Heating Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	10016.9	0.000105981
-Others	Propane	Heating Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	13969.5	8.43699e-05
-Others	Propane	Heating Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	0	4.4652e-05
-Others	Propane	Heating Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	16701.1	2.28005e-05
-Others	Propane	Heating Only	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	10330.1	0.000270986
+Others	Propane	Heating Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	3997.35	6.72362e-05
+Others	Propane	Heating Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	9404.07	0.000119687
+Others	Propane	Heating Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	5	1500.99	0.000111348
+Others	Propane	Heating Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	5	30498.9	0.000140572
+Others	Propane	Heating Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	10016.9	0.000106016
+Others	Propane	Heating Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	4	13969.5	8.43849e-05
+Others	Propane	Heating Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	0	4.47081e-05
+Others	Propane	Heating Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	16701.1	2.28183e-05
+Others	Propane	Heating Only	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	10330.1	0.000270987
 Others	Propane	Heating and Cooling	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	3.3846e-06
 Others	Propane	Heating and Cooling	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	8.02353e-06
-Others	Propane	Heating and Cooling	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.2533e-05
-Others	Propane	Heating and Cooling	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	3.27667e-05
-Others	Propane	Heating and Cooling	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.70819e-05
-Others	Propane	Heating and Cooling	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.12648e-05
-Others	Propane	Heating and Cooling	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	1.62569e-05
-Others	Propane	Heating and Cooling	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	1148.77	5.27788e-06
+Others	Propane	Heating and Cooling	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.25218e-05
+Others	Propane	Heating and Cooling	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	3.2652e-05
+Others	Propane	Heating and Cooling	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.70603e-05
+Others	Propane	Heating and Cooling	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.12547e-05
+Others	Propane	Heating and Cooling	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	1.62465e-05
+Others	Propane	Heating and Cooling	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	1148.77	5.26658e-06
 Others	Propane	Heating and Cooling	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.23188e-05
-Others	Propane	None	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0.00575398	0.253222	0.109488	0	0	0	0	0.205727	0.42581	0	0	0	0	0	32	28240.7	0.000485172
-Others	Propane	None	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0.010927	0.195986	0.0799264	0	0	0	0	0.221145	0.492016	0	0	0	0	0	16	53895.1	0.000973138
+Others	Propane	None	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0.00575398	0.253222	0.109488	0	0	0	0	0.205727	0.42581	0	0	0	0	0	32	28240.7	0.000485171
+Others	Propane	None	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0.010927	0.195986	0.0799264	0	0	0	0	0.221145	0.492016	0	0	0	0	0	16	53895.1	0.000973121
 Others	Propane	None	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0.00663536	0.300303	0.129985	0	0	0	0	0.179446	0.383632	0	0	0	0	0	21	69929.4	0.00123252
-Others	Propane	None	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.00947296	0.26577	0.11236	0	0	0	0	0.183719	0.428678	0	0	0	0	0	37	94951.6	0.00221895
-Others	Propane	None	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0.0015815	0.188223	0.083388	0	0	0	0	0.221794	0.505013	0	0	0	0	0	34	76146.7	0.00181641
-Others	Propane	None	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.00907839	0.159589	0.0649489	0	0	0	0	0.240172	0.526212	0	0	0	0	0	29	63424.1	0.00151561
-Others	Propane	None	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0.238826	0.107299	0	0	0	0	0.202482	0.451393	0	0	0	0	0	22	44870.7	0.00112287
-Others	Propane	None	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0.38424	0.172629	0	0	0	0	0.132939	0.310192	0	0	0	0	0	22	36704	0.000575245
+Others	Propane	None	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0.00947296	0.26577	0.11236	0	0	0	0	0.183719	0.428678	0	0	0	0	0	37	94951.6	0.00221897
+Others	Propane	None	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0.0015815	0.188223	0.083388	0	0	0	0	0.221794	0.505013	0	0	0	0	0	34	76146.7	0.00181642
+Others	Propane	None	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.00907839	0.159589	0.0649489	0	0	0	0	0.240172	0.526212	0	0	0	0	0	29	63424.1	0.00151562
+Others	Propane	None	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0.238826	0.107299	0	0	0	0	0.202482	0.451393	0	0	0	0	0	22	44870.7	0.00112286
+Others	Propane	None	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0.38424	0.172629	0	0	0	0	0.132939	0.310192	0	0	0	0	0	22	36704	0.000575261
 Others	Propane	None	Non-Ducted Heating	<1940	0	0	0	0	0	0	0	0.00575398	0.253222	0.109488	0	0	0	0	0.205727	0.42581	0	0	0	0	0	32	72980.4	0.00147607
 Others	Propane	Cooling Only	None	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
 Others	Propane	Cooling Only	None	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0
@@ -1119,7 +1119,7 @@ Others	Wood	Cooling Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	
 Others	Wood	Cooling Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	7	5125.6	3.64095e-08
 Others	Wood	Cooling Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	8	12056.4	1.7549e-07
 Others	Wood	Cooling Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	8	11463	8.22445e-07
-Others	Wood	Cooling Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	8	18157.8	1.14061e-06
+Others	Wood	Cooling Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	8	18157.8	1.13772e-06
 Others	Wood	Cooling Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	8	14082.2	8.8207e-07
 Others	Wood	Cooling Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	7	11405.3	9.27207e-07
 Others	Wood	Cooling Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	7	4121.68	3.82492e-07
@@ -1128,7 +1128,7 @@ Others	Wood	Heating Only	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
 Others	Wood	Heating Only	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.46537e-06
 Others	Wood	Heating Only	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.59486e-06
 Others	Wood	Heating Only	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	3.87613e-06
-Others	Wood	Heating Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.91201e-06
+Others	Wood	Heating Only	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	2.92319e-06
 Others	Wood	Heating Only	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.63587e-06
 Others	Wood	Heating Only	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	9.3423e-07
 Others	Wood	Heating Only	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	1328.12	4.07238e-07
@@ -1137,7 +1137,7 @@ Others	Wood	Heating and Cooling	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 Others	Wood	Heating and Cooling	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.84264e-07
 Others	Wood	Heating and Cooling	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	5.12884e-07
 Others	Wood	Heating and Cooling	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.04736e-06
-Others	Wood	Heating and Cooling	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.86444e-06
+Others	Wood	Heating and Cooling	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.85952e-06
 Others	Wood	Heating and Cooling	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.19444e-06
 Others	Wood	Heating and Cooling	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	5.29963e-07
 Others	Wood	Heating and Cooling	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	8.93207e-07
@@ -1146,7 +1146,7 @@ Others	Wood	None	Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	
 Others	Wood	None	Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	7	5125.6	0.000103105
 Others	Wood	None	Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	8	12056.4	0.000149949
 Others	Wood	None	Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	8	11463	0.00020332
-Others	Wood	None	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	8	18157.8	0.000326926
+Others	Wood	None	Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	8	18157.8	0.000326922
 Others	Wood	None	Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	8	14082.2	0.000204315
 Others	Wood	None	Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	7	11405.3	0.000205653
 Others	Wood	None	Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	7	4121.68	6.02268e-05
@@ -1191,7 +1191,7 @@ Others	Wood	Cooling Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0.054328	0	0	0	0
 Others	Wood	Cooling Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	20	59873.1	4.62387e-08
 Others	Wood	Cooling Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	26	72289.9	1.3267e-07
 Others	Wood	Cooling Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	73	192192	6.0951e-07
-Others	Wood	Cooling Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	72	184614	1.33318e-06
+Others	Wood	Cooling Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	72	184614	1.32995e-06
 Others	Wood	Cooling Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0.0483744	0	0	0	0	0	0	0.951626	0	0	0	0	0	0	48	124170	7.48686e-07
 Others	Wood	Cooling Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0.0413914	0	0	0	0	0	0	0.958609	0	0	0	0	0	0	40	89553.5	5.3362e-07
 Others	Wood	Cooling Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	23	43737.9	4.91361e-07
@@ -1200,7 +1200,7 @@ Others	Wood	Heating Only	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
 Others	Wood	Heating Only	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	4.27843e-06
 Others	Wood	Heating Only	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	4.50485e-06
 Others	Wood	Heating Only	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.11622e-05
-Others	Wood	Heating Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	6537.58	7.72512e-06
+Others	Wood	Heating Only	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	6537.58	7.72757e-06
 Others	Wood	Heating Only	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	4.18867e-06
 Others	Wood	Heating Only	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	6481.89	1.55627e-06
 Others	Wood	Heating Only	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	3	8675.17	7.98628e-07
@@ -1209,7 +1209,7 @@ Others	Wood	Heating and Cooling	Non-Ducted Heating	1940s	0	0	0	0	0	0	0	0	0	0	0	0
 Others	Wood	Heating and Cooling	Non-Ducted Heating	1950s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.03387e-07
 Others	Wood	Heating and Cooling	Non-Ducted Heating	1960s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	6317.55	4.60194e-07
 Others	Wood	Heating and Cooling	Non-Ducted Heating	1970s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	2.06601e-06
-Others	Wood	Heating and Cooling	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.17895e-06
+Others	Wood	Heating and Cooling	Non-Ducted Heating	1980s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	1.1757e-06
 Others	Wood	Heating and Cooling	Non-Ducted Heating	1990s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	9.12945e-07
 Others	Wood	Heating and Cooling	Non-Ducted Heating	2000s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	3.90577e-07
 Others	Wood	Heating and Cooling	Non-Ducted Heating	2010s	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	1	4045.82	2.33642e-07
@@ -2536,4 +2536,4 @@ AK	Wood	None	None	<1940	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0
 # Assumption: For Alaska, electric space heaters are modelled as electric baseboards.
 # Assumption: For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
 # Assumption: For Alaska, fireplace and stoves are not modeled.
-# Assumption: For Alaska, heat pumps are assumed to be non-ducted air source heat pumps.
+# Assumption: For Alaska, all heat pumps (including geothermal) are assumed to be non-ducted air source heat pumps.

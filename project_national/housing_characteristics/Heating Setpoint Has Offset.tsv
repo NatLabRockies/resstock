@@ -1,12 +1,12 @@
 Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	Dependency=HVAC Has Zonal Electric Heating	Option=No	Option=Yes	source_count	source_weight	sampling_probability
 1A	Mobile Home	No	0.884742	0.115258	269	16405.8	0.000308661
-1A	Multi-Family with 2 - 4 Units	No	0.892181	0.107819	23	151857	0.00101014
-1A	Multi-Family with 5+ Units	No	0.889664	0.110336	98	804378	0.00654438
+1A	Multi-Family with 2 - 4 Units	No	0.892181	0.107819	23	151857	0.00101181
+1A	Multi-Family with 5+ Units	No	0.889664	0.110336	98	804378	0.00654243
 1A	Single-Family Attached	No	0.842326	0.157674	45	173615	0.00146317
 1A	Single-Family Detached	No	0.890721	0.109279	223	915387	0.00722209
 1A	Mobile Home	Yes	0.699614	0.300386	10	0	2.89752e-05
-1A	Multi-Family with 2 - 4 Units	Yes	0.699614	0.300386	10	0	0.000100007
-1A	Multi-Family with 5+ Units	Yes	0.699614	0.300386	10	43333.8	0.000547288
+1A	Multi-Family with 2 - 4 Units	Yes	0.699614	0.300386	10	0	9.83376e-05
+1A	Multi-Family with 5+ Units	Yes	0.699614	0.300386	10	43333.8	0.000549235
 1A	Single-Family Attached	Yes	0.699614	0.300386	10	1275.11	0.000143157
 1A	Single-Family Detached	Yes	0.699614	0.300386	10	43702.4	0.000572419
 2A	Mobile Home	No	0.645862	0.354138	87	998985	0.00984962
