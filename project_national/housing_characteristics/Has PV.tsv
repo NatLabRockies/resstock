@@ -5467,7 +5467,7 @@ HI, Hawaii County	Multi-Family with 5+ Units	Occupied	1	0	0	1	5.47774e-05
 HI, Hawaii County	Multi-Family with 5+ Units	Vacant	1	0	0	1	3.63685e-05
 HI, Hawaii County	Single-Family Attached	Occupied	1	0	0	1	1.47416e-05
 HI, Hawaii County	Single-Family Attached	Vacant	1	0	0	1	2.63813e-06
-HI, Hawaii County	Single-Family Detached	Occupied	0.758322	0.241678	11575	47894.2	0.000410367
+HI, Hawaii County	Single-Family Detached	Occupied	0.728185	0.271815	13607	50059.8	0.000410367
 HI, Hawaii County	Single-Family Detached	Vacant	1	0	0	1	8.65801e-05
 HI, Honolulu County	Mobile Home	Occupied	1	0	0	1	3.71613e-06
 HI, Honolulu County	Mobile Home	Vacant	1	0	0	1	8.35162e-07
@@ -5477,7 +5477,7 @@ HI, Honolulu County	Multi-Family with 5+ Units	Occupied	1	0	0	1	0.00079263
 HI, Honolulu County	Multi-Family with 5+ Units	Vacant	1	0	0	1	0.000168456
 HI, Honolulu County	Single-Family Attached	Occupied	1	0	0	1	0.000283007
 HI, Honolulu County	Single-Family Attached	Vacant	1	0	0	1	2.0098e-05
-HI, Honolulu County	Single-Family Detached	Occupied	0.584987	0.415013	46663	112437	0.00105837
+HI, Honolulu County	Single-Family Detached	Occupied	0.457961	0.542039	61808	114029	0.00105837
 HI, Honolulu County	Single-Family Detached	Vacant	1	0	0	1	7.49059e-05
 HI, Kalawao County	Mobile Home	Occupied	1	0	0	1	2.35552e-09
 HI, Kalawao County	Mobile Home	Vacant	1	0	0	1	7.57129e-10
@@ -5487,7 +5487,7 @@ HI, Kalawao County	Multi-Family with 5+ Units	Occupied	1	0	0	1	7.98631e-08
 HI, Kalawao County	Multi-Family with 5+ Units	Vacant	1	0	0	1	1.00803e-07
 HI, Kalawao County	Single-Family Attached	Occupied	1	0	0	1	3.91253e-08
 HI, Kalawao County	Single-Family Attached	Vacant	1	0	0	1	5.06157e-09
-HI, Kalawao County	Single-Family Detached	Occupied	0.662294	0.337706	10672	31601.4	3.77478e-07
+HI, Kalawao County	Single-Family Detached	Occupied	0.609325	0.390675	12684	32466.9	3.77478e-07
 HI, Kalawao County	Single-Family Detached	Vacant	1	0	0	1	6.52252e-08
 HI, Kauai County	Mobile Home	Occupied	1	0	0	1	7.30401e-07
 HI, Kauai County	Mobile Home	Vacant	1	0	0	1	2.34771e-07
@@ -5497,7 +5497,7 @@ HI, Kauai County	Multi-Family with 5+ Units	Occupied	1	0	0	1	2.4764e-05
 HI, Kauai County	Multi-Family with 5+ Units	Vacant	1	0	0	1	3.12572e-05
 HI, Kauai County	Single-Family Attached	Occupied	1	0	0	1	1.2132e-05
 HI, Kauai County	Single-Family Attached	Vacant	1	0	0	1	1.5695e-06
-HI, Kauai County	Single-Family Detached	Occupied	0.734456	0.265544	3971	14954.2	0.000117049
+HI, Kauai County	Single-Family Detached	Occupied	0.64247	0.35753	5543	15503.6	0.000117049
 HI, Kauai County	Single-Family Detached	Vacant	1	0	0	1	2.02251e-05
 HI, Maui County	Mobile Home	Occupied	1	0	0	1	1.7184e-06
 HI, Maui County	Mobile Home	Vacant	1	0	0	1	5.52341e-07
@@ -5507,7 +5507,7 @@ HI, Maui County	Multi-Family with 5+ Units	Occupied	1	0	0	1	5.82617e-05
 HI, Maui County	Multi-Family with 5+ Units	Vacant	1	0	0	1	7.35381e-05
 HI, Maui County	Single-Family Attached	Occupied	1	0	0	1	2.85427e-05
 HI, Maui County	Single-Family Attached	Vacant	1	0	0	1	3.69251e-06
-HI, Maui County	Single-Family Detached	Occupied	0.662295	0.337705	10672	31601.5	0.000275378
+HI, Maui County	Single-Family Detached	Occupied	0.609325	0.390675	12684	32466.9	0.000275378
 HI, Maui County	Single-Family Detached	Vacant	1	0	0	1	4.75831e-05
 IA, Adair County	Mobile Home	Occupied	1	0	0	1	1.23363e-06
 IA, Adair County	Mobile Home	Vacant	1	0	0	1	3.47236e-07

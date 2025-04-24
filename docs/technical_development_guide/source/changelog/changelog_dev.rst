@@ -10,6 +10,21 @@ Development Changelog
     
     .. change::
         :tags: characteristics, documentation, technical reference guide
+        :pullreq: 1385
+
+        **Date**: 2025-04-22
+
+        Title:
+        Update Hawaii PV 2023
+
+        Description:
+        Update PV data from EIA Form 861 2018 to 2023 to have latest information
+
+        Assignees: Janet Reyna
+
+
+.. change::
+        :tags: characteristics, documentation, technical reference guide
         :pullreq: 1380
 
         **Date**: 2025-04-15
@@ -21,6 +36,21 @@ Development Changelog
         Remove fallback rules from Hawaii and to match technology saturation from RECS2020
 
         Assignees: Janet Reyna
+
+ 
+    .. change::
+        :tags: bug fix
+        :pullreq: 1362
+
+        **Date**: 2025-04-18
+
+        Title:
+        Prevent ducted secondary heating when primary heating is ducted
+
+        Description:
+        OS-HPXML disallows multiple heating systems on a single distribution system and ResStock is not set up to have multiple distribution systems. Disallowing ducted secondary heating when primary heating is ducted will prevent this error.
+
+        Assignees: Yingli Lou, Lixi Liu, Anthony Fontanini
 
 
     .. change::
