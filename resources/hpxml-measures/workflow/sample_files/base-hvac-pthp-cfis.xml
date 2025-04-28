@@ -342,7 +342,7 @@
               </AnnualCoolingEfficiency>
               <AnnualHeatingEfficiency>
                 <Units>COP</Units>
-                <Value>3.8</Value>
+                <Value>3.6</Value>
               </AnnualHeatingEfficiency>
               <extension>
                 <HeatingCapacityRetention>
