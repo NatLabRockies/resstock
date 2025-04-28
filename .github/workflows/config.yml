@@ -133,7 +133,7 @@ jobs:
           rm national_550ksamples.csv
 
       - name: Upload SDR options analysis artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sdr_options_analysis
           path: |
