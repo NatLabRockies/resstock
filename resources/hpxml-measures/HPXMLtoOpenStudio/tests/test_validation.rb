@@ -226,6 +226,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                                'Expected 0 element(s) for xpath: SensibleRecoveryEfficiency | AdjustedSensibleRecoveryEfficiency'],
                             'invalid-water-heater-heating-capacity' => ['Expected HeatingCapacity to be greater than 0.'],
                             'invalid-water-heater-heating-capacity2' => ['Expected HeatingCapacity to be greater than 0.'],
+                            'invalid-water-heater-stratified-tank-model' => ['Expected 0 element(s) for xpath: extension/TankModelType'],
                             'invalid-window-height' => ['Expected DistanceToBottomOfWindow to be greater than DistanceToTopOfWindow [context: /HPXML/Building/BuildingDetails/Enclosure/Windows/Window/Overhangs[number(Depth) > 0], id: "Window2"]'],
                             'leakiness-description-missing-year-built' => ['Expected 1 element(s) for xpath: BuildingSummary/BuildingConstruction/YearBuilt'],
                             'lighting-fractions' => ['Expected sum(LightingGroup/FractionofUnitsInLocation) for Location="interior" to be less than or equal to 1 [context: /HPXML/Building/BuildingDetails/Lighting, id: "MyBuilding"]'],
@@ -690,6 +691,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'invalid-water-heater-heating-capacity2'
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump.xml')
         hpxml_bldg.water_heating_systems[0].heating_capacity = 0
+      when 'invalid-water-heater-stratified-tank-model'
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-gas.xml')
+        hpxml_bldg.water_heating_systems[0].tank_model_type = HPXML::WaterHeaterTankModelTypeStratified
       when 'invalid-window-height'
         hpxml, hpxml_bldg = _create_hpxml('base-enclosure-overhangs.xml')
         hpxml_bldg.windows[1].overhangs_distance_to_bottom_of_window = 1.0
@@ -1390,13 +1394,13 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed-research-features.xml')
         hpxml_bldg.building_construction.number_of_units = 2
       when 'hvac-gshp-invalid-bore-depth-autosized'
-        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump.xml')
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.site.ground_conductivity = 0.1
       when 'hvac-gshp-invalid-num-bore-holes'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml')
         hpxml_bldg.geothermal_loops[0].num_bore_holes = 5
       when 'hvac-gshp-invalid-num-bore-holes-autosized'
-        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump.xml')
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].cooling_capacity *= 2
         hpxml_bldg.site.ground_conductivity = 0.08
       when 'hvac-inconsistent-fan-powers'
@@ -1771,7 +1775,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base-appliances-dehumidifier.xml')
         hpxml_bldg.building_construction.number_of_units = 2
       when 'whole-mf-building-gshps-unit-multiplier'
-        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump.xml')
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.building_construction.number_of_units = 2
       else
         fail "Unhandled case: #{error_case}."
@@ -1975,7 +1979,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base-foundation-unvented-crawlspace.xml')
         hpxml_bldg.floors[0].floor_or_ceiling = HPXML::FloorOrCeilingCeiling
       when 'hvac-gshp-bore-depth-autosized-high'
-        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump.xml')
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.site.ground_conductivity = 0.07
       when 'hvac-seasons'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-seasons.xml')

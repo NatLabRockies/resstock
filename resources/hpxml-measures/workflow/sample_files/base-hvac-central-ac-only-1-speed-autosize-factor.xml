@@ -330,7 +330,6 @@
                 <Units>SEER</Units>
                 <Value>13.0</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.73</SensibleHeatFraction>
               <extension>
                 <CoolingAutosizingFactor>1.7</CoolingAutosizingFactor>
                 <CoolingAutosizingLimit>37000.0</CoolingAutosizingLimit>

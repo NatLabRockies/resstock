@@ -329,7 +329,6 @@
               <CoolingCapacity>36000.0</CoolingCapacity>
               <CompressorType>single stage</CompressorType>
               <CompressorLockoutTemperature>25.0</CompressorLockoutTemperature>
-              <CoolingSensibleHeatFraction>0.73</CoolingSensibleHeatFraction>
               <BackupType>integrated</BackupType>
               <BackupSystemFuel>natural gas</BackupSystemFuel>
               <BackupAnnualHeatingEfficiency>

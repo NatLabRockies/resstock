@@ -1041,47 +1041,45 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
 
   def test_ground_to_air_heat_pump
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-ground-to-air-heat-pump.xml'))
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-ground-to-air-heat-pump-1-speed.xml'))
     model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     # Get HPXML values
     heat_pump = hpxml_bldg.heat_pumps[0]
-    clg_capacity = UnitConversions.convert(heat_pump.cooling_capacity, 'Btu/hr', 'W')
-    htg_capacity = UnitConversions.convert(heat_pump.heating_capacity, 'Btu/hr', 'W')
+    _check_ghp_standard(model, heat_pump, 5.84, 3.94, 962, [12.5, -1.3], [20, 31])
 
-    # Check cooling coil
-    assert_equal(1, model.getCoilCoolingWaterToAirHeatPumpEquationFits.size)
-    clg_coil = model.getCoilCoolingWaterToAirHeatPumpEquationFits[0]
-    assert_in_epsilon(5.84, clg_coil.ratedCoolingCoefficientofPerformance, 0.01)
-    assert_in_epsilon(clg_capacity, clg_coil.ratedTotalCoolingCapacity.get, 0.01)
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-ground-to-air-heat-pump-2-speed.xml'))
+    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+    # Get HPXML values
+    heat_pump = hpxml_bldg.heat_pumps[0]
+    _check_ghp_standard(model, heat_pump, 7.52, 4.44, 962, [12.5, -1.3], [20, 31])
 
-    # Check heating coil
-    assert_equal(1, model.getCoilHeatingWaterToAirHeatPumpEquationFits.size)
-    htg_coil = model.getCoilHeatingWaterToAirHeatPumpEquationFits[0]
-    assert_in_epsilon(3.94, htg_coil.ratedHeatingCoefficientofPerformance, 0.01)
-    assert_in_epsilon(htg_capacity, htg_coil.ratedHeatingCapacity.get, 0.01)
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-ground-to-air-heat-pump-var-speed.xml'))
+    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+    # Get HPXML values
+    heat_pump = hpxml_bldg.heat_pumps[0]
+    _check_ghp_standard(model, heat_pump, 12.79, 4.94, 962, [12.5, -1.3], [20, 31])
 
-    # Check EMS
-    assert_equal(1, model.getAirLoopHVACUnitarySystems.size)
-    unitary_system = model.getAirLoopHVACUnitarySystems[0]
-    program_values = get_ems_values(model.getEnergyManagementSystemPrograms, "#{unitary_system.name} IQ")
-    assert(program_values.empty?) # Check no EMS program
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-ground-to-air-heat-pump-1-speed-experimental.xml'))
+    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    # Check ghx
-    assert(1, model.getGroundHeatExchangerVerticals.size)
-    ghx = model.getGroundHeatExchangerVerticals[0]
+    # Get HPXML values
+    heat_pump = hpxml_bldg.heat_pumps[0]
+    _check_ghp_experimental(model, heat_pump, [10550.56], [10550.56], [5.84], [3.94], 962, [12.5, -1.3], [20, 31])
 
-    # Check xing
-    assert(1, model.getSiteGroundTemperatureUndisturbedXings.size)
-    xing = model.getSiteGroundTemperatureUndisturbedXings[0]
-    assert_in_epsilon(ghx.groundThermalConductivity.get, xing.soilThermalConductivity, 0.01)
-    assert_in_epsilon(962, xing.soilDensity, 0.01)
-    assert_in_epsilon(ghx.groundThermalHeatCapacity.get / xing.soilDensity, xing.soilSpecificHeat, 0.01)
-    assert_in_epsilon(ghx.groundTemperature.get, xing.averageSoilSurfaceTemperature, 0.01)
-    assert_in_epsilon(12.5, xing.soilSurfaceTemperatureAmplitude1, 0.01)
-    assert_in_epsilon(-1.3, xing.soilSurfaceTemperatureAmplitude2, 0.01)
-    assert_in_epsilon(20, xing.phaseShiftofTemperatureAmplitude1, 0.01)
-    assert_in_epsilon(31, xing.phaseShiftofTemperatureAmplitude2, 0.01)
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-ground-to-air-heat-pump-2-speed-experimental.xml'))
+    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+
+    # Get HPXML values
+    heat_pump = hpxml_bldg.heat_pumps[0]
+    _check_ghp_experimental(model, heat_pump, [7757.83, 10550.56], [7779.98, 10550.56], [8.29, 7.52], [5.15, 4.44], 962, [12.5, -1.3], [20, 31])
+
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-ground-to-air-heat-pump-var-speed-experimental.xml'))
+    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+
+    # Get HPXML values
+    heat_pump = hpxml_bldg.heat_pumps[0]
+    _check_ghp_experimental(model, heat_pump, [5066.38, 10550.56], [4719.26, 10550.56], [13.55, 12.79], [5.69, 4.94], 962, [12.5, -1.3], [20, 31])
   end
 
   def test_ground_to_air_heat_pump_integrated_backup
@@ -1495,7 +1493,7 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
 
   def test_install_quality_ground_to_air_heat_pump
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-install-quality-ground-to-air-heat-pump.xml'))
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-hvac-install-quality-ground-to-air-heat-pump-1-speed.xml'))
     model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     # Get HPXML values
@@ -1531,6 +1529,44 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     assert_in_epsilon(program_values['F_CH'].sum, charge_defect, 0.01)
     assert_in_epsilon(program_values['FF_AF_clg'].sum, cooling_cfm / rated_airflow_cfm_clg, 0.01)
     assert_in_epsilon(program_values['FF_AF_htg'].sum, heating_cfm / rated_airflow_cfm_htg, 0.01)
+
+    ['base-hvac-install-quality-ground-to-air-heat-pump-2-speed-experimental.xml',
+     'base-hvac-install-quality-ground-to-air-heat-pump-var-speed-experimental.xml'].each do |filename|
+      args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, filename))
+      model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+
+      # Get HPXML values
+      heat_pump = hpxml_bldg.heat_pumps[0]
+      charge_defect = heat_pump.charge_defect_ratio
+      fan_watts_cfm = heat_pump.fan_watts_per_cfm
+
+      # model objects:
+      # Unitary system
+      assert_equal(1, model.getAirLoopHVACUnitarySystems.size)
+      unitary_system = model.getAirLoopHVACUnitarySystems[0]
+
+      # Cooling coil
+      assert_equal(1, model.getCoilCoolingWaterToAirHeatPumpVariableSpeedEquationFits.size)
+
+      # Heating coil
+      assert_equal(1, model.getCoilHeatingWaterToAirHeatPumpVariableSpeedEquationFits.size)
+
+      # Fan
+      fan = unitary_system.supplyFan.get.to_FanSystemModel.get
+      assert_in_epsilon(fan_watts_cfm, fan.electricPowerPerUnitFlowRate * UnitConversions.convert(1.0, 'cfm', 'm^3/s'), 0.01)
+
+      # Check installation quality EMS
+      program_values = get_ems_values(model.getEnergyManagementSystemPrograms, "#{unitary_system.name} IQ")
+
+      # defect ratios in EMS is calculated correctly
+      assert_in_epsilon(program_values['F_CH'].sum, charge_defect, 0.01)
+      [0.75, 0.75].each_with_index do |rated_airflow_ratio, i|
+        assert_in_epsilon(rated_airflow_ratio, program_values['FF_AF_clg'][i], 0.01)
+      end
+      [0.702, 0.702].each_with_index do |rated_airflow_ratio, i|
+        assert_in_epsilon(rated_airflow_ratio, program_values['FF_AF_htg'][i], 0.01)
+      end
+    end
   end
 
   def test_install_quality_mini_split_air_conditioner
@@ -1849,6 +1885,94 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     program_values = get_ems_values(model.getEnergyManagementSystemPrograms, "#{unitary_system.name} defrost program")
     assert_in_epsilon(program_values['supp_design_level'].sum, supp_design_level, 0.01)
     assert_in_epsilon(program_values['supp_delivered_htg'].sum, supp_delivered_htg, 0.01)
+  end
+
+  def _check_ghp_standard(model, heat_pump, clg_cop, htg_cop, soil_density, soil_surface_temp_amps, phase_shift_temp_amps)
+    clg_capacity = UnitConversions.convert(heat_pump.cooling_capacity, 'Btu/hr', 'W')
+    htg_capacity = UnitConversions.convert(heat_pump.heating_capacity, 'Btu/hr', 'W')
+
+    # Check cooling coil
+    assert_equal(1, model.getCoilCoolingWaterToAirHeatPumpEquationFits.size)
+    clg_coil = model.getCoilCoolingWaterToAirHeatPumpEquationFits[0]
+    assert_in_epsilon(clg_cop, clg_coil.ratedCoolingCoefficientofPerformance, 0.01)
+    assert_in_epsilon(clg_capacity, clg_coil.ratedTotalCoolingCapacity.get, 0.01)
+
+    # Check heating coil
+    assert_equal(1, model.getCoilHeatingWaterToAirHeatPumpEquationFits.size)
+    htg_coil = model.getCoilHeatingWaterToAirHeatPumpEquationFits[0]
+    assert_in_epsilon(htg_cop, htg_coil.ratedHeatingCoefficientofPerformance, 0.01)
+    assert_in_epsilon(htg_capacity, htg_coil.ratedHeatingCapacity.get, 0.01)
+
+    # Check EMS
+    assert_equal(1, model.getAirLoopHVACUnitarySystems.size)
+    unitary_system = model.getAirLoopHVACUnitarySystems[0]
+    program_values = get_ems_values(model.getEnergyManagementSystemPrograms, "#{unitary_system.name} IQ")
+    assert(program_values.empty?) # Check no EMS program
+
+    # Check ghx
+    assert(1, model.getGroundHeatExchangerVerticals.size)
+    ghx = model.getGroundHeatExchangerVerticals[0]
+
+    # Check xing
+    assert(1, model.getSiteGroundTemperatureUndisturbedXings.size)
+    xing = model.getSiteGroundTemperatureUndisturbedXings[0]
+    assert_in_epsilon(ghx.groundThermalConductivity.get, xing.soilThermalConductivity, 0.01)
+    assert_in_epsilon(soil_density, xing.soilDensity, 0.01)
+    assert_in_epsilon(ghx.groundThermalHeatCapacity.get / xing.soilDensity, xing.soilSpecificHeat, 0.01)
+    assert_in_epsilon(ghx.groundTemperature.get, xing.averageSoilSurfaceTemperature, 0.01)
+    assert_in_epsilon(soil_surface_temp_amps[0], xing.soilSurfaceTemperatureAmplitude1, 0.01)
+    assert_in_epsilon(soil_surface_temp_amps[1], xing.soilSurfaceTemperatureAmplitude2, 0.01)
+    assert_in_epsilon(phase_shift_temp_amps[0], xing.phaseShiftofTemperatureAmplitude1, 0.01)
+    assert_in_epsilon(phase_shift_temp_amps[1], xing.phaseShiftofTemperatureAmplitude2, 0.01)
+  end
+
+  def _check_ghp_experimental(model, heat_pump, clg_capacities, htg_capacities, clg_cops, htg_cops, soil_density, soil_surface_temp_amps, phase_shift_temp_amps)
+    # Check cooling coil
+    assert_equal(1, model.getCoilCoolingWaterToAirHeatPumpVariableSpeedEquationFits.size)
+    clg_coil = model.getCoilCoolingWaterToAirHeatPumpVariableSpeedEquationFits[0]
+    clg_cops.each_with_index do |clg_cop, i|
+      assert_in_epsilon(clg_cop, clg_coil.speeds[i].referenceUnitGrossRatedCoolingCOP, 0.01)
+      assert_in_epsilon(clg_capacities[i], clg_coil.speeds[i].referenceUnitGrossRatedTotalCoolingCapacity, 0.01)
+    end
+
+    # Check heating coil
+    assert_equal(1, model.getCoilHeatingWaterToAirHeatPumpVariableSpeedEquationFits.size)
+    htg_coil = model.getCoilHeatingWaterToAirHeatPumpVariableSpeedEquationFits[0]
+    htg_cops.each_with_index do |htg_cop, i|
+      assert_in_epsilon(htg_cop, htg_coil.speeds[i].referenceUnitGrossRatedHeatingCOP, 0.01)
+      assert_in_epsilon(htg_capacities[i], htg_coil.speeds[i].referenceUnitGrossRatedHeatingCapacity, 0.01)
+    end
+
+    assert_equal(1, model.getAirLoopHVACUnitarySystems.size)
+    unitary_system = model.getAirLoopHVACUnitarySystems[0]
+
+    assert_equal(2, model.getPumpVariableSpeeds.size) # 1 for dhw, 1 for ghp
+    pump = model.getPumpVariableSpeeds.find { |pump| pump.name.get.include? Constants::ObjectTypeGroundSourceHeatPump }
+    assert_equal(EPlus::PumpControlTypeIntermittent, pump.pumpControlType)
+    # Check EMS
+    program_values = get_ems_values(model.getEnergyManagementSystemPrograms, "#{unitary_system.name} IQ")
+    assert(program_values.empty?) # Check no EMS program
+    if heat_pump.compressor_type == HPXML::HVACCompressorTypeVariableSpeed
+      program_values = get_ems_values(model.getEnergyManagementSystemPrograms, "#{pump.name} mfr program")
+      assert_in_epsilon(program_values['max_vfr_htg'].sum, htg_coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel.get, 0.01)
+      assert_in_epsilon(program_values['max_vfr_clg'].sum, clg_coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel.get, 0.01)
+    end
+
+    # Check ghx
+    assert(1, model.getGroundHeatExchangerVerticals.size)
+    ghx = model.getGroundHeatExchangerVerticals[0]
+
+    # Check xing
+    assert(1, model.getSiteGroundTemperatureUndisturbedXings.size)
+    xing = model.getSiteGroundTemperatureUndisturbedXings[0]
+    assert_in_epsilon(ghx.groundThermalConductivity.get, xing.soilThermalConductivity, 0.01)
+    assert_in_epsilon(soil_density, xing.soilDensity, 0.01)
+    assert_in_epsilon(ghx.groundThermalHeatCapacity.get / xing.soilDensity, xing.soilSpecificHeat, 0.01)
+    assert_in_epsilon(ghx.groundTemperature.get, xing.averageSoilSurfaceTemperature, 0.01)
+    assert_in_epsilon(soil_surface_temp_amps[0], xing.soilSurfaceTemperatureAmplitude1, 0.01)
+    assert_in_epsilon(soil_surface_temp_amps[1], xing.soilSurfaceTemperatureAmplitude2, 0.01)
+    assert_in_epsilon(phase_shift_temp_amps[0], xing.phaseShiftofTemperatureAmplitude1, 0.01)
+    assert_in_epsilon(phase_shift_temp_amps[1], xing.phaseShiftofTemperatureAmplitude2, 0.01)
   end
 
   def _create_hpxml(hpxml_name)

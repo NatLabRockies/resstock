@@ -1147,6 +1147,7 @@ def _check_unit_multiplier_results(xml, hpxml_bldg, annual_results_1x, annual_re
   annual_results_10x = annual_results_10x.dup
   ['System Use:',
    'Temperature:',
+   'Humidity Ratio:', 'Relative Humidity:', 'Dewpoint Temperature:', 'Radiant Temperature:', 'Operative Temperature:',
    'Utility Bills:',
    'HVAC Zone Design Load:',
    'HVAC Space Design Load:'].each do |key|

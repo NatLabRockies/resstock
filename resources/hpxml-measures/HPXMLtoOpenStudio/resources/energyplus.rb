@@ -49,6 +49,12 @@ module EPlus
   SurfaceTypeWall = 'Wall'
   SurfaceWindExposureNo = 'NoWind'
   SurfaceWindExposureYes = 'WindExposed'
+  PumpControlTypeIntermittent = 'Intermittent'
+  TimeseriesFrequencyNone = 'none'
+  TimeseriesFrequencyTimestep = 'timestep'
+  TimeseriesFrequencyHourly = 'hourly'
+  TimeseriesFrequencyDaily = 'daily'
+  TimeseriesFrequencyMonthly = 'monthly'
 
   # Returns the fuel type used in the EnergyPlus simulation that the HPXML fuel type
   # maps to.
@@ -82,5 +88,16 @@ module EPlus
     else
       fail "Unexpected HPXML fuel '#{hpxml_fuel}'."
     end
+  end
+
+  # Map of reporting timeseries frequency choices to MessagePack timeseries names.
+  #
+  # @param timeseries_frequency [String] Timeseries reporting frequency (TimeseriesFrequencyXXX)
+  # @return [String] MessagePack timeseries name
+  def self.get_msgpack_timeseries_name(timeseries_frequency)
+    return { EPlus::TimeseriesFrequencyTimestep => 'TimeStep',
+             EPlus::TimeseriesFrequencyHourly => 'Hourly',
+             EPlus::TimeseriesFrequencyDaily => 'Daily',
+             EPlus::TimeseriesFrequencyMonthly => 'Monthly' }[timeseries_frequency]
   end
 end

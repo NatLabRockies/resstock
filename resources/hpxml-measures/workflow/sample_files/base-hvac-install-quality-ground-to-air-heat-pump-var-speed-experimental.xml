@@ -10,6 +10,9 @@
     <extension>
       <SimulationControl>
         <Timestep>60</Timestep>
+        <AdvancedResearchFeatures>
+          <GroundToAirHeatPumpModelType>experimental</GroundToAirHeatPumpModelType>
+        </AdvancedResearchFeatures>
       </SimulationControl>
       <UtilityBillScenarios>
         <UtilityBillScenario>
@@ -327,18 +330,21 @@
               <HeatPumpFuel>electricity</HeatPumpFuel>
               <HeatingCapacity>36000.0</HeatingCapacity>
               <CoolingCapacity>36000.0</CoolingCapacity>
-              <CoolingSensibleHeatFraction>0.73</CoolingSensibleHeatFraction>
+              <CompressorType>variable speed</CompressorType>
               <FractionHeatLoadServed>1.0</FractionHeatLoadServed>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
                 <Units>EER</Units>
-                <Value>16.6</Value>
+                <Value>30.9</Value>
               </AnnualCoolingEfficiency>
               <AnnualHeatingEfficiency>
                 <Units>COP</Units>
-                <Value>3.6</Value>
+                <Value>4.4</Value>
               </AnnualHeatingEfficiency>
               <extension>
+                <AirflowDefectRatio>-0.25</AirflowDefectRatio>
+                <ChargeDefectRatio>-0.25</ChargeDefectRatio>
+                <FanPowerWattsPerCFM>0.365</FanPowerWattsPerCFM>
                 <PumpPowerWattsPerTon>100.0</PumpPowerWattsPerTon>
               </extension>
             </HeatPump>
@@ -398,8 +404,6 @@
             <HeatingCapacity>18767.0</HeatingCapacity>
             <EnergyFactor>0.95</EnergyFactor>
             <HotWaterTemperature>125.0</HotWaterTemperature>
-            <UsesDesuperheater>true</UsesDesuperheater>
-            <RelatedHVACSystem idref='HeatPump1'/>
           </WaterHeatingSystem>
           <HotWaterDistribution>
             <SystemIdentifier id='HotWaterDistribution1'/>

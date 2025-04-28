@@ -711,10 +711,6 @@
                 <Units>SEER</Units>
                 <Value>13.0</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.73</SensibleHeatFraction>
-              <extension>
-                <CrankcaseHeaterPowerWatts>25.0</CrankcaseHeaterPowerWatts>
-              </extension>
             </CoolingSystem>
             <CoolingSystem>
               <SystemIdentifier id='CoolingSystem2'/>
@@ -729,10 +725,6 @@
                 <Units>SEER</Units>
                 <Value>13.0</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.73</SensibleHeatFraction>
-              <extension>
-                <CrankcaseHeaterPowerWatts>25.0</CrankcaseHeaterPowerWatts>
-              </extension>
             </CoolingSystem>
           </HVACPlant>
           <HVACControl>

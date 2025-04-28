@@ -107,7 +107,8 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
       hpxml_path = File.expand_path(hpxml_path)
     end
     unless File.exist?(hpxml_path) && hpxml_path.downcase.end_with?('.xml')
-      fail "'#{hpxml_path}' does not exist or is not an .xml file."
+      runner.registerError("'#{hpxml_path}' does not exist or is not an .xml file.")
+      return false
     end
 
     hpxml_output_path = args[:hpxml_output_path]
@@ -129,27 +130,28 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
 
     output_csv_basename, _ = args[:output_csv_path].split('.csv')
 
-    doc = XMLHelper.parse_file(hpxml_path)
-    hpxml_doc = XMLHelper.get_element(doc, '/HPXML')
-    doc_buildings = XMLHelper.get_elements(hpxml_doc, 'Building')
-    doc_buildings.each_with_index do |building, i|
-      doc_building_id = XMLHelper.get_attribute_value(XMLHelper.get_element(building, 'BuildingID'), 'id')
+    hpxml = HPXML.new(hpxml_path: hpxml_path)
 
-      next if doc_buildings.size > 1 && args[:building_id] != 'ALL' && args[:building_id] != doc_building_id
+    # Since we modify the HPXML object (apply defaults), use a copy of the
+    # original HPXML object so that the HPXML object we write does not include
+    # any such modifications.
+    orig_hpxml = Marshal.load(Marshal.dump(hpxml))
 
-      hpxml = HPXML.new(hpxml_path: hpxml_path, building_id: doc_building_id)
-      hpxml_bldg = hpxml.buildings[0]
+    hpxml.buildings.each_with_index do |hpxml_bldg, i|
+      next if hpxml.buildings.size > 1 && args[:building_id] != 'ALL' && args[:building_id] != hpxml_bldg.building_id
 
+      # Only need to do this once
       if epw_path.nil?
         epw_path = Location.get_epw_path(hpxml_bldg, hpxml_path)
         weather = WeatherFile.new(epw_path: epw_path, runner: runner)
       end
+
       # deterministically vary schedules across building units
       args[:random_seed] *= (i + 1)
 
       # exit if number of occupants is zero
       if hpxml_bldg.building_occupancy.number_of_residents == 0
-        runner.registerInfo("#{doc_building_id}: Number of occupants set to zero; skipping generation of stochastic schedules.")
+        runner.registerInfo("#{hpxml_bldg.building_id}: Number of occupants set to zero; skipping generation of stochastic schedules.")
         next
       end
 
@@ -159,34 +161,23 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
 
       # create the schedules
       success = create_schedules(runner, hpxml, hpxml_bldg, weather, args)
-      return false if not success
+      return false unless success
 
       # modify the hpxml with the schedules path
-      extension = XMLHelper.create_elements_as_needed(building, ['BuildingDetails', 'BuildingSummary', 'extension'])
-      schedules_filepaths = XMLHelper.get_values(extension, 'SchedulesFilePath', :string)
-      if !schedules_filepaths.include?(args[:output_csv_path])
-        XMLHelper.add_element(extension, 'SchedulesFilePath', args[:output_csv_path], :string)
+      if !orig_hpxml.buildings[i].header.schedules_filepaths.include?(args[:output_csv_path])
+        orig_hpxml.buildings[i].header.schedules_filepaths << args[:output_csv_path]
       end
-      write_modified_hpxml(runner, doc, hpxml_path, hpxml_output_path, schedules_filepaths, args)
     end
+
+    if hpxml_path == hpxml_output_path
+      # Create a backup of the original HPXML file
+      runner.registerWarning('HPXML Output File Path is same as HPXML File Path, creating backup.')
+      File.rename(hpxml_path, hpxml_path.gsub('.xml', '_bak.xml'))
+    end
+
+    XMLHelper.write_file(orig_hpxml.to_doc(), hpxml_output_path)
 
     return true
-  end
-
-  # Write out the HPXML file with the output CSV path containing occupancy schedules.
-  #
-  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
-  # @param doc [Oga::XML::Document] Oga XML Document object
-  # @param hpxml_path [String] Path to the HPXML file
-  # @param hpxml_output_path [String] Path to the output HPXML file
-  # @param schedules_filepaths [Array<String>] array of SchedulesFilePath strings in the input HPXML file
-  # @param args [Hash] Map of :argument_name => value
-  def write_modified_hpxml(runner, doc, hpxml_path, hpxml_output_path, schedules_filepaths, args)
-    # write out the modified hpxml
-    if (hpxml_path != hpxml_output_path) || !schedules_filepaths.include?(args[:output_csv_path])
-      XMLHelper.write_file(doc, hpxml_output_path)
-      runner.registerInfo("Wrote file: #{hpxml_output_path}")
-    end
   end
 
   # Create and export the occupancy schedules.

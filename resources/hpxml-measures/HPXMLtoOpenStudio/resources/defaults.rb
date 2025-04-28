@@ -73,7 +73,7 @@ module Defaults
     apply_doors(hpxml_bldg)
     apply_partition_wall_mass(hpxml_bldg)
     apply_furniture_mass(hpxml_bldg)
-    apply_hvac(runner, hpxml_bldg, weather, convert_shared_systems, unit_num)
+    apply_hvac(runner, hpxml_bldg, weather, convert_shared_systems, unit_num, hpxml.header)
     apply_hvac_control(hpxml_bldg, schedules_file, eri_version)
     apply_hvac_distribution(hpxml_bldg)
     apply_infiltration(hpxml_bldg)
@@ -96,7 +96,7 @@ module Defaults
     apply_vehicles(hpxml_bldg, schedules_file)
 
     # Do HVAC sizing after all other defaults have been applied
-    all_zone_loads, all_space_loads = apply_hvac_sizing(runner, hpxml_bldg, weather)
+    all_zone_loads, all_space_loads = apply_hvac_sizing(runner, hpxml_bldg, weather, hpxml.header)
 
     # These need to be applied after sizing HVAC capacities/airflows
     apply_detailed_performance_data_for_var_speed_systems(hpxml_bldg)
@@ -226,6 +226,11 @@ module Defaults
     if hpxml_header.defrost_model_type.nil? && (hpxml_bldg.heat_pumps.any? { |hp| [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpMiniSplit, HPXML::HVACTypeHeatPumpRoom, HPXML::HVACTypeHeatPumpPTHP].include? hp.heat_pump_type })
       hpxml_header.defrost_model_type = HPXML::AdvancedResearchDefrostModelTypeStandard
       hpxml_header.defrost_model_type_isdefaulted = true
+    end
+
+    if hpxml_header.ground_to_air_heat_pump_model_type.nil? && (hpxml_bldg.heat_pumps.any? { |hp| hp.heat_pump_type == HPXML::HVACTypeHeatPumpGroundToAir })
+      hpxml_header.ground_to_air_heat_pump_model_type = HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard
+      hpxml_header.ground_to_air_heat_pump_model_type_isdefaulted = true
     end
 
     hpxml_header.unavailable_periods.each do |unavailable_period|
@@ -1837,8 +1842,9 @@ module Defaults
   # @param weather [WeatherFile] Weather object containing EPW information
   # @param convert_shared_systems [Boolean] Whether to convert shared systems to equivalent in-unit systems per ANSI/RESNET/ICC 301
   # @param unit_num [Integer] Dwelling unit number
+  # @param hpxml_header [HPXML::Header] HPXML Header object
   # @return [nil]
-  def self.apply_hvac(runner, hpxml_bldg, weather, convert_shared_systems, unit_num)
+  def self.apply_hvac(runner, hpxml_bldg, weather, convert_shared_systems, unit_num, hpxml_header)
     if convert_shared_systems
       HVAC.apply_shared_systems(hpxml_bldg)
     end
@@ -2309,7 +2315,7 @@ module Defaults
         end
 
         HVAC.set_gshp_assumptions(heat_pump, weather)
-        HVAC.set_curves_gshp(heat_pump)
+        HVAC.set_curves_gshp(heat_pump, hpxml_header)
 
         if heat_pump.geothermal_loop.bore_spacing.nil?
           heat_pump.geothermal_loop.bore_spacing = 16.4 # ft, distance between bores
@@ -4516,10 +4522,11 @@ module Defaults
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param hpxml_header [HPXML::Header] HPXML Header object
   # @return [Array<Hash, Hash>] Maps of HPXML::Zones => DesignLoadValues object, HPXML::Spaces => DesignLoadValues object
-  def self.apply_hvac_sizing(runner, hpxml_bldg, weather)
+  def self.apply_hvac_sizing(runner, hpxml_bldg, weather, hpxml_header)
     hvac_systems = HVAC.get_hpxml_hvac_systems(hpxml_bldg)
-    _, all_zone_loads, all_space_loads = HVACSizing.calculate(runner, weather, hpxml_bldg, hvac_systems)
+    _, all_zone_loads, all_space_loads = HVACSizing.calculate(runner, weather, hpxml_bldg, hvac_systems, hpxml_header)
     return all_zone_loads, all_space_loads
   end
 

@@ -347,6 +347,19 @@ class ReportSimulationOutputTest < Minitest::Test
     'Temperature: Cooling Setpoint',
   ]
 
+  BaseHPXMLTimeseriesColsZoneConds = [
+    'Humidity Ratio: Attic - Unvented',
+    'Humidity Ratio: Conditioned Space',
+    'Relative Humidity: Attic - Unvented',
+    'Relative Humidity: Conditioned Space',
+    'Dewpoint Temperature: Attic - Unvented',
+    'Dewpoint Temperature: Conditioned Space',
+    'Radiant Temperature: Attic - Unvented',
+    'Radiant Temperature: Conditioned Space',
+    'Operative Temperature: Attic - Unvented',
+    'Operative Temperature: Conditioned Space',
+  ]
+
   BaseHPXMLTimeseriesColsAirflows = [
     "Airflow: #{AFT::Infiltration}",
     "Airflow: #{AFT::MechanicalVentilation}",
@@ -421,6 +434,7 @@ class ReportSimulationOutputTest < Minitest::Test
             BaseHPXMLTimeseriesColsTotalLoads +
             BaseHPXMLTimeseriesColsUnmetHours +
             BaseHPXMLTimeseriesColsZoneTemps +
+            BaseHPXMLTimeseriesColsZoneConds +
             BaseHPXMLTimeseriesColsAirflows +
             BaseHPXMLTimeseriesColsWeather)
   end
@@ -613,6 +627,7 @@ class ReportSimulationOutputTest < Minitest::Test
                   'include_timeseries_unmet_hours' => false,
                   'include_timeseries_component_loads' => false,
                   'include_timeseries_zone_temperatures' => false,
+                  'include_timeseries_zone_conditions' => false,
                   'include_timeseries_airflows' => false,
                   'include_timeseries_weather' => false,
                   'include_timeseries_resilience' => false }
@@ -653,6 +668,7 @@ class ReportSimulationOutputTest < Minitest::Test
                   'include_timeseries_unmet_hours' => true,
                   'include_timeseries_component_loads' => true,
                   'include_timeseries_zone_temperatures' => true,
+                  'include_timeseries_zone_conditions' => true,
                   'include_timeseries_airflows' => true,
                   'include_timeseries_weather' => true,
                   'include_timeseries_resilience' => true }
@@ -994,6 +1010,24 @@ class ReportSimulationOutputTest < Minitest::Test
     assert_equal(8760, timeseries_rows.size - 2)
   end
 
+  def test_timeseries_hourly_zone_conditions
+    args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), '../../workflow/sample_files/base-hvac-furnace-gas-only.xml'),
+                  'skip_validation' => true,
+                  'timeseries_frequency' => 'hourly',
+                  'include_timeseries_zone_conditions' => true }
+    annual_csv, timeseries_csv = _test_measure(args_hash)
+    assert(File.exist?(annual_csv))
+    assert(File.exist?(timeseries_csv))
+    expected_timeseries_cols = ['Time'] + BaseHPXMLTimeseriesColsZoneConds
+    actual_timeseries_cols = File.readlines(timeseries_csv)[0].strip.split(',')
+    assert_equal(expected_timeseries_cols.sort, actual_timeseries_cols.sort)
+    timeseries_rows = CSV.read(timeseries_csv)
+    assert_equal(8760, timeseries_rows.size - 2)
+    timeseries_cols = timeseries_rows.transpose
+    assert_equal(1, _check_for_constant_timeseries_step(timeseries_cols[0]))
+    _check_for_nonzero_avg_timeseries_value(timeseries_csv, BaseHPXMLTimeseriesColsZoneConds)
+  end
+
   def test_timeseries_hourly_airflows_with_mechvent
     args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), '../../workflow/sample_files/base-mechvent-multiple.xml'),
                   'skip_validation' => true,
@@ -1064,6 +1098,7 @@ class ReportSimulationOutputTest < Minitest::Test
                   'include_timeseries_unmet_hours' => true,
                   'include_timeseries_component_loads' => true,
                   'include_timeseries_zone_temperatures' => true,
+                  'include_timeseries_zone_conditions' => true,
                   'include_timeseries_airflows' => true,
                   'include_timeseries_weather' => true,
                   'include_timeseries_resilience' => true }
@@ -1107,6 +1142,7 @@ class ReportSimulationOutputTest < Minitest::Test
                   'include_timeseries_unmet_hours' => true,
                   'include_timeseries_component_loads' => true,
                   'include_timeseries_zone_temperatures' => true,
+                  'include_timeseries_zone_conditions' => true,
                   'include_timeseries_airflows' => true,
                   'include_timeseries_weather' => true,
                   'include_timeseries_resilience' => true }
@@ -1146,6 +1182,7 @@ class ReportSimulationOutputTest < Minitest::Test
                   'include_timeseries_unmet_hours' => true,
                   'include_timeseries_component_loads' => true,
                   'include_timeseries_zone_temperatures' => true,
+                  'include_timeseries_zone_conditions' => true,
                   'include_timeseries_airflows' => true,
                   'include_timeseries_weather' => true,
                   'include_timeseries_resilience' => true }
@@ -1348,6 +1385,18 @@ class ReportSimulationOutputTest < Minitest::Test
     assert_equal(1, _check_for_constant_timeseries_step(timeseries_cols[0]))
     _check_for_nonzero_avg_timeseries_value(timeseries_csv, BaseHPXMLTimeseriesColsEnergyPlusOutputVariables)
     assert(File.readlines(run_log).any? { |line| line.include?("Request for output variable 'Foo'") })
+  end
+
+  def test_timeseries_energyplus_output_variables_freq_none
+    args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), '../../workflow/sample_files/base.xml'),
+                  'skip_validation' => true,
+                  'add_component_loads' => true,
+                  'timeseries_frequency' => 'none',
+                  'user_output_variables' => 'Zone People Occupant Count, Zone People Total Heating Energy, Foo, Surface Construction Index' }
+    annual_csv, timeseries_csv, run_log = _test_measure(args_hash)
+    assert(File.exist?(annual_csv))
+    assert(!File.exist?(timeseries_csv))
+    assert(!File.readlines(run_log).any? { |line| line.include?("Request for output variable 'Foo'") })
   end
 
   def test_timeseries_energyplus_output_meters

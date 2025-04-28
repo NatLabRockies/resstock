@@ -24,6 +24,19 @@ Whether to use daylight saving. If not provided, the OS-HPXML default (see <a hr
 
 <br/>
 
+**Simulation Control: Ground-to-Air Heat Pump Model Type**
+
+Research feature to select the type of ground-to-air heat pump model. Use standard for standard ground-to-air heat pump modeling. Use experimental for an improved model that better accounts for coil staging. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-simulation-control'>HPXML Simulation Control</a>) is used.
+
+- **Name:** ``simulation_control_ground_to_air_heat_pump_model_type``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `auto`, `standard`, `experimental`
+
+<br/>
+
 **Site: Type**
 
 The type of site. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-site'>HPXML Site</a>) is used.
@@ -1665,7 +1678,7 @@ The rated efficiency value of the cooling system. Ignored for evaporative cooler
 
 **Cooling System: Cooling Compressor Type**
 
-The compressor type of the cooling system. Only applies to central air conditioner and mini-split. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner'>Central Air Conditioner</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner'>Mini-Split Air Conditioner</a>) is used.
+The compressor type of the cooling system. Only applies to central air conditioner and mini-split.
 
 - **Name:** ``cooling_system_cooling_compressor_type``
 - **Type:** ``Choice``
@@ -1866,7 +1879,7 @@ The rated cooling efficiency value of the heat pump.
 
 **Heat Pump: Cooling Compressor Type**
 
-The compressor type of the heat pump. Only applies to air-to-air and mini-split. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'>Air-to-Air Heat Pump</a>, <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'>Mini-Split Heat Pump</a>) is used.
+The compressor type of the heat pump. Only applies to air-to-air, mini-split and ground-to-air.
 
 - **Name:** ``heat_pump_cooling_compressor_type``
 - **Type:** ``Choice``
