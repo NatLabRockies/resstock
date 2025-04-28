@@ -54,7 +54,7 @@ For example, suppose a central air conditioner is described in the HPXML input f
 The ``in.xml`` output file will include autosized HVAC capacities as well as some other details:
 
 .. code-block:: XML
- 
+
   <HVACPlant>
     <CoolingSystem>
       <SystemIdentifier id='CoolingSystem1'/>
@@ -337,6 +337,7 @@ Peak Building Electricity
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Peak building electricity outputs are listed below.
+Values are calculated as the maximum energy use for any individual timestep divided by the timestep length.
 
   ==================================  =============================================================
   Type                                Notes
@@ -348,7 +349,7 @@ Peak building electricity outputs are listed below.
   Peak Electricity: Summer Net (W)    Summer maximum for total electricity consumption minus power produced by PV
   Peak Electricity: Annual Net (W)    Annual maximum for total electricity consumption minus power produced by PV
   ==================================  =============================================================
-  
+
   .. [#] Winter is Dec/Jan/Feb (or Jun/Jul/Aug in the southern hemisphere).
   .. [#] Summer is Jun/Jul/Aug (or Dec/Jan/Feb in the southern hemisphere).
 
@@ -356,6 +357,7 @@ Peak Building Loads
 ~~~~~~~~~~~~~~~~~~~
 
 Peak building loads are listed below.
+Values are calculated as the maximum load for any individual timestep divided by the timestep length.
 
   =======================================  ==================================
   Type                                     Notes
@@ -377,7 +379,7 @@ Component loads represent the estimated contribution of different building compo
 The sum of component loads for heating (or cooling) will roughly equal the annual heating (or cooling) building load reported above.
 
 Component loads disaggregated by Heating/Cooling are listed below.
-   
+
   =================================================  =========================================================================================================
   Type                                               Notes
   =================================================  =========================================================================================================
@@ -416,7 +418,7 @@ Annual hot water uses are listed below.
   Hot Water: Clothes Washer (gal)
   Hot Water: Dishwasher (gal)
   Hot Water: Fixtures (gal)            Showers and faucets.
-  Hot Water: Distribution Waste (gal) 
+  Hot Water: Distribution Waste (gal)
   ===================================  ====================
 
 .. note::
@@ -459,7 +461,7 @@ Capacities for individual HVAC systems can be found in the ``in.xml`` file.
   For heat pumps with a minimum compressor lockout temperature greater than the heating design temperature (e.g., a dual-fuel heat pump in a cold climate), the compressor will be sized based on heating design loads calculated at the compressor lockout temperature.
   This is done to prevent unutilized capacity at temperatures below the compressor lockout temperature.
   Any heat pump backup will still be based on heating design loads calculated using the heating design temperature.
-  
+
 .. _hvac_design_temps:
 
 HVAC Design Temperatures
@@ -648,6 +650,7 @@ Depending on the outputs requested, the file may include:
   Component Loads                     ``componentloads``   Heating and cooling loads (in kBtu) disaggregated by component (e.g., Walls, Windows, Infiltration, Ducts, etc.).
   Unmet Hours                         ``unmethours``       Heating, cooling, and EV driving unmet hours.
   Zone Temperatures                   ``temperatures``     Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints.
+  Zone Conditions                     ``conditions``       Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)
   Airflows                            ``airflows``         Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans.
   Weather                             ``weather``          Weather file data including outdoor temperatures, relative humidity, wind speed, and solar.
   Resilience                          ``resilience``       Resilience outputs (currently only average resilience hours for battery storage).
@@ -802,15 +805,15 @@ For each HPXML Building, the following output types are reported.
   ===========================  ===========  ================  ================  ================  ================
   Type                         Orientation  Heating HTM [#]_  Cooling HTM [#]_  Heating CFM [#]_  Cooling CFM [#]_
   ===========================  ===========  ================  ================  ================  ================
-  Windows: <WindowID>          X            X                 X                                     
-  Skylights: <SkylightID>      X            X                 X                                     
-  Doors: <DoorID>              X            X                 X                                     
-  Above Grade Walls: <WallID>  X            X                 X                                     
-  Below Grade Walls: <WallID>  X            X                 X                                     
-  Ceilings: <CeilingID>                     X                 X                                     
-  Floors: <FloorID>                         X                 X                                     
-  Infiltration                                                                  X                 X  
-  Ventilation                                                                   X                 X  
+  Windows: <WindowID>          X            X                 X
+  Skylights: <SkylightID>      X            X                 X
+  Doors: <DoorID>              X            X                 X
+  Above Grade Walls: <WallID>  X            X                 X
+  Below Grade Walls: <WallID>  X            X                 X
+  Ceilings: <CeilingID>                     X                 X
+  Floors: <FloorID>                         X                 X
+  Infiltration                                                                  X                 X
+  Ventilation                                                                   X                 X
   ===========================  ===========  ================  ================  ================  ================
 
   .. [#] Heating HTM is the heating heat transfer multiplier (Btu/ft^2), which is multiplier by surface area to calculate the heating design load.
@@ -833,13 +836,13 @@ For each HPXML Building, the following output types are reported.
   Below Grade Walls: <WallID>  X                                          X               X
   Ceilings: <CeilingID>        X                                          X               X
   Floors: <FloorID>            X            See [#]_                      X               X
-  Infiltration                                           X                X               X                        X  
-  Internal Gains                                                                          X                        X  
-  Ducts                                                                   X               X                        X  
-  Ventilation                                                             X               X                        X  
+  Infiltration                                           X                X               X                        X
+  Internal Gains                                                                          X                        X
+  Ducts                                                                   X               X                        X
+  Ventilation                                                             X               X                        X
   Piping                                                                  X
   Blower Heat                                                                             X
-  AED Excursion                                                                           X                          
+  AED Excursion                                                                           X
   Total                                                                   X               X                        X
   ===========================  ===========  ===========  ===============  ==============  =======================  =====================
 
@@ -861,13 +864,13 @@ Only those surfaces attached to a space in the given zone will be included.
   Below Grade Walls: <WallID>  X                                          X               X
   Ceilings: <CeilingID>        X                                          X               X
   Floors: <FloorID>            X            See [#]_                      X               X
-  Infiltration                                           X                X               X                        X  
-  Internal Gains                                                                          X                        X  
-  Ducts                                                                   X               X                        X  
-  Ventilation                                                             X               X                        X  
+  Infiltration                                           X                X               X                        X
+  Internal Gains                                                                          X                        X
+  Ducts                                                                   X               X                        X
+  Ventilation                                                             X               X                        X
   Piping                                                                  X
   Blower Heat                                                                             X
-  AED Excursion                                                                           X                          
+  AED Excursion                                                                           X
   Total                                                                   X               X                        X
   ===========================  ===========  ===========  ===============  ==============  =======================  =====================
 
@@ -905,6 +908,6 @@ For each HPXML Building (and any HPXML spaces, see :ref:`zones_spaces`), the hou
   =======================  ===========  ===========  ============  ============  ============  ============  ============  ============  ============  ============  ============  ============
   Type                     Hr 8 (Btuh)  Hr 9 (Btuh)  Hr 10 (Btuh)  Hr 11 (Btuh)  Hr 12 (Btuh)  Hr 13 (Btuh)  Hr 14 (Btuh)  Hr 15 (Btuh)  Hr 16 (Btuh)  Hr 17 (Btuh)  Hr 18 (Btuh)  Hr 19 (Btuh)
   =======================  ===========  ===========  ============  ============  ============  ============  ============  ============  ============  ============  ============  ============
-  <BuildingID>             X            X            X             X             X             X             X             X             X             X             X             X  
-  <BuildingID>: <SpaceID>  X            X            X             X             X             X             X             X             X             X             X             X  
+  <BuildingID>             X            X            X             X             X             X             X             X             X             X             X             X
+  <BuildingID>: <SpaceID>  X            X            X             X             X             X             X             X             X             X             X             X
   =======================  ===========  ===========  ============  ============  ============  ============  ============  ============  ============  ============  ============  ============

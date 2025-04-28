@@ -171,6 +171,11 @@ def run_hpxml_workflow(rundir, measures, measures_dir, debug: false, run_measure
 
   print "Done.\n" unless suppress_print
 
+  # Clean up EnergyPlus output files
+  if not debug
+    FileUtils.rm Dir.glob(File.join(rundir, 'eplusout*.msgpack'))
+  end
+
   return { success: true, runner: runner, sim_time: sim_time }
 end
 

@@ -12,7 +12,7 @@ module Geometry
   # @return [nil]
   def self.apply_roofs(runner, model, spaces, hpxml_bldg, hpxml_header)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    walls_top, _foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    walls_top = hpxml_bldg.building_construction.additional_properties.walls_height_above_grade
 
     hpxml_bldg.roofs.each do |roof|
       next if roof.net_area < 1.0 # skip modeling net surface area for surfaces comprised entirely of subsurface area
@@ -135,7 +135,7 @@ module Geometry
   # @return [nil]
   def self.apply_walls(runner, model, spaces, hpxml_bldg, hpxml_header)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    _walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     hpxml_bldg.walls.each do |wall|
       next if wall.net_area < 1.0 # skip modeling net surface area for surfaces comprised entirely of subsurface area
@@ -217,7 +217,7 @@ module Geometry
   # @return [nil]
   def self.apply_rim_joists(runner, model, spaces, hpxml_bldg)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    _walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     hpxml_bldg.rim_joists.each do |rim_joist|
       if rim_joist.azimuth.nil?
@@ -300,7 +300,8 @@ module Geometry
   # @return [nil]
   def self.apply_floors(runner, model, spaces, hpxml_bldg, hpxml_header)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    walls_top = hpxml_bldg.building_construction.additional_properties.walls_height_above_grade
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     hpxml_bldg.floors.each do |floor|
       next if floor.net_area < 1.0 # skip modeling net surface area for surfaces comprised entirely of subsurface area
@@ -698,7 +699,7 @@ module Geometry
     end
     hpxml_bldg.collapse_enclosure_surfaces()
 
-    _walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     shading_schedules = {}
 
@@ -795,7 +796,7 @@ module Geometry
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
   def self.apply_doors(model, spaces, hpxml_bldg)
-    _walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     surfaces = []
     hpxml_bldg.doors.each do |door|
@@ -847,7 +848,7 @@ module Geometry
   # @return [nil]
   def self.apply_skylights(model, spaces, hpxml_bldg, hpxml_header)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    walls_top, _foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    walls_top = hpxml_bldg.building_construction.additional_properties.walls_height_above_grade
 
     surfaces = []
     shading_schedules = {}
@@ -966,7 +967,7 @@ module Geometry
   # @return [nil]
   def self.apply_conditioned_floor_area(model, spaces, hpxml_bldg)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    _walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     sum_cfa = 0.0
     hpxml_bldg.floors.each do |floor|
@@ -1044,11 +1045,11 @@ module Geometry
     end
   end
 
-  # Calculates the assumed above-grade height of the top of the dwelling unit's walls and foundation walls.
+  # Assigns the assumed above-grade height of the top of the dwelling unit's walls and foundation walls.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
-  # @return [Array<Double, Double>] Top of the walls (ft), top of the foundation walls (ft)
-  def self.get_foundation_and_walls_top(hpxml_bldg)
+  # @return [nil]
+  def self.apply_foundation_and_walls_top(hpxml_bldg)
     foundation_top = [hpxml_bldg.building_construction.unit_height_above_grade, 0].max
     hpxml_bldg.foundation_walls.each do |foundation_wall|
       top = -1 * foundation_wall.depth_below_grade + foundation_wall.height
@@ -1057,7 +1058,8 @@ module Geometry
     ncfl_ag = hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade
     walls_top = foundation_top + hpxml_bldg.building_construction.average_ceiling_height * ncfl_ag
 
-    return walls_top, foundation_top
+    hpxml_bldg.building_construction.additional_properties.walls_height_above_grade = walls_top
+    hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade = foundation_top
   end
 
   # Get the default number of occupants.
@@ -1507,7 +1509,7 @@ module Geometry
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
   def self.add_neighbor_shading(model, length, hpxml_bldg)
-    walls_top, _foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    walls_top = hpxml_bldg.building_construction.additional_properties.walls_height_above_grade
     z_origin = 0 # shading surface always starts at grade
 
     shading_surfaces = []

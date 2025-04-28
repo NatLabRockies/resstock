@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>report_simulation_output</name>
   <uid>df9d170c-c21a-4130-866d-0d46b06073fd</uid>
-  <version_id>ad1aa48f-db1c-4970-b703-513ef327fd78</version_id>
-  <version_modified>2025-03-18T21:25:44Z</version_modified>
+  <version_id>c66f3dfc-781a-49dd-ac02-173fe7170b66</version_id>
+  <version_modified>2025-04-28T18:16:50Z</version_modified>
   <xml_checksum>9BF1E6AC</xml_checksum>
   <class_name>ReportSimulationOutput</class_name>
   <display_name>HPXML Simulation Output Report</display_name>
@@ -602,6 +602,25 @@
       </choices>
     </argument>
     <argument>
+      <name>include_timeseries_zone_conditions</name>
+      <display_name>Generate Timeseries Output: Zone Conditions</display_name>
+      <description>Generates timeseries temperatures and humidities for each thermal zone.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>include_timeseries_airflows</name>
       <display_name>Generate Timeseries Output: Airflows</display_name>
       <description>Generates timeseries airflows.</description>
@@ -680,7 +699,7 @@
     <argument>
       <name>timeseries_num_decimal_places</name>
       <display_name>Generate Timeseries Output: Number of Decimal Places</display_name>
-      <description>Allows overriding the default number of decimal places for timeseries output.</description>
+      <description>Allows overriding the default number of decimal places for timeseries outputs.</description>
       <type>Integer</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -1982,7 +2001,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>403BC6A3</checksum>
+      <checksum>EFC2A621</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -1999,13 +2018,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>C7A7E2B3</checksum>
+      <checksum>6BB19C0F</checksum>
     </file>
     <file>
       <filename>test_report_sim_output.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>BA45C804</checksum>
+      <checksum>608E4F81</checksum>
     </file>
   </files>
 </measure>

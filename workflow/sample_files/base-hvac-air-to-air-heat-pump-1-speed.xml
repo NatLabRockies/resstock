@@ -328,7 +328,6 @@
               <HeatingCapacity>36000.0</HeatingCapacity>
               <CoolingCapacity>36000.0</CoolingCapacity>
               <CompressorType>single stage</CompressorType>
-              <CoolingSensibleHeatFraction>0.73</CoolingSensibleHeatFraction>
               <BackupType>integrated</BackupType>
               <BackupSystemFuel>electricity</BackupSystemFuel>
               <BackupAnnualHeatingEfficiency>

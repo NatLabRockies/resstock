@@ -2851,7 +2851,8 @@ module Airflow
     end
 
     # Get distance above ground for the space
-    walls_top, foundation_top = Geometry.get_foundation_and_walls_top(hpxml_bldg)
+    walls_top = hpxml_bldg.building_construction.additional_properties.walls_height_above_grade
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
     if [HPXML::LocationConditionedSpace, HPXML::LocationGarage].include? location
       space_height_ag = foundation_top
     elsif [HPXML::LocationAtticVented].include? location

@@ -330,6 +330,7 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     hvac_days = HVAC.apply_setpoints(runner, model, weather, spaces, hpxml_bldg, hpxml.header, schedules_file)
 
     # Geometry & Enclosure
+    Geometry.apply_foundation_and_walls_top(hpxml_bldg)
     Geometry.apply_roofs(runner, model, spaces, hpxml_bldg, hpxml.header)
     Geometry.apply_walls(runner, model, spaces, hpxml_bldg, hpxml.header)
     Geometry.apply_rim_joists(runner, model, spaces, hpxml_bldg)
