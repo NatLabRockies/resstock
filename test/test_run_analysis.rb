@@ -515,6 +515,7 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, 'Unknown column found in schedule file: pre_peak_period')
       next if _expected_warning_message(message, "Could not find row='peak_period' in unavailable_periods.csv")
       next if _expected_warning_message(message, "Could not find row='pre_peak_period' in unavailable_periods.csv")
+      next if _expected_warning_message(message, 'HPXML Output File Path is same as HPXML File Path, creating backup.')
 
       # For the EV minutes warning try replacing the number of minutes as a string rather than a number.
       new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? '(<number of minutes>)' : match }
