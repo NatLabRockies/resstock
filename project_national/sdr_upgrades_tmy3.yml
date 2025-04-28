@@ -96,6 +96,7 @@ workflow_generator:
       include_timeseries_emissions: true
       include_timeseries_emission_fuels: true
       include_timeseries_emission_end_uses: false
+      include_annual_emission_end_uses: false
       include_timeseries_hot_water_uses: true
       include_timeseries_total_loads: true
       include_timeseries_component_loads: true
