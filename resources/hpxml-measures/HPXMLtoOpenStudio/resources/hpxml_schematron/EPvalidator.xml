@@ -60,8 +60,8 @@
       <sch:assert role='ERROR' test='number(h:OnOffThermostatDeadbandTemperature) &gt; 0 or not(h:OnOffThermostatDeadbandTemperature)'>Expected OnOffThermostatDeadbandTemperature to be greater than 0</sch:assert>
       <sch:assert role='ERROR' test='count(h:HeatPumpBackupCapacityIncrement) &lt;= 1'>Expected 0 or 1 element(s) for xpath: HeatPumpBackupCapacityIncrement</sch:assert>
       <sch:assert role='ERROR' test='number(h:HeatPumpBackupCapacityIncrement) &gt; 0 or not (h:HeatPumpBackupCapacityIncrement)'>HeatPumpBackupCapacityIncrement should be greater than 0.0</sch:assert>
-      <sch:assert role='ERROR' test='count(h:GeothermalModelType) &lt;= 1'>Expected 0 or 1 element(s) for xpath: GeothermalModelType</sch:assert>
-      <sch:assert role='ERROR' test='h:GeothermalModelType[text()="simple" or text()="advanced"] or not(h:GeothermalModelType)'>Expected GeothermalModelType to be 'simple' or 'advanced'</sch:assert>
+      <sch:assert role='ERROR' test='count(h:GroundToAirHeatPumpModelType) &lt;= 1'>Expected 0 or 1 element(s) for xpath: GroundToAirHeatPumpModelType</sch:assert>
+      <sch:assert role='ERROR' test='h:GroundToAirHeatPumpModelType[text()="standard" or text()="experimental"] or not(h:GroundToAirHeatPumpModelType)'>Expected GroundToAirHeatPumpModelType to be 'standard' or 'experimental'</sch:assert>
     </sch:rule>
   </sch:pattern>
 
@@ -2233,6 +2233,13 @@
       <sch:report role='WARN' test='number(h:EnergyFactor) &lt; 0.45'>EnergyFactor should typically be greater than or equal to 0.45.</sch:report>
       <sch:report role='WARN' test='number(h:HeatingCapacity) &lt;= 1000 and number(h:HeatingCapacity) &gt; 0'>Heating capacity should typically be greater than or equal to 1000 Btu/hr.</sch:report>
       <sch:report role='WARN' test='number(h:HotWaterTemperature) &lt; 110'>Hot water setpoint should typically be greater than or equal to 110 deg-F.</sch:report>
+    </sch:rule>
+  </sch:pattern>
+
+  <sch:pattern>
+    <sch:title>[WaterHeatingSystemType=NonElectricTank]</sch:title>
+    <sch:rule context='/h:HPXML/h:Building/h:BuildingDetails/h:Systems/h:WaterHeating/h:WaterHeatingSystem[h:WaterHeaterType="storage water heater" and h:FuelType!="electricity"]'>
+      <sch:assert role='ERROR' test='count(h:extension/h:TankModelType[text()="stratified"]) = 0'>Expected 0 element(s) for xpath: extension/TankModelType</sch:assert>
     </sch:rule>
   </sch:pattern>
 

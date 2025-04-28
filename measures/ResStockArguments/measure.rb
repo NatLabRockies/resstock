@@ -522,13 +522,13 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # HVAC Setpoints
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
       [Constants::Weekday, Constants::Weekend].each do |wkdy_or_wked|
-        setpoints = [args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_temp".to_sym]] * 24
+        schedule = [args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_temp".to_sym]] * 24
 
         hvac_control_setpoint_offset_magnitude = args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_offset_magnitude".to_sym]
         hvac_control_setpoint_schedule = args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_schedule".to_sym].split(',').map { |i| Float(i) }
-        setpoints = modify_setpoint_schedule(setpoints, hvac_control_setpoint_offset_magnitude, hvac_control_setpoint_schedule)
+        schedule = modify_setpoint_schedule(schedule, hvac_control_setpoint_offset_magnitude, hvac_control_setpoint_schedule)
 
-        args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint".to_sym] = setpoints.join(', ')
+        args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint".to_sym] = schedule.join(', ')
       end
     end
 
@@ -867,7 +867,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # Electric Panel
-    args[:electric_panel_service_feeders_load_calculation_types] = "#{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased}, #{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingMeterBased}"
+    args[:electric_panel_service_feeders_load_calculation_types] = "#{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased}"
+    # FIXME Ideas for supporting meter-based calculations in upgrades:
+    # - populate the electric_panel_baseline_peak_electricity_power argument from ApplyUpgrade with values from (pre-run) baseline simulations
+    # - record an additional, e.g., report_simulation_output.electric_panel_load_new, output so that we can post-process the meter-based calculation
+    # args[:electric_panel_service_feeders_load_calculation_types] += ", #{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingMeterBased}"
 
     panel_sampler = ElectricalPanelSampler.new(runner: runner, **args)
     cap_bin, cap_val = panel_sampler.assign_rated_capacity(args: args)

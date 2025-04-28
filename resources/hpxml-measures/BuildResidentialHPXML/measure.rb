@@ -128,12 +128,12 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription("Research feature to select the type of defrost model. Use #{HPXML::AdvancedResearchDefrostModelTypeStandard} for default E+ defrost setting. Use #{HPXML::AdvancedResearchDefrostModelTypeAdvanced} for an improved model that better accounts for load and energy use during defrost; using #{HPXML::AdvancedResearchDefrostModelTypeAdvanced} may impact simulation runtime. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-simulation-control'>HPXML Simulation Control</a>) is used.")
     args << arg
 
-    geothermal_model_type_choices = OpenStudio::StringVector.new
-    geothermal_model_type_choices << HPXML::AdvancedResearchGeothermalModelTypeSimple
-    geothermal_model_type_choices << HPXML::AdvancedResearchGeothermalModelTypeAdvanced
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('simulation_control_geothermal_model_type', geothermal_model_type_choices, false)
-    arg.setDisplayName('Simulation Control: Geothermal Model Type')
-    arg.setDescription("Research feature to select the type of geothermal model. Use #{HPXML::AdvancedResearchGeothermalModelTypeSimple} for simple E+ geothermal coil modeling. Use #{HPXML::AdvancedResearchGeothermalModelTypeAdvanced} for an improved model that better accounts for coil staging; using #{HPXML::AdvancedResearchGeothermalModelTypeAdvanced} may impact simulation runtime. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-simulation-control'>HPXML Simulation Control</a>) is used.")
+    ground_to_air_heat_pump_model_type_choices = OpenStudio::StringVector.new
+    ground_to_air_heat_pump_model_type_choices << HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard
+    ground_to_air_heat_pump_model_type_choices << HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeExperimental
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('simulation_control_ground_to_air_heat_pump_model_type', ground_to_air_heat_pump_model_type_choices, false)
+    arg.setDisplayName('Simulation Control: Ground-to-Air Heat Pump Model Type')
+    arg.setDescription("Research feature to select the type of ground-to-air heat pump model. Use #{HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard} for standard ground-to-air heat pump modeling. Use #{HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeExperimental} for an improved model that better accounts for coil staging. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#hpxml-simulation-control'>HPXML Simulation Control</a>) is used.")
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('simulation_control_onoff_thermostat_deadband', false)
@@ -2734,7 +2734,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription("Whether the second heating system is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#panel-loads'>Panel Loads</a>) is used.")
     args << arg
 
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('electric_panel_load_mech_vent_power', false)
     arg.setDisplayName('Electric Panel: Mechanical Ventilation Power')
     arg.setDescription("Specifies the panel load mechanical ventilation power. If not provided, the OS-HPXML default (see <a href='#{docs_base_url}#panel-loads'>Panel Loads</a>) is used.")
@@ -4616,11 +4615,11 @@ module HPXMLFile
       hpxml.header.defrost_model_type = args[:simulation_control_defrost_model_type]
     end
 
-    if not args[:simulation_control_geothermal_model_type].nil?
-      if (not hpxml.header.geothermal_model_type.nil?) && (hpxml.header.geothermal_model_type != args[:simulation_control_geothermal_model_type])
-        errors << "'Simulation Control: Geothermal Model Type' cannot vary across dwelling units."
+    if not args[:simulation_control_ground_to_air_heat_pump_model_type].nil?
+      if (not hpxml.header.ground_to_air_heat_pump_model_type.nil?) && (hpxml.header.ground_to_air_heat_pump_model_type != args[:simulation_control_ground_to_air_heat_pump_model_type])
+        errors << "'Simulation Control: Ground-to-Air Heat Pump Model Type' cannot vary across dwelling units."
       end
-      hpxml.header.geothermal_model_type = args[:simulation_control_geothermal_model_type]
+      hpxml.header.ground_to_air_heat_pump_model_type = args[:simulation_control_ground_to_air_heat_pump_model_type]
     end
 
     if not args[:simulation_control_onoff_thermostat_deadband].nil?

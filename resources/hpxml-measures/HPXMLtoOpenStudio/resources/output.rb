@@ -901,6 +901,7 @@ module Outputs
     ocf.setOutputCSV(debug)
     ocf.setOutputSQLite(debug)
     ocf.setOutputPerfLog(debug)
+    ocf.setOutputTabular(debug)
   end
 
   # Store some data for use in reporting measure.

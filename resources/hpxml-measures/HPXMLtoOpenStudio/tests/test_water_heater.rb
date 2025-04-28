@@ -1245,7 +1245,7 @@ class HPXMLtoOpenStudioWaterHeaterTest < Minitest::Test
     # Expected value
     tank_volume = UnitConversions.convert(water_heating_system.tank_volume * 0.9, 'gal', 'm^3') # convert to actual volume
     fuel = EPlus.fuel_type(water_heating_system.fuel_type)
-    u =  0.0743
+    u = 0.422
     t_set = UnitConversions.convert(water_heating_system.temperature, 'F', 'C') + 1 # setpoint + 1/2 deadband
     ther_eff = 1.0
     tank_height = 1.2192

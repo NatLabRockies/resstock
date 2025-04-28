@@ -2,9 +2,8 @@
 
 __New Features__
 - HVAC modeling updates:
-  - **Breaking Change**: `CompressorType` required for central and mini-split air conditioners and heat pumps.
-  - Allows modeling two-speed and variable-speed geothermal heat pumps with `CompressorType` to be "two stage" or "variable speed".
-  - Optional input `h:SimulationControl/AdvancedResearchFeatures/GeothermalModelType` to choose the "simple" or "advanced" geothermal heat pump models, "advanced" geothermal model uses E+ variable speed coils.
+  - **Breaking Change**: `CompressorType` required for central and mini-split air conditioners and heat pumps as well as ground-to-air heat pumps.
+  - Optional input `SimulationControl/AdvancedResearchFeatures/GroundToAirHeatPumpModelType` to choose "standard" (default) or "experimental"; "experimental" ground-to-air heat pump model better accounts for coil staging.
 - Electric vehicle enhancements:
   - Allows detailed modeling of electric vehicles (batteries and charging/discharging) using `Vehicles` as an alternative to the simple EV charging `PlugLoad`.
   - Adds EV driving unmet hours output.
@@ -15,7 +14,10 @@ __New Features__
   - Removes generation of stochastic schedules for building components not present in the HPXML file.
 - Output updates:
   - **Breaking change**: Adds generator electricity produced to *total* fuel/energy use; previously it was only included in *net* values.
+  - Adds optional new outputs for timeseries zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures).
   - Adds new outputs for *net* peak electricity (summer/winter/annual); same as *total* peak electricity outputs but subtracts power produced by PV.
+  - Avoids writing the E+ eplustbl.htm by default; use the debug flag to get it.
+  - Deletes the eplusout\*.msgpack files by default (run_simulation.rb only); use the debug flag to preserve them.
 - Allows arbitrary columns to be present in a detailed schedule csv file with warning.
 - Electric panel calculations:
   - Allows optional `ElectricPanel` inputs for describing branch circuits and service feeders
@@ -33,6 +35,8 @@ __Bugfixes__
 - Fixes `SolarFraction` documentation/error-checking for solar thermal systems; must now be <= 0.99.
 - Fixes whole house fans so that they are unavailable during vacancies.
 - Fixes error if there's a vented attic with zero roof pitch.
+- Fixes tank loss coefficient when TankModelType=stratified for a conventional storage water heater.
+- Adds error-checking to ensure TankModelType=stratified is not used with a non-electric water heater.
 - BuildResidentialHPXML measure: Fixes error when specifying a combi boiler as the water heater type and a *shared* boiler as the heating system type.
 - BuildResidentialScheduleFile measure: Fixes out-of-sync shifting of occupancy and end use schedule resulting in activities even when there is no occupancy.
 - BuildResidentialScheduleFile measure: Fixes a small bug in sink schedule generation resulting in more concentrated schedule.

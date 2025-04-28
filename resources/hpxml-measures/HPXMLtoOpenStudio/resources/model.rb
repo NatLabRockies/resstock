@@ -387,6 +387,7 @@ module Model
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param name [String] Name for the OpenStudio object
   # @param rated_power [Double] Design power consumption (W)
+  # @param control_type [String] Pump control type (EPlus::PumpControlTypeXXX)
   # @return [OpenStudio::Model::PumpVariableSpeed] The model object
   def self.add_pump_variable_speed(model, name:, rated_power:, control_type: EPlus::PumpControlTypeIntermittent)
     pump = OpenStudio::Model::PumpVariableSpeed.new(model)
@@ -482,8 +483,10 @@ module Model
   # @param coeff [Array<Double>] Coefficients for the above equation
   # @param min_x [Double] Minimum allowable value for x
   # @param max_x [Double] Maximum allowable value for x
+  # @param min_y [Double] Minimum allowable value for y
+  # @param max_y [Double] Maximum allowable value for y
   # @return [OpenStudio::Model::CurveCubic] The model object
-  def self.add_curve_cubic(model, name:, coeff:, min_x: nil, max_x: nil, min_y: nil, max_y:nil)
+  def self.add_curve_cubic(model, name:, coeff:, min_x: nil, max_x: nil, min_y: nil, max_y: nil)
     curve = OpenStudio::Model::CurveCubic.new(model)
     curve.setName(name)
     curve.setCoefficient1Constant(coeff[0])

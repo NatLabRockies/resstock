@@ -349,7 +349,7 @@ class ApplyUpgradeTest < Minitest::Test
 
     hpxml.buildings.each do |hpxml_bldg|
       # Check for correct capacity values
-      hvac_system_upgrades = measure.get_hvac_system_upgrades(hpxml_bldg, [], args_hash)
+      hvac_system_upgrades = measure.get_hvac_system_upgrades(hpxml_bldg, args_hash)
       actual_capacities, actual_autosizing_factors, _ = measure.get_hvac_system_values(hpxml_bldg, hvac_system_upgrades)
 
       expected_capacities.each do |str, val|

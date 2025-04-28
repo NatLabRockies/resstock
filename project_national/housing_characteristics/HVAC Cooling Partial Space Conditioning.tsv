@@ -1,244 +1,484 @@
-Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	Dependency=Geometry Floor Area Bin	Dependency=HVAC Cooling Type	Option=<10% Conditioned	Option=20% Conditioned	Option=40% Conditioned	Option=60% Conditioned	Option=80% Conditioned	Option=100% Conditioned	Option=None	Option=Void	source_count	source_weight	sampling_probability
-1A	Mobile Home	0-1499	Central AC	0	0	0	7.68224e-05	0.00288286	0.99704	0	0	1.31789	3596.94	7.32947e-05
-1A	Mobile Home	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.30296	3028.83	0.000136095
-1A	Mobile Home	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Mobile Home	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.30296	366.719	2.28252e-06
-1A	Mobile Home	0-1499	None	0	0	0	0	0	0	1	0	0.143323	399.018	1.5211e-05
-1A	Mobile Home	0-1499	Room AC	0	0.0737307	0.0784096	0.289893	0.0101966	0.547771	0	0	2.03144	5918.6	4.22931e-05
-1A	Mobile Home	1500-2499	Central AC	0	0	0	0.000303778	0.00709169	0.992605	0	0	0.925949	2372.12	1.73258e-05
-1A	Mobile Home	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.50298	3205.83	3.20698e-05
-1A	Mobile Home	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Mobile Home	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.50298	388.15	3.61448e-07
-1A	Mobile Home	1500-2499	None	0	0	0	0	0	0	1	0	0.038023	96.7483	4.3184e-06
-1A	Mobile Home	1500-2499	Room AC	0	0.162965	0.123977	0.367629	0.0322408	0.313188	0	0	0.298952	772.152	8.78144e-06
-1A	Mobile Home	2500-3999	Central AC	0	0	0	0.000729563	0.0130003	0.98627	0	0	0.430404	1066.28	1.52195e-06
-1A	Mobile Home	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.391814	842.256	2.2995e-06
-1A	Mobile Home	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Mobile Home	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.391814	101.977	2.68252e-08
-1A	Mobile Home	2500-3999	None	0	0	0	0	0	0	1	0	0.0117001	29.1335	4.0236e-07
-1A	Mobile Home	2500-3999	Room AC	0	0.268905	0.114673	0.344098	0.0362628	0.236061	0	0	0.127528	321.662	6.0298e-07
-1A	Mobile Home	4000+	Central AC	0	0	0	0.000684542	0.013366	0.985949	0	0	0.0869234	217.283	2.01293e-07
-1A	Mobile Home	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0675344	123.968	3.52854e-07
-1A	Mobile Home	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Mobile Home	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0675344	15.0096	2.31283e-09
-1A	Mobile Home	4000+	None	0	0	0	0	0	0	1	0	0.0013841	3.32825	6.80628e-08
-1A	Mobile Home	4000+	Room AC	0	0.248355	0.0704758	0.311525	0.022507	0.347137	0	0	0.0118073	31.8415	1.24802e-07
-1A	Multi-Family with 2 - 4 Units	0-1499	Central AC	0	0	0	0.000173397	0.00121085	0.998616	0	0	14.5454	15198.9	0.000351165
-1A	Multi-Family with 2 - 4 Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.6465	1483.58	0.000262208
-1A	Multi-Family with 2 - 4 Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Multi-Family with 2 - 4 Units	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.6465	179.627	2.43233e-05
-1A	Multi-Family with 2 - 4 Units	0-1499	None	0	0	0	0	0	0	1	0	2.75659	2992.22	0.000149129
-1A	Multi-Family with 2 - 4 Units	0-1499	Room AC	0	0.0524096	0.150027	0.18043	0.0354822	0.581651	0	0	23.0235	26788.3	0.000147165
-1A	Multi-Family with 2 - 4 Units	1500-2499	Central AC	0	0	0	0.000687147	0.00298508	0.996328	0	0	10.2196	10023.4	6.16395e-05
-1A	Multi-Family with 2 - 4 Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.89925	1570.29	4.93202e-05
-1A	Multi-Family with 2 - 4 Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Multi-Family with 2 - 4 Units	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.89925	190.124	4.50476e-06
-1A	Multi-Family with 2 - 4 Units	1500-2499	None	0	0	0	0	0	0	1	0	0.731312	725.513	1.93416e-05
-1A	Multi-Family with 2 - 4 Units	1500-2499	Room AC	0	0.112836	0.231064	0.222881	0.109283	0.323936	0	0	3.38821	3494.86	1.99698e-05
-1A	Multi-Family with 2 - 4 Units	2500-3999	Central AC	0	0	0	0.00165508	0.00548812	0.992857	0	0	4.75031	4505.59	5.51482e-06
-1A	Multi-Family with 2 - 4 Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.495118	412.555	3.9535e-06
-1A	Multi-Family with 2 - 4 Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Multi-Family with 2 - 4 Units	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.495118	49.9506	2.99656e-07
-1A	Multi-Family with 2 - 4 Units	2500-3999	None	0	0	0	0	0	0	1	0	0.225032	218.471	4.0082e-06
-1A	Multi-Family with 2 - 4 Units	2500-3999	Room AC	0	0.190844	0.219068	0.213831	0.125989	0.250268	0	0	1.44535	1455.88	2.81034e-06
-1A	Multi-Family with 2 - 4 Units	4000+	Central AC	0	0	0	0.00155337	0.00564405	0.992803	0	0	0.959363	918.134	1.62201e-06
-1A	Multi-Family with 2 - 4 Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0853404	60.7222	9.33425e-07
-1A	Multi-Family with 2 - 4 Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Multi-Family with 2 - 4 Units	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0853404	7.35202	1.15828e-07
-1A	Multi-Family with 2 - 4 Units	4000+	None	0	0	0	0	0	0	1	0	0.026621	24.9584	1.09156e-06
-1A	Multi-Family with 2 - 4 Units	4000+	Room AC	0	0.185398	0.141615	0.203627	0.0822513	0.387109	0	0	0.133819	144.119	1.03039e-06
-1A	Multi-Family with 5+ Units	0-1499	Central AC	0	0	0	0.000173397	0.00121085	0.998616	0	0	14.5454	15198.9	0.00265535
-1A	Multi-Family with 5+ Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.6465	1483.58	0.00192838
-1A	Multi-Family with 5+ Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Multi-Family with 5+ Units	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.6465	179.627	7.59232e-05
-1A	Multi-Family with 5+ Units	0-1499	None	0	0	0	0	0	0	1	0	2.75659	2992.22	0.000756669
-1A	Multi-Family with 5+ Units	0-1499	Room AC	0	0.0524096	0.150027	0.18043	0.0354822	0.581651	0	0	23.0235	26788.3	0.000708084
-1A	Multi-Family with 5+ Units	1500-2499	Central AC	0	0	0	0.000687147	0.00298508	0.996328	0	0	10.2196	10023.4	0.000403575
-1A	Multi-Family with 5+ Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.89925	1570.29	0.000289923
-1A	Multi-Family with 5+ Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Multi-Family with 5+ Units	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.89925	190.124	1.10108e-05
-1A	Multi-Family with 5+ Units	1500-2499	None	0	0	0	0	0	0	1	0	0.731312	725.513	9.22178e-05
-1A	Multi-Family with 5+ Units	1500-2499	Room AC	0	0.112836	0.231064	0.222881	0.109283	0.323936	0	0	3.38821	3494.86	7.60081e-05
-1A	Multi-Family with 5+ Units	2500-3999	Central AC	0	0	0	0.00165508	0.00548812	0.992857	0	0	4.75031	4505.59	4.2172e-05
-1A	Multi-Family with 5+ Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.495118	412.555	2.72202e-05
-1A	Multi-Family with 5+ Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Multi-Family with 5+ Units	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.495118	49.9506	1.2299e-06
-1A	Multi-Family with 5+ Units	2500-3999	None	0	0	0	0	0	0	1	0	0.225032	218.471	7.88396e-06
-1A	Multi-Family with 5+ Units	2500-3999	Room AC	0	0.190844	0.219068	0.213831	0.125989	0.250268	0	0	1.44535	1455.88	4.02269e-06
-1A	Multi-Family with 5+ Units	4000+	Central AC	0	0	0	0.00155337	0.00564405	0.992803	0	0	0.959363	918.134	5.44618e-06
-1A	Multi-Family with 5+ Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0853404	60.7222	3.03442e-06
-1A	Multi-Family with 5+ Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Multi-Family with 5+ Units	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0853404	7.35202	2.26343e-07
-1A	Multi-Family with 5+ Units	4000+	None	0	0	0	0	0	0	1	0	0.026621	24.9584	2.12498e-06
-1A	Multi-Family with 5+ Units	4000+	Room AC	0	0.185398	0.141615	0.203627	0.0822513	0.387109	0	0	0.133819	144.119	1.16266e-06
-1A	Single-Family Attached	0-1499	Central AC	0	0	0	0.00198825	0.00723368	0.990778	0	0	251.604	239869	0.000361867
-1A	Single-Family Attached	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	65.3383	52405.1	0.000307457
-1A	Single-Family Attached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Single-Family Attached	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	65.3383	6345.01	1.15331e-05
-1A	Single-Family Attached	0-1499	None	0	0	0	0	0	0	1	0	10.8089	10477.2	0.000107638
-1A	Single-Family Attached	0-1499	Room AC	0	0.142835	0.171063	0.239529	0.0795097	0.367064	0	0	59.0369	63844.3	0.000110474
-1A	Single-Family Attached	1500-2499	Central AC	0	0	0	0.00776869	0.0175831	0.974648	0	0	176.776	158189	0.000271915
-1A	Single-Family Attached	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	75.3683	55467.7	0.000214453
-1A	Single-Family Attached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Single-Family Attached	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	75.3683	6715.82	8.1431e-06
-1A	Single-Family Attached	1500-2499	None	0	0	0	0	0	0	1	0	2.86756	2540.37	5.74783e-05
-1A	Single-Family Attached	1500-2499	Room AC	0	0.233645	0.200173	0.224806	0.186057	0.155319	0	0	8.68805	8329.25	5.5262e-05
-1A	Single-Family Attached	2500-3999	Central AC	0	0	0	0.0183039	0.0316218	0.950074	0	0	82.1699	71107	3.82734e-05
-1A	Single-Family Attached	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	19.6479	14572.8	2.81251e-05
-1A	Single-Family Attached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Single-Family Attached	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	19.6479	1764.42	1.12348e-06
-1A	Single-Family Attached	2500-3999	None	0	0	0	0	0	0	1	0	0.882376	764.974	8.69149e-06
-1A	Single-Family Attached	2500-3999	Room AC	0	0.34813	0.167189	0.190003	0.188966	0.105712	0	0	3.70617	3469.79	8.08567e-06
-1A	Single-Family Attached	4000+	Central AC	0	0	0	0.0171838	0.0325293	0.950287	0	0	16.5949	14489.9	6.77463e-06
-1A	Single-Family Attached	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	3.38659	2144.91	5.31257e-06
-1A	Single-Family Attached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Single-Family Attached	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	3.38659	259.698	9.45167e-08
-1A	Single-Family Attached	4000+	None	0	0	0	0	0	0	1	0	0.104384	87.3916	1.52994e-06
-1A	Single-Family Attached	4000+	Room AC	0	0.369982	0.118236	0.197941	0.13496	0.178882	0	0	0.343139	343.476	2.09206e-06
-1A	Single-Family Detached	0-1499	Central AC	0	0	0	0.00198825	0.00723368	0.990778	0	0	251.604	239869	0.00101235
-1A	Single-Family Detached	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	65.3383	52405.1	0.000838905
-1A	Single-Family Detached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Single-Family Detached	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	65.3383	6345.01	5.81089e-05
-1A	Single-Family Detached	0-1499	None	0	0	0	0	0	0	1	0	10.8089	10477.2	0.000397057
-1A	Single-Family Detached	0-1499	Room AC	0	0.142835	0.171063	0.239529	0.0795097	0.367064	0	0	59.0369	63844.3	0.000331696
-1A	Single-Family Detached	1500-2499	Central AC	0	0	0	0.00776869	0.0175831	0.974648	0	0	176.776	158189	0.00132445
-1A	Single-Family Detached	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	75.3683	55467.7	0.00122277
-1A	Single-Family Detached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Single-Family Detached	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	75.3683	6715.82	7.15858e-05
-1A	Single-Family Detached	1500-2499	None	0	0	0	0	0	0	1	0	2.86756	2540.37	0.000448368
-1A	Single-Family Detached	1500-2499	Room AC	0	0.233645	0.200173	0.224806	0.186057	0.155319	0	0	8.68805	8329.25	0.000367629
-1A	Single-Family Detached	2500-3999	Central AC	0	0	0	0.0183039	0.0316218	0.950074	0	0	82.1699	71107	0.000587135
-1A	Single-Family Detached	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	19.6479	14572.8	0.000537351
-1A	Single-Family Detached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Single-Family Detached	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	19.6479	1764.42	2.82904e-05
-1A	Single-Family Detached	2500-3999	None	0	0	0	0	0	0	1	0	0.882376	764.974	0.000159776
-1A	Single-Family Detached	2500-3999	Room AC	0	0.34813	0.167189	0.190003	0.188966	0.105712	0	0	3.70617	3469.79	0.000121028
-1A	Single-Family Detached	4000+	Central AC	0	0	0	0.0171838	0.0325293	0.950287	0	0	16.5949	14489.9	0.000117484
-1A	Single-Family Detached	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	3.38659	2144.91	0.000104894
-1A	Single-Family Detached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-1A	Single-Family Detached	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	3.38659	259.698	5.05355e-06
-1A	Single-Family Detached	4000+	None	0	0	0	0	0	0	1	0	0.104384	87.3916	3.30415e-05
-1A	Single-Family Detached	4000+	Room AC	0	0.369982	0.118236	0.197941	0.13496	0.178882	0	0	0.343139	343.476	2.75337e-05
-2A	Mobile Home	0-1499	Central AC	0	0	0	7.68224e-05	0.00288286	0.99704	0	0	1.31789	29102.5	0.00289541
-2A	Mobile Home	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.30296	24506	0.00359409
-2A	Mobile Home	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Mobile Home	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.30296	2967.09	4.73066e-05
-2A	Mobile Home	0-1499	None	0	0	0	0	0	0	1	0	0.143323	3228.42	0.000387457
-2A	Mobile Home	0-1499	Room AC	0	0.0737307	0.0784096	0.289893	0.0101966	0.547771	0	0	2.03144	47886.8	0.00151741
-2A	Mobile Home	1500-2499	Central AC	0	0	0	0.000303778	0.00709169	0.992605	0	0	0.925949	19192.6	0.00094335
-2A	Mobile Home	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.50298	25938.1	0.00107876
-2A	Mobile Home	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Mobile Home	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.50298	3140.49	1.04188e-05
-2A	Mobile Home	1500-2499	None	0	0	0	0	0	0	1	0	0.038023	782.782	0.000126873
-2A	Mobile Home	1500-2499	Room AC	0	0.162965	0.123977	0.367629	0.0322408	0.313188	0	0	0.298952	6247.41	0.000419542
-2A	Mobile Home	2500-3999	Central AC	0	0	0	0.000729563	0.0130003	0.98627	0	0	0.430404	8627.18	8.15825e-05
-2A	Mobile Home	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.391814	6814.61	8.90782e-05
-2A	Mobile Home	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Mobile Home	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.391814	825.088	9.36406e-07
-2A	Mobile Home	2500-3999	None	0	0	0	0	0	0	1	0	0.0117001	235.716	1.17487e-05
-2A	Mobile Home	2500-3999	Room AC	0	0.268905	0.114673	0.344098	0.0362628	0.236061	0	0	0.127528	2602.53	3.36659e-05
-2A	Mobile Home	4000+	Central AC	0	0	0	0.000684542	0.013366	0.985949	0	0	0.0869234	1758.02	4.25683e-05
-2A	Mobile Home	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0675344	1003.02	3.80893e-05
-2A	Mobile Home	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Mobile Home	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0675344	121.441	6.30034e-08
-2A	Mobile Home	4000+	None	0	0	0	0	0	0	1	0	0.0013841	26.9286	4.62181e-06
-2A	Mobile Home	4000+	Room AC	0	0.248355	0.0704758	0.311525	0.022507	0.347137	0	0	0.0118073	257.627	2.87577e-05
-2A	Multi-Family with 2 - 4 Units	0-1499	Central AC	0	0	0	0.000173397	0.00121085	0.998616	0	0	14.5454	122973	0.00296941
-2A	Multi-Family with 2 - 4 Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.6465	12003.5	0.00199928
-2A	Multi-Family with 2 - 4 Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Multi-Family with 2 - 4 Units	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.6465	1453.34	0.000115463
-2A	Multi-Family with 2 - 4 Units	0-1499	None	0	0	0	0	0	0	1	0	2.75659	24209.8	0.000402658
-2A	Multi-Family with 2 - 4 Units	0-1499	Room AC	0	0.0524096	0.150027	0.18043	0.0354822	0.581651	0	0	23.0235	216742	0.000518338
-2A	Multi-Family with 2 - 4 Units	1500-2499	Central AC	0	0	0	0.000687147	0.00298508	0.996328	0	0	10.2196	81098.7	0.000419531
-2A	Multi-Family with 2 - 4 Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.89925	12705	0.000338224
-2A	Multi-Family with 2 - 4 Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Multi-Family with 2 - 4 Units	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.89925	1538.28	2.948e-05
-2A	Multi-Family with 2 - 4 Units	1500-2499	None	0	0	0	0	0	0	1	0	0.731312	5870.06	5.09548e-05
-2A	Multi-Family with 2 - 4 Units	1500-2499	Room AC	0	0.112836	0.231064	0.222881	0.109283	0.323936	0	0	3.38821	28276.6	5.75416e-05
-2A	Multi-Family with 2 - 4 Units	2500-3999	Central AC	0	0	0	0.00165508	0.00548812	0.992857	0	0	4.75031	36454.3	3.68025e-05
-2A	Multi-Family with 2 - 4 Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.495118	3337.94	2.87558e-05
-2A	Multi-Family with 2 - 4 Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Multi-Family with 2 - 4 Units	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.495118	404.145	3.48217e-06
-2A	Multi-Family with 2 - 4 Units	2500-3999	None	0	0	0	0	0	0	1	0	0.225032	1767.63	4.57854e-06
-2A	Multi-Family with 2 - 4 Units	2500-3999	Room AC	0	0.190844	0.219068	0.213831	0.125989	0.250268	0	0	1.44535	11779.4	6.10479e-06
-2A	Multi-Family with 2 - 4 Units	4000+	Central AC	0	0	0	0.00155337	0.00564405	0.992803	0	0	0.959363	7428.54	2.05303e-05
-2A	Multi-Family with 2 - 4 Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0853404	491.298	8.52354e-06
-2A	Multi-Family with 2 - 4 Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Multi-Family with 2 - 4 Units	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0853404	59.4845	5.6916e-07
-2A	Multi-Family with 2 - 4 Units	4000+	None	0	0	0	0	0	0	1	0	0.026621	201.937	2.58956e-06
-2A	Multi-Family with 2 - 4 Units	4000+	Room AC	0	0.185398	0.141615	0.203627	0.0822513	0.387109	0	0	0.133819	1166.05	4.96886e-06
-2A	Multi-Family with 5+ Units	0-1499	Central AC	0	0	0	0.000173397	0.00121085	0.998616	0	0	14.5454	122973	0.0099408
-2A	Multi-Family with 5+ Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.6465	12003.5	0.00733974
-2A	Multi-Family with 5+ Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Multi-Family with 5+ Units	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.6465	1453.34	0.000268325
-2A	Multi-Family with 5+ Units	0-1499	None	0	0	0	0	0	0	1	0	2.75659	24209.8	0.00117537
-2A	Multi-Family with 5+ Units	0-1499	Room AC	0	0.0524096	0.150027	0.18043	0.0354822	0.581651	0	0	23.0235	216742	0.0010808
-2A	Multi-Family with 5+ Units	1500-2499	Central AC	0	0	0	0.000687147	0.00298508	0.996328	0	0	10.2196	81098.7	0.00111736
-2A	Multi-Family with 5+ Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.89925	12705	0.000799283
-2A	Multi-Family with 5+ Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Multi-Family with 5+ Units	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.89925	1538.28	2.96748e-05
-2A	Multi-Family with 5+ Units	1500-2499	None	0	0	0	0	0	0	1	0	0.731312	5870.06	0.000120757
-2A	Multi-Family with 5+ Units	1500-2499	Room AC	0	0.112836	0.231064	0.222881	0.109283	0.323936	0	0	3.38821	28276.6	9.59267e-05
-2A	Multi-Family with 5+ Units	2500-3999	Central AC	0	0	0	0.00165508	0.00548812	0.992857	0	0	4.75031	36454.3	8.97842e-05
-2A	Multi-Family with 5+ Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.495118	3337.94	6.04131e-05
-2A	Multi-Family with 5+ Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Multi-Family with 5+ Units	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.495118	404.145	2.49351e-06
-2A	Multi-Family with 5+ Units	2500-3999	None	0	0	0	0	0	0	1	0	0.225032	1767.63	1.21335e-05
-2A	Multi-Family with 5+ Units	2500-3999	Room AC	0	0.190844	0.219068	0.213831	0.125989	0.250268	0	0	1.44535	11779.4	5.88349e-06
-2A	Multi-Family with 5+ Units	4000+	Central AC	0	0	0	0.00155337	0.00564405	0.992803	0	0	0.959363	7428.54	1.5584e-05
-2A	Multi-Family with 5+ Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0853404	491.298	1.14328e-05
-2A	Multi-Family with 5+ Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Multi-Family with 5+ Units	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0853404	59.4845	7.22289e-07
-2A	Multi-Family with 5+ Units	4000+	None	0	0	0	0	0	0	1	0	0.026621	201.937	2.97963e-06
-2A	Multi-Family with 5+ Units	4000+	Room AC	0	0.185398	0.141615	0.203627	0.0822513	0.387109	0	0	0.133819	1166.05	1.44808e-06
-2A	Single-Family Attached	0-1499	Central AC	0	0	0	0.00198825	0.00723368	0.990778	0	0	251.604	1.94076e+06	0.00124658
-2A	Single-Family Attached	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	65.3383	424005	0.000813513
-2A	Single-Family Attached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Single-Family Attached	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	65.3383	51336.9	3.02017e-05
-2A	Single-Family Attached	0-1499	None	0	0	0	0	0	0	1	0	10.8089	84770.3	8.09186e-05
-2A	Single-Family Attached	0-1499	Room AC	0	0.142835	0.171063	0.239529	0.0795097	0.367064	0	0	59.0369	516558	0.000201647
-2A	Single-Family Attached	1500-2499	Central AC	0	0	0	0.00776869	0.0175831	0.974648	0	0	176.776	1.2799e+06	0.00100811
-2A	Single-Family Attached	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	75.3683	448784	0.000655667
-2A	Single-Family Attached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Single-Family Attached	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	75.3683	54337.1	2.35948e-05
-2A	Single-Family Attached	1500-2499	None	0	0	0	0	0	0	1	0	2.86756	20553.9	6.13713e-05
-2A	Single-Family Attached	1500-2499	Room AC	0	0.233645	0.200173	0.224806	0.186057	0.155319	0	0	8.68805	67391.2	0.000111004
-2A	Single-Family Attached	2500-3999	Central AC	0	0	0	0.0183039	0.0316218	0.950074	0	0	82.1699	575320	0.000155344
-2A	Single-Family Attached	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	19.6479	117907	9.26671e-05
-2A	Single-Family Attached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Single-Family Attached	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	19.6479	14275.8	2.77849e-06
-2A	Single-Family Attached	2500-3999	None	0	0	0	0	0	0	1	0	0.882376	6189.33	8.89719e-06
-2A	Single-Family Attached	2500-3999	Room AC	0	0.34813	0.167189	0.190003	0.188966	0.105712	0	0	3.70617	28073.7	1.87102e-05
-2A	Single-Family Attached	4000+	Central AC	0	0	0	0.0171838	0.0325293	0.950287	0	0	16.5949	117237	4.13911e-05
-2A	Single-Family Attached	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	3.38659	17354.3	2.03122e-05
-2A	Single-Family Attached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Single-Family Attached	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	3.38659	2101.19	5.05349e-07
-2A	Single-Family Attached	4000+	None	0	0	0	0	0	0	1	0	0.104384	707.078	2.35617e-06
-2A	Single-Family Attached	4000+	Room AC	0	0.369982	0.118236	0.197941	0.13496	0.178882	0	0	0.343139	2779.04	4.93048e-06
-2A	Single-Family Detached	0-1499	Central AC	0	0	0	0.00198825	0.00723368	0.990778	0	0	251.604	1.94076e+06	0.0116059
-2A	Single-Family Detached	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	65.3383	424005	0.00677504
-2A	Single-Family Detached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Single-Family Detached	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	65.3383	51336.9	0.000351753
-2A	Single-Family Detached	0-1499	None	0	0	0	0	0	0	1	0	10.8089	84770.3	0.00063832
-2A	Single-Family Detached	0-1499	Room AC	0	0.142835	0.171063	0.239529	0.0795097	0.367064	0	0	59.0369	516558	0.00236278
-2A	Single-Family Detached	1500-2499	Central AC	0	0	0	0.00776869	0.0175831	0.974648	0	0	176.776	1.2799e+06	0.0176977
-2A	Single-Family Detached	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	75.3683	448784	0.0107117
-2A	Single-Family Detached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Single-Family Detached	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	75.3683	54337.1	0.000417135
-2A	Single-Family Detached	1500-2499	None	0	0	0	0	0	0	1	0	2.86756	20553.9	0.000902477
-2A	Single-Family Detached	1500-2499	Room AC	0	0.233645	0.200173	0.224806	0.186057	0.155319	0	0	8.68805	67391.2	0.00213944
-2A	Single-Family Detached	2500-3999	Central AC	0	0	0	0.0183039	0.0316218	0.950074	0	0	82.1699	575320	0.00811666
-2A	Single-Family Detached	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	19.6479	117907	0.00475228
-2A	Single-Family Detached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Single-Family Detached	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	19.6479	14275.8	0.000145914
-2A	Single-Family Detached	2500-3999	None	0	0	0	0	0	0	1	0	0.882376	6189.33	0.000392869
-2A	Single-Family Detached	2500-3999	Room AC	0	0.34813	0.167189	0.190003	0.188966	0.105712	0	0	3.70617	28073.7	0.00065724
-2A	Single-Family Detached	4000+	Central AC	0	0	0	0.0171838	0.0325293	0.950287	0	0	16.5949	117237	0.00184766
-2A	Single-Family Detached	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	3.38659	17354.3	0.00104558
-2A	Single-Family Detached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
-2A	Single-Family Detached	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	3.38659	2101.19	2.53597e-05
-2A	Single-Family Detached	4000+	None	0	0	0	0	0	0	1	0	0.104384	707.078	8.48657e-05
-2A	Single-Family Detached	4000+	Room AC	0	0.369982	0.118236	0.197941	0.13496	0.178882	0	0	0.343139	2779.04	0.000143282
+Dependency=ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	Dependency=Geometry Building Type RECS	Dependency=Geometry Floor Area Bin	Dependency=HVAC Cooling Type	Option=<10% Conditioned	Option=20% Conditioned	Option=40% Conditioned	Option=60% Conditioned	Option=80% Conditioned	Option=100% Conditioned	Option=None	Option=Void	source_count	source_weight	sampling_probability
+1A - FL	Mobile Home	0-1499	Central AC	0	0	0	4.66794e-05	0.00203169	0.997922	0	0	0.737925	2999.83	7.16156e-05
+1A - FL	Mobile Home	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.22225	4589.09	0.00013555
+1A - FL	Mobile Home	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Mobile Home	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.22225	555.629	2.16742e-06
+1A - FL	Mobile Home	0-1499	None	0	0	0	0	0	0	1	0	0.0852192	366.128	1.28146e-05
+1A - FL	Mobile Home	0-1499	Room AC	0	0.0749635	0.0850279	0.265207	0.00425548	0.570547	0	0	0.925208	4292.23	4.02499e-05
+1A - FL	Mobile Home	1500-2499	Central AC	0	0	0	0.000184831	0.00500453	0.994811	0	0	0.518465	1978.34	1.66442e-05
+1A - FL	Mobile Home	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.40987	4857.28	3.18827e-05
+1A - FL	Mobile Home	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Mobile Home	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.40987	588.101	3.30371e-07
+1A - FL	Mobile Home	1500-2499	None	0	0	0	0	0	0	1	0	0.0226083	88.7735	3.56234e-06
+1A - FL	Mobile Home	1500-2499	Room AC	0	0.169743	0.137731	0.344551	0.0137846	0.33419	0	0	0.136156	559.972	8.11181e-06
+1A - FL	Mobile Home	2500-3999	Central AC	0	0	0	0.000444749	0.00919181	0.990363	0	0	0.240995	889.275	1.46764e-06
+1A - FL	Mobile Home	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.367542	1276.13	2.28364e-06
+1A - FL	Mobile Home	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Mobile Home	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.367542	154.509	2.18165e-08
+1A - FL	Mobile Home	2500-3999	None	0	0	0	0	0	0	1	0	0.0069568	26.7321	3.19346e-07
+1A - FL	Mobile Home	2500-3999	Room AC	0	0.280826	0.12773	0.323345	0.0155451	0.252554	0	0	0.058082	233.272	5.28504e-07
+1A - FL	Mobile Home	4000+	Central AC	0	0	0	0.000417342	0.00945127	0.990131	0	0	0.0486709	181.213	1.66515e-07
+1A - FL	Mobile Home	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0633509	187.829	3.44525e-07
+1A - FL	Mobile Home	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Mobile Home	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0633509	22.7416	1.00023e-09
+1A - FL	Mobile Home	4000+	None	0	0	0	0	0	0	1	0	0.00082298	3.05391	3.60082e-08
+1A - FL	Mobile Home	4000+	Room AC	0	0.256381	0.0775966	0.289369	0.00953725	0.367117	0	0	0.00537756	23.0918	9.6393e-08
+1A - FL	Multi-Family with 2 - 4 Units	0-1499	Central AC	0	0	0	0.000105312	0.000852951	0.999042	0	0	8.14439	12675.9	0.000312145
+1A - FL	Multi-Family with 2 - 4 Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.5445	2247.83	0.000256721
+1A - FL	Multi-Family with 2 - 4 Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Multi-Family with 2 - 4 Units	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.5445	272.159	2.23271e-05
+1A - FL	Multi-Family with 2 - 4 Units	0-1499	None	0	0	0	0	0	0	1	0	1.63906	2745.58	4.83431e-05
+1A - FL	Multi-Family with 2 - 4 Units	0-1499	Room AC	0	0.0531962	0.162416	0.164788	0.0147833	0.604816	0	0	10.486	19427.2	7.92529e-05
+1A - FL	Multi-Family with 2 - 4 Units	1500-2499	Central AC	0	0	0	0.000417643	0.0021043	0.997478	0	0	5.72224	8359.52	5.67279e-05
+1A - FL	Multi-Family with 2 - 4 Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.7816	2379.2	4.85289e-05
+1A - FL	Multi-Family with 2 - 4 Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Multi-Family with 2 - 4 Units	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.7816	288.064	4.24259e-06
+1A - FL	Multi-Family with 2 - 4 Units	1500-2499	None	0	0	0	0	0	0	1	0	0.434834	665.71	7.76452e-06
+1A - FL	Multi-Family with 2 - 4 Units	1500-2499	Room AC	0	0.120481	0.263144	0.214136	0.0478977	0.354341	0	0	1.54314	2534.51	1.27709e-05
+1A - FL	Multi-Family with 2 - 4 Units	2500-3999	Central AC	0	0	0	0.00100708	0.00387313	0.99512	0	0	2.65983	3757.65	3.64403e-06
+1A - FL	Multi-Family with 2 - 4 Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.464447	625.076	3.78026e-06
+1A - FL	Multi-Family with 2 - 4 Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Multi-Family with 2 - 4 Units	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.464447	75.6819	2.608e-07
+1A - FL	Multi-Family with 2 - 4 Units	2500-3999	None	0	0	0	0	0	0	1	0	0.133803	200.463	5.09736e-07
+1A - FL	Multi-Family with 2 - 4 Units	2500-3999	Room AC	0	0.206317	0.252596	0.208005	0.055909	0.277174	0	0	0.658279	1055.82	1.25652e-06
+1A - FL	Multi-Family with 2 - 4 Units	4000+	Central AC	0	0	0	0.000945194	0.0039832	0.995072	0	0	0.537175	765.721	1.39936e-06
+1A - FL	Multi-Family with 2 - 4 Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0800539	92.0025	8.97221e-07
+1A - FL	Multi-Family with 2 - 4 Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Multi-Family with 2 - 4 Units	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0800539	11.1393	1.01596e-07
+1A - FL	Multi-Family with 2 - 4 Units	4000+	None	0	0	0	0	0	0	1	0	0.0158287	22.9012	2.85336e-07
+1A - FL	Multi-Family with 2 - 4 Units	4000+	Room AC	0	0.195155	0.158992	0.192867	0.0355395	0.417446	0	0	0.0609473	104.516	4.78569e-07
+1A - FL	Multi-Family with 5+ Units	0-1499	Central AC	0	0	0	0.000105312	0.000852951	0.999042	0	0	8.14439	12675.9	0.00246783
+1A - FL	Multi-Family with 5+ Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.5445	2247.83	0.00189125
+1A - FL	Multi-Family with 5+ Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Multi-Family with 5+ Units	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.5445	272.159	6.14147e-05
+1A - FL	Multi-Family with 5+ Units	0-1499	None	0	0	0	0	0	0	1	0	1.63906	2745.58	0.00023581
+1A - FL	Multi-Family with 5+ Units	0-1499	Room AC	0	0.0531962	0.162416	0.164788	0.0147833	0.604816	0	0	10.486	19427.2	0.000349538
+1A - FL	Multi-Family with 5+ Units	1500-2499	Central AC	0	0	0	0.000417643	0.0021043	0.997478	0	0	5.72224	8359.52	0.000383564
+1A - FL	Multi-Family with 5+ Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.7816	2379.2	0.000286288
+1A - FL	Multi-Family with 5+ Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Multi-Family with 5+ Units	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.7816	288.064	9.58092e-06
+1A - FL	Multi-Family with 5+ Units	1500-2499	None	0	0	0	0	0	0	1	0	0.434834	665.71	3.8737e-05
+1A - FL	Multi-Family with 5+ Units	1500-2499	Room AC	0	0.120481	0.263144	0.214136	0.0478977	0.354341	0	0	1.54314	2534.51	4.10278e-05
+1A - FL	Multi-Family with 5+ Units	2500-3999	Central AC	0	0	0	0.00100708	0.00387313	0.99512	0	0	2.65983	3757.65	4.09644e-05
+1A - FL	Multi-Family with 5+ Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.464447	625.076	2.69248e-05
+1A - FL	Multi-Family with 5+ Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Multi-Family with 5+ Units	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.464447	75.6819	1.14743e-06
+1A - FL	Multi-Family with 5+ Units	2500-3999	None	0	0	0	0	0	0	1	0	0.133803	200.463	5.38891e-06
+1A - FL	Multi-Family with 5+ Units	2500-3999	Room AC	0	0.206317	0.252596	0.208005	0.055909	0.277174	0	0	0.658279	1055.82	2.62559e-06
+1A - FL	Multi-Family with 5+ Units	4000+	Central AC	0	0	0	0.000945194	0.0039832	0.995072	0	0	0.537175	765.721	5.07806e-06
+1A - FL	Multi-Family with 5+ Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0800539	92.0025	2.96276e-06
+1A - FL	Multi-Family with 5+ Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Multi-Family with 5+ Units	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0800539	11.1393	1.94173e-07
+1A - FL	Multi-Family with 5+ Units	4000+	None	0	0	0	0	0	0	1	0	0.0158287	22.9012	8.44337e-07
+1A - FL	Multi-Family with 5+ Units	4000+	Room AC	0	0.195155	0.158992	0.192867	0.0355395	0.417446	0	0	0.0609473	104.516	2.60989e-07
+1A - FL	Single-Family Attached	0-1499	Central AC	0	0	0	0.00121059	0.00510834	0.993681	0	0	140.88	200050	0.000308117
+1A - FL	Single-Family Attached	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	61.2908	79400.9	0.000286866
+1A - FL	Single-Family Attached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Single-Family Attached	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	61.2908	9613.56	6.56634e-06
+1A - FL	Single-Family Attached	0-1499	None	0	0	0	0	0	0	1	0	6.42692	9613.61	2.42356e-05
+1A - FL	Single-Family Attached	0-1499	Room AC	0	0.150433	0.192157	0.226993	0.0343733	0.396043	0	0	26.8881	46300.5	4.35472e-05
+1A - FL	Single-Family Attached	1500-2499	Central AC	0	0	0	0.00475556	0.0124837	0.982761	0	0	98.9821	131929	0.000242531
+1A - FL	Single-Family Attached	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	70.6995	84041.1	0.000203662
+1A - FL	Single-Family Attached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Single-Family Attached	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	70.6995	10175.4	5.58656e-06
+1A - FL	Single-Family Attached	1500-2499	None	0	0	0	0	0	0	1	0	1.70503	2330.97	1.64226e-05
+1A - FL	Single-Family Attached	1500-2499	Room AC	0	0.264031	0.241266	0.228588	0.0863054	0.17981	0	0	3.95693	6040.46	2.35358e-05
+1A - FL	Single-Family Attached	2500-3999	Central AC	0	0	0	0.0112991	0.0226404	0.96606	0	0	46.0093	59303	3.27875e-05
+1A - FL	Single-Family Attached	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	18.4308	22079.8	2.64071e-05
+1A - FL	Single-Family Attached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Single-Family Attached	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	18.4308	2673.34	6.61956e-07
+1A - FL	Single-Family Attached	2500-3999	None	0	0	0	0	0	0	1	0	0.524656	701.918	2.5276e-06
+1A - FL	Single-Family Attached	2500-3999	Room AC	0	0.394135	0.201883	0.193557	0.087817	0.122608	0	0	1.68796	2516.32	3.68547e-06
+1A - FL	Single-Family Attached	4000+	Central AC	0	0	0	0.0106058	0.0232861	0.966108	0	0	9.29194	12084.6	6.16877e-06
+1A - FL	Single-Family Attached	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	3.1768	3249.83	4.95736e-06
+1A - FL	Single-Family Attached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Single-Family Attached	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	3.1768	393.478	5.93472e-08
+1A - FL	Single-Family Attached	4000+	None	0	0	0	0	0	0	1	0	0.0620661	80.1881	4.7756e-07
+1A - FL	Single-Family Attached	4000+	Room AC	0	0.405304	0.138146	0.195111	0.0606873	0.200751	0	0	0.156281	249.092	1.05424e-06
+1A - FL	Single-Family Detached	0-1499	Central AC	0	0	0	0.00121059	0.00510834	0.993681	0	0	140.88	200050	0.000880407
+1A - FL	Single-Family Detached	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	61.2908	79400.9	0.000788071
+1A - FL	Single-Family Detached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Single-Family Detached	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	61.2908	9613.56	4.21576e-05
+1A - FL	Single-Family Detached	0-1499	None	0	0	0	0	0	0	1	0	6.42692	9613.61	6.05918e-05
+1A - FL	Single-Family Detached	0-1499	Room AC	0	0.150433	0.192157	0.226993	0.0343733	0.396043	0	0	26.8881	46300.5	8.22415e-05
+1A - FL	Single-Family Detached	1500-2499	Central AC	0	0	0	0.00475556	0.0124837	0.982761	0	0	98.9821	131929	0.00114982
+1A - FL	Single-Family Detached	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	70.6995	84041.1	0.00115414
+1A - FL	Single-Family Detached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Single-Family Detached	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	70.6995	10175.4	5.41671e-05
+1A - FL	Single-Family Detached	1500-2499	None	0	0	0	0	0	0	1	0	1.70503	2330.97	8.28908e-05
+1A - FL	Single-Family Detached	1500-2499	Room AC	0	0.264031	0.241266	0.228588	0.0863054	0.17981	0	0	3.95693	6040.46	8.837e-05
+1A - FL	Single-Family Detached	2500-3999	Central AC	0	0	0	0.0112991	0.0226404	0.96606	0	0	46.0093	59303	0.000505478
+1A - FL	Single-Family Detached	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	18.4308	22079.8	0.000510281
+1A - FL	Single-Family Detached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Single-Family Detached	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	18.4308	2673.34	2.18541e-05
+1A - FL	Single-Family Detached	2500-3999	None	0	0	0	0	0	0	1	0	0.524656	701.918	3.47725e-05
+1A - FL	Single-Family Detached	2500-3999	Room AC	0	0.394135	0.201883	0.193557	0.087817	0.122608	0	0	1.68796	2516.32	3.20109e-05
+1A - FL	Single-Family Detached	4000+	Central AC	0	0	0	0.0106058	0.0232861	0.966108	0	0	9.29194	12084.6	0.000100554
+1A - FL	Single-Family Detached	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	3.1768	3249.83	9.95147e-05
+1A - FL	Single-Family Detached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+1A - FL	Single-Family Detached	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	3.1768	393.478	3.76776e-06
+1A - FL	Single-Family Detached	4000+	None	0	0	0	0	0	0	1	0	0.0620661	80.1881	6.51897e-06
+1A - FL	Single-Family Detached	4000+	Room AC	0	0.405304	0.138146	0.195111	0.0606873	0.200751	0	0	0.156281	249.092	5.99555e-06
+1A - HI	Mobile Home	0-1499	Central AC	0	0	0	0	0	1	0	0	0.0343508	66.5848	4.66894e-07
+1A - HI	Mobile Home	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	8.78752e-19	1.1142e-18	5.4585e-07
+1A - HI	Mobile Home	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	2.10087e-18	1.7383e-18	0
+1A - HI	Mobile Home	0-1499	Non-Ducted Heat Pump	0	0.0511959	0.0953194	0.35693	0	0.496555	0	0	0.0468326	114.607	1.15096e-07
+1A - HI	Mobile Home	0-1499	None	0	0	0	0	0	0	1	0	0.713632	1392.72	2.76009e-06
+1A - HI	Mobile Home	0-1499	Room AC	0	0.229672	0.204556	0.351963	0.131021	0.0827878	0	0	1.84372	3382.11	2.89173e-06
+1A - HI	Mobile Home	1500-2499	Central AC	0	0	0	0	0	1	0	0	0.0307721	48.6488	1.59831e-07
+1A - HI	Mobile Home	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	6.41122e-19	6.97095e-19	1.87106e-07
+1A - HI	Mobile Home	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	1.53878e-18	1.10707e-18	0
+1A - HI	Mobile Home	1500-2499	Non-Ducted Heat Pump	0	0.0872831	0.107514	0.537113	0	0.268089	0	0	0.0369342	59.3779	3.10773e-08
+1A - HI	Mobile Home	1500-2499	None	0	0	0	0	0	0	1	0	0.20279	297.033	9.56765e-07
+1A - HI	Mobile Home	1500-2499	Room AC	0	0.517101	0.196087	0.186606	0.067154	0.0330515	0	0	0.298288	408.605	9.90776e-07
+1A - HI	Mobile Home	2500-3999	Central AC	0	0	0	0	0	1	0	0	0.0138708	20.5367	1.47284e-08
+1A - HI	Mobile Home	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.84677e-19	1.89418e-19	1.58595e-08
+1A - HI	Mobile Home	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	9.95605e-20	5.76288e-20	0
+1A - HI	Mobile Home	2500-3999	Non-Ducted Heat Pump	0	0.161473	0.167067	0.555056	0	0.116404	0	0	0.0162245	26.4057	5.00863e-09
+1A - HI	Mobile Home	2500-3999	None	0	0	0	0	0	0	1	0	0.0290686	37.3412	9.70162e-08
+1A - HI	Mobile Home	2500-3999	Room AC	0	0.554103	0.179285	0.137903	0.109854	0.0188551	0	0	0.0427165	48.9651	1.00059e-07
+1A - HI	Mobile Home	4000+	Central AC	0	0	0	0	0	1	0	0	0.00121883	1.75197	7.95592e-09
+1A - HI	Mobile Home	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.18401e-20	1.05567e-20	8.32874e-09
+1A - HI	Mobile Home	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	1.52459e-20	1.35512e-20	0
+1A - HI	Mobile Home	4000+	Non-Ducted Heat Pump	0	0.157113	0.264283	0.578604	0	0	0	0	0.0005681	0.771723	1.3126e-09
+1A - HI	Mobile Home	4000+	None	0	0	0	0	0	0	1	0	0.00136055	1.94088	4.26366e-08
+1A - HI	Mobile Home	4000+	Room AC	0	0.625971	0.175013	0.187186	0	0.0118289	0	0	0.00142523	1.71812	4.46488e-08
+1A - HI	Multi-Family with 2 - 4 Units	0-1499	Central AC	0	0	0	0	0	1	0	0	0.0399924	102.609	1.10561e-05
+1A - HI	Multi-Family with 2 - 4 Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	2.05554e-19	2.6226e-19	5.48642e-06
+1A - HI	Multi-Family with 2 - 4 Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	1.36469e-19	1.98336e-19	0
+1A - HI	Multi-Family with 2 - 4 Units	0-1499	Non-Ducted Heat Pump	0	0.0837566	0.0882991	0.662253	0.165691	0	0	0	0.0148078	45.8307	1.99621e-06
+1A - HI	Multi-Family with 2 - 4 Units	0-1499	None	0	0	0	0	0	0	1	0	2.82215	7509.01	9.64496e-05
+1A - HI	Multi-Family with 2 - 4 Units	0-1499	Room AC	0.00222153	0.263945	0.202092	0.315852	0.136845	0.0790451	0	0	4.4614	11768.5	0.000100213
+1A - HI	Multi-Family with 2 - 4 Units	1500-2499	Central AC	0	0	0	0	0	1	0	0	0.0358259	74.9694	1.22756e-06
+1A - HI	Multi-Family with 2 - 4 Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.49969e-19	1.64082e-19	7.91215e-07
+1A - HI	Multi-Family with 2 - 4 Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	9.99567e-20	1.26315e-19	0
+1A - HI	Multi-Family with 2 - 4 Units	1500-2499	Non-Ducted Heat Pump	0	0.0977242	0.06816	0.682017	0.152099	0	0	0	0.0116781	23.745	2.62175e-07
+1A - HI	Multi-Family with 2 - 4 Units	1500-2499	None	0	0	0	0	0	0	1	0	0.80196	1601.49	1.1019e-05
+1A - HI	Multi-Family with 2 - 4 Units	1500-2499	Room AC	0.0235116	0.548923	0.178945	0.154684	0.0647876	0.0291496	0	0	0.721789	1421.8	1.14411e-05
+1A - HI	Multi-Family with 2 - 4 Units	2500-3999	Central AC	0	0	0	0	0	1	0	0	0.0161489	31.6478	3.43405e-07
+1A - HI	Multi-Family with 2 - 4 Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	4.31989e-20	4.45852e-20	1.73243e-07
+1A - HI	Multi-Family with 2 - 4 Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	6.46729e-21	6.57532e-21	0
+1A - HI	Multi-Family with 2 - 4 Units	2500-3999	Non-Ducted Heat Pump	0	0.154492	0.0905081	0.60228	0.15272	0	0	0	0.00512998	10.5595	3.88569e-08
+1A - HI	Multi-Family with 2 - 4 Units	2500-3999	None	0	0	0	0	0	0	1	0	0.114956	201.329	3.26167e-06
+1A - HI	Multi-Family with 2 - 4 Units	2500-3999	Room AC	0.0400308	0.571088	0.15885	0.110986	0.102899	0.0161453	0	0	0.103364	170.381	3.31801e-06
+1A - HI	Multi-Family with 2 - 4 Units	4000+	Central AC	0	0	0	0	0	1	0	0	0.001419	2.69984	8.03422e-08
+1A - HI	Multi-Family with 2 - 4 Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	2.76958e-21	2.48484e-21	3.62039e-08
+1A - HI	Multi-Family with 2 - 4 Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	9.90351e-22	1.54616e-21	0
+1A - HI	Multi-Family with 2 - 4 Units	4000+	Non-Ducted Heat Pump	0	0.151803	0.144586	0.634023	0.0695877	0	0	0	0.000179625	0.308609	1.42325e-08
+1A - HI	Multi-Family with 2 - 4 Units	4000+	None	0	0	0	0	0	0	1	0	0.00538048	10.4645	7.39114e-07
+1A - HI	Multi-Family with 2 - 4 Units	4000+	Room AC	0.0636514	0.628607	0.151088	0.146785	0	0.00986905	0	0	0.00344874	5.97846	7.61238e-07
+1A - HI	Multi-Family with 5+ Units	0-1499	Central AC	0	0	0	0	0	1	0	0	0.382082	1009.99	5.72649e-05
+1A - HI	Multi-Family with 5+ Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.9821e-18	3.07772e-18	3.71316e-05
+1A - HI	Multi-Family with 5+ Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	8.7571e-19	1.68737e-18	0
+1A - HI	Multi-Family with 5+ Units	0-1499	Non-Ducted Heat Pump	0	0.0729375	0.0778824	0.464357	0.0242807	0.360543	0	0	0.695015	2271.67	1.45086e-05
+1A - HI	Multi-Family with 5+ Units	0-1499	None	0	0	0	0	0	0	1	0	8.85014	25634.9	0.000492448
+1A - HI	Multi-Family with 5+ Units	0-1499	Room AC	0.000398138	0.204978	0.20127	0.357567	0.0830338	0.152753	0	0	17.7617	42307.8	0.000517212
+1A - HI	Multi-Family with 5+ Units	1500-2499	Central AC	0	0	0	0	0	1	0	0	0.342275	737.93	5.53802e-06
+1A - HI	Multi-Family with 5+ Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.4461e-18	1.92556e-18	3.63513e-06
+1A - HI	Multi-Family with 5+ Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	6.41414e-19	1.07464e-18	0
+1A - HI	Multi-Family with 5+ Units	1500-2499	Non-Ducted Heat Pump	0	0.109252	0.0771806	0.61393	0.0286143	0.171023	0	0	0.548118	1176.95	1.42987e-06
+1A - HI	Multi-Family with 5+ Units	1500-2499	None	0	0	0	0	0	0	1	0	2.51491	5467.3	5.04648e-05
+1A - HI	Multi-Family with 5+ Units	1500-2499	Room AC	0.00479114	0.48471	0.20264	0.19911	0.0446984	0.0640504	0	0	2.87358	5111.37	5.24685e-05
+1A - HI	Multi-Family with 5+ Units	2500-3999	Central AC	0	0	0	0	0	1	0	0	0.154284	311.512	2.83069e-07
+1A - HI	Multi-Family with 5+ Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	4.16553e-19	5.23224e-19	2.95457e-07
+1A - HI	Multi-Family with 5+ Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	4.15001e-20	5.59402e-20	0
+1A - HI	Multi-Family with 5+ Units	2500-3999	Non-Ducted Heat Pump	0	0.189893	0.112679	0.596072	0.0315887	0.069767	0	0	0.240779	523.398	8.24773e-08
+1A - HI	Multi-Family with 5+ Units	2500-3999	None	0	0	0	0	0	0	1	0	0.360496	687.316	2.32406e-06
+1A - HI	Multi-Family with 5+ Units	2500-3999	Room AC	0.00866282	0.535527	0.19103	0.151714	0.0753912	0.0376741	0	0	0.411513	612.52	2.49257e-06
+1A - HI	Multi-Family with 5+ Units	4000+	Central AC	0	0	0	0	0	1	0	0	0.0135569	26.5747	1.42596e-07
+1A - HI	Multi-Family with 5+ Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	2.67062e-20	2.91605e-20	7.16652e-08
+1A - HI	Multi-Family with 5+ Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	6.355e-21	1.31541e-20	0
+1A - HI	Multi-Family with 5+ Units	4000+	Non-Ducted Heat Pump	0	0.185021	0.178492	0.622215	0.0142726	0	0	0	0.00843084	15.2966	3.21698e-08
+1A - HI	Multi-Family with 5+ Units	4000+	None	0	0	0	0	0	0	1	0	0.0168729	35.7246	1.17247e-06
+1A - HI	Multi-Family with 5+ Units	4000+	Room AC	0.0136568	0.584431	0.180144	0.198936	0	0.0228323	0	0	0.0137301	21.4925	1.23536e-06
+1A - HI	Single-Family Attached	0-1499	Central AC	0	0	0	0	0	1	0	0	0.181627	209.191	1.3896e-05
+1A - HI	Single-Family Attached	0-1499	Ducted Heat Pump	0	0	0	0.152826	0.162989	0.684184	0	0	4.04188e-19	2.69908e-19	2.0591e-05
+1A - HI	Single-Family Attached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	1.67738e-19	1.17046e-19	0
+1A - HI	Single-Family Attached	0-1499	Non-Ducted Heat Pump	0	0.106669	0.0636164	0.670587	0.0554959	0.103632	0	0	0.15838	240.747	4.96679e-06
+1A - HI	Single-Family Attached	0-1499	None	0	0	0	0	0	0	1	0	1.49818	1852.46	9.28045e-05
+1A - HI	Single-Family Attached	0-1499	Room AC	0.0208413	0.416011	0.227604	0.215877	0.0973648	0.0223022	0	0	1.12175	1415.19	9.73786e-05
+1A - HI	Single-Family Attached	1500-2499	Central AC	0	0	0	0	0	1	0	0	0.162705	152.841	7.41721e-06
+1A - HI	Single-Family Attached	1500-2499	Ducted Heat Pump	0	0	0	0.301411	0.326545	0.372044	0	0	2.94888e-19	1.68867e-19	1.07904e-05
+1A - HI	Single-Family Attached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	1.22859e-19	7.4543e-20	0
+1A - HI	Single-Family Attached	1500-2499	Non-Ducted Heat Pump	0	0.130541	0.0515071	0.724356	0.0534333	0.0401623	0	0	0.124905	124.732	2.55654e-06
+1A - HI	Single-Family Attached	1500-2499	None	0	0	0	0	0	0	1	0	0.425731	395.085	4.61275e-05
+1A - HI	Single-Family Attached	1500-2499	Room AC	0.152401	0.597774	0.139246	0.0730467	0.0318491	0.00568249	0	0	0.181483	170.975	4.86214e-05
+1A - HI	Single-Family Attached	2500-3999	Central AC	0	0	0	0	0	1	0	0	0.0733408	64.5207	1.18305e-06
+1A - HI	Single-Family Attached	2500-3999	Ducted Heat Pump	0	0	0	0.586974	0.282885	0.130141	0	0	8.49434e-20	4.58855e-20	1.71797e-06
+1A - HI	Single-Family Attached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	7.94912e-21	3.88034e-21	0
+1A - HI	Single-Family Attached	2500-3999	Non-Ducted Heat Pump	0	0.209943	0.0695787	0.650738	0.0545802	0.0151597	0	0	0.0548687	55.4689	4.61519e-07
+1A - HI	Single-Family Attached	2500-3999	None	0	0	0	0	0	0	1	0	0.0610258	49.6677	7.2256e-06
+1A - HI	Single-Family Attached	2500-3999	Room AC	0.233524	0.559705	0.111246	0.0471688	0.0455248	0.00283257	0	0	0.0259894	20.4887	7.64135e-06
+1A - HI	Single-Family Attached	4000+	Central AC	0	0	0	0	0	1	0	0	0.00644446	5.50419	2.12173e-07
+1A - HI	Single-Family Attached	4000+	Ducted Heat Pump	0	0	0	0.745039	0.186101	0.06886	0	0	5.44592e-21	2.55731e-21	3.55212e-07
+1A - HI	Single-Family Attached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	1.21727e-21	9.12448e-22	0
+1A - HI	Single-Family Attached	4000+	Non-Ducted Heat Pump	0	0.200798	0.108193	0.666801	0.0242077	0	0	0	0.00192122	1.62111	3.51695e-08
+1A - HI	Single-Family Attached	4000+	None	0	0	0	0	0	0	1	0	0.0028563	2.58158	1.20202e-06
+1A - HI	Single-Family Attached	4000+	Room AC	0.320843	0.532332	0.0914262	0.0539032	0	0.00149609	0	0	0.000867131	0.718923	1.28187e-06
+1A - HI	Single-Family Detached	0-1499	Central AC	0	0	0	0	0	1	0	0	13.9224	24557.1	4.1924e-05
+1A - HI	Single-Family Detached	0-1499	Ducted Heat Pump	0	0	0	0.150497	0.269016	0.580487	0	0	4.77271e-17	5.06737e-17	5.08338e-05
+1A - HI	Single-Family Detached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5.26759e-17	5.58601e-17	0
+1A - HI	Single-Family Detached	0-1499	Non-Ducted Heat Pump	0	0.221152	0.156685	0.414804	0.0829069	0.124452	0	0	14.4537	24174.5	1.59513e-05
+1A - HI	Single-Family Detached	0-1499	None	0	0	0	0	0	0	1	0	73.5439	127995	0.000332638
+1A - HI	Single-Family Detached	0-1499	Room AC	0.0286885	0.52316	0.195053	0.15341	0.0762533	0.0234359	0	0	58.3045	90438.3	0.000343301
+1A - HI	Single-Family Detached	1500-2499	Central AC	0	0	0	0	0	1	0	0	12.4719	17942.1	5.06181e-05
+1A - HI	Single-Family Detached	1500-2499	Ducted Heat Pump	0	0	0	0.257778	0.468082	0.27414	0	0	3.48208e-17	3.17038e-17	6.86294e-05
+1A - HI	Single-Family Detached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	3.85824e-17	3.55757e-17	0
+1A - HI	Single-Family Detached	1500-2499	Non-Ducted Heat Pump	0	0.277977	0.130297	0.460201	0.0819879	0.0495377	0	0	11.3988	12524.8	1.74187e-05
+1A - HI	Single-Family Detached	1500-2499	None	0	0	0	0	0	0	1	0	20.8987	27298.1	0.000376478
+1A - HI	Single-Family Detached	1500-2499	Room AC	0.180276	0.646002	0.102547	0.0446082	0.0214349	0.00513145	0	0	9.43282	10926.2	0.000392272
+1A - HI	Single-Family Detached	2500-3999	Central AC	0	0	0	0	0	1	0	0	5.62183	7574.14	1.91224e-05
+1A - HI	Single-Family Detached	2500-3999	Ducted Heat Pump	0	0	0	0.500304	0.404126	0.0955701	0	0	1.00302e-17	8.61473e-18	2.70698e-05
+1A - HI	Single-Family Detached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	2.49632e-18	1.8519e-18	0
+1A - HI	Single-Family Detached	2500-3999	Non-Ducted Heat Pump	0	0.392518	0.15454	0.362994	0.0735309	0.0164174	0	0	5.00731	5569.87	6.43623e-06
+1A - HI	Single-Family Detached	2500-3999	None	0	0	0	0	0	0	1	0	2.99569	3431.75	0.000135095
+1A - HI	Single-Family Detached	2500-3999	Room AC	0.269492	0.590093	0.0799263	0.0281018	0.0298908	0.00249545	0	0	1.35083	1309.34	0.00014146
+1A - HI	Single-Family Detached	4000+	Central AC	0	0	0	0	0	1	0	0	0.49399	646.141	4.07626e-06
+1A - HI	Single-Family Detached	4000+	Ducted Heat Pump	0	0	0	0.667428	0.279425	0.0531476	0	0	6.43061e-19	4.8012e-19	5.3795e-06
+1A - HI	Single-Family Detached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	3.82267e-19	4.35467e-19	0
+1A - HI	Single-Family Detached	4000+	Non-Ducted Heat Pump	0	0.367954	0.235526	0.364556	0.0319642	0	0	0	0.17533	162.783	1.28579e-06
+1A - HI	Single-Family Detached	4000+	None	0	0	0	0	0	0	1	0	0.140213	178.372	2.98701e-05
+1A - HI	Single-Family Detached	4000+	Room AC	0.359262	0.544563	0.0637356	0.0311601	0	0.00127888	0	0	0.0450703	45.943	3.10447e-05
+2A - FL, GA, AL, MS	Mobile Home	0-1499	Central AC	0	0	0	4.66794e-05	0.00203169	0.997922	0	0	0.737925	13665.9	0.00129755
+2A - FL, GA, AL, MS	Mobile Home	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.22225	20905.8	0.00276169
+2A - FL, GA, AL, MS	Mobile Home	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Mobile Home	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.22225	2531.2	2.77649e-05
+2A - FL, GA, AL, MS	Mobile Home	0-1499	None	0	0	0	0	0	0	1	0	0.0852192	1667.91	0.00028231
+2A - FL, GA, AL, MS	Mobile Home	0-1499	Room AC	0	0.0749635	0.0850279	0.265207	0.00425548	0.570547	0	0	0.925208	19553.5	0.000848237
+2A - FL, GA, AL, MS	Mobile Home	1500-2499	Central AC	0	0	0	0.000184831	0.00500453	0.994811	0	0	0.518465	9012.44	0.00039153
+2A - FL, GA, AL, MS	Mobile Home	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.40987	22127.6	0.000801138
+2A - FL, GA, AL, MS	Mobile Home	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Mobile Home	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.40987	2679.13	7.41281e-06
+2A - FL, GA, AL, MS	Mobile Home	1500-2499	None	0	0	0	0	0	0	1	0	0.0226083	404.413	9.13205e-05
+2A - FL, GA, AL, MS	Mobile Home	1500-2499	Room AC	0	0.169743	0.137731	0.344551	0.0137846	0.33419	0	0	0.136156	2550.98	0.00021832
+2A - FL, GA, AL, MS	Mobile Home	2500-3999	Central AC	0	0	0	0.000444749	0.00919181	0.990363	0	0	0.240995	4051.14	3.83239e-05
+2A - FL, GA, AL, MS	Mobile Home	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.367542	5813.49	6.77672e-05
+2A - FL, GA, AL, MS	Mobile Home	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Mobile Home	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.367542	703.876	3.38866e-07
+2A - FL, GA, AL, MS	Mobile Home	2500-3999	None	0	0	0	0	0	0	1	0	0.0069568	121.779	8.98238e-06
+2A - FL, GA, AL, MS	Mobile Home	2500-3999	Room AC	0	0.280826	0.12773	0.323345	0.0155451	0.252554	0	0	0.058082	1062.68	1.75902e-05
+2A - FL, GA, AL, MS	Mobile Home	4000+	Central AC	0	0	0	0.000417342	0.00945127	0.990131	0	0	0.0486709	825.528	8.4584e-06
+2A - FL, GA, AL, MS	Mobile Home	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0633509	855.664	1.51349e-05
+2A - FL, GA, AL, MS	Mobile Home	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Mobile Home	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0633509	103.601	6.30034e-08
+2A - FL, GA, AL, MS	Mobile Home	4000+	None	0	0	0	0	0	0	1	0	0.00082298	13.9122	1.92035e-06
+2A - FL, GA, AL, MS	Mobile Home	4000+	Room AC	0	0.256381	0.0775966	0.289369	0.00953725	0.367117	0	0	0.00537756	105.196	3.56234e-06
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	0-1499	Central AC	0	0	0	0.000105312	0.000852951	0.999042	0	0	8.14439	57745.6	0.00129313
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.5445	10240.1	0.00115014
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.5445	1239.83	0.000105127
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	0-1499	None	0	0	0	0	0	0	1	0	1.63906	12507.6	0.000176602
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	0-1499	Room AC	0	0.0531962	0.162416	0.164788	0.0147833	0.604816	0	0	10.486	88501.6	0.000236537
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	1500-2499	Central AC	0	0	0	0.000417643	0.0021043	0.997478	0	0	5.72224	38082.2	0.000310605
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.7816	10838.6	0.00028848
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.7816	1312.29	2.871e-05
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	1500-2499	None	0	0	0	0	0	0	1	0	0.434834	3032.68	3.87127e-05
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	1500-2499	Room AC	0	0.120481	0.263144	0.214136	0.0478977	0.354341	0	0	1.54314	11546.1	4.4299e-05
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	2500-3999	Central AC	0	0	0	0.00100708	0.00387313	0.99512	0	0	2.65983	17118.2	2.7013e-05
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.464447	2847.57	2.44992e-05
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.464447	344.773	3.35731e-06
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	2500-3999	None	0	0	0	0	0	0	1	0	0.133803	913.22	3.46549e-06
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	2500-3999	Room AC	0	0.206317	0.252596	0.208005	0.055909	0.277174	0	0	0.658279	4809.85	3.35015e-06
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	4000+	Central AC	0	0	0	0.000945194	0.0039832	0.995072	0	0	0.537175	3488.28	5.67085e-06
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0800539	419.122	3.57678e-06
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0800539	50.7458	5.14596e-07
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	4000+	None	0	0	0	0	0	0	1	0	0.0158287	104.328	1.18098e-06
+2A - FL, GA, AL, MS	Multi-Family with 2 - 4 Units	4000+	Room AC	0	0.195155	0.158992	0.192867	0.0355395	0.417446	0	0	0.0609473	476.13	1.62779e-06
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	0-1499	Central AC	0	0	0	0.000105312	0.000852951	0.999042	0	0	8.14439	57745.6	0.005007
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.5445	10240.1	0.00385742
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.5445	1239.83	0.000125069
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	0-1499	None	0	0	0	0	0	0	1	0	1.63906	12507.6	0.000535143
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	0-1499	Room AC	0	0.0531962	0.162416	0.164788	0.0147833	0.604816	0	0	10.486	88501.6	0.000545825
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	1500-2499	Central AC	0	0	0	0.000417643	0.0021043	0.997478	0	0	5.72224	38082.2	0.000835401
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.7816	10838.6	0.000628465
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.7816	1312.29	2.13816e-05
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	1500-2499	None	0	0	0	0	0	0	1	0	0.434834	3032.68	9.39391e-05
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	1500-2499	Room AC	0	0.120481	0.263144	0.214136	0.0478977	0.354341	0	0	1.54314	11546.1	7.20294e-05
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	2500-3999	Central AC	0	0	0	0.00100708	0.00387313	0.99512	0	0	2.65983	17118.2	8.64058e-05
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.464447	2847.57	5.94938e-05
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.464447	344.773	2.49351e-06
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	2500-3999	None	0	0	0	0	0	0	1	0	0.133803	913.22	1.18027e-05
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	2500-3999	Room AC	0	0.206317	0.252596	0.208005	0.055909	0.277174	0	0	0.658279	4809.85	5.45593e-06
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	4000+	Central AC	0	0	0	0.000945194	0.0039832	0.995072	0	0	0.537175	3488.28	7.06306e-06
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0800539	419.122	4.77787e-06
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0800539	50.7458	2.81077e-07
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	4000+	None	0	0	0	0	0	0	1	0	0.0158287	104.328	1.19854e-06
+2A - FL, GA, AL, MS	Multi-Family with 5+ Units	4000+	Room AC	0	0.195155	0.158992	0.192867	0.0355395	0.417446	0	0	0.0609473	476.13	6.14155e-07
+2A - FL, GA, AL, MS	Single-Family Attached	0-1499	Central AC	0	0	0	0.00121059	0.00510834	0.993681	0	0	140.88	911338	0.000753766
+2A - FL, GA, AL, MS	Single-Family Attached	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	61.2908	361715	0.000631126
+2A - FL, GA, AL, MS	Single-Family Attached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Single-Family Attached	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	61.2908	43795.1	1.6853e-05
+2A - FL, GA, AL, MS	Single-Family Attached	0-1499	None	0	0	0	0	0	0	1	0	6.42692	43795.3	5.28772e-05
+2A - FL, GA, AL, MS	Single-Family Attached	0-1499	Room AC	0	0.150433	0.192157	0.226993	0.0343733	0.396043	0	0	26.8881	210925	7.82674e-05
+2A - FL, GA, AL, MS	Single-Family Attached	1500-2499	Central AC	0	0	0	0.00475556	0.0124837	0.982761	0	0	98.9821	601012	0.000684405
+2A - FL, GA, AL, MS	Single-Family Attached	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	70.6995	382854	0.000544833
+2A - FL, GA, AL, MS	Single-Family Attached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Single-Family Attached	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	70.6995	46354.5	1.6846e-05
+2A - FL, GA, AL, MS	Single-Family Attached	1500-2499	None	0	0	0	0	0	0	1	0	1.70503	10618.9	4.55991e-05
+2A - FL, GA, AL, MS	Single-Family Attached	1500-2499	Room AC	0	0.264031	0.241266	0.228588	0.0863054	0.17981	0	0	3.95693	27517.6	5.4703e-05
+2A - FL, GA, AL, MS	Single-Family Attached	2500-3999	Central AC	0	0	0	0.0112991	0.0226404	0.96606	0	0	46.0093	270158	0.000104154
+2A - FL, GA, AL, MS	Single-Family Attached	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	18.4308	100586	7.74601e-05
+2A - FL, GA, AL, MS	Single-Family Attached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Single-Family Attached	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	18.4308	12178.5	2.15436e-06
+2A - FL, GA, AL, MS	Single-Family Attached	2500-3999	None	0	0	0	0	0	0	1	0	0.524656	3197.63	7.47114e-06
+2A - FL, GA, AL, MS	Single-Family Attached	2500-3999	Room AC	0	0.394135	0.201883	0.193557	0.087817	0.122608	0	0	1.68796	11463.3	9.3225e-06
+2A - FL, GA, AL, MS	Single-Family Attached	4000+	Central AC	0	0	0	0.0106058	0.0232861	0.966108	0	0	9.29194	55051.9	1.65366e-05
+2A - FL, GA, AL, MS	Single-Family Attached	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	3.1768	14804.8	1.11926e-05
+2A - FL, GA, AL, MS	Single-Family Attached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Single-Family Attached	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	3.1768	1792.51	1.09174e-07
+2A - FL, GA, AL, MS	Single-Family Attached	4000+	None	0	0	0	0	0	0	1	0	0.0620661	365.301	1.04223e-06
+2A - FL, GA, AL, MS	Single-Family Attached	4000+	Room AC	0	0.405304	0.138146	0.195111	0.0606873	0.200751	0	0	0.156281	1134.75	2.07804e-06
+2A - FL, GA, AL, MS	Single-Family Detached	0-1499	Central AC	0	0	0	0.00121059	0.00510834	0.993681	0	0	140.88	911338	0.0050874
+2A - FL, GA, AL, MS	Single-Family Detached	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	61.2908	361715	0.00487024
+2A - FL, GA, AL, MS	Single-Family Detached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Single-Family Detached	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	61.2908	43795.1	0.000204067
+2A - FL, GA, AL, MS	Single-Family Detached	0-1499	None	0	0	0	0	0	0	1	0	6.42692	43795.3	0.000345128
+2A - FL, GA, AL, MS	Single-Family Detached	0-1499	Room AC	0	0.150433	0.192157	0.226993	0.0343733	0.396043	0	0	26.8881	210925	0.000473595
+2A - FL, GA, AL, MS	Single-Family Detached	1500-2499	Central AC	0	0	0	0.00475556	0.0124837	0.982761	0	0	98.9821	601012	0.00746361
+2A - FL, GA, AL, MS	Single-Family Detached	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	70.6995	382854	0.00771683
+2A - FL, GA, AL, MS	Single-Family Detached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Single-Family Detached	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	70.6995	46354.5	0.000258525
+2A - FL, GA, AL, MS	Single-Family Detached	1500-2499	None	0	0	0	0	0	0	1	0	1.70503	10618.9	0.00048489
+2A - FL, GA, AL, MS	Single-Family Detached	1500-2499	Room AC	0	0.264031	0.241266	0.228588	0.0863054	0.17981	0	0	3.95693	27517.6	0.000478295
+2A - FL, GA, AL, MS	Single-Family Detached	2500-3999	Central AC	0	0	0	0.0112991	0.0226404	0.96606	0	0	46.0093	270158	0.00336134
+2A - FL, GA, AL, MS	Single-Family Detached	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	18.4308	100586	0.0034208
+2A - FL, GA, AL, MS	Single-Family Detached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Single-Family Detached	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	18.4308	12178.5	9.90034e-05
+2A - FL, GA, AL, MS	Single-Family Detached	2500-3999	None	0	0	0	0	0	0	1	0	0.524656	3197.63	0.000215424
+2A - FL, GA, AL, MS	Single-Family Detached	2500-3999	Room AC	0	0.394135	0.201883	0.193557	0.087817	0.122608	0	0	1.68796	11463.3	0.000169306
+2A - FL, GA, AL, MS	Single-Family Detached	4000+	Central AC	0	0	0	0.0106058	0.0232861	0.966108	0	0	9.29194	55051.9	0.000730882
+2A - FL, GA, AL, MS	Single-Family Detached	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	3.1768	14804.8	0.000736356
+2A - FL, GA, AL, MS	Single-Family Detached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - FL, GA, AL, MS	Single-Family Detached	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	3.1768	1792.51	1.59328e-05
+2A - FL, GA, AL, MS	Single-Family Detached	4000+	None	0	0	0	0	0	0	1	0	0.0620661	365.301	4.48355e-05
+2A - FL, GA, AL, MS	Single-Family Detached	4000+	Room AC	0	0.405304	0.138146	0.195111	0.0606873	0.200751	0	0	0.156281	1134.75	3.2082e-05
+2A - TX, LA	Mobile Home	0-1499	Central AC	0	0	0	0.000109641	0.00381769	0.996073	0	0	0.574073	15857.7	0.00159786
+2A - TX, LA	Mobile Home	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0807143	2039.88	0.000832407
+2A - TX, LA	Mobile Home	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Mobile Home	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0807143	246.98	1.95417e-05
+2A - TX, LA	Mobile Home	0-1499	None	0	0	0	0	0	0	1	0	0.058104	1593.39	0.000105147
+2A - TX, LA	Mobile Home	0-1499	Room AC	0	0.0961027	0.0962646	0.410891	0.0201271	0.376615	0	0	0.874925	24781.1	0.000669176
+2A - TX, LA	Mobile Home	1500-2499	Central AC	0	0	0	0.000432918	0.00937759	0.990189	0	0	0.403343	10457.9	0.00055182
+2A - TX, LA	Mobile Home	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0931047	2159.09	0.000277617
+2A - TX, LA	Mobile Home	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Mobile Home	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0931047	261.414	3.006e-06
+2A - TX, LA	Mobile Home	1500-2499	None	0	0	0	0	0	0	1	0	0.0154147	386.344	3.55528e-05
+2A - TX, LA	Mobile Home	1500-2499	Room AC	0	0.182381	0.130689	0.447402	0.0546424	0.184885	0	0	0.128757	3232.99	0.000201221
+2A - TX, LA	Mobile Home	2500-3999	Central AC	0	0	0	0.00103753	0.0171547	0.981808	0	0	0.187484	4700.86	4.32586e-05
+2A - TX, LA	Mobile Home	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0242716	567.248	2.1311e-05
+2A - TX, LA	Mobile Home	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Mobile Home	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0242716	68.6803	5.9754e-07
+2A - TX, LA	Mobile Home	2500-3999	None	0	0	0	0	0	0	1	0	0.00474327	116.338	2.76634e-06
+2A - TX, LA	Mobile Home	2500-3999	Room AC	0	0.288979	0.116075	0.402115	0.0590156	0.133815	0	0	0.0549253	1346.79	1.60757e-05
+2A - TX, LA	Mobile Home	4000+	Central AC	0	0	0	0.000973407	0.0176355	0.981391	0	0	0.0378638	957.927	3.41099e-05
+2A - TX, LA	Mobile Home	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.00418355	83.491	2.29544e-05
+2A - TX, LA	Mobile Home	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Mobile Home	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.00418355	10.1088	0
+2A - TX, LA	Mobile Home	4000+	None	0	0	0	0	0	0	1	0	0.000561123	13.2907	2.70146e-06
+2A - TX, LA	Mobile Home	4000+	Room AC	0	0.285238	0.0762403	0.389072	0.0391464	0.210304	0	0	0.00508531	133.32	2.51953e-05
+2A - TX, LA	Multi-Family with 2 - 4 Units	0-1499	Central AC	0	0	0	0.000247596	0.0016043	0.998148	0	0	6.33597	67006.8	0.00167628
+2A - TX, LA	Multi-Family with 2 - 4 Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.101995	999.174	0.000849135
+2A - TX, LA	Multi-Family with 2 - 4 Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Multi-Family with 2 - 4 Units	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.101995	120.976	1.03364e-05
+2A - TX, LA	Multi-Family with 2 - 4 Units	0-1499	None	0	0	0	0	0	0	1	0	1.11754	11948.8	0.000226056
+2A - TX, LA	Multi-Family with 2 - 4 Units	0-1499	Room AC	0	0.0698352	0.188297	0.261442	0.0716	0.408826	0	0	9.91606	112163	0.000281801
+2A - TX, LA	Multi-Family with 2 - 4 Units	1500-2499	Central AC	0	0	0	0.000980407	0.0039519	0.995068	0	0	4.45165	44189.9	0.000108926
+2A - TX, LA	Multi-Family with 2 - 4 Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.117653	1057.57	4.9744e-05
+2A - TX, LA	Multi-Family with 2 - 4 Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Multi-Family with 2 - 4 Units	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.117653	128.046	7.70006e-07
+2A - TX, LA	Multi-Family with 2 - 4 Units	1500-2499	None	0	0	0	0	0	0	1	0	0.296478	2897.18	1.22422e-05
+2A - TX, LA	Multi-Family with 2 - 4 Units	1500-2499	Room AC	0	0.124103	0.239374	0.266568	0.182022	0.187934	0	0	1.45928	14632.9	1.32426e-05
+2A - TX, LA	Multi-Family with 2 - 4 Units	2500-3999	Central AC	0	0	0	0.00235854	0.00725672	0.990385	0	0	2.06923	19863.6	9.78941e-06
+2A - TX, LA	Multi-Family with 2 - 4 Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0306711	277.85	4.25657e-06
+2A - TX, LA	Multi-Family with 2 - 4 Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Multi-Family with 2 - 4 Units	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0306711	33.641	1.24863e-07
+2A - TX, LA	Multi-Family with 2 - 4 Units	2500-3999	None	0	0	0	0	0	0	1	0	0.0912293	872.419	1.11305e-06
+2A - TX, LA	Multi-Family with 2 - 4 Units	2500-3999	Room AC	0	0.200356	0.216628	0.244116	0.200307	0.138593	0	0	0.622503	6095.77	2.75464e-06
+2A - TX, LA	Multi-Family with 2 - 4 Units	4000+	Central AC	0	0	0	0.00221358	0.00746284	0.990324	0	0	0.417898	4047.74	1.48594e-05
+2A - TX, LA	Multi-Family with 2 - 4 Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.00528658	40.8956	4.94676e-06
+2A - TX, LA	Multi-Family with 2 - 4 Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Multi-Family with 2 - 4 Units	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.00528658	4.95149	5.45641e-08
+2A - TX, LA	Multi-Family with 2 - 4 Units	4000+	None	0	0	0	0	0	0	1	0	0.0107923	99.6663	1.40858e-06
+2A - TX, LA	Multi-Family with 2 - 4 Units	4000+	Room AC	0	0.213353	0.153502	0.254818	0.143343	0.234984	0	0	0.0576349	603.424	3.34107e-06
+2A - TX, LA	Multi-Family with 5+ Units	0-1499	Central AC	0	0	0	0.000247596	0.0016043	0.998148	0	0	6.33597	67006.8	0.00493381
+2A - TX, LA	Multi-Family with 5+ Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.101995	999.174	0.00348232
+2A - TX, LA	Multi-Family with 5+ Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Multi-Family with 5+ Units	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.101995	120.976	0.000143256
+2A - TX, LA	Multi-Family with 5+ Units	0-1499	None	0	0	0	0	0	0	1	0	1.11754	11948.8	0.000640231
+2A - TX, LA	Multi-Family with 5+ Units	0-1499	Room AC	0	0.0698352	0.188297	0.261442	0.0716	0.408826	0	0	9.91606	112163	0.000534972
+2A - TX, LA	Multi-Family with 5+ Units	1500-2499	Central AC	0	0	0	0.000980407	0.0039519	0.995068	0	0	4.45165	44189.9	0.000281959
+2A - TX, LA	Multi-Family with 5+ Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.117653	1057.57	0.000170818
+2A - TX, LA	Multi-Family with 5+ Units	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Multi-Family with 5+ Units	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.117653	128.046	8.2931e-06
+2A - TX, LA	Multi-Family with 5+ Units	1500-2499	None	0	0	0	0	0	0	1	0	0.296478	2897.18	2.68182e-05
+2A - TX, LA	Multi-Family with 5+ Units	1500-2499	Room AC	0	0.124103	0.239374	0.266568	0.182022	0.187934	0	0	1.45928	14632.9	2.38972e-05
+2A - TX, LA	Multi-Family with 5+ Units	2500-3999	Central AC	0	0	0	0.00235854	0.00725672	0.990385	0	0	2.06923	19863.6	3.37842e-06
+2A - TX, LA	Multi-Family with 5+ Units	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0306711	277.85	9.19303e-07
+2A - TX, LA	Multi-Family with 5+ Units	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Multi-Family with 5+ Units	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0306711	33.641	0
+2A - TX, LA	Multi-Family with 5+ Units	2500-3999	None	0	0	0	0	0	0	1	0	0.0912293	872.419	3.30778e-07
+2A - TX, LA	Multi-Family with 5+ Units	2500-3999	Room AC	0	0.200356	0.216628	0.244116	0.200307	0.138593	0	0	0.622503	6095.77	4.27561e-07
+2A - TX, LA	Multi-Family with 5+ Units	4000+	Central AC	0	0	0	0.00221358	0.00746284	0.990324	0	0	0.417898	4047.74	8.52089e-06
+2A - TX, LA	Multi-Family with 5+ Units	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.00528658	40.8956	6.65496e-06
+2A - TX, LA	Multi-Family with 5+ Units	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Multi-Family with 5+ Units	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.00528658	4.95149	4.41211e-07
+2A - TX, LA	Multi-Family with 5+ Units	4000+	None	0	0	0	0	0	0	1	0	0.0107923	99.6663	1.78109e-06
+2A - TX, LA	Multi-Family with 5+ Units	4000+	Room AC	0	0.213353	0.153502	0.254818	0.143343	0.234984	0	0	0.0576349	603.424	8.33922e-07
+2A - TX, LA	Single-Family Attached	0-1499	Central AC	0	0	0	0.00283131	0.00955803	0.987611	0	0	109.598	1.0575e+06	0.000492809
+2A - TX, LA	Single-Family Attached	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	4.04751	35294.2	0.000182387
+2A - TX, LA	Single-Family Attached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Single-Family Attached	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	4.04751	4273.28	1.33487e-05
+2A - TX, LA	Single-Family Attached	0-1499	None	0	0	0	0	0	0	1	0	4.38199	41838.6	2.80413e-05
+2A - TX, LA	Single-Family Attached	0-1499	Room AC	0	0.162596	0.183418	0.296508	0.137068	0.220409	0	0	25.4268	267315	0.000123379
+2A - TX, LA	Single-Family Attached	1500-2499	Central AC	0	0	0	0.0109987	0.0230983	0.965903	0	0	77.0037	697403	0.000323701
+2A - TX, LA	Single-Family Attached	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	4.66884	37356.8	0.000110834
+2A - TX, LA	Single-Family Attached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Single-Family Attached	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	4.66884	4523.02	6.74874e-06
+2A - TX, LA	Single-Family Attached	1500-2499	None	0	0	0	0	0	0	1	0	1.16252	10144.4	1.57723e-05
+2A - TX, LA	Single-Family Attached	1500-2499	Room AC	0	0.226764	0.182993	0.237262	0.273466	0.079516	0	0	3.74188	34874.5	5.63009e-05
+2A - TX, LA	Single-Family Attached	2500-3999	Central AC	0	0	0	0.0256828	0.0411699	0.933147	0	0	35.7932	313486	5.11899e-05
+2A - TX, LA	Single-Family Attached	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.21713	9814.59	1.5207e-05
+2A - TX, LA	Single-Family Attached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Single-Family Attached	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.21713	1188.31	6.24128e-07
+2A - TX, LA	Single-Family Attached	2500-3999	None	0	0	0	0	0	0	1	0	0.35772	3054.76	1.42605e-06
+2A - TX, LA	Single-Family Attached	2500-3999	Room AC	0	0.330247	0.149387	0.196001	0.271468	0.0528972	0	0	1.59622	14528	9.38771e-06
+2A - TX, LA	Single-Family Attached	4000+	Central AC	0	0	0	0.0241156	0.042359	0.933525	0	0	7.22871	63881.2	2.48545e-05
+2A - TX, LA	Single-Family Attached	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.209789	1444.57	9.11958e-06
+2A - TX, LA	Single-Family Attached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Single-Family Attached	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.209789	174.903	3.96175e-07
+2A - TX, LA	Single-Family Attached	4000+	None	0	0	0	0	0	0	1	0	0.0423178	348.98	1.31394e-06
+2A - TX, LA	Single-Family Attached	4000+	Room AC	0	0.371715	0.111889	0.216256	0.20534	0.0947997	0	0	0.147787	1438.13	2.85244e-06
+2A - TX, LA	Single-Family Detached	0-1499	Central AC	0	0	0	0.00283131	0.00955803	0.987611	0	0	109.598	1.0575e+06	0.00651855
+2A - TX, LA	Single-Family Detached	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	4.04751	35294.2	0.0019048
+2A - TX, LA	Single-Family Detached	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Single-Family Detached	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	4.04751	4273.28	0.000147686
+2A - TX, LA	Single-Family Detached	0-1499	None	0	0	0	0	0	0	1	0	4.38199	41838.6	0.000293192
+2A - TX, LA	Single-Family Detached	0-1499	Room AC	0	0.162596	0.183418	0.296508	0.137068	0.220409	0	0	25.4268	267315	0.00188918
+2A - TX, LA	Single-Family Detached	1500-2499	Central AC	0	0	0	0.0109987	0.0230983	0.965903	0	0	77.0037	697403	0.0102341
+2A - TX, LA	Single-Family Detached	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	4.66884	37356.8	0.0029949
+2A - TX, LA	Single-Family Detached	1500-2499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Single-Family Detached	1500-2499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	4.66884	4523.02	0.00015861
+2A - TX, LA	Single-Family Detached	1500-2499	None	0	0	0	0	0	0	1	0	1.16252	10144.4	0.000417587
+2A - TX, LA	Single-Family Detached	1500-2499	Room AC	0	0.226764	0.182993	0.237262	0.273466	0.079516	0	0	3.74188	34874.5	0.00166114
+2A - TX, LA	Single-Family Detached	2500-3999	Central AC	0	0	0	0.0256828	0.0411699	0.933147	0	0	35.7932	313486	0.00475532
+2A - TX, LA	Single-Family Detached	2500-3999	Ducted Heat Pump	0	0	0	0	0	1	0	0	1.21713	9814.59	0.00133148
+2A - TX, LA	Single-Family Detached	2500-3999	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Single-Family Detached	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	1.21713	1188.31	4.69104e-05
+2A - TX, LA	Single-Family Detached	2500-3999	None	0	0	0	0	0	0	1	0	0.35772	3054.76	0.000177445
+2A - TX, LA	Single-Family Detached	2500-3999	Room AC	0	0.330247	0.149387	0.196001	0.271468	0.0528972	0	0	1.59622	14528	0.000487933
+2A - TX, LA	Single-Family Detached	4000+	Central AC	0	0	0	0.0241156	0.042359	0.933525	0	0	7.22871	63881.2	0.00111678
+2A - TX, LA	Single-Family Detached	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.209789	1444.57	0.000309222
+2A - TX, LA	Single-Family Detached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
+2A - TX, LA	Single-Family Detached	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.209789	174.903	9.42686e-06
+2A - TX, LA	Single-Family Detached	4000+	None	0	0	0	0	0	0	1	0	0.0423178	348.98	4.00302e-05
+2A - TX, LA	Single-Family Detached	4000+	Room AC	0	0.371715	0.111889	0.216256	0.20534	0.0947997	0	0	0.147787	1438.13	0.0001112
 2B	Mobile Home	0-1499	Central AC	0	0	0	8.88942e-05	0.00172143	0.99819	0	0	0.148528	4493.45	0.00066908
 2B	Mobile Home	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.188333	5239.48	0.00041206
 2B	Mobile Home	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
@@ -713,7 +953,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 3C	Single-Family Detached	2500-3999	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	5.79584e-18	5.53181e-18	2.12758e-05
 3C	Single-Family Detached	2500-3999	None	0	0	0	0	0	0	1	0	5.77122	42000.7	0.000456491
 3C	Single-Family Detached	2500-3999	Room AC	0	0.69278	0.168991	0.119929	0	0.0182999	0	0	0.660506	4593.6	0.000171155
-3C	Single-Family Detached	4000+	Central AC	0	0	0	0	0.0297473	0.970253	0	0	0.949975	6698.15	0.000248805
+3C	Single-Family Detached	4000+	Central AC	0	0	0	0	0.0297473	0.970253	0	0	0.949975	6698.15	0.000248806
 3C	Single-Family Detached	4000+	Ducted Heat Pump	0	0	0	0	0	1	0	0	9.98993e-19	8.14205e-19	1.47642e-05
 3C	Single-Family Detached	4000+	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
 3C	Single-Family Detached	4000+	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	9.98993e-19	8.14205e-19	4.32722e-06
@@ -1611,7 +1851,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 7A	Multi-Family with 5+ Units	0-1499	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0194277	65.7433	7.37816e-05
 7A	Multi-Family with 5+ Units	0-1499	Evaporative or Swamp Cooler	0	0	0	0	0	0	0	1	5e-18	5e-18	0
 7A	Multi-Family with 5+ Units	0-1499	Non-Ducted Heat Pump	0	0	0	0	0	1	0	0	0.0194277	7.95995	8.81922e-06
-7A	Multi-Family with 5+ Units	0-1499	None	0	0	0	0	0	0	1	0	5.8857	32032.7	6.47527e-05
+7A	Multi-Family with 5+ Units	0-1499	None	0	0	0	0	0	0	1	0	5.8857	32032.7	6.47528e-05
 7A	Multi-Family with 5+ Units	0-1499	Room AC	0	0.512643	0.312499	0.0931246	0	0.0817333	0	0	3.53331	15214.3	0.000348624
 7A	Multi-Family with 5+ Units	1500-2499	Central AC	0	0	0	0.0262526	0.0626594	0.911088	0	0	0.274229	1153.15	2.79954e-05
 7A	Multi-Family with 5+ Units	1500-2499	Ducted Heat Pump	0	0	0	0	0	1	0	0	0.02241	69.5854	5.20767e-06
@@ -2041,7 +2281,7 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Building Type RECS	
 8AK	Single-Family Detached	4000+	Room AC	0.0797069	0.834182	0.056768	0.0235487	0	0.00579399	0	0	0.0526599	12.5946	0
 # Created by: sources\recs\recs2009\tsv_maker.py
 # Description: The fraction of the finished floor area that the cooling system provides cooling.
-# Source: Constructed using U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.
+# Source: Constructed using U.S. EIA 2009 Residential Energy Consumption Survey (RECS) microdata.Hawaii constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 # Assumption: Central AC systems need to serve at least 60 percent of the floor area.
-# Assumption: Heat pumps serve 100 percent of the floor area because the system serves 100 percent of the heated floor area.
+# Assumption: Heat pumps serve 100 percent of the floor area because the system serves 100 percent of the heated floor area, except for in Hawaii
 # Assumption: Due to low sample count, the tsv is constructed by downscaling a core sub-tsv with 3 sub-tsvs of different dependencies. The sub-tsvs have the following dependencies: tsv1 : 'HVAC Cooling Type', 'ASHRAE IECC Climate Zone 2004'; tsv2 : 'HVAC Cooling Type', 'Geometry Floor Area Bin'; tsv3 : 'HVAC Cooling Type', 'Geometry Building Type RECS';

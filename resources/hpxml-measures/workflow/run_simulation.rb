@@ -13,7 +13,7 @@ basedir = File.expand_path(File.dirname(__FILE__))
 
 $timeseries_types = ['ALL', 'total', 'fuels', 'enduses', 'systemuses', 'emissions', 'emissionfuels',
                      'emissionenduses', 'hotwater', 'loads', 'componentloads',
-                     'unmethours', 'temperatures', 'airflows', 'weather', 'resilience']
+                     'unmethours', 'temperatures', 'conditions', 'airflows', 'weather', 'resilience']
 
 def run_workflow(basedir, rundir, hpxml, debug, skip_validation, add_comp_loads,
                  output_format, building_id, ep_input_format, stochastic_schedules,
@@ -28,6 +28,7 @@ def run_workflow(basedir, rundir, hpxml, debug, skip_validation, add_comp_loads,
     measure_subdir = 'BuildResidentialScheduleFile'
     args = {}
     args['hpxml_path'] = hpxml
+    hpxml = File.join(rundir, File.basename(hpxml).gsub('.xml', 'stochastic_schedules.xml'))
     args['hpxml_output_path'] = hpxml
     args['output_csv_path'] = File.join(rundir, 'stochastic.csv')
     args['debug'] = debug
@@ -88,6 +89,7 @@ def run_workflow(basedir, rundir, hpxml, debug, skip_validation, add_comp_loads,
       args['include_timeseries_component_loads'] = timeseries_outputs.include? 'componentloads'
       args['include_timeseries_unmet_hours'] = timeseries_outputs.include? 'unmethours'
       args['include_timeseries_zone_temperatures'] = timeseries_outputs.include? 'temperatures'
+      args['include_timeseries_zone_conditions'] = timeseries_outputs.include? 'conditions'
       args['include_timeseries_airflows'] = timeseries_outputs.include? 'airflows'
       args['include_timeseries_weather'] = timeseries_outputs.include? 'weather'
       args['include_timeseries_resilience'] = timeseries_outputs.include? 'resilience'

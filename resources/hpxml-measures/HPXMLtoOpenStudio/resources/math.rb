@@ -70,6 +70,49 @@ module MathTools
     return y
   end
 
+  # Calculates the result of a quadlinear polynomial with independent variable.
+  # w, x, y, z and a list of coefficients, c:
+  #
+  # y = c[1] + c[2]*w + c[3]*x + c[4]*y + c[5]*z
+  #
+  # @param w [Double] independent variable 1
+  # @param x [Double] independent variable 2
+  # @param y [Double] independent variable 3
+  # @param z [Double] independent variable 4
+  # @param c [Array<Double>] list of 5 coefficients
+  # @return [Double] result of quadlinear polynomial
+  def self.quadlinear(w, x, y, z, c)
+    if c.size != 5
+      fail 'Error: There must be 5 coefficients in a quadlinear polynomial'
+    end
+
+    y = c[0] + c[1] * w + c[2] * x + c[3] * y + c[4] * z
+
+    return y
+  end
+
+  # Calculates the result of a quintlinear polynomial with independent variable.
+  # v, w, x, y, z and a list of coefficients, c:
+  #
+  # y = c[1] + c[2]*v + c[3]*w + c[4]*x + c[5]*y + c[6]*z
+  #
+  # @param v [Double] independent variable 1
+  # @param w [Double] independent variable 2
+  # @param x [Double] independent variable 3
+  # @param y [Double] independent variable 4
+  # @param z [Double] independent variable 5
+  # @param c [Array<Double>] list of 6 coefficients
+  # @return [Double] result of quintlinear polynomial
+  def self.quintlinear(v, w, x, y, z, c)
+    if c.size != 6
+      fail 'Error: There must be 6 coefficients in a quintlinear polynomial'
+    end
+
+    y = c[0] + c[1] * v + c[2] * w + c[3] * x + c[4] * y + c[5] * z
+
+    return y
+  end
+
   # Calculates the result of a bicubic polynomial with independent variables.
   # x and y, and a list of coefficients, c:
   #

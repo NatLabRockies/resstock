@@ -372,7 +372,8 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
   # @param args [Hash] Map of :argument_name => value
   # @return [Array<String>] array of monthly timestamps (e.g., 2007-01-01T00:00:00)
   def get_timestamps(args)
-    ep_timestamps = @msgpackData['MeterData']['Monthly']['Rows'].map { |r| r.keys[0] }
+    msgpack_monthly_name = EPlus::get_msgpack_timeseries_name(EPlus::TimeseriesFrequencyMonthly)
+    ep_timestamps = @msgpackData['MeterData'][msgpack_monthly_name]['Rows'].map { |r| r.keys[0] }
 
     timestamps = []
     year = @hpxml_header.sim_calendar_year
@@ -742,8 +743,10 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
     fuels.each do |(fuel_type, _is_production), fuel|
       unit_conv = UnitConversions.convert(1.0, 'J', fuel.units)
 
-      timeseries_freq = 'monthly'
-      timeseries_freq = 'hourly' if fuel_type == FT::Elec && !utility_bill_scenario.elec_tariff_filepath.nil?
+      timeseries_freq = EPlus::TimeseriesFrequencyMonthly
+      if fuel_type == FT::Elec && !utility_bill_scenario.elec_tariff_filepath.nil?
+        timeseries_freq = EPlus::TimeseriesFrequencyHourly
+      end
       fuel.timeseries = get_report_meter_data_timeseries(fuel.meter, unit_conv, timeseries_freq)
     end
   end
@@ -755,8 +758,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
   # @param timeseries_freq [String] the frequency of the requested timeseries data
   # @return [Array<Double>] array of timeseries data
   def get_report_meter_data_timeseries(meter_name, unit_conv, timeseries_freq)
-    msgpack_timeseries_name = { 'hourly' => 'Hourly',
-                                'monthly' => 'Monthly' }[timeseries_freq]
+    msgpack_timeseries_name = EPlus::get_msgpack_timeseries_name(timeseries_freq)
     data = @msgpackData['MeterData'][msgpack_timeseries_name]
     cols = data['Cols']
     rows = data['Rows']

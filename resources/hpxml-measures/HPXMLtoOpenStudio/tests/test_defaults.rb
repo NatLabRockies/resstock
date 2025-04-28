@@ -3256,37 +3256,31 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.water_heating_systems.each do |wh|
       wh.first_hour_rating = nil
       wh.usage_bin = HPXML::WaterHeaterUsageBinVerySmall
-      wh.tank_model_type = HPXML::WaterHeaterTankModelTypeStratified
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     assert_nil(default_hpxml_bldg.water_heating_systems[0].first_hour_rating)
     assert_equal(HPXML::WaterHeaterUsageBinVerySmall, default_hpxml_bldg.water_heating_systems[0].usage_bin)
-    assert_equal(HPXML::WaterHeaterTankModelTypeStratified, default_hpxml_bldg.water_heating_systems[0].tank_model_type)
 
     # Test defaults w/ UEF & FHR
     hpxml_bldg.water_heating_systems.each do |wh|
       wh.first_hour_rating = 40
       wh.usage_bin = nil
-      wh.tank_model_type = nil
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     assert_equal(40, default_hpxml_bldg.water_heating_systems[0].first_hour_rating)
     assert_equal(HPXML::WaterHeaterUsageBinLow, default_hpxml_bldg.water_heating_systems[0].usage_bin)
-    assert_equal(HPXML::WaterHeaterTankModelTypeMixed, default_hpxml_bldg.water_heating_systems[0].tank_model_type)
 
     # Test defaults w/ UEF & no FHR
     hpxml_bldg.water_heating_systems.each do |wh|
       wh.first_hour_rating = nil
       wh.usage_bin = nil
-      wh.tank_model_type = nil
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     assert_nil(default_hpxml_bldg.water_heating_systems[0].first_hour_rating)
     assert_equal(HPXML::WaterHeaterUsageBinMedium, default_hpxml_bldg.water_heating_systems[0].usage_bin)
-    assert_equal(HPXML::WaterHeaterTankModelTypeMixed, default_hpxml_bldg.water_heating_systems[0].tank_model_type)
   end
 
   def test_tankless_water_heaters

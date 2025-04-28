@@ -302,7 +302,9 @@ class TestRunAnalysis < Minitest::Test
     assert(File.exist?(File.join(@testing_baseline, 'osw', 'Baseline', '1.osw')))
     assert(File.exist?(File.join(@testing_baseline, 'xml', 'Baseline', '1.xml')))
 
-    FileUtils.cp(results_baseline, File.join(File.dirname(@testing_baseline), 'project_testing'))
+    des = File.join(@buildstock_directory, 'project_testing/testing_baseline')
+    Dir.mkdir(des)
+    FileUtils.cp(results_baseline, des)
   end
 
   def test_national_baseline
@@ -336,7 +338,9 @@ class TestRunAnalysis < Minitest::Test
     assert(!File.exist?(File.join(@national_baseline, 'osw', 'Baseline', '1.osw')))
     assert(File.exist?(File.join(@national_baseline, 'xml', 'Baseline', '1.xml')))
 
-    FileUtils.cp(results_baseline, File.join(File.dirname(@national_baseline), 'project_national'))
+    des = File.join(@buildstock_directory, 'project_national/national_baseline')
+    Dir.mkdir(des)
+    FileUtils.cp(results_baseline, des)
   end
 
   def test_sdr_upgrades_tmy3
@@ -392,7 +396,10 @@ class TestRunAnalysis < Minitest::Test
     assert(File.exist?(File.join(@sdr_upgrades_tmy3, 'xml', test_package_name, '1-existing.xml')))
     assert(File.exist?(File.join(@sdr_upgrades_tmy3, 'xml', test_package_name, '1-upgraded.xml')))
 
-    FileUtils.cp(results_packageupgrade, File.join(File.dirname(@sdr_upgrades_tmy3), 'project_national'))
+    des = File.join(@buildstock_directory, 'project_national/sdr_upgrades_tmy3')
+    Dir.mkdir(des)
+    FileUtils.cp(results_baseline, des)
+    FileUtils.cp(results_packageupgrade, des)
   end
 
   private
@@ -476,6 +483,8 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, "Both 'lighting_garage' schedule file and weekday fractions provided; the latter will be ignored.")
       next if _expected_warning_message(message, "Both 'lighting_garage' schedule file and weekend fractions provided; the latter will be ignored.")
       next if _expected_warning_message(message, "Both 'lighting_garage' schedule file and monthly multipliers provided; the latter will be ignored.")
+      next if _expected_warning_message(message, "Both 'cooling_setpoint' schedule file and cooling setpoint temperature provided; the latter will be ignored.")
+      next if _expected_warning_message(message, "Both 'heating_setpoint' schedule file and heating setpoint temperature provided; the latter will be ignored.")
       next if _expected_warning_message(message, 'Could not find state average propane rate based on')
       next if _expected_warning_message(message, 'Could not find state average fuel oil rate based on')
       next if _expected_warning_message(message, "Specified incompatible corridor; setting corridor position to 'Single Exterior (Front)'.")
@@ -502,6 +511,10 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, "Both schedule file and weekday fractions provided for 'electric_vehicle'; weekday fractions will be ignored.")
       next if _expected_warning_message(message, "Both schedule file and weekend fractions provided for 'electric_vehicle'; weekend fractions will be ignored.")
       next if _expected_warning_message(message, "Both schedule file and monthly multipliers provided for 'electric_vehicle'; monthly multipliers will be ignored.")
+      next if _expected_warning_message(message, 'Unknown column found in schedule file: peak_period')
+      next if _expected_warning_message(message, 'Unknown column found in schedule file: pre_peak_period')
+      next if _expected_warning_message(message, "Could not find row='peak_period' in unavailable_periods.csv")
+      next if _expected_warning_message(message, "Could not find row='pre_peak_period' in unavailable_periods.csv")
 
       # For the EV minutes warning try replacing the number of minutes as a string rather than a number.
       new_message = message.gsub(/\(([^)]+)\)/) { |match| $1.match?(/^\d+(\.\d+)?$/) ? '(<number of minutes>)' : match }

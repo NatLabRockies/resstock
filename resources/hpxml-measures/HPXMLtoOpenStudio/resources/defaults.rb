@@ -228,9 +228,9 @@ module Defaults
       hpxml_header.defrost_model_type_isdefaulted = true
     end
 
-    if hpxml_header.geothermal_model_type.nil? && (hpxml_bldg.heat_pumps.any? { |hp| [HPXML::HVACTypeHeatPumpGroundToAir].include? hp.heat_pump_type })
-      hpxml_header.geothermal_model_type = HPXML::AdvancedResearchGeothermalModelTypeSimple
-      hpxml_header.geothermal_model_type_isdefaulted = true
+    if hpxml_header.ground_to_air_heat_pump_model_type.nil? && (hpxml_bldg.heat_pumps.any? { |hp| hp.heat_pump_type == HPXML::HVACTypeHeatPumpGroundToAir })
+      hpxml_header.ground_to_air_heat_pump_model_type = HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard
+      hpxml_header.ground_to_air_heat_pump_model_type_isdefaulted = true
     end
 
     hpxml_header.unavailable_periods.each do |unavailable_period|
