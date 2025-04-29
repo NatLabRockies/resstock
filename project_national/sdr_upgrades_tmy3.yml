@@ -98,17 +98,17 @@ workflow_generator:
       include_timeseries_emission_end_uses: false
       include_timeseries_hot_water_uses: true
       include_timeseries_total_loads: true
-      include_timeseries_component_loads: true
+      include_timeseries_component_loads: false
       include_timeseries_unmet_hours: true
       include_timeseries_zone_temperatures: true
-      include_timeseries_zone_conditions: false
+      include_timeseries_zone_conditions: true
       include_timeseries_airflows: true
       include_timeseries_weather: true
       include_timeseries_resilience: true
       output_variables:
-        - name: Site Outdoor Air Drybulb Temperature
-        - name: Zone Mean Air Temperature
-        - name: Zone Air Relative Humidity
+        # - name: Site Outdoor Air Drybulb Temperature # handled by include_timeseries_weather: true
+        # - name: Zone Mean Air Temperature # handled by include_timeseries_zone_temperatures: true
+        # - name: Zone Air Relative Humidity # handled by include_timeseries_zone_conditions: true
         - name: People Sensible Heating Rate
         - name: People Total Heating Rate
         - name: Site Outdoor Air Humidity Ratio
