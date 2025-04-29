@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>42d795ab-b39d-4ca8-ae7a-e8eaa4c12f72</version_id>
-  <version_modified>2025-04-29T18:12:17Z</version_modified>
+  <version_id>5e8fcabd-38b1-4d37-9795-39f5ff8285cb</version_id>
+  <version_modified>2025-04-29T22:17:28Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -369,7 +369,7 @@
       <filename>hotwater_appliances.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>FA4DA1B3</checksum>
+      <checksum>AB3CDDDF</checksum>
     </file>
     <file>
       <filename>hpxml.rb</filename>
@@ -747,7 +747,7 @@
       <filename>test_hotwater_appliance.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>B02084FA</checksum>
+      <checksum>1E78F15D</checksum>
     </file>
     <file>
       <filename>test_hvac.rb</filename>
@@ -777,7 +777,7 @@
       <filename>test_miscloads.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>AF74F5D9</checksum>
+      <checksum>DF8F647E</checksum>
     </file>
     <file>
       <filename>test_pv.rb</filename>

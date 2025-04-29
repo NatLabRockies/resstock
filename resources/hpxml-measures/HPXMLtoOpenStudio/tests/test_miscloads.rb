@@ -288,7 +288,7 @@ class HPXMLtoOpenStudioMiscLoadsTest < Minitest::Test
     assert_equal(0, therm_yr)
   end
 
-  def test_operational_5_5_occupants
+  def test_operational_5point5_occupants
     args_hash = {}
     args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-residents-5-5.xml'))
     model, _hpxml, _hpxml_bldg = _test_measure(args_hash)
