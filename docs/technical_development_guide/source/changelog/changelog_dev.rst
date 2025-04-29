@@ -22,6 +22,7 @@ Development Changelog
 
         Assignees: Rajendra Adhikari
 
+
     .. change::
         :tags: characteristics, documentation, technical reference guide
         :pullreq: 1385
@@ -37,7 +38,7 @@ Development Changelog
         Assignees: Janet Reyna
 
 
-.. change::
+    .. change::
         :tags: characteristics, documentation, technical reference guide
         :pullreq: 1380
 
@@ -127,18 +128,18 @@ Development Changelog
         Assignees: Lixi Liu, Anthony Fontanini, Jeff Maguire
 
 
-   .. change::
+    .. change::
         :tags: characteristics, documentation
         :pullreq: 1374
-
+        
         **Date**: 2025-04-05
-
+        
         Title:
         Differentiate Hawaii in IECC Climate Zone 1A
-
+        
         Description:
         Split out HI and FL in Climate Zone 1A to support Hawaii differentiation.
-
+        
         Assignees: Janet Reyna
 
 
