@@ -587,6 +587,8 @@ class HPXML < Object
                bs_occupied: 'Occupied',
                bs_headroom: 'Headroom' }
 
+  attr_accessor(:contents)
+
   def initialize(hpxml_path: nil, schema_validator: nil, schematron_validator: nil, building_id: nil)
     @hpxml_path = hpxml_path
     @errors = []
@@ -595,7 +597,8 @@ class HPXML < Object
 
     hpxml_element = nil
     if not hpxml_path.nil?
-      doc = XMLHelper.parse_file(hpxml_path)
+      @contents = File.read(hpxml_path)
+      doc = XMLHelper.parse_file(hpxml_path, hpxml_contents: @contents)
 
       # Validate against XSD schema
       if not schema_validator.nil?

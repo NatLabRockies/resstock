@@ -253,19 +253,22 @@ module XMLHelper
   # Obtains the XML document for the XML file at the specified path.
   #
   # @param hpxml_path [String] Path to the HPXML file
+  # @param hpxml_path [String] Contents of the HPXML file if already available
   # @return [Oga::XML::Document] The XML document
-  def self.parse_file(hpxml_path)
-    file_read = File.read(hpxml_path)
-    hpxml_doc = Oga.parse_xml(file_read)
+  def self.parse_file(hpxml_path, hpxml_contents: nil)
+    if hpxml_contents.nil?
+      hpxml_contents = File.read(hpxml_path)
+    end
+    hpxml_doc = Oga.parse_xml(hpxml_contents)
     return hpxml_doc
   end
 
-  # Writes the XML file for the given XML document.
+  # Creates the final string representation of the XML document -- i.e., one that is
+  # ready to be written to a file.
   #
   # @param doc [Oga::XML::Document] Oga XML Document object
-  # @param hpxml_path [String] Path to the HPXML file
-  # @return [String] The written XML file as a string
-  def self.write_file(doc, hpxml_path)
+  # @return [String] The final string representation
+  def self.finalize_doc_string(doc)
     doc_s = doc.to_xml.delete("\r")
 
     # Manually apply pretty-printing (indentation and newlines)
@@ -306,6 +309,17 @@ module XMLHelper
     doc_s.gsub!(' ?>', '?>')
     doc_s.gsub!('&quot;', '"')
 
+    return doc_s
+  end
+
+  # Writes the XML file for the given XML document.
+  #
+  # @param doc [Oga::XML::Document] Oga XML Document object
+  # @param hpxml_path [String] Path to the HPXML file
+  # @return [nil]
+  def self.write_file(doc, hpxml_path)
+    doc_s = finalize_doc_string(doc)
+
     # Write XML file
     if not Dir.exist? File.dirname(hpxml_path)
       FileUtils.mkdir_p(File.dirname(hpxml_path))
@@ -313,8 +327,6 @@ module XMLHelper
     File.open(hpxml_path, 'w', newline: :crlf) do |f|
       f << doc_s
     end
-
-    return doc_s
   end
 end
 

@@ -39095,12 +39095,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``simulation_control_geothermal_model_type``
+   * - ``simulation_control_ground_to_air_heat_pump_model_type``
      - false
      - 
      - Choice
-     - auto, simple, advanced
-     - Research feature to select the type of geothermal model. Use simple for simple E+ geothermal coil modeling. Use advanced for an improved model that better accounts for coil staging; using advanced may impact simulation runtime. If not provided, the OS-HPXML default (see `HPXML Simulation Control <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-simulation-control>`_) is used.
+     - auto, standard, experimental
+     - Research feature to select the type of ground-to-air heat pump model. Use standard for standard ground-to-air heat pump modeling. Use experimental for an improved model that better accounts for coil staging. If not provided, the OS-HPXML default (see `HPXML Simulation Control <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-simulation-control>`_) is used.
    * - ``heating_system_type``
      - true
      - 
@@ -39372,7 +39372,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
-     - ``simulation_control_geothermal_model_type``
+     - ``simulation_control_ground_to_air_heat_pump_model_type``
      - ``heating_system_type``
      - ``heating_system_heating_efficiency``
      - ``heating_system_heating_capacity``
