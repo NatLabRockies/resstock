@@ -566,7 +566,7 @@ upgrades:
           - HVAC Shared Efficiencies|Fan Coil Cooling Only
 
     options:
-      - option: HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8, Single Stage Advanced
+      - option: HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8
         apply_logic: *ducted_ASHP_apply_logic
         costs: &costs_GTHP
         #### costs not accurate or final, need to find GTHP costs + adjust to inflation - PRW 1/2/2024 ####
@@ -588,7 +588,7 @@ upgrades:
 
     options:
       - &ducted_GTHP
-        option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0, Two Stage
+        option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
         apply_logic: *ducted_ASHP_apply_logic
         costs: *costs_GTHP
         lifetime: *lifetime_ducted_GTHP
@@ -601,7 +601,7 @@ upgrades:
     package_apply_logic: *remove_shared_heating_cooling_ghp
 
     options:
-      - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4, Variable Speed
+      - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4
         apply_logic: *ducted_ASHP_apply_logic
         costs: *costs_GTHP
         lifetime: *lifetime_ducted_GTHP
