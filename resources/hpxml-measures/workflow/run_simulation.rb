@@ -28,7 +28,6 @@ def run_workflow(basedir, rundir, hpxml, debug, skip_validation, add_comp_loads,
     measure_subdir = 'BuildResidentialScheduleFile'
     args = {}
     args['hpxml_path'] = hpxml
-    hpxml = File.join(rundir, File.basename(hpxml).gsub('.xml', 'stochastic_schedules.xml'))
     args['hpxml_output_path'] = hpxml
     args['output_csv_path'] = File.join(rundir, 'stochastic.csv')
     args['debug'] = debug
