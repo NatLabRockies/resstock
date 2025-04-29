@@ -54,7 +54,7 @@ sampler:
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.02.05
+  version: 2025.04.29
   args:
     # Annual simulation and timestep  
     build_existing_model:
@@ -115,6 +115,7 @@ workflow_generator:
       include_timeseries_component_loads: true
       include_timeseries_unmet_hours: true
       include_timeseries_zone_temperatures: true
+      include_timeseries_zone_conditions: false
       include_timeseries_airflows: true
       include_timeseries_weather: true
       include_timeseries_resilience: true

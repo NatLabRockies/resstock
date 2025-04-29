@@ -174,7 +174,7 @@ jobs:
 
       - name: Run buildstockbatch
         run: |
-          pip install git+https://github.com/NREL/buildstockbatch.git@develop
+          pip install git+https://github.com/NREL/buildstockbatch.git@zone-conditions
           
           buildstock_local project_national/national_baseline.yml
           buildstock_local project_testing/testing_baseline.yml
