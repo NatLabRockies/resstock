@@ -9,6 +9,20 @@ Development Changelog
 
     
     .. change::
+        :tags: feature
+        :pullreq: 1384
+
+        **Date**: 2025-04-29
+
+        Title:
+        SDR Upgrade Analysis
+
+        Description:
+        Implemented CI workflow for validating option application in SDR yaml and added checks to ensure all upgrade options have non-zero applicability.
+
+        Assignees: Rajendra Adhikari
+
+    .. change::
         :tags: characteristics, documentation, technical reference guide
         :pullreq: 1385
 
