@@ -88,6 +88,7 @@ report_simulation_output.include_timeseries_total_loads,"Generates timeseries to
 report_simulation_output.include_timeseries_component_loads,Generates timeseries heating and cooling loads disaggregated by component type.
 report_simulation_output.include_timeseries_unmet_hours,Generates timeseries unmet hours for heating and cooling.
 report_simulation_output.include_timeseries_zone_temperatures,Generates timeseries temperatures for each thermal zone.
+report_simulation_output.include_timeseries_zone_conditions,Generates timeseries temperatures and humidities for each thermal zone.
 report_simulation_output.include_timeseries_airflows,Generates timeseries airflows.
 report_simulation_output.include_timeseries_weather,Generates timeseries weather data.
 report_simulation_output.include_timeseries_resilience,Generates timeseries resilience outputs.
