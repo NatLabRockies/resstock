@@ -153,11 +153,6 @@ def create_hpxmls
 
   puts "\n"
 
-  # Delete stochastic schedule backup file
-  dirs.each do |dir|
-    Dir.glob("#{workflow_dir}/#{dir}/*_bak.xml").each { |file| File.delete(file) }
-  end
-
   # Print warnings about extra files
   dirs.each do |dir|
     Dir["#{workflow_dir}/#{dir}/*.xml"].each do |hpxml|

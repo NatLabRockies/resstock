@@ -132,6 +132,18 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
 
     hpxml = HPXML.new(hpxml_path: hpxml_path)
 
+    create_backup = false
+    if hpxml_path == hpxml_output_path
+      # Check if HPXML data will be dropped when we write the new HPXML file.
+      # This can happen if the original HPXML file was not written by OS-HPXML.
+      # If this will occur, we will save a backup of the original HPXML file.
+      orig_hpxml_contents = hpxml.contents.delete("\r")
+      new_hpxml_contents = XMLHelper.finalize_doc_string(hpxml.to_doc())
+      if orig_hpxml_contents != new_hpxml_contents
+        create_backup = true
+      end
+    end
+
     # Since we modify the HPXML object (apply defaults), use a copy of the
     # original HPXML object so that the HPXML object we write does not include
     # any such modifications.
@@ -169,7 +181,7 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    if hpxml_path == hpxml_output_path
+    if create_backup
       # Create a backup of the original HPXML file
       runner.registerWarning('HPXML Output File Path is same as HPXML File Path, creating backup.')
       File.rename(hpxml_path, hpxml_path.gsub('.xml', '_bak.xml'))
