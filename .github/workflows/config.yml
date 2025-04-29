@@ -141,6 +141,7 @@ jobs:
             project_national/resources/sdr_option_application_detailed_report.txt
             project_national/resources/sdr_option_application_report.csv
           retention-days: 90
+          if-no-files-found: error          
 
       - name: Test for zero applicable_to values
         run: |
