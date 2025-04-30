@@ -518,35 +518,70 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 517,,,,Temperature: Other Heated Space,temperature__other_heated_space__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
 518,,,,Temperature: Heating Setpoint,temperature__heating_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
 519,,,,Temperature: Cooling Setpoint,temperature__cooling_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
-520,,,,Airflow: Infiltration,airflow__infiltration__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
-521,,,,Airflow: Mechanical Ventilation,airflow__mechanical_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
-522,,,,Airflow: Natural Ventilation,airflow__natural_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
-523,,,,Weather: Drybulb Temperature,weather__drybulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-524,,,,Weather: Wetbulb Temperature,weather__wetbulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-525,,,,Weather: Relative Humidity,weather__relative_humidity__%,%,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-526,,,,Weather: Wind Speed,weather__wind_speed__mph,mph,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-527,,,,Weather: Diffuse Solar Radiation,weather__diffuse_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-528,,,,Weather: Direct Solar Radiation,weather__direct_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
-529,,,,Zone People Occupant Count: Conditioned Space,zone_people_occupant_count__conditioned_space,,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
-530,,,,Electricity:Facility,electricity_facility__j,J,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
-531,,,,,schedules_ceiling_fan,frac,Ceiling fan energy use schedule.
-532,,,,,schedules_clothes_dryer,frac,Clothes dryer energy use schedule.
-533,,,,,schedules_clothes_washer,frac,Clothes washer energy use schedule.
-534,,,,,schedules_cooking_range,frac,Cooking range & oven energy use schedule.
-535,,,,,schedules_dishwasher,frac,Dishwasher energy use schedule.
-536,,,,,schedules_hot_water_clothes_washer,frac,Clothes washer hot water use schedule.
-537,,,,,schedules_hot_water_dishwasher,frac,Dishwasher hot water use schedule.
-538,,,,,schedules_hot_water_fixtures,frac,"Fixtures (sinks, showers, baths) hot water use schedule."
-539,,,,,schedules_lighting_garage,frac,Garage lighting energy use schedule.
-540,,,,,schedules_lighting_interior,frac,Interior lighting energy use schedule.
-541,,,,,schedules_no_space_cooling,,Unavailable period.
-542,,,,,schedules_no_space_heating,,Unavailable period.
-543,,,,,schedules_occupants,frac,Occupant heat gain schedule.
-544,,,,,schedules_plug_loads_other,frac,Other plug load energy use schedule.
-545,,,,,schedules_plug_loads_tv,frac,Television plug load energy use schedule.
-546,,,,,schedules_power_outage,,Unavailable period.
-547,,,,,schedules_vacancy,,Unavailable period.
-548,,,,,schedules_electric_vehicle_charging,frac,Availability schedule for electric vehicle charging.
-549,,,,,schedules_electric_vehicle_discharging,frac,Availability schedule for electric vehicle discharging.
-550,,,,,schedules_peak_period,frac,Load flexibility measure ouput that indicates when the system is in the peak demand period.
-551,,,,,schedules_pre_peak_period,frac,Load flexibility measure ouput that identifies when the system is in the period leading up to the peak demand period.
+520,,,,Humidity Ratio: Attic - Unvented,humidity_ratio__attic_-_unvented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+521,,,,Humidity Ratio: Attic - Vented,humidity_ratio__attic_-_vented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+522,,,,Humidity Ratio: Basement - Unconditioned,humidity_ratio__basement_-_unconditioned__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+523,,,,Humidity Ratio: Crawlspace - Unvented,humidity_ratio__crawlspace_-_unvented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+524,,,,Humidity Ratio: Crawlspace - Vented,humidity_ratio__crawlspace_-_vented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+525,,,,Humidity Ratio: Garage,humidity_ratio__garage__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+526,,,,Humidity Ratio: Conditioned Space,humidity_ratio__conditioned_space__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+527,,,,Relative Humidity: Attic - Unvented,relative_humidity__attic_-_unvented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+528,,,,Relative Humidity: Attic - Vented,relative_humidity__attic_-_vented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+529,,,,Relative Humidity: Basement - Unconditioned,relative_humidity__basement_-_unconditioned__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+530,,,,Relative Humidity: Crawlspace - Unvented,relative_humidity__crawlspace_-_unvented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+531,,,,Relative Humidity: Crawlspace - Vented,relative_humidity__crawlspace_-_vented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+532,,,,Relative Humidity: Garage,relative_humidity__garage__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+533,,,,Relative Humidity: Conditioned Space,relative_humidity__conditioned_space__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+534,,,,Dewpoint Temperature: Attic - Unvented,dewpoint_temperature__attic_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+535,,,,Dewpoint Temperature: Attic - Vented,dewpoint_temperature__attic_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+536,,,,Dewpoint Temperature: Basement - Unconditioned,dewpoint_temperature__basement_-_unconditioned__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+537,,,,Dewpoint Temperature: Crawlspace - Unvented,dewpoint_temperature__crawlspace_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+538,,,,Dewpoint Temperature: Crawlspace - Vented,dewpoint_temperature__crawlspace_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+539,,,,Dewpoint Temperature: Garage,dewpoint_temperature__garage__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+540,,,,Dewpoint Temperature: Conditioned Space,dewpoint_temperature__conditioned_space__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+541,,,,Radiant Temperature: Attic - Unvented,radiant_temperature__attic_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+542,,,,Radiant Temperature: Attic - Vented,radiant_temperature__attic_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+543,,,,Radiant Temperature: Basement - Unconditioned,radiant_temperature__basement_-_unconditioned__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+544,,,,Radiant Temperature: Crawlspace - Unvented,radiant_temperature__crawlspace_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+545,,,,Radiant Temperature: Crawlspace - Vented,radiant_temperature__crawlspace_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+546,,,,Radiant Temperature: Garage,radiant_temperature__garage__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+547,,,,Radiant Temperature: Conditioned Space,radiant_temperature__conditioned_space__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+548,,,,Operative Temperature: Attic - Unvented,operative_temperature__attic_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+549,,,,Operative Temperature: Attic - Vented,operative_temperature__attic_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+550,,,,Operative Temperature: Basement - Unconditioned,operative_temperature__basement_-_unconditioned__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+551,,,,Operative Temperature: Crawlspace - Unvented,operative_temperature__crawlspace_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+552,,,,Operative Temperature: Crawlspace - Vented,operative_temperature__crawlspace_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+553,,,,Operative Temperature: Garage,operative_temperature__garage__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+554,,,,Operative Temperature: Conditioned Space,operative_temperature__conditioned_space__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+555,,,,Airflow: Infiltration,airflow__infiltration__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
+556,,,,Airflow: Mechanical Ventilation,airflow__mechanical_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
+557,,,,Airflow: Natural Ventilation,airflow__natural_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
+558,,,,Weather: Drybulb Temperature,weather__drybulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+559,,,,Weather: Wetbulb Temperature,weather__wetbulb_temperature__f,F,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+560,,,,Weather: Relative Humidity,weather__relative_humidity__%,%,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+561,,,,Weather: Wind Speed,weather__wind_speed__mph,mph,"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+562,,,,Weather: Diffuse Solar Radiation,weather__diffuse_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+563,,,,Weather: Direct Solar Radiation,weather__direct_solar_radiation__btu/(hr*ft^2),Btu/(hr*ft^2),"Weather file data including outdoor temperatures, relative humidity, wind speed, and solar."
+564,,,,Zone People Occupant Count: Conditioned Space,zone_people_occupant_count__conditioned_space,,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
+565,,,,Electricity:Facility,electricity_facility__j,J,"Any user-specified EnergyPlus output variables/meters (e.g., 'Zone People Occupant Count', 'MainsWater:Facility')."
+566,,,,,schedules_ceiling_fan,frac,Ceiling fan energy use schedule.
+567,,,,,schedules_clothes_dryer,frac,Clothes dryer energy use schedule.
+568,,,,,schedules_clothes_washer,frac,Clothes washer energy use schedule.
+569,,,,,schedules_cooking_range,frac,Cooking range & oven energy use schedule.
+570,,,,,schedules_dishwasher,frac,Dishwasher energy use schedule.
+571,,,,,schedules_hot_water_clothes_washer,frac,Clothes washer hot water use schedule.
+572,,,,,schedules_hot_water_dishwasher,frac,Dishwasher hot water use schedule.
+573,,,,,schedules_hot_water_fixtures,frac,"Fixtures (sinks, showers, baths) hot water use schedule."
+574,,,,,schedules_lighting_garage,frac,Garage lighting energy use schedule.
+575,,,,,schedules_lighting_interior,frac,Interior lighting energy use schedule.
+576,,,,,schedules_no_space_cooling,,Unavailable period.
+577,,,,,schedules_no_space_heating,,Unavailable period.
+578,,,,,schedules_occupants,frac,Occupant heat gain schedule.
+579,,,,,schedules_plug_loads_other,frac,Other plug load energy use schedule.
+580,,,,,schedules_plug_loads_tv,frac,Television plug load energy use schedule.
+581,,,,,schedules_power_outage,,Unavailable period.
+582,,,,,schedules_vacancy,,Unavailable period.
+583,,,,,schedules_electric_vehicle_charging,frac,Availability schedule for electric vehicle charging.
+584,,,,,schedules_electric_vehicle_discharging,frac,Availability schedule for electric vehicle discharging.
+585,,,,,schedules_peak_period,frac,Load flexibility measure ouput that indicates when the system is in the peak demand period.
+586,,,,,schedules_pre_peak_period,frac,Load flexibility measure ouput that identifies when the system is in the period leading up to the peak demand period.

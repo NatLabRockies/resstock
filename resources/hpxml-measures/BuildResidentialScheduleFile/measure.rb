@@ -137,8 +137,8 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
       # Check if HPXML data will be dropped when we write the new HPXML file.
       # This can happen if the original HPXML file was not written by OS-HPXML.
       # If this will occur, we will save a backup of the original HPXML file.
-      orig_hpxml_contents = hpxml.contents.delete("\r")
-      new_hpxml_contents = XMLHelper.finalize_doc_string(hpxml.to_doc())
+      orig_hpxml_contents = hpxml.contents.delete("\r").gsub(" dataSource='software'", '')
+      new_hpxml_contents = XMLHelper.finalize_doc_string(hpxml.to_doc()).gsub(" dataSource='software'", '')
       if orig_hpxml_contents != new_hpxml_contents
         create_backup = true
       end
