@@ -212,7 +212,7 @@ jobs:
             project_national/national_baseline/results_csvs/results_up00.csv
             project_testing/testing_baseline/results_csvs/results_up00.csv
             project_national/sdr_upgrades_tmy3/results_csvs/results_up00.csv
-            project_national/sdr_upgrades_tmy3/results_csvs/results_up16.csv
+            project_national/sdr_upgrades_tmy3/results_csvs/results_up18.csv
           if-no-files-found: error
 
       - name: Run tests
