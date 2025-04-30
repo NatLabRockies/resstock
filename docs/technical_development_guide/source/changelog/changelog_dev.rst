@@ -2,11 +2,9 @@
 Development Changelog
 =====================
 
-
 .. changelog::
     :version: v3.5.0
     :released: pending
-
 
     .. change::
         :tags: workflow, feature, outputs
@@ -18,9 +16,10 @@ Development Changelog
         Latest OS-HPXML
 
         Description:
+        Make EV charging/discharging unavailable during vacancy periods.
         Introduce new argument for including detailed zone conditions timeseries outputs (i.e., temperatures, humidities).
 
-        OpenStudio-HPXML: `pull request 1982 <https://github.com/NREL/OpenStudio-HPXML/pull/1982>`_
+        OpenStudio-HPXML: `pull request 1967 <https://github.com/NREL/OpenStudio-HPXML/pull/1967>`_, `pull request 1982 <https://github.com/NREL/OpenStudio-HPXML/pull/1982>`_
 
         Assignees: Joe Robertson
 

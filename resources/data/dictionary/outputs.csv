@@ -541,7 +541,7 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 540,,,,Dewpoint Temperature: Conditioned Space,dewpoint_temperature__conditioned_space__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
 541,,,,Radiant Temperature: Attic - Unvented,radiant_temperature__attic_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
 542,,,,Radiant Temperature: Attic - Vented,radiant_temperature__attic_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
-543,,,,Radiant Temperature:Basement - Unconditioned,radiant_temperature__basement_-_unconditioned__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+543,,,,Radiant Temperature: Basement - Unconditioned,radiant_temperature__basement_-_unconditioned__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
 544,,,,Radiant Temperature: Crawlspace - Unvented,radiant_temperature__crawlspace_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
 545,,,,Radiant Temperature: Crawlspace - Vented,radiant_temperature__crawlspace_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
 546,,,,Radiant Temperature: Garage,radiant_temperature__garage__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
