@@ -455,13 +455,6 @@ upgrades:
         lifetime: *lifetime_ducted_ASHP
 
       ## fuel oil furnaces ##
-      - &ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_60_FO
-        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 60% AFUE Fuel Oil, 5F-40F switchover band
-        apply_logic: &dual-fuel_60pctAFUE_FO_furnace_apply_logic
-          - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-          - HVAC Heating Type And Fuel|Fuel Oil Fuel Furnace        
-        costs: *costs_ashp_ducted_SEER_16_9-2_HSPF
-        lifetime: *lifetime_ducted_ASHP
       - &ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_76_FO
         option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 76% AFUE Fuel Oil, 5F-40F switchover band
         apply_logic: &dual-fuel_76pctAFUE_FO_furnace_apply_logic
@@ -792,7 +785,6 @@ upgrades:
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_76_propane
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_80_propane
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_92-5_propane
-      - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_60_FO
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_76_FO
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_80_FO
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_92-5_FO
@@ -1061,7 +1053,6 @@ upgrades:
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_76_propane
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_80_propane
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_92-5_propane
-      - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_60_FO
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_76_FO
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_80_FO
       - *ducted_ASHP_ENERGYSTAR_exist_backup_shared_ducts_92-5_FO

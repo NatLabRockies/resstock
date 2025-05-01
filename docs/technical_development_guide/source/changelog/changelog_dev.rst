@@ -9,6 +9,21 @@ Development Changelog
 
     
     .. change::
+        :tags: feature
+        :pullreq: 1384
+
+        **Date**: 2025-04-29
+
+        Title:
+        SDR Upgrade Analysis
+
+        Description:
+        Implemented CI workflow for validating option application in SDR yaml and added checks to ensure all upgrade options have non-zero applicability.
+
+        Assignees: Rajendra Adhikari
+
+
+    .. change::
         :tags: characteristics, documentation, technical reference guide
         :pullreq: 1385
 
@@ -23,7 +38,7 @@ Development Changelog
         Assignees: Janet Reyna
 
 
-.. change::
+    .. change::
         :tags: characteristics, documentation, technical reference guide
         :pullreq: 1380
 
@@ -113,18 +128,18 @@ Development Changelog
         Assignees: Lixi Liu, Anthony Fontanini, Jeff Maguire
 
 
-   .. change::
+    .. change::
         :tags: characteristics, documentation
         :pullreq: 1374
-
+        
         **Date**: 2025-04-05
-
+        
         Title:
         Differentiate Hawaii in IECC Climate Zone 1A
-
+        
         Description:
         Split out HI and FL in Climate Zone 1A to support Hawaii differentiation.
-
+        
         Assignees: Janet Reyna
 
 
