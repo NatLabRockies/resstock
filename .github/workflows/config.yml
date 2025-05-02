@@ -146,7 +146,7 @@ jobs:
       - name: Test for zero applicable_to values
         run: |
           cd project_national/resources
-          # Use Python to check specifically the applicable_to column (5th column)
+          # Check applicable_to column (5th column)
           python3 -c '
           import csv
           import sys
