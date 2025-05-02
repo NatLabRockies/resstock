@@ -1,8 +1,13 @@
+# Documentation build artifacts
 /docs/technical_development_guide/_build
 /docs/technical_reference_guide/_build
+
+# Libraries and test outputs
 /lib
 /measures/UpgradeCosts/tests/in*
 /measures/UpgradeCosts/tests/*.xml
+
+# Project-specific outputs
 /project_national/national_baseline
 /project_national/sdr_upgrades_tmy3*
 /project_testing/testing_baseline
@@ -10,17 +15,27 @@
 /testing_baseline
 /sdr_upgrades_tmy3*
 /test_upgrade_name
+
+# Resource and data files
 /resources/buildstock.csv
 /project_*/**/*.csv
 !/project_*/resources/source_report.csv
 !/project_*/resources/options_saturations.csv
 !/project_national/resources/sdr_*.csv
+!/resources/data/dictionary/outputs.csv
+
+# Log files
 /project_*/**/*.log
+buildstockbatch_crash_details.log
+
+# Weather data
 /weather
+
+# IDE/editor-specific
 .vscode/
 .DS_Store
-buildstockbatch_crash_details.log
+
+# Jupyter and data cache
 **/.ipynb_checkpoints/*
 **/data/*
 **/.bsq_cache/
-!/resources/data/dictionary/outputs.csv
