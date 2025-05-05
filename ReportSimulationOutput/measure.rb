@@ -1750,7 +1750,13 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     runner.registerInfo("Wrote annual output results to #{annual_output_path}.")
 
     # Panel data
-    if args[:include_annual_panel_summary] && @hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.electric_panels.size }.sum > 0
+    # Currently, we only write results_panel.csv if:
+    # (1) requested by this measure
+    # (2) at least one load calculation type is specified
+    # (3) an electric panel is specified
+    if args[:include_annual_panel_summary] &&
+       (not @hpxml_header.service_feeders_load_calculation_types.empty?) &&
+       (@hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.electric_panels.size }.sum > 0)
       electric_panel_results_out = []
       Outputs.append_panel_results(@hpxml_header, @hpxml_bldgs, electric_panel_results_out)
 
