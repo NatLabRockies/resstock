@@ -132,13 +132,14 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
   def test_low_load
     args_hash = { 'hpxml_path' => File.absolute_path(@tmp_hpxml_path) }
     hpxml, hpxml_bldg = _create_hpxml('base.xml')
-
     hpxml.header.service_feeders_load_calculation_types = [HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased,
                                                            HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingMeterBased]
+
     branch_circuits = hpxml_bldg.electric_panels[0].branch_circuits
     branch_circuits.add(id: 'Kitchen', occupied_spaces: 2)
     branch_circuits.add(id: 'Laundry', occupied_spaces: 1)
     branch_circuits.add(id: 'Other', occupied_spaces: 1)
+
     service_feeders = hpxml_bldg.electric_panels[0].service_feeders
     service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeHeating, power: 0, component_idrefs: [hpxml_bldg.heating_systems[0].id])
     service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}", type: HPXML::ElectricPanelLoadTypeCooling, power: 0, component_idrefs: [hpxml_bldg.cooling_systems[0].id])
@@ -699,6 +700,9 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
   def _create_hpxml(hpxml_name, test_name = nil)
     puts "Testing #{test_name}..." if !test_name.nil?
     hpxml = HPXML.new(hpxml_path: File.join(@sample_files_path, hpxml_name))
+    if hpxml.header.service_feeders_load_calculation_types.empty?
+      hpxml.header.service_feeders_load_calculation_types = [HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased]
+    end
     hpxml_bldg = hpxml.buildings[0]
     if hpxml_bldg.electric_panels.size == 0
       hpxml_bldg.electric_panels.add(id: 'ElectricPanel')
