@@ -12,9 +12,7 @@
 /test_upgrade_name
 /resources/buildstock.csv
 /project_*/**/*.csv
-!/project_*/resources/source_report.csv
-!/project_*/resources/options_saturations.csv
-!/project_national/resources/sdr_*.csv
+!/project_*/resources/**/*.csv
 /project_*/**/*.log
 /weather
 .vscode/
