@@ -263,7 +263,7 @@ module XMLHelper
     return hpxml_doc
   end
 
-  # Creates the final string representation of the XML document -- i.e., one that is
+  # Returns the final string representation of the XML document -- i.e., one that is
   # ready to be written to a file.
   #
   # @param doc [Oga::XML::Document] Oga XML Document object
@@ -312,11 +312,12 @@ module XMLHelper
     return doc_s
   end
 
-  # Writes the XML file for the given XML document.
+  # Writes the XML file for the given XML document and returns the final
+  # string representation of the XML document.
   #
   # @param doc [Oga::XML::Document] Oga XML Document object
   # @param hpxml_path [String] Path to the HPXML file
-  # @return [nil]
+  # @return [String] The final string representation
   def self.write_file(doc, hpxml_path)
     doc_s = finalize_doc_string(doc)
 
@@ -327,6 +328,8 @@ module XMLHelper
     File.open(hpxml_path, 'w', newline: :crlf) do |f|
       f << doc_s
     end
+
+    return doc_s
   end
 end
 
