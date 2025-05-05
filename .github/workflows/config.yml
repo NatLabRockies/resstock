@@ -267,7 +267,7 @@ jobs:
 
       - name: Run buildstockbatch
         run: |
-          pip install git+https://github.com/NREL/buildstockbatch.git@light_local
+          pip install git+https://github.com/NREL/buildstockbatch.git@post_transform
           buildstock_local --low-disk project_national/sdr_upgrades_tmy3_v2.yml
 
       - name: Unzip results
