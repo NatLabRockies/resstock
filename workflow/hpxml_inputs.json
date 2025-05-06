@@ -999,14 +999,14 @@
     "hvac_control_cooling_weekday_setpoint": 78,
     "hvac_control_cooling_weekend_setpoint": 78,
     "ducts_leakage_units": "CFM25",
-    "ducts_supply_leakage_to_outside_value": 75,
-    "ducts_return_leakage_to_outside_value": 25,
+    "ducts_supply_leakage_to_outside_value": 81,
+    "ducts_return_leakage_to_outside_value": 27,
     "ducts_supply_location": "attic - unvented",
     "ducts_supply_insulation_r": 4,
-    "ducts_supply_surface_area": 150,
+    "ducts_supply_surface_area_fraction": 1.0,
     "ducts_return_location": "attic - unvented",
-    "ducts_return_insulation_r": 0,
-    "ducts_return_surface_area": 50,
+    "ducts_return_insulation_r": 4,
+    "ducts_return_surface_area_fraction": 1.0,
     "mech_vent_fan_type": "none",
     "mech_vent_recovery_efficiency_type": "Unadjusted",
     "mech_vent_total_recovery_efficiency": 0,
@@ -1220,8 +1220,10 @@
     "geometry_unit_num_floors_above_grade": 2,
     "geometry_unit_cfa": 3600,
     "geometry_attic_type": "ConditionedAttic",
-    "ducts_supply_leakage_to_outside_value": 5,
-    "ducts_return_leakage_to_outside_value": 10,
+    "ducts_supply_leakage_to_outside_value": 27,
+    "ducts_return_leakage_to_outside_value": 9,
+    "ducts_supply_insulation_r": 0,
+    "ducts_return_insulation_r": 0,
     "ducts_supply_location": "conditioned space",
     "ducts_return_location": "conditioned space",
     "water_heater_location": "basement - conditioned",
@@ -1358,7 +1360,9 @@
     "window_area_right": 0,
     "air_leakage_type": "unit exterior only",
     "heating_system_heating_capacity": 24000,
-    "misc_plug_loads_other_annual_kwh": 1638
+    "misc_plug_loads_other_annual_kwh": 1638,
+    "ducts_supply_leakage_to_outside_value": 54.0,
+    "ducts_return_leakage_to_outside_value": 18.0
   },
   "sample_files/base-bldgtype-sfa-unit-2stories.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-sfa-unit.xml",
@@ -1366,9 +1370,9 @@
     "geometry_unit_cfa": 2700,
     "heating_system_heating_capacity": 48000,
     "cooling_system_cooling_capacity": 36000,
-    "ducts_supply_surface_area": 112.5,
-    "ducts_return_surface_area": 37.5,
-    "misc_plug_loads_other_annual_kwh": 2457
+    "misc_plug_loads_other_annual_kwh": 2457,
+    "ducts_supply_leakage_to_outside_value": 81.0,
+    "ducts_return_leakage_to_outside_value": 27.0
   },
   "sample_files/base-bldgtype-sfa-unit-atticroof-cathedral.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-sfa-unit-2stories.xml",
@@ -1410,6 +1414,7 @@
     "ducts_supply_location": "conditioned space",
     "ducts_supply_insulation_r": 0,
     "ducts_return_location": "conditioned space",
+    "ducts_return_insulation_r": 0,
     "misc_plug_loads_other_annual_kwh": 819
   },
   "sample_files/base-bldgtype-mf-unit-adjacent-to-multifamily-buffer-space.xml": {
@@ -1419,7 +1424,9 @@
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml"
   },
   "sample_files/base-bldgtype-mf-unit-adjacent-to-non-freezing-space.xml": {
-    "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml"
+    "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
+    "heating_system_heating_capacity": 18000,
+    "cooling_system_cooling_capacity": 18000
   },
   "sample_files/base-bldgtype-mf-unit-adjacent-to-other-heated-space.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml"
@@ -1980,8 +1987,10 @@
     "window_area_right": 144,
     "heating_system_heating_capacity": 48000,
     "cooling_system_cooling_capacity": 36000,
-    "ducts_supply_surface_area": 112.5,
-    "ducts_return_surface_area": 37.5,
+    "ducts_supply_surface_area_fraction": 0.75,
+    "ducts_return_surface_area_fraction": 0.75,
+    "ducts_supply_leakage_to_outside_value": 121.5,
+    "ducts_return_leakage_to_outside_value": 40.5,
     "misc_plug_loads_other_annual_kwh": 3685.5
   },
   "sample_files/base-enclosure-2stories-garage.xml": {
@@ -1989,7 +1998,9 @@
     "geometry_unit_cfa": 3250,
     "geometry_garage_width": 20,
     "floor_over_garage_assembly_r": 39.3,
-    "misc_plug_loads_other_annual_kwh": 2957.5
+    "misc_plug_loads_other_annual_kwh": 2957.5,
+    "ducts_supply_leakage_to_outside_value": 97.5,
+    "ducts_return_leakage_to_outside_value": 32.5
   },
   "sample_files/base-enclosure-beds-1.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2073,14 +2084,6 @@
     "parent_hpxml": "sample_files/base.xml",
     "air_leakage_leakiness_description": "leaky",
     "year_built": 1988,
-    "air_leakage_value": null,
-    "air_leakage_units": null,
-    "air_leakage_type": null
-  },
-  "sample_files/base-enclosure-2stories-infil-leakiness-description.xml": {
-    "parent_hpxml": "sample_files/base-enclosure-2stories.xml",
-    "air_leakage_leakiness_description": "very tight",
-    "year_built": 1999,
     "air_leakage_value": null,
     "air_leakage_units": null,
     "air_leakage_type": null
@@ -2198,7 +2201,9 @@
     "geometry_unit_cfa": 1350,
     "geometry_foundation_type": "Ambient",
     "floor_over_foundation_assembly_r": 18.7,
-    "misc_plug_loads_other_annual_kwh": 1228.5
+    "misc_plug_loads_other_annual_kwh": 1228.5,
+    "ducts_supply_leakage_to_outside_value": 40.5,
+    "ducts_return_leakage_to_outside_value": 13.5
   },
   "sample_files/base-foundation-basement-garage.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2216,9 +2221,13 @@
     "window_area_back": 140,
     "window_area_left": 20,
     "window_area_right": 20,
+    "ducts_leakage_units": "Percent",
+    "ducts_supply_leakage_to_outside_value": 0.15,
     "ducts_supply_location": "manufactured home belly",
     "ducts_supply_insulation_r": 0,
-    "ducts_return_location": "manufactured home belly"
+    "ducts_return_leakage_to_outside_value": 0.05,
+    "ducts_return_location": "manufactured home belly",
+    "ducts_return_insulation_r": 0
   },
   "sample_files/base-foundation-belly-wing-no-skirt.xml": {
     "parent_hpxml": "sample_files/base-foundation-belly-wing-skirt.xml",
@@ -2269,7 +2278,9 @@
     "slab_carpet_r": 2.5,
     "ducts_supply_location": "under slab",
     "ducts_return_location": "under slab",
-    "misc_plug_loads_other_annual_kwh": 1228.5
+    "misc_plug_loads_other_annual_kwh": 1228.5,
+    "ducts_supply_leakage_to_outside_value": 40.5,
+    "ducts_return_leakage_to_outside_value": 13.5
   },
   "sample_files/base-foundation-slab-exterior-horizontal-insulation.xml": {
     "parent_hpxml": "sample_files/base-foundation-slab.xml",
@@ -2297,7 +2308,9 @@
     "dishwasher_location": "basement - unconditioned",
     "refrigerator_location": "basement - unconditioned",
     "cooking_range_oven_location": "basement - unconditioned",
-    "misc_plug_loads_other_annual_kwh": 1228.5
+    "misc_plug_loads_other_annual_kwh": 1228.5,
+    "ducts_supply_leakage_to_outside_value": 40.5,
+    "ducts_return_leakage_to_outside_value": 13.5
   },
   "sample_files/base-foundation-unconditioned-basement-above-grade.xml": {
     "parent_hpxml": "sample_files/base-foundation-unconditioned-basement.xml",
@@ -2325,7 +2338,9 @@
     "ducts_supply_location": "crawlspace - unvented",
     "ducts_return_location": "crawlspace - unvented",
     "water_heater_location": "crawlspace - unvented",
-    "misc_plug_loads_other_annual_kwh": 1228.5
+    "misc_plug_loads_other_annual_kwh": 1228.5,
+    "ducts_supply_leakage_to_outside_value": 40.5,
+    "ducts_return_leakage_to_outside_value": 13.5
   },
   "sample_files/base-foundation-vented-crawlspace.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2338,7 +2353,9 @@
     "ducts_supply_location": "crawlspace - vented",
     "ducts_return_location": "crawlspace - vented",
     "water_heater_location": "crawlspace - vented",
-    "misc_plug_loads_other_annual_kwh": 1228.5
+    "misc_plug_loads_other_annual_kwh": 1228.5,
+    "ducts_supply_leakage_to_outside_value": 40.5,
+    "ducts_return_leakage_to_outside_value": 13.5
   },
   "sample_files/base-foundation-vented-crawlspace-above-grade.xml": {
     "parent_hpxml": "sample_files/base-foundation-vented-crawlspace.xml",
@@ -2493,7 +2510,9 @@
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler-switchover-temperature.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml",
     "heat_pump_compressor_lockout_temp": 30,
-    "heat_pump_backup_heating_lockout_temp": 30
+    "heat_pump_backup_heating_lockout_temp": 30,
+    "heat_pump_heating_capacity": 24000,
+    "heat_pump_cooling_capacity": 24000
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-furnace.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml"
@@ -2715,26 +2734,28 @@
     "heat_pump_compressor_lockout_temp": 30,
     "heat_pump_backup_fuel": "natural gas",
     "heat_pump_backup_heating_efficiency": 0.95,
-    "heat_pump_backup_heating_lockout_temp": 30
+    "heat_pump_backup_heating_lockout_temp": 30,
+    "ducts_supply_surface_area_fraction": null,
+    "ducts_return_surface_area_fraction": null
   },
   "sample_files/base-hvac-ducts-leakage-cfm50.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "ducts_leakage_units": "CFM50",
-    "ducts_supply_leakage_to_outside_value": 100,
-    "ducts_return_leakage_to_outside_value": 125
+    "ducts_supply_leakage_to_outside_value": 101.25,
+    "ducts_return_leakage_to_outside_value": 33.75
   },
   "sample_files/base-hvac-ducts-leakage-percent.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "ducts_leakage_units": "Percent",
-    "ducts_supply_leakage_to_outside_value": 0.1,
-    "ducts_return_leakage_to_outside_value": 0.05
+    "ducts_supply_leakage_to_outside_value": 0.112,
+    "ducts_return_leakage_to_outside_value": 0.038
   },
-  "sample_files/base-hvac-ducts-area-fractions.xml": {
-    "parent_hpxml": "sample_files/base-enclosure-2stories.xml",
-    "ducts_supply_surface_area": null,
-    "ducts_supply_surface_area_fraction": 0.75,
-    "ducts_return_surface_area": null,
-    "ducts_return_surface_area_fraction": 0.75
+  "sample_files/base-hvac-ducts-areas.xml": {
+    "parent_hpxml": "sample_files/base.xml",
+    "ducts_supply_surface_area": 150.0,
+    "ducts_supply_surface_area_fraction": null,
+    "ducts_return_surface_area": 50.0,
+    "ducts_return_surface_area_fraction": null
   },
   "sample_files/base-hvac-ducts-area-multipliers.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -2752,9 +2773,11 @@
     "heating_system_2_heating_efficiency": 1.0,
     "heating_system_2_fraction_heat_load_served": 0.25,
     "ducts_supply_location": null,
-    "ducts_supply_surface_area": null,
+    "ducts_supply_surface_area_fraction": null,
     "ducts_return_location": null,
-    "ducts_return_surface_area": null
+    "ducts_return_surface_area_fraction": null,
+    "ducts_supply_leakage_to_outside_value": 60.75,
+    "ducts_return_leakage_to_outside_value": 20.25
   },
   "sample_files/base-hvac-ducts-effective-rvalue.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -2768,11 +2791,6 @@
     "parent_hpxml": "sample_files/base.xml",
     "ducts_supply_fraction_rectangular": 1.0,
     "ducts_return_fraction_rectangular": 1.0
-  },
-  "sample_files/base-hvac-ducts-shape-mixed.xml": {
-    "parent_hpxml": "sample_files/base.xml",
-    "ducts_supply_fraction_rectangular": 0.25,
-    "ducts_return_fraction_rectangular": 0.75
   },
   "sample_files/base-hvac-elec-resistance-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -3073,8 +3091,11 @@
     "ducts_supply_leakage_to_outside_value": 15,
     "ducts_return_leakage_to_outside_value": 5,
     "ducts_supply_insulation_r": 0,
+    "ducts_return_insulation_r": 0,
     "ducts_supply_surface_area": 30,
-    "ducts_return_surface_area": 10
+    "ducts_return_surface_area": 10,
+    "ducts_supply_surface_area_fraction": null,
+    "ducts_return_surface_area_fraction": null
   },
   "sample_files/base-hvac-mini-split-air-conditioner-only-ductless.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-air-conditioner-only-ducted.xml",
@@ -3125,8 +3146,11 @@
     "ducts_supply_leakage_to_outside_value": 15,
     "ducts_return_leakage_to_outside_value": 5,
     "ducts_supply_insulation_r": 0,
+    "ducts_return_insulation_r": 0,
     "ducts_supply_surface_area": 30,
-    "ducts_return_surface_area": 10
+    "ducts_return_surface_area": 10,
+    "ducts_supply_surface_area_fraction": null,
+    "ducts_return_surface_area_fraction": null
   },
   "sample_files/base-hvac-mini-split-heat-pump-ducted-detailed-performance.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ducted.xml",
@@ -3258,14 +3282,24 @@
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-stove.xml",
     "heating_system_2_type": "Furnace",
     "heating_system_2_fuel": "natural gas",
-    "heating_system_2_heating_efficiency": 0.8
+    "heating_system_2_heating_efficiency": 0.8,
+    "ducts_supply_leakage_to_outside_value": 81,
+    "ducts_return_leakage_to_outside_value": 27,
+    "ducts_supply_location": "attic - unvented",
+    "ducts_supply_insulation_r": 4,
+    "ducts_supply_surface_area": null,
+    "ducts_supply_surface_area_fraction": 1.0,
+    "ducts_return_location": "attic - unvented",
+    "ducts_return_insulation_r": 4,
+    "ducts_return_surface_area": null,
+    "ducts_return_surface_area_fraction": 1.0
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace-ducts-defaults.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace.xml",
     "ducts_supply_location": null,
-    "ducts_supply_surface_area": null,
+    "ducts_supply_surface_area_fraction": null,
     "ducts_return_location": null,
-    "ducts_return_surface_area": null
+    "ducts_return_surface_area_fraction": null
   },
   "sample_files/base-hvac-multiple.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -3425,8 +3459,8 @@
     "parent_hpxml": "sample_files/base.xml",
     "heating_system_heating_capacity": 3600,
     "cooling_system_cooling_capacity": 2400,
-    "ducts_supply_leakage_to_outside_value": 7.5,
-    "ducts_return_leakage_to_outside_value": 2.5
+    "ducts_supply_leakage_to_outside_value": 40.5,
+    "ducts_return_leakage_to_outside_value": 13.5
   },
   "sample_files/base-hvac-wall-furnace-elec-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -3763,9 +3797,9 @@
     "hvac_control_cooling_weekday_setpoint": null,
     "hvac_control_cooling_weekend_setpoint": null,
     "ducts_supply_location": null,
-    "ducts_supply_surface_area": null,
+    "ducts_supply_surface_area_fraction": null,
     "ducts_return_location": null,
-    "ducts_return_surface_area": null,
+    "ducts_return_surface_area_fraction": null,
     "ducts_number_of_return_registers": 2,
     "mech_vent_fan_type": "exhaust only",
     "mech_vent_total_recovery_efficiency": 0.48,
@@ -4290,9 +4324,7 @@
     "heating_system_fraction_heat_load_served": 0.5,
     "cooling_system_cooling_capacity": 12000,
     "cooling_system_fraction_cool_load_served": 0.5,
-    "ducts_supply_leakage_to_outside_value": 37.5,
-    "ducts_return_leakage_to_outside_value": 12.5,
-    "ducts_supply_surface_area": 75,
-    "ducts_return_surface_area": 25
+    "ducts_supply_leakage_to_outside_value": 40.5,
+    "ducts_return_leakage_to_outside_value": 13.5
   }
 }

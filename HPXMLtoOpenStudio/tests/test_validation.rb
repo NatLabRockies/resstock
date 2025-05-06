@@ -243,7 +243,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'missing-capacity-detailed-performance' => ['Expected 1 element(s) for xpath: ../../../HeatingCapacity',
                                                                         'Expected 1 element(s) for xpath: ../../../CoolingCapacity'],
                             'missing-cfis-supplemental-fan' => ['Expected 1 element(s) for xpath: CFISControls/SupplementalFan'],
-                            'missing-distribution-cfa-served' => ['Expected 1 element(s) for xpath: ../../../ConditionedFloorAreaServed [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution/DistributionSystemType/AirDistribution/Ducts[not(DuctSurfaceArea)], id: "Ducts2"]'],
+                            'missing-distribution-cfa-served' => ['Expected 1 element(s) for xpath: ../../../ConditionedFloorAreaServed [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution/DistributionSystemType/AirDistribution/Ducts[not(DuctSurfaceArea)], id: "Ducts1"]',
+                                                                  'Expected 1 element(s) for xpath: ../../../ConditionedFloorAreaServed [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution/DistributionSystemType/AirDistribution/Ducts[not(DuctSurfaceArea)], id: "Ducts2"]'],
                             'missing-duct-area' => ['Expected 1 or more element(s) for xpath: FractionDuctArea | DuctSurfaceArea [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution/DistributionSystemType/AirDistribution/Ducts[DuctLocation], id: "Ducts2"]'],
                             'missing-duct-location' => ['Expected 0 element(s) for xpath: FractionDuctArea | DuctSurfaceArea [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution/DistributionSystemType/AirDistribution/Ducts[not(DuctLocation)], id: "Ducts2"]'],
                             'missing-elements' => ['Expected 1 element(s) for xpath: NumberofConditionedFloors [context: /HPXML/Building/BuildingDetails/BuildingSummary/BuildingConstruction, id: "MyBuilding"]',
@@ -555,11 +556,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.dishwashers[0].label_electric_rate = 0
       when 'invalid-duct-area-fractions'
-        hpxml, hpxml_bldg = _create_hpxml('base-hvac-ducts-area-fractions.xml')
-        hpxml_bldg.hvac_distributions[0].ducts[0].duct_surface_area = nil
-        hpxml_bldg.hvac_distributions[0].ducts[1].duct_surface_area = nil
-        hpxml_bldg.hvac_distributions[0].ducts[2].duct_surface_area = nil
-        hpxml_bldg.hvac_distributions[0].ducts[3].duct_surface_area = nil
+        hpxml, hpxml_bldg = _create_hpxml('base-enclosure-2stories.xml')
         hpxml_bldg.hvac_distributions[0].ducts[0].duct_fraction_area = 0.65
         hpxml_bldg.hvac_distributions[0].ducts[1].duct_fraction_area = 0.65
         hpxml_bldg.hvac_distributions[0].ducts[2].duct_fraction_area = 0.15
@@ -736,12 +733,11 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.ventilation_fans[1].delete
       when 'missing-distribution-cfa-served'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
-        hpxml_bldg.hvac_distributions[0].ducts[1].duct_surface_area = nil
-        hpxml_bldg.hvac_distributions[0].ducts[1].duct_location = nil
+        hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = nil
       when 'missing-duct-area'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = hpxml_bldg.building_construction.conditioned_floor_area
-        hpxml_bldg.hvac_distributions[0].ducts[1].duct_surface_area = nil
+        hpxml_bldg.hvac_distributions[0].ducts[1].duct_fraction_area = nil
       when 'missing-duct-location'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.hvac_distributions[0].ducts[1].duct_location = nil
@@ -1932,7 +1928,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
           dlm.duct_leakage_value = 100.0
         end
         hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
-          duct.duct_surface_area = nil
+          duct.duct_fraction_area = nil
           duct.duct_location = nil
         end
       when 'duct-lto-cfm25-uncond-space'
@@ -1948,7 +1944,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
           dlm.duct_leakage_value = 200.0
         end
         hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
-          duct.duct_surface_area = nil
+          duct.duct_fraction_area = nil
           duct.duct_location = nil
         end
       when 'duct-lto-cfm50-uncond-space'
@@ -1964,7 +1960,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
           dlm.duct_leakage_value = 0.035
         end
         hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
-          duct.duct_surface_area = nil
+          duct.duct_fraction_area = nil
           duct.duct_location = nil
         end
       when 'duct-lto-percent-uncond-space'

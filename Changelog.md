@@ -18,7 +18,7 @@ __New Features__
   - Adds optional new outputs for timeseries zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures).
   - Adds new outputs for *net* peak electricity (summer/winter/annual); same as *total* peak electricity outputs but subtracts power produced by PV.
   - Avoids writing the E+ eplustbl.htm by default; use the debug flag to get it.
-  - Deletes the eplusout\*.msgpack files by default (run_simulation.rb only); use the debug flag to preserve them.
+  - Deletes eplusout\*.msgpack files by default (run_simulation.rb only); use the debug flag to preserve them.
 - Allows arbitrary columns to be present in a detailed schedule csv file with warning.
 - Electric panel calculations:
   - Allows optional `ElectricPanel` inputs for describing branch circuits and service feeders
