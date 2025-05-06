@@ -561,13 +561,13 @@ upgrades:
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8
         apply_logic: *ducted_ASHP_apply_logic
-        costs: &costs_GTHP
-        #### costs not accurate or final, need to find GTHP costs + adjust to inflation - PRW 1/2/2024 ####
+        costs: &costs_ghp
+        #### costs not accurate or final, need to find ghp costs + adjust to inflation - PRW 1/2/2024 ####
           - value: 999
             multiplier: Fixed (1)
           - value: 999
             multiplier: Size, Heating System Primary (kBtu/h)
-        lifetime: &lifetime_ducted_GTHP 15
+        lifetime: &lifetime_ducted_ghp 15
 
       - *HP_cooling_efficiency_ducted
       - &100_percent_conditioned_ducts_only
@@ -580,11 +580,11 @@ upgrades:
     package_apply_logic: *remove_shared_heating_cooling_ghp
 
     options:
-      - &ducted_GTHP
+      - &dual_speed_ducted_ghp
         option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
         apply_logic: *ducted_ASHP_apply_logic
-        costs: *costs_GTHP
-        lifetime: *lifetime_ducted_GTHP
+        costs: *costs_ghp
+        lifetime: *lifetime_ducted_ghp
 
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
@@ -596,8 +596,8 @@ upgrades:
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4
         apply_logic: *ducted_ASHP_apply_logic
-        costs: *costs_GTHP
-        lifetime: *lifetime_ducted_GTHP
+        costs: *costs_ghp
+        lifetime: *lifetime_ducted_ghp
 
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
@@ -826,17 +826,11 @@ upgrades:
     package_apply_logic: *remove_shared_heating_cooling_ghp
 
     options:
-      - *ducted_GTHP
-        ### -- Adding commented out offset removal logic - still unclear if offsets can be turned off for this GTHP -- ###
-      # - *cooling_setpoint_no_offset_ducted
-      # - *cooling_setpoint_offset_magnitude_0_ducted
-      # - *cooling_setpoint_offset_period_none_ducted
-      # - *heating_setpoint_no_offset_ducted
-      # - *heating_setpoint_offset_magnitude_0_ducted
-      # - *heating_setpoint_offset_period_none_ducted     
-
+      ### -- Dual-Speed Ducted ghp -- ###
+      - *dual_speed_ducted_ghp
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
+
         ### -- Light Touch Envelope -- ###
       - *attic_insulation_IECC_CZ1A
       - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
@@ -1105,15 +1099,8 @@ upgrades:
     package_apply_logic: *remove_shared_heating_cooling_ghp
 
     options:
-      - *ducted_GTHP
-        ### -- Adding commented out offset removal logic - still unclear if offsets can be turned off for this GTHP -- ###
-      # - *cooling_setpoint_no_offset_ducted
-      # - *cooling_setpoint_offset_magnitude_0_ducted
-      # - *cooling_setpoint_offset_period_none_ducted
-      # - *heating_setpoint_no_offset_ducted
-      # - *heating_setpoint_offset_magnitude_0_ducted
-      # - *heating_setpoint_offset_period_none_ducted     
-
+      ### -- Dual-Speed Ducted ghp -- ###
+      - *dual_speed_ducted_ghp
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
 
