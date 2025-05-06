@@ -375,7 +375,7 @@
                   <DuctType>supply</DuctType>
                   <DuctLeakage>
                     <Units>CFM25</Units>
-                    <Value>75.0</Value>
+                    <Value>60.75</Value>
                     <TotalOrToOutside>to outside</TotalOrToOutside>
                   </DuctLeakage>
                 </DuctLeakageMeasurement>
@@ -383,7 +383,7 @@
                   <DuctType>return</DuctType>
                   <DuctLeakage>
                     <Units>CFM25</Units>
-                    <Value>25.0</Value>
+                    <Value>20.25</Value>
                     <TotalOrToOutside>to outside</TotalOrToOutside>
                   </DuctLeakage>
                 </DuctLeakageMeasurement>
@@ -395,7 +395,7 @@
                 <Ducts>
                   <SystemIdentifier id='Ducts2'/>
                   <DuctType>return</DuctType>
-                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctInsulationRValue>4.0</DuctInsulationRValue>
                 </Ducts>
               </AirDistribution>
             </DistributionSystemType>

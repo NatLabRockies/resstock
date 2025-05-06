@@ -341,7 +341,7 @@
                   <DuctType>supply</DuctType>
                   <DuctLeakage>
                     <Units>CFM25</Units>
-                    <Value>75.0</Value>
+                    <Value>81.0</Value>
                     <TotalOrToOutside>to outside</TotalOrToOutside>
                   </DuctLeakage>
                 </DuctLeakageMeasurement>
@@ -358,11 +358,12 @@
                   <DuctType>supply</DuctType>
                   <DuctInsulationRValue>4.0</DuctInsulationRValue>
                   <DuctLocation>attic - unvented</DuctLocation>
-                  <DuctSurfaceArea>150.0</DuctSurfaceArea>
+                  <FractionDuctArea>1.0</FractionDuctArea>
                 </Ducts>
                 <NumberofReturnRegisters>0</NumberofReturnRegisters>
               </AirDistribution>
             </DistributionSystemType>
+            <ConditionedFloorAreaServed>2700.0</ConditionedFloorAreaServed>
           </HVACDistribution>
         </HVAC>
         <MechanicalVentilation>

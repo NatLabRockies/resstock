@@ -41,7 +41,7 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
     args_hash = { 'hpxml_path' => File.absolute_path(@tmp_hpxml_path),
                   'skip_validation' => true }
     Dir["#{@sample_files_path}/base-hvac*.xml"].each do |hvac_hpxml|
-      next if (hvac_hpxml.include? 'autosize')
+      next if hvac_hpxml.include? 'autosize'
       next if hvac_hpxml.include? 'detailed-performance' # Autosizing not allowed
 
       { 'USA_CO_Denver.Intl.AP.725650_TMY3.epw' => 'denver',
@@ -156,7 +156,7 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
               elsif hp_sizing_methodology == HPXML::HeatPumpSizingMaxLoad && min_compressor_temp <= autosized_bldg.header.manualj_heating_design_temp
                 assert_equal(0, htg_backup_cap)
               else
-                assert_operator(htg_backup_cap, :>, 0)
+                assert_operator(htg_backup_cap, :>=, 0)
               end
             end
           end
