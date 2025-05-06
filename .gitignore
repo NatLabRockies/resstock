@@ -22,6 +22,7 @@
 !/project_*/resources/source_report.csv
 !/project_*/resources/options_saturations.csv
 !/resources/data/dictionary/outputs.csv
+!/project_national/resources/sdr_*.csv
 
 # Log files
 /project_*/**/*.log
@@ -34,6 +35,7 @@ buildstockbatch_crash_details.log
 .vscode/
 .DS_Store
 **/.ipynb_checkpoints/*
+**/.bsq_cache/
 
 # Data directories
 **/data/*

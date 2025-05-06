@@ -94,7 +94,8 @@ class WorkflowHERSTest < Minitest::Test
     _dhw_energy = _write_hers_hot_water_results(dhw_results, test_results_csv)
 
     # Check results
-    # FIXME: Temporarily disabled
+    # FIXME: Temporarily disabled until RESNET acceptance criteria are updated
+    # Needs to be updated because of MINHERS Addenda 81 and 90f
     # _check_hot_water(dhw_energy)
   end
 end

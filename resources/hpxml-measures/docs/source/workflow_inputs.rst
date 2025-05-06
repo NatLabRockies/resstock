@@ -375,8 +375,9 @@ You can create an additional column in the CSV file to define another unavailabl
 HPXML Electric Panel Calculations
 *********************************
 
-One or more electric panel calculation types (e.g., 2023 NEC 220.83) can be entered in ``/HPXML/SoftwareInfo/extension/ElectricPanelCalculations/ServiceFeeders``.
+To enable electric panel load calculations, one or more calculation types (e.g., 2023 NEC 220.83) can be entered in ``/HPXML/SoftwareInfo/extension/ElectricPanelCalculations/ServiceFeeders``.
 If not entered, electric panel loads will not be calculated.
+These calculations are currently considered experimental research features.
 
   ====================================  ========  =======  ================  ========  ================  ===========
   Element                               Type      Units    Constraints       Required  Default           Description
@@ -4639,6 +4640,7 @@ HPXML Electric Panels
 *********************
 
 A single electric panel can be entered as a ``/HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel``.
+An electric panel is only used and subject to having default values applied when at least one load calculation type is specified (see :ref:`hpxml_electric_panel_calculations`).
 
   =======================================================================  =======  =========  =======================  ========  =============  ============================================
   Element                                                                  Type     Units      Constraints              Required  Default        Notes

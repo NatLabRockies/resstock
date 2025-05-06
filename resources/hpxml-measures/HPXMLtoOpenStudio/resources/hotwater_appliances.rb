@@ -641,11 +641,15 @@ module HotWaterAndAppliances
       lcy = dishwasher.label_usage * 52.0
       kwh_per_cyc = ((dishwasher.label_annual_gas_cost * 0.5497 / dishwasher.label_gas_rate - dishwasher.rated_annual_kwh * dishwasher.label_electric_rate * 0.02504 / dishwasher.label_electric_rate) / (dishwasher.label_electric_rate * 0.5497 / dishwasher.label_gas_rate - 0.02504)) / lcy
       if n_occ.nil? # Asset calculation
-        # RESNET MINHERS Addendum 81 Eq. 4.2-36a
-        if unit_type == HPXML::ResidentialTypeApartment
-          scy = 135.7 + 13.5 * nbeds
+        if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
+          # RESNET MINHERS Addendum 81 Eq. 4.2-36a
+          if unit_type == HPXML::ResidentialTypeApartment
+            scy = 135.7 + 13.5 * nbeds
+          else
+            scy = 123.7 + 16.2 * nbeds
+          end
         else
-          scy = 123.7 + 16.2 * nbeds
+          scy = 88.4 + 34.9 * nbeds
         end
       else # Operational calculation
         scy = 91.0 + 30.0 * n_occ # Eq. 3 from http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf
@@ -738,11 +742,15 @@ module HotWaterAndAppliances
       end
       rmc = (0.97 * (clothes_washer.capacity / clothes_washer.integrated_modified_energy_factor) - clothes_washer.rated_annual_kwh / 312.0) / ((2.0104 * clothes_washer.capacity + 1.4242) * 0.455) + 0.04
       if n_occ.nil? # Asset calculation
-        # RESNET MINHERS Addendum 81 Eq. 4.2-34
-        if unit_type == HPXML::ResidentialTypeApartment
-          scy = 213.9 + 27.5 * nbeds
+        if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
+          # RESNET MINHERS Addendum 81 Eq. 4.2-34
+          if unit_type == HPXML::ResidentialTypeApartment
+            scy = 213.9 + 27.5 * nbeds
+          else
+            scy = 189.5 + 32.9 * nbeds
+          end
         else
-          scy = 189.5 + 32.9 * nbeds
+          scy = 164.0 + 46.5 * nbeds
         end
       else # Operational calculation
         scy = 123.0 + 61.0 * n_occ # Eq. 1 from http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf
@@ -848,11 +856,15 @@ module HotWaterAndAppliances
       elec_h20 = 0.0178 # (gal/cyc) per (kWh/y)
       lcy = clothes_washer.label_usage * 52.0 # label cycles per year
       if n_occ.nil? # Asset calculation
-        # RESNET MINHERS Addendum 81 Eq. 4.2-34
-        if unit_type == HPXML::ResidentialTypeApartment
-          scy = 213.9 + 27.5 * nbeds
+        if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
+          # RESNET MINHERS Addendum 81 Eq. 4.2-34
+          if unit_type == HPXML::ResidentialTypeApartment
+            scy = 213.9 + 27.5 * nbeds
+          else
+            scy = 189.5 + 32.9 * nbeds
+          end
         else
-          scy = 189.5 + 32.9 * nbeds
+          scy = 164.0 + nbeds * 46.5
         end
       else # Operational calculation
         scy = 123.0 + 61.0 * n_occ # Eq. 1 from http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf
@@ -1202,11 +1214,15 @@ module HotWaterAndAppliances
 
     if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2014A')
       if n_occ.nil? # Asset calculation
-        # RESNET MINHERS Addendum 90f Eq. 4.2-29 (refFgpd)
-        if unit_type == HPXML::ResidentialTypeApartment
-          ref_f_gpd = 21.75 + 8.46 * nbeds
+        if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
+          # RESNET MINHERS Addendum 90f Eq. 4.2-29 (refFgpd)
+          if unit_type == HPXML::ResidentialTypeApartment
+            ref_f_gpd = 21.75 + 8.46 * nbeds
+          else
+            ref_f_gpd = 14.36 + 10.17 * nbeds
+          end
         else
-          ref_f_gpd = 14.36 + 10.17 * nbeds
+          ref_f_gpd = 14.6 + 10.0 * nbeds
         end
       else # Operational calculation
         ref_f_gpd = [-4.84 + 18.6 * n_occ, 0.0].max # Eq. 14 from http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf
@@ -1263,11 +1279,15 @@ module HotWaterAndAppliances
     end
 
     if n_occ.nil? # Asset calculation
-      # RESNET MINHERS Addendum 81 Eq. 4.2-29 (refWgpd)
-      if unit_type == HPXML::ResidentialTypeApartment
-        ref_w_gpd = 11.27 * (nbeds**0.323)
+      if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
+        # RESNET MINHERS Addendum 81 Eq. 4.2-29 (refWgpd)
+        if unit_type == HPXML::ResidentialTypeApartment
+          ref_w_gpd = 11.27 * (nbeds**0.323)
+        else
+          ref_w_gpd = 9.95 * (nbeds**0.399)
+        end
       else
-        ref_w_gpd = 9.95 * (nbeds**0.399)
+        ref_w_gpd = 9.8 * (nbeds**0.43)
       end
     else # Operational calculation
       ref_w_gpd = 7.16 * (n_occ**0.7) # Eq. 14 from http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf
