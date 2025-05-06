@@ -92,7 +92,7 @@ jobs:
           path: coverage
           if-no-files-found: error
 
-  sdr_options_analysis:
+  sdr-options-analysis:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     container:
