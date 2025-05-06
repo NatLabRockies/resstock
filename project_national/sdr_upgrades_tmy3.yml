@@ -543,7 +543,7 @@ upgrades:
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
 
-  - upgrade_name: GHP Single Speed with Enhanced Grout
+  - upgrade_name: Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
     package_apply_logic: &remove_shared_heating_cooling_ghp
       - not: Heating Fuel|Wood
@@ -575,7 +575,7 @@ upgrades:
         apply_logic: &yes_has_ducts_apply_logic
           - HVAC Has Ducts|Yes
 
-  - upgrade_name: GHP Dual Speed with Enhanced Grout
+  - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
     package_apply_logic: *remove_shared_heating_cooling_ghp
 
@@ -589,7 +589,7 @@ upgrades:
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
 
-  - upgrade_name: GHP Variable Speed with Enhanced Grout
+  - upgrade_name: Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
     package_apply_logic: *remove_shared_heating_cooling_ghp
 
@@ -821,7 +821,7 @@ upgrades:
       - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
       - *infiltration_30pct_reduction
 
-  - upgrade_name: GHP Dual Speed with Enhanced Grout + Light Touch Envelope
+  - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope
 
     package_apply_logic: *remove_shared_heating_cooling_ghp
 
@@ -1100,7 +1100,7 @@ upgrades:
       - *electric_pool_heaters
       - *electric_spa_heaters
 
-  - upgrade_name: GHP Dual Speed with Enhanced Grout + Light Touch Envelope + Full Appliance Electrification with Efficiency
+  - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency
     
     package_apply_logic: *remove_shared_heating_cooling_ghp
 
