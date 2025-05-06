@@ -35713,12 +35713,6 @@ Arguments
      - Double
      - auto
      - The rated power output of the EV charger. If not provided, the OS-HPXML default (see `HPXML Electric Vehicle Chargers <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>`_) is used.
-   * - ``ev_charger_location``
-     - false
-     - 
-     - Choice
-     - auto, garage, outside
-     - The space type for the EV charger. If not provided, the OS-HPXML default (see `HPXML Electric Vehicle Chargers <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>`_) is used.
 
 Options
 *******
@@ -35734,27 +35728,22 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - Stock saturation
      - ``ev_charger_present``
      - ``ev_charger_power``
-     - ``ev_charger_location``
 
    * - Level 1 charger
      - 0.86%
      - true
      - 1600
-     - auto
    * - Level 2 charger
      - 0.59%
      - true
      - 5690
-     - auto
    * - None
      - 99%
      - false
      - 
-     - 
    * - Void
      - 0%
      - false
-     - 
      - 
 
 .. _electric_vehicle_miles_traveled:
@@ -38340,7 +38329,7 @@ Arguments
      - 
      - Choice
      - auto, single stage, two stage, variable speed
-     - The compressor type of the cooling system. Only applies to central air conditioner and mini-split. If not provided, the OS-HPXML default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
+     - The compressor type of the cooling system. Only applies to central air conditioner and mini-split.
    * - ``cooling_system_cooling_sensible_heat_fraction``
      - false
      - Frac
@@ -39106,6 +39095,12 @@ Arguments
      - Type
      - Choices
      - Description
+   * - ``simulation_control_ground_to_air_heat_pump_model_type``
+     - false
+     - 
+     - Choice
+     - auto, standard, experimental
+     - Research feature to select the type of ground-to-air heat pump model. Use standard for standard ground-to-air heat pump modeling. Use experimental for an improved model that better accounts for coil staging. If not provided, the OS-HPXML default (see `HPXML Simulation Control <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-simulation-control>`_) is used.
    * - ``heating_system_type``
      - true
      - 
@@ -39177,7 +39172,7 @@ Arguments
      - 
      - Choice
      - auto, single stage, two stage, variable speed
-     - The compressor type of the heat pump. Only applies to air-to-air and mini-split. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_) is used.
+     - The compressor type of the heat pump. Only applies to air-to-air, mini-split and ground-to-air.
    * - ``heat_pump_cooling_sensible_heat_fraction``
      - false
      - Frac
@@ -39377,6 +39372,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
+     - ``simulation_control_ground_to_air_heat_pump_model_type``
      - ``heating_system_type``
      - ``heating_system_heating_efficiency``
      - ``heating_system_heating_capacity``
@@ -39423,6 +39419,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - ASHP, SEER 10, 6.2 HSPF
      - 0.72%
+     - 
      - none
      - 0
      - auto
@@ -39468,6 +39465,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - ASHP, SEER 13, 7.7 HSPF
      - 7.4%
+     - 
      - none
      - 0
      - auto
@@ -39513,6 +39511,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - ASHP, SEER 15, 8.5 HSPF
      - 7.2%
+     - 
      - none
      - 0
      - auto
@@ -39558,6 +39557,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Electric Baseboard, 100% Efficiency
      - 6.3%
+     - 
      - ElectricResistance
      - 1
      - auto
@@ -39603,6 +39603,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Electric Boiler, 100% AFUE
      - 0.21%
+     - 
      - Boiler
      - 1
      - auto
@@ -39648,6 +39649,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Electric Furnace, 100% AFUE
      - 11%
+     - 
      - Furnace
      - 1
      - auto
@@ -39693,6 +39695,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Electric Wall Furnace, 100% AFUE
      - 1.1%
+     - 
      - WallFurnace
      - 1
      - auto
@@ -39738,6 +39741,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Boiler, 76% AFUE
      - 0.89%
+     - 
      - Boiler
      - 0.76
      - auto
@@ -39783,6 +39787,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Boiler, 80% AFUE
      - 3.3%
+     - 
      - Boiler
      - 0.8
      - auto
@@ -39828,6 +39833,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Boiler, 90% AFUE
      - 0.49%
+     - 
      - Boiler
      - 0.9
      - auto
@@ -39873,6 +39879,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Furnace, 60% AFUE
      - 0.49%
+     - 
      - Furnace
      - 0.6
      - auto
@@ -39918,6 +39925,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Furnace, 76% AFUE
      - 2.8%
+     - 
      - Furnace
      - 0.76
      - auto
@@ -39963,6 +39971,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Furnace, 80% AFUE
      - 25%
+     - 
      - Furnace
      - 0.8
      - auto
@@ -40008,6 +40017,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Furnace, 92.5% AFUE
      - 15%
+     - 
      - Furnace
      - 0.925
      - auto
@@ -40053,6 +40063,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Wall/Floor Furnace, 60% AFUE
      - 3.2%
+     - 
      - WallFurnace
      - 0.6
      - auto
@@ -40098,6 +40109,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Fuel Wall/Floor Furnace, 68% AFUE
      - 2.8%
+     - 
      - WallFurnace
      - 0.68
      - auto
@@ -40143,6 +40155,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - MSHP, SEER 14.5, 8.2 HSPF
      - 0.96%
+     - 
      - none
      - 0
      - auto
@@ -40188,6 +40201,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - MSHP, SEER 29.3, 14 HSPF
      - 0.015%
+     - 
      - none
      - 0
      - auto
@@ -40233,6 +40247,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - None
      - 1.1%
+     - 
      - none
      - 0
      - auto
@@ -40321,8 +40336,10 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - 
      - 
+     - 
    * - Void
      - 0%
+     - 
      - 
      - 
      - 
@@ -40999,7 +41016,7 @@ Arguments
      - 
      - Choice
      - auto, single stage, two stage, variable speed
-     - The compressor type of the cooling system. Only applies to central air conditioner and mini-split. If not provided, the OS-HPXML default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
+     - The compressor type of the cooling system. Only applies to central air conditioner and mini-split.
    * - ``cooling_system_cooling_capacity``
      - false
      - Btu/hr

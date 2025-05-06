@@ -329,7 +329,6 @@
                 <Units>CEER</Units>
                 <Value>8.4</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.65</SensibleHeatFraction>
             </CoolingSystem>
           </HVACPlant>
           <HVACControl>

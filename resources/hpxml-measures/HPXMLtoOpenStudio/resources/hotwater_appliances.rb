@@ -14,18 +14,6 @@ module HotWaterAndAppliances
   # @param plantloop_map [Hash] Map of HPXML System ID => OpenStudio PlantLoop objects
   # @return [nil]
   def self.apply(runner, model, weather, spaces, hpxml_bldg, hpxml_header, schedules_file, plantloop_map)
-    cfa = hpxml_bldg.building_construction.conditioned_floor_area
-    ncfl = hpxml_bldg.building_construction.number_of_conditioned_floors
-    has_uncond_bsmnt = hpxml_bldg.has_location(HPXML::LocationBasementUnconditioned)
-    has_cond_bsmnt = hpxml_bldg.has_location(HPXML::LocationBasementConditioned)
-    fixtures_usage_multiplier = hpxml_bldg.water_heating.water_fixtures_usage_multiplier
-    conditioned_space = spaces[HPXML::LocationConditionedSpace]
-    nbeds = hpxml_bldg.building_construction.number_of_bedrooms
-    n_occ = hpxml_bldg.building_occupancy.number_of_residents
-    unit_type = hpxml_bldg.building_construction.residential_facility_type
-    eri_version = hpxml_header.eri_calculation_versions[0]
-    unit_multiplier = hpxml_bldg.building_construction.number_of_units
-
     # Get appliances, etc.
     if not hpxml_bldg.clothes_washers.empty?
       clothes_washer = hpxml_bldg.clothes_washers[0]
@@ -43,6 +31,10 @@ module HotWaterAndAppliances
       oven = hpxml_bldg.ovens[0]
     end
 
+    eri_version = hpxml_header.eri_calculation_versions[0]
+    conditioned_space = spaces[HPXML::LocationConditionedSpace]
+    unit_multiplier = hpxml_bldg.building_construction.number_of_units
+
     # Create WaterUseConnections object for each water heater (plant loop)
     water_use_connections = {}
     hpxml_bldg.water_heating_systems.each do |water_heating_system|
@@ -56,7 +48,7 @@ module HotWaterAndAppliances
     # Clothes washer energy
     if not clothes_washer.nil?
       cw_space = Geometry.get_space_from_location(clothes_washer.location, spaces)
-      cw_annual_kwh, cw_frac_sens, cw_frac_lat, cw_gpd = calc_clothes_washer_energy_gpd(runner, eri_version, nbeds, n_occ, clothes_washer, cw_space.nil?)
+      cw_annual_kwh, cw_frac_sens, cw_frac_lat, cw_gpd = calc_clothes_washer_energy_gpd(runner, eri_version, hpxml_bldg, clothes_washer, cw_space.nil?)
 
       # Create schedule
       cw_power_schedule = nil
@@ -98,7 +90,7 @@ module HotWaterAndAppliances
     # Clothes dryer energy
     if not clothes_dryer.nil?
       cd_space = Geometry.get_space_from_location(clothes_dryer.location, spaces)
-      cd_annual_kwh, cd_annual_therm, cd_frac_sens, cd_frac_lat = calc_clothes_dryer_energy(runner, eri_version, nbeds, n_occ, clothes_dryer, clothes_washer, cd_space.nil?)
+      cd_annual_kwh, cd_annual_therm, cd_frac_sens, cd_frac_lat = calc_clothes_dryer_energy(runner, eri_version, hpxml_bldg, clothes_dryer, clothes_washer, cd_space.nil?)
 
       # Create schedule
       cd_schedule = nil
@@ -154,7 +146,7 @@ module HotWaterAndAppliances
     # Dishwasher energy
     if not dishwasher.nil?
       dw_space = Geometry.get_space_from_location(dishwasher.location, spaces)
-      dw_annual_kwh, dw_frac_sens, dw_frac_lat, dw_gpd = calc_dishwasher_energy_gpd(runner, eri_version, nbeds, n_occ, dishwasher, dw_space.nil?)
+      dw_annual_kwh, dw_frac_sens, dw_frac_lat, dw_gpd = calc_dishwasher_energy_gpd(runner, eri_version, hpxml_bldg, dishwasher, dw_space.nil?)
 
       # Create schedule
       dw_power_schedule = nil
@@ -300,7 +292,7 @@ module HotWaterAndAppliances
     # Cooking Range energy
     if not cooking_range.nil?
       cook_space = Geometry.get_space_from_location(cooking_range.location, spaces)
-      cook_annual_kwh, cook_annual_therm, cook_frac_sens, cook_frac_lat = calc_range_oven_energy(runner, nbeds, n_occ, unit_type, cooking_range, oven, cook_space.nil?)
+      cook_annual_kwh, cook_annual_therm, cook_frac_sens, cook_frac_lat = calc_range_oven_energy(runner, hpxml_bldg, cooking_range, oven, cook_space.nil?)
 
       # Create schedule
       cook_schedule = nil
@@ -355,32 +347,6 @@ module HotWaterAndAppliances
 
     if hpxml_bldg.hot_water_distributions.size > 0
       hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
-    end
-    if not hot_water_distribution.nil?
-      fixtures = hpxml_bldg.water_fixtures.select { |wf| [HPXML::WaterFixtureTypeShowerhead, HPXML::WaterFixtureTypeFaucet].include? wf.water_fixture_type }
-      if fixtures.size > 0
-        if fixtures.any? { |wf| wf.count.nil? }
-          showerheads = fixtures.select { |wf| wf.water_fixture_type == HPXML::WaterFixtureTypeShowerhead }
-          if showerheads.size > 0
-            frac_low_flow_showerheads = showerheads.count { |wf| wf.low_flow } / Float(showerheads.size)
-          else
-            frac_low_flow_showerheads = 0.0
-          end
-          faucets = fixtures.select { |wf| wf.water_fixture_type == HPXML::WaterFixtureTypeFaucet }
-          if faucets.size > 0
-            frac_low_flow_faucets = faucets.count { |wf| wf.low_flow } / Float(faucets.size)
-          else
-            frac_low_flow_faucets = 0.0
-          end
-          frac_low_flow_fixtures = 0.4 * frac_low_flow_showerheads + 0.6 * frac_low_flow_faucets
-        else
-          num_wfs = fixtures.map { |wf| wf.count }.sum
-          num_low_flow_wfs = fixtures.select { |wf| wf.low_flow }.map { |wf| wf.count }.sum
-          frac_low_flow_fixtures = num_low_flow_wfs / num_wfs
-        end
-      else
-        frac_low_flow_fixtures = 0.0
-      end
 
       # Calculate mixed water fractions
       t_mix = 105.0 # F, Temperature of mixed water at fixtures
@@ -390,7 +356,7 @@ module HotWaterAndAppliances
         wh_setpoint = Defaults.get_water_heater_temperature(eri_version) if wh_setpoint.nil? # using detailed schedules
         avg_setpoint_temp += wh_setpoint * water_heating_system.fraction_dhw_load_served
       end
-      daily_wh_inlet_temperatures = calc_water_heater_daily_inlet_temperatures(weather, nbeds, n_occ, unit_type, hot_water_distribution, frac_low_flow_fixtures)
+      daily_wh_inlet_temperatures = calc_water_heater_daily_inlet_temperatures(weather, hpxml_bldg)
       daily_wh_inlet_temperatures_c = daily_wh_inlet_temperatures.map { |t| UnitConversions.convert(t, 'F', 'C') }
       daily_mw_fractions = calc_mixed_water_daily_fractions(daily_wh_inlet_temperatures, avg_setpoint_temp, t_mix)
 
@@ -438,8 +404,8 @@ module HotWaterAndAppliances
       gpd_frac = water_heating_system.fraction_dhw_load_served # Fixtures fraction
       if gpd_frac > 0
 
-        fx_gpd = get_fixtures_gpd(eri_version, nbeds, frac_low_flow_fixtures, daily_mw_fractions, fixtures_usage_multiplier, n_occ)
-        w_gpd = get_dist_waste_gpd(eri_version, nbeds, has_uncond_bsmnt, has_cond_bsmnt, cfa, ncfl, hot_water_distribution, frac_low_flow_fixtures, fixtures_usage_multiplier, n_occ)
+        fx_gpd = get_fixtures_gpd(eri_version, hpxml_bldg, daily_mw_fractions)
+        w_gpd = get_dist_waste_gpd(eri_version, hpxml_bldg)
 
         fx_peak_flow = nil
         if not schedules_file.nil?
@@ -474,7 +440,7 @@ module HotWaterAndAppliances
         )
 
         # Recirculation pump
-        recirc_pump_annual_kwh = get_hwdist_recirc_pump_energy(hot_water_distribution, fixtures_usage_multiplier, nbeds)
+        recirc_pump_annual_kwh = get_hwdist_recirc_pump_energy(hpxml_bldg)
         if recirc_pump_annual_kwh > 0
 
           # Create schedule
@@ -589,14 +555,16 @@ module HotWaterAndAppliances
   # Calculates cooking range/oven annual energy use.
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
-  # @param nbeds [Integer] Number of bedrooms in the dwelling unit
-  # @param n_occ [Double] Number of occupants in the dwelling unit
-  # @param unit_type [String] Type of dwelling unit (HXPML::ResidentialTypeXXX)
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param cooking_range [HPXML::CookingRange] The HPXML cooking range of interest
   # @param oven [HPXML::Oven] The HPXML oven of interest
   # @param is_outside [Boolean] Whether the appliance is located outside the dwelling unit
   # @return [Array<Double, Double, Double, Double>] Annual electricity use (kWh), annual fuel use (therm), sensible/latent fractions
-  def self.calc_range_oven_energy(runner, nbeds, n_occ, unit_type, cooking_range, oven, is_outside = false)
+  def self.calc_range_oven_energy(runner, hpxml_bldg, cooking_range, oven, is_outside = false)
+    nbeds = hpxml_bldg.building_construction.number_of_bedrooms
+    n_occ = hpxml_bldg.building_occupancy.number_of_residents
+    unit_type = hpxml_bldg.building_construction.residential_facility_type
+
     if n_occ == 0
       # Operational calculation w/ zero occupants, zero out energy use
       return 0.0, 0.0, 0.0, 0.0
@@ -652,12 +620,15 @@ module HotWaterAndAppliances
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param eri_version [String] Version of the ANSI/RESNET/ICC 301 Standard to use for equations/assumptions
-  # @param nbeds [Integer] Number of bedrooms in the dwelling unit
-  # @param n_occ [Double] Number of occupants in the dwelling unit
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param dishwasher [HPXML::Dishwasher] The HPXML dishwasher of interest
   # @param is_outside [Boolean] Whether the appliance is located outside the dwelling unit
   # @return [Array<Double, Double, Double, Double>] Annual electricity use (kWh), sensible/latent fractions, hot water use (gal/day)
-  def self.calc_dishwasher_energy_gpd(runner, eri_version, nbeds, n_occ, dishwasher, is_outside = false)
+  def self.calc_dishwasher_energy_gpd(runner, eri_version, hpxml_bldg, dishwasher, is_outside = false)
+    nbeds = hpxml_bldg.building_construction.number_of_bedrooms
+    n_occ = hpxml_bldg.building_occupancy.number_of_residents
+    unit_type = hpxml_bldg.building_construction.residential_facility_type
+
     if n_occ == 0
       # Operational calculation w/ zero occupants, zero out energy use
       return 0.0, 0.0, 0.0, 0.0
@@ -670,7 +641,16 @@ module HotWaterAndAppliances
       lcy = dishwasher.label_usage * 52.0
       kwh_per_cyc = ((dishwasher.label_annual_gas_cost * 0.5497 / dishwasher.label_gas_rate - dishwasher.rated_annual_kwh * dishwasher.label_electric_rate * 0.02504 / dishwasher.label_electric_rate) / (dishwasher.label_electric_rate * 0.5497 / dishwasher.label_gas_rate - 0.02504)) / lcy
       if n_occ.nil? # Asset calculation
-        scy = 88.4 + 34.9 * nbeds
+        if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
+          # RESNET MINHERS Addendum 81 Eq. 4.2-36a
+          if unit_type == HPXML::ResidentialTypeApartment
+            scy = 135.7 + 13.5 * nbeds
+          else
+            scy = 123.7 + 16.2 * nbeds
+          end
+        else
+          scy = 88.4 + 34.9 * nbeds
+        end
       else # Operational calculation
         scy = 91.0 + 30.0 * n_occ # Eq. 3 from http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf
       end
@@ -738,13 +718,16 @@ module HotWaterAndAppliances
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param eri_version [String] Version of the ANSI/RESNET/ICC 301 Standard to use for equations/assumptions
-  # @param nbeds [Integer] Number of bedrooms in the dwelling unit
-  # @param n_occ [Double] Number of occupants in the dwelling unit
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param clothes_dryer [HPXML::ClothesDryer] The HPXML clothes dryer of interest
   # @param clothes_washer [HPXML::ClothesWasher] The related HPXML clothes washer, which affects dryer use
   # @param is_outside [Boolean] Whether the appliance is located outside the dwelling unit
   # @return [Array<Double, Double, Double, Double>] Annual electricity use (kWh), annual fuel use (therm), sensible/latent fractions
-  def self.calc_clothes_dryer_energy(runner, eri_version, nbeds, n_occ, clothes_dryer, clothes_washer, is_outside = false)
+  def self.calc_clothes_dryer_energy(runner, eri_version, hpxml_bldg, clothes_dryer, clothes_washer, is_outside = false)
+    nbeds = hpxml_bldg.building_construction.number_of_bedrooms
+    n_occ = hpxml_bldg.building_occupancy.number_of_residents
+    unit_type = hpxml_bldg.building_construction.residential_facility_type
+
     if n_occ == 0
       # Operational calculation w/ zero occupants, zero out energy use
       return 0.0, 0.0, 0.0, 0.0
@@ -759,7 +742,16 @@ module HotWaterAndAppliances
       end
       rmc = (0.97 * (clothes_washer.capacity / clothes_washer.integrated_modified_energy_factor) - clothes_washer.rated_annual_kwh / 312.0) / ((2.0104 * clothes_washer.capacity + 1.4242) * 0.455) + 0.04
       if n_occ.nil? # Asset calculation
-        scy = 164.0 + 46.5 * nbeds
+        if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
+          # RESNET MINHERS Addendum 81 Eq. 4.2-34
+          if unit_type == HPXML::ResidentialTypeApartment
+            scy = 213.9 + 27.5 * nbeds
+          else
+            scy = 189.5 + 32.9 * nbeds
+          end
+        else
+          scy = 164.0 + 46.5 * nbeds
+        end
       else # Operational calculation
         scy = 123.0 + 61.0 * n_occ # Eq. 1 from http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf
       end
@@ -845,12 +837,15 @@ module HotWaterAndAppliances
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param eri_version [String] Version of the ANSI/RESNET/ICC 301 Standard to use for equations/assumptions
-  # @param nbeds [Integer] Number of bedrooms in the dwelling unit
-  # @param n_occ [Double] Number of occupants in the dwelling unit
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param clothes_washer [HPXML::ClothesWasher] The HPXML clothes washer of interest
   # @param is_outside [Boolean] Whether the appliance is located outside the dwelling unit
   # @return [Array<Double, Double, Double, Double>] Annual electricity use (kWh), sensible/latent fractions, hot water use (gal/day)
-  def self.calc_clothes_washer_energy_gpd(runner, eri_version, nbeds, n_occ, clothes_washer, is_outside = false)
+  def self.calc_clothes_washer_energy_gpd(runner, eri_version, hpxml_bldg, clothes_washer, is_outside = false)
+    nbeds = hpxml_bldg.building_construction.number_of_bedrooms
+    n_occ = hpxml_bldg.building_occupancy.number_of_residents
+    unit_type = hpxml_bldg.building_construction.residential_facility_type
+
     if n_occ == 0
       # Operational calculation w/ zero occupants, zero out energy use
       return 0.0, 0.0, 0.0, 0.0
@@ -861,7 +856,16 @@ module HotWaterAndAppliances
       elec_h20 = 0.0178 # (gal/cyc) per (kWh/y)
       lcy = clothes_washer.label_usage * 52.0 # label cycles per year
       if n_occ.nil? # Asset calculation
-        scy = 164.0 + nbeds * 46.5
+        if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
+          # RESNET MINHERS Addendum 81 Eq. 4.2-34
+          if unit_type == HPXML::ResidentialTypeApartment
+            scy = 213.9 + 27.5 * nbeds
+          else
+            scy = 189.5 + 32.9 * nbeds
+          end
+        else
+          scy = 164.0 + nbeds * 46.5
+        end
       else # Operational calculation
         scy = 123.0 + 61.0 * n_occ # Eq. 1 from http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf
       end
@@ -1041,11 +1045,22 @@ module HotWaterAndAppliances
   #
   # Source: ANSI/RESNET/ICC 301
   #
-  # @param nbeds_eq [Integer] Number of bedrooms (or equivalent bedrooms, as adjusted by the number of occupants) in the dwelling unit
-  # @param hot_water_distribution [HPXML::HotWaterDistribution] The HPXML hot water distribution system of interest
-  # @param frac_low_flow_fixtures [Double] The fraction of fixtures considered low-flow
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [Array<Double, Double, Double, Double, Double>] Effectiveness (frac), fraction of water impacted by DWHR, piping loss coefficient, location factor, fixture factor
-  def self.get_dwhr_factors(nbeds_eq, hot_water_distribution, frac_low_flow_fixtures)
+  def self.get_dwhr_factors(hpxml_bldg)
+    nbeds = hpxml_bldg.building_construction.number_of_bedrooms
+    n_occ = hpxml_bldg.building_occupancy.number_of_residents
+    unit_type = hpxml_bldg.building_construction.residential_facility_type
+    hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
+    frac_low_flow_fixtures = calc_frac_low_flow_fixtures(hpxml_bldg)
+
+    if n_occ == 0
+      # Operational calculation w/ zero occupants
+      nbeds_eq = 0
+    else
+      nbeds_eq = Defaults.get_equivalent_nbeds(nbeds, n_occ, unit_type)
+    end
+
     # ANSI/RESNET/ICC 301-2022 Eq. 4.2-42
 
     eff_adj = 1.0 + 0.082 * frac_low_flow_fixtures
@@ -1080,23 +1095,14 @@ module HotWaterAndAppliances
   # there is a drain water heat recovery device.
   #
   # @param weather [WeatherFile] Weather object containing EPW information
-  # @param nbeds [Integer] Number of bedrooms in the dwelling unit
-  # @param n_occ [Double] Number of occupants in the dwelling unit
-  # @param unit_type [String] Type of dwelling unit (HXPML::ResidentialTypeXXX)
-  # @param hot_water_distribution [HPXML::HotWaterDistribution] The HPXML hot water distribution system of interest
-  # @param frac_low_flow_fixtures [Double] The fraction of fixtures considered low-flow
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [Array<Double>] Daily water heater inlet temperatures (F)
-  def self.calc_water_heater_daily_inlet_temperatures(weather, nbeds, n_occ, unit_type, hot_water_distribution, frac_low_flow_fixtures)
-    if n_occ == 0
-      # Operational calculation w/ zero occupants
-      nbeds_eq = 0
-    else
-      nbeds_eq = Defaults.get_equivalent_nbeds(nbeds, n_occ, unit_type)
-    end
+  def self.calc_water_heater_daily_inlet_temperatures(weather, hpxml_bldg)
+    hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
     wh_temps_daily = weather.data.MainsDailyTemps.dup
     if (not hot_water_distribution.dwhr_efficiency.nil?)
       # Per ANSI/RESNET/ICC 301
-      dwhr_eff_adj, dwhr_iFrac, dwhr_plc, dwhr_locF, dwhr_fixF = get_dwhr_factors(nbeds_eq, hot_water_distribution, frac_low_flow_fixtures)
+      dwhr_eff_adj, dwhr_iFrac, dwhr_plc, dwhr_locF, dwhr_fixF = get_dwhr_factors(hpxml_bldg)
       # Adjust inlet temperatures
       dwhr_inT = 97.0 # F
       for day in 0..wh_temps_daily.size - 1
@@ -1132,11 +1138,13 @@ module HotWaterAndAppliances
   # Calculates annual energy use for a recirculation (or shared recirculation) hot water
   # distribution system.
   #
-  # @param hot_water_distribution [HPXML::HotWaterDistribution] The HPXML hot water distribution system of interest
-  # @param fixtures_usage_multiplier [Double] Occupant usage multiplier
-  # @param nbeds [Integer] Number of bedrooms in the dwelling unit
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [Double] Annual electricity use (kWh)
-  def self.get_hwdist_recirc_pump_energy(hot_water_distribution, fixtures_usage_multiplier, nbeds)
+  def self.get_hwdist_recirc_pump_energy(hpxml_bldg)
+    nbeds = hpxml_bldg.building_construction.number_of_bedrooms
+    hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
+    fixtures_usage_multiplier = hpxml_bldg.water_heating.water_fixtures_usage_multiplier
+
     # Per ANSI/RESNET/ICC 301
     dist_pump_annual_kwh = 0.0
 
@@ -1182,9 +1190,11 @@ module HotWaterAndAppliances
 
   # Calculates the fixtures effectiveness due to the presence of low-flow fixtures.
   #
-  # @param frac_low_flow_fixtures [Double] The fraction of fixtures considered low-flow
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [Double] Effectiveness (frac)
-  def self.get_fixtures_effectiveness(frac_low_flow_fixtures)
+  def self.get_fixtures_effectiveness(hpxml_bldg)
+    frac_low_flow_fixtures = calc_frac_low_flow_fixtures(hpxml_bldg)
+
     # ANSI/RESNET/ICC 301 specifies 0.95 if all shower/faucet fixtures are low-flow (<= 2 gal/min)
     f_eff = 1.0 - 0.05 * frac_low_flow_fixtures
     return f_eff
@@ -1193,20 +1203,31 @@ module HotWaterAndAppliances
   # Calculates water fixtures mixed (not hot) water use.
   #
   # @param eri_version [String] Version of the ANSI/RESNET/ICC 301 Standard to use for equations/assumptions
-  # @param nbeds [Integer] Number of bedrooms in the dwelling unit
-  # @param frac_low_flow_fixtures [Double] The fraction of fixtures considered low-flow
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param daily_mw_fractions [Array<Double>] Daily mixed water adjustment fractions
-  # @param fixtures_usage_multiplier [Double] Occupant usage multiplier
-  # @param n_occ [Double] Number of occupants in the dwelling unit
   # @return [Double] Mixed water use (gal/day)
-  def self.get_fixtures_gpd(eri_version, nbeds, frac_low_flow_fixtures, daily_mw_fractions, fixtures_usage_multiplier = 1.0, n_occ = nil)
+  def self.get_fixtures_gpd(eri_version, hpxml_bldg, daily_mw_fractions)
+    nbeds = hpxml_bldg.building_construction.number_of_bedrooms
+    n_occ = hpxml_bldg.building_occupancy.number_of_residents
+    unit_type = hpxml_bldg.building_construction.residential_facility_type
+    fixtures_usage_multiplier = hpxml_bldg.water_heating.water_fixtures_usage_multiplier
+
     if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2014A')
       if n_occ.nil? # Asset calculation
-        ref_f_gpd = 14.6 + 10.0 * nbeds # ANSI/RESNET/ICC 301-2022 Eq. 4.2-29 (refFgpd)
+        if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
+          # RESNET MINHERS Addendum 90f Eq. 4.2-29 (refFgpd)
+          if unit_type == HPXML::ResidentialTypeApartment
+            ref_f_gpd = 21.75 + 8.46 * nbeds
+          else
+            ref_f_gpd = 14.36 + 10.17 * nbeds
+          end
+        else
+          ref_f_gpd = 14.6 + 10.0 * nbeds
+        end
       else # Operational calculation
         ref_f_gpd = [-4.84 + 18.6 * n_occ, 0.0].max # Eq. 14 from http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf
       end
-      f_eff = get_fixtures_effectiveness(frac_low_flow_fixtures)
+      f_eff = get_fixtures_effectiveness(hpxml_bldg)
       return f_eff * ref_f_gpd * fixtures_usage_multiplier
     else
       hw_gpd = 30.0 + 10.0 * nbeds # Table 4.2.2(1) Service water heating systems
@@ -1221,18 +1242,19 @@ module HotWaterAndAppliances
   # Source: ANSI/RESNET/ICC 301
   #
   # @param eri_version [String] Version of the ANSI/RESNET/ICC 301 Standard to use for equations/assumptions
-  # @param nbeds [Integer] Number of bedrooms in the dwelling unit
-  # @param has_uncond_bsmnt [Boolean] Whether the dwelling unit has an unconditioned basement
-  # @param has_cond_bsmnt [Boolean] Whether the dwelling unit has a conditioned basement
-  # @param cfa [Double] Conditioned floor area in the dwelling unit (ft2)
-  # @param ncfl [Double] Total number of conditioned floors in the dwelling unit
-  # @param hot_water_distribution [HPXML::HotWaterDistribution] The HPXML hot water distribution system of interest
-  # @param frac_low_flow_fixtures [Double] The fraction of fixtures considered low-flow
-  # @param fixtures_usage_multiplier [Double] Occupant usage multiplier
-  # @param n_occ [Double] Number of occupants in the dwelling unit
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [Double] Mixed water use (gal/day)
-  def self.get_dist_waste_gpd(eri_version, nbeds, has_uncond_bsmnt, has_cond_bsmnt, cfa, ncfl, hot_water_distribution,
-                              frac_low_flow_fixtures, fixtures_usage_multiplier = 1.0, n_occ = nil)
+  def self.get_dist_waste_gpd(eri_version, hpxml_bldg)
+    nbeds = hpxml_bldg.building_construction.number_of_bedrooms
+    unit_type = hpxml_bldg.building_construction.residential_facility_type
+    has_uncond_bsmnt = hpxml_bldg.has_location(HPXML::LocationBasementUnconditioned)
+    has_cond_bsmnt = hpxml_bldg.has_location(HPXML::LocationBasementConditioned)
+    cfa = hpxml_bldg.building_construction.conditioned_floor_area
+    ncfl = hpxml_bldg.building_construction.number_of_conditioned_floors
+    n_occ = hpxml_bldg.building_occupancy.number_of_residents
+    fixtures_usage_multiplier = hpxml_bldg.water_heating.water_fixtures_usage_multiplier
+    hot_water_distribution = hpxml_bldg.hot_water_distributions[0]
+
     if Constants::ERIVersions.index(eri_version) <= Constants::ERIVersions.index('2014')
       return 0.0
     end
@@ -1257,7 +1279,16 @@ module HotWaterAndAppliances
     end
 
     if n_occ.nil? # Asset calculation
-      ref_w_gpd = 9.8 * (nbeds**0.43) # ANSI/RESNET/ICC 301-2022 Eq. 4.2-29 (refWgpd)
+      if Constants::ERIVersions.index(eri_version) >= Constants::ERIVersions.index('2022C')
+        # RESNET MINHERS Addendum 81 Eq. 4.2-29 (refWgpd)
+        if unit_type == HPXML::ResidentialTypeApartment
+          ref_w_gpd = 11.27 * (nbeds**0.323)
+        else
+          ref_w_gpd = 9.95 * (nbeds**0.399)
+        end
+      else
+        ref_w_gpd = 9.8 * (nbeds**0.43)
+      end
     else # Operational calculation
       ref_w_gpd = 7.16 * (n_occ**0.7) # Eq. 14 from http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf
     end
@@ -1283,10 +1314,41 @@ module HotWaterAndAppliances
       wd_eff = 1.0
     end
 
-    f_eff = get_fixtures_effectiveness(frac_low_flow_fixtures)
+    f_eff = get_fixtures_effectiveness(hpxml_bldg)
 
     mw_gpd = f_eff * (o_w_gpd + s_w_gpd * wd_eff) # Eq. 4.2-11
 
     return mw_gpd * fixtures_usage_multiplier
+  end
+
+  # Calculates the fraction of low-flow fixtures.
+  #
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @return [Double] Fraction of fixtures that are low-flow
+  def self.calc_frac_low_flow_fixtures(hpxml_bldg)
+    fixtures = hpxml_bldg.water_fixtures.select { |wf| [HPXML::WaterFixtureTypeShowerhead, HPXML::WaterFixtureTypeFaucet].include? wf.water_fixture_type }
+
+    return 0.0 if fixtures.empty?
+
+    if fixtures.any? { |wf| wf.count.nil? }
+      # We don't know how many fixtures there are; assume 40% are showerheads and 60% are faucets.
+      showerheads = fixtures.select { |wf| wf.water_fixture_type == HPXML::WaterFixtureTypeShowerhead }
+      if showerheads.size > 0
+        frac_low_flow_showerheads = showerheads.count { |wf| wf.low_flow } / Float(showerheads.size)
+      else
+        frac_low_flow_showerheads = 0.0
+      end
+      faucets = fixtures.select { |wf| wf.water_fixture_type == HPXML::WaterFixtureTypeFaucet }
+      if faucets.size > 0
+        frac_low_flow_faucets = faucets.count { |wf| wf.low_flow } / Float(faucets.size)
+      else
+        frac_low_flow_faucets = 0.0
+      end
+      return 0.4 * frac_low_flow_showerheads + 0.6 * frac_low_flow_faucets
+    else
+      num_wfs = fixtures.map { |wf| wf.count }.sum
+      num_low_flow_wfs = fixtures.select { |wf| wf.low_flow }.map { |wf| wf.count }.sum
+      return num_low_flow_wfs / num_wfs
+    end
   end
 end

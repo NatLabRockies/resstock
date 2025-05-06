@@ -198,6 +198,7 @@ def apply_hpxml_modification_ashrae_140(hpxml)
     end
     roof.emittance = 0.9
     roof.roof_color = nil
+    roof.roof_type = nil
   end
   (hpxml_bldg.walls + hpxml_bldg.rim_joists).each do |wall|
     if wall.color == HPXML::ColorReflective
@@ -207,6 +208,7 @@ def apply_hpxml_modification_ashrae_140(hpxml)
     end
     wall.emittance = 0.9
     wall.color = nil
+    wall.siding = nil
     if wall.is_a?(HPXML::Wall)
       if wall.attic_wall_type == HPXML::AtticWallTypeGable
         wall.insulation_assembly_r_value = 2.15
@@ -304,8 +306,10 @@ def apply_hpxml_modification_hers_hot_water(hpxml)
     surface.emittance = 0.9
     if surface.is_a? HPXML::Roof
       surface.roof_color = nil
+      surface.roof_type = nil
     else
       surface.color = nil
+      surface.siding = nil
     end
   end
 
@@ -1822,15 +1826,13 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                      cooling_system_fuel: HPXML::FuelTypeElectricity,
                                      cooling_capacity: 9600,
                                      fraction_cool_load_served: 0.1333,
-                                     cooling_efficiency_eer: 8.5,
-                                     cooling_shr: 0.65)
+                                     cooling_efficiency_eer: 8.5)
       hpxml_bldg.cooling_systems.add(id: "CoolingSystem#{hpxml_bldg.cooling_systems.size + 1}",
                                      cooling_system_type: HPXML::HVACTypePTAC,
                                      cooling_system_fuel: HPXML::FuelTypeElectricity,
                                      cooling_capacity: 9600,
                                      fraction_cool_load_served: 0.1333,
-                                     cooling_efficiency_eer: 10.7,
-                                     cooling_shr: 0.65)
+                                     cooling_efficiency_eer: 10.7)
       hpxml_bldg.heat_pumps.add(id: "HeatPump#{hpxml_bldg.heat_pumps.size + 1}",
                                 distribution_system_idref: hpxml_bldg.hvac_distributions[4].id,
                                 heat_pump_type: HPXML::HVACTypeHeatPumpAirToAir,
@@ -1846,7 +1848,6 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                 heating_efficiency_hspf: 7.7,
                                 cooling_efficiency_seer: 13,
                                 heating_capacity_17F: 4800 * 0.6,
-                                cooling_shr: 0.73,
                                 compressor_type: HPXML::HVACCompressorTypeSingleStage)
       hpxml_bldg.heat_pumps.add(id: "HeatPump#{hpxml_bldg.heat_pumps.size + 1}",
                                 distribution_system_idref: hpxml_bldg.hvac_distributions[5].id,
@@ -1854,6 +1855,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                 heat_pump_fuel: HPXML::FuelTypeElectricity,
                                 heating_capacity: 4800,
                                 cooling_capacity: 4800,
+                                compressor_type: HPXML::HVACCompressorTypeSingleStage,
                                 backup_type: HPXML::HeatPumpBackupTypeIntegrated,
                                 backup_heating_fuel: HPXML::FuelTypeElectricity,
                                 backup_heating_capacity: 3412,
@@ -1862,7 +1864,6 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                 fraction_cool_load_served: 0.2,
                                 heating_efficiency_cop: 3.6,
                                 cooling_efficiency_eer: 16.6,
-                                cooling_shr: 0.73,
                                 pump_watts_per_ton: 100.0)
       hpxml_bldg.heat_pumps.add(id: "HeatPump#{hpxml_bldg.heat_pumps.size + 1}",
                                 heat_pump_type: HPXML::HVACTypeHeatPumpMiniSplit,
@@ -1878,7 +1879,6 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                 heating_efficiency_hspf: 10,
                                 cooling_efficiency_seer: 19,
                                 heating_capacity_17F: 4800 * 0.6,
-                                cooling_shr: 0.73,
                                 compressor_type: HPXML::HVACCompressorTypeVariableSpeed,
                                 primary_cooling_system: true,
                                 primary_heating_system: true)
@@ -2635,36 +2635,10 @@ if ARGV[0].to_sym == :update_measures
   ENV['HOME'] = 'C:' if !ENV['HOME'].nil? && ENV['HOME'].start_with?('U:')
   ENV['HOMEDRIVE'] = 'C:\\' if !ENV['HOMEDRIVE'].nil? && ENV['HOMEDRIVE'].start_with?('U:')
 
-  # Apply rubocop
-  cops = ['Layout',
-          'Lint/DeprecatedClassMethods',
-          'Lint/DuplicateElsifCondition',
-          'Lint/DuplicateHashKey',
-          'Lint/DuplicateMethods',
-          'Lint/InterpolationCheck',
-          'Lint/LiteralAsCondition',
-          'Lint/RedundantStringCoercion',
-          'Lint/SelfAssignment',
-          'Lint/UnderscorePrefixedVariableName',
-          'Lint/UnusedBlockArgument',
-          'Lint/UnusedMethodArgument',
-          'Lint/UselessAssignment',
-          'Style/AndOr',
-          'Style/Documentation',
-          'Style/DocumentationMethod',
-          'Style/FrozenStringLiteralComment',
-          'Style/HashSyntax',
-          'Style/Next',
-          'Style/NilComparison',
-          'Style/RedundantParentheses',
-          'Style/RedundantSelf',
-          'Style/ReturnNil',
-          'Style/SelfAssignment',
-          'Style/StringLiterals',
-          'Style/StringLiteralsInInterpolation']
+  # Apply rubocop (uses .rubocop.yml)
   commands = ["\"require 'rubocop/rake_task' \"",
               "\"require 'stringio' \"",
-              "\"RuboCop::RakeTask.new(:rubocop) do |t| t.options = ['--autocorrect', '--format', 'simple', '--only', '#{cops.join(',')}'] end\"",
+              "\"RuboCop::RakeTask.new(:rubocop) do |t| t.options = ['--autocorrect-all', '--format', 'simple'] end\"",
               '"Rake.application[:rubocop].invoke"']
   command = "#{OpenStudio.getOpenStudioCLI} -e #{commands.join(' -e ')}"
   puts 'Applying rubocop auto-correct to measures...'

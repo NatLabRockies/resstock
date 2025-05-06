@@ -4,7 +4,6 @@ require_relative '../../HPXMLtoOpenStudio/resources/minitest_helper'
 require 'openstudio'
 require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
-# require 'csv'
 require_relative '../measure.rb'
 
 class BuildResidentialScheduleFileTest < Minitest::Test
@@ -17,8 +16,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     FileUtils.mkdir_p(@tmp_output_path)
 
     @args_hash = {}
-    @args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
-    @args_hash['hpxml_output_path'] = @args_hash['hpxml_path']
+    @args_hash['hpxml_output_path'] = File.join(@tmp_output_path, 'stochastic_schedules.xml')
     @year = 2007
     @tol = 0.005
   end
@@ -30,9 +28,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
   end
 
   def test_stochastic
-    hpxml = _create_hpxml('base.xml')
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-
+    @args_hash['hpxml_path'] = File.join(@sample_files_path, 'base.xml')
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
     hpxml, result = _test_measure()
 
@@ -69,9 +65,6 @@ class BuildResidentialScheduleFileTest < Minitest::Test
   end
 
   def test_stochastic_subset_of_columns
-    hpxml = _create_hpxml('base.xml')
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-
     columns = [SchedulesFile::Columns[:CookingRange].name,
                SchedulesFile::Columns[:Dishwasher].name,
                SchedulesFile::Columns[:HotWaterDishwasher].name,
@@ -80,6 +73,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
                SchedulesFile::Columns[:ClothesDryer].name,
                SchedulesFile::Columns[:HotWaterFixtures].name]
 
+    @args_hash['hpxml_path'] = File.join(@sample_files_path, 'base.xml')
     @args_hash['schedules_type'] = 'stochastic'
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
     @args_hash['schedules_column_names'] = columns.join(', ')
@@ -101,9 +95,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
   end
 
   def test_stochastic_subset_of_columns_invalid_name
-    hpxml = _create_hpxml('base.xml')
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-
+    @args_hash['hpxml_path'] = File.join(@sample_files_path, 'base.xml')
     @args_hash['schedules_type'] = 'stochastic'
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
     @args_hash['schedules_column_names'] = "foobar, #{SchedulesFile::Columns[:CookingRange].name}, foobar2"
@@ -115,9 +107,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
   end
 
   def test_stochastic_location_detailed
-    hpxml = _create_hpxml('base-location-detailed.xml')
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-
+    @args_hash['hpxml_path'] = File.join(@sample_files_path, 'base-location-detailed.xml')
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
     hpxml, result = _test_measure()
 
@@ -154,9 +144,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
   end
 
   def test_stochastic_debug
-    hpxml = _create_hpxml('base.xml')
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-
+    @args_hash['hpxml_path'] = File.join(@sample_files_path, 'base.xml')
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
     @args_hash['debug'] = true
     hpxml, result = _test_measure()
@@ -194,9 +182,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
   end
 
   def test_random_seed
-    hpxml = _create_hpxml('base-location-baltimore-md.xml')
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-
+    @args_hash['hpxml_path'] = File.join(@sample_files_path, 'base-location-baltimore-md.xml')
     @args_hash['schedules_random_seed'] = 1
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
     hpxml, result = _test_measure()
@@ -267,9 +253,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
   end
 
   def test_10_min_timestep
-    hpxml = _create_hpxml('base-simcontrol-timestep-10-mins.xml')
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-
+    @args_hash['hpxml_path'] = File.join(@sample_files_path, 'base-simcontrol-timestep-10-mins.xml')
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
     hpxml, result = _test_measure()
 
@@ -312,6 +296,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     hpxml.buildings[0].building_occupancy.number_of_residents = num_occupants
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
 
+    @args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
     _hpxml, result = _test_measure()
 
@@ -326,6 +311,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     hpxml.buildings[0].building_occupancy.number_of_residents = num_occupants
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
 
+    @args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
     _hpxml, result = _test_measure()
 
@@ -343,6 +329,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     hpxml.buildings[0].building_occupancy.number_of_residents = num_occupants
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
 
+    @args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
     hpxml, _result = _test_measure()
     sf = SchedulesFile.new(schedules_paths: hpxml.buildings[0].header.schedules_filepaths,
@@ -359,6 +346,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
 
+    @args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic.csv'))
     @args_hash['building_id'] = 'ALL'
     hpxml, result = _test_measure()
@@ -438,6 +426,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     end
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
 
+    @args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
     @args_hash['output_csv_path'] = File.absolute_path(File.join(@tmp_output_path, 'occupancy-stochastic_2.csv'))
     @args_hash['building_id'] = 'MyBuilding_2'
     hpxml, result = _test_measure()
@@ -488,8 +477,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     orig_cols = File.readlines(existing_csv_path)[0].strip.split(',')
 
     # Test w/ append_output=false
-    hpxml = _create_hpxml('base.xml')
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    @args_hash['hpxml_path'] = File.join(@sample_files_path, 'base.xml')
     FileUtils.cp(existing_csv_path, @tmp_schedule_file_path)
     @args_hash['output_csv_path'] = @tmp_schedule_file_path
     @args_hash['append_output'] = false
@@ -500,8 +488,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
     assert((outdata[0].strip.split(',').to_set - expected_cols.to_set).empty?)
 
     # Test w/ append_output=true
-    hpxml = _create_hpxml('base.xml')
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    @args_hash['hpxml_path'] = File.join(@sample_files_path, 'base.xml')
     FileUtils.cp(existing_csv_path, @tmp_schedule_file_path)
     @args_hash['output_csv_path'] = @tmp_schedule_file_path
     @args_hash['append_output'] = true
@@ -514,8 +501,7 @@ class BuildResidentialScheduleFileTest < Minitest::Test
 
     # Test w/ append_output=true and inconsistent data
     existing_csv_path = File.join(File.dirname(__FILE__), '..', '..', 'HPXMLtoOpenStudio', 'resources', 'schedule_files', 'setpoints-10-mins.csv')
-    hpxml = _create_hpxml('base.xml')
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    @args_hash['hpxml_path'] = File.join(@sample_files_path, 'base.xml')
     FileUtils.cp(existing_csv_path, @tmp_schedule_file_path)
     @args_hash['output_csv_path'] = @tmp_schedule_file_path
     @args_hash['append_output'] = true
@@ -523,6 +509,55 @@ class BuildResidentialScheduleFileTest < Minitest::Test
 
     error_msgs = result.errors.map { |x| x.logMessage }
     assert(error_msgs.any? { |error_msg| error_msg.include?('Invalid number of rows (52561) in file.csv. Expected 8761 rows (including the header row).') })
+  end
+
+  def test_output_hpxml_path_same_as_input_hpxml_path
+    @args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
+    @args_hash['hpxml_output_path'] = @args_hash['hpxml_path']
+    @args_hash['output_csv_path'] = @tmp_schedule_file_path
+
+    runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+    weather = nil
+
+    hpxml_backup_path = @args_hash['hpxml_path'].gsub('.xml', '_bak.xml')
+    backup_warn_msg = 'HPXML Output File Path is same as HPXML File Path, creating backup.'
+
+    [false, true].each do |test_backup_file|
+      [false, true].each do |test_with_defaults|
+        hpxml = _create_hpxml('base.xml')
+        if test_with_defaults
+          # Check that the presence of dataSource='software' attributes doesn't affect the logic
+          hpxml_bldg = hpxml.buildings[0]
+          if weather.nil?
+            epw_path = File.join(@root_path, 'weather', hpxml_bldg.climate_and_risk_zones.weather_station_epw_filepath)
+            weather = WeatherFile.new(epw_path: epw_path, runner: runner)
+          end
+          Defaults.apply(runner, hpxml, hpxml_bldg, weather)
+        end
+        hpxml_doc = hpxml.to_doc()
+        if test_backup_file
+          # Add an element that isn't recognized by the HPXML class and will be dropped when the new HPXML is written
+          # This should cause the original HPXML file to be backed up
+          extension_element = XMLHelper.get_element(hpxml_doc, '/HPXML/SoftwareInfo/extension')
+          XMLHelper.add_element(extension_element, 'foo', 'bar', :string)
+        end
+        XMLHelper.write_file(hpxml_doc, @tmp_hpxml_path)
+        _hpxml, result = _test_measure()
+
+        warn_msgs = result.warnings.map { |x| x.logMessage }
+
+        if test_backup_file
+          # Check backup file created
+          assert(File.exist? hpxml_backup_path)
+          File.delete(hpxml_backup_path)
+          assert(warn_msgs.any? { |warn_msg| warn_msg.include?(backup_warn_msg) })
+        else
+          # Check backup file NOT created
+          refute(File.exist? hpxml_backup_path)
+          refute(warn_msgs.any? { |warn_msg| warn_msg.include?(backup_warn_msg) })
+        end
+      end
+    end
   end
 
   private
@@ -560,7 +595,9 @@ class BuildResidentialScheduleFileTest < Minitest::Test
       assert_equal('Success', result.value.valueName)
     end
 
-    hpxml = HPXML.new(hpxml_path: @tmp_hpxml_path)
+    if File.exist? @args_hash['hpxml_output_path']
+      hpxml = HPXML.new(hpxml_path: @args_hash['hpxml_output_path'])
+    end
 
     return hpxml, result
   end

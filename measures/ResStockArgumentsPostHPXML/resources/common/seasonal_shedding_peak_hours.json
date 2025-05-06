@@ -1,0 +1,461 @@
+{
+  "IA":
+  {
+    "summer_peak_start": "2050-08-28 17:00:00",
+    "summer_peak_end": "2050-08-28 21:00:00",
+    "winter_peak_start": "2050-01-19 17:00:00",
+    "winter_peak_end": "2050-01-19 21:00:00",
+    "intermediate_peak_start": "2050-11-04 17:00:00",
+    "intermediate_peak_end": "2050-11-04 21:00:00"
+  },
+  "WV":
+  {
+    "summer_peak_start": "2050-07-18 16:00:00",
+    "summer_peak_end": "2050-07-18 20:00:00",
+    "winter_peak_start": "2050-01-18 17:00:00",
+    "winter_peak_end": "2050-01-18 21:00:00",
+    "intermediate_peak_start": "2050-05-29 16:00:00",
+    "intermediate_peak_end": "2050-05-29 20:00:00"
+  },
+  "MA":
+  {
+    "summer_peak_start": "2050-06-22 17:00:00",
+    "summer_peak_end": "2050-06-22 21:00:00",
+    "winter_peak_start": "2050-12-14 17:00:00",
+    "winter_peak_end": "2050-12-14 21:00:00",
+    "intermediate_peak_start": "2050-10-18 17:00:00",
+    "intermediate_peak_end": "2050-10-18 21:00:00"
+  },
+  "VT":
+  {
+    "summer_peak_start": "2050-07-12 18:00:00",
+    "summer_peak_end": "2050-07-12 22:00:00",
+    "winter_peak_start": "2050-12-25 18:00:00",
+    "winter_peak_end": "2050-12-25 22:00:00",
+    "intermediate_peak_start": "2050-11-28 17:00:00",
+    "intermediate_peak_end": "2050-11-28 21:00:00"
+  },
+  "WI":
+  {
+    "summer_peak_start": "2050-07-06 18:00:00",
+    "summer_peak_end": "2050-07-06 22:00:00",
+    "winter_peak_start": "2050-12-19 17:00:00",
+    "winter_peak_end": "2050-12-19 21:00:00",
+    "intermediate_peak_start": "2050-11-08 17:00:00",
+    "intermediate_peak_end": "2050-11-08 21:00:00"
+  },
+  "CT":
+  {
+    "summer_peak_start": "2050-06-22 17:00:00",
+    "summer_peak_end": "2050-06-22 21:00:00",
+    "winter_peak_start": "2050-12-07 17:00:00",
+    "winter_peak_end": "2050-12-07 21:00:00",
+    "intermediate_peak_start": "2050-05-30 17:00:00",
+    "intermediate_peak_end": "2050-05-30 21:00:00"
+  },
+  "TN":
+  {
+    "summer_peak_start": "2050-06-30 17:00:00",
+    "summer_peak_end": "2050-06-30 21:00:00",
+    "winter_peak_start": "2050-01-18 17:00:00",
+    "winter_peak_end": "2050-01-18 21:00:00",
+    "intermediate_peak_start": "2050-05-28 17:00:00",
+    "intermediate_peak_end": "2050-05-28 21:00:00"
+  },
+  "NY":
+  {
+    "summer_peak_start": "2050-07-06 18:00:00",
+    "summer_peak_end": "2050-07-06 22:00:00",
+    "winter_peak_start": "2050-01-20 17:00:00",
+    "winter_peak_end": "2050-01-20 21:00:00",
+    "intermediate_peak_start": "2050-11-16 17:00:00",
+    "intermediate_peak_end": "2050-11-16 21:00:00"
+  },
+  "UT":
+  {
+    "summer_peak_start": "2050-08-08 18:00:00",
+    "summer_peak_end": "2050-08-08 22:00:00",
+    "winter_peak_start": "2050-12-29 17:00:00",
+    "winter_peak_end": "2050-12-29 21:00:00",
+    "intermediate_peak_start": "2050-11-13 17:00:00",
+    "intermediate_peak_end": "2050-11-13 21:00:00"
+  },
+  "VA":
+  {
+    "summer_peak_start": "2050-07-07 18:00:00",
+    "summer_peak_end": "2050-07-07 22:00:00",
+    "winter_peak_start": "2050-12-29 16:00:00",
+    "winter_peak_end": "2050-12-29 20:00:00",
+    "intermediate_peak_start": "2050-11-27 16:00:00",
+    "intermediate_peak_end": "2050-11-27 20:00:00"
+  },
+  "DC":
+  {
+    "summer_peak_start": "2050-07-07 18:00:00",
+    "summer_peak_end": "2050-07-07 22:00:00",
+    "winter_peak_start": "2050-12-29 16:00:00",
+    "winter_peak_end": "2050-12-29 20:00:00",
+    "intermediate_peak_start": "2050-11-27 16:00:00",
+    "intermediate_peak_end": "2050-11-27 20:00:00"
+  },
+  "SD":
+  {
+    "summer_peak_start": "2050-06-29 15:00:00",
+    "summer_peak_end": "2050-06-29 19:00:00",
+    "winter_peak_start": "2050-12-26 16:00:00",
+    "winter_peak_end": "2050-12-26 20:00:00",
+    "intermediate_peak_start": "2050-04-17 18:00:00",
+    "intermediate_peak_end": "2050-04-17 22:00:00"
+  },
+  "OH":
+  {
+    "summer_peak_start": "2050-07-07 17:00:00",
+    "summer_peak_end": "2050-07-07 21:00:00",
+    "winter_peak_start": "2050-01-03 17:00:00",
+    "winter_peak_end": "2050-01-03 21:00:00",
+    "intermediate_peak_start": "2050-11-28 17:00:00",
+    "intermediate_peak_end": "2050-11-28 21:00:00"
+  },
+  "SC":
+  {
+    "summer_peak_start": "2050-07-28 19:00:00",
+    "summer_peak_end": "2050-07-28 23:00:00",
+    "winter_peak_start": "2050-02-09 18:00:00",
+    "winter_peak_end": "2050-02-09 22:00:00",
+    "intermediate_peak_start": "2050-10-05 17:00:00",
+    "intermediate_peak_end": "2050-10-05 21:00:00"
+  },
+  "MT":
+  {
+    "summer_peak_start": "2050-09-25 17:00:00",
+    "summer_peak_end": "2050-09-25 21:00:00",
+    "winter_peak_start": "2050-01-18 18:00:00",
+    "winter_peak_end": "2050-01-18 22:00:00",
+    "intermediate_peak_start": "2050-10-06 19:00:00",
+    "intermediate_peak_end": "2050-10-06 23:00:00"
+  },
+  "MS":
+  {
+    "summer_peak_start": "2050-07-30 18:00:00",
+    "summer_peak_end": "2050-07-30 22:00:00",
+    "winter_peak_start": "2050-01-18 17:00:00",
+    "winter_peak_end": "2050-01-18 21:00:00",
+    "intermediate_peak_start": "2050-05-28 18:00:00",
+    "intermediate_peak_end": "2050-05-28 22:00:00"
+  },
+  "NM":
+  {
+    "summer_peak_start": "2050-08-09 18:00:00",
+    "summer_peak_end": "2050-08-09 22:00:00",
+    "winter_peak_start": "2050-03-11 17:00:00",
+    "winter_peak_end": "2050-03-11 21:00:00",
+    "intermediate_peak_start": "2050-10-31 17:00:00",
+    "intermediate_peak_end": "2050-10-31 21:00:00"
+  },
+  "NJ":
+  {
+    "summer_peak_start": "2050-07-06 17:00:00",
+    "summer_peak_end": "2050-07-06 21:00:00",
+    "winter_peak_start": "2050-12-07 17:00:00",
+    "winter_peak_end": "2050-12-07 21:00:00",
+    "intermediate_peak_start": "2050-05-31 17:00:00",
+    "intermediate_peak_end": "2050-05-31 21:00:00"
+  },
+  "GA":
+  {
+    "summer_peak_start": "2050-06-30 18:00:00",
+    "summer_peak_end": "2050-06-30 22:00:00",
+    "winter_peak_start": "2050-01-03 18:00:00",
+    "winter_peak_end": "2050-01-03 22:00:00",
+    "intermediate_peak_start": "2050-05-26 18:00:00",
+    "intermediate_peak_end": "2050-05-26 22:00:00"
+  },
+  "CA":
+  {
+    "summer_peak_start": "2050-08-14 18:00:00",
+    "summer_peak_end": "2050-08-14 22:00:00",
+    "winter_peak_start": "2050-12-14 17:00:00",
+    "winter_peak_end": "2050-12-14 21:00:00",
+    "intermediate_peak_start": "2050-10-02 17:00:00",
+    "intermediate_peak_end": "2050-10-02 21:00:00"
+  },
+  "IL":
+  {
+    "summer_peak_start": "2050-07-07 18:00:00",
+    "summer_peak_end": "2050-07-07 22:00:00",
+    "winter_peak_start": "2050-12-29 16:00:00",
+    "winter_peak_end": "2050-12-29 20:00:00",
+    "intermediate_peak_start": "2050-11-08 16:00:00",
+    "intermediate_peak_end": "2050-11-08 20:00:00"
+  },
+  "AZ":
+  {
+    "summer_peak_start": "2050-08-09 18:00:00",
+    "summer_peak_end": "2050-08-09 22:00:00",
+    "winter_peak_start": "2050-03-30 18:00:00",
+    "winter_peak_end": "2050-03-30 22:00:00",
+    "intermediate_peak_start": "2050-10-03 17:00:00",
+    "intermediate_peak_end": "2050-10-03 21:00:00"
+  },
+  "TX":
+  {
+    "summer_peak_start": "2050-08-28 18:00:00",
+    "summer_peak_end": "2050-08-28 22:00:00",
+    "winter_peak_start": "2050-12-12 17:00:00",
+    "winter_peak_end": "2050-12-12 21:00:00",
+    "intermediate_peak_start": "2050-10-03 17:00:00",
+    "intermediate_peak_end": "2050-10-03 21:00:00"
+  },
+  "NH":
+  {
+    "summer_peak_start": "2050-08-09 17:00:00",
+    "summer_peak_end": "2050-08-09 21:00:00",
+    "winter_peak_start": "2050-12-07 17:00:00",
+    "winter_peak_end": "2050-12-07 21:00:00",
+    "intermediate_peak_start": "2050-11-28 17:00:00",
+    "intermediate_peak_end": "2050-11-28 21:00:00"
+  },
+  "DE":
+  {
+    "summer_peak_start": "2050-06-30 17:00:00",
+    "summer_peak_end": "2050-06-30 21:00:00",
+    "winter_peak_start": "2050-12-07 17:00:00",
+    "winter_peak_end": "2050-12-07 21:00:00",
+    "intermediate_peak_start": "2050-11-27 17:00:00",
+    "intermediate_peak_end": "2050-11-27 21:00:00"
+  },
+  "WA":
+  {
+    "summer_peak_start": "2050-08-17 17:00:00",
+    "summer_peak_end": "2050-08-17 21:00:00",
+    "winter_peak_start": "2050-01-12 17:00:00",
+    "winter_peak_end": "2050-01-12 21:00:00",
+    "intermediate_peak_start": "2050-10-25 17:00:00",
+    "intermediate_peak_end": "2050-10-25 21:00:00"
+  },
+  "OR":
+  {
+    "summer_peak_start": "2050-09-18 17:00:00",
+    "summer_peak_end": "2050-09-18 21:00:00",
+    "winter_peak_start": "2050-01-12 17:00:00",
+    "winter_peak_end": "2050-01-12 21:00:00",
+    "intermediate_peak_start": "2050-10-26 16:00:00",
+    "intermediate_peak_end": "2050-10-26 20:00:00"
+  },
+  "MI":
+  {
+    "summer_peak_start": "2050-07-07 17:00:00",
+    "summer_peak_end": "2050-07-07 21:00:00",
+    "winter_peak_start": "2050-03-02 18:00:00",
+    "winter_peak_end": "2050-03-02 22:00:00",
+    "intermediate_peak_start": "2050-11-21 17:00:00",
+    "intermediate_peak_end": "2050-11-21 21:00:00"
+  },
+  "MN":
+  {
+    "summer_peak_start": "2050-07-15 17:00:00",
+    "summer_peak_end": "2050-07-15 21:00:00",
+    "winter_peak_start": "2050-12-12 17:00:00",
+    "winter_peak_end": "2050-12-12 21:00:00",
+    "intermediate_peak_start": "2050-11-04 16:00:00",
+    "intermediate_peak_end": "2050-11-04 20:00:00"
+  },
+  "WY":
+  {
+    "summer_peak_start": "2050-09-18 18:00:00",
+    "summer_peak_end": "2050-09-18 22:00:00",
+    "winter_peak_start": "2050-02-07 08:00:00",
+    "winter_peak_end": "2050-02-07 12:00:00",
+    "intermediate_peak_start": "2050-10-26 08:00:00",
+    "intermediate_peak_end": "2050-10-26 12:00:00"
+  },
+  "IN":
+  {
+    "summer_peak_start": "2050-07-07 18:00:00",
+    "summer_peak_end": "2050-07-07 22:00:00",
+    "winter_peak_start": "2050-12-28 17:00:00",
+    "winter_peak_end": "2050-12-28 21:00:00",
+    "intermediate_peak_start": "2050-11-14 17:00:00",
+    "intermediate_peak_end": "2050-11-14 21:00:00"
+  },
+  "OK":
+  {
+    "summer_peak_start": "2050-09-06 15:00:00",
+    "summer_peak_end": "2050-09-06 19:00:00",
+    "winter_peak_start": "2050-02-14 04:00:00",
+    "winter_peak_end": "2050-02-14 08:00:00",
+    "intermediate_peak_start": "2050-11-17 03:00:00",
+    "intermediate_peak_end": "2050-11-17 07:00:00"
+  },
+  "NV":
+  {
+    "summer_peak_start": "2050-07-11 18:00:00",
+    "summer_peak_end": "2050-07-11 22:00:00",
+    "winter_peak_start": "2050-12-29 17:00:00",
+    "winter_peak_end": "2050-12-29 21:00:00",
+    "intermediate_peak_start": "2050-05-17 18:00:00",
+    "intermediate_peak_end": "2050-05-17 22:00:00"
+  },
+  "KS":
+  {
+    "summer_peak_start": "2050-08-01 18:00:00",
+    "summer_peak_end": "2050-08-01 22:00:00",
+    "winter_peak_start": "2050-01-17 17:00:00",
+    "winter_peak_end": "2050-01-17 21:00:00",
+    "intermediate_peak_start": "2050-11-01 17:00:00",
+    "intermediate_peak_end": "2050-11-01 21:00:00"
+  },
+  "PA":
+  {
+    "summer_peak_start": "2050-06-22 17:00:00",
+    "summer_peak_end": "2050-06-22 21:00:00",
+    "winter_peak_start": "2050-01-03 17:00:00",
+    "winter_peak_end": "2050-01-03 21:00:00",
+    "intermediate_peak_start": "2050-05-29 17:00:00",
+    "intermediate_peak_end": "2050-05-29 21:00:00"
+  },
+  "MO":
+  {
+    "summer_peak_start": "2050-07-06 18:00:00",
+    "summer_peak_end": "2050-07-06 22:00:00",
+    "winter_peak_start": "2050-12-29 08:00:00",
+    "winter_peak_end": "2050-12-29 12:00:00",
+    "intermediate_peak_start": "2050-11-16 16:00:00",
+    "intermediate_peak_end": "2050-11-16 20:00:00"
+  },
+  "ME":
+{
+  "summer_peak_start": "2050-08-10 17:00:00",
+  "summer_peak_end": "2050-08-10 21:00:00",
+  "winter_peak_start": "2050-02-15 17:00:00",
+  "winter_peak_end": "2050-02-15 21:00:00",
+  "intermediate_peak_start": "2050-11-28 16:00:00",
+  "intermediate_peak_end": "2050-11-28 20:00:00"
+},
+"KY":
+{
+"summer_peak_start": "2050-07-07 19:00:00",
+"summer_peak_end": "2050-07-07 23:00:00",
+"winter_peak_start": "2050-12-12 17:00:00",
+    "winter_peak_end": "2050-12-12 21:00:00",
+    "intermediate_peak_start": "2050-11-29 17:00:00",
+    "intermediate_peak_end": "2050-11-29 21:00:00"
+  },
+  "CO":
+  {
+    "summer_peak_start": "2050-08-09 18:00:00",
+    "summer_peak_end": "2050-08-09 22:00:00",
+    "winter_peak_start": "2050-12-26 18:00:00",
+    "winter_peak_end": "2050-12-26 22:00:00",
+    "intermediate_peak_start": "2050-11-27 16:00:00",
+    "intermediate_peak_end": "2050-11-27 20:00:00"
+  },
+  "NC":
+  {
+    "summer_peak_start": "2050-08-16 18:00:00",
+    "summer_peak_end": "2050-08-16 22:00:00",
+    "winter_peak_start": "2050-12-29 17:00:00",
+    "winter_peak_end": "2050-12-29 21:00:00",
+    "intermediate_peak_start": "2050-11-30 17:00:00",
+    "intermediate_peak_end": "2050-11-30 21:00:00"
+  },
+  "AL":
+  {
+    "summer_peak_start": "2050-07-24 18:00:00",
+    "summer_peak_end": "2050-07-24 22:00:00",
+    "winter_peak_start": "2050-01-03 18:00:00",
+    "winter_peak_end": "2050-01-03 22:00:00",
+    "intermediate_peak_start": "2050-05-26 18:00:00",
+    "intermediate_peak_end": "2050-05-26 22:00:00"
+  },
+  "ND":
+  {
+    "summer_peak_start": "2050-07-31 19:00:00",
+    "summer_peak_end": "2050-07-31 23:00:00",
+    "winter_peak_start": "2050-12-26 19:00:00",
+    "winter_peak_end": "2050-12-26 23:00:00",
+    "intermediate_peak_start": "2050-04-17 18:00:00",
+    "intermediate_peak_end": "2050-04-17 22:00:00"
+  },
+  "AR":
+  {
+    "summer_peak_start": "2050-09-06 17:00:00",
+    "summer_peak_end": "2050-09-06 21:00:00",
+    "winter_peak_start": "2050-12-12 17:00:00",
+    "winter_peak_end": "2050-12-12 21:00:00",
+    "intermediate_peak_start": "2050-05-30 18:00:00",
+    "intermediate_peak_end": "2050-05-30 22:00:00"
+  },
+  "FL":
+  {
+    "summer_peak_start": "2050-07-27 18:00:00",
+    "summer_peak_end": "2050-07-27 22:00:00",
+    "winter_peak_start": "2050-01-03 18:00:00",
+    "winter_peak_end": "2050-01-03 22:00:00",
+    "intermediate_peak_start": "2050-05-31 18:00:00",
+    "intermediate_peak_end": "2050-05-31 22:00:00"
+  },
+  "ID":
+  {
+    "summer_peak_start": "2050-08-05 19:00:00",
+    "summer_peak_end": "2050-08-05 23:00:00",
+    "winter_peak_start": "2050-01-12 17:00:00",
+    "winter_peak_end": "2050-01-12 21:00:00",
+    "intermediate_peak_start": "2050-11-15 18:00:00",
+    "intermediate_peak_end": "2050-11-15 22:00:00"
+  },
+  "LA":
+  {
+    "summer_peak_start": "2050-06-29 18:00:00",
+    "summer_peak_end": "2050-06-29 22:00:00",
+    "winter_peak_start": "2050-12-12 17:00:00",
+    "winter_peak_end": "2050-12-12 21:00:00",
+    "intermediate_peak_start": "2050-05-30 18:00:00",
+    "intermediate_peak_end": "2050-05-30 22:00:00"
+  },
+  "MD":
+  {
+    "summer_peak_start": "2050-07-06 17:00:00",
+    "summer_peak_end": "2050-07-06 21:00:00",
+    "winter_peak_start": "2050-01-09 16:00:00",
+    "winter_peak_end": "2050-01-09 20:00:00",
+    "intermediate_peak_start": "2050-05-26 17:00:00",
+    "intermediate_peak_end": "2050-05-26 21:00:00"
+  },
+  "NE":
+  {
+    "summer_peak_start": "2050-07-15 15:00:00",
+    "summer_peak_end": "2050-07-15 19:00:00",
+    "winter_peak_start": "2050-03-16 17:00:00",
+    "winter_peak_end": "2050-03-16 21:00:00",
+    "intermediate_peak_start": "2050-10-31 16:00:00",
+    "intermediate_peak_end": "2050-10-31 20:00:00"
+  },
+  "RI":
+  {
+    "summer_peak_start": "2050-07-28 18:00:00",
+    "summer_peak_end": "2050-07-28 22:00:00",
+    "winter_peak_start": "2050-12-07 17:00:00",
+    "winter_peak_end": "2050-12-07 21:00:00",
+    "intermediate_peak_start": "2050-10-18 18:00:00",
+    "intermediate_peak_end": "2050-10-18 22:00:00"
+  },
+  "HI":
+  {
+    "summer_peak_start": "2050-07-27 18:00:00",
+    "summer_peak_end": "2050-07-27 22:00:00",
+    "winter_peak_start": "2050-01-03 18:00:00",
+    "winter_peak_end": "2050-01-03 22:00:00",
+    "intermediate_peak_start": "2050-05-31 18:00:00",
+    "intermediate_peak_end": "2050-05-31 22:00:00"
+  },
+  "AK":
+  {
+    "summer_peak_start": "2050-07-15 17:00:00",
+    "summer_peak_end": "2050-07-15 21:00:00",
+    "winter_peak_start": "2050-12-12 17:00:00",
+    "winter_peak_end": "2050-12-12 21:00:00",
+    "intermediate_peak_start": "2050-11-04 16:00:00",
+    "intermediate_peak_end": "2050-11-04 20:00:00"
+  }
+}

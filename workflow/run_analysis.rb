@@ -196,6 +196,7 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     'include_timeseries_component_loads' => false,
     'include_timeseries_unmet_hours' => false,
     'include_timeseries_zone_temperatures' => false,
+    'include_timeseries_zone_conditions' => false,
     'include_timeseries_airflows' => false,
     'include_timeseries_weather' => false,
     'include_timeseries_resilience' => false,

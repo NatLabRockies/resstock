@@ -55,7 +55,7 @@ postprocessing:
 workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
-  version: 2025.02.05
+  version: 2025.04.29
 
   args:
     # Annual simulation and timestep
@@ -98,16 +98,17 @@ workflow_generator:
       include_timeseries_emission_end_uses: false
       include_timeseries_hot_water_uses: true
       include_timeseries_total_loads: true
-      include_timeseries_component_loads: true
+      include_timeseries_component_loads: false
       include_timeseries_unmet_hours: true
       include_timeseries_zone_temperatures: true
+      include_timeseries_zone_conditions: true
       include_timeseries_airflows: true
       include_timeseries_weather: true
       include_timeseries_resilience: true
       output_variables:
-        - name: Site Outdoor Air Drybulb Temperature
-        - name: Zone Mean Air Temperature
-        - name: Zone Air Relative Humidity
+        # - name: Site Outdoor Air Drybulb Temperature # handled by include_timeseries_weather: true
+        # - name: Zone Mean Air Temperature # handled by include_timeseries_zone_temperatures: true
+        # - name: Zone Air Relative Humidity # handled by include_timeseries_zone_conditions: true
         - name: People Sensible Heating Rate
         - name: People Total Heating Rate
         - name: Site Outdoor Air Humidity Ratio
@@ -1142,10 +1143,46 @@ upgrades:
       - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
       - *infiltration_30pct_reduction
 
+### -- Thermostat Demand Flexibility -- ###
+  - upgrade_name: HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset
+    package_apply_logic: &has_cooling_or_heating
+      - or:  # apply if there is either a cooling or a heating system
+        - not: HVAC Cooling Type|None
+        - not: HVAC Heating Type|None
+    options:
+      - option: Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset
+      - &Demand_Flexibility_30min_Random_Shift
+        option: Demand Flexibility Random Shift|30 minutes
+
+  - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
+    package_apply_logic: *has_cooling_or_heating
+    options:
+      - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
+      - *Demand_Flexibility_30min_Random_Shift
+
+  - upgrade_name: HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset
+    package_apply_logic: *has_cooling_or_heating
+    options:
+      - option: Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset
+      - *Demand_Flexibility_30min_Random_Shift
+
+  - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
+    package_apply_logic: *has_cooling_or_heating
+    options:
+      - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
+      - *Demand_Flexibility_30min_Random_Shift
+
+  - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
+    package_apply_logic: *has_cooling_or_heating
+    options:
+      - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
+      - *Demand_Flexibility_30min_Random_Shift
+
+### -- Electric Vehicles -- ###
   - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
     package_apply_logic:
       - Electric Vehicle Ownership|No
-      - &Occupied_only
+      - &Occupied_Only
           Vacancy Status|Occupied
     options:
       - &EV_Ownership_Yes
@@ -1153,15 +1190,36 @@ upgrades:
       - option: Electric Vehicle Charger|Level 1 charger
 
   - upgrade_name: Electric Vehicle Adoption with Level 2 Charging
-    package_apply_logic: *Occupied_only
+    package_apply_logic: *Occupied_Only
     options:
       - *EV_Ownership_Yes
-      - &L2_Charger
+      - &EV_L2_Charger
         option: Electric Vehicle Charger|Level 2 charger
 
   - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging
-    package_apply_logic: *Occupied_only
+    package_apply_logic: *Occupied_Only
     options:
       - *EV_Ownership_Yes
-      - *L2_Charger
-      - option: Electric Vehicle Efficiency Increase|15%
+      - *EV_L2_Charger
+      - &EV_15Percent_Efficiency
+        option: Electric Vehicle Efficiency Increase|15%
+
+  # Demand Flexibility
+  - upgrade_name: Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
+    package_apply_logic: *Occupied_Only
+    options:
+      - *EV_Ownership_Yes
+      - *EV_L2_Charger
+      - &Demand_Flexibility_Electric_Vehicle
+        option: Demand Flexibility Electric Vehicle|Enabled
+      - *Demand_Flexibility_30min_Random_Shift
+
+  - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
+    package_apply_logic: *Occupied_Only
+    options:
+      - *EV_Ownership_Yes
+      - *EV_L2_Charger
+      - *EV_15Percent_Efficiency
+      - *Demand_Flexibility_Electric_Vehicle
+      - *Demand_Flexibility_30min_Random_Shift
+
