@@ -7,6 +7,23 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: standard data release
+        :pullreq: 1372
+
+        **Date**: 2025-04-30
+
+        Title:
+        Two Speed and Variable Speed Geothermal Heat Pumps
+
+        Description:
+        Add upgrades to the SDR yml file for single speed, dual speed (w/out light touch, w/light touch, and w/light touch + appliance electrification), and variable speed geothermal heat pumps.
+
+        OpenStudio-HPXML: `pull request 1878 <https://github.com/NREL/OpenStudio-HPXML/pull/1878>`_
+
+        Assignees: Joe Robertson
+
+
+    .. change::
         :tags: workflow, feature, outputs
         :pullreq: 1368
 

@@ -87,8 +87,8 @@ class TestTools < Minitest::Test
     columns = ['report_simulation_output.energy_use_total_m_btu']
 
     results_csvs = Dir[File.join(@buildstock_directory, 'buildstockbatch/project_national/sdr_upgrades_tmy3/results_csvs/results_up*.csv')]
-    assert_equal(2, results_csvs.size)
-    buildstockbatch_path = results_csvs[-1]
+    assert_equal(2, results_csvs.size) # 2 items uploaded from config.yml
+    buildstockbatch_path = results_csvs[-1] # the second item should be "Envelope Only - Light Touch Envelope"
     buildstockbatch = CSV.read(buildstockbatch_path, headers: true)
 
     run_analysis_path = File.join(@buildstock_directory, 'run_analysis/project_national/sdr_upgrades_tmy3/results-EnvelopeOnlyLightTouchEnvelope.csv')
