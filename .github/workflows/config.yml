@@ -211,7 +211,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: buildstockbatch_results_csvs
-          path: |
+          path: | # results_up16.csv should correspond to "Envelope Only - Light Touch Envelope"
             project_national/national_baseline/results_csvs/results_up00.csv
             project_testing/testing_baseline/results_csvs/results_up00.csv
             project_national/sdr_upgrades_tmy3/results_csvs/results_up00.csv
