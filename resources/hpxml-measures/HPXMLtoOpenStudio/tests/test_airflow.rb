@@ -154,7 +154,7 @@ class HPXMLtoOpenStudioAirflowTest < Minitest::Test
 
     # Check infiltration/ventilation program
     program_values = get_ems_values(model.getEnergyManagementSystemPrograms, "#{Constants::ObjectTypeInfiltration} program")
-    assert_in_epsilon(0.1956, program_values['c'].sum, 0.01)
+    assert_in_epsilon(0.1863, program_values['c'].sum, 0.01)
     assert_in_epsilon(0.0573, program_values['Cs'].sum, 0.01)
     assert_in_epsilon(0.1446, program_values['Cw'].sum, 0.01)
   end
@@ -675,8 +675,8 @@ class HPXMLtoOpenStudioAirflowTest < Minitest::Test
 
       # Check ducts program
       program_values = get_ems_values(model.getEnergyManagementSystemSubroutines, 'duct subroutine')
-      assert_in_delta(166.4 * supply_area_multiplier, UnitConversions.convert(program_values['supply_ua'].sum, 'W/K', 'Btu/(hr*F)'), 0.1)
-      assert_in_delta(54.0 * return_area_multiplier, UnitConversions.convert(program_values['return_ua'].sum, 'W/K', 'Btu/(hr*F)'), 0.1)
+      assert_in_delta(124.8 * supply_area_multiplier, UnitConversions.convert(program_values['supply_ua'].sum, 'W/K', 'Btu/(hr*F)'), 0.1)
+      assert_in_delta(40.5 * return_area_multiplier, UnitConversions.convert(program_values['return_ua'].sum, 'W/K', 'Btu/(hr*F)'), 0.1)
     end
   end
 
@@ -687,8 +687,8 @@ class HPXMLtoOpenStudioAirflowTest < Minitest::Test
 
     # Check ducts program
     program_values = get_ems_values(model.getEnergyManagementSystemSubroutines, 'duct subroutine')
-    assert_in_delta(45.76, UnitConversions.convert(program_values['supply_ua'].sum, 'W/K', 'Btu/(hr*F)'), 0.1)
-    assert_in_delta(11.93, UnitConversions.convert(program_values['return_ua'].sum, 'W/K', 'Btu/(hr*F)'), 0.1)
+    assert_in_delta(34.3, UnitConversions.convert(program_values['supply_ua'].sum, 'W/K', 'Btu/(hr*F)'), 0.1)
+    assert_in_delta(8.9, UnitConversions.convert(program_values['return_ua'].sum, 'W/K', 'Btu/(hr*F)'), 0.1)
   end
 
   def test_infiltration_compartmentalization_area

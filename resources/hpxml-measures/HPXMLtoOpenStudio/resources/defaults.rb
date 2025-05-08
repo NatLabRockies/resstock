@@ -2511,8 +2511,8 @@ module Defaults
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
   def self.apply_hvac_distribution(hpxml_bldg)
-    ncfl_ag = hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade
     ncfl = hpxml_bldg.building_construction.number_of_conditioned_floors
+    ncfl_ag = hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade
 
     hpxml_bldg.hvac_distributions.each do |hvac_distribution|
       next unless hvac_distribution.distribution_system_type == HPXML::HVACDistributionTypeAir
@@ -2534,8 +2534,8 @@ module Defaults
         # Default both duct location(s) and duct surface area(s)
         [supply_ducts, return_ducts].each do |ducts|
           ducts.each do |duct|
-            primary_duct_area, secondary_duct_area = get_duct_surface_area(duct.duct_type, ncfl_ag, cfa_served, n_returns).map { |area| area / ducts.size }
             primary_duct_location, secondary_duct_location = get_duct_locations(hpxml_bldg)
+            primary_duct_area, secondary_duct_area = get_duct_surface_area(duct.duct_type, primary_duct_location, ncfl, ncfl_ag, cfa_served, n_returns).map { |area| area / ducts.size }
             if primary_duct_location.nil? # If a home doesn't have any unconditioned spaces, place all ducts in conditioned space.
               duct.duct_surface_area = primary_duct_area + secondary_duct_area
               duct.duct_surface_area_isdefaulted = true
@@ -2548,9 +2548,10 @@ module Defaults
               duct.duct_location_isdefaulted = true
 
               if secondary_duct_area > 0
+                ins_r = (secondary_duct_location == HPXML::LocationConditionedSpace ? 0.0 : duct.duct_insulation_r_value)
                 hvac_distribution.ducts.add(id: "#{duct.id}_secondary",
                                             duct_type: duct.duct_type,
-                                            duct_insulation_r_value: duct.duct_insulation_r_value,
+                                            duct_insulation_r_value: ins_r,
                                             duct_location: secondary_duct_location,
                                             duct_location_isdefaulted: true,
                                             duct_surface_area: secondary_duct_area,
@@ -2563,7 +2564,7 @@ module Defaults
         # Default duct surface area(s)
         [supply_ducts, return_ducts].each do |ducts|
           ducts.each do |duct|
-            total_duct_area = get_duct_surface_area(duct.duct_type, ncfl_ag, cfa_served, n_returns).sum()
+            total_duct_area = get_duct_surface_area(duct.duct_type, duct.duct_location, ncfl, ncfl_ag, cfa_served, n_returns).sum()
             duct.duct_surface_area = total_duct_area * duct.duct_fraction_area
             duct.duct_surface_area_isdefaulted = true
           end
@@ -5896,38 +5897,59 @@ module Defaults
   # Gets the default supply/return surface areas for a duct.
   #
   # @param duct_type [String] Whether the duct is on the supply or return side (HPXML::DuctTypeXXX)
+  # @param duct_location [String] Location of the ducts (HPXML::LocationXXX)
+  # @param ncfl [Double] Number of conditioned floors in the dwelling unit
   # @param ncfl_ag [Double] Number of conditioned floors above grade in the dwelling unit
   # @param cfa_served [Double] Dwelling unit conditioned floor area served by this distribution system (ft^2)
   # @param n_returns [Integer] Number of return registers
   # @return [Array<Double, Double>] Primary/secondary duct surface areas (ft^2)
-  def self.get_duct_surface_area(duct_type, ncfl_ag, cfa_served, n_returns)
+  def self.get_duct_surface_area(duct_type, duct_location, ncfl, ncfl_ag, cfa_served, n_returns)
     # Equations based on ASHRAE 152
     # https://www.energy.gov/eere/buildings/downloads/ashrae-standard-152-spreadsheet
 
-    # Fraction of primary ducts (ducts outside conditioned space)
-    f_out = get_duct_outside_fraction(ncfl_ag)
+    # Fraction of ducts in primary location (ducts outside secondary location, i.e., conditioned space)
+    f_primary = get_duct_primary_fraction(duct_location, ncfl, ncfl_ag)
 
     if duct_type == HPXML::DuctTypeSupply
-      primary_duct_area = 0.27 * cfa_served * f_out
-      secondary_duct_area = 0.27 * cfa_served * (1.0 - f_out)
+      primary_duct_area = 0.27 * cfa_served * f_primary
+      secondary_duct_area = 0.27 * cfa_served * (1.0 - f_primary)
     elsif duct_type == HPXML::DuctTypeReturn
       b_r = (n_returns < 6) ? (0.05 * n_returns) : 0.25
-      primary_duct_area = b_r * cfa_served * f_out
-      secondary_duct_area = b_r * cfa_served * (1.0 - f_out)
+      primary_duct_area = b_r * cfa_served * f_primary
+      secondary_duct_area = b_r * cfa_served * (1.0 - f_primary)
     end
 
     return primary_duct_area, secondary_duct_area
   end
 
-  # Gets the default fraction of duct surface area outside conditioned space.
+  # Gets the default fraction of duct surface area in the primary location.
   #
+  # @param duct_location [String] Location of the ducts (HPXML::LocationXXX)
+  # @param ncfl [Double] Number of conditioned floors in the dwelling unit
   # @param ncfl_ag [Double] Number of conditioned floors above grade in the dwelling unit
-  # @return [Double] Fraction outside conditioned space
-  def self.get_duct_outside_fraction(ncfl_ag)
+  # @return [Double] Fraction in primary location
+  def self.get_duct_primary_fraction(duct_location, ncfl, ncfl_ag)
     # Equation based on ASHRAE 152
     # https://www.energy.gov/eere/buildings/downloads/ashrae-standard-152-spreadsheet
-    f_out = (ncfl_ag <= 1) ? 1.0 : 0.75
-    return f_out
+
+    # Example logic:
+    #
+    # =========================    ==============    =========
+    # Bldg Type                    Duct Location     f_primary
+    # =========================    ==============    =========
+    # 1-story, crawl, attic        crawl or attic    1.0
+    # 1-story, cond bsmt, attic    cond bsmt         1.0
+    # 1-story, cond bsmt, attic    attic             0.75 (some ducts must run from attic to cond bsmt)
+    # 2-story, crawl, attic	       crawl        	   0.75 (some ducts must run from crawl to 2nd story)
+    # 2-story, crawl, attic	       attic        	   0.75 (some ducts must run from attic to 1st story)
+    # =========================    ==============    =========
+
+    if [HPXML::LocationAtticUnvented, HPXML::LocationAtticVented].include? duct_location
+      f_primary = (ncfl <= 1) ? 1.0 : 0.75
+    else
+      f_primary = (ncfl_ag <= 1) ? 1.0 : 0.75
+    end
+    return f_primary
   end
 
   # Gets the default pump power for a closed loop ground-source heat pump.

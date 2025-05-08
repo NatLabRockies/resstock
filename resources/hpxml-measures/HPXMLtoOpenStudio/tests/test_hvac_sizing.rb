@@ -1888,7 +1888,22 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
     assert_equal(num_expected_reports, num_reports)
   end
 
-  def _test_measure(args_hash)
+  def test_really_bad_ducts
+    args_hash = {}
+    args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
+
+    hpxml, hpxml_bldg = _create_hpxml('base.xml')
+    hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
+      duct.duct_fraction_area = nil
+      duct.duct_surface_area = 1000.0
+    end
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+
+    # Check there are no duct iteration warnings
+    _test_measure(args_hash, expect_num_warnings: 0)
+  end
+
+  def _test_measure(args_hash, expect_num_warnings: nil)
     # create an instance of the measure
     measure = HPXMLtoOpenStudio.new
 
@@ -1918,6 +1933,10 @@ class HPXMLtoOpenStudioHVACSizingTest < Minitest::Test
 
     # assert that it ran correctly
     assert_equal('Success', result.value.valueName)
+
+    if not expect_num_warnings.nil?
+      assert_equal(expect_num_warnings, runner.result.stepWarnings.size)
+    end
 
     hpxml = HPXML.new(hpxml_path: File.join(File.dirname(__FILE__), 'in.xml'))
 

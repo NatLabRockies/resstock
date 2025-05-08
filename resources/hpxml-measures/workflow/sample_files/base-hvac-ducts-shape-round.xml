@@ -379,7 +379,7 @@
                   <DuctType>supply</DuctType>
                   <DuctInsulationRValue>4.0</DuctInsulationRValue>
                   <DuctLocation>attic - unvented</DuctLocation>
-                  <FractionDuctArea>1.0</FractionDuctArea>
+                  <FractionDuctArea>0.75</FractionDuctArea>
                   <DuctShape>round</DuctShape>
                 </Ducts>
                 <Ducts>
@@ -387,8 +387,22 @@
                   <DuctType>return</DuctType>
                   <DuctInsulationRValue>4.0</DuctInsulationRValue>
                   <DuctLocation>attic - unvented</DuctLocation>
-                  <FractionDuctArea>1.0</FractionDuctArea>
+                  <FractionDuctArea>0.75</FractionDuctArea>
                   <DuctShape>round</DuctShape>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts3'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <FractionDuctArea>0.25</FractionDuctArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts4'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <FractionDuctArea>0.25</FractionDuctArea>
                 </Ducts>
               </AirDistribution>
             </DistributionSystemType>

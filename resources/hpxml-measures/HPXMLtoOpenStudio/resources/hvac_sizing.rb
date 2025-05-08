@@ -60,7 +60,7 @@ module HVACSizing
       hvac_loads = all_hvac_loads[hvac_system]
       apply_hvac_air_temperatures(mj, hvac_loads, hvac_heating, hvac_cooling)
       apply_hvac_fractions_load_served(hvac_loads, hvac_heating, hvac_cooling, hpxml_bldg, hvac_systems, zone)
-      apply_hvac_duct_loads(mj, zone, hvac_loads, all_zone_loads[zone], all_space_loads, hvac_heating, hvac_cooling, hpxml_bldg, weather)
+      apply_hvac_duct_loads(mj, runner, zone, hvac_loads, all_zone_loads[zone], all_space_loads, hvac_heating, hvac_cooling, hpxml_bldg, weather)
       apply_hvac_cfis_loads(mj, hvac_loads, all_zone_loads[zone], hvac_heating, hvac_cooling, hpxml_bldg)
       apply_hvac_blower_heat_load(hvac_loads, all_zone_loads[zone], hvac_heating, hvac_cooling)
       apply_hvac_piping_load(hvac_loads, all_zone_loads[zone], hvac_heating)
@@ -1830,6 +1830,7 @@ module HVACSizing
   # Applies duct loads to the HVAC/zone/space loads as appropriate.
   #
   # @param mj [MJValues] Object with a collection of misc Manual J values
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param zone [HPXML::Zone] The current zone of interest
   # @param hvac_loads [DesignLoadValues] Object with design loads for the current HPXML HVAC system
   # @param zone_loads [DesignLoadValues] Object with design loads for the current HPXML::Zone
@@ -1839,7 +1840,7 @@ module HVACSizing
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param weather [WeatherFile] Weather object containing EPW information
   # @return [nil]
-  def self.apply_hvac_duct_loads(mj, zone, hvac_loads, zone_loads, all_space_loads, hvac_heating, hvac_cooling, hpxml_bldg, weather)
+  def self.apply_hvac_duct_loads(mj, runner, zone, hvac_loads, zone_loads, all_space_loads, hvac_heating, hvac_cooling, hpxml_bldg, weather)
     has_heat_duct_losses = (not (hvac_heating.nil? || (hvac_loads.Heat_Tot <= 0) || hvac_heating.distribution_system.nil? || hvac_heating.distribution_system.ducts.empty?))
     has_cool_duct_losses = (not (hvac_cooling.nil? || (hvac_loads.Cool_Sens <= 0) || hvac_cooling.distribution_system.nil? || hvac_cooling.distribution_system.ducts.empty?))
 
@@ -1868,6 +1869,8 @@ module HVACSizing
     else
       # Use ASHRAE 152 distribution system efficiency (DSE) calculations
 
+      max_iter = 50
+
       # Heating
       if has_heat_duct_losses
         hvac_heating_ap = hvac_heating.additional_properties
@@ -1879,26 +1882,34 @@ module HVACSizing
 
         # Initialize for the iteration
         delta = 1
+        de = nil
         heat_load_next = init_heat_load
 
-        for _iter in 0..19
-          break if delta.abs <= 0.001
+        for i in 1..max_iter
+          break if delta.abs <= 0.001 # 0.1%
 
-          heat_load_prev = heat_load_next
-
-          # Calculate the new heating air flow rate
+          # Calculate the new heating airflow rate
           heating_delta_t = hvac_heating_ap.supply_air_temp - mj.heat_setpoint
           heat_cfm = calc_airflow_rate_manual_s(mj, heat_load_next, heating_delta_t)
 
+          # Calculate the new duct leakage (can be a percentage, in which case it's dependent on airflow rate)
           q_s, q_r = calc_duct_leakages_cfm25(distribution_system, heat_cfm)
 
+          # Calculate the delivery effectiveness
+          de_prev = de
           de = calc_delivery_effectiveness_heating(mj, q_s, q_r, heat_cfm, heat_load_next, t_amb_s, t_amb_r, a_s, a_r, mj.heat_setpoint, f_regain_s, f_regain_r, rvalue_s, rvalue_r)
+          de = (de + de_prev) / 2.0 unless de_prev.nil? # Force towards convergence, see https://github.com/NREL/OpenStudio-HPXML/pull/2004
 
-          # Calculate the increase in heating load due to ducts (Approach: DE = Qload/Qequip -> Qducts = Qequip-Qload)
+          # Calculate the increase in heating load due to ducts
+          heat_load_prev = heat_load_next
           heat_load_next = init_heat_load / de
 
           # Calculate the change since the last iteration
           delta = (heat_load_next - heat_load_prev) / heat_load_prev
+
+          if i == max_iter && delta.abs > 0.05 # 5%
+            runner.registerWarning('Heating duct design load calculation did not converge.')
+          end
         end
 
         ducts_heat_load = heat_load_next - init_heat_load
@@ -1919,35 +1930,46 @@ module HVACSizing
 
         # Initialize for the iteration
         delta = 1
+        de = nil
         cool_load_tot_next = init_cool_load_sens + init_cool_load_lat
 
         cooling_delta_t = mj.cool_setpoint - hvac_cooling_ap.leaving_air_temp
         cool_cfm = calc_airflow_rate_manual_s(mj, init_cool_load_sens, cooling_delta_t)
         _q_s, q_r = calc_duct_leakages_cfm25(distribution_system, cool_cfm)
 
-        for _iter in 1..50
-          break if delta.abs <= 0.001
-
-          cool_load_tot_prev = cool_load_tot_next
+        for i in 1..max_iter
+          break if delta.abs <= 0.001 # 0.1%
 
           cool_load_lat, cool_load_sens = calculate_sensible_latent_split(mj, q_r, cool_load_tot_next, init_cool_load_lat)
           cool_load_tot = cool_load_lat + cool_load_sens
 
-          # Calculate the new cooling air flow rate
+          # Calculate the new cooling airflow rate
           cool_cfm = calc_airflow_rate_manual_s(mj, cool_load_sens, cooling_delta_t)
 
+          # Calculate the new duct leakage (can be a percentage, in which case it's dependent on airflow rate)
           q_s, q_r = calc_duct_leakages_cfm25(distribution_system, cool_cfm)
 
+          # Calculate the delivery effectiveness
+          de_prev = de
           de = calc_delivery_effectiveness_cooling(mj, q_s, q_r, hvac_cooling_ap.leaving_air_temp, cool_cfm, cool_load_sens, cool_load_tot, t_amb_s, t_amb_r, a_s, a_r, mj.cool_setpoint, f_regain_s, f_regain_r, h_r, rvalue_s, rvalue_r)
+          de = (de + de_prev) / 2.0 unless de_prev.nil? # Force towards convergence, see https://github.com/NREL/OpenStudio-HPXML/pull/2004
 
-          cool_load_tot_next = (init_cool_load_sens + init_cool_load_lat) / de
+          # Calculate the increase in cooling load due to ducts
+          cool_load_tot_prev = cool_load_tot_next
+          cool_load_sens_next = init_cool_load_sens / de
+          cool_load_lat_next = init_cool_load_lat / de
+          cool_load_tot_next = cool_load_sens_next + cool_load_lat_next
 
           # Calculate the change since the last iteration
           delta = (cool_load_tot_next - cool_load_tot_prev) / cool_load_tot_prev
+
+          if i == max_iter && delta.abs > 0.05 # 5%
+            runner.registerWarning('Cooling duct design load calculation did not converge.')
+          end
         end
 
-        ducts_cool_load_sens = cool_load_sens - init_cool_load_sens
-        ducts_cool_load_lat = cool_load_lat - init_cool_load_lat
+        ducts_cool_load_sens = cool_load_sens_next - init_cool_load_sens
+        ducts_cool_load_lat = cool_load_lat_next - init_cool_load_lat
       end
     end
 

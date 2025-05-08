@@ -449,18 +449,19 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                           conditioned_floor_area_served: hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served)
         hpxml_bldg.hvac_distributions[-1].duct_leakage_measurements << hpxml_bldg.hvac_distributions[0].duct_leakage_measurements[0].dup
         hpxml_bldg.hvac_distributions[-1].duct_leakage_measurements << hpxml_bldg.hvac_distributions[0].duct_leakage_measurements[1].dup
-        hpxml_bldg.hvac_distributions[-1].ducts << hpxml_bldg.hvac_distributions[0].ducts[0].dup
-        hpxml_bldg.hvac_distributions[-1].ducts << hpxml_bldg.hvac_distributions[0].ducts[1].dup
-        hpxml_bldg.hvac_distributions[-1].ducts[0].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + 1}"
-        hpxml_bldg.hvac_distributions[-1].ducts[1].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + 2}"
+        hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
+          hpxml_bldg.hvac_distributions[-1].ducts << duct.dup
+          hpxml_bldg.hvac_distributions[-1].ducts[-1].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + hpxml_bldg.hvac_distributions[1].ducts.size}"
+        end
         hpxml_bldg.heating_systems[-1].distribution_system_idref = hpxml_bldg.hvac_distributions[-1].id
         hpxml_bldg.cooling_systems[-1].distribution_system_idref = hpxml_bldg.hvac_distributions[-1].id
       end
       hpxml_bldg.hvac_distributions.each do |hvac_distribution|
-        hvac_distribution.ducts[0].duct_fraction_area = nil
-        hvac_distribution.ducts[1].duct_fraction_area = nil
-        hvac_distribution.ducts[0].duct_surface_area = 150.0 / hpxml_bldg.hvac_distributions.size
-        hvac_distribution.ducts[1].duct_surface_area = 50.0 / hpxml_bldg.hvac_distributions.size
+        hvac_distribution.ducts.each do |duct|
+          duct.duct_fraction_area = nil
+          duct.duct_surface_area = (duct.duct_type == HPXML::DuctTypeSupply ? 150.0 : 50.0)
+          duct.duct_surface_area /= hpxml_bldg.hvac_distributions.size
+        end
       end
 
       # Add spaces
@@ -1900,10 +1901,10 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                         conditioned_floor_area_served: hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served)
       hpxml_bldg.hvac_distributions[-1].duct_leakage_measurements << hpxml_bldg.hvac_distributions[0].duct_leakage_measurements[0].dup
       hpxml_bldg.hvac_distributions[-1].duct_leakage_measurements << hpxml_bldg.hvac_distributions[0].duct_leakage_measurements[1].dup
-      hpxml_bldg.hvac_distributions[-1].ducts << hpxml_bldg.hvac_distributions[0].ducts[0].dup
-      hpxml_bldg.hvac_distributions[-1].ducts << hpxml_bldg.hvac_distributions[0].ducts[1].dup
-      hpxml_bldg.hvac_distributions[-1].ducts[0].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + 1}"
-      hpxml_bldg.hvac_distributions[-1].ducts[1].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + 2}"
+      hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
+        hpxml_bldg.hvac_distributions[-1].ducts << duct.dup
+        hpxml_bldg.hvac_distributions[-1].ducts[-1].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + hpxml_bldg.hvac_distributions[1].ducts.size}"
+      end
       hpxml_bldg.heat_pumps[-1].distribution_system_idref = hpxml_bldg.hvac_distributions[-1].id
     elsif ['base-mechvent-multiple.xml',
            'base-bldgtype-mf-unit-shared-mechvent-multiple.xml'].include? hpxml_file
@@ -1914,10 +1915,10 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                         conditioned_floor_area_served: hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served)
       hpxml_bldg.hvac_distributions[1].duct_leakage_measurements << hpxml_bldg.hvac_distributions[0].duct_leakage_measurements[0].dup
       hpxml_bldg.hvac_distributions[1].duct_leakage_measurements << hpxml_bldg.hvac_distributions[0].duct_leakage_measurements[1].dup
-      hpxml_bldg.hvac_distributions[1].ducts << hpxml_bldg.hvac_distributions[0].ducts[0].dup
-      hpxml_bldg.hvac_distributions[1].ducts << hpxml_bldg.hvac_distributions[0].ducts[1].dup
-      hpxml_bldg.hvac_distributions[1].ducts[0].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + 1}"
-      hpxml_bldg.hvac_distributions[1].ducts[1].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + 2}"
+      hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
+        hpxml_bldg.hvac_distributions[1].ducts << duct.dup
+        hpxml_bldg.hvac_distributions[1].ducts[-1].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + hpxml_bldg.hvac_distributions[1].ducts.size}"
+      end
       hpxml_bldg.heating_systems[0].heating_capacity /= 2.0
       hpxml_bldg.heating_systems[0].fraction_heat_load_served /= 2.0
       hpxml_bldg.heating_systems[0].primary_system = false
@@ -1965,10 +1966,12 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
       hpxml_bldg.hvac_distributions[0].air_type = HPXML::AirTypeRegularVelocity
       hpxml_bldg.hvac_distributions[0].duct_leakage_measurements << hpxml_bldg.hvac_distributions[1].duct_leakage_measurements[0].dup
       hpxml_bldg.hvac_distributions[0].duct_leakage_measurements << hpxml_bldg.hvac_distributions[1].duct_leakage_measurements[1].dup
-      hpxml_bldg.hvac_distributions[0].ducts << hpxml_bldg.hvac_distributions[1].ducts[0].dup
-      hpxml_bldg.hvac_distributions[0].ducts << hpxml_bldg.hvac_distributions[1].ducts[1].dup
-      hpxml_bldg.hvac_distributions[1].ducts[0].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + 1}"
-      hpxml_bldg.hvac_distributions[1].ducts[1].id = "Ducts#{hpxml_bldg.hvac_distributions[0].ducts.size + 2}"
+      hpxml_bldg.hvac_distributions[1].ducts.each do |duct|
+        hpxml_bldg.hvac_distributions[0].ducts << duct.dup
+      end
+      (hpxml_bldg.hvac_distributions[0].ducts + hpxml_bldg.hvac_distributions[1].ducts).each_with_index do |duct, i|
+        duct.id = "Ducts#{i + 1}"
+      end
       hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = hpxml_bldg.building_construction.conditioned_floor_area
     end
     if ['base-hvac-ducts-area-multipliers.xml'].include? hpxml_file

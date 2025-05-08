@@ -1003,10 +1003,8 @@
     "ducts_return_leakage_to_outside_value": 27,
     "ducts_supply_location": "attic - unvented",
     "ducts_supply_insulation_r": 4,
-    "ducts_supply_surface_area_fraction": 1.0,
     "ducts_return_location": "attic - unvented",
     "ducts_return_insulation_r": 4,
-    "ducts_return_surface_area_fraction": 1.0,
     "mech_vent_fan_type": "none",
     "mech_vent_recovery_efficiency_type": "Unadjusted",
     "mech_vent_total_recovery_efficiency": 0,
@@ -1987,8 +1985,6 @@
     "window_area_right": 144,
     "heating_system_heating_capacity": 48000,
     "cooling_system_cooling_capacity": 36000,
-    "ducts_supply_surface_area_fraction": 0.75,
-    "ducts_return_surface_area_fraction": 0.75,
     "ducts_supply_leakage_to_outside_value": 121.5,
     "ducts_return_leakage_to_outside_value": 40.5,
     "misc_plug_loads_other_annual_kwh": 3685.5
@@ -2515,7 +2511,9 @@
     "heat_pump_cooling_capacity": 24000
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-furnace.xml": {
-    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml"
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml",
+    "ducts_supply_leakage_to_outside_value": 40.5,
+    "ducts_return_leakage_to_outside_value": 13.5
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-furnace-autosize-factor.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-furnace.xml",
@@ -2537,6 +2535,8 @@
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-two-systems.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
+    "ducts_supply_leakage_to_outside_value": 40.5,
+    "ducts_return_leakage_to_outside_value": 13.5,
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-10-mins.xml": {
@@ -2734,9 +2734,7 @@
     "heat_pump_compressor_lockout_temp": 30,
     "heat_pump_backup_fuel": "natural gas",
     "heat_pump_backup_heating_efficiency": 0.95,
-    "heat_pump_backup_heating_lockout_temp": 30,
-    "ducts_supply_surface_area_fraction": null,
-    "ducts_return_surface_area_fraction": null
+    "heat_pump_backup_heating_lockout_temp": 30
   },
   "sample_files/base-hvac-ducts-leakage-cfm50.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2753,9 +2751,7 @@
   "sample_files/base-hvac-ducts-areas.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "ducts_supply_surface_area": 150.0,
-    "ducts_supply_surface_area_fraction": null,
-    "ducts_return_surface_area": 50.0,
-    "ducts_return_surface_area_fraction": null
+    "ducts_return_surface_area": 50.0
   },
   "sample_files/base-hvac-ducts-area-multipliers.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -2773,9 +2769,7 @@
     "heating_system_2_heating_efficiency": 1.0,
     "heating_system_2_fraction_heat_load_served": 0.25,
     "ducts_supply_location": null,
-    "ducts_supply_surface_area_fraction": null,
     "ducts_return_location": null,
-    "ducts_return_surface_area_fraction": null,
     "ducts_supply_leakage_to_outside_value": 60.75,
     "ducts_return_leakage_to_outside_value": 20.25
   },
@@ -3093,9 +3087,7 @@
     "ducts_supply_insulation_r": 0,
     "ducts_return_insulation_r": 0,
     "ducts_supply_surface_area": 30,
-    "ducts_return_surface_area": 10,
-    "ducts_supply_surface_area_fraction": null,
-    "ducts_return_surface_area_fraction": null
+    "ducts_return_surface_area": 10
   },
   "sample_files/base-hvac-mini-split-air-conditioner-only-ductless.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-air-conditioner-only-ducted.xml",
@@ -3148,9 +3140,7 @@
     "ducts_supply_insulation_r": 0,
     "ducts_return_insulation_r": 0,
     "ducts_supply_surface_area": 30,
-    "ducts_return_surface_area": 10,
-    "ducts_supply_surface_area_fraction": null,
-    "ducts_return_surface_area_fraction": null
+    "ducts_return_surface_area": 10
   },
   "sample_files/base-hvac-mini-split-heat-pump-ducted-detailed-performance.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ducted.xml",
@@ -3288,18 +3278,14 @@
     "ducts_supply_location": "attic - unvented",
     "ducts_supply_insulation_r": 4,
     "ducts_supply_surface_area": null,
-    "ducts_supply_surface_area_fraction": 1.0,
     "ducts_return_location": "attic - unvented",
     "ducts_return_insulation_r": 4,
-    "ducts_return_surface_area": null,
-    "ducts_return_surface_area_fraction": 1.0
+    "ducts_return_surface_area": null
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace-ducts-defaults.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace.xml",
     "ducts_supply_location": null,
-    "ducts_supply_surface_area_fraction": null,
-    "ducts_return_location": null,
-    "ducts_return_surface_area_fraction": null
+    "ducts_return_location": null
   },
   "sample_files/base-hvac-multiple.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -3710,7 +3696,9 @@
     "mech_vent_sensible_recovery_efficiency": 0.79
   },
   "sample_files/base-mechvent-multiple.xml": {
-    "parent_hpxml": "sample_files/base-mechvent-bath-kitchen-fans.xml"
+    "parent_hpxml": "sample_files/base-mechvent-bath-kitchen-fans.xml",
+    "ducts_supply_leakage_to_outside_value": 40.5,
+    "ducts_return_leakage_to_outside_value": 13.5
   },
   "sample_files/base-mechvent-supply.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -3797,9 +3785,7 @@
     "hvac_control_cooling_weekday_setpoint": null,
     "hvac_control_cooling_weekend_setpoint": null,
     "ducts_supply_location": null,
-    "ducts_supply_surface_area_fraction": null,
     "ducts_return_location": null,
-    "ducts_return_surface_area_fraction": null,
     "ducts_number_of_return_registers": 2,
     "mech_vent_fan_type": "exhaust only",
     "mech_vent_total_recovery_efficiency": 0.48,

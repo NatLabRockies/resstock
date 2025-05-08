@@ -37,7 +37,9 @@ __Bugfixes__
 - Fixes whole house fans so that they are unavailable during vacancies.
 - Fixes error if there's a vented attic with zero roof pitch.
 - Fixes tank loss coefficient when TankModelType=stratified for a conventional storage water heater.
+- Fixes possibility of incorrect design duct load for really bad ducts (e.g., ducts with high surface area in a cold attic).
 - Adds error-checking to ensure TankModelType=stratified is not used with a non-electric water heater.
+- BuildResidentialHPXML measure: Improves default duct areas/locations for 1-story buildings with a conditioned basement and ducts located in the attic.
 - BuildResidentialHPXML measure: Fixes error when specifying a combi boiler as the water heater type and a *shared* boiler as the heating system type.
 - BuildResidentialScheduleFile measure: Fixes out-of-sync shifting of occupancy and end use schedule resulting in activities even when there is no occupancy.
 - BuildResidentialScheduleFile measure: Fixes a small bug in sink schedule generation resulting in more concentrated schedule.
