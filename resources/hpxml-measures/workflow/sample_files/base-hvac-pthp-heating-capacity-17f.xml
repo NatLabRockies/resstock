@@ -327,7 +327,6 @@
               <HeatingCapacity>36000.0</HeatingCapacity>
               <HeatingCapacity17F>21600.0</HeatingCapacity17F>
               <CoolingCapacity>36000.0</CoolingCapacity>
-              <CoolingSensibleHeatFraction>0.65</CoolingSensibleHeatFraction>
               <BackupType>integrated</BackupType>
               <BackupSystemFuel>electricity</BackupSystemFuel>
               <BackupAnnualHeatingEfficiency>

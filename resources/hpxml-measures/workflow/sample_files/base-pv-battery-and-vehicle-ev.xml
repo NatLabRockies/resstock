@@ -349,7 +349,6 @@
                 <Units>SEER</Units>
                 <Value>13.0</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.73</SensibleHeatFraction>
             </CoolingSystem>
           </HVACPlant>
           <HVACControl>
@@ -487,7 +486,6 @@
         <ElectricVehicleChargers>
           <ElectricVehicleCharger>
             <SystemIdentifier id='EVCharger1'/>
-            <Location>outside</Location>
           </ElectricVehicleCharger>
         </ElectricVehicleChargers>
       </Systems>

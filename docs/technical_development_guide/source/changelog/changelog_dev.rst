@@ -2,12 +2,45 @@
 Development Changelog
 =====================
 
-
 .. changelog::
     :version: v3.5.0
     :released: pending
 
-    
+    .. change::
+        :tags: standard data release
+        :pullreq: 1372
+
+        **Date**: 2025-04-30
+
+        Title:
+        Two Speed and Variable Speed Geothermal Heat Pumps
+
+        Description:
+        Add upgrades to the SDR yml file for single speed, dual speed (w/out light touch, w/light touch, and w/light touch + appliance electrification), and variable speed geothermal heat pumps.
+
+        OpenStudio-HPXML: `pull request 1878 <https://github.com/NREL/OpenStudio-HPXML/pull/1878>`_
+
+        Assignees: Joe Robertson
+
+
+    .. change::
+        :tags: workflow, feature, outputs
+        :pullreq: 1368
+
+        **Date**: 2025-04-30
+
+        Title:
+        Latest OS-HPXML
+
+        Description:
+        Make EV charging/discharging unavailable during vacancy periods.
+        Introduce new argument for including detailed zone conditions timeseries outputs (i.e., temperatures, humidities).
+
+        OpenStudio-HPXML: `pull request 1967 <https://github.com/NREL/OpenStudio-HPXML/pull/1967>`_, `pull request 1982 <https://github.com/NREL/OpenStudio-HPXML/pull/1982>`_
+
+        Assignees: Joe Robertson
+
+
     .. change::
         :tags: feature
         :pullreq: 1384
@@ -33,7 +66,7 @@ Development Changelog
         Update Hawaii PV 2023
 
         Description:
-        Update PV data from EIA Form 861 2018 to 2023 to have latest information
+        Update PV data from EIA Form 861 2018 to 2023 to have latest information.
 
         Assignees: Janet Reyna
 
@@ -48,7 +81,7 @@ Development Changelog
         Hawaii cooling saturation
 
         Description:
-        Remove fallback rules from Hawaii and to match technology saturation from RECS2020
+        Remove fallback rules from Hawaii and to match technology saturation from RECS2020.
 
         Assignees: Janet Reyna
 
@@ -63,9 +96,25 @@ Development Changelog
         Prevent ducted secondary heating when primary heating is ducted
 
         Description:
-        OS-HPXML disallows multiple heating systems on a single distribution system and ResStock is not set up to have multiple distribution systems. Disallowing ducted secondary heating when primary heating is ducted will prevent this error.
+        OS-HPXML disallows multiple heating systems on a single distribution system and ResStock is not set up to have multiple distribution systems.
+        Disallowing ducted secondary heating when primary heating is ducted will prevent this error.
 
         Assignees: Yingli Lou, Lixi Liu, Anthony Fontanini
+
+
+    .. change::
+        :tags: standard data release
+        :pullreq: 1369
+
+        **Date**: 2025-04-18
+
+        Title:
+        Add Electric Vehicle Demand Flexibility Upgrades
+
+        Description:
+        Add Electric Vehicle load flexibility upgrade measures to the Standard Data Release project file.
+
+        Assignees: Rajendra Adhikari, Andrew Speake, Anthony Fontanini
 
 
     .. change::
@@ -93,7 +142,10 @@ Development Changelog
         Refrigeration correction factors
 
         Description:
-        Assign state level correction factors for freezer and secondary refrigeration to account for the fact that homes can have more than 1 freezer and 2 refrigerators. This also corrects the freezer usage, which was previously assigned to match the national saturation of freezers.
+        Assign state level correction factors for freezer and secondary refrigeration to account for the fact that homes can have more than 1 freezer and 2 refrigerators.
+        This also corrects the freezer usage, which was previously assigned to match the national saturation of freezers.
+
+        resstock-estimation: `pull request 447 <https://github.com/NREL/resstock-estimation/pull/447>`_
 
         Assignees: Lixi Liu, Anthony Fontanini
 
@@ -108,7 +160,7 @@ Development Changelog
         Update HVAC Cooling Partial Space Conditioning for Hawaii
 
         Description:
-        Update of HVAC Cooling Partial Space Conditioning.tsv to separate Hawaii and Miami and to allow for more partial space conditioning in Hawai
+        Update of HVAC Cooling Partial Space Conditioning.tsv to separate Hawaii and Miami and to allow for more partial space conditioning in Hawaii.
 
         Assignees: Janet Reyna
 
@@ -131,16 +183,34 @@ Development Changelog
     .. change::
         :tags: characteristics, documentation
         :pullreq: 1374
-        
+
         **Date**: 2025-04-05
-        
+
         Title:
         Differentiate Hawaii in IECC Climate Zone 1A
-        
+
         Description:
-        Split out HI and FL in Climate Zone 1A to support Hawaii differentiation.
-        
+        Split out Hawaii and Florida in Climate Zone 1A to support Hawaii differentiation.
+
+        resstock-estimation 
+
         Assignees: Janet Reyna
+
+        
+    .. change::
+        :tags: standard data release, documentation, outputs, feature
+        :pullreq: 1259
+
+        **Date**: 2025-04-04
+
+        Title:
+        HVAC Load Flexibility
+
+        Description:
+        Introduce HVAC load flexibility capability to ResStockArgumentsPostHPXML measure.
+        The measure, when asked for, modifies the heating and cooling setpoint to reduce heating and cooling load during peak period to reduce HVAC energy use.
+
+        Assignees: Rajendra Adhikari
 
 
     .. change::
@@ -153,7 +223,9 @@ Development Changelog
         Remove end-use emissions from SDR YAML outputs
 
         Description:
-        ResStock SDR currently do not publish end-use emissions. ResStock SDR only publish totals and totals by fuel. In an effort to reduce the number of outputs, end-use emissions outputs have been removed from the SDR raw outputs. The end-use emissions can still be called out for testing purposes using.
+        ResStock SDR currently do not publish end-use emissions. ResStock SDR only publish totals and totals by fuel.
+        In an effort to reduce the number of outputs, end-use emissions outputs have been removed from the SDR raw outputs.
+        The end-use emissions can still be called out for testing purposes using.
 
         Assignees: Anthony Fontanini
 
@@ -183,7 +255,8 @@ Development Changelog
         Latest OS-HPXML
 
         Description:
-        All OpenStudio-HPXML changes, no required ResStock changes. Updates to NEEP ASHP sample files, fix possible HVAC sizing error, HPXML class update for attic/foundation types, Speed up weather processing, combi boiler error fix, smooth shcedule EV plugload, shift all schedules in sync and fix occupancy aggregation.
+        All OpenStudio-HPXML changes, no required ResStock changes.
+        Updates to NEEP ASHP sample files, fix possible HVAC sizing error, HPXML class update for attic/foundation types, speed up weather processing, combi boiler error fix, smooth shcedule EV plugload, shift all schedules in sync and fix occupancy aggregation.
 
         Assignees: Joe Robertson
 
@@ -249,9 +322,10 @@ Development Changelog
         Add Hawaii to TSVs
 
         Description:
-        Add Hawaii in all TSVs - includes a change to PV System Size.tsv to give samples to Hawaii in anticipation of adding to Hawaii to Has PV.tsv. Update TRG to include Hawaii.
+        Add Hawaii in all TSVs - includes a change to PV System Size.tsv to give samples to Hawaii in anticipation of adding to Hawaii to Has PV.tsv.
+        Update TRG to include Hawaii.
 
-        resstock-estimation: `pull request 441 <https://github.com/NREL/resstock-estimation/pull/441>`
+        resstock-estimation: `pull request 441 <https://github.com/NREL/resstock-estimation/pull/441>`_
 
         Assignees: Janet Reyna
 
@@ -315,7 +389,8 @@ Development Changelog
         Well pump distribution using AHS
 
         Description:
-        Use 2017-2019 AHS data to create Misc Well Pump distribution (~11% nationally) with respect to geography/urbanity, building type, and foundation type. Previously well pump was randomly assigned via a manually created distribution.
+        Use 2017-2019 AHS data to create Misc Well Pump distribution (~11% nationally) with respect to geography/urbanity, building type, and foundation type.
+        Previously well pump was randomly assigned via a manually created distribution.
 
         resstock-estimation: `pull request 437 <https://github.com/NREL/resstock-estimation/pull/437>`_
 

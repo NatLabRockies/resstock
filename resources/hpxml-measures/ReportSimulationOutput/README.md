@@ -345,6 +345,17 @@ Generates timeseries temperatures for each thermal zone.
 
 <br/>
 
+**Generate Timeseries Output: Zone Conditions**
+
+Generates timeseries temperatures and humidities for each thermal zone.
+
+- **Name:** ``include_timeseries_zone_conditions``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
 **Generate Timeseries Output: Airflows**
 
 Generates timeseries airflows.
@@ -393,7 +404,7 @@ Determines whether timeseries timestamps use the start-of-period or end-of-perio
 
 **Generate Timeseries Output: Number of Decimal Places**
 
-Allows overriding the default number of decimal places for timeseries output.
+Allows overriding the default number of decimal places for timeseries outputs.
 
 - **Name:** ``timeseries_num_decimal_places``
 - **Type:** ``Integer``

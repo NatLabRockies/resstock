@@ -109,6 +109,7 @@ These features may require shorter timesteps, allow more sophisticated simulatio
   ``DefrostModelType``                    string             See [#]_          No        standard  Defrost model type for air source heat pumps [#]_
   ``OnOffThermostatDeadbandTemperature``  double    F        > 0 [#]_          No                  Temperature difference between cut-in and cut-out temperature for HVAC operation [#]_
   ``HeatPumpBackupCapacityIncrement``     double    Btu/hr   > 0 [#]_          No                  Capacity increment of multi-stage heat pump backup systems [#]_
+  ``GroundToAirHeatPumpModelType``        string             See [#]_          No        standard  Ground-to-air heat pump system model type [#]_
   ======================================  ========  =======  ================  ========  ========  ========================================================
 
   .. [#] The default value of 7 is an average value found in the literature when calibrating timeseries EnergyPlus indoor temperatures to field data.
@@ -131,6 +132,10 @@ These features may require shorter timesteps, allow more sophisticated simulatio
   .. [#] HeatPumpBackupCapacityIncrement is currently only allowed with a 1 minute timestep.
   .. [#] HeatPumpBackupCapacityIncrement allows modeling multi-stage electric heat pump backup with time-based staging.
          If not provided, the heat pump backup is modeled with a single stage.
+  .. [#] GroundToAirHeatPumpModelType choices are "standard" and "experimental".
+  .. [#] Use "standard" for standard ground-to-air heat pump modeling.
+         Use "experimental" for an improved model that better accounts for coil staging.
+         The "experimental" ground-to-air heat pump models with desuperheater are not supported yet, see :ref:`water_heater_desuperheater`.
 
 HPXML Emissions Scenarios
 *************************
@@ -370,8 +375,9 @@ You can create an additional column in the CSV file to define another unavailabl
 HPXML Electric Panel Calculations
 *********************************
 
-One or more electric panel calculation types (e.g., 2023 NEC 220.83) can be entered in ``/HPXML/SoftwareInfo/extension/ElectricPanelCalculations/ServiceFeeders``.
+To enable electric panel load calculations, one or more calculation types (e.g., 2023 NEC 220.83) can be entered in ``/HPXML/SoftwareInfo/extension/ElectricPanelCalculations/ServiceFeeders``.
 If not entered, electric panel loads will not be calculated.
+These calculations are currently considered experimental research features.
 
   ====================================  ========  =======  ================  ========  ================  ===========
   Element                               Type      Units    Constraints       Required  Default           Description
@@ -2046,19 +2052,21 @@ If the skylight has a shaft, additional information is entered in ``Skylight``.
 HPXML Doors
 ***********
 
-Each opaque door is entered as a ``/HPXML/Building/BuildingDetails/Enclosure/Doors/Door``.
+Each door with opaque area is entered as a ``/HPXML/Building/BuildingDetails/Enclosure/Doors/Door``.
 
   ============================================  =================  ============  ========================  ========  =========  ==============================
   Element                                       Type               Units         Constraints               Required  Default    Notes
   ============================================  =================  ============  ========================  ========  =========  ==============================
   ``SystemIdentifier``                          id                                                         Yes                  Unique identifier
   ``AttachedToWall``                            idref                            See [#]_                  Yes                  ID of attached wall
-  ``Area``                                      double             ft2           > 0                       Yes                  Total area
+  ``Area``                                      double             ft2           > 0                       Yes                  Total opaque area [#]_
   ``Azimuth`` or ``Orientation``                integer or string  deg           >= 0, <= 359 or See [#]_  No        See [#]_   Direction (clockwise from North)
   ``RValue``                                    double             F-ft2-hr/Btu  > 0                       Yes                  R-value [#]_
   ============================================  =================  ============  ========================  ========  =========  ==============================
 
   .. [#] AttachedToWall must reference a ``Wall`` or ``FoundationWall``.
+  .. [#] Any *glass* area in the door should be modeled using :ref:`windowinputs`.
+         For example, if a 30 ft2 door has 10 ft2 of glass, the door area should be entered as 20 ft2 (with a separate ``Window`` for the remaining 10 ft2).
   .. [#] Orientation choices are "northeast", "east", "southeast", "south", "southwest", "west", "northwest", or "north"
   .. [#] If neither Azimuth nor Orientation nor AttachedToWall azimuth provided, defaults to the azimuth with the largest surface area defined in the HPXML file.
   .. [#] RValue includes interior/exterior air films and presence of any storm door.
@@ -2169,7 +2177,7 @@ Each central furnace is entered as a ``/HPXML/Building/BuildingDetails/Systems/H
   ``HeatingCapacity``                                     double   Btu/hr     >= 0             No        autosized [#]_  Heating output capacity
   ``AnnualHeatingEfficiency[Units="AFUE"]/Value``         double   frac       > 0, <= 1        Yes                       Rated efficiency
   ``FractionHeatLoadServed``                              double   frac       >= 0, <= 1 [#]_  See [#]_                  Fraction of heating load served
-  ``extension/FanPowerWattsPerCFM``                       double   W/cfm      >= 0             No        See [#]_        Blower fan efficiency at maximum fan speed [#]_
+  ``extension/FanPowerWattsPerCFM``                       double   W/cfm      >= 0 [#]_        No        See [#]_        Blower fan efficiency at maximum fan speed
   ``extension/AirflowDefectRatio``                        double   frac       >= -0.9, <= 9    No        0.0             Deviation between design/installed airflows [#]_
   ``extension/HeatingAutosizingFactor``                   double   frac       > 0              No        1.0             Heating autosizing capacity multiplier
   ``extension/HeatingAutosizingLimit``                    double   Btu/hr     > 0              No                        Heating autosizing capacity limit
@@ -2190,8 +2198,8 @@ Each central furnace is entered as a ``/HPXML/Building/BuildingDetails/Systems/H
   .. [#] The sum of all ``FractionHeatLoadServed`` (across all HVAC systems) must be less than or equal to 1.
   .. [#] FractionHeatLoadServed is required unless the heating system is a heat pump backup system (i.e., referenced by a ``HeatPump[BackupType="separate"]/BackupSystem``; see :ref:`hvac_heatpump`), in which case FractionHeatLoadServed is not allowed.
          Heat pump backup will only operate during colder temperatures when the heat pump runs out of heating capacity or is disabled due to a switchover/lockout temperature.
-  .. [#] If FanPowerWattsPerCFM not provided, defaulted to 0 W/cfm if gravity distribution system, else 0.5 W/cfm if AFUE <= 0.9, else 0.375 W/cfm.
   .. [#] If there is a cooling system attached to the DistributionSystem, the heating and cooling systems cannot have different values for FanPowerWattsPerCFM.
+  .. [#] If FanPowerWattsPerCFM not provided, defaulted to 0 W/cfm if gravity distribution system, else 0.5 W/cfm if AFUE <= 0.9, else 0.375 W/cfm.
   .. [#] AirflowDefectRatio is defined as (InstalledAirflow - DesignAirflow) / DesignAirflow; a value of zero means no airflow defect.
          See `ANSI/RESNET/ACCA 310-2020 <https://codes.iccsafe.org/content/ICC3102020P1>`_ for more information.
 
@@ -2487,7 +2495,7 @@ Each central air conditioner is entered as a ``/HPXML/Building/BuildingDetails/S
   ``AnnualCoolingEfficiency[Units="SEER" or Units="SEER2"]/Value``  double   Btu/Wh       > 0                      Yes                       Rated efficiency [#]_
   ``SensibleHeatFraction``                                          double   frac         > 0.5, <= 1              No        See [#]_        Sensible heat fraction
   ``CoolingDetailedPerformanceData``                                element                                        No        <none>          Cooling detailed performance data [#]_
-  ``extension/FanPowerWattsPerCFM``                                 double   W/cfm        >= 0                     No        See [#]_        Blower fan efficiency at maximum fan speed [#]_
+  ``extension/FanPowerWattsPerCFM``                                 double   W/cfm        >= 0 [#]_                No        See [#]_        Blower fan efficiency at maximum fan speed
   ``extension/AirflowDefectRatio``                                  double   frac         >= -0.9, <= 9            No        0.0             Deviation between design/installed airflows [#]_
   ``extension/ChargeDefectRatio``                                   double   frac         >= -0.9, <= 9            No        0.0             Deviation between design/installed refrigerant charges [#]_
   ``extension/CrankcaseHeaterPowerWatts``                           double   W            >= 0                     No        50.0            Crankcase heater power
@@ -2511,8 +2519,8 @@ Each central air conditioner is entered as a ``/HPXML/Building/BuildingDetails/S
   .. [#] If SEER2 provided, converted to SEER using ANSI/RESNET/ICC 301-2022 Addendum C, where SEER = SEER2 / 0.95 (assumed to be a split system).
   .. [#] If SensibleHeatFraction not provided, defaults to 0.73 for single/two stage and 0.78 for variable speed.
   .. [#] If CoolingDetailedPerformanceData is provided, see :ref:`clg_detailed_perf_data`.
-  .. [#] If FanPowerWattsPerCFM not provided, defaults to using attached furnace W/cfm if available, else 0.5 W/cfm if SEER <= 13.5, else 0.375 W/cfm.
   .. [#] If there is a heating system attached to the DistributionSystem, the heating and cooling systems cannot have different values for FanPowerWattsPerCFM.
+  .. [#] If FanPowerWattsPerCFM not provided, defaults to using attached furnace W/cfm if available, else 0.5 W/cfm if SEER <= 13.5, else 0.375 W/cfm.
   .. [#] AirflowDefectRatio is defined as (InstalledAirflow - DesignAirflow) / DesignAirflow; a value of zero means no airflow defect.
          See `ANSI/RESNET/ACCA 310-2020 <https://codes.iccsafe.org/content/ICC3102020P1>`_ for more information.
   .. [#] ChargeDefectRatio is defined as (InstalledCharge - DesignCharge) / DesignCharge; a value of zero means no refrigerant charge defect.
@@ -2662,7 +2670,7 @@ Each mini-split air conditioner is entered as a ``/HPXML/Building/BuildingDetail
   ``AnnualCoolingEfficiency[Units="SEER" or Units="SEER2"]/Value``  double    Btu/Wh  > 0              Yes                       Rated cooling efficiency [#]_
   ``SensibleHeatFraction``                                          double    frac    > 0.5, <= 1      No        0.73            Sensible heat fraction
   ``CoolingDetailedPerformanceData``                                element                            No        <none>          Cooling detailed performance data [#]_
-  ``extension/FanPowerWattsPerCFM``                                 double    W/cfm   >= 0             No        See [#]_        Blower fan efficiency at maximum fan speed
+  ``extension/FanPowerWattsPerCFM``                                 double    W/cfm   >= 0 [#]_        No        See [#]_        Blower fan efficiency at maximum fan speed
   ``extension/AirflowDefectRatio``                                  double    frac    >= -0.9, <= 9    No        0.0             Deviation between design/installed airflows [#]_
   ``extension/ChargeDefectRatio``                                   double    frac    >= -0.9, <= 9    No        0.0             Deviation between design/installed refrigerant charges [#]_
   ``extension/CrankcaseHeaterPowerWatts``                           double    W       >= 0             No        50.0            Crankcase heater power
@@ -2684,6 +2692,7 @@ Each mini-split air conditioner is entered as a ``/HPXML/Building/BuildingDetail
   .. [#] The sum of all ``FractionCoolLoadServed`` (across all HVAC systems) must be less than or equal to 1.
   .. [#] If SEER2 provided, converted to SEER using ANSI/RESNET/ICC 301-2022 Addendum C, where SEER = SEER2 / 0.95 if ducted and SEER = SEER2 if ductless.
   .. [#] If CoolingDetailedPerformanceData is provided, see :ref:`clg_detailed_perf_data`.
+  .. [#] If there is a heating system attached to the DistributionSystem, the heating and cooling systems cannot have different values for FanPowerWattsPerCFM.
   .. [#] FanPowerWattsPerCFM defaults to 0.07 W/cfm for ductless systems and 0.18 W/cfm for ducted systems.
   .. [#] AirflowDefectRatio is defined as (InstalledAirflow - DesignAirflow) / DesignAirflow; a value of zero means no airflow defect.
          A non-zero airflow defect can only be applied for systems attached to a distribution system.
@@ -3052,6 +3061,7 @@ Each ground-to-air heat pump is entered as a ``/HPXML/Building/BuildingDetails/S
   ``HeatPumpFuel``                                 string            electricity      Yes                       Fuel type
   ``HeatingCapacity``                              double    Btu/hr  >= 0             No        autosized [#]_  Heating output capacity (excluding any backup heating)
   ``CoolingCapacity``                              double    Btu/hr  >= 0             No        autosized [#]_  Cooling output capacity
+  ``CompressorType``                               string            See [#]_         Yes                       Type of compressor
   ``CoolingSensibleHeatFraction``                  double    frac    > 0.5, <= 1      No        0.73            Sensible heat fraction
   ``BackupType``                                   string            See [#]_         No        <none>          Type of backup heating
   ``FractionHeatLoadServed``                       double    frac    >= 0, <= 1 [#]_  Yes                       Fraction of heating load served
@@ -3084,6 +3094,7 @@ Each ground-to-air heat pump is entered as a ``/HPXML/Building/BuildingDetails/S
   .. [#] IsSharedSystem should be true if the SFA/MF building has multiple ground source heat pumps connected to a shared hydronic circulation loop.
   .. [#] Heating capacity autosized per ACCA Manual J/S based on heating design load.
   .. [#] Cooling capacity autosized per ACCA Manual J/S based on cooling design load.
+  .. [#] CompressorType choices are "single stage", "two stage", or "variable speed".
   .. [#] BackupType choices are "integrated" or "separate".
          Heat pump backup will only operate during colder temperatures when the heat pump runs out of heating capacity or is disabled due to a switchover/lockout temperature.
          Use "integrated" if the heat pump's distribution system and blower fan power applies to the backup heating (e.g., built-in electric strip heat or an integrated backup furnace, i.e., a dual-fuel heat pump).
@@ -4061,7 +4072,7 @@ Each conventional storage water heater is entered as a ``/HPXML/Building/Buildin
 
   .. [#] The water heater setpoint can alternatively be defined using :ref:`schedules_detailed`.
   .. [#] Additional desuperheater inputs are described in :ref:`water_heater_desuperheater`.
-  .. [#] TankModelType choices are "mixed" or "stratified".
+  .. [#] TankModelType choices are "mixed" or "stratified". Only currently allowed if FuelType is "electricity".
   .. [#] NumberofBedroomsServed only required if IsSharedSystem is true.
          Tank losses will be apportioned to the dwelling unit using its number of bedrooms divided by the total number of bedrooms served by the water heating system per `ANSI/RESNET/ICC 301-2022 <https://codes.iccsafe.org/content/RESNET3012022P1>`_.
          Each dwelling unit w/zero bedrooms should be counted as 1 bedroom -- e.g., a value of 3 should be entered for a shared system serving 3 studio (zero bedroom) apartments.
@@ -4255,7 +4266,9 @@ If the water heater uses a desuperheater, additional information is entered in `
 
   .. warning::
 
-    A desuperheater is currently not allow if detailed water heater setpoint schedules are used.
+    A desuperheater is currently not allowed if detailed water heater setpoint schedules are used.
+
+    A desuperheater is currently not allowed if ``GroundToAirHeatPumpModelType`` is "experimental", see :ref:`hpxml_simulation_control`.
 
 HPXML Hot Water Distribution
 ****************************
@@ -4476,7 +4489,7 @@ Additional information can be entered in ``/HPXML/Building/BuildingDetails/Syste
   .. [#] If WaterFixturesWeekdayScheduleFractions or WaterFixturesWeekendScheduleFractions not provided (and :ref:`schedules_detailed` not used), then :ref:`schedules_default` are used.
   .. [#] If WaterFixturesMonthlyScheduleMultipliers not provided (and :ref:`schedules_detailed` not used), then :ref:`schedules_default` are used.
 
-Water fixture hot water use is calculated per the Energy Rating Rated Home in `ANSI/RESNET/ICC 301-2019 <https://codes.iccsafe.org/content/RESNET3012019P1>`_.
+Water fixture hot water use is calculated per the Energy Rating Rated Home in `ANSI/RESNET/ICC 301-2019 <https://codes.iccsafe.org/content/RESNET3012019P1>`_, including RESNET MINHERS Addenda 81 and 90f.
 If NumberofResidents is provided, then water fixture use from Equation 14 of `Estimating Daily Domestic Hot-Water Use in North American Homes <http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf>`_ is substituted into the ANSI/RESNET/ICC 301 equations.
 
 HPXML Solar Thermal
@@ -4627,6 +4640,7 @@ HPXML Electric Panels
 *********************
 
 A single electric panel can be entered as a ``/HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel``.
+An electric panel is only used and subject to having default values applied when at least one load calculation type is specified (see :ref:`hpxml_electric_panel_calculations`).
 
   =======================================================================  =======  =========  =======================  ========  =============  ============================================
   Element                                                                  Type     Units      Constraints              Required  Default        Notes
@@ -4876,13 +4890,10 @@ A single electric vehicle charger can be entered as a ``/HPXML/Building/Building
   Element               Type     Units  Constraints  Required  Default   Notes
   ====================  =======  =====  ===========  ========  ========  ============================================
   ``SystemIdentifier``  id                           Yes                 Unique identifier
-  ``Location``          string          See [#]_     No        See [#]_  Location of charger and attached EV when at home
   ``ChargingLevel``     integer         >= 1, <= 3   No        See [#]_  Charger power level
   ``ChargingPower``     double   W      > 0          No        See [#]_  Charger power output
   ====================  =======  =====  ===========  ========  ========  ============================================
 
-  .. [#] Location choices are "garage" or "outside".
-  .. [#] If Location not provided, defaults to "garage" if a garage is present, otherwise "outside".
   .. [#] If neither ChargingLevel nor ChargingPower provided, defaults to level 2.
   .. [#] If ChargingPower not provided, defaults to 1600 W if a level 1 charger, otherwise 5690 W per `EV Watts Public Database <https://www.osti.gov/biblio/1970735>`_.
 
@@ -4969,7 +4980,7 @@ If IntegratedModifiedEnergyFactor or ModifiedEnergyFactor is provided, a complet
   ``Capacity``                      double   ft3      > 0          Yes                    Clothes washer volume
   ================================  =======  =======  ===========  ============  =======  ====================================
 
-Clothes washer energy use and hot water use is calculated per the Energy Rating Rated Home in `ANSI/RESNET/ICC 301-2019 Addendum A <https://www.resnet.us/wp-content/uploads/ANSI_RESNET_ICC-301-2019-Addendum-A-2019_7.16.20-1.pdf>`_.
+Clothes washer energy use and hot water use is calculated per the Energy Rating Rated Home in `ANSI/RESNET/ICC 301-2019 Addendum A <https://www.resnet.us/wp-content/uploads/ANSI_RESNET_ICC-301-2019-Addendum-A-2019_7.16.20-1.pdf>`_, including RESNET MINHERS Addenda 81 and 90f.
 If NumberofResidents is provided, then the number of cycles from Equation 1 of `Estimating Daily Domestic Hot-Water Use in North American Homes <http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf>`_ is substituted into the ANSI/RESNET/ICC 301 equations.
 
 HPXML Clothes Dryer
@@ -5007,7 +5018,7 @@ If not entered, the simulation will not include a clothes dryer.
   .. [#] If WeekdayScheduleFractions or WeekendScheduleFractions not provided (and :ref:`schedules_detailed` not used), then :ref:`schedules_default` are used.
   .. [#] If MonthlyScheduleMultipliers not provided (and :ref:`schedules_detailed` not used), then :ref:`schedules_default` are used.
 
-Clothes dryer energy use is calculated per the Energy Rating Rated Home in `ANSI/RESNET/ICC 301-2019 Addendum A <https://www.resnet.us/wp-content/uploads/ANSI_RESNET_ICC-301-2019-Addendum-A-2019_7.16.20-1.pdf>`_.
+Clothes dryer energy use is calculated per the Energy Rating Rated Home in `ANSI/RESNET/ICC 301-2019 Addendum A <https://www.resnet.us/wp-content/uploads/ANSI_RESNET_ICC-301-2019-Addendum-A-2019_7.16.20-1.pdf>`_, including RESNET MINHERS Addenda 81 and 90f.
 
 HPXML Dishwasher
 ****************
@@ -5058,7 +5069,7 @@ If the RatedAnnualkWh or EnergyFactor is provided, a complete set of EnergyGuide
   ``LabelUsage``            double   cyc/wk   > 0          Yes                EnergyGuide label number of cycles
   ========================  =======  =======  ===========  ========  =======  ==================================
 
-Dishwasher energy use and hot water use is calculated per the Energy Rating Rated Home in `ANSI/RESNET/ICC 301-2019 Addendum A <https://www.resnet.us/wp-content/uploads/ANSI_RESNET_ICC-301-2019-Addendum-A-2019_7.16.20-1.pdf>`_.
+Dishwasher energy use and hot water use is calculated per the Energy Rating Rated Home in `ANSI/RESNET/ICC 301-2019 Addendum A <https://www.resnet.us/wp-content/uploads/ANSI_RESNET_ICC-301-2019-Addendum-A-2019_7.16.20-1.pdf>`_, including RESNET MINHERS Addenda 81 and 90f.
 If NumberofResidents is provided, then the number of cycles from Equation 3 of `Estimating Daily Domestic Hot-Water Use in North American Homes <http://www.fsec.ucf.edu/en/publications/pdf/fsec-pf-464-15.pdf>`_ is substituted into the ANSI/RESNET/ICC 301 equations.
 
 HPXML Refrigerators
