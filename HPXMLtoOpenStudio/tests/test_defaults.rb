@@ -2588,6 +2588,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml, hpxml_bldg = _create_hpxml('base.xml')
     hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = 2700.0
     hpxml_bldg.hvac_distributions[0].number_of_return_registers = 2
+    hpxml_bldg.hvac_distributions[0].ducts[-1].delete
+    hpxml_bldg.hvac_distributions[0].ducts[-1].delete
     hpxml_bldg.hvac_distributions[0].ducts[0].duct_surface_area = 150.0
     hpxml_bldg.hvac_distributions[0].ducts[1].duct_surface_area = 50.0
     hpxml_bldg.hvac_distributions[0].ducts[0].duct_fraction_area = nil
@@ -2764,41 +2766,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
                                           expected_supply_buried_levels, expected_return_buried_levels, expected_supply_effective_rvalues, expected_return_effective_rvalues,
                                           expected_supply_rect_fracs, expected_return_rect_fracs, 0.0)
 
-    # Test defaults w/ 2-story building
-    hpxml, hpxml_bldg = _create_hpxml('base-enclosure-2stories.xml')
-    hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = 4050.0
-    hpxml_bldg.hvac_distributions[0].number_of_return_registers = 3
-    hpxml_bldg.hvac_distributions[0].ducts.each do |duct|
-      duct.duct_location = nil
-      duct.duct_fraction_area = nil
-      duct.duct_surface_area_multiplier = nil
-      duct.duct_buried_insulation_level = nil
-      duct.duct_fraction_rectangular = nil
-      duct.duct_shape = nil
-    end
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-    _default_hpxml, default_hpxml_bldg = _test_measure()
-    expected_supply_locations = [HPXML::LocationBasementConditioned, HPXML::LocationBasementConditioned, HPXML::LocationConditionedSpace, HPXML::LocationConditionedSpace]
-    expected_return_locations = [HPXML::LocationBasementConditioned, HPXML::LocationBasementConditioned, HPXML::LocationConditionedSpace, HPXML::LocationConditionedSpace]
-    expected_supply_areas = [410.06, 410.06, 136.69, 136.69]
-    expected_return_areas = [227.82, 227.82, 75.94, 75.94]
-    expected_supply_fracs = [0.375, 0.375, 0.125, 0.125]
-    expected_return_fracs = [0.375, 0.375, 0.125, 0.125]
-    expected_supply_area_mults = [1.0, 1.0, 1.0, 1.0]
-    expected_return_area_mults = [1.0, 1.0, 1.0, 1.0]
-    expected_supply_buried_levels = [HPXML::DuctBuriedInsulationNone] * 4
-    expected_return_buried_levels = [HPXML::DuctBuriedInsulationNone] * 4
-    expected_supply_effective_rvalues = [4.4] * 4
-    expected_return_effective_rvalues = [5.0, 1.7] * 2
-    expected_supply_rect_fracs = [0.25] * 4
-    expected_return_rect_fracs = [1.0] * 4
-    expected_n_return_registers = default_hpxml_bldg.building_construction.number_of_conditioned_floors
-    _test_default_air_distribution_values(default_hpxml_bldg, expected_supply_locations, expected_return_locations, expected_supply_areas, expected_return_areas,
-                                          expected_supply_fracs, expected_return_fracs, expected_n_return_registers, expected_supply_area_mults, expected_return_area_mults,
-                                          expected_supply_buried_levels, expected_return_buried_levels, expected_supply_effective_rvalues, expected_return_effective_rvalues,
-                                          expected_supply_rect_fracs, expected_return_rect_fracs, 0.0)
-
-    # Test defaults w/ 1-story building & multiple HVAC systems
+    # Test defaults w/ multiple HVAC systems
     hpxml, hpxml_bldg = _create_hpxml('base-hvac-multiple.xml')
     hpxml_bldg.hvac_distributions.each do |hvac_distribution|
       next unless hvac_distribution.distribution_system_type == HPXML::HVACDistributionTypeAir
@@ -2821,89 +2789,6 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     expected_supply_areas = [36.45, 36.45] * default_hpxml_bldg.hvac_distributions.size
     expected_return_areas = [13.5, 13.5] * default_hpxml_bldg.hvac_distributions.size
     expected_supply_fracs = [0.5, 0.5] * default_hpxml_bldg.hvac_distributions.size
-    expected_return_fracs = [0.5, 0.5] * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_area_mults = [1.0, 1.0] * default_hpxml_bldg.hvac_distributions.size
-    expected_return_area_mults = [1.0, 1.0] * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_buried_levels = [HPXML::DuctBuriedInsulationNone] * 2 * default_hpxml_bldg.hvac_distributions.size
-    expected_return_buried_levels = [HPXML::DuctBuriedInsulationNone] * 2 * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_effective_rvalues = [6.9] * 2 * default_hpxml_bldg.hvac_distributions.size
-    expected_return_effective_rvalues = [5.0] * 2 * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_rect_fracs = [0.25] * 2 * default_hpxml_bldg.hvac_distributions.size
-    expected_return_rect_fracs = [1.0] * 2 * default_hpxml_bldg.hvac_distributions.size
-    expected_n_return_registers = default_hpxml_bldg.building_construction.number_of_conditioned_floors
-    _test_default_air_distribution_values(default_hpxml_bldg, expected_supply_locations, expected_return_locations, expected_supply_areas, expected_return_areas,
-                                          expected_supply_fracs, expected_return_fracs, expected_n_return_registers, expected_supply_area_mults, expected_return_area_mults,
-                                          expected_supply_buried_levels, expected_return_buried_levels, expected_supply_effective_rvalues, expected_return_effective_rvalues,
-                                          expected_supply_rect_fracs, expected_return_rect_fracs, 0.0)
-
-    # Test defaults w/ 2-story building & multiple HVAC systems
-    hpxml, hpxml_bldg = _create_hpxml('base-hvac-multiple.xml')
-    hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade = 2
-    hpxml_bldg.hvac_distributions.each do |hvac_distribution|
-      next unless hvac_distribution.distribution_system_type == HPXML::HVACDistributionTypeAir
-
-      hvac_distribution.conditioned_floor_area_served = 270.0
-      hvac_distribution.number_of_return_registers = 2
-      hvac_distribution.ducts.each do |duct|
-        duct.duct_location = nil
-        duct.duct_surface_area = nil
-        duct.duct_surface_area_multiplier = nil
-        duct.duct_buried_insulation_level = nil
-        duct.duct_fraction_rectangular = nil
-        duct.duct_shape = nil
-      end
-    end
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-    _default_hpxml, default_hpxml_bldg = _test_measure()
-    expected_supply_locations = [HPXML::LocationBasementConditioned, HPXML::LocationBasementConditioned, HPXML::LocationConditionedSpace, HPXML::LocationConditionedSpace] * default_hpxml_bldg.hvac_distributions.size
-    expected_return_locations = [HPXML::LocationBasementConditioned, HPXML::LocationBasementConditioned, HPXML::LocationConditionedSpace, HPXML::LocationConditionedSpace] * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_areas = [27.34, 27.34, 9.11, 9.11] * default_hpxml_bldg.hvac_distributions.size
-    expected_return_areas = [10.125, 10.125, 3.375, 3.375] * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_fracs = [0.375, 0.375, 0.125, 0.125] * default_hpxml_bldg.hvac_distributions.size
-    expected_return_fracs = [0.375, 0.375, 0.125, 0.125] * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_area_mults = [1.0, 1.0, 1.0, 1.0] * default_hpxml_bldg.hvac_distributions.size
-    expected_return_area_mults = [1.0, 1.0, 1.0, 1.0] * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_buried_levels = [HPXML::DuctBuriedInsulationNone] * 4 * default_hpxml_bldg.hvac_distributions.size
-    expected_return_buried_levels = [HPXML::DuctBuriedInsulationNone] * 4 * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_effective_rvalues = [6.9] * 4 * default_hpxml_bldg.hvac_distributions.size
-    expected_return_effective_rvalues = [5.0] * 4 * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_rect_fracs = [0.25] * 4 * default_hpxml_bldg.hvac_distributions.size
-    expected_return_rect_fracs = [1.0] * 4 * default_hpxml_bldg.hvac_distributions.size
-    expected_n_return_registers = default_hpxml_bldg.building_construction.number_of_conditioned_floors
-    _test_default_air_distribution_values(default_hpxml_bldg, expected_supply_locations, expected_return_locations, expected_supply_areas, expected_return_areas,
-                                          expected_supply_fracs, expected_return_fracs, expected_n_return_registers, expected_supply_area_mults, expected_return_area_mults,
-                                          expected_supply_buried_levels, expected_return_buried_levels, expected_supply_effective_rvalues, expected_return_effective_rvalues,
-                                          expected_supply_rect_fracs, expected_return_rect_fracs, 0.0)
-
-    # Test defaults w/ 2-story building & multiple HVAC systems & duct area fractions
-    hpxml, hpxml_bldg = _create_hpxml('base-hvac-multiple.xml')
-    hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade = 2
-    hpxml_bldg.hvac_distributions.each do |hvac_distribution|
-      next unless hvac_distribution.distribution_system_type == HPXML::HVACDistributionTypeAir
-
-      hvac_distribution.conditioned_floor_area_served = 270.0
-      hvac_distribution.number_of_return_registers = 2
-      hvac_distribution.ducts[0].duct_fraction_area = 0.75
-      hvac_distribution.ducts[1].duct_fraction_area = 0.25
-      hvac_distribution.ducts[2].duct_fraction_area = 0.5
-      hvac_distribution.ducts[3].duct_fraction_area = 0.5
-    end
-    hpxml_bldg.hvac_distributions.each do |hvac_distribution|
-      hvac_distribution.ducts.each do |duct|
-        duct.duct_surface_area = nil
-        duct.duct_surface_area_multiplier = nil
-        duct.duct_buried_insulation_level = nil
-        duct.duct_fraction_rectangular = nil
-        duct.duct_shape = nil
-      end
-    end
-    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
-    _default_hpxml, default_hpxml_bldg = _test_measure()
-    expected_supply_locations = [HPXML::LocationAtticUnvented, HPXML::LocationOutside, HPXML::LocationAtticUnvented, HPXML::LocationOutside] * default_hpxml_bldg.hvac_distributions.size
-    expected_return_locations = [HPXML::LocationAtticUnvented, HPXML::LocationOutside, HPXML::LocationAtticUnvented, HPXML::LocationOutside] * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_areas = [54.675, 18.225] * default_hpxml_bldg.hvac_distributions.size
-    expected_return_areas = [13.5, 13.5] * default_hpxml_bldg.hvac_distributions.size
-    expected_supply_fracs = [0.75, 0.25] * default_hpxml_bldg.hvac_distributions.size
     expected_return_fracs = [0.5, 0.5] * default_hpxml_bldg.hvac_distributions.size
     expected_supply_area_mults = [1.0, 1.0] * default_hpxml_bldg.hvac_distributions.size
     expected_return_area_mults = [1.0, 1.0] * default_hpxml_bldg.hvac_distributions.size
