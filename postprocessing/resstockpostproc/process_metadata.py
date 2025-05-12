@@ -172,7 +172,7 @@ def add_puma_column(df: pl.LazyFrame):
     """
     here = pathlib.Path(__file__).resolve().parent
     pumas = gpd.read_file(
-        here / "resources" / "gisdata" / "ipums_pums_2010_simple_t100_area_conus.geojson"
+        here / "resources" / "gisdata" / "us_states.geojson"
     )
     puma_map = pumas[["GISJOIN", "puma_tsv"]].set_index("puma_tsv")["GISJOIN"].to_dict()
     df = df.with_columns([
