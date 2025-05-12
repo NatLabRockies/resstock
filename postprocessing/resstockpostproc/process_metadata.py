@@ -151,7 +151,7 @@ def add_county_column(df: pl.LazyFrame):
     """
     here = pathlib.Path(__file__).resolve().parent
     county_map_df = pl.read_csv(
-        here / "resources" / "gisdata" / "spatial_county_lookup_table.csv",
+        here / "resources" / "gisdata" / "county_lookup_table.csv",
         columns=["long_name", "original_FIP"]
     ).select(
         pl.col("long_name"),
