@@ -11,7 +11,7 @@ module MathTools
   # @param f1 [Double] known point 2 function value
   # @return [Double] the interpolated value for given x-coordinate
   def self.interp2(x, x0, x1, f0, f1)
-    return f0 + ((x - x0) / (x1 - x0)) * (f1 - f0)
+    return f0 + ((x - x0) / Float(x1 - x0)) * (f1 - f0)
   end
 
   # Returns the bilinear interpolation between four results.
@@ -28,10 +28,10 @@ module MathTools
   # @param fx2y2 [Double] known point 4 function value
   # @return [Double] the interpolated value for the given x- and y- coordinates
   def self.interp4(x, y, x1, x2, y1, y2, fx1y1, fx1y2, fx2y1, fx2y2)
-    return (fx1y1 / ((x2 - x1) * (y2 - y1))) * (x2 - x) * (y2 - y) \
-          + (fx2y1 / ((x2 - x1) * (y2 - y1))) * (x - x1) * (y2 - y) \
-          + (fx1y2 / ((x2 - x1) * (y2 - y1))) * (x2 - x) * (y - y1) \
-          + (fx2y2 / ((x2 - x1) * (y2 - y1))) * (x - x1) * (y - y1)
+    return (fx1y1 / Float((x2 - x1) * (y2 - y1))) * (x2 - x) * (y2 - y) \
+          + (fx2y1 / Float((x2 - x1) * (y2 - y1))) * (x - x1) * (y2 - y) \
+          + (fx1y2 / Float((x2 - x1) * (y2 - y1))) * (x2 - x) * (y - y1) \
+          + (fx2y2 / Float((x2 - x1) * (y2 - y1))) * (x - x1) * (y - y1)
   end
 
   # Calculates the result of a biquadratic polynomial with independent variables.

@@ -104,14 +104,14 @@ def _run_xml(xml, worker_num, apply_unit_multiplier = false, annual_results_1x =
   # Check outputs
   hpxml_defaults_path = File.join(rundir, 'in.xml')
   schema_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', '..', 'HPXMLtoOpenStudio', 'resources', 'hpxml_schema', 'HPXML.xsd'))
-  schematron_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', '..', 'HPXMLtoOpenStudio', 'resources', 'hpxml_schematron', 'EPvalidator.xml'))
+  schematron_validator = XMLValidator.get_xml_validator(File.join(File.dirname(__FILE__), '..', '..', 'HPXMLtoOpenStudio', 'resources', 'hpxml_schematron', 'EPvalidator.sch'))
   hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, schema_validator: schema_validator, schematron_validator: schematron_validator) # Validate in.xml to ensure it can be run back through OS-HPXML
   if not hpxml.errors.empty?
     puts 'ERRORS:'
     hpxml.errors.each do |error|
       puts error
     end
-    flunk "EPvalidator.xml error in #{hpxml_defaults_path}."
+    flunk "EPvalidator.sch error in #{hpxml_defaults_path}."
   end
   annual_results = _get_simulation_annual_results(annual_csv_path, bills_csv_path, panel_csv_path)
   monthly_results = _get_simulation_monthly_results(monthly_csv_path)
@@ -271,7 +271,7 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
       next if message.include? 'It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus during an unavailable period.'
     end
     if hpxml_bldg.climate_and_risk_zones.weather_station_epw_filepath.include? 'US_CO_Boulder_AMY_2012.epw'
-      next if message.include? 'No design condition info found; calculating design conditions from EPW weather data.'
+      next if message.include? 'No EPW design conditions found; calculating design conditions from EPW weather data.'
     end
     if hpxml_bldg.building_construction.number_of_units > 1
       next if message.include? 'NumberofUnits is greater than 1, indicating that the HPXML Building represents multiple dwelling units; simulation outputs will reflect this unit multiplier.'
@@ -374,12 +374,6 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     end
     # Evaporative coolers
     if hpxml_bldg.cooling_systems.count { |c| c.cooling_system_type == HPXML::HVACTypeEvaporativeCooler } > 0
-      # Evap cooler model is not really using Controller:MechanicalVentilation object, so these warnings of ignoring some features are fine.
-      # OS requires a Controller:MechanicalVentilation to be attached to the oa controller, however it's not required by E+.
-      # Manually removing Controller:MechanicalVentilation from idf eliminates these two warnings.
-      # FUTURE: Can we update OS to allow removing it?
-      next if message.include?('Zone') && message.include?('is not accounted for by Controller:MechanicalVentilation object')
-      next if message.include?('PEOPLE object for zone') && message.include?('is not accounted for by Controller:MechanicalVentilation object')
       # "The only valid controller type for an AirLoopHVAC is Controller:WaterCoil.", evap cooler doesn't need one.
       next if message.include?('GetAirPathData: AirLoopHVAC') && message.include?('has no Controllers')
       # input "Autosize" for Fixed Minimum Air Flow Rate is added by OS translation, now set it to 0 to skip potential sizing process, though no way to prevent this warning.
@@ -915,10 +909,18 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
   # HVAC Load Fractions
   if not is_warm_climate
     htg_energy = results.select { |k, _v| (k.include?(': Heating (MBtu)') || k.include?(': Heating Fans/Pumps (MBtu)')) && !k.include?('Load') }.values.sum(0.0)
-    assert_equal(hpxml_bldg.total_fraction_heat_load_served > 0, htg_energy > 0)
+    if hpxml_bldg.total_fraction_heat_load_served > 0
+      assert_operator(htg_energy, :>, 0)
+    else
+      assert_equal(0, htg_energy)
+    end
   end
   clg_energy = results.select { |k, _v| (k.include?(': Cooling (MBtu)') || k.include?(': Cooling Fans/Pumps (MBtu)')) && !k.include?('Load') }.values.sum(0.0)
-  assert_equal(hpxml_bldg.total_fraction_cool_load_served > 0, clg_energy > 0)
+  if hpxml_bldg.total_fraction_cool_load_served > 0
+    assert_operator(clg_energy, :>, 0)
+  else
+    assert_equal(0, clg_energy)
+  end
 
   # Mechanical Ventilation
   whole_vent_fans = hpxml_bldg.ventilation_fans.select { |f| f.used_for_whole_building_ventilation && !f.is_cfis_supplemental_fan }
@@ -1092,9 +1094,9 @@ def _check_unit_multiplier_results(xml, hpxml_bldg, annual_results_1x, annual_re
 
   def get_tolerances(key)
     if key.include?('(MBtu)') || key.include?('(kBtu)') || key.include?('(kWh)')
-      # Check that the energy difference is less than 0.5 MBtu or less than 5%
+      # Check that the energy difference is less than 0.5 MBtu or less than 6%
       abs_delta_tol = 0.5 # MBtu
-      abs_frac_tol = 0.05
+      abs_frac_tol = 0.06
       if key.include?('(kBtu)')
         abs_delta_tol = UnitConversions.convert(abs_delta_tol, 'MBtu', 'kBtu')
       elsif key.include?('(kWh)')

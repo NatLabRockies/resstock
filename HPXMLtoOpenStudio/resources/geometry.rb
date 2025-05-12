@@ -985,7 +985,7 @@ module Geometry
 
     addtl_cfa = hpxml_bldg.building_construction.conditioned_floor_area - sum_cfa
 
-    fail if addtl_cfa < -1.0 # Allow some rounding; EPvalidator.xml should prevent this
+    fail if addtl_cfa < -1.0 # Allow some rounding; EPvalidator.sch should prevent this
 
     return unless addtl_cfa > 1.0 # Allow some rounding
 

@@ -571,6 +571,53 @@ module Model
     return curve
   end
 
+  # Adds a TableIndependentVariable object to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the OpenStudio object
+  # @param min [Double] Minimum allowable value
+  # @param max [Double] Maximum allowable value
+  # @param values [Array<Double>] List of values
+  # @param extrap_method [String] Extrapolation method for values beyond the bounds of the independent variables
+  # @return [OpenStudio::Model::TableIndependentVariable] The model object
+  def self.add_table_independent_variable(model, name:, min:, max:, values:, extrap_method: 'Constant')
+    ind_var = OpenStudio::Model::TableIndependentVariable.new(model)
+    ind_var.setName(name)
+    ind_var.setMinimumValue(min)
+    ind_var.setMaximumValue(max)
+    ind_var.setValues(values)
+    ind_var.setExtrapolationMethod(extrap_method)
+    return ind_var
+  end
+
+  # Adds a TableLookup object to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the OpenStudio object
+  # @param ind_vars [Array<OpenStudio::Model::TableIndependentVariable>] List of independent variables
+  # @param output_values [Array<Double>] List of output values
+  # @param output_min [Double] The minimum allowable value of the evaluated table after interpolation and extrapolation
+  # @param output_max [Double] The maximum allowable value of the evaluated table after interpolation and extrapolation
+  # @return [OpenStudio::Model::TableLookup] The model object
+  def self.add_table_lookup(model, name:, ind_vars:, output_values:, output_min: nil, output_max: nil)
+    if (not output_min.nil?) && (output_values.min < output_min)
+      fail "Minimum table lookup output value (#{output_values.min}) is less than #{output_min} for #{name}."
+    end
+    if (not output_max.nil?) && (output_values.max > output_max)
+      fail "Maximum table lookup output value (#{output_values.max}) is greater than #{output_max} for #{name}."
+    end
+
+    table = OpenStudio::Model::TableLookup.new(model)
+    table.setName(name)
+    ind_vars.each do |ind_var|
+      table.addIndependentVariable(ind_var)
+    end
+    table.setMinimumOutput(output_min) unless output_min.nil?
+    table.setMaximumOutput(output_max) unless output_max.nil?
+    table.setOutputValues(output_values)
+    return table
+  end
+
   # Adds a ScheduleConstant object to the OpenStudio model.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
@@ -722,7 +769,7 @@ module Model
     return stl
   end
 
-  # Adds an EnergyManagementSystemSensor to the OpenStudio model.
+  # Adds an EnergyManagementSystemSensor object to the OpenStudio model.
   #
   # The EnergyManagementSystemSensor object gets information during the simulation
   # that can be used in custom calculations.
@@ -739,7 +786,7 @@ module Model
     return sensor
   end
 
-  # Adds an EnergyManagementSystemGlobalVariable to the OpenStudio model.
+  # Adds an EnergyManagementSystemGlobalVariable object to the OpenStudio model.
   #
   # The EnergyManagementSystemGlobalVariable object allows an EMS variable to be
   # global such that it can be used across EMS programs/subroutines.
@@ -751,7 +798,7 @@ module Model
     return OpenStudio::Model::EnergyManagementSystemGlobalVariable.new(model, ems_friendly_name(var_name))
   end
 
-  # Adds an EnergyManagementSystemTrendVariable to the OpenStudio model.
+  # Adds an EnergyManagementSystemTrendVariable object to the OpenStudio model.
   #
   # The EnergyManagementSystemTrendVariable object creates a global EMS variable
   # that stores the recent history of an EMS variable for use in a calculation.
@@ -767,7 +814,7 @@ module Model
     return tvar
   end
 
-  # Adds an EnergyManagementSystemInternalVariable to the OpenStudio model.
+  # Adds an EnergyManagementSystemInternalVariable object to the OpenStudio model.
   #
   # The EnergyManagementSystemInternalVariable object is used to obtain static data from
   # elsewhere in the model.
@@ -784,7 +831,7 @@ module Model
     return ivar
   end
 
-  # Adds an EnergyManagementSystemActuator to the OpenStudio model.
+  # Adds an EnergyManagementSystemActuator object to the OpenStudio model.
   #
   # The EnergyManagementSystemActuator object specifies the properties or controls
   # of an EnergyPlus object that is to be overridden during the simulation.
@@ -803,7 +850,7 @@ module Model
     return act
   end
 
-  # Adds an EnergyManagementSystemProgram to the OpenStudio model.
+  # Adds an EnergyManagementSystemProgram object to the OpenStudio model.
   #
   # The EnergyManagementSystemProgram object allows custom calculations to be
   # performed within the EnergyPlus simulation in order to override the properties
@@ -820,7 +867,7 @@ module Model
     return prg
   end
 
-  # Adds an EnergyManagementSystemSubroutine to the OpenStudio model.
+  # Adds an EnergyManagementSystemSubroutine object to the OpenStudio model.
   #
   # The EnergyManagementSystemSubroutine object allows EMS code to be reused
   # across multiple EMS programs.
@@ -836,7 +883,7 @@ module Model
     return sbrt
   end
 
-  # Adds an EnergyManagementSystemProgramCallingManager to the OpenStudio model.
+  # Adds an EnergyManagementSystemProgramCallingManager object to the OpenStudio model.
   #
   # The EnergyManagementSystemProgramCallingManager object is used to specify when
   # an EMS program is run during the simulation.
@@ -854,6 +901,99 @@ module Model
       pcm.addProgram(ems_program)
     end
     return pcm
+  end
+
+  # Adds an EnergyManagementSystemOutputVariable object to the OpenStudio model.
+  #
+  # The EnergyManagementSystemOutputVariable object allows generating output for
+  # an EMS variable; the object can be referenced by an OutputVariable object.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] User-defined name for the new output variable
+  # @param ems_variable_name [String] EMS variable name to be output
+  # @param type_of_data [String] The nature of the variable ('averaged' or 'summed')
+  # @param update_frequency [String] Timestep the variable is associated with ('ZoneTimestep' or 'SystemTimestep')
+  # @param ems_program_or_subroutine [OpenStudio::Model::EnergyManagementSystemProgram or EnergyManagementSystemSubroutine] The EMS program/subroutine with the EMS variable
+  # @param units [String] The units for the output variable in standard EnergyPlus units
+  # @return [OpenStudio::Model::EnergyManagementSystemOutputVariable] The model object
+  def self.add_ems_output_variable(model, name:, ems_variable_name:, type_of_data:, update_frequency:, ems_program_or_subroutine:, units:)
+    ov = OpenStudio::Model::EnergyManagementSystemOutputVariable.new(model, ems_variable_name)
+    ov.setName(name)
+    ov.setTypeOfDataInVariable(type_of_data)
+    ov.setUpdateFrequency(update_frequency)
+    ov.setEMSProgramOrSubroutineName(ems_program_or_subroutine)
+    ov.setUnits(units)
+    return ov
+  end
+
+  # Adds an OutputVariable object to the OpenStudio model. If there is already an
+  # identical existing object on the model, returns that instead.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param key_value [String] The specific object reference for reporting
+  # @param variable_name [String] The variable name as shown in the eplusout.rdd file
+  # @param reporting_frequency [String] Output reporting frequency ('detailed', 'timestep', 'hourly', 'daily', 'monthly', 'runperiod', or 'annual')
+  # @return [OpenStudio::Model::OutputVariable] The model object
+  def self.add_output_variable(model, key_value:, variable_name:, reporting_frequency:)
+    model.getOutputVariables.each do |ov|
+      next unless ov.variableName == variable_name
+      next unless ov.keyValue == key_value
+      next unless ov.reportingFrequency == reporting_frequency
+
+      return ov # Duplicate of existing object
+    end
+    ov = OpenStudio::Model::OutputVariable.new(variable_name, model)
+    ov.setKeyValue(key_value)
+    ov.setReportingFrequency(reporting_frequency)
+    return ov
+  end
+
+  # Adds an OutputMeter object to the OpenStudio model. If there is already an
+  # identical existing object on the model, returns that instead.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param meter_name [String] The meter name as shown in the eplusout.mdd file
+  # @param reporting_frequency [String] Output reporting frequency ('detailed', 'timestep', 'hourly', 'daily', 'monthly', 'runperiod', or 'annual')
+  # @return [OpenStudio::Model::OutputMeter] The model object
+  def self.add_output_meter(model, meter_name:, reporting_frequency:)
+    model.getOutputMeters.each do |om|
+      next unless om.name == meter_name
+      next unless om.reportingFrequency == reporting_frequency
+
+      return om # Duplicate of existing object
+    end
+    om = OpenStudio::Model::OutputMeter.new(model)
+    om.setName(meter_name)
+    om.setReportingFrequency(reporting_frequency)
+    return om
+  end
+
+  # Adds an OutputTableMonthly to the OpenStudio model. If there is already an
+  # identical existing object on the model, returns that instead.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the output table
+  # @param digits_after_decimal [Integer] Number of digits after the decimal point
+  # @param output_var_or_meter_name [String] EnergyPlus Output:Variable or Output:Meter name
+  # @param aggregation_type [String] Aggregation type (SumOrAverage, Maximum, Minimum, etc.)
+  # @return [OpenStudio::Model::OutputTableMonthly] The model object
+  def self.add_output_table_monthly(model, name:, digits_after_decimal: 2, output_var_or_meter_name:, aggregation_type:)
+    model.getOutputTableMonthlys.each do |otm|
+      next unless otm.name.to_s == name
+      next unless otm.digitsAfterDecimal == digits_after_decimal
+      next unless otm.numberofMonthlyVariableGroups == 1
+
+      first_group = otm.getMonthlyVariableGroup(0).get
+      next unless first_group.variableOrMeterName == output_var_or_meter_name
+      next unless first_group.aggregationType == aggregation_type
+
+      return otm # Duplicate of existing object
+    end
+    otm = OpenStudio::Model::OutputTableMonthly.new(model)
+    otm.setName(name)
+    otm.setDigitsAfterDecimal(digits_after_decimal)
+    otm.addMonthlyVariableGroup(output_var_or_meter_name, aggregation_type)
+    return otm
   end
 
   # Converts existing string to EMS friendly string.

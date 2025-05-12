@@ -238,27 +238,41 @@ class WorkflowOtherTest < Minitest::Test
     refute(File.exist? File.join(File.dirname(xml), 'run', 'eplusout.msgpack'))
   end
 
-  def test_run_defaulted_in_xml
+  def test_run_defaulted_in_xml_with_hvac_installation_quality
     # Check that if we simulate the in.xml file (HPXML w/ defaults), we get
-    # the same results as the original HPXML.
+    # the same results as the original HPXML for a home with HVAC installation
+    # defects.
 
-    # Run base.xml
     rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
-    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base.xml')
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\""
+    sample_files_path = File.join(File.dirname(__FILE__), '..', 'sample_files')
+
+    tmp_hpxml_path = File.join(sample_files_path, 'tmp.xml')
+    hpxml = HPXML.new(hpxml_path: File.join(sample_files_path, 'base-hvac-install-quality-air-to-air-heat-pump-1-speed.xml'))
+    hpxml.buildings[0].header.allow_increased_fixed_capacities = true
+    hpxml.buildings[0].heat_pumps[0].heating_capacity /= 10.0
+    hpxml.buildings[0].heat_pumps[0].cooling_capacity /= 10.0
+    hpxml.buildings[0].heat_pumps[0].backup_heating_capacity /= 10.0
+    hpxml.buildings[0].heat_pumps[0].heating_design_airflow_cfm /= 10.0
+    hpxml.buildings[0].heat_pumps[0].cooling_design_airflow_cfm /= 10.0
+    XMLHelper.write_file(hpxml.to_doc, tmp_hpxml_path)
+
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{tmp_hpxml_path}\""
     system(command, err: File::NULL)
-    assert(File.exist? File.join(File.dirname(xml), 'run', 'results_annual.csv'))
-    base_results = CSV.read(File.join(File.dirname(xml), 'run', 'results_annual.csv'))
+    assert(File.exist? File.join(File.dirname(tmp_hpxml_path), 'run', 'results_annual.csv'))
+    base_results = CSV.read(File.join(File.dirname(tmp_hpxml_path), 'run', 'results_annual.csv'))
 
     # Run in.xml (generated from base.xml)
-    xml2 = File.join(File.dirname(xml), 'run', 'in.xml')
-    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml2}\""
+    in_xml = File.join(File.dirname(tmp_hpxml_path), 'run', 'in.xml')
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{in_xml}\""
     system(command, err: File::NULL)
-    assert(File.exist? File.join(File.dirname(xml2), 'run', 'results_annual.csv'))
-    default_results = CSV.read(File.join(File.dirname(xml2), 'run', 'results_annual.csv'))
+    assert(File.exist? File.join(File.dirname(in_xml), 'run', 'results_annual.csv'))
+    default_results = CSV.read(File.join(File.dirname(in_xml), 'run', 'results_annual.csv'))
 
     # Check two output files are identical
     assert_equal(base_results, default_results)
+
+    # Cleanup
+    File.delete(tmp_hpxml_path) if File.exist? tmp_hpxml_path
   end
 
   def test_template_osws

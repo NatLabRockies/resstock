@@ -259,6 +259,6 @@ class HPXMLtoOpenStudioWeatherTest < Minitest::Test
 
     # Check runner
     assert_equal(0, runner.result.stepErrors.size)
-    assert_equal(1, runner.result.stepWarnings.count { |w| w == 'No design condition info found; calculating design conditions from EPW weather data.' })
+    assert_equal(1, runner.result.stepWarnings.count { |w| w == 'No EPW design conditions found; calculating design conditions from EPW weather data.' })
   end
 end

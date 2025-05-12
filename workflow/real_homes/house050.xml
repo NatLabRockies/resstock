@@ -369,7 +369,6 @@
                 <Units>SEER</Units>
                 <Value>14.0</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.7</SensibleHeatFraction>
             </CoolingSystem>
           </HVACPlant>
           <HVACControl>
