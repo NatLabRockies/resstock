@@ -291,10 +291,10 @@ jobs:
 
       - name: Copy and commit results to resources
         run: |
-          mkdir -p project_national/resources/minimal_buildstock_result/results_csvs_pub/
-          cp -r project_national/sdr_upgrades_tmy3_v2/results_csvs_pub/* project_national/resources/minimal_buildstock_result/results_csvs_pub/
+          mkdir -p test/base_results/upgrades/sdr_annual/
+          cp -r project_national/sdr_upgrades_tmy3_v2/results_csvs_pub/* test/base_results/upgrades/sdr_annual/
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          git add project_national/resources/minimal_buildstock_result
+          git add test/base_results/upgrades/sdr_annual/
           git diff --cached --quiet || (
             git commit -m "Update minimal buildstock results"
             git push
