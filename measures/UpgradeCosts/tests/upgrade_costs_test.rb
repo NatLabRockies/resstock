@@ -779,5 +779,6 @@ class UpgradeCostsTest < Minitest::Test
     File.delete(File.join(File.dirname(__FILE__), upgrade_osw_file))
     File.delete(File.join(File.dirname(__FILE__), upgrade_osw_file.gsub('.osw', '.xml')))
     Dir.glob(File.join(File.dirname(__FILE__), 'in.*')).each { |f| File.delete(f) }
+    Dir.glob(File.join(File.dirname(__FILE__), 'results_*.csv')).each { |f| File.delete(f) }
   end
 end
