@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
-  <error></error>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>498f2709-670e-44be-b35f-9d78a36dc841</version_id>
-  <version_modified>2025-04-21T17:09:55Z</version_modified>
+  <version_id>0cad2b3b-f27e-4a96-ba7d-1fe9c4fda894</version_id>
+  <version_modified>2025-05-12T20:01:52Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -55,6 +54,25 @@
       <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>0</default_value>
+    </argument>
+    <argument>
+      <name>ev_flex_enabled</name>
+      <display_name>EV Flexibility Enabled</display_name>
+      <description>Whether to enable EV flexibility.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
     </argument>
     <argument>
       <name>building_id</name>
@@ -147,7 +165,7 @@
       <filename>test_template.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>4719AE8A</checksum>
+      <checksum>B468D88E</checksum>
     </file>
   </files>
 </measure>
