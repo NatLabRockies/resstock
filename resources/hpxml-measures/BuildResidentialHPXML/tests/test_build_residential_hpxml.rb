@@ -192,9 +192,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'error-unavailable-period-args-not-all-same-size.xml' => 'base-sfd.xml',
       'error-unavailable-period-window-natvent-invalid.xml' => 'base-sfd.xml',
       'error-heating-perf-data-not-all-specified.xml' => 'base-sfd.xml',
-      'error-heating-perf-data-not-all-same-size.xml' => 'base-sfd.xml',
       'error-cooling-perf-data-not-all-specified.xml' => 'base-sfd.xml',
-      'error-cooling-perf-data-not-all-same-size.xml' => 'base-sfd.xml',
       'error-emissions-args-not-all-specified.xml' => 'base-sfd.xml',
       'error-emissions-args-not-all-same-size.xml' => 'base-sfd.xml',
       'error-emissions-natural-gas-args-not-all-specified.xml' => 'base-sfd.xml',
@@ -258,9 +256,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'error-unavailable-period-args-not-all-same-size.xml' => ['One or more unavailable period arguments does not have enough comma-separated elements specified.'],
       'error-unavailable-period-window-natvent-invalid.xml' => ["Window natural ventilation availability 'invalid' during an unavailable period is invalid."],
       'error-heating-perf-data-not-all-specified.xml' => ['Did not specify all required heating detailed performance data arguments.'],
-      'error-heating-perf-data-not-all-same-size.xml' => ['One or more detailed heating performance data arguments does not have enough comma-separated elements specified.'],
       'error-cooling-perf-data-not-all-specified.xml' => ['Did not specify all required cooling detailed performance data arguments.'],
-      'error-cooling-perf-data-not-all-same-size.xml' => ['One or more detailed cooling performance data arguments does not have enough comma-separated elements specified.'],
       'error-emissions-args-not-all-specified.xml' => ['Did not specify all required emissions arguments.'],
       'error-emissions-args-not-all-same-size.xml' => ['One or more emissions arguments does not have enough comma-separated elements specified.'],
       'error-emissions-natural-gas-args-not-all-specified.xml' => ['Did not specify fossil fuel emissions units for natural gas emissions values.'],
@@ -503,8 +499,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['cooling_system_type'] = HPXML::HVACTypeCentralAirConditioner
       args['cooling_system_cooling_efficiency_type'] = HPXML::UnitsSEER
       args['cooling_system_cooling_efficiency'] = 13.0
-      args['cooling_system_cooling_compressor_type'] = HPXML::HVACCompressorTypeSingleStage
-      args['cooling_system_cooling_sensible_heat_fraction'] = 0.73
+      args['cooling_system_compressor_type'] = HPXML::HVACCompressorTypeSingleStage
       args['cooling_system_cooling_capacity'] = 24000.0
       args['cooling_system_fraction_cool_load_served'] = 1
       args['cooling_system_is_ducted'] = false
@@ -513,8 +508,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['heat_pump_heating_efficiency'] = 7.7
       args['heat_pump_cooling_efficiency_type'] = HPXML::UnitsSEER
       args['heat_pump_cooling_efficiency'] = 13.0
-      args['heat_pump_cooling_compressor_type'] = HPXML::HVACCompressorTypeSingleStage
-      args['heat_pump_cooling_sensible_heat_fraction'] = 0.73
+      args['heat_pump_compressor_type'] = HPXML::HVACCompressorTypeSingleStage
       args['heat_pump_heating_capacity'] = 36000.0
       args['heat_pump_cooling_capacity'] = 36000.0
       args['heat_pump_fraction_heat_load_served'] = 1
@@ -818,7 +812,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['heating_system_type'] = Constants::None
       args['cooling_system_type'] = Constants::None
       args['heat_pump_type'] = HPXML::HVACTypeHeatPumpMiniSplit
-      args['heat_pump_cooling_compressor_type'] = HPXML::HVACCompressorTypeVariableSpeed
+      args['heat_pump_compressor_type'] = HPXML::HVACCompressorTypeVariableSpeed
       args['heat_pump_heating_efficiency'] = 10.0
       args['heat_pump_cooling_efficiency'] = 19.0
       args['heat_pump_heating_capacity'] = 48000.0
@@ -954,20 +948,23 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['heat_pump_type'] = HPXML::HVACTypeHeatPumpAirToAir
       args['heat_pump_heating_efficiency'] = 10.0
       args['heat_pump_cooling_efficiency'] = 17.25
-      args['heat_pump_cooling_compressor_type'] = HPXML::HVACCompressorTypeVariableSpeed
-      args['heat_pump_cooling_sensible_heat_fraction'] = 0.78
+      args['heat_pump_compressor_type'] = HPXML::HVACCompressorTypeVariableSpeed
       args.delete('heat_pump_heating_capacity')
       args.delete('heat_pump_cooling_capacity')
       args['hvac_perf_data_capacity_type'] = 'Normalized capacity fractions'
       args['hvac_perf_data_heating_outdoor_temperatures'] = '47.0, 17.0, 5.0'
       args['hvac_perf_data_heating_min_speed_capacities'] = '0.28, 0.12, 0.05'
-      args['hvac_perf_data_heating_max_speed_capacities'] = '1.0, 0.69, 0.55'
+      args['hvac_perf_data_heating_nom_speed_capacities'] = '1.0, 0.5, 0.3'
+      args['hvac_perf_data_heating_max_speed_capacities'] = '1.2, 0.69, 0.55'
       args['hvac_perf_data_heating_min_speed_cops'] = '4.73, 1.84, 0.81'
+      args['hvac_perf_data_heating_nom_speed_cops'] = '4.0, 3.2, 1.8'
       args['hvac_perf_data_heating_max_speed_cops'] = '3.44, 2.66, 2.28'
       args['hvac_perf_data_cooling_outdoor_temperatures'] = '95.0, 82.0'
       args['hvac_perf_data_cooling_min_speed_capacities'] = '0.325, 0.37'
-      args['hvac_perf_data_cooling_max_speed_capacities'] = '1.0, 1.11'
+      args['hvac_perf_data_cooling_nom_speed_capacities'] = '1.0, 0.6'
+      args['hvac_perf_data_cooling_max_speed_capacities'] = '1.11, 1.5'
       args['hvac_perf_data_cooling_min_speed_cops'] = '4.47, 6.34'
+      args['hvac_perf_data_cooling_nom_speed_cops'] = '3.8, 5.0'
       args['hvac_perf_data_cooling_max_speed_cops'] = '2.71, 3.53'
     when 'extra-power-outage-periods.xml'
       args['schedules_unavailable_period_types'] = 'Power Outage, Power Outage'
@@ -1168,7 +1165,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['heating_system_type'] = Constants::None
       args['cooling_system_type'] = Constants::None
       args['heat_pump_type'] = HPXML::HVACTypeHeatPumpMiniSplit
-      args['heat_pump_cooling_compressor_type'] = HPXML::HVACCompressorTypeVariableSpeed
+      args['heat_pump_compressor_type'] = HPXML::HVACCompressorTypeVariableSpeed
       args['heat_pump_is_ducted'] = true
       args['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
       args['heating_system_2_type'] = HPXML::HVACTypeFurnace
@@ -1217,20 +1214,8 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['schedules_unavailable_period_window_natvent_availabilities'] = 'invalid'
     when 'error-heating-perf-data-not-all-specified.xml'
       args['hvac_perf_data_heating_outdoor_temperatures'] = '47.0'
-    when 'error-heating-perf-data-not-all-same-size.xml'
-      args['hvac_perf_data_heating_outdoor_temperatures'] = '47.0'
-      args['hvac_perf_data_heating_min_speed_capacities'] = '10000, 4200'
-      args['hvac_perf_data_heating_max_speed_capacities'] = '36000, 24800'
-      args['hvac_perf_data_heating_min_speed_cops'] = '4.73, 1.84'
-      args['hvac_perf_data_heating_max_speed_cops'] = '3.44, 2.66'
     when 'error-cooling-perf-data-not-all-specified.xml'
       args['hvac_perf_data_cooling_outdoor_temperatures'] = '95.0'
-    when 'error-cooling-perf-data-not-all-same-size.xml'
-      args['hvac_perf_data_cooling_outdoor_temperatures'] = '95.0'
-      args['hvac_perf_data_cooling_min_speed_capacities'] = '11700, 13200'
-      args['hvac_perf_data_cooling_max_speed_capacities'] = '36000, 40000'
-      args['hvac_perf_data_cooling_min_speed_cops'] = '4.47, 6.34'
-      args['hvac_perf_data_cooling_max_speed_cops'] = '2.71, 3.53'
     when 'error-emissions-args-not-all-specified.xml'
       args['emissions_scenario_names'] = 'Scenario1'
     when 'error-emissions-args-not-all-same-size.xml'
