@@ -5843,6 +5843,17 @@ Whether the heat pump uses the existing system as backup.
 
 <br/>
 
+**HVAC Distribution: Use Autosizing Limits and Maintain Duct System Curve**
+
+Whether to (a) set upper limits for autosized capacities and (b) adjust the blower fan efficiency.
+
+- **Name:** ``hvac_distribution_use_duct_restriction``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
 **Electric Vehicle: Average Miles Per Hour**
 
 The average miles/hour driven by the vehicle.

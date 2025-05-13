@@ -399,6 +399,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Whether the heat pump uses the existing system as backup.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('hvac_distribution_use_duct_restriction', false)
+    arg.setDisplayName('HVAC Distribution: Use Autosizing Limits and Maintain Duct System Curve')
+    arg.setDescription('Whether to (a) set upper limits for autosized capacities and (b) adjust the blower fan efficiency.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_average_mph', false)
     arg.setDisplayName('Electric Vehicle: Average Miles Per Hour')
     arg.setDescription('The average miles/hour driven by the vehicle.')

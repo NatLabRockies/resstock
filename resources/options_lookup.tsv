@@ -9941,6 +9941,7 @@ HVAC System Single Speed ASHP Charge	None
 Has PV	No
 Has PV	Yes
 Heat Pump Backup	Use Existing System	ResStockArguments	heat_pump_backup_use_existing_system=true
+HVAC Distribution	Use Duct Restriction	ResStockArguments	hvac_distribution_use_duct_restriction=true
 Heating Fuel	Electricity	ResStockArguments	heating_system_fuel=electricity
 Heating Fuel	Fuel Oil	ResStockArguments	heating_system_fuel=fuel oil
 Heating Fuel	Natural Gas	ResStockArguments	heating_system_fuel=natural gas

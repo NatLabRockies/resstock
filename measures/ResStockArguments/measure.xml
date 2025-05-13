@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>6919e640-25dd-4c6c-bfb5-889606325b24</version_id>
-  <version_modified>2025-05-08T15:48:05Z</version_modified>
+  <version_id>fd5a3f46-d73e-4fda-9e35-2e092400e352</version_id>
+  <version_modified>2025-05-13T18:31:10Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -7752,6 +7752,24 @@
       </choices>
     </argument>
     <argument>
+      <name>hvac_distribution_use_duct_restriction</name>
+      <display_name>HVAC Distribution: Use Autosizing Limits and Maintain Duct System Curve</display_name>
+      <description>Whether to (a) set upper limits for autosized capacities and (b) adjust the blower fan efficiency.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>ev_average_mph</name>
       <display_name>Electric Vehicle: Average Miles Per Hour</display_name>
       <description>The average miles/hour driven by the vehicle.</description>
@@ -7787,7 +7805,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>3A9CC2B9</checksum>
+      <checksum>A94E8DCA</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7804,7 +7822,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>AE180932</checksum>
+      <checksum>ADA7AA3C</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
