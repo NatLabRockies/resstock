@@ -247,6 +247,9 @@ Non-zero end uses from :ref:`annualenduses` will be included.
 Annual Emissions
 ~~~~~~~~~~~~~~~~
 
+When no emissions scenarios are specified, emissions outputs will not be reported.
+See :ref:`hpxml_emissions_scenarios` for more information about specifying emissions scenarios.
+
 Results for each emissions scenario defined in the HPXML file are listed as shown below.
 
   =======================================================================  ==================================================================
@@ -630,6 +633,9 @@ Timeseries Outputs
 ------------------
 
 OpenStudio-HPXML can optionally generate a timeseries output file.
+
+**Note**: This output file is only available when timeseries outputs are requested.
+
 The timeseries output file is called ``results_timeseries.csv`` (or ``.json`` or ``.msgpack``) and located in the run directory.
 If multiple timeseries frequencies are requested (e.g., hourly and daily), the timeseries output filenames will include the frequency (e.g., ``run/results_timeseries_daily.csv``).
 
@@ -673,6 +679,11 @@ Utility Bill Outputs
 --------------------
 
 OpenStudio-HPXML can optionally generate utility bill output files (annual, monthly, or both).
+
+**Note**: These output files are only available when utility bill scenarios are specified.
+When no utility bill scenarios are specified, utility bill output files are not generated.
+See :ref:`hpxml_utility_bill_scenarios` for more information about specifying utility bill scenarios.
+
 The annual utility bills output file is called ``results_bills.csv`` (or ``.json`` or ``.msgpack``) and located in the run directory.
 The monthly utility bills output file is called ``results_bills_monthly.csv`` (or ``.json`` or ``.msgpack``) and located in the run directory.
 
@@ -720,6 +731,11 @@ Electric Panel Outputs
 ----------------------
 
 OpenStudio-HPXML can optionally generate an electric panels output file.
+
+**Note**: This output file is only available when electric panel load calculation outputs are requested.
+When no load calculation types are specified, the electric panels output file is not generated.
+See :ref:`hpxml_electric_panel_calculations` for more information about specifying electric panel load calculation types.
+
 The electric panels output file is called ``results_panel.csv`` (or ``.json`` or ``.msgpack``) and located in the run directory.
 Panel breaker spaces and loads can also be found in the ``in.xml`` file.
 

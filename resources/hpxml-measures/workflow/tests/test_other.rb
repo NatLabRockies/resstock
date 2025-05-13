@@ -238,6 +238,35 @@ class WorkflowOtherTest < Minitest::Test
     refute(File.exist? File.join(File.dirname(xml), 'run', 'eplusout.msgpack'))
   end
 
+  def test_run_simulation_electric_panel_outputs
+    # Check that the simulation produces electric panel only when requested
+
+    # Run base.xml (no panel information or calculation types)
+    rb_path = File.join(File.dirname(__FILE__), '..', 'run_simulation.rb')
+    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base.xml')
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\""
+    system(command, err: File::NULL)
+
+    # Check for output files
+    refute(File.exist? File.join(File.dirname(xml), 'run', 'results_panel.csv'))
+
+    # Run base-detailed-electric-panel-no-calculation-types.xml (panel information but no calculation types)
+    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base-detailed-electric-panel-no-calculation-types.xml')
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\""
+    system(command, err: File::NULL)
+
+    # Check for output files
+    refute(File.exist? File.join(File.dirname(xml), 'run', 'results_panel.csv'))
+
+    # Run base-detailed-electric-panel.xml (both panel information and calculation types)
+    xml = File.join(File.dirname(__FILE__), '..', 'sample_files', 'base-detailed-electric-panel.xml')
+    command = "\"#{OpenStudio.getOpenStudioCLI}\" \"#{rb_path}\" -x \"#{xml}\""
+    system(command, err: File::NULL)
+
+    # Check for output files
+    assert(File.exist? File.join(File.dirname(xml), 'run', 'results_panel.csv'))
+  end
+
   def test_run_defaulted_in_xml
     # Check that if we simulate the in.xml file (HPXML w/ defaults), we get
     # the same results as the original HPXML.
