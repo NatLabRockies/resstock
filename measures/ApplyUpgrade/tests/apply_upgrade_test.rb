@@ -122,6 +122,24 @@ class ApplyUpgradeTest < Minitest::Test
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeIntegrated
     _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, 'true', expected_values)
+
+    puts 'Duct restriction:'
+    expected_values = {
+      'max_airflow_cfm' => 2182.0 / 0.75,
+      'autosizing_limit' => (2182.0 / 0.75) / 400.0 * 12000.0
+    }
+
+    expected_values['adjusted_fan_watts_per_cfm'] = 0.064
+    _test_duct_restriction(1200.0, 0.375, expected_values)
+
+    expected_values['adjusted_fan_watts_per_cfm'] = 0.075
+    _test_duct_restriction(1300.0, 0.375, expected_values)
+
+    expected_values['adjusted_fan_watts_per_cfm'] = 0.087
+    _test_duct_restriction(1400.0, 0.375, expected_values)
+
+    expected_values['adjusted_fan_watts_per_cfm'] = 0.375
+    _test_duct_restriction(2182.0 / 0.75, 0.375, expected_values)
   end
 
   def test_SFD_2story_CS_UA_AC2_FuelBoiler_FuelTankWH
@@ -184,6 +202,24 @@ class ApplyUpgradeTest < Minitest::Test
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
     _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, 'true', expected_values)
+
+    puts 'Duct restriction:'
+    expected_values = {
+      'max_airflow_cfm' => 2000.0,
+      'autosizing_limit' => 2000.0 / 400.0 * 12000.0
+    }
+
+    expected_values['adjusted_fan_watts_per_cfm'] = 0.135
+    _test_duct_restriction(1200.0, 0.375, expected_values)
+
+    expected_values['adjusted_fan_watts_per_cfm'] = 0.158
+    _test_duct_restriction(1300.0, 0.375, expected_values)
+
+    expected_values['adjusted_fan_watts_per_cfm'] = 0.184
+    _test_duct_restriction(1400.0, 0.375, expected_values)
+
+    expected_values['adjusted_fan_watts_per_cfm'] = 0.375
+    _test_duct_restriction(2000.0, 0.375, expected_values)
   end
 
   def test_SFD_2story_FB_UA_GRG_AC1_ElecBaseboard_FuelTankWH
@@ -397,6 +433,33 @@ class ApplyUpgradeTest < Minitest::Test
           assert_nil(actual_values[str])
         else
           assert_equal(val, actual_values[str])
+        end
+      end
+    end
+  end
+
+  def _test_duct_restriction(upgrade_max_airflow_cfm, fan_watts_per_cfm, expected_values)
+    this_dir = File.dirname(__FILE__)
+    hpxml_path = File.join(this_dir, '../../UpgradeCosts/tests/in.xml')
+    hpxml = HPXML.new(hpxml_path: hpxml_path)
+
+    # Create instance of the measure
+    measure = ApplyUpgrade.new
+
+    hpxml.buildings.each do |hpxml_bldg|
+      actual_values = measure.get_duct_restriction_values(hpxml_bldg)
+
+      puts "\tupgrade_max_airflow_cfm='#{upgrade_max_airflow_cfm}', fan_watts_per_cfm='#{fan_watts_per_cfm}'..."
+
+      baseline_max_airflow_cfm = actual_values['max_airflow_cfm']
+      adjusted_fan_watts_per_cfm = measure.get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
+      actual_values['adjusted_fan_watts_per_cfm'] = adjusted_fan_watts_per_cfm
+
+      expected_values.each do |str, val|
+        if val.nil?
+          assert_nil(actual_values[str])
+        else
+          assert_in_epsilon(val, actual_values[str], 0.01)
         end
       end
     end

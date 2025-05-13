@@ -328,17 +328,14 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # Optional whole SFA/MF building simulation
     whole_sfa_or_mf_building_sim = hpxml.header.whole_sfa_or_mf_building_sim
 
+    # Retain Existing Heating System as Heat Pump Backup
+    heat_pump_backup_use_existing_system = measures['ResStockArguments'][0]['heat_pump_backup_use_existing_system']
+
     # Use Autosizing Limits and Maintain Duct System Curve
     use_duct_restriction = measures['ResStockArguments'][0]['hvac_distribution_use_duct_restriction']
-    if use_duct_restriction == 'true'
-      cfm_per_ton = 400.0
-      baseline_max_airflow_cfm = nil
-    end
 
     new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
-      unit_number += 1
-
       measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
 
       # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
@@ -352,7 +349,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       # Set whole SFA/MF building simulation items
       measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = whole_sfa_or_mf_building_sim
 
-      if unit_number > 1
+      if unit_number > 0
         measures['BuildResidentialHPXML'][0]['existing_hpxml_path'] = hpxml_path
       end
 
@@ -400,7 +397,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       measures['BuildResidentialHPXML'][0]['heat_pump_charge_defect_ratio'] = defect_ratios['heat_pump_charge_defect_ratio']
 
       # Retain Existing Heating System as Heat Pump Backup
-      heat_pump_backup_use_existing_system = measures['ResStockArguments'][0]['heat_pump_backup_use_existing_system']
       if heat_pump_backup_use_existing_system == 'true'
         heating_system = get_heating_system(hpxml_bldg)
         heat_pump_type = measures['BuildResidentialHPXML'][0]['heat_pump_type']
@@ -458,14 +454,16 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         end
       end
 
-      # Use Duct Restriction
+      # Use Autosizing Limits and Maintain Duct System Curve (Part 1)
+      # Set the autosizing limit based on the baseline airflow.
       if use_duct_restriction == 'true'
-        air_distribution_airflows = get_air_distribution_airflows(hpxml_bldg)
+        duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
 
-        if !air_distribution_airflows.empty? # Only limit HVAC system types with ducted air distribution
-          baseline_max_airflow_cfm = air_distribution_airflows.max
-          autosizing_limit = UnitConversions.convert(baseline_max_airflow_cfm / cfm_per_ton, 'ton', 'Btu/hr')
+        baseline_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
+        autosizing_limit = duct_restriction_values['autosizing_limit']
 
+        # Only limit HVAC system types with ducted air distribution.
+        if not autosizing_limit.nil?
           if [HPXML::HVACTypeFurnace].include?(measures['BuildResidentialHPXML'][0]['heating_system_type'])
             measures['BuildResidentialHPXML'][0]['heating_system_heating_autosizing_limit'] = autosizing_limit
           end
@@ -477,6 +475,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
              ([HPXML::HVACTypeHeatPumpMiniSplit].include?(measures['BuildResidentialHPXML'][0]['heat_pump_type']) && (measures['BuildResidentialHPXML'][0]['heat_pump_is_ducted']) == 'true')
             measures['BuildResidentialHPXML'][0]['heat_pump_heating_autosizing_limit'] = autosizing_limit
             measures['BuildResidentialHPXML'][0]['heat_pump_cooling_autosizing_limit'] = autosizing_limit
+            # We intentionally do not limit the heat pump backup heating autosized value below.
             # measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_autosizing_limit'] = autosizing_limit
           end
           if [HPXML::HVACTypeFurnace].include?(measures['BuildResidentialHPXML'][0]['heating_system_2_type'])
@@ -549,43 +548,43 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         register_logs(runner, new_runner)
         return false
       end
-    end # end hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
 
-    # Maintain Duct System Curve
-    if use_duct_restriction == 'true'
+      # Use Autosizing Limits and Maintain Duct System Curve (Part 2)
+      # Grab the upgrade airflow, and use it along with the baseline airflow and upgrade blower fan W/cfm, to make an adjustment to the blower fan W/cfm.
+      # Apply the BuildResidentialHPXML measure again, which overwrites the first application of the measure.
+      next unless use_duct_restriction == 'true'
+
       if File.exist?(hpxml_path)
         hpxml = HPXML.new(hpxml_path: hpxml_path)
       else
         runner.registerWarning("ApplyUpgrade measure could not find '#{hpxml_path}'.")
         return true
       end
+      hpxml_bldg = hpxml.buildings[unit_number]
 
-      hpxml.buildings.each_with_index do |hpxml_bldg, _unit_number|
-        air_distribution_airflows = get_air_distribution_airflows(hpxml_bldg)
+      duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
+      upgrade_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
 
-        if !baseline_max_airflow_cfm.nil? && !air_distribution_airflows.empty? # ducted -> ducted
-          upgrade_max_airflow_cfm = air_distribution_airflows.max
+      if (not baseline_max_airflow_cfm.nil?) && (not upgrade_max_airflow_cfm.nil?) # ducted -> ducted
+        fan_watts_per_cfm = get_fan_watts_per_cfm(hpxml_bldg)
+        adjusted_fan_watts_per_cfm = get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
 
-          fan_watts_per_cfm = get_fan_watts_per_cfm(hpxml_bldg)
-          adjusted_fan_watts_per_cfm = get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
+        measures['BuildResidentialHPXML'][0]['hvac_blower_fan_watts_per_cfm'] = adjusted_fan_watts_per_cfm
+      else # not ducted -> ducted; don't set autosizing limits or adjusted fan power
+        measures['BuildResidentialHPXML'][0].delete('heating_system_heating_autosizing_limit')
+        measures['BuildResidentialHPXML'][0].delete('cooling_system_cooling_autosizing_limit')
+        measures['BuildResidentialHPXML'][0].delete('heat_pump_heating_autosizing_limit')
+        measures['BuildResidentialHPXML'][0].delete('heat_pump_cooling_autosizing_limit')
+        measures['BuildResidentialHPXML'][0].delete('heat_pump_backup_heating_autosizing_limit')
+        measures['BuildResidentialHPXML'][0].delete('heating_system_2_heating_autosizing_limit')
+      end
 
-          measures['BuildResidentialHPXML'][0]['hvac_blower_fan_watts_per_cfm'] = adjusted_fan_watts_per_cfm
-        else # not ducted -> ducted; don't set autosizing limits or adjusted fan power
-          measures['BuildResidentialHPXML'][0].delete('heating_system_heating_autosizing_limit')
-          measures['BuildResidentialHPXML'][0].delete('cooling_system_cooling_autosizing_limit')
-          measures['BuildResidentialHPXML'][0].delete('heat_pump_heating_autosizing_limit')
-          measures['BuildResidentialHPXML'][0].delete('heat_pump_cooling_autosizing_limit')
-          measures['BuildResidentialHPXML'][0].delete('heat_pump_backup_heating_autosizing_limit')
-          measures['BuildResidentialHPXML'][0].delete('heating_system_2_heating_autosizing_limit')
-        end
-
-        measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
-        if not apply_measures(hpxml_measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
-          register_logs(runner, new_runner)
-          return false
-        end
-      end # end hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
-    end # end use_autosizing_limits_and_maintain_duct_system_curve
+      measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
+      if not apply_measures(hpxml_measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
+        register_logs(runner, new_runner)
+        return false
+      end
+    end # end hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
 
     # Get registered values and pass them to BuildResidentialScheduleFile
     measures['BuildResidentialScheduleFile'] = [{ 'hpxml_path' => hpxml_path,
@@ -849,8 +848,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def get_air_distribution_airflows(hpxml_bldg)
-    # Assume at most one ducted system with a single heating and/or cooling system
-    # We divide airflow by fraction of load served to account for partial conditioning adjustments
+    # Assume at most one ducted system with a single heating and/or cooling system.
+    # We divide airflow by fraction of load served to account for partial conditioning adjustments.
 
     fraction_heat_load_served = nil
     fraction_cool_load_served = nil
@@ -888,8 +887,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    # The following assumes we will be expanding (i.e., rebuilding) the existing ducts
-    # So we avoid setting a heating/cooling autosizing limit
+    # The following assumes we will be expanding (i.e., rebuilding) the existing ducts.
+    # So we avoid setting a heating/cooling autosizing limit.
     if fraction_heat_load_served.nil? && !fraction_cool_load_served.nil? && fraction_cool_load_served < 1.0
       air_distribution_airflows = []
     end
@@ -897,8 +896,24 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     return air_distribution_airflows
   end
 
+  def get_duct_restriction_values(hpxml_bldg)
+    duct_restriction_values = {
+      'max_airflow_cfm' => nil,
+      'autosizing_limit' => nil
+    }
+
+    air_distribution_airflows = get_air_distribution_airflows(hpxml_bldg)
+    if !air_distribution_airflows.empty?
+      duct_restriction_values['max_airflow_cfm'] = air_distribution_airflows.max
+      cfm_per_ton = 400.0
+      duct_restriction_values['autosizing_limit'] = UnitConversions.convert(duct_restriction_values['max_airflow_cfm'] / cfm_per_ton, 'ton', 'Btu/hr')
+    end
+
+    return duct_restriction_values
+  end
+
   def get_fan_watts_per_cfm(hpxml_bldg)
-    # Assume at most one ducted system with a single blower fan
+    # Assume at most one ducted system with a single blower fan.
 
     fan_watts_per_cfm = nil
     hpxml_bldg.hvac_distributions.each do |hvac_distribution|
@@ -912,6 +927,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
+    # FIXME: source? description?
+
     v_baseline = baseline_max_airflow_cfm
     v_upgrade = upgrade_max_airflow_cfm
 
