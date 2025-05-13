@@ -125,7 +125,9 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       return true
     end
 
+    # Assign the user inputs to variables
     args = runner.getArgumentValues(arguments(model), user_arguments)
+
     # Retrieve Option X argument values
     options = {}
     for option_num in 1..num_options
