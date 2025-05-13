@@ -4412,7 +4412,7 @@ module HPXMLFile
     xsd_errors, xsd_warnings = XMLValidator.validate_against_schema(hpxml_path, schema_validator)
 
     # Validate input HPXML against schematron docs
-    schematron_path = File.join(File.dirname(__FILE__), '..', 'HPXMLtoOpenStudio', 'resources', 'hpxml_schematron', 'EPvalidator.xml')
+    schematron_path = File.join(File.dirname(__FILE__), '..', 'HPXMLtoOpenStudio', 'resources', 'hpxml_schematron', 'EPvalidator.sch')
     schematron_validator = XMLValidator.get_xml_validator(schematron_path)
     sct_errors, sct_warnings = XMLValidator.validate_against_schematron(hpxml_path, schematron_validator, hpxml_doc)
 

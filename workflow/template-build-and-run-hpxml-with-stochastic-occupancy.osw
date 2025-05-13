@@ -76,7 +76,8 @@
         "window_left_wwr": 0,
         "window_right_wwr": 0,
         "window_shgc": 0.45,
-        "window_ufactor": 0.33
+        "window_ufactor": 0.33,
+        "utility_bill_scenario_names": "Bills"
       },
       "measure_dir_name": "BuildResidentialHPXML"
     },

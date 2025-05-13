@@ -22,7 +22,7 @@ HPXML files submitted to OpenStudio-HPXML undergo a two step validation process:
 
 2. Validation using `Schematron <http://schematron.com/>`_
 
-  The Schematron document for the EnergyPlus use case can be found at ``HPXMLtoOpenStudio/resources/hpxml_schematron/EPvalidator.xml``.
+  The Schematron document for the EnergyPlus use case can be found at ``HPXMLtoOpenStudio/resources/hpxml_schematron/EPvalidator.sch``.
   Schematron is a rule-based validation language, expressed in XML using XPath expressions, for validating the presence or absence of inputs in XML files.
   As opposed to an XSD Schema, a Schematron document validates constraints and requirements based on conditionals and other logical statements.
   For example, if an element is specified with a particular value, the applicable enumerations of another element may change.
@@ -136,6 +136,8 @@ These features may require shorter timesteps, allow more sophisticated simulatio
   .. [#] Use "standard" for standard ground-to-air heat pump modeling.
          Use "experimental" for an improved model that better accounts for coil staging.
          The "experimental" ground-to-air heat pump models with desuperheater are not supported yet, see :ref:`water_heater_desuperheater`.
+
+.. _hpxml_emissions_scenarios:
 
 HPXML Emissions Scenarios
 *************************
@@ -4640,7 +4642,9 @@ HPXML Electric Panels
 *********************
 
 A single electric panel can be entered as a ``/HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel``.
-An electric panel is only used and subject to having default values applied when at least one load calculation type is specified (see :ref:`hpxml_electric_panel_calculations`).
+
+**Note**: An electric panel is only used and subject to having default values applied when load calculation types are specified.
+See :ref:`hpxml_electric_panel_calculations` for more information about specifying electric panel load calculation types.
 
   =======================================================================  =======  =========  =======================  ========  =============  ============================================
   Element                                                                  Type     Units      Constraints              Required  Default        Notes

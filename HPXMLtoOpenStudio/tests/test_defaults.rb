@@ -3444,6 +3444,28 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
   end
 
   def test_electric_panels
+    # Test electric panel is never added
+    hpxml, _hpxml_bldg = _create_hpxml('base.xml')
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    assert_equal(0, default_hpxml_bldg.electric_panels.size)
+    hpxml, hpxml_bldg = _create_hpxml('base-detailed-electric-panel.xml')
+    hpxml_bldg.electric_panels.clear
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    assert_equal(0, default_hpxml_bldg.electric_panels.size)
+
+    # Test electric panel is not defaulted without calculation types
+    hpxml, hpxml_bldg = _create_hpxml('base-detailed-electric-panel.xml')
+    hpxml.header.service_feeders_load_calculation_types = []
+    hpxml_bldg.electric_panels[0].voltage = nil
+    hpxml_bldg.electric_panels[0].max_current_rating = nil
+    hpxml_bldg.electric_panels[0].headroom_spaces = nil
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    electric_panel = default_hpxml_bldg.electric_panels[0]
+    _test_default_electric_panel_values(electric_panel, nil, nil, nil, nil)
+
     # Test electric panel inputs not overriden by defaults
     hpxml, hpxml_bldg = _create_hpxml('base-detailed-electric-panel.xml')
     electric_panel = hpxml_bldg.electric_panels[0]
@@ -3537,7 +3559,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeLaundry }, 10000, true)
     _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeOther }, 11000, true)
 
-    # Test w/ RatedTotalSpaces instead of Headroom
+    # Test w/ RatedTotalSpaces instead of HeadroomSpaces
     hpxml_bldg.electric_panels[0].headroom_spaces = nil
     hpxml_bldg.electric_panels[0].rated_total_spaces = 12
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
@@ -5919,8 +5941,16 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
   end
 
   def _test_default_electric_panel_values(electric_panel, voltage, max_current_rating, headroom_spaces, rated_total_spaces)
-    assert_equal(voltage, electric_panel.voltage)
-    assert_equal(max_current_rating, electric_panel.max_current_rating)
+    if voltage.nil?
+      assert_nil(electric_panel.voltage)
+    else
+      assert_equal(voltage, electric_panel.voltage)
+    end
+    if max_current_rating.nil?
+      assert_nil(electric_panel.max_current_rating)
+    else
+      assert_equal(max_current_rating, electric_panel.max_current_rating)
+    end
     if headroom_spaces.nil?
       assert_nil(electric_panel.headroom_spaces)
     else
