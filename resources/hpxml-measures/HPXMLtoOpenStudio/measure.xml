@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>5b1da384-16e0-4508-85a1-c62ff2fd5d6f</version_id>
-  <version_modified>2025-05-08T05:56:02Z</version_modified>
+  <version_id>c93419dd-9c94-4f3f-ab87-4e86f0d1004d</version_id>
+  <version_modified>2025-05-12T17:11:23Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -264,6 +264,12 @@
       <checksum>FC171B98</checksum>
     </file>
     <file>
+      <filename>data/default_panels.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>02E3F5B6</checksum>
+    </file>
+    <file>
       <filename>data/default_schedules.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
@@ -333,7 +339,13 @@
       <filename>defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>13129E81</checksum>
+      <checksum>301E5456</checksum>
+    </file>
+    <file>
+      <filename>electric_panel.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>8365E56D</checksum>
     </file>
     <file>
       <filename>energyplus.rb</filename>
@@ -363,13 +375,13 @@
       <filename>hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9C53526C</checksum>
+      <checksum>16E5EB8C</checksum>
     </file>
     <file>
       <filename>hpxml_schema/HPXML.xsd</filename>
       <filetype>xsd</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E36727BB</checksum>
+      <checksum>7F241E64</checksum>
     </file>
     <file>
       <filename>hpxml_schema/README.md</filename>
@@ -381,7 +393,7 @@
       <filename>hpxml_schematron/EPvalidator.sch</filename>
       <filetype>sch</filetype>
       <usage_type>resource</usage_type>
-      <checksum>510A21D0</checksum>
+      <checksum>AE0A6375</checksum>
     </file>
     <file>
       <filename>hpxml_schematron/iso-schematron.xsd</filename>
@@ -393,7 +405,7 @@
       <filename>hvac.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>033B937B</checksum>
+      <checksum>F8C92AFD</checksum>
     </file>
     <file>
       <filename>hvac_sizing.rb</filename>
@@ -459,7 +471,7 @@
       <filename>output.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7BB1D071</checksum>
+      <checksum>B97408D1</checksum>
     </file>
     <file>
       <filename>psychrometrics.rb</filename>
@@ -675,7 +687,7 @@
       <filename>waterheater.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D3763678</checksum>
+      <checksum>5878AFFC</checksum>
     </file>
     <file>
       <filename>weather.rb</filename>
@@ -711,7 +723,13 @@
       <filename>test_defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>46FA64AB</checksum>
+      <checksum>FD4F1BDD</checksum>
+    </file>
+    <file>
+      <filename>test_electric_panel.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>F3FC6C61</checksum>
     </file>
     <file>
       <filename>test_enclosure.rb</filename>
@@ -783,7 +801,7 @@
       <filename>test_validation.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>D9247B80</checksum>
+      <checksum>2E56618D</checksum>
     </file>
     <file>
       <filename>test_vehicle.rb</filename>
