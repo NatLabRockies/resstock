@@ -141,7 +141,7 @@ class WorkflowOtherTest < Minitest::Test
         # Check run.log has no warnings about both simple and detailed schedules
         assert(File.exist? File.join(File.dirname(xml), 'run', 'run.log'))
         log_lines = File.readlines(File.join(File.dirname(xml), 'run', 'run.log')).map(&:strip)
-        refute(log_lines.any? { |log_line| log_line.include?('provided; the latter will be ignored') })
+        refute(log_lines.any? { |log_line| log_line.include?('will be ignored') })
 
         # Cleanup
         File.delete(tmp_hpxml_path) if File.exist? tmp_hpxml_path

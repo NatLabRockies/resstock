@@ -357,10 +357,10 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
           plug_load.monthly_multipliers = nil
         end
       when SchedulesFile::Columns[:ElectricVehicle].name
-        hpxml_bldg.plug_loads.select { |pl| pl.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging }.each do |plug_load|
-          plug_load.weekday_fractions = nil
-          plug_load.weekend_fractions = nil
-          plug_load.monthly_multipliers = nil
+        hpxml_bldg.vehicles.select { |v| v.vehicle_type == HPXML::VehicleTypeBEV }.each do |vehicle|
+          vehicle.ev_weekday_fractions = nil
+          vehicle.ev_weekend_fractions = nil
+          vehicle.ev_monthly_multipliers = nil
         end
       else
         fail "Unexpected column name: #{column_name}"
