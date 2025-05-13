@@ -18,7 +18,7 @@ __New Features__
   - Adds optional new outputs for timeseries zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures).
   - Adds new outputs for *net* peak electricity (summer/winter/annual); same as *total* peak electricity outputs but subtracts power produced by PV.
   - Avoids writing the E+ eplustbl.htm by default; use the debug flag to get it.
-  - Deletes the eplusout\*.msgpack files by default (run_simulation.rb only); use the debug flag to preserve them.
+  - Deletes eplusout\*.msgpack files by default (run_simulation.rb only); use the debug flag to preserve them.
 - Allows arbitrary columns to be present in a detailed schedule csv file with warning.
 - Electric panel calculations:
   - Allows optional `ElectricPanel` inputs for describing branch circuits and service feeders
@@ -37,7 +37,9 @@ __Bugfixes__
 - Fixes whole house fans so that they are unavailable during vacancies.
 - Fixes error if there's a vented attic with zero roof pitch.
 - Fixes tank loss coefficient when TankModelType=stratified for a conventional storage water heater.
+- Fixes possibility of incorrect design duct load for really bad ducts (e.g., ducts with high surface area in a cold attic).
 - Adds error-checking to ensure TankModelType=stratified is not used with a non-electric water heater.
+- BuildResidentialHPXML measure: Improves default duct areas/locations for 1-story buildings with a conditioned basement and ducts located in the attic.
 - BuildResidentialHPXML measure: Fixes error when specifying a combi boiler as the water heater type and a *shared* boiler as the heating system type.
 - BuildResidentialScheduleFile measure: Fixes out-of-sync shifting of occupancy and end use schedule resulting in activities even when there is no occupancy.
 - BuildResidentialScheduleFile measure: Fixes a small bug in sink schedule generation resulting in more concentrated schedule.
