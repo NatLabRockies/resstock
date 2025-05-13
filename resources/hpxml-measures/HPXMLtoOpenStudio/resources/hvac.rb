@@ -1539,10 +1539,7 @@ module HVAC
     if ceiling_fan_sch.nil?
       ceiling_fan_unavailable_periods = Schedule.get_unavailable_periods(runner, ceiling_fan_col_name, hpxml_header.unavailable_periods)
       annual_kwh *= ceiling_fan.monthly_multipliers.split(',').map(&:to_f).sum(0.0) / 12.0
-      weekday_sch = ceiling_fan.weekday_fractions
-      weekend_sch = ceiling_fan.weekend_fractions
-      monthly_sch = ceiling_fan.monthly_multipliers
-      ceiling_fan_sch_obj = MonthWeekdayWeekendSchedule.new(model, obj_name + ' schedule', weekday_sch, weekend_sch, monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: ceiling_fan_unavailable_periods)
+      ceiling_fan_sch_obj = MonthWeekdayWeekendSchedule.new(model, obj_name + ' schedule', ceiling_fan.weekday_fractions, ceiling_fan.weekend_fractions, ceiling_fan.monthly_multipliers, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: ceiling_fan_unavailable_periods)
       ceiling_fan_design_level = ceiling_fan_sch_obj.calc_design_level_from_daily_kwh(annual_kwh / 365.0)
       ceiling_fan_sch = ceiling_fan_sch_obj.schedule
     else

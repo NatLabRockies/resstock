@@ -175,10 +175,7 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
       success = create_schedules(runner, hpxml, hpxml_bldg, weather, args)
       return false unless success
 
-      # modify the hpxml with the schedules path
-      if !orig_hpxml.buildings[i].header.schedules_filepaths.include?(args[:output_csv_path])
-        orig_hpxml.buildings[i].header.schedules_filepaths << args[:output_csv_path]
-      end
+      update_hpxml_building(orig_hpxml.buildings[i], args)
     end
 
     if create_backup
@@ -264,7 +261,12 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
       # Unhandled state code, fallback to CO
       args[:state] = 'CO'
     end
-    args[:column_names] = args[:schedules_column_names].split(',').map(&:strip) if !args[:schedules_column_names].nil?
+
+    if !args[:schedules_column_names].nil?
+      args[:column_names] = args[:schedules_column_names].split(',').map(&:strip)
+    else
+      args[:column_names] = ScheduleGenerator.export_columns
+    end
 
     if hpxml_bldg.building_occupancy.number_of_residents.nil?
       args[:geometry_num_occupants] = Geometry.get_occupancy_default_num(hpxml_bldg.building_construction.number_of_bedrooms)
@@ -276,6 +278,94 @@ class BuildResidentialScheduleFile < OpenStudio::Measure::ModelMeasure
     args[:time_zone_utc_offset] = hpxml_bldg.time_zone_utc_offset
     args[:latitude] = hpxml_bldg.latitude
     args[:longitude] = hpxml_bldg.longitude
+  end
+
+  # Updates the HPXML Building (that will be written to file) to include the new
+  # schedule filepath and remove simple schedules.
+  #
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param args [Hash] Map of :argument_name => value
+  # @return [nil]
+  def update_hpxml_building(hpxml_bldg, args)
+    # Update the schedules path
+    if !hpxml_bldg.header.schedules_filepaths.include?(args[:output_csv_path])
+      hpxml_bldg.header.schedules_filepaths << args[:output_csv_path]
+    end
+
+    # Remove simple schedules (so that we don't have both detailed/stochastic schedules
+    # and simple schedules referenced by the HPXML).
+    args[:column_names].each do |column_name|
+      case column_name
+      when SchedulesFile::Columns[:Occupants].name
+        hpxml_bldg.building_occupancy.weekday_fractions = nil
+        hpxml_bldg.building_occupancy.weekend_fractions = nil
+        hpxml_bldg.building_occupancy.monthly_multipliers = nil
+      when SchedulesFile::Columns[:LightingInterior].name
+        hpxml_bldg.lighting.interior_weekday_fractions = nil
+        hpxml_bldg.lighting.interior_weekend_fractions = nil
+        hpxml_bldg.lighting.interior_monthly_multipliers = nil
+      when SchedulesFile::Columns[:LightingGarage].name
+        hpxml_bldg.lighting.garage_weekday_fractions = nil
+        hpxml_bldg.lighting.garage_weekend_fractions = nil
+        hpxml_bldg.lighting.garage_monthly_multipliers = nil
+      when SchedulesFile::Columns[:CookingRange].name
+        hpxml_bldg.cooking_ranges.each do |cooking_range|
+          cooking_range.weekday_fractions = nil
+          cooking_range.weekend_fractions = nil
+          cooking_range.monthly_multipliers = nil
+        end
+      when SchedulesFile::Columns[:Dishwasher].name,
+           SchedulesFile::Columns[:HotWaterDishwasher].name
+        hpxml_bldg.dishwashers.each do |dishwasher|
+          dishwasher.weekday_fractions = nil
+          dishwasher.weekend_fractions = nil
+          dishwasher.monthly_multipliers = nil
+        end
+      when SchedulesFile::Columns[:ClothesWasher].name,
+           SchedulesFile::Columns[:HotWaterClothesWasher].name
+        hpxml_bldg.clothes_washers.each do |clothes_washer|
+          clothes_washer.weekday_fractions = nil
+          clothes_washer.weekend_fractions = nil
+          clothes_washer.monthly_multipliers = nil
+        end
+      when SchedulesFile::Columns[:ClothesDryer].name
+        hpxml_bldg.clothes_dryers.each do |clothes_dryer|
+          clothes_dryer.weekday_fractions = nil
+          clothes_dryer.weekend_fractions = nil
+          clothes_dryer.monthly_multipliers = nil
+        end
+      when SchedulesFile::Columns[:CeilingFan].name
+        hpxml_bldg.ceiling_fans.each do |ceiling_fan|
+          ceiling_fan.weekday_fractions = nil
+          ceiling_fan.weekend_fractions = nil
+          ceiling_fan.monthly_multipliers = nil
+        end
+      when SchedulesFile::Columns[:HotWaterFixtures].name
+        hpxml_bldg.water_heating.water_fixtures_weekday_fractions = nil
+        hpxml_bldg.water_heating.water_fixtures_weekend_fractions = nil
+        hpxml_bldg.water_heating.water_fixtures_monthly_multipliers = nil
+      when SchedulesFile::Columns[:PlugLoadsOther].name
+        hpxml_bldg.plug_loads.select { |pl| pl.plug_load_type == HPXML::PlugLoadTypeOther }.each do |plug_load|
+          plug_load.weekday_fractions = nil
+          plug_load.weekend_fractions = nil
+          plug_load.monthly_multipliers = nil
+        end
+      when SchedulesFile::Columns[:PlugLoadsTV].name
+        hpxml_bldg.plug_loads.select { |pl| pl.plug_load_type == HPXML::PlugLoadTypeTelevision }.each do |plug_load|
+          plug_load.weekday_fractions = nil
+          plug_load.weekend_fractions = nil
+          plug_load.monthly_multipliers = nil
+        end
+      when SchedulesFile::Columns[:ElectricVehicle].name
+        hpxml_bldg.plug_loads.select { |pl| pl.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging }.each do |plug_load|
+          plug_load.weekday_fractions = nil
+          plug_load.weekend_fractions = nil
+          plug_load.monthly_multipliers = nil
+        end
+      else
+        fail "Unexpected column name: #{column_name}"
+      end
+    end
   end
 end
 
