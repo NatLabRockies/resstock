@@ -491,7 +491,7 @@ class TestRunAnalysis < Minitest::Test
       next if _expected_warning_message(message, 'DistanceToTopOfWindow is greater than 12 feet; this may indicate incorrect units. [context: /HPXML/Building/BuildingDetails/Enclosure/Windows/Window/Overhangs[number(Depth) > 0]')
       next if _expected_warning_message(message, 'Not calculating emissions because an electricity filepath for at least one emissions scenario could not be located.') # these are AK/HI samples
       next if _expected_warning_message(message, 'Could not find State=AK') # these are AK samples
-      next if _expected_warning_message(message, 'No design condition info found; calculating design conditions from EPW weather data.')
+      next if _expected_warning_message(message, 'No EPW design conditions found; calculating design conditions from EPW weather data.')
       next if _expected_warning_message(message, 'The garage pitch was changed to accommodate garage ridge >= house ridge')
       next if _expected_warning_message(message, 'Could not find County=') # we intentionally leave some fields blank in resources/data/simple_rates/County.tsv
       next if _expected_warning_message(message, 'Battery without PV specified, and no charging/discharging schedule provided; battery is assumed to operate as backup and will not be modeled.')
