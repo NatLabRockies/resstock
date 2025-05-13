@@ -2374,6 +2374,11 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                               miles_per_year: 15000.0,
                               hours_per_week: 10.0)
     end
+    if ['base-schedules-simple.xml'].include? hpxml_file
+      hpxml_bldg.vehicles[0].ev_weekday_fractions = '0.0714, 0.0714, 0.0714, 0.0714, 0.0714, 0.0714, 0.0714, -0.3535, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.3221, -0.3244, 0.0714, 0.0714, 0.0714, 0.0714, 0.0714, 0.0714, 0.0714'
+      hpxml_bldg.vehicles[0].ev_weekend_fractions = '0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, -0.3334, 0, 0, 0, 0, -0.3293, -0.3372, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588'
+      hpxml_bldg.vehicles[0].ev_monthly_multipliers = '1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0'
+    end
 
     # ---------------- #
     # HPXML Appliances #
