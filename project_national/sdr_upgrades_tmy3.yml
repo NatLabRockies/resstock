@@ -242,112 +242,23 @@ upgrades:
 
   - upgrade_name: Duct Restricted ENERGY STAR heat pump with elec backup 
     
-    package_apply_logic: &remove_high_rise_shared
-      - not: Heating Fuel|Wood
-      - not: Heating Fuel|Other Fuel
-      - not: Heating Fuel|None
-      - not:
-        - or:
-          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-          - HVAC Shared Efficiencies|Fan Coil Cooling Only
-        - and:
-          - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
-
+    package_apply_logic: *remove_high_rise_shared
     options:
-        ### -- ENERGY STAR ASHP applies to all dwellings with ducts
-      - &ducted_ASHP_ENERGYSTAR_elec_backup
-        option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF
-        apply_logic: &ducted_ASHP_apply_logic
-          - HVAC Has Ducts|Yes
-          - not:
-            - or:
-              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-              - HVAC Shared Efficiencies|Fan Coil Cooling Only
-        costs: &costs_ashp_ducted_SEER_16_9-2_HSPF
-        #### costs not accurate or final, need to adjust inflation and re-calculate regressions - PRW 1/2/2024 ####
-        # Source: Custom regression by Brennan Less. Ducted heat pump project costs were regressed on nameplate tons and HSPF,
-        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
-        # Ducted ASHP regression n=317. Implicitly includes electrical upgrades and electric backup.
-          - value: 4821.83 # for HSPF 9.2
-            multiplier: Fixed (1)
-          - value: 167.64
-            multiplier: Size, Heating System Primary (kBtu/h)
-        lifetime: &lifetime_ducted_ASHP 15
-
-        ### -- ENERGY STAR MSHP applies to all dwellings without ducts
-      - &nonducted_MSHP_ENERGYSTAR_elec_backup
-        option: HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Max Load
-        apply_logic: &nonducted_MSHP_apply_logic
-          - or: 
-            - HVAC Has Ducts|No
-            - or:
-              - or:
-                - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-                - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-                - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-                - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-                - HVAC Shared Efficiencies|Fan Coil Cooling Only
-        costs: &costs_mshp_nonducted_SEER_16_9-2_HSPF
-        #### costs not accurate or final, need to adjust inflation and re-calculate regressions - PRW 1/2/2024 ####
-        # Source: Custom regression by Brennan Less. Ductless heat pump project costs were regressed on nameplate tons,
-        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
-        # Ductless MSHP n=173, HSPF median 11, range 9.3–14.2. Implicitly includes multiple zones and electrical upgrades.
-        # Regression results in costs that are 15–30% higher than costs from The Heat Pump Store as documented in https://redwoodenergy.net/wp-content/uploads/2021/02/Pocket-Guide-to-All-Electric-Retrofits-of-Single-Family-Homes.pdf 
-        # LBNL data were not sufficient to include a relationship between SEER or HSPF and cost, so cost deltas for higher 
-        # and lower HSPF were added using the relationship between HSPF and cost for ductless MSHPs in REMDB: 2.2% addition or subtraction per point
-        # according to how many points above or below the HSPF rating is from 10.5 (https://remdb.nrel.gov/).
-          - value: 2733.38
-            multiplier: Fixed (1)
-          - value: 354.96
-            multiplier: Size, Heating System Primary (kBtu/h)
-        lifetime: &lifetime_nonducted_MSHP 15
+        ### -- ENERGY STAR heat pumps ###
+      - *ducted_ASHP_ENERGYSTAR_elec_backup
+      - *nonducted_MSHP_ENERGYSTAR_elec_backup
 
         ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - &cooling_setpoint_no_offset_nonducted
-        option: Cooling Setpoint Has Offset|No
-        apply_logic: *nonducted_MSHP_apply_logic
+      - *cooling_setpoint_no_offset_nonducted
+      - *cooling_setpoint_offset_magnitude_0_nonducted
+      - *cooling_setpoint_offset_period_none_nonducted
+      - *heating_setpoint_no_offset_nonducted
+      - *heating_setpoint_offset_magnitude_0_nonducted
+      - *heating_setpoint_offset_period_none_nonducted
 
-      - &cooling_setpoint_offset_magnitude_0_nonducted
-        option: Cooling Setpoint Offset Magnitude|0F
-        apply_logic: *nonducted_MSHP_apply_logic
-              
-      - &cooling_setpoint_offset_period_none_nonducted
-        option: Cooling Setpoint Offset Period|None
-        apply_logic: *nonducted_MSHP_apply_logic
-
-      - &heating_setpoint_no_offset_nonducted
-        option: Heating Setpoint Has Offset|No
-        apply_logic: *nonducted_MSHP_apply_logic
-
-      - &heating_setpoint_offset_magnitude_0_nonducted
-        option: Heating Setpoint Offset Magnitude|0F
-        apply_logic: *nonducted_MSHP_apply_logic
-
-      - &heating_setpoint_offset_period_none_nonducted
-        option: Heating Setpoint Offset Period|None
-        apply_logic: *nonducted_MSHP_apply_logic
-
-      - &HP_cooling_efficiency_nonducted
-        option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
-        apply_logic: *nonducted_MSHP_apply_logic
-
-      - &HP_cooling_efficiency_ducted
-        option: HVAC Cooling Efficiency|Ducted Heat Pump
-        apply_logic: *ducted_ASHP_apply_logic
-
-        ### -- Apply 100% conditioned to all dwellings -- ###
-      - &100_percent_conditioned
-        option: HVAC Cooling Partial Space Conditioning|100% Conditioned
-        apply_logic: &yes_and_no_has_ducts_apply_logic
-          - or:
-            - HVAC Has Ducts|Yes
-            - HVAC Has Ducts|No 
+      - *HP_cooling_efficiency_nonducted
+      - *HP_cooling_efficiency_ducted
+      - *100_percent_conditioned
 
       - &hvac_distribution_use_duct_restriction
         option: HVAC Distribution|Use Duct Restriction
