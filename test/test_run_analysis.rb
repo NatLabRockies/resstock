@@ -348,6 +348,7 @@ class TestRunAnalysis < Minitest::Test
     @command += yml
     @command += ' -d'
     @command += ' -k'
+    @command += ' -n 1'
 
     system(@command)
 

@@ -468,6 +468,8 @@ def run_workflow(yml, in_threads, measures_only, debug_arg, overwrite, building_
     info += " / #{workflow_and_building_ids.size}"
     info += ' | elapsed: '
     info += '%8s' % "#{get_elapsed_time(Time.now, $start_time)}"
+    info += " | building_id: #{building_id}" # FIXME: remove
+    info += " | upgrade_name: #{upgrade_name}" # FIXME: remove
     puts info
   end
 
