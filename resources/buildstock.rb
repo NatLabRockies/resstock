@@ -467,12 +467,8 @@ class RunOSWs
     out = File.expand_path(out)
     fail if !File.exist?(out)
 
-    begin
-      text = File.read(out)
-      out = JSON.parse(text)
-    rescue
-      puts text
-    end
+    text = File.read(out)
+    out = JSON.parse(text)
 
     started_at = out['started_at']
     completed_at = out['completed_at']
@@ -483,7 +479,8 @@ class RunOSWs
     return started_at, completed_at, completed_status, result_output, run_output if !File.exist?(data_point_out)
 
     rows = {}
-    old_rows = JSON.parse(File.read(File.expand_path(data_point_out)))
+    text = File.read(File.expand_path(data_point_out))
+    old_rows = JSON.parse(text)
     old_rows.each do |measure, values|
       rows[measure] = {}
       values.each do |arg, val|
