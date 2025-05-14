@@ -146,7 +146,7 @@ jobs:
       - name: Test for zero applicable_to values
         run: |
           cd project_national/resources
-          # Use Python to check specifically the applicable_to column (5th column)
+          # Check applicable_to column (5th column)
           python3 -c '
           import csv
           import sys
@@ -304,7 +304,7 @@ jobs:
             project_national/national_baseline/results_csvs/results_up00.csv
             project_testing/testing_baseline/results_csvs/results_up00.csv
             project_national/sdr_upgrades_tmy3/results_csvs/results_up00.csv
-            project_national/sdr_upgrades_tmy3/results_csvs/results_up16.csv
+            project_national/sdr_upgrades_tmy3/results_csvs/results_up18.csv
           if-no-files-found: error
 
       - name: Run tests

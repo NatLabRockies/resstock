@@ -12,7 +12,7 @@ module Geometry
   # @return [nil]
   def self.apply_roofs(runner, model, spaces, hpxml_bldg, hpxml_header)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    walls_top, _foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    walls_top = hpxml_bldg.building_construction.additional_properties.walls_height_above_grade
 
     hpxml_bldg.roofs.each do |roof|
       next if roof.net_area < 1.0 # skip modeling net surface area for surfaces comprised entirely of subsurface area
@@ -135,7 +135,7 @@ module Geometry
   # @return [nil]
   def self.apply_walls(runner, model, spaces, hpxml_bldg, hpxml_header)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    _walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     hpxml_bldg.walls.each do |wall|
       next if wall.net_area < 1.0 # skip modeling net surface area for surfaces comprised entirely of subsurface area
@@ -217,7 +217,7 @@ module Geometry
   # @return [nil]
   def self.apply_rim_joists(runner, model, spaces, hpxml_bldg)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    _walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     hpxml_bldg.rim_joists.each do |rim_joist|
       if rim_joist.azimuth.nil?
@@ -300,7 +300,8 @@ module Geometry
   # @return [nil]
   def self.apply_floors(runner, model, spaces, hpxml_bldg, hpxml_header)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    walls_top = hpxml_bldg.building_construction.additional_properties.walls_height_above_grade
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     hpxml_bldg.floors.each do |floor|
       next if floor.net_area < 1.0 # skip modeling net surface area for surfaces comprised entirely of subsurface area
@@ -698,7 +699,7 @@ module Geometry
     end
     hpxml_bldg.collapse_enclosure_surfaces()
 
-    _walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     shading_schedules = {}
 
@@ -795,7 +796,7 @@ module Geometry
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
   def self.apply_doors(model, spaces, hpxml_bldg)
-    _walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     surfaces = []
     hpxml_bldg.doors.each do |door|
@@ -847,7 +848,7 @@ module Geometry
   # @return [nil]
   def self.apply_skylights(model, spaces, hpxml_bldg, hpxml_header)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    walls_top, _foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    walls_top = hpxml_bldg.building_construction.additional_properties.walls_height_above_grade
 
     surfaces = []
     shading_schedules = {}
@@ -966,7 +967,7 @@ module Geometry
   # @return [nil]
   def self.apply_conditioned_floor_area(model, spaces, hpxml_bldg)
     default_azimuths = Defaults.get_azimuths(hpxml_bldg)
-    _walls_top, foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    foundation_top = hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade
 
     sum_cfa = 0.0
     hpxml_bldg.floors.each do |floor|
@@ -1044,11 +1045,11 @@ module Geometry
     end
   end
 
-  # Calculates the assumed above-grade height of the top of the dwelling unit's walls and foundation walls.
+  # Assigns the assumed above-grade height of the top of the dwelling unit's walls and foundation walls.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
-  # @return [Array<Double, Double>] Top of the walls (ft), top of the foundation walls (ft)
-  def self.get_foundation_and_walls_top(hpxml_bldg)
+  # @return [nil]
+  def self.apply_foundation_and_walls_top(hpxml_bldg)
     foundation_top = [hpxml_bldg.building_construction.unit_height_above_grade, 0].max
     hpxml_bldg.foundation_walls.each do |foundation_wall|
       top = -1 * foundation_wall.depth_below_grade + foundation_wall.height
@@ -1057,66 +1058,8 @@ module Geometry
     ncfl_ag = hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade
     walls_top = foundation_top + hpxml_bldg.building_construction.average_ceiling_height * ncfl_ag
 
-    return walls_top, foundation_top
-  end
-
-  # Get the largest z difference for a surface.
-  #
-  # @param surface [OpenStudio::Model::Surface] an OpenStudio::Model::Surface object
-  # @return [Double] the max z value minus the min x value
-  def self.get_surface_height(surface)
-    zvalues = get_surface_z_values(surfaceArray: [surface])
-    zrange = zvalues.max - zvalues.min
-    return zrange
-  end
-
-  # Return an array of x values for surfaces passed in.
-  # The values will be relative to the parent origin.
-  # This was intended for spaces.
-  #
-  # @param surfaceArray [Array<OpenStudio::Model::Surface>] array of OpenStudio::Model::Surface objects
-  # @return [Array<Double>] array of x-coordinates (ft)
-  def self.get_surface_x_values(surfaceArray:)
-    xValueArray = []
-    surfaceArray.each do |surface|
-      surface.vertices.each do |vertex|
-        xValueArray << UnitConversions.convert(vertex.x, 'm', 'ft').round(5)
-      end
-    end
-    return xValueArray
-  end
-
-  # Return an array of y values for surfaces passed in.
-  # The values will be relative to the parent origin.
-  # This was intended for spaces.
-  #
-  # @param surfaceArray [Array<OpenStudio::Model::Surface>] array of OpenStudio::Model::Surface objects
-  # @return [Array<Double>] array of y-coordinates (ft)
-  def self.get_surface_y_values(surfaceArray:)
-    yValueArray = []
-    surfaceArray.each do |surface|
-      surface.vertices.each do |vertex|
-        yValueArray << UnitConversions.convert(vertex.y, 'm', 'ft').round(5)
-      end
-    end
-    return yValueArray
-  end
-
-  # Return an array of z values for surfaces passed in.
-  # The values will be relative to the parent origin.
-  # This was intended for spaces.
-  #
-  # @param surfaceArray [Array<OpenStudio::Model::Surface>] array of OpenStudio::Model::Surface objects
-  # @return [Array<Double>] array of z-coordinates (ft)
-  def self.get_surface_z_values(surfaceArray:)
-    # Return an array of z values for surfaces passed in. The values will be relative to the parent origin. This was intended for spaces.
-    zValueArray = []
-    surfaceArray.each do |surface|
-      surface.vertices.each do |vertex|
-        zValueArray << UnitConversions.convert(vertex.z, 'm', 'ft').round(5)
-      end
-    end
-    return zValueArray
+    hpxml_bldg.building_construction.additional_properties.walls_height_above_grade = walls_top
+    hpxml_bldg.building_construction.additional_properties.foundation_height_above_grade = foundation_top
   end
 
   # Get the default number of occupants.
@@ -1132,7 +1075,7 @@ module Geometry
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
-  # @param location [String] HPXML location
+  # @param location [String] The location of interest (HPXML::LocationXXX)
   # @param zone_multiplier [Integer] the number of similar zones represented
   # @return [OpenStudio::Model::Space, nil] updated spaces hash if location is not already a key
   def self.create_space_and_zone(model, spaces, location, zone_multiplier)
@@ -1534,18 +1477,6 @@ module Geometry
     end
   end
 
-  # Get the z origin (minimum) of a thermal zone.
-  #
-  # @param zone [OpenStudio::Model::ThermalZone] OpenStudio ThermalZone object
-  # @return [Double] Minimum of space z origins in a zone (ft)
-  def self.get_z_origin_for_zone(zone)
-    z_origins = []
-    zone.spaces.each do |space|
-      z_origins << UnitConversions.convert(space.zOrigin, 'm', 'ft')
-    end
-    return z_origins.min
-  end
-
   # Get the surface transformation using the translation matrix defined by an offset multiplied by 3D translation vector (x, y, z).
   # Applying the affine transformation will shift a set of vertices.
   #
@@ -1578,7 +1509,7 @@ module Geometry
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
   def self.add_neighbor_shading(model, length, hpxml_bldg)
-    walls_top, _foundation_top = get_foundation_and_walls_top(hpxml_bldg)
+    walls_top = hpxml_bldg.building_construction.additional_properties.walls_height_above_grade
     z_origin = 0 # shading surface always starts at grade
 
     shading_surfaces = []
@@ -1606,14 +1537,36 @@ module Geometry
   # Calculate zone volume for an HPXML location based on floor area and an assumed height.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
-  # @param location [String] the location of interest (HPXML::LocationXXX)
-  # @return [Double] calculated zone volume (ft^3)
+  # @param location [String] The location of interest (HPXML::LocationXXX)
+  # @return [Double] The zone volume (ft^3)
   def self.calculate_zone_volume(hpxml_bldg, location)
     if [HPXML::LocationBasementUnconditioned,
         HPXML::LocationCrawlspaceUnvented,
         HPXML::LocationCrawlspaceVented,
         HPXML::LocationGarage].include? location
       floor_area = hpxml_bldg.slabs.select { |s| s.interior_adjacent_to == location }.map { |s| s.area }.sum(0.0)
+      height = calculate_zone_height(hpxml_bldg, location)
+      return floor_area * height
+    elsif [HPXML::LocationAtticUnvented,
+           HPXML::LocationAtticVented].include? location
+      floor_area = hpxml_bldg.floors.select { |f| [f.interior_adjacent_to, f.exterior_adjacent_to].include? location }.map { |s| s.area }.sum(0.0)
+      height = calculate_zone_height(hpxml_bldg, location)
+      # Assume square hip roof
+      return [floor_area * height / 3.0, 0.01].max
+    end
+  end
+
+  # Calculate (or assume) the zone height (difference between top and bottom of the zone) for a
+  # given HPXML location.
+  #
+  # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
+  # @param location [String] The location of interest (HPXML::LocationXXX)
+  # @return [Double] The zone height (ft)
+  def self.calculate_zone_height(hpxml_bldg, location)
+    if [HPXML::LocationBasementUnconditioned,
+        HPXML::LocationCrawlspaceUnvented,
+        HPXML::LocationCrawlspaceVented,
+        HPXML::LocationGarage].include? location
       height = hpxml_bldg.foundation_walls.select { |w| w.interior_adjacent_to == location }.map { |w| w.height }.max
       if height.nil? # No foundation walls, need to make assumption because HPXML Wall elements don't have a height
         height = { HPXML::LocationBasementUnconditioned => 8,
@@ -1621,22 +1574,26 @@ module Geometry
                    HPXML::LocationCrawlspaceVented => 3,
                    HPXML::LocationGarage => 8 }[location]
       end
-      return floor_area * height
     elsif [HPXML::LocationAtticUnvented,
            HPXML::LocationAtticVented].include? location
       floor_area = hpxml_bldg.floors.select { |f| [f.interior_adjacent_to, f.exterior_adjacent_to].include? location }.map { |s| s.area }.sum(0.0)
       roofs = hpxml_bldg.roofs.select { |r| r.interior_adjacent_to == location }
       avg_pitch = roofs.map { |r| r.pitch }.sum(0.0) / roofs.size
-      # Assume square hip roof for volume calculation
-      length = floor_area**0.5
-      height = 0.5 * Math.sin(Math.atan(avg_pitch / 12.0)) * length
-      return [floor_area * height / 3.0, 0.01].max
+      if avg_pitch > 0
+        # Assume square hip roof
+        length = floor_area**0.5
+        height = 0.5 * Math.sin(Math.atan(avg_pitch / 12.0)) * length
+      else
+        # Flat roof w/ attic, assume height
+        height = 2.0
+      end
     end
+    return height
   end
 
   # Get temperature scheduled space values for an HPXML location.
   #
-  # @param location [String] the general HPXML location
+  # @param location [String] The location of interest (HPXML::LocationXXX)
   # @return [Hash] Map of minimum temperature, indoor/outdoor/ground weights, duct regain factor
   def self.get_temperature_scheduled_space_values(location)
     case location
@@ -1788,7 +1745,7 @@ module Geometry
   # can be shared by any surface, duct adjacent to / located in those spaces.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param location [String] the location of interest (HPXML::LocationXXX)
+  # @param location [String] The location of interest (HPXML::LocationXXX)
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @return [OpenStudio::Model::ScheduleConstant] OpenStudio ScheduleConstant object
   def self.get_space_temperature_schedule(model, location, spaces)
@@ -1920,7 +1877,7 @@ module Geometry
   # Should be called when the object's energy use is sensitive to ambient temperature
   # (e.g., water heaters, ducts, and refrigerators).
   #
-  # @param location [String] the location of interest (HPXML::LocationXXX)
+  # @param location [String] The location of interest (HPXML::LocationXXX)
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @return [OpenStudio::Model::Space or OpenStudio::Model::ScheduleConstant] OpenStudio Space or Schedule object
@@ -1950,7 +1907,7 @@ module Geometry
   # Should be called when the object's energy use is NOT sensitive to ambient temperature
   # (e.g., appliances).
   #
-  # @param location [String] the location of interest (HPXML::LocationXXX)
+  # @param location [String] The location of interest (HPXML::LocationXXX)
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
   # @return [OpenStudio::Model::Space] OpenStudio Space object
   def self.get_space_from_location(location, spaces)
@@ -1965,31 +1922,6 @@ module Geometry
     end
 
     return spaces[location]
-  end
-
-  # Calculates space height as the max z coordinate minus the min z coordinate.
-  #
-  # @param space [OpenStudio::Model::Space] an OpenStudio::Model::Space object
-  # @return [Double] space height (ft)
-  def self.get_space_height(space)
-    zvalues = get_surface_z_values(surfaceArray: space.surfaces)
-    return zvalues.max - zvalues.min
-  end
-
-  # Determine the length of an OpenStudio Surface by calculating the maximum difference between x and y coordinates.
-  #
-  # @param surface [OpenStudio::Model::Surface] an OpenStudio::Model::Surface object
-  # @return [Double] length of the OpenStudio Surface (ft)
-  def self.get_surface_length(surface)
-    xvalues = get_surface_x_values(surfaceArray: [surface])
-    yvalues = get_surface_y_values(surfaceArray: [surface])
-    xrange = xvalues.max - xvalues.min
-    yrange = yvalues.max - yvalues.min
-    if xrange > yrange
-      return xrange
-    end
-
-    return yrange
   end
 
   # Calculates the minimum buffer distance that the parent surface
@@ -2009,7 +1941,7 @@ module Geometry
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param spaces [Hash] Map of HPXML locations => OpenStudio Space objects
-  # @param location [String] the location of interest (HPXML::LocationXXX)
+  # @param location [String] The location of interest (HPXML::LocationXXX)
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [OpenStudio::Model::Space] the OpenStudio::Model::Space object corresponding to HPXML::LocationXXX
   def self.create_or_get_space(model, spaces, location, hpxml_bldg)

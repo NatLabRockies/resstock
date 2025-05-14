@@ -84,13 +84,13 @@
       "arguments": {
         "hpxml_path": "../built.xml",
         "output_csv_path": "stochastic.csv",
-        "hpxml_output_path": "../built-stochastic-schedules.xml"
+        "hpxml_output_path": "../built.xml"
       },
       "measure_dir_name": "BuildResidentialScheduleFile"
     },
     {
       "arguments": {
-        "hpxml_path": "../built-stochastic-schedules.xml",
+        "hpxml_path": "../built.xml",
         "output_dir": "..",
         "debug": false,
         "add_component_loads": false,
@@ -130,6 +130,7 @@
         "include_timeseries_component_loads": false,
         "include_timeseries_unmet_hours": false,
         "include_timeseries_zone_temperatures": false,
+        "include_timeseries_zone_conditions": false,
         "include_timeseries_airflows": false,
         "include_timeseries_weather": false,
         "include_timeseries_resilience": false,

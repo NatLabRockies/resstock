@@ -12,6 +12,41 @@ Temperature: Conditioned Space,temperature__conditioned_space__f,F,"Zone tempera
 Temperature: Other Heated Space,temperature__other_heated_space__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
 Temperature: Heating Setpoint,temperature__heating_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
 Temperature: Cooling Setpoint,temperature__cooling_setpoint__f,F,"Zone temperatures (in deg-F) for each space (e.g., conditioned space, attic, garage, basement, crawlspace, etc.) plus heating/cooling setpoints."
+Humidity Ratio: Attic - Unvented,humidity_ratio__attic_-_unvented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Humidity Ratio: Attic - Vented,humidity_ratio__attic_-_vented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Humidity Ratio: Basement - Unconditioned,humidity_ratio__basement_-_unconditioned__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Humidity Ratio: Crawlspace - Unvented,humidity_ratio__crawlspace_-_unvented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Humidity Ratio: Crawlspace - Vented,humidity_ratio__crawlspace_-_vented__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Humidity Ratio: Garage,humidity_ratio__garage__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Humidity Ratio: Conditioned Space,humidity_ratio__conditioned_space__fraction,frac,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Relative Humidity: Attic - Unvented,relative_humidity__attic_-_unvented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Relative Humidity: Attic - Vented,relative_humidity__attic_-_vented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Relative Humidity: Basement - Unconditioned,relative_humidity__basement_-_unconditioned__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Relative Humidity: Crawlspace - Unvented,relative_humidity__crawlspace_-_unvented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Relative Humidity: Crawlspace - Vented,relative_humidity__crawlspace_-_vented__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Relative Humidity: Garage,relative_humidity__garage__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Relative Humidity: Conditioned Space,relative_humidity__conditioned_space__%,%,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Dewpoint Temperature: Attic - Unvented,dewpoint_temperature__attic_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Dewpoint Temperature: Attic - Vented,dewpoint_temperature__attic_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Dewpoint Temperature: Basement - Unconditioned,dewpoint_temperature__basement_-_unconditioned__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Dewpoint Temperature: Crawlspace - Unvented,dewpoint_temperature__crawlspace_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Dewpoint Temperature: Crawlspace - Vented,dewpoint_temperature__crawlspace_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Dewpoint Temperature: Garage,dewpoint_temperature__garage__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Dewpoint Temperature: Conditioned Space,dewpoint_temperature__conditioned_space__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Radiant Temperature: Attic - Unvented,radiant_temperature__attic_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Radiant Temperature: Attic - Vented,radiant_temperature__attic_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Radiant Temperature: Basement - Unconditioned,radiant_temperature__basement_-_unconditioned__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Radiant Temperature: Crawlspace - Unvented,radiant_temperature__crawlspace_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Radiant Temperature: Crawlspace - Vented,radiant_temperature__crawlspace_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Radiant Temperature: Garage,radiant_temperature__garage__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Radiant Temperature: Conditioned Space,radiant_temperature__conditioned_space__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Operative Temperature: Attic - Unvented,operative_temperature__attic_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Operative Temperature: Attic - Vented,operative_temperature__attic_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Operative Temperature: Basement - Unconditioned,operative_temperature__basement_-_unconditioned__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Operative Temperature: Crawlspace - Unvented,operative_temperature__crawlspace_-_unvented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Operative Temperature: Crawlspace - Vented,operative_temperature__crawlspace_-_vented__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Operative Temperature: Garage,operative_temperature__garage__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
+Operative Temperature: Conditioned Space,operative_temperature__conditioned_space__f,F,"Zone conditions (humidity ratio and relative humidity and dewpoint, radiant, and operative temperatures)."
 Airflow: Infiltration,airflow__infiltration__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
 Airflow: Mechanical Ventilation,airflow__mechanical_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
 Airflow: Natural Ventilation,airflow__natural_ventilation__cfm,cfm,"Airflow rates (in cfm) for infiltration, mechanical ventilation (including clothes dryer exhaust), natural ventilation, whole house fans."
@@ -40,5 +75,7 @@ Electricity:Facility,electricity_facility__j,J,"Any user-specified EnergyPlus ou
 ,schedules_plug_loads_tv,frac,Television plug load energy use schedule.
 ,schedules_power_outage,,Unavailable period.
 ,schedules_vacancy,,Unavailable period.
-,schedules_electric_vehicle_charging,frac,availability schedule for electric vehicle charging.
-,schedules_electric_vehicle_discharging,frac,availability schedule for electric vehicle discharging.
+,schedules_electric_vehicle_charging,frac,Availability schedule for electric vehicle charging.
+,schedules_electric_vehicle_discharging,frac,Availability schedule for electric vehicle discharging.
+,schedules_peak_period,frac,Load flexibility measure ouput that indicates when the system is in the peak demand period.
+,schedules_pre_peak_period,frac,Load flexibility measure ouput that identifies when the system is in the period leading up to the peak demand period.

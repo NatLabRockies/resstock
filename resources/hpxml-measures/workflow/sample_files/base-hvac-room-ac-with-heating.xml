@@ -329,7 +329,6 @@
                 <Units>EER</Units>
                 <Value>8.5</Value>
               </AnnualCoolingEfficiency>
-              <SensibleHeatFraction>0.65</SensibleHeatFraction>
               <IntegratedHeatingSystemFuel>electricity</IntegratedHeatingSystemFuel>
               <IntegratedHeatingSystemCapacity>36000.0</IntegratedHeatingSystemCapacity>
               <IntegratedHeatingSystemAnnualEfficiency>
