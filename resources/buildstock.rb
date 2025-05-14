@@ -467,7 +467,12 @@ class RunOSWs
     out = File.expand_path(out)
     fail if !File.exist?(out)
 
-    out = JSON.parse(File.read(out))
+    begin
+      text = File.read(out)
+      out = JSON.parse(text)
+    rescue
+      puts text
+    end
 
     started_at = out['started_at']
     completed_at = out['completed_at']
