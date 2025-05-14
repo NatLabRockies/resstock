@@ -60,10 +60,7 @@ module HotWaterAndAppliances
       end
       if cw_power_schedule.nil?
         cw_unavailable_periods = Schedule.get_unavailable_periods(runner, cw_col_name, hpxml_header.unavailable_periods)
-        cw_weekday_sch = clothes_washer.weekday_fractions
-        cw_weekend_sch = clothes_washer.weekend_fractions
-        cw_monthly_sch = clothes_washer.monthly_multipliers
-        cw_schedule_obj = MonthWeekdayWeekendSchedule.new(model, cw_object_name + ' schedule', cw_weekday_sch, cw_weekend_sch, cw_monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: cw_unavailable_periods)
+        cw_schedule_obj = MonthWeekdayWeekendSchedule.new(model, cw_object_name + ' schedule', clothes_washer.weekday_fractions, clothes_washer.weekend_fractions, clothes_washer.monthly_multipliers, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: cw_unavailable_periods)
         cw_design_level_w = cw_schedule_obj.calc_design_level_from_daily_kwh(cw_annual_kwh / 365.0)
         cw_power_schedule = cw_schedule_obj.schedule
       else
@@ -103,10 +100,7 @@ module HotWaterAndAppliances
       end
       if cd_schedule.nil?
         cd_unavailable_periods = Schedule.get_unavailable_periods(runner, cd_col_name, hpxml_header.unavailable_periods)
-        cd_weekday_sch = clothes_dryer.weekday_fractions
-        cd_weekend_sch = clothes_dryer.weekend_fractions
-        cd_monthly_sch = clothes_dryer.monthly_multipliers
-        cd_schedule_obj = MonthWeekdayWeekendSchedule.new(model, cd_obj_name + ' schedule', cd_weekday_sch, cd_weekend_sch, cd_monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: cd_unavailable_periods)
+        cd_schedule_obj = MonthWeekdayWeekendSchedule.new(model, cd_obj_name + ' schedule', clothes_dryer.weekday_fractions, clothes_dryer.weekend_fractions, clothes_dryer.monthly_multipliers, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: cd_unavailable_periods)
         cd_design_level_e = cd_schedule_obj.calc_design_level_from_daily_kwh(cd_annual_kwh / 365.0)
         cd_design_level_f = cd_schedule_obj.calc_design_level_from_daily_therm(cd_annual_therm / 365.0)
         cd_schedule = cd_schedule_obj.schedule
@@ -158,10 +152,7 @@ module HotWaterAndAppliances
       end
       if dw_power_schedule.nil?
         dw_unavailable_periods = Schedule.get_unavailable_periods(runner, dw_col_name, hpxml_header.unavailable_periods)
-        dw_weekday_sch = dishwasher.weekday_fractions
-        dw_weekend_sch = dishwasher.weekend_fractions
-        dw_monthly_sch = dishwasher.monthly_multipliers
-        dw_schedule_obj = MonthWeekdayWeekendSchedule.new(model, dw_obj_name + ' schedule', dw_weekday_sch, dw_weekend_sch, dw_monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: dw_unavailable_periods)
+        dw_schedule_obj = MonthWeekdayWeekendSchedule.new(model, dw_obj_name + ' schedule', dishwasher.weekday_fractions, dishwasher.weekend_fractions, dishwasher.monthly_multipliers, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: dw_unavailable_periods)
         dw_design_level_w = dw_schedule_obj.calc_design_level_from_daily_kwh(dw_annual_kwh / 365.0)
         dw_power_schedule = dw_schedule_obj.schedule
       else
@@ -206,11 +197,7 @@ module HotWaterAndAppliances
           rf_design_level = UnitConversions.convert(rf_annual_kwh / 8760.0, 'kW', 'W')
           rf_schedule = get_fridge_or_freezer_coefficients_schedule(model, rf_col_name, rf_obj_name, refrigerator, rf_space, rf_loc_schedule, rf_unavailable_periods)
         elsif !refrigerator.weekday_fractions.nil? && !refrigerator.weekend_fractions.nil? && !refrigerator.monthly_multipliers.nil?
-          rf_weekday_sch = refrigerator.weekday_fractions
-          rf_weekend_sch = refrigerator.weekend_fractions
-          rf_monthly_sch = refrigerator.monthly_multipliers
-
-          rf_schedule_obj = MonthWeekdayWeekendSchedule.new(model, rf_obj_name + ' schedule', rf_weekday_sch, rf_weekend_sch, rf_monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: rf_unavailable_periods)
+          rf_schedule_obj = MonthWeekdayWeekendSchedule.new(model, rf_obj_name + ' schedule', refrigerator.weekday_fractions, refrigerator.weekend_fractions, refrigerator.monthly_multipliers, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: rf_unavailable_periods)
           rf_design_level = rf_schedule_obj.calc_design_level_from_daily_kwh(rf_annual_kwh / 365.0)
           rf_schedule = rf_schedule_obj.schedule
         end
@@ -258,11 +245,7 @@ module HotWaterAndAppliances
           fz_design_level = UnitConversions.convert(fz_annual_kwh / 8760.0, 'kW', 'W')
           fz_schedule = get_fridge_or_freezer_coefficients_schedule(model, fz_col_name, fz_obj_name, freezer, fz_space, fz_loc_schedule, fz_unavailable_periods)
         elsif !freezer.weekday_fractions.nil? && !freezer.weekend_fractions.nil? && !freezer.monthly_multipliers.nil?
-          fz_weekday_sch = freezer.weekday_fractions
-          fz_weekend_sch = freezer.weekend_fractions
-          fz_monthly_sch = freezer.monthly_multipliers
-
-          fz_schedule_obj = MonthWeekdayWeekendSchedule.new(model, fz_obj_name + ' schedule', fz_weekday_sch, fz_weekend_sch, fz_monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: fz_unavailable_periods)
+          fz_schedule_obj = MonthWeekdayWeekendSchedule.new(model, fz_obj_name + ' schedule', freezer.weekday_fractions, freezer.weekend_fractions, freezer.monthly_multipliers, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: fz_unavailable_periods)
           fz_design_level = fz_schedule_obj.calc_design_level_from_daily_kwh(fz_annual_kwh / 365.0)
           fz_schedule = fz_schedule_obj.schedule
         end
@@ -305,10 +288,7 @@ module HotWaterAndAppliances
       end
       if cook_schedule.nil?
         cook_unavailable_periods = Schedule.get_unavailable_periods(runner, cook_col_name, hpxml_header.unavailable_periods)
-        cook_weekday_sch = cooking_range.weekday_fractions
-        cook_weekend_sch = cooking_range.weekend_fractions
-        cook_monthly_sch = cooking_range.monthly_multipliers
-        cook_schedule_obj = MonthWeekdayWeekendSchedule.new(model, cook_obj_name + ' schedule', cook_weekday_sch, cook_weekend_sch, cook_monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: cook_unavailable_periods)
+        cook_schedule_obj = MonthWeekdayWeekendSchedule.new(model, cook_obj_name + ' schedule', cooking_range.weekday_fractions, cooking_range.weekend_fractions, cooking_range.monthly_multipliers, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: cook_unavailable_periods)
         cook_design_level_e = cook_schedule_obj.calc_design_level_from_daily_kwh(cook_annual_kwh / 365.0)
         cook_design_level_f = cook_schedule_obj.calc_design_level_from_daily_therm(cook_annual_therm / 365.0)
         cook_schedule = cook_schedule_obj.schedule
@@ -377,6 +357,8 @@ module HotWaterAndAppliances
         limits: EPlus::ScheduleTypeLimitsTemperature
       )
 
+      water_heating = hpxml_bldg.water_heating
+
       # Create schedule
       fixtures_schedule = nil
       fixtures_col_name = SchedulesFile::Columns[:HotWaterFixtures].name
@@ -386,15 +368,12 @@ module HotWaterAndAppliances
       end
       if fixtures_schedule.nil?
         fixtures_unavailable_periods = Schedule.get_unavailable_periods(runner, fixtures_col_name, hpxml_header.unavailable_periods)
-        fixtures_weekday_sch = hpxml_bldg.water_heating.water_fixtures_weekday_fractions
-        fixtures_weekend_sch = hpxml_bldg.water_heating.water_fixtures_weekend_fractions
-        fixtures_monthly_sch = hpxml_bldg.water_heating.water_fixtures_monthly_multipliers
-        fixtures_schedule_obj = MonthWeekdayWeekendSchedule.new(model, fixtures_obj_name + ' schedule', fixtures_weekday_sch, fixtures_weekend_sch, fixtures_monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: fixtures_unavailable_periods)
+        fixtures_schedule_obj = MonthWeekdayWeekendSchedule.new(model, fixtures_obj_name + ' schedule', water_heating.water_fixtures_weekday_fractions, water_heating.water_fixtures_weekend_fractions, water_heating.water_fixtures_monthly_multipliers, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: fixtures_unavailable_periods)
         fixtures_schedule = fixtures_schedule_obj.schedule
       else
-        runner.registerWarning("Both '#{fixtures_col_name}' schedule file and weekday fractions provided; the latter will be ignored.") if !hpxml_bldg.water_heating.water_fixtures_weekday_fractions.nil?
-        runner.registerWarning("Both '#{fixtures_col_name}' schedule file and weekend fractions provided; the latter will be ignored.") if !hpxml_bldg.water_heating.water_fixtures_weekend_fractions.nil?
-        runner.registerWarning("Both '#{fixtures_col_name}' schedule file and monthly multipliers provided; the latter will be ignored.") if !hpxml_bldg.water_heating.water_fixtures_monthly_multipliers.nil?
+        runner.registerWarning("Both '#{fixtures_col_name}' schedule file and weekday fractions provided; the latter will be ignored.") if !water_heating.water_fixtures_weekday_fractions.nil?
+        runner.registerWarning("Both '#{fixtures_col_name}' schedule file and weekend fractions provided; the latter will be ignored.") if !water_heating.water_fixtures_weekend_fractions.nil?
+        runner.registerWarning("Both '#{fixtures_col_name}' schedule file and monthly multipliers provided; the latter will be ignored.") if !water_heating.water_fixtures_monthly_multipliers.nil?
       end
     end
 
@@ -453,10 +432,7 @@ module HotWaterAndAppliances
           end
           if recirc_pump_sch.nil?
             recirc_pump_unavailable_periods = Schedule.get_unavailable_periods(runner, recirc_pump_col_name, hpxml_header.unavailable_periods)
-            recirc_pump_weekday_sch = hot_water_distribution.recirculation_pump_weekday_fractions
-            recirc_pump_weekend_sch = hot_water_distribution.recirculation_pump_weekend_fractions
-            recirc_pump_monthly_sch = hot_water_distribution.recirculation_pump_monthly_multipliers
-            recirc_pump_sch = MonthWeekdayWeekendSchedule.new(model, recirc_pump_obj_name + ' schedule', recirc_pump_weekday_sch, recirc_pump_weekend_sch, recirc_pump_monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: recirc_pump_unavailable_periods)
+            recirc_pump_sch = MonthWeekdayWeekendSchedule.new(model, recirc_pump_obj_name + ' schedule', hot_water_distribution.recirculation_pump_weekday_fractions, hot_water_distribution.recirculation_pump_weekend_fractions, hot_water_distribution.recirculation_pump_monthly_multipliers, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: recirc_pump_unavailable_periods)
             recirc_pump_design_level = recirc_pump_sch.calc_design_level_from_daily_kwh(recirc_pump_annual_kwh / 365.0)
             recirc_pump_sch = recirc_pump_sch.schedule
           else
