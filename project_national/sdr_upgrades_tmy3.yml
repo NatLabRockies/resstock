@@ -240,6 +240,7 @@ upgrades:
             - HVAC Has Ducts|Yes
             - HVAC Has Ducts|No 
 
+    ### --- Duct Restricted ENERGY STAR heat pump with elec backup
   - upgrade_name: Duct Restricted ENERGY STAR heat pump with elec backup
 
     package_apply_logic: *remove_high_rise_shared
@@ -264,6 +265,7 @@ upgrades:
         option: HVAC Distribution|Use Duct Restriction
         apply_logic: *ducted_ASHP_apply_logic
 
+    ### --- High efficiency cold-climate heat pump with elec backup
   - upgrade_name: High efficiency cold-climate heat pump with elec backup
     
     package_apply_logic: *remove_high_rise_shared
