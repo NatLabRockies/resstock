@@ -3551,15 +3551,15 @@ Additional information is entered in each ``Ducts``.
          If both are provided, DuctSurfaceArea will be used in the model.
   .. [#] If neither DuctSurfaceArea nor FractionDuctArea provided, duct surface areas will be calculated based on `ASHRAE Standard 152 <https://www.energy.gov/eere/buildings/downloads/ashrae-standard-152-spreadsheet>`_:
 
-         \- **Primary supply duct area**: 0.27 * F_out * ConditionedFloorAreaServed
+         \- **Primary supply duct area**: 0.27 * F_primary * ConditionedFloorAreaServed
 
-         \- **Secondary supply duct area**: 0.27 * (1 - F_out) * ConditionedFloorAreaServed
+         \- **Secondary supply duct area**: 0.27 * (1 - F_primary) * ConditionedFloorAreaServed
 
-         \- **Primary return duct area**: b_r * F_out * ConditionedFloorAreaServed
+         \- **Primary return duct area**: b_r * F_primary * ConditionedFloorAreaServed
 
-         \- **Secondary return duct area**: b_r * (1 - F_out) * ConditionedFloorAreaServed
+         \- **Secondary return duct area**: b_r * (1 - F_primary) * ConditionedFloorAreaServed
 
-         where F_out is 1.0 when NumberofConditionedFloorsAboveGrade <= 1 and 0.75 when NumberofConditionedFloorsAboveGrade > 1, and b_r is 0.05 * NumberofReturnRegisters with a maximum value of 0.25.
+         where F_primary is 1.0 if NumberofConditionedFloorsAboveGrade <= 1 else 0.75, and b_r is 0.05 * NumberofReturnRegisters (with a maximum value of 0.25).
 
          If FractionDuctArea is provided, each duct surface area will be FractionDuctArea times total duct area, which is calculated using the sum of primary and secondary duct areas from the equations above.
 
