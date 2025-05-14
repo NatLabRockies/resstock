@@ -267,7 +267,7 @@ jobs:
 
       - name: Clone buildstockbatch repository
         run: |
-          git clone https://github.com/NREL/buildstockbatch.git
+          git clone --branch post_transform https://github.com/NREL/buildstockbatch.git
 
       - name: Install buildstockbatch and ResStock postprocessing
         run: |
@@ -338,7 +338,7 @@ jobs:
 
       - name: Clone buildstockbatch repository
         run: |
-          git clone https://github.com/NREL/buildstockbatch.git@develop
+          git clone --branch post_transform https://github.com/NREL/buildstockbatch.git
 
       - name: Install buildstockbatch
         run: |
