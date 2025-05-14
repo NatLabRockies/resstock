@@ -7,6 +7,25 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: workflow, feature
+        :pullreq: 1408
+        :tickets: 1154
+
+        **Date**: 2025-05-14
+
+        Title:
+        Use Autosizing Limits and Maintain Duct System Curve
+
+        Description:
+        For ducted HVAC system upgrades, adds the ability to (1) limit the autosized capacity based on the existing duct system, and (2) adjust the blower fan efficiency to maintain the duct system curve.
+        This feature is enabled by using only a single option from the lookup.
+
+        OpenStudio-HPXML: `pull request 1584 <https://github.com/NREL/OpenStudio-HPXML/pull/1584>`_
+
+        Assignees: Joe Robertson
+
+
+    .. change::
         :tags: standard data release
         :pullreq: 1372
 
