@@ -265,9 +265,19 @@ jobs:
           path: resources
           name: options_lookup
 
+      - name: Clone buildstockbatch repository
+        run: |
+          git clone https://github.com/NREL/buildstockbatch.git
+
+      - name: Install buildstockbatch and ResStock postprocessing
+        run: |
+          cd buildstockbatch
+          python -m pip install --progress-bar off --upgrade pip
+          chmod +x install.sh
+          ./install.sh dev
+
       - name: Run buildstockbatch
         run: |
-          pip install git+https://github.com/NREL/buildstockbatch.git@post_transform
           buildstock_local --low-disk project_national/sdr_upgrades_tmy3_v2.yml
 
       - name: Unzip results
@@ -326,9 +336,19 @@ jobs:
           path: resources
           name: options_lookup
 
-      - name: Run buildstockbatch
+      - name: Clone buildstockbatch repository
         run: |
-          pip install git+https://github.com/NREL/buildstockbatch.git@develop
+          git clone https://github.com/NREL/buildstockbatch.git@develop
+
+      - name: Install buildstockbatch
+        run: |
+          cd buildstockbatch
+          python -m pip install --progress-bar off --upgrade pip
+          chmod +x install.sh
+          ./install.sh dev
+
+      - name: Run simulations
+        run: |
           buildstock_local project_national/national_baseline.yml
           buildstock_local project_testing/testing_baseline.yml
           buildstock_local project_national/sdr_upgrades_tmy3.yml
