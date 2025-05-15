@@ -413,6 +413,13 @@ jobs:
           path: test/base_results/comparisons
           if-no-files-found: error
 
+      - name: Comment on the PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          recreate: true
+          number: ${{ github.event.workflow_run.pull_requests[0].number }}
+          path: test/base_results/comparisons/baseline/annual/results_output_building_type_fuel_use.html
+
   update-results:
     runs-on: ubuntu-22.04
     needs: [analysis-tests, integration-tests]
