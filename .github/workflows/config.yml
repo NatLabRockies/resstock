@@ -52,13 +52,13 @@ jobs:
           wget https://picsum.photos/200/200.jpg -O output/b.jpg
 
       - name: Comment Webpage Screenshot
-        uses: opengisch/comment-pr-with-images@0.0.5
+        uses: opengisch/comment-pr-with-images@main
         with:
           # images: "output/**/*.jpg"
           images: "test/base_results/comparisons/baseline/annual/**/*.html"
           upload_to: imgur
-          custom_attachment_msg: "Test message"
-          edit_previous_comment: true
+          # custom_attachment_msg: "Test message"
+          # edit_previous_comment: true
 
   unit-tests:
     runs-on: ubuntu-22.04
