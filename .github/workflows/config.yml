@@ -54,7 +54,7 @@ jobs:
           if-no-files-found: error
 
       - name: Comment Webpage Screenshot
-        uses: opengisch/comment-pr-with-images@upload_only
+        uses: opengisch/comment-pr-with-images@main
         with:
           # required: Comma seperated list of files to upload.
           images: "test_artifacts/**/*.html"
@@ -62,10 +62,10 @@ jobs:
           # upload the screenshots to that branch.
           upload_to: github_branch  # Or, imgur
           # optional (defaults to the text used in this example): The message to use in the comment
-          # custom_attachment_msg: "Screenshot for commit..."
+          custom_attachment_msg: "Screenshot for commit..."
           # optional (defaults to `true`): Whether the previous comment should be edited with
           # a deprecation warning along with a reference to the last comment
-          # edit_previous_comment: true
+          edit_previous_comment: true
 
   unit-tests:
     runs-on: ubuntu-22.04
