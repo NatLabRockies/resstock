@@ -271,6 +271,7 @@ jobs:
           cd ..
           git clone https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
+          cd buildstockbatch
           bash install.sh dev
 
       - name: Run buildstockbatch
@@ -338,6 +339,7 @@ jobs:
           cd ..
           git clone https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
+          cd buildstockbatch
           bash install.sh dev
 
       - name: Run simulations
