@@ -418,7 +418,21 @@ jobs:
         with:
           recreate: true
           number: ${{ github.event.workflow_run.pull_requests[0].number }}
-          path: test/base_results/comparisons/baseline/annual/results_output_building_type_fuel_use.html
+          path: 
+
+      - name: Comment Webpage Screenshot
+        uses: opengisch/comment-pr-with-images@upload_only
+        with:
+          # required: Comma seperated list of files to upload.
+          images: test/base_results/comparisons/baseline/annual/results_output_building_type_fuel_use.html
+          # optional: The action will create a new branch and
+          # upload the screenshots to that branch.
+          upload_to: github_branch  # Or, imgur
+          # optional (defaults to the text used in this example): The message to use in the comment
+          custom_attachment_msg: "Screenshot for commit..."
+          # optional (defaults to `true`): Whether the previous comment should be edited with
+          # a deprecation warning along with a reference to the last comment
+          edit_previous_comment: true
 
   update-results:
     runs-on: ubuntu-22.04
