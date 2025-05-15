@@ -49,13 +49,13 @@ jobs:
       - name: Generate an image
         run: |
           mkdir output
-          wget https://picsum.photos/200/200.jpg -O output/b.jpg
+          wget https://picsum.photos/200/200.jpg -O output/c.jpg
 
       - name: Comment Webpage Screenshot
         uses: opengisch/comment-pr-with-images@main
         with:
-          # images: "output/**/*.jpg"
-          images: "test/base_results/comparisons/baseline/annual/**/*.html"
+          images: "output/**/*.jpg"
+          # images: "test/base_results/comparisons/baseline/annual/**/*.html"
           upload_to: imgur
           # custom_attachment_msg: "Test message"
           # edit_previous_comment: true
