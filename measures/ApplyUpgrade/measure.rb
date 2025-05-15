@@ -125,7 +125,9 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       return true
     end
 
+    # Assign the user inputs to variables
     args = runner.getArgumentValues(arguments(model), user_arguments)
+
     # Retrieve Option X argument values
     options = {}
     for option_num in 1..num_options
@@ -322,7 +324,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       return false
     end
 
-    # Initialize measure keys with hpxml_path arguments
+    # Set arguments for the BuildResidentialHPXML measure
     hpxml_path = File.expand_path('../upgraded.xml')
     measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
     measures['BuildResidentialHPXML'][0]['apply_defaults'] = true
@@ -348,15 +350,16 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       baseline_max_airflow_cfm = set_autosizing_limits(measures, hpxml_bldg)
 
       # Specify measures to run
-      if not apply_measures(hpxml_measures_dir, { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
+      measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
+      if not apply_measures(hpxml_measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
         register_logs(runner, new_runner)
         return false
       end
 
       set_adjusted_fan_efficiency(measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
-    end # end hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
+    end
 
-    # Get registered values and pass them to BuildResidentialScheduleFile
+    # Set arguments for the BuildResidentialScheduleFile measure
     measures['BuildResidentialScheduleFile'] = [{ 'hpxml_path' => hpxml_path,
                                                   'hpxml_output_path' => hpxml_path,
                                                   'schedules_random_seed' => values['building_id'],
@@ -370,6 +373,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       return false
     end
 
+    # Set arguments for the ResStockArgumentsPostHPXML measure
     measures['ResStockArgumentsPostHPXML'] = [{}] if !measures.keys.include?('ResStockArgumentsPostHPXML')
     measures['ResStockArgumentsPostHPXML'][0]['hpxml_path'] = hpxml_path
     measures['ResStockArgumentsPostHPXML'][0]['building_id'] = values['building_id']
@@ -422,9 +426,14 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def set_header(measures, hpxml, values)
+    # Whole SFA/MF Building Simulation?
     measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = hpxml.header.whole_sfa_or_mf_building_sim
+
+    # Software Info
     measures['BuildResidentialHPXML'][0]['software_info_program_used'] = hpxml.header.software_program_used
     measures['BuildResidentialHPXML'][0]['software_info_program_version'] = hpxml.header.software_program_version
+
+    # Simulation Control
     measures['BuildResidentialHPXML'][0]['simulation_control_timestep'] = values['simulation_control_timestep']
     if !values['simulation_control_run_period_begin_month'].nil? && !values['simulation_control_run_period_begin_day_of_month'].nil? && !values['simulation_control_run_period_end_month'].nil? && !values['simulation_control_run_period_end_day_of_month'].nil?
       begin_month = "#{Date::ABBR_MONTHNAMES[values['simulation_control_run_period_begin_month']]}"
@@ -469,9 +478,9 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     measures['BuildResidentialHPXML'][0]['utility_bill_pv_monthly_grid_connection_fees'] = values['utility_bill_pv_monthly_grid_connection_fees']
   end
 
-  def set_resstock_arguments(measures, runner)
+  def set_resstock_arguments(measures, child_runner)
     # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
-    runner.result.stepValues.each do |step_value|
+    child_runner.result.stepValues.each do |step_value|
       value = get_value_from_workflow_step_value(step_value)
       next if value == '' || Constants::ArgumentsToExclude.include?(step_value.name)
 

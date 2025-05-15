@@ -239,8 +239,9 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     Version.check_buildstockbatch_version()
 
-    # assign the user inputs to variables
+    # Assign the user inputs to variables
     args = runner.getArgumentValues(arguments(model), user_arguments)
+
     # Get file/dir paths
     resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../resources'))
     characteristics_dir = File.absolute_path(File.join(File.dirname(__FILE__), "../../#{args[:project_directory]}/housing_characteristics"))
@@ -357,7 +358,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       unit_multipliers = split_into(geometry_building_num_units, num_units_modeled)
     end
 
-    # Initialize measure keys with hpxml_path arguments
+    # Set arguments for the BuildResidentialHPXML measure
     hpxml_path = File.expand_path('../existing.xml')
     measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
     measures['BuildResidentialHPXML'][0]['apply_defaults'] = true # for apply_hvac_sizing since ApplyUpgrade sets HVAC capacities
@@ -373,7 +374,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
         measures['BuildResidentialHPXML'][0]['existing_hpxml_path'] = hpxml_path
       end
 
-      set_resstock_arguments(measures, resstock_arguments_runner)
+      set_resstock_arguments(measures, runner, resstock_arguments_runner)
       if not unit_multipliers.empty?
         unit_multiplier = unit_multipliers[unit_number]
       end
@@ -381,14 +382,15 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       set_dehumidifier(measures, unit_multiplier)
 
       # Specify measures to run
-      if not apply_measures(hpxml_measures_dir, { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
+      measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
+      if not apply_measures(hpxml_measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
         register_logs(runner, new_runner)
         return false
       end
-    end # end (1..num_units_modeled).each do |unit_number|
+    end
 
     if not run_hescore_workflow
-      # Get argument values and pass them to BuildResidentialScheduleFile
+      # Set arguments for the BuildResidentialScheduleFile measure
       measures['BuildResidentialScheduleFile'] = [{ 'hpxml_path' => hpxml_path,
                                                     'hpxml_output_path' => hpxml_path,
                                                     'schedules_random_seed' => args[:building_id],
@@ -403,6 +405,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       end
     end
 
+    # Set arguments for the ResStockArgumentsPostHPXML measure
     measures['ResStockArgumentsPostHPXML'] = [{}] if !measures.keys.include?('ResStockArgumentsPostHPXML')
     measures['ResStockArgumentsPostHPXML'][0]['hpxml_path'] = hpxml_path
     measures['ResStockArgumentsPostHPXML'][0]['building_id'] = args[:building_id]
@@ -472,9 +475,14 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
   end
 
   def set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir)
+    # Whole SFA/MF Building Simulation?
     measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = whole_sfa_or_mf_building_sim
+
+    # Software Info
     measures['BuildResidentialHPXML'][0]['software_info_program_used'] = 'ResStock'
     measures['BuildResidentialHPXML'][0]['software_info_program_version'] = Version::ResStock_Version
+
+    # Simulation Control
     measures['BuildResidentialHPXML'][0]['simulation_control_timestep'] = args[:simulation_control_timestep] if !args[:simulation_control_timestep].nil?
     if !args[:simulation_control_run_period_begin_month].nil? && !args[:simulation_control_run_period_begin_day_of_month].nil? && !args[:simulation_control_run_period_end_month].nil? && !args[:simulation_control_run_period_end_day_of_month].nil?
       begin_month = "#{Date::ABBR_MONTHNAMES[args[:simulation_control_run_period_begin_month]]}"
@@ -799,9 +807,9 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     end
   end
 
-  def set_resstock_arguments(measures, runner)
+  def set_resstock_arguments(measures, runner, child_runner)
     # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
-    runner.result.stepValues.each do |step_value|
+    child_runner.result.stepValues.each do |step_value|
       value = get_value_from_workflow_step_value(step_value)
       register_value(runner, step_value.name, value) if Constants::ArgumentsToRegister.include?(step_value.name)
       next if value == '' || Constants::ArgumentsToExclude.include?(step_value.name)
