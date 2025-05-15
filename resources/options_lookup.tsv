@@ -9694,6 +9694,7 @@ HVAC Cooling Type	Non-Ducted Heat Pump
 HVAC Cooling Type	None
 HVAC Cooling Type	Room AC
 HVAC Detailed Performance Data	Default	ResStockArguments	hvac_perf_data_capacity_type=auto	hvac_perf_data_heating_outdoor_temperatures=auto	hvac_perf_data_heating_min_speed_capacities=auto	hvac_perf_data_heating_max_speed_capacities=auto	hvac_perf_data_heating_min_speed_cops=auto	hvac_perf_data_heating_max_speed_cops=auto	hvac_perf_data_cooling_outdoor_temperatures=auto	hvac_perf_data_cooling_min_speed_capacities=auto	hvac_perf_data_cooling_max_speed_capacities=auto	hvac_perf_data_cooling_min_speed_cops=auto	hvac_perf_data_cooling_max_speed_cops=auto
+HVAC Distribution	Use Duct Restriction	ResStockArguments	hvac_distribution_use_duct_restriction=true
 HVAC Has Ducts	No	ResStockArguments	hvac_blower_fan_watts_per_cfm=auto
 HVAC Has Ducts	Void
 HVAC Has Ducts	Yes	ResStockArguments	hvac_blower_fan_watts_per_cfm=auto
@@ -9905,7 +9906,6 @@ HVAC System Single Speed ASHP Charge	None
 Has PV	No
 Has PV	Yes
 Heat Pump Backup	Use Existing System	ResStockArguments	heat_pump_backup_use_existing_system=true
-HVAC Distribution	Use Duct Restriction	ResStockArguments	hvac_distribution_use_duct_restriction=true
 Heating Fuel	Electricity	ResStockArguments	heating_system_fuel=electricity
 Heating Fuel	Fuel Oil	ResStockArguments	heating_system_fuel=fuel oil
 Heating Fuel	Natural Gas	ResStockArguments	heating_system_fuel=natural gas
