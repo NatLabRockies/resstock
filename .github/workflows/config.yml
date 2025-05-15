@@ -245,7 +245,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          path: resstock
           ref: ${{ github.head_ref }}
 
       - uses: actions/setup-python@v5
