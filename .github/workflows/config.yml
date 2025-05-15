@@ -245,6 +245,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          path: resstock
           ref: ${{ github.head_ref }}
 
       - uses: actions/setup-python@v5
@@ -265,16 +266,12 @@ jobs:
           path: resources
           name: options_lookup
 
-      - name: Clone buildstockbatch repository
+      - name: Clone and install buildstockbatch repository
         run: |
-          git clone --branch post_transform https://github.com/NREL/buildstockbatch.git
-
-      - name: Install buildstockbatch and ResStock postprocessing
-        run: |
-          cd buildstockbatch
+          cd ..
+          git clone https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
-          chmod +x install.sh
-          ./install.sh dev
+          bash install.sh dev
 
       - name: Run buildstockbatch
         run: |
@@ -336,16 +333,12 @@ jobs:
           path: resources
           name: options_lookup
 
-      - name: Clone buildstockbatch repository
+      - name: Clone and install buildstockbatch
         run: |
-          git clone --branch post_transform https://github.com/NREL/buildstockbatch.git
-
-      - name: Install buildstockbatch
-        run: |
-          cd buildstockbatch
+          cd ..
+          git clone https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
-          chmod +x install.sh
-          ./install.sh dev
+          bash install.sh dev
 
       - name: Run simulations
         run: |
