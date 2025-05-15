@@ -3,7 +3,7 @@
 SDR Option Application Detailed Report
 ======================================
 
-The ``sdr_option_application_detailed_report.txt`` file is intentionally verbose and exposes the entire Boolean-logic tree with highly detailed breakdown of how the apply logic defined in the SDR project YAML file (e.g., ``project_national/sdr_upgrades_tmy3.yml``) is parsed and applied to buildings in the housing stock sample (typically 550K). This report is invaluable for validating complex apply logic, debugging unexpected behavior, and understanding the precise interplay between different options within an upgrade package. It serves as a deeper dive compared to the summary provided in :ref:`sdr_option_application_report`.
+The ``sdr_option_application_detailed_report.txt`` file is intentionally verbose and exposes the entire boolean-logic tree with highly detailed breakdown of how the apply logic defined in the SDR project YAML file (e.g., ``project_national/sdr_upgrades_tmy3.yml``) is parsed and applied to buildings in the housing stock sample (typically 550K). This report is invaluable for validating complex apply logic, debugging unexpected behavior, and understanding the precise interplay between different options within an upgrade package. It serves as a deeper dive compared to the summary provided in :ref:`sdr_option_application_report`.
 
 File Location
 ------------
@@ -17,7 +17,7 @@ The file is a plain text report organized sequentially by upgrade scenario as de
 
 1.  **Option-Specific Logic Parsing**: This section repeats for each option within the upgrade package and contains three subsections:
    
-   * **Option Apply Report**: Shows the detailed breakdown of the option's specific ``apply_logic`` as defined in the YAML.
+   * **Option Apply Logic Report**: Shows the detailed breakdown of the parsing of the option's ``apply_logic`` as defined in the YAML.
      
      It begins in the report with this kind of header:
   
@@ -28,7 +28,8 @@ The file is a plain text report organized sequentially by upgrade scenario as de
             Option Apply Report for - Upgrade1:'ENERGY STAR he...<br>
             ----------------------------------------------------------------------<br>
         </div>
-
+    
+    and follows with breakdown of the ``apply_logic``. We will explain in more details later how to ready this breakdown.
 
    * **Package Apply Logic Report**: Shows the breakdown of the upgrade's ``package_apply_logic`` that applies to all options.
      
@@ -42,7 +43,8 @@ The file is a plain text report organized sequentially by upgrade scenario as de
           ----------------------------------------------------------------------<br>
       </div>
 
-   * **Overall Applicability**: Shows the final count and percentage of buildings to which the specific option applies (considering both option and package logic).
+    and follows with the breakdown of the ``package_apply_logic``. 
+   * **Overall Applicability**: Shows the final count and percentage of buildings to which the option applies to considering both ``apply_logic`` and ``package_apply_logic``. This number corresponds to the ``applicabile_to`` and ``applicable percentage`` for corresponding option in the :ref:`sdr_option_application_report`.
 
     This section consists of a single line such as below:
   
@@ -52,9 +54,9 @@ The file is a plain text report organized sequentially by upgrade scenario as de
          Overall applied to => 408859 (74.3%)
       </div>
 
-    The numbers in here corresponds to the ``applicabile_to`` and ``applicable percentage`` for corresponding option in the :ref:`sdr_option_application_report`.
+    
 
-2.  **Upgrade Summary Information**: This section appears once per upgrade after detailing all options specific logic parsing. It provides information about application of combination of options within the upgrade. It has three sections as described below:
+2.  **Upgrade Summary Information**: This section appears once per upgrade after detailing all options specific logic parsing. It provides information about application of combination of options within the upgrade. It has three sections:
    
    * **Overall Package Statistics**: Shows buildings receiving all options versus any option in the package. It consists of two lines as shown below:
     .. raw:: html
@@ -63,49 +65,59 @@ The file is a plain text report organized sequentially by upgrade scenario as de
          All of the options (and-ing) were applied to: 0 (0.0%)<br>
          Any of the options (or-ing) were applied to: 530447 (96.4%)
       </div>
-    The first line shows the number of samples (and percentage) to which all of the options were applied to. If the upgrade contains a set of options that should be mutually exclusive, this number should be 0. Non-zero value here in such cases can indicate errors.
+    The first line shows the number of samples (and percentage) to which all of the options were applied to. If the upgrade contains a set of options that should be mutually exclusive, this number should be 0.
+    
+    However, note that sometimes option apply logics are defined in progressive way. For example, one might assign a medium efficiency HPWH to all the buildings in option 1 (applicabiliy=100%) and then assign a high efficiency HPWH to select buildings in option 2 (say, applicability=20%) of the same upgrade. Since no building can have both a medium efficiency and high efficiency HPWH, the options are mutually exlusive. However, the apply logic doesn't necessarily have to be. ResStock automatically assigns the last option to the building when the same parameter (HPWH, in this example) is attempted to be assigned multiple options. In this example, since 20% of buildings will be attempted to be assigned medium efficiecny HPWH followed by high efficiency HPWH, ResStock will only apply the high efficiency HPWH to those buildings. We will have non-zero value in first line in such cases, however, it doesn't indicate any error.
 
-    The second line shows the number of samples which got applied at least one option in the upgrade. If the set of options are designed to cover the whole building stock, this number should be high. 
+    The second line shows the number of samples which got applied at least one option in the upgrade. If the set of options are designed to (almost) cover the whole building stock, this number should be 100% (or close to it). 
 
-   * **Applicability Summary Table (by Parameter Type)**: Shows how combinations of *types* of parameters (e.g., 'hvac heating efficiency', 'cooling setpoint') are applied across the building stock.
+   * **Applicability Summary Table (by Parameter Type)**: This is the second section under upgrade summary information and it shows how combinations of *types* of parameters (e.g., 'hvac heating efficiency', 'cooling setpoint') are applied across the building stock. It is formated as a table with the following header:
 
-   * **Applicability Summary Table (by Option Number)**: Shows how combinations of *specific options* (corresponding to their order in the YAML) are applied. There are typically more options than parameter types because same parameter appears multiple times in an upgrade with different options (for example, ``upgrade1.option9 = HVAC Cooling Efficiency|Non-Ducted Heat Pump`` and ``upgrade1.option10 = HVAC Cooling Efficiency|Ducted Heat Pump``)
+    .. raw:: html
+    
+      <div class="small-font">
+      -------------------------------------------------------------------------------<br>
+         Report of how the 9 options were applied to the buildings.<br>
+      -------------------------------------------------------------------------------<br>
+      </div>
 
-Reading the file
+   * **Applicability Summary Table (by Option Number)**: This is the third secion under the upgrade summary information and it shows how combinations of *specific options* (corresponding to their order in the YAML) are applied. This is different from the table above because there are typically more options than parameter types because same parameter appears multiple times in an upgrade with different options. For example if ``upgrade1.option9 = HVAC Cooling Efficiency|Non-Ducted Heat Pump`` and ``upgrade1.option10 = HVAC Cooling Efficiency|Ducted Heat Pump`` then both `option 9` and `option 10` are grouped together into `hvac_cooling_efficiency` in the previous table but kept separate in this table. This table begins with the following header:
+
+    .. raw:: html
+    
+      <div class="small-font">
+        ----------------------------------------------------------------------------------<br>
+         Detailed report of how the 11 options were applied to the buildings.<br>
+        ----------------------------------------------------------------------------------<br>
+      </div>
+
+
+Reading the details
 ----------------
 
-The file composed of 4 sections for each upgrade.
+Understanding the Apply Logic Breakdown
+---------------------------------------
 
-**1. Option-Specific Logic Parsing**
-
-For each option within an upgrade, the report presents three key parts:
-
-* **`Option Apply Report`**: This section shows how the specific `apply_logic` for that *individual option* (as defined in the YAML) is parsed and evaluated against the building stock.
-* **`Package Apply Logic Report`**: This section shows how the `package_apply_logic` for the *entire upgrade* (as defined in the YAML) is parsed and evaluated. This logic applies as a constraint to *all* options within the upgrade.
-* **`Overall applied to`**: This line shows the final number and percentage of buildings that satisfy *both* the Option Apply Logic *and* the Package Apply Logic.
-
-**Understanding the Logic Trees:**
-
-Both the Option and Package Apply Logic reports use an indented tree structure to represent the logic:
+Both the Option and Package Apply Logic reports use an indented tree structure to represent the parsing of the logic:
 
 * **Operators (`and`, `or`, `not`)**: These correspond directly to the logic defined in the YAML.
     * `and`: All conditions listed under it (at the next indentation level) must be true.
     * `or`: At least one of the conditions listed under it must be true.
     * `not`: The condition listed under it must be false.
 * **Conditions**: These are the specific building characteristics being checked (e.g., `HVAC Has Ducts|Yes`, `Heating Fuel|Wood`).
-* **Counts and Percentages**: Each line shows the number and percentage of buildings (out of the total stock, e.g., 550,000) that satisfy the logic *up to that point* in the tree.
+* **Counts and Percentages**: Each line shows the number and percentage of samples (out of the total of 550,000) that satisfy the logic *up to that point* in the tree.
 
-**Example: Comparing YAML Logic and Report Parsing**
 
 Let's compare the YAML logic with the report's parsed representation sequentially.
 
-**A. Option 1 Apply Logic Comparison:**
+**Example Option Apply Logic Breakdown:**
 
 * **YAML Definition (`sdr_upgrades_tmy3.yml`):**
     *(This logic is referenced in the YAML as `*ducted_ASHP_apply_logic`)*
 
     .. code-block:: yaml
 
+       option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF
        apply_logic: &ducted_ASHP_apply_logic
          # Implicit 'and' for top-level list
          - HVAC Has Ducts|Yes
@@ -124,7 +136,7 @@ Let's compare the YAML logic with the report's parsed representation sequentiall
        --------------------------------------------------------------------------------------------------------------------------------------
        Option Apply Report for - Upgrade1:'ENERGY STAR heat pump with elec backup', Option1:'HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF'
        --------------------------------------------------------------------------------------------------------------------------------------
-       and => 413417 (75.2%)  # Result of the implicit 'and'
+       and => 413417 (75.2%)  # Result of the implicit 'and' between HVAC Has Ducts and 'not' block
          HVAC Has Ducts|Yes => 423608 (77.0%) # First condition
          not => 489600 (89.0%) # Start of the 'not' block (buildings NOT matching the 'or' below)
            or => 60400 (11.0%) # Start of the 'or' block (buildings matching ANY shared system)
@@ -135,7 +147,9 @@ Let's compare the YAML logic with the report's parsed representation sequentiall
              HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
        -------------------------------------------------------------------
 
-**B. Package Apply Logic Comparison:**
+  Based on the parsed report, the logic applies to 413417 building samples, which is 75.2% of the total stock of 550,000 samples. This doesn't mean the option applies to that many buildings since the applicability can further be reduced by the package apply logic. The final applicability for an option is intersction of the option apply logic and package apply logic. This final number can be found on the `Overall applied to` line or the :ref:`sdr_option_application_report`. All percentages are based on the total stock sample of 550,000.
+
+**Example Package Apply Logic Breakdown:**
 
 * **YAML Definition (`sdr_upgrades_tmy3.yml`):**
     *(This logic is referenced in the YAML as `*remove_high_rise_shared`)*
@@ -159,7 +173,7 @@ Let's compare the YAML logic with the report's parsed representation sequentiall
              - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
 
 * **Parsed Representation in Report (`sdr_option_application_detailed_report.txt`):**
-    *(This appears identically for each option within the upgrade)*
+    *(This appears identically for all options within the upgrade)*
 
     .. code-block:: text
 
@@ -168,11 +182,11 @@ Let's compare the YAML logic with the report's parsed representation sequentiall
        --------------------------
        and => 530447 (96.4%) # Result of the top-level implicit 'and'
          not => 541444 (98.4%) # Buildings NOT Wood fuel
-           Heating Fuel|Wood => 8556 (1.6%)
+           Heating Fuel|Wood => 8556 (1.6%)  # Buildings with Wood fuel
          not => 548119 (99.7%) # Buildings NOT Other fuel
-           Heating Fuel|Other Fuel => 1881 (0.3%)
+           Heating Fuel|Other Fuel => 1881 (0.3%)  # Buildings with Other fuel
          not => 545936 (99.3%) # Buildings NOT None fuel
-           Heating Fuel|None => 4064 (0.7%)
+           Heating Fuel|None => 4064 (0.7%)  # Buildings with None fuel
          not => 544870 (99.1%) # Buildings NOT matching the 'or' block below
            or => 60400 (11.0%) # Buildings matching ANY shared system
              HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
@@ -185,20 +199,16 @@ Let's compare the YAML logic with the report's parsed representation sequentiall
              Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
        ------------------------------------------------------------------------------------------
 
-* **`Overall applied to`**: For Option 1, the report shows `Overall applied to => 408859 (74.3%)`. This means 74.3% of buildings satisfy *both* the Option 1 Apply Logic (resulting in `413417`) *and* the Package Apply Logic (resulting in `530447`). The final result is the intersection of these two sets.
+    Based on the parsed report, the package apply logic applies to 530447 building samples, which is 96.4% of the total stock of 550,000 samples. This doesn't mean the option applies to that many buildings since the final applicability for an option is intersection of the option apply logic and package apply logic. This final number can be found on the `Overall applied to` line or the :ref:`sdr_option_application_report`. All percentages are based on the total stock sample of 550,000.
 
-**2. Upgrade Summary Information**
 
-After the details for all options in an upgrade, summary statistics are provided:
+Understanding Upgrade Summary Tables
+-------------------------------------
 
-* `All of the options (and-ing) were applied to: 0 (0.0%)`
-    * Indicates how many buildings received *every single option* listed in this upgrade package (Options 1 through 11 in this case). This is often 0% if options are mutually exclusive (like ducted vs. non-ducted systems). If it is non-zero for mutually exclusive set of options, it signifies error in the apply logic.
-* `Any of the options (or-ing) were applied to: 530447 (96.4%)`
-    * Indicates how many buildings received *at least one* option from this upgrade package. This number should ideally match the number of buildings eligible under the `Package Apply Logic Report`, confirming that the options cover all intended eligible buildings.
 * **Applicability Summary Table (by Option Name)**:
-    * This table groups the applied options by their *type* (e.g., `hvac heating efficiency`, `cooling setpoint has offset`).
-    * It shows how many buildings receive specific *combinations of option types*.
-    * Example:
+  This table groups the applied options by their *type* (e.g., `hvac heating efficiency`, `cooling setpoint has offset`). It shows how many buildings receive specific *combinations of option types*.
+  
+  Let's look at an example:
   
       .. raw:: html
       
@@ -222,7 +232,7 @@ After the details for all options in an upgrade, summary statistics are provided
                              hvac cooling partial space conditioning                                                   
          =================== ==================================================== =================== ================ ================
 
-      In the table, the first row shows number of samples receiving exactly 3 distinct type of options (namely hvac heating efficiency, hvac cooling efficiency and hvac cooling partial space conditioning). The "Applied buildings" column shows the count and percentage of buildings receiving exactly that combination of options. The "Cumulative sub" column shows the running total within the same number of options category, while "Cumulative all" shows the running total across all categories, reaching 96.4% in this example. For reference, the ``sdr_option_application_report.csv`` below shows how the 11 options defined in upgrade 1 applies. Since option 1 and option 2 both apply ``hvac heating efficiency`` option, in this table, they are grouped together.
+  In the table, the first row shows number of samples receiving exactly 3 distinct type of options (namely hvac heating efficiency, hvac cooling efficiency and hvac cooling partial space conditioning). The "Applied buildings" column shows the count and percentage of buildings receiving exactly that combination of options. The "Cumulative sub" column shows the running total within the same number of options category, while "Cumulative all" shows the running total across all categories, reaching 96.4% in this example. For reference, the ``sdr_option_application_report.csv`` below shows how the 11 options defined in upgrade 1 applies. Since option 1 and option 2 both apply ``hvac heating efficiency`` option, in this table, they are grouped together.
 
 
 .. list-table:: sdr_option_application_report.csv
@@ -310,8 +320,7 @@ After the details for all options in an upgrade, summary statistics are provided
       - 96.4
 
 * **Applicability Summary Table (by Option Number)**:
-    * This table groups applied options by their *specific number* (Option 1, Option 2, etc., based on the YAML order). Based on the ``sdr_option_application_report.csv`` both option 1 and option 2 apply ``hvac heating efficiency`` upgrade but they are kept separate in this table.
-    * It shows how many buildings receive specific *combinations of numbered options*.
+  This is similar to the previous table but it treats all options as distinct and doesn't group options by the paramter name. In the example below, based on the ``sdr_option_application_report.csv`` both option 1 and option 2 apply ``hvac heating efficiency`` upgrade but they are kept separate in this table. It shows how many buildings receive specific *combinations of numbered options*. 
 
     .. raw:: html
 
@@ -329,11 +338,11 @@ After the details for all options in an upgrade, summary statistics are provided
        10                    1, 2, 3, 4, 5, 6, 7, 8, 9, 11   121588 (22.1%)        121588 (22.1%)     530447 (96.4%)   
        ===================== =============================== ===================== ================== ==================
 
+  In the table, the first row shows that exactly 4 options (numbered 1, 9, 10, and 11) applies to 74.3% of the buildings and the second row shows that exactly 10 options applies to 22.1% of the buildings.  The Cumulative all at the bottom right shows that 96.4% of the buildings get either of these two combination of options.
 
-    * Example: `4 | 1, 9, 10, 11 | 408859 (74.3%)`. As noted before, this specific combination seems contradictory (mixing ducted option 1 & 10 with non-ducted option 9) and highlights the report's utility for debugging potential logic flaws or unexpected interactions.
-    * Example 2: `10 | 1, 2, 3, 4, 5, 6, 7, 8, 9, 11 | 121588 (22.1%)`. Similarly, this combination appears contradictory by including both Option 1 (ducted) and Option 2 (non-ducted). This definitely warrants investigation using the detailed logic trees provided earlier in the report.
 
-These summary tables are crucial for verifying that combinations of options are being applied as intended and identifying potential conflicts or unexpected overlaps.
+
+These summary tables are crucial for verifying that combinations of options are being applied as intended and identifying potential conflicts or unexpected overlaps. For example, ``Applicability Summary Table (by Option Number)`` above shows that the offset options (3 to 8) are never applied with otion 10 (ducted heat pump upgrade) but they are applied with option 9 (non-ducted heat pump upgrade). This may or may not be what is desired - the report only highlights the case and helps with debugging.
 
 .. raw:: html
 
@@ -346,11 +355,11 @@ These summary tables are crucial for verifying that combinations of options are 
 Usage
 -------
 
-The ``sdr_option_application_detailed_report.txt`` file serves several important purposes:
+The ``sdr_option_application_detailed_report.txt`` helps with:
 
-1.  **Logic Parsing Validation**: Allows developers to confirm that complex nested `apply_logic` and `package_apply_logic` from the YAML are being interpreted and combined correctly by the buildstock-query tool.
-2.  **Debugging**: Helps identify errors or unexpected outcomes in applicability. For instance, if a specific logic branch applies to zero buildings when it shouldn't, or if mutually exclusive options are applied to the same buildings (as potentially hinted in the example's summary table), this report makes it evident. This provides more insight than the ``sdr_option_application_report.csv``, which might show a reasonable overall percentage while masking underlying logic issues.
-3.  **Option Interplay Analysis**: Unlike the CSV report, this file shows precisely which combinations of options are applied together (via the summary tables), allowing validation that packages are formed correctly (e.g., ensuring non-ducted systems get all associated non-ducted options and not ducted ones).
+1.  **Logic Parsing Validation**: Allows developers to confirm that complex nested `apply_logic` and `package_apply_logic` from the YAML are being interpreted and combined as intented.
+2.  **Debugging**: Helps identify errors or unexpected outcomes in applicability. For instance, if a specific logic branch applies to zero buildings when it shouldn't, or if mutually exclusive options are applied to the same buildings, this report makes it evident. This provides more insight than the ``sdr_option_application_report.csv``, which might show a reasonable overall percentage while masking underlying logic issues.
+3.  **Option Interplay Analysis**: Unlike the CSV report, this file shows precisely which combinations of options are applied together (via the summary tables), allowing validation that packages are formed correctly (e.g., ensuring non-ducted systems get all associated non-ducted options and not ducted ones etc).
 4.  **Reporting**: Provides detailed statistics (building counts and percentages at each logic step) that can be used for documentation or reporting on measure applicability.
 
 Creation
