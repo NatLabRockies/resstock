@@ -52,7 +52,7 @@ jobs:
           wget https://picsum.photos/200/200.jpg -O output/a.jpg
 
       - name: Comment Webpage Screenshot
-        uses: opengisch/comment-pr-with-images@upload_only
+        uses: opengisch/comment-pr-with-images@main
         with:
           images: "output/**/*.jpg"
 
