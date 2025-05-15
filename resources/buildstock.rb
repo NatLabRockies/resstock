@@ -465,7 +465,7 @@ class RunOSWs
 
     out = File.join(parent_dir, 'out.osw')
     out = File.expand_path(out)
-    fail if !File.exist?(out)
+    fail "Could not find '#{out}'." unless File.exist?(out)
 
     text = File.read(out)
     out = JSON.parse(text)
