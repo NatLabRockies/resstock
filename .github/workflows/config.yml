@@ -46,26 +46,15 @@ jobs:
           path: resources/options_lookup.tsv
           if-no-files-found: error
 
-      - name: Upload test artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: test_artifacts
-          path: test/base_results/comparisons/baseline/annual/results_output_building_type_fuel_use.html
-          if-no-files-found: error
+      - name: Generate an image
+        run: |
+          mkdir output
+          wget https://picsum.photos/200/200.jpg -O output/a.jpg
 
       - name: Comment Webpage Screenshot
-        uses: opengisch/comment-pr-with-images@main
+        uses: opengisch/comment-pr-with-images@upload_only
         with:
-          # required: Comma seperated list of files to upload.
-          images: "test_artifacts/**/*.html"
-          # optional: The action will create a new branch and
-          # upload the screenshots to that branch.
-          upload_to: github_branch  # Or, imgur
-          # optional (defaults to the text used in this example): The message to use in the comment
-          custom_attachment_msg: "Screenshot for commit..."
-          # optional (defaults to `true`): Whether the previous comment should be edited with
-          # a deprecation warning along with a reference to the last comment
-          edit_previous_comment: true
+          images: "output/**/*.jpg"
 
   unit-tests:
     runs-on: ubuntu-22.04
