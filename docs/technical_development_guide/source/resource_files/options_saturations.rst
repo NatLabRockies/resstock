@@ -28,7 +28,7 @@ The options_saturations.csv file summarizes the distribution of housing characte
 Example
 -------
 
-Here's an example of how the data appears in the file:
+Here's an example of how the data appear in the file:
 
 .. code-block:: text
 
