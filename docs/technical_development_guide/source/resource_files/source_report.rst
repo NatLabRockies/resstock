@@ -1,17 +1,17 @@
 .. _source_report:
 
 Source Report
-============
+=============
 
 The ``source_report.csv`` file provides detailed metadata about each parameter used in ResStock, including information about its creation, sources, and assumptions.
 
 File Location
-------------
+-------------
 
 The file is located at ``project_national/resources/source_report.csv`` in the ResStock repository.
 
 File Structure
--------------
+--------------
 
 The file is structured as a CSV (comma-separated values) file with the following columns:
 

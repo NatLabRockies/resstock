@@ -1,17 +1,17 @@
 .. _options_saturations:
 
 Options Saturations
-==================
+====================
 
 The ``options_saturations.csv`` file contains information about the saturation (prevalence) of different options for each parameter in the ResStock housing stock.
 
 File Location
-------------
+-------------
 
 The file is located at ``project_national/resources/options_saturations.csv`` in the ResStock repository.
 
 File Structure
--------------
+--------------
 
 The file is structured as a CSV (comma-separated values) file with the following columns:
 

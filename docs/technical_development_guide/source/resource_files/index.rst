@@ -1,7 +1,7 @@
 .. _resource_files:
 
 Resource Files
-=============
+==============
 
 ResStock uses and produces various resource files for different purposes in the simulation workflow.
 This section documents the key resource files available in the ResStock repository.

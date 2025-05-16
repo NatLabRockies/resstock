@@ -6,12 +6,12 @@ SDR Option Application Detailed Report
 The ``sdr_option_application_detailed_report.txt`` file is intentionally verbose and exposes the entire boolean-logic tree with highly detailed breakdown of how the apply logic defined in the SDR project YAML file (e.g., ``project_national/sdr_upgrades_tmy3.yml``) is parsed and applied to buildings in the housing stock sample (typically 550K). This report is invaluable for validating complex apply logic, debugging unexpected behavior, and understanding the precise interplay between different options within an upgrade package. It serves as a deeper dive compared to the summary provided in :ref:`sdr_option_application_report`.
 
 File Location
-------------
+-------------
 
 The file is located at ``project_national/resources/sdr_option_application_detailed_report.txt`` within the ResStock repository.
 
 File Structure
--------------
+--------------
 
 The file is a plain text report organized sequentially by upgrade scenario as defined in the project YAML file. For each upgrade scenario, the report is divided into two main sections:
 
@@ -58,13 +58,16 @@ The file is a plain text report organized sequentially by upgrade scenario as de
 
 2.  **Upgrade Summary Information**: This section appears once per upgrade after detailing all options specific logic parsing. It provides information about application of combination of options within the upgrade. It has three sections:
    
+   
    * **Overall Package Statistics**: Shows buildings receiving all options versus any option in the package. It consists of two lines as shown below:
+
     .. raw:: html
     
       <div class="small-font">
          All of the options (and-ing) were applied to: 0 (0.0%)<br>
          Any of the options (or-ing) were applied to: 530447 (96.4%)
       </div>
+    
     The first line shows the number of samples (and percentage) to which all of the options were applied to. If the upgrade contains a set of options that should be mutually exclusive, this number should be 0.
     
     However, note that sometimes option apply logics are defined in progressive way. For example, one might assign a medium efficiency HPWH to all the buildings in option 1 (applicabiliy=100%) and then assign a high efficiency HPWH to select buildings in option 2 (say, applicability=20%) of the same upgrade. Since no building can have both a medium efficiency and high efficiency HPWH, the options are mutually exlusive. However, the apply logic doesn't necessarily have to be. ResStock automatically assigns the last option to the building when the same parameter (HPWH, in this example) is attempted to be assigned multiple options. In this example, since 20% of buildings will be attempted to be assigned medium efficiecny HPWH followed by high efficiency HPWH, ResStock will only apply the high efficiency HPWH to those buildings. We will have non-zero value in first line in such cases, however, it doesn't indicate any error.
@@ -206,31 +209,41 @@ Understanding Upgrade Summary Tables
 -------------------------------------
 
 * **Applicability Summary Table (by Option Name)**:
+
+ 
   This table groups the applied options by their *type* (e.g., `hvac heating efficiency`, `cooling setpoint has offset`). It shows how many buildings receive specific *combinations of option types*.
   
+
   Let's look at an example:
   
       .. raw:: html
-      
+
        <div class="small-font">
-          Report of how the 9 options were applied to the buildings.
+          ----------------------------------------------------------------------<br>
+          Report of how the 9 options were applied to the buildings.<br>
+          ----------------------------------------------------------------------<br>
        </div>
 
-      .. table::
-         :class: small-font
-      
-         =================== ==================================================== =================== ================ ================
-         Number of options   Applied options                                      Applied buildings   Cumulative sub   Cumulative all
-         =================== ==================================================== =================== ================ ================
-         3                   hvac heating efficiency, hvac cooling efficiency,    408859 (74.3%)      408859 (74.3%)   408859 (74.3%)
-                             hvac cooling partial space conditioning                                                   
-         9                   hvac heating efficiency, cooling setpoint has        121588 (22.1%)      121588 (22.1%)   530447 (96.4%)
-                             offset, cooling setpoint offset magnitude, cooling                                        
-                             setpoint offset period, heating setpoint has                                              
-                             offset, heating setpoint offset magnitude, heating                                        
-                             setpoint offset period, hvac cooling efficiency,                                          
-                             hvac cooling partial space conditioning                                                   
-         =================== ==================================================== =================== ================ ================
+      .. list-table::
+        :class: small-font
+        :widths: 10 40 20 20 10
+        :header-rows: 1
+
+        * - Number of options
+          - Applied options
+          - Applied buildings
+          - Cumulative sub
+          - Cumulative all
+        * - 3
+          - hvac heating efficiency, hvac cooling efficiency, hvac cooling partial space conditioning
+          - 408 859 (74.3%)
+          - 408 859 (74.3%)
+          - 408 859 (74.3%)
+        * - 9
+          - hvac heating efficiency, cooling setpoint has offset, ... hvac cooling partial space conditioning
+          - 121 588 (22.1%)
+          - 121 588 (22.1%)
+          - 530 447 (96.4%)
 
   In the table, the first row shows number of samples receiving exactly 3 distinct type of options (namely hvac heating efficiency, hvac cooling efficiency and hvac cooling partial space conditioning). The "Applied buildings" column shows the count and percentage of buildings receiving exactly that combination of options. The "Cumulative sub" column shows the running total within the same number of options category, while "Cumulative all" shows the running total across all categories, reaching 96.4% in this example. For reference, the ``sdr_option_application_report.csv`` below shows how the 11 options defined in upgrade 1 applies. Since option 1 and option 2 both apply ``hvac heating efficiency`` option, in this table, they are grouped together.
 
@@ -325,7 +338,9 @@ Understanding Upgrade Summary Tables
     .. raw:: html
 
        <div class="small-font">
-          Detailed report of how the 11 options were applied to the buildings.
+          ---------------------------------------------------------------------------------<br>
+          Detailed report of how the 11 options were applied to the buildings.<br>
+          ---------------------------------------------------------------------------------<br>
        </div>
   
     .. table::

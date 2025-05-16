@@ -6,12 +6,12 @@ SDR Option Application Report
 The ``sdr_option_application_report.csv`` file provides a summary of how many buildings each of the options and upgrades in the sdr project yaml file (``project_national/sdr_upgrades_tmy3.yml``) will apply to in a 550K building sample. This is used to validate the apply logic in the sdr project yaml file. A more detailed look into the parsing of the applicability logic is available in :ref:`sdr_option_application_detailed_report`.
 
 File Location
-------------
+-------------
 
 The file is located at ``project_national/resources/sdr_option_application_report.csv`` in the ResStock repository.
 
 File Structure
--------------
+--------------
 
 The file is structured as a CSV (comma-separated values) file with the following columns:
 
@@ -23,7 +23,7 @@ The file is structured as a CSV (comma-separated values) file with the following
 - **applicable_percent**: The percentage of the total building stock sample (550K) to which this option was applied
 
 Reading the file
-----------------
+-----------------
 
 Here's an example of how to read the information in the file:
 
