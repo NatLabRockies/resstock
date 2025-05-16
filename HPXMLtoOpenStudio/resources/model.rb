@@ -571,6 +571,53 @@ module Model
     return curve
   end
 
+  # Adds a TableIndependentVariable object to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the OpenStudio object
+  # @param min [Double] Minimum allowable value
+  # @param max [Double] Maximum allowable value
+  # @param values [Array<Double>] List of values
+  # @param extrap_method [String] Extrapolation method for values beyond the bounds of the independent variables
+  # @return [OpenStudio::Model::TableIndependentVariable] The model object
+  def self.add_table_independent_variable(model, name:, min:, max:, values:, extrap_method: 'Constant')
+    ind_var = OpenStudio::Model::TableIndependentVariable.new(model)
+    ind_var.setName(name)
+    ind_var.setMinimumValue(min)
+    ind_var.setMaximumValue(max)
+    ind_var.setValues(values)
+    ind_var.setExtrapolationMethod(extrap_method)
+    return ind_var
+  end
+
+  # Adds a TableLookup object to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the OpenStudio object
+  # @param ind_vars [Array<OpenStudio::Model::TableIndependentVariable>] List of independent variables
+  # @param output_values [Array<Double>] List of output values
+  # @param output_min [Double] The minimum allowable value of the evaluated table after interpolation and extrapolation
+  # @param output_max [Double] The maximum allowable value of the evaluated table after interpolation and extrapolation
+  # @return [OpenStudio::Model::TableLookup] The model object
+  def self.add_table_lookup(model, name:, ind_vars:, output_values:, output_min: nil, output_max: nil)
+    if (not output_min.nil?) && (output_values.min < output_min)
+      fail "Minimum table lookup output value (#{output_values.min}) is less than #{output_min} for #{name}."
+    end
+    if (not output_max.nil?) && (output_values.max > output_max)
+      fail "Maximum table lookup output value (#{output_values.max}) is greater than #{output_max} for #{name}."
+    end
+
+    table = OpenStudio::Model::TableLookup.new(model)
+    table.setName(name)
+    ind_vars.each do |ind_var|
+      table.addIndependentVariable(ind_var)
+    end
+    table.setMinimumOutput(output_min) unless output_min.nil?
+    table.setMaximumOutput(output_max) unless output_max.nil?
+    table.setOutputValues(output_values)
+    return table
+  end
+
   # Adds a ScheduleConstant object to the OpenStudio model.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
