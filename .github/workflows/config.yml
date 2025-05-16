@@ -379,7 +379,7 @@ jobs:
             project_national/national_baseline/results_csvs/results_up00.csv
             project_testing/testing_baseline/results_csvs/results_up00.csv
             project_national/sdr_upgrades_tmy3/results_csvs/results_up00.csv
-            project_national/sdr_upgrades_tmy3/results_csvs/results_up18.csv
+            project_national/sdr_upgrades_tmy3/results_csvs/results_up19.csv
           if-no-files-found: error
 
       - name: Run tests
@@ -460,6 +460,7 @@ jobs:
           pip install pandas
           pip install plotly
           pip install kaleido
+          pip install imgkit
           
           # baseline annual
           mkdir -p test/base_results/comparisons/baseline/annual
@@ -467,6 +468,7 @@ jobs:
           python test/compare.py -a results -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
           python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
           python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
+          python test/compare.py -a visualize -x results_output.jpg -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # *.jpg
           
           # baseline timeseries
           mkdir test/base_results/comparisons/baseline/timeseries
@@ -491,7 +493,7 @@ jobs:
       - name: Comment energy use comparison
         uses: opengisch/comment-pr-with-images@main
         with:
-          images: "test/base_results/comparisons/baseline/annual/results_output_building_type_energy_use.html"
+          images: "test/base_results/comparisons/baseline/annual/results_output_energy_use.jpg"
           upload_to: imgur
 
   update-results:
