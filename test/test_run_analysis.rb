@@ -347,7 +347,7 @@ class TestRunAnalysis < Minitest::Test
     yml = ' -y project_national/sdr_upgrades_tmy3.yml'
     @command += yml
     @command += ' -d'
-    @command += ' -k -n 5'
+    @command += ' -k'
 
     system(@command)
 
