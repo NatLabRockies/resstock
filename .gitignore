@@ -19,10 +19,7 @@
 # CSV files
 /resources/buildstock.csv
 /project_*/**/*.csv
-!/project_*/resources/source_report.csv
-!/project_*/resources/options_saturations.csv
-!/resources/data/dictionary/outputs.csv
-!/project_national/resources/sdr_*.csv
+!/project_*/resources/**/*.csv
 
 # Log files
 /project_*/**/*.log
