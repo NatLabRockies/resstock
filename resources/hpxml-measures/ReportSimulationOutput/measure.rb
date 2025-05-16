@@ -1492,7 +1492,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @return [Boolean] True if no errors
   def check_for_errors(runner)
-    tol = 0.1
+    tol = 0.1 # 0.1%
 
     # ElectricityProduced:Facility contains:
     # - Generator Produced DC Electricity Energy
@@ -1521,7 +1521,8 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
 
     # Check sum of electricity produced end use outputs match total output from meter
     sum_elec_prod_annual = @end_uses.select { |k, eu| k[0] == FT::Elec && eu.is_negative }.map { |_k, eu| eu.annual_output.to_f }.sum(0.0) # Negative value
-    if (sum_elec_prod_annual - meter_elec_produced).abs > tol
+    avg_value = (sum_elec_prod_annual + meter_elec_produced) / 2.0
+    if (sum_elec_prod_annual - meter_elec_produced).abs / avg_value > tol
       runner.registerError("#{FT::Elec} produced category end uses (#{sum_elec_prod_annual.round(3)}) do not sum to total (#{meter_elec_produced.round(3)}).")
       return false
     end
@@ -1533,7 +1534,8 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
       sum_categories = @end_uses.select { |k, _eu| k[0] == fuel_type }.map { |_k, eu| eu.annual_output.to_f }.sum(0.0)
       meter_fuel_total = @fuels[[fuel_type, total_or_net]].annual_output.to_f
 
-      next unless (sum_categories - meter_fuel_total).abs > tol
+      avg_value = (sum_categories + meter_fuel_total) / 2.0
+      next unless (sum_categories - meter_fuel_total).abs / avg_value > tol
 
       runner.registerError("#{fuel_type} category end uses (#{sum_categories.round(3)}) do not sum to total (#{meter_fuel_total.round(3)}).")
       return false
@@ -1546,11 +1548,12 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
       system_use_sums[eu_key] = 0 if system_use_sums[eu_key].nil?
       system_use_sums[eu_key] += system_use.annual_output
     end
-    system_use_sums.each do |eu_key, systems_sum|
+    system_use_sums.each do |eu_key, sum_systems|
       end_use_total = @end_uses[eu_key].annual_output.to_f
-      next unless (systems_sum - end_use_total).abs > tol
+      avg_value = (sum_systems + end_use_total) / 2.0
+      next unless (sum_systems - end_use_total).abs / avg_value > tol
 
-      runner.registerError("System uses (#{systems_sum.round(3)}) do not sum to total (#{end_use_total.round(3)}) for End Use: #{eu_key.join(': ')}.")
+      runner.registerError("System uses (#{sum_systems.round(3)}) do not sum to total (#{end_use_total.round(3)}) for End Use: #{eu_key.join(': ')}.")
       return false
     end
 
@@ -1567,7 +1570,8 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
 
         sum_timeseries = UnitConversions.convert(obj.timeseries_output.sum(0.0), obj.timeseries_units, obj.annual_units)
         annual_total = obj.annual_output.to_f
-        if (annual_total - sum_timeseries).abs > tol
+        avg_value = (annual_total + sum_timeseries) / 2.0
+        if (annual_total - sum_timeseries).abs / avg_value > tol
           runner.registerError("Timeseries outputs (#{sum_timeseries.round(3)}) do not sum to annual output (#{annual_total.round(3)}) for #{output_type}: #{key}.")
           return false
         end
