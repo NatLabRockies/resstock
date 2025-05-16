@@ -488,6 +488,52 @@ jobs:
           path: test/base_results/comparisons
           if-no-files-found: error
 
+  build-docs:
+    # This is just for testing the documentation build process. Final documentation build and upload is 
+    # is done after the integration tests by the update-results.
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install software
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt update
+          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
+
+      - name: Download formatted options_lookup
+        uses: actions/download-artifact@v4
+        with:
+          path: resources
+          name: options_lookup
+
+      - name: Build technical development guide
+        run: |
+          sudo gem install oga
+          ruby docs/technical_development_guide/source/workflow_inputs/create_characteristics_rst.rb
+          ruby docs/technical_development_guide/source/workflow_outputs/csv_tables.rb
+          cd docs/technical_development_guide
+          pip install changelog
+          make html SPHINXOPTS="-W --keep-going -n"
+      
+      - name: Build technical reference guide
+        uses: dante-ev/latex-action@2023-A
+        with:
+          working_directory: docs/technical_reference_guide
+          root_file: ResStockTechnicalReferenceGuide.tex
+          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -output-directory=_build
+
+      - name: Save documentation build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-test-build
+          path: |
+            docs/technical_development_guide/_build/html/
+            docs/technical_reference_guide/_build/ResStockTechnicalReferenceGuide.pdf
+          if-no-files-found: error
+
   update-results:
     runs-on: ubuntu-22.04
     needs: [analysis-tests, integration-tests]
