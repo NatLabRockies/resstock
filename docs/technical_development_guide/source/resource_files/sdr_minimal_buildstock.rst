@@ -41,4 +41,4 @@ Here's a simplified example of how the data appears in the file (showing only a 
 
 Creation
 --------
-minimal_buildstock.csv file is automatically created by ResStock CI job and commited to project_national/resources directory. The CI uses upgrades_analyzer tool in buildstock-query with the ``project_national/sdr_upgrades_tmy3.yml`` and a fresh 550K sample as input to generate this file. Whenever the yaml apply or the housing characteristics changes, the CI job will regenerate this file and commit to the repo.
+minimal_buildstock.csv file is automatically created by ResStock CI job and committed to project_national/resources directory. The CI uses upgrades_analyzer tool in buildstock-query with the ``project_national/sdr_upgrades_tmy3.yml`` and a fresh 550K sample as input to generate this file. Whenever the yaml apply or the housing characteristics changes, the CI job will regenerate this file and commit to the repo.
