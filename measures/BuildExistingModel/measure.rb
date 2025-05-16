@@ -239,8 +239,9 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     Version.check_buildstockbatch_version()
 
-    # assign the user inputs to variables
+    # Assign the user inputs to variables
     args = runner.getArgumentValues(arguments(model), user_arguments)
+
     # Get file/dir paths
     resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../resources'))
     characteristics_dir = File.absolute_path(File.join(File.dirname(__FILE__), "../../#{args[:project_directory]}/housing_characteristics"))

@@ -603,7 +603,7 @@
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-07.xml",
     "weather_station_epw_filepath": "USA_FL_Miami.Intl.AP.722020_TMY3.epw"
   },
-  "real_homes/house054.xml": {
+  "real_homes/house051.xml": {
     "simulation_control_timestep": 60,
     "site_type": "suburban",
     "site_iecc_zone": "5B",
@@ -1973,6 +1973,10 @@
     "electric_panel_breaker_spaces_type": "headroom",
     "electric_panel_breaker_spaces": 5,
     "electric_panel_load_other_power": 559
+  },
+  "sample_files/base-detailed-electric-panel-no-calculation-types.xml": {
+    "parent_hpxml": "sample_files/base-detailed-electric-panel.xml",
+    "electric_panel_service_feeders_load_calculation_types": null
   },
   "sample_files/base-enclosure-2stories.xml": {
     "parent_hpxml": "sample_files/base.xml",

@@ -92,95 +92,6 @@ jobs:
           path: coverage
           if-no-files-found: error
 
-  sdr_options_analysis:
-    runs-on: ubuntu-22.04
-    needs: [unit-tests]
-    container:
-      image: docker://nrel/openstudio:develop
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Install gems
-        run: |
-          rm -f Gemfile.lock && bundle install
-
-      - name: Install python
-        shell: bash
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y python3-pip
-
-      - name: Install python dependencies
-        run: |
-          python3 -m pip install --progress-bar off --upgrade pip
-          pip3 install --progress-bar off pandas pyyaml
-
-      - name: Install buildstock_query
-        run: |
-          python3 -m pip install git+https://github.com/NREL/buildstock-query.git@main
-
-      - name: Generate 550K Sampler
-        run: |
-          openstudio resources/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
-
-      - name: Generate minimal buildstock and other files
-        run: |
-          cd project_national/resources
-          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
-          rm national_550ksamples.csv
-
-      - name: Upload SDR options analysis artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: sdr_options_analysis
-          path: |
-            project_national/resources/sdr_minimal_buildstock.csv
-            project_national/resources/sdr_option_application_detailed_report.txt
-            project_national/resources/sdr_option_application_report.csv
-          retention-days: 90
-          if-no-files-found: error
-
-      - name: Test for zero applicable_to values
-        run: |
-          cd project_national/resources
-          # Check applicable_to column (5th column)
-          python3 -c '
-          import csv
-          import sys
-
-          zero_applicable_options = []
-          with open("sdr_option_application_report.csv", "r") as f:
-              reader = csv.reader(f)
-              headers = next(reader)  # Skip header row
-              for row in reader:
-                  if len(row) >= 5 and row[4] == "0":  # Check if applicable_to (5th column) is zero
-                      zero_applicable_options.append(row)
-
-          if zero_applicable_options:
-              print("ERROR: Found options with zero applicable_to values in sdr_option_application_report.csv")
-              print("The following options have zero applicable_to values:")
-              for row in zero_applicable_options:
-                  print(f"Upgrade: {row[0]}, Upgrade Name: {row[1]}, Option: {row[3]}, Applicable To: {row[4]}")
-              sys.exit(1)
-          else:
-              print("All options have non-zero applicable_to values. Test passed.")
-          '
-
-      - name: Mark repo safe
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
-      - name: Commit the analysis results
-        shell: bash
-        run: |
-          git add project_national/resources
-          git diff --cached --quiet || (
-            git commit -m "SDR Analysis Results"
-            git push
-          )
-
   analysis-tests:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
@@ -314,6 +225,95 @@ jobs:
           sudo gem install simplecov
           sudo gem install simplecov-html
           ruby test/test_bsb_analysis.rb
+
+  sdr-options-analysis:
+    runs-on: ubuntu-22.04
+    needs: [unit-tests]
+    container:
+      image: docker://nrel/openstudio:develop
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install gems
+        run: |
+          rm -f Gemfile.lock && bundle install
+
+      - name: Install python
+        shell: bash
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt update
+          sudo -E apt-get install -y python3-pip
+
+      - name: Install python dependencies
+        run: |
+          python3 -m pip install --progress-bar off --upgrade pip
+          pip3 install --progress-bar off pandas pyyaml
+
+      - name: Install buildstock_query
+        run: |
+          python3 -m pip install git+https://github.com/NREL/buildstock-query.git@main
+
+      - name: Generate 550K Sampler
+        run: |
+          openstudio resources/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
+
+      - name: Generate minimal buildstock and other files
+        run: |
+          cd project_national/resources
+          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
+          rm national_550ksamples.csv
+
+      - name: Upload SDR options analysis artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdr_options_analysis
+          path: |
+            project_national/resources/sdr_minimal_buildstock.csv
+            project_national/resources/sdr_option_application_detailed_report.txt
+            project_national/resources/sdr_option_application_report.csv
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Test for zero applicable_to values
+        run: |
+          cd project_national/resources
+          # Check applicable_to column (5th column)
+          python3 -c '
+          import csv
+          import sys
+
+          zero_applicable_options = []
+          with open("sdr_option_application_report.csv", "r") as f:
+              reader = csv.reader(f)
+              headers = next(reader)  # Skip header row
+              for row in reader:
+                  if len(row) >= 5 and row[4] == "0":  # Check if applicable_to (5th column) is zero
+                      zero_applicable_options.append(row)
+
+          if zero_applicable_options:
+              print("ERROR: Found options with zero applicable_to values in sdr_option_application_report.csv")
+              print("The following options have zero applicable_to values:")
+              for row in zero_applicable_options:
+                  print(f"Upgrade: {row[0]}, Upgrade Name: {row[1]}, Option: {row[3]}, Applicable To: {row[4]}")
+              sys.exit(1)
+          else:
+              print("All options have non-zero applicable_to values. Test passed.")
+          '
+
+      - name: Mark repo safe
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Commit the analysis results
+        shell: bash
+        run: |
+          git add project_national/resources
+          git diff --cached --quiet || (
+            git commit -m "SDR Analysis Results"
+            git push
+          )
 
   compare-tools:
     runs-on: ubuntu-22.04

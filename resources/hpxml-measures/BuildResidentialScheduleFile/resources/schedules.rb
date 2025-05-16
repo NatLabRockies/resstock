@@ -66,11 +66,7 @@ class ScheduleGenerator
              weather:)
     @schedules = {}
 
-    if @column_names.nil?
-      @column_names = SchedulesFile::Columns.values.map { |c| c.name }
-    end
-
-    invalid_columns = (@column_names - SchedulesFile::Columns.values.map { |c| c.name })
+    invalid_columns = (@column_names - ScheduleGenerator.export_columns)
     invalid_columns.each do |invalid_column|
       @runner.registerError("Invalid column name specified: '#{invalid_column}'.")
     end
@@ -87,7 +83,7 @@ class ScheduleGenerator
   # @param schedules_path [String] Path to write the schedules CSV file to
   # @return [Boolean] Returns true if successful, false if there was an error
   def export(schedules_path:)
-    (SchedulesFile::Columns.values.map { |c| c.name } - @column_names).each do |col_to_remove|
+    (ScheduleGenerator.export_columns - @column_names).each do |col_to_remove|
       @schedules.delete(col_to_remove)
     end
     schedule_keys = @schedules.keys

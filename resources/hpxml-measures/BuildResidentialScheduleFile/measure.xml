@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_schedule_file</name>
   <uid>f770b2db-1a9f-4e99-99a7-7f3161a594b1</uid>
-  <version_id>41a51ac7-f6a5-4e3c-8d7d-15e546034f01</version_id>
-  <version_modified>2025-04-29T21:16:21Z</version_modified>
+  <version_id>d9297fcd-5d59-4716-b586-a8eb5a4de124</version_id>
+  <version_modified>2025-05-13T19:26:09Z</version_modified>
   <xml_checksum>03F02484</xml_checksum>
   <class_name>BuildResidentialScheduleFile</class_name>
   <display_name>Schedule File Builder</display_name>
@@ -22,7 +22,7 @@
     <argument>
       <name>schedules_column_names</name>
       <display_name>Schedules: Column Names</display_name>
-      <description>A comma-separated list of the column names to generate. If not provided, defaults to all columns. Possible column names are: occupants, lighting_interior, lighting_garage, cooking_range, dishwasher, clothes_washer, clothes_dryer, ceiling_fan, plug_loads_other, plug_loads_tv, hot_water_dishwasher, hot_water_clothes_washer, hot_water_fixtures.</description>
+      <description>A comma-separated list of the column names to generate. If not provided, defaults to all columns. Possible column names are: occupants, lighting_interior, lighting_garage, cooking_range, dishwasher, clothes_washer, clothes_dryer, ceiling_fan, plug_loads_other, plug_loads_tv, hot_water_dishwasher, hot_water_clothes_washer, hot_water_fixtures, electric_vehicle.</description>
       <type>String</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -116,7 +116,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>EB56CA85</checksum>
+      <checksum>04BFD8B8</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -133,7 +133,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>C75F5224</checksum>
+      <checksum>93AE5D02</checksum>
     </file>
     <file>
       <filename>README.md</filename>
@@ -229,7 +229,7 @@
       <filename>schedules.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>BA9C5FE8</checksum>
+      <checksum>7402E4B2</checksum>
     </file>
     <file>
       <filename>shower_cluster_size_probability.csv</filename>
