@@ -43,8 +43,9 @@ The file is a plain text report organized sequentially by upgrade scenario as de
           ----------------------------------------------------------------------<br>
       </div>
 
-    and follows with the breakdown of the ``package_apply_logic``. 
-   * **Overall Applicability**: Shows the final count and percentage of buildings to which the option applies to considering both ``apply_logic`` and ``package_apply_logic``. This number corresponds to the ``applicabile_to`` and ``applicable percentage`` for corresponding option in the :ref:`sdr_option_application_report`.
+    and follows with the breakdown of the ``package_apply_logic``.
+
+    * **Overall Applicability**: Shows the final count and percentage of buildings to which the option applies to considering both ``apply_logic`` and ``package_apply_logic``. This number corresponds to the ``applicabile_to`` and ``applicable percentage`` for corresponding option in the :ref:`sdr_option_application_report``.
 
     This section consists of a single line such as below:
   
@@ -96,7 +97,7 @@ The file is a plain text report organized sequentially by upgrade scenario as de
 
 
 Reading the details
-----------------
+-------------------
 
 Understanding the Apply Logic Breakdown
 ---------------------------------------
