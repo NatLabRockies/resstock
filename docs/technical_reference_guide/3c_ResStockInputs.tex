@@ -1,5 +1,5 @@
 \section{Water Heating} 
-Water heating describes the system that provides domestic hot water and distributes it for use at the fixtures or by appliances, such as dishwashers and clothes washers. This section covers water heaters, hot water distribution, and hot water use for fixtures and appliances. For building characterization, ResStock provides distributions for how many housing units have a standalone water heater vs.~a shared central water heater (Water Heater In Unit: Section \ref{water_heater_in_unit}), where the water heater is located (Water Heater Location: Section \ref{water_heater_location}), water heating fuel (Water Heater Fuel: Section \ref{water_heater_fuel}), and water heater specification (Water Heater Efficiency: Section \ref{water_heater_efficiency}). Additionally, ResStock characterizes the piping material and insulation level for distributing hot water to the fixtures (Hot Water Distribution: Section \ref{hot_water_distribution}), as well as the fixture usage and flow levels in the form of usage multipliers (Hot Water Fixtures: Section \ref{hot_water_fixtures}). ResStock has a placeholder distribution for solar hot water systems (Solar Hot Water: Section \ref{solar_hot_water}), which will be refined in a future model release.
+Water heating describes the system that provides domestic hot water and distributes it for use at the fixtures or by appliances, such as dishwashers and clothes washers. This section covers water heaters, hot water distribution, and hot water use for fixtures and appliances. For building characterization, ResStock provides distributions for how many housing units have a standalone water heater vs.~a shared central water heater (Water Heater In Unit: Section \ref{water_heater_in_unit}), where the water heater is located (Water Heater Location: Section \ref{water_heater_location}), water heating fuel (Water Heater Fuel: Section \ref{water_heater_fuel}), and water heater specification (Water Heater Efficiency: Section \ref{water_heater_efficiency}). Additionally, ResStock characterizes the piping material and insulation level for distributing hot water to the fixtures (Hot Water Distribution: Section \ref{hot_water_distribution}), as well as the fixture usage and flow levels in the form of usage multipliers (Hot Water Fixtures: Section \ref{hot_water_fixtures}).
 
 % ######################
 \subsection{Water Heaters}
@@ -3425,7 +3425,7 @@ The breaker space calculation is broken out into two parts. First the total rate
 \begin{customLongTable}{ |p{3cm}|p{1.5cm}|p{1.5cm}|p{8cm}| }
   {Default voltage and breaker space by load type.} {tab:breaker_spaces} 
   {\textbf{Load Name} & \textbf{Voltage} & \textbf{Breaker Spaces} & \textbf{Notes}} 
-  lighting & 120 & 0 & 	 \\ \hline
+  lighting & 120 & 2 & 	 \\ \hline
   kitchen & 120 & 2 & Two kitchen small appliance circuits. \\ \hline
   laundry & 120 & 1 & One laundry circuit. \\ \hline
   electric vehicle charging & 120 & 1 & Level 1 - 120V EV charger. Assumes dedicated circuit. \\ \hline
@@ -3449,13 +3449,27 @@ The breaker space calculation is broken out into two parts. First the total rate
   hot water &	240 &	auto & Storage water heater. The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
   hot water & 120 & auto & 120V heat pump water heater. Assumes dedicated circuit. The default power rating is auto sized. The number of breaker space = (power rating in W/240V/15A).ceil. \\ \hline
   hot water & 240 &	auto & 240V heat pump water heater. The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
-  heating & 240 & auto & The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
-  cooling	& 240 &	auto & The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
+  heating & 240 & auto & The default power rating is auto sized and includes auxiliary devices such as air handler and hydronic pump. The number of breaker space depends on the HVAC configuration, but generally = 2*(power rating in W/240V/50A).ceil. \\ \hline
+  cooling	& 240 &	auto & The default power rating is auto sized and includes auxiliary devices such as air handler and hydronic pump. The number of breaker space depends on the HVAC configuration, but generally = 2*(power rating in W/240V/50A).ceil. \\ \hline
   mechanical ventilation & 120 & 1	&  \\ \hline
   other	& 120 &	1	& Only assumes 1 garage door opener if a garage is present and does not account for other permanent appliances (e.g. garbage disposal). \\
 \end{customLongTable}
 
-% TODO Add heat pump breaker space table
+Determining the breaker space requirement for heat pump is a bit complicated - it depends on whether the system is ducted, dual-fuel, or has backup, and ultimately how the subsystems are electrically configured. 
+For ducted systems, for example, the indoor unit (IDU, or air handler) and the outdoor unit (ODU, or compressor) can be on the same circuit (with a disconnect switch) or they can be on separate circuits, in which case, more spaces are required.
+The air handler is typically 240V to allow for the installation of heat strip backup on the same circuit, in which case, the ODU must be on a second circuit. For dual-fuel systems, the air handler can be 120V. 
+Table \ref{tab:breaker_spaces_hp} below summarizes the breaker space requirement implemented in ResStock.
+
+\begin{customLongTable}{ |p{3cm}|p{4cm}|p{8cm}| }
+  {Default voltage and breaker space by heat pump systems.} {tab:breaker_spaces_hp} 
+  {\textbf{Heat Pump System} & \textbf{Circuits} & \textbf{Breaker Spaces}}
+  Air-to-air, ducted, dual-fuel & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 120V, IDU} & \makecell[l]{ckt 1: 2*(ODU power rating in W/240V/50A).ceil \\ ckt 2: 1} \\ \hline
+  Air-to-air, ducted, no backup & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 240V, IDU} & \makecell[l]{ckt 1: 2*(ODU power rating in W/240V/50A).ceil \\ ckt 2: 2} \\ \hline
+  Air-to-air / mini-split, ducted, electric backup & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 240V, IDU + backup} & \makecell[l]{ckt 1: 2*(ODU power rating in W/240V/50A).ceil \\ ckt 2: 2*(IDU + backup power rating in W/240V/50A).ceil} \\ \hline
+  Mini-split, ductless, no backup & ckt 1: 240V, ODU & ckt 1: 2*(ODU power rating in W/240V/50A).ceil \\ \hline
+  Mini-split, ductless, electric backup & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 240V, backup} & \makecell[l]{ckt 1: 2*(ODU power rating in W/240V/50A).ceil \\ ckt 2: 2*(backup power rating in W/240V/50A).ceil} \\ \hline
+  Mini-split, ducted, no backup & ckt 1: 240V, ODU + IDU & ckt 1: 2*(ODU + IDU power rating in W/240V/50A).ceil \\
+\end{customLongTable}
 
 Once the total rated breaker space is calculated, it is used to calculate the headroom breaker space in an upgrade simulation by subtracting from it the new total spaces occupied by electric loads in the upgraded home. Note, although the headroom breaker space for the baseline is an input characteristic, all space-related metrics are listed as output metrics to avoid confusion.
 

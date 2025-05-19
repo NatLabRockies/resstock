@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>820db503-70ed-4076-9353-548ba88c13e7</version_id>
-  <version_modified>2025-05-13T03:43:42Z</version_modified>
+  <version_id>05a94cd2-67c2-487a-95c6-7a5d40543daa</version_id>
+  <version_modified>2025-05-19T16:49:27Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -7840,7 +7840,7 @@
       <filename>electrical_panel.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>57678570</checksum>
+      <checksum>86F56068</checksum>
     </file>
     <file>
       <filename>measure.txt</filename>
@@ -7852,7 +7852,7 @@
       <filename>resstock_arguments_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>7E6D3230</checksum>
+      <checksum>27099A1D</checksum>
     </file>
   </files>
 </measure>

@@ -35,8 +35,12 @@ class ResStockArgumentsTest < Minitest::Test
       resstock_arguments << arg.name
     end
 
-    resstock_arguments_extras = resstock_arguments - lookup_arguments
-    puts "resstock_arguments - lookup_arguments: #{resstock_arguments_extras.sort}" if !resstock_arguments_extras.empty?
-    assert_equal(0, resstock_arguments_extras.size)
+    missing_lookup_arguments = resstock_arguments - lookup_arguments
+    puts "missing options_lookup.tsv arguments: #{missing_lookup_arguments.sort}" if !missing_lookup_arguments.empty?
+    assert_equal(0, missing_lookup_arguments.size)
+
+    extra_lookup_arguments = lookup_arguments - resstock_arguments
+    puts "extra options_lookup.tsv arguments: #{extra_lookup_arguments.sort}" if !extra_lookup_arguments.empty?
+    assert_equal(0, extra_lookup_arguments.size)
   end
 end
