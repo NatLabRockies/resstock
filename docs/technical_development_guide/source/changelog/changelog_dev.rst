@@ -26,6 +26,21 @@ Development Changelog
 
 
     .. change::
+        :tags: workflow
+        :pullreq: 1385
+
+        **Date**: 2025-05-15
+
+        Title:
+        Update electrical panel open breaker prediction
+
+        Description:
+        Update electrical panel open breaker prediction to account for EV charger presence.
+
+        Assignees: Lixi Liu
+
+
+    .. change::
         :tags: standard data release
         :pullreq: 1372
 
