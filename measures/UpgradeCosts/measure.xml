@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>upgrade_costs</name>
   <uid>ef51212c-acc4-48d7-9b29-cf2a5c6c4449</uid>
-  <version_id>c0a604ad-ff73-44b8-ac9b-54ed33126fc9</version_id>
-  <version_modified>2025-05-14T20:53:09Z</version_modified>
+  <version_id>f52862b0-faa3-4418-915f-dec2434ccc4a</version_id>
+  <version_modified>2025-05-19T21:17:19Z</version_modified>
   <xml_checksum>B1F14CB4</xml_checksum>
   <class_name>UpgradeCosts</class_name>
   <display_name>Upgrade Costs</display_name>
@@ -141,7 +141,7 @@
       <filename>SFD_1story_FB_UA_GRG_MSHP_FuelTanklessWH.xml</filename>
       <filetype>xml</filetype>
       <usage_type>test</usage_type>
-      <checksum>B953C485</checksum>
+      <checksum>91E66CF4</checksum>
     </file>
     <file>
       <filename>SFD_1story_FB_UA_GRG_RoomAC_ElecBoiler_FuelTanklessWH.osw</filename>
@@ -171,7 +171,7 @@
       <filename>SFD_1story_UB_UA_GRG_ACV_FuelFurnace_PortableHeater_HPWH.xml</filename>
       <filetype>xml</filetype>
       <usage_type>test</usage_type>
-      <checksum>D7FE4F73</checksum>
+      <checksum>F90036F5</checksum>
     </file>
     <file>
       <filename>SFD_2story_CS_UA_AC2_FuelBoiler_FuelTankWH.osw</filename>
@@ -183,7 +183,7 @@
       <filename>SFD_2story_CS_UA_AC2_FuelBoiler_FuelTankWH.xml</filename>
       <filetype>xml</filetype>
       <usage_type>test</usage_type>
-      <checksum>63D06C31</checksum>
+      <checksum>593F0DDA</checksum>
     </file>
     <file>
       <filename>SFD_2story_CS_UA_GRG_ASHPV_FuelTanklessWH.osw</filename>
@@ -201,7 +201,7 @@
       <filename>SFD_2story_FB_UA_GRG_AC1_ElecBaseboard_FuelTankWH.xml</filename>
       <filetype>xml</filetype>
       <usage_type>test</usage_type>
-      <checksum>471DD5FA</checksum>
+      <checksum>FF104AA1</checksum>
     </file>
     <file>
       <filename>SFD_2story_FB_UA_GRG_AC1_UnitHeater_FuelTankWH.osw</filename>
@@ -238,6 +238,24 @@
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
       <checksum>083B023F</checksum>
+    </file>
+    <file>
+      <filename>in.epw</filename>
+      <filetype>epw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>E23378AA</checksum>
+    </file>
+    <file>
+      <filename>in.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>24F741A6</checksum>
+    </file>
+    <file>
+      <filename>in.xml</filename>
+      <filetype>xml</filetype>
+      <usage_type>test</usage_type>
+      <checksum>51AF534A</checksum>
     </file>
     <file>
       <filename>upgrade_costs_test.rb</filename>
