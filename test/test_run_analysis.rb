@@ -292,7 +292,7 @@ class TestRunAnalysis < Minitest::Test
     assert(File.exist?(File.join(@testing_baseline, 'run1', 'run')))
     contents = Dir[File.join(@testing_baseline, 'run1', 'run/*')].collect { |x| File.basename(x) }
 
-    _test_contents(contents, false, true)
+    _test_contents(contents, true)
 
     timeseries = _get_timeseries_columns(Dir[File.join(@testing_baseline, 'run*/run/results_timeseries.csv')])
     assert(_test_timeseries_columns(timeseries, true))
@@ -328,7 +328,7 @@ class TestRunAnalysis < Minitest::Test
     assert(File.exist?(File.join(@national_baseline, 'run1', 'run')))
     contents = Dir[File.join(@national_baseline, 'run1', 'run/*')].collect { |x| File.basename(x) }
 
-    _test_contents(contents, false, false)
+    _test_contents(contents, false)
 
     timeseries = _get_timeseries_columns(Dir[File.join(@national_baseline, 'run*/run/results_timeseries.csv')])
     assert(_test_timeseries_columns(timeseries))
