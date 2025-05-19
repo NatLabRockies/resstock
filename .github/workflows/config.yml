@@ -533,7 +533,7 @@ jobs:
             docs/technical_reference_guide/_build/ResStockTechnicalReferenceGuide.pdf
           if-no-files-found: error
 
-      - name: Commit latest results
+      - name: Commit latest documentation
         shell: bash        
         run: |
           branch_name="${{ github.head_ref }}"
