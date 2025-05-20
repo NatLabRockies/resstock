@@ -92,6 +92,66 @@ jobs:
           path: coverage
           if-no-files-found: error
 
+  build-documentation:
+    runs-on: ubuntu-22.04
+    needs: format-files
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install software
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt update
+          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
+
+      - name: Download formatted options_lookup
+        uses: actions/download-artifact@v4
+        with:
+          path: resources
+          name: options_lookup
+
+      - name: Build technical development guide
+        run: |
+          sudo gem install oga
+          ruby docs/technical_development_guide/source/workflow_inputs/create_characteristics_rst.rb
+          ruby docs/technical_development_guide/source/workflow_outputs/csv_tables.rb
+          cd docs/technical_development_guide
+          pip install changelog
+          make html SPHINXOPTS="-W --keep-going -n"
+      
+      - name: Build technical reference guide
+        uses: dante-ev/latex-action@2023-A
+        with:
+          working_directory: docs/technical_reference_guide
+          root_file: ResStockTechnicalReferenceGuide.tex
+          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -output-directory=_build
+
+      - name: Save documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: |
+            docs/technical_development_guide/_build/html/
+            docs/technical_reference_guide/_build/ResStockTechnicalReferenceGuide.pdf
+          if-no-files-found: error
+
+      - name: Commit latest documentation
+        shell: bash        
+        run: |
+          branch_name="${{ github.head_ref }}"
+          git pull origin $branch_name
+          git add docs
+          git status
+          if [[ $(git diff --cached --exit-code) ]]; then
+            git config --global user.email "github-action@users.noreply.github.com"
+            git config --global user.name "GitHub Action"
+            git commit -m "Update documentation."
+            echo "Pushing to branch: $branch_name"
+            git push -u origin $branch_name
+          fi
+
   analysis-tests:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
@@ -252,6 +312,125 @@ jobs:
           sudo gem install simplecov-html
           ruby test/test_analysis_tools.rb
 
+  compare-results:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-22.04
+    needs: [integration-tests]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+
+      - name: Upload base results
+        uses: actions/upload-artifact@v4
+        with:
+          name: base_results
+          path: test/base_results
+          if-no-files-found: error
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Download base results
+        uses: actions/download-artifact@v4
+        with:
+          path: base_results
+          name: base_results
+
+      - name: Download feature samples
+        uses: actions/download-artifact@v4
+        with:
+          path: samples
+          name: feature_samples
+
+      - name: Download feature results
+        uses: actions/download-artifact@v4
+        with:
+          path: results
+          name: feature_results
+
+      - name: Compare samples and results
+        run: |          
+          pip install numpy
+          pip install pandas
+          pip install plotly
+          pip install kaleido
+          
+          # baseline annual
+          mkdir -p test/base_results/comparisons/baseline/annual
+          python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
+          python test/compare.py -a results -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
+          python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
+          
+          # baseline timeseries
+          mkdir test/base_results/comparisons/baseline/timeseries
+          python test/compare.py -a timeseries -b base_results/baseline/timeseries -f results/baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
+
+      - name: Upload comparisons
+        uses: actions/upload-artifact@v4
+        with:
+          name: comparisons
+          path: test/base_results/comparisons
+          if-no-files-found: error
+
+  update-results:
+    runs-on: ubuntu-22.04
+    needs: [analysis-tests, integration-tests]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install software
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt update
+          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
+
+      - name: Download feature samples
+        uses: actions/download-artifact@v4
+        with:
+          path: samples
+          name: feature_samples
+
+      - name: Download feature results
+        uses: actions/download-artifact@v4
+        with:
+          path: results
+          name: feature_results
+
+      - name: Download formatted options_lookup
+        uses: actions/download-artifact@v4
+        with:
+          path: resources
+          name: options_lookup
+
+      - name: Download precomputed buildstocks
+        uses: actions/download-artifact@v4
+        with:
+          path: test/tests_yml_files
+          name: precomputed_buildstocks
+
+      - name: Commit the integration tests results
+        shell: bash        
+        run: |
+          branch_name="${{ github.head_ref }}"
+          git pull origin $branch_name
+          cp -r samples/buildstock*.csv test/base_results/baseline/annual
+          cp -r results/baseline/annual/results*.csv test/base_results/baseline/annual
+          cp -r results/baseline/timeseries/*.csv test/base_results/baseline/timeseries
+          git add test/base_results
+          git add resources/options_lookup.tsv
+          git add test/tests_yml_files
+          git status
+          if [[ $(git diff --cached --exit-code) ]]; then
+            git commit -m "Baseline integration tests results."
+            echo "Pushing to branch: $branch_name"
+            git push -u origin $branch_name
+          fi
+
   sdr-options-analysis:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
@@ -329,17 +508,18 @@ jobs:
               print("All options have non-zero applicable_to values. Test passed.")
           '
 
-      - name: Mark repo safe
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
-      - name: Commit the analysis results
+      - name: Commit the options analysis results
         shell: bash
         run: |
+          branch_name="${{ github.head_ref }}"
+          git pull origin $branch_name
           git add project_national/resources
-          git diff --cached --quiet || (
-            git commit -m "SDR Analysis Results"
-            git push
-          )
+          git status
+          if [[ $(git diff --cached --exit-code) ]]; then
+            git commit -m "SDR options analysis results."
+            echo "Pushing to branch: $branch_name"
+            git push -u origin $branch_name
+          fi
 
   sdr-integration-tests:
     runs-on: ubuntu-22.04
@@ -388,205 +568,25 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: buildstockbatch_results_sdr_published_csvs
-          path: project_national/sdr_upgrades_tmy3/results_csvs_pub/
+          path: project_national/sdr_upgrades_tmy3/results_csvs_pub
           if-no-files-found: error
 
       - name: Upload buildstockbatch results - raw
         uses: actions/upload-artifact@v4
         with:
           name: buildstockbatch_results_sdr_raw_csvs
-          path: project_national/sdr_upgrades_tmy3/results_csvs/
+          path: project_national/sdr_upgrades_tmy3/results_csvs
           if-no-files-found: error
 
-      - name: Copy and commit results to resources
-        run: |
-          mkdir -p test/base_results/upgrades/sdr_annual/
-          cp -r project_national/sdr_upgrades_tmy3/results_csvs_pub/* test/base_results/upgrades/sdr_annual/
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          git add test/base_results/upgrades/sdr_annual/
-          git diff --cached --quiet || (
-            git commit -m "Update minimal buildstock results"
-            git push
-          )
-
-  compare-results:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-22.04
-    needs: [integration-tests]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.sha }}
-
-      - name: Upload base results
-        uses: actions/upload-artifact@v4
-        with:
-          name: base_results
-          path: test/base_results
-          if-no-files-found: error
-
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Download base results
-        uses: actions/download-artifact@v4
-        with:
-          path: base_results
-          name: base_results
-
-      - name: Download feature samples
-        uses: actions/download-artifact@v4
-        with:
-          path: samples
-          name: feature_samples
-
-      - name: Download feature results
-        uses: actions/download-artifact@v4
-        with:
-          path: results
-          name: feature_results
-
-      - name: Compare samples and results
-        run: |          
-          pip install numpy
-          pip install pandas
-          pip install plotly
-          pip install kaleido
-          
-          # baseline annual
-          mkdir -p test/base_results/comparisons/baseline/annual
-          python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
-          python test/compare.py -a results -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
-          python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
-          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
-          
-          # baseline timeseries
-          mkdir test/base_results/comparisons/baseline/timeseries
-          python test/compare.py -a timeseries -b base_results/baseline/timeseries -f results/baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
-
-      - name: Upload comparisons
-        uses: actions/upload-artifact@v4
-        with:
-          name: comparisons
-          path: test/base_results/comparisons
-          if-no-files-found: error
-
-  build-documentation:
-    runs-on: ubuntu-22.04
-    needs: format-files
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Install software
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
-
-      - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
-        with:
-          path: resources
-          name: options_lookup
-
-      - name: Build technical development guide
-        run: |
-          sudo gem install oga
-          ruby docs/technical_development_guide/source/workflow_inputs/create_characteristics_rst.rb
-          ruby docs/technical_development_guide/source/workflow_outputs/csv_tables.rb
-          cd docs/technical_development_guide
-          pip install changelog
-          make html SPHINXOPTS="-W --keep-going -n"
-      
-      - name: Build technical reference guide
-        uses: dante-ev/latex-action@2023-A
-        with:
-          working_directory: docs/technical_reference_guide
-          root_file: ResStockTechnicalReferenceGuide.tex
-          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -output-directory=_build
-
-      - name: Save documentation
-        uses: actions/upload-artifact@v4
-        with:
-          name: documentation
-          path: |
-            docs/technical_development_guide/_build/html/
-            docs/technical_reference_guide/_build/ResStockTechnicalReferenceGuide.pdf
-          if-no-files-found: error
-
-      - name: Commit latest documentation
-        shell: bash        
+      - name: Commit the integration tests results
         run: |
           branch_name="${{ github.head_ref }}"
           git pull origin $branch_name
-          git add docs
+          cp -r project_national/sdr_upgrades_tmy3/results_csvs_pub/* test/base_results/upgrades/sdr_annual
+          git add test/base_results/upgrades/sdr_annual
           git status
           if [[ $(git diff --cached --exit-code) ]]; then
-            git config --global user.email "github-action@users.noreply.github.com"
-            git config --global user.name "GitHub Action"
-            git commit -m "Update documentation."
-            echo "Pushing to branch: $branch_name"
-            git push -u origin $branch_name
-          fi
-
-
-  update-results:
-    runs-on: ubuntu-22.04
-    needs: [analysis-tests, integration-tests]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Install software
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
-
-      - name: Download feature samples
-        uses: actions/download-artifact@v4
-        with:
-          path: samples
-          name: feature_samples
-
-      - name: Download feature results
-        uses: actions/download-artifact@v4
-        with:
-          path: results
-          name: feature_results
-
-      - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
-        with:
-          path: resources
-          name: options_lookup
-
-      - name: Download precomputed buildstocks
-        uses: actions/download-artifact@v4
-        with:
-          path: test/tests_yml_files
-          name: precomputed_buildstocks
-
-      - name: Commit latest results
-        shell: bash        
-        run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
-          cp -r samples/buildstock*.csv test/base_results/baseline/annual
-          cp -r results/baseline/annual/results*.csv test/base_results/baseline/annual
-          cp -r results/baseline/timeseries/*.csv test/base_results/baseline/timeseries
-          git add test/base_results
-          git add resources/options_lookup.tsv
-          git add test/tests_yml_files
-          git status
-          if [[ $(git diff --cached --exit-code) ]]; then
-            git config --global user.email "github-action@users.noreply.github.com"
-            git config --global user.name "GitHub Action"
-            git commit -m "Latest results."
+            git commit -m "SDR integration tests results."
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
