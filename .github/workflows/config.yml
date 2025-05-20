@@ -503,6 +503,67 @@ jobs:
           images: "test/base_results/comparisons/baseline/annual/results_output_energy_use.jpg"
           upload_to: imgur
 
+  build-documentation:
+    runs-on: ubuntu-22.04
+    needs: format-files
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install software
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt update
+          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
+
+      - name: Download formatted options_lookup
+        uses: actions/download-artifact@v4
+        with:
+          path: resources
+          name: options_lookup
+
+      - name: Build technical development guide
+        run: |
+          sudo gem install oga
+          ruby docs/technical_development_guide/source/workflow_inputs/create_characteristics_rst.rb
+          ruby docs/technical_development_guide/source/workflow_outputs/csv_tables.rb
+          cd docs/technical_development_guide
+          pip install changelog
+          make html SPHINXOPTS="-W --keep-going -n"
+      
+      - name: Build technical reference guide
+        uses: dante-ev/latex-action@2023-A
+        with:
+          working_directory: docs/technical_reference_guide
+          root_file: ResStockTechnicalReferenceGuide.tex
+          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -output-directory=_build
+
+      - name: Save documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: |
+            docs/technical_development_guide/_build/html/
+            docs/technical_reference_guide/_build/ResStockTechnicalReferenceGuide.pdf
+          if-no-files-found: error
+
+      - name: Commit latest documentation
+        shell: bash        
+        run: |
+          branch_name="${{ github.head_ref }}"
+          git pull origin $branch_name
+          git add docs
+          git status
+          if [[ $(git diff --cached --exit-code) ]]; then
+            git config --global user.email "github-action@users.noreply.github.com"
+            git config --global user.name "GitHub Action"
+            git commit -m "Update documentation."
+            echo "Pushing to branch: $branch_name"
+            git push -u origin $branch_name
+          fi
+
+
   update-results:
     runs-on: ubuntu-22.04
     needs: [analysis-tests, integration-tests]
@@ -541,31 +602,6 @@ jobs:
           path: test/tests_yml_files
           name: precomputed_buildstocks
 
-      - name: Build technical development guide
-        run: |
-          sudo gem install oga
-          ruby docs/technical_development_guide/source/workflow_inputs/create_characteristics_rst.rb
-          ruby docs/technical_development_guide/source/workflow_outputs/csv_tables.rb
-          cd docs/technical_development_guide
-          pip install changelog
-          make html SPHINXOPTS="-W --keep-going -n"
-      
-      - name: Build technical reference guide
-        uses: dante-ev/latex-action@2023-A
-        with:
-          working_directory: docs/technical_reference_guide
-          root_file: ResStockTechnicalReferenceGuide.tex
-          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -output-directory=_build
-
-      - name: Save documentation
-        uses: actions/upload-artifact@v4
-        with:
-          name: documentation
-          path: |
-            docs/technical_development_guide/_build/html/
-            docs/technical_reference_guide/_build/ResStockTechnicalReferenceGuide.pdf
-          if-no-files-found: error
-
       - name: Commit latest results
         shell: bash        
         run: |
@@ -577,7 +613,6 @@ jobs:
           cp -r results/upgrades/annual/results*.csv test/base_results/upgrades/annual
           cp -r results/upgrades/timeseries/*.csv test/base_results/upgrades/timeseries
           git add test/base_results
-          git add docs
           git add resources/options_lookup.tsv
           git add test/tests_yml_files
           git status
