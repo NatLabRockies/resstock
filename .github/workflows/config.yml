@@ -20,6 +20,8 @@ env:
   OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.9.0
+  BUILDSTOCK_BRANCH: develop
+  BUILDSTOCK_QUERY_BRANCH: main
 
 jobs:
   format-files:
@@ -233,7 +235,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone https://github.com/NREL/buildstockbatch.git
+          git clone https://github.com/NREL/buildstockbatch.git@$BUILDSTOCK_BRANCH
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
@@ -457,7 +459,7 @@ jobs:
 
       - name: Install buildstock_query
         run: |
-          python3 -m pip install git+https://github.com/NREL/buildstock-query.git@main
+          python3 -m pip install git+https://github.com/NREL/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
 
       - name: Generate 550K Sampler
         run: |
@@ -516,6 +518,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
+            git config --global --add safe.directory "$GITHUB_WORKSPACE"
             git commit -m "SDR options analysis results."
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
@@ -550,7 +553,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone https://github.com/NREL/buildstockbatch.git
+          git clone https://github.com/NREL/buildstockbatch.git@$BUILDSTOCK_BRANCH
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
