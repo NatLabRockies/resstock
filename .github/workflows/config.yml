@@ -528,7 +528,7 @@ jobs:
 
   sdr-integration-tests:
     runs-on: ubuntu-22.04
-    needs: [unit-tests, sdr-options-analysis]
+    needs: [sdr-options-analysis]
     steps:
       - uses: actions/checkout@v4
         with:
