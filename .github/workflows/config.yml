@@ -235,7 +235,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone https://github.com/NREL/buildstockbatch.git@$BUILDSTOCK_BRANCH
+          git clone --single-branch --branch $BUILDSTOCK_BRANCH https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
@@ -526,7 +526,7 @@ jobs:
 
   sdr-integration-tests:
     runs-on: ubuntu-22.04
-    needs: [unit-tests]
+    needs: [unit-tests, sdr-options-analysis]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -553,7 +553,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone https://github.com/NREL/buildstockbatch.git@$BUILDSTOCK_BRANCH
+          git clone --single-branch --branch $BUILDSTOCK_BRANCH https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
