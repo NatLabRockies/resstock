@@ -19,7 +19,7 @@ class TestBuildStockBatch < Minitest::Test
     assert(File.exist?(File.join(@testing_baseline, 'simulation_output', 'up00', 'bldg0000001', 'run')))
     contents = Dir[File.join(@testing_baseline, 'simulation_output', 'up00', 'bldg0000001', 'run/*')].collect { |x| File.basename(x) }
 
-    _test_contents(contents, false, true)
+    _test_contents(contents, true)
 
     timeseries = _get_timeseries_columns(Dir[File.join(@testing_baseline, 'simulation_output/up*/bldg*/run/results_timeseries.csv')])
     assert(_test_timeseries_columns(timeseries, true))
@@ -34,7 +34,7 @@ class TestBuildStockBatch < Minitest::Test
     assert(File.exist?(File.join(@national_baseline, 'simulation_output', 'up00', 'bldg0000001', 'run')))
     contents = Dir[File.join(@national_baseline, 'simulation_output', 'up00', 'bldg0000001', 'run/*')].collect { |x| File.basename(x) }
 
-    _test_contents(contents, false, false)
+    _test_contents(contents, false)
 
     timeseries = _get_timeseries_columns(Dir[File.join(@national_baseline, 'simulation_output/up*/bldg*/run/results_timeseries.csv')])
     assert(_test_timeseries_columns(timeseries))
