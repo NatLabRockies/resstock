@@ -8,7 +8,6 @@ class TestBuildStockBatch < Minitest::Test
   def before_setup
     @testing_baseline = 'project_testing/testing_baseline'
     @national_baseline = 'project_national/national_baseline'
-    @sdr_upgrades = 'project_national/sdr_upgrades_tmy3'
   end
 
   def test_testing_baseline
@@ -20,7 +19,7 @@ class TestBuildStockBatch < Minitest::Test
     assert(File.exist?(File.join(@testing_baseline, 'simulation_output', 'up00', 'bldg0000001', 'run')))
     contents = Dir[File.join(@testing_baseline, 'simulation_output', 'up00', 'bldg0000001', 'run/*')].collect { |x| File.basename(x) }
 
-    _test_contents(contents, false, true)
+    _test_contents(contents, true)
 
     timeseries = _get_timeseries_columns(Dir[File.join(@testing_baseline, 'simulation_output/up*/bldg*/run/results_timeseries.csv')])
     assert(_test_timeseries_columns(timeseries, true))
@@ -35,35 +34,9 @@ class TestBuildStockBatch < Minitest::Test
     assert(File.exist?(File.join(@national_baseline, 'simulation_output', 'up00', 'bldg0000001', 'run')))
     contents = Dir[File.join(@national_baseline, 'simulation_output', 'up00', 'bldg0000001', 'run/*')].collect { |x| File.basename(x) }
 
-    _test_contents(contents, false, false)
+    _test_contents(contents, false)
 
     timeseries = _get_timeseries_columns(Dir[File.join(@national_baseline, 'simulation_output/up*/bldg*/run/results_timeseries.csv')])
-    assert(_test_timeseries_columns(timeseries))
-  end
-
-  def test_sdr_upgrades
-    assert(File.exist?(File.join(@sdr_upgrades, 'results_csvs', 'results_up00.csv')))
-    results = CSV.read(File.join(@sdr_upgrades, 'results_csvs', 'results_up00.csv'), headers: true)
-
-    _test_columns(results)
-
-    assert(File.exist?(File.join(@sdr_upgrades, 'simulation_output', 'up00', 'bldg0000001', 'run')))
-    contents = Dir[File.join(@sdr_upgrades, 'simulation_output', 'up00', 'bldg0000001', 'run/*')].collect { |x| File.basename(x) }
-
-    _test_contents(contents, false, false)
-
-    num_upgrade_scenarios = Dir[File.join(@sdr_upgrades, 'results_csvs', 'results_up*')].count - 1
-    assert(File.exist?(File.join(@sdr_upgrades, 'results_csvs', "results_up#{num_upgrade_scenarios}.csv")))
-    results = CSV.read(File.join(@sdr_upgrades, 'results_csvs', "results_up#{num_upgrade_scenarios}.csv"), headers: true)
-
-    _test_columns(results, true)
-
-    assert(File.exist?(File.join(@sdr_upgrades, 'simulation_output', "up#{num_upgrade_scenarios}", 'bldg0000001', 'run')))
-    contents = Dir[File.join(@sdr_upgrades, 'simulation_output', "up#{num_upgrade_scenarios}", 'bldg0000001', 'run/*')].collect { |x| File.basename(x) }
-
-    _test_contents(contents, true, false)
-
-    timeseries = _get_timeseries_columns(Dir[File.join(@sdr_upgrades, 'simulation_output/up*/bldg*/run/results_timeseries.csv')])
     assert(_test_timeseries_columns(timeseries))
   end
 

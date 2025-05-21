@@ -11,7 +11,7 @@ Development Changelog
         :pullreq: 1408
         :tickets: 1154
 
-        **Date**: 2025-05-14
+        **Date**: 2025-05-22
 
         Title:
         Use Autosizing Limits and Maintain Duct System Curve
@@ -23,6 +23,21 @@ Development Changelog
         OpenStudio-HPXML: `pull request 1584 <https://github.com/NREL/OpenStudio-HPXML/pull/1584>`_
 
         Assignees: Joe Robertson
+
+
+    .. change::
+        :tags: feature, standard data release
+        :pullreq: 1398, 1412
+
+        **Date**: 2025-05-20
+
+        Title:
+        SDR Integration Tests
+
+        Description:
+        Add ResStock post processing code to create publication version of the annual results and commit them for the minimal buildstock test result.
+
+        Assignees: Rajendra Adhikari, Anthony Fontanini, Joe Robertson
 
 
     .. change::
@@ -76,7 +91,7 @@ Development Changelog
 
 
     .. change::
-        :tags: feature
+        :tags: feature, standard data release
         :pullreq: 1384
 
         **Date**: 2025-04-29
@@ -87,7 +102,7 @@ Development Changelog
         Description:
         Implemented CI workflow for validating option application in SDR yaml and added checks to ensure all upgrade options have non-zero applicability.
 
-        Assignees: Rajendra Adhikari
+        Assignees: Rajendra Adhikari, Anthony Fontanini
 
 
     .. change::
