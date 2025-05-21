@@ -108,9 +108,6 @@ workflow_generator:
       include_timeseries_weather: true
       include_timeseries_resilience: true
       output_variables:
-        # - name: Site Outdoor Air Drybulb Temperature # handled by include_timeseries_weather: true
-        # - name: Zone Mean Air Temperature # handled by include_timeseries_zone_temperatures: true
-        # - name: Zone Air Relative Humidity # handled by include_timeseries_zone_conditions: true
         - name: People Sensible Heating Rate
         - name: People Total Heating Rate
         - name: Site Outdoor Air Humidity Ratio
