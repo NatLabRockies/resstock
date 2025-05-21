@@ -20,10 +20,8 @@ env:
   OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.9.0
-  GIT_AUTHOR_NAME: GitHub Action
-  GIT_AUTHOR_EMAIL: github-action@users.noreply.github.com
-  GIT_COMMITTER_NAME: github-action
-  GIT_COMMITTER_EMAIL: github-action@users.noreply.github.com
+  BUILDSTOCK_BRANCH: develop
+  BUILDSTOCK_QUERY_BRANCH: main
 
 jobs:
   format-files:
@@ -92,94 +90,65 @@ jobs:
           path: coverage
           if-no-files-found: error
 
-  sdr_options_analysis:
+  build-documentation:
     runs-on: ubuntu-22.04
-    needs: [unit-tests]
-    container:
-      image: docker://nrel/openstudio:3.9.0
+    needs: format-files
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Install gems
-        run: |
-          rm -f Gemfile.lock && bundle install
-
-      - name: Install python
-        shell: bash
+      - name: Install software
         run: |
           export DEBIAN_FRONTEND=noninteractive
           sudo apt update
-          sudo -E apt-get install -y python3-pip
+          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
 
-      - name: Install python dependencies
+      - name: Download formatted options_lookup
+        uses: actions/download-artifact@v4
+        with:
+          path: resources
+          name: options_lookup
+
+      - name: Build technical development guide
         run: |
-          python3 -m pip install --progress-bar off --upgrade pip
-          pip3 install --progress-bar off pandas pyyaml
+          sudo gem install oga
+          ruby docs/technical_development_guide/source/workflow_inputs/create_characteristics_rst.rb
+          ruby docs/technical_development_guide/source/workflow_outputs/csv_tables.rb
+          cd docs/technical_development_guide
+          pip install changelog
+          make html SPHINXOPTS="-W --keep-going -n"
+      
+      - name: Build technical reference guide
+        uses: dante-ev/latex-action@2023-A
+        with:
+          working_directory: docs/technical_reference_guide
+          root_file: ResStockTechnicalReferenceGuide.tex
+          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -output-directory=_build
 
-      - name: Install buildstock_query
-        run: |
-          python3 -m pip install git+https://github.com/NREL/buildstock-query.git@main
-
-      - name: Generate 550K Sampler
-        run: |
-          openstudio resources/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
-
-      - name: Generate minimal buildstock and other files
-        run: |
-          cd project_national/resources
-          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
-          rm national_550ksamples.csv
-
-      - name: Upload SDR options analysis artifacts
+      - name: Save documentation
         uses: actions/upload-artifact@v4
         with:
-          name: sdr_options_analysis
+          name: documentation
           path: |
-            project_national/resources/sdr_minimal_buildstock.csv
-            project_national/resources/sdr_option_application_detailed_report.txt
-            project_national/resources/sdr_option_application_report.csv
-          retention-days: 90
-          if-no-files-found: error          
+            docs/technical_development_guide/_build/html/
+            docs/technical_reference_guide/_build/ResStockTechnicalReferenceGuide.pdf
+          if-no-files-found: error
 
-      - name: Test for zero applicable_to values
+      - name: Commit latest documentation
+        shell: bash        
         run: |
-          cd project_national/resources
-          # Check applicable_to column (5th column)
-          python3 -c '
-          import csv
-          import sys
-
-          zero_applicable_options = []
-          with open("sdr_option_application_report.csv", "r") as f:
-              reader = csv.reader(f)
-              headers = next(reader)  # Skip header row
-              for row in reader:
-                  if len(row) >= 5 and row[4] == "0":  # Check if applicable_to (5th column) is zero
-                      zero_applicable_options.append(row)
-
-          if zero_applicable_options:
-              print("ERROR: Found options with zero applicable_to values in sdr_option_application_report.csv")
-              print("The following options have zero applicable_to values:")
-              for row in zero_applicable_options:
-                  print(f"Upgrade: {row[0]}, Upgrade Name: {row[1]}, Option: {row[3]}, Applicable To: {row[4]}")
-              sys.exit(1)
-          else:
-              print("All options have non-zero applicable_to values. Test passed.")
-          '
-
-      - name: Mark repo safe
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
-      - name: Commit the analysis results
-        shell: bash
-        run: |
-          git add project_national/resources
-          git diff --cached --quiet || (
-            git commit -m "SDR Analysis Results"
-            git push
-          )
+          branch_name="${{ github.head_ref }}"
+          git pull origin $branch_name
+          git add docs
+          git status
+          if [[ $(git diff --cached --exit-code) ]]; then
+            git config --global user.email "github-action@users.noreply.github.com"
+            git config --global user.name "GitHub Action"
+            git commit -m "Update documentation."
+            echo "Pushing to branch: $branch_name"
+            git push -u origin $branch_name
+          fi
 
   analysis-tests:
     runs-on: ubuntu-22.04
@@ -235,11 +204,9 @@ jobs:
           path: |
             project_national/national_baseline/results-Baseline.csv
             project_testing/testing_baseline/results-Baseline.csv
-            project_national/sdr_upgrades_tmy3/results-Baseline.csv
-            project_national/sdr_upgrades_tmy3/results-EnvelopeOnlyLightTouchEnvelope.csv
           if-no-files-found: error
 
-  integration-tests-sdr:
+  integration-tests:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     steps:
@@ -268,75 +235,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone https://github.com/NREL/buildstockbatch.git
-          python -m pip install --progress-bar off --upgrade pip
-          cd buildstockbatch
-          bash install.sh dev
-
-      - name: Run buildstockbatch
-        run: |
-          buildstock_local --low-disk project_national/sdr_upgrades_tmy3_v2.yml
-
-      - name: Unzip results
-        run: |
-          gunzip -v project_national/sdr_upgrades_tmy3_v2/results_csvs_pub/*.csv.gz
-          gunzip -v project_national/sdr_upgrades_tmy3_v2/results_csvs/*.csv.gz
-
-      - name: Upload buildstockbatch results - published
-        uses: actions/upload-artifact@v4
-        with:
-          name: buildstockbatch_results_sdr_v2_published_csvs
-          path: project_national/sdr_upgrades_tmy3_v2/results_csvs_pub/
-          if-no-files-found: error
-
-      - name: Upload buildstockbatch results - raw
-        uses: actions/upload-artifact@v4
-        with:
-          name: buildstockbatch_results_sdr_v2_raw_csvs
-          path: project_national/sdr_upgrades_tmy3_v2/results_csvs/
-          if-no-files-found: error
-
-      - name: Copy and commit results to resources
-        run: |
-          mkdir -p test/base_results/upgrades/sdr_annual/
-          cp -r project_national/sdr_upgrades_tmy3_v2/results_csvs_pub/* test/base_results/upgrades/sdr_annual/
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          git add test/base_results/upgrades/sdr_annual/
-          git diff --cached --quiet || (
-            git commit -m "Update minimal buildstock results"
-            git push
-          )
-
-  integration-tests:
-    runs-on: ubuntu-22.04
-    needs: [unit-tests]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Download and Install OpenStudio
-        run: |
-          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
-          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
-          sudo apt install -y ./$OS_DEBFILE
-          openstudio openstudio_version
-          which openstudio
-
-      - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
-        with:
-          path: resources
-          name: options_lookup
-
-      - name: Clone and install buildstockbatch
-        run: |
-          cd ..
-          git clone https://github.com/NREL/buildstockbatch.git
+          git clone --single-branch --branch $BUILDSTOCK_BRANCH https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
@@ -345,17 +244,14 @@ jobs:
         run: |
           buildstock_local project_national/national_baseline.yml
           buildstock_local project_testing/testing_baseline.yml
-          buildstock_local project_national/sdr_upgrades_tmy3.yml
 
       - name: Unzip results
         run: |
           gunzip -v project_national/national_baseline/results_csvs/*.csv.gz
           gunzip -v project_testing/testing_baseline/results_csvs/*.csv.gz
-          gunzip -v project_national/sdr_upgrades_tmy3/results_csvs/*.csv.gz
           
           tar -xvf project_national/national_baseline/simulation_output/*.tar.gz -C project_national/national_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw'
           tar -xvf project_testing/testing_baseline/simulation_output/*.tar.gz -C project_testing/testing_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw' --wildcards '*in.osm' --wildcards '*in.idf'
-          tar -xvf project_national/sdr_upgrades_tmy3/simulation_output/*.tar.gz -C project_national/sdr_upgrades_tmy3/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw'
 
       - name: Process results
         run: |
@@ -378,8 +274,6 @@ jobs:
           path: |
             project_national/national_baseline/results_csvs/results_up00.csv
             project_testing/testing_baseline/results_csvs/results_up00.csv
-            project_national/sdr_upgrades_tmy3/results_csvs/results_up00.csv
-            project_national/sdr_upgrades_tmy3/results_csvs/results_up18.csv
           if-no-files-found: error
 
       - name: Run tests
@@ -471,15 +365,6 @@ jobs:
           # baseline timeseries
           mkdir test/base_results/comparisons/baseline/timeseries
           python test/compare.py -a timeseries -b base_results/baseline/timeseries -f results/baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
-          
-          # upgrades annual
-          mkdir -p test/base_results/comparisons/upgrades/annual
-          python test/compare.py -a results -b base_results/upgrades/annual -f results/upgrades/annual -e test/base_results/comparisons/upgrades/annual # results_output.csv
-          python test/compare.py -a visualize -x results_output.html -b base_results/upgrades/annual -f results/upgrades/annual -e test/base_results/comparisons/upgrades/annual # *.html
-          
-          # upgrades timeseries
-          mkdir test/base_results/comparisons/upgrades/timeseries
-          python test/compare.py -a timeseries -b base_results/upgrades/timeseries -f results/upgrades/timeseries -e test/base_results/comparisons/upgrades/timeseries # cvrmse_nmbe_*.csv
 
       - name: Upload comparisons
         uses: actions/upload-artifact@v4
@@ -487,67 +372,6 @@ jobs:
           name: comparisons
           path: test/base_results/comparisons
           if-no-files-found: error
-
-  build-documentation:
-    runs-on: ubuntu-22.04
-    needs: format-files
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Install software
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
-
-      - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
-        with:
-          path: resources
-          name: options_lookup
-
-      - name: Build technical development guide
-        run: |
-          sudo gem install oga
-          ruby docs/technical_development_guide/source/workflow_inputs/create_characteristics_rst.rb
-          ruby docs/technical_development_guide/source/workflow_outputs/csv_tables.rb
-          cd docs/technical_development_guide
-          pip install changelog
-          make html SPHINXOPTS="-W --keep-going -n"
-      
-      - name: Build technical reference guide
-        uses: dante-ev/latex-action@2023-A
-        with:
-          working_directory: docs/technical_reference_guide
-          root_file: ResStockTechnicalReferenceGuide.tex
-          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -output-directory=_build
-
-      - name: Save documentation
-        uses: actions/upload-artifact@v4
-        with:
-          name: documentation
-          path: |
-            docs/technical_development_guide/_build/html/
-            docs/technical_reference_guide/_build/ResStockTechnicalReferenceGuide.pdf
-          if-no-files-found: error
-
-      - name: Commit latest documentation
-        shell: bash        
-        run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
-          git add docs
-          git status
-          if [[ $(git diff --cached --exit-code) ]]; then
-            git config --global user.email "github-action@users.noreply.github.com"
-            git config --global user.name "GitHub Action"
-            git commit -m "Update documentation."
-            echo "Pushing to branch: $branch_name"
-            git push -u origin $branch_name
-          fi
-
 
   update-results:
     runs-on: ubuntu-22.04
@@ -587,7 +411,7 @@ jobs:
           path: test/tests_yml_files
           name: precomputed_buildstocks
 
-      - name: Commit latest results
+      - name: Commit the integration tests results
         shell: bash        
         run: |
           branch_name="${{ github.head_ref }}"
@@ -595,8 +419,6 @@ jobs:
           cp -r samples/buildstock*.csv test/base_results/baseline/annual
           cp -r results/baseline/annual/results*.csv test/base_results/baseline/annual
           cp -r results/baseline/timeseries/*.csv test/base_results/baseline/timeseries
-          cp -r results/upgrades/annual/results*.csv test/base_results/upgrades/annual
-          cp -r results/upgrades/timeseries/*.csv test/base_results/upgrades/timeseries
           git add test/base_results
           git add resources/options_lookup.tsv
           git add test/tests_yml_files
@@ -604,7 +426,174 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "Latest results."
+            git commit -m "Baseline integration tests results."
+            echo "Pushing to branch: $branch_name"
+            git push -u origin $branch_name
+          fi
+
+  sdr-options-analysis:
+    runs-on: ubuntu-22.04
+    needs: [unit-tests]
+    container:
+      image: docker://nrel/openstudio:3.9.0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install gems
+        run: |
+          rm -f Gemfile.lock && bundle install
+
+      - name: Install python
+        shell: bash
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt update
+          sudo -E apt-get install -y python3-pip
+
+      - name: Install python dependencies
+        run: |
+          python3 -m pip install --progress-bar off --upgrade pip
+          pip3 install --progress-bar off pandas pyyaml
+
+      - name: Install buildstock_query
+        run: |
+          python3 -m pip install git+https://github.com/NREL/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
+
+      - name: Generate 550K Sampler
+        run: |
+          openstudio resources/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
+
+      - name: Generate minimal buildstock and other files
+        run: |
+          cd project_national/resources
+          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
+          rm national_550ksamples.csv
+
+      - name: Upload SDR options analysis artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdr_options_analysis
+          path: |
+            project_national/resources/sdr_minimal_buildstock.csv
+            project_national/resources/sdr_option_application_detailed_report.txt
+            project_national/resources/sdr_option_application_report.csv
+          retention-days: 90
+          if-no-files-found: error          
+
+      - name: Test for zero applicable_to values
+        run: |
+          cd project_national/resources
+          # Check applicable_to column (5th column)
+          python3 -c '
+          import csv
+          import sys
+
+          zero_applicable_options = []
+          with open("sdr_option_application_report.csv", "r") as f:
+              reader = csv.reader(f)
+              headers = next(reader)  # Skip header row
+              for row in reader:
+                  if len(row) >= 5 and row[4] == "0":  # Check if applicable_to (5th column) is zero
+                      zero_applicable_options.append(row)
+
+          if zero_applicable_options:
+              print("ERROR: Found options with zero applicable_to values in sdr_option_application_report.csv")
+              print("The following options have zero applicable_to values:")
+              for row in zero_applicable_options:
+                  print(f"Upgrade: {row[0]}, Upgrade Name: {row[1]}, Option: {row[3]}, Applicable To: {row[4]}")
+              sys.exit(1)
+          else:
+              print("All options have non-zero applicable_to values. Test passed.")
+          '
+
+      - name: Mark repo safe
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Commit the options analysis results
+        shell: bash
+        run: |
+          branch_name="${{ github.head_ref }}"
+          git pull origin $branch_name
+          git add project_national/resources
+          git status
+          if [[ $(git diff --cached --exit-code) ]]; then
+            git config --global user.email "github-action@users.noreply.github.com"
+            git config --global user.name "GitHub Action"
+            git commit -m "SDR options analysis results."
+            echo "Pushing to branch: $branch_name"
+            git push -u origin $branch_name
+          fi
+
+  sdr-integration-tests:
+    runs-on: ubuntu-22.04
+    needs: [sdr-options-analysis]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Download and Install OpenStudio
+        run: |
+          export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
+          wget -q $OPENSTUDIO_URL/$OS_DEBFILE
+          sudo apt install -y ./$OS_DEBFILE
+          openstudio openstudio_version
+          which openstudio
+
+      - name: Download formatted options_lookup
+        uses: actions/download-artifact@v4
+        with:
+          path: resources
+          name: options_lookup
+
+      - name: Clone and install buildstockbatch repository
+        run: |
+          cd ..
+          git clone --single-branch --branch $BUILDSTOCK_BRANCH https://github.com/NREL/buildstockbatch.git
+          python -m pip install --progress-bar off --upgrade pip
+          cd buildstockbatch
+          bash install.sh dev
+
+      - name: Run buildstockbatch
+        run: |
+          buildstock_local --low-disk project_national/sdr_upgrades_tmy3.yml
+
+      - name: Unzip results
+        run: |
+          gunzip -v project_national/sdr_upgrades_tmy3/results_csvs_pub/*.csv.gz
+          gunzip -v project_national/sdr_upgrades_tmy3/results_csvs/*.csv.gz
+
+      - name: Upload buildstockbatch results - published
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildstockbatch_results_sdr_published_csvs
+          path: project_national/sdr_upgrades_tmy3/results_csvs_pub
+          if-no-files-found: error
+
+      - name: Upload buildstockbatch results - raw
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildstockbatch_results_sdr_raw_csvs
+          path: project_national/sdr_upgrades_tmy3/results_csvs
+          if-no-files-found: error
+
+      - name: Commit the integration tests results
+        run: |
+          branch_name="${{ github.head_ref }}"
+          git pull origin $branch_name
+          cp -r project_national/sdr_upgrades_tmy3/results_csvs_pub/* test/base_results/upgrades/sdr_annual
+          git add test/base_results/upgrades/sdr_annual
+          git status
+          if [[ $(git diff --cached --exit-code) ]]; then
+            git config --global user.email "github-action@users.noreply.github.com"
+            git config --global user.name "GitHub Action"
+            git commit -m "SDR integration tests results."
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi

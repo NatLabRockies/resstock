@@ -293,60 +293,44 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 16,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,44,Misc Pool Heater|Electricity,4618,0.8
 16,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,45,Misc Hot Tub Spa|Electricity,4759,0.9
 16,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,-1,All,280116,50.9
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",408859,74.3
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,2,HVAC Cooling Efficiency|Ducted Heat Pump,408859,74.3
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,408859,74.3
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,4,Insulation Ceiling|R-30,1112,0.2
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,5,Insulation Ceiling|R-49,76965,14.0
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,6,Insulation Ceiling|R-60,110626,20.1
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,7,Infiltration Reduction|30%,261505,47.5
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,8,Water Heater Fuel|Electricity,215727,39.2
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,9,"Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF",303244,55.1
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,10,"Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF",81675,14.8
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,11,"Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF",23092,4.2
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,12,"Clothes Dryer|Electric, Premium, EnergyStar",69656,12.7
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,13,Cooking Range|Electric Induction,151371,27.5
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,14,Misc Pool Heater|Electricity,5340,1.0
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,15,Misc Hot Tub Spa|Electricity,5206,0.9
-17,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency,-1,All,408859,74.3
-18,Envelope Only - Light Touch Envelope,1,Insulation Ceiling|R-30,1502,0.3
-18,Envelope Only - Light Touch Envelope,2,Insulation Ceiling|R-49,84557,15.4
-18,Envelope Only - Light Touch Envelope,3,Insulation Ceiling|R-60,129264,23.5
-18,Envelope Only - Light Touch Envelope,4,Infiltration Reduction|30%,366250,66.6
-18,Envelope Only - Light Touch Envelope,-1,All,445325,81.0
-19,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset",548291,99.7
-19,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
-19,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",-1,All,548291,99.7
-20,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",548291,99.7
-20,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
-20,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",-1,All,548291,99.7
-21,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset",548291,99.7
-21,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
-21,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",-1,All,548291,99.7
-22,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",548291,99.7
-22,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
-22,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",-1,All,548291,99.7
-23,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",548291,99.7
-23,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
-23,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",-1,All,548291,99.7
-24,Electric Vehicle Adoption with Level 1 Charging,1,Electric Vehicle Ownership|Yes,477589,86.8
-24,Electric Vehicle Adoption with Level 1 Charging,2,Electric Vehicle Charger|Level 1 charger,477589,86.8
-24,Electric Vehicle Adoption with Level 1 Charging,-1,All,477589,86.8
-25,Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,483360,87.9
-25,Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
-25,Electric Vehicle Adoption with Level 2 Charging,-1,All,483360,87.9
-26,Efficient Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,483360,87.9
-26,Efficient Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
-26,Efficient Electric Vehicle Adoption with Level 2 Charging,3,Electric Vehicle Efficiency Increase|15%,483360,87.9
-26,Efficient Electric Vehicle Adoption with Level 2 Charging,-1,All,483360,87.9
-27,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,483360,87.9
-27,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
-27,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Demand Flexibility Electric Vehicle|Enabled,483360,87.9
-27,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Random Shift|30 minutes,483360,87.9
-27,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,483360,87.9
-28,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,483360,87.9
-28,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
-28,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Electric Vehicle Efficiency Increase|15%,483360,87.9
-28,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Electric Vehicle|Enabled,483360,87.9
-28,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,5,Demand Flexibility Random Shift|30 minutes,483360,87.9
-28,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,483360,87.9
+17,Envelope Only - Light Touch Envelope,1,Insulation Ceiling|R-30,1502,0.3
+17,Envelope Only - Light Touch Envelope,2,Insulation Ceiling|R-49,84557,15.4
+17,Envelope Only - Light Touch Envelope,3,Insulation Ceiling|R-60,129264,23.5
+17,Envelope Only - Light Touch Envelope,4,Infiltration Reduction|30%,366250,66.6
+17,Envelope Only - Light Touch Envelope,-1,All,445325,81.0
+18,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset",548291,99.7
+18,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
+18,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",-1,All,548291,99.7
+19,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",548291,99.7
+19,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
+19,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",-1,All,548291,99.7
+20,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset",548291,99.7
+20,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
+20,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",-1,All,548291,99.7
+21,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",548291,99.7
+21,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
+21,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",-1,All,548291,99.7
+22,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",548291,99.7
+22,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
+22,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",-1,All,548291,99.7
+23,Electric Vehicle Adoption with Level 1 Charging,1,Electric Vehicle Ownership|Yes,477589,86.8
+23,Electric Vehicle Adoption with Level 1 Charging,2,Electric Vehicle Charger|Level 1 charger,477589,86.8
+23,Electric Vehicle Adoption with Level 1 Charging,-1,All,477589,86.8
+24,Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,483360,87.9
+24,Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
+24,Electric Vehicle Adoption with Level 2 Charging,-1,All,483360,87.9
+25,Efficient Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,483360,87.9
+25,Efficient Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
+25,Efficient Electric Vehicle Adoption with Level 2 Charging,3,Electric Vehicle Efficiency Increase|15%,483360,87.9
+25,Efficient Electric Vehicle Adoption with Level 2 Charging,-1,All,483360,87.9
+26,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,483360,87.9
+26,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
+26,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Demand Flexibility Electric Vehicle|Enabled,483360,87.9
+26,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Random Shift|30 minutes,483360,87.9
+26,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,483360,87.9
+27,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,483360,87.9
+27,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
+27,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Electric Vehicle Efficiency Increase|15%,483360,87.9
+27,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Electric Vehicle|Enabled,483360,87.9
+27,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,5,Demand Flexibility Random Shift|30 minutes,483360,87.9
+27,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,483360,87.9

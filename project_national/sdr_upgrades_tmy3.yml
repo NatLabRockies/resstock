@@ -1,4 +1,4 @@
-schema_version: '0.4'
+schema_version: '0.6'
 os_version: 3.9.0
 os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
@@ -15,9 +15,10 @@ baseline:
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: residential_quota
+  type: precomputed
+  # type: residential_quota # For production run
   args:
-    n_datapoints: 2 # For CI
+    sample_file: resources/sdr_minimal_buildstock.csv # For CI
     # n_datapoints: 550000 # For production run
 
 # NREL High Performance Computing machine configuration
@@ -40,6 +41,7 @@ postprocessing:
   partition_columns:
     - State
     - County
+  publish_annual_results: true
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
   # aws:
   #  region_name: us-west-2
@@ -98,7 +100,7 @@ workflow_generator:
       include_timeseries_emission_end_uses: false
       include_timeseries_hot_water_uses: true
       include_timeseries_total_loads: true
-      include_timeseries_component_loads: false
+      include_timeseries_component_loads: true
       include_timeseries_unmet_hours: true
       include_timeseries_zone_temperatures: true
       include_timeseries_zone_conditions: true
@@ -106,9 +108,6 @@ workflow_generator:
       include_timeseries_weather: true
       include_timeseries_resilience: true
       output_variables:
-        # - name: Site Outdoor Air Drybulb Temperature # handled by include_timeseries_weather: true
-        # - name: Zone Mean Air Temperature # handled by include_timeseries_zone_temperatures: true
-        # - name: Zone Air Relative Humidity # handled by include_timeseries_zone_conditions: true
         - name: People Sensible Heating Rate
         - name: People Total Heating Rate
         - name: Site Outdoor Air Humidity Ratio
@@ -129,8 +128,9 @@ workflow_generator:
 ### -- Upgrades --
 # Standard Data Release - Residential
 
-### -- Heat Pumps -- ###
 upgrades:
+
+### -- Heat Pumps -- ###
   - upgrade_name: ENERGY STAR heat pump with elec backup 
     
     package_apply_logic: &remove_high_rise_shared
@@ -601,6 +601,38 @@ upgrades:
 
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
+
+  - upgrade_name: Detailed Performance Data - Typical Cold Climate
+
+    package_apply_logic: *remove_high_rise_shared
+
+    options:
+      - &hvac_heating_efficiency_ashp_typical_cc
+        option: HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
+        apply_logic: &ducted_ASHP_apply_logic_detailed_performance
+          - HVAC Has Ducts|Yes
+
+      - &hvac_cooling_efficiency_ducted_heat_pump_detailed_performance
+        option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *ducted_ASHP_apply_logic_detailed_performance
+      
+      - &hvac_performance_data_ashp
+        option: HVAC Detailed Performance Data|CCHP Ducted
+        apply_logic: *ducted_ASHP_apply_logic_detailed_performance
+
+      - &hvac_heating_efficiency_mshp_typical_cc
+        option: HVAC Heating Efficiency|MSHP, SEER2 22.7, 10.3 HSPF2, Typical Cold Climate
+        apply_logic: &nonducted_MSHP_apply_logic_detailed_performance
+          - HVAC Has Ducts|No
+          - not: HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+
+      - &hvac_cooling_efficiency_non_ducted_heat_pump_detailed_performance
+        option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
+        apply_logic: *nonducted_MSHP_apply_logic_detailed_performance
+
+      - &hvac_performance_data_mshp
+        option: HVAC Detailed Performance Data|CCHP Non-Ducted
+        apply_logic: *nonducted_MSHP_apply_logic_detailed_performance
 
 ### -- Heat Pumps + Light Touch -- ###
   - upgrade_name: ENERGY STAR heat pump with elec backup + Light Touch Envelope
@@ -1094,34 +1126,6 @@ upgrades:
       - *electric_pool_heaters
       - *electric_spa_heaters
 
-  - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope with Full Appliance Electrification with Efficiency
-    
-    package_apply_logic: *remove_shared_heating_cooling_ghp
-
-    options:
-      ### -- Dual-Speed Ducted ghp -- ###
-      - *dual_speed_ducted_ghp
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned_ducts_only
-
-        ### -- Light Touch Envelope -- ###
-      - *attic_insulation_IECC_CZ1A
-      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
-      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
-      - *infiltration_30pct_reduction
-
-        ### -- HPWHs -- ###
-      - *water_heater_fuel_type
-      - *water_heater_efficiency_electric_heat_pump_50_gal_3_pt_45_uef
-      - *water_heater_efficiency_electric_heat_pump_66_gal_3_pt_35_uef
-      - *water_heater_efficiency_electric_heat_pump_80_gal_3_pt_45_uef
-
-        ### -- Full Electrification -- ###
-      - *energystar_electric_dryer_for_non-electric_dryer
-      - *induction_range_oven_for_non-electric_cooking
-      - *electric_pool_heaters
-      - *electric_spa_heaters
-
   - upgrade_name: Envelope Only - Light Touch Envelope
     options:
         ### -- Light Touch Envelope -- ###
@@ -1191,7 +1195,7 @@ upgrades:
       - &EV_15Percent_Efficiency
         option: Electric Vehicle Efficiency Increase|15%
 
-  # Demand Flexibility
+### -- Electric Vehicles Demand Flexibility -- ###
   - upgrade_name: Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
     package_apply_logic: *Occupied_Only
     options:
@@ -1209,4 +1213,3 @@ upgrades:
       - *EV_15Percent_Efficiency
       - *Demand_Flexibility_Electric_Vehicle
       - *Demand_Flexibility_30min_Random_Shift
-
