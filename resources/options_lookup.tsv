@@ -9172,11 +9172,11 @@ Dehumidifier	"65 pints/day, 50% RH, 2.0 EF"	ResStockArguments	dehumidifier_type=
 Dehumidifier	"65 pints/day, 60% RH"	ResStockArguments	dehumidifier_type=portable	dehumidifier_efficiency_type=EnergyFactor	dehumidifier_efficiency=1.8	dehumidifier_capacity=65	dehumidifier_rh_setpoint=0.6	dehumidifier_fraction_dehumidification_load_served=1
 Dehumidifier	None	ResStockArguments	dehumidifier_type=none	dehumidifier_efficiency_type=EnergyFactor	dehumidifier_efficiency=0	dehumidifier_capacity=40	dehumidifier_rh_setpoint=0.5	dehumidifier_fraction_dehumidification_load_served=1
 Demand Flexibility Electric Vehicle	Enabled	ResStockArgumentsPostHPXML	ev_flex_enabled=true
-Demand Flexibility HVAC	On-peak Load Shedding, 2F Offset	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=2	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0
-Demand Flexibility HVAC	On-peak Load Shedding, 4F Offset	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=4	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0
-Demand Flexibility HVAC	Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=1	hvac_flex_pre_peak_offset=2
-Demand Flexibility HVAC	Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=2
-Demand Flexibility HVAC	Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=4
+Demand Flexibility HVAC	"On-peak Load Shedding, 2F Offset"	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=2	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0
+Demand Flexibility HVAC	"On-peak Load Shedding, 4F Offset"	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=4	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0
+Demand Flexibility HVAC	"Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration"	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=1	hvac_flex_pre_peak_offset=2
+Demand Flexibility HVAC	"Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration"	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=2
+Demand Flexibility HVAC	"Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration"	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=4
 Demand Flexibility Random Shift	30 minutes	ResStockArgumentsPostHPXML	flex_random_shift_minutes=30
 Dishwasher	144 Rated kWh	ResStockArguments	dishwasher_present=true	dishwasher_location=auto	dishwasher_efficiency_type=RatedAnnualkWh	dishwasher_efficiency=144	dishwasher_label_electric_rate=0.12	dishwasher_label_gas_rate=1.09	dishwasher_label_annual_gas_cost=13	dishwasher_label_usage=4	dishwasher_place_setting_capacity=12
 Dishwasher	199 Rated kWh	ResStockArguments	dishwasher_present=true	dishwasher_location=auto	dishwasher_efficiency_type=RatedAnnualkWh	dishwasher_efficiency=199	dishwasher_label_electric_rate=0.12	dishwasher_label_gas_rate=1.09	dishwasher_label_annual_gas_cost=18	dishwasher_label_usage=4	dishwasher_place_setting_capacity=12
@@ -9658,7 +9658,7 @@ Ground Thermal Conductivity	0.8	ResStockArguments	site_ground_conductivity=0.8	s
 Ground Thermal Conductivity	1.1	ResStockArguments	site_ground_conductivity=1.1	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto
 Ground Thermal Conductivity	1.4	ResStockArguments	site_ground_conductivity=1.4	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto
 Ground Thermal Conductivity	1.7	ResStockArguments	site_ground_conductivity=1.7	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto
-Ground Thermal Conductivity	2.0	ResStockArguments	site_ground_conductivity=2.0	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto
+Ground Thermal Conductivity	2	ResStockArguments	site_ground_conductivity=2.0	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto
 Ground Thermal Conductivity	2.3	ResStockArguments	site_ground_conductivity=2.3	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto
 Ground Thermal Conductivity	2.6	ResStockArguments	site_ground_conductivity=2.6	site_ground_diffusivity=auto	site_soil_and_moisture_type=auto
 HVAC Cooling Autosizing Factor	40% Oversized	ResStockArguments	cooling_system_cooling_autosizing_factor=1.4	heat_pump_cooling_autosizing_factor=auto
@@ -13843,6 +13843,67 @@ Roof Material	Composition Shingles	ResStockArguments	roof_material_type=asphalt 
 Roof Material	Galvanized Steel	ResStockArguments	roof_material_type=metal surfacing	roof_color=medium
 Roof Material	Slate	ResStockArguments	roof_material_type=slate or tile shingles	roof_color=medium
 Roof Material	Wood Shingles	ResStockArguments	roof_material_type=wood shingles or shakes	roof_color=medium
+Sampling Region	0
+Sampling Region	1
+Sampling Region	10
+Sampling Region	100
+Sampling Region	101
+Sampling Region	102
+Sampling Region	103
+Sampling Region	104
+Sampling Region	105
+Sampling Region	106
+Sampling Region	107
+Sampling Region	108
+Sampling Region	109
+Sampling Region	11
+Sampling Region	12
+Sampling Region	13
+Sampling Region	14
+Sampling Region	15
+Sampling Region	16
+Sampling Region	17
+Sampling Region	18
+Sampling Region	19
+Sampling Region	2
+Sampling Region	20
+Sampling Region	21
+Sampling Region	22
+Sampling Region	23
+Sampling Region	24
+Sampling Region	25
+Sampling Region	26
+Sampling Region	27
+Sampling Region	28
+Sampling Region	29
+Sampling Region	3
+Sampling Region	30
+Sampling Region	31
+Sampling Region	32
+Sampling Region	33
+Sampling Region	34
+Sampling Region	35
+Sampling Region	36
+Sampling Region	37
+Sampling Region	38
+Sampling Region	39
+Sampling Region	4
+Sampling Region	40
+Sampling Region	41
+Sampling Region	42
+Sampling Region	43
+Sampling Region	44
+Sampling Region	45
+Sampling Region	46
+Sampling Region	47
+Sampling Region	48
+Sampling Region	49
+Sampling Region	5
+Sampling Region	6
+Sampling Region	7
+Sampling Region	8
+Sampling Region	9
+Sampling Region	Void
 State	AK	ResStockArguments	site_state_code=AK	extra_refrigerator_usage_multiplier=1.80	freezer_usage_multiplier=1.27
 State	AL	ResStockArguments	site_state_code=AL	extra_refrigerator_usage_multiplier=1.76	freezer_usage_multiplier=1.34
 State	AR	ResStockArguments	site_state_code=AR	extra_refrigerator_usage_multiplier=1.90	freezer_usage_multiplier=1.25
