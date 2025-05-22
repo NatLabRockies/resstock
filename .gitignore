@@ -6,6 +6,7 @@
 # Measures and testing-related files
 /measures/UpgradeCosts/tests/in*
 /measures/UpgradeCosts/tests/*.xml
+/measures/ResStockArguments/resources/electrical_panel/*
 
 # Project-specific files
 /project_national/national_baseline
