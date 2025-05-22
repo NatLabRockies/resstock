@@ -240,27 +240,7 @@ upgrades:
             - HVAC Has Ducts|Yes
             - HVAC Has Ducts|No 
 
-    ### --- Duct Restricted ENERGY STAR heat pump with elec backup
-  - upgrade_name: Duct Restricted ENERGY STAR heat pump with elec backup
-
-    package_apply_logic: *remove_high_rise_shared
-    options:
-        ### -- ENERGY STAR heat pumps ###
-      - *ducted_ASHP_ENERGYSTAR_elec_backup
-      - *nonducted_MSHP_ENERGYSTAR_elec_backup
-
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - *cooling_setpoint_no_offset_nonducted
-      - *cooling_setpoint_offset_magnitude_0_nonducted
-      - *cooling_setpoint_offset_period_none_nonducted
-      - *heating_setpoint_no_offset_nonducted
-      - *heating_setpoint_offset_magnitude_0_nonducted
-      - *heating_setpoint_offset_period_none_nonducted
-
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
+        ### -- Limit the upgraded equipment capacity based on the existing duct system
       - &hvac_distribution_use_duct_restriction
         option: HVAC Distribution|Use Duct Restriction
         apply_logic: *ducted_ASHP_apply_logic
@@ -332,6 +312,8 @@ upgrades:
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
 
+      - *hvac_distribution_use_duct_restriction
+
   - upgrade_name: Ultra high efficiency heat pump with elec backup
     
     package_apply_logic: *remove_high_rise_shared
@@ -381,6 +363,8 @@ upgrades:
       - *HP_cooling_efficiency_nonducted
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
+
+      - *hvac_distribution_use_duct_restriction
 
   - upgrade_name: ENERGY STAR heat pump with existing system as backup
 
@@ -448,6 +432,8 @@ upgrades:
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
 
+      - *hvac_distribution_use_duct_restriction
+
   - upgrade_name: Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
     package_apply_logic: &remove_shared_heating_cooling_ghp
@@ -480,6 +466,8 @@ upgrades:
         apply_logic: &yes_has_ducts_apply_logic
           - HVAC Has Ducts|Yes
 
+      - *hvac_distribution_use_duct_restriction
+
   - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
     package_apply_logic: *remove_shared_heating_cooling_ghp
@@ -494,6 +482,8 @@ upgrades:
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
 
+      - *hvac_distribution_use_duct_restriction
+
   - upgrade_name: Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
     package_apply_logic: *remove_shared_heating_cooling_ghp
@@ -506,6 +496,8 @@ upgrades:
 
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
+
+      - *hvac_distribution_use_duct_restriction
 
 ### -- Heat Pumps + Light Touch -- ###
   - upgrade_name: ENERGY STAR heat pump with elec backup + Light Touch Envelope
@@ -527,6 +519,8 @@ upgrades:
       - *HP_cooling_efficiency_nonducted
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
+
+      - *hvac_distribution_use_duct_restriction
 
       ### -- Light Touch Envelope -- ###  
       # Attic floor insulation up to IECC 2021 levels for homes with vented attics with R-13 or less insulation
@@ -646,6 +640,8 @@ upgrades:
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
 
+      - *hvac_distribution_use_duct_restriction
+
         ### -- Light Touch Envelope -- ###
       - *attic_insulation_IECC_CZ1A
       - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
@@ -669,6 +665,8 @@ upgrades:
       - *HP_cooling_efficiency_nonducted
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
+
+      - *hvac_distribution_use_duct_restriction
 
         ### -- Light Touch Envelope -- ###
       - *attic_insulation_IECC_CZ1A
@@ -700,6 +698,8 @@ upgrades:
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
 
+      - *hvac_distribution_use_duct_restriction
+
         ### -- Light Touch Envelope -- ###
       - *attic_insulation_IECC_CZ1A
       - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
@@ -715,6 +715,8 @@ upgrades:
       - *dual_speed_ducted_ghp
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
+
+      - *hvac_distribution_use_duct_restriction
 
         ### -- Light Touch Envelope -- ###
       - *attic_insulation_IECC_CZ1A
@@ -741,6 +743,8 @@ upgrades:
       - *HP_cooling_efficiency_nonducted
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
+
+      - *hvac_distribution_use_duct_restriction
 
         ### -- Light Touch Envelope -- ###
       - *attic_insulation_IECC_CZ1A
@@ -863,6 +867,8 @@ upgrades:
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
 
+      - *hvac_distribution_use_duct_restriction
+
         ### -- Light Touch Envelope -- ###
       - *attic_insulation_IECC_CZ1A
       - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
@@ -898,6 +904,8 @@ upgrades:
       - *HP_cooling_efficiency_nonducted
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
+
+      - *hvac_distribution_use_duct_restriction
 
         ### -- Light Touch Envelope -- ###
       - *attic_insulation_IECC_CZ1A
@@ -940,6 +948,8 @@ upgrades:
       - *HP_cooling_efficiency_nonducted
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned
+
+      - *hvac_distribution_use_duct_restriction
 
         ### -- Light Touch Envelope -- ###
       - *attic_insulation_IECC_CZ1A
