@@ -10,8 +10,22 @@ The ResStock workflow allows modeling heat pumps with either "integrated" or "se
 Definitions for each are given below.
 See `HPXML Heat Pumps <https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-heat-pumps>`_ for more information.
 
-- **integrated**: the heat pump’s distribution system and blower fan power applies to the backup heating (e.g., built-in electric strip heat or an integrated backup furnace, i.e., a dual-fuel heat pump).
-- **separate**: the backup system has its own distribution system (e.g., electric baseboard or a boiler).
+- :ref:`integrated_backup`
+- :ref:`separate_backup` 
+
+.. _integrated_backup:
+
+Integrated
+**********
+
+The heat pump’s distribution system and blower fan power applies to the backup heating (e.g., built-in electric strip heat or an integrated backup furnace, i.e., a dual-fuel heat pump).
+
+.. _separate_backup:
+
+Separate
+********
+
+The backup system has its own distribution system (e.g., electric baseboard or a boiler).
 
 Lockout Temperatures
 --------------------
@@ -20,17 +34,31 @@ The ResStock workflow allows for controlling the compressor and/or backup heatin
 Definitions for each are given below.
 See the `Backup <https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#backup>`_ section of the OpenStudio-HPXML documentation for more information.
 
-- **compressor**: minimum outdoor temperature for compressor operation.
-- **backup heating**: maximum outdoor temperature for backup operation.
+- :ref:`compressor_lockout` 
+- :ref:`backup_heating_lockout`
 
-For example, a heat pump upgrade option could be defined with a compressor lockout temperature of 5F and a backup heating lockout temperature of 40F.
-See below the argument assignments that would need to be added to the ``options_lookup.tsv`` file.
+For example, a heat pump upgrade option could be defined with a compressor lockout temperature of 5F and a backup heating lockout temperature of 40F (i.e., a 5F - 40F switchover band).
+See the argument assignments below that would need to be added to the ``options_lookup.tsv`` file.
 These values would override the OpenStudio-HPXML defaults.
 
 .. code::
 
   heat_pump_compressor_lockout_temp=5
   heat_pump_backup_heating_lockout_temp=40
+
+.. _compressor_lockout:
+
+Compressor
+**********
+
+Minimum outdoor temperature for compressor operation.
+
+.. _backup_heating_lockout:
+
+Backup Heating
+**************
+
+Maximum outdoor temperature for backup operation.
 
 Replacement Scenarios
 ---------------------
@@ -181,8 +209,3 @@ For example:
         lifetime: 30
       - option: HVAC Cooling Efficiency|Ducted Heat Pump
       - option: HVAC Distribution|Use Duct Restriction
-
-.. include:: ../../../../project_national/sdr_upgrades_tmy3.yml
-   :code: text
-   :start-after: ### --- Duct Restricted ENERGY STAR heat pump with elec backup
-   :end-before: ### --- High efficiency cold-climate heat pump with elec backup
