@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>apply_upgrade</name>
   <uid>33f1654c-f734-43d1-b35d-9d2856e41b5a</uid>
-  <version_id>a42b3f07-62cd-48e7-98c7-20cd22d00d7c</version_id>
-  <version_modified>2025-05-15T20:48:47Z</version_modified>
+  <version_id>03a7808f-1ede-4d32-bda0-5c2623e22e76</version_id>
+  <version_modified>2025-05-22T19:27:59Z</version_modified>
   <xml_checksum>9339BE01</xml_checksum>
   <class_name>ApplyUpgrade</class_name>
   <display_name>Apply Upgrade</display_name>
