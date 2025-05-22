@@ -4706,22 +4706,22 @@ Level,Parameter,Option,Saturation
 1,Refrigerator Usage Level,105% Usage,0.25
 2,AIANNH Area,No,0.983911
 2,AIANNH Area,Yes,0.0160887
-2,CEC Climate Zone,1,0.000650205
-2,CEC Climate Zone,2,0.00300946
-2,CEC Climate Zone,3,0.0115914
-2,CEC Climate Zone,4,0.00544989
-2,CEC Climate Zone,5,0.00113621
-2,CEC Climate Zone,6,0.00869446
-2,CEC Climate Zone,7,0.00630159
-2,CEC Climate Zone,8,0.0110207
-2,CEC Climate Zone,9,0.0159304
-2,CEC Climate Zone,10,0.00991014
-2,CEC Climate Zone,11,0.00336647
-2,CEC Climate Zone,12,0.0133907
-2,CEC Climate Zone,13,0.005833
-2,CEC Climate Zone,14,0.00262196
-2,CEC Climate Zone,15,0.00243313
-2,CEC Climate Zone,16,0.00243635
+2,CEC Climate Zone,1,0.000654073
+2,CEC Climate Zone,2,0.00300777
+2,CEC Climate Zone,3,0.0115884
+2,CEC Climate Zone,4,0.00545622
+2,CEC Climate Zone,5,0.00113669
+2,CEC Climate Zone,6,0.00862788
+2,CEC Climate Zone,7,0.00633066
+2,CEC Climate Zone,8,0.0110913
+2,CEC Climate Zone,9,0.0159375
+2,CEC Climate Zone,10,0.00985424
+2,CEC Climate Zone,11,0.00333907
+2,CEC Climate Zone,12,0.0133893
+2,CEC Climate Zone,13,0.00579794
+2,CEC Climate Zone,14,0.00261718
+2,CEC Climate Zone,15,0.00240379
+2,CEC Climate Zone,16,0.002544
 2,CEC Climate Zone,None,0.896224
 2,City,"AK, Anchorage",0.0008537
 2,City,"AL, Auburn",0.000193954
@@ -11373,9 +11373,9 @@ Level,Parameter,Option,Saturation
 3,Building America Climate Zone,Mixed-Humid,0.302433
 3,Building America Climate Zone,Subarctic,0.000519458
 3,Building America Climate Zone,Very Cold,0.0108148
-3,Energystar Climate Zone 2023,North-Central,0.24664
+3,Energystar Climate Zone 2023,North-Central,0.246683
 3,Energystar Climate Zone 2023,Northern,0.371741
-3,Energystar Climate Zone 2023,South-Central,0.228425
+3,Energystar Climate Zone 2023,South-Central,0.228382
 3,Energystar Climate Zone 2023,Southern,0.153194
 3,Energystar Climate Zone 2023,Void,0
 3,ISO RTO Region,CAISO,0.0684827
@@ -12439,6 +12439,67 @@ Level,Parameter,Option,Saturation
 3,REEDS Balancing Area,133,0.00345124
 3,REEDS Balancing Area,134,0.00542408
 3,REEDS Balancing Area,None,0.00626205
+3,Sampling Region,0,0.0268295
+3,Sampling Region,1,0.0023063
+3,Sampling Region,2,0.0113423
+3,Sampling Region,3,0.00161893
+3,Sampling Region,4,0.0152803
+3,Sampling Region,5,0.0542921
+3,Sampling Region,6,0.0139845
+3,Sampling Region,7,0.00386829
+3,Sampling Region,8,0.0239086
+3,Sampling Region,9,0.048544
+3,Sampling Region,10,0.0323035
+3,Sampling Region,11,0.00859915
+3,Sampling Region,12,0.0179329
+3,Sampling Region,13,0.0300261
+3,Sampling Region,14,0.00395575
+3,Sampling Region,15,0.00670602
+3,Sampling Region,16,0.00970081
+3,Sampling Region,17,0.0276726
+3,Sampling Region,18,0.042659
+3,Sampling Region,19,0.0791914
+3,Sampling Region,20,0.0168602
+3,Sampling Region,21,0.00187367
+3,Sampling Region,22,0.0540783
+3,Sampling Region,23,0.00582237
+3,Sampling Region,24,0.0156678
+3,Sampling Region,25,0.0180665
+3,Sampling Region,26,0.0230797
+3,Sampling Region,27,0.00650113
+3,Sampling Region,28,0.00866824
+3,Sampling Region,29,0.0319361
+3,Sampling Region,30,0.0365328
+3,Sampling Region,31,0.00491986
+3,Sampling Region,32,0.0158975
+3,Sampling Region,33,0.0125846
+3,Sampling Region,34,0.00507359
+3,Sampling Region,35,0.00440855
+3,Sampling Region,36,0.0189375
+3,Sampling Region,37,0.0163518
+3,Sampling Region,38,0.0170521
+3,Sampling Region,39,0.0282504
+3,Sampling Region,40,0.0260238
+3,Sampling Region,41,0.00138597
+3,Sampling Region,42,0.00191966
+3,Sampling Region,43,0.00301304
+3,Sampling Region,44,0.00358669
+3,Sampling Region,45,0.00369626
+3,Sampling Region,46,0.00311757
+3,Sampling Region,47,0.00631277
+3,Sampling Region,48,0.0361314
+3,Sampling Region,49,0.00775183
+3,Sampling Region,100,0.00620584
+3,Sampling Region,101,0.0115884
+3,Sampling Region,102,0.0152208
+3,Sampling Region,103,0.00633066
+3,Sampling Region,104,0.0110913
+3,Sampling Region,105,0.0159375
+3,Sampling Region,106,0.00985424
+3,Sampling Region,107,0.0167284
+3,Sampling Region,108,0.00579794
+3,Sampling Region,109,0.00502097
+3,Sampling Region,Void,0
 3,State,AK,0.0023063
 3,State,AL,0.0164808
 3,State,AR,0.0100063
