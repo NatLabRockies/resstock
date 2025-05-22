@@ -375,7 +375,7 @@ upgrades:
     options:
         ### -- ENERGY STAR ASHP applies to all dwellings with ducts, retaining existing system as backup
         ### -- ENERGY STAR ASHP for dwellings with ducts, but non-ducted heating systems
-      - &ducted_ASHP_ENERGYSTAR_exist_backup
+      - &ducted_ASHP_ENERGYSTAR_exist_backup_nonducted
         option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Separate Backup
         apply_logic: &nonducted_heating_with_ducts_apply_logic
           - HVAC Has Ducts|Yes
@@ -388,8 +388,8 @@ upgrades:
         lifetime: *lifetime_ducted_ASHP
 
         ### -- ENERGY STAR ASHP for dwellings with ducted heating systems
-      - &ducted_ASHP_ENERGYSTAR_exist_backup2
-        option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, 5F-40F switchover band
+      - &ducted_ASHP_ENERGYSTAR_exist_backup_ducted
+        option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 5F-40F switchover band
         apply_logic: &ducted_heating_apply_logic
           - HVAC Has Ducts|Yes
           - or:
@@ -656,8 +656,8 @@ upgrades:
 
     options: 
 
-      - *ducted_ASHP_ENERGYSTAR_exist_backup
-      - *ducted_ASHP_ENERGYSTAR_exist_backup2
+      - *ducted_ASHP_ENERGYSTAR_exist_backup_nonducted
+      - *ducted_ASHP_ENERGYSTAR_exist_backup_ducted
       - *nonducted_MSHP_ENERGYSTAR_exist_backup
 
       - *heat_pump_backup_use_existing_system
@@ -897,8 +897,8 @@ upgrades:
 
     options: 
 
-      - *ducted_ASHP_ENERGYSTAR_exist_backup
-      - *ducted_ASHP_ENERGYSTAR_exist_backup2
+      - *ducted_ASHP_ENERGYSTAR_exist_backup_nonducted
+      - *ducted_ASHP_ENERGYSTAR_exist_backup_ducted
       - *nonducted_MSHP_ENERGYSTAR_exist_backup
 
       - *heat_pump_backup_use_existing_system
