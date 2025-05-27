@@ -19,11 +19,12 @@ ResStock Technical Development Guide
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-   
+
    basic_tutorial/index
    advanced_tutorial/index
    workflow_inputs/index
-   workflow_outputs/index   
+   workflow_outputs/index
+   resource_files/index
 
 Updates & Changelog
 ===================

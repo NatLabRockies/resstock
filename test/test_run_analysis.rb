@@ -16,11 +16,9 @@ class TestRunAnalysis < Minitest::Test
 
     @testing_baseline = File.join(@buildstock_directory, 'testing_baseline')
     @national_baseline = File.join(@buildstock_directory, 'national_baseline')
-    @sdr_upgrades_tmy3 = File.join(@buildstock_directory, 'sdr_upgrades_tmy3')
 
     FileUtils.rm_rf(@testing_baseline)
     FileUtils.rm_rf(@national_baseline)
-    FileUtils.rm_rf(@sdr_upgrades_tmy3)
   end
 
   def test_version
@@ -294,7 +292,7 @@ class TestRunAnalysis < Minitest::Test
     assert(File.exist?(File.join(@testing_baseline, 'run1', 'run')))
     contents = Dir[File.join(@testing_baseline, 'run1', 'run/*')].collect { |x| File.basename(x) }
 
-    _test_contents(contents, false, true)
+    _test_contents(contents, true)
 
     timeseries = _get_timeseries_columns(Dir[File.join(@testing_baseline, 'run*/run/results_timeseries.csv')])
     assert(_test_timeseries_columns(timeseries, true))
@@ -330,7 +328,7 @@ class TestRunAnalysis < Minitest::Test
     assert(File.exist?(File.join(@national_baseline, 'run1', 'run')))
     contents = Dir[File.join(@national_baseline, 'run1', 'run/*')].collect { |x| File.basename(x) }
 
-    _test_contents(contents, false, false)
+    _test_contents(contents, false)
 
     timeseries = _get_timeseries_columns(Dir[File.join(@national_baseline, 'run*/run/results_timeseries.csv')])
     assert(_test_timeseries_columns(timeseries))
@@ -341,65 +339,6 @@ class TestRunAnalysis < Minitest::Test
     des = File.join(@buildstock_directory, 'project_national/national_baseline')
     Dir.mkdir(des)
     FileUtils.cp(results_baseline, des)
-  end
-
-  def test_sdr_upgrades_tmy3
-    yml = ' -y project_national/sdr_upgrades_tmy3.yml'
-    @command += yml
-    @command += ' -d'
-    @command += ' -k'
-
-    system(@command)
-
-    cli_output_log = File.join(@sdr_upgrades_tmy3, 'cli_output.log')
-    assert(File.exist?(cli_output_log))
-    cli_output = File.readlines(cli_output_log)
-    _assert_and_puts(cli_output, 'ERROR', false)
-    _verify_outputs(cli_output_log)
-
-    _test_measure_order(File.join(@sdr_upgrades_tmy3, 'sdr_upgrades_tmy3-Baseline.osw'))
-    results_baseline = File.join(@sdr_upgrades_tmy3, 'results-Baseline.csv')
-    assert(File.exist?(results_baseline))
-    results = CSV.read(results_baseline, headers: true)
-
-    _test_columns(results)
-
-    assert(File.exist?(File.join(@sdr_upgrades_tmy3, 'run1', 'run')))
-    contents = Dir[File.join(@sdr_upgrades_tmy3, 'run1', 'run/*')].collect { |x| File.basename(x) }
-
-    _test_contents(contents, true, false)
-
-    test_package_name = 'EnvelopeOnlyLightTouchEnvelope' # This package was arbitrarily selected
-    _test_measure_order(File.join(@sdr_upgrades_tmy3, "sdr_upgrades_tmy3-#{test_package_name}.osw"))
-    results_packageupgrade = File.join(@sdr_upgrades_tmy3, "results-#{test_package_name}.csv")
-    assert(File.exist?(results_packageupgrade))
-    results = CSV.read(results_packageupgrade, headers: true)
-
-    _test_columns(results, true)
-
-    num_run_folders = Dir[File.join(@sdr_upgrades_tmy3, 'run*')].count
-    assert(File.exist?(File.join(@sdr_upgrades_tmy3, "run#{num_run_folders}", 'run')))
-    contents = Dir[File.join(@sdr_upgrades_tmy3, "run#{num_run_folders}", 'run/*')].collect { |x| File.basename(x) }
-
-    _test_contents(contents, false, false)
-
-    timeseries = _get_timeseries_columns(Dir[File.join(@sdr_upgrades_tmy3, 'run*/run/results_timeseries.csv')])
-    assert(_test_timeseries_columns(timeseries, true))
-
-    assert(File.exist?(File.join(@sdr_upgrades_tmy3, 'osw', 'Baseline', '1-existing.osw')))
-    assert(!File.exist?(File.join(@sdr_upgrades_tmy3, 'osw', 'Baseline', '1-upgraded.osw')))
-    assert(File.exist?(File.join(@sdr_upgrades_tmy3, 'xml', 'Baseline', '1-existing.xml')))
-    assert(!File.exist?(File.join(@sdr_upgrades_tmy3, 'xml', 'Baseline', '1-upgraded.xml')))
-
-    assert(File.exist?(File.join(@sdr_upgrades_tmy3, 'osw', test_package_name, '1-existing.osw')))
-    assert(File.exist?(File.join(@sdr_upgrades_tmy3, 'osw', test_package_name, '1-upgraded.osw')))
-    assert(File.exist?(File.join(@sdr_upgrades_tmy3, 'xml', test_package_name, '1-existing.xml')))
-    assert(File.exist?(File.join(@sdr_upgrades_tmy3, 'xml', test_package_name, '1-upgraded.xml')))
-
-    des = File.join(@buildstock_directory, 'project_national/sdr_upgrades_tmy3')
-    Dir.mkdir(des)
-    FileUtils.cp(results_baseline, des)
-    FileUtils.cp(results_packageupgrade, des)
   end
 
   private

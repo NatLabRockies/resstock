@@ -324,200 +324,39 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       return false
     end
 
-    # Initialize measure keys with hpxml_path arguments
+    # Set arguments for the BuildResidentialHPXML measure
     hpxml_path = File.expand_path('../upgraded.xml')
+    measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
+    measures['BuildResidentialHPXML'][0]['apply_defaults'] = true
+    measures['BuildResidentialHPXML'][0]['apply_validation'] = true
 
-    # Optional whole SFA/MF building simulation
-    whole_sfa_or_mf_building_sim = hpxml.header.whole_sfa_or_mf_building_sim
+    set_header(measures, hpxml, values)
+    set_building_header(measures)
+    set_battery(measures, hpxml)
 
     new_runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
-      unit_number += 1
-
-      measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
-
-      # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
-      resstock_arguments_runner.result.stepValues.each do |step_value|
-        value = get_value_from_workflow_step_value(step_value)
-        next if value == '' || Constants::ArgumentsToExclude.include?(step_value.name)
-
-        measures['BuildResidentialHPXML'][0][step_value.name] = value
-      end
-
-      # Set whole SFA/MF building simulation items
-      measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = whole_sfa_or_mf_building_sim
-
-      if unit_number > 1
+      if unit_number > 0
         measures['BuildResidentialHPXML'][0]['existing_hpxml_path'] = hpxml_path
       end
 
-      if whole_sfa_or_mf_building_sim && hpxml.buildings.size > 1
-        measures['BuildResidentialHPXML'][0]['battery_present'] = 'false' # limitation of OS-HPXML
-      end
+      set_resstock_arguments(measures, resstock_arguments_runner)
+      set_building_construction(measures, hpxml_bldg)
+      set_dehumidifier(measures, hpxml_bldg)
+      set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
+      set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
 
-      unit_multiplier = hpxml_bldg.building_construction.number_of_units
-      measures['BuildResidentialHPXML'][0]['unit_multiplier'] = unit_multiplier
-      if unit_multiplier > 1
-        measures['BuildResidentialHPXML'][0]['dehumidifier_type'] = 'none' # limitation of OS-HPXML
-      end
-
-      # Set additional properties
-      additional_properties = []
-      ['ceiling_insulation_r'].each do |arg_name|
-        arg_value = measures['ResStockArguments'][0][arg_name]
-        additional_properties << "#{arg_name}=#{arg_value}"
-      end
-      measures['BuildResidentialHPXML'][0]['additional_properties'] = additional_properties.join('|') unless additional_properties.empty?
-
-      # Retain (calculated) HVAC capacities if upgrade is not HVAC system related
-      # Do not retain HVAC autosizing factors and defect ratios if upgrade is HVAC system related
-      hvac_system_upgrades = get_hvac_system_upgrades(hpxml_bldg, upgrade_args_hash)
-      capacities, autosizing_factors, defect_ratios = get_hvac_system_values(hpxml_bldg, hvac_system_upgrades)
-
-      measures['BuildResidentialHPXML'][0]['heating_system_heating_capacity'] = capacities['heating_system_heating_capacity']
-      measures['BuildResidentialHPXML'][0]['heating_system_2_heating_capacity'] = capacities['heating_system_2_heating_capacity']
-      measures['BuildResidentialHPXML'][0]['cooling_system_cooling_capacity'] = capacities['cooling_system_cooling_capacity']
-      measures['BuildResidentialHPXML'][0]['heat_pump_heating_capacity'] = capacities['heat_pump_heating_capacity']
-      measures['BuildResidentialHPXML'][0]['heat_pump_cooling_capacity'] = capacities['heat_pump_cooling_capacity']
-      measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_capacity'] = capacities['heat_pump_backup_heating_capacity']
-
-      measures['BuildResidentialHPXML'][0]['heating_system_heating_autosizing_factor'] = autosizing_factors['heating_system_heating_autosizing_factor']
-      measures['BuildResidentialHPXML'][0]['heating_system_2_heating_autosizing_factor'] = autosizing_factors['heating_system_2_heating_autosizing_factor']
-      measures['BuildResidentialHPXML'][0]['cooling_system_cooling_autosizing_factor'] = autosizing_factors['cooling_system_cooling_autosizing_factor']
-      measures['BuildResidentialHPXML'][0]['heat_pump_heating_autosizing_factor'] = autosizing_factors['heat_pump_heating_autosizing_factor']
-      measures['BuildResidentialHPXML'][0]['heat_pump_cooling_autosizing_factor'] = autosizing_factors['heat_pump_cooling_autosizing_factor']
-      measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_autosizing_factor'] = autosizing_factors['heat_pump_backup_heating_autosizing_factor']
-
-      measures['BuildResidentialHPXML'][0]['heating_system_airflow_defect_ratio'] = defect_ratios['heating_system_airflow_defect_ratio']
-      measures['BuildResidentialHPXML'][0]['cooling_system_airflow_defect_ratio'] = defect_ratios['cooling_system_airflow_defect_ratio']
-      measures['BuildResidentialHPXML'][0]['cooling_system_charge_defect_ratio'] = defect_ratios['cooling_system_charge_defect_ratio']
-      measures['BuildResidentialHPXML'][0]['heat_pump_airflow_defect_ratio'] = defect_ratios['heat_pump_airflow_defect_ratio']
-      measures['BuildResidentialHPXML'][0]['heat_pump_charge_defect_ratio'] = defect_ratios['heat_pump_charge_defect_ratio']
-
-      # Retain Existing Heating System as Heat Pump Backup
-      heat_pump_backup_use_existing_system = measures['ResStockArguments'][0]['heat_pump_backup_use_existing_system']
-      if heat_pump_backup_use_existing_system == 'true'
-        heating_system = get_heating_system(hpxml_bldg)
-        heat_pump_type = measures['BuildResidentialHPXML'][0]['heat_pump_type']
-        heat_pump_is_ducted = measures['BuildResidentialHPXML'][0]['heat_pump_is_ducted']
-
-        # Only set the backup if the heat pump is applied and there is an existing heating system
-        if (heat_pump_type != 'none') && (not heating_system.nil?)
-          heat_pump_backup_type = get_heat_pump_backup_type(heating_system, heat_pump_type, heat_pump_is_ducted)
-          heat_pump_backup_values = get_heat_pump_backup_values(heating_system)
-
-          heating_system_type = heat_pump_backup_values['heating_system_type']
-          heat_pump_backup_fuel = heat_pump_backup_values['heat_pump_backup_fuel']
-          heat_pump_backup_heating_efficiency = heat_pump_backup_values['heat_pump_backup_heating_efficiency']
-          heat_pump_backup_heating_capacity = heat_pump_backup_values['heat_pump_backup_heating_capacity']
-          heat_pump_backup_heating_autosizing_factor = heat_pump_backup_values['heat_pump_backup_heating_autosizing_factor']
-
-          # Integrated; heat pump's distribution system and blower fan power applies to the backup heating
-          # e.g., ducted heat pump (e.g., ashp, gshp, ducted minisplit) with ducted (e.g., furnace) backup
-          if heat_pump_backup_type == HPXML::HeatPumpBackupTypeIntegrated
-
-            # Likely only fuel-fired furnace as integrated backup
-            if heat_pump_backup_fuel != HPXML::FuelTypeElectricity
-              measures['BuildResidentialHPXML'][0]['heat_pump_backup_type'] = heat_pump_backup_type
-              measures['BuildResidentialHPXML'][0]['heat_pump_backup_fuel'] = heat_pump_backup_fuel
-              measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_efficiency'] = heat_pump_backup_heating_efficiency
-              measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_capacity'] = heat_pump_backup_heating_capacity
-              measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_autosizing_factor'] = heat_pump_backup_heating_autosizing_factor
-
-              runner.registerInfo("Found '#{heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{measures['BuildResidentialHPXML'][0]['heat_pump_backup_type']}'.")
-            else # Likely would not have electric furnace as integrated backup
-              runner.registerInfo("Found '#{heating_system_type}' heating system type with '#{heat_pump_backup_fuel}' fuel type; not setting it as integrated backup.")
-            end
-
-          # Separate; backup system has its own distribution system
-          # e.g., ductless heat pump (e.g., ductless minisplit) with ducted (e.g., furnace) or ductless (e.g., boiler) backup
-          # e.g., ducted heat pump (e.g., ashp, gshp) with ductless (e.g., boiler) backup
-          elsif heat_pump_backup_type == HPXML::HeatPumpBackupTypeSeparate
-            # It's possible this was < 1.0 due to adjustment for secondary heating system
-            measures['BuildResidentialHPXML'][0]['heat_pump_fraction_heat_load_served'] = 1.0
-
-            measures['BuildResidentialHPXML'][0]['heat_pump_backup_type'] = heat_pump_backup_type
-            measures['BuildResidentialHPXML'][0]['heating_system_2_type'] = heating_system_type
-            measures['BuildResidentialHPXML'][0]['heating_system_2_fuel'] = heat_pump_backup_fuel
-            measures['BuildResidentialHPXML'][0]['heating_system_2_heating_efficiency'] = heat_pump_backup_heating_efficiency
-            measures['BuildResidentialHPXML'][0]['heating_system_2_heating_capacity'] = heat_pump_backup_heating_capacity
-            measures['BuildResidentialHPXML'][0]['heating_system_2_heating_autosizing_factor'] = heat_pump_backup_heating_autosizing_factor
-
-            runner.registerInfo("Found '#{heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{measures['BuildResidentialHPXML'][0]['heat_pump_backup_type']}'.")
-          else
-            runner.registerError("Unknown heat pump backup type '#{heat_pump_backup_type}'.")
-            return false
-          end
-        end
-      end
-
-      # Get software program used and version
-      measures['BuildResidentialHPXML'][0]['software_info_program_used'] = 'ResStock'
-      measures['BuildResidentialHPXML'][0]['software_info_program_version'] = Version::ResStock_Version
-
-      # Get registered values and pass them to BuildResidentialHPXML
-      measures['BuildResidentialHPXML'][0]['simulation_control_timestep'] = values['simulation_control_timestep']
-      if !values['simulation_control_run_period_begin_month'].nil? && !values['simulation_control_run_period_begin_day_of_month'].nil? && !values['simulation_control_run_period_end_month'].nil? && !values['simulation_control_run_period_end_day_of_month'].nil?
-        begin_month = "#{Date::ABBR_MONTHNAMES[values['simulation_control_run_period_begin_month']]}"
-        begin_day = values['simulation_control_run_period_begin_day_of_month']
-        end_month = "#{Date::ABBR_MONTHNAMES[values['simulation_control_run_period_end_month']]}"
-        end_day = values['simulation_control_run_period_end_day_of_month']
-        measures['BuildResidentialHPXML'][0]['simulation_control_run_period'] = "#{begin_month} #{begin_day} - #{end_month} #{end_day}"
-      end
-      measures['BuildResidentialHPXML'][0]['simulation_control_run_period_calendar_year'] = values['simulation_control_run_period_calendar_year']
-
-      # Emissions
-      if values.keys.include?('emissions_electricity_values_or_filepaths')
-        measures['BuildResidentialHPXML'][0]['emissions_scenario_names'] = values['emissions_scenario_names']
-        measures['BuildResidentialHPXML'][0]['emissions_types'] = values['emissions_types']
-        measures['BuildResidentialHPXML'][0]['emissions_electricity_units'] = values['emissions_electricity_units']
-        measures['BuildResidentialHPXML'][0]['emissions_electricity_values_or_filepaths'] = values['emissions_electricity_values_or_filepaths']
-        measures['BuildResidentialHPXML'][0]['emissions_fossil_fuel_units'] = values['emissions_fossil_fuel_units']
-        measures['BuildResidentialHPXML'][0]['emissions_natural_gas_values'] = values['emissions_natural_gas_values']
-        measures['BuildResidentialHPXML'][0]['emissions_propane_values'] = values['emissions_propane_values']
-        measures['BuildResidentialHPXML'][0]['emissions_fuel_oil_values'] = values['emissions_fuel_oil_values']
-        measures['BuildResidentialHPXML'][0]['emissions_wood_values'] = values['emissions_wood_values']
-      end
-
-      # Utility Bills
-      measures['BuildResidentialHPXML'][0]['utility_bill_scenario_names'] = values['utility_bill_scenario_names']
-      measures['BuildResidentialHPXML'][0]['utility_bill_electricity_filepaths'] = values['utility_bill_electricity_filepaths']
-      measures['BuildResidentialHPXML'][0]['utility_bill_electricity_fixed_charges'] = values['utility_bill_electricity_fixed_charges']
-      measures['BuildResidentialHPXML'][0]['utility_bill_electricity_marginal_rates'] = values['utility_bill_electricity_marginal_rates']
-      measures['BuildResidentialHPXML'][0]['utility_bill_natural_gas_fixed_charges'] = values['utility_bill_natural_gas_fixed_charges']
-      measures['BuildResidentialHPXML'][0]['utility_bill_natural_gas_marginal_rates'] = values['utility_bill_natural_gas_marginal_rates']
-      measures['BuildResidentialHPXML'][0]['utility_bill_propane_fixed_charges'] = values['utility_bill_propane_fixed_charges']
-      measures['BuildResidentialHPXML'][0]['utility_bill_propane_marginal_rates'] = values['utility_bill_propane_marginal_rates']
-      measures['BuildResidentialHPXML'][0]['utility_bill_fuel_oil_fixed_charges'] = values['utility_bill_fuel_oil_fixed_charges']
-      measures['BuildResidentialHPXML'][0]['utility_bill_fuel_oil_marginal_rates'] = values['utility_bill_fuel_oil_marginal_rates']
-      measures['BuildResidentialHPXML'][0]['utility_bill_wood_fixed_charges'] = values['utility_bill_wood_fixed_charges']
-      measures['BuildResidentialHPXML'][0]['utility_bill_wood_marginal_rates'] = values['utility_bill_wood_marginal_rates']
-      measures['BuildResidentialHPXML'][0]['utility_bill_pv_compensation_types'] = values['utility_bill_pv_compensation_types']
-      measures['BuildResidentialHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rate_types'] = values['utility_bill_pv_net_metering_annual_excess_sellback_rate_types']
-      measures['BuildResidentialHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rates'] = values['utility_bill_pv_net_metering_annual_excess_sellback_rates']
-      measures['BuildResidentialHPXML'][0]['utility_bill_pv_feed_in_tariff_rates'] = values['utility_bill_pv_feed_in_tariff_rates']
-      measures['BuildResidentialHPXML'][0]['utility_bill_pv_monthly_grid_connection_fee_units'] = values['utility_bill_pv_monthly_grid_connection_fee_units']
-      measures['BuildResidentialHPXML'][0]['utility_bill_pv_monthly_grid_connection_fees'] = values['utility_bill_pv_monthly_grid_connection_fees']
-
-      # Electric Panel
-      measures['BuildResidentialHPXML'][0]['electric_panel_service_rating'] = hpxml_bldg.electric_panels[0].max_current_rating
-      measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces_type'] = 'total'
-      measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
-
-      panel_system_additions = get_panel_system_additions(upgrade_args_hash)
-      measures['BuildResidentialHPXML'][0].update(panel_system_additions)
+      set_existing_system_as_heat_pump_backup(measures, hpxml_bldg)
 
       # Specify measures to run
-      measures['BuildResidentialHPXML'][0]['apply_defaults'] = true
-      measures['BuildResidentialHPXML'][0]['apply_validation'] = true
       measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
       if not apply_measures(hpxml_measures_dir, measures_hash, new_runner, model, true, 'OpenStudio::Measure::ModelMeasure', nil)
         register_logs(runner, new_runner)
         return false
       end
-    end # end hpxml.buildings.each_with_index do |hpxml_bldg, unit_number|
+    end
 
-    # Get registered values and pass them to BuildResidentialScheduleFile
+    # Set arguments for the BuildResidentialScheduleFile measure
     measures['BuildResidentialScheduleFile'] = [{ 'hpxml_path' => hpxml_path,
                                                   'hpxml_output_path' => hpxml_path,
                                                   'schedules_random_seed' => values['building_id'],
@@ -531,6 +370,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       return false
     end
 
+    # Set arguments for the ResStockArgumentsPostHPXML measure
     measures['ResStockArgumentsPostHPXML'] = [{}] if !measures.keys.include?('ResStockArgumentsPostHPXML')
     measures['ResStockArgumentsPostHPXML'][0]['hpxml_path'] = hpxml_path
     measures['ResStockArgumentsPostHPXML'][0]['building_id'] = values['building_id']
@@ -580,6 +420,190 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
 
     return false
+  end
+
+  def set_header(measures, hpxml, values)
+    # Whole SFA/MF Building Simulation?
+    measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = hpxml.header.whole_sfa_or_mf_building_sim
+
+    # Software Info
+    measures['BuildResidentialHPXML'][0]['software_info_program_used'] = hpxml.header.software_program_used
+    measures['BuildResidentialHPXML'][0]['software_info_program_version'] = hpxml.header.software_program_version
+
+    # Simulation Control
+    measures['BuildResidentialHPXML'][0]['simulation_control_timestep'] = values['simulation_control_timestep']
+    if !values['simulation_control_run_period_begin_month'].nil? && !values['simulation_control_run_period_begin_day_of_month'].nil? && !values['simulation_control_run_period_end_month'].nil? && !values['simulation_control_run_period_end_day_of_month'].nil?
+      begin_month = "#{Date::ABBR_MONTHNAMES[values['simulation_control_run_period_begin_month']]}"
+      begin_day = values['simulation_control_run_period_begin_day_of_month']
+      end_month = "#{Date::ABBR_MONTHNAMES[values['simulation_control_run_period_end_month']]}"
+      end_day = values['simulation_control_run_period_end_day_of_month']
+      measures['BuildResidentialHPXML'][0]['simulation_control_run_period'] = "#{begin_month} #{begin_day} - #{end_month} #{end_day}"
+    end
+    measures['BuildResidentialHPXML'][0]['simulation_control_run_period_calendar_year'] = values['simulation_control_run_period_calendar_year']
+
+    # Emissions
+    if values.keys.include?('emissions_electricity_values_or_filepaths')
+      measures['BuildResidentialHPXML'][0]['emissions_scenario_names'] = values['emissions_scenario_names']
+      measures['BuildResidentialHPXML'][0]['emissions_types'] = values['emissions_types']
+      measures['BuildResidentialHPXML'][0]['emissions_electricity_units'] = values['emissions_electricity_units']
+      measures['BuildResidentialHPXML'][0]['emissions_electricity_values_or_filepaths'] = values['emissions_electricity_values_or_filepaths']
+      measures['BuildResidentialHPXML'][0]['emissions_fossil_fuel_units'] = values['emissions_fossil_fuel_units']
+      measures['BuildResidentialHPXML'][0]['emissions_natural_gas_values'] = values['emissions_natural_gas_values']
+      measures['BuildResidentialHPXML'][0]['emissions_propane_values'] = values['emissions_propane_values']
+      measures['BuildResidentialHPXML'][0]['emissions_fuel_oil_values'] = values['emissions_fuel_oil_values']
+      measures['BuildResidentialHPXML'][0]['emissions_wood_values'] = values['emissions_wood_values']
+    end
+
+    # Utility Bills
+    measures['BuildResidentialHPXML'][0]['utility_bill_scenario_names'] = values['utility_bill_scenario_names']
+    measures['BuildResidentialHPXML'][0]['utility_bill_electricity_filepaths'] = values['utility_bill_electricity_filepaths']
+    measures['BuildResidentialHPXML'][0]['utility_bill_electricity_fixed_charges'] = values['utility_bill_electricity_fixed_charges']
+    measures['BuildResidentialHPXML'][0]['utility_bill_electricity_marginal_rates'] = values['utility_bill_electricity_marginal_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_natural_gas_fixed_charges'] = values['utility_bill_natural_gas_fixed_charges']
+    measures['BuildResidentialHPXML'][0]['utility_bill_natural_gas_marginal_rates'] = values['utility_bill_natural_gas_marginal_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_propane_fixed_charges'] = values['utility_bill_propane_fixed_charges']
+    measures['BuildResidentialHPXML'][0]['utility_bill_propane_marginal_rates'] = values['utility_bill_propane_marginal_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_fuel_oil_fixed_charges'] = values['utility_bill_fuel_oil_fixed_charges']
+    measures['BuildResidentialHPXML'][0]['utility_bill_fuel_oil_marginal_rates'] = values['utility_bill_fuel_oil_marginal_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_wood_fixed_charges'] = values['utility_bill_wood_fixed_charges']
+    measures['BuildResidentialHPXML'][0]['utility_bill_wood_marginal_rates'] = values['utility_bill_wood_marginal_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_compensation_types'] = values['utility_bill_pv_compensation_types']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rate_types'] = values['utility_bill_pv_net_metering_annual_excess_sellback_rate_types']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rates'] = values['utility_bill_pv_net_metering_annual_excess_sellback_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_feed_in_tariff_rates'] = values['utility_bill_pv_feed_in_tariff_rates']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_monthly_grid_connection_fee_units'] = values['utility_bill_pv_monthly_grid_connection_fee_units']
+    measures['BuildResidentialHPXML'][0]['utility_bill_pv_monthly_grid_connection_fees'] = values['utility_bill_pv_monthly_grid_connection_fees']
+  end
+
+  def set_resstock_arguments(measures, child_runner)
+    # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
+    child_runner.result.stepValues.each do |step_value|
+      value = get_value_from_workflow_step_value(step_value)
+      next if value == '' || Constants::ArgumentsToExclude.include?(step_value.name)
+
+      measures['BuildResidentialHPXML'][0][step_value.name] = value
+    end
+  end
+
+  def set_building_construction(measures, hpxml_bldg)
+    measures['BuildResidentialHPXML'][0]['unit_multiplier'] = hpxml_bldg.building_construction.number_of_units
+  end
+
+  def set_building_header(measures)
+    additional_properties = []
+    ['ceiling_insulation_r'].each do |arg_name|
+      arg_value = measures['ResStockArguments'][0][arg_name]
+      additional_properties << "#{arg_name}=#{arg_value}"
+    end
+    measures['BuildResidentialHPXML'][0]['additional_properties'] = additional_properties.join('|') unless additional_properties.empty?
+  end
+
+  def set_dehumidifier(measures, hpxml_bldg)
+    if hpxml_bldg.building_construction.number_of_units > 1
+      measures['BuildResidentialHPXML'][0]['dehumidifier_type'] = 'none' # limitation of OS-HPXML
+    end
+  end
+
+  def set_battery(measures, hpxml)
+    if hpxml.header.whole_sfa_or_mf_building_sim && hpxml.buildings.size > 1
+      measures['BuildResidentialHPXML'][0]['battery_present'] = 'false' # limitation of OS-HPXML
+    end
+  end
+
+  def set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
+    measures['BuildResidentialHPXML'][0]['electric_panel_service_rating'] = hpxml_bldg.electric_panels[0].max_current_rating
+    measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces_type'] = 'total'
+    measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
+
+    panel_system_additions = get_panel_system_additions(upgrade_args_hash)
+    measures['BuildResidentialHPXML'][0].update(panel_system_additions)
+  end
+
+  def set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
+    # Retain (calculated) HVAC capacities if upgrade is not HVAC system related
+    # Do not retain HVAC autosizing factors and defect ratios if upgrade is HVAC system related
+    hvac_system_upgrades = get_hvac_system_upgrades(hpxml_bldg, upgrade_args_hash)
+    capacities, autosizing_factors, defect_ratios = get_hvac_system_values(hpxml_bldg, hvac_system_upgrades)
+
+    measures['BuildResidentialHPXML'][0]['heating_system_heating_capacity'] = capacities['heating_system_heating_capacity']
+    measures['BuildResidentialHPXML'][0]['heating_system_2_heating_capacity'] = capacities['heating_system_2_heating_capacity']
+    measures['BuildResidentialHPXML'][0]['cooling_system_cooling_capacity'] = capacities['cooling_system_cooling_capacity']
+    measures['BuildResidentialHPXML'][0]['heat_pump_heating_capacity'] = capacities['heat_pump_heating_capacity']
+    measures['BuildResidentialHPXML'][0]['heat_pump_cooling_capacity'] = capacities['heat_pump_cooling_capacity']
+    measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_capacity'] = capacities['heat_pump_backup_heating_capacity']
+
+    measures['BuildResidentialHPXML'][0]['heating_system_heating_autosizing_factor'] = autosizing_factors['heating_system_heating_autosizing_factor']
+    measures['BuildResidentialHPXML'][0]['heating_system_2_heating_autosizing_factor'] = autosizing_factors['heating_system_2_heating_autosizing_factor']
+    measures['BuildResidentialHPXML'][0]['cooling_system_cooling_autosizing_factor'] = autosizing_factors['cooling_system_cooling_autosizing_factor']
+    measures['BuildResidentialHPXML'][0]['heat_pump_heating_autosizing_factor'] = autosizing_factors['heat_pump_heating_autosizing_factor']
+    measures['BuildResidentialHPXML'][0]['heat_pump_cooling_autosizing_factor'] = autosizing_factors['heat_pump_cooling_autosizing_factor']
+    measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_autosizing_factor'] = autosizing_factors['heat_pump_backup_heating_autosizing_factor']
+
+    measures['BuildResidentialHPXML'][0]['heating_system_airflow_defect_ratio'] = defect_ratios['heating_system_airflow_defect_ratio']
+    measures['BuildResidentialHPXML'][0]['cooling_system_airflow_defect_ratio'] = defect_ratios['cooling_system_airflow_defect_ratio']
+    measures['BuildResidentialHPXML'][0]['cooling_system_charge_defect_ratio'] = defect_ratios['cooling_system_charge_defect_ratio']
+    measures['BuildResidentialHPXML'][0]['heat_pump_airflow_defect_ratio'] = defect_ratios['heat_pump_airflow_defect_ratio']
+    measures['BuildResidentialHPXML'][0]['heat_pump_charge_defect_ratio'] = defect_ratios['heat_pump_charge_defect_ratio']
+  end
+
+  def set_existing_system_as_heat_pump_backup(measures, hpxml_bldg)
+    # Retain Existing Heating System as Heat Pump Backup
+    if measures['ResStockArguments'][0]['heat_pump_backup_use_existing_system'] == 'true'
+      heating_system = get_heating_system(hpxml_bldg)
+      heat_pump_type = measures['BuildResidentialHPXML'][0]['heat_pump_type']
+      heat_pump_is_ducted = measures['BuildResidentialHPXML'][0]['heat_pump_is_ducted']
+
+      # Only set the backup if the heat pump is applied and there is an existing heating system
+      if (heat_pump_type != 'none') && (not heating_system.nil?)
+        heat_pump_backup_type = get_heat_pump_backup_type(heating_system, heat_pump_type, heat_pump_is_ducted)
+        heat_pump_backup_values = get_heat_pump_backup_values(heating_system)
+
+        heating_system_type = heat_pump_backup_values['heating_system_type']
+        heat_pump_backup_fuel = heat_pump_backup_values['heat_pump_backup_fuel']
+        heat_pump_backup_heating_efficiency = heat_pump_backup_values['heat_pump_backup_heating_efficiency']
+        heat_pump_backup_heating_capacity = heat_pump_backup_values['heat_pump_backup_heating_capacity']
+        heat_pump_backup_heating_autosizing_factor = heat_pump_backup_values['heat_pump_backup_heating_autosizing_factor']
+
+        # Integrated; heat pump's distribution system and blower fan power applies to the backup heating
+        # e.g., ducted heat pump (e.g., ashp, gshp, ducted minisplit) with ducted (e.g., furnace) backup
+        if heat_pump_backup_type == HPXML::HeatPumpBackupTypeIntegrated
+
+          # Likely only fuel-fired furnace as integrated backup
+          if heat_pump_backup_fuel != HPXML::FuelTypeElectricity
+            measures['BuildResidentialHPXML'][0]['heat_pump_backup_type'] = heat_pump_backup_type
+            measures['BuildResidentialHPXML'][0]['heat_pump_backup_fuel'] = heat_pump_backup_fuel
+            measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_efficiency'] = heat_pump_backup_heating_efficiency
+            measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_capacity'] = heat_pump_backup_heating_capacity
+            measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_autosizing_factor'] = heat_pump_backup_heating_autosizing_factor
+
+            runner.registerInfo("Found '#{heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{measures['BuildResidentialHPXML'][0]['heat_pump_backup_type']}'.")
+          else # Likely would not have electric furnace as integrated backup
+            runner.registerInfo("Found '#{heating_system_type}' heating system type with '#{heat_pump_backup_fuel}' fuel type; not setting it as integrated backup.")
+          end
+
+        # Separate; backup system has its own distribution system
+        # e.g., ductless heat pump (e.g., ductless minisplit) with ducted (e.g., furnace) or ductless (e.g., boiler) backup
+        # e.g., ducted heat pump (e.g., ashp, gshp) with ductless (e.g., boiler) backup
+        elsif heat_pump_backup_type == HPXML::HeatPumpBackupTypeSeparate
+          # It's possible this was < 1.0 due to adjustment for secondary heating system
+          measures['BuildResidentialHPXML'][0]['heat_pump_fraction_heat_load_served'] = 1.0
+
+          measures['BuildResidentialHPXML'][0]['heat_pump_backup_type'] = heat_pump_backup_type
+          measures['BuildResidentialHPXML'][0]['heating_system_2_type'] = heating_system_type
+          measures['BuildResidentialHPXML'][0]['heating_system_2_fuel'] = heat_pump_backup_fuel
+          measures['BuildResidentialHPXML'][0]['heating_system_2_heating_efficiency'] = heat_pump_backup_heating_efficiency
+          measures['BuildResidentialHPXML'][0]['heating_system_2_heating_capacity'] = heat_pump_backup_heating_capacity
+          measures['BuildResidentialHPXML'][0]['heating_system_2_heating_autosizing_factor'] = heat_pump_backup_heating_autosizing_factor
+
+          runner.registerInfo("Found '#{heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{measures['BuildResidentialHPXML'][0]['heat_pump_backup_type']}'.")
+        else
+          runner.registerError("Unknown heat pump backup type '#{heat_pump_backup_type}'.")
+          return false
+        end
+      elsif (heat_pump_type != 'none') && heating_system.nil?
+        runner.registerWarning('Either a primary heating system was not found, or it was found but is a shared system; not setting it as heat pump backup.')
+      end
+    end
   end
 
   def get_heating_system(hpxml_bldg)
