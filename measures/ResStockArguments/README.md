@@ -3808,54 +3808,6 @@ Maximum power output of the second PV system. For a shared system, this is the t
 
 <br/>
 
-**Electric Panel: Electric Pool Heater Power Rating**
-
-Specifies the panel load pool heater power rating. Only applies to electric pool heater. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'>Service Feeders</a>) is used.
-
-- **Name:** ``electric_panel_load_electric_pool_heater_power_rating``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Electric Pool Heater New Load**
-
-Whether the pool heater is a new panel load addition to an existing service panel. Only applies to electric pool heater. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'>Service Feeders</a>) is used.
-
-- **Name:** ``electric_panel_load_electric_pool_heater_new_load``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `auto`, `true`, `false`
-
-<br/>
-
-**Electric Panel: Electric Permanent Spa Heater Power Rating**
-
-Specifies the panel load permanent spa heater power rating. Only applies to electric permanent spa heater. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'>Service Feeders</a>) is used.
-
-- **Name:** ``electric_panel_load_electric_permanent_spa_heater_power_rating``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**Electric Panel: Electric Permanent Spa Heater New Load**
-
-Whether the spa heater is a new panel load addition to an existing service panel. Only applies to electric permanent spa heater. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'>Service Feeders</a>) is used.
-
-- **Name:** ``electric_panel_load_electric_permanent_spa_heater_new_load``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `auto`, `true`, `false`
-
-<br/>
-
 **Battery: Present**
 
 Whether there is a lithium ion battery present.

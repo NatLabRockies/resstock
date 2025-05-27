@@ -789,11 +789,11 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       elsif arg_name.start_with?('pool_pump_')
         panel_system_additions['electric_panel_load_pool_pump_new_load'] = true
       elsif arg_name.start_with?('pool_heater_')
-        panel_system_additions['electric_panel_load_pool_heater_new_load'] = true
+        panel_system_additions['electric_panel_load_electric_pool_heater_new_load'] = true
       elsif arg_name.start_with?('permanent_spa_pump_')
         panel_system_additions['electric_panel_load_permanent_spa_pump_new_load'] = true
       elsif arg_name.start_with?('permanent_spa_heater_')
-        panel_system_additions['electric_panel_load_permanent_spa_heater_new_load'] = true
+        panel_system_additions['electric_panel_load_electric_permanent_spa_heater_new_load'] = true
         # else
         # panel_system_additions['electric_panel_load_other_addition'] = true
       end
