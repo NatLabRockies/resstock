@@ -58,9 +58,7 @@
           <ConditionedBuildingVolume>21600.0</ConditionedBuildingVolume>
         </BuildingConstruction>
         <extension>
-          <AdditionalProperties>
-            <PeakElectricity>4500.0</PeakElectricity>
-          </AdditionalProperties>
+          <ElectricPanelBaselinePeakPower>4500.0</ElectricPanelBaselinePeakPower>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
