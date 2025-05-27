@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>cd8f3496-007d-4df2-a164-67a516dc65f0</version_id>
-  <version_modified>2025-05-27T17:28:38Z</version_modified>
+  <version_id>7f5f5c66-16e7-45bf-befb-05d92c9200a1</version_id>
+  <version_modified>2025-05-27T17:34:38Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -5317,6 +5317,751 @@
       <default_value>4000</default_value>
     </argument>
     <argument>
+      <name>electric_panel_baseline_peak_power</name>
+      <display_name>Electric Panel: Baseline Peak Power</display_name>
+      <description>Specifies the baseline peak power. Used for 2023 Existing Dwelling Meter-Based. If not provided, assumed to be zero.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_service_max_current_rating</name>
+      <display_name>Electric Panel: Service Max Current Rating</display_name>
+      <description>The service max current rating of the electric panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-panels'&gt;HPXML Electric Panels&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>A</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_breaker_spaces_headroom</name>
+      <display_name>Electric Panel: Breaker Spaces Headroom</display_name>
+      <description>The unoccupied number of breaker spaces on the electric panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-panels'&gt;HPXML Electric Panels&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>#</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_breaker_spaces_rated_total</name>
+      <display_name>Electric Panel: Breaker Spaces Rated Total</display_name>
+      <description>The rated total number of breaker spaces on the electric panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-panels'&gt;HPXML Electric Panels&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>#</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_heating_system_power_rating</name>
+      <display_name>Electric Panel: Heating System Power Rating</display_name>
+      <description>Specifies the panel load heating system power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_heating_system_new_load</name>
+      <display_name>Electric Panel: Heating System New Load</display_name>
+      <description>Whether the heating system is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_cooling_system_power_rating</name>
+      <display_name>Electric Panel: Cooling System Power Rating</display_name>
+      <description>Specifies the panel load cooling system power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_cooling_system_new_load</name>
+      <display_name>Electric Panel: Cooling System New Load</display_name>
+      <description>Whether the cooling system is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_heat_pump_power_rating</name>
+      <display_name>Electric Panel: Heat Pump Power Rating</display_name>
+      <description>Specifies the panel load heat pump power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_heat_pump_new_load</name>
+      <display_name>Electric Panel: Heat Pump New Load</display_name>
+      <description>Whether the heat pump is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_heating_system_2_power_rating</name>
+      <display_name>Electric Panel: Heating System 2 Power Rating</display_name>
+      <description>Specifies the panel load second heating system power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_heating_system_2_new_load</name>
+      <display_name>Electric Panel: Heating System 2 New Load</display_name>
+      <description>Whether the second heating system is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_mech_vent_power_rating</name>
+      <display_name>Electric Panel: Mechanical Ventilation Power Rating</display_name>
+      <description>Specifies the panel load mechanical ventilation power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_mech_vent_fan_new_load</name>
+      <display_name>Electric Panel: Mechanical Ventilation New Load</display_name>
+      <description>Whether the mechanical ventilation is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_mech_vent_2_power_rating</name>
+      <display_name>Electric Panel: Mechanical Ventilation 2 Power Rating</display_name>
+      <description>Specifies the panel load second mechanical ventilation power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_mech_vent_2_new_load</name>
+      <display_name>Electric Panel: Mechanical Ventilation 2 New Load</display_name>
+      <description>Whether the second mechanical ventilation is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_whole_house_fan_power_rating</name>
+      <display_name>Electric Panel: Whole House Fan Power Rating</display_name>
+      <description>Specifies the panel load whole house fan power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_whole_house_fan_new_load</name>
+      <display_name>Electric Panel: Whole House Fan New Load</display_name>
+      <description>Whether the whole house fan is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_kitchen_fans_power_rating</name>
+      <display_name>Electric Panel: Kitchen Fans Power Rating</display_name>
+      <description>Specifies the panel load kitchen fans power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_kitchen_fans_new_load</name>
+      <display_name>Electric Panel: Kitchen Fans New Load</display_name>
+      <description>Whether the kitchen fans is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_bathroom_fans_power_rating</name>
+      <display_name>Electric Panel: Bathroom Fans Power Rating</display_name>
+      <description>Specifies the panel load bathroom fans power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_bathroom_fans_new_load</name>
+      <display_name>Electric Panel: Bathroom Fans New Load</display_name>
+      <description>Whether the bathroom fans is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_water_heater_power_rating</name>
+      <display_name>Electric Panel: Electric Water Heater Power Rating</display_name>
+      <description>Specifies the panel load water heater power rating. Only applies to electric water heater. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_water_heater_voltage</name>
+      <display_name>Electric Panel: Electric Water Heater Voltage</display_name>
+      <description>Specifies the panel load water heater voltage. Only applies to electric water heater. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units>V</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>120</value>
+          <display_name>120</display_name>
+        </choice>
+        <choice>
+          <value>240</value>
+          <display_name>240</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_water_heater_new_load</name>
+      <display_name>Electric Panel: Electric Water Heater New Load</display_name>
+      <description>Whether the water heater is a new panel load addition to an existing service panel. Only applies to electric water heater. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_clothes_dryer_power_rating</name>
+      <display_name>Electric Panel: Electric Clothes Dryer Power Rating</display_name>
+      <description>Specifies the panel load clothes dryer power rating. Only applies to electric clothes dryer. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_clothes_dryer_voltage</name>
+      <display_name>Electric Panel: Electric Clothes Dryer Voltage</display_name>
+      <description>Specifies the panel load clothes dryer voltage. Only applies to electric clothes dryer. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units>V</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>120</value>
+          <display_name>120</display_name>
+        </choice>
+        <choice>
+          <value>240</value>
+          <display_name>240</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_clothes_dryer_new_load</name>
+      <display_name>Electric Panel: Electric Clothes Dryer New Load</display_name>
+      <description>Whether the clothes dryer is a new panel load addition to an existing service panel. Only applies to electric clothes dryer. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_dishwasher_power_rating</name>
+      <display_name>Electric Panel: Dishwasher Power Rating</display_name>
+      <description>Specifies the panel load dishwasher power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_dishwasher_new_load</name>
+      <display_name>Electric Panel: Dishwasher New Load</display_name>
+      <description>Whether the dishwasher is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_cooking_range_power_rating</name>
+      <display_name>Electric Panel: Electric Cooking Range/Oven Power Rating</display_name>
+      <description>Specifies the panel load cooking range/oven power rating. Only applies to electric cooking range/oven. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_cooking_range_voltage</name>
+      <display_name>Electric Panel: Electric Cooking Range/Oven Voltage</display_name>
+      <description>Specifies the panel load cooking range/oven voltage. Only applies to electric cooking range/oven. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units>V</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>120</value>
+          <display_name>120</display_name>
+        </choice>
+        <choice>
+          <value>240</value>
+          <display_name>240</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_cooking_range_new_load</name>
+      <display_name>Electric Panel: Electric Cooking Range/Oven New Load</display_name>
+      <description>Whether the cooking range is a new panel load addition to an existing service panel. Only applies to electric cooking range/oven. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_misc_plug_loads_well_pump_power_rating</name>
+      <display_name>Electric Panel: Misc Plug Loads Well Pump Power Rating</display_name>
+      <description>Specifies the panel load well pump power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_misc_plug_loads_well_pump_new_load</name>
+      <display_name>Electric Panel: Misc Plug Loads Well Pump New Load</display_name>
+      <description>Whether the well pump is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_misc_plug_loads_vehicle_power_rating</name>
+      <display_name>Electric Panel: Misc Plug Loads Vehicle Power Rating</display_name>
+      <description>Specifies the panel load electric vehicle power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_misc_plug_loads_vehicle_new_load</name>
+      <display_name>Electric Panel: Misc Plug Loads Vehicle New Load</display_name>
+      <description>Whether the electric vehicle is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_pool_pump_power_rating</name>
+      <display_name>Electric Panel: Pool Pump Power Rating</display_name>
+      <description>Specifies the panel load pool pump power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_pool_pump_new_load</name>
+      <display_name>Electric Panel: Pool Pump New Load</display_name>
+      <description>Whether the pool pump is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_pool_heater_power_rating</name>
+      <display_name>Electric Panel: Electric Pool Heater Power Rating</display_name>
+      <description>Specifies the panel load pool heater power rating. Only applies to electric pool heater. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_pool_heater_new_load</name>
+      <display_name>Electric Panel: Electric Pool Heater New Load</display_name>
+      <description>Whether the pool heater is a new panel load addition to an existing service panel. Only applies to electric pool heater. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_permanent_spa_pump_power_rating</name>
+      <display_name>Electric Panel: Permanent Spa Pump Power Rating</display_name>
+      <description>Specifies the panel load permanent spa pump power rating. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_permanent_spa_pump_new_load</name>
+      <display_name>Electric Panel: Permanent Spa Pump New Load</display_name>
+      <description>Whether the spa pump is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_permanent_spa_heater_power_rating</name>
+      <display_name>Electric Panel: Electric Permanent Spa Heater Power Rating</display_name>
+      <description>Specifies the panel load permanent spa heater power rating. Only applies to electric permanent spa heater. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_permanent_spa_heater_new_load</name>
+      <display_name>Electric Panel: Electric Permanent Spa Heater New Load</display_name>
+      <description>Whether the spa heater is a new panel load addition to an existing service panel. Only applies to electric permanent spa heater. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_other_power_rating</name>
+      <display_name>Electric Panel: Other Power Rating</display_name>
+      <description>Specifies the panel load other power rating. This represents the total of all other electric loads that are fastened in place, permanently connected, or located on a specific circuit. For example, garbage disposal, built-in microwave. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>String</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_other_new_load</name>
+      <display_name>Electric Panel: Other New Load</display_name>
+      <description>Whether the other load is a new panel load addition to an existing service panel. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#service-feeders'&gt;Service Feeders&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>battery_present</name>
       <display_name>Battery: Present</display_name>
       <description>Whether there is a lithium ion battery present.</description>
@@ -7787,7 +8532,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>3A9CC2B9</checksum>
+      <checksum>ED156D57</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7846,7 +8591,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>A8FB2DAE</checksum>
+      <checksum>87A8EA5A</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>

@@ -1006,7 +1006,7 @@ module Outputs
     htg, clg, hw, cd, dw, ov, vf, sh, sp, ph, pp, wp, ev, oth = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
     unit_multiplier = hpxml_bldg.building_construction.number_of_units
     hpxml_bldg.electric_panels.each do |electric_panel|
-      htg += ElectricPanel.get_panel_load_heating(hpxml_bldg, electric_panel) * unit_multiplier
+      htg += ElectricPanel.get_service_feeder_heating(hpxml_bldg, electric_panel) * unit_multiplier
       electric_panel.service_feeders.each do |service_feeder|
         if service_feeder.type == HPXML::ElectricPanelLoadTypeCooling
           clg += service_feeder.power * unit_multiplier
