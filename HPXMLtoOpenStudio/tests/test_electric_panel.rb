@@ -535,7 +535,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeClothesDryer, 5760)
-    _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeClothesDryer], 3)
+    _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeClothesDryer], 4)
 
     test_name = 'HP clothes dryer'
     hpxml, _hpxml_bldg = _create_hpxml('base-appliances-modified.xml', test_name)
@@ -617,7 +617,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeRangeOven, 10000)
-    _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeRangeOven], 5)
+    _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeRangeOven], 6)
   end
 
   def test_ventilation_fans_configurations
@@ -707,7 +707,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     if hpxml_bldg.electric_panels.size == 0
       hpxml_bldg.electric_panels.add(id: 'ElectricPanel')
     end
-    hpxml_bldg.header.extension_properties['PeakElectricity'] = 4500
+    hpxml_bldg.header.electric_panel_baseline_peak_power = 4500
     return hpxml, hpxml_bldg
   end
 
