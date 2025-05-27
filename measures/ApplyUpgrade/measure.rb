@@ -511,9 +511,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
-    measures['BuildResidentialHPXML'][0]['electric_panel_service_rating'] = hpxml_bldg.electric_panels[0].max_current_rating
-    measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces_type'] = 'total'
-    measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
+    measures['BuildResidentialHPXML'][0]['electric_panel_service_max_current_rating'] = hpxml_bldg.electric_panels[0].max_current_rating
+    measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces_rated_total'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
 
     panel_system_additions = get_panel_system_additions(upgrade_args_hash)
     measures['BuildResidentialHPXML'][0].update(panel_system_additions)
@@ -758,43 +757,43 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     panel_system_additions = {}
     args_hash.each do |arg_name, _value|
       if arg_name.start_with?('heating_system_') && (not arg_name.start_with?('heating_system_2_'))
-        panel_system_additions['electric_panel_load_heating_system_addition'] = true
+        panel_system_additions['electric_panel_load_heating_system_new_load'] = true
       elsif arg_name.start_with?('cooling_system_')
-        panel_system_additions['electric_panel_load_cooling_system_addition'] = true
+        panel_system_additions['electric_panel_load_cooling_system_new_load'] = true
       elsif arg_name.start_with?('heat_pump_')
-        panel_system_additions['electric_panel_load_heat_pump_addition'] = true
+        panel_system_additions['electric_panel_load_heat_pump_new_load'] = true
       elsif arg_name.start_with?('heating_system_2_')
-        panel_system_additions['electric_panel_load_heating_system_2_addition'] = true
+        panel_system_additions['electric_panel_load_heating_system_2_new_load'] = true
       elsif arg_name.start_with?('mech_vent_') && (not arg_name.start_with?('mech_vent_2_'))
-        panel_system_additions['electric_panel_load_mech_vent_fan_addition'] = true
+        panel_system_additions['electric_panel_load_mech_vent_fan_new_load'] = true
       elsif arg_name.start_with?('mech_vent_2_')
-        panel_system_additions['electric_panel_load_mech_vent_2_addition'] = true
+        panel_system_additions['electric_panel_load_mech_vent_2_new_load'] = true
       elsif arg_name.start_with?('whole_house_fan_')
-        panel_system_additions['electric_panel_load_whole_house_fan_addition'] = true
+        panel_system_additions['electric_panel_load_whole_house_fan_new_load'] = true
       elsif arg_name.start_with?('kitchen_fans_')
-        panel_system_additions['electric_panel_load_kitchen_fans_addition'] = true
+        panel_system_additions['electric_panel_load_kitchen_fans_new_load'] = true
       elsif arg_name.start_with?('bathroom_fans_')
-        panel_system_additions['electric_panel_load_bathroom_fans_addition'] = true
+        panel_system_additions['electric_panel_load_bathroom_fans_new_load'] = true
       elsif arg_name.start_with?('water_heater_')
-        panel_system_additions['electric_panel_load_water_heater_addition'] = true
+        panel_system_additions['electric_panel_load_electric_water_heater_new_load'] = true
       elsif arg_name.start_with?('clothes_dryer_')
-        panel_system_additions['electric_panel_load_clothes_dryer_addition'] = true
+        panel_system_additions['electric_panel_load_electric_clothes_dryer_new_load'] = true
       elsif arg_name.start_with?('dishwasher_')
-        panel_system_additions['electric_panel_load_dishwasher_addition'] = true
+        panel_system_additions['electric_panel_load_dishwasher_new_load'] = true
       elsif arg_name.start_with?('cooking_range_oven_')
-        panel_system_additions['electric_panel_load_cooking_range_addition'] = true
+        panel_system_additions['electric_panel_load_electric_cooking_range_new_load'] = true
       elsif arg_name.start_with?('misc_plug_loads_well_pump_')
-        panel_system_additions['electric_panel_load_misc_plug_loads_well_pump_addition'] = true
+        panel_system_additions['electric_panel_load_misc_plug_loads_well_pump_new_load'] = true
       elsif arg_name.start_with?('misc_plug_loads_vehicle_')
-        panel_system_additions['electric_panel_load_misc_plug_loads_vehicle_addition'] = true
+        panel_system_additions['electric_panel_load_misc_plug_loads_vehicle_new_load'] = true
       elsif arg_name.start_with?('pool_pump_')
-        panel_system_additions['electric_panel_load_pool_pump_addition'] = true
+        panel_system_additions['electric_panel_load_pool_pump_new_load'] = true
       elsif arg_name.start_with?('pool_heater_')
-        panel_system_additions['electric_panel_load_pool_heater_addition'] = true
+        panel_system_additions['electric_panel_load_pool_heater_new_load'] = true
       elsif arg_name.start_with?('permanent_spa_pump_')
-        panel_system_additions['electric_panel_load_permanent_spa_pump_addition'] = true
+        panel_system_additions['electric_panel_load_permanent_spa_pump_new_load'] = true
       elsif arg_name.start_with?('permanent_spa_heater_')
-        panel_system_additions['electric_panel_load_permanent_spa_heater_addition'] = true
+        panel_system_additions['electric_panel_load_permanent_spa_heater_new_load'] = true
         # else
         # panel_system_additions['electric_panel_load_other_addition'] = true
       end
