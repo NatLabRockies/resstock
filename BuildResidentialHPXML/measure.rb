@@ -7303,7 +7303,7 @@ module HPXMLFile
     hpxml_bldg.water_heating_systems.each do |water_heating_system|
       next if water_heating_system.fuel_type != HPXML::FuelTypeElectricity
 
-      if not args[:electric_panel_load_water_heater_voltage].nil?
+      if not args[:electric_panel_load_electric_water_heater_voltage].nil?
         branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
                             voltage: args[:electric_panel_load_electric_water_heater_voltage],
                             component_idrefs: [water_heating_system.id])
@@ -7318,7 +7318,7 @@ module HPXMLFile
     hpxml_bldg.clothes_dryers.each do |clothes_dryer|
       next if clothes_dryer.fuel_type != HPXML::FuelTypeElectricity
 
-      if not args[:electric_panel_load_clothes_dryer_voltage].nil?
+      if not args[:electric_panel_load_electric_clothes_dryer_voltage].nil?
         branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
                             voltage: args[:electric_panel_load_electric_clothes_dryer_voltage],
                             component_idrefs: [clothes_dryer.id])
@@ -7341,7 +7341,7 @@ module HPXMLFile
     hpxml_bldg.cooking_ranges.each do |cooking_range|
       next if cooking_range.fuel_type != HPXML::FuelTypeElectricity
 
-      if not args[:electric_panel_load_cooking_range_voltage].nil?
+      if not args[:electric_panel_load_electric_cooking_range_voltage].nil?
         branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
                             voltage: args[:electric_panel_load_electric_cooking_range_voltage],
                             component_idrefs: [cooking_range.id])
