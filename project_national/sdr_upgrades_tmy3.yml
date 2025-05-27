@@ -424,9 +424,20 @@ upgrades:
 
   - upgrade_name: Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
-    package_apply_logic: &remove_high_rise_shared_nonducted
-      - *remove_high_rise_shared
+    package_apply_logic: &remove_nonducted_high_rise_shared
       - HVAC Has Ducts|Yes
+      - not: Heating Fuel|Wood
+      - not: Heating Fuel|Other Fuel
+      - not: Heating Fuel|None
+      - not:
+        - or:
+          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+          - HVAC Shared Efficiencies|Fan Coil Cooling Only
+        - and:
+          - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
 
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8
@@ -447,7 +458,7 @@ upgrades:
 
   - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
-    package_apply_logic: *remove_high_rise_shared_nonducted
+    package_apply_logic: *remove_nonducted_high_rise_shared
 
     options:
       - &dual_speed_ducted_ghp
@@ -461,7 +472,7 @@ upgrades:
 
   - upgrade_name: Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
-    package_apply_logic: *remove_high_rise_shared_nonducted
+    package_apply_logic: *remove_nonducted_high_rise_shared
 
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4
@@ -673,7 +684,7 @@ upgrades:
 
   - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope
 
-    package_apply_logic: *remove_high_rise_shared_nonducted
+    package_apply_logic: *remove_nonducted_high_rise_shared
 
     options:
       ### -- Dual-Speed Ducted ghp -- ###
