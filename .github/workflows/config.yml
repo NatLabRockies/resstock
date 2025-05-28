@@ -629,6 +629,7 @@ jobs:
           if-no-files-found: error
 
       - name: Commit the integration tests results
+        if: false
         run: |
           branch_name="${{ github.head_ref }}"
           git pull origin $branch_name
