@@ -46,7 +46,7 @@ Development Changelog
         Two Speed and Variable Speed Geothermal Heat Pumps
 
         Description:
-        Add upgrades to the SDR yml file for single-speed, dual-speed (with and without light touch envelope), and variable-speed geothermal heat pumps (GHPs).
+        Add/modify upgrades defined in the SDR yml file for single-speed, dual-speed (with and without light touch envelope), and variable-speed geothermal heat pumps (GHPs).
         Use the same package apply logic as ASHP, but only for dwelling units with ducts.
 
         OpenStudio-HPXML: `pull request 1878 <https://github.com/NREL/OpenStudio-HPXML/pull/1878>`_
