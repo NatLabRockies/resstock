@@ -70,8 +70,6 @@ The file is a plain text report organized sequentially by upgrade scenario as de
       </div>
     
     The first line shows the number of samples (and percentage) to which all of the options were applied to. If the upgrade contains a set of options that should be mutually exclusive, this number should be 0.
-    
-    However, note that sometimes option apply logics are defined in progressive way. For example, one might assign a medium efficiency HPWH to all the buildings in option 1 (applicability=100%) and then assign a high efficiency HPWH to select buildings in option 2 (say, applicability=20%) of the same upgrade. Since no building can have both a medium efficiency and high efficiency HPWH, the options are mutually exlcusive. However, the apply logic doesn't necessarily have to be. ResStock automatically assigns the last option to the building when the same parameter (HPWH, in this example) is attempted to be assigned multiple options. In this example, since 20% of buildings will be attempted to be assigned medium efficiecny HPWH followed by high efficiency HPWH, ResStock will only apply the high efficiency HPWH to those buildings. We will have non-zero value in first line in such cases, however, it doesn't indicate any error.
 
     The second line shows the number of samples which got applied at least one option in the upgrade. If the set of options are designed to (almost) cover the whole building stock, this number should be 100% (or close to it). 
 
@@ -348,12 +346,11 @@ Understanding Upgrade Summary Tables
        ===================== =============================== ===================== ================== ==================
        Number of options     Applied options                 Applied buildings     Cumulative sub     Cumulative all    
        ===================== =============================== ===================== ================== ==================
-       4                     1, 9, 10, 11                    408859 (74.3%)        408859 (74.3%)     408859 (74.3%)   
-       10                    1, 2, 3, 4, 5, 6, 7, 8, 9, 11   121588 (22.1%)        121588 (22.1%)     530447 (96.4%)   
+       3                     1, 10, 11                       408859 (74.3%)        408859 (74.3%)     408859 (74.3%)
+       9                     2, 3, 4, 5, 6, 7, 8, 9, 11      121588 (22.1%)        121588 (22.1%)     530447 (96.4%)
        ===================== =============================== ===================== ================== ==================
 
-  In the table, the first row shows that exactly 4 options (numbered 1, 9, 10, and 11) applies to 74.3% of the buildings and the second row shows that exactly 10 options applies to 22.1% of the buildings.  The Cumulative all at the bottom right shows that 96.4% of the buildings get either of these two combination of options.
-
+  In the table, the first row shows that exactly 3 options (numbered 1, 10, and 11) applies to 74.3% of the buildings and the second row shows that exactly 9 options applies to 22.1% of the buildings. The Cumulative all at the bottom right shows that 96.4% of the buildings get either of these two combination of options. It makes it easy to verify no building gets applied both option 1 and 2 which are both HVAC Heating Efficiency options or both option 9 and 10 which are both HVAC Cooling Efficiency options. If there were more than one combination of exactly 3 options being appled (say options 2, 9, 11 were being applied to some subset of buildings), there would be another row for that combination and Cumulative sub would provide the cumulative applicability percentage for the 3 option combination. The Cumulative sub resets when Number of options switches to the next value.
 
 
 These summary tables are crucial for verifying that combinations of options are being applied as intended and identifying potential conflicts or unexpected overlaps. For example, ``Applicability Summary Table (by Option Number)`` above shows that the offset options (3 to 8) are never applied with option 10 (ducted heat pump upgrade) but they are applied with option 9 (non-ducted heat pump upgrade). This may or may not be what is desired - the report only highlights the case and helps with debugging.
