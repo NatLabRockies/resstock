@@ -3,8 +3,8 @@ import shutil
 from html2image import Html2Image
 hti = Html2Image()
 
-html_file = 'test/base_results/comparisons/baseline/annual/results_output_energy_use.html'
-save_as = 'results_output_energy_use.jpg'
+html_file = 'test/base_results/comparisons/baseline/annual/results_output_building_type_energy_use.html'
+save_as = 'results_output_building_type_energy_use.jpg'
 
 # screenshot an HTML file
 hti.screenshot(
