@@ -620,6 +620,34 @@ jobs:
           path: project_national/sdr_upgrades_tmy3/results_csvs
           if-no-files-found: error
 
+      - name: Check for failed simulations
+        run: |
+          echo "Checking for failed simulations in results files..."
+          FAILED=false
+          for csv_file in project_national/sdr_upgrades_tmy3/results_csvs/*.csv; do
+            echo "Checking file: $csv_file"
+            if grep -q "Fail" "$csv_file"; then
+              echo "Found failures in $csv_file:"
+              # Extract and print rows with Fail status along with their step_failures
+              python3 -c '
+              import csv
+              import sys
+              with open("'"$csv_file"'", "r") as f:
+                  reader = csv.DictReader(f)
+                  for row in reader:
+                      if row.get("completed_status") == "Fail":
+                          print(f"  Building ID: {row.get(\"building_id", "N/A")}, Step Failures: {row.get(\"step_failures\", "N/A")}")
+              '
+              FAILED=true
+            fi
+          done
+          if [ "$FAILED" = true ]; then
+            echo "ERROR: Some simulations failed. Check the logs above for details."
+            exit 1
+          else
+            echo "All simulations completed successfully."
+          fi
+
       - name: Commit the integration tests results
         run: |
           branch_name="${{ github.head_ref }}"
