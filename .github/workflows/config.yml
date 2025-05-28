@@ -629,15 +629,17 @@ jobs:
             if grep -q "Fail" "$csv_file"; then
               echo "Found failures in $csv_file:"
               # Extract and print rows with Fail status along with their step_failures
-              python3 -c '
-              import csv
-              import sys
-              with open("'"$csv_file"'", "r") as f:
+              python3 - <<'PY' "$csv_file"
+              import csv, sys, pathlib
+
+              csv_path = pathlib.Path(sys.argv[1])
+              with csv_path.open(newline='') as f:
                   reader = csv.DictReader(f)
                   for row in reader:
-                      if row.get("completed_status") == "Fail":
-                          print(f"  Building ID: {row.get(\"building_id", "N/A")}, Step Failures: {row.get(\"step_failures\", "N/A")}")
-              '
+                      if row.get('completed_status') == 'Fail':
+                          print(f"  Building ID: {row.get('building_id', 'N/A')}, "
+                                f"Step Failures: {row.get('step_failures', 'N/A')}")
+              PY
               FAILED=true
             fi
           done
