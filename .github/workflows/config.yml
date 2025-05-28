@@ -460,6 +460,7 @@ jobs:
           export DEBIAN_FRONTEND=noninteractive
           sudo apt update
           sudo -E apt-get install -y python3-pip
+          which gzip || sudo apt-get install -y gzip
 
       - name: Install python dependencies
         run: |
@@ -470,15 +471,51 @@ jobs:
         run: |
           python3 -m pip install git+https://github.com/NREL/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
 
-      - name: Generate 550K Sampler
+      - name: Generate 550K Sample
         run: |
           openstudio resources/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
+          cd project_national/resources
+          gzip -c national_550ksamples.csv > national_550ksamples.csv.gz
+
+      - name: Upload 550K samples if on develop branch
+        if: github.ref == 'refs/heads/develop'
+        uses: actions/upload-artifact@v4
+        with:
+          name: national_550ksamples
+          path: project_national/resources/national_550ksamples.csv.gz
+          retention-days: 30
+
+      - name: Delete older national_550ksamples artifacts, keep newest
+        if: github.ref == 'refs/heads/develop'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const NAME = 'national_550ksamples';
+
+            const all = await github.paginate(
+              github.rest.actions.listArtifactsForRepo,
+              { owner: context.repo.owner, repo: context.repo.repo, per_page: 100 }
+            );
+
+            const toDelete = all
+              .filter(a => a.name === NAME)
+              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+              .slice(1);            // keep newest
+            console.log(`will delete ${toDelete.length} artifacts`);
+            for (const a of toDelete) {
+              await github.rest.actions.deleteArtifact({
+                owner: context.repo.owner,
+                repo:  context.repo.repo,
+                artifact_id: a.id
+              });
+            }
 
       - name: Generate minimal buildstock and other files
         run: |
           cd project_national/resources
           python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
           rm national_550ksamples.csv
+          rm national_550ksamples.csv.gz
 
       - name: Upload SDR options analysis artifacts
         uses: actions/upload-artifact@v4
