@@ -346,7 +346,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
       set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
 
-      set_existing_system_as_heat_pump_backup(measures, hpxml_bldg)
+      set_existing_system_as_heat_pump_backup(measures, runner, hpxml_bldg)
 
       # Specify measures to run
       measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
@@ -546,7 +546,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     measures['BuildResidentialHPXML'][0]['heat_pump_charge_defect_ratio'] = defect_ratios['heat_pump_charge_defect_ratio']
   end
 
-  def set_existing_system_as_heat_pump_backup(measures, hpxml_bldg)
+  def set_existing_system_as_heat_pump_backup(measures, runner, hpxml_bldg)
     # Retain Existing Heating System as Heat Pump Backup
     if measures['ResStockArguments'][0]['heat_pump_backup_use_existing_system'] == 'true'
       heating_system = get_heating_system(hpxml_bldg)
