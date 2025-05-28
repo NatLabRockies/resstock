@@ -330,12 +330,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Install software
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y wkhtmltopdf
-
       - name: Download base results
         uses: actions/download-artifact@v4
         with:
@@ -360,7 +354,7 @@ jobs:
           pip install pandas
           pip install plotly
           pip install kaleido
-          pip install imgkit
+          pip install html2image
           
           # baseline annual
           mkdir -p test/base_results/comparisons/baseline/annual
