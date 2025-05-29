@@ -45,6 +45,10 @@ def get_failures(csv_path: str, verbose: bool = False) -> List[Dict[str, Any]]:
                      "completed_status": "N/A",
                      "step_failures": f"completed_status column not found in {csv_path}"}]
         
+        if 'step_failures' not in schema:
+            # all simulations are successful so there is no step_failures column
+            return []
+        
         # Extract only the columns we need for failure reporting
         columns_to_select = ['building_id', 'completed_status', 'step_failures']
         
