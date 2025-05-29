@@ -51,16 +51,16 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 4,ENERGY STAR heat pump with existing system as backup,-1,All,280116,50.9
 5,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8",408859,74.3
 5,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,408859,74.3
-5,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,408859,74.3
-5,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,408859,74.3
+5,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,418430,76.1
+5,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,418430,76.1
 6,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",408859,74.3
 6,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,408859,74.3
-6,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,408859,74.3
-6,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,408859,74.3
+6,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,418430,76.1
+6,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,418430,76.1
 7,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4",408859,74.3
 7,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,408859,74.3
-7,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,408859,74.3
-7,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,408859,74.3
+7,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,418430,76.1
+7,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,418430,76.1
 8,ENERGY STAR heat pump with elec backup + Light Touch Envelope,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF",408859,74.3
 8,ENERGY STAR heat pump with elec backup + Light Touch Envelope,2,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Max Load",121588,22.1
 8,ENERGY STAR heat pump with elec backup + Light Touch Envelope,3,Cooling Setpoint Has Offset|No,121588,22.1
@@ -129,12 +129,12 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 11,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,-1,All,280116,50.9
 12,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",408859,74.3
 12,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope,2,HVAC Cooling Efficiency|Ducted Heat Pump,408859,74.3
-12,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,408859,74.3
+12,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,418430,76.1
 12,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope,4,Insulation Ceiling|R-30,1112,0.2
 12,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope,5,Insulation Ceiling|R-49,76965,14.0
 12,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope,6,Insulation Ceiling|R-60,110626,20.1
-12,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope,7,Infiltration Reduction|30%,261505,47.5
-12,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope,-1,All,408859,74.3
+12,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope,7,Infiltration Reduction|30%,268114,48.7
+12,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope,-1,All,418430,76.1
 13,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF",408859,74.3
 13,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,2,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Max Load",121588,22.1
 13,ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,3,Cooling Setpoint Has Offset|No,121588,22.1
