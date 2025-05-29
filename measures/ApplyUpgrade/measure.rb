@@ -346,8 +346,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
       set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
 
-      set_existing_system_as_heat_pump_backup(measures, runner, hpxml_bldg)
-      baseline_max_airflow_cfm = set_autosizing_limits(measures, hpxml_bldg)
+      set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
+      baseline_max_airflow_cfm = set_autosizing_limits(runner, measures, hpxml_bldg)
 
       # Specify measures to run
       measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
@@ -356,7 +356,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         return false
       end
 
-      set_adjusted_fan_efficiency(measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
+      set_adjusted_fan_efficiency(runner, measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
     end
 
     # Set arguments for the BuildResidentialScheduleFile measure
@@ -549,7 +549,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     measures['BuildResidentialHPXML'][0]['heat_pump_charge_defect_ratio'] = defect_ratios['heat_pump_charge_defect_ratio']
   end
 
-  def set_existing_system_as_heat_pump_backup(measures, runner, hpxml_bldg)
+  def set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
     # Retain Existing Heating System as Heat Pump Backup
     if measures['ResStockArguments'][0]['heat_pump_backup_use_existing_system'] == 'true'
       heating_system = get_heating_system(hpxml_bldg)
@@ -609,7 +609,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
   end
 
-  def set_autosizing_limits(measures, hpxml_bldg)
+  def set_autosizing_limits(runner, measures, hpxml_bldg)
     # Use Autosizing Limits and Maintain Duct System Curve (Part 1)
     # Set the autosizing limit based on the baseline airflow.
     if measures['ResStockArguments'][0]['hvac_distribution_use_duct_restriction'] == 'true'
@@ -621,22 +621,24 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       if not autosizing_limit.nil?
         if [HPXML::HVACTypeFurnace].include?(measures['BuildResidentialHPXML'][0]['heating_system_type'])
           measures['BuildResidentialHPXML'][0]['heating_system_heating_autosizing_limit'] = autosizing_limit
+          runner.registerInfo("The capacity of the upgraded heating system is limited to 'heating_system_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
         end
         if [HPXML::HVACTypeCentralAirConditioner].include?(measures['BuildResidentialHPXML'][0]['cooling_system_type']) ||
            ([HPXML::HVACTypeEvaporativeCooler, HPXML::HVACTypeMiniSplitAirConditioner].include?(measures['BuildResidentialHPXML'][0]['cooling_system_type']) && (measures['BuildResidentialHPXML'][0]['cooling_system_is_ducted'] == 'true'))
           measures['BuildResidentialHPXML'][0]['cooling_system_cooling_autosizing_limit'] = autosizing_limit
+          runner.registerInfo("The capacity of the upgraded cooling system is limited to 'cooling_system_cooling_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
         end
         if [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(measures['BuildResidentialHPXML'][0]['heat_pump_type']) ||
            ([HPXML::HVACTypeHeatPumpMiniSplit].include?(measures['BuildResidentialHPXML'][0]['heat_pump_type']) && (measures['BuildResidentialHPXML'][0]['heat_pump_is_ducted']) == 'true')
-          # Assume the same cfm/ton as the baseline for HP to HP upgrades.
-          if hpxml_bldg.heat_pumps.size == 0
-            measures['BuildResidentialHPXML'][0]['heat_pump_heating_autosizing_limit'] = autosizing_limit
-            measures['BuildResidentialHPXML'][0]['heat_pump_cooling_autosizing_limit'] = autosizing_limit
-            # We intentionally do not limit the heat pump backup heating autosized value.
-          end
+          measures['BuildResidentialHPXML'][0]['heat_pump_heating_autosizing_limit'] = autosizing_limit
+          measures['BuildResidentialHPXML'][0]['heat_pump_cooling_autosizing_limit'] = autosizing_limit
+          # We intentionally do not limit the heat pump backup heating autosized value.
+          runner.registerInfo("The heating capacity of the upgraded heat pump is limited to 'heat_pump_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
+          runner.registerInfo("The cooling capacity of the upgraded heat pump is limited to 'heat_pump_cooling_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
         end
         if [HPXML::HVACTypeFurnace].include?(measures['BuildResidentialHPXML'][0]['heating_system_2_type'])
           measures['BuildResidentialHPXML'][0]['heating_system_2_heating_autosizing_limit'] = autosizing_limit
+          runner.registerInfo("The capacity of the upgraded second heating system is limited to 'heating_system_2_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
         end
       end
       return baseline_max_airflow_cfm
@@ -644,7 +646,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     return
   end
 
-  def set_adjusted_fan_efficiency(measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
+  def set_adjusted_fan_efficiency(runner, measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
     # Use Autosizing Limits and Maintain Duct System Curve (Part 2)
     # - Get the upgrade airflow cfm.
     # - Use it along with the baseline airflow cfm and upgrade blower fan W/cfm.
@@ -669,6 +671,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
         HPXMLFile.set_hvac_blower(hpxml_bldg, { :hvac_blower_fan_watts_per_cfm => adjusted_fan_watts_per_cfm })
         XMLHelper.write_file(hpxml.to_doc(), hpxml_path)
+
+        runner.registerInfo("The blower fan efficiency of #{fan_watts_per_cfm} was adjusted to 'hvac_blower_fan_watts_per_cfm=#{adjusted_fan_watts_per_cfm}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an upgrade maximum airflow rate of #{upgrade_max_airflow_cfm} cfm.")
       end
     end
   end
@@ -927,7 +931,10 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     air_distribution_airflows = get_air_distribution_airflows(hpxml_bldg)
     if !air_distribution_airflows.empty?
       duct_restriction_values['max_airflow_cfm'] = air_distribution_airflows.max
-      cfm_per_ton = 400.0 # Per Jon W, the recommended airflow for most heat pumps.
+      # TODO:
+      # Currently we are assuming a constant value for upgrade cfm/ton, regardless of the upgraded equipment type (furnace, heat pump, etc).
+      # This value should more appropriately vary based on the type of upgraded equipment.
+      cfm_per_ton = Constants::DuctRestrictionAssumedAirflow
       duct_restriction_values['autosizing_limit'] = UnitConversions.convert(duct_restriction_values['max_airflow_cfm'] / cfm_per_ton, 'ton', 'Btu/hr')
     end
 
@@ -949,7 +956,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
-    # FIXME: source? description?
+    # Adjust the blower fan efficiency based on baseline/upgrade maximum airflow cfm values.
+    # FIXME: Source?
 
     v_baseline = baseline_max_airflow_cfm
     v_upgrade = upgrade_max_airflow_cfm
@@ -958,7 +966,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     p_upgrade = p_int * (v_upgrade / v_baseline)**3
     adjusted_fan_watts_per_cfm = p_upgrade / v_upgrade
 
-    return adjusted_fan_watts_per_cfm
+    return adjusted_fan_watts_per_cfm.round(3)
   end
 end
 
