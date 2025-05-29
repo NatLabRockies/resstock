@@ -625,11 +625,7 @@ jobs:
           echo "Checking for failed simulations in results files..."
           FAILED=false
           for csv_file in project_national/sdr_upgrades_tmy3/results_csvs/*.csv; do
-            echo "Checking file: $csv_file"
-            python -m resstockpostproc.get_failures "$csv_file" --verbose --exit-code
-            if [ $? -ne 0 ]; then
-              FAILED=true
-            fi
+            python -m resstockpostproc.get_failures "$csv_file" --verbose --exit-code || FAILED=true
           done
           if [ "$FAILED" = true ]; then
             echo "ERROR: Some simulations failed. See details above."
