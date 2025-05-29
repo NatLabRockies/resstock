@@ -305,6 +305,23 @@ if __name__ == '__main__':
         export_file, ext = args.export_file.split('.')
         export_file = '{}_{}.{}'.format(export_file, category.strip('.').rstrip('_'), ext)
         cols_to_ignore = ['color_index'] + categories
+        cols_to_ignore += ['applicable',
+                      'include_annual_',
+                      'include_timeseries_',
+                      'output_format',
+                      'timeseries_frequency',
+                      'timestamp_convention',
+                      'timeseries_num_decimal_places',
+                      'upgrade_name',
+                      'add_timeseries_',
+                      'user_output_',
+                      'debug',
+                      'include_monthly_',
+                      'register_annual_',
+                      'register_monthly_',
+                      'completed_at',
+                      'completed_status',
+                      'server_directory_cleanup.']
         cols_to_ignore.remove(category)
         compare = MoreCompare(args.base_folder, args.feature_folder, args.export_folder, export_file, args.map_file)
         compare.visualize(args.aggregate_column, args.aggregate_function, args.display_column, excludes, enum_maps, cols_to_ignore)
