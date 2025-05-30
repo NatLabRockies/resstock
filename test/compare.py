@@ -321,7 +321,8 @@ if __name__ == '__main__':
                       'register_monthly_',
                       'completed_at',
                       'completed_status',
-                      'server_directory_cleanup.']
+                      'server_directory_cleanup.',
+                      'started_at']
         cols_to_ignore.remove(category)
         compare = MoreCompare(args.base_folder, args.feature_folder, args.export_folder, export_file, args.map_file)
         compare.visualize(args.aggregate_column, args.aggregate_function, args.display_column, excludes, enum_maps, cols_to_ignore)
