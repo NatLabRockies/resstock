@@ -399,13 +399,14 @@ These calculations are currently considered experimental research features.
 See :ref:`panel_outputs` for descriptions of how calculated loads appear in the output files.
 
 The electric panel baseline peak power is entered in ``/HPXML/Building/BuildingDetails/BuildingSummary/extension``.
-This value is used for meter-based load calculations.
 
   ====================================  ========  =======  ================  ========  ================  ===========
   Element                               Type      Units    Constraints       Required  Default           Notes
   ====================================  ========  =======  ================  ========  ================  ===========
-  ``ElectricPanelBaselinePeakPower``    double    W        >= 0              No        0                 Used for meter-based load calculations
+  ``ElectricPanelBaselinePeakPower``    double    W        > 0               See [#]_                    Used for meter-based load calculations
   ====================================  ========  =======  ================  ========  ================  ===========
+
+  .. [#] ElectricPanelBaselinePeakPower only required if meter-based load calculations are desired.
 
 .. _hpxml_building:
 
@@ -4694,10 +4695,30 @@ Individual branch circuits entered in ``BranchCircuits/BranchCircuit``.
 
   .. [#] Voltage choices are "120" or "240".
   .. [#] If Voltage not provided, defaults based on optional referenced components as follows:
+
+         \- ``HeatingSystem[HeatingSystemFuel="electricity"]``: 240
          
-         \- **No referenced components, non-electric heating systems, room air conditioners, dishwashers, ventilation fans, electric vehicle plug loads and chargers**: 120
+         \- ``CoolingSystem[CoolingSystemType!="room air conditioner"]``: 240
          
-         \- **All other referenced components**: 240
+         \- ``HeatPump[HeatPumpFuel="electricity"]``: 240
+                  
+         \- ``WaterHeatingSystem[FuelType="electricity"]``: 240
+         
+         \- ``ClothesDryer[FuelType="electricity"]``: 240
+         
+         \- ``CookingRange[FuelType="electricity"]``: 240
+                  
+         \- ``PermanentSpa/Heater[Type="electric resistance" or "heat pump"]``: 240
+         
+         \- ``Pool/Heater[Type="electric resistance" or "heat pump"]``: 240
+         
+         \- ``PlugLoad[PlugLoadType="well pump"]``: 240
+         
+         \- ``PVSystem``: 240
+         
+         \- ``Battery``: 240
+         
+         \- Otherwise: 120
 
   .. [#] If MaxCurrentRating not provided, defaults based on Voltage as follows:
   
@@ -4707,6 +4728,7 @@ Individual branch circuits entered in ``BranchCircuits/BranchCircuit``.
 
   .. [#] OccupiedSpaces choices are 0.0, 0.5, 1.0, or 2.0.
   .. [#] If OccupiedSpaces not provided, then :ref:`panels_default` are used based on Voltage and properties of components referenced by AttachedToComponent.
+         Components that are not attached to :ref:`service_feeders` are assumed to occupy zero breaker spaces.
          If no corresponding Voltage is specified, the other Voltage classification will be used.
          Occupied breaker spaces will be recalculated based on the new Voltage classification.
          Occupied breaker spaces are calculated based on PowerRating, Voltage, and MaxCurrentRating as follows:
@@ -4763,9 +4785,9 @@ Individual service feeders entered in ``ServiceFeeders/ServiceFeeder``.
 
          \- **pool pump**: ``Pool/Pumps/Pump``
 
-         \- **well pump**: ``PlugLoad[PlugLoadType=”well pump”]``
+         \- **well pump**: ``PlugLoad[PlugLoadType="well pump"]``
 
-         \- **electric vehicle charging**: ``PlugLoad[PlugLoadType=”electric vehicle charging”]`` or ``ElectricVehicleCharger``
+         \- **electric vehicle charging**: ``PlugLoad[PlugLoadType="electric vehicle charging"]`` or ``ElectricVehicleCharger``
 
   .. [#] Not allowed if LoadType is "lighting", "kitchen", "laundry", or "other"; otherwise, required.
   .. [#] A service feeder is created for any electric component not already referenced by a service feeder.

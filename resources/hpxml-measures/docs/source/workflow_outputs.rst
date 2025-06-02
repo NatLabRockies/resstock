@@ -730,7 +730,7 @@ Monthly results for each utility bill scenario defined in the HPXML file are lis
 Electric Panel Outputs
 ----------------------
 
-OpenStudio-HPXML can optionally generate an electric panels output file.
+OpenStudio-HPXML can optionally generate an electric panel output file.
 
 **Note**: This output file is only available when electric panel load calculation outputs are requested.
 When no load calculation types are specified, the electric panels output file is not generated.

@@ -3559,17 +3559,16 @@ module Defaults
                             component_idrefs_isdefaulted: true)
       end
 
-      electric_panel_default_values = get_electric_panel_values()
       if electric_panel.voltage.nil?
-        electric_panel.voltage = electric_panel_default_values[:panel_voltage]
+        electric_panel.voltage = HPXML::ElectricPanelVoltage240
         electric_panel.voltage_isdefaulted = true
       end
       if electric_panel.max_current_rating.nil?
-        electric_panel.max_current_rating = electric_panel_default_values[:max_current_rating]
+        electric_panel.max_current_rating = 200.0 # A
         electric_panel.max_current_rating_isdefaulted = true
       end
       if electric_panel.headroom_spaces.nil? && electric_panel.rated_total_spaces.nil?
-        electric_panel.headroom_spaces = electric_panel_default_values[:headroom_spaces]
+        electric_panel.headroom_spaces = 3
         electric_panel.headroom_spaces_isdefaulted = true
       end
 
@@ -6154,42 +6153,48 @@ module Defaults
     return num_breakers
   end
 
-  # Gets the default properties for electric panels.
-  #
-  # @return [Hash] Map of property type => value
-  def self.get_electric_panel_values()
-    return { panel_voltage: HPXML::ElectricPanelVoltage240,
-             max_current_rating: 200.0, # A
-             headroom_spaces: 3 }
-  end
-
   # Gets the default voltage for a branch circuit based on attached component.
   #
   # @param branch_circuit [HPXML::BranchCircuit] Object that defines a single electric panel branch circuit
   # @return [String] '120' or '240'
   def self.get_branch_circuit_voltage_default_values(branch_circuit)
+    voltages = []
     branch_circuit.components.each do |component|
       if component.is_a?(HPXML::HeatingSystem)
-        if component.heating_system_fuel != HPXML::FuelTypeElectricity
-          return HPXML::ElectricPanelVoltage120
+        if component.heating_system_fuel == HPXML::FuelTypeElectricity
+          voltages << HPXML::ElectricPanelVoltage240
         end
       elsif component.is_a?(HPXML::CoolingSystem)
-        if component.cooling_system_type == HPXML::HVACTypeRoomAirConditioner
-          return HPXML::ElectricPanelVoltage120
+        if component.cooling_system_type != HPXML::HVACTypeRoomAirConditioner
+          voltages << HPXML::ElectricPanelVoltage240
         end
-      elsif component.is_a?(HPXML::Dishwasher)
-        return HPXML::ElectricPanelVoltage120
-      elsif component.is_a?(HPXML::VentilationFan)
-        return HPXML::ElectricPanelVoltage120
+      elsif component.is_a?(HPXML::HeatPump)
+        if component.heat_pump_fuel == HPXML::FuelTypeElectricity
+          voltages << HPXML::ElectricPanelVoltage240
+        end
+      elsif component.is_a?(HPXML::PVSystem)
+        voltages << HPXML::ElectricPanelVoltage240
+      elsif component.is_a?(HPXML::WaterHeatingSystem) ||
+            component.is_a?(HPXML::ClothesDryer) ||
+            component.is_a?(HPXML::CookingRange)
+        if component.fuel_type == HPXML::FuelTypeElectricity
+          voltages << HPXML::ElectricPanelVoltage240
+        end
+      elsif component.is_a?(HPXML::PermanentSpa) ||
+            component.is_a?(HPXML::Pool)
+        if [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(component.heater_type)
+          voltages << HPXML::ElectricPanelVoltage240
+        end
       elsif component.is_a?(HPXML::PlugLoad)
-        if component.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging
-          return HPXML::ElectricPanelVoltage120
+        if component.plug_load_type == HPXML::PlugLoadTypeWellPump
+          voltages << HPXML::ElectricPanelVoltage240
         end
-      elsif component.is_a?(HPXML::ElectricVehicleCharger)
-        return HPXML::ElectricPanelVoltage120
       end
+    end
+    if voltages.include?(HPXML::ElectricPanelVoltage240)
       return HPXML::ElectricPanelVoltage240
     end
+
     return HPXML::ElectricPanelVoltage120
   end
 

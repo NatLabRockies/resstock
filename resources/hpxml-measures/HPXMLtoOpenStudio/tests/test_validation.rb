@@ -266,6 +266,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'panel-with-unrequired-system' => ['Expected 0 element(s) for xpath: AttachedToComponent [context: /HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel/ServiceFeeders/ServiceFeeder, id: "ServiceFeeder1"]'],
                             'panel-without-load-type' => ['Expected 1 element(s) for xpath: LoadType [context: /HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel/ServiceFeeders/ServiceFeeder, id: "ServiceFeeder1"]'],
                             'panel-insufficient-voltage' => ["Expected ../../../ElectricPanel/Voltage to be '240' [context: /HPXML/Building/BuildingDetails/Systems/ElectricPanels/ElectricPanel/BranchCircuits/BranchCircuit, id: \"BranchCircuit1\"]"],
+                            'panel-zero-meter-based' => ['Expected extension/ElectricPanelBaselinePeakPower to be greater than 0 [context: /HPXML/Building/BuildingDetails/BuildingSummary, id: "MyBuilding"]'],
                             'refrigerator-location' => ['A location is specified as "garage" but no surfaces were found adjacent to this space type.'],
                             'refrigerator-schedule' => ['Expected either schedule fractions/multipliers or schedule coefficients but not both.'],
                             'solar-fraction-one' => ['Expected SolarFraction to be less than or equal to 0.99 [context: /HPXML/Building/BuildingDetails/Systems/SolarThermal/SolarThermalSystem[SolarFraction], id: "SolarThermalSystem1"]'],
@@ -806,6 +807,11 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                        voltage: HPXML::ElectricPanelVoltage120)
         hpxml_bldg.electric_panels[0].branch_circuits.add(id: 'BranchCircuit1',
                                                           voltage: HPXML::ElectricPanelVoltage240)
+      when 'panel-zero-meter-based'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.electric_panels.add(id: 'ElectricPanel1')
+        hpxml.header.service_feeders_load_calculation_types = [HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingMeterBased]
+        hpxml_bldg.header.electric_panel_baseline_peak_power = 0
       when 'refrigerator-location'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.refrigerators[0].location = HPXML::LocationGarage
@@ -1216,8 +1222,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                                "Calculated a negative net surface area for surface 'Floor1'."],
                             'orphaned-geothermal-loop' => ["Geothermal loop 'GeothermalLoop1' found but no heat pump attached to it."],
                             'orphaned-hvac-distribution' => ["Distribution system 'HVACDistribution1' found but no HVAC system attached to it."],
-                            'panel-wrong-system-type' => ["One or more referenced components 'WaterHeatingSystem1' not valid for service feeder 'ServiceFeeder1'"],
-                            'panel-missing-system' => ["One or more referenced components 'foobar' not found for service feeder 'ServiceFeeder1'"],
+                            'panel-wrong-system-type' => ["One or more referenced components 'WaterHeatingSystem1' not valid for service feeder 'ServiceFeeder1' with LoadType 'heating'."],
                             'refrigerators-multiple-primary' => ['More than one refrigerator designated as the primary.'],
                             'refrigerators-no-primary' => ['Could not find a primary refrigerator.'],
                             'repeated-relatedhvac-dhw-indirect' => ["RelatedHVACSystem 'HeatingSystem1' is attached to multiple water heating systems."],
@@ -1594,12 +1599,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.electric_panels[0].service_feeders.add(id: 'ServiceFeeder1',
                                                           type: HPXML::ElectricPanelLoadTypeHeating,
                                                           component_idrefs: [hpxml_bldg.water_heating_systems[0].id])
-      when 'panel-missing-system'
-        hpxml, hpxml_bldg = _create_hpxml('base.xml')
-        hpxml_bldg.electric_panels.add(id: 'ElectricPanel1')
-        hpxml_bldg.electric_panels[0].service_feeders.add(id: 'ServiceFeeder1',
-                                                          type: HPXML::ElectricPanelLoadTypeCooling,
-                                                          component_idrefs: ['foobar'])
       when 'refrigerators-multiple-primary'
         hpxml, hpxml_bldg = _create_hpxml('base-misc-loads-large-uncommon.xml')
         hpxml_bldg.refrigerators[1].primary_indicator = true
