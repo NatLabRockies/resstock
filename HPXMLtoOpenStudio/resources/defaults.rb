@@ -6182,8 +6182,12 @@ module Defaults
         end
       elsif component.is_a?(HPXML::PermanentSpa) ||
             component.is_a?(HPXML::Pool)
-        if [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(component.heater_type)
+        if branch_circuit.component_idrefs.include?(component.pump_id)
           voltages << HPXML::ElectricPanelVoltage240
+        elsif branch_circuit.component_idrefs.include?(component.heater_id)
+          if [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(component.heater_type)
+            voltages << HPXML::ElectricPanelVoltage240
+          end
         end
       elsif component.is_a?(HPXML::PlugLoad)
         if component.plug_load_type == HPXML::PlugLoadTypeWellPump
