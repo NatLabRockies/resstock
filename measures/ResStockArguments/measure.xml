@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>6444e2b8-1c5d-4496-ae47-5297c7b20d14</version_id>
-  <version_modified>2025-05-27T21:19:30Z</version_modified>
+  <version_id>f2b758b7-232f-4b84-b7bc-4aa3dde5794b</version_id>
+  <version_modified>2025-06-02T16:16:30Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -7804,13 +7804,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>5FAC9994</checksum>
+      <checksum>35726B1C</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E5DEB4E2</checksum>
+      <checksum>032ACC5E</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>

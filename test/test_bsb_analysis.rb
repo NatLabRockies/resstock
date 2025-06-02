@@ -8,6 +8,15 @@ class TestBuildStockBatch < Minitest::Test
   def before_setup
     @testing_baseline = 'project_testing/testing_baseline'
     @national_baseline = 'project_national/national_baseline'
+
+    expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
+    @expected_input_names = expected_inputs['Input Name']
+    
+    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
+    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
+    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
+    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
+    @expected_annual_names = expected_outputs['Annual Name'].select { |n| !n.nil? }
   end
 
   def test_testing_baseline
@@ -41,75 +50,50 @@ class TestBuildStockBatch < Minitest::Test
   end
 
   def test_testing_inputs
-    expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
-    expected_names = expected_inputs['Input Name']
-
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
-    expected_annual_names = expected_outputs['Annual Name'].select { |n| !n.nil? }
-
     actual_outputs = CSV.read(File.join(@testing_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_2_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_3_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('server_directory_cleanup.') }
-    actual_names = actual_outputs.headers - expected_annual_names
+    actual_input_names = actual_outputs.headers - @expected_annual_names
 
-    actual_extras = actual_names - expected_names
-    puts "Input Name, actual - expected: #{actual_extras}" if !actual_extras.empty?
-    assert_equal(0, actual_extras.size)
+    extra_input_arguments = actual_input_names - @expected_input_names
+    puts "extra input arguments: #{extra_input_arguments}" if !extra_input_arguments.empty?
+    assert_equal(0, extra_input_arguments.size)
 
-    # expected_extras = expected_names - actual_names
-    # puts "Input Name, expected - actual: #{expected_extras}" if !expected_extras.empty?
-    # assert_equal(0, expected_extras.size) # allow
+    # Allow missing input arguments for the testing project.\
+    missing_input_arguments = @expected_input_names - actual_input_names
+    puts "missing input arguments: #{missing_input_arguments}" if !missing_input_arguments.empty?
+    assert_equal(0, missing_input_arguments.size)
   end
 
   def test_national_inputs
-    expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
-    expected_names = expected_inputs['Input Name']
-
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
-    expected_annual_names = expected_outputs['Annual Name'].select { |n| !n.nil? }
-
     actual_outputs = CSV.read(File.join(@national_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
-    actual_names = actual_outputs.headers - expected_annual_names
+    actual_input_names = actual_outputs.headers - @expected_annual_names
 
-    actual_extras = actual_names - expected_names
-    puts "Input Name, actual - expected: #{actual_extras}" if !actual_extras.empty?
-    assert_equal(0, actual_extras.size)
+    extra_input_arguments = actual_input_names - @expected_input_names
+    puts "extra input arguments: #{extra_input_arguments}" if !extra_input_arguments.empty?
+    assert_equal(0, extra_input_arguments.size)
 
-    expected_extras = expected_names - actual_names
-    puts "Input Name, expected - actual: #{expected_extras}" if !expected_extras.empty?
-    assert_equal(0, expected_extras.size)
+    missing_input_arguments = @expected_input_names - actual_input_names
+    puts "missing input arguments: #{missing_input_arguments}" if !missing_input_arguments.empty?
+    assert_equal(0, missing_input_arguments.size)
   end
 
   def test_testing_annual_outputs
-    expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
-    expected_names = expected_inputs['Input Name']
-
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
-    expected_annual_names = expected_outputs['Annual Name'].select { |n| !n.nil? }
-
     actual_outputs = CSV.read(File.join(@testing_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_2_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_3_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('server_directory_cleanup.') }
-    actual_annual_names = actual_outputs.headers - expected_names
+    actual_annual_names = actual_outputs.headers - @expected_input_names
 
-    actual_extras = actual_annual_names - expected_annual_names
-    puts "Annual Name, actual - expected: #{actual_extras}" if !actual_extras.empty?
-    assert_equal(0, actual_extras.size)
+    extra_annual_outputs = actual_annual_names - @expected_annual_names
+    puts "extra annual outputs: #{extra_annual_outputs}" if !extra_annual_outputs.empty?
+    assert_equal(0, extra_annual_outputs.size)
 
-    # expected_extras = expected_annual_names - actual_annual_names
-    # puts "Annual Name, expected - actual: #{expected_extras}" if !expected_extras.empty?
-    # assert_equal(0, expected_extras.size) # allow
+    # Allow missing annual outputs for the testing project.
+    missing_annual_outputs = @expected_annual_names - actual_annual_names
+    puts "extra annual outputs: #{missing_annual_outputs}" if !missing_annual_outputs.empty?
+    assert_equal(0, missing_annual_outputs.size)
 
     tol = 0.001
     sums_to_indexes = expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
@@ -130,25 +114,17 @@ class TestBuildStockBatch < Minitest::Test
   end
 
   def test_national_annual_outputs
-    expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
-    expected_names = expected_inputs['Input Name']
-
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
-    expected_annual_names = expected_outputs['Annual Name'].select { |n| !n.nil? }
-
     actual_outputs = CSV.read(File.join(@national_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
-    actual_annual_names = actual_outputs.headers - expected_names
+    actual_annual_names = actual_outputs.headers - @expected_input_names
 
-    actual_extras = actual_annual_names - expected_annual_names
-    puts "Annual Name, actual - expected: #{actual_extras}" if !actual_extras.empty?
-    assert_equal(0, actual_extras.size)
+    extra_annual_outputs = actual_annual_names - @expected_annual_names
+    puts "extra annual outputs: #{extra_annual_outputs}" if !extra_annual_outputs.empty?
+    assert_equal(0, extra_annual_outputs.size)
 
-    # expected_extras = expected_annual_names - actual_annual_names
-    # puts "Annual Name, expected - actual: #{expected_extras}" if !expected_extras.empty?
-    # assert_equal(0, expected_extras.size) # allow
+    # Allow missing annual outputs for the national project.
+    missing_annual_outputs = @expected_annual_names - actual_annual_names
+    puts "extra annual outputs: #{missing_annual_outputs}" if !missing_annual_outputs.empty?
+    assert_equal(0, missing_annual_outputs.size)
 
     tol = 0.001
     sums_to_indexes = expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
@@ -178,11 +154,12 @@ class TestBuildStockBatch < Minitest::Test
     actual_outputs = CSV.read(File.join('baseline', 'timeseries', 'results_output.csv'), headers: true)
     actual_timeseries_names = actual_outputs.headers
 
-    actual_extras = actual_timeseries_names - expected_timeseries_names
+    actual_timeseries_extras = actual_timeseries_names - expected_timeseries_names
     actual_extras -= ['PROJECT']
-    puts "#{ts_col}, actual - expected: #{actual_extras}" if !actual_extras.empty?
-    assert_equal(0, actual_extras.size)
+    puts "#{ts_col}, actual - expected: #{actual_timeseries_extras}" if !actual_timeseries_extras.empty?
+    assert_equal(0, actual_timeseries_extras.size)
 
+    # TODO allow
     # expected_extras = expected_timeseries_names - actual_timeseries_names
     # puts "#{ts_col}, expected - actual: #{expected_extras}" if !expected_extras.empty?
     # assert_equal(0, expected_extras.size) # allow
@@ -223,10 +200,10 @@ class TestBuildStockBatch < Minitest::Test
     actual_outputs = CSV.read(File.join('baseline', 'timeseries', 'buildstockbatch.csv'), headers: true)
     actual_timeseries_names = actual_outputs.headers
 
-    actual_extras = actual_timeseries_names - expected_timeseries_names
-    actual_extras -= ['PROJECT']
-    puts "#{ts_col}, actual - expected: #{actual_extras}" if !actual_extras.empty?
-    assert_equal(0, actual_extras.size)
+    actual_timeseries_extras = actual_timeseries_names - expected_timeseries_names
+    actual_timeseries_extras -= ['PROJECT']
+    puts "#{ts_col}, actual - expected: #{actual_timeseries_extras}" if !actual_timeseries_extras.empty?
+    assert_equal(0, actual_timeseries_extras.size)
 
     tol = 0.001
     sums_to_indexes = expected_outputs['Sums To'].select { |n| !n.nil? }.uniq

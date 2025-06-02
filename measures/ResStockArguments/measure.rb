@@ -876,7 +876,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     panel_sampler = ElectricalPanelSampler.new(runner: runner, **args)
     cap_bin, cap_val = panel_sampler.assign_rated_capacity(args: args)
 
-    args[:electric_panel_service_rating_bin] = cap_bin
+    args[:electric_panel_service_max_current_rating_bin] = cap_bin
     args[:electric_panel_service_max_current_rating] = cap_val
 
     breaker_spaces_headroom = panel_sampler.assign_breaker_space_headroom(args: args)
