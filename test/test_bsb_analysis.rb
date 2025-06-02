@@ -9,14 +9,12 @@ class TestBuildStockBatch < Minitest::Test
     @testing_baseline = 'project_testing/testing_baseline'
     @national_baseline = 'project_national/national_baseline'
 
-    expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
-    @expected_input_names = expected_inputs['Input Name']
+    @expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
     
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
-    expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
-    @expected_annual_names = expected_outputs['Annual Name'].select { |n| !n.nil? }
+    @expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
+    @expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
+    @expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
+    @expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
   end
 
   def test_testing_baseline
@@ -50,59 +48,66 @@ class TestBuildStockBatch < Minitest::Test
   end
 
   def test_testing_inputs
+    expected_input_names = @expected_inputs['Input Name']
+    expected_annual_names = @expected_outputs['Annual Name'].select { |n| !n.nil? }
+
     actual_outputs = CSV.read(File.join(@testing_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_2_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_3_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('server_directory_cleanup.') }
-    actual_input_names = actual_outputs.headers - @expected_annual_names
+    actual_input_names = actual_outputs.headers - expected_annual_names
 
-    extra_input_arguments = actual_input_names - @expected_input_names
+    extra_input_arguments = actual_input_names - expected_input_names
     puts "extra input arguments: #{extra_input_arguments}" if !extra_input_arguments.empty?
     assert_equal(0, extra_input_arguments.size)
 
-    # Allow missing input arguments for the testing project.\
-    missing_input_arguments = @expected_input_names - actual_input_names
+    missing_input_arguments = expected_input_names - actual_input_names
     puts "missing input arguments: #{missing_input_arguments}" if !missing_input_arguments.empty?
-    assert_equal(0, missing_input_arguments.size)
+    assert_equal(0, missing_input_arguments.size) # Allow missing input arguments for the testing project.
   end
 
   def test_national_inputs
-    actual_outputs = CSV.read(File.join(@national_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
-    actual_input_names = actual_outputs.headers - @expected_annual_names
+    expected_input_names = @expected_inputs['Input Name']
+    expected_annual_names = @expected_outputs['Annual Name'].select { |n| !n.nil? }
 
-    extra_input_arguments = actual_input_names - @expected_input_names
+    actual_outputs = CSV.read(File.join(@national_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
+    actual_input_names = actual_outputs.headers - expected_annual_names
+
+    extra_input_arguments = actual_input_names - expected_input_names
     puts "extra input arguments: #{extra_input_arguments}" if !extra_input_arguments.empty?
     assert_equal(0, extra_input_arguments.size)
 
-    missing_input_arguments = @expected_input_names - actual_input_names
+    missing_input_arguments = expected_input_names - actual_input_names
     puts "missing input arguments: #{missing_input_arguments}" if !missing_input_arguments.empty?
     assert_equal(0, missing_input_arguments.size)
   end
 
   def test_testing_annual_outputs
+    expected_input_names = @expected_inputs['Input Name']
+    expected_annual_names = @expected_outputs['Annual Name'].select { |n| !n.nil? }
+
     actual_outputs = CSV.read(File.join(@testing_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_2_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('report_utility_bills.bills_3_') }
     actual_outputs.headers.map { |x| actual_outputs.delete(x) if x.include?('server_directory_cleanup.') }
-    actual_annual_names = actual_outputs.headers - @expected_input_names
+    actual_annual_names = actual_outputs.headers - expected_input_names
 
-    extra_annual_outputs = actual_annual_names - @expected_annual_names
+    extra_annual_outputs = actual_annual_names - expected_annual_names
     puts "extra annual outputs: #{extra_annual_outputs}" if !extra_annual_outputs.empty?
     assert_equal(0, extra_annual_outputs.size)
 
-    # Allow missing annual outputs for the testing project.
-    missing_annual_outputs = @expected_annual_names - actual_annual_names
+    missing_annual_outputs = expected_annual_names - actual_annual_names
     puts "extra annual outputs: #{missing_annual_outputs}" if !missing_annual_outputs.empty?
-    assert_equal(0, missing_annual_outputs.size)
+    assert_equal(0, missing_annual_outputs.size) # Allow missing annual outputs for the testing project.
 
     tol = 0.001
-    sums_to_indexes = expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
+    sums_to_indexes = @expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
     sums_to_indexes.each do |sums_to_ix|
-      ix = expected_outputs['Row Index'].index(sums_to_ix)
-      sums_to = expected_outputs['Annual Name'][ix]
+      ix = @expected_outputs['Row Index'].index(sums_to_ix)
+      sums_to = @expected_outputs['Annual Name'][ix]
 
       terms = []
-      expected_outputs['Sums To'].zip(expected_outputs['Annual Name']).each do |ix, annual_name|
+      @expected_outputs['Sums To'].zip(@expected_outputs['Annual Name']).each do |ix, annual_name|
         terms << annual_name if ix == sums_to_ix
       end
 
@@ -114,26 +119,28 @@ class TestBuildStockBatch < Minitest::Test
   end
 
   def test_national_annual_outputs
-    actual_outputs = CSV.read(File.join(@national_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
-    actual_annual_names = actual_outputs.headers - @expected_input_names
+    expected_input_names = @expected_inputs['Input Name']
+    expected_annual_names = @expected_outputs['Annual Name'].select { |n| !n.nil? }
 
-    extra_annual_outputs = actual_annual_names - @expected_annual_names
+    actual_outputs = CSV.read(File.join(@national_baseline, 'results_csvs', 'results_up00.csv'), headers: true)
+    actual_annual_names = actual_outputs.headers - expected_input_names
+
+    extra_annual_outputs = actual_annual_names - expected_annual_names
     puts "extra annual outputs: #{extra_annual_outputs}" if !extra_annual_outputs.empty?
     assert_equal(0, extra_annual_outputs.size)
 
-    # Allow missing annual outputs for the national project.
-    missing_annual_outputs = @expected_annual_names - actual_annual_names
+    missing_annual_outputs = expected_annual_names - actual_annual_names
     puts "extra annual outputs: #{missing_annual_outputs}" if !missing_annual_outputs.empty?
-    assert_equal(0, missing_annual_outputs.size)
+    assert_equal(0, missing_annual_outputs.size) # Allow missing annual outputs for the national project.
 
     tol = 0.001
-    sums_to_indexes = expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
+    sums_to_indexes = @expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
     sums_to_indexes.each do |sums_to_ix|
-      ix = expected_outputs['Row Index'].index(sums_to_ix)
-      sums_to = expected_outputs['Annual Name'][ix]
+      ix = @expected_outputs['Row Index'].index(sums_to_ix)
+      sums_to = @expected_outputs['Annual Name'][ix]
 
       terms = []
-      expected_outputs['Sums To'].zip(expected_outputs['Annual Name']).each do |ix, annual_name|
+      @expected_outputs['Sums To'].zip(@expected_outputs['Annual Name']).each do |ix, annual_name|
         terms << annual_name if ix == sums_to_ix
       end
 
@@ -147,31 +154,29 @@ class TestBuildStockBatch < Minitest::Test
   def test_timeseries_resstock_outputs
     ts_col = 'Timeseries ResStock Name'
 
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
-    expected_outputs[ts_col] = _map_scenario_names(expected_outputs[ts_col], 'Emissions: <type>: <scenario_name>', 'Emissions: CO2e: LRMER_MidCase_15')
-    expected_timeseries_names = expected_outputs[ts_col].select { |n| !n.nil? }
+    @expected_outputs[ts_col] = _map_scenario_names(@expected_outputs[ts_col], 'Emissions: <type>: <scenario_name>', 'Emissions: CO2e: LRMER_MidCase_15')
+    expected_timeseries_names = @expected_outputs[ts_col].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join('baseline', 'timeseries', 'results_output.csv'), headers: true)
     actual_timeseries_names = actual_outputs.headers
 
-    actual_timeseries_extras = actual_timeseries_names - expected_timeseries_names
+    extra_timeseries_outputs = actual_timeseries_names - expected_timeseries_names
     actual_extras -= ['PROJECT']
-    puts "#{ts_col}, actual - expected: #{actual_timeseries_extras}" if !actual_timeseries_extras.empty?
-    assert_equal(0, actual_timeseries_extras.size)
+    puts "extra timeseries outputs: #{extra_timeseries_outputs}" if !extra_timeseries_outputs.empty?
+    assert_equal(0, extra_timeseries_outputs.size)
 
-    # TODO allow
-    # expected_extras = expected_timeseries_names - actual_timeseries_names
-    # puts "#{ts_col}, expected - actual: #{expected_extras}" if !expected_extras.empty?
-    # assert_equal(0, expected_extras.size) # allow
+    missing_timeseries_outputs = expected_timeseries_names - actual_timeseries_names
+    puts "missing timeseries outputs: #{missing_timeseries_outputs}" if !missing_timeseries_outputs.empty?
+    assert_equal(0, missing_timeseries_outputs.size) # Allow missing timeseries outputs for the national project.
 
     tol = 0.001
-    sums_to_indexes = expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
+    sums_to_indexes = @expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
     sums_to_indexes.each do |sums_to_ix|
-      ix = expected_outputs['Row Index'].index(sums_to_ix)
-      sums_to = expected_outputs[ts_col][ix]
+      ix = @expected_outputs['Row Index'].index(sums_to_ix)
+      sums_to = @expected_outputs[ts_col][ix]
 
       terms = []
-      expected_outputs['Sums To'].zip(expected_outputs[ts_col]).each do |ix, annual_name|
+      @expected_outputs['Sums To'].zip(@expected_outputs[ts_col]).each do |ix, annual_name|
         terms << annual_name if ix == sums_to_ix
       end
 
@@ -193,26 +198,29 @@ class TestBuildStockBatch < Minitest::Test
   def test_timeseries_buildstockbatch_outputs
     ts_col = 'Timeseries BuildStockBatch Name'
 
-    expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
-    expected_outputs[ts_col] = _map_scenario_names(expected_outputs[ts_col], 'emissions__<type>__<scenario_name>', 'emissions__co2e__lrmer_midcase_15')
-    expected_timeseries_names = expected_outputs[ts_col].select { |n| !n.nil? }
+    @expected_outputs[ts_col] = _map_scenario_names(@expected_outputs[ts_col], 'emissions__<type>__<scenario_name>', 'emissions__co2e__lrmer_midcase_15')
+    expected_timeseries_names = @expected_outputs[ts_col].select { |n| !n.nil? }
 
     actual_outputs = CSV.read(File.join('baseline', 'timeseries', 'buildstockbatch.csv'), headers: true)
     actual_timeseries_names = actual_outputs.headers
 
-    actual_timeseries_extras = actual_timeseries_names - expected_timeseries_names
+    extra_timeseries_outputs = actual_timeseries_names - expected_timeseries_names
     actual_timeseries_extras -= ['PROJECT']
-    puts "#{ts_col}, actual - expected: #{actual_timeseries_extras}" if !actual_timeseries_extras.empty?
-    assert_equal(0, actual_timeseries_extras.size)
+    puts "extra timeseries outputs: #{extra_timeseries_outputs}" if !extra_timeseries_outputs.empty?
+    assert_equal(0, extra_timeseries_outputs.size)
+
+    missing_timeseries_outputs = expected_timeseries_names - actual_timeseries_names
+    puts "missing timeseries outputs: #{missing_timeseries_outputs}" if !missing_timeseries_outputs.empty?
+    assert_equal(0, missing_timeseries_outputs.size) # Allow missing timeseries outputs for the national project.
 
     tol = 0.001
-    sums_to_indexes = expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
+    sums_to_indexes = @expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
     sums_to_indexes.each do |sums_to_ix|
-      ix = expected_outputs['Row Index'].index(sums_to_ix)
-      sums_to = expected_outputs[ts_col][ix]
+      ix = @expected_outputs['Row Index'].index(sums_to_ix)
+      sums_to = @expected_outputs[ts_col][ix]
 
       terms = []
-      expected_outputs['Sums To'].zip(expected_outputs[ts_col]).each do |ix, annual_name|
+      @expected_outputs['Sums To'].zip(@expected_outputs[ts_col]).each do |ix, annual_name|
         terms << annual_name if ix == sums_to_ix
       end
 
