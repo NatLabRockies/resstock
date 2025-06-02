@@ -12,9 +12,9 @@ class TestBuildStockBatch < Minitest::Test
     @expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
     
     @expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
-    @expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
-    @expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
-    @expected_outputs['Annual Name'] = _map_scenario_names(expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
+    @expected_outputs['Annual Name'] = _map_scenario_names(@expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
+    @expected_outputs['Annual Name'] = _map_scenario_names(@expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
+    @expected_outputs['Annual Name'] = _map_scenario_names(@expected_outputs['Annual Name'], 'report_utility_bills.<scenario_name>', 'report_utility_bills.bills')
   end
 
   def test_testing_baseline
