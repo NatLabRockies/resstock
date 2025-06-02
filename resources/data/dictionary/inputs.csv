@@ -235,7 +235,6 @@ report_simulation_output.include_annual_peak_loads,Generates annual peak loads f
 report_simulation_output.include_annual_component_loads,Generates annual heating and cooling loads disaggregated by component type.
 report_simulation_output.include_annual_hot_water_uses,Generates annual hot water usages for each end use.
 report_simulation_output.include_annual_hvac_summary,"Generates HVAC capacities, design temperatures, and design loads."
-report_simulation_output.include_annual_panel_summary,Generates electric panel breaker spaces and loads.
 report_simulation_output.include_annual_resilience,Generates annual resilience outputs.
 report_simulation_output.include_timeseries_total_consumptions,Generates timeseries energy consumptions for the total building.
 report_simulation_output.include_timeseries_fuel_consumptions,Generates timeseries energy consumptions for each fuel type.
