@@ -58,6 +58,9 @@
           <ConditionedFloorArea>2700.0</ConditionedFloorArea>
           <ConditionedBuildingVolume>21600.0</ConditionedBuildingVolume>
         </BuildingConstruction>
+        <extension>
+          <ElectricPanelBaselinePeakPower>4500.0</ElectricPanelBaselinePeakPower>
+        </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
         <ClimateZoneIECC>

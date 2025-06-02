@@ -352,6 +352,7 @@
       <sch:assert role='ERROR' test='number(h:extension/h:NaturalVentilationAvailabilityDaysperWeek) &gt;= 0 or not(h:extension/h:NaturalVentilationAvailabilityDaysperWeek)'>Expected extension/NaturalVentilationAvailabilityDaysperWeek to be greater than or equal to 0</sch:assert>
       <sch:assert role='ERROR' test='number(h:extension/h:NaturalVentilationAvailabilityDaysperWeek) &lt;= 7 or not(h:extension/h:NaturalVentilationAvailabilityDaysperWeek)'>Expected extension/NaturalVentilationAvailabilityDaysperWeek to be less than or equal to 7</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:ElectricPanelBaselinePeakPower) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/ElectricPanelBaselinePeakPower</sch:assert>
+      <sch:assert role='ERROR' test='number(h:extension/h:ElectricPanelBaselinePeakPower) &gt; 0 or not(h:extension/h:ElectricPanelBaselinePeakPower)'>Expected extension/ElectricPanelBaselinePeakPower to be greater than 0</sch:assert>
     </sch:rule>
   </sch:pattern>
 

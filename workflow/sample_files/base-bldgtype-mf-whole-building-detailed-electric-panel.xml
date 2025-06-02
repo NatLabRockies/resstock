@@ -62,6 +62,7 @@
         </BuildingConstruction>
         <extension>
           <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit.csv</SchedulesFilePath>
+          <ElectricPanelBaselinePeakPower>4500.0</ElectricPanelBaselinePeakPower>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
@@ -597,6 +598,7 @@
         </BuildingConstruction>
         <extension>
           <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit_2.csv</SchedulesFilePath>
+          <ElectricPanelBaselinePeakPower>4500.0</ElectricPanelBaselinePeakPower>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
@@ -1132,6 +1134,7 @@
         </BuildingConstruction>
         <extension>
           <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit_3.csv</SchedulesFilePath>
+          <ElectricPanelBaselinePeakPower>4500.0</ElectricPanelBaselinePeakPower>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
@@ -1555,6 +1558,7 @@
         </BuildingConstruction>
         <extension>
           <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit_4.csv</SchedulesFilePath>
+          <ElectricPanelBaselinePeakPower>4500.0</ElectricPanelBaselinePeakPower>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
@@ -1978,6 +1982,7 @@
         </BuildingConstruction>
         <extension>
           <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit_5.csv</SchedulesFilePath>
+          <ElectricPanelBaselinePeakPower>4500.0</ElectricPanelBaselinePeakPower>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
@@ -2458,6 +2463,7 @@
         </BuildingConstruction>
         <extension>
           <SchedulesFilePath>../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-mf-unit_6.csv</SchedulesFilePath>
+          <ElectricPanelBaselinePeakPower>4500.0</ElectricPanelBaselinePeakPower>
         </extension>
       </BuildingSummary>
       <ClimateandRiskZones>

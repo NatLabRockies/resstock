@@ -862,6 +862,7 @@
     "electric_panel_service_feeders_load_calculation_types": "2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based",
     "electric_panel_service_voltage": "240",
     "electric_panel_service_max_current_rating": 200,
+    "electric_panel_baseline_peak_power": 7200,
     "electric_panel_load_heat_pump_power_rating": 2500,
     "electric_panel_load_heat_pump_new_load": true,
     "electric_panel_load_heating_system_2_power_rating": 1950,
@@ -3936,7 +3937,8 @@
   },
   "sample_files/base-misc-unit-multiplier-detailed-electric-panel.xml": {
     "parent_hpxml": "sample_files/base-misc-unit-multiplier.xml",
-    "electric_panel_service_feeders_load_calculation_types": "2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based"
+    "electric_panel_service_feeders_load_calculation_types": "2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based",
+    "electric_panel_baseline_peak_power": 4500
   },
   "sample_files/base-misc-usage-multiplier.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -4015,7 +4017,8 @@
   },
   "sample_files/base-bldgtype-mf-whole-building-detailed-electric-panel.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml",
-    "electric_panel_service_feeders_load_calculation_types": "2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based"
+    "electric_panel_service_feeders_load_calculation_types": "2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based",
+    "electric_panel_baseline_peak_power": 4500
   },
   "sample_files/base-pv.xml": {
     "parent_hpxml": "sample_files/base.xml",

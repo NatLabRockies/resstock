@@ -988,6 +988,7 @@ module HVAC
   end
 
   # Get the outdoor unit (compressor) power (W) using regression based on (output) capacity.
+  # The equation is a derived regression for the minimum circuit amp (MCA) of direct expansion compressor from 201 product datapoints (including central ACs, room ACs, and ASHPs) collected between 2023-2024.
   #
   # @param capacity [Double] Direct expansion coil rated (output) capacity [kBtu/hr].
   # @param voltage [String] '120' or '240'
@@ -1021,7 +1022,7 @@ module HVAC
 
   # Returns the heating input capacity, calculated as the heating rated (output) capacity divided by the rated efficiency.
   #
-  # @param heating_capacity [Double] Heating output capacity
+  # @param heating_capacity [Double] Heating output capacity [Btu/hr]
   # @param heating_efficiency_afue [Double] Rated efficiency [AFUE]
   # @param heating_efficiency_percent [Double] Rated efficiency [Percent]
   # @return [Double] The heating input capacity [Btu/hr]

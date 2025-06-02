@@ -69,6 +69,9 @@
           <ConditionedFloorArea>989.0</ConditionedFloorArea>
           <ConditionedBuildingVolume>7912.0</ConditionedBuildingVolume>
         </BuildingConstruction>
+        <extension>
+          <ElectricPanelBaselinePeakPower>7200.0</ElectricPanelBaselinePeakPower>
+        </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
         <ClimateZoneIECC>
@@ -520,6 +523,12 @@
               <BranchCircuit>
                 <SystemIdentifier id='BranchCircuit2'/>
                 <OccupiedSpaces>1.0</OccupiedSpaces>
+              </BranchCircuit>
+              <BranchCircuit>
+                <SystemIdentifier id='BranchCircuit3'/>
+                <OccupiedSpaces>1.0</OccupiedSpaces>
+                <AttachedToComponent idref='Refrigerator1'/>
+                <AttachedToComponent idref='PlugLoad2'/>
               </BranchCircuit>
             </BranchCircuits>
             <ServiceFeeders>
