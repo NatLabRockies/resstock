@@ -178,6 +178,7 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
         electric_panel_results_out = Outputs.get_panel_results(hpxml.header, hpxml.buildings)
 
         Outputs.write_results_out_to_file(electric_panel_results_out, args[:output_format], args[:electric_panel_output_file_path])
+        Outputs.register_results_out_to_runner(runner, electric_panel_results_out)
       end
 
       # Write design load details output file

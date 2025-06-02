@@ -1725,14 +1725,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     Outputs.write_results_out_to_file(results_out, args[:output_format], annual_output_path)
     runner.registerInfo("Wrote annual output results to #{annual_output_path}.")
 
-    results_out.each do |name, value|
-      next if name.nil? || value.nil?
-
-      name = OpenStudio::toUnderscoreCase(name).chomp('_')
-
-      runner.registerValue(name, value)
-      runner.registerInfo("Registering #{value} for #{name}.")
-    end
+    Outputs.register_results_out_to_runner(runner, results_out)
   end
 
   # Writes out timeseries results to an output file (CSV, JSON, etc.).

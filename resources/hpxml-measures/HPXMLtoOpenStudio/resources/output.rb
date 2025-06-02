@@ -1419,6 +1419,22 @@ module Outputs
     end
   end
 
+  # Register to the runner for the given rows of output data.
+  #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param results_out [Array] Rows of output data
+  # @return [nil]
+  def self.register_results_out_to_runner(runner, results_out)
+    results_out.each do |name, value|
+      next if name.nil? || value.nil?
+
+      name = OpenStudio::toUnderscoreCase(name).chomp('_')
+
+      runner.registerValue(name, value)
+      runner.registerInfo("Registering #{value} for #{name}.")
+    end
+  end
+
   # Creates custom output meters that are used across reporting measures.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
