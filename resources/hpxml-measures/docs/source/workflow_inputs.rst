@@ -4708,7 +4708,11 @@ Individual branch circuits entered in ``BranchCircuits/BranchCircuit``.
          
          \- ``CookingRange[FuelType="electricity"]``: 240
                   
+         \- ``PermanentSpa/Pumps/Pump``: 240
+         
          \- ``PermanentSpa/Heater[Type="electric resistance" or "heat pump"]``: 240
+         
+         \- ``Pool/Pumps/Pump``: 240
          
          \- ``Pool/Heater[Type="electric resistance" or "heat pump"]``: 240
          
