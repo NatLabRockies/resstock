@@ -5843,9 +5843,9 @@ Whether the heat pump uses the existing system as backup. This argument is only 
 
 <br/>
 
-**Heat Pump: Is Duct Limited**
+**Heat Pump: Sizing Is Duct Limited**
 
-Whether the heat pump has upper limits for autosized capacities and an adjusted the blower fan efficiency. This argument is only applicable for heat pump upgrades.
+Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.
 
 - **Name:** ``heat_pump_sizing_is_duct_limited``
 - **Type:** ``Boolean``

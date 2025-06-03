@@ -73,7 +73,8 @@ When defining a heat pump upgrade, the new heat pump can:
 Replace the Existing Primary Heating/Cooling System
 ***************************************************
 
-TODO: intro, including something about backup?
+Remove any existing heating or cooling systems, and replace with a heat pump.
+Heat pump backup type, fuel type, efficiency, capacity, etc. may be specified using heat pump arguments named with the ``heat_pump_backup`` prefix.
 
 For example:
 
