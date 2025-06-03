@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>d2dae950-5958-4935-b7af-0203313b367f</version_id>
-  <version_modified>2025-06-02T21:48:45Z</version_modified>
+  <version_id>2cb64f0a-a314-4461-883f-a104d8d4dd07</version_id>
+  <version_modified>2025-06-03T15:14:59Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -192,7 +192,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>299F7A32</checksum>
+      <checksum>59BCB7E3</checksum>
     </file>
     <file>
       <filename>airflow.rb</filename>
