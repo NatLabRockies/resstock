@@ -1,4 +1,4 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://hpxmlonline.com/2023/09" targetNamespace="http://hpxmlonline.com/2023/09" elementFormDefault="qualified" version="4.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://hpxmlonline.com/2023/09" targetNamespace="http://hpxmlonline.com/2023/09" elementFormDefault="qualified" version="4.2">
     <xs:element name="HPXML">
         <xs:complexType>
             <xs:sequence>
@@ -421,6 +421,7 @@
 					<xs:element minOccurs="0" name="Type" type="ClothesDryerType"/>
 					<xs:element minOccurs="0" name="Location" type="LaundryMachineLocation"/>
 					<xs:element name="FuelType" type="FuelType" minOccurs="0"/>
+					<xs:element name="DryingMethod" minOccurs="0" type="ClothesDryerDryingMethod"/>
 					<xs:element minOccurs="0" name="Usage" type="HPXMLDouble">
 						<xs:annotation>
 							<xs:documentation>loads/week of actual usage by the occupants</xs:documentation>
@@ -1846,7 +1847,7 @@
 										</xs:annotation>
 									</xs:element>
 									<xs:element minOccurs="0" name="HasMixingValve" type="HPXMLBoolean"/>
-									<xs:element minOccurs="0" name="MixingValueSetpoint" type="TemperatureGreaterThanZero"/>
+									<xs:element minOccurs="0" name="MixingValveSetpoint" type="TemperatureGreaterThanZero"/>
 									<xs:element minOccurs="0" name="UsesDesuperheater" type="HPXMLBoolean">
 										<xs:annotation>
 											<xs:documentation>Indicates whether this water heater uses a desuperheater. The attached heat pump or air conditioner can be referenced in the
@@ -2063,7 +2064,7 @@
 									</xs:element>
 									<xs:element minOccurs="0" name="CollectorRatedOpticalEfficiency" type="CollectorRatedOpticalEfficiency">
 										<xs:annotation>
-											<xs:documentation>[Btu/h-ft^2-F] Often referred to as Fr-tau-alpha (FRta), this describes the optical efficiency portion of the overall collector efficiency. 
+											<xs:documentation>[Btu/h-ft^2-F] Often referred to as Fr-tau-alpha (FRta), this describes the optical efficiency portion of the overall collector efficiency.
 												In the OG-100 SRCC Certified Solar Thermal Collector Directory, this is the y-intercept of the efficiency curve.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
@@ -4894,6 +4895,94 @@
 					<xs:attribute name="dataSource" type="DataSource"/>
 				</xs:complexType>
 			</xs:element>
+			<xs:element minOccurs="0" name="MeasureType">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="InstallReplace">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="extension" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="AtticEncapsulation">
+							<xs:annotation>
+								<xs:documentation>AtticEncapsulation measures move the thermal boundary of the building from the floor of an attic space to the roof and gable walls, converting the attic from unconditioned to conditioned.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element minOccurs="0" name="DuctsMovedToConditionedSpace" type="HPXMLBoolean">
+										<xs:annotation>
+											<xs:documentation>'true' indicates that the attic encapsulation measure brought existing ducts inside the conditioned envelope.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element minOccurs="0" ref="extension"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="FoundationEncapsulation">
+							<xs:annotation>
+								<xs:documentation>FoundationEncapsulation measures move the thermal boundary of the building from the floor above the foundation space to the slab and foundation walls, converting the foundation from unconditioned to conditioned.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element minOccurs="0" name="DuctsMovedToConditionedSpace" type="HPXMLBoolean">
+										<xs:annotation>
+											<xs:documentation>'true' indicates that the foundation encapsulation measure brought existing ducts inside the conditioned envelope.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element minOccurs="0" ref="extension"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="HVACRedesign">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element minOccurs="0" name="DistributionTypeChange" type="HPXMLBoolean">
+										<xs:annotation>
+											<xs:documentation>'true' indicates that an HVAC replacement necessitates a change to the distribution type</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element minOccurs="0" name="PartialDisplacement" type="HPXMLBoolean">
+										<xs:annotation>
+											<xs:documentation>'true' indicates that the measure references and installed component that partially displaces the load met by an existing component that will remain installed, but meet a smaller load</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element minOccurs="0" name="HotWaterIntegrated">
+										<xs:annotation>
+											<xs:documentation>In an integrated system, the HVAC system also supplies domestic hot water, a separated system does not.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="separated"/>
+												<xs:enumeration value="integrated"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element minOccurs="0" ref="extension"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="DuctImprovement">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element minOccurs="0" name="DuctInsulation" type="HPXMLBoolean">
+										<xs:annotation>
+											<xs:documentation>'true' indicates that the DuctImprovement measure includes changes to the DuctInsulationMaterial node.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element minOccurs="0" name="DuctSealing" type="HPXMLBoolean">
+										<xs:annotation>
+											<xs:documentation>'true' indicates that the DuctImprovement measure includes changes to the DuctLeakageMeasurement node.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element minOccurs="0" ref="extension"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
 			<xs:element minOccurs="0" name="ReplacedComponents">
 				<xs:annotation>
 					<xs:documentation>or removed component</xs:documentation>
@@ -6787,6 +6876,8 @@
 	<xs:simpleType name="schemaVersionType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="4.0"/>
+			<xs:enumeration value="4.1"/>
+			<xs:enumeration value="4.2"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<!--Address Information Below-->
@@ -9771,6 +9862,24 @@
 	<xs:complexType name="LaundryMachineLocation">
 		<xs:simpleContent>
 			<xs:extension base="LaundryMachineLocation_simple">
+				<xs:attribute name="dataSource" type="DataSource"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ClothesDryerDryingMethod_simple">
+		<xs:annotation>
+			<xs:documentation>The method of drying clothes in the clothes dryer.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="conventional"/>
+			<xs:enumeration value="condensing"/>
+			<xs:enumeration value="heat pump"/>
+			<xs:enumeration value="other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ClothesDryerDryingMethod">
+		<xs:simpleContent>
+			<xs:extension base="ClothesDryerDryingMethod_simple">
 				<xs:attribute name="dataSource" type="DataSource"/>
 			</xs:extension>
 		</xs:simpleContent>
