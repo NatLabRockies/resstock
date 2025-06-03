@@ -150,7 +150,7 @@ upgrades:
     options:
         ### -- ENERGY STAR ASHP applies to all dwellings with ducts
       - &ducted_ASHP_ENERGYSTAR_elec_backup
-        option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF
+        option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Duct Limited
         apply_logic: &ducted_ASHP_apply_logic
           - HVAC Has Ducts|Yes
           - not:
@@ -238,23 +238,7 @@ upgrades:
         apply_logic: &yes_and_no_has_ducts_apply_logic
           - or:
             - HVAC Has Ducts|Yes
-            - HVAC Has Ducts|No 
-
-        ### -- Limit the upgraded equipment capacity based on the existing duct system
-      - &hvac_distribution_use_duct_restriction
-        option: HVAC Distribution|Use Duct Restriction
-        apply_logic:
-          - HVAC Has Ducts|Yes
-          - not:
-            - or:
-              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-              - HVAC Shared Efficiencies|Fan Coil Cooling Only
-              - HVAC Heating Efficiency|ASHP, SEER 10, 6.2 HSPF
-              - HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF
-              - HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF
+            - HVAC Has Ducts|No
 
     # ### --- High efficiency cold-climate heat pump with elec backup
   # - upgrade_name: High efficiency cold-climate heat pump with elec backup
@@ -323,8 +307,6 @@ upgrades:
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned
 
-      # - *hvac_distribution_use_duct_restriction
-
   # - upgrade_name: Ultra high efficiency heat pump with elec backup
     
     # package_apply_logic: *remove_high_rise_shared
@@ -374,8 +356,6 @@ upgrades:
       # - *HP_cooling_efficiency_nonducted
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned
-
-      # - *hvac_distribution_use_duct_restriction
 
   # - upgrade_name: ENERGY STAR heat pump with existing system as backup
 
@@ -443,8 +423,6 @@ upgrades:
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned
 
-      # - *hvac_distribution_use_duct_restriction
-
   # - upgrade_name: Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
     # package_apply_logic: &remove_nonducted_high_rise_shared
@@ -479,8 +457,6 @@ upgrades:
         # apply_logic: &yes_has_ducts_apply_logic
           # - HVAC Has Ducts|Yes
 
-      # - *hvac_distribution_use_duct_restriction
-
   # - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
     # package_apply_logic: *remove_nonducted_high_rise_shared
@@ -495,8 +471,6 @@ upgrades:
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned_ducts_only
 
-      # - *hvac_distribution_use_duct_restriction
-
   # - upgrade_name: Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
     
     # package_apply_logic: *remove_nonducted_high_rise_shared
@@ -509,8 +483,6 @@ upgrades:
 
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned_ducts_only
-
-      # - *hvac_distribution_use_duct_restriction
 
 # ### -- Heat Pumps + Light Touch -- ###
   # - upgrade_name: ENERGY STAR heat pump with elec backup + Light Touch Envelope
@@ -532,8 +504,6 @@ upgrades:
       # - *HP_cooling_efficiency_nonducted
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned
-
-      # - *hvac_distribution_use_duct_restriction
 
       # ### -- Light Touch Envelope -- ###  
       # # Attic floor insulation up to IECC 2021 levels for homes with vented attics with R-13 or less insulation
@@ -653,8 +623,6 @@ upgrades:
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned
 
-      # - *hvac_distribution_use_duct_restriction
-
         # ### -- Light Touch Envelope -- ###
       # - *attic_insulation_IECC_CZ1A
       # - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
@@ -678,8 +646,6 @@ upgrades:
       # - *HP_cooling_efficiency_nonducted
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned
-
-      # - *hvac_distribution_use_duct_restriction
 
         # ### -- Light Touch Envelope -- ###
       # - *attic_insulation_IECC_CZ1A
@@ -711,8 +677,6 @@ upgrades:
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned
 
-      # - *hvac_distribution_use_duct_restriction
-
         # ### -- Light Touch Envelope -- ###
       # - *attic_insulation_IECC_CZ1A
       # - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
@@ -728,8 +692,6 @@ upgrades:
       # - *dual_speed_ducted_ghp
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned_ducts_only
-
-      # - *hvac_distribution_use_duct_restriction
 
         # ### -- Light Touch Envelope -- ###
       # - *attic_insulation_IECC_CZ1A
@@ -756,8 +718,6 @@ upgrades:
       # - *HP_cooling_efficiency_nonducted
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned
-
-      # - *hvac_distribution_use_duct_restriction
 
         # ### -- Light Touch Envelope -- ###
       # - *attic_insulation_IECC_CZ1A
@@ -880,8 +840,6 @@ upgrades:
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned
 
-      # - *hvac_distribution_use_duct_restriction
-
         # ### -- Light Touch Envelope -- ###
       # - *attic_insulation_IECC_CZ1A
       # - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
@@ -917,8 +875,6 @@ upgrades:
       # - *HP_cooling_efficiency_nonducted
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned
-
-      # - *hvac_distribution_use_duct_restriction
 
         # ### -- Light Touch Envelope -- ###
       # - *attic_insulation_IECC_CZ1A
@@ -961,8 +917,6 @@ upgrades:
       # - *HP_cooling_efficiency_nonducted
       # - *HP_cooling_efficiency_ducted
       # - *100_percent_conditioned
-
-      # - *hvac_distribution_use_duct_restriction
 
         # ### -- Light Touch Envelope -- ###
       # - *attic_insulation_IECC_CZ1A

@@ -612,7 +612,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   def set_autosizing_limits(runner, measures, hpxml_bldg)
     # Use Autosizing Limits and Maintain Duct System Curve (Part 1)
     # Set the autosizing limit based on the baseline airflow.
-    if measures['ResStockArguments'][0]['hvac_distribution_use_duct_restriction'] == 'true'
+    if measures['ResStockArguments'][0]['heat_pump_sizing_is_duct_limited'] == 'true'
       duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
       baseline_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
       autosizing_limit = duct_restriction_values['autosizing_limit']
@@ -653,7 +653,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # - Make an adjustment to the upgrade blower fan W/cfm.
     # - Update the HPXML Building (using a method borrowed from BuildResidentialHPXML).
     # - Write the updated HPXML file back out.
-    if measures['ResStockArguments'][0]['hvac_distribution_use_duct_restriction'] == 'true'
+    if measures['ResStockArguments'][0]['heat_pump_sizing_is_duct_limited'] == 'true'
       if File.exist?(hpxml_path)
         hpxml = HPXML.new(hpxml_path: hpxml_path)
       else

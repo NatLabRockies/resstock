@@ -155,44 +155,17 @@ When defining a heat pump upgrade, the new heat pump can be sized according to:
 - :ref:`acca`
 - :ref:`hers`
 - :ref:`max_load`
-- :ref:`duct_restriction`
 
 See `HPXML HVAC Sizing Control <https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-hvac-sizing-control>`_ for more information.
 
-.. _acca:
-
-ACCA Manual J/S
-***************
-
-Meet the cooling load with some oversizing allowances (e.g., 30% for VSHPs, otherwise 15%, in cold climates).
-
-.. _hers:
-
-HERS
-****
-
-This is the default sizing methodology.
-TODO: same as ACCA, except...
-
-.. _max_load:
-
-Max Load
-********
-
-Uses the larger of the heating/cooling design loads.
-
-.. _duct_restriction:
-
-Duct Restriction
-****************
-
-Use the ``HVAC Distribution|Use Duct Restriction`` option from the lookup to use autosizing limits and maintain the existing duct system curve.
-
 ResStock currently assumes the existing home's duct system for HVAC equipment upgrades.
 Without restricting the upgraded equipment's capacity to the maximum of the existing duct system's heating/cooling airflow rate divided by 400 cfm/ton, fan pressure rise increases and results in higher power use.
-This is avoided by limiting the upgraded equipment's capacity based on the existing duct system.
+Based on the existing duct system, this duct restriction can be avoided by:
 
-Additionally, the blower fan efficiency (W/cfm) is adjusted based on baseline model inputs to assume the duct system curve does not change pre- and post- heat pump installation.
+- Limiting the upgraded equipment's capacity 
+- Adjusting the blower fan efficiency (W/cfm)
+
+Set ``heat_pump_sizing_is_duct_limited=true`` for ``HVAC Heating Efficiency`` options in the lookup to use autosizing limits and maintain the existing duct system curve.
 
 For example:
 
@@ -200,7 +173,7 @@ For example:
 
   - upgrade_name: ASHP
     options:
-      - option: HVAC Heating Efficiency|ASHP, SEER 22, 10 HSPF
+      - option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Duct Limited
         apply_logic:
           - HVAC Has Ducts|Yes
         costs:
@@ -208,4 +181,30 @@ For example:
             multiplier: Size, Heating System Primary (kBtu/h)
         lifetime: 30
       - option: HVAC Cooling Efficiency|Ducted Heat Pump
-      - option: HVAC Distribution|Use Duct Restriction
+
+.. _acca:
+
+ACCA Manual J/S
+***************
+
+Autosized heat pumps have their nominal capacity sized per ACCA Manual J/S based on cooling design loads, with some oversizing allowances for larger heating design loads.
+
+Set ``heat_pump_sizing_methodology=ACCA`` for ``HVAC Heating Efficiency`` options in the lookup to size based on ACCA Manual J/S.
+
+.. _hers:
+
+HERS
+****
+
+Same as ACCA except autosized heat pumps have their nominal capacity sized equal to at least the larger of heating and sensible cooling design loads.
+
+Set ``heat_pump_sizing_methodology=HERS`` (or ``heat_pump_sizing_methodology=auto``) for ``HVAC Heating Efficiency`` options in the lookup to size based on HERS.
+
+.. _max_load:
+
+Max Load
+********
+
+Autosized heat pumps have their nominal capacity sized based on the larger of heating/cooling design loads, while taking into account the heat pump’s reduced capacity at the design temperature, such that no backup heating should be necessary.
+
+Set ``heat_pump_sizing_methodology=MaxLoad`` for ``HVAC Heating Efficiency`` options in the lookup to size based on Max Load.
