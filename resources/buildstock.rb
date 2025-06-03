@@ -492,7 +492,6 @@ class RunOSWs
 
     result_output = get_measure_results(rows, result_output, 'BuildExistingModel') if !upgrade
     result_output = get_measure_results(rows, result_output, 'ApplyUpgrade')
-    result_output = get_measure_results(rows, result_output, 'HPXMLtoOpenStudio')
     measures.each do |measure|
       result_output = get_measure_results(rows, result_output, measure)
     end

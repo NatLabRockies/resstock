@@ -316,40 +316,40 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 315,,report_simulation_output.unmet_hours_cooling_hr,hr,Unmet Hours: Cooling,unmet_hours__cooling__hr,hr,Number of hours where the cooling setpoint is not maintained.
 316,,report_simulation_output.unmet_hours_heating_hr,hr,Unmet Hours: Heating,unmet_hours__heating__hr,hr,Number of hours where the heating setpoint is not maintained.
 317,,report_simulation_output.unmet_hours_ev_driving_hr,hr,Unmet Hours: EV Driving,unmet_hours__ev_driving__hr,hr,Number of hours where the EV driving demand is not met.
-318,,hpxm_lto_openstudio.electric_panel_breaker_spaces_clothes_dryer_count,#,,,,Sum of clothes dryer occupied spaces
-319,,hpxm_lto_openstudio.electric_panel_breaker_spaces_cooling_count,#,,,,Sum of cooling system and heat pump cooling occupied spaces
-320,,hpxm_lto_openstudio.electric_panel_breaker_spaces_dishwasher_count,#,,,,Sum of dishwasher occupied spaces
-321,,hpxm_lto_openstudio.electric_panel_breaker_spaces_electric_vehicle_charging_count,#,,,,Sum of electric vehicle charging occupied spaces
-322,,hpxm_lto_openstudio.electric_panel_breaker_spaces_heating_count,#,,,,Sum of heating system and heat pump heating occupied spaces
-323,,hpxm_lto_openstudio.electric_panel_breaker_spaces_hot_water_count,#,,,,Sum of water heating system occupied spaces
-324,,hpxm_lto_openstudio.electric_panel_breaker_spaces_mech_vent_count,#,,,,Sum of mechanical ventilation occupied spaces
-325,,hpxm_lto_openstudio.electric_panel_breaker_spaces_other_count,#,,,,Sum of other occupied spaces
-326,,hpxm_lto_openstudio.electric_panel_breaker_spaces_permanent_spa_heater_count,#,,,,Sum of permanent spa heater occupied spaces
-327,,hpxm_lto_openstudio.electric_panel_breaker_spaces_permanent_spa_pump_count,#,,,,Sum of permanent spa pump occupied spaces
-328,,hpxm_lto_openstudio.electric_panel_breaker_spaces_pool_heater_count,#,,,,Sum of pool heater occupied spaces
-329,,hpxm_lto_openstudio.electric_panel_breaker_spaces_pool_pump_count,#,,,,Sum of pool pump occupied spaces
-330,,hpxm_lto_openstudio.electric_panel_breaker_spaces_range_oven_count,#,,,,Sum of range/oven occupied spaces
-331,,hpxm_lto_openstudio.electric_panel_breaker_spaces_well_pump_count,#,,,,Sum of well pump occupied spaces
-332,,hpxm_lto_openstudio.electric_panel_breaker_spaces_headroom_count,#,,,,Total rated spaces minus occupied spaces
-333,,hpxm_lto_openstudio.electric_panel_breaker_spaces_occupied_count,#,,,,Total number of occupied spaces on the panel
-334,,hpxm_lto_openstudio.electric_panel_breaker_spaces_total_count,#,,,,Total rated number of spaces on the panel
-335,,hpxm_lto_openstudio.electric_panel_load_clothes_dryer_w,W,,,,Sum of clothes dryer demand loads
-336,,hpxm_lto_openstudio.electric_panel_load_cooling_w,W,,,,Sum of cooling system and heat pump cooling demand loads
-337,,hpxm_lto_openstudio.electric_panel_load_dishwasher_w,W,,,,Sum of dishwasher demand loads
-338,,hpxm_lto_openstudio.electric_panel_load_electric_vehicle_charging_w,W,,,,Sum of electric vehicle charging demand loads
-339,,hpxm_lto_openstudio.electric_panel_load_heating_w,W,,,,Sum of heating system and heat pump heating demand loads
-340,,hpxm_lto_openstudio.electric_panel_load_hot_water_w,W,,,,Sum of water heating system demand loads
-341,,hpxm_lto_openstudio.electric_panel_load_mech_vent_w,W,,,,Sum of mechanical ventilation demand loads
-342,,hpxm_lto_openstudio.electric_panel_load_other_w,W,,,,Sum of other demand loads
-343,,hpxm_lto_openstudio.electric_panel_load_permanent_spa_heater_w,W,,,,Sum of permanent spa heater demand loads
-344,,hpxm_lto_openstudio.electric_panel_load_permanent_spa_pump_w,W,,,,Sum of permanent spa pump demand loads
-345,,hpxm_lto_openstudio.electric_panel_load_pool_heater_w,W,,,,Sum of pool heater demand loads
-346,,hpxm_lto_openstudio.electric_panel_load_pool_pump_w,W,,,,Sum of pool pump demand loads
-347,,hpxm_lto_openstudio.electric_panel_load_range_oven_w,W,,,,Sum of range/oven demand loads
-348,,hpxm_lto_openstudio.electric_panel_load_well_pump_w,W,,,,Sum of well pump demand loads
-349,,hpxm_lto_openstudio.electric_panel_load_<type>_headroom_capacity_a,A,,,,Panel max current rating (A) minus Total Capacity (A)
-350,,hpxm_lto_openstudio.electric_panel_load_<type>_total_capacity_a,A,,,,Total Load (W) divided by panel voltage
-351,,hpxm_lto_openstudio.electric_panel_load_<type>_total_load_w,W,,,,Calculated NEC demand load capacity
+318,,report_simulation_output.electric_panel_breaker_spaces_clothes_dryer_count,#,,,,Sum of clothes dryer occupied spaces
+319,,report_simulation_output.electric_panel_breaker_spaces_cooling_count,#,,,,Sum of cooling system and heat pump cooling occupied spaces
+320,,report_simulation_output.electric_panel_breaker_spaces_dishwasher_count,#,,,,Sum of dishwasher occupied spaces
+321,,report_simulation_output.electric_panel_breaker_spaces_electric_vehicle_charging_count,#,,,,Sum of electric vehicle charging occupied spaces
+322,,report_simulation_output.electric_panel_breaker_spaces_heating_count,#,,,,Sum of heating system and heat pump heating occupied spaces
+323,,report_simulation_output.electric_panel_breaker_spaces_hot_water_count,#,,,,Sum of water heating system occupied spaces
+324,,report_simulation_output.electric_panel_breaker_spaces_mech_vent_count,#,,,,Sum of mechanical ventilation occupied spaces
+325,,report_simulation_output.electric_panel_breaker_spaces_other_count,#,,,,Sum of other occupied spaces
+326,,report_simulation_output.electric_panel_breaker_spaces_permanent_spa_heater_count,#,,,,Sum of permanent spa heater occupied spaces
+327,,report_simulation_output.electric_panel_breaker_spaces_permanent_spa_pump_count,#,,,,Sum of permanent spa pump occupied spaces
+328,,report_simulation_output.electric_panel_breaker_spaces_pool_heater_count,#,,,,Sum of pool heater occupied spaces
+329,,report_simulation_output.electric_panel_breaker_spaces_pool_pump_count,#,,,,Sum of pool pump occupied spaces
+330,,report_simulation_output.electric_panel_breaker_spaces_range_oven_count,#,,,,Sum of range/oven occupied spaces
+331,,report_simulation_output.electric_panel_breaker_spaces_well_pump_count,#,,,,Sum of well pump occupied spaces
+332,,report_simulation_output.electric_panel_breaker_spaces_headroom_count,#,,,,Total rated spaces minus occupied spaces
+333,,report_simulation_output.electric_panel_breaker_spaces_occupied_count,#,,,,Total number of occupied spaces on the panel
+334,,report_simulation_output.electric_panel_breaker_spaces_total_count,#,,,,Total rated number of spaces on the panel
+335,,report_simulation_output.electric_panel_load_clothes_dryer_w,W,,,,Sum of clothes dryer demand loads
+336,,report_simulation_output.electric_panel_load_cooling_w,W,,,,Sum of cooling system and heat pump cooling demand loads
+337,,report_simulation_output.electric_panel_load_dishwasher_w,W,,,,Sum of dishwasher demand loads
+338,,report_simulation_output.electric_panel_load_electric_vehicle_charging_w,W,,,,Sum of electric vehicle charging demand loads
+339,,report_simulation_output.electric_panel_load_heating_w,W,,,,Sum of heating system and heat pump heating demand loads
+340,,report_simulation_output.electric_panel_load_hot_water_w,W,,,,Sum of water heating system demand loads
+341,,report_simulation_output.electric_panel_load_mech_vent_w,W,,,,Sum of mechanical ventilation demand loads
+342,,report_simulation_output.electric_panel_load_other_w,W,,,,Sum of other demand loads
+343,,report_simulation_output.electric_panel_load_permanent_spa_heater_w,W,,,,Sum of permanent spa heater demand loads
+344,,report_simulation_output.electric_panel_load_permanent_spa_pump_w,W,,,,Sum of permanent spa pump demand loads
+345,,report_simulation_output.electric_panel_load_pool_heater_w,W,,,,Sum of pool heater demand loads
+346,,report_simulation_output.electric_panel_load_pool_pump_w,W,,,,Sum of pool pump demand loads
+347,,report_simulation_output.electric_panel_load_range_oven_w,W,,,,Sum of range/oven demand loads
+348,,report_simulation_output.electric_panel_load_well_pump_w,W,,,,Sum of well pump demand loads
+349,,report_simulation_output.electric_panel_load_<type>_headroom_capacity_a,A,,,,Panel max current rating (A) minus Total Capacity (A)
+350,,report_simulation_output.electric_panel_load_<type>_total_capacity_a,A,,,,Total Load (W) divided by panel voltage
+351,,report_simulation_output.electric_panel_load_<type>_total_load_w,W,,,,Calculated NEC demand load capacity
 352,354,report_utility_bills.<scenario_name>_coal_energy_usd,$,,,,Scenario annual energy charges for coal.
 353,354,report_utility_bills.<scenario_name>_coal_fixed_usd,$,,,,Scenario annual fixed charges for coal.
 354,428,report_utility_bills.<scenario_name>_coal_total_usd,$,,,,Scenario annual total charges for coal.
