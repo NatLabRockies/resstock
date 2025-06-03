@@ -39359,6 +39359,12 @@ Arguments
      - String
      -
      - Whether the heating system has a flue or chimney.
+   * - ``heat_pump_sizing_is_duct_limited``
+     - false
+     - 
+     - Boolean
+     - true, false
+     - Whether the heat pump has upper limits for autosized capacities and an adjusted the blower fan efficiency. This argument is only applicable for heat pump upgrades.
 
 Options
 *******
@@ -39416,6 +39422,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``geothermal_loop_pipe_type``
      - ``geothermal_loop_pipe_diameter``
      - ``heating_system_has_flue_or_chimney``
+     - ``heat_pump_sizing_is_duct_limited``
 
    * - ASHP, SEER 10, 6.2 HSPF
      - 0.72%
@@ -39463,6 +39470,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - ASHP, SEER 13, 7.7 HSPF
      - 7.4%
      - 
@@ -39509,6 +39517,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - ASHP, SEER 15, 8.5 HSPF
      - 7.2%
      - 
@@ -39555,6 +39564,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Electric Baseboard, 100% Efficiency
      - 6.3%
      - 
@@ -39601,6 +39611,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Electric Boiler, 100% AFUE
      - 0.21%
      - 
@@ -39647,6 +39658,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Electric Furnace, 100% AFUE
      - 11%
      - 
@@ -39693,6 +39705,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Electric Wall Furnace, 100% AFUE
      - 1.1%
      - 
@@ -39739,6 +39752,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Fuel Boiler, 76% AFUE
      - 0.89%
      - 
@@ -39785,6 +39799,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Fuel Boiler, 80% AFUE
      - 3.3%
      - 
@@ -39831,6 +39846,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Fuel Boiler, 90% AFUE
      - 0.49%
      - 
@@ -39877,6 +39893,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Fuel Furnace, 60% AFUE
      - 0.49%
      - 
@@ -39923,6 +39940,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Fuel Furnace, 76% AFUE
      - 2.8%
      - 
@@ -39969,6 +39987,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Fuel Furnace, 80% AFUE
      - 25%
      - 
@@ -40015,6 +40034,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Fuel Furnace, 92.5% AFUE
      - 15%
      - 
@@ -40061,6 +40081,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Fuel Wall/Floor Furnace, 60% AFUE
      - 3.2%
      - 
@@ -40107,6 +40128,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Fuel Wall/Floor Furnace, 68% AFUE
      - 2.8%
      - 
@@ -40153,6 +40175,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - MSHP, SEER 14.5, 8.2 HSPF
      - 0.96%
      - 
@@ -40199,6 +40222,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - MSHP, SEER 29.3, 14 HSPF
      - 0.015%
      - 
@@ -40245,6 +40269,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - None
      - 1.1%
      - 
@@ -40291,6 +40316,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
+     - false
    * - Shared Heating
      - 9.6%
      - 
@@ -40337,8 +40363,10 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - 
      - 
+     - 
    * - Void
      - 0%
+     - 
      - 
      - 
      - 
