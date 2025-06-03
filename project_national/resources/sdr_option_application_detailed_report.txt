@@ -1,6 +1,6 @@
---------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'ENERGY STAR heat pump with elec backup', Option1:'HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF'
---------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade1:'ENERGY STAR heat pump with elec backup', Option1:'HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Duct Limited'
+----------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
   not => 489600 (89.0%)
@@ -377,57 +377,15 @@ and => 530447 (96.4%)
 Overall applied to => 530447 (96.4%).
 -------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'ENERGY STAR heat pump with elec backup', Option12:'HVAC Distribution|Use Duct Restriction'
-------------------------------------------------------------------------------------------------------------------------------
-and => 326229 (59.3%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 402412 (73.2%)
-    or => 147588 (26.8%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-      HVAC Heating Efficiency|ASHP, SEER 10, 6.2 HSPF => 4077 (0.7%)
-      HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF => 42004 (7.6%)
-      HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF => 41107 (7.5%)
----------------------------------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 321671 (58.5%).
--------------------------------------
-
 All of the options (and-ing) were applied to: 0 (0.0%)
 Any of the options (or-ing) were applied to: 530447 (96.4%)
 --------------------------------------------------------------------------------
-Report of how the 10 options were applied to the buildings.
+Report of how the 9 options were applied to the buildings.
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================================================+=====================+==================+==================+
-|                   3 | hvac heating efficiency, hvac cooling efficiency,  | 87188 (15.9%)       | 87188 (15.9%)    | 87188 (15.9%)    |
+|                   3 | hvac heating efficiency, hvac cooling efficiency,  | 408859 (74.3%)      | 408859 (74.3%)   | 408859 (74.3%)   |
 |                     | hvac cooling partial space conditioning            |                     |                  |                  |
-+---------------------+----------------------------------------------------+---------------------+------------------+------------------+
-|                   4 | hvac heating efficiency, hvac cooling efficiency,  | 321671 (58.5%)      | 321671 (58.5%)   | 408859 (74.3%)   |
-|                     | hvac cooling partial space conditioning, hvac      |                     |                  |                  |
-|                     | distribution                                       |                     |                  |                  |
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 |                   9 | hvac heating efficiency, cooling setpoint has      | 121588 (22.1%)      | 121588 (22.1%)   | 530447 (96.4%)   |
 |                     | offset, cooling setpoint offset magnitude, cooling |                     |                  |                  |
@@ -437,13 +395,11 @@ Report of how the 10 options were applied to the buildings.
 |                     | hvac cooling partial space conditioning            |                     |                  |                  |
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
-Detailed report of how the 12 options were applied to the buildings.
+Detailed report of how the 11 options were applied to the buildings.
 +---------------------+----------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options            | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+============================+=====================+==================+==================+
-|                   3 | 1, 10, 11                  | 87188 (15.9%)       | 87188 (15.9%)    | 87188 (15.9%)    |
-+---------------------+----------------------------+---------------------+------------------+------------------+
-|                   4 | 1, 10, 11, 12              | 321671 (58.5%)      | 321671 (58.5%)   | 408859 (74.3%)   |
+|                   3 | 1, 10, 11                  | 408859 (74.3%)      | 408859 (74.3%)   | 408859 (74.3%)   |
 +---------------------+----------------------------+---------------------+------------------+------------------+
 |                   9 | 2, 3, 4, 5, 6, 7, 8, 9, 11 | 121588 (22.1%)      | 121588 (22.1%)   | 530447 (96.4%)   |
 +---------------------+----------------------------+---------------------+------------------+------------------+
