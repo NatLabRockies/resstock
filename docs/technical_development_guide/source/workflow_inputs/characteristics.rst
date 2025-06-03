@@ -39364,7 +39364,7 @@ Arguments
      - 
      - Boolean
      - true, false
-     - Whether the heat pump has upper limits for autosized capacities and an adjusted the blower fan efficiency. This argument is only applicable for heat pump upgrades.
+     - Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.
 
 Options
 *******
