@@ -419,14 +419,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
 
     return unless args[:register_annual_bills]
 
-    results_out.each do |name, value|
-      next if name.nil? || value.nil?
-
-      name = OpenStudio::toUnderscoreCase(name).chomp('_')
-
-      runner.registerValue(name, value)
-      runner.registerInfo("Registering #{value} for #{name}.")
-    end
+    Outputs.register_results_out_to_runner(runner, results_out)
   end
 
   # Get monthly utility bill data from the utility_bills Hash.
