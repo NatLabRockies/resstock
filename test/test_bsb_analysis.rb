@@ -58,11 +58,21 @@ class TestBuildStockBatch < Minitest::Test
     actual_input_names = actual_outputs.headers - expected_annual_names
 
     extra_input_arguments = actual_input_names - expected_input_names
-    puts "extra input arguments: #{extra_input_arguments}" if !extra_input_arguments.empty?
+    if !extra_input_arguments.empty?
+      puts "extra input arguments:"
+      extra_input_arguments.sort.each do |extra_input_argument|
+        puts "\t- #{extra_input_argument}"
+      end
+    end
     assert_equal(0, extra_input_arguments.size)
 
     missing_input_arguments = expected_input_names - actual_input_names
-    puts "missing input arguments: #{missing_input_arguments}" if !missing_input_arguments.empty?
+    if !missing_input_arguments.empty?
+      puts "missing input arguments:"
+      missing_input_arguments.sort.each do |missing_input_argument|
+        puts "\t- #{missing_input_argument}"
+      end
+    end
     # assert_equal(0, missing_input_arguments.size) # Allow missing input arguments for the testing project (e.g., build_existing_model.ahs_region, build_existing_model.aiannh_area).
   end
 
@@ -74,11 +84,21 @@ class TestBuildStockBatch < Minitest::Test
     actual_input_names = actual_outputs.headers - expected_annual_names
 
     extra_input_arguments = actual_input_names - expected_input_names
-    puts "extra input arguments: #{extra_input_arguments}" if !extra_input_arguments.empty?
+    if !extra_input_arguments.empty?
+      puts "extra input arguments:"
+      extra_input_arguments.sort.each do |extra_input_argument|
+        puts "\t- #{extra_input_argument}"
+      end
+    end
     assert_equal(0, extra_input_arguments.size)
 
     missing_input_arguments = expected_input_names - actual_input_names
-    puts "missing input arguments: #{missing_input_arguments}" if !missing_input_arguments.empty?
+    if !missing_input_arguments.empty?
+      puts "missing input arguments:"
+      missing_input_arguments.sort.each do |missing_input_argument|
+        puts "\t- #{missing_input_argument}"
+      end
+    end
     assert_equal(0, missing_input_arguments.size)
   end
 
@@ -93,12 +113,22 @@ class TestBuildStockBatch < Minitest::Test
     actual_annual_names = actual_outputs.headers - expected_input_names
 
     extra_annual_outputs = actual_annual_names - expected_annual_names
-    puts "extra annual outputs: #{extra_annual_outputs}" if !extra_annual_outputs.empty?
+    if !extra_annual_outputs.empty?
+      puts "extra annual outputs:"
+      extra_annual_outputs.sort.each do |extra_annual_output|
+        puts "\t- #{extra_annual_output}"
+      end
+    end
     assert_equal(0, extra_annual_outputs.size)
 
     missing_annual_outputs = expected_annual_names - actual_annual_names
-    puts "missing annual outputs: #{missing_annual_outputs}" if !missing_annual_outputs.empty?
-    assert_equal(0, missing_annual_outputs.size) # Allow missing annual outputs for the testing project.
+    if !missing_annual_outputs.empty?
+      puts "missing annual outputs:"
+      missing_annual_outputs.sort.each do |missing_annual_output|
+        puts "\t- #{missing_annual_output}"
+      end
+    end
+    assert_equal(0, missing_annual_outputs.size)
 
     tol = 0.001
     sums_to_indexes = @expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
@@ -126,12 +156,22 @@ class TestBuildStockBatch < Minitest::Test
     actual_annual_names = actual_outputs.headers - expected_input_names
 
     extra_annual_outputs = actual_annual_names - expected_annual_names
-    puts "extra annual outputs: #{extra_annual_outputs}" if !extra_annual_outputs.empty?
+    if !extra_annual_outputs.empty?
+      puts "extra annual outputs:"
+      extra_annual_outputs.sort.each do |extra_annual_output|
+        puts "\t- #{extra_annual_output}"
+      end
+    end
     assert_equal(0, extra_annual_outputs.size)
 
     missing_annual_outputs = expected_annual_names - actual_annual_names
-    puts "missing annual outputs: #{missing_annual_outputs}" if !missing_annual_outputs.empty?
-    # assert_equal(0, missing_annual_outputs.size) # Allow missing annual outputs for the national project (e.g., report_simulation_output.component_load_cooling_ceilings_m_btu, report_simulation_output.component_load_cooling_doors_m_btu).
+    if !missing_annual_outputs.empty?
+      puts "missing annual outputs:"
+      missing_annual_outputs.sort.each do |missing_annual_output|
+        puts "\t- #{missing_annual_output}"
+      end
+    end
+    # assert_equal(0, missing_annual_outputs.size) # Allow missing annual outputs for the national project (e.g., component loads, monthly bills).
 
     tol = 0.001
     sums_to_indexes = @expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
@@ -162,12 +202,22 @@ class TestBuildStockBatch < Minitest::Test
 
     extra_timeseries_outputs = actual_timeseries_names - expected_timeseries_names
     extra_timeseries_outputs -= ['PROJECT']
-    puts "extra timeseries outputs: #{extra_timeseries_outputs}" if !extra_timeseries_outputs.empty?
+    if !extra_timeseries_outputs.empty?
+      puts "extra timeseries outputs:"
+      extra_timeseries_outputs.sort.each do |extra_timeseries_output|
+        puts "\t- #{extra_timeseries_output}"
+      end
+    end
     assert_equal(0, extra_timeseries_outputs.size)
 
     missing_timeseries_outputs = expected_timeseries_names - actual_timeseries_names
-    puts "missing timeseries outputs: #{missing_timeseries_outputs}" if !missing_timeseries_outputs.empty?
-    assert_equal(0, missing_timeseries_outputs.size) # Allow missing timeseries outputs for the national project.
+    if !missing_timeseries_outputs.empty?
+      puts "missing timeseries outputs:"
+      missing_timeseries_outputs.sort.each do |missing_timeseries_output|
+        puts "\t- #{missing_timeseries_output}"
+      end
+    end
+    # assert_equal(0, missing_timeseries_outputs.size) # Allow missing timeseries outputs for the national project (e.g., Component Load: Cooling: Skylights Conduction, Fuel Use: Wood Pellets: Total).
 
     tol = 0.001
     sums_to_indexes = @expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
@@ -206,12 +256,22 @@ class TestBuildStockBatch < Minitest::Test
 
     extra_timeseries_outputs = actual_timeseries_names - expected_timeseries_names
     extra_timeseries_outputs -= ['PROJECT']
-    puts "extra timeseries outputs: #{extra_timeseries_outputs}" if !extra_timeseries_outputs.empty?
+    if !extra_timeseries_outputs.empty?
+      puts "extra timeseries outputs:"
+      extra_timeseries_outputs.sort.each do |extra_timeseries_output|
+        puts "\t- #{extra_timeseries_output}"
+      end
+    end
     assert_equal(0, extra_timeseries_outputs.size)
 
     missing_timeseries_outputs = expected_timeseries_names - actual_timeseries_names
-    puts "missing timeseries outputs: #{missing_timeseries_outputs}" if !missing_timeseries_outputs.empty?
-    assert_equal(0, missing_timeseries_outputs.size) # Allow missing timeseries outputs for the national project.
+    if !missing_timeseries_outputs.empty?
+      puts "missing timeseries outputs:"
+      missing_timeseries_outputs.sort.each do |missing_timeseries_output|
+        puts "\t- #{missing_timeseries_output}"
+      end
+    end
+    # assert_equal(0, missing_timeseries_outputs.size) # Allow missing timeseries outputs for the national project (e.g., component_load__cooling__skylights_conduction__kbtu, fuel_use__wood_pellets__total__kbtu).
 
     tol = 0.001
     sums_to_indexes = @expected_outputs['Sums To'].select { |n| !n.nil? }.uniq
