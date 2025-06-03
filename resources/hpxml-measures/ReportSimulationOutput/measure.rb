@@ -1726,11 +1726,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     runner.registerInfo("Wrote annual output results to #{annual_output_path}.")
 
     # Electric panel
-    if (not @hpxml_header.service_feeders_load_calculation_types.empty?) &&
-       (@hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.electric_panels.size }.sum > 0)
-    
-      results_out += Outputs.get_panel_results(@hpxml_header, @hpxml_bldgs)
-    end
+    results_out += Outputs.get_panel_results(@hpxml_header, @hpxml_bldgs)
 
     Outputs.register_results_out_to_runner(runner, results_out)
   end

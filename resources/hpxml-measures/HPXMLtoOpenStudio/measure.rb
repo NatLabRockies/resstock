@@ -169,14 +169,9 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
       Outputs.append_sizing_results(hpxml.buildings, annual_results_out)
       Outputs.write_results_out_to_file(annual_results_out, args[:output_format], args[:annual_output_file_path])
 
-      # Write electric panel output file
-      # Currently, we only write this if:
-      # (1) at least one load calculation type is specified
-      # (2) an electric panel is specified
-      if (not hpxml.header.service_feeders_load_calculation_types.empty?) &&
-         (hpxml.buildings.map { |hpxml_bldg| hpxml_bldg.electric_panels.size }.sum > 0)
-        electric_panel_results_out = Outputs.get_panel_results(hpxml.header, hpxml.buildings)
-
+      # Write electric panel output file as needed
+      electric_panel_results_out = Outputs.get_panel_results(hpxml.header, hpxml.buildings)
+      if not electric_panel_results_out.empty?
         Outputs.write_results_out_to_file(electric_panel_results_out, args[:output_format], args[:electric_panel_output_file_path])
       end
 
