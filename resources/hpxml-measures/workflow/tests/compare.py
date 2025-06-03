@@ -198,8 +198,7 @@ class BaseCompare:
             for col in cols[:]:
                 for col_to_ignore in cols_to_ignore:
                     if col_to_ignore in col:
-                        if col in cols:
-                            cols.remove(col)
+                        cols.remove(col)
             return cols
 
         for file in sorted(files):

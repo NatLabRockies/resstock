@@ -151,7 +151,6 @@ jobs:
           fi
 
   analysis-tests:
-    if: false
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     container:
@@ -208,7 +207,6 @@ jobs:
           if-no-files-found: error
 
   integration-tests:
-    if: false
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     steps:
@@ -643,7 +641,6 @@ jobs:
           fi
 
       - name: Commit the integration tests results
-        if: false
         run: |
           branch_name="${{ github.head_ref }}"
           git pull origin $branch_name
