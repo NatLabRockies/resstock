@@ -170,8 +170,10 @@ The following arguments are always set to ``auto'' for all systems:
 The \texttt{heating\_system\_fraction\_heat\_load\_served}, \texttt{heat\_pump\_fraction\_heat\_load\_served}, \texttt{heat\_pump\_fraction\_cool\_load\_served}, and \texttt{heat\_pump\_backup\_heating\_efficiency} arguments are always set to 1 for all systems. 
 
 The \texttt{heat\_pump\_heating\_efficiency\_type} is always HSPF (Heating Seasonal Performance Factor) for all systems. The \texttt{heat\_pump\_cooling\_efficiency\_type} is always SEER (Seasonal Energy Efficiency Ratio) for all systems.
-The \texttt{heat\_pump\_backup\_sizing\_methodology} is always ACCA (Air Conditioning
-Contractors of America) for all systems in the ResStock baseline.
+The \texttt{heat\_pump\_sizing\_methodology} is always ACCA (Air Conditioning Contractors of America) for all systems in the ResStock baseline.
+
+The \texttt{heat\_pump\_backup\_use\_existing\_system} and \texttt{heat\_pump\_sizing\_is\_duct\_limited} arguments are applicable for heat pump upgrades only.
+They are not used in baseline models.
 
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{2.4cm}|p{5cm}| }
 {The ResStock argument definitions set in the HVAC Heating Efficiency characteristic} {table:hc_arg_def_ht_eff} 
@@ -327,9 +329,17 @@ temperature (for, e.g., a dual-fuel heat pump). Applies for both Backup
 Type of \textquotesingle integrated\textquotesingle{} and
 \textquotesingle separate\textquotesingle.  \\
 \hline
+\texttt{heat\_pump\_backup\_use\_existing\_system} & false & & Boolean & true, false
+& Whether the heat pump uses the existing system as backup.
+This argument is only applicable for heat pump upgrades.  \\
+\hline
 \texttt{heat\_pump\_sizing\_methodology} & false & & Choice & auto,
 ACCA, HERS, MaxLoad & The auto-sizing methodology to use when the heat
 pump capacity is not provided.  \\
+\hline
+\texttt{heat\_pump\_sizing\_is\_duct\_limited} & false & & Boolean & true, false
+& Whether the heat pump has upper limits for autosized capacities and an adjusted the blower fan efficiency.
+This argument is only applicable for heat pump upgrades.  \\
 \hline
 \texttt{heat\_pump\_backup\_sizing\_methodology} & false & & Choice &
 auto, emergency, supplemental & The auto-sizing methodology to use when
