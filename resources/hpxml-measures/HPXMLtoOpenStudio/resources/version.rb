@@ -4,7 +4,7 @@
 module Version
   OS_HPXML_Version = '1.10.0' # Version of the OS-HPXML workflow
   OS_Version = '3.10.0' # Required version of OpenStudio (can be 'X.X' or 'X.X.X')
-  HPXML_Version = '4.0' # HPXML schemaVersion
+  HPXML_Version = '4.2' # HPXML schemaVersion
 
   # Checks whether the version of OpenStudio that is running OpenStudio-HPXML
   # meets the version requirements; throws an error if not.

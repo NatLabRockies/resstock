@@ -1059,7 +1059,10 @@ module Waterheater
 
     e_cap = UnitConversions.convert(water_heating_system.backup_heating_capacity, 'Btu/hr', 'W') # W
     parasitics = 3.0 # W
-    # Based on Ecotope lab testing of most recent AO Smith HPWHs (series HPTU)
+    # Based on Ecotope lab testing of AO Smith HPWHs (series HPTU), see 2015 report:
+    # https://neea.org/img/documents/hpwh-lab-report_ao-smith_hptu_12-09-2015.pdf.
+    # More recent products do not show much change to UA values, see 2021 report:
+    # https://neea.org/img/documents/Laboratory-Assessment-of-Rheem-Generation-5-Series-HPWH.pdf.
     if water_heating_system.tank_volume <= 58.0
       tank_ua = 3.6 # Btu/hr-F
     elsif water_heating_system.tank_volume <= 73.0
@@ -1439,17 +1442,17 @@ module Waterheater
 
       # Calculate areas for tank w/o unit multiplier
       tank_a, side_a = calc_tank_areas(vol_tank / unit_multiplier, h_tank)
-      a_top = (tank_a - side_a) / 2.0
+      top_a = (tank_a - side_a) / 2.0
       num_nodes = tank.numberofNodes
 
       # Calculate desired UA for each node
       for node_num in 0..num_nodes - 1
         # These node area calculations are based on the E+ WaterThermalTankData::SetupStratifiedNodes() method
-        a_node = side_a / num_nodes
+        node_a = side_a / num_nodes
         if (node_num == 0) || (node_num == num_nodes - 1) # Top or bottom node
-          a_node += a_top
+          node_a += top_a
         end
-        node_ua[node_num] = UnitConversions.convert(tank_u.to_f, 'Btu/(hr*ft^2*F)', 'W/(m^2*K)') * UnitConversions.convert(a_node, 'ft^2', 'm^2') * unit_multiplier
+        node_ua[node_num] = UnitConversions.convert(tank_u.to_f, 'Btu/(hr*ft^2*F)', 'W/(m^2*K)') * UnitConversions.convert(node_a, 'ft^2', 'm^2') * unit_multiplier
       end
     end
 
@@ -1825,7 +1828,7 @@ module Waterheater
   #   Source: Burch and Erickson 2004 - http://www.nrel.gov/docs/gen/fy04/36035.pdf
   # IF using UEF:
   #   Calculations based on the Uniform Energy Factor, First Hour Rating, and Recovery Efficiency of the tank
-  #   Source: Maguire and Roberts 2020 - https://www.ashrae.org/file%20library/conferences/specialty%20conferences/2020%20building%20performance/papers/d-bsc20-c039.pdf
+  #   Source: Maguire and Roberts 2020 - https://www.nrel.gov/docs/fy21osti/71633.pdf
   #
   # @param act_vol [Double] Actual tank volume (gal)
   # @param water_heating_system [HPXML::WaterHeatingSystem] The HPXML water heating system of interest
@@ -1880,7 +1883,9 @@ module Waterheater
         if not water_heating_system.energy_factor.nil?
           ua = q_load * (1.0 / water_heating_system.energy_factor - 1.0) / ((t - t_env) * 24.0)
         elsif not water_heating_system.uniform_energy_factor.nil?
-          ua = q_load * (1.0 / water_heating_system.uniform_energy_factor - 1.0) / ((24.0 * (t - t_env)) * (0.8 + 0.2 * ((t_in - t_env) / (t - t_env))))
+          f_low = 0.2 # Assumed fraction of water volume below lower element, assumed to be unheated
+          f_high = 1.0 - f_low # Fraction of water volume above lower element
+          ua = q_load * (1.0 / water_heating_system.uniform_energy_factor - 1.0) / ((24.0 * (t - t_env)) * (f_high + f_low * ((t_in - t_env) / (t - t_env))))
         end
         eta_c = 1.0
       end

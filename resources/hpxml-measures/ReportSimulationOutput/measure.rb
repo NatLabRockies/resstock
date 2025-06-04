@@ -132,12 +132,6 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_panel_summary', false)
-    arg.setDisplayName('Generate Annual Output: Electric Panel Summary')
-    arg.setDescription('Generates electric panel breaker spaces and loads.')
-    arg.setDefaultValue(true)
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_resilience', false)
     arg.setDisplayName('Generate Annual Output: Resilience')
     arg.setDescription('Generates annual resilience outputs.')
@@ -291,11 +285,6 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('annual_output_file_name', false)
     arg.setDisplayName('Annual Output File Name')
     arg.setDescription("If not provided, defaults to 'results_annual.csv' (or 'results_annual.json' or 'results_annual.msgpack').")
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('electric_panel_output_file_name', false)
-    arg.setDisplayName('Electric Panel Output File Name')
-    arg.setDescription("If not provided, defaults to 'results_panel.csv' (or 'results_panel.json' or 'results_panel.msgpack').")
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('timeseries_output_file_name', false)
@@ -641,11 +630,6 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     else
       annual_output_path = File.join(output_dir, "results_annual.#{args[:output_format]}")
     end
-    if not args[:electric_panel_output_file_name].nil?
-      electric_panel_output_path = File.join(output_dir, args[:electric_panel_output_file_name])
-    else
-      electric_panel_output_path = File.join(output_dir, "results_panel.#{args[:output_format]}")
-    end
     if not args[:timeseries_output_file_name].nil?
       timeseries_output_path = File.join(output_dir, args[:timeseries_output_file_name])
     else
@@ -664,7 +648,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     end
 
     # Write/report results
-    report_runperiod_output_results(runner, args, annual_output_path, electric_panel_output_path)
+    report_runperiod_output_results(runner, args, annual_output_path)
     report_timeseries_output_results(runner, timeseries_output_path, args)
 
     return true
@@ -948,7 +932,6 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
       end
     end
 
-    fuel_types = @fuels.keys.map { |fuel_type, _total_or_net| fuel_type }.uniq
     @hpxml_bldgs.each do |hpxml_bldg|
       # Apply Heating/Cooling DSEs
       (hpxml_bldg.heating_systems + hpxml_bldg.heat_pumps).each do |htg_system|
@@ -958,7 +941,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         next if htg_system.distribution_system.annual_heating_dse.nil?
 
         dse = htg_system.distribution_system.annual_heating_dse
-        fuel_types.each do |fuel_type|
+        @unique_fuel_types.each do |fuel_type|
           [EUT::Heating, EUT::HeatingHeatPumpBackup, EUT::HeatingFanPump, EUT::HeatingHeatPumpBackupFanPump].each do |end_use_type|
             end_use = @end_uses[[fuel_type, end_use_type]]
             next if end_use.nil?
@@ -976,7 +959,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         next if clg_system.distribution_system.annual_cooling_dse.nil?
 
         dse = clg_system.distribution_system.annual_cooling_dse
-        fuel_types.each do |fuel_type|
+        @unique_fuel_types.each do |fuel_type|
           [EUT::Cooling, EUT::CoolingFanPump].each do |end_use_type|
             end_use = @end_uses[[fuel_type, end_use_type]]
             next if end_use.nil?
@@ -1528,9 +1511,8 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     end
 
     # Check sum of end use outputs match fuel outputs from meters
-    @fuels.keys.each do |fuel_type, total_or_net|
-      next if fuel_type == FT::Elec && total_or_net == TE::Total # Use net electricity, not total electricity
-
+    @unique_fuel_types.each do |fuel_type|
+      total_or_net = (fuel_type == FT::Elec ? TE::Net : TE::Total)
       sum_categories = @end_uses.select { |k, _eu| k[0] == fuel_type }.map { |_k, eu| eu.annual_output.to_f }.sum(0.0)
       meter_fuel_total = @fuels[[fuel_type, total_or_net]].annual_output.to_f
 
@@ -1587,9 +1569,8 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param args [Hash] Map of :argument_name => value
   # @param annual_output_path [String] Path for the output file
-  # @param electric_panel_output_path [String] TODO
   # @return [nil]
-  def report_runperiod_output_results(runner, args, annual_output_path, electric_panel_output_path)
+  def report_runperiod_output_results(runner, args, annual_output_path)
     # Set rounding precision for run period (e.g., annual) outputs.
     if args[:output_format] == 'msgpack'
       # No need to round; no file size penalty to storing full precision
@@ -1643,44 +1624,36 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     end
 
     # Total Emissions
-    if args[:include_annual_emissions]
-      if not @emissions.empty?
-        @emissions.each do |_scenario_key, emission|
-          results_out << ["#{emission.name}: Total (#{emission.annual_units})", emission.annual_output.to_f.round(n_digits - 1)]
-          results_out << ["#{emission.name}: Net (#{emission.annual_units})", emission.net_annual_output.to_f.round(n_digits - 1)]
-        end
-        results_out << [line_break]
+    if args[:include_annual_emissions] && (not @emissions.empty?)
+      @emissions.each do |_scenario_key, emission|
+        results_out << ["#{emission.name}: Total (#{emission.annual_units})", emission.annual_output.to_f.round(n_digits - 1)]
+        results_out << ["#{emission.name}: Net (#{emission.annual_units})", emission.net_annual_output.to_f.round(n_digits - 1)]
       end
+      results_out << [line_break]
     end
 
     # Fuel Emissions
-    if args[:include_annual_emission_fuels]
-      if not @emissions.empty?
-        @emissions.each do |_scenario_key, emission|
-          emission.annual_output_by_fuel.keys.each do |fuel_key|
-            fuel, emission_type = fuel_key
-            results_out << ["#{emission.name}: #{fuel}: #{emission_type} (#{emission.annual_units})", emission.annual_output_by_fuel[fuel_key].to_f.round(n_digits - 1)]
-          end
+    if args[:include_annual_emission_fuels] && (not @emissions.empty?)
+      @emissions.each do |_scenario_key, emission|
+        emission.annual_output_by_fuel.keys.each do |fuel_key|
+          fuel, emission_type = fuel_key
+          results_out << ["#{emission.name}: #{fuel}: #{emission_type} (#{emission.annual_units})", emission.annual_output_by_fuel[fuel_key].to_f.round(n_digits - 1)]
         end
-        results_out << [line_break]
       end
+      results_out << [line_break]
     end
 
     # End Use Emissions
-    if args[:include_annual_emission_end_uses]
-      if not @emissions.empty?
-        @emissions.each do |_scenario_key, emission|
-          @fuels.keys.each do |fuel, _total_or_net|
-            @end_uses.keys.each do |key|
-              fuel_type, end_use_type = key
-              next unless fuel_type == fuel
-
-              results_out << ["#{emission.name}: #{fuel_type}: #{end_use_type} (#{emission.annual_units})", emission.annual_output_by_end_use[key].to_f.round(n_digits - 1)]
-            end
+    if args[:include_annual_emission_end_uses] && (not @emissions.empty?)
+      @emissions.each do |_scenario_key, emission|
+        @unique_fuel_types.each do |fuel_type|
+          @end_uses.keys.select { |k| k[0] == fuel_type }.each do |key|
+            end_use_fuel_type, end_use_type = key
+            results_out << ["#{emission.name}: #{end_use_fuel_type}: #{end_use_type} (#{emission.annual_units})", emission.annual_output_by_end_use[key].to_f.round(n_digits - 1)]
           end
         end
-        results_out << [line_break]
       end
+      results_out << [line_break]
     end
 
     # Loads
@@ -1716,13 +1689,11 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     end
 
     # Component loads
-    if args[:include_annual_component_loads]
-      if @component_loads.values.map { |load| load.annual_output.to_f }.sum != 0 # Skip if component loads not calculated
-        @component_loads.each do |_load_type, load|
-          results_out << ["#{load.name} (#{load.annual_units})", load.annual_output.to_f.round(n_digits)]
-        end
-        results_out << [line_break]
+    if args[:include_annual_component_loads] && @component_loads.values.map { |load| load.annual_output.to_f }.sum != 0 # Skip if component loads not calculated
+      @component_loads.each do |_load_type, load|
+        results_out << ["#{load.name} (#{load.annual_units})", load.annual_output.to_f.round(n_digits)]
       end
+      results_out << [line_break]
     end
 
     # Hot water uses
@@ -1746,34 +1717,19 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
       results_out = Outputs.append_sizing_results(@hpxml_bldgs, results_out)
     end
 
+    # Check for duplicate results
+    results_data = results_out.select { |e| e != [line_break] }
+    if results_data.size != results_data.uniq.size
+      fail "Duplicate results found: #{results_data.select { |e| results_data.count(e) > 1 }.uniq}"
+    end
+
     Outputs.write_results_out_to_file(results_out, args[:output_format], annual_output_path)
     runner.registerInfo("Wrote annual output results to #{annual_output_path}.")
 
-    # Panel data
-    # Currently, we only write results_panel.csv if:
-    # (1) requested by this measure
-    # (2) at least one load calculation type is specified
-    # (3) an electric panel is specified
-    if args[:include_annual_panel_summary] &&
-       (not @hpxml_header.service_feeders_load_calculation_types.empty?) &&
-       (@hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.electric_panels.size }.sum > 0)
-      electric_panel_results_out = []
-      Outputs.append_panel_results(@hpxml_header, @hpxml_bldgs, electric_panel_results_out)
+    # Electric panel
+    results_out += Outputs.get_panel_results(@hpxml_header, @hpxml_bldgs)
 
-      Outputs.write_results_out_to_file(electric_panel_results_out, args[:output_format], electric_panel_output_path)
-      runner.registerInfo("Wrote panel output results to #{electric_panel_output_path}.")
-
-      results_out += electric_panel_results_out
-    end
-
-    results_out.each do |name, value|
-      next if name.nil? || value.nil?
-
-      name = OpenStudio::toUnderscoreCase(name).chomp('_')
-
-      runner.registerValue(name, value)
-      runner.registerInfo("Registering #{value} for #{name}.")
-    end
+    Outputs.register_results_out_to_runner(runner, results_out)
   end
 
   # Writes out timeseries results to an output file (CSV, JSON, etc.).
@@ -2729,6 +2685,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     @fuels[[FT::WoodCord, TE::Total]] = Fuel.new(meter: "#{EPlus::FuelTypeWoodCord}:Facility")
     @fuels[[FT::WoodPellets, TE::Total]] = Fuel.new(meter: "#{EPlus::FuelTypeWoodPellets}:Facility")
     @fuels[[FT::Coal, TE::Total]] = Fuel.new(meter: "#{EPlus::FuelTypeCoal}:Facility")
+    @unique_fuel_types = @fuels.keys.map { |k| k[0] }.uniq
 
     @fuels.each do |(fuel_type, total_or_net), fuel|
       if total_or_net == TE::Net

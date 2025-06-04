@@ -1006,7 +1006,7 @@ module Outputs
     htg, clg, hw, cd, dw, ov, vf, sh, sp, ph, pp, wp, ev, oth = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
     unit_multiplier = hpxml_bldg.building_construction.number_of_units
     hpxml_bldg.electric_panels.each do |electric_panel|
-      htg += ElectricPanel.get_panel_load_heating(hpxml_bldg, electric_panel) * unit_multiplier
+      htg += ElectricPanel.get_service_feeder_heating(hpxml_bldg, electric_panel) * unit_multiplier
       electric_panel.service_feeders.each do |service_feeder|
         if service_feeder.type == HPXML::ElectricPanelLoadTypeCooling
           clg += service_feeder.power * unit_multiplier
@@ -1306,12 +1306,22 @@ module Outputs
     return results_out
   end
 
-  # Appends electric panel results to the provided array for use in writing output files.
+  # Returns electric panel results for use in writing output files.
   #
   # @param hpxml_bldgs [Array<HPXML::Building>] List of HPXML Building objects representing an individual dwelling unit
-  # @param results_out [Array] Rows of output data
   # @return [Array] Rows of output data, with electric panel results appended
-  def self.append_panel_results(hpxml_header, hpxml_bldgs, results_out)
+  def self.get_panel_results(hpxml_header, hpxml_bldgs)
+    results_out = []
+
+    # Currently, we only write this file if:
+    # (1) at least one load calculation type is specified
+    # (2) an electric panel is specified
+    if hpxml_header.service_feeders_load_calculation_types.empty?
+      return results_out
+    elsif hpxml_bldgs.map { |hpxml_bldg| hpxml_bldg.electric_panels.size }.sum == 0
+      return results_out
+    end
+
     line_break = nil
 
     # Summary breaker spaces
@@ -1416,6 +1426,22 @@ module Outputs
         require 'msgpack'
         File.open(output_file_path, "#{mode}b") { |json| h.to_msgpack(json) }
       end
+    end
+  end
+
+  # Register to the runner for the given rows of output data.
+  #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
+  # @param results_out [Array] Rows of output data
+  # @return [nil]
+  def self.register_results_out_to_runner(runner, results_out)
+    results_out.each do |name, value|
+      next if name.nil? || value.nil?
+
+      name = OpenStudio::toUnderscoreCase(name).chomp('_')
+
+      runner.registerValue(name, value)
+      runner.registerInfo("Registering #{value} for #{name}.")
     end
   end
 

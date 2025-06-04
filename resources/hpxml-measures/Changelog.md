@@ -1,7 +1,7 @@
 ## OpenStudio-HPXML v1.10.0
 
 __New Features__
-- Updates to OpenStudio 3.10/EnergyPlus 25.1.
+- Updates to OpenStudio 3.10/EnergyPlus 25.1/HPXML v4.2-rc2.
 - HVAC modeling updates:
   - **Breaking Change**: `CompressorType` required for central and mini-split air conditioners and heat pumps as well as ground-to-air heat pumps.
   - **Breaking change**: Replaces `HeatingCapacityRetention[Fraction | Temperature]` with `HeatingCapacityFraction17F`.
@@ -23,9 +23,9 @@ __New Features__
   - Allows detailed modeling of electric vehicles (batteries and charging/discharging) using `Vehicles` as an alternative to the simple EV charging `PlugLoad`.
   - Adds EV driving unmet hours output.
   - Updates the default schedule for the EV charging `PlugLoad` to better reflect real-world hourly/monthly variation.
-- Electric panel calculations (experimental research feature):
+- Electric panel NEC load calculations (experimental research feature):
   - Allows optional `ElectricPanel` inputs for describing branch circuits and service feeders
-  - Optionally reports breaker spaces and calculated loads for specified NEC calculation types
+  - Optionally reports breaker spaces and calculated loads for specified NEC calculation types (`SoftwareInfo/extension/ElectricPanelCalculations/ServiceFeeders/Type`)
 - Allows requesting timeseries EnergyPlus output meters (e.g., `--hourly "MainsWater:Facility"`), similar to requesting EnergyPlus output variables.
 - BuildResidentialScheduleFile measure:
   - Adds stochastic schedule generation for electric vehicle charging (using `Vehicles`).
@@ -53,6 +53,7 @@ __Bugfixes__
 - Fixes error if there's a vented attic with zero roof pitch.
 - Fixes tank loss coefficient when TankModelType=stratified for a conventional storage water heater.
 - Fixes possibility of incorrect design duct load for really bad ducts (e.g., ducts with high surface area in a cold attic).
+- Fixes duplicate emission end use rows for electricity in results_annual.csv.
 - Adds error-checking to ensure TankModelType=stratified is not used with a non-electric water heater.
 - BuildResidentialHPXML measure: Improves default duct areas/locations for 1-story buildings with a conditioned basement and ducts located in the attic.
 - BuildResidentialHPXML measure: Fixes error when specifying a combi boiler as the water heater type and a *shared* boiler as the heating system type.

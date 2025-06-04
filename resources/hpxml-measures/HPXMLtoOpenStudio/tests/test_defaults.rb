@@ -3758,7 +3758,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     # Test electric panel inputs not overriden by defaults
     hpxml, hpxml_bldg = _create_hpxml('base-detailed-electric-panel.xml')
     electric_panel = hpxml_bldg.electric_panels[0]
-    electric_panel.voltage = HPXML::ElectricPanelVoltage120
+    electric_panel.voltage = HPXML::ElectricPanelVoltage240
     electric_panel.max_current_rating = 200.0
     electric_panel.headroom_spaces = 5
 
@@ -3779,7 +3779,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
                         occupied_spaces: 2,
                         component_idrefs: [hpxml_bldg.cooling_systems[0].id])
 
-    # Test demand load inputs not overridden by defaults
+    # Test service feeder inputs not overridden by defaults
     service_feeders = electric_panel.service_feeders
     htg_load = service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeHeating }
     htg_load.power = 1000
@@ -3832,7 +3832,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     electric_panel = default_hpxml_bldg.electric_panels[0]
     branch_circuits = electric_panel.branch_circuits
     service_feeders = electric_panel.service_feeders
-    _test_default_electric_panel_values(electric_panel, HPXML::ElectricPanelVoltage120, 200.0, 5, nil)
+    _test_default_electric_panel_values(electric_panel, HPXML::ElectricPanelVoltage240, 200.0, 5, nil)
     _test_default_branch_circuit_values(branch_circuits[0], HPXML::ElectricPanelVoltage120, 20.0, 1)
     _test_default_branch_circuit_values(branch_circuits[1], HPXML::ElectricPanelVoltage240, 50.0, 2)
     _test_default_branch_circuit_values(branch_circuits[2], HPXML::ElectricPanelVoltage240, 50.0, 2)
@@ -3854,7 +3854,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
     electric_panel = default_hpxml_bldg.electric_panels[0]
-    _test_default_electric_panel_values(electric_panel, HPXML::ElectricPanelVoltage120, 200.0, nil, 12)
+    _test_default_electric_panel_values(electric_panel, HPXML::ElectricPanelVoltage240, 200.0, nil, 12)
 
     # Test defaults
     electric_panel = hpxml_bldg.electric_panels[0]
@@ -3877,8 +3877,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     branch_circuits = electric_panel.branch_circuits
     service_feeders = electric_panel.service_feeders
     _test_default_electric_panel_values(electric_panel, HPXML::ElectricPanelVoltage240, 200.0, 3, nil)
-    _test_default_branch_circuit_values(branch_circuits[0], HPXML::ElectricPanelVoltage120, 20.0, 0)
-    _test_default_branch_circuit_values(branch_circuits[1], HPXML::ElectricPanelVoltage120, 20.0, 0)
+    _test_default_branch_circuit_values(branch_circuits[0], HPXML::ElectricPanelVoltage120, 15.0, 0)
+    _test_default_branch_circuit_values(branch_circuits[1], HPXML::ElectricPanelVoltage120, 15.0, 0)
     _test_default_branch_circuit_values(branch_circuits[2], HPXML::ElectricPanelVoltage240, 50.0, 2)
     _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeHeating }, 427.9, false)
     _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeCooling }, 2807.4, false)

@@ -88,7 +88,7 @@ class ElectricalPanelSampler
       geometry_building_type_recs,
       args[:geometry_unit_cfa_bin],
       major_elec_load_count.to_s,
-      args[:electric_panel_service_rating_bin].to_s,
+      args[:electric_panel_service_max_current_rating_bin].to_s,
     ]
 
     breaker_space_headroom = get_row_headers(breaker_space_headroom_prob_map, lookup_array, header_size: 32)
@@ -132,9 +132,9 @@ class ElectricalPanelSampler
     has_elec_drying = electric_fuel_and_presence(args[:clothes_dryer_present], args[:clothes_dryer_fuel_type])
     has_elec_cooking = electric_fuel_and_presence(args[:cooking_range_oven_present], args[:cooking_range_fuel_type])
     # has pv
-    has_pv = has_pv(args[:pv_system_present])
+    has_pv = bool_to_numeric(args[:pv_system_present])
     # has ev charging
-    has_ev_charging = 0 # TODO: connect with args[:ev_charger_present] when PR 1299 is merged
+    has_ev_charging = bool_to_numeric(args[:ev_charger_present])
 
     load_vars = [
       has_elec_heating_primary,
@@ -267,8 +267,8 @@ class ElectricalPanelSampler
     end
   end
 
-  def has_pv(pv_system_present)
-    if pv_system_present
+  def bool_to_numeric(is_present)
+    if is_present
       return 1
     else
       return 0

@@ -876,16 +876,15 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     panel_sampler = ElectricalPanelSampler.new(runner: runner, **args)
     cap_bin, cap_val = panel_sampler.assign_rated_capacity(args: args)
 
-    args[:electric_panel_service_rating_bin] = cap_bin
-    args[:electric_panel_service_rating] = cap_val
+    args[:electric_panel_service_max_current_rating_bin] = cap_bin
+    args[:electric_panel_service_max_current_rating] = cap_val
 
     breaker_spaces_headroom = panel_sampler.assign_breaker_space_headroom(args: args)
-    args[:electric_panel_breaker_spaces_type] = 'headroom'
-    args[:electric_panel_breaker_spaces] = breaker_spaces_headroom
+    args[:electric_panel_breaker_spaces_headroom] = breaker_spaces_headroom
 
     # Assign miscellaneous permanently connected appliance loads
-    if args[:electric_panel_load_other_power].nil?
-      args[:electric_panel_load_other_power] = 0
+    if args[:electric_panel_load_other_power_rating].nil?
+      args[:electric_panel_load_other_power_rating] = 0
     end
     # Assume all homes have a microwave
     if args[:geometry_unit_num_bedrooms] <= 2
@@ -919,9 +918,9 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       garage_door_power = 373 # W, 1/2 HP (1 mech HP = 745.7 W)
     end
 
-    args[:electric_panel_load_other_power] += microwave_power
-    args[:electric_panel_load_other_power] += garbage_disposal_power
-    args[:electric_panel_load_other_power] += garage_door_power
+    args[:electric_panel_load_other_power_rating] += microwave_power
+    args[:electric_panel_load_other_power_rating] += garbage_disposal_power
+    args[:electric_panel_load_other_power_rating] += garage_door_power
 
     # Register values to runner
     args.each do |arg_name, arg_value|

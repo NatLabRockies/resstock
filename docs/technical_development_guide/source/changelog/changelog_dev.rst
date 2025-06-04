@@ -7,16 +7,47 @@ Development Changelog
     :released: pending
 
     .. change::
-        :tags: standard data release
-        :pullreq: 1372
+        :tags: feature, standard data release
+        :pullreq: 1398, 1412
 
-        **Date**: 2025-04-30
+        **Date**: 2025-05-20
+
+        Title:
+        SDR Integration Tests
+
+        Description:
+        Add ResStock post processing code to create publication version of the annual results and commit them for the minimal buildstock test result.
+
+        Assignees: Rajendra Adhikari, Anthony Fontanini, Joe Robertson
+
+
+    .. change::
+        :tags: workflow
+        :pullreq: 1385
+
+        **Date**: 2025-05-15
+
+        Title:
+        Update electrical panel open breaker prediction
+
+        Description:
+        Update electrical panel open breaker prediction to account for EV charger presence.
+
+        Assignees: Lixi Liu
+
+
+    .. change::
+        :tags: standard data release
+        :pullreq: 1372, 1420
+
+        **Date**: 2025-05-28
 
         Title:
         Two Speed and Variable Speed Geothermal Heat Pumps
 
         Description:
-        Add upgrades to the SDR yml file for single speed, dual speed (w/out light touch, w/light touch, and w/light touch + appliance electrification), and variable speed geothermal heat pumps.
+        Add/modify upgrades defined in the SDR yml file for single-speed, dual-speed (with and without light touch envelope), and variable-speed geothermal heat pumps (GHPs).
+        Use the same package apply logic as ASHP, but only for dwelling units with ducts.
 
         OpenStudio-HPXML: `pull request 1878 <https://github.com/NREL/OpenStudio-HPXML/pull/1878>`_
 
@@ -42,7 +73,7 @@ Development Changelog
 
 
     .. change::
-        :tags: feature
+        :tags: feature, standard data release
         :pullreq: 1384
 
         **Date**: 2025-04-29
@@ -53,7 +84,7 @@ Development Changelog
         Description:
         Implemented CI workflow for validating option application in SDR yaml and added checks to ensure all upgrade options have non-zero applicability.
 
-        Assignees: Rajendra Adhikari
+        Assignees: Rajendra Adhikari, Anthony Fontanini
 
 
     .. change::
