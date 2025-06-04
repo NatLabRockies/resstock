@@ -38312,6 +38312,12 @@ Arguments
      - Choice
      - none, central air conditioner, room air conditioner, evaporative cooler, mini-split, packaged terminal air conditioner
      - The type of cooling system. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.
+   * - ``cooling_system_compressor_type``
+     - false
+     - 
+     - Choice
+     - auto, single stage, two stage, variable speed
+     - The compressor type of the cooling system. Required for central air conditioner and mini-split.
    * - ``cooling_system_cooling_efficiency_type``
      - true
      - 
@@ -38324,18 +38330,6 @@ Arguments
      - Double
      -
      - The rated efficiency value of the cooling system. Ignored for evaporative cooler.
-   * - ``cooling_system_cooling_compressor_type``
-     - false
-     - 
-     - Choice
-     - auto, single stage, two stage, variable speed
-     - The compressor type of the cooling system. Only applies to central air conditioner and mini-split.
-   * - ``cooling_system_cooling_sensible_heat_fraction``
-     - false
-     - Frac
-     - Double
-     - auto
-     - The sensible heat fraction of the cooling system. Ignored for evaporative cooler. If not provided, the OS-HPXML default (see `Central Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner>`_, `Room Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner>`_, `Packaged Terminal Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-air-conditioner>`_, `Mini-Split Air Conditioner <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner>`_) is used.
    * - ``cooling_system_cooling_capacity``
      - false
      - Btu/hr
@@ -38398,10 +38392,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Option name
      - Stock saturation
      - ``cooling_system_type``
+     - ``cooling_system_compressor_type``
      - ``cooling_system_cooling_efficiency_type``
      - ``cooling_system_cooling_efficiency``
-     - ``cooling_system_cooling_compressor_type``
-     - ``cooling_system_cooling_sensible_heat_fraction``
      - ``cooling_system_cooling_capacity``
      - ``cooling_system_cooling_autosizing_limit``
      - ``cooling_system_is_ducted``
@@ -38414,10 +38407,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - AC, SEER 8
      - 0.9%
      - central air conditioner
+     - single stage
      - SEER
      - 8
-     - single stage
-     - auto
      - auto
      - auto
      - false
@@ -38429,10 +38421,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - AC, SEER 10
      - 6%
      - central air conditioner
+     - single stage
      - SEER
      - 10
-     - single stage
-     - auto
      - auto
      - auto
      - false
@@ -38444,10 +38435,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - AC, SEER 13
      - 29%
      - central air conditioner
+     - single stage
      - SEER
      - 13
-     - single stage
-     - auto
      - auto
      - auto
      - false
@@ -38459,10 +38449,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - AC, SEER 15
      - 13%
      - central air conditioner
+     - single stage
      - SEER
      - 15
-     - single stage
-     - auto
      - auto
      - auto
      - false
@@ -38474,10 +38463,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Ducted Heat Pump
      - 15%
      - none
+     - auto
      - SEER
      - 0
-     - auto
-     - auto
      - auto
      - auto
      - false
@@ -38489,10 +38477,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Non-Ducted Heat Pump
      - 0.97%
      - none
+     - auto
      - SEER
      - 0
-     - auto
-     - auto
      - auto
      - auto
      - false
@@ -38504,10 +38491,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - None
      - 11%
      - none
+     - auto
      - SEER
      - 0
-     - auto
-     - auto
      - auto
      - auto
      - false
@@ -38519,10 +38505,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Room AC, EER 8.5
      - 0.43%
      - room air conditioner
+     - auto
      - EER
      - 8.5
-     - auto
-     - auto
      - auto
      - auto
      - false
@@ -38534,10 +38519,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Room AC, EER 9.8
      - 2.6%
      - room air conditioner
+     - auto
      - EER
      - 9.8
-     - auto
-     - auto
      - auto
      - auto
      - false
@@ -38549,10 +38533,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Room AC, EER 10.7
      - 9.6%
      - room air conditioner
+     - auto
      - EER
      - 10.7
-     - auto
-     - auto
      - auto
      - auto
      - false
@@ -38564,10 +38547,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Room AC, EER 12.0
      - 7.4%
      - room air conditioner
+     - auto
      - EER
      - 12
-     - auto
-     - auto
      - auto
      - auto
      - false
@@ -38578,7 +38560,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
    * - Shared Cooling
      - 3.8%
-     - 
      - 
      - 
      - 
@@ -39143,6 +39124,12 @@ Arguments
      - Choice
      - none, air-to-air, mini-split, ground-to-air, packaged terminal heat pump, room air conditioner with reverse cycle
      - The type of heat pump. Use 'none' if there is no heat pump.
+   * - ``heat_pump_compressor_type``
+     - false
+     - 
+     - Choice
+     - auto, single stage, two stage, variable speed
+     - The compressor type of the heat pump. Required for air-to-air, mini-split and ground-to-air.
    * - ``heat_pump_heating_efficiency_type``
      - true
      - 
@@ -39167,18 +39154,6 @@ Arguments
      - Double
      -
      - The rated cooling efficiency value of the heat pump.
-   * - ``heat_pump_cooling_compressor_type``
-     - false
-     - 
-     - Choice
-     - auto, single stage, two stage, variable speed
-     - The compressor type of the heat pump. Only applies to air-to-air, mini-split and ground-to-air.
-   * - ``heat_pump_cooling_sensible_heat_fraction``
-     - false
-     - Frac
-     - Double
-     - auto
-     - The sensible heat fraction of the heat pump. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_, `Ground-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#ground-to-air-heat-pump>`_) is used.
    * - ``heat_pump_heating_capacity``
      - false
      - Btu/hr
@@ -39191,18 +39166,12 @@ Arguments
      - Double
      -
      - The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.
-   * - ``heat_pump_heating_capacity_retention_fraction``
+   * - ``heat_pump_heating_capacity_fraction_17_f``
      - false
      - Frac
      - Double
      - auto
-     - The output heating capacity of the heat pump at a user-specified temperature (e.g., 17F or 5F) divided by the above nominal heating capacity. Applies to all heat pump types except ground-to-air. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_) is used.
-   * - ``heat_pump_heating_capacity_retention_temp``
-     - false
-     - F
-     - Double
-     -
-     - The user-specified temperature (e.g., 17F or 5F) for the above heating capacity retention fraction. Applies to all heat pump types except ground-to-air. Required if the Heating Capacity Retention Fraction is provided.
+     - The output heating capacity of the heat pump at 17F divided by the above nominal heating capacity at 47F. Applies to all heat pump types except ground-to-air. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_) is used.
    * - ``heat_pump_cooling_capacity``
      - false
      - Btu/hr
@@ -39293,6 +39262,18 @@ Arguments
      - Double
      - auto
      - Heat Pump crankcase heater power consumption in Watts. Applies only to air-to-air, mini-split, packaged terminal heat pump and room air conditioner with reverse cycle. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_, `Packaged Terminal Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump>`_, `Room Air Conditioner w/ Reverse Cycle <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle>`_) is used.
+   * - ``heat_pump_pan_heater_watts``
+     - false
+     - W
+     - Double
+     - auto
+     - Heat Pump pan heater power consumption in Watts. Applies only to air-to-air and mini-split. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_) is used.
+   * - ``heat_pump_pan_heater_control_type``
+     - false
+     - 
+     - Choice
+     - auto, continuous, defrost mode
+     - Heat pump pan heater control type. If 'continuous', operates continuously when outdoor temperature is below 32F. If 'defrost mode', operates only during defrost mode when outdoor temperature is below 32F. Applies only to air-to-air and mini-split. If not provided, the OS-HPXML default (see `Air-to-Air Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump>`_, `Mini-Split Heat Pump <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump>`_) is used.
    * - ``geothermal_loop_configuration``
      - false
      - 
@@ -39380,16 +39361,14 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``heating_system_fraction_heat_load_served``
      - ``heating_system_pilot_light``
      - ``heat_pump_type``
+     - ``heat_pump_compressor_type``
      - ``heat_pump_heating_efficiency_type``
      - ``heat_pump_heating_efficiency``
      - ``heat_pump_cooling_efficiency_type``
      - ``heat_pump_cooling_efficiency``
-     - ``heat_pump_cooling_compressor_type``
-     - ``heat_pump_cooling_sensible_heat_fraction``
      - ``heat_pump_heating_capacity``
      - ``heat_pump_heating_autosizing_limit``
-     - ``heat_pump_heating_capacity_retention_fraction``
-     - ``heat_pump_heating_capacity_retention_temp``
+     - ``heat_pump_heating_capacity_fraction_17_f``
      - ``heat_pump_cooling_capacity``
      - ``heat_pump_cooling_autosizing_limit``
      - ``heat_pump_fraction_heat_load_served``
@@ -39405,6 +39384,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``heat_pump_backup_sizing_methodology``
      - ``heat_pump_is_ducted``
      - ``heat_pump_crankcase_heater_watts``
+     - ``heat_pump_pan_heater_watts``
+     - ``heat_pump_pan_heater_control_type``
      - ``geothermal_loop_configuration``
      - ``geothermal_loop_borefield_configuration``
      - ``geothermal_loop_loop_flow``
@@ -39427,13 +39408,11 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - 
      - air-to-air
+     - single stage
      - HSPF
      - 6.2
      - SEER
      - 10
-     - single stage
-     - auto
-     - auto
      - auto
      - auto
      - auto
@@ -39451,6 +39430,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ACCA
      - auto
      - true
+     - auto
+     - auto
      - auto
      - none
      - auto
@@ -39473,13 +39454,11 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - 
      - air-to-air
+     - single stage
      - HSPF
      - 7.7
      - SEER
      - 13
-     - single stage
-     - auto
-     - auto
      - auto
      - auto
      - auto
@@ -39497,6 +39476,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ACCA
      - auto
      - true
+     - auto
+     - auto
      - auto
      - none
      - auto
@@ -39519,13 +39500,11 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - 
      - air-to-air
+     - single stage
      - HSPF
      - 8.5
      - SEER
      - 15
-     - single stage
-     - auto
-     - auto
      - auto
      - auto
      - auto
@@ -39543,6 +39522,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ACCA
      - auto
      - true
+     - auto
+     - auto
      - auto
      - none
      - auto
@@ -39565,15 +39546,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - 
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -39588,6 +39567,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -39611,15 +39592,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - 
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -39634,6 +39613,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -39657,15 +39638,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - 
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -39680,6 +39659,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -39703,15 +39684,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - 
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -39726,6 +39705,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -39749,15 +39730,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - auto
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -39772,6 +39751,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -39795,15 +39776,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - auto
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -39818,6 +39797,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -39841,15 +39822,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - auto
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -39864,6 +39843,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -39887,15 +39868,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - auto
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -39910,6 +39889,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -39933,15 +39914,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - auto
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -39956,6 +39935,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -39979,15 +39960,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - auto
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -40002,6 +39981,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -40025,15 +40006,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - auto
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -40048,6 +40027,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -40071,15 +40052,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - auto
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -40094,6 +40073,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -40117,15 +40098,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - auto
      - none
+     - 
      - HSPF
      - 0
      - SEER
      - 0
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -40140,6 +40119,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -40163,16 +40144,14 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - 
      - mini-split
+     - variable speed
      - HSPF
      - 8.2
      - SEER
      - 14.5
-     - variable speed
      - auto
      - auto
-     - auto
-     - 0.25
-     - -5
+     - 0.57
      - auto
      - auto
      - 1
@@ -40187,6 +40166,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ACCA
      - auto
      - false
+     - auto
+     - auto
      - auto
      - none
      - auto
@@ -40209,16 +40190,14 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - 
      - mini-split
+     - variable speed
      - HSPF
      - 14
      - SEER
      - 29.3
-     - variable speed
      - auto
      - auto
-     - auto
-     - 0.5
-     - -15
+     - 0.76
      - auto
      - auto
      - 1
@@ -40233,6 +40212,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ACCA
      - auto
      - false
+     - auto
+     - auto
      - auto
      - none
      - auto
@@ -40255,15 +40236,13 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - 
      - none
+     - 
      - HSPF
      - 6.2
      - SEER
      - 10
-     - 
-     - 
      - auto
      - auto
-     - 
      - 
      - auto
      - auto
@@ -40278,6 +40257,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - ACCA
      - auto
+     - 
+     - 
      - 
      - 
      - none
@@ -40999,6 +40980,12 @@ Arguments
      - Choice
      - none, central air conditioner, room air conditioner, evaporative cooler, mini-split, packaged terminal air conditioner
      - The type of cooling system. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.
+   * - ``cooling_system_compressor_type``
+     - false
+     - 
+     - Choice
+     - auto, single stage, two stage, variable speed
+     - The compressor type of the cooling system. Required for central air conditioner and mini-split.
    * - ``cooling_system_cooling_efficiency_type``
      - true
      - 
@@ -41011,12 +40998,6 @@ Arguments
      - Double
      -
      - The rated efficiency value of the cooling system. Ignored for evaporative cooler.
-   * - ``cooling_system_cooling_compressor_type``
-     - false
-     - 
-     - Choice
-     - auto, single stage, two stage, variable speed
-     - The compressor type of the cooling system. Only applies to central air conditioner and mini-split.
    * - ``cooling_system_cooling_capacity``
      - false
      - Btu/hr
@@ -41228,9 +41209,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``heating_system_heating_autosizing_limit``
      - ``heating_system_fraction_heat_load_served``
      - ``cooling_system_type``
+     - ``cooling_system_compressor_type``
      - ``cooling_system_cooling_efficiency_type``
      - ``cooling_system_cooling_efficiency``
-     - ``cooling_system_cooling_compressor_type``
      - ``cooling_system_cooling_capacity``
      - ``cooling_system_cooling_autosizing_limit``
      - ``cooling_system_is_ducted``
@@ -41358,9 +41339,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - 
      - mini-split
+     - variable speed
      - SEER
      - 13
-     - variable speed
      - auto
      - auto
      - false
@@ -41401,9 +41382,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - 1
      - mini-split
+     - variable speed
      - SEER
      - 13
-     - variable speed
      - auto
      - 
      - false
@@ -41444,9 +41425,9 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - 1
      - mini-split
+     - variable speed
      - SEER
      - 13
-     - variable speed
      - auto
      - 
      - false
