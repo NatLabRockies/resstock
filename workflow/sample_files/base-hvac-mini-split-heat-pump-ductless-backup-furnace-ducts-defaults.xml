@@ -353,10 +353,7 @@
                 <Value>10.0</Value>
               </AnnualHeatingEfficiency>
               <extension>
-                <HeatingCapacityRetention>
-                  <Fraction>0.6</Fraction>
-                  <Temperature>17.0</Temperature>
-                </HeatingCapacityRetention>
+                <HeatingCapacityFraction17F>0.6</HeatingCapacityFraction17F>
               </extension>
             </HeatPump>
           </HVACPlant>

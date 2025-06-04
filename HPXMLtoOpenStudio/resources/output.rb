@@ -184,7 +184,8 @@ module Outputs
     htg_cond_load_sensors, clg_cond_load_sensors = {}, {}
     htg_duct_load_sensors, clg_duct_load_sensors = {}, {}
     total_heat_load_serveds, total_cool_load_serveds = {}, {}
-    dehumidifier_global_vars, dehumidifier_sensors = {}, {}
+    dehumidifier_global_vars, dehumidifier_sensors, defrost_load_oe_sensors = {}, {}, {}
+    unit_multipliers = {}
 
     hpxml_osm_map.each_with_index do |(hpxml_bldg, unit_model), unit|
       # Retrieve objects
@@ -192,6 +193,7 @@ module Outputs
       duct_zone_names = unit_model.getThermalZones.select { |z| z.isPlenum }.map { |z| z.name.to_s }
       dehumidifier = unit_model.getZoneHVACDehumidifierDXs
       dehumidifier_name = dehumidifier[0].name.to_s unless dehumidifier.empty?
+      defrost_load_oes = unit_model.getOtherEquipments.select { |o| o.additionalProperties.getFeatureAsString('ObjectType').to_s == Constants::ObjectTypeHPDefrostHeatLoad }
 
       # Fraction heat/cool load served
       if hpxml_header.apply_ashrae140_assumptions
@@ -236,6 +238,16 @@ module Outputs
         )
       end
 
+      defrost_load_oe_sensors[unit] = []
+      defrost_load_oes.sort.each_with_index do |o, i|
+        defrost_load_oe_sensors[unit] << Model.add_ems_sensor(
+          model,
+          name: "ig_defrost_#{i}",
+          output_var_or_meter_name: 'Other Equipment Total Heating Energy',
+          key_name: o.name.to_s
+        )
+      end
+      unit_multipliers[unit] = hpxml_bldg.building_construction.number_of_units
       next if dehumidifier_name.nil?
 
       # Need to adjust E+ EnergyTransfer meters for dehumidifier internal gains.
@@ -293,6 +305,9 @@ module Outputs
       end
       if not dehumidifier_global_vars[unit].nil?
         program.addLine("  Set loads_htg_tot = loads_htg_tot - #{dehumidifier_global_vars[unit].name}")
+      end
+      defrost_load_oe_sensors[unit].each do |defrost_ss|
+        program.addLine("  Set loads_htg_tot = loads_htg_tot + #{defrost_ss.name} * #{unit_multipliers[unit]}")
       end
       program.addLine('EndIf')
     end
@@ -1153,15 +1168,15 @@ module Outputs
     unit_multiplier = hpxml_bldg.building_construction.number_of_units
     hpxml_bldg.hvac_systems.each do |hvac_system|
       if hvac_system.is_a? HPXML::HeatingSystem
-        htg_cfm += hvac_system.heating_airflow_cfm.to_f * unit_multiplier
+        htg_cfm += hvac_system.heating_design_airflow_cfm.to_f * unit_multiplier
       elsif hvac_system.is_a? HPXML::CoolingSystem
-        clg_cfm += hvac_system.cooling_airflow_cfm.to_f * unit_multiplier
+        clg_cfm += hvac_system.cooling_design_airflow_cfm.to_f * unit_multiplier
         if hvac_system.has_integrated_heating
           htg_cfm += hvac_system.integrated_heating_system_airflow_cfm.to_f * unit_multiplier
         end
       elsif hvac_system.is_a? HPXML::HeatPump
-        htg_cfm += hvac_system.heating_airflow_cfm.to_f * unit_multiplier
-        clg_cfm += hvac_system.cooling_airflow_cfm.to_f * unit_multiplier
+        htg_cfm += hvac_system.heating_design_airflow_cfm.to_f * unit_multiplier
+        clg_cfm += hvac_system.cooling_design_airflow_cfm.to_f * unit_multiplier
       end
     end
     return htg_cfm, clg_cfm
@@ -1497,26 +1512,32 @@ module Outputs
       MeterCustomElectricityNet => net_key_vars }.each do |meter_name, key_vars|
       if key_vars.empty?
         # Avoid OpenStudio warnings if nothing to decrement
-        meter = OpenStudio::Model::MeterCustom.new(model)
         key_vars << ['', 'Electricity:Facility']
+        Model.add_meter_custom(
+          model,
+          name: meter_name,
+          fuel_type: EPlus::FuelTypeElectricity,
+          key_var_pairs: key_vars
+        )
       else
-        meter = OpenStudio::Model::MeterCustomDecrement.new(model, 'Electricity:Facility')
-      end
-      meter.setName(meter_name)
-      meter.setFuelType(EPlus::FuelTypeElectricity)
-      key_vars.uniq.each do |key_var|
-        meter.addKeyVarGroup(key_var[0], key_var[1])
+        Model.add_meter_custom_decrement(
+          model,
+          name: meter_name,
+          fuel_type: EPlus::FuelTypeElectricity,
+          key_var_pairs: key_vars,
+          source_meter_name: 'Electricity:Facility'
+        )
       end
     end
 
     # Create PV meter
     if not pv_key_vars.empty?
-      meter = OpenStudio::Model::MeterCustom.new(model)
-      meter.setName(MeterCustomElectricityPV)
-      meter.setFuelType(EPlus::FuelTypeElectricity)
-      pv_key_vars.uniq.each do |key_var|
-        meter.addKeyVarGroup(key_var[0], key_var[1])
-      end
+      Model.add_meter_custom(
+        model,
+        name: MeterCustomElectricityPV,
+        fuel_type: EPlus::FuelTypeElectricity,
+        key_var_pairs: pv_key_vars
+      )
     end
   end
 end

@@ -342,6 +342,8 @@
                 <AirflowDefectRatio>-0.25</AirflowDefectRatio>
                 <ChargeDefectRatio>-0.25</ChargeDefectRatio>
                 <FanPowerWattsPerCFM>0.365</FanPowerWattsPerCFM>
+                <HeatingDesignAirflowCFM>1080.0</HeatingDesignAirflowCFM>
+                <CoolingDesignAirflowCFM>1080.0</CoolingDesignAirflowCFM>
                 <PumpPowerWattsPerTon>100.0</PumpPowerWattsPerTon>
               </extension>
             </HeatPump>

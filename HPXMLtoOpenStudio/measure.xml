@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>be730b7e-d7aa-4815-b23c-65a84240cac5</version_id>
-  <version_modified>2025-06-03T18:49:12Z</version_modified>
+  <version_id>985848fb-5837-4a9c-9772-8f925f47c063</version_id>
+  <version_modified>2025-06-03T23:56:13Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -216,7 +216,7 @@
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1382D07B</checksum>
+      <checksum>25C134C6</checksum>
     </file>
     <file>
       <filename>constructions.rb</filename>
@@ -348,7 +348,7 @@
       <filename>defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9E697816</checksum>
+      <checksum>60864979</checksum>
     </file>
     <file>
       <filename>electric_panel.rb</filename>
@@ -360,7 +360,7 @@
       <filename>energyplus.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>A3E60F7A</checksum>
+      <checksum>F8A84C95</checksum>
     </file>
     <file>
       <filename>generator.rb</filename>
@@ -384,7 +384,7 @@
       <filename>hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C056CD3F</checksum>
+      <checksum>6ADABC3B</checksum>
     </file>
     <file>
       <filename>hpxml_schema/HPXML.xsd</filename>
@@ -402,7 +402,7 @@
       <filename>hpxml_schematron/EPvalidator.sch</filename>
       <filetype>sch</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C84506CE</checksum>
+      <checksum>6ED69A49</checksum>
     </file>
     <file>
       <filename>hpxml_schematron/iso-schematron.xsd</filename>
@@ -414,13 +414,13 @@
       <filename>hvac.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>19DE6163</checksum>
+      <checksum>74A5F976</checksum>
     </file>
     <file>
       <filename>hvac_sizing.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F0DE7EAD</checksum>
+      <checksum>3E814040</checksum>
     </file>
     <file>
       <filename>internal_gains.rb</filename>
@@ -450,7 +450,7 @@
       <filename>math.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E6FA54B6</checksum>
+      <checksum>647802D1</checksum>
     </file>
     <file>
       <filename>meta_measure.rb</filename>
@@ -474,19 +474,19 @@
       <filename>model.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D85755A1</checksum>
+      <checksum>625DB094</checksum>
     </file>
     <file>
       <filename>output.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>067582CC</checksum>
+      <checksum>46864C27</checksum>
     </file>
     <file>
       <filename>psychrometrics.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>716C98E6</checksum>
+      <checksum>62A04744</checksum>
     </file>
     <file>
       <filename>pv.rb</filename>
@@ -732,13 +732,13 @@
       <filename>test_defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>DA970E01</checksum>
+      <checksum>C8B0C08B</checksum>
     </file>
     <file>
       <filename>test_electric_panel.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>5A08B09C</checksum>
+      <checksum>AAB17403</checksum>
     </file>
     <file>
       <filename>test_enclosure.rb</filename>
@@ -762,13 +762,13 @@
       <filename>test_hvac.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>CF69479F</checksum>
+      <checksum>890921E0</checksum>
     </file>
     <file>
       <filename>test_hvac_sizing.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>85B21381</checksum>
+      <checksum>9FB38712</checksum>
     </file>
     <file>
       <filename>test_lighting.rb</filename>
@@ -810,7 +810,7 @@
       <filename>test_validation.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>522878D4</checksum>
+      <checksum>7B425888</checksum>
     </file>
     <file>
       <filename>test_vehicle.rb</filename>
