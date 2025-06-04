@@ -620,6 +620,18 @@ jobs:
           path: project_national/sdr_upgrades_tmy3/results_csvs
           if-no-files-found: error
 
+      - name: Check for failed simulations
+        run: |
+          echo "Checking for failed simulations in results files..."
+          FAILED=false
+          for csv_file in project_national/sdr_upgrades_tmy3/results_csvs/*.csv; do
+            python -m resstockpostproc.get_failures "$csv_file" --verbose --exit-code || FAILED=true
+          done
+          if [ "$FAILED" = true ]; then
+            echo "ERROR: Some simulations failed. See details above."
+            exit 1
+          fi
+
       - name: Commit the integration tests results
         run: |
           branch_name="${{ github.head_ref }}"
