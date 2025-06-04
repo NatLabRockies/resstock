@@ -389,7 +389,7 @@ upgrades:
 
         ### -- ENERGY STAR ASHP for dwellings with ducted heating systems
       - &ducted_ASHP_ENERGYSTAR_exist_backup_ducted
-        option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 5F-40F switchover band
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 5F-40F switchover band
         apply_logic: &ducted_heating_apply_logic
           - HVAC Has Ducts|Yes
           - or:
