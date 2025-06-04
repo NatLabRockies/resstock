@@ -40,6 +40,7 @@ module Constants
   ObjectTypeGSHPSharedPump = 'gshp shared loop pump'
   ObjectTypeHotWaterRecircPump = 'dhw recirc pump'
   ObjectTypeHPDefrostSupplHeat = 'hp defrost suppl heat'
+  ObjectTypeHPDefrostHeatLoad = 'hp defrost heat load'
   ObjectTypeHVACAvailabilitySensor = 'hvac availability sensor'
   ObjectTypeIdealAirSystem = 'ideal air system'
   ObjectTypeInfiltration = 'infil'

@@ -7111,64 +7111,65 @@ class HPXML < Object
     end
     CLASS_ATTRS = [:cooling_detailed_performance_data, # [HPXML::CoolingDetailedPerformanceData]
                    :heating_detailed_performance_data] # [HPXML::HeatingDetailedPerformanceData]
-    ATTRS = [:primary_heating_system,              # [Boolean] ../PrimarySystems/PrimaryHeatingSystem/@idref
-             :primary_cooling_system,              # [Boolean] ../PrimarySystems/PrimaryCoolingSystem/@idref
-             :id,                                  # [String] SystemIdentifier/@id
-             :attached_to_zone_idref,              # [String] AttachedToZone/@idref
-             :location,                            # [String] UnitLocation (HPXML::LocationXXX)
-             :year_installed,                      # [Integer] YearInstalled
-             :third_party_certification,           # [String] ThirdPartyCertification
-             :distribution_system_idref,           # [String] DistributionSystem/@idref
-             :is_shared_system,                    # [Boolean] IsSharedSystem
-             :number_of_units_served,              # [Integer] NumberofUnitsServed
-             :heat_pump_type,                      # [String] HeatPumpType (HPXML::HVACTypeXXX)
-             :heat_pump_fuel,                      # [String] HeatPumpFuel (HPXML::FuelTypeXXX)
-             :heating_capacity,                    # [Double] HeatingCapacity (Btu/hr)
-             :heating_capacity_17F,                # [Double] HeatingCapacity17F (Btu/hr)
-             :cooling_capacity,                    # [Double] CoolingCapacity (Btu/hr)
-             :compressor_type,                     # [String] CompressorType (HPXML::HVACCompressorTypeXXX)
-             :compressor_lockout_temp,             # [Double] CompressorLockoutTemperature (F)
-             :backup_type,                         # [String] BackupType (HPXML::HeatPumpBackupTypeXXX)
-             :backup_system_idref,                 # [String] BackupSystem/@idref
-             :backup_heating_fuel,                 # [String] BackupSystemFuel (HPXML::FuelTypeXXX)
-             :backup_heating_efficiency_percent,   # [Double] BackupAnnualHeatingEfficiency[Units="Percent"]/Value (frac)
-             :backup_heating_efficiency_afue,      # [Double] BackupAnnualHeatingEfficiency[Units="AFUE"]/Value (frac)
-             :backup_heating_capacity,             # [Double] BackupHeatingCapacity (Btu/hr)
-             :backup_heating_switchover_temp,      # [Double] BackupHeatingSwitchoverTemperature (F)
-             :backup_heating_lockout_temp,         # [Double] BackupHeatingLockoutTemperature (F)
-             :fraction_heat_load_served,           # [Double] FractionHeatLoadServed (frac)
-             :fraction_cool_load_served,           # [Double] FractionCoolLoadServed (frac)
-             :cooling_efficiency_seer,             # [Double] AnnualCoolingEfficiency[Units="SEER"]/Value (Btu/Wh)
-             :cooling_efficiency_seer2,            # [Double] AnnualCoolingEfficiency[Units="SEER2"]/Value (Btu/Wh)
-             :cooling_efficiency_eer,              # [Double] AnnualCoolingEfficiency[Units="EER"]/Value (Btu/Wh)
-             :cooling_efficiency_eer2,             # [Double] AnnualCoolingEfficiency[Units="EER2"]/Value (Btu/Wh)
-             :cooling_efficiency_ceer,             # [Double] AnnualCoolingEfficiency[Units="CEER"]/Value (Btu/Wh)
-             :heating_efficiency_hspf,             # [Double] AnnualHeatingEfficiency[Units="HSPF"]/Value (Btu/Wh)
-             :heating_efficiency_hspf2,            # [Double] AnnualHeatingEfficiency[Units="HSPF2"]/Value (Btu/Wh)
-             :heating_efficiency_cop,              # [Double] AnnualHeatingEfficiency[Units="COP"]/Value (W/W)
-             :geothermal_loop_idref,               # [String] AttachedToGeothermalLoop/@idref
-             :airflow_defect_ratio,                # [Double] extension/AirflowDefectRatio (frac)
-             :charge_defect_ratio,                 # [Double] extension/ChargeDefectRatio (frac)
-             :fan_motor_type,                      # [String] extension/FanMotorType
-             :fan_watts_per_cfm,                   # [Double] extension/FanPowerWattsPerCFM (W/cfm)
-             :heating_design_airflow_cfm,          # [Double] extension/HeatingDesignAirflowCFM (cfm)
-             :cooling_design_airflow_cfm,          # [Double] extension/CoolingDesignAirflowCFM (cfm)
-             :pump_watts_per_ton,                  # [Double] extension/PumpPowerWattsPerTon (W/ton)
-             :shared_loop_watts,                   # [Double] extension/SharedLoopWatts (W)
-             :shared_loop_motor_efficiency,        # [Double] extension/SharedLoopMotorEfficiency (frac)
-             :crankcase_heater_watts,              # [Double] extension/CrankcaseHeaterPowerWatts (W)
-             :pan_heater_watts,                    # [Double] extension/PanHeaterPowerWatts (W)
-             :pan_heater_control_type,             # [String] extension/PanHeaterControlType (HPXML::HVACPanHeaterControlTypeXXX)
-             :heating_capacity_fraction_17F,       # [Double] extension/HeatingCapacityFraction17F (frac)
-             :cooling_autosizing_factor,           # [Double] extension/CoolingAutosizingFactor (frac)
-             :heating_autosizing_factor,           # [Double] extension/HeatingAutosizingFactor (frac)
-             :backup_heating_autosizing_factor,    # [Double] extension/BackupHeatingAutosizingFactor (frac)
-             :cooling_autosizing_limit,            # [Double] extension/CoolingAutosizingLimit (Btu/hr)
-             :heating_autosizing_limit,            # [Double] extension/HeatingAutosizingLimit (Btu/hr)
-             :backup_heating_autosizing_limit,     # [Double] extension/BackupHeatingAutosizingLimit (Btu/hr)
-             :equipment_type,                      # [String] extension/EquipmentType (HPXML::HVACEquipmentTypeXXX)
-             :htg_seed_id,                         # [String] extension/HeatingSeedId
-             :clg_seed_id]                         # [String] extension/CoolingSeedId
+    ATTRS = [:primary_heating_system,               # [Boolean] ../PrimarySystems/PrimaryHeatingSystem/@idref
+             :primary_cooling_system,               # [Boolean] ../PrimarySystems/PrimaryCoolingSystem/@idref
+             :id,                                   # [String] SystemIdentifier/@id
+             :attached_to_zone_idref,               # [String] AttachedToZone/@idref
+             :location,                             # [String] UnitLocation (HPXML::LocationXXX)
+             :year_installed,                       # [Integer] YearInstalled
+             :third_party_certification,            # [String] ThirdPartyCertification
+             :distribution_system_idref,            # [String] DistributionSystem/@idref
+             :is_shared_system,                     # [Boolean] IsSharedSystem
+             :number_of_units_served,               # [Integer] NumberofUnitsServed
+             :heat_pump_type,                       # [String] HeatPumpType (HPXML::HVACTypeXXX)
+             :heat_pump_fuel,                       # [String] HeatPumpFuel (HPXML::FuelTypeXXX)
+             :heating_capacity,                     # [Double] HeatingCapacity (Btu/hr)
+             :heating_capacity_17F,                 # [Double] HeatingCapacity17F (Btu/hr)
+             :cooling_capacity,                     # [Double] CoolingCapacity (Btu/hr)
+             :compressor_type,                      # [String] CompressorType (HPXML::HVACCompressorTypeXXX)
+             :compressor_lockout_temp,              # [Double] CompressorLockoutTemperature (F)
+             :backup_type,                          # [String] BackupType (HPXML::HeatPumpBackupTypeXXX)
+             :backup_system_idref,                  # [String] BackupSystem/@idref
+             :backup_heating_fuel,                  # [String] BackupSystemFuel (HPXML::FuelTypeXXX)
+             :backup_heating_efficiency_percent,    # [Double] BackupAnnualHeatingEfficiency[Units="Percent"]/Value (frac)
+             :backup_heating_efficiency_afue,       # [Double] BackupAnnualHeatingEfficiency[Units="AFUE"]/Value (frac)
+             :backup_heating_capacity,              # [Double] BackupHeatingCapacity (Btu/hr)
+             :backup_heating_switchover_temp,       # [Double] BackupHeatingSwitchoverTemperature (F)
+             :backup_heating_lockout_temp,          # [Double] BackupHeatingLockoutTemperature (F)
+             :fraction_heat_load_served,            # [Double] FractionHeatLoadServed (frac)
+             :fraction_cool_load_served,            # [Double] FractionCoolLoadServed (frac)
+             :cooling_efficiency_seer,              # [Double] AnnualCoolingEfficiency[Units="SEER"]/Value (Btu/Wh)
+             :cooling_efficiency_seer2,             # [Double] AnnualCoolingEfficiency[Units="SEER2"]/Value (Btu/Wh)
+             :cooling_efficiency_eer,               # [Double] AnnualCoolingEfficiency[Units="EER"]/Value (Btu/Wh)
+             :cooling_efficiency_eer2,              # [Double] AnnualCoolingEfficiency[Units="EER2"]/Value (Btu/Wh)
+             :cooling_efficiency_ceer,              # [Double] AnnualCoolingEfficiency[Units="CEER"]/Value (Btu/Wh)
+             :heating_efficiency_hspf,              # [Double] AnnualHeatingEfficiency[Units="HSPF"]/Value (Btu/Wh)
+             :heating_efficiency_hspf2,             # [Double] AnnualHeatingEfficiency[Units="HSPF2"]/Value (Btu/Wh)
+             :heating_efficiency_cop,               # [Double] AnnualHeatingEfficiency[Units="COP"]/Value (W/W)
+             :geothermal_loop_idref,                # [String] AttachedToGeothermalLoop/@idref
+             :airflow_defect_ratio,                 # [Double] extension/AirflowDefectRatio (frac)
+             :charge_defect_ratio,                  # [Double] extension/ChargeDefectRatio (frac)
+             :fan_motor_type,                       # [String] extension/FanMotorType
+             :fan_watts_per_cfm,                    # [Double] extension/FanPowerWattsPerCFM (W/cfm)
+             :heating_design_airflow_cfm,           # [Double] extension/HeatingDesignAirflowCFM (cfm)
+             :cooling_design_airflow_cfm,           # [Double] extension/CoolingDesignAirflowCFM (cfm)
+             :pump_watts_per_ton,                   # [Double] extension/PumpPowerWattsPerTon (W/ton)
+             :shared_loop_watts,                    # [Double] extension/SharedLoopWatts (W)
+             :shared_loop_motor_efficiency,         # [Double] extension/SharedLoopMotorEfficiency (frac)
+             :crankcase_heater_watts,               # [Double] extension/CrankcaseHeaterPowerWatts (W)
+             :pan_heater_watts,                     # [Double] extension/PanHeaterPowerWatts (W)
+             :pan_heater_control_type,              # [String] extension/PanHeaterControlType (HPXML::HVACPanHeaterControlTypeXXX)
+             :backup_heating_active_during_defrost, # [Boolean] extension/BackupHeatingActiveDuringDefrost
+             :heating_capacity_fraction_17F,        # [Double] extension/HeatingCapacityFraction17F (frac)
+             :cooling_autosizing_factor,            # [Double] extension/CoolingAutosizingFactor (frac)
+             :heating_autosizing_factor,            # [Double] extension/HeatingAutosizingFactor (frac)
+             :backup_heating_autosizing_factor,     # [Double] extension/BackupHeatingAutosizingFactor (frac)
+             :cooling_autosizing_limit,             # [Double] extension/CoolingAutosizingLimit (Btu/hr)
+             :heating_autosizing_limit,             # [Double] extension/HeatingAutosizingLimit (Btu/hr)
+             :backup_heating_autosizing_limit,      # [Double] extension/BackupHeatingAutosizingLimit (Btu/hr)
+             :equipment_type,                       # [String] extension/EquipmentType (HPXML::HVACEquipmentTypeXXX)
+             :htg_seed_id,                          # [String] extension/HeatingSeedId (Used by OS-ERI)
+             :clg_seed_id]                          # [String] extension/CoolingSeedId (Used by OS-ERI)
     attr_reader(*CLASS_ATTRS)
     attr_accessor(*ATTRS)
 
@@ -7419,6 +7420,7 @@ class HPXML < Object
       XMLHelper.add_extension(heat_pump, 'CrankcaseHeaterPowerWatts', @crankcase_heater_watts, :float, @crankcase_heater_watts_isdefaulted) unless @crankcase_heater_watts.nil?
       XMLHelper.add_extension(heat_pump, 'PanHeaterPowerWatts', @pan_heater_watts, :float, @pan_heater_watts_isdefaulted) unless @pan_heater_watts.nil?
       XMLHelper.add_extension(heat_pump, 'PanHeaterControlType', @pan_heater_control_type, :string, @pan_heater_control_type_isdefaulted) unless @pan_heater_control_type.nil?
+      XMLHelper.add_extension(heat_pump, 'BackupHeatingActiveDuringDefrost', @backup_heating_active_during_defrost, :boolean, @backup_heating_active_during_defrost_isdefaulted) unless @backup_heating_active_during_defrost.nil?
       XMLHelper.add_extension(heat_pump, 'HeatingCapacityFraction17F', @heating_capacity_fraction_17F, :float, @heating_capacity_fraction_17F_isdefaulted) unless @heating_capacity_fraction_17F.nil?
       XMLHelper.add_extension(heat_pump, 'CoolingAutosizingFactor', @cooling_autosizing_factor, :float, @cooling_autosizing_factor_isdefaulted) unless @cooling_autosizing_factor.nil?
       XMLHelper.add_extension(heat_pump, 'HeatingAutosizingFactor', @heating_autosizing_factor, :float, @heating_autosizing_factor_isdefaulted) unless @heating_autosizing_factor.nil?
@@ -7494,6 +7496,7 @@ class HPXML < Object
       @crankcase_heater_watts = XMLHelper.get_value(heat_pump, 'extension/CrankcaseHeaterPowerWatts', :float)
       @pan_heater_watts = XMLHelper.get_value(heat_pump, 'extension/PanHeaterPowerWatts', :float)
       @pan_heater_control_type = XMLHelper.get_value(heat_pump, 'extension/PanHeaterControlType', :string)
+      @backup_heating_active_during_defrost = XMLHelper.get_value(heat_pump, 'extension/BackupHeatingActiveDuringDefrost', :boolean)
       @heating_capacity_fraction_17F = XMLHelper.get_value(heat_pump, 'extension/HeatingCapacityFraction17F', :float)
       @cooling_autosizing_factor = XMLHelper.get_value(heat_pump, 'extension/CoolingAutosizingFactor', :float)
       @heating_autosizing_factor = XMLHelper.get_value(heat_pump, 'extension/HeatingAutosizingFactor', :float)

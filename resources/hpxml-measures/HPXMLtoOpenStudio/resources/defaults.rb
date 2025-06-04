@@ -2256,6 +2256,21 @@ module Defaults
       end
     end
 
+    # Defrost Backup Heat
+    hpxml_bldg.heat_pumps.each do |heat_pump|
+      next unless heat_pump.backup_heating_active_during_defrost.nil?
+      next unless [HPXML::HVACTypeHeatPumpAirToAir,
+                   HPXML::HVACTypeHeatPumpMiniSplit,
+                   HPXML::HVACTypeHeatPumpRoom,
+                   HPXML::HVACTypeHeatPumpPTHP].include? heat_pump.heat_pump_type
+
+      # The input is only used when there's integrated backup heat
+      next unless heat_pump.backup_type == HPXML::HeatPumpBackupTypeIntegrated
+
+      heat_pump.backup_heating_active_during_defrost = !heat_pump.distribution_system.nil?
+      heat_pump.backup_heating_active_during_defrost_isdefaulted = true
+    end
+
     # EER2
     (hpxml_bldg.cooling_systems + hpxml_bldg.heat_pumps).each do |hvac_system|
       if hvac_system.is_a?(HPXML::CoolingSystem)
@@ -6467,7 +6482,7 @@ module Defaults
           watts += UnitConversions.convert(HVAC.get_heating_input_capacity(heating_system.heating_capacity, heating_system.heating_efficiency_afue, heating_system.heating_efficiency_percent), 'btu/hr', 'w')
         end
 
-        watts += HVAC.get_blower_fan_power_watts(heating_system.fan_watts_per_cfm, heating_system.heating_design_airflow_cfm)
+        watts += HVAC.get_blower_fan_power_watts(heating_system.fan_watts_per_cfm, heating_system.additional_properties.heating_actual_airflow_cfm)
         watts += HVAC.get_pump_power_watts(heating_system.electric_auxiliary_energy)
 
         if branch_circuit.occupied_spaces.nil?
@@ -6483,7 +6498,7 @@ module Defaults
         branch_circuit_odu = get_or_add_branch_circuit(electric_panel, heat_pump, unit_num)
         branch_circuit_ahu = get_or_add_branch_circuit(electric_panel, heat_pump, unit_num, true)
 
-        watts_ahu = HVAC.get_blower_fan_power_watts(heat_pump.fan_watts_per_cfm, heat_pump.heating_design_airflow_cfm)
+        watts_ahu = HVAC.get_blower_fan_power_watts(heat_pump.fan_watts_per_cfm, heat_pump.additional_properties.heating_actual_airflow_cfm)
         watts_odu = HVAC.get_dx_coil_power_watts_from_capacity(UnitConversions.convert(heat_pump.heating_capacity, 'btu/hr', 'kbtu/hr'), branch_circuit_odu.voltage)
 
         if heat_pump.backup_type == HPXML::HeatPumpBackupTypeIntegrated
@@ -6529,7 +6544,7 @@ module Defaults
         branch_circuit_odu = get_or_add_branch_circuit(electric_panel, cooling_system, unit_num)
         branch_circuit_ahu = get_or_add_branch_circuit(electric_panel, cooling_system, unit_num, true)
 
-        watts_ahu = HVAC.get_blower_fan_power_watts(cooling_system.fan_watts_per_cfm, cooling_system.cooling_design_airflow_cfm)
+        watts_ahu = HVAC.get_blower_fan_power_watts(cooling_system.fan_watts_per_cfm, cooling_system.additional_properties.cooling_actual_airflow_cfm)
         watts_odu = HVAC.get_dx_coil_power_watts_from_capacity(UnitConversions.convert(cooling_system.cooling_capacity, 'btu/hr', 'kbtu/hr'), branch_circuit_odu.voltage)
 
         if branch_circuit_ahu.occupied_spaces.nil?
@@ -6559,7 +6574,7 @@ module Defaults
         next if !component_ids.include?(heat_pump.id)
         next if heat_pump.fraction_cool_load_served == 0
 
-        watts_ahu = HVAC.get_blower_fan_power_watts(heat_pump.fan_watts_per_cfm, heat_pump.cooling_design_airflow_cfm)
+        watts_ahu = HVAC.get_blower_fan_power_watts(heat_pump.fan_watts_per_cfm, heat_pump.additional_properties.cooling_actual_airflow_cfm)
         watts_odu = HVAC.get_dx_coil_power_watts_from_capacity(UnitConversions.convert(heat_pump.cooling_capacity, 'btu/hr', 'kbtu/hr'), HPXML::ElectricPanelVoltage240)
 
         if heat_pump.fraction_heat_load_served == 0

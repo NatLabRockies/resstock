@@ -2035,6 +2035,11 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
         hvac_system.equipment_type = HPXML::HVACEquipmentTypeSpaceConstrained
       end
     end
+    if hpxml_file.include? 'defrost-with-backup-heat-active'
+      hpxml_bldg.heat_pumps.each do |heat_pump|
+        heat_pump.backup_heating_active_during_defrost = true
+      end
+    end
 
     # ------------------ #
     # HPXML WaterHeating #

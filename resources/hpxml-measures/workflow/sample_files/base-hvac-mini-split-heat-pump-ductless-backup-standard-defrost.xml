@@ -11,7 +11,7 @@
       <SimulationControl>
         <Timestep>60</Timestep>
         <AdvancedResearchFeatures>
-          <DefrostModelType>advanced</DefrostModelType>
+          <DefrostModelType>standard</DefrostModelType>
         </AdvancedResearchFeatures>
       </SimulationControl>
       <UtilityBillScenarios>
@@ -330,6 +330,13 @@
               <HeatingCapacity>36000.0</HeatingCapacity>
               <CoolingCapacity>36000.0</CoolingCapacity>
               <CompressorType>variable speed</CompressorType>
+              <BackupType>integrated</BackupType>
+              <BackupSystemFuel>electricity</BackupSystemFuel>
+              <BackupAnnualHeatingEfficiency>
+                <Units>Percent</Units>
+                <Value>1.0</Value>
+              </BackupAnnualHeatingEfficiency>
+              <BackupHeatingCapacity>36000.0</BackupHeatingCapacity>
               <FractionHeatLoadServed>1.0</FractionHeatLoadServed>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>

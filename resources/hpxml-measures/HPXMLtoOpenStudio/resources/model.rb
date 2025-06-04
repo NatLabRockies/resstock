@@ -996,6 +996,41 @@ module Model
     return otm
   end
 
+  # Adds a MeterCustom to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the meter object
+  # @param fuel_type [String] Fuel type (HPXML::FuelTypeXXX)
+  # @param key_var_pairs [Array<Array<String>>] List of (key value, variable name) pairs to be included
+  # @return [OpenStudio::Model::MeterCustom] The model object
+  def self.add_meter_custom(model, name:, fuel_type:, key_var_pairs:)
+    meter = OpenStudio::Model::MeterCustom.new(model)
+    meter.setName(name)
+    meter.setFuelType(fuel_type)
+    key_var_pairs.uniq.each do |key_var|
+      meter.addKeyVarGroup(key_var[0], key_var[1])
+    end
+    return meter
+  end
+
+  # Adds a MeterCustomDecrement to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the meter object
+  # @param fuel_type [String] Fuel type (HPXML::FuelTypeXXX)
+  # @param key_var_pairs [Array<Array<String>>] List of (key value, variable name) pairs to be included
+  # @param source_meter_name [String] Name of source meter to subtract from
+  # @return [OpenStudio::Model::MeterCustomDecrement] The model object
+  def self.add_meter_custom_decrement(model, name:, fuel_type:, key_var_pairs:, source_meter_name:)
+    meter = OpenStudio::Model::MeterCustomDecrement.new(model, source_meter_name)
+    meter.setName(name)
+    meter.setFuelType(fuel_type)
+    key_var_pairs.uniq.each do |key_var|
+      meter.addKeyVarGroup(key_var[0], key_var[1])
+    end
+    return meter
+  end
+
   # Converts existing string to EMS friendly string.
   #
   # Source: openstudio-standards

@@ -1539,6 +1539,8 @@
       <sch:assert role='ERROR' test='number(h:extension/h:PanHeaterPowerWatts) &gt;= 0.0 or not(h:extension/h:PanHeaterPowerWatts)'>Expected extension/PanHeaterPowerWatts to be greater than or equal to 0.0.</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:PanHeaterControlType) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/PanHeaterControlType</sch:assert>
       <sch:assert role='ERROR' test='h:extension/h:PanHeaterControlType[text()="continuous" or text()="defrost mode"] or not(h:extension/h:PanHeaterControlType)'>Expected extension/PanHeaterControlType to be 'continuous' or 'defrost mode'</sch:assert>
+      <sch:assert role='ERROR' test='count(h:extension/h:BackupHeatingActiveDuringDefrost) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/BackupHeatingActiveDuringDefrost</sch:assert>
+      <sch:assert role='ERROR' test='h:extension/h:BackupHeatingActiveDuringDefrost[text()="true" or text()="false"] or not(h:extension/h:BackupHeatingActiveDuringDefrost)'>Expected extension/BackupHeatingActiveDuringDefrost to be 'true' or 'false'</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:EquipmentType) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/EquipmentType</sch:assert>
       <sch:assert role='ERROR' test='h:extension/h:EquipmentType[text()="split system" or text()="packaged system" or text()="small duct high velocity system" or text()="space constrained system"] or not(h:extension/h:EquipmentType)'>Expected extension/EquipmentType to be 'split system', 'packaged system', 'small duct high velocity system', or 'space constrained system'</sch:assert>
       <!-- Warnings -->
@@ -1604,6 +1606,8 @@
       <sch:assert role='ERROR' test='number(h:extension/h:PanHeaterPowerWatts) &gt;= 0.0 or not(h:extension/h:PanHeaterPowerWatts)'>Expected extension/PanHeaterPowerWatts to be greater than or equal to 0.0.</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:PanHeaterControlType) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/PanHeaterControlType</sch:assert>
       <sch:assert role='ERROR' test='h:extension/h:PanHeaterControlType[text()="continuous" or text()="defrost mode"] or not(h:extension/h:PanHeaterControlType)'>Expected extension/PanHeaterControlType to be 'continuous' or 'defrost mode'</sch:assert>
+      <sch:assert role='ERROR' test='count(h:extension/h:BackupHeatingActiveDuringDefrost) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/BackupHeatingActiveDuringDefrost</sch:assert>
+      <sch:assert role='ERROR' test='h:extension/h:BackupHeatingActiveDuringDefrost[text()="true" or text()="false"] or not(h:extension/h:BackupHeatingActiveDuringDefrost)'>Expected extension/BackupHeatingActiveDuringDefrost to be 'true' or 'false'</sch:assert>
       <!-- Warnings -->
       <sch:report role='WARN' test='number(h:AnnualCoolingEfficiency[h:Units="SEER"]/h:Value) &lt; 8'>SEER should typically be greater than or equal to 8.</sch:report>
       <sch:report role='WARN' test='number(h:AnnualCoolingEfficiency[h:Units="SEER2"]/h:Value) &lt; 7.6'>SEER2 should typically be greater than or equal to 7.6.</sch:report>
@@ -1709,6 +1713,8 @@
       <sch:assert role='ERROR' test='count(h:FractionCoolLoadServed) = 1'>Expected 1 element(s) for xpath: FractionCoolLoadServed</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:CrankcaseHeaterPowerWatts) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/CrankcaseHeaterPowerWatts</sch:assert>
       <sch:assert role='ERROR' test='number(h:extension/h:CrankcaseHeaterPowerWatts) &gt;= 0.0 or not(h:extension/h:CrankcaseHeaterPowerWatts)'>Expected extension/CrankcaseHeaterPowerWatts to be greater than or equal to 0.0.</sch:assert>
+      <sch:assert role='ERROR' test='count(h:extension/h:BackupHeatingActiveDuringDefrost) &lt;= 1'>Expected 0 or 1 element(s) for xpath: extension/BackupHeatingActiveDuringDefrost</sch:assert>
+      <sch:assert role='ERROR' test='h:extension/h:BackupHeatingActiveDuringDefrost[text()="true" or text()="false"] or not(h:extension/h:BackupHeatingActiveDuringDefrost)'>Expected extension/BackupHeatingActiveDuringDefrost to be 'true' or 'false'</sch:assert>
       <!-- Warnings -->
       <sch:report role='WARN' test='number(h:HeatingCapacity) &lt;= 1000 and number(h:HeatingCapacity) &gt; 0 and h:HeatingCapacity'>Heating capacity should typically be greater than or equal to 1000 Btu/hr.</sch:report>
       <sch:report role='WARN' test='number(h:CoolingCapacity) &lt;= 1000 and number(h:CoolingCapacity) &gt; 0 and h:CoolingCapacity'>Cooling capacity should typically be greater than or equal to 1000 Btu/hr.</sch:report>
@@ -1758,6 +1764,8 @@
       <sch:assert role='ERROR' test='count(h:BackupHeatingCapacity) = 0'>Expected 0 element(s) for xpath: BackupHeatingCapacity</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:BackupHeatingAutosizingFactor) = 0'>Expected 0 element(s) for xpath: extension/BackupHeatingAutosizingFactor</sch:assert>
       <sch:assert role='ERROR' test='count(h:extension/h:BackupHeatingAutosizingLimit) = 0'>Expected 0 element(s) for xpath: extension/BackupHeatingAutosizingLimit</sch:assert>
+      <!-- Warnings -->
+      <sch:report role='WARN' test='count(h:extension/h:BackupHeatingActiveDuringDefrost[text()="true"]) &gt; 0'>BackupHeatingActiveDuringDefrost does not apply when system has separate backup heating.</sch:report>
     </sch:rule>
   </sch:pattern>
 

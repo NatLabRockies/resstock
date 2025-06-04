@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>29cac2a9-ab31-4d66-ab4d-f0ace13c3408</version_id>
-  <version_modified>2025-05-27T17:37:05Z</version_modified>
+  <version_id>2e426af0-37b3-400f-8082-50e748a07bae</version_id>
+  <version_modified>2025-06-03T22:36:22Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -2613,6 +2613,28 @@
       </choices>
     </argument>
     <argument>
+      <name>cooling_system_compressor_type</name>
+      <display_name>Cooling System: Cooling Compressor Type</display_name>
+      <description>The compressor type of the cooling system. Required for central air conditioner and mini-split.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>single stage</value>
+          <display_name>single stage</display_name>
+        </choice>
+        <choice>
+          <value>two stage</value>
+          <display_name>two stage</display_name>
+        </choice>
+        <choice>
+          <value>variable speed</value>
+          <display_name>variable speed</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>cooling_system_cooling_efficiency_type</name>
       <display_name>Cooling System: Efficiency Type</display_name>
       <description>The efficiency type of the cooling system. System types central air conditioner and mini-split use SEER or SEER2. System types room air conditioner and packaged terminal air conditioner use EER or CEER. Ignored for system type evaporative cooler.</description>
@@ -2647,37 +2669,6 @@
       <required>true</required>
       <model_dependent>false</model_dependent>
       <default_value>13</default_value>
-    </argument>
-    <argument>
-      <name>cooling_system_cooling_compressor_type</name>
-      <display_name>Cooling System: Cooling Compressor Type</display_name>
-      <description>The compressor type of the cooling system. Only applies to central air conditioner and mini-split.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>single stage</value>
-          <display_name>single stage</display_name>
-        </choice>
-        <choice>
-          <value>two stage</value>
-          <display_name>two stage</display_name>
-        </choice>
-        <choice>
-          <value>variable speed</value>
-          <display_name>variable speed</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>cooling_system_cooling_sensible_heat_fraction</name>
-      <display_name>Cooling System: Cooling Sensible Heat Fraction</display_name>
-      <description>The sensible heat fraction of the cooling system. Ignored for evaporative cooler. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#central-air-conditioner'&gt;Central Air Conditioner&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner'&gt;Room Air Conditioner&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-air-conditioner'&gt;Packaged Terminal Air Conditioner&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-air-conditioner'&gt;Mini-Split Air Conditioner&lt;/a&gt;) is used.</description>
-      <type>Double</type>
-      <units>Frac</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>cooling_system_cooling_capacity</name>
@@ -2862,6 +2853,28 @@
       </choices>
     </argument>
     <argument>
+      <name>heat_pump_compressor_type</name>
+      <display_name>Heat Pump: Cooling Compressor Type</display_name>
+      <description>The compressor type of the heat pump. Required for air-to-air, mini-split and ground-to-air.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>single stage</value>
+          <display_name>single stage</display_name>
+        </choice>
+        <choice>
+          <value>two stage</value>
+          <display_name>two stage</display_name>
+        </choice>
+        <choice>
+          <value>variable speed</value>
+          <display_name>variable speed</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>heat_pump_heating_efficiency_type</name>
       <display_name>Heat Pump: Heating Efficiency Type</display_name>
       <description>The heating efficiency type of heat pump. System types air-to-air and mini-split use HSPF or HSPF2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use COP.</description>
@@ -2930,37 +2943,6 @@
       <default_value>13</default_value>
     </argument>
     <argument>
-      <name>heat_pump_cooling_compressor_type</name>
-      <display_name>Heat Pump: Cooling Compressor Type</display_name>
-      <description>The compressor type of the heat pump. Only applies to air-to-air, mini-split and ground-to-air.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>single stage</value>
-          <display_name>single stage</display_name>
-        </choice>
-        <choice>
-          <value>two stage</value>
-          <display_name>two stage</display_name>
-        </choice>
-        <choice>
-          <value>variable speed</value>
-          <display_name>variable speed</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>heat_pump_cooling_sensible_heat_fraction</name>
-      <display_name>Heat Pump: Cooling Sensible Heat Fraction</display_name>
-      <description>The sensible heat fraction of the heat pump. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'&gt;Air-to-Air Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'&gt;Mini-Split Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'&gt;Packaged Terminal Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'&gt;Room Air Conditioner w/ Reverse Cycle&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#ground-to-air-heat-pump'&gt;Ground-to-Air Heat Pump&lt;/a&gt;) is used.</description>
-      <type>Double</type>
-      <units>Frac</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>heat_pump_heating_capacity</name>
       <display_name>Heat Pump: Heating Capacity</display_name>
       <description>The output heating capacity of the heat pump. If not provided, the OS-HPXML autosized default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'&gt;Air-to-Air Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'&gt;Mini-Split Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'&gt;Packaged Terminal Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'&gt;Room Air Conditioner w/ Reverse Cycle&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#ground-to-air-heat-pump'&gt;Ground-to-Air Heat Pump&lt;/a&gt;) is used.</description>
@@ -2987,20 +2969,11 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>heat_pump_heating_capacity_retention_fraction</name>
-      <display_name>Heat Pump: Heating Capacity Retention Fraction</display_name>
-      <description>The output heating capacity of the heat pump at a user-specified temperature (e.g., 17F or 5F) divided by the above nominal heating capacity. Applies to all heat pump types except ground-to-air. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'&gt;Air-to-Air Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'&gt;Mini-Split Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'&gt;Packaged Terminal Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'&gt;Room Air Conditioner w/ Reverse Cycle&lt;/a&gt;) is used.</description>
+      <name>heat_pump_heating_capacity_fraction_17_f</name>
+      <display_name>Heat Pump: Heating Capacity Fraction at 17F</display_name>
+      <description>The output heating capacity of the heat pump at 17F divided by the above nominal heating capacity at 47F. Applies to all heat pump types except ground-to-air. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'&gt;Air-to-Air Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'&gt;Mini-Split Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#packaged-terminal-heat-pump'&gt;Packaged Terminal Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#room-air-conditioner-w-reverse-cycle'&gt;Room Air Conditioner w/ Reverse Cycle&lt;/a&gt;) is used.</description>
       <type>Double</type>
       <units>Frac</units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_heating_capacity_retention_temp</name>
-      <display_name>Heat Pump: Heating Capacity Retention Temperature</display_name>
-      <description>The user-specified temperature (e.g., 17F or 5F) for the above heating capacity retention fraction. Applies to all heat pump types except ground-to-air. Required if the Heating Capacity Retention Fraction is provided.</description>
-      <type>Double</type>
-      <units>F</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -3239,9 +3212,36 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>heat_pump_pan_heater_watts</name>
+      <display_name>Heat Pump: Pan Heater Power Watts</display_name>
+      <description>Heat Pump pan heater power consumption in Watts. Applies only to air-to-air and mini-split. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'&gt;Air-to-Air Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'&gt;Mini-Split Heat Pump&lt;/a&gt;) is used.</description>
+      <type>Double</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_pan_heater_control_type</name>
+      <display_name>Heat Pump: Pan Heater Control Type</display_name>
+      <description>Heat pump pan heater control type. If 'continuous', operates continuously when outdoor temperature is below 32F. If 'defrost mode', operates only during defrost mode when outdoor temperature is below 32F. Applies only to air-to-air and mini-split. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#air-to-air-heat-pump'&gt;Air-to-Air Heat Pump&lt;/a&gt;, &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump'&gt;Mini-Split Heat Pump&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>continuous</value>
+          <display_name>continuous</display_name>
+        </choice>
+        <choice>
+          <value>defrost mode</value>
+          <display_name>defrost mode</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>hvac_perf_data_capacity_type</name>
       <display_name>HVAC Detailed Performance Data: Capacity Type</display_name>
-      <description>Type of capacity values for detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps).</description>
+      <description>Type of capacity values for detailed performance data if available. Applies only to air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps).</description>
       <type>Choice</type>
       <units>Absolute capacities</units>
       <required>false</required>
@@ -3260,7 +3260,7 @@
     <argument>
       <name>hvac_perf_data_heating_outdoor_temperatures</name>
       <display_name>HVAC Detailed Performance Data: Heating Outdoor Temperatures</display_name>
-      <description>Outdoor temperatures of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). One of the outdoor temperatures must be 47 F. At least two performance data points are required using a comma-separated list.</description>
+      <description>Outdoor temperatures of heating detailed performance data if available. Applies only to air-source HVAC systems (air-to-air and mini-split heat pumps). Only certain outdoor temperatures are allowed, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-heating-performance-data'&gt;Detailed Heating Performance Data&lt;/a&gt;).</description>
       <type>String</type>
       <units>F</units>
       <required>false</required>
@@ -3269,7 +3269,16 @@
     <argument>
       <name>hvac_perf_data_heating_min_speed_capacities</name>
       <display_name>HVAC Detailed Performance Data: Heating Minimum Speed Capacities</display_name>
-      <description>Minimum speed capacities of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.</description>
+      <description>Minimum speed capacities of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to two stage and variable speed air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-heating-performance-data'&gt;Detailed Heating Performance Data&lt;/a&gt;).</description>
+      <type>String</type>
+      <units>Btu/hr or Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_heating_nom_speed_capacities</name>
+      <display_name>HVAC Detailed Performance Data: Heating Nominal Speed Capacities</display_name>
+      <description>Nominal speed capacities of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-heating-performance-data'&gt;Detailed Heating Performance Data&lt;/a&gt;).</description>
       <type>String</type>
       <units>Btu/hr or Frac</units>
       <required>false</required>
@@ -3278,7 +3287,7 @@
     <argument>
       <name>hvac_perf_data_heating_max_speed_capacities</name>
       <display_name>HVAC Detailed Performance Data: Heating Maximum Speed Capacities</display_name>
-      <description>Maximum speed capacities of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.</description>
+      <description>Maximum speed capacities of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-heating-performance-data'&gt;Detailed Heating Performance Data&lt;/a&gt;).</description>
       <type>String</type>
       <units>Btu/hr or Frac</units>
       <required>false</required>
@@ -3287,7 +3296,16 @@
     <argument>
       <name>hvac_perf_data_heating_min_speed_cops</name>
       <display_name>HVAC Detailed Performance Data: Heating Minimum Speed COPs</display_name>
-      <description>Minimum speed efficiency COP values of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.</description>
+      <description>Minimum speed efficiency COP values of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to two stage and variable speed air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-heating-performance-data'&gt;Detailed Heating Performance Data&lt;/a&gt;).</description>
+      <type>String</type>
+      <units>W/W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_heating_nom_speed_cops</name>
+      <display_name>HVAC Detailed Performance Data: Heating Nominal Speed COPs</display_name>
+      <description>Nominal speed efficiency COP values of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-heating-performance-data'&gt;Detailed Heating Performance Data&lt;/a&gt;).</description>
       <type>String</type>
       <units>W/W</units>
       <required>false</required>
@@ -3296,7 +3314,7 @@
     <argument>
       <name>hvac_perf_data_heating_max_speed_cops</name>
       <display_name>HVAC Detailed Performance Data: Heating Maximum Speed COPs</display_name>
-      <description>Maximum speed efficiency COP values of heating detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.</description>
+      <description>Maximum speed efficiency COP values of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-heating-performance-data'&gt;Detailed Heating Performance Data&lt;/a&gt;).</description>
       <type>String</type>
       <units>W/W</units>
       <required>false</required>
@@ -3305,7 +3323,7 @@
     <argument>
       <name>hvac_perf_data_cooling_outdoor_temperatures</name>
       <display_name>HVAC Detailed Performance Data: Cooling Outdoor Temperatures</display_name>
-      <description>Outdoor temperatures of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). One of the outdoor temperatures must be 95 F. At least two performance data points are required using a comma-separated list.</description>
+      <description>Outdoor temperatures of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Only certain outdoor temperatures are allowed, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-cooling-performance-data'&gt;Detailed Cooling Performance Data&lt;/a&gt;).</description>
       <type>String</type>
       <units>F</units>
       <required>false</required>
@@ -3314,7 +3332,16 @@
     <argument>
       <name>hvac_perf_data_cooling_min_speed_capacities</name>
       <display_name>HVAC Detailed Performance Data: Cooling Minimum Speed Capacities</display_name>
-      <description>Minimum speed capacities of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.</description>
+      <description>Minimum speed capacities of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to two stage and variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-cooling-performance-data'&gt;Detailed Cooling Performance Data&lt;/a&gt;).</description>
+      <type>String</type>
+      <units>Btu/hr or Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_cooling_nom_speed_capacities</name>
+      <display_name>HVAC Detailed Performance Data: Cooling Nominal Speed Capacities</display_name>
+      <description>Nominal speed capacities of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-cooling-performance-data'&gt;Detailed Cooling Performance Data&lt;/a&gt;).</description>
       <type>String</type>
       <units>Btu/hr or Frac</units>
       <required>false</required>
@@ -3323,7 +3350,7 @@
     <argument>
       <name>hvac_perf_data_cooling_max_speed_capacities</name>
       <display_name>HVAC Detailed Performance Data: Cooling Maximum Speed Capacities</display_name>
-      <description>Maximum speed capacities of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.</description>
+      <description>Maximum speed capacities of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-cooling-performance-data'&gt;Detailed Cooling Performance Data&lt;/a&gt;).</description>
       <type>String</type>
       <units>Btu/hr or Frac</units>
       <required>false</required>
@@ -3332,7 +3359,16 @@
     <argument>
       <name>hvac_perf_data_cooling_min_speed_cops</name>
       <display_name>HVAC Detailed Performance Data: Cooling Minimum Speed COPs</display_name>
-      <description>Minimum speed efficiency COP values of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.</description>
+      <description>Minimum speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to two stage and variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-cooling-performance-data'&gt;Detailed Cooling Performance Data&lt;/a&gt;).</description>
+      <type>String</type>
+      <units>W/W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_cooling_nom_speed_cops</name>
+      <display_name>HVAC Detailed Performance Data: Cooling Nominal Speed COPs</display_name>
+      <description>Nominal speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-cooling-performance-data'&gt;Detailed Cooling Performance Data&lt;/a&gt;).</description>
       <type>String</type>
       <units>W/W</units>
       <required>false</required>
@@ -3341,7 +3377,7 @@
     <argument>
       <name>hvac_perf_data_cooling_max_speed_cops</name>
       <display_name>HVAC Detailed Performance Data: Cooling Maximum Speed COPs</display_name>
-      <description>Maximum speed efficiency COP values of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central air conditioners, mini-split air conditioners, air-to-air heat pumps, and mini-split heat pumps). At least two performance data points are required using a comma-separated list.</description>
+      <description>Maximum speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation (&lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#detailed-cooling-performance-data'&gt;Detailed Cooling Performance Data&lt;/a&gt;).</description>
       <type>String</type>
       <units>W/W</units>
       <required>false</required>
@@ -8361,7 +8397,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>15A2DDF6</checksum>
+      <checksum>2DCA6709</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -8378,7 +8414,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>F4B1A602</checksum>
+      <checksum>50C508EE</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
@@ -8402,7 +8438,7 @@
       <filename>test_build_residential_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>7F31C85A</checksum>
+      <checksum>C93CBD32</checksum>
     </file>
   </files>
 </measure>

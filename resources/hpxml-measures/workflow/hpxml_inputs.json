@@ -3275,10 +3275,6 @@
     "heat_pump_backup_heating_efficiency": 0,
     "heat_pump_is_ducted": false
   },
-  "sample_files/base-hvac-mini-split-heat-pump-ductless-advanced-defrost.xml": {
-    "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless.xml",
-    "simulation_control_defrost_model_type": "advanced"
-  },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-autosize-factor.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless.xml",
     "heat_pump_cooling_capacity": null,
@@ -3346,10 +3342,20 @@
     "heating_system_2_heating_efficiency": 1
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-advanced-defrost.xml": {
-    "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-advanced-defrost.xml",
+    "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless.xml",
     "heat_pump_backup_type": "integrated",
     "heat_pump_backup_heating_efficiency": 1,
     "simulation_control_defrost_model_type": "advanced"
+  },
+  "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-advanced-defrost-with-backup-heat-active.xml": {
+    "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-advanced-defrost.xml"
+  },
+  "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-standard-defrost.xml": {
+    "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-advanced-defrost.xml",
+    "simulation_control_defrost_model_type": "standard"
+  },
+  "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-standard-defrost-with-backup-heat-active.xml": {
+    "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-standard-defrost.xml"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-stove.xml",

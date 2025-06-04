@@ -16,9 +16,11 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
 
   def teardown
     File.delete(@tmp_hpxml_path) if File.exist? @tmp_hpxml_path
-    File.delete(File.join(File.dirname(__FILE__), 'results_annual.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_annual.csv')
-    File.delete(File.join(File.dirname(__FILE__), 'results_panel.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_panel.csv')
-    File.delete(File.join(File.dirname(__FILE__), 'results_design_load_details.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_design_load_details.csv')
+    ['csv', 'json'].each do |file_ext|
+      File.delete(File.join(File.dirname(__FILE__), "results_annual.#{file_ext}")) if File.exist? File.join(File.dirname(__FILE__), "results_annual.#{file_ext}")
+      File.delete(File.join(File.dirname(__FILE__), "results_panel.#{file_ext}")) if File.exist? File.join(File.dirname(__FILE__), "results_panel.#{file_ext}")
+      File.delete(File.join(File.dirname(__FILE__), "results_design_load_details.#{file_ext}")) if File.exist? File.join(File.dirname(__FILE__), "results_design_load_details.#{file_ext}")
+    end
   end
 
   def sample_files_dir
@@ -156,7 +158,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
     electric_panel = hpxml_bldg.electric_panels[0]
 
-    assert_equal(4 + 3, electric_panel.breaker_spaces_total)
+    assert_equal(7, electric_panel.breaker_spaces_total)
     assert_equal(4, electric_panel.breaker_spaces_occupied)
     assert_equal(3, electric_panel.breaker_spaces_headroom)
     assert_in_epsilon(5000.0, electric_panel.capacity_total_watts[0], 0.001)
@@ -205,7 +207,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 295)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 270)
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 0)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 1)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 0)
@@ -215,7 +217,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 295 + 10766)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 11036)
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 0)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 2)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 0)
@@ -226,7 +228,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 393 + 14355)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 14715)
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 0)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 4)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 0)
@@ -236,8 +238,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 295)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 300 + 4022)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 360)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 4382)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 1)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 2)
 
@@ -246,8 +248,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 295 + 10551)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 300 + 4022)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 10911)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 4382)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 2)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 2)
 
@@ -257,8 +259,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 393 + 14067)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 300 + 4022)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 14547)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 4382)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 4)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 2)
 
@@ -268,7 +270,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 0)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 400 + 4022)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 4382)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 0)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 3)
 
@@ -279,7 +281,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 0)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 800 + 7657)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 8377)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 0)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 3)
 
@@ -288,7 +290,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 96.2)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 96)
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 0)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 1)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 0)
@@ -298,7 +300,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 82 + 10766)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 10848)
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 0)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 2)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 0)
@@ -309,7 +311,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 82 + 14355)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 14437)
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 0)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 4)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 0)
@@ -319,8 +321,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 96.2)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 400 + 4022)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 96)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 4382)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 1)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 3)
 
@@ -330,8 +332,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 96.2 + 11468)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 400 + 4022)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 11564)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 4382)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 2)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 3)
 
@@ -342,8 +344,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 96.2 + 15291)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 400 + 4022)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 15387)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 4382)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating], 4)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeCooling], 3)
 
@@ -353,8 +355,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 561 + 5839)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 600 + 5839)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 6379)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 6379)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 4)
 
     test_name = 'ASHP w/integrated electric backup'
@@ -362,8 +364,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 561 + 5839 + 10551)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 600 + 5839)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 16930)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 6379)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 4)
 
     # Switchover temperature should only be used for a heat pump with fossil fuel backup; use compressor lockout temperature instead.
@@ -375,8 +377,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 561 + 5839)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 600 + 5839)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 6379)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 6379)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 3)
 
     test_name = 'ASHP w/separate gas backup'
@@ -384,8 +386,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 210 + 3114 + 96)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 225 + 3114)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 3412)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 3316)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 5)
 
     test_name = 'ASHP w/separate gas backup switchover'
@@ -393,8 +395,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 281 + 4022 + 96)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 300 + 4022)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 4388)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 4292)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 5)
 
     test_name = 'ASHP heating only w/integrated electric backup'
@@ -402,7 +404,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 561 + 5839 + 10551)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 16930)
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 0)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 4)
 
@@ -412,7 +414,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 0)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 600 + 5839)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 6379)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 4)
 
     test_name = 'Ducted MSHP w/out backup'
@@ -421,8 +423,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 202 + 5839)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 216 + 5839)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 6034)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 6034)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 2)
 
     test_name = 'Ducted MSHP w/integrated electric backup'
@@ -430,8 +432,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 202 + 5839 + 10551)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 216 + 5839)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 16584)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 6034)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 4)
 
     test_name = 'Ducted MSHP w/integrated gas backup switchover'
@@ -439,8 +441,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 202 + 5839)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 216 + 5839)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 6034)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 6034)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 3)
 
     test_name = 'Ductless MSHP w/out backup'
@@ -448,8 +450,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 84 + 5839)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 84 + 5839)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 5915)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 5915)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 2)
 
     test_name = 'Ductless MSHP w/separate electric backup'
@@ -457,8 +459,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 42 + 3114 + 17584)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 42 + 3114)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 20736)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 3151)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 6)
 
     test_name = 'Ductless MSHP w/separate gas backup'
@@ -466,8 +468,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 42 + 3114 + 655)
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 42 + 3114)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeHeating, 3751)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeCooling, 3151)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeHeating, HPXML::ElectricPanelLoadTypeCooling], 3)
   end
 
@@ -674,7 +676,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     assert_equal(16, json['Electric Panel Breaker Spaces']['Total Count'])
     assert_equal(11, json['Electric Panel Breaker Spaces']['Occupied Count'])
     assert_equal(16 - 11, json['Electric Panel Breaker Spaces']['Headroom Count'])
-    assert_equal(9444.2, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Total Load (W)'])
+    assert_equal(9459.0, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Total Load (W)'])
     assert_equal(39.4, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Total Capacity (A)'])
     assert_in_epsilon(100.0 - 39.4, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Headroom Capacity (A)'], 0.01)
     assert_equal(5625.0, json['Electric Panel Load']['2023 Existing Dwelling Meter-Based: Total Load (W)'])
@@ -740,8 +742,8 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     json = JSON.parse(File.read(electric_panel_path))
 
     assert_equal(16, json['Electric Panel Breaker Spaces']['Total Count'])
-    assert_equal(11 + 12, json['Electric Panel Breaker Spaces']['Occupied Count'])
-    assert_equal(16 - 23, json['Electric Panel Breaker Spaces']['Headroom Count'])
+    assert_equal(23, json['Electric Panel Breaker Spaces']['Occupied Count'])
+    assert_equal(-7, json['Electric Panel Breaker Spaces']['Headroom Count'])
     assert_equal(34827.2, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Total Load (W)'])
     assert_equal(145.1, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Total Capacity (A)'])
     assert_in_epsilon(100.0 - 145.1, json['Electric Panel Load']['2023 Existing Dwelling Load-Based: Headroom Capacity (A)'], 0.01)
@@ -760,7 +762,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     sfs.each do |sf|
       pw += sf.power
     end
-    assert_in_epsilon(power, pw, 0.001)
+    assert_in_delta(power, pw, 1.0)
   end
 
   def _test_occupied_spaces(hpxml_bldg, types, occupied_spaces)
