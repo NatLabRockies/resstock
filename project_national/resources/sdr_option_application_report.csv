@@ -36,7 +36,7 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 3,Ultra high efficiency heat pump with elec backup,11,HVAC Cooling Partial Space Conditioning|100% Conditioned,530447,96.4
 3,Ultra high efficiency heat pump with elec backup,-1,All,530447,96.4
 4,ENERGY STAR heat pump with existing system as backup,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Separate Backup",11375,2.1
-4,ENERGY STAR heat pump with existing system as backup,2,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 5F-40F switchover band",235784,42.9
+4,ENERGY STAR heat pump with existing system as backup,2,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 5F-40F switchover band",235784,42.9
 4,ENERGY STAR heat pump with existing system as backup,3,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Separate Backup, Max Load",32957,6.0
 4,ENERGY STAR heat pump with existing system as backup,4,Heat Pump Backup|Use Existing System,280116,50.9
 4,ENERGY STAR heat pump with existing system as backup,5,Cooling Setpoint Has Offset|No,32957,6.0
@@ -110,7 +110,7 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 10,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,15,Infiltration Reduction|30%,352470,64.1
 10,Ultra high efficiency heat pump with elec backup + Light Touch Envelope,-1,All,530447,96.4
 11,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Separate Backup",11375,2.1
-11,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,2,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 5F-40F switchover band",235784,42.9
+11,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,2,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 5F-40F switchover band",235784,42.9
 11,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,3,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Separate Backup, Max Load",32957,6.0
 11,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,4,Heat Pump Backup|Use Existing System,280116,50.9
 11,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope,5,Cooling Setpoint Has Offset|No,32957,6.0
@@ -208,7 +208,7 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 15,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,23,Misc Hot Tub Spa|Electricity,6034,1.1
 15,Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,-1,All,530447,96.4
 16,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Separate Backup",11375,2.1
-16,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,2,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 5F-40F switchover band",235784,42.9
+16,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,2,"HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 5F-40F switchover band",235784,42.9
 16,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,3,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Separate Backup, Max Load",32957,6.0
 16,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,4,Heat Pump Backup|Use Existing System,280116,50.9
 16,ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency,5,Cooling Setpoint Has Offset|No,32957,6.0
