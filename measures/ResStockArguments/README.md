@@ -2061,30 +2061,6 @@ The maximum capacity limit applied to the auto-sizing methodology if Backup Type
 
 <br/>
 
-**Heat Pump: Backup Fuel Type**
-
-The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'.
-
-- **Name:** ``heat_pump_backup_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`
-
-<br/>
-
-**Heat Pump: Backup Rated Efficiency**
-
-The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'.
-
-- **Name:** ``heat_pump_backup_heating_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``true``
-
-<br/>
-
 **Heat Pump: Backup Heating Capacity**
 
 The backup output heating capacity of the heat pump. If not provided, the OS-HPXML autosized default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#backup'>Backup</a>) is used. Only applies if Backup Type is 'integrated'.
@@ -5829,6 +5805,30 @@ The fraction of manufacturer recommended charge of the heat pump.
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
+<br/>
+
+**Heat Pump: Backup Fuel Type**
+
+E.g., 'electricity' or 'auto'.
+
+- **Name:** ``heat_pump_backup_fuel``
+- **Type:** ``Choice``
+
+- **Required:** ``true``
+
+- **Choices:** `auto`, `electricity`, `natural gas`, `fuel oil`, `propane`
+
+<br/>
+
+**Heat Pump: Backup Rated Efficiency**
+
+E.g., '1' or 'auto'.
+
+- **Name:** ``heat_pump_backup_heating_efficiency``
+- **Type:** ``String``
+
+- **Required:** ``true``
 
 <br/>
 

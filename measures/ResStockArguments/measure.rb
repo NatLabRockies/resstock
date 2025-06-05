@@ -40,6 +40,8 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
       # Following are arguments with the same name but different options
       next if arg.name == 'geometry_unit_cfa'
+      next if arg.name == 'heat_pump_backup_fuel'
+      next if arg.name == 'heat_pump_backup_heating_efficiency'
 
       # Convert optional arguments to string arguments that allow Constants::Auto for defaulting
       if !arg.required
@@ -116,7 +118,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('geometry_unit_cfa', true)
     arg.setDisplayName('Geometry: Unit Conditioned Floor Area')
     arg.setDescription("E.g., '2000' or '#{Constants::Auto}'.")
-    arg.setUnits('sqft')
+    arg.setUnits('ft^2')
     arg.setDefaultValue('2000')
     args << arg
 
@@ -392,6 +394,24 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('Heat Pump: Fraction of Manufacturer Recommended Charge')
     arg.setDescription('The fraction of manufacturer recommended charge of the heat pump.')
     arg.setUnits('Frac')
+    args << arg
+
+    # Adds a heat_pump_backup_fuel argument similar to the BuildResidentialHPXML measure, but with "auto" allowed
+    arg = @build_residential_hpxml_measure_arguments.find { |arg| arg.name == 'heat_pump_backup_fuel' }
+    heat_pump_backup_fuel_choices = arg.choiceValues.map(&:to_s)
+    heat_pump_backup_fuel_choices.unshift(Constants::Auto)
+
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_fuel', heat_pump_backup_fuel_choices, true)
+    arg.setDisplayName('Heat Pump: Backup Fuel Type')
+    arg.setDescription("E.g., '#{HPXML::FuelTypeElectricity}' or '#{Constants::Auto}'.")
+    arg.setDefaultValue(HPXML::FuelTypeElectricity)
+    args << arg
+
+    # Adds a heat_pump_backup_heating_efficiency argument similar to the BuildResidentialHPXML measure, but as a string with "auto" allowed
+    arg = OpenStudio::Measure::OSArgument::makeStringArgument('heat_pump_backup_heating_efficiency', true)
+    arg.setDisplayName('Heat Pump: Backup Rated Efficiency')
+    arg.setDescription("E.g., '1' or '#{Constants::Auto}'.")
+    arg.setDefaultValue('1')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('heat_pump_backup_use_existing_system', false)

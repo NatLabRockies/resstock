@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>07536f4c-296b-47b0-8797-4b05b013616b</version_id>
-  <version_modified>2025-05-19T21:17:15Z</version_modified>
+  <version_id>bb2a99fb-b470-46de-ae47-fad80006d3a7</version_id>
+  <version_modified>2025-06-05T04:12:55Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -2922,42 +2922,6 @@
       <units>Btu/hr</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_fuel</name>
-      <display_name>Heat Pump: Backup Fuel Type</display_name>
-      <description>The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'.</description>
-      <type>Choice</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>electricity</default_value>
-      <choices>
-        <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
-        </choice>
-        <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
-        </choice>
-        <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
-        </choice>
-        <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_heating_efficiency</name>
-      <display_name>Heat Pump: Backup Rated Efficiency</display_name>
-      <description>The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'.</description>
-      <type>Double</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
     </argument>
     <argument>
       <name>heat_pump_backup_heating_capacity</name>
@@ -7279,7 +7243,7 @@
       <display_name>Geometry: Unit Conditioned Floor Area</display_name>
       <description>E.g., '2000' or 'auto'.</description>
       <type>String</type>
-      <units>sqft</units>
+      <units>ft^2</units>
       <required>true</required>
       <model_dependent>false</model_dependent>
       <default_value>2000</default_value>
@@ -7734,6 +7698,46 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>heat_pump_backup_fuel</name>
+      <display_name>Heat Pump: Backup Fuel Type</display_name>
+      <description>E.g., 'electricity' or 'auto'.</description>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>electricity</default_value>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>electricity</value>
+          <display_name>electricity</display_name>
+        </choice>
+        <choice>
+          <value>natural gas</value>
+          <display_name>natural gas</display_name>
+        </choice>
+        <choice>
+          <value>fuel oil</value>
+          <display_name>fuel oil</display_name>
+        </choice>
+        <choice>
+          <value>propane</value>
+          <display_name>propane</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>heat_pump_backup_heating_efficiency</name>
+      <display_name>Heat Pump: Backup Rated Efficiency</display_name>
+      <description>E.g., '1' or 'auto'.</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
       <name>heat_pump_backup_use_existing_system</name>
       <display_name>Heat Pump: Backup Use Existing System</display_name>
       <description>Whether the heat pump uses the existing system as backup.</description>
@@ -7787,7 +7791,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>3A9CC2B9</checksum>
+      <checksum>DA105C3D</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7804,7 +7808,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>AE180932</checksum>
+      <checksum>EFDB3921</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
