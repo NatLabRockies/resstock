@@ -507,7 +507,7 @@ upgrades:
 
       - &hvac_cooling_efficiency_non_ducted_heat_pump_detailed_performance
         option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
-        apply_logic: *nonducted_MSHP_apply_logic_detailed_performance
+        apply_logic: *nonducted_MSHP_apply_logic
 
       - &hvac_performance_data_mshp
         option: HVAC Detailed Performance Data|Cold Climate Heat Pump Non-Ducted
