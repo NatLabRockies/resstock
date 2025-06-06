@@ -1970,8 +1970,16 @@ Detailed report of how the 3 options were applied to the buildings.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade8:'Detailed Performance Data - Typical Cold Climate', Option1:'HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-HVAC Has Ducts|Yes => 423608 (77.0%)
-------------------------------------
+and => 413417 (75.2%)
+  HVAC Has Ducts|Yes => 423608 (77.0%)
+  not => 489600 (89.0%)
+    or => 60400 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+-------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 530447 (96.4%)
@@ -1991,14 +1999,22 @@ and => 530447 (96.4%)
     and => 11268 (2.0%)
       Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
 ------------------------------------------------------------------------------------------
-Overall applied to => 418430 (76.1%).
+Overall applied to => 408859 (74.3%).
 -------------------------------------
 
 -----------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade8:'Detailed Performance Data - Typical Cold Climate', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 -----------------------------------------------------------------------------------------------------------------------------------------
-HVAC Has Ducts|Yes => 423608 (77.0%)
-------------------------------------
+and => 413417 (75.2%)
+  HVAC Has Ducts|Yes => 423608 (77.0%)
+  not => 489600 (89.0%)
+    or => 60400 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+-------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 530447 (96.4%)
@@ -2018,14 +2034,22 @@ and => 530447 (96.4%)
     and => 11268 (2.0%)
       Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
 ------------------------------------------------------------------------------------------
-Overall applied to => 418430 (76.1%).
+Overall applied to => 408859 (74.3%).
 -------------------------------------
 
--------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade8:'Detailed Performance Data - Typical Cold Climate', Option3:'HVAC Detailed Performance Data|CCHP Ducted'
--------------------------------------------------------------------------------------------------------------------------------------------
-HVAC Has Ducts|Yes => 423608 (77.0%)
-------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade8:'Detailed Performance Data - Typical Cold Climate', Option3:'HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted'
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+and => 413417 (75.2%)
+  HVAC Has Ducts|Yes => 423608 (77.0%)
+  not => 489600 (89.0%)
+    or => 60400 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+-------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 530447 (96.4%)
@@ -2045,17 +2069,22 @@ and => 530447 (96.4%)
     and => 11268 (2.0%)
       Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
 ------------------------------------------------------------------------------------------
-Overall applied to => 418430 (76.1%).
+Overall applied to => 408859 (74.3%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade8:'Detailed Performance Data - Typical Cold Climate', Option4:'HVAC Heating Efficiency|MSHP, SEER2 22.7, 10.3 HSPF2, Typical Cold Climate'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 126308 (23.0%)
+or => 136583 (24.8%)
   HVAC Has Ducts|No => 126392 (23.0%)
-  not => 549916 (100.0%)
-    HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF => 84 (0.0%)
------------------------------------------------------------------
+  or => 60400 (11.0%)
+    or => 60400 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+-------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 530447 (96.4%)
@@ -2075,17 +2104,22 @@ and => 530447 (96.4%)
     and => 11268 (2.0%)
       Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
 ------------------------------------------------------------------------------------------
-Overall applied to => 111933 (20.4%).
+Overall applied to => 121588 (22.1%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade8:'Detailed Performance Data - Typical Cold Climate', Option5:'HVAC Cooling Efficiency|Non-Ducted Heat Pump'
 ---------------------------------------------------------------------------------------------------------------------------------------------
-and => 126308 (23.0%)
+or => 136583 (24.8%)
   HVAC Has Ducts|No => 126392 (23.0%)
-  not => 549916 (100.0%)
-    HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF => 84 (0.0%)
------------------------------------------------------------------
+  or => 60400 (11.0%)
+    or => 60400 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+-------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 530447 (96.4%)
@@ -2105,17 +2139,22 @@ and => 530447 (96.4%)
     and => 11268 (2.0%)
       Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
 ------------------------------------------------------------------------------------------
-Overall applied to => 111933 (20.4%).
+Overall applied to => 121588 (22.1%).
 -------------------------------------
 
------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade8:'Detailed Performance Data - Typical Cold Climate', Option6:'HVAC Detailed Performance Data|CCHP Non-Ducted'
------------------------------------------------------------------------------------------------------------------------------------------------
-and => 126308 (23.0%)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade8:'Detailed Performance Data - Typical Cold Climate', Option6:'HVAC Detailed Performance Data|Cold Climate Heat Pump Non-Ducted'
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+or => 136583 (24.8%)
   HVAC Has Ducts|No => 126392 (23.0%)
-  not => 549916 (100.0%)
-    HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF => 84 (0.0%)
------------------------------------------------------------------
+  or => 60400 (11.0%)
+    or => 60400 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+-------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 530447 (96.4%)
@@ -2135,17 +2174,17 @@ and => 530447 (96.4%)
     and => 11268 (2.0%)
       Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
 ------------------------------------------------------------------------------------------
-Overall applied to => 111933 (20.4%).
+Overall applied to => 121588 (22.1%).
 -------------------------------------
 
 All of the options (and-ing) were applied to: 0 (0.0%)
-Any of the options (or-ing) were applied to: 530363 (96.4%)
+Any of the options (or-ing) were applied to: 530447 (96.4%)
 --------------------------------------------------------------------------------
 Report of how the 3 options were applied to the buildings.
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================================================+=====================+==================+==================+
-|                   3 | hvac heating efficiency, hvac cooling efficiency, | 530363 (96.4%)      | 530363 (96.4%)   | 530363 (96.4%)   |
+|                   3 | hvac heating efficiency, hvac cooling efficiency, | 530447 (96.4%)      | 530447 (96.4%)   | 530447 (96.4%)   |
 |                     | hvac detailed performance data                    |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -2153,9 +2192,9 @@ Detailed report of how the 6 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   3 | 1, 2, 3           | 418430 (76.1%)      | 418430 (76.1%)   | 418430 (76.1%)   |
+|                   3 | 1, 2, 3           | 408859 (74.3%)      | 408859 (74.3%)   | 408859 (74.3%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 4, 5, 6           | 111933 (20.4%)      | 530363 (96.4%)   | 530363 (96.4%)   |
+|                   3 | 4, 5, 6           | 121588 (22.1%)      | 530447 (96.4%)   | 530447 (96.4%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------

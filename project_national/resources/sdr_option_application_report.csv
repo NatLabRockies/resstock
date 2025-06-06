@@ -61,13 +61,13 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 7,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,408859,74.3
 7,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,418430,76.1
 7,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,418430,76.1
-8,Detailed Performance Data - Typical Cold Climate,1,"HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate",418430,76.1
-8,Detailed Performance Data - Typical Cold Climate,2,HVAC Cooling Efficiency|Ducted Heat Pump,418430,76.1
-8,Detailed Performance Data - Typical Cold Climate,3,HVAC Detailed Performance Data|CCHP Ducted,418430,76.1
-8,Detailed Performance Data - Typical Cold Climate,4,"HVAC Heating Efficiency|MSHP, SEER2 22.7, 10.3 HSPF2, Typical Cold Climate",111933,20.4
-8,Detailed Performance Data - Typical Cold Climate,5,HVAC Cooling Efficiency|Non-Ducted Heat Pump,111933,20.4
-8,Detailed Performance Data - Typical Cold Climate,6,HVAC Detailed Performance Data|CCHP Non-Ducted,111933,20.4
-8,Detailed Performance Data - Typical Cold Climate,-1,All,530363,96.4
+8,Detailed Performance Data - Typical Cold Climate,1,"HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate",408859,74.3
+8,Detailed Performance Data - Typical Cold Climate,2,HVAC Cooling Efficiency|Ducted Heat Pump,408859,74.3
+8,Detailed Performance Data - Typical Cold Climate,3,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,408859,74.3
+8,Detailed Performance Data - Typical Cold Climate,4,"HVAC Heating Efficiency|MSHP, SEER2 22.7, 10.3 HSPF2, Typical Cold Climate",121588,22.1
+8,Detailed Performance Data - Typical Cold Climate,5,HVAC Cooling Efficiency|Non-Ducted Heat Pump,121588,22.1
+8,Detailed Performance Data - Typical Cold Climate,6,HVAC Detailed Performance Data|Cold Climate Heat Pump Non-Ducted,121588,22.1
+8,Detailed Performance Data - Typical Cold Climate,-1,All,530447,96.4
 9,ENERGY STAR heat pump with elec backup + Light Touch Envelope,1,"HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF",408859,74.3
 9,ENERGY STAR heat pump with elec backup + Light Touch Envelope,2,"HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Max Load",121588,22.1
 9,ENERGY STAR heat pump with elec backup + Light Touch Envelope,3,Cooling Setpoint Has Offset|No,121588,22.1
