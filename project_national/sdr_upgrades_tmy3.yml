@@ -490,30 +490,28 @@ upgrades:
     options:
       - &hvac_heating_efficiency_ashp_typical_cc
         option: HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
-        apply_logic: &ducted_ASHP_apply_logic_detailed_performance
-          - HVAC Has Ducts|Yes
+        apply_logic: *ducted_ASHP_apply_logic
 
       - &hvac_cooling_efficiency_ducted_heat_pump_detailed_performance
         option: HVAC Cooling Efficiency|Ducted Heat Pump
-        apply_logic: *ducted_ASHP_apply_logic_detailed_performance
+        apply_logic: *ducted_ASHP_apply_logic
       
       - &hvac_performance_data_ashp
-        option: HVAC Detailed Performance Data|CCHP Ducted
-        apply_logic: *ducted_ASHP_apply_logic_detailed_performance
+        option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
+        apply_logic: *ducted_ASHP_apply_logic
 
       - &hvac_heating_efficiency_mshp_typical_cc
         option: HVAC Heating Efficiency|MSHP, SEER2 22.7, 10.3 HSPF2, Typical Cold Climate
-        apply_logic: &nonducted_MSHP_apply_logic_detailed_performance
-          - HVAC Has Ducts|No
-          - not: HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+        apply_logic: *nonducted_MSHP_apply_logic
+
 
       - &hvac_cooling_efficiency_non_ducted_heat_pump_detailed_performance
         option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
         apply_logic: *nonducted_MSHP_apply_logic_detailed_performance
 
       - &hvac_performance_data_mshp
-        option: HVAC Detailed Performance Data|CCHP Non-Ducted
-        apply_logic: *nonducted_MSHP_apply_logic_detailed_performance
+        option: HVAC Detailed Performance Data|Cold Climate Heat Pump Non-Ducted
+        apply_logic: *nonducted_MSHP_apply_logic
 
 ### -- Heat Pumps + Light Touch -- ###
   - upgrade_name: ENERGY STAR heat pump with elec backup + Light Touch Envelope
