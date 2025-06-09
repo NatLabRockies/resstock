@@ -376,7 +376,7 @@ upgrades:
         ### -- ENERGY STAR ASHP applies to all dwellings with ducts, retaining existing system as backup
         ### -- ENERGY STAR ASHP for dwellings with ducts, but non-ducted heating systems
       - &ducted_ASHP_ENERGYSTAR_exist_backup_nonducted
-        option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Separate Backup
+        option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Existing Separate Backup
         apply_logic: &nonducted_heating_with_ducts_apply_logic
           - HVAC Has Ducts|Yes
           - not:
@@ -389,7 +389,7 @@ upgrades:
 
         ### -- ENERGY STAR ASHP for dwellings with ducted heating systems
       - &ducted_ASHP_ENERGYSTAR_exist_backup_ducted
-        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 5F-40F switchover band
+        option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 16, 9.2 HSPF, Existing Integrated Backup, 5F-40F switchover band
         apply_logic: &ducted_heating_apply_logic
           - HVAC Has Ducts|Yes
           - or:
@@ -401,14 +401,10 @@ upgrades:
 
         ### -- ENERGY STAR MSHP applies to all dwellings without ducts
       - &nonducted_MSHP_ENERGYSTAR_exist_backup
-        option: HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Separate Backup, Max Load
+        option: HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Existing Separate Backup, Max Load
         apply_logic: *nonducted_MSHP_apply_logic
         costs: *costs_mshp_nonducted_SEER_16_9-2_HSPF
         lifetime: *lifetime_nonducted_MSHP
-
-        ### Retain the existing heating system, including its size, as backup to the new heat pump
-      - &heat_pump_backup_use_existing_system
-        option: Heat Pump Backup|Use Existing System
 
         ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
       - *cooling_setpoint_no_offset_nonducted
@@ -661,8 +657,6 @@ upgrades:
       - *ducted_ASHP_ENERGYSTAR_exist_backup_nonducted
       - *ducted_ASHP_ENERGYSTAR_exist_backup_ducted
       - *nonducted_MSHP_ENERGYSTAR_exist_backup
-
-      - *heat_pump_backup_use_existing_system
   
         ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
       - *cooling_setpoint_no_offset_nonducted
@@ -902,8 +896,6 @@ upgrades:
       - *ducted_ASHP_ENERGYSTAR_exist_backup_nonducted
       - *ducted_ASHP_ENERGYSTAR_exist_backup_ducted
       - *nonducted_MSHP_ENERGYSTAR_exist_backup
-
-      - *heat_pump_backup_use_existing_system
 
         ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###      
       - *cooling_setpoint_no_offset_nonducted
