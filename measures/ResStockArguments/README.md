@@ -5834,7 +5834,7 @@ E.g., '1' or 'auto'.
 
 **Heat Pump: Backup Use Existing System**
 
-Whether the heat pump uses the existing system as backup.
+Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated, heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system.
 
 - **Name:** ``heat_pump_backup_use_existing_system``
 - **Type:** ``Boolean``

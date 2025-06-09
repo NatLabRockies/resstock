@@ -595,6 +595,12 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
           measures['BuildResidentialHPXML'][0]['heating_system_2_heating_capacity'] = heat_pump_backup_heating_capacity
           measures['BuildResidentialHPXML'][0]['heating_system_2_heating_autosizing_factor'] = heat_pump_backup_heating_autosizing_factor
 
+          # Hard set these in case the lookup set them to "auto" (ignored if Backup Type is "separate")
+          measures['BuildResidentialHPXML'][0]['heat_pump_backup_fuel'] = HPXML::FuelTypeElectricity
+          measures['BuildResidentialHPXML'][0]['heat_pump_backup_heating_efficiency'] = 1
+          measures['BuildResidentialHPXML'][0].delete('heat_pump_backup_heating_capacity')
+          measures['BuildResidentialHPXML'][0].delete('heat_pump_backup_heating_autosizing_factor')
+
           runner.registerInfo("Found '#{heating_system_type}' heating system type; setting it as 'heat_pump_backup_type=#{measures['BuildResidentialHPXML'][0]['heat_pump_backup_type']}'.")
         else
           runner.registerError("Unknown heat pump backup type '#{heat_pump_backup_type}'.")

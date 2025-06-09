@@ -60,7 +60,7 @@ Primary System becomes Backup to New Heat Pump
 **********************************************
 
 Set ``heat_pump_backup_use_existing_system=true`` for ``HVAC Heating Efficiency`` options in the lookup to retain the primary (existing) heating system as backup to the heat pump.
-The following properties are retained:
+The following properties of the existing heating system are retained:
 
 - fuel type
 - efficiency
