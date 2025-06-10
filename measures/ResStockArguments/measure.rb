@@ -403,14 +403,14 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
     arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_fuel', heat_pump_backup_fuel_choices, true)
     arg.setDisplayName('Heat Pump: Backup Fuel Type')
-    arg.setDescription("The backup fuel type of the heat pump. Only applies if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. E.g., '#{HPXML::FuelTypeElectricity}' or '#{Constants::Auto}'.")
+    arg.setDescription("The backup fuel type of the heat pump. Only applies if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. E.g., '#{HPXML::FuelTypeElectricity}' or '#{Constants::Auto}'. Use '#{Constants::Auto}' when Backup Use Existing System is true.")
     arg.setDefaultValue(HPXML::FuelTypeElectricity)
     args << arg
 
     # Adds a heat_pump_backup_heating_efficiency argument similar to the BuildResidentialHPXML measure, but as a string with "auto" allowed
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('heat_pump_backup_heating_efficiency', true)
     arg.setDisplayName('Heat Pump: Backup Rated Efficiency')
-    arg.setDescription("The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. E.g., '1' or '#{Constants::Auto}'.")
+    arg.setDescription("The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. E.g., '1' or '#{Constants::Auto}'. Use '#{Constants::Auto}' when Backup Use Existing System is true.")
     arg.setDefaultValue('1')
     args << arg
 

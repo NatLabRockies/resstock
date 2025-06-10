@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>fb103c61-7e1d-4d5e-bfcc-d36d5b25151e</version_id>
-  <version_modified>2025-06-10T17:51:00Z</version_modified>
+  <version_id>546e9840-9586-4163-afb9-4ae9720f79df</version_id>
+  <version_modified>2025-06-10T17:56:01Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -7700,7 +7700,7 @@
     <argument>
       <name>heat_pump_backup_fuel</name>
       <display_name>Heat Pump: Backup Fuel Type</display_name>
-      <description>The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'.</description>
+      <description>The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'. Use 'auto' when Backup Use Existing System is true.</description>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -7731,7 +7731,7 @@
     <argument>
       <name>heat_pump_backup_heating_efficiency</name>
       <display_name>Heat Pump: Backup Rated Efficiency</display_name>
-      <description>The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'.</description>
+      <description>The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'. Use 'auto' when Backup Use Existing System is true.</description>
       <type>String</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -7791,7 +7791,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>2E40FADE</checksum>
+      <checksum>F86FF112</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7808,7 +7808,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>FAA9D249</checksum>
+      <checksum>60C7A95E</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

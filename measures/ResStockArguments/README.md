@@ -5810,7 +5810,7 @@ The fraction of manufacturer recommended charge of the heat pump.
 
 **Heat Pump: Backup Fuel Type**
 
-The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'.
+The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'. Use 'auto' when Backup Use Existing System is true.
 
 - **Name:** ``heat_pump_backup_fuel``
 - **Type:** ``Choice``
@@ -5823,7 +5823,7 @@ The backup fuel type of the heat pump. Only applies if Backup Type is 'integrate
 
 **Heat Pump: Backup Rated Efficiency**
 
-The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'.
+The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'. Use 'auto' when Backup Use Existing System is true.
 
 - **Name:** ``heat_pump_backup_heating_efficiency``
 - **Type:** ``String``
