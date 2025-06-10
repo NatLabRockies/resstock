@@ -37002,7 +37002,7 @@ Arguments
      - ft^2
      - Double
      - auto
-     - E.g., '2000' or 'auto'.
+     - The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or 'auto'.
    * - ``geometry_garage_protrusion``
      - true
      - Frac
@@ -39250,13 +39250,13 @@ Arguments
      - 
      - Choice
      - auto, electricity, natural gas, fuel oil, propane
-     - E.g., 'electricity' or 'auto'.
+     - The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'.
    * - ``heat_pump_backup_heating_efficiency``
      - true
      - 
      - Double
      - auto
-     - E.g., '1' or 'auto'.
+     - The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'.
    * - ``heat_pump_backup_heating_capacity``
      - false
      - Btu/hr
@@ -39364,7 +39364,7 @@ Arguments
      - 
      - Boolean
      - true, false
-     - Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated, heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system.
+     - Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system.
 
 Options
 *******
@@ -41146,13 +41146,13 @@ Arguments
      - 
      - Choice
      - auto, electricity, natural gas, fuel oil, propane
-     - E.g., 'electricity' or 'auto'.
+     - The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'.
    * - ``heat_pump_backup_heating_efficiency``
      - true
      - 
      - Double
      - auto
-     - E.g., '1' or 'auto'.
+     - The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'.
    * - ``heat_pump_backup_heating_capacity``
      - false
      - Btu/hr
