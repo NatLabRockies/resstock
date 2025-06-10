@@ -39249,7 +39249,7 @@ Arguments
      - true
      - 
      - Choice
-     - auto, auto, electricity, natural gas, fuel oil, propane
+     - auto, electricity, natural gas, fuel oil, propane
      - E.g., 'electricity' or 'auto'.
    * - ``heat_pump_backup_heating_efficiency``
      - true
@@ -41145,7 +41145,7 @@ Arguments
      - true
      - 
      - Choice
-     - auto, auto, electricity, natural gas, fuel oil, propane
+     - auto, electricity, natural gas, fuel oil, propane
      - E.g., 'electricity' or 'auto'.
    * - ``heat_pump_backup_heating_efficiency``
      - true
@@ -63108,7 +63108,7 @@ Arguments
      - false
      - 
      - Integer
-     -
+     - auto
      - The year the building was built.
    * - ``vintage``
      - false
