@@ -36997,6 +36997,12 @@ Arguments
      - Type
      - Choices
      - Description
+   * - ``geometry_unit_cfa``
+     - true
+     - ft^2
+     - Double
+     - auto
+     - E.g., '2000' or 'auto'.
    * - ``geometry_garage_protrusion``
      - true
      - Frac
@@ -37009,12 +37015,6 @@ Arguments
      - String
      -
      - E.g., '2000-2499'.
-   * - ``geometry_unit_cfa``
-     - true
-     - ft^2
-     - Double
-     -
-     - E.g., '2000' or 'auto'.
 
 Options
 *******
@@ -37028,55 +37028,55 @@ From ``project_national`` the list of options, option stock sturation, and optio
 
    * - Option name
      - Stock saturation
+     - ``geometry_unit_cfa``
      - ``geometry_garage_protrusion``
      - ``geometry_unit_cfa_bin``
-     - ``geometry_unit_cfa``
 
    * - 0-499
      - 3.2%
+     - auto
      - 0.72
      - 0-499
-     - auto
    * - 500-749
      - 8.5%
+     - auto
      - 0.75
      - 500-749
-     - auto
    * - 750-999
      - 15%
+     - auto
      - 0.5
      - 750-999
-     - auto
    * - 1000-1499
      - 26%
+     - auto
      - 0.5
      - 1000-1499
-     - auto
    * - 1500-1999
      - 19%
+     - auto
      - 0.5
      - 1500-1999
-     - auto
    * - 2000-2499
      - 12%
+     - auto
      - 0.5
      - 2000-2499
-     - auto
    * - 2500-2999
      - 6.5%
+     - auto
      - 0.5
      - 2500-2999
-     - auto
    * - 3000-3999
      - 6.1%
+     - auto
      - 0.5
      - 3000-3999
-     - auto
    * - 4000+
      - 3%
+     - auto
      - 0.5
      - 4000+
-     - auto
 
 .. _geometry_floor_area_bin:
 
@@ -39245,6 +39245,18 @@ Arguments
      - Double
      -
      - The maximum capacity limit applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, no limit is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Limit.
+   * - ``heat_pump_backup_fuel``
+     - true
+     - 
+     - Choice
+     - auto, auto, electricity, natural gas, fuel oil, propane
+     - E.g., 'electricity' or 'auto'.
+   * - ``heat_pump_backup_heating_efficiency``
+     - true
+     - 
+     - Double
+     - auto
+     - E.g., '1' or 'auto'.
    * - ``heat_pump_backup_heating_capacity``
      - false
      - Btu/hr
@@ -39347,18 +39359,6 @@ Arguments
      - String
      -
      - Whether the heating system has a flue or chimney.
-   * - ``heat_pump_backup_fuel``
-     - true
-     - 
-     - Choice
-     - auto, electricity, natural gas, fuel oil, propane
-     - E.g., 'electricity' or 'auto'.
-   * - ``heat_pump_backup_heating_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - E.g., '1' or 'auto'.
    * - ``heat_pump_backup_use_existing_system``
      - false
      - 
@@ -39403,6 +39403,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``heat_pump_compressor_lockout_temp``
      - ``heat_pump_backup_type``
      - ``heat_pump_backup_heating_autosizing_limit``
+     - ``heat_pump_backup_fuel``
+     - ``heat_pump_backup_heating_efficiency``
      - ``heat_pump_backup_heating_capacity``
      - ``heat_pump_backup_heating_lockout_temp``
      - ``heat_pump_sizing_methodology``
@@ -39420,8 +39422,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``geothermal_loop_pipe_type``
      - ``geothermal_loop_pipe_diameter``
      - ``heating_system_has_flue_or_chimney``
-     - ``heat_pump_backup_fuel``
-     - ``heat_pump_backup_heating_efficiency``
      - ``heat_pump_backup_use_existing_system``
 
    * - ASHP, SEER 10, 6.2 HSPF
@@ -39451,6 +39451,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - integrated
      - auto
+     - electricity
+     - 1
      - auto
      - auto
      - ACCA
@@ -39468,8 +39470,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - ASHP, SEER 13, 7.7 HSPF
      - 7.4%
@@ -39498,6 +39498,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - integrated
      - auto
+     - electricity
+     - 1
      - auto
      - auto
      - ACCA
@@ -39515,8 +39517,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - ASHP, SEER 15, 8.5 HSPF
      - 7.2%
@@ -39545,6 +39545,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - integrated
      - auto
+     - electricity
+     - 1
      - auto
      - auto
      - ACCA
@@ -39562,8 +39564,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Electric Baseboard, 100% Efficiency
      - 6.3%
@@ -39592,6 +39592,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -39609,8 +39611,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Electric Boiler, 100% AFUE
      - 0.21%
@@ -39639,6 +39639,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -39656,8 +39658,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Electric Furnace, 100% AFUE
      - 11%
@@ -39686,6 +39686,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -39703,8 +39705,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Electric Wall Furnace, 100% AFUE
      - 1.1%
@@ -39733,6 +39733,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -39750,8 +39752,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Fuel Boiler, 76% AFUE
      - 0.89%
@@ -39780,6 +39780,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -39797,8 +39799,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Fuel Boiler, 80% AFUE
      - 3.3%
@@ -39827,6 +39827,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -39844,8 +39846,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Fuel Boiler, 90% AFUE
      - 0.49%
@@ -39874,6 +39874,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -39891,8 +39893,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Fuel Furnace, 60% AFUE
      - 0.49%
@@ -39921,6 +39921,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -39938,8 +39940,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Fuel Furnace, 76% AFUE
      - 2.8%
@@ -39968,6 +39968,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -39985,8 +39987,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Fuel Furnace, 80% AFUE
      - 25%
@@ -40015,6 +40015,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -40032,8 +40034,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Fuel Furnace, 92.5% AFUE
      - 15%
@@ -40062,6 +40062,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -40079,8 +40081,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Fuel Wall/Floor Furnace, 60% AFUE
      - 3.2%
@@ -40109,6 +40109,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -40126,8 +40128,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Fuel Wall/Floor Furnace, 68% AFUE
      - 2.8%
@@ -40156,6 +40156,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -40173,8 +40175,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - MSHP, SEER 14.5, 8.2 HSPF
      - 0.96%
@@ -40203,6 +40203,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - integrated
      - auto
+     - electricity
+     - 1
      - auto
      - auto
      - ACCA
@@ -40220,8 +40222,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - MSHP, SEER 29.3, 14 HSPF
      - 0.015%
@@ -40250,6 +40250,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - integrated
      - auto
+     - electricity
+     - 1
      - auto
      - auto
      - ACCA
@@ -40267,8 +40269,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - None
      - 1.1%
@@ -40297,6 +40297,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - 
      - ACCA
@@ -40314,8 +40316,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
      - false
    * - Shared Heating
      - 9.6%
@@ -41141,6 +41141,18 @@ Arguments
      - Double
      -
      - The maximum capacity limit applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, no limit is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Limit.
+   * - ``heat_pump_backup_fuel``
+     - true
+     - 
+     - Choice
+     - auto, auto, electricity, natural gas, fuel oil, propane
+     - E.g., 'electricity' or 'auto'.
+   * - ``heat_pump_backup_heating_efficiency``
+     - true
+     - 
+     - Double
+     - auto
+     - E.g., '1' or 'auto'.
    * - ``heat_pump_backup_heating_capacity``
      - false
      - Btu/hr
@@ -41225,18 +41237,6 @@ Arguments
      - String
      -
      - Whether the heating system has a flue or chimney.
-   * - ``heat_pump_backup_fuel``
-     - true
-     - 
-     - Choice
-     - auto, electricity, natural gas, fuel oil, propane
-     - E.g., 'electricity' or 'auto'.
-   * - ``heat_pump_backup_heating_efficiency``
-     - true
-     - 
-     - Double
-     -
-     - E.g., '1' or 'auto'.
 
 Options
 *******
@@ -41275,6 +41275,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``heat_pump_fraction_cool_load_served``
      - ``heat_pump_backup_type``
      - ``heat_pump_backup_heating_autosizing_limit``
+     - ``heat_pump_backup_fuel``
+     - ``heat_pump_backup_heating_efficiency``
      - ``heat_pump_backup_heating_capacity``
      - ``heat_pump_sizing_methodology``
      - ``heat_pump_backup_sizing_methodology``
@@ -41289,8 +41291,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - ``geothermal_loop_pipe_type``
      - ``geothermal_loop_pipe_diameter``
      - ``heating_system_has_flue_or_chimney``
-     - ``heat_pump_backup_fuel``
-     - ``heat_pump_backup_heating_efficiency``
 
    * - Boiler Baseboards Heating Only, Electricity
      - 2.8%
@@ -41319,6 +41319,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - ACCA
      - auto
@@ -41333,8 +41335,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
    * - Boiler Baseboards Heating Only, Fuel
      - 4.4%
      - Shared Boiler w/ Baseboard
@@ -41362,6 +41362,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - ACCA
      - auto
@@ -41376,8 +41378,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
    * - Fan Coil Cooling Only
      - 1.4%
      - 
@@ -41448,6 +41448,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - ACCA
      - auto
@@ -41462,8 +41464,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
    * - Fan Coil Heating and Cooling, Fuel
      - 1.1%
      - Shared Boiler w/ Ductless Fan Coil
@@ -41491,6 +41491,8 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 1
      - none
      - auto
+     - electricity
+     - 1
      - auto
      - ACCA
      - auto
@@ -41505,8 +41507,6 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - auto
      - auto
      - auto
-     - electricity
-     - 1
    * - None
      - 89%
      - 
@@ -63108,7 +63108,7 @@ Arguments
      - false
      - 
      - Integer
-     - auto
+     -
      - The year the building was built.
    * - ``vintage``
      - false
