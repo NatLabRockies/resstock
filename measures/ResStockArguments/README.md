@@ -5294,7 +5294,7 @@ E.g., '2000-2499'.
 
 **Geometry: Unit Conditioned Floor Area**
 
-E.g., '2000' or 'auto'.
+The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or 'auto'.
 
 - **Name:** ``geometry_unit_cfa``
 - **Type:** ``String``
@@ -5810,7 +5810,7 @@ The fraction of manufacturer recommended charge of the heat pump.
 
 **Heat Pump: Backup Fuel Type**
 
-E.g., 'electricity' or 'auto'.
+The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'.
 
 - **Name:** ``heat_pump_backup_fuel``
 - **Type:** ``Choice``
@@ -5823,7 +5823,7 @@ E.g., 'electricity' or 'auto'.
 
 **Heat Pump: Backup Rated Efficiency**
 
-E.g., '1' or 'auto'.
+The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'.
 
 - **Name:** ``heat_pump_backup_heating_efficiency``
 - **Type:** ``String``
@@ -5834,7 +5834,7 @@ E.g., '1' or 'auto'.
 
 **Heat Pump: Backup Use Existing System**
 
-Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated, heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system.
+Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system.
 
 - **Name:** ``heat_pump_backup_use_existing_system``
 - **Type:** ``Boolean``

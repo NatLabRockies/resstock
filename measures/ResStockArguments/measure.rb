@@ -117,7 +117,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # Adds a geometry_unit_cfa argument similar to the BuildResidentialHPXML measure, but as a string with "auto" allowed
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('geometry_unit_cfa', true)
     arg.setDisplayName('Geometry: Unit Conditioned Floor Area')
-    arg.setDescription("E.g., '2000' or '#{Constants::Auto}'.")
+    arg.setDescription("The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or '#{Constants::Auto}'.")
     arg.setUnits('ft^2')
     arg.setDefaultValue('2000')
     args << arg
@@ -403,20 +403,20 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
     arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_fuel', heat_pump_backup_fuel_choices, true)
     arg.setDisplayName('Heat Pump: Backup Fuel Type')
-    arg.setDescription("E.g., '#{HPXML::FuelTypeElectricity}' or '#{Constants::Auto}'.")
+    arg.setDescription("The backup fuel type of the heat pump. Only applies if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. E.g., '#{HPXML::FuelTypeElectricity}' or '#{Constants::Auto}'.")
     arg.setDefaultValue(HPXML::FuelTypeElectricity)
     args << arg
 
     # Adds a heat_pump_backup_heating_efficiency argument similar to the BuildResidentialHPXML measure, but as a string with "auto" allowed
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('heat_pump_backup_heating_efficiency', true)
     arg.setDisplayName('Heat Pump: Backup Rated Efficiency')
-    arg.setDescription("E.g., '1' or '#{Constants::Auto}'.")
+    arg.setDescription("The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. E.g., '1' or '#{Constants::Auto}'.")
     arg.setDefaultValue('1')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('heat_pump_backup_use_existing_system', false)
     arg.setDisplayName('Heat Pump: Backup Use Existing System')
-    arg.setDescription("Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is '#{HPXML::HeatPumpBackupTypeIntegrated}, heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is '#{HPXML::HeatPumpBackupTypeSeparate}', heating_system_2_xxx arguments are assigned values based on the existing heating system.")
+    arg.setDescription("Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is '#{HPXML::HeatPumpBackupTypeIntegrated}', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is '#{HPXML::HeatPumpBackupTypeSeparate}', heating_system_2_xxx arguments are assigned values based on the existing heating system.")
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_average_mph', false)

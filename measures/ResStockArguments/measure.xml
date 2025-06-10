@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>c5cc8313-986f-451f-b395-fd1325b11d79</version_id>
-  <version_modified>2025-06-09T19:52:47Z</version_modified>
+  <version_id>fb103c61-7e1d-4d5e-bfcc-d36d5b25151e</version_id>
+  <version_modified>2025-06-10T17:51:00Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -7241,7 +7241,7 @@
     <argument>
       <name>geometry_unit_cfa</name>
       <display_name>Geometry: Unit Conditioned Floor Area</display_name>
-      <description>E.g., '2000' or 'auto'.</description>
+      <description>The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or 'auto'.</description>
       <type>String</type>
       <units>ft^2</units>
       <required>true</required>
@@ -7700,7 +7700,7 @@
     <argument>
       <name>heat_pump_backup_fuel</name>
       <display_name>Heat Pump: Backup Fuel Type</display_name>
-      <description>E.g., 'electricity' or 'auto'.</description>
+      <description>The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'.</description>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -7731,7 +7731,7 @@
     <argument>
       <name>heat_pump_backup_heating_efficiency</name>
       <display_name>Heat Pump: Backup Rated Efficiency</display_name>
-      <description>E.g., '1' or 'auto'.</description>
+      <description>The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'.</description>
       <type>String</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -7740,7 +7740,7 @@
     <argument>
       <name>heat_pump_backup_use_existing_system</name>
       <display_name>Heat Pump: Backup Use Existing System</display_name>
-      <description>Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated, heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system.</description>
+      <description>Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system.</description>
       <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -7791,7 +7791,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>57B606FA</checksum>
+      <checksum>2E40FADE</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7808,7 +7808,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>B92DD079</checksum>
+      <checksum>FAA9D249</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
