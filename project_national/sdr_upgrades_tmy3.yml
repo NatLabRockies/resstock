@@ -225,20 +225,6 @@ references:
         - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
         - HVAC Shared Efficiencies|Fan Coil Cooling Only
 
-  ducted_ghp_apply_logic: &ducted_ghp_apply_logic
-    - HVAC Has Ducts|Yes
-    - not:
-      - or:
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Cooling Only
-    - not:
-      - or:
-        - Ground Thermal Conductivity|0.5
-        - Ground Thermal Conductivity|0.8
-
   ev_15_percent_efficiency: &ev_15_percent_efficiency
     option: Electric Vehicle Efficiency Increase|15%
 
@@ -337,7 +323,7 @@ references:
 
   dual_speed_ducted_ghp: &dual_speed_ducted_ghp
       option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
-      apply_logic: *ducted_ghp_apply_logic
+      apply_logic: *ducted_ashp_apply_logic
       costs: *costs_ghp
       lifetime: *lifetime_ducted_ghp
 
@@ -382,7 +368,7 @@ upgrades:
     package_apply_logic: *remove_nonducted_high_rise_shared
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8
-        apply_logic: *ducted_ghp_apply_logic
+        apply_logic: *ducted_ashp_apply_logic
         costs: *costs_ghp
         lifetime: *lifetime_ducted_ghp
 
@@ -400,7 +386,7 @@ upgrades:
     package_apply_logic: *remove_nonducted_high_rise_shared
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4
-        apply_logic: *ducted_ghp_apply_logic
+        apply_logic: *ducted_ashp_apply_logic
         costs: *costs_ghp
         lifetime: *lifetime_ducted_ghp
 
