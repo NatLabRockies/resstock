@@ -41,7 +41,7 @@ postprocessing:
   partition_columns:
     - State
     - County
-  publish_annual_results: false
+  publish_annual_results: true
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
   # aws:
   #  region_name: us-west-2
