@@ -19,7 +19,7 @@ sampler:
   # type: residential_quota # For production run
   args:
     sample_file: resources/sdr_minimal_buildstock.csv # For CI
-    # n_datapoints: 5 # For production run
+    # n_datapoints: 550000 # For production run
 
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
@@ -41,7 +41,7 @@ postprocessing:
   partition_columns:
     - State
     - County
-  publish_annual_results: true
+  publish_annual_results: false
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
   # aws:
   #  region_name: us-west-2
