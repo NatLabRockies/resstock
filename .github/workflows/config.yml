@@ -627,6 +627,7 @@ jobs:
             echo "Error: Found 'Fail' in the following files:"
             echo "$result"
             exit 1
+          fi
 
       - name: Commit the integration tests results
         run: |
