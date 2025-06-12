@@ -10,7 +10,7 @@ class TestBuildStockBatch < Minitest::Test
     @national_baseline = 'project_national/national_baseline'
 
     @expected_inputs = CSV.read(File.join('resources', 'data', 'dictionary', 'inputs.csv'), headers: true)
-    
+
     @expected_outputs = CSV.read(File.join('resources', 'data', 'dictionary', 'outputs.csv'), headers: true)
     @expected_outputs['Annual Name'] = _map_scenario_names(@expected_outputs['Annual Name'], 'report_simulation_output.emissions_<type>_<scenario_name>', 'report_simulation_output.emissions_co_2_e_lrmer_mid_case_15')
     @expected_outputs['Annual Name'] = _map_scenario_names(@expected_outputs['Annual Name'], 'report_simulation_output.electric_panel_load_<type>', 'report_simulation_output.electric_panel_load_2023_existing_dwelling_load_based')
@@ -59,7 +59,7 @@ class TestBuildStockBatch < Minitest::Test
 
     extra_input_arguments = actual_input_names - expected_input_names
     if !extra_input_arguments.empty?
-      puts "extra input arguments:"
+      puts 'extra input arguments:'
       extra_input_arguments.sort.each do |extra_input_argument|
         puts "\t- #{extra_input_argument}"
       end
@@ -68,7 +68,7 @@ class TestBuildStockBatch < Minitest::Test
 
     missing_input_arguments = expected_input_names - actual_input_names
     if !missing_input_arguments.empty?
-      puts "missing input arguments:"
+      puts 'missing input arguments:'
       missing_input_arguments.sort.each do |missing_input_argument|
         puts "\t- #{missing_input_argument}"
       end
@@ -85,7 +85,7 @@ class TestBuildStockBatch < Minitest::Test
 
     extra_input_arguments = actual_input_names - expected_input_names
     if !extra_input_arguments.empty?
-      puts "extra input arguments:"
+      puts 'extra input arguments:'
       extra_input_arguments.sort.each do |extra_input_argument|
         puts "\t- #{extra_input_argument}"
       end
@@ -94,7 +94,7 @@ class TestBuildStockBatch < Minitest::Test
 
     missing_input_arguments = expected_input_names - actual_input_names
     if !missing_input_arguments.empty?
-      puts "missing input arguments:"
+      puts 'missing input arguments:'
       missing_input_arguments.sort.each do |missing_input_argument|
         puts "\t- #{missing_input_argument}"
       end
@@ -114,7 +114,7 @@ class TestBuildStockBatch < Minitest::Test
 
     extra_annual_outputs = actual_annual_names - expected_annual_names
     if !extra_annual_outputs.empty?
-      puts "extra annual outputs:"
+      puts 'extra annual outputs:'
       extra_annual_outputs.sort.each do |extra_annual_output|
         puts "\t- #{extra_annual_output}"
       end
@@ -123,7 +123,7 @@ class TestBuildStockBatch < Minitest::Test
 
     missing_annual_outputs = expected_annual_names - actual_annual_names
     if !missing_annual_outputs.empty?
-      puts "missing annual outputs:"
+      puts 'missing annual outputs:'
       missing_annual_outputs.sort.each do |missing_annual_output|
         puts "\t- #{missing_annual_output}"
       end
@@ -157,7 +157,7 @@ class TestBuildStockBatch < Minitest::Test
 
     extra_annual_outputs = actual_annual_names - expected_annual_names
     if !extra_annual_outputs.empty?
-      puts "extra annual outputs:"
+      puts 'extra annual outputs:'
       extra_annual_outputs.sort.each do |extra_annual_output|
         puts "\t- #{extra_annual_output}"
       end
@@ -166,7 +166,7 @@ class TestBuildStockBatch < Minitest::Test
 
     missing_annual_outputs = expected_annual_names - actual_annual_names
     if !missing_annual_outputs.empty?
-      puts "missing annual outputs:"
+      puts 'missing annual outputs:'
       missing_annual_outputs.sort.each do |missing_annual_output|
         puts "\t- #{missing_annual_output}"
       end
@@ -203,7 +203,7 @@ class TestBuildStockBatch < Minitest::Test
     extra_timeseries_outputs = actual_timeseries_names - expected_timeseries_names
     extra_timeseries_outputs -= ['PROJECT']
     if !extra_timeseries_outputs.empty?
-      puts "extra timeseries outputs:"
+      puts 'extra timeseries outputs:'
       extra_timeseries_outputs.sort.each do |extra_timeseries_output|
         puts "\t- #{extra_timeseries_output}"
       end
@@ -212,7 +212,7 @@ class TestBuildStockBatch < Minitest::Test
 
     missing_timeseries_outputs = expected_timeseries_names - actual_timeseries_names
     if !missing_timeseries_outputs.empty?
-      puts "missing timeseries outputs:"
+      puts 'missing timeseries outputs:'
       missing_timeseries_outputs.sort.each do |missing_timeseries_output|
         puts "\t- #{missing_timeseries_output}"
       end
@@ -257,7 +257,7 @@ class TestBuildStockBatch < Minitest::Test
     extra_timeseries_outputs = actual_timeseries_names - expected_timeseries_names
     extra_timeseries_outputs -= ['PROJECT']
     if !extra_timeseries_outputs.empty?
-      puts "extra timeseries outputs:"
+      puts 'extra timeseries outputs:'
       extra_timeseries_outputs.sort.each do |extra_timeseries_output|
         puts "\t- #{extra_timeseries_output}"
       end
@@ -266,7 +266,7 @@ class TestBuildStockBatch < Minitest::Test
 
     missing_timeseries_outputs = expected_timeseries_names - actual_timeseries_names
     if !missing_timeseries_outputs.empty?
-      puts "missing timeseries outputs:"
+      puts 'missing timeseries outputs:'
       missing_timeseries_outputs.sort.each do |missing_timeseries_output|
         puts "\t- #{missing_timeseries_output}"
       end

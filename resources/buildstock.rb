@@ -497,7 +497,7 @@ class RunOSWs
     end
     result_output = get_measure_results(rows, result_output, 'UpgradeCosts')
     result_output = get_measure_results(rows, result_output, 'ReportSimulationOutput')
-    result_output = get_measure_results(rows, result_output, 'ReportUtilityBills')    
+    result_output = get_measure_results(rows, result_output, 'ReportUtilityBills')
     reporting_measures.each do |reporting_measure|
       result_output = get_measure_results(rows, result_output, reporting_measure)
     end
