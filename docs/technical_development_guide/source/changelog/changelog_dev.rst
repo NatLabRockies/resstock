@@ -6,6 +6,22 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+
+    .. change::
+        :tags: standard data release
+        :pullreq: 1429
+
+        **Date**: 2025-06-11
+
+        Title:
+        Clean up the SDR yaml file
+
+        Description:
+        Clean up the SDR yaml file by moving anchors to the reference section of the yaml. Remove non-SDR upgrades for the 9/30/2025 release.
+
+        Assignees: Anthony Fontanini
+
+
     .. change::
         :tags: feature, standard data release
         :pullreq: 1398, 1412
