@@ -665,7 +665,7 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     assert_equal(1, model.getCoilHeatingDXMultiSpeeds.size)
     htg_coil = model.getCoilHeatingDXMultiSpeeds[0]
     assert_equal(2, htg_coil.stages.size)
-    [4.56, 3.89].each_with_index do |cop, i|
+    [4.41, 3.74].each_with_index do |cop, i|
       assert_in_epsilon(cop, htg_coil.stages[i].grossRatedHeatingCOP, 0.01)
     end
     [3876, 10634].each_with_index do |htg_capacity, i|
@@ -750,7 +750,7 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
 
     # Check EMS
     assert_equal(1, model.getAirLoopHVACUnitarySystems.size)
-    _check_max_power_ratio_EMS_multispeed(model, 3875.80, 4.56, 10634.05, 3.88, 4169.30, 5.39, 10752.98, 4.77)
+    _check_max_power_ratio_EMS_multispeed(model, 3875.80, 4.41, 10634.05, 3.74, 4169.30, 5.39, 10752.98, 4.77)
 
     # two systems
     args_hash = {}
@@ -776,8 +776,8 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
 
     # Check EMS
     assert_equal(2, model.getAirLoopHVACUnitarySystems.size)
-    _check_max_power_ratio_EMS_multispeed(model, 3875.80, 4.56, 10634.05, 3.88, 4169.30, 5.39, 10752.98, 4.77, 2, 0)
-    _check_max_power_ratio_EMS_multispeed(model, 3875.80, 4.56, 10634.05, 3.88, 4169.30, 5.39, 10752.98, 4.77, 2, 1)
+    _check_max_power_ratio_EMS_multispeed(model, 3875.80, 4.41, 10634.05, 3.74, 4169.30, 5.39, 10752.98, 4.77, 2, 0)
+    _check_max_power_ratio_EMS_multispeed(model, 3875.80, 4.41, 10634.05, 3.74, 4169.30, 5.39, 10752.98, 4.77, 2, 1)
   end
 
   def test_air_to_air_heat_pump_1_speed_onoff_thermostat
@@ -939,7 +939,7 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     assert_equal(1, model.getCoilHeatingDXMultiSpeeds.size)
     htg_coil = model.getCoilHeatingDXMultiSpeeds[0]
     assert_equal(2, htg_coil.stages.size)
-    [4.63, 3.31].each_with_index do |cop, i|
+    [4.34, 3.10].each_with_index do |cop, i|
       assert_in_epsilon(cop, htg_coil.stages[i].grossRatedHeatingCOP, 0.01)
     end
     [3273, 12890].each_with_index do |htg_capacity, i|
@@ -1013,7 +1013,7 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
 
     # Check EMS
     assert_equal(1, model.getAirLoopHVACUnitarySystems.size)
-    _check_max_power_ratio_EMS_multispeed(model, 3304.36, 4.55, 10634.05, 3.88, 4169.30, 4.64, 10752.98, 4.07)
+    _check_max_power_ratio_EMS_multispeed(model, 3304.36, 4.39, 10634.05, 3.74, 4169.30, 4.64, 10752.98, 4.07)
   end
 
   def test_mini_split_air_conditioner

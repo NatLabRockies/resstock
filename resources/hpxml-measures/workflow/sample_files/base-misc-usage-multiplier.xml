@@ -182,9 +182,9 @@
             <SystemIdentifier id='FoundationWall1'/>
             <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Type>solid concrete</Type>
             <Height>8.0</Height>
             <Area>1200.0</Area>
-            <Thickness>8.0</Thickness>
             <DepthBelowGrade>7.0</DepthBelowGrade>
             <InteriorFinish>
               <Type>gypsum board</Type>
@@ -193,9 +193,7 @@
               <SystemIdentifier id='FoundationWall1Insulation'/>
               <Layer>
                 <InstallationType>continuous - exterior</InstallationType>
-                <NominalRValue>8.9</NominalRValue>
-                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
-                <DistanceToBottomOfInsulation>8.0</DistanceToBottomOfInsulation>
+                <NominalRValue>10.0</NominalRValue>
               </Layer>
               <Layer>
                 <InstallationType>continuous - interior</InstallationType>
@@ -228,7 +226,6 @@
             <SystemIdentifier id='Slab1'/>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
             <Area>1350.0</Area>
-            <Thickness>4.0</Thickness>
             <ExposedPerimeter>150.0</ExposedPerimeter>
             <PerimeterInsulation>
               <SystemIdentifier id='Slab1PerimeterInsulation'/>
@@ -332,7 +329,7 @@
                 <Furnace/>
               </HeatingSystemType>
               <HeatingSystemFuel>natural gas</HeatingSystemFuel>
-              <HeatingCapacity>36000.0</HeatingCapacity>
+              <HeatingCapacity>35000.0</HeatingCapacity>
               <AnnualHeatingEfficiency>
                 <Units>AFUE</Units>
                 <Value>0.92</Value>
@@ -663,10 +660,6 @@
         <PlugLoad>
           <SystemIdentifier id='PlugLoad1'/>
           <PlugLoadType>TV other</PlugLoadType>
-          <Load>
-            <Units>kWh/year</Units>
-            <Value>620.0</Value>
-          </Load>
           <extension>
             <UsageMultiplier>0.9</UsageMultiplier>
           </extension>
@@ -674,23 +667,13 @@
         <PlugLoad>
           <SystemIdentifier id='PlugLoad2'/>
           <PlugLoadType>other</PlugLoadType>
-          <Load>
-            <Units>kWh/year</Units>
-            <Value>2457.0</Value>
-          </Load>
           <extension>
-            <FracSensible>0.855</FracSensible>
-            <FracLatent>0.045</FracLatent>
             <UsageMultiplier>0.9</UsageMultiplier>
           </extension>
         </PlugLoad>
         <FuelLoad>
           <SystemIdentifier id='FuelLoad1'/>
           <FuelLoadType>grill</FuelLoadType>
-          <Load>
-            <Units>therm/year</Units>
-            <Value>25.0</Value>
-          </Load>
           <FuelType>propane</FuelType>
           <extension>
             <UsageMultiplier>0.9</UsageMultiplier>
@@ -702,10 +685,6 @@
         <FuelLoad>
           <SystemIdentifier id='FuelLoad2'/>
           <FuelLoadType>lighting</FuelLoadType>
-          <Load>
-            <Units>therm/year</Units>
-            <Value>28.0</Value>
-          </Load>
           <FuelType>natural gas</FuelType>
           <extension>
             <UsageMultiplier>0.9</UsageMultiplier>
@@ -717,14 +696,8 @@
         <FuelLoad>
           <SystemIdentifier id='FuelLoad3'/>
           <FuelLoadType>fireplace</FuelLoadType>
-          <Load>
-            <Units>therm/year</Units>
-            <Value>55.0</Value>
-          </Load>
           <FuelType>wood</FuelType>
           <extension>
-            <FracSensible>0.5</FracSensible>
-            <FracLatent>0.1</FracLatent>
             <UsageMultiplier>0.9</UsageMultiplier>
             <WeekdayScheduleFractions>0.044, 0.023, 0.019, 0.015, 0.016, 0.018, 0.026, 0.033, 0.033, 0.032, 0.033, 0.033, 0.032, 0.032, 0.032, 0.033, 0.045, 0.057, 0.066, 0.076, 0.081, 0.086, 0.075, 0.065</WeekdayScheduleFractions>
             <WeekendScheduleFractions>0.044, 0.023, 0.019, 0.015, 0.016, 0.018, 0.026, 0.033, 0.033, 0.032, 0.033, 0.033, 0.032, 0.032, 0.032, 0.033, 0.045, 0.057, 0.066, 0.076, 0.081, 0.086, 0.075, 0.065</WeekendScheduleFractions>

@@ -2755,8 +2755,9 @@ module Constructions
 
     # Ref: https://labhomes.pnnl.gov/documents/PNNL_24444_Thermal_and_Optical_Properties_Low-E_Storm_Windows_Panels.pdf
     # U-factor and SHGC adjustment based on the data obtained from the above reference
-    if base_ufactor < 0.45
-      fail "Unexpected base window U-Factor (#{base_ufactor}) for a storm window."
+    min_base_ufactor_for_storm = 0.45
+    if base_ufactor < min_base_ufactor_for_storm
+      fail "Storm windows are currently restricted to windows with U-factor >= #{min_base_ufactor_for_storm}, while base window U-Factor was #{base_ufactor}."
     end
 
     if storm_type == HPXML::WindowGlassTypeClear
