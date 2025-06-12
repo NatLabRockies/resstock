@@ -243,7 +243,6 @@
             <SystemIdentifier id='Slab1'/>
             <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
             <Area>1539.0</Area>
-            <Thickness>4.0</Thickness>
             <ExposedPerimeter>168.0</ExposedPerimeter>
             <PerimeterInsulation>
               <SystemIdentifier id='Slab1PerimeterInsulation'/>

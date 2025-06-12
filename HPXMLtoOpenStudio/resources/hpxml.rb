@@ -2473,6 +2473,13 @@ class HPXML < Object
              :height]      # [Double] Height (ft)
     attr_accessor(*ATTRS)
 
+    # Deletes the current object from the array.
+    #
+    # @return [nil]
+    def delete
+      @parent_object.neighbor_buildings.delete(self)
+    end
+
     # Additional error-checking beyond what's checked in Schema/Schematron validators.
     #
     # @return [Array<String>] List of error messages

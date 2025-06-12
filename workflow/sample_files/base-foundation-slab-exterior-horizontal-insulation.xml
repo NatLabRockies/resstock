@@ -177,28 +177,27 @@
             <SystemIdentifier id='Slab1'/>
             <InteriorAdjacentTo>conditioned space</InteriorAdjacentTo>
             <Area>1350.0</Area>
-            <Thickness>4.0</Thickness>
             <ExposedPerimeter>150.0</ExposedPerimeter>
             <PerimeterInsulation>
               <SystemIdentifier id='Slab1PerimeterInsulation'/>
               <Layer>
-                <NominalRValue>5.4</NominalRValue>
-                <InsulationDepth>0.0</InsulationDepth>
+                <NominalRValue>5.0</NominalRValue>
+                <InsulationDepth>2.0</InsulationDepth>
               </Layer>
             </PerimeterInsulation>
             <ExteriorHorizontalInsulation>
               <SystemIdentifier id='Slab1ExteriorHorizontalInsulation'/>
               <Layer>
-                <NominalRValue>5.4</NominalRValue>
+                <NominalRValue>5.0</NominalRValue>
                 <InsulationWidth>2.5</InsulationWidth>
-                <InsulationDepthBelowGrade>1.0</InsulationDepthBelowGrade>
+                <InsulationDepthBelowGrade>2.0</InsulationDepthBelowGrade>
               </Layer>
             </ExteriorHorizontalInsulation>
             <UnderSlabInsulation>
               <SystemIdentifier id='Slab1UnderSlabInsulation'/>
               <Layer>
-                <NominalRValue>5.0</NominalRValue>
-                <InsulationSpansEntireSlab>true</InsulationSpansEntireSlab>
+                <NominalRValue>0.0</NominalRValue>
+                <InsulationWidth>0.0</InsulationWidth>
               </Layer>
             </UnderSlabInsulation>
             <extension>
@@ -289,7 +288,7 @@
                 <Furnace/>
               </HeatingSystemType>
               <HeatingSystemFuel>natural gas</HeatingSystemFuel>
-              <HeatingCapacity>36000.0</HeatingCapacity>
+              <HeatingCapacity>35000.0</HeatingCapacity>
               <AnnualHeatingEfficiency>
                 <Units>AFUE</Units>
                 <Value>0.92</Value>
@@ -490,22 +489,10 @@
         <PlugLoad>
           <SystemIdentifier id='PlugLoad1'/>
           <PlugLoadType>TV other</PlugLoadType>
-          <Load>
-            <Units>kWh/year</Units>
-            <Value>620.0</Value>
-          </Load>
         </PlugLoad>
         <PlugLoad>
           <SystemIdentifier id='PlugLoad2'/>
           <PlugLoadType>other</PlugLoadType>
-          <Load>
-            <Units>kWh/year</Units>
-            <Value>1228.5</Value>
-          </Load>
-          <extension>
-            <FracSensible>0.855</FracSensible>
-            <FracLatent>0.045</FracLatent>
-          </extension>
         </PlugLoad>
       </MiscLoads>
     </BuildingDetails>

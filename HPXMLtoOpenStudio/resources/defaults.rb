@@ -5272,7 +5272,7 @@ module Defaults
     when HPXML::MechVentTypeERV, HPXML::MechVentTypeHRV
       return 1.00
     else
-      fail "Unexpected fan_type: '#{fan_type}'."
+      fail "Unexpected fan_type: '#{vent_fan.fan_type}'."
     end
   end
 

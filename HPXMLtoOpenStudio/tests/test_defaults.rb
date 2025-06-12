@@ -435,6 +435,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
   def test_neighbor_buildings
     # Test inputs not overridden by defaults
     hpxml, hpxml_bldg = _create_hpxml('base-misc-neighbor-shading.xml')
+    hpxml_bldg.neighbor_buildings[-1].delete
+    hpxml_bldg.neighbor_buildings[-1].delete
     hpxml_bldg.neighbor_buildings[0].azimuth = 123
     hpxml_bldg.neighbor_buildings[1].azimuth = 321
     hpxml_bldg.walls[0].azimuth = 123
@@ -2377,14 +2379,14 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     # Test defaults
     hpxml_bldg.geothermal_loops[0].loop_flow = nil # autosized
     hpxml_bldg.geothermal_loops[0].num_bore_holes = nil # autosized
-    hpxml_bldg.geothermal_loops[0].bore_spacing = nil # 16.4
+    hpxml_bldg.geothermal_loops[0].bore_spacing = nil # 16.4 ft
     hpxml_bldg.geothermal_loops[0].bore_length = nil # autosized
-    hpxml_bldg.geothermal_loops[0].bore_diameter = nil # 5.0
+    hpxml_bldg.geothermal_loops[0].bore_diameter = nil # 5.0 in
     hpxml_bldg.geothermal_loops[0].grout_type = nil # standard
-    hpxml_bldg.geothermal_loops[0].grout_conductivity = nil # 0.4
+    hpxml_bldg.geothermal_loops[0].grout_conductivity = nil # 0.75 Btu/hr-ft-F
     hpxml_bldg.geothermal_loops[0].pipe_type = nil # standard
-    hpxml_bldg.geothermal_loops[0].pipe_conductivity = nil # 0.23
-    hpxml_bldg.geothermal_loops[0].pipe_diameter = nil # 1.25
+    hpxml_bldg.geothermal_loops[0].pipe_conductivity = nil # 0.23 Btu/hr-ft-F
+    hpxml_bldg.geothermal_loops[0].pipe_diameter = nil # 1.25 in
     hpxml_bldg.geothermal_loops[0].shank_spacing = nil # 2.63
     hpxml_bldg.geothermal_loops[0].bore_config = nil # rectangle
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
@@ -3466,14 +3468,14 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     electric_panel = default_hpxml_bldg.electric_panels[0]
     _test_default_electric_panel_values(electric_panel, nil, nil, nil, nil)
 
-    # Test electric panel inputs not overriden by defaults
+    # Test electric panel inputs not overridden by defaults
     hpxml, hpxml_bldg = _create_hpxml('base-detailed-electric-panel.xml')
     electric_panel = hpxml_bldg.electric_panels[0]
     electric_panel.voltage = HPXML::ElectricPanelVoltage240
     electric_panel.max_current_rating = 200.0
     electric_panel.headroom_spaces = 5
 
-    # Test branch circuit inputs not overriden by defaults
+    # Test branch circuit inputs not overridden by defaults
     branch_circuits = electric_panel.branch_circuits
     branch_circuits.clear
     branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
@@ -3591,8 +3593,8 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _test_default_branch_circuit_values(branch_circuits[0], HPXML::ElectricPanelVoltage120, 15.0, 0)
     _test_default_branch_circuit_values(branch_circuits[1], HPXML::ElectricPanelVoltage120, 15.0, 0)
     _test_default_branch_circuit_values(branch_circuits[2], HPXML::ElectricPanelVoltage240, 50.0, 2)
-    _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeHeating }, 427.9, false)
-    _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeCooling }, 2807.4, false)
+    _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeHeating }, 409.1, false)
+    _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeCooling }, 3338.5, false)
     _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeWaterHeater }, 0.0, false)
     _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeClothesDryer }, 0.0, false)
     _test_default_service_feeder_values(service_feeders.find { |sf| sf.type == HPXML::ElectricPanelLoadTypeDishwasher }, 1200.0, false)

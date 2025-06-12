@@ -180,9 +180,9 @@
             <SystemIdentifier id='FoundationWall1'/>
             <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Type>solid concrete</Type>
             <Height>8.0</Height>
             <Area>1200.0</Area>
-            <Thickness>8.0</Thickness>
             <DepthBelowGrade>7.0</DepthBelowGrade>
             <InteriorFinish>
               <Type>gypsum board</Type>
@@ -191,9 +191,7 @@
               <SystemIdentifier id='FoundationWall1Insulation'/>
               <Layer>
                 <InstallationType>continuous - exterior</InstallationType>
-                <NominalRValue>8.9</NominalRValue>
-                <DistanceToTopOfInsulation>0.0</DistanceToTopOfInsulation>
-                <DistanceToBottomOfInsulation>8.0</DistanceToBottomOfInsulation>
+                <NominalRValue>10.0</NominalRValue>
               </Layer>
               <Layer>
                 <InstallationType>continuous - interior</InstallationType>
@@ -226,7 +224,6 @@
             <SystemIdentifier id='Slab1'/>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
             <Area>1350.0</Area>
-            <Thickness>4.0</Thickness>
             <ExposedPerimeter>150.0</ExposedPerimeter>
             <PerimeterInsulation>
               <SystemIdentifier id='Slab1PerimeterInsulation'/>
@@ -330,7 +327,7 @@
                 <Furnace/>
               </HeatingSystemType>
               <HeatingSystemFuel>natural gas</HeatingSystemFuel>
-              <HeatingCapacity>36000.0</HeatingCapacity>
+              <HeatingCapacity>35000.0</HeatingCapacity>
               <AnnualHeatingEfficiency>
                 <Units>AFUE</Units>
                 <Value>0.92</Value>
@@ -592,10 +589,6 @@
         <PlugLoad>
           <SystemIdentifier id='PlugLoad2'/>
           <PlugLoadType>other</PlugLoadType>
-          <extension>
-            <FracSensible>0.855</FracSensible>
-            <FracLatent>0.045</FracLatent>
-          </extension>
         </PlugLoad>
         <PlugLoad>
           <SystemIdentifier id='PlugLoad3'/>
@@ -608,7 +601,7 @@
         <FuelLoad>
           <SystemIdentifier id='FuelLoad1'/>
           <FuelLoadType>grill</FuelLoadType>
-          <FuelType>fuel oil</FuelType>
+          <FuelType>propane</FuelType>
         </FuelLoad>
         <FuelLoad>
           <SystemIdentifier id='FuelLoad2'/>
@@ -618,11 +611,7 @@
         <FuelLoad>
           <SystemIdentifier id='FuelLoad3'/>
           <FuelLoadType>fireplace</FuelLoadType>
-          <FuelType>wood pellets</FuelType>
-          <extension>
-            <FracSensible>0.5</FracSensible>
-            <FracLatent>0.1</FracLatent>
-          </extension>
+          <FuelType>wood</FuelType>
         </FuelLoad>
       </MiscLoads>
     </BuildingDetails>

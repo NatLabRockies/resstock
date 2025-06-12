@@ -28,7 +28,7 @@
         "ducts_supply_surface_area": 150.0,
         "floor_over_foundation_assembly_r": 0,
         "floor_over_garage_assembly_r": 0,
-        "foundation_wall_insulation_r": 8.9,
+        "foundation_wall_insulation_r": 10.0,
         "geometry_attic_type": "UnventedAttic",
         "geometry_average_ceiling_height": 8.0,
         "geometry_eaves_depth": 0,
