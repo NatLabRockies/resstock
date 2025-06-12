@@ -301,6 +301,9 @@ references:
     - or:
       - HVAC Has Ducts|Yes
       - HVAC Has Ducts|No
+
+  drill_and_fill_logic: &drill_and_fill_apply_logic
+    - Insulation Wall|Wood Stud, Uninsulated
   
   ### -- Anchors dependent on other anchors -- ###
   cooling_setpoint_no_offset: &cooling_setpoint_no_offset
@@ -346,6 +349,10 @@ references:
   partial_conditioning_100_percent: &partial_conditioning_100_percent
       option: HVAC Cooling Partial Space Conditioning|100% Conditioned
       apply_logic: *yes_and_no_has_ducts_apply_logic
+
+  drill_and_fill_with_air_sealing: &drill_and_fill_apply_logic
+      option: 
+      apply_logic: *infiltration_30_percent_reduction #hold for Sinoun's actual infiltration rates
 
 ### Standard Data Release - Residential -- ###
 upgrades:
