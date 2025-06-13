@@ -523,8 +523,221 @@ Detailed report of how the 3 options were applied to the buildings.
 |                   3 | 1, 2, 3           | 380161 (69.1%)      | 380161 (69.1%)   | 389136 (70.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
+-----------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade5:'Heat Pumps Water Heater', Option1:'Water Heater Fuel|Electricity'
+-----------------------------------------------------------------------------------------------------
+not => 284613 (51.7%)
+  Water Heater Fuel|Electricity => 265387 (48.3%)
+-------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 547420 (99.5%)
+  not => 548297 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
+  not => 549123 (99.8%)
+    Water Heater Fuel|Solar Thermal => 877 (0.2%)
+-------------------------------------------------
+Overall applied to => 283736 (51.6%).
+-------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade5:'Heat Pumps Water Heater', Option2:'Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.78 UEF'
+------------------------------------------------------------------------------------------------------------------------------------
+and => 200333 (36.4%)
+  or => 217678 (39.6%)
+    Bedrooms|1 => 72015 (13.1%)
+    Bedrooms|2 => 145663 (26.5%)
+  or => 441843 (80.3%)
+    Occupants|0 => 66640 (12.1%)
+    Occupants|1 => 132597 (24.1%)
+    Occupants|2 => 166939 (30.4%)
+    Occupants|3 => 75667 (13.8%)
+--------------------------------
+Package Apply Logic Report
+--------------------------
+and => 547420 (99.5%)
+  not => 548297 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
+  not => 549123 (99.8%)
+    Water Heater Fuel|Solar Thermal => 877 (0.2%)
+-------------------------------------------------
+Overall applied to => 199342 (36.2%).
+-------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade5:'Heat Pumps Water Heater', Option3:'Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.95 UEF'
+------------------------------------------------------------------------------------------------------------------------------------
+or => 204903 (37.3%)
+  and => 11375 (2.1%)
+    or => 217678 (39.6%)
+      Bedrooms|1 => 72015 (13.1%)
+      Bedrooms|2 => 145663 (26.5%)
+    Occupants|4 => 61551 (11.2%)
+  and => 193528 (35.2%)
+    Bedrooms|3 => 211923 (38.5%)
+    or => 503394 (91.5%)
+      Occupants|0 => 66640 (12.1%)
+      Occupants|1 => 132597 (24.1%)
+      Occupants|2 => 166939 (30.4%)
+      Occupants|3 => 75667 (13.8%)
+      Occupants|4 => 61551 (11.2%)
+----------------------------------
+Package Apply Logic Report
+--------------------------
+and => 547420 (99.5%)
+  not => 548297 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
+  not => 549123 (99.8%)
+    Water Heater Fuel|Solar Thermal => 877 (0.2%)
+-------------------------------------------------
+Overall applied to => 203979 (37.1%).
+-------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade5:'Heat Pumps Water Heater', Option4:'Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.98 UEF'
+------------------------------------------------------------------------------------------------------------------------------------
+or => 144764 (26.3%)
+  Bedrooms|4 => 94252 (17.1%)
+  Bedrooms|5 => 26147 (4.8%)
+  Occupants|5 => 28847 (5.2%)
+  Occupants|6 => 11257 (2.0%)
+  Occupants|7 => 3975 (0.7%)
+  Occupants|8 => 1492 (0.3%)
+  Occupants|9 => 509 (0.1%)
+  Occupants|10+ => 526 (0.1%)
+-----------------------------
+Package Apply Logic Report
+--------------------------
+and => 547420 (99.5%)
+  not => 548297 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
+  not => 549123 (99.8%)
+    Water Heater Fuel|Solar Thermal => 877 (0.2%)
+-------------------------------------------------
+Overall applied to => 144099 (26.2%).
+-------------------------------------
+
+All of the options (and-ing) were applied to: 0 (0.0%)
+Any of the options (or-ing) were applied to: 547420 (99.5%)
+--------------------------------------------------------------------------------
+Report of how the 2 options were applied to the buildings.
++---------------------+--------------------------------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options                            | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+============================================+=====================+==================+==================+
+|                   1 | water heater efficiency                    | 263684 (47.9%)      | 263684 (47.9%)   | 263684 (47.9%)   |
++---------------------+--------------------------------------------+---------------------+------------------+------------------+
+|                   2 | water heater fuel, water heater efficiency | 283736 (51.6%)      | 283736 (51.6%)   | 547420 (99.5%)   |
++---------------------+--------------------------------------------+---------------------+------------------+------------------+
+--------------------------------------------------------------------------------
+Detailed report of how the 4 options were applied to the buildings.
++---------------------+-------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+===================+=====================+==================+==================+
+|                   1 | 2                 | 104599 (19.0%)      | 104599 (19.0%)   | 104599 (19.0%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   1 | 3                 | 94944 (17.3%)       | 199543 (36.3%)   | 199543 (36.3%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   1 | 4                 | 64141 (11.7%)       | 263684 (47.9%)   | 263684 (47.9%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 1, 2              | 94743 (17.2%)       | 94743 (17.2%)    | 358427 (65.2%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 1, 3              | 109035 (19.8%)      | 203778 (37.1%)   | 467462 (85.0%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 1, 4              | 79958 (14.5%)       | 283736 (51.6%)   | 547420 (99.5%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+
+-------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade6:'High Efficiency Natural Gas Tankless Water Heater', Option1:'Water Heater Fuel|Natural Gas'
+-------------------------------------------------------------------------------------------------------------------------------
+not => 300910 (54.7%)
+  Water Heater Fuel|Natural Gas => 249090 (45.3%)
+-------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 304731 (55.4%)
+  not => 548297 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
+  not => 549123 (99.8%)
+    Water Heater Fuel|Solar Thermal => 877 (0.2%)
+  not => 533857 (97.1%)
+    Water Heater Efficiency|Natural Gas Tankless => 16143 (2.9%)
+  or => 321616 (58.5%)
+    Water Heater Fuel|Natural Gas => 249090 (45.3%)
+    Heating Fuel|Natural Gas => 262254 (47.7%)
+    Clothes Dryer|Gas => 77979 (14.2%)
+    Cooking Range|Gas => 180243 (32.8%)
+---------------------------------------
+Overall applied to => 71784 (13.1%).
+------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade6:'High Efficiency Natural Gas Tankless Water Heater', Option2:'Water Heater Efficiency|High Efficiency Natural Gas Tankless, Condensing'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 304731 (55.4%)
+  not => 548297 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
+  not => 550000 (100.0%)
+    Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
+  not => 549123 (99.8%)
+    Water Heater Fuel|Solar Thermal => 877 (0.2%)
+  not => 533857 (97.1%)
+    Water Heater Efficiency|Natural Gas Tankless => 16143 (2.9%)
+  or => 321616 (58.5%)
+    Water Heater Fuel|Natural Gas => 249090 (45.3%)
+    Heating Fuel|Natural Gas => 262254 (47.7%)
+    Clothes Dryer|Gas => 77979 (14.2%)
+    Cooking Range|Gas => 180243 (32.8%)
+---------------------------------------
+Overall applied to => 304731 (55.4%).
+-------------------------------------
+
+All of the options (and-ing) were applied to: 71784 (13.1%)
+Any of the options (or-ing) were applied to: 304731 (55.4%)
+--------------------------------------------------------------------------------
+Report of how the 2 options were applied to the buildings.
++---------------------+--------------------------------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options                            | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+============================================+=====================+==================+==================+
+|                   1 | water heater efficiency                    | 232947 (42.4%)      | 232947 (42.4%)   | 232947 (42.4%)   |
++---------------------+--------------------------------------------+---------------------+------------------+------------------+
+|                   2 | water heater fuel, water heater efficiency | 71784 (13.1%)       | 71784 (13.1%)    | 304731 (55.4%)   |
++---------------------+--------------------------------------------+---------------------+------------------+------------------+
+--------------------------------------------------------------------------------
+Detailed report of how the 2 options were applied to the buildings.
++---------------------+-------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+===================+=====================+==================+==================+
+|                   1 | 2                 | 232947 (42.4%)      | 232947 (42.4%)   | 232947 (42.4%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 1, 2              | 71784 (13.1%)       | 71784 (13.1%)    | 304731 (55.4%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+
 --------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Air Sealing', Option1:'Infiltration Reduction|30%'
+Option Apply Report for - Upgrade7:'Air Sealing', Option1:'Infiltration Reduction|30%'
 --------------------------------------------------------------------------------------
 or => 366250 (66.6%)
   Infiltration|50 ACH50 => 17543 (3.2%)
@@ -557,7 +770,7 @@ Detailed report of how the 1 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option1:'Insulation Ceiling|R-30'
+Option Apply Report for - Upgrade8:'Attic Floor Insulation for Unfinished Attics', Option1:'Insulation Ceiling|R-30'
 --------------------------------------------------------------------------------------------------------------------
 and => 1502 (0.3%)
   ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
@@ -572,7 +785,7 @@ Overall applied to => 1502 (0.3%).
 ----------------------------------
 
 --------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option2:'Insulation Ceiling|R-49'
+Option Apply Report for - Upgrade8:'Attic Floor Insulation for Unfinished Attics', Option2:'Insulation Ceiling|R-49'
 --------------------------------------------------------------------------------------------------------------------
 and => 84557 (15.4%)
   or => 211797 (38.5%)
@@ -594,7 +807,7 @@ Overall applied to => 84557 (15.4%).
 ------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option3:'Insulation Ceiling|R-60'
+Option Apply Report for - Upgrade8:'Attic Floor Insulation for Unfinished Attics', Option3:'Insulation Ceiling|R-60'
 --------------------------------------------------------------------------------------------------------------------
 and => 129264 (23.5%)
   or => 327067 (59.5%)
@@ -642,7 +855,7 @@ Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option1:'HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0'
+Option Apply Report for - Upgrade9:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option1:'HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
@@ -682,7 +895,7 @@ Overall applied to => 380161 (69.1%).
 -------------------------------------
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
+Option Apply Report for - Upgrade9:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
@@ -722,7 +935,7 @@ Overall applied to => 380161 (69.1%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
+Option Apply Report for - Upgrade9:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HVAC Has Ducts|Yes => 423608 (77.0%)
 ------------------------------------
@@ -754,7 +967,7 @@ Overall applied to => 389136 (70.8%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option4:'Insulation Ceiling|R-30'
+Option Apply Report for - Upgrade9:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option4:'Insulation Ceiling|R-30'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 1502 (0.3%)
   ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
@@ -793,7 +1006,7 @@ Overall applied to => 1081 (0.2%).
 ----------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option5:'Insulation Ceiling|R-49'
+Option Apply Report for - Upgrade9:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option5:'Insulation Ceiling|R-49'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 84557 (15.4%)
   or => 211797 (38.5%)
@@ -839,7 +1052,7 @@ Overall applied to => 74413 (13.5%).
 ------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option6:'Insulation Ceiling|R-60'
+Option Apply Report for - Upgrade9:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option6:'Insulation Ceiling|R-60'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 129264 (23.5%)
   or => 327067 (59.5%)
@@ -890,7 +1103,7 @@ Overall applied to => 100949 (18.4%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option7:'Infiltration Reduction|30%'
+Option Apply Report for - Upgrade9:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option7:'Infiltration Reduction|30%'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 366250 (66.6%)
   Infiltration|50 ACH50 => 17543 (3.2%)
@@ -982,9 +1195,9 @@ Detailed report of how the 7 options were applied to the buildings.
 |                   5 | 1, 2, 3, 6, 7     | 64660 (11.8%)       | 110357 (20.1%)   | 389136 (70.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
-------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade8:'Electric Vehicle Adoption with Level 1 Charging', Option1:'Electric Vehicle Ownership|Yes'
-------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade10:'Electric Vehicle Adoption with Level 1 Charging', Option1:'Electric Vehicle Ownership|Yes'
+-------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 477589 (86.8%)
@@ -994,9 +1207,9 @@ and => 477589 (86.8%)
 Overall applied to => 477589 (86.8%).
 -------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade8:'Electric Vehicle Adoption with Level 1 Charging', Option2:'Electric Vehicle Charger|Level 1 charger'
-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade10:'Electric Vehicle Adoption with Level 1 Charging', Option2:'Electric Vehicle Charger|Level 1 charger'
+-----------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 477589 (86.8%)
@@ -1024,9 +1237,9 @@ Detailed report of how the 2 options were applied to the buildings.
 |                   2 | 1, 2              | 477589 (86.8%)      | 477589 (86.8%)   | 477589 (86.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
-------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Electric Vehicle Adoption with Level 2 Charging', Option1:'Electric Vehicle Ownership|Yes'
-------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade11:'Electric Vehicle Adoption with Level 2 Charging', Option1:'Electric Vehicle Ownership|Yes'
+-------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 Vacancy Status|Occupied => 483360 (87.9%)
@@ -1034,9 +1247,9 @@ Vacancy Status|Occupied => 483360 (87.9%)
 Overall applied to => 483360 (87.9%).
 -------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Electric Vehicle Adoption with Level 2 Charging', Option2:'Electric Vehicle Charger|Level 2 charger'
-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade11:'Electric Vehicle Adoption with Level 2 Charging', Option2:'Electric Vehicle Charger|Level 2 charger'
+-----------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 Vacancy Status|Occupied => 483360 (87.9%)
@@ -1063,7 +1276,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -----------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option1:'Electric Vehicle Ownership|Yes'
+Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option1:'Electric Vehicle Ownership|Yes'
 -----------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1073,7 +1286,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option2:'Electric Vehicle Charger|Level 2 charger'
+Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option2:'Electric Vehicle Charger|Level 2 charger'
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1083,7 +1296,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option3:'Electric Vehicle Efficiency Increase|15%'
+Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option3:'Electric Vehicle Efficiency Increase|15%'
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1111,7 +1324,7 @@ Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option1:'Electric Vehicle Ownership|Yes'
+Option Apply Report for - Upgrade13:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option1:'Electric Vehicle Ownership|Yes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1121,7 +1334,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option2:'Electric Vehicle Charger|Level 2 charger'
+Option Apply Report for - Upgrade13:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option2:'Electric Vehicle Charger|Level 2 charger'
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1131,7 +1344,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option3:'Demand Flexibility Electric Vehicle|Enabled'
+Option Apply Report for - Upgrade13:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option3:'Demand Flexibility Electric Vehicle|Enabled'
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1141,7 +1354,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option4:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade13:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option4:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1170,7 +1383,7 @@ Detailed report of how the 4 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option1:'Electric Vehicle Ownership|Yes'
+Option Apply Report for - Upgrade14:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option1:'Electric Vehicle Ownership|Yes'
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1180,7 +1393,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option2:'Electric Vehicle Charger|Level 2 charger'
+Option Apply Report for - Upgrade14:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option2:'Electric Vehicle Charger|Level 2 charger'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1190,7 +1403,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option3:'Electric Vehicle Efficiency Increase|15%'
+Option Apply Report for - Upgrade14:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option3:'Electric Vehicle Efficiency Increase|15%'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1200,7 +1413,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option4:'Demand Flexibility Electric Vehicle|Enabled'
+Option Apply Report for - Upgrade14:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option4:'Demand Flexibility Electric Vehicle|Enabled'
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1210,7 +1423,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option5:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade14:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option5:'Demand Flexibility Random Shift|30 minutes'
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1240,7 +1453,7 @@ Detailed report of how the 5 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade13:'HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset', Option1:'Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset'
+Option Apply Report for - Upgrade15:'HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset', Option1:'Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1254,7 +1467,7 @@ Overall applied to => 548291 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade13:'HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset', Option2:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade15:'HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset', Option2:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1286,7 +1499,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade14:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration'
+Option Apply Report for - Upgrade16:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1300,7 +1513,7 @@ Overall applied to => 548291 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade14:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade16:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1332,7 +1545,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade15:'HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset', Option1:'Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset'
+Option Apply Report for - Upgrade17:'HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset', Option1:'Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1346,7 +1559,7 @@ Overall applied to => 548291 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade15:'HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset', Option2:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade17:'HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset', Option2:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1378,7 +1591,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade16:'HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration'
+Option Apply Report for - Upgrade18:'HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1392,7 +1605,7 @@ Overall applied to => 548291 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade16:'HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade18:'HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1424,7 +1637,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade17:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration'
+Option Apply Report for - Upgrade19:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1438,7 +1651,7 @@ Overall applied to => 548291 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade17:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade19:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
