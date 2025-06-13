@@ -36,3 +36,10 @@ buildstockbatch_crash_details.log
 
 # Data directories
 **/data/*
+
+# Python virtual environments
+**/.venv/
+
+# Python compiled files
+**/*.pyc
+**/__pycache__/
