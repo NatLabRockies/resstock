@@ -36,7 +36,7 @@ class PlotSpec(BaseModel):
             raise ValueError("Box plots cannot be generated from stacked quantities")
         return v
 
-    def path_segments(self, quantity_group: str) -> Path:
+    def path_segments(self, quantity_group_name: str) -> Path:
         """Return path sub-segments derived from the definition."""
         path_segment = Path(f"Included Buildings = {self.upgrade_inclusion.value}")
         path_segment /= f"Vacancy = {self.vacancy_inclusion.value}"
@@ -46,7 +46,7 @@ class PlotSpec(BaseModel):
             path_segment /= f"Group By = {self.group_by}"
         else:
             path_segment /= "Group By = all"
-        path_segment /= f"Quantity Group = {quantity_group}"
+        path_segment /= f"Quantity Group = {quantity_group_name}"
         if isinstance(self.quantity, QuantityGroup):
             path_segment /= "Quantity = all_stacked"
         else:

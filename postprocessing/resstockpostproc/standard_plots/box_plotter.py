@@ -176,7 +176,7 @@ class BoxPlotter(BasePlotter):
                     row_stats = hue_stats.iloc[0]
 
                     # Position for boxes
-                    x_position = x_idx
+                    x_position: float = x_idx
                     if hue:
                         box_width = 0.8 / len(hue_values)
                         x_position = x_idx + (hue_idx - (len(hue_values) - 1) / 2) * box_width

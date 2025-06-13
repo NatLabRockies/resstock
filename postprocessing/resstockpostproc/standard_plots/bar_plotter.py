@@ -120,8 +120,8 @@ class BarPlotter(BasePlotter):
                 # Add line breaks for longer titles
                 if len(title_text) > 15:
                     words = title_text.split()
-                    wrapped = []
-                    line = []
+                    wrapped: list[str] = []
+                    line: list[str] = []
                     for word in words:
                         if len(" ".join(line + [word])) > 15 and line:
                             wrapped.append(" ".join(line))

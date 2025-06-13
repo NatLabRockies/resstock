@@ -6,7 +6,7 @@ in VSCode and pre-commit hooks.
 import json
 from pathlib import Path
 
-from workflow_schema import WorkflowConfig
+from workflow_schema import WorkflowConfig  # type: ignore
 
 schema = WorkflowConfig.model_json_schema()
 output_path = Path(__file__).parent / "workflow_schema.json"

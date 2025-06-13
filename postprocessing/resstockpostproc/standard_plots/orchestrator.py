@@ -53,27 +53,26 @@ class PlotOrchestrator:
         for combination in all_combinations:
             comparison_type = combination[0]
             visualization_type = combination[3]
-            quantity = combination[5].model_copy()
+            quantity_group: QuantityGroup = combination[5].model_copy()
             if comparison_type == ComparisonTypes.savings:
-                quantity.constituents = [f"{col}.savings" for col in quantity.constituents]
-                quantity.sum = f"{quantity.sum}.savings" if quantity.sum else None
+                quantity_group.constituents = [f"{col}.savings" for col in quantity_group.constituents]
+                quantity_group.sum = f"{quantity_group.sum}.savings" if quantity_group.sum else None
 
             # Usually, visualize each constituent quantity and the sum (if any) separately
             # Prepare a mutable list of quantities, starting with individual constituents and optional sum
             quantities: list[str | QuantityGroup] = []
-            quantities.extend(quantity.constituents)
-            if quantity.sum:
-                quantities.append(quantity.sum)
+            quantities.extend(quantity_group.constituents)
+            if quantity_group.sum:
+                quantities.append(quantity_group.sum)
             if visualization_type == VizType.bar:
                 # For bar plots, additionally visualize all together as a group in stacked bar plot
-                quantities.append(quantity)
-            quantity_group = quantity.name
+                quantities.append(quantity_group)
             for quantity in quantities:
                 plot_spec = PlotSpec(
                     comparison_type=combination[0], upgrade_inclusion=combination[1], vacancy_inclusion=combination[2], visualization_type=combination[3], group_by=combination[4], quantity=quantity
                 )
                 df = self.processor.prepare_data_for_plot(plot_spec)
-                path_seg = plot_spec.path_segments(quantity_group)
+                path_seg = plot_spec.path_segments(quantity_group_name=quantity_group.name)
 
                 def safe_sqlite_name(path: Path) -> str:
                     return re.sub(r"[^0-9A-Za-z_]", "_", path.as_posix())

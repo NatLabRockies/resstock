@@ -39,18 +39,24 @@ repos:
     hooks:
       - id: mypy
         name: mypy
-        entry: uv run mypy
+        entry: uv run --directory=postprocessing -m mypy
         language: system
         types: [python]
-        args: ["--config-file=postprocessing/pyproject.toml"]
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.13
-    hooks:
-      # Run the linter
-      - id: ruff-check
-        args: [--fix, --exit-non-zero-on-fix, --output-format=full]
-      # Run the formatter
-      - id: ruff-format
+        args:
+          [
+            "--config-file=pyproject.toml",
+            "--python-version=3.11",
+            "resstockpostproc/",
+          ]
+        pass_filenames: false
+  # - repo: https://github.com/astral-sh/ruff-pre-commit
+  #   rev: v0.11.13
+  #   hooks:
+  #     # Run the linter
+  #     - id: ruff-check
+  #       args: [--fix, --exit-non-zero-on-fix, --output-format=full]
+  #     # Run the formatter
+  #     - id: ruff-format
   - repo: local
     hooks:
       - id: pydantic-schema

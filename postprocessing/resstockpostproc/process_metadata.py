@@ -94,25 +94,20 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     new_cols = []
 
     # Handle income parsing with better error handling
-    income_expr = pl.when(pl.col("in.income").is_in(["Not Available", ""]))
-    income_expr = income_expr.then(None)
-
-    # Handle range case like "10000-20000"
-    income_expr = income_expr.when(pl.col("in.income").str.contains("-"))
-    income_expr = income_expr.then(
-        (pl.col("in.income").str.extract(r"(\d+)-(\d+)", 1).cast(pl.Float64, strict=False) + pl.col("in.income").str.extract(r"(\d+)-(\d+)", 2).cast(pl.Float64, strict=False)) / 2
+    income_expr = (
+        pl.when(pl.col("in.income").is_in(["Not Available", ""]))
+        .then(None)
+        .when(pl.col("in.income").str.contains("-"))
+        .then(
+            (pl.col("in.income").str.extract(r"(\d+)-(\d+)", 1).cast(pl.Float64, strict=False) +
+             pl.col("in.income").str.extract(r"(\d+)-(\d+)", 2).cast(pl.Float64, strict=False)) / 2
+        )
+        .when(pl.col("in.income").str.contains("\+"))
+        .then(pl.col("in.income").str.extract(r"(\d+)\+", 1).cast(pl.Float64, strict=False))
+        .when(pl.col("in.income").str.contains("<"))
+        .then(pl.col("in.income").str.extract(r"<(\d+)", 1).cast(pl.Float64, strict=False) / 2)
+        .otherwise(pl.col("in.income").cast(pl.Float64, strict=False))
     )
-
-    # Handle plus case like "200000+"
-    income_expr = income_expr.when(pl.col("in.income").str.contains("\+"))
-    income_expr = income_expr.then(pl.col("in.income").str.extract(r"(\d+)\+", 1).cast(pl.Float64, strict=False))
-
-    # Handle less than case like "<10000"
-    income_expr = income_expr.when(pl.col("in.income").str.contains("<"))
-    income_expr = income_expr.then(pl.col("in.income").str.extract(r"<(\d+)", 1).cast(pl.Float64, strict=False) / 2)
-
-    # Otherwise try direct conversion
-    income_expr = income_expr.otherwise(pl.col("in.income").cast(pl.Float64, strict=False))
 
     rep_income_col = income_expr.alias("in.representative_income")
     new_cols.append(rep_income_col)
@@ -184,7 +179,7 @@ def add_upgrade_columns(lf: pl.LazyFrame) -> pl.LazyFrame:
         .collect()
         .group_by(["bldg_id", "upgrade_key"])
         .agg(pl.col("upgrade_value").first())
-        .pivot(index="bldg_id", columns="upgrade_key", values="upgrade_value")
+        .pivot(index="bldg_id", on="upgrade_key", values="upgrade_value")
     )
     print("Done adding upgrade columns")
     upgrade_df = upgrade_df.rename({c: f"upgrade.{c.lower().replace(' ', '_')}" for c in upgrade_df.columns if c != "bldg_id"})

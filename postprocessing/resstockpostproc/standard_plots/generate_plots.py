@@ -19,7 +19,7 @@ from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
 
 # Make sure plotly can write images
 try:
-    import kaleido
+    import kaleido  # type: ignore
 
     pio.kaleido.scope.mathjax = None  # Disable MathJax for better performance
 except ImportError:
