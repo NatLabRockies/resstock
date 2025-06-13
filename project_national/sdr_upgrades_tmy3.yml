@@ -344,7 +344,6 @@ references:
       - Clothes Dryer|Gas
       - Cooking Range|Gas
 
-
   change_water_heater_fuel_to_electricity: &change_water_heater_fuel_to_electricity
     option: Water Heater Fuel|Electricity
     apply_logic:
