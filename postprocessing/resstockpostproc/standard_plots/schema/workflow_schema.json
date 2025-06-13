@@ -1,7 +1,7 @@
 {
   "$defs": {
     "ComparisonTypes": {
-      "description": "Different interpretations of results columns.",
+      "description": "Different kinds of comparison between the upgrade and the baseline.",
       "enum": [
         "absolute",
         "savings",

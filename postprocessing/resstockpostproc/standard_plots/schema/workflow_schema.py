@@ -18,7 +18,7 @@ class NoExtraModel(BaseModel):
 
 
 class ComparisonTypes(str, Enum):
-    """Different interpretations of results columns."""
+    """Different kinds of comparison between the upgrade and the baseline."""
 
     absolute = "absolute"  # raw values
     savings = "savings"  # pre-aggregated mean across simulation rows
