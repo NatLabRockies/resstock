@@ -1,0 +1,144 @@
+{
+  "$defs": {
+    "ComparisonTypes": {
+      "description": "Different interpretations of results columns.",
+      "enum": ["absolute", "savings", "percent_savings"],
+      "title": "ComparisonTypes",
+      "type": "string"
+    },
+    "QuantityGroup": {
+      "description": "Definition of a quantity group with constituents and sum",
+      "properties": {
+        "name": {
+          "description": "Name of the quantity group",
+          "title": "Name",
+          "type": "string"
+        },
+        "constituents": {
+          "description": "List of constituent columns",
+          "items": {
+            "type": "string"
+          },
+          "title": "Constituents",
+          "type": "array"
+        },
+        "sum": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Column name for the sum quantity",
+          "title": "Sum"
+        }
+      },
+      "required": ["name", "constituents"],
+      "title": "QuantityGroup",
+      "type": "object"
+    },
+    "UpgradeInclusion": {
+      "description": "Different ways to include a quantity in a plot.",
+      "enum": ["all", "applied_only"],
+      "title": "UpgradeInclusion",
+      "type": "string"
+    },
+    "VacancyInclusion": {
+      "description": "Different ways to include a quantity in a plot.",
+      "enum": ["all", "occupied_only"],
+      "title": "VacancyInclusion",
+      "type": "string"
+    },
+    "VizType": {
+      "description": "Supported chart templates.",
+      "enum": ["bar", "box", "histogram"],
+      "title": "VizType",
+      "type": "string"
+    }
+  },
+  "description": "Configuration for plot generation",
+  "properties": {
+    "annual_results_dir": {
+      "description": "Path to folder containing annual results",
+      "title": "Annual Results Dir",
+      "type": "string"
+    },
+    "output_dir": {
+      "description": "Path to output directory",
+      "title": "Output Dir",
+      "type": "string"
+    },
+    "upgrades": {
+      "description": "List of upgrade indices to include",
+      "items": {
+        "type": "integer"
+      },
+      "title": "Upgrades",
+      "type": "array"
+    },
+    "quantities": {
+      "description": "List of quantity groups to generate plots for",
+      "items": {
+        "$ref": "#/$defs/QuantityGroup"
+      },
+      "title": "Quantities",
+      "type": "array"
+    },
+    "group_by": {
+      "description": "List of grouping columns",
+      "items": {
+        "type": "string"
+      },
+      "title": "Group By",
+      "type": "array"
+    },
+    "visualization_types": {
+      "description": "List of visualization types to generate",
+      "items": {
+        "$ref": "#/$defs/VizType"
+      },
+      "title": "Visualization Types",
+      "type": "array"
+    },
+    "comparison_types": {
+      "description": "List of comparison types to generate",
+      "items": {
+        "$ref": "#/$defs/ComparisonTypes"
+      },
+      "title": "Comparison Types",
+      "type": "array"
+    },
+    "upgrade_inclusion": {
+      "description": "Upgrade inclusion type",
+      "items": {
+        "$ref": "#/$defs/UpgradeInclusion"
+      },
+      "title": "Upgrade Inclusion",
+      "type": "array"
+    },
+    "vacancy_inclusion": {
+      "description": "Vacancy inclusion type",
+      "items": {
+        "$ref": "#/$defs/VacancyInclusion"
+      },
+      "title": "Vacancy Inclusion",
+      "type": "array"
+    }
+  },
+  "required": [
+    "annual_results_dir",
+    "output_dir",
+    "upgrades",
+    "quantities",
+    "group_by",
+    "visualization_types",
+    "comparison_types",
+    "upgrade_inclusion",
+    "vacancy_inclusion"
+  ],
+  "title": "WorkflowConfig",
+  "type": "object"
+}

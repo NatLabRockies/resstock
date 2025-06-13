@@ -8,7 +8,7 @@ from enum import Enum
 
 import yaml
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, Union
 
 
 class ComparisonTypes(str, Enum):
@@ -51,10 +51,10 @@ class VacancyInclusion(str, Enum):
 
 class SelectionLogic(BaseModel):
     """Selection logic for plots based on upgrade apply logic rules"""
-    and_: list["SelectionLogic"] | None = Field(None, alias="and")
-    or_: list["SelectionLogic"] | None = Field(None, alias="or")
-    not_: "SelectionLogic" | list["SelectionLogic"] | None = Field(None, alias="not")
-    param_option: str | None = None
+    and_: Optional[list["SelectionLogic"]] = Field(None, alias="and")
+    or_: Optional[list["SelectionLogic"]] = Field(None, alias="or")
+    not_: Optional[Union["SelectionLogic", list["SelectionLogic"]]] = Field(None, alias="not")
+    param_option: Optional[str] = None
 
 class WorkflowConfig(BaseModel):
     """Configuration for plot generation"""
