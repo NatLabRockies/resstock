@@ -323,6 +323,84 @@ references:
       - HVAC Has Ducts|Yes
       - HVAC Has Ducts|No
   
+  hpwh_apply_logic: &hpwh_apply_logic
+    # remove dwelling units that have hpwh or solar thermal water heater
+    - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF
+    - not: Water Heater Fuel|Solar Thermal
+  
+  high_eff_ng_tankless_wh_apply_logic: &high_eff_ng_tankless_wh_apply_logic
+    # remove dwelling units that have hpwh or solar thermal wh or tankless gas wh
+    # have access to natural gas
+    - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF
+    - not: Water Heater Fuel|Solar Thermal
+    - not: Water Heater Efficiency|Natural Gas Tankless
+    - or:
+      - Water Heater Fuel|Natural Gas
+      - Heating Fuel|Natural Gas
+      - Clothes Dryer|Gas
+      - Cooking Range|Gas
+
+
+  change_water_heater_fuel_to_electricity: &change_water_heater_fuel_to_electricity
+    option: Water Heater Fuel|Electricity
+    apply_logic:
+      - not: Water Heater Fuel|Electricity
+  
+  change_water_heater_fuel_to_natural_gas: &change_water_heater_fuel_to_natural_gas
+    option: Water Heater Fuel|Natural Gas
+    apply_logic:
+      - not: Water Heater Fuel|Natural Gas
+  
+  hpwh_50_gal_3_pt_78_uef: &hpwh_50_gal_3_pt_78_uef
+    option: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.78 UEF
+    apply_logic:
+      - or:
+        - Bedrooms|1
+        - Bedrooms|2
+      - or:
+        - Occupants|0
+        - Occupants|1
+        - Occupants|2
+        - Occupants|3
+
+  hpwh_66_gal_3_pt_95_uef: &hpwh_66_gal_3_pt_95_uef
+    option: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.95 UEF
+    apply_logic:
+      - or:
+        - and:
+          - or:
+            - Bedrooms|1
+            - Bedrooms|2
+          - Occupants|4
+        - and:
+          - Bedrooms|3
+          - or:
+            - Occupants|0
+            - Occupants|1
+            - Occupants|2
+            - Occupants|3
+            - Occupants|4
+
+  hpwh_80_gal_3_pt_98_uef: &hpwh_80_gal_3_pt_98_uef
+    option: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.98 UEF
+    apply_logic:
+      - or:
+        - Bedrooms|4
+        - Bedrooms|5
+        - Occupants|5
+        - Occupants|6
+        - Occupants|7
+        - Occupants|8
+        - Occupants|9
+        - Occupants|10+
+
+  high_eff_ng_tankless_wh: &high_eff_ng_tankless_wh
+    option: Water Heater Efficiency|High Efficiency Natural Gas Tankless, Condensing
+
   ### -- Anchors dependent on other anchors -- ###
   cooling_setpoint_no_offset: &cooling_setpoint_no_offset
       option: Cooling Setpoint Has Offset|No
@@ -411,6 +489,21 @@ upgrades:
 
       - *heat_pump_cooling_efficiency_ducted
       - *partial_conditioning_100_percent_ducts_only
+
+  ### -- Water Heater -- ###
+  - upgrade_name: Heat Pumps Water Heater
+    package_apply_logic: *hpwh_apply_logic
+    options:
+      - *change_water_heater_fuel_to_electricity
+      - *hpwh_50_gal_3_pt_78_uef
+      - *hpwh_66_gal_3_pt_95_uef
+      - *hpwh_80_gal_3_pt_98_uef
+
+  - upgrade_name: High Efficiency Natural Gas Tankless Water Heater
+    package_apply_logic: *high_eff_ng_tankless_wh_apply_logic
+    options:
+      - *change_water_heater_fuel_to_natural_gas
+      - *high_eff_ng_tankless_wh
 
   ### -- Envelope and Ducts -- ###
   - upgrade_name: Air Sealing
