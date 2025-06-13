@@ -3,21 +3,21 @@
 Provides shared helpers (theme access, column guards, etc.) so concrete
 plotters don’t have to duplicate boilerplate.
 """
+
 from __future__ import annotations
 
 from abc import ABC
-from typing import Dict, List, Optional
 
 import polars as pl
 
-from .theme import ThemeManager
 from .schema.plot_spec import PlotSpec
+from .theme import ThemeManager
 
 
 class BasePlotter(ABC):
     """Abstract base plotter – every concrete plotter inherits this."""
 
-    def __init__(self, theme_cfg: Optional[Dict] = None):
+    def __init__(self, theme_cfg: dict | None = None):
         # Centralised style/theme manager
         self.theme = ThemeManager(theme_cfg)
 
@@ -25,7 +25,7 @@ class BasePlotter(ABC):
     # Shared helpers
     # ------------------------------------------------------------------
     @staticmethod
-    def _ensure_columns_exist(df: pl.DataFrame, cols: List[str]) -> pl.DataFrame:
+    def _ensure_columns_exist(df: pl.DataFrame, cols: list[str]) -> pl.DataFrame:
         """Ensure *cols* are present in *df* (add with zeros if missing)."""
         for col in cols:
             if col not in df.columns:

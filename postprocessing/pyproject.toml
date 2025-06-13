@@ -15,22 +15,23 @@ classifiers = [
 ]
 requires-python = ">=3.11"
 dependencies = [
-    "pandas",
-    "geopandas",
-    "plotly",
-    "pyarrow",
-    "fsspec",
-    "s3fs",
-    "polars",
-    "kaleido==0.2.1",
-    "prefect>=3.4.5",
     "connectorx>=0.4.3",
-    "nbformat>=4.2.0",
-    "dash>=3.0.4",
-    "dash-core-components>=2.0.0",
-    "dash-html-components>=2.0.0",
     "dash-bootstrap-components>=2.0.3",
+    "dash-core-components>=2.0.0",
     "dash-extensions>=2.0.4",
+    "dash-html-components>=2.0.0",
+    "dash>=3.0.4",
+    "fsspec",
+    "geopandas",
+    "kaleido==0.2.1",
+    "nbformat>=4.2.0",
+    "pandas",
+    "plotly",
+    "polars",
+    "prefect>=3.4.5",
+    "pyarrow",
+    "pydantic>=2.11.5",
+    "s3fs",
 ]
 
 [project.urls]
@@ -49,12 +50,26 @@ resstockpostproc = [
     "resources/publication/sdr_column_definitions.csv"
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
-    "pytest",
-    "black",
-    "autopep8",
     "ipykernel",
+    "mypy>=1.16.0",
+    "pandas-stubs",
+    "plotly-stubs",
+    "pre-commit>=4.2.0",
+    "pytest",
+    "scipy-stubs",
+    "types-colorama",
+    "types-decorator",
+    "types-geopandas",
+    "types-greenlet",
+    "types-jsonschema",
+    "types-openpyxl",
+    "types-pexpect",
+    "types-psutil",
+    "types-pygments",
+    "types-python-dateutil",
+    "types-pyyaml",
 ]
 
 [tool.hatch.metadata]  # To allow direct references to git dependencies

@@ -3,59 +3,49 @@ Plotting module for standard plots
 ----------------------------------
 Handles creation of plots using Plotly with consistent styling
 """
-import plotly.graph_objects as go
-import plotly.express as px
-from plotly.subplots import make_subplots
-import polars as pl
-from typing import List, Optional, Literal
-from .theme import ThemeManager
-from .base_plotter import BasePlotter
+
 import pandas as pd
-import warnings
-from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, ComparisonTypes
+import plotly.express as px
+import plotly.graph_objects as go
+import polars as pl
+from plotly.subplots import make_subplots
+
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
+from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
+
+from .base_plotter import BasePlotter
 
 
 class BarPlotter(BasePlotter):
     """Generates standardized bar / stacked bar plots with consistent styling."""
 
-    def __init__(self, theme_cfg: Optional[dict] = None):
+    def __init__(self, theme_cfg: dict | None = None):
         super().__init__(theme_cfg)
-    
+
     def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
         """Create a plot based on the plot spec."""
 
         if isinstance(plot_spec.quantity, QuantityGroup):
             fig = self.create_stacked_bar_plot(
-                data=data,
-                constituent_cols=plot_spec.quantity.constituents,
-                sum_col=plot_spec.quantity.sum,
-                facet_column=plot_spec.group_by if plot_spec.group_by else None
+                data=data, constituent_cols=plot_spec.quantity.constituents, sum_col=plot_spec.quantity.sum, facet_column=plot_spec.group_by if plot_spec.group_by else None
             )
+        elif plot_spec.group_by:
+            fig = self.create_bar_plot(data=data, x_column=plot_spec.group_by, y_column=plot_spec.quantity, group_column="upgrade_name", title=plot_spec.quantity)
         else:
-            if plot_spec.group_by:
-                fig = self.create_bar_plot(data=data,
-                x_column=plot_spec.group_by,
-                y_column=plot_spec.quantity,
-                group_column="upgrade_name",
-                title=plot_spec.quantity)
-            else:
-                fig = self.create_bar_plot(data=data,
-                x_column="upgrade_name",
-                y_column=plot_spec.quantity,
-                title=plot_spec.quantity)
+            fig = self.create_bar_plot(data=data, x_column="upgrade_name", y_column=plot_spec.quantity, title=plot_spec.quantity)
         # fig.show(renderer="browser")
         return fig
 
     def create_bar_plot(
-        self, *,
+        self,
+        *,
         data: pl.DataFrame,
         x_column: str,
         y_column: str,
-        group_column: Optional[str] = None,
-        title: Optional[str] = None,
-        x_label: Optional[str] = None,
-        y_label: Optional[str] = None,
+        group_column: str | None = None,
+        title: str | None = None,
+        x_label: str | None = None,
+        y_label: str | None = None,
     ) -> go.Figure:
         """Grouped (simple) bar plot."""
         plot_data = data.to_pandas()
@@ -92,15 +82,15 @@ class BarPlotter(BasePlotter):
     def create_stacked_bar_plot(
         self,
         data: pl.DataFrame,
-        constituent_cols: List[str],
+        constituent_cols: list[str],
         *,
-        sum_col: Optional[str] = None,
+        sum_col: str | None = None,
         x_column: str = "upgrade_name",
         hue: str = "upgrade_name",
-        facet_column: Optional[str] = None,
-        title: Optional[str] = None,
-        x_label: Optional[str] = None,
-        y_label: Optional[str] = None,
+        facet_column: str | None = None,
+        title: str | None = None,
+        x_label: str | None = None,
+        y_label: str | None = None,
     ) -> go.Figure:
         """Stacked (optionally faceted) bar plot."""
 
@@ -142,7 +132,7 @@ class BarPlotter(BasePlotter):
                         wrapped.append(" ".join(line))
                     title_text = "<br>".join(wrapped)
                 wrapped_titles.append(title_text)
-                
+
             fig = make_subplots(
                 rows=1,
                 cols=len(facet_vals),
@@ -165,11 +155,7 @@ class BarPlotter(BasePlotter):
                     if xd.empty:
                         continue
 
-                    x_arg = [
-                        x_idx - (cluster_frac / 2) + h_idx * bar_width + (bar_width / 2)
-                        if facet_column is None
-                        else x_val
-                    ]
+                    x_arg = [x_idx - (cluster_frac / 2) + h_idx * bar_width + (bar_width / 2) if facet_column is None else x_val]
 
                     for c_idx, col_name in enumerate(constituent_cols):
                         val = xd[col_name].iloc[0] if col_name in xd else 0
@@ -226,9 +212,7 @@ class BarPlotter(BasePlotter):
             _render_slice(slice_df, row=1, col_idx=(f_idx + 1) if facet_column else 1)
 
         # Layout tweaks
-        y_axis_label = y_label or (
-            (sum_col.split(".")[-1].replace("_", " ").title() if sum_col else constituent_cols[0].split(".")[-1].replace("_", " ").title())
-        )
+        y_axis_label = y_label or (sum_col.split(".")[-1].replace("_", " ").title() if sum_col else constituent_cols[0].split(".")[-1].replace("_", " ").title())
 
         fig.update_layout(
             title=title,

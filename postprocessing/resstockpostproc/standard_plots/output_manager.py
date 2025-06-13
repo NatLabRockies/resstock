@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import os
 from pathlib import Path
-from typing import Tuple
+
 from plotly.graph_objects import Figure
 
 # Lazy import to avoid circulars
-from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 
 __all__ = ["OutputManager"]
 
@@ -25,7 +23,7 @@ class OutputManager:
         full_path = self.base_dir / path_seg
         full_path.mkdir(parents=True, exist_ok=True)
         return full_path
-    
+
     def save_plot(self, fig: Figure, path_seg: Path) -> None:
         """Save a plot to the output directory."""
         output_dir = self.get_output_dir(path_seg)
@@ -35,7 +33,7 @@ class OutputManager:
         svg_dir = output_dir / "svg"
         html_dir.mkdir(exist_ok=True)
         svg_dir.mkdir(exist_ok=True)
-        
+
         # Write files to their respective directories
         fig.write_html(html_dir / "plot.html")
         fig.write_image(svg_dir / "plot.svg")

@@ -29,7 +29,9 @@ buildstockbatch_crash_details.log
 /weather
 
 # Development environment and system files
+.idea/
 .vscode/
+node_modules/
 .DS_Store
 **/.ipynb_checkpoints/*
 **/.bsq_cache/

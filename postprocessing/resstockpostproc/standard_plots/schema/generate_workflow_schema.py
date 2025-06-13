@@ -5,6 +5,7 @@ in VSCode and pre-commit hooks.
 
 import json
 from pathlib import Path
+
 from workflow_schema import WorkflowConfig
 
 schema = WorkflowConfig.model_json_schema()

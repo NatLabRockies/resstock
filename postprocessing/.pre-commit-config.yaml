@@ -1,3 +1,4 @@
+files: ^postprocessing/
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
@@ -13,7 +14,6 @@ repos:
       - id: check-json
       - id: check-merge-conflict
       - id: check-toml
-      - id: check-xml
       - id: check-yaml
       - id: debug-statements
       - id: detect-private-key
@@ -24,35 +24,34 @@ repos:
       # - id: name-tests-test
       #   args: ["--pytest-test-first"]
       - id: trailing-whitespace
-  - repo: https://github.com/crate-ci/typos
-    rev: v1.32.0
-    hooks:
-      - id: typos
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
-        types_or: [json, markdown, toml, yaml]
-        exclude: postprocessing/resstockpostproc/standard_plots/schema/workflow_schema.json # Exclude the generated schema
-  # - repo: https://github.com/pre-commit/mirrors-mypy
-  #   rev: v1.15.0
-  #   hooks:
-  #     - id: mypy
-  #       args: ["--python-version=3.11", "--install-types"]
-  # - repo: https://github.com/astral-sh/ruff-pre-commit
-  #   rev: v0.11.10
-  #   hooks:
-  #     # Run the linter
-  #     - id: ruff-check
-  #       args: [--fix, --exit-non-zero-on-fix, --output-format=full]
-  #     # Run the formatter
-  #     - id: ruff-format
+        types_or: [markdown, toml, yaml]
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.16.0
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: uv run mypy
+        language: system
+        types: [python]
+        args: ["--config-file=postprocessing/pyproject.toml"]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.13
+    hooks:
+      # Run the linter
+      - id: ruff-check
+        args: [--fix, --exit-non-zero-on-fix, --output-format=full]
+      # Run the formatter
+      - id: ruff-format
   - repo: local
     hooks:
       - id: pydantic-schema
         name: Generate JSON Schema from models
-        language: python
-        entry: cd postprocessing && uv run resstockpostproc/standard_plots/schema/generate_workflow_schema.py
+        language: system
+        entry: uv run postprocessing/resstockpostproc/standard_plots/schema/generate_workflow_schema.py
         # Only run when model files change; adjust to match your package path.
         files: postprocessing/resstockpostproc/standard_plots/schema/workflow_schema.py
         pass_filenames: false

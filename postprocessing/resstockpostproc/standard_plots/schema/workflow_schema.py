@@ -3,17 +3,19 @@ Configuration schema for plot generation
 ----------------------------------------
 Defines the Pydantic models for validating plot configuration
 """
+
 from __future__ import annotations
+
 from enum import Enum
 
 import yaml
 from pydantic import BaseModel, Field
-from typing import Optional, Union
 
 
 class NoExtraModel(BaseModel):
     class Config:
         extra = "forbid"
+
 
 class ComparisonTypes(str, Enum):
     """Different interpretations of results columns."""
@@ -45,17 +47,20 @@ class UpgradeInclusion(str, Enum):
     all = "all"
     applied_only = "applied_only"
 
+
 class VacancyInclusion(str, Enum):
     """Different ways to include a quantity in a plot."""
 
     all = "all"
     occupied_only = "occupied_only"
 
+
 class SelectionLogic(BaseModel):
     """Selection logic for plots based on upgrade apply logic rules"""
-    and_: Optional[SelectionLogic | list[SelectionLogic | str]] = Field(None, alias="and")
-    or_: Optional[SelectionLogic | list[SelectionLogic | str]] = Field(None, alias="or")
-    not_: Optional[SelectionLogic | list[SelectionLogic | str] | str] = Field(None, alias="not")
+
+    and_: SelectionLogic | list[SelectionLogic | str] | None = Field(None, alias="and")
+    or_: SelectionLogic | list[SelectionLogic | str] | None = Field(None, alias="or")
+    not_: SelectionLogic | list[SelectionLogic | str] | str | None = Field(None, alias="not")
 
 
 class WorkflowConfig(NoExtraModel):
@@ -64,7 +69,7 @@ class WorkflowConfig(NoExtraModel):
     annual_results_dir: str = Field(description="Path to folder containing annual results")
     output_dir: str = Field(description="Path to output directory")
     upgrades: list[int] = Field(description="List of upgrade indices to include")
-    selection_logic: Optional[SelectionLogic | list[SelectionLogic] | list[str]] = Field(None, description="Selection logic for")
+    selection_logic: SelectionLogic | list[SelectionLogic] | list[str] | None = Field(None, description="Selection logic for")
     quantities: list[QuantityGroup] = Field(description="List of quantity groups to generate plots for")
     group_by: list[str] = Field(description="List of grouping columns")
     visualization_types: list[VizType] = Field(description="List of visualization types to generate")
@@ -73,7 +78,7 @@ class WorkflowConfig(NoExtraModel):
     vacancy_inclusion: list[VacancyInclusion] = Field(description="Vacancy inclusion type")
 
     @classmethod
-    def from_yaml(cls, yaml_path: str) -> "WorkflowConfig":
+    def from_yaml(cls, yaml_path: str) -> WorkflowConfig:
         """
         Load configuration from a YAML file
 

@@ -47,7 +47,7 @@ class PlotOrchestrator:
             self.workflow.upgrade_inclusion,
             self.workflow.vacancy_inclusion,
             self.workflow.visualization_types,
-            [None] + self.workflow.group_by,
+            [None, *self.workflow.group_by],
             self.workflow.quantities,
         )
         for combination in all_combinations:

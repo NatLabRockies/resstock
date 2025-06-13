@@ -109,7 +109,7 @@ class DataProcessor:
         group_by_cols = ["upgrade", "upgrade_name"]
         if group_by:
             group_by_cols.append(group_by)
-        columns_to_select = group_by_cols + [quantity]
+        columns_to_select = [*group_by_cols, quantity]
         data = combined_df.select(columns_to_select).sort(group_by_cols)
 
         data = data.group_by(group_by_cols).agg(
