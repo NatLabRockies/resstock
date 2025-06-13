@@ -2605,6 +2605,7 @@ dependencies = [
     { name = "prefect" },
     { name = "pyarrow" },
     { name = "pydantic" },
+    { name = "pyyaml" },
     { name = "s3fs" },
 ]
 
@@ -2648,6 +2649,7 @@ requires-dist = [
     { name = "prefect", specifier = ">=3.4.5" },
     { name = "pyarrow" },
     { name = "pydantic", specifier = ">=2.11.5" },
+    { name = "pyyaml" },
     { name = "s3fs" },
 ]
 
