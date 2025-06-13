@@ -7,6 +7,7 @@
       "type": "string"
     },
     "QuantityGroup": {
+      "additionalProperties": false,
       "description": "Definition of a quantity group with constituents and sum",
       "properties": {
         "name": {
@@ -40,6 +41,91 @@
       "title": "QuantityGroup",
       "type": "object"
     },
+    "SelectionLogic": {
+      "description": "Selection logic for plots based on upgrade apply logic rules",
+      "properties": {
+        "and": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SelectionLogic"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SelectionLogic"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "And"
+        },
+        "or": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SelectionLogic"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SelectionLogic"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Or"
+        },
+        "not": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SelectionLogic"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SelectionLogic"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Not"
+        }
+      },
+      "title": "SelectionLogic",
+      "type": "object"
+    },
     "UpgradeInclusion": {
       "description": "Different ways to include a quantity in a plot.",
       "enum": ["all", "applied_only"],
@@ -59,6 +145,7 @@
       "type": "string"
     }
   },
+  "additionalProperties": false,
   "description": "Configuration for plot generation",
   "properties": {
     "annual_results_dir": {
@@ -78,6 +165,31 @@
       },
       "title": "Upgrades",
       "type": "array"
+    },
+    "selection_logic": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SelectionLogic"
+        },
+        {
+          "items": {
+            "$ref": "#/$defs/SelectionLogic"
+          },
+          "type": "array"
+        },
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Selection logic for",
+      "title": "Selection Logic"
     },
     "quantities": {
       "description": "List of quantity groups to generate plots for",

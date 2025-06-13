@@ -4,6 +4,7 @@
 annual_results_dir: /Users/radhikar/Documents/buildstock2025/resstock_amy2018_release_2/parquet
 output_dir: /Users/radhikar/Documents/buildstock2025/resstock_amy2018_release_2/plots
 upgrades: [0, 1] # corresponds to results_up00.csv, results_up01.csv, results_up02.csv
+
 quantities:
   - name: energy_consumption
     constituents:

@@ -3,13 +3,17 @@ Configuration schema for plot generation
 ----------------------------------------
 Defines the Pydantic models for validating plot configuration
 """
-
+from __future__ import annotations
 from enum import Enum
 
 import yaml
 from pydantic import BaseModel, Field
 from typing import Optional, Union
 
+
+class NoExtraModel(BaseModel):
+    class Config:
+        extra = "forbid"
 
 class ComparisonTypes(str, Enum):
     """Different interpretations of results columns."""
@@ -27,7 +31,7 @@ class VizType(str, Enum):
     hist = "histogram"
 
 
-class QuantityGroup(BaseModel):
+class QuantityGroup(NoExtraModel):
     """Definition of a quantity group with constituents and sum"""
 
     name: str = Field(description="Name of the quantity group")
@@ -41,28 +45,26 @@ class UpgradeInclusion(str, Enum):
     all = "all"
     applied_only = "applied_only"
 
-
 class VacancyInclusion(str, Enum):
     """Different ways to include a quantity in a plot."""
 
     all = "all"
     occupied_only = "occupied_only"
 
-
 class SelectionLogic(BaseModel):
     """Selection logic for plots based on upgrade apply logic rules"""
-    and_: Optional[list["SelectionLogic"]] = Field(None, alias="and")
-    or_: Optional[list["SelectionLogic"]] = Field(None, alias="or")
-    not_: Optional[Union["SelectionLogic", list["SelectionLogic"]]] = Field(None, alias="not")
-    param_option: Optional[str] = None
+    and_: Optional[SelectionLogic | list[SelectionLogic | str]] = Field(None, alias="and")
+    or_: Optional[SelectionLogic | list[SelectionLogic | str]] = Field(None, alias="or")
+    not_: Optional[SelectionLogic | list[SelectionLogic | str] | str] = Field(None, alias="not")
 
-class WorkflowConfig(BaseModel):
+
+class WorkflowConfig(NoExtraModel):
     """Configuration for plot generation"""
 
     annual_results_dir: str = Field(description="Path to folder containing annual results")
     output_dir: str = Field(description="Path to output directory")
     upgrades: list[int] = Field(description="List of upgrade indices to include")
-    selection_logic: Optional[SelectionLogic] = Field(None, description="Selection logic for")
+    selection_logic: Optional[SelectionLogic | list[SelectionLogic] | list[str]] = Field(None, description="Selection logic for")
     quantities: list[QuantityGroup] = Field(description="List of quantity groups to generate plots for")
     group_by: list[str] = Field(description="List of grouping columns")
     visualization_types: list[VizType] = Field(description="List of visualization types to generate")
