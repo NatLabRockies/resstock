@@ -2,7 +2,11 @@
   "$defs": {
     "ComparisonTypes": {
       "description": "Different interpretations of results columns.",
-      "enum": ["absolute", "savings", "percent_savings"],
+      "enum": [
+        "absolute",
+        "savings",
+        "percent_savings"
+      ],
       "title": "ComparisonTypes",
       "type": "string"
     },
@@ -37,7 +41,10 @@
           "title": "Sum"
         }
       },
-      "required": ["name", "constituents"],
+      "required": [
+        "name",
+        "constituents"
+      ],
       "title": "QuantityGroup",
       "type": "object"
     },
@@ -128,19 +135,29 @@
     },
     "UpgradeInclusion": {
       "description": "Different ways to include a quantity in a plot.",
-      "enum": ["all", "applied_only"],
+      "enum": [
+        "all",
+        "applied_only"
+      ],
       "title": "UpgradeInclusion",
       "type": "string"
     },
     "VacancyInclusion": {
       "description": "Different ways to include a quantity in a plot.",
-      "enum": ["all", "occupied_only"],
+      "enum": [
+        "all",
+        "occupied_only"
+      ],
       "title": "VacancyInclusion",
       "type": "string"
     },
     "VizType": {
       "description": "Supported chart templates.",
-      "enum": ["bar", "box", "histogram"],
+      "enum": [
+        "bar",
+        "box",
+        "histogram"
+      ],
       "title": "VizType",
       "type": "string"
     }
