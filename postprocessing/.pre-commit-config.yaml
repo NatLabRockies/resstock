@@ -50,7 +50,7 @@ repos:
       - id: pydantic-schema
         name: Generate JSON Schema from models
         language: python
-        entry: python resstockpostproc/standard_plots/scripts/generate_workflow_schema.py
+        entry: cd postprocessing && uv run resstockpostproc/standard_plots/schema/generate_workflow_schema.py
         # Only run when model files change; adjust to match your package path.
-        files: resstockpostproc/standard_plots/schema/workflow_schema.py
+        files: postprocessing/resstockpostproc/standard_plots/schema/workflow_schema.py
         pass_filenames: false

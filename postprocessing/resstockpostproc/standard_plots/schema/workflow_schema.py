@@ -8,6 +8,7 @@ from enum import Enum
 
 import yaml
 from pydantic import BaseModel, Field
+from typing import Optional
 
 
 class ComparisonTypes(str, Enum):
@@ -48,12 +49,20 @@ class VacancyInclusion(str, Enum):
     occupied_only = "occupied_only"
 
 
+class SelectionLogic(BaseModel):
+    """Selection logic for plots based on upgrade apply logic rules"""
+    and_: list["SelectionLogic"] | None = Field(None, alias="and")
+    or_: list["SelectionLogic"] | None = Field(None, alias="or")
+    not_: "SelectionLogic" | list["SelectionLogic"] | None = Field(None, alias="not")
+    param_option: str | None = None
+
 class WorkflowConfig(BaseModel):
     """Configuration for plot generation"""
 
     annual_results_dir: str = Field(description="Path to folder containing annual results")
     output_dir: str = Field(description="Path to output directory")
     upgrades: list[int] = Field(description="List of upgrade indices to include")
+    selection_logic: Optional[SelectionLogic] = Field(None, description="Selection logic for")
     quantities: list[QuantityGroup] = Field(description="List of quantity groups to generate plots for")
     group_by: list[str] = Field(description="List of grouping columns")
     visualization_types: list[VizType] = Field(description="List of visualization types to generate")
