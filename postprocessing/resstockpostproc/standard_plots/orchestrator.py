@@ -53,7 +53,7 @@ class PlotOrchestrator:
         for combination in all_combinations:
             comparison_type = combination[0]
             visualization_type = combination[3]
-            quantity = combination[5].copy()
+            quantity = combination[5].model_copy()
             if comparison_type == ComparisonTypes.savings:
                 quantity.constituents = [f"{col}.savings" for col in quantity.constituents]
                 quantity.sum = f"{quantity.sum}.savings" if quantity.sum else None
@@ -72,8 +72,6 @@ class PlotOrchestrator:
                 plot_spec = PlotSpec(
                     comparison_type=combination[0], upgrade_inclusion=combination[1], vacancy_inclusion=combination[2], visualization_type=combination[3], group_by=combination[4], quantity=quantity
                 )
-                if not isinstance(quantity, str) or not plot_spec.group_by:
-                    continue
                 df = self.processor.prepare_data_for_plot(plot_spec)
                 path_seg = plot_spec.path_segments(quantity_group)
 

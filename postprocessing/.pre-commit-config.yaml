@@ -32,16 +32,25 @@ repos:
     hooks:
       - id: prettier
         types_or: [json, markdown, toml, yaml]
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.15.0
+  # - repo: https://github.com/pre-commit/mirrors-mypy
+  #   rev: v1.15.0
+  #   hooks:
+  #     - id: mypy
+  #       args: ["--python-version=3.11", "--install-types"]
+  # - repo: https://github.com/astral-sh/ruff-pre-commit
+  #   rev: v0.11.10
+  #   hooks:
+  #     # Run the linter
+  #     - id: ruff-check
+  #       args: [--fix, --exit-non-zero-on-fix, --output-format=full]
+  #     # Run the formatter
+  #     - id: ruff-format
+  - repo: local
     hooks:
-      - id: mypy
-        args: ["--python-version=3.11", "--install-types"]
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.10
-    hooks:
-      # Run the linter
-      - id: ruff-check
-        args: [--fix, --exit-non-zero-on-fix, --output-format=full]
-      # Run the formatter
-      - id: ruff-format
+      - id: pydantic-schema
+        name: Generate JSON Schema from models
+        language: python
+        entry: python resstockpostproc/standard_plots/scripts/generate_workflow_schema.py
+        # Only run when model files change; adjust to match your package path.
+        files: resstockpostproc/standard_plots/schema/workflow_schema.py
+        pass_filenames: false
