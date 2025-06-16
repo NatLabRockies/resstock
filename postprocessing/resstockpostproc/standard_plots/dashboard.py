@@ -5,8 +5,6 @@ from pathlib import Path
 
 import dash
 import dash_bootstrap_components as dbc  # type: ignore
-import dash_core_components as dcc  # type: ignore
-import dash_html_components as html  # type: ignore
 from dash import ALL, dcc, html
 
 # import PreventUpdate
@@ -58,7 +56,7 @@ def get_selection_row(entity_list, indx, initial_value):
             dbc.Col(
                 dcc.RadioItems(
                     id={"type": "radio-selection", "index": indx, "name_labels_text": name_labels_text},
-                    options=[{"label": l, "value": f} for f, l in zip(entity_list, labels)],
+                    options=[{"label": lbl, "value": val} for val, lbl in zip(entity_list, labels)],
                     value=initial_value,
                     labelStyle={"display": "inline-block", "margin-right": "10px"},
                 ),
@@ -118,7 +116,9 @@ app.layout = dbc.Container(
 )
 
 
-@app.callback(dash.dependencies.Output("dropdown-container", "children"), [dash.dependencies.Input("root-path", "value")])
+@app.callback(
+    dash.dependencies.Output("dropdown-container", "children"), [dash.dependencies.Input("root-path", "value")]
+)
 def update_dropdowns(root_path):
     return get_downstream_rows(root_path, [], 0)
 
@@ -167,7 +167,7 @@ def update_dropdowns2(root_path, current_children, selection):
         try:
             with open(full_path) as f:
                 html_contents = f.read()
-        except Exception:
+        except Exception:  # noqa: BLE001
             html_contents = f"<p>Could not open {full_path}</p>"
     else:
         html_contents = ""

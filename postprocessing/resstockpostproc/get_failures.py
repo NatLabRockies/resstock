@@ -40,7 +40,13 @@ def get_failures(csv_path: str, verbose: bool = False) -> list[dict[str, Any]]:
         schema = df_lazy.collect_schema()
         if "completed_status" not in schema:
             print(f"Warning: 'completed_status' column not found in {csv_path}")
-            return [{"building_id": "N/A", "completed_status": "N/A", "step_failures": f"completed_status column not found in {csv_path}"}]
+            return [
+                {
+                    "building_id": "N/A",
+                    "completed_status": "N/A",
+                    "step_failures": f"completed_status column not found in {csv_path}",
+                }
+            ]
 
         if "step_failures" not in schema:
             # all simulations are successful so there is no step_failures column
@@ -57,9 +63,11 @@ def get_failures(csv_path: str, verbose: bool = False) -> list[dict[str, Any]]:
 
         return failures
 
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Error processing {csv_path}: {e!s}")
-        return [{"building_id": "N/A", "completed_status": "N/A", "step_failures": f"Error processing {csv_path}: {e!s}"}]
+        return [
+            {"building_id": "N/A", "completed_status": "N/A", "step_failures": f"Error processing {csv_path}: {e!s}"}
+        ]
 
 
 def print_failures(failures: list[dict[str, Any]], csv_path: str) -> None:

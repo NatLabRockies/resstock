@@ -4,7 +4,6 @@ Plotting module for standard plots
 Handles creation of plots using Plotly with consistent styling
 """
 
-
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -28,12 +27,23 @@ class BarPlotter(BasePlotter):
 
         if isinstance(plot_spec.quantity, QuantityGroup):
             fig = self.create_stacked_bar_plot(
-                data=data, constituent_cols=plot_spec.quantity.constituents, sum_col=plot_spec.quantity.sum, facet_column=plot_spec.group_by if plot_spec.group_by else None
+                data=data,
+                constituent_cols=plot_spec.quantity.constituents,
+                sum_col=plot_spec.quantity.sum,
+                facet_column=plot_spec.group_by if plot_spec.group_by else None,
             )
         elif plot_spec.group_by:
-            fig = self.create_bar_plot(data=data, x_column=plot_spec.group_by, y_column=plot_spec.quantity, group_column="upgrade_name", title=plot_spec.quantity)
+            fig = self.create_bar_plot(
+                data=data,
+                x_column=plot_spec.group_by,
+                y_column=plot_spec.quantity,
+                group_column="upgrade_name",
+                title=plot_spec.quantity,
+            )
         else:
-            fig = self.create_bar_plot(data=data, x_column="upgrade_name", y_column=plot_spec.quantity, title=plot_spec.quantity)
+            fig = self.create_bar_plot(
+                data=data, x_column="upgrade_name", y_column=plot_spec.quantity, title=plot_spec.quantity
+            )
         # fig.show(renderer="browser")
         return fig
 
@@ -101,7 +111,7 @@ class BarPlotter(BasePlotter):
         def _fuel_name(col: str) -> str:
             if "." in col:
                 parts = col.split(".")
-                col = parts[2] if len(parts) > 2 and parts[1] in {"bills", "emissions"} else parts[1]
+                col = parts[2] if len(parts) > 2 and parts[1] in {"bills", "emissions"} else parts[1]  # noqa: PLR2004 Magic number 2
             return col.replace("_", " ").title()
 
         legend_added: set[str] = set()
@@ -116,12 +126,12 @@ class BarPlotter(BasePlotter):
             for v in facet_vals:
                 title_text = str(v).replace("in.", "").replace("_", " ").title()
                 # Add line breaks for longer titles
-                if len(title_text) > 15:
+                if len(title_text) > self.theme.facet_title_width:
                     words = title_text.split()
                     wrapped: list[str] = []
                     line: list[str] = []
                     for word in words:
-                        if len(" ".join([*line, word])) > 15 and line:
+                        if len(" ".join([*line, word])) > self.theme.facet_title_width and line:
                             wrapped.append(" ".join(line))
                             line = [word]
                         else:
@@ -153,7 +163,11 @@ class BarPlotter(BasePlotter):
                     if xd.empty:
                         continue
 
-                    x_arg = [x_idx - (cluster_frac / 2) + h_idx * bar_width + (bar_width / 2) if facet_column is None else x_val]
+                    x_arg = [
+                        x_idx - (cluster_frac / 2) + h_idx * bar_width + (bar_width / 2)
+                        if facet_column is None
+                        else x_val
+                    ]
 
                     for c_idx, col_name in enumerate(constituent_cols):
                         val = xd[col_name].iloc[0] if col_name in xd else 0
@@ -210,7 +224,11 @@ class BarPlotter(BasePlotter):
             _render_slice(slice_df, row=1, col_idx=(f_idx + 1) if facet_column else 1)
 
         # Layout tweaks
-        y_axis_label = y_label or (sum_col.split(".")[-1].replace("_", " ").title() if sum_col else constituent_cols[0].split(".")[-1].replace("_", " ").title())
+        y_axis_label = y_label or (
+            sum_col.split(".")[-1].replace("_", " ").title()
+            if sum_col
+            else constituent_cols[0].split(".")[-1].replace("_", " ").title()
+        )
 
         fig.update_layout(
             title=title,
@@ -236,7 +254,9 @@ class BarPlotter(BasePlotter):
             )
         else:
             for i in range(len(facet_vals)):
-                fig.update_yaxes(title=y_axis_label if i == 0 else None, gridcolor="lightgray", gridwidth=0.5, col=i + 1)
+                fig.update_yaxes(
+                    title=y_axis_label if i == 0 else None, gridcolor="lightgray", gridwidth=0.5, col=i + 1
+                )
                 fig.update_xaxes(title="", col=i + 1)
 
         fig.update_yaxes(gridcolor="lightgray", gridwidth=0.5)

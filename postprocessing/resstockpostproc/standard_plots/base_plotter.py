@@ -1,7 +1,6 @@
 """Common abstract base class for all plotters.
 
-Provides shared helpers (theme access, column guards, etc.) so concrete
-plotters don’t have to duplicate boilerplate.
+Provides shared helpers (theme access, column guards, etc.) so concrete plotters do not have to duplicate boilerplate.
 """
 
 from __future__ import annotations
@@ -15,7 +14,7 @@ from .theme import ThemeManager
 
 
 class BasePlotter(ABC):
-    """Abstract base plotter – every concrete plotter inherits this."""
+    """Abstract base plotter - every concrete plotter inherits this."""
 
     def __init__(self, theme_cfg: dict | None = None):
         # Centralised style/theme manager
@@ -35,6 +34,6 @@ class BasePlotter(ABC):
     # ------------------------------------------------------------------
     # Mandatory interface
     # ------------------------------------------------------------------
-    def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec):  # pragma: no cover – optional override
+    def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec):
         """Placeholder fallback; subclasses typically override for convenience."""
         raise NotImplementedError("Subclasses should implement `create_plot` or use specific helpers.")

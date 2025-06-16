@@ -28,7 +28,9 @@ class BoxPlotter(BasePlotter):
         if isinstance(plot_spec.quantity, QuantityGroup):
             raise ValueError("QuantityGroup is not supported for box plots")
         if plot_spec.group_by:
-            fig = self.create_faceted_box_plot(data, x_column="upgrade_name", y_column=plot_spec.quantity, facet_column=plot_spec.group_by)
+            fig = self.create_faceted_box_plot(
+                data, x_column="upgrade_name", y_column=plot_spec.quantity, facet_column=plot_spec.group_by
+            )
         else:
             fig = self.create_box_plot(
                 data,
@@ -42,12 +44,6 @@ class BoxPlotter(BasePlotter):
         data: pl.DataFrame,
         x_column: str,
         y_column: str,
-        title: str | None = None,
-        x_label: str | None = None,
-        y_label: str | None = None,
-        show_outliers: bool = True,
-        notched: bool = False,
-        point_position: float = 0,  # Controls jitter (0 = no jitter)
     ) -> go.Figure:
         """
         Create a box plot using Plotly to show distribution and outliers
@@ -98,8 +94,6 @@ class BoxPlotter(BasePlotter):
         y_column: str,
         facet_column: str = "in.building_type",
         hue: str | None = "upgrade_name",
-        title: str | None = None,
-        x_label: str | None = None,
         y_label: str | None = None,
         show_outliers: bool = True,  # This ensures outliers are shown by default
         notched: bool = False,
@@ -129,7 +123,12 @@ class BoxPlotter(BasePlotter):
         facet_values = list(plot_data[facet_column].unique())
 
         # Create subplots - one for each facet value
-        fig = make_subplots(rows=1, cols=len(facet_values), subplot_titles=[str(val).replace("in.", "").replace("_", " ").title() for val in facet_values], shared_yaxes=True)
+        fig = make_subplots(
+            rows=1,
+            cols=len(facet_values),
+            subplot_titles=[str(val).replace("in.", "").replace("_", " ").title() for val in facet_values],
+            shared_yaxes=True,
+        )
 
         # Track which categories have already been added to the legend
         legend_added = set()
@@ -200,7 +199,10 @@ class BoxPlotter(BasePlotter):
                             notched=notched,
                             x=[x_position],  # Position boxes side by side
                             width=box_width if hue else 0.8,
-                            hovertemplate=f"{trace_name}<br>Count: {row_stats['n_points']}<br>Median: {row_stats['median']:.2f}<extra></extra>",
+                            hovertemplate=(
+                                f"{trace_name}<br>Count: {row_stats['n_points']}"
+                                f"<br>Median: {row_stats['median']:.2f}<extra></extra>"
+                            ),
                         ),
                         row=1,
                         col=facet_idx + 1,
@@ -217,10 +219,20 @@ class BoxPlotter(BasePlotter):
         # Format Y-axis - only show title on the far left facet
         for i in range(len(facet_values)):
             title_text = y_label if y_label else y_column.split(".")[-1].replace("_", " ").title()
-            fig.update_yaxes(title=title_text if i == 0 else None, gridcolor="lightgray", gridwidth=0.5, zeroline=True, zerolinecolor="darkgray", zerolinewidth=1, col=i + 1)
+            fig.update_yaxes(
+                title=title_text if i == 0 else None,
+                gridcolor="lightgray",
+                gridwidth=0.5,
+                zeroline=True,
+                zerolinecolor="darkgray",
+                zerolinewidth=1,
+                col=i + 1,
+            )
 
         # Format X-axis for each facet
         for i in range(len(facet_values)):
-            fig.update_xaxes(title="", tickvals=list(range(len(x_values))), ticktext=[str(val) for val in x_values], col=i + 1)
+            fig.update_xaxes(
+                title="", tickvals=list(range(len(x_values))), ticktext=[str(val) for val in x_values], col=i + 1
+            )
 
         return fig

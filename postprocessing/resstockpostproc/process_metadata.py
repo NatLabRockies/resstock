@@ -32,7 +32,9 @@ def publish_baseline_annual_results(failed_bldgs: set[int], base: pl.LazyFrame) 
     return base
 
 
-def publish_upgrade_annual_results(failed_bldgs: set[int], base: pl.LazyFrame, upgrade: pl.LazyFrame, upgrade_num: int) -> pl.LazyFrame:
+def publish_upgrade_annual_results(
+    failed_bldgs: set[int], base: pl.LazyFrame, upgrade: pl.LazyFrame, upgrade_num: int
+) -> pl.LazyFrame:
     col_maps = get_col_maps()
     upgrade = upgrade.filter((~pl.col("building_id").is_in(failed_bldgs)) & (pl.col("completed_status") == "Success"))
 
@@ -76,11 +78,14 @@ def get_transformed_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl.LazyF
     for col_map in col_maps:
         if col_map["column_type"] not in ["Input", "Output"]:
             continue
-        assert col_map["column_name"] is not None, "ResStock column name must be provided for Input or Output columns"
+        if col_map["column_name"] is None:
+            raise ValueError("ResStock column name must be provided for Input or Output columns")
         if col_map["column_name"] not in all_cols:
             continue
         if col_map["conversion_factor"]:
-            new_col = (pl.col(col_map["column_name"]).cast(pl.Float64) * float(col_map["conversion_factor"])).alias(col_map["published_name"])
+            new_col = (pl.col(col_map["column_name"]).cast(pl.Float64) * float(col_map["conversion_factor"])).alias(
+                col_map["published_name"]
+            )
         else:
             new_col = pl.col(col_map["column_name"]).alias(col_map["published_name"])
         transformed_cols.append(new_col)
@@ -99,8 +104,11 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
         .then(None)
         .when(pl.col("in.income").str.contains("-"))
         .then(
-            (pl.col("in.income").str.extract(r"(\d+)-(\d+)", 1).cast(pl.Float64, strict=False) +
-             pl.col("in.income").str.extract(r"(\d+)-(\d+)", 2).cast(pl.Float64, strict=False)) / 2
+            (
+                pl.col("in.income").str.extract(r"(\d+)-(\d+)", 1).cast(pl.Float64, strict=False)
+                + pl.col("in.income").str.extract(r"(\d+)-(\d+)", 2).cast(pl.Float64, strict=False)
+            )
+            / 2
         )
         .when(pl.col("in.income").str.contains("\+"))
         .then(pl.col("in.income").str.extract(r"(\d+)\+", 1).cast(pl.Float64, strict=False))
@@ -113,7 +121,12 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     new_cols.append(rep_income_col)
 
     # Calculate burden only when income is not null
-    burden_col = pl.when(income_expr.is_not_null() & (income_expr > 0)).then(pl.col("out.bills.all_fuels.usd") / income_expr * 100).otherwise(None).alias("out.energy_burden.percentage")
+    burden_col = (
+        pl.when(income_expr.is_not_null() & (income_expr > 0))
+        .then(pl.col("out.bills.all_fuels.usd") / income_expr * 100)
+        .otherwise(None)
+        .alias("out.energy_burden.percentage")
+    )
     new_cols.append(burden_col)
 
     return df.with_columns(new_cols)
@@ -124,11 +137,15 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
     all_cols = df.collect_schema().names()
     out_cols = [col for col in all_cols if "out." in col and "out.params" not in col]
 
-    baseline_df_with_renamed = baseline_df.select([pl.col(col).alias(f"baseline_{col}") for col in out_cols] + ["bldg_id"])
+    baseline_df_with_renamed = baseline_df.select(
+        [pl.col(col).alias(f"baseline_{col}") for col in out_cols] + ["bldg_id"]
+    )
     df_with_baseline = df.join(baseline_df_with_renamed, on="bldg_id", how="left")
     for col in out_cols:
         if col.startswith("out.emissions"):
-            saving_col = (pl.col(f"baseline_{col}") - pl.col(col)).alias(col.replace("out.emissions", "out.emissions_reduction"))
+            saving_col = (pl.col(f"baseline_{col}") - pl.col(col)).alias(
+                col.replace("out.emissions", "out.emissions_reduction")
+            )
         else:
             saving_col = (pl.col(f"baseline_{col}") - pl.col(col)).alias(f"{col}.savings")
         savings_cols.append(saving_col)
@@ -140,9 +157,9 @@ def add_county_column(df: pl.LazyFrame):
     Changes the county column to the FIPS code and adds a county name column.
     """
     here = pathlib.Path(__file__).resolve().parent
-    county_map_df = pl.read_csv(here / "resources" / "gisdata" / "county_lookup_table.csv", columns=["long_name", "original_FIP"]).select(
-        pl.col("long_name"), pl.col("original_FIP").alias("county_fip")
-    )
+    county_map_df = pl.read_csv(
+        here / "resources" / "gisdata" / "county_lookup_table.csv", columns=["long_name", "original_FIP"]
+    ).select(pl.col("long_name"), pl.col("original_FIP").alias("county_fip"))
     county_map = dict(county_map_df.iter_rows())
 
     df = df.with_columns(
@@ -174,7 +191,9 @@ def add_upgrade_columns(lf: pl.LazyFrame) -> pl.LazyFrame:
         upgrade_lf.unpivot(index="bldg_id", on=upgrade_cols, variable_name="upgrade_name", value_name="upgrade_value")
         .drop_nulls("upgrade_value")
         .filter(pl.col("upgrade_value") != "")
-        .with_columns(pl.col("upgrade_value").str.split_exact("|", 1).struct.rename_fields(["upgrade_key", "upgrade_value"]))
+        .with_columns(
+            pl.col("upgrade_value").str.split_exact("|", 1).struct.rename_fields(["upgrade_key", "upgrade_value"])
+        )
         .unnest("upgrade_value")
         .collect()
         .group_by(["bldg_id", "upgrade_key"])
@@ -182,7 +201,9 @@ def add_upgrade_columns(lf: pl.LazyFrame) -> pl.LazyFrame:
         .pivot(index="bldg_id", on="upgrade_key", values="upgrade_value")
     )
     print("Done adding upgrade columns")
-    upgrade_df = upgrade_df.rename({c: f"upgrade.{c.lower().replace(' ', '_')}" for c in upgrade_df.columns if c != "bldg_id"})
+    upgrade_df = upgrade_df.rename(
+        {c: f"upgrade.{c.lower().replace(' ', '_')}" for c in upgrade_df.columns if c != "bldg_id"}
+    )
     return lf.drop(upgrade_cols).join(upgrade_df.lazy(), on="bldg_id", how="left")
 
 

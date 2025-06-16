@@ -23,6 +23,7 @@ class ThemeManager:
         # Default figure size
         self.fig_width: int = cfg.get("fig_width", 1000)
         self.fig_height: int = cfg.get("fig_height", 600)
+        self.facet_title_width = cfg.get("facet_title_width", 15)
 
     # ---------------------------------------------------------------------
     # Helper methods

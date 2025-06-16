@@ -40,7 +40,9 @@ class DataProcessor:
             # Use regex-like pattern matching to find files with the base pattern anywhere in the name
             matching_files: list[pathlib.Path] = []
             for file_path in pathlib.Path(self.annual_results_dir).iterdir():
-                if file_path.suffix in (".csv", ".parquet") and any(pattern in file_path.name for pattern in base_patterns):
+                if file_path.suffix in (".csv", ".parquet") and any(
+                    pattern in file_path.name for pattern in base_patterns
+                ):
                     matching_files.append(file_path)
 
             if not matching_files:
@@ -51,10 +53,14 @@ class DataProcessor:
                 raise ValueError(f"Multiple result files found for upgrade {upgrade}: {matching_files}")
 
             file_path = matching_files[0]
-            self.lazyframes[upgrade] = pl.scan_csv(file_path) if file_path.suffix == ".csv" else pl.scan_parquet(file_path)
+            self.lazyframes[upgrade] = (
+                pl.scan_csv(file_path) if file_path.suffix == ".csv" else pl.scan_parquet(file_path)
+            )
 
             if upgrade == 0:
-                self.lazyframes[upgrade] = self.lazyframes[upgrade].with_columns(pl.lit("baseline").alias("upgrade_name"))
+                self.lazyframes[upgrade] = self.lazyframes[upgrade].with_columns(
+                    pl.lit("baseline").alias("upgrade_name")
+                )
             print(f"Scanned data for upgrade {upgrade}")
 
     def prepare_data_for_plot(self, plot_spec: PlotSpec) -> pl.DataFrame:
@@ -86,7 +92,7 @@ class DataProcessor:
             combined_df = combined_df.filter(pl.col("in.vacancy_status") == "Occupied")
 
         if plot_spec.visualization_type == VizType.box:
-            assert isinstance(plot_spec.quantity, str)
+            assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
             return self.prepare_data_for_box_plot(combined_df, plot_spec.quantity, plot_spec.group_by)
         elif plot_spec.visualization_type == VizType.bar:
             return self.prepare_data_for_bar_plot(combined_df, quantities, plot_spec.group_by)
@@ -121,7 +127,9 @@ class DataProcessor:
         )
         return data.collect()
 
-    def prepare_data_for_bar_plot(self, combined_df: pl.LazyFrame, quantities: list[str], group_by: str | None) -> pl.DataFrame:
+    def prepare_data_for_bar_plot(
+        self, combined_df: pl.LazyFrame, quantities: list[str], group_by: str | None
+    ) -> pl.DataFrame:
         """
         Prepare data for bar plotting by grouping and aggregating
 
