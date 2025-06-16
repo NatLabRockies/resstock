@@ -4,6 +4,7 @@ Plotting module for standard plots
 Handles creation of plots using Plotly with consistent styling
 """
 
+
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -109,7 +110,7 @@ class BarPlotter(BasePlotter):
         legend_added: set[str] = set()
 
         # Faceting setup
-        facet_vals = [None] if facet_column is None else list(plot_data[facet_column].unique())
+        facet_vals: list[str | None] = [None] if facet_column is None else list(plot_data[facet_column].unique())
         if facet_column is None:
             fig = make_subplots(rows=1, cols=1)
         else:
