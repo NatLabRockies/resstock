@@ -138,11 +138,12 @@ def update_dropdowns2(root_path, current_children, selection):
     trigger_path = "/".join(trigger_inputs[: trigger_index + 1])
     current_path = root_path + "/" + trigger_path
 
-    def get_value(child):
+    def get_value(child) -> str:
         if isinstance(child, dict):
             return child["props"]["children"][1]["props"]["children"]["props"]["value"]
-        elif isinstance(child, dbc.Row):
+        elif isinstance(child, dbc.Row) and child.children:
             return child.children[1].children.value
+        return ""
 
     current_values = [get_value(child) for child in current_children]
 
@@ -161,7 +162,7 @@ def update_dropdowns2(root_path, current_children, selection):
             else:
                 new_children.append(new_row)
         current_children = new_children
-    new_values = [get_value(child) for child in current_children]
+    new_values: list[str] = [get_value(child) for child in current_children]
     if ".html" in trigger_inputs[-1]:
         full_path = root_path + "/" + "/".join(new_values[:-1]) + "/html/" + new_values[-1]
         try:

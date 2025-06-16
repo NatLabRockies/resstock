@@ -140,7 +140,7 @@ class BoxPlotter(BasePlotter):
         group_cols = list(set(group_cols))
         # Precompute statistics for all groups
         stats = data.to_pandas()
-
+        x_values = []
         # For each facet value
         for facet_idx, facet_val in enumerate(facet_values):
             # Filter stats for this facet
@@ -176,6 +176,7 @@ class BoxPlotter(BasePlotter):
 
                     # Position for boxes
                     x_position: float = x_idx
+                    box_width = 0.8
                     if hue:
                         box_width = 0.8 / len(hue_values)
                         x_position = x_idx + (hue_idx - (len(hue_values) - 1) / 2) * box_width

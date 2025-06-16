@@ -50,6 +50,7 @@ ignore = [
     "PLR0915", # too-many-statements
     "PD901", # df for variable assignment
     "PGH003", # Use specific rule codes when ignoring type issues instead of type: ignore
+    "I001",  # isort: import is unsorted or unformatted
 ]
 
 [lint.per-file-ignores]
