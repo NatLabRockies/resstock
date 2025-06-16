@@ -87,10 +87,7 @@ def get_downstream_rows(path, current_values, index):
             entities = sorted([f for f in files if f.endswith(".html")])
 
         try:
-            if current_values[index] in entities:
-                initial_value = current_values[index]
-            else:
-                initial_value = entities[0]
+            initial_value = current_values[index] if current_values[index] in entities else entities[0]
         except IndexError:
             initial_value = entities[0]
 
@@ -136,8 +133,8 @@ def update_dropdowns(root_path):
 def update_dropdowns2(root_path, current_children, selection):
     if not selection or not selection[0]:
         raise PreventUpdate()
-    trigger_index = [val["index"] for val in dash.callback_context.triggered_prop_ids.values()][0]
-    trigger_inputs = [val for val in dash.callback_context.inputs.values()]
+    trigger_index = next(val["index"] for val in dash.callback_context.triggered_prop_ids.values())
+    trigger_inputs = list(dash.callback_context.inputs.values())
     trigger_path = "/".join(trigger_inputs[: trigger_index + 1])
     current_path = root_path + "/" + trigger_path
 

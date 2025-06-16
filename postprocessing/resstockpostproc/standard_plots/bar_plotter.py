@@ -67,14 +67,14 @@ class BarPlotter(BasePlotter):
 
         self.theme.apply_layout(fig)
         fig.update_layout(
-            legend=dict(
-                orientation="v",
-                x=1.02,
-                y=1,
-                xanchor="left",
-                yanchor="top",
-                title=dict(text="Upgrade Name"),
-            )
+            legend={
+                "orientation": "v",
+                "x": 1.02,
+                "y": 1,
+                "xanchor": "left",
+                "yanchor": "top",
+                "title": {"text": "Upgrade Name"},
+            }
         )
         fig.update_yaxes(gridcolor="lightgray", gridwidth=0.5)
         fig.update_xaxes(tickangle=45 if x_column != "upgrade_name" else 0)
@@ -101,10 +101,7 @@ class BarPlotter(BasePlotter):
         def _fuel_name(col: str) -> str:
             if "." in col:
                 parts = col.split(".")
-                if len(parts) > 2 and parts[1] in {"bills", "emissions"}:
-                    col = parts[2]
-                else:
-                    col = parts[1]
+                col = parts[2] if len(parts) > 2 and parts[1] in {"bills", "emissions"} else parts[1]
             return col.replace("_", " ").title()
 
         legend_added: set[str] = set()
@@ -124,7 +121,7 @@ class BarPlotter(BasePlotter):
                     wrapped: list[str] = []
                     line: list[str] = []
                     for word in words:
-                        if len(" ".join(line + [word])) > 15 and line:
+                        if len(" ".join([*line, word])) > 15 and line:
                             wrapped.append(" ".join(line))
                             line = [word]
                         else:
@@ -198,7 +195,7 @@ class BarPlotter(BasePlotter):
                         x=xs,
                         y=ys,
                         mode="markers",
-                        marker=dict(symbol="diamond", color="black", size=10),
+                        marker={"symbol": "diamond", "color": "black", "size": 10},
                         name=comp_name,
                         showlegend=show,
                         legendgroup=comp_name,
@@ -219,9 +216,9 @@ class BarPlotter(BasePlotter):
             title=title,
             barmode="stack",
             template=self.theme.template,
-            font=dict(family="Arial", size=12),
-            legend=dict(orientation="v", x=1.02, y=1, xanchor="left", yanchor="top"),
-            margin=dict(l=50, r=50 if facet_column else 150, t=80, b=50),
+            font={"family": "Arial", "size": 12},
+            legend={"orientation": "v", "x": 1.02, "y": 1, "xanchor": "left", "yanchor": "top"},
+            margin={"l": 50, "r": 50 if facet_column else 150, "t": 80, "b": 50},
             plot_bgcolor="white",
             height=self.theme.fig_height if facet_column else None,
             width=(120 * len(facet_vals) + 150) if facet_column else None,

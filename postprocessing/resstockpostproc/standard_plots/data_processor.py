@@ -40,9 +40,8 @@ class DataProcessor:
             # Use regex-like pattern matching to find files with the base pattern anywhere in the name
             matching_files: list[pathlib.Path] = []
             for file_path in pathlib.Path(self.annual_results_dir).iterdir():
-                if file_path.suffix in (".csv", ".parquet"):
-                    if any(pattern in file_path.name for pattern in base_patterns):
-                        matching_files.append(file_path)
+                if file_path.suffix in (".csv", ".parquet") and any(pattern in file_path.name for pattern in base_patterns):
+                    matching_files.append(file_path)
 
             if not matching_files:
                 print(f"Warning: No result file found for upgrade {upgrade}")

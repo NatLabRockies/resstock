@@ -37,10 +37,8 @@ class PlotOrchestrator:
     def generate_all_plots(self) -> None:
         """Generate all plots declared in YAML using the new PlotDef contract."""
 
-        gen: dict[str, str] = {}
 
         # Get all configuration elements for iteration
-        group_by_list = self.workflow.group_by
         # Create all possible combinations of parameters
         all_combinations = product(
             self.workflow.comparison_types,

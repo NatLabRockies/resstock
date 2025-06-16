@@ -29,7 +29,7 @@ class PlotSpec(BaseModel):
     quantity: QuantityType = Field(..., description="Column(s) to visualise.")
 
     @field_validator("quantity")
-    def _validate_quantity(cls, v, values):
+    def _validate_quantity(self, v, values):
         """Ensure quantity form is compatible with viz type (basic checks)."""
         viz = values.data.get("visualization_type")
         if viz == VizType.box and not isinstance(v, str):

@@ -209,7 +209,7 @@ class BoxPlotter(BasePlotter):
         # Apply theme then customise facet-specific sizing
         self.theme.apply_layout(fig)
         fig.update_layout(
-            legend=dict(orientation="v", x=1.02, y=1, xanchor="left", yanchor="top"),
+            legend={"orientation": "v", "x": 1.02, "y": 1, "xanchor": "left", "yanchor": "top"},
             boxmode="group",
             width=250 * len(facet_values) + 150,
         )

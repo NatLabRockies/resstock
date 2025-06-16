@@ -40,7 +40,7 @@ def publish_upgrade_annual_results(failed_bldgs: set[int], base: pl.LazyFrame, u
     upgrade = upgrade.with_columns([pl.lit(upgrade_num).alias("upgrade")])
     base_cols = base.collect_schema().names()
     upgrade_cols = upgrade.collect_schema().names()
-    missing_cols = list(set(base_cols) - set(upgrade_cols)) + ["bldg_id"]
+    missing_cols = [*list(set(base_cols) - set(upgrade_cols)), "bldg_id"]
     upgrade = upgrade.join(base.select(missing_cols), on="bldg_id", how="left")
     all_cols = upgrade.collect_schema().names()
     print("Fixing site energy and site emission total for upgrade ...")
@@ -169,7 +169,7 @@ def add_upgrade_columns(lf: pl.LazyFrame) -> pl.LazyFrame:
     upgrade_cols = [c for c in lf.collect_schema().names() if c.startswith("upgrade_costs.") and c.endswith("_name")]
     if not upgrade_cols:
         return lf
-    upgrade_lf = lf.select(["bldg_id"] + upgrade_cols)
+    upgrade_lf = lf.select(["bldg_id", *upgrade_cols])
     upgrade_df = (
         upgrade_lf.unpivot(index="bldg_id", on=upgrade_cols, variable_name="upgrade_name", value_name="upgrade_value")
         .drop_nulls("upgrade_value")
