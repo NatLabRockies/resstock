@@ -109,14 +109,15 @@ Other situations and considerations:
   - it remains secondary if the heat pump upgrade is integrated backup
   - it is removed if the heat pump upgrade is separate backup
 
-HVAC Detailed Performance Data
-------------------------------
+Detailed Performance Data
+-------------------------
 
-Use the ``HVAC Detailed Performance Data`` option from the lookup to add specific performance data coefficients for a heat pump.
+Use the ``HVAC Detailed Performance Data`` option from the lookup to add specific performance data coefficients for a variable-speed heat pump.
 
 Detailed performance data (i.e., capacity and COP coefficients) for minimum and maximum compressor speeds can be defined for a set of 5 outdoor temperatures.
 See below the argument assignments that would need to be added to the ``options_lookup.tsv`` file.
 These values would override the OpenStudio-HPXML defaults.
+See `HPXML HVAC Detailed Perf. Data <https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-hvac-detailed-perf-data>`_ for more information.
 
 .. code::
 
