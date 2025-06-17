@@ -10,6 +10,7 @@ import polars as pl
 
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, UpgradeInclusion, VacancyInclusion, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
+from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEnduses
 
 
 class DataProcessor:
@@ -63,6 +64,29 @@ class DataProcessor:
                 )
             print(f"Scanned data for upgrade {upgrade}")
 
+    def fill_missing_quantities(self, combined_df: pl.LazyFrame, quantities: list[str]) -> pl.LazyFrame:
+        """
+        Fills missing quantity columns in a LazyFrame. If a quantity can be
+        calculated by summing existing columns, it does so. Otherwise, it fills
+        the quantity with 0.
+        """
+        all_cols: set[str] = set(combined_df.collect_schema().names())
+        missing_quantity_cols: set[str] = set(quantities) - all_cols
+
+        if not missing_quantity_cols:
+            return combined_df
+
+        new_column_exprs = []
+        for quantity in missing_quantity_cols:
+            expression = pl.lit(0, dtype=pl.Int32).alias(quantity)  # Default to 0 if quantity is missing
+            if quantity in EnduseGroupToEnduses:  # If quantity is enduse group and end uses are available, use that
+                enduse_cols_to_sum = [col for col in EnduseGroupToEnduses[quantity] if col in all_cols]
+                if enduse_cols_to_sum:
+                    expression = pl.sum_horizontal([pl.col(c) for c in enduse_cols_to_sum]).alias(quantity)
+            new_column_exprs.append(expression)
+
+        return combined_df.with_columns(new_column_exprs)
+
     def prepare_data_for_plot(self, plot_spec: PlotSpec) -> pl.DataFrame:
         """
         Prepare data for plotting by grouping and aggregating using mean
@@ -74,7 +98,6 @@ class DataProcessor:
             DataFrame prepared for plotting with aggregated (mean) values
         """
         combined_df = pl.concat(self.lazyframes.values(), how="diagonal")
-        all_cols = combined_df.collect_schema().names()
         quantities = []
         if isinstance(plot_spec.quantity, str):
             quantities.append(plot_spec.quantity)
@@ -83,8 +106,7 @@ class DataProcessor:
             if plot_spec.quantity.sum:
                 quantities.append(plot_spec.quantity.sum)
 
-        if missing_quantity_cols := set(quantities) - set(all_cols):
-            combined_df = combined_df.with_columns(pl.lit(0).alias(quantity) for quantity in missing_quantity_cols)
+        combined_df = self.fill_missing_quantities(combined_df, quantities)
 
         if plot_spec.upgrade_inclusion == UpgradeInclusion.applied_only:
             combined_df = combined_df.filter(pl.col("applicability"))

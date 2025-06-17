@@ -3,6 +3,7 @@ Centralizes style configuration so all plotters share a consistent look & feel.
 """
 
 import plotly.graph_objects as go
+from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseToColor, EnduseToPattern
 
 
 class ThemeManager:
@@ -13,15 +14,18 @@ class ThemeManager:
         # Base template - can be changed via config
         self.template: str = cfg.get("template", "plotly_white")
         # Color palette used across plots
-        self.color_palette: dict[str, str] = cfg.get(
-            "color_palette",
-            {
+        self.color_palette: dict[str, str] = cfg.get("color_palette", {})
+        self.end_use_to_color = EnduseToColor
+        self.end_use_to_pattern = EnduseToPattern
+        # Default color palette if not specified in config
+        if not self.color_palette:
+            self.color_palette = {
                 "Baseline": "#1f77b4",  # Dark blue
                 "DF Plug": "#5aa1cf",  # Light blue
-            },
-        )
+            }
         # Default figure size
         self.fig_width: int = cfg.get("fig_width", 1000)
+        self.facet_width: int = cfg.get("facet_width", 150)
         self.fig_height: int = cfg.get("fig_height", 600)
         self.facet_title_width = cfg.get("facet_title_width", 15)
 

@@ -13,6 +13,39 @@ quantities:
       - out.propane.total.energy_consumption.kwh
       - out.fuel_oil.total.energy_consumption.kwh
     sum: out.site_energy.total.energy_consumption.kwh
+  - name: End Use Groups
+    constituents:
+      - Electric Vehicle Charging, Electricity
+      - Hot Water, Propane
+      - Hot Water, Fuel Oil
+      - Hot Water, Natural Gas
+      - Hot Water, Electricity
+      - Heating Heat Pump Backup, Propane
+      - Heating Heat Pump Backup, Fuel Oil
+      - Heating Heat Pump Backup, Natural Gas
+      - Heating Heat Pump Backup, Electricity
+      - Heating Fans Pumps, Electricity
+      - Heating, Propane
+      - Heating, Fuel Oil
+      - Heating, Natural Gas
+      - Heating, Electricity
+      - Cooling Fans Pumps, Electricity
+      - Cooling, Electricity
+      - Ligghting, Propane
+      - Lighting, Fuel Oil
+      - Lighting, Natural Gas
+      - Lighting, Electricity
+      - Vent Fan, Electricity
+      - Miscellaneous, Propane
+      - Miscellaneous, Fuel Oil
+      - Miscellaneous, Natural Gas
+      - Miscellaneous, Electricity
+      - Appliances, Propane
+      - Appliances, Fuel Oil
+      - Appliances, Natural Gas
+      - Appliances, Electricity
+    sum: out.site_energy.total.energy_consumption.kwh
+
   - name: bills
     constituents:
       - out.bills.electricity.usd
