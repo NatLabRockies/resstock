@@ -37,7 +37,6 @@ class PlotOrchestrator:
     def generate_all_plots(self) -> None:
         """Generate all plots declared in YAML using the new PlotDef contract."""
 
-
         # Get all configuration elements for iteration
         # Create all possible combinations of parameters
         all_combinations = product(
@@ -67,7 +66,12 @@ class PlotOrchestrator:
                 quantities.append(quantity_group)
             for quantity in quantities:
                 plot_spec = PlotSpec(
-                    comparison_type=combination[0], upgrade_inclusion=combination[1], vacancy_inclusion=combination[2], visualization_type=combination[3], group_by=combination[4], quantity=quantity
+                    comparison_type=combination[0],
+                    upgrade_inclusion=combination[1],
+                    vacancy_inclusion=combination[2],
+                    visualization_type=combination[3],
+                    group_by=combination[4],
+                    quantity=quantity,
                 )
                 df = self.processor.prepare_data_for_plot(plot_spec)
                 path_seg = plot_spec.path_segments(quantity_group_name=quantity_group.name)
@@ -76,7 +80,9 @@ class PlotOrchestrator:
                     return re.sub(r"[^0-9A-Za-z_]", "_", path.as_posix())
 
                 table_name = safe_sqlite_name(path_seg)
-                df.write_database(table_name, f"sqlite:///{self.workflow.output_dir}/plot_data.db", if_table_exists="replace")
+                df.write_database(
+                    table_name, f"sqlite:///{self.workflow.output_dir}/plot_data.db", if_table_exists="replace"
+                )
                 plotter = self._get_plotter(plot_spec.visualization_type)
                 fig = plotter.create_plot(df, plot_spec)
                 self.out_mgr.save_plot(fig, path_seg)

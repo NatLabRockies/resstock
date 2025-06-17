@@ -69,7 +69,9 @@ class WorkflowConfig(NoExtraModel):
     annual_results_dir: str = Field(description="Path to folder containing annual results")
     output_dir: str = Field(description="Path to output directory")
     upgrades: list[int] = Field(description="List of upgrade indices to include")
-    selection_logic: SelectionLogic | list[SelectionLogic] | list[str] | None = Field(None, description="Selection logic for")
+    selection_logic: SelectionLogic | list[SelectionLogic] | list[str] | None = Field(
+        None, description="Selection logic for"
+    )
     quantities: list[QuantityGroup] = Field(description="List of quantity groups to generate plots for")
     group_by: list[str] = Field(description="List of grouping columns")
     visualization_types: list[VizType] = Field(description="List of visualization types to generate")

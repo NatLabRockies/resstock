@@ -10,7 +10,13 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field, field_validator
 
-from resstockpostproc.standard_plots.schema.workflow_schema import ComparisonTypes, QuantityGroup, UpgradeInclusion, VacancyInclusion, VizType
+from resstockpostproc.standard_plots.schema.workflow_schema import (
+    ComparisonTypes,
+    QuantityGroup,
+    UpgradeInclusion,
+    VacancyInclusion,
+    VizType,
+)
 
 # Accept dicts whose values can be *either* a list[str] (for "constituents") or a
 # single string (for "sum"). We don't need to be overly strict here - runtime

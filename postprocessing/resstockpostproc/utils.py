@@ -12,8 +12,12 @@ def remove_all_empty_cols(df: pl.DataFrame):
     ',,,' catches emissions_fuel_oil_values, emissions_natural_gas_values, and emissions_propane_values.
     """
     cols_to_keep = {"upgrade", "applicability", "metadata_index"}  # To keep even if 0 or empty
-    all_empty_str_cols = [col.name for col in df.select(pl.col(pl.Utf8).is_in(["", ",,,"])) if col.all() and col.name not in cols_to_keep]
-    all_zero_numeric_cols = [col.name for col in df.select(cs.numeric() == 0) if col.all() and col.name not in cols_to_keep]
+    all_empty_str_cols = [
+        col.name for col in df.select(pl.col(pl.Utf8).is_in(["", ",,,"])) if col.all() and col.name not in cols_to_keep
+    ]
+    all_zero_numeric_cols = [
+        col.name for col in df.select(cs.numeric() == 0) if col.all() and col.name not in cols_to_keep
+    ]
     all_empty_cols = all_empty_str_cols + all_zero_numeric_cols
     # drop the empty columns
     print(f"Dropping {len(all_empty_cols)} columns: {all_empty_cols}")
