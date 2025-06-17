@@ -308,6 +308,27 @@ references:
       - and:
         - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
 
+  # FIXME: We'd prefer to apply GHP to 0.5 and 0.8, but we are actively working on fixing a bug here.
+  # When fixed, remove the following block and replace with use of remove_nonducted_high_rise_shared.
+  remove_nonducted_high_rise_shared_low_ground_conductivity: &remove_nonducted_high_rise_shared_low_ground_conductivity
+    - HVAC Has Ducts|Yes
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+      - and:
+        - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
+    - not:
+      - or:
+        - Ground Thermal Conductivity|0.5
+        - Ground Thermal Conductivity|0.8
+
   yes_and_no_has_ducts_apply_logic: &yes_and_no_has_ducts_apply_logic
     - or:
       - HVAC Has Ducts|Yes
@@ -398,7 +419,7 @@ upgrades:
 
   ### -- HVAC: Geothermal Heat Pumps -- ###
   - upgrade_name: Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
-    package_apply_logic: *remove_nonducted_high_rise_shared
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8
         apply_logic: *ducted_ashp_apply_logic
@@ -409,14 +430,14 @@ upgrades:
       - *partial_conditioning_100_percent_ducts_only
 
   - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
-    package_apply_logic: *remove_nonducted_high_rise_shared
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
     options:
       - *dual_speed_ducted_ghp
       - *heat_pump_cooling_efficiency_ducted
       - *partial_conditioning_100_percent_ducts_only
 
   - upgrade_name: Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
-    package_apply_logic: *remove_nonducted_high_rise_shared
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4
         apply_logic: *ducted_ashp_apply_logic
@@ -439,7 +460,7 @@ upgrades:
 
   ### -- Packages -- ###
   - upgrade_name: Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation
-    package_apply_logic: *remove_nonducted_high_rise_shared
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
     options:
       ### -- Dual-Speed Ducted GHP -- ###
       - *dual_speed_ducted_ghp
