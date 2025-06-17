@@ -27,7 +27,7 @@ Development Changelog
         :pullreq: 1408
         :tickets: 1154
 
-        **Date**: 2025-06-04
+        **Date**: 2025-06-17
 
         Title:
         Use Autosizing Limits and Maintain Duct System Curve
