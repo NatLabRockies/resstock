@@ -23,6 +23,25 @@ Development Changelog
 
 
     .. change::
+        :tags: workflow, feature
+        :pullreq: 1408
+        :tickets: 1154
+
+        **Date**: 2025-06-17
+
+        Title:
+        Use Autosizing Limits and Maintain Duct System Curve
+
+        Description:
+        For ducted heat pump upgrades, adds the ability to limit the autosized heating/cooling capacity based on the existing duct system, and adjust the blower fan efficiency to maintain the duct system curve.
+        This feature is enabled by using setting a new ResStockArguments measure argument `heat_pump_sizing_is_duct_limited=true` for HVAC Heating Efficiency options.
+
+        OpenStudio-HPXML: `pull request 1584 <https://github.com/NREL/OpenStudio-HPXML/pull/1584>`_
+
+        Assignees: Joe Robertson
+
+
+    .. change::
         :tags: feature, standard data release
         :pullreq: 1398, 1412
 

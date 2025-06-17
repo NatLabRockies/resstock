@@ -5834,9 +5834,20 @@ The fraction of manufacturer recommended charge of the heat pump.
 
 **Heat Pump: Backup Use Existing System**
 
-Whether the heat pump uses the existing system as backup.
+Whether the heat pump uses the existing system as backup. This argument is only applicable for heat pump upgrades.
 
 - **Name:** ``heat_pump_backup_use_existing_system``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Heat Pump: Sizing Is Duct Limited**
+
+Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.
+
+- **Name:** ``heat_pump_sizing_is_duct_limited``
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
