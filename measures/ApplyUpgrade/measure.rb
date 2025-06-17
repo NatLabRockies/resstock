@@ -346,7 +346,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
       set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
 
-      set_existing_system_as_heat_pump_backup(measures, runner, hpxml_bldg)
+      set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
+      baseline_max_airflow_cfm = set_autosizing_limits(runner, measures, hpxml_bldg)
 
       # Specify measures to run
       measures_hash = { 'BuildResidentialHPXML' => measures['BuildResidentialHPXML'] }
@@ -354,6 +355,8 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         register_logs(runner, new_runner)
         return false
       end
+
+      set_adjusted_fan_efficiency(runner, measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
     end
 
     # Set arguments for the BuildResidentialScheduleFile measure
@@ -546,7 +549,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     measures['BuildResidentialHPXML'][0]['heat_pump_charge_defect_ratio'] = defect_ratios['heat_pump_charge_defect_ratio']
   end
 
-  def set_existing_system_as_heat_pump_backup(measures, runner, hpxml_bldg)
+  def set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
     # Retain Existing Heating System as Heat Pump Backup
     if measures['ResStockArguments'][0]['heat_pump_backup_use_existing_system'] == 'true'
       heating_system = get_heating_system(hpxml_bldg)
@@ -602,6 +605,74 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         end
       elsif (heat_pump_type != 'none') && heating_system.nil?
         runner.registerWarning('Either a primary heating system was not found, or it was found but is a shared system; not setting it as heat pump backup.')
+      end
+    end
+  end
+
+  def set_autosizing_limits(runner, measures, hpxml_bldg)
+    # Use Autosizing Limits and Maintain Duct System Curve (Part 1)
+    # Set the autosizing limit based on the baseline airflow.
+    if measures['ResStockArguments'][0]['heat_pump_sizing_is_duct_limited'] == 'true'
+      duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
+      baseline_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
+      autosizing_limit = duct_restriction_values['autosizing_limit']
+
+      # Only limit HVAC system types with ducted air distribution.
+      if not autosizing_limit.nil?
+        if [HPXML::HVACTypeFurnace].include?(measures['BuildResidentialHPXML'][0]['heating_system_type'])
+          measures['BuildResidentialHPXML'][0]['heating_system_heating_autosizing_limit'] = autosizing_limit
+          runner.registerInfo("The capacity of the upgraded heating system is limited to 'heating_system_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
+        end
+        if [HPXML::HVACTypeCentralAirConditioner].include?(measures['BuildResidentialHPXML'][0]['cooling_system_type']) ||
+           ([HPXML::HVACTypeEvaporativeCooler, HPXML::HVACTypeMiniSplitAirConditioner].include?(measures['BuildResidentialHPXML'][0]['cooling_system_type']) && (measures['BuildResidentialHPXML'][0]['cooling_system_is_ducted'] == 'true'))
+          measures['BuildResidentialHPXML'][0]['cooling_system_cooling_autosizing_limit'] = autosizing_limit
+          runner.registerInfo("The capacity of the upgraded cooling system is limited to 'cooling_system_cooling_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
+        end
+        if [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(measures['BuildResidentialHPXML'][0]['heat_pump_type']) ||
+           ([HPXML::HVACTypeHeatPumpMiniSplit].include?(measures['BuildResidentialHPXML'][0]['heat_pump_type']) && (measures['BuildResidentialHPXML'][0]['heat_pump_is_ducted']) == 'true')
+          measures['BuildResidentialHPXML'][0]['heat_pump_heating_autosizing_limit'] = autosizing_limit
+          measures['BuildResidentialHPXML'][0]['heat_pump_cooling_autosizing_limit'] = autosizing_limit
+          # We intentionally do not limit the heat pump backup heating autosized value.
+          runner.registerInfo("The heating capacity of the upgraded heat pump is limited to 'heat_pump_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
+          runner.registerInfo("The cooling capacity of the upgraded heat pump is limited to 'heat_pump_cooling_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
+        end
+        if [HPXML::HVACTypeFurnace].include?(measures['BuildResidentialHPXML'][0]['heating_system_2_type'])
+          measures['BuildResidentialHPXML'][0]['heating_system_2_heating_autosizing_limit'] = autosizing_limit
+          runner.registerInfo("The capacity of the upgraded second heating system is limited to 'heating_system_2_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
+        end
+      end
+      return baseline_max_airflow_cfm
+    end
+    return
+  end
+
+  def set_adjusted_fan_efficiency(runner, measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
+    # Use Autosizing Limits and Maintain Duct System Curve (Part 2)
+    # - Get the upgrade airflow cfm.
+    # - Use it along with the baseline airflow cfm and upgrade blower fan W/cfm.
+    # - Make an adjustment to the upgrade blower fan W/cfm.
+    # - Update the HPXML Building (using a method borrowed from BuildResidentialHPXML).
+    # - Write the updated HPXML file back out.
+    if measures['ResStockArguments'][0]['heat_pump_sizing_is_duct_limited'] == 'true'
+      if File.exist?(hpxml_path)
+        hpxml = HPXML.new(hpxml_path: hpxml_path)
+      else
+        runner.registerWarning("ApplyUpgrade measure could not find '#{hpxml_path}'.")
+        return true
+      end
+      hpxml_bldg = hpxml.buildings[unit_number]
+
+      duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
+      upgrade_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
+
+      if (not baseline_max_airflow_cfm.nil?) && (not upgrade_max_airflow_cfm.nil?) # ducted -> ducted
+        fan_watts_per_cfm = get_fan_watts_per_cfm(hpxml_bldg)
+        adjusted_fan_watts_per_cfm = get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
+
+        HPXMLFile.set_hvac_blower(hpxml_bldg, { :hvac_blower_fan_watts_per_cfm => adjusted_fan_watts_per_cfm })
+        XMLHelper.write_file(hpxml.to_doc(), hpxml_path)
+
+        runner.registerInfo("The blower fan efficiency of #{fan_watts_per_cfm} was adjusted to 'hvac_blower_fan_watts_per_cfm=#{adjusted_fan_watts_per_cfm}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an upgrade maximum airflow rate of #{upgrade_max_airflow_cfm} cfm.")
       end
     end
   end
@@ -800,6 +871,102 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       end
     end
     return panel_system_additions
+  end
+
+  def get_air_distribution_airflows(hpxml_bldg)
+    # Assume at most one ducted system with a single heating and/or cooling system.
+    # We divide airflow by fraction of load served to account for partial conditioning adjustments.
+
+    fraction_heat_load_served = nil
+    fraction_cool_load_served = nil
+
+    air_distribution_airflows = []
+    hpxml_bldg.hvac_distributions.each do |hvac_distribution|
+      next if hvac_distribution.ducts.empty?
+
+      hvac_distribution.hvac_systems.each do |hvac_system|
+        if hvac_system.is_a?(HPXML::HeatingSystem)
+          heating_airflow_cfm = hvac_system.heating_airflow_cfm
+          if !heating_airflow_cfm.nil?
+            fraction_heat_load_served = hvac_system.fraction_heat_load_served
+            air_distribution_airflows << heating_airflow_cfm / fraction_heat_load_served
+          end
+        elsif hvac_system.is_a?(HPXML::CoolingSystem)
+          cooling_airflow_cfm = hvac_system.cooling_airflow_cfm
+          if !cooling_airflow_cfm.nil?
+            fraction_cool_load_served = hvac_system.fraction_cool_load_served
+            air_distribution_airflows << cooling_airflow_cfm / fraction_cool_load_served
+          end
+        elsif hvac_system.is_a?(HPXML::HeatPump)
+          heating_airflow_cfm = hvac_system.heating_airflow_cfm
+          if !heating_airflow_cfm.nil?
+            fraction_heat_load_served = hvac_system.fraction_heat_load_served
+            air_distribution_airflows << heating_airflow_cfm / fraction_heat_load_served
+          end
+
+          cooling_airflow_cfm = hvac_system.cooling_airflow_cfm
+          if !cooling_airflow_cfm.nil?
+            fraction_cool_load_served = hvac_system.fraction_cool_load_served
+            air_distribution_airflows << cooling_airflow_cfm / fraction_cool_load_served
+          end
+        end
+      end
+    end
+
+    # The following assumes we will be expanding (i.e., rebuilding) the existing ducts.
+    # So we avoid setting a heating/cooling autosizing limit.
+    if fraction_heat_load_served.nil? && !fraction_cool_load_served.nil? && fraction_cool_load_served < 1.0
+      air_distribution_airflows = []
+    end
+
+    return air_distribution_airflows
+  end
+
+  def get_duct_restriction_values(hpxml_bldg)
+    duct_restriction_values = {
+      'max_airflow_cfm' => nil,
+      'autosizing_limit' => nil
+    }
+
+    air_distribution_airflows = get_air_distribution_airflows(hpxml_bldg)
+    if !air_distribution_airflows.empty?
+      duct_restriction_values['max_airflow_cfm'] = air_distribution_airflows.max
+      # TODO:
+      # Currently we are assuming a constant value for upgrade cfm/ton, regardless of the upgraded equipment type (furnace, heat pump, etc).
+      # This value should more appropriately vary based on the type of upgraded equipment.
+      cfm_per_ton = Constants::DuctRestrictionAssumedAirflow
+      duct_restriction_values['autosizing_limit'] = UnitConversions.convert(duct_restriction_values['max_airflow_cfm'] / cfm_per_ton, 'ton', 'Btu/hr')
+    end
+
+    return duct_restriction_values
+  end
+
+  def get_fan_watts_per_cfm(hpxml_bldg)
+    # Assume at most one ducted system with a single blower fan.
+
+    fan_watts_per_cfm = nil
+    hpxml_bldg.hvac_distributions.each do |hvac_distribution|
+      next if hvac_distribution.ducts.empty?
+
+      hvac_distribution.hvac_systems.each do |hvac_system|
+        fan_watts_per_cfm = hvac_system.fan_watts_per_cfm
+      end
+    end
+    return fan_watts_per_cfm
+  end
+
+  def get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
+    # Adjust the blower fan efficiency based on baseline/upgrade maximum airflow cfm values.
+    # FIXME: Source?
+
+    v_baseline = baseline_max_airflow_cfm
+    v_upgrade = upgrade_max_airflow_cfm
+
+    p_int = v_baseline * fan_watts_per_cfm
+    p_upgrade = p_int * (v_upgrade / v_baseline)**3
+    adjusted_fan_watts_per_cfm = p_upgrade / v_upgrade
+
+    return adjusted_fan_watts_per_cfm.round(3)
   end
 end
 

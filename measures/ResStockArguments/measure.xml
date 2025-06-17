@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>07536f4c-296b-47b0-8797-4b05b013616b</version_id>
-  <version_modified>2025-05-19T21:17:15Z</version_modified>
+  <version_id>66fceaba-963c-4999-9b8c-43e1736d58ec</version_id>
+  <version_modified>2025-06-03T23:21:12Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -7736,7 +7736,25 @@
     <argument>
       <name>heat_pump_backup_use_existing_system</name>
       <display_name>Heat Pump: Backup Use Existing System</display_name>
-      <description>Whether the heat pump uses the existing system as backup.</description>
+      <description>Whether the heat pump uses the existing system as backup. This argument is only applicable for heat pump upgrades.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>heat_pump_sizing_is_duct_limited</name>
+      <display_name>Heat Pump: Sizing Is Duct Limited</display_name>
+      <description>Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.</description>
       <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -7787,7 +7805,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>3A9CC2B9</checksum>
+      <checksum>10E71050</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7804,7 +7822,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>AE180932</checksum>
+      <checksum>094286C7</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
