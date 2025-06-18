@@ -9,6 +9,21 @@ Development Changelog
 
     .. change::
         :tags: standard data release
+        :pullreq: 1429, 1197
+
+        **Date**: 2025-06-18
+
+        Title:
+        Use HVAC Detailed Performance Option for a Ducted ASHP
+
+        Description:
+        Introduce an ASHP upgrade measure for SDR that is a typical cold climate ducted air source heat pump with detailed performance data. This pull request uses a couple detailed HVAC performance options to define the curves for a ducted version of a variable speed cold climate ASHP. Options are added to `options_lookup.tsv` and the cold climate ASHP upgrade is added to `sdr_upgrades_tmy3.yml`.
+
+        Assignees: Philip White, Joe Robertson, Anthony Fontanini
+
+
+    .. change::
+        :tags: standard data release
         :pullreq: 1429
 
         **Date**: 2025-06-11

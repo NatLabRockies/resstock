@@ -147,6 +147,59 @@ Other situations and considerations:
   - it remains secondary if the heat pump upgrade is integrated backup
   - it is removed if the heat pump upgrade is separate backup
 
+Detailed Performance Data
+-------------------------
+
+Use the ``HVAC Detailed Performance Data`` option from the lookup to add specific performance data coefficients for a variable-speed heat pump.
+
+Detailed performance data (i.e., capacity and COP coefficients) for minimum and maximum compressor speeds can be defined for a set of 5 outdoor temperatures.
+See below the argument assignments that would need to be added to the ``options_lookup.tsv`` file.
+These values would override the OpenStudio-HPXML defaults.
+See `HPXML HVAC Detailed Perf. Data <https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-hvac-detailed-perf-data>`_ for more information.
+
+.. code::
+
+  hvac_perf_data_heating_outdoor_temperatures=67.0, 47.0, 17.0, 5.0, -15.0	
+  hvac_perf_data_heating_min_speed_capacities=0.423, 0.308, 0.353, 0.371, 0.331	
+  hvac_perf_data_heating_max_speed_capacities=1.387, 1.028, 0.766, 0.688, 0.507	
+  hvac_perf_data_heating_min_speed_cops=5.150, 4.390, 2.550, 2.050, 1.660	
+  hvac_perf_data_heating_max_speed_cops=3.684, 3.370, 2.330, 1.980, 1.490	
+  hvac_perf_data_cooling_outdoor_temperatures=125.0, 95.0, 82.0, 70.0	
+  hvac_perf_data_cooling_min_speed_capacities=0.267, 0.333, 0.368, 0.391	
+  hvac_perf_data_cooling_max_speed_capacities=0.847, 1.017, 1.090, 1.148	
+  hvac_perf_data_cooling_min_speed_cops=1.918, 3.870, 5.860, 7.126	
+  hvac_perf_data_cooling_max_speed_cops=2.017, 3.220, 4.140, 4.900
+
+This ``HVAC Detailed Performance Data`` option would be called in the yaml file along with an ``HVAC Heating Efficiency`` heat pump option.
+
+For example, to include ``HVAC Detailed Performance Data`` with a cold climate heat pump, you could include the following:
+
+.. code-block:: yaml
+
+  - upgrade_name: Typical Cold Climate with Detailed Performance Data
+    options:
+      - option: HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
+        apply_logic:
+          - HVAC Has Ducts|Yes
+          - not:
+            - or:
+              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+              - HVAC Shared Efficiencies|Fan Coil Cooling Only
+
+      - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
+        apply_logic:
+          - HVAC Has Ducts|Yes
+          - not:
+            - or:
+              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+              - HVAC Shared Efficiencies|Fan Coil Cooling Only
+
 Sizing Methodologies
 --------------------
 
