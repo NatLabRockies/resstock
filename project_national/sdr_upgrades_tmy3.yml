@@ -225,17 +225,6 @@ references:
         - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
         - HVAC Shared Efficiencies|Fan Coil Cooling Only
 
-  nonducted_mshp_apply_logic: &nonducted_mshp_apply_logic
-    - or: 
-      - HVAC Has Ducts|No
-      - or:
-        - or:
-          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-          - HVAC Shared Efficiencies|Fan Coil Cooling Only
-
   ev_15_percent_efficiency: &ev_15_percent_efficiency
     option: Electric Vehicle Efficiency Increase|15%
 
@@ -362,10 +351,6 @@ references:
   heat_pump_cooling_efficiency_ducted: &heat_pump_cooling_efficiency_ducted
       option: HVAC Cooling Efficiency|Ducted Heat Pump
       apply_logic: *ducted_ashp_apply_logic
-
-  heat_pump_cooling_efficiency_nonducted: &heat_pump_cooling_efficiency_nonducted
-      option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
-      apply_logic: *nonducted_mshp_apply_logic
 
   heating_setpoint_no_offset: &heating_setpoint_no_offset
       option: Heating Setpoint Has Offset|No
