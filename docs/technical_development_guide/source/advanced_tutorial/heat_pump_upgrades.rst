@@ -96,10 +96,9 @@ For example:
 Retain the Existing Primary Heating System as Backup
 ****************************************************
 
-Use the ``Heat Pump Backup|Use Existing System`` option from the lookup to retain the existing primary heating system as backup.
-
+Set ``heat_pump_backup_use_existing_system=true`` for ``HVAC Heating Efficiency`` options in the lookup to retain the primary (existing) heating system as backup to the heat pump.
 In this case, all properties of the existing primary system are retained as properties of the heat pump backup heating system.
-The following properties are retained:
+The following properties of the existing heating system are retained:
 
 - fuel type
 - efficiency
