@@ -10,8 +10,22 @@ The ResStock workflow allows modeling heat pumps with either "integrated" or "se
 Definitions for each are given below.
 See `HPXML Heat Pumps <https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-heat-pumps>`_ for more information.
 
-- *integrated*: the heat pump’s distribution system and blower fan power applies to the backup heating (e.g., built-in electric strip heat or an integrated backup furnace, i.e., a dual-fuel heat pump).
-- *separate*: the backup system has its own distribution system (e.g., electric baseboard or a boiler).
+- :ref:`integrated_backup`
+- :ref:`separate_backup` 
+
+.. _integrated_backup:
+
+Integrated
+**********
+
+The heat pump’s distribution system and blower fan power applies to the backup heating (e.g., built-in electric strip heat or an integrated backup furnace, i.e., a dual-fuel heat pump).
+
+.. _separate_backup:
+
+Separate
+********
+
+The backup system has its own distribution system (e.g., electric baseboard or a boiler).
 
 Lockout Temperatures
 --------------------
@@ -20,11 +34,11 @@ The ResStock workflow allows for controlling the compressor and/or backup heatin
 Definitions for each are given below.
 See the `Backup <https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#backup>`_ section of the OpenStudio-HPXML documentation for more information.
 
-- *compressor*: minimum outdoor temperature for compressor operation.
-- *backup heating*: maximum outdoor temperature for backup operation.
+- :ref:`compressor_lockout` 
+- :ref:`backup_heating_lockout`
 
-For example, a heat pump upgrade option could be defined with a compressor lockout temperature of 5F and a backup heating lockout temperature of 40F.
-See below the argument assignments that would need to be added to the ``options_lookup.tsv`` file.
+For example, a heat pump upgrade option could be defined with a compressor lockout temperature of 5F and a backup heating lockout temperature of 40F (i.e., a 5F - 40F switchover band).
+See the argument assignments below that would need to be added to the ``options_lookup.tsv`` file.
 These values would override the OpenStudio-HPXML defaults.
 
 .. code::
@@ -32,14 +46,35 @@ These values would override the OpenStudio-HPXML defaults.
   heat_pump_compressor_lockout_temp=5
   heat_pump_backup_heating_lockout_temp=40
 
+.. _compressor_lockout:
+
+Compressor
+**********
+
+Minimum outdoor temperature for compressor operation.
+
+.. _backup_heating_lockout:
+
+Backup Heating
+**************
+
+Maximum outdoor temperature for backup operation.
+
 Replacement Scenarios
 ---------------------
 
-When defining a heat pump upgrade, the new heat pump can either (a) replace the primary (existing) system, or (b) retain the primary (existing) system as its backup heating system.
-In the latter case, all properties (e.g., capacity) of the primary (existing) system are retained as properties of the heat pump backup heating system.
+When defining a heat pump upgrade, the new heat pump can:
 
-Replace Primary System with New Heat Pump
-*****************************************
+- :ref:`replace_the_existing_primary_heating_cooling_system`
+- :ref:`retain_the_existing_primary_heating_system_as_backup`
+
+.. _replace_the_existing_primary_heating_cooling_system:
+
+Replace the Existing Primary Heating/Cooling System
+***************************************************
+
+Remove any existing heating or cooling systems, and replace with a heat pump.
+Heat pump backup type, fuel type, efficiency, capacity, etc. may be specified using heat pump arguments named with the ``heat_pump_backup`` prefix.
 
 For example:
 
@@ -56,10 +91,13 @@ For example:
         lifetime: 30
       - option: HVAC Cooling Efficiency|Ducted Heat Pump
 
-Primary System becomes Backup to New Heat Pump
-**********************************************
+.. _retain_the_existing_primary_heating_system_as_backup:
+
+Retain the Existing Primary Heating System as Backup
+****************************************************
 
 Set ``heat_pump_backup_use_existing_system=true`` for ``HVAC Heating Efficiency`` options in the lookup to retain the primary (existing) heating system as backup to the heat pump.
+In this case, all properties of the existing primary system are retained as properties of the heat pump backup heating system.
 The following properties of the existing heating system are retained:
 
 - fuel type
@@ -83,7 +121,7 @@ For example:
       - option: HVAC Cooling Efficiency|Ducted Heat Pump
       - option: Heat Pump Backup|Use Existing System
 
-For this scenario, the type of the backup is (automatically) determined based on information in the table below:
+For this scenario, the type of the backup is automatically determined based on information in the table below:
 
   ============= ============= =========== =============================
   New Heat Pump Backup System Backup Type Example
@@ -99,12 +137,74 @@ For this scenario, the type of the backup is (automatically) determined based on
 
 Other situations and considerations:
 
-- The primary (existing) system does not become backup to the heat pump when:
+- The existing primary system does not become backup to the heat pump when:
 
   - the primary system is a heat pump
   - the primary system is a shared system
 
-- When a secondary (existing) system exists:
+- When an existing secondary system exists:
 
   - it remains secondary if the heat pump upgrade is integrated backup
   - it is removed if the heat pump upgrade is separate backup
+
+Sizing Methodologies
+--------------------
+
+When defining a heat pump upgrade, the new heat pump can be sized according to:
+
+- :ref:`acca`
+- :ref:`hers`
+- :ref:`max_load`
+
+See `HPXML HVAC Sizing Control <https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-hvac-sizing-control>`_ for more information.
+
+ResStock currently assumes the existing home's duct system for HVAC equipment upgrades.
+Without restricting the upgraded equipment's capacity to the maximum of the existing duct system's heating/cooling airflow rate divided by 400 cfm/ton, fan pressure rise increases and results in higher power use.
+Based on the existing duct system, this duct restriction can be avoided by:
+
+- Limiting the upgraded equipment's capacity 
+- Adjusting the blower fan efficiency (W/cfm)
+
+Set ``heat_pump_sizing_is_duct_limited=true`` for ``HVAC Heating Efficiency`` options in the lookup to use autosizing limits and maintain the existing duct system curve.
+
+For example:
+
+.. code-block:: yaml
+
+  - upgrade_name: ASHP
+    options:
+      - option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Duct Limited
+        apply_logic:
+          - HVAC Has Ducts|Yes
+        costs:
+          - value: 50.0
+            multiplier: Size, Heating System Primary (kBtu/h)
+        lifetime: 30
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+
+.. _acca:
+
+ACCA Manual J/S
+***************
+
+Autosized heat pumps have their nominal capacity sized per ACCA Manual J/S based on cooling design loads, with some oversizing allowances for larger heating design loads.
+
+Set ``heat_pump_sizing_methodology=ACCA`` for ``HVAC Heating Efficiency`` options in the lookup to size based on ACCA Manual J/S.
+
+.. _hers:
+
+HERS
+****
+
+Same as ACCA except autosized heat pumps have their nominal capacity sized equal to at least the larger of heating and sensible cooling design loads.
+
+Set ``heat_pump_sizing_methodology=HERS`` (or ``heat_pump_sizing_methodology=auto``) for ``HVAC Heating Efficiency`` options in the lookup to size based on HERS.
+
+.. _max_load:
+
+Max Load
+********
+
+Autosized heat pumps have their nominal capacity sized based on the larger of heating/cooling design loads, while taking into account the heat pump’s reduced capacity at the design temperature, such that no backup heating should be necessary.
+
+Set ``heat_pump_sizing_methodology=MaxLoad`` for ``HVAC Heating Efficiency`` options in the lookup to size based on Max Load.
