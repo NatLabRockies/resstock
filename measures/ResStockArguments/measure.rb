@@ -40,6 +40,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
       # Following are arguments with the same name but different options
       next if arg.name == 'geometry_unit_cfa'
+      next if arg.name == 'heat_pump_backup_type'
       next if arg.name == 'heat_pump_backup_fuel'
       next if arg.name == 'heat_pump_backup_heating_efficiency'
 
@@ -394,6 +395,17 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('Heat Pump: Fraction of Manufacturer Recommended Charge')
     arg.setDescription('The fraction of manufacturer recommended charge of the heat pump.')
     arg.setUnits('Frac')
+    args << arg
+
+    # Adds a heat_pump_backup_type argument similar to the BuildResidentialHPXML measure, but with "auto" allowed
+    arg = @build_residential_hpxml_measure_arguments.find { |arg| arg.name == 'heat_pump_backup_type' }
+    heat_pump_backup_type_choices = arg.choiceValues.map(&:to_s)
+    heat_pump_backup_type_choices.unshift(Constants::Auto)
+
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_type', heat_pump_backup_type_choices, true)
+    arg.setDisplayName('Heat Pump: Backup Type')
+    arg.setDescription("The backup type of the heat pump. If '#{HPXML::HeatPumpBackupTypeIntegrated}', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If '#{HPXML::HeatPumpBackupTypeSeparate}', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use '#{Constants::None}' if there is no backup heating. E.g., '#{HPXML::HeatPumpBackupTypeIntegrated}' or '#{Constants::Auto}'. Use '#{Constants::Auto}' when Backup Use Existing System is true.")
+    arg.setDefaultValue(HPXML::HeatPumpBackupTypeIntegrated)
     args << arg
 
     # Adds a heat_pump_backup_fuel argument similar to the BuildResidentialHPXML measure, but with "auto" allowed

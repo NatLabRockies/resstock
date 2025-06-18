@@ -2026,19 +2026,6 @@ The temperature below which the heat pump compressor is disabled. If both this a
 
 <br/>
 
-**Heat Pump: Backup Type**
-
-The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating.
-
-- **Name:** ``heat_pump_backup_type``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `none`, `integrated`, `separate`
-
-<br/>
-
 **Heat Pump: Backup Heating Autosizing Factor**
 
 The capacity scaling factor applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, 1.0 is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Factor.
@@ -5805,6 +5792,19 @@ The fraction of manufacturer recommended charge of the heat pump.
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
+<br/>
+
+**Heat Pump: Backup Type**
+
+The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating. E.g., 'integrated' or 'auto'. Use 'auto' when Backup Use Existing System is true.
+
+- **Name:** ``heat_pump_backup_type``
+- **Type:** ``Choice``
+
+- **Required:** ``true``
+
+- **Choices:** `auto`, `none`, `integrated`, `separate`
 
 <br/>
 

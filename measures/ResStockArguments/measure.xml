@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>f2b4ebdb-fc5e-4d34-aae8-49a90f4e8ed1</version_id>
-  <version_modified>2025-06-18T02:23:52Z</version_modified>
+  <version_id>fac00fa7-8927-4ed1-b6e2-c2adafef1e4f</version_id>
+  <version_modified>2025-06-18T15:53:19Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -2881,29 +2881,6 @@
       <units>F</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>heat_pump_backup_type</name>
-      <display_name>Heat Pump: Backup Type</display_name>
-      <description>The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating.</description>
-      <type>Choice</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>integrated</default_value>
-      <choices>
-        <choice>
-          <value>none</value>
-          <display_name>none</display_name>
-        </choice>
-        <choice>
-          <value>integrated</value>
-          <display_name>integrated</display_name>
-        </choice>
-        <choice>
-          <value>separate</value>
-          <display_name>separate</display_name>
-        </choice>
-      </choices>
     </argument>
     <argument>
       <name>heat_pump_backup_heating_autosizing_factor</name>
@@ -7698,6 +7675,33 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>heat_pump_backup_type</name>
+      <display_name>Heat Pump: Backup Type</display_name>
+      <description>The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating. E.g., 'integrated' or 'auto'. Use 'auto' when Backup Use Existing System is true.</description>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>integrated</default_value>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>none</value>
+          <display_name>none</display_name>
+        </choice>
+        <choice>
+          <value>integrated</value>
+          <display_name>integrated</display_name>
+        </choice>
+        <choice>
+          <value>separate</value>
+          <display_name>separate</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>heat_pump_backup_fuel</name>
       <display_name>Heat Pump: Backup Fuel Type</display_name>
       <description>The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'. Use 'auto' when Backup Use Existing System is true.</description>
@@ -7809,7 +7813,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>E58CE6EE</checksum>
+      <checksum>A9E80ED0</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7826,7 +7830,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>4FCABA5C</checksum>
+      <checksum>E3F6D15D</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
