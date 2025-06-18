@@ -39237,8 +39237,8 @@ Arguments
      - true
      - 
      - Choice
-     - none, integrated, separate
-     - The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating.
+     - auto, none, integrated, separate
+     - The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating. E.g., 'integrated' or 'auto'. Use 'auto' when Backup Use Existing System is true.
    * - ``heat_pump_backup_heating_autosizing_limit``
      - false
      - Btu/hr
@@ -41161,8 +41161,8 @@ Arguments
      - true
      - 
      - Choice
-     - none, integrated, separate
-     - The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating.
+     - auto, none, integrated, separate
+     - The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating. E.g., 'integrated' or 'auto'. Use 'auto' when Backup Use Existing System is true.
    * - ``heat_pump_backup_heating_autosizing_limit``
      - false
      - Btu/hr
