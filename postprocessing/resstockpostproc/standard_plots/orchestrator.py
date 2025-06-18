@@ -80,6 +80,7 @@ class PlotOrchestrator:
                     return re.sub(r"[^0-9A-Za-z_]", "_", path.as_posix())
 
                 table_name = safe_sqlite_name(path_seg)
+                Path(self.workflow.output_dir).mkdir(parents=True, exist_ok=True)
                 df.write_database(
                     table_name, f"sqlite:///{self.workflow.output_dir}/plot_data.db", if_table_exists="replace"
                 )

@@ -35,5 +35,5 @@ class OutputManager:
         svg_dir.mkdir(exist_ok=True)
 
         # Write files to their respective directories
-        fig.write_html(html_dir / "plot.html")
+        fig.write_html(html_dir / "plot.html", include_plotlyjs="cdn", include_mathjax="cdn")
         fig.write_image(svg_dir / "plot.svg")
