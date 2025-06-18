@@ -47,26 +47,30 @@ def get_failures(csv_path: str, verbose: bool = False) -> list[dict[str, Any]]:
                     "step_failures": f"completed_status column not found in {csv_path}",
                 }
             ]
+        columns_to_select = [pl.col("building_id"), pl.col("completed_status")]
 
-        if "step_failures" not in schema:
-            # all simulations are successful so there is no step_failures column
-            return []
+        if "step_failures" in schema:
+            columns_to_select.append(pl.col("step_failures"))
+        else:
+            columns_to_select.append(pl.lit("Step failure details not available").alias("step_failures"))
 
-        # Extract only the columns we need for failure reporting
-        columns_to_select = ["building_id", "completed_status", "step_failures"]
+        if "eplusout_err" in schema:
+            columns_to_select.append(pl.col("eplusout_err"))
+        else:
+            columns_to_select.append(pl.lit("eplusout_err not found").alias("eplusout_err"))
 
-        # Filter to only failed simulations and collect
         failed_sims = df_lazy.select(columns_to_select).filter(pl.col("completed_status") == "Fail").collect()
-
-        # Convert to list of dictionaries
         failures = failed_sims.to_dicts() if not failed_sims.is_empty() else []
-
         return failures
-
     except Exception as e:  # noqa: BLE001
         print(f"Error processing {csv_path}: {e!s}")
         return [
-            {"building_id": "N/A", "completed_status": "N/A", "step_failures": f"Error processing {csv_path}: {e!s}"}
+            {
+                "building_id": "N/A",
+                "completed_status": "N/A",
+                "step_failures": f"Error processing {csv_path}: {e!s}",
+                "eplusout_err": "N/A",
+            }
         ]
 
 
@@ -86,6 +90,7 @@ def print_failures(failures: list[dict[str, Any]], csv_path: str) -> None:
     for i, failure in enumerate(failures, 1):
         building_id = failure.get("building_id", "N/A")
         step_failures = failure.get("step_failures", "N/A")
+        eplusout_err = failure.get("eplusout_err", "N/A")
 
         print(f"  {i}. Building ID: {building_id}")
 
@@ -123,6 +128,7 @@ def print_failures(failures: list[dict[str, Any]], csv_path: str) -> None:
         except (ValueError, SyntaxError, AttributeError):
             # If parsing fails, fall back to original display
             print(f"     Step Failures: {step_failures}")
+        print(f"     eplusout_err: {eplusout_err}")
 
 
 def main():

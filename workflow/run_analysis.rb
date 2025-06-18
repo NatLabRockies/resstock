@@ -529,7 +529,7 @@ def samples_osw(results_dir, upgrade_name, workflow, building_id, job_id, folder
   worker_folder_ = worker_folder if keep_run_folders
   run_output = "Building ID: #{building_id}. Upgrade Name: #{upgrade_name}. Job ID: #{worker_folder_}\n"
   upgrade = upgrade_name != 'Baseline'
-  started_at, completed_at, completed_status, result_output, run_output = RunOSWs.run(osw, worker_dir, run_output, upgrade, measures, reporting_measures, measures_only)
+  started_at, completed_at, completed_status, eplusout_err, result_output, run_output = RunOSWs.run(osw, worker_dir, run_output, upgrade, measures, reporting_measures, measures_only)
 
   started_at = create_timestamp(started_at)
   completed_at = create_timestamp(completed_at)
@@ -539,6 +539,7 @@ def samples_osw(results_dir, upgrade_name, workflow, building_id, job_id, folder
   result_output['started_at'] = started_at
   result_output['completed_at'] = completed_at
   result_output['completed_status'] = completed_status
+  result_output['eplusout_err'] = eplusout_err
 
   clean_up_result_output(result_output, upgrade)
 
