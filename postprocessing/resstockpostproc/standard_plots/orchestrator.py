@@ -34,7 +34,7 @@ class PlotOrchestrator:
         self.processor = DataProcessor(self.workflow.annual_results_dir, self.workflow.upgrades)
         self.out_mgr = OutputManager(self.workflow.output_dir)
 
-    def generate_all_plots(self) -> None:
+    def generate_all_plots(self, save_data: bool = False) -> None:
         """Generate all plots declared in YAML using the new PlotDef contract."""
 
         # Get all configuration elements for iteration
@@ -81,9 +81,10 @@ class PlotOrchestrator:
 
                 table_name = safe_sqlite_name(path_seg)
                 Path(self.workflow.output_dir).mkdir(parents=True, exist_ok=True)
-                df.write_database(
-                    table_name, f"sqlite:///{self.workflow.output_dir}/plot_data.db", if_table_exists="replace"
-                )
+                if save_data:
+                    df.write_database(
+                        table_name, f"sqlite:///{self.workflow.output_dir}/plot_data.db", if_table_exists="replace"
+                    )
                 plotter = self._get_plotter(plot_spec.visualization_type)
                 fig = plotter.create_plot(df, plot_spec)
                 self.out_mgr.save_plot(fig, path_seg)

@@ -25,9 +25,14 @@ def main():
         help="Path to plot configuration YAML file",
         default=str(Path(__file__).parent / "workflow.yaml"),
     )
-
+    parser.add_argument(
+        "--save-data",
+        action="store_true",
+        help="Save the data used to generate the plots",
+    )
     args = parser.parse_args()
     config_path = args.config
+    save_data = args.save_data or False
 
     # Verify the config file exists
     if not os.path.exists(config_path):
@@ -36,7 +41,7 @@ def main():
 
     # Create the orchestrator and generate plots
     orchestrator = PlotOrchestrator(config_path)
-    orchestrator.generate_all_plots()
+    orchestrator.generate_all_plots(save_data=save_data)
     return 0
 
 
