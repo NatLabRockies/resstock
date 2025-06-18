@@ -386,7 +386,7 @@ references:
 ### Standard Data Release - Residential -- ###
 upgrades:
   ### -- HVAC: Air Source Heat Pumps -- ###
-  - upgrade_name: Typical Cold Climate with Detailed Performance Data
+  - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data
     package_apply_logic: *remove_high_rise_shared
     options:
       - option: HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
@@ -395,14 +395,7 @@ upgrades:
       - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
         apply_logic: *ducted_ashp_apply_logic
 
-      - option: HVAC Heating Efficiency|MSHP, SEER2 22.7, 10.3 HSPF2, Typical Cold Climate
-        apply_logic: *nonducted_mshp_apply_logic
-
-      - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Non-Ducted
-        apply_logic: *nonducted_mshp_apply_logic
-
       - *heat_pump_cooling_efficiency_ducted
-      - *heat_pump_cooling_efficiency_nonducted
 
   ### -- HVAC: Geothermal Heat Pumps -- ###
   - upgrade_name: Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
