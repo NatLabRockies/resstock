@@ -15,11 +15,11 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  OPENSTUDIO_VER: 3.10.0-rc5
-  OPENSTUDIO_SHA: e2e9b52d54
+  OPENSTUDIO_VER: 3.10.0
+  OPENSTUDIO_SHA: 86d7e215a1
   OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
   OPENSTUDIO_EXT: deb
-  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0-rc5
+  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0
   BUILDSTOCK_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [format-files]
     container:
-      image: docker://nrel/openstudio:3.10-rc5
+      image: docker://nrel/openstudio:3.10.0
     steps:
       - uses: actions/checkout@v4
         with:
@@ -154,7 +154,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     container:
-      image: docker://nrel/openstudio:3.10-rc5
+      image: docker://nrel/openstudio:3.10.0
     steps:
       - uses: actions/checkout@v4
         with:
@@ -435,7 +435,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     container:
-      image: docker://nrel/openstudio:3.10-rc5
+      image: docker://nrel/openstudio:3.10.0
     steps:
       - uses: actions/checkout@v4
         with:

@@ -1,6 +1,6 @@
 schema_version: '0.4'
-os_version: 3.10.0-rc5
-os_sha: e2e9b52d54
+os_version: 3.10.0
+os_sha: 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_testing # Relative to buildstock_directory
 output_directory: testing_baseline
