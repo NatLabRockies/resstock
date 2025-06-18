@@ -386,19 +386,6 @@ references:
 ### Standard Data Release - Residential -- ###
 upgrades:
   ### -- HVAC: Air Source Heat Pumps -- ###
-  - upgrade_name: Cold Climate Heat Pump with Electric Backup
-    package_apply_logic: *remove_high_rise_shared
-    options:
-      - *ducted_ashp_seer_20_11_hspf_cchp_electric_backup
-      - *cooling_setpoint_no_offset
-      - *cooling_setpoint_offset_magnitude_0
-      - *cooling_setpoint_offset_period_none
-      - *heating_setpoint_no_offset
-      - *heating_setpoint_offset_magnitude_0
-      - *heating_setpoint_offset_period_none
-      - *heat_pump_cooling_efficiency_ducted
-      - *partial_conditioning_100_percent
-
   - upgrade_name: Typical Cold Climate with Detailed Performance Data
     package_apply_logic: *remove_high_rise_shared
     options:
