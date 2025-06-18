@@ -1,5 +1,6 @@
 import pathlib
 from collections.abc import Sequence
+
 import geopandas as gpd
 import polars as pl
 from resstockpostproc.utils import fix_all_fuels_emissions, fix_site_energy_total, get_col_maps

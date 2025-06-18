@@ -166,7 +166,7 @@ def update_dropdowns2(root_path, current_children, selection):
     if ".html" in trigger_inputs[-1]:
         full_path = root_path + "/" + "/".join(new_values[:-1]) + "/html/" + new_values[-1]
         try:
-            with open(full_path) as f:
+            with open(full_path, encoding="utf8") as f:
                 html_contents = f.read()
         except Exception:  # noqa: BLE001
             html_contents = f"<p>Could not open {full_path}</p>"

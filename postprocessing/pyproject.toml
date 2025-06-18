@@ -23,7 +23,7 @@ dependencies = [
     "dash>=3.0.4",
     "fsspec",
     "geopandas",
-    "kaleido==0.2.1",
+    "kaleido==1.0.0rc15",
     "nbformat>=4.2.0",
     "pandas",
     "plotly",

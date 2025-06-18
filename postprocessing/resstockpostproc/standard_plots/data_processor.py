@@ -127,7 +127,7 @@ class DataProcessor:
 
         Args:
             combined_df: Combined DataFrame containing all data
-            quantities: List of quantities to plot
+            quantity: List of quantities to plot
             group_by: List of columns to group by
 
         Returns:

@@ -3,8 +3,6 @@
 Provides shared helpers (theme access, column guards, etc.) so concrete plotters do not have to duplicate boilerplate.
 """
 
-from __future__ import annotations
-
 from abc import ABC
 
 import polars as pl
@@ -17,7 +15,7 @@ class BasePlotter(ABC):
     """Abstract base plotter - every concrete plotter inherits this."""
 
     def __init__(self, theme_cfg: dict | None = None):
-        # Centralised style/theme manager
+        # Centralized style/theme manager
         self.theme = ThemeManager(theme_cfg)
 
     # ------------------------------------------------------------------
