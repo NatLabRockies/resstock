@@ -473,10 +473,11 @@ class RunOSWs
     started_at = out['started_at']
     completed_at = out['completed_at']
     completed_status = out['completed_status']
+    eplusout_err = out['eplusout_err']
 
     data_point_out = File.join(parent_dir, 'run/data_point_out.json')
 
-    return started_at, completed_at, completed_status, result_output, run_output if !File.exist?(data_point_out)
+    return started_at, completed_at, completed_status, eplusout_err, result_output, run_output if !File.exist?(data_point_out)
 
     rows = {}
     text = File.read(File.expand_path(data_point_out))
@@ -502,7 +503,7 @@ class RunOSWs
       result_output = get_measure_results(rows, result_output, reporting_measure)
     end
 
-    return started_at, completed_at, completed_status, result_output, run_output
+    return started_at, completed_at, completed_status, eplusout_err, result_output, run_output
   end
 
   def self.get_measure_results(rows, result, measure)
@@ -526,7 +527,7 @@ class RunOSWs
     end
     column_headers = column_headers.sort
 
-    ['completed_status', 'completed_at', 'started_at', 'job_id', 'building_id'].each do |col|
+    ['eplusout_err', 'completed_status', 'completed_at', 'started_at', 'job_id', 'building_id'].each do |col|
       column_headers.delete(col)
       column_headers.insert(0, col)
     end

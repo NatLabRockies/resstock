@@ -4,6 +4,7 @@ job_id,The unique identifier of the job/processor.
 started_at,Simulation start time.
 completed_at,Simulation end time.
 completed_status,"Simulation Success, Fail, or Invalid."
+eplusout_err,Contents of the eplusout.err file.
 build_existing_model.air_leakage_to_outside_ach_50,Total infiltration to the dwelling unit adjusted by ratio of exterior envelope surface area to total envelope surface area.
 build_existing_model.applicable,The measure was applied to the workflow.
 build_existing_model.buildstock_csv_path,Absolute/relative path of the buildstock CSV file. Relative is compared to the 'lib/housing_characteristics' directory.
