@@ -87,12 +87,22 @@ resstockarguments_xml.each do |name, properties|
   end
 
   # Add "auto" to Choices for optional String/Double/Integer
-  if (properties['description'].include?('OS-HPXML default') && ['String', 'Double', 'Integer'].include?(properties['type'])) || (name == 'year_built') || (name == 'geometry_unit_num_occupants') # these last 2 are special because ResStockArguments provides the default instead of OS-HPXML
+  extra_args_with_auto = ['year_built', 'geometry_unit_num_occupants', 'geometry_unit_cfa', 'heat_pump_backup_heating_efficiency'] # these are special because ResStockArguments provides the default instead of OS-HPXML
+  if (properties['description'].include?('OS-HPXML default') && ['String', 'Double', 'Integer'].include?(properties['type'])) ||
+     extra_args_with_auto.include?(name)
     resstockarguments_xml[name]['choices'].unshift('auto')
   end
 
   # Convert href to rst for description
   resstockarguments_xml[name]['description'] = href_to_rst(resstockarguments_xml[name]['description'])
+end
+
+# Display arguments in Arguments and Options table by the order they appear in BuildResidentialHPXML, otherwise use ResStockArguments if only defined there
+arg_order = buildreshpxmlarguments_xml.keys
+resstockarguments_xml.keys.each do |k|
+  if !arg_order.include?(k)
+    arg_order << k
+  end
 end
 
 source_report_cols = ['Description', 'Created by', 'Source', 'Assumption']
@@ -181,8 +191,15 @@ source_report.each do |row|
       line = "   * - #{arguments_col}" if i == 0
       f.puts(line)
     end
-
-    r_arguments = r_arguments.sort_by &resstockarguments_xml.keys.method(:index)
+    if parameter == 'HVAC Heating Efficiency'
+      puts "r_arguments 1 #{r_arguments}"
+    end
+    # r_arguments = r_arguments.sort_by &resstockarguments_xml.keys.method(:index)
+    # r_arguments = r_arguments.sort
+    r_arguments = r_arguments.sort_by &arg_order.method(:index)
+    if parameter == 'HVAC Heating Efficiency'
+      puts "r_arguments 2 #{r_arguments}"
+    end
     r_arguments.each do |r_argument|
       f.puts("   * - ``#{r_argument}``")
       f.puts("     - #{resstockarguments_xml[r_argument]['required']}")

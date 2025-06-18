@@ -2026,19 +2026,6 @@ The temperature below which the heat pump compressor is disabled. If both this a
 
 <br/>
 
-**Heat Pump: Backup Type**
-
-The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating.
-
-- **Name:** ``heat_pump_backup_type``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `none`, `integrated`, `separate`
-
-<br/>
-
 **Heat Pump: Backup Heating Autosizing Factor**
 
 The capacity scaling factor applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, 1.0 is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Factor.
@@ -2058,30 +2045,6 @@ The maximum capacity limit applied to the auto-sizing methodology if Backup Type
 - **Type:** ``String``
 
 - **Required:** ``false``
-
-<br/>
-
-**Heat Pump: Backup Fuel Type**
-
-The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'.
-
-- **Name:** ``heat_pump_backup_fuel``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`
-
-<br/>
-
-**Heat Pump: Backup Rated Efficiency**
-
-The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'.
-
-- **Name:** ``heat_pump_backup_heating_efficiency``
-- **Type:** ``Double``
-
-- **Required:** ``true``
 
 <br/>
 
@@ -5318,7 +5281,7 @@ E.g., '2000-2499'.
 
 **Geometry: Unit Conditioned Floor Area**
 
-E.g., '2000' or 'auto'.
+The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or 'auto'.
 
 - **Name:** ``geometry_unit_cfa``
 - **Type:** ``String``
@@ -5832,9 +5795,46 @@ The fraction of manufacturer recommended charge of the heat pump.
 
 <br/>
 
+**Heat Pump: Backup Type**
+
+The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating. E.g., 'integrated' or 'auto'. Use 'auto' when Backup Use Existing System is true.
+
+- **Name:** ``heat_pump_backup_type``
+- **Type:** ``Choice``
+
+- **Required:** ``true``
+
+- **Choices:** `auto`, `none`, `integrated`, `separate`
+
+<br/>
+
+**Heat Pump: Backup Fuel Type**
+
+The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'. Use 'auto' when Backup Use Existing System is true.
+
+- **Name:** ``heat_pump_backup_fuel``
+- **Type:** ``Choice``
+
+- **Required:** ``true``
+
+- **Choices:** `auto`, `electricity`, `natural gas`, `fuel oil`, `propane`
+
+<br/>
+
+**Heat Pump: Backup Rated Efficiency**
+
+The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'. Use 'auto' when Backup Use Existing System is true.
+
+- **Name:** ``heat_pump_backup_heating_efficiency``
+- **Type:** ``String``
+
+- **Required:** ``true``
+
+<br/>
+
 **Heat Pump: Backup Use Existing System**
 
-Whether the heat pump uses the existing system as backup. This argument is only applicable for heat pump upgrades.
+Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is 'integrated', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is 'separate', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.
 
 - **Name:** ``heat_pump_backup_use_existing_system``
 - **Type:** ``Boolean``
