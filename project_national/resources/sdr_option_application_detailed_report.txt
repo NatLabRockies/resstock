@@ -1,6 +1,6 @@
-----------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option1:'HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load'
-----------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option1:'HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate'
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
   not => 489600 (89.0%)
@@ -33,183 +33,9 @@ and => 530447 (96.4%)
 Overall applied to => 408859 (74.3%).
 -------------------------------------
 
---------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option2:'Cooling Setpoint Has Offset|No'
---------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
---------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option3:'Cooling Setpoint Offset Magnitude|0F'
---------------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
--------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option4:'Cooling Setpoint Offset Period|None'
--------------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
---------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option5:'Heating Setpoint Has Offset|No'
---------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
---------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option6:'Heating Setpoint Offset Magnitude|0F'
---------------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
--------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option7:'Heating Setpoint Offset Period|None'
--------------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
-------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option8:'HVAC Cooling Efficiency|Ducted Heat Pump'
-------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option2:'HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
   not => 489600 (89.0%)
@@ -242,13 +68,19 @@ and => 530447 (96.4%)
 Overall applied to => 408859 (74.3%).
 -------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option9:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
-----------------------------------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option3:'HVAC Cooling Efficiency|Ducted Heat Pump'
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
+  not => 489600 (89.0%)
+    or => 60400 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+-------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 530447 (96.4%)
@@ -268,271 +100,29 @@ and => 530447 (96.4%)
     and => 11268 (2.0%)
       Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
 ------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
+Overall applied to => 408859 (74.3%).
 -------------------------------------
 
 All of the options (and-ing) were applied to: 408859 (74.3%)
-Any of the options (or-ing) were applied to: 530447 (96.4%)
---------------------------------------------------------------------------------
-Report of how the 9 options were applied to the buildings.
-+---------------------+----------------------------------------------------+---------------------+------------------+------------------+
-|   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
-+=====================+====================================================+=====================+==================+==================+
-|                   7 | cooling setpoint has offset, cooling setpoint      | 121588 (22.1%)      | 121588 (22.1%)   | 121588 (22.1%)   |
-|                     | offset magnitude, cooling setpoint offset period,  |                     |                  |                  |
-|                     | heating setpoint has offset, heating setpoint      |                     |                  |                  |
-|                     | offset magnitude, heating setpoint offset period,  |                     |                  |                  |
-|                     | hvac cooling partial space conditioning            |                     |                  |                  |
-+---------------------+----------------------------------------------------+---------------------+------------------+------------------+
-|                   9 | hvac heating efficiency, cooling setpoint has      | 408859 (74.3%)      | 408859 (74.3%)   | 530447 (96.4%)   |
-|                     | offset, cooling setpoint offset magnitude, cooling |                     |                  |                  |
-|                     | setpoint offset period, heating setpoint has       |                     |                  |                  |
-|                     | offset, heating setpoint offset magnitude, heating |                     |                  |                  |
-|                     | setpoint offset period, hvac cooling efficiency,   |                     |                  |                  |
-|                     | hvac cooling partial space conditioning            |                     |                  |                  |
-+---------------------+----------------------------------------------------+---------------------+------------------+------------------+
---------------------------------------------------------------------------------
-Detailed report of how the 9 options were applied to the buildings.
-+---------------------+---------------------------+---------------------+------------------+------------------+
-|   Number of options | Applied options           | Applied buildings   | Cumulative sub   | Cumulative all   |
-+=====================+===========================+=====================+==================+==================+
-|                   7 | 2, 3, 4, 5, 6, 7, 9       | 121588 (22.1%)      | 121588 (22.1%)   | 121588 (22.1%)   |
-+---------------------+---------------------------+---------------------+------------------+------------------+
-|                   9 | 1, 2, 3, 4, 5, 6, 7, 8, 9 | 408859 (74.3%)      | 408859 (74.3%)   | 530447 (96.4%)   |
-+---------------------+---------------------------+---------------------+------------------+------------------+
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade2:'Typical Cold Climate with Detailed Performance Data', Option1:'HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate'
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
--------------------------------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 408859 (74.3%).
--------------------------------------
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade2:'Typical Cold Climate with Detailed Performance Data', Option2:'HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
--------------------------------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 408859 (74.3%).
--------------------------------------
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade2:'Typical Cold Climate with Detailed Performance Data', Option3:'HVAC Heating Efficiency|MSHP, SEER2 22.7, 10.3 HSPF2, Typical Cold Climate'
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-or => 136583 (24.8%)
-  HVAC Has Ducts|No => 126392 (23.0%)
-  or => 60400 (11.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
--------------------------------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 121588 (22.1%).
--------------------------------------
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade2:'Typical Cold Climate with Detailed Performance Data', Option4:'HVAC Detailed Performance Data|Cold Climate Heat Pump Non-Ducted'
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-or => 136583 (24.8%)
-  HVAC Has Ducts|No => 126392 (23.0%)
-  or => 60400 (11.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
--------------------------------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 121588 (22.1%).
--------------------------------------
-
---------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade2:'Typical Cold Climate with Detailed Performance Data', Option5:'HVAC Cooling Efficiency|Ducted Heat Pump'
---------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
--------------------------------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 408859 (74.3%).
--------------------------------------
-
-------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade2:'Typical Cold Climate with Detailed Performance Data', Option6:'HVAC Cooling Efficiency|Non-Ducted Heat Pump'
-------------------------------------------------------------------------------------------------------------------------------------------------
-or => 136583 (24.8%)
-  HVAC Has Ducts|No => 126392 (23.0%)
-  or => 60400 (11.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
--------------------------------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 121588 (22.1%).
--------------------------------------
-
-All of the options (and-ing) were applied to: 0 (0.0%)
-Any of the options (or-ing) were applied to: 530447 (96.4%)
+Any of the options (or-ing) were applied to: 408859 (74.3%)
 --------------------------------------------------------------------------------
 Report of how the 3 options were applied to the buildings.
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================================================+=====================+==================+==================+
-|                   3 | hvac heating efficiency, hvac detailed performance | 530447 (96.4%)      | 530447 (96.4%)   | 530447 (96.4%)   |
+|                   3 | hvac heating efficiency, hvac detailed performance | 408859 (74.3%)      | 408859 (74.3%)   | 408859 (74.3%)   |
 |                     | data, hvac cooling efficiency                      |                     |                  |                  |
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
-Detailed report of how the 6 options were applied to the buildings.
+Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   3 | 1, 2, 5           | 408859 (74.3%)      | 408859 (74.3%)   | 408859 (74.3%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 3, 4, 6           | 121588 (22.1%)      | 530447 (96.4%)   | 530447 (96.4%)   |
+|                   3 | 1, 2, 3           | 408859 (74.3%)      | 408859 (74.3%)   | 408859 (74.3%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade3:'Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option1:'HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8'
+Option Apply Report for - Upgrade2:'Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option1:'HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8'
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
@@ -572,7 +162,7 @@ Overall applied to => 380161 (69.1%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade3:'Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
+Option Apply Report for - Upgrade2:'Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
@@ -612,7 +202,7 @@ Overall applied to => 380161 (69.1%).
 -------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade3:'Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
+Option Apply Report for - Upgrade2:'Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HVAC Has Ducts|Yes => 423608 (77.0%)
 ------------------------------------
@@ -666,7 +256,7 @@ Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade4:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option1:'HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0'
+Option Apply Report for - Upgrade3:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option1:'HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0'
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
@@ -706,7 +296,7 @@ Overall applied to => 380161 (69.1%).
 -------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade4:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
+Option Apply Report for - Upgrade3:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
@@ -746,7 +336,7 @@ Overall applied to => 380161 (69.1%).
 -------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade4:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
+Option Apply Report for - Upgrade3:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HVAC Has Ducts|Yes => 423608 (77.0%)
 ------------------------------------
@@ -800,7 +390,7 @@ Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option1:'HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4'
+Option Apply Report for - Upgrade4:'Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option1:'HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
@@ -840,7 +430,7 @@ Overall applied to => 380161 (69.1%).
 -------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
+Option Apply Report for - Upgrade4:'Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
@@ -880,7 +470,7 @@ Overall applied to => 380161 (69.1%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
+Option Apply Report for - Upgrade4:'Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HVAC Has Ducts|Yes => 423608 (77.0%)
 ------------------------------------
@@ -934,7 +524,7 @@ Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade6:'Air Sealing', Option1:'Infiltration Reduction|30%'
+Option Apply Report for - Upgrade5:'Air Sealing', Option1:'Infiltration Reduction|30%'
 --------------------------------------------------------------------------------------
 or => 366250 (66.6%)
   Infiltration|50 ACH50 => 17543 (3.2%)
@@ -967,7 +557,7 @@ Detailed report of how the 1 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade7:'Attic Floor Insulation for Unfinished Attics', Option1:'Insulation Ceiling|R-30'
+Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option1:'Insulation Ceiling|R-30'
 --------------------------------------------------------------------------------------------------------------------
 and => 1502 (0.3%)
   ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
@@ -982,7 +572,7 @@ Overall applied to => 1502 (0.3%).
 ----------------------------------
 
 --------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade7:'Attic Floor Insulation for Unfinished Attics', Option2:'Insulation Ceiling|R-49'
+Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option2:'Insulation Ceiling|R-49'
 --------------------------------------------------------------------------------------------------------------------
 and => 84557 (15.4%)
   or => 211797 (38.5%)
@@ -1004,7 +594,7 @@ Overall applied to => 84557 (15.4%).
 ------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade7:'Attic Floor Insulation for Unfinished Attics', Option3:'Insulation Ceiling|R-60'
+Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option3:'Insulation Ceiling|R-60'
 --------------------------------------------------------------------------------------------------------------------
 and => 129264 (23.5%)
   or => 327067 (59.5%)
@@ -1052,7 +642,7 @@ Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade8:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option1:'HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0'
+Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option1:'HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
@@ -1092,7 +682,7 @@ Overall applied to => 380161 (69.1%).
 -------------------------------------
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade8:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
+Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
@@ -1132,7 +722,7 @@ Overall applied to => 380161 (69.1%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade8:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
+Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HVAC Has Ducts|Yes => 423608 (77.0%)
 ------------------------------------
@@ -1164,7 +754,7 @@ Overall applied to => 389136 (70.8%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade8:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option4:'Insulation Ceiling|R-30'
+Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option4:'Insulation Ceiling|R-30'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 1502 (0.3%)
   ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
@@ -1203,7 +793,7 @@ Overall applied to => 1081 (0.2%).
 ----------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade8:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option5:'Insulation Ceiling|R-49'
+Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option5:'Insulation Ceiling|R-49'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 84557 (15.4%)
   or => 211797 (38.5%)
@@ -1249,7 +839,7 @@ Overall applied to => 74413 (13.5%).
 ------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade8:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option6:'Insulation Ceiling|R-60'
+Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option6:'Insulation Ceiling|R-60'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 129264 (23.5%)
   or => 327067 (59.5%)
@@ -1300,7 +890,7 @@ Overall applied to => 100949 (18.4%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade8:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option7:'Infiltration Reduction|30%'
+Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option7:'Infiltration Reduction|30%'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 366250 (66.6%)
   Infiltration|50 ACH50 => 17543 (3.2%)
@@ -1393,7 +983,7 @@ Detailed report of how the 7 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Electric Vehicle Adoption with Level 1 Charging', Option1:'Electric Vehicle Ownership|Yes'
+Option Apply Report for - Upgrade8:'Electric Vehicle Adoption with Level 1 Charging', Option1:'Electric Vehicle Ownership|Yes'
 ------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1405,7 +995,7 @@ Overall applied to => 477589 (86.8%).
 -------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Electric Vehicle Adoption with Level 1 Charging', Option2:'Electric Vehicle Charger|Level 1 charger'
+Option Apply Report for - Upgrade8:'Electric Vehicle Adoption with Level 1 Charging', Option2:'Electric Vehicle Charger|Level 1 charger'
 ----------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1434,9 +1024,9 @@ Detailed report of how the 2 options were applied to the buildings.
 |                   2 | 1, 2              | 477589 (86.8%)      | 477589 (86.8%)   | 477589 (86.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
--------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Electric Vehicle Adoption with Level 2 Charging', Option1:'Electric Vehicle Ownership|Yes'
--------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade9:'Electric Vehicle Adoption with Level 2 Charging', Option1:'Electric Vehicle Ownership|Yes'
+------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 Vacancy Status|Occupied => 483360 (87.9%)
@@ -1444,9 +1034,9 @@ Vacancy Status|Occupied => 483360 (87.9%)
 Overall applied to => 483360 (87.9%).
 -------------------------------------
 
------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Electric Vehicle Adoption with Level 2 Charging', Option2:'Electric Vehicle Charger|Level 2 charger'
------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade9:'Electric Vehicle Adoption with Level 2 Charging', Option2:'Electric Vehicle Charger|Level 2 charger'
+----------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 Vacancy Status|Occupied => 483360 (87.9%)
@@ -1473,7 +1063,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -----------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option1:'Electric Vehicle Ownership|Yes'
+Option Apply Report for - Upgrade10:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option1:'Electric Vehicle Ownership|Yes'
 -----------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1483,7 +1073,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option2:'Electric Vehicle Charger|Level 2 charger'
+Option Apply Report for - Upgrade10:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option2:'Electric Vehicle Charger|Level 2 charger'
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1493,7 +1083,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option3:'Electric Vehicle Efficiency Increase|15%'
+Option Apply Report for - Upgrade10:'Efficient Electric Vehicle Adoption with Level 2 Charging', Option3:'Electric Vehicle Efficiency Increase|15%'
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1521,7 +1111,7 @@ Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade12:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option1:'Electric Vehicle Ownership|Yes'
+Option Apply Report for - Upgrade11:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option1:'Electric Vehicle Ownership|Yes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1531,7 +1121,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade12:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option2:'Electric Vehicle Charger|Level 2 charger'
+Option Apply Report for - Upgrade11:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option2:'Electric Vehicle Charger|Level 2 charger'
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1541,7 +1131,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade12:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option3:'Demand Flexibility Electric Vehicle|Enabled'
+Option Apply Report for - Upgrade11:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option3:'Demand Flexibility Electric Vehicle|Enabled'
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1551,7 +1141,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade12:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option4:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade11:'Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option4:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1580,7 +1170,7 @@ Detailed report of how the 4 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade13:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option1:'Electric Vehicle Ownership|Yes'
+Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option1:'Electric Vehicle Ownership|Yes'
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1590,7 +1180,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade13:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option2:'Electric Vehicle Charger|Level 2 charger'
+Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option2:'Electric Vehicle Charger|Level 2 charger'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1600,7 +1190,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade13:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option3:'Electric Vehicle Efficiency Increase|15%'
+Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option3:'Electric Vehicle Efficiency Increase|15%'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1610,7 +1200,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade13:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option4:'Demand Flexibility Electric Vehicle|Enabled'
+Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option4:'Demand Flexibility Electric Vehicle|Enabled'
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1620,7 +1210,7 @@ Overall applied to => 483360 (87.9%).
 -------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade13:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option5:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade12:'Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility', Option5:'Demand Flexibility Random Shift|30 minutes'
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1650,7 +1240,7 @@ Detailed report of how the 5 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade14:'HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset', Option1:'Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset'
+Option Apply Report for - Upgrade13:'HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset', Option1:'Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1664,7 +1254,7 @@ Overall applied to => 548291 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade14:'HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset', Option2:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade13:'HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset', Option2:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1696,7 +1286,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade15:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration'
+Option Apply Report for - Upgrade14:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1710,7 +1300,7 @@ Overall applied to => 548291 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade15:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade14:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1742,7 +1332,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade16:'HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset', Option1:'Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset'
+Option Apply Report for - Upgrade15:'HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset', Option1:'Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1756,7 +1346,7 @@ Overall applied to => 548291 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade16:'HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset', Option2:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade15:'HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset', Option2:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1788,7 +1378,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade17:'HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration'
+Option Apply Report for - Upgrade16:'HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1802,7 +1392,7 @@ Overall applied to => 548291 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade17:'HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade16:'HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1834,7 +1424,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade18:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration'
+Option Apply Report for - Upgrade17:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration', Option1:'Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -1848,7 +1438,7 @@ Overall applied to => 548291 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade18:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
+Option Apply Report for - Upgrade17:'HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration', Option2:'Demand Flexibility Random Shift|30 minutes'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
