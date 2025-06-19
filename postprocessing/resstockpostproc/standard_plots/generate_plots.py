@@ -30,9 +30,18 @@ def main():
         action="store_true",
         help="Save the data used to generate the plots",
     )
+    parser.add_argument(
+        "--max-plots",
+        type=int,
+        help="Maximum number of plots to generate",
+    )
+    parser.add_argument(
+        "--save-image",
+        action="store_true",
+        help="Save the image used to generate the plots",
+    )
     args = parser.parse_args()
     config_path = args.config
-    save_data = args.save_data or False
 
     # Verify the config file exists
     if not os.path.exists(config_path):
@@ -40,8 +49,9 @@ def main():
         sys.exit(1)
 
     # Create the orchestrator and generate plots
-    orchestrator = PlotOrchestrator(config_path)
-    orchestrator.generate_all_plots(save_data=save_data)
+    orchestrator = PlotOrchestrator(config_path, should_save_image=args.save_image, should_save_data=args.save_data)
+    orchestrator.generate_all_plots(max_plots_to_gen=args.max_plots)
+    orchestrator.out_mgr.print_time_spent()
     return 0
 
 

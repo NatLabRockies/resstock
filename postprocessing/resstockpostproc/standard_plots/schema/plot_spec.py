@@ -33,6 +33,9 @@ class PlotSpec(BaseModel):
     visualization_type: VizType = Field(..., alias="visualization_type")
     group_by: str | None = Field(None, description="Column to facet/group by.")
     quantity: QuantityType = Field(..., description="Column(s) to visualise.")
+    quantity_group_name: str = Field(
+        ..., description="Name of the quantity group - used when quantity is part of group"
+    )
 
     @field_validator("quantity")
     @classmethod
@@ -43,7 +46,7 @@ class PlotSpec(BaseModel):
             raise ValueError("Box plots cannot be generated from stacked quantities")
         return v
 
-    def path_segments(self, quantity_group_name: str) -> Path:
+    def path_segments(self) -> Path:
         """Return path sub-segments derived from the definition."""
         path_segment = Path(f"Included Buildings = {self.upgrade_inclusion.value}")
         path_segment /= f"Vacancy = {self.vacancy_inclusion.value}"
@@ -53,7 +56,7 @@ class PlotSpec(BaseModel):
             path_segment /= f"Group By = {self.group_by}"
         else:
             path_segment /= "Group By = all"
-        path_segment /= f"Quantity Group = {quantity_group_name}"
+        path_segment /= f"Quantity Group = {self.quantity_group_name}"
         if isinstance(self.quantity, QuantityGroup):
             path_segment /= "Quantity = all_stacked"
         else:

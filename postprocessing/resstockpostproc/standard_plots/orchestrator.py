@@ -4,9 +4,7 @@ Orchestrator module for standard plots
 Coordinates the generation of all plots based on the configuration
 """
 
-import re
 from itertools import product
-from pathlib import Path
 
 from resstockpostproc.standard_plots.bar_plotter import BarPlotter
 from resstockpostproc.standard_plots.box_plotter import BoxPlotter
@@ -21,32 +19,39 @@ class PlotOrchestrator:
     Orchestrates the plot generation process
     """
 
-    def __init__(self, config_path: str):
+    def __init__(self, config_path: str, should_save_image: bool = False, should_save_data: bool = False):
         """
         Initialize the orchestrator
 
         Args:
             config_path: Path to the workflow configuration YAML file
+            should_save_image: Whether to save the image of the plot
+            should_save_data: Whether to save the data used to generate the plot
         """
         self.workflow = WorkflowConfig.from_yaml(config_path)
 
         # Setup the data processor
         self.processor = DataProcessor(self.workflow.annual_results_dir, self.workflow.upgrades)
-        self.out_mgr = OutputManager(self.workflow.output_dir)
+        self.out_mgr = OutputManager(
+            self.workflow.output_dir, should_save_image=should_save_image, should_save_data=should_save_data
+        )
 
-    def generate_all_plots(self, save_data: bool = False) -> None:
+    def generate_all_plots(self, *, max_plots_to_gen: int | None = None) -> None:
         """Generate all plots declared in YAML using the new PlotDef contract."""
 
         # Get all configuration elements for iteration
         # Create all possible combinations of parameters
-        all_combinations = product(
-            self.workflow.comparison_types,
-            self.workflow.upgrade_inclusion,
-            self.workflow.vacancy_inclusion,
-            self.workflow.visualization_types,
-            [None, *self.workflow.group_by],
-            self.workflow.quantities,
+        all_combinations = list(
+            product(
+                self.workflow.comparison_types,
+                self.workflow.upgrade_inclusion,
+                self.workflow.vacancy_inclusion,
+                self.workflow.visualization_types,
+                [None, *self.workflow.group_by],
+                self.workflow.quantities,
+            )
         )
+        plots_to_gen = []
         for combination in all_combinations:
             comparison_type = combination[0]
             visualization_type = combination[3]
@@ -72,23 +77,23 @@ class PlotOrchestrator:
                     visualization_type=combination[3],
                     group_by=combination[4],
                     quantity=quantity,
+                    quantity_group_name=quantity_group.name,
                 )
-                df = self.processor.prepare_data_for_plot(plot_spec)
-                path_seg = plot_spec.path_segments(quantity_group_name=quantity_group.name)
-
-                def safe_sqlite_name(path: Path) -> str:
-                    return re.sub(r"[^0-9A-Za-z_]", "_", path.as_posix())
-
-                table_name = safe_sqlite_name(path_seg)
-                Path(self.workflow.output_dir).mkdir(parents=True, exist_ok=True)
-                if save_data:
-                    df.write_database(
-                        table_name, f"sqlite:///{self.workflow.output_dir}/plot_data.db", if_table_exists="replace"
-                    )
-                plotter = self._get_plotter(plot_spec.visualization_type)
-                fig = plotter.create_plot(df, plot_spec)
-                self.out_mgr.save_plot(fig, path_seg)
-                print(f"Saved plot for {path_seg}")
+                plots_to_gen.append(plot_spec)
+        plots_generated = 0
+        if max_plots_to_gen is None:
+            print(f"Generating all {len(plots_to_gen)} plots")
+        else:
+            print(f"Generating {max_plots_to_gen} plots")
+        for plots_generated, plot_spec in enumerate(plots_to_gen, 1):
+            df = self.processor.prepare_data_for_plot(plot_spec)
+            path_seg = plot_spec.path_segments()
+            plotter = self._get_plotter(plot_spec.visualization_type)
+            fig = plotter.create_plot(df, plot_spec)
+            self.out_mgr.save_plot(fig, path_seg, df)
+            print(f"Saved plot for {path_seg}")
+            if max_plots_to_gen is not None and plots_generated >= max_plots_to_gen:
+                return
 
     # Simple factory for plotter instances (no caching) -------------------
     def _get_plotter(self, viz: VizType):
