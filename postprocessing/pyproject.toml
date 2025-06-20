@@ -24,7 +24,7 @@ dependencies = [
     "fsspec",
     "geopandas",
     "kaleido==0.2.1; sys_platform != 'win32'",
-    "kaleido==1.0.0rc15; sys_platform == 'win32'",
+    "kaleido==0.1.0.post1; sys_platform == 'win32'",
     "nbformat>=4.2.0",
     "pandas",
     "plotly",
