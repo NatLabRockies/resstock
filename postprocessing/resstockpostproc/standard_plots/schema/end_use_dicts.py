@@ -68,9 +68,11 @@ EnduseGroupToEnduses = {
     "Lighting, Natural Gas": [
         "out.natural_gas.lighting.energy_consumption.kwh",
     ],
+    "Lighting, Propane": [
+        "out.propane.lighting.energy_consumption.kwh",
+    ],
     "Lighting, Fuel Oil": [
         "out.fuel_oil.lighting.energy_consumption.kwh",
-        "out.propane.lighting.energy_consumption.kwh",
     ],
     "Vent Fan, Electricity": [
         "out.electricity.mechanical_ventilation.energy_consumption.kwh",

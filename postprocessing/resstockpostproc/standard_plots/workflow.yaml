@@ -50,6 +50,7 @@ quantities:
     constituents:
       - out.bills.electricity.usd
       - out.bills.natural_gas.usd
+      - out.bills.fuel_oil.usd
       - out.bills.propane.usd
     sum: out.bills.all_fuels.usd
   - name: unmet_hours
