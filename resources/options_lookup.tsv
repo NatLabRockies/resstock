@@ -10085,11 +10085,19 @@ Infiltration Reduction	15%	ResStockArguments	air_leakage_percent_reduction=15
 Infiltration Reduction	20%	ResStockArguments	air_leakage_percent_reduction=20
 Infiltration Reduction	25%	ResStockArguments	air_leakage_percent_reduction=25
 Infiltration Reduction	30%	ResStockArguments	air_leakage_percent_reduction=30
+Infiltration Reduction	32%	ResStockArguments	air_leakage_percent_reduction=32
+Infiltration Reduction	40%	ResStockArguments	air_leakage_percent_reduction=40
+Infiltration Reduction	42%	ResStockArguments	air_leakage_percent_reduction=42
+Infiltration Reduction	53%	ResStockArguments	air_leakage_percent_reduction=53
+Infiltration Reduction	63%	ResStockArguments	air_leakage_percent_reduction=63
 Insulation Ceiling	None	ResStockArguments	ceiling_assembly_r=0	ceiling_insulation_r=0
 Insulation Ceiling	R-13	ResStockArguments	ceiling_assembly_r=14.6	ceiling_insulation_r=13
 Insulation Ceiling	R-19	ResStockArguments	ceiling_assembly_r=20.6	ceiling_insulation_r=19
+Insulation Ceiling	R-28	ResStockArguments	ceiling_assembly_r=29.6	ceiling_insulation_r=28
 Insulation Ceiling	R-30	ResStockArguments	ceiling_assembly_r=31.6	ceiling_insulation_r=30
+Insulation Ceiling	R-34	ResStockArguments	ceiling_assembly_r=35.6	ceiling_insulation_r=34
 Insulation Ceiling	R-38	ResStockArguments	ceiling_assembly_r=39.6	ceiling_insulation_r=38
+Insulation Ceiling	R-44	ResStockArguments	ceiling_assembly_r=45.6	ceiling_insulation_r=44
 Insulation Ceiling	R-49	ResStockArguments	ceiling_assembly_r=50.6	ceiling_insulation_r=49
 Insulation Ceiling	R-60	ResStockArguments	ceiling_assembly_r=61.6	ceiling_insulation_r=60
 Insulation Ceiling	R-7	ResStockArguments	ceiling_assembly_r=8.7	ceiling_insulation_r=7
