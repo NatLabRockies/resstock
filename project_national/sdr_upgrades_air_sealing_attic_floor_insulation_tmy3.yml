@@ -137,12 +137,12 @@ references:
       - or:
           - Geometry Attic Type|Vented Attic
           - Geometry Attic Type|Unvented Attic
+      # - or:
+      #     - Geometry Building Type RECS|Single-Family Detached
+      #     - Geometry Building Type RECS|Single-Family Attached
       - or:
-          - Geometry Building Type RECS|Single-Family Detached
-          - Geometry Building Type RECS|Single-Family Attached
-      - or:
-          - Insulation Ceiling|None
-          - Insulation Ceiling|Uninsulated
+          #- Insulation Ceiling|None
+          #- Insulation Ceiling|Uninsulated
           - Insulation Ceiling|R-7
           - Insulation Ceiling|R-13
           - Insulation Ceiling|R-19
@@ -156,12 +156,12 @@ references:
       - or:
           - Geometry Attic Type|Vented Attic
           - Geometry Attic Type|Unvented Attic
+      # - or:
+      #     - Geometry Building Type RECS|Single-Family Detached
+      #     - Geometry Building Type RECS|Single-Family Attached
       - or:
-          - Geometry Building Type RECS|Single-Family Detached
-          - Geometry Building Type RECS|Single-Family Attached
-      - or:
-          - Insulation Ceiling|None
-          - Insulation Ceiling|Uninsulated
+          #- Insulation Ceiling|None
+          #- Insulation Ceiling|Uninsulated
           - Insulation Ceiling|R-7
           - Insulation Ceiling|R-13
           - Insulation Ceiling|R-19
@@ -177,12 +177,12 @@ references:
       - or:
           - Geometry Attic Type|Vented Attic
           - Geometry Attic Type|Unvented Attic
+      # - or:
+      #     - Geometry Building Type RECS|Single-Family Detached
+      #     - Geometry Building Type RECS|Single-Family Attached
       - or:
-          - Geometry Building Type RECS|Single-Family Detached
-          - Geometry Building Type RECS|Single-Family Attached
-      - or:
-          - Insulation Ceiling|None
-          - Insulation Ceiling|Uninsulated
+      #     - Insulation Ceiling|None
+          #- Insulation Ceiling|Uninsulated
           - Insulation Ceiling|R-7
           - Insulation Ceiling|R-13
           - Insulation Ceiling|R-19
@@ -200,85 +200,43 @@ references:
       - or:
           - Geometry Attic Type|Vented Attic
           - Geometry Attic Type|Unvented Attic
+      # - or:
+      #     - Geometry Building Type RECS|Single-Family Detached
+      #     - Geometry Building Type RECS|Single-Family Attached
       - or:
-          - Geometry Building Type RECS|Single-Family Detached
-          - Geometry Building Type RECS|Single-Family Attached
-      - or:
-          - Insulation Ceiling|None
-          - Insulation Ceiling|Uninsulated
+      #     - Insulation Ceiling|None
+          #- Insulation Ceiling|Uninsulated
           - Insulation Ceiling|R-7
           - Insulation Ceiling|R-13
           - Insulation Ceiling|R-19
           - Insulation Ceiling|R-30
           - Insulation Ceiling|R-38
 
-  attic_insulation_sf_cz6_7: &attic_insulation_sf_cz6_7
+  attic_insulation_sf_cz6_8: &attic_insulation_sf_cz6_8
     option: Insulation Ceiling|R-60
     apply_logic:
       - or:
           - ASHRAE IECC Climate Zone 2004|6A
           - ASHRAE IECC Climate Zone 2004|6B
           - ASHRAE IECC Climate Zone 2004|7A
+          - ASHRAE IECC Climate Zone 2004|7AK
           - ASHRAE IECC Climate Zone 2004|7B
+          - ASHRAE IECC Climate Zone 2004|8AK
       - or:
           - Geometry Attic Type|Vented Attic
           - Geometry Attic Type|Unvented Attic
+      # - or:
+      #     - Geometry Building Type RECS|Single-Family Detached
+      #     - Geometry Building Type RECS|Single-Family Attached
       - or:
-          - Geometry Building Type RECS|Single-Family Detached
-          - Geometry Building Type RECS|Single-Family Attached
-      - or:
-          - Insulation Ceiling|None
-          - Insulation Ceiling|Uninsulated
+          #- Insulation Ceiling|None
+          #- Insulation Ceiling|Uninsulated
           - Insulation Ceiling|R-7
           - Insulation Ceiling|R-13
           - Insulation Ceiling|R-19
           - Insulation Ceiling|R-30
           - Insulation Ceiling|R-38
           - Insulation Ceiling|R-49
-
-  costs_ashp_ducted_seer_20_11_hspf: &costs_ashp_ducted_seer_20_11_hspf
-    - value: 10229.58
-      multiplier: Fixed (1)
-    - value: 167.64
-      multiplier: Size, Heating System Primary (kBtu/h)
-
-  costs_ghp: &costs_ghp
-    - value: 999
-      multiplier: Fixed (1)
-    - value: 999
-      multiplier: Size, Heating System Primary (kBtu/h)
-
-  demand_flexibility_30_minute_random_shift: &demand_flexibility_30_minute_random_shift
-    option: Demand Flexibility Random Shift|30 minutes
-
-  demand_flexibility_electric_vehicle: &demand_flexibility_electric_vehicle
-    option: Demand Flexibility Electric Vehicle|Enabled
-
-  ducted_ashp_apply_logic: &ducted_ashp_apply_logic
-    - HVAC Has Ducts|Yes
-    - not:
-      - or:
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Cooling Only
-
-  ev_15_percent_efficiency: &ev_15_percent_efficiency
-    option: Electric Vehicle Efficiency Increase|15%
-
-  ev_l2_charger: &ev_l2_charger
-    option: Electric Vehicle Charger|Level 2 charger
-
-  ev_ownership_yes: &ev_ownership_yes
-    option: Electric Vehicle Ownership|Yes
-
-  has_cooling_or_heating: &has_cooling_or_heating
-    - or:
-      - not: HVAC Cooling Type|None
-      - not: HVAC Heating Type|None
-
-
 
   #Air sealing / infiltration reduction 
   #Note: CZ = Climate ZONE, PCT = percent infiltration reduction (due to air sealing)
@@ -414,6 +372,7 @@ references:
           - ASHRAE IECC Climate Zone 2004|6A
           - ASHRAE IECC Climate Zone 2004|6B
           - ASHRAE IECC Climate Zone 2004|7A
+          - ASHRAE IECC Climate Zone 2004|7AK
           - ASHRAE IECC Climate Zone 2004|7B
           - ASHRAE IECC Climate Zone 2004|8AK
       - or:
@@ -447,6 +406,7 @@ references:
           - ASHRAE IECC Climate Zone 2004|6A
           - ASHRAE IECC Climate Zone 2004|6B
           - ASHRAE IECC Climate Zone 2004|7A
+          - ASHRAE IECC Climate Zone 2004|7AK
           - ASHRAE IECC Climate Zone 2004|7B
           - ASHRAE IECC Climate Zone 2004|8AK
       - or:
@@ -496,100 +456,8 @@ references:
           - Infiltration|40 ACH50
           - Infiltration|50 ACH50
 
-  lifetime_ducted_ashp: &lifetime_ducted_ashp 15
-
-  lifetime_ducted_ghp: &lifetime_ducted_ghp 15
-
-  occupied_only: &occupied_only
-    Vacancy Status|Occupied
-
-  partial_conditioning_100_percent_ducts_only: &partial_conditioning_100_percent_ducts_only
-    option: HVAC Cooling Partial Space Conditioning|100% Conditioned
-    apply_logic:
-      - HVAC Has Ducts|Yes
-
-  remove_high_rise_shared: &remove_high_rise_shared
-    - not: Heating Fuel|Wood
-    - not: Heating Fuel|Other Fuel
-    - not: Heating Fuel|None
-    - not:
-      - or:
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Cooling Only
-      - and:
-        - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
-
-  remove_nonducted_high_rise_shared: &remove_nonducted_high_rise_shared
-    - HVAC Has Ducts|Yes
-    - not: Heating Fuel|Wood
-    - not: Heating Fuel|Other Fuel
-    - not: Heating Fuel|None
-    - not:
-      - or:
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Cooling Only
-      - and:
-        - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
-
-  yes_and_no_has_ducts_apply_logic: &yes_and_no_has_ducts_apply_logic
-    - or:
-      - HVAC Has Ducts|Yes
-      - HVAC Has Ducts|No
-  
-  ### -- Anchors dependent on other anchors -- ###
-  cooling_setpoint_no_offset: &cooling_setpoint_no_offset
-      option: Cooling Setpoint Has Offset|No
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  cooling_setpoint_offset_magnitude_0: &cooling_setpoint_offset_magnitude_0
-      option: Cooling Setpoint Offset Magnitude|0F
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  cooling_setpoint_offset_period_none: &cooling_setpoint_offset_period_none
-      option: Cooling Setpoint Offset Period|None
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  ducted_ashp_seer_20_11_hspf_cchp_electric_backup: &ducted_ashp_seer_20_11_hspf_cchp_electric_backup
-      option: HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load
-      apply_logic: *ducted_ashp_apply_logic
-      costs: *costs_ashp_ducted_seer_20_11_hspf
-      lifetime: *lifetime_ducted_ashp
-
-  dual_speed_ducted_ghp: &dual_speed_ducted_ghp
-      option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
-      apply_logic: *ducted_ashp_apply_logic
-      costs: *costs_ghp
-      lifetime: *lifetime_ducted_ghp
-
-  heat_pump_cooling_efficiency_ducted: &heat_pump_cooling_efficiency_ducted
-      option: HVAC Cooling Efficiency|Ducted Heat Pump
-      apply_logic: *ducted_ashp_apply_logic
-
-  heating_setpoint_no_offset: &heating_setpoint_no_offset
-      option: Heating Setpoint Has Offset|No
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  heating_setpoint_offset_magnitude_0: &heating_setpoint_offset_magnitude_0
-      option: Heating Setpoint Offset Magnitude|0F
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  heating_setpoint_offset_period_none: &heating_setpoint_offset_period_none
-      option: Heating Setpoint Offset Period|None
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  partial_conditioning_100_percent: &partial_conditioning_100_percent
-      option: HVAC Cooling Partial Space Conditioning|100% Conditioned
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
 ### Standard Data Release - Residential -- ###
 upgrades:
-  
 
   - upgrade_name: Air Sealing
     options:
@@ -607,4 +475,4 @@ upgrades:
       - *attic_insulation_sf_cz2
       - *attic_insulation_sf_cz3
       - *attic_insulation_sf_cz4_5
-      - *attic_insulation_sf_cz6_7
+      - *attic_insulation_sf_cz6_8
