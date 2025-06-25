@@ -1,0 +1,2 @@
+[console_scripts]
+resstockpostproc = resstockpostproc.entry_points:main

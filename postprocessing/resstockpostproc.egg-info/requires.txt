@@ -1,0 +1,15 @@
+pandas
+geopandas
+plotly
+pyarrow
+fsspec
+s3fs
+polars
+buildstock_query@ git+https://github.com/NREL/buildstock-query@main
+kaleido==0.2.1
+
+[dev]
+pytest
+black
+autopep8
+ipykernel
