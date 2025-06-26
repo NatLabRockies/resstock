@@ -25,11 +25,15 @@ def main():
         help="Path to plot configuration YAML file",
         default=str(Path(__file__).parent / "workflow.yaml"),
     )
+    # By default, save data; allow users to opt-out with --no-save-data
     parser.add_argument(
-        "--save-data",
-        action="store_true",
-        help="Save the data used to generate the plots",
+        "--no-save-data",
+        dest="save_data",
+        action="store_false",
+        help="Do not save the data used to generate the plots",
     )
+    # Ensure the default is to save data if the flag is omitted
+    parser.set_defaults(save_data=True)
     parser.add_argument(
         "--max-plots",
         type=int,
