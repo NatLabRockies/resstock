@@ -30,20 +30,18 @@ class OutputManager:
         full_path.mkdir(parents=True, exist_ok=True)
         return full_path
 
-    def save_plot(self, fig: Figure, path_seg: Path, df: pl.DataFrame) -> None:
+    def save_plot(self, fig: Figure, path_seg: Path, df: pl.DataFrame, file_name: str) -> None:
         """Save a plot to the output directory."""
         output_dir = self.get_output_dir(path_seg)
 
         # Create separate directories for HTML and SVG outputs
         html_dir = output_dir / "html"
-        svg_dir = output_dir / "svg"
         html_dir.mkdir(exist_ok=True)
-        svg_dir.mkdir(exist_ok=True)
 
         # Write files to their respective directories
         start_time = time.time()
         fig.write_html(
-            html_dir / "plot.html",
+            html_dir / f"{file_name}.html",
             include_plotlyjs="cdn",
             include_mathjax="cdn",
             config={
@@ -57,20 +55,22 @@ class OutputManager:
         self.html_time_spent += time.time() - start_time
 
         if self.should_save_image:
+            svg_dir = output_dir / "svg"
+            svg_dir.mkdir(exist_ok=True)
             start_time = time.time()
-            fig.write_image(svg_dir / "plot.svg")
+            fig.write_image(svg_dir / f"{file_name}.svg")
             self.svg_time_spent += time.time() - start_time
 
         if self.should_save_data:
+            data_dir = output_dir / "data"
             start_time = time.time()
-            self.save_data(path_seg, df)
+            self.save_data(data_dir, df, file_name)
             self.data_time_spent += time.time() - start_time
 
-    def save_data(self, path_seg: Path, df: pl.DataFrame) -> None:
-        output_dir = self.get_output_dir(path_seg)
-        data_file = output_dir / "plot_data.parquet"
-        if self.should_save_data:
-            df.write_parquet(data_file)
+    def save_data(self, data_dir: Path, df: pl.DataFrame, file_name: str) -> None:
+        data_dir.mkdir(exist_ok=True)
+        data_file = data_dir / f"{file_name}.parquet"
+        df.write_parquet(data_file)
 
     def print_time_spent(self) -> None:
         if self.should_save_image:

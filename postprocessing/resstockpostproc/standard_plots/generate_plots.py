@@ -51,6 +51,7 @@ def main():
     # Create the orchestrator and generate plots
     orchestrator = PlotOrchestrator(config_path, should_save_image=args.save_image, should_save_data=args.save_data)
     orchestrator.generate_all_plots(max_plots_to_gen=args.max_plots)
+    orchestrator.print_time_spent()
     orchestrator.out_mgr.print_time_spent()
     return 0
 

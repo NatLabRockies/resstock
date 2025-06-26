@@ -30,6 +30,8 @@ class DataProcessor:
         self.upgrades = upgrades
         self.lazyframes: dict[int, pl.LazyFrame] = {}
         self._load_data()
+        self._combined_df = pl.concat(self.lazyframes.values(), how="diagonal")
+        self.all_cols: set[str] = set(self._combined_df.collect_schema().names())
 
     def _load_data(self) -> None:
         """Load data for each upgrade using Polars LazyFrames from CSV or Parquet files"""
@@ -70,8 +72,7 @@ class DataProcessor:
         calculated by summing existing columns, it does so. Otherwise, it fills
         the quantity with 0.
         """
-        all_cols: set[str] = set(combined_df.collect_schema().names())
-        missing_quantity_cols: set[str] = set(quantities) - all_cols
+        missing_quantity_cols: set[str] = set(quantities) - self.all_cols
 
         if not missing_quantity_cols:
             return combined_df
@@ -80,7 +81,7 @@ class DataProcessor:
         for quantity in missing_quantity_cols:
             expression = pl.lit(0, dtype=pl.Int32).alias(quantity)  # Default to 0 if quantity is missing
             if quantity in EnduseGroupToEnduses:  # If quantity is enduse group and end uses are available, use that
-                enduse_cols_to_sum = [col for col in EnduseGroupToEnduses[quantity] if col in all_cols]
+                enduse_cols_to_sum = [col for col in EnduseGroupToEnduses[quantity] if col in self.all_cols]
                 if enduse_cols_to_sum:
                     expression = pl.sum_horizontal([pl.col(c) for c in enduse_cols_to_sum]).alias(quantity)
             new_column_exprs.append(expression)
@@ -97,7 +98,6 @@ class DataProcessor:
         Returns:
             DataFrame prepared for plotting with aggregated (mean) values
         """
-        combined_df = pl.concat(self.lazyframes.values(), how="diagonal")
         quantities = []
         if isinstance(plot_spec.quantity, str):
             quantities.append(plot_spec.quantity)
@@ -106,7 +106,7 @@ class DataProcessor:
             if plot_spec.quantity.sum:
                 quantities.append(plot_spec.quantity.sum)
 
-        combined_df = self.fill_missing_quantities(combined_df, quantities)
+        combined_df = self.fill_missing_quantities(self._combined_df, quantities)
 
         if plot_spec.upgrade_inclusion == UpgradeInclusion.applied_only:
             combined_df = combined_df.filter(pl.col("applicability"))

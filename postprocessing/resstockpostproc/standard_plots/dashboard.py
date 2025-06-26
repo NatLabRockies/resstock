@@ -11,6 +11,10 @@ from dash import ALL, dcc, html
 from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import DashProxy, MultiplexerTransform  # type: ignore
 
+import io
+import base64
+import polars as pl  # type: ignore
+
 external_script = ["https://tailwindcss.com/", {"src": "https://cdn.tailwindcss.com"}]
 transforms = [MultiplexerTransform()]
 
@@ -23,7 +27,7 @@ app = DashProxy(
 
 cur_dir = Path(__file__).parent
 ROOT_FOLDER = cur_dir / "buildstock_viz_plots"
-ROOT_FOLDER = Path("/Users/radhikar/Documents/buildstock2025/resstock_amy2018_release_2/plots")
+ROOT_FOLDER = Path("/Users/radhikar/Documents/buildstock2025/resstock_amy2018_release_2/plots_jun26")
 root_path = str(ROOT_FOLDER)
 
 
@@ -109,6 +113,34 @@ app.layout = dbc.Container(
             html.Br(),
             html.Div(id="dropdown-container"),
             html.Br(),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        dbc.Button(
+                            "⬇️ CSV",
+                            id="btn-csv",
+                            color="primary",
+                            size="sm",
+                            className="me-2",
+                            outline=True,
+                        ),
+                        width="auto",
+                    ),
+                    dbc.Col(
+                        dbc.Button(
+                            "⬇️ Parquet",
+                            id="btn-parquet",
+                            color="secondary",
+                            size="sm",
+                            outline=True,
+                        ),
+                        width="auto",
+                    ),
+                    dcc.Download(id="download-data"),
+                    dcc.Store(id="current-html-path"),
+                ],
+                className="my-2 align-items-center",
+            ),
             html.Iframe(id="plot-display", width="100%", height="1000", sandbox="allow-scripts"),
         ]
     ),
@@ -126,6 +158,7 @@ def update_dropdowns(root_path):
 @app.callback(
     dash.dependencies.Output("plot-display", "srcDoc"),
     dash.dependencies.Output("dropdown-container", "children"),
+    dash.dependencies.Output("current-html-path", "data"),
     dash.dependencies.State("root-path", "value"),
     dash.dependencies.State("dropdown-container", "children"),
     [dash.dependencies.Input({"type": "radio-selection", "index": ALL, "name_labels_text": ALL}, "value")],
@@ -172,9 +205,95 @@ def update_dropdowns2(root_path, current_children, selection):
             html_contents = f"<p>Could not open {full_path}</p>"
     else:
         html_contents = ""
-    return html_contents, current_children
+        full_path = ""
+    return html_contents, current_children, full_path
+
+
+# --------------------------  DOWNLOAD CALLBACK  --------------------------- #
+
+
+@app.callback(
+    dash.dependencies.Output("download-data", "data"),
+    [
+        dash.dependencies.Input("btn-csv", "n_clicks"),
+        dash.dependencies.Input("btn-parquet", "n_clicks"),
+    ],
+    dash.dependencies.State("current-html-path", "data"),
+    prevent_initial_call=True,
+)
+def download_plot_data(n_csv, n_parquet, html_path):
+    """Provide parquet or csv download for the currently displayed plot.
+
+    Parameters
+    ----------
+    n_csv, n_parquet : int | None
+        Number of clicks on the respective buttons. Used with
+        ``dash.callback_context.triggered_id`` to identify which button
+        initiated the callback.
+    html_path : str | None
+        Full path to the currently displayed HTML file. Stored in the
+        ``current-html-path`` ``dcc.Store`` from the selection callback.
+    """
+    if not html_path:
+        raise PreventUpdate()
+
+    if n_csv is None and n_parquet is None:
+        raise PreventUpdate()
+
+    # Identify which button was pressed
+    # Dash >=2.12 provides ctx helper for callback context
+    try:
+        from dash import ctx  # type: ignore
+
+        triggered = ctx.triggered_id  # newest API
+    except ImportError:
+        # Fallback for older versions
+        triggered = dash.callback_context.triggered_id  # type: ignore[attr-defined]
+    if triggered is None:
+        raise PreventUpdate()
+
+    # Derive the corresponding data file name
+    base_dir, html_file = os.path.split(html_path)
+    # Replace the html folder with data folder
+    data_dir = base_dir.replace("/html", "/data")
+    file_stem = os.path.splitext(html_file)[0]
+
+    if triggered == "btn-parquet":
+        parquet_path = os.path.join(data_dir, f"{file_stem}.parquet")
+        try:
+            with open(parquet_path, "rb") as f_parq:
+                parquet_bytes = f_parq.read()
+        except FileNotFoundError:
+            raise PreventUpdate()
+
+        parquet_b64 = base64.b64encode(parquet_bytes).decode()
+        return {
+            "content": parquet_b64,
+            "filename": f"{file_stem}.parquet",
+            "type": "application/octet-stream",
+            "base64": True,
+        }
+
+    if triggered == "btn-csv":
+        parquet_path = os.path.join(data_dir, f"{file_stem}.parquet")
+        try:
+            df = pl.read_parquet(parquet_path)
+        except FileNotFoundError:
+            raise PreventUpdate()
+
+        buffer = io.StringIO()
+        df.write_csv(buffer)
+        csv_str = buffer.getvalue()
+
+        return {
+            "content": csv_str,
+            "filename": f"{file_stem}.csv",
+            "type": "text/csv",
+        }
+
+    raise PreventUpdate()
 
 
 if __name__ == "__main__":
     webbrowser.open("http://127.0.0.1:8050")
-    app.run(debug=False, dev_tools_ui=True, dev_tools_props_check=True)
+    app.run(debug=True, dev_tools_ui=True, dev_tools_props_check=True)

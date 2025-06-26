@@ -4,6 +4,7 @@ Orchestrator module for standard plots
 Coordinates the generation of all plots based on the configuration
 """
 
+import time
 from itertools import product
 
 from resstockpostproc.standard_plots.bar_plotter import BarPlotter
@@ -29,9 +30,15 @@ class PlotOrchestrator:
             should_save_data: Whether to save the data used to generate the plot
         """
         self.workflow = WorkflowConfig.from_yaml(config_path)
+        self.data_loading_time: float = 0
+        self.data_preparing_time: float = 0
+        self.figure_creation_time: float = 0
+        self.saving_time: float = 0
 
         # Setup the data processor
+        start_time = time.time()
         self.processor = DataProcessor(self.workflow.annual_results_dir, self.workflow.upgrades)
+        self.data_loading_time = time.time() - start_time
         self.out_mgr = OutputManager(
             self.workflow.output_dir, should_save_image=should_save_image, should_save_data=should_save_data
         )
@@ -51,7 +58,7 @@ class PlotOrchestrator:
                 self.workflow.quantities,
             )
         )
-        plots_to_gen = []
+        plots_to_gen: list[PlotSpec] = []
         for combination in all_combinations:
             comparison_type = combination[0]
             visualization_type = combination[3]
@@ -86,16 +93,21 @@ class PlotOrchestrator:
         else:
             print(f"Generating {max_plots_to_gen} plots")
         for plots_generated, plot_spec in enumerate(plots_to_gen, 1):
+            start_time = time.time()
             df = self.processor.prepare_data_for_plot(plot_spec)
-            path_seg = plot_spec.path_segments()
+            self.data_preparing_time += time.time() - start_time
+            path_seg, name = plot_spec.get_path_and_name()
             plotter = self._get_plotter(plot_spec.visualization_type)
+            start_time = time.time()
             fig = plotter.create_plot(df, plot_spec)
-            self.out_mgr.save_plot(fig, path_seg, df)
-            print(f"Saved plot for {path_seg}")
+            self.figure_creation_time += time.time() - start_time
+            start_time = time.time()
+            self.out_mgr.save_plot(fig, path_seg, df, name)
+            self.saving_time += time.time() - start_time
+            print(f"Saved plot for {path_seg}/{name}")
             if max_plots_to_gen is not None and plots_generated >= max_plots_to_gen:
                 return
 
-    # Simple factory for plotter instances (no caching) -------------------
     def _get_plotter(self, viz: VizType):
         """Return a new plotter instance for the given visualization type."""
         if viz == VizType.bar:
@@ -103,3 +115,9 @@ class PlotOrchestrator:
         if viz == VizType.box:
             return BoxPlotter()
         raise ValueError(f"Unsupported visualization type: {viz}")
+
+    def print_time_spent(self) -> None:
+        print(f"Time spent loading data: {self.data_loading_time:.2f} seconds")
+        print(f"Time spent preparing data: {self.data_preparing_time:.2f} seconds")
+        print(f"Time spent creating figures: {self.figure_creation_time:.2f} seconds")
+        print(f"Time spent saving plots: {self.saving_time:.2f} seconds")
