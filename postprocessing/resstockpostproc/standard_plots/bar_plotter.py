@@ -147,6 +147,6 @@ class BarPlotter(BasePlotter):
             num_facets = len(data[facet_column].unique())
             for i in range(2, num_facets + 1):  # Remove y-axis titles for all but the first facet
                 fig.update_yaxes(title_text="", row=1, col=i)
-            fig.update_layout(width=max(800, min(1920, num_facets * self.theme.facet_width)))
+            fig.update_layout(width=max(1000, min(1920, num_facets * self.theme.facet_width)))
         fig.for_each_annotation(lambda a: a.update(text=a.text.replace("=", "<br>")))
         return fig
