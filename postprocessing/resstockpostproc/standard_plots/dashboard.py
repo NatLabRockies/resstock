@@ -141,7 +141,7 @@ app.layout = dbc.Container(
                 ],
                 className="my-2 align-items-center",
             ),
-            html.Iframe(id="plot-display", width="100%", height="1000", sandbox="allow-scripts"),
+            html.Iframe(id="plot-display", width="100%", height="1000", sandbox="allow-scripts allow-downloads"),
         ]
     ),
     className="mx-5 my-1",
