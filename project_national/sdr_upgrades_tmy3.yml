@@ -43,15 +43,15 @@ postprocessing:
     - County
   publish_annual_results: true
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
-  # aws:
-  #  region_name: us-west-2
-  #  s3:
-  #    bucket: sdr_resstock
-  #    prefix: production_runs
-  #  athena:
-  #    glue_service_role: service-role/AWSGlueServiceRole-default
-  #    database_name: sdr_resstock
-  #    max_crawling_time: 1200
+  aws:
+   region_name: us-west-2
+   s3:
+     bucket: resstock-core
+     prefix: resstock_ci
+   athena:
+     glue_service_role: service-role/AWSGlueServiceRole-default
+     database_name: sdr_resstock
+     max_crawling_time: 1200
 
 # Workflow generator
 workflow_generator:
