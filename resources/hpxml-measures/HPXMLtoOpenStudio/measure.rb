@@ -422,9 +422,6 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     if hpxml_header.eri_calculation_versions.empty?
       hpxml_header.eri_calculation_versions = ['latest']
     end
-    if hpxml_header.eri_calculation_versions == ['latest']
-      hpxml_header.eri_calculation_versions = [Constants::ERIVersions[-1]]
-    end
 
     # Hidden feature: Whether to override certain assumptions to better match the ASHRAE 140 specification
     if hpxml_header.apply_ashrae140_assumptions.nil?

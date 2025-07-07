@@ -123,11 +123,36 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'heat-pump-capacity-17f' => ['Expected HeatingCapacity17F to be less than or equal to HeatingCapacity'],
                             'heat-pump-lockout-temperatures' => ['Expected CompressorLockoutTemperature to be less than or equal to BackupHeatingLockoutTemperature'],
                             'heat-pump-multiple-backup-systems' => ['Expected 0 or 1 element(s) for xpath: HeatPump/BackupSystem [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]'],
-                            'hvac-detailed-performance-not-variable-speed' => ['Expected 1 element(s) for xpath: ../CompressorType[text()="variable speed"]',
-                                                                               'Expected 1 element(s) for xpath: ../CompressorType[text()="variable speed"]'],
+                            'hvac-detailed-performance-bad-odbs' => ['Expected PerformanceDataPoint/OutdoorTemperature to be 47, 17, 5, or <5',
+                                                                     'Expected PerformanceDataPoint/OutdoorTemperature to be 82, 95, or >95'],
+                            'hvac-detailed-performance-inconsistent-capacities' => ['Expected ../../HeatingCapacity to be equal to Capacity',
+                                                                                    'Expected ../../HeatingCapacity17F to be equal to Capacity',
+                                                                                    'Expected ../../CoolingCapacity to be equal to Capacity'],
+                            'hvac-detailed-performance-inconsistent-capacity-fractions' => ['Expected CapacityFractionOfNominal to be 1.0',
+                                                                                            'Expected CapacityFractionOfNominal to be 1.0'],
+                            'hvac-detailed-performance-incomplete-pair' => ['Cooling detailed performance data for outdoor temperature > 95.0 is incomplete; there must be exactly one minimum and one maximum capacity datapoint.',
+                                                                            'Heating detailed performance data for outdoor temperature < 5.0 is incomplete; there must be exactly one minimum and one maximum capacity datapoint.'],
+                            'hvac-detailed-performance-invalid-data' => ['Cooling detailed performance data for outdoor temperature = 82.0 is invalid; Power (capacity / COP) at minimum capacity must be less than power at maximum capacity.',
+                                                                         'Cooling detailed performance data for outdoor temperature = 95.0 is invalid; Minimum capacity must be less than maximum capacity.',
+                                                                         'Cooling detailed performance data for outdoor temperature = 95.0 is invalid; Minimum capacity must be less than or equal to nominal capacity.',
+                                                                         'Heating detailed performance data for outdoor temperature = 47.0 is invalid; Power (capacity / COP) at minimum capacity must be less than power at maximum capacity.',
+                                                                         'Heating detailed performance data for outdoor temperature = 47.0 is invalid; Power (capacity / COP) at minimum capacity must be less than or equal to power at nominal capacity.',
+                                                                         'Heating detailed performance data for outdoor temperature = 5.0 is invalid; Minimum capacity must be less than maximum capacity.'],
                             'hvac-distribution-return-duct-leakage-missing' => ['Expected 1 element(s) for xpath: DuctLeakageMeasurement[DuctType="return"]/DuctLeakage[(Units="CFM25" or Units="CFM50" or Units="Percent") and TotalOrToOutside="to outside"] [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution/DistributionSystemType/AirDistribution[AirDistributionType[text()="regular velocity" or text()="gravity"]], id: "HVACDistribution1"]'],
                             'hvac-frac-load-served' => ['Expected sum(FractionHeatLoadServed) to be less than or equal to 1 [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]',
                                                         'Expected sum(FractionCoolLoadServed) to be less than or equal to 1 [context: /HPXML/Building/BuildingDetails, id: "MyBuilding"]'],
+                            'hvac-gshp-invalid-bore-config' => ["Expected BorefieldConfiguration to be 'Rectangle' or 'Open Rectangle' or 'C' or 'L' or 'U' or 'Lopsided U' [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/GeothermalLoop, id: \"GeothermalLoop1\"]"],
+                            'hvac-gshp-invalid-bore-depth-low' => ['Expected BoreholesOrTrenches/Length to be greater than or equal to 80 [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/GeothermalLoop, id: "GeothermalLoop1"]'],
+                            'hvac-gshp-invalid-bore-depth-high' => ['Expected BoreholesOrTrenches/Length to be less than or equal to 500 [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/GeothermalLoop, id: "GeothermalLoop1"]'],
+                            'hvac-gshp-autosized-count-not-rectangle' => ["Expected BoreholesOrTrenches/Count when extension/BorefieldConfiguration is not 'Rectangle' [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/GeothermalLoop, id: \"GeothermalLoop1\"]"],
+                            'hvac-invalid-fan-model-type' => ["Expected extension/FanMotorType to be 'PSC' or 'BPM'"],
+                            'hvac-invalid-eer' => ['Expected EER to be less than SEER.'],
+                            'hvac-invalid-eer2' => ['Expected EER2 to be less than or equal to SEER2.'],
+                            'hvac-location-heating-system' => ['A location is specified as "basement - unconditioned" but no surfaces were found adjacent to this space type.'],
+                            'hvac-location-cooling-system' => ['A location is specified as "basement - unconditioned" but no surfaces were found adjacent to this space type.'],
+                            'hvac-location-heat-pump' => ['A location is specified as "basement - unconditioned" but no surfaces were found adjacent to this space type.'],
+                            'hvac-msac-not-var-speed' => ["Expected CompressorType to be 'variable speed'"],
+                            'hvac-mshp-not-var-speed' => ["Expected CompressorType to be 'variable speed'"],
                             'hvac-research-features-timestep-ten-mins' => ['Expected ../../SoftwareInfo/extension/SimulationControl/Timestep to be 1.0',
                                                                            'Expected ../../Timestep to be 1.0'],
                             'hvac-research-features-timestep-missing' => ['Expected ../../SoftwareInfo/extension/SimulationControl/Timestep to be 1.0',
@@ -137,21 +162,13 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'hvac-research-features-onoff-thermostat-negative-value' => ['Expected OnOffThermostatDeadbandTemperature to be greater than 0'],
                             'hvac-research-features-onoff-thermostat-two-heat-pumps' => ['Expected at maximum one cooling system for each Building',
                                                                                          'Expected at maximum one heating system for each Building'],
-                            'hvac-gshp-invalid-bore-config' => ["Expected BorefieldConfiguration to be 'Rectangle' or 'Open Rectangle' or 'C' or 'L' or 'U' or 'Lopsided U' [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/GeothermalLoop, id: \"GeothermalLoop1\"]"],
-                            'hvac-gshp-invalid-bore-depth-low' => ['Expected BoreholesOrTrenches/Length to be greater than or equal to 80 [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/GeothermalLoop, id: "GeothermalLoop1"]'],
-                            'hvac-gshp-invalid-bore-depth-high' => ['Expected BoreholesOrTrenches/Length to be less than or equal to 500 [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/GeothermalLoop, id: "GeothermalLoop1"]'],
-                            'hvac-gshp-autosized-count-not-rectangle' => ["Expected BoreholesOrTrenches/Count when extension/BorefieldConfiguration is not 'Rectangle' [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/GeothermalLoop, id: \"GeothermalLoop1\"]"],
-                            'hvac-location-heating-system' => ['A location is specified as "basement - unconditioned" but no surfaces were found adjacent to this space type.'],
-                            'hvac-location-cooling-system' => ['A location is specified as "basement - unconditioned" but no surfaces were found adjacent to this space type.'],
-                            'hvac-location-heat-pump' => ['A location is specified as "basement - unconditioned" but no surfaces were found adjacent to this space type.'],
-                            'hvac-msac-not-var-speed' => ["Expected CompressorType to be 'variable speed'"],
-                            'hvac-mshp-not-var-speed' => ["Expected CompressorType to be 'variable speed'"],
-                            'hvac-shr-low' => ["The value '0.4' must be greater than '0.5'"],
                             'hvac-sizing-humidity-setpoint' => ['Expected ManualJInputs/HumiditySetpoint to be less than 1'],
                             'hvac-sizing-daily-temp-range' => ["Expected ManualJInputs/DailyTemperatureRange to be 'low' or 'medium' or 'high'"],
                             'hvac-negative-crankcase-heater-watts' => ['Expected extension/CrankcaseHeaterPowerWatts to be greater than or equal to 0.0.'],
                             'incomplete-integrated-heating' => ['Expected 1 element(s) for xpath: IntegratedHeatingSystemFractionHeatLoadServed'],
                             'invalid-airflow-defect-ratio' => ['Expected extension/AirflowDefectRatio to be 0'],
+                            'invalid-airflow-rates' => ['Expected extension/HeatingDesignAirflowCFM to be greater than or equal to 0',
+                                                        'Expected extension/CoolingDesignAirflowCFM to be greater than or equal to 0'],
                             'invalid-assembly-effective-rvalue' => ["Element 'AssemblyEffectiveRValue': [facet 'minExclusive'] The value '0.0' must be greater than '0'."],
                             'invalid-battery-capacities-ah' => ['Expected UsableCapacity to be less than NominalCapacity'],
                             'invalid-battery-capacities-kwh' => ['Expected UsableCapacity to be less than NominalCapacity'],
@@ -174,9 +191,8 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                                      'Expected DistanceToBottomOfInsulation to be less than or equal to ../../Height [context: /HPXML/Building/BuildingDetails/Enclosure/FoundationWalls/FoundationWall/Insulation/Layer[InstallationType="continuous - exterior" or InstallationType="continuous - interior"], id: "FoundationWall1Insulation"]'],
                             'invalid-ground-conductivity' => ["The value '0.0' must be greater than '0'"],
                             'invalid-ground-diffusivity' => ['Expected extension/Diffusivity to be greater than 0'],
-                            'invalid-heat-pump-capacity-retention' => ['Expected Fraction to be less than 1',
-                                                                       'Expected Temperature to be less than or equal to 17'],
-                            'invalid-heat-pump-capacity-retention2' => ['Expected Fraction to be greater than or equal to 0'],
+                            'invalid-heat-pump-capacity-fraction-17F' => ['Expected extension/HeatingCapacityFraction17F to be less than 1'],
+                            'invalid-heat-pump-capacity-fraction-17F-2' => ['Expected extension/HeatingCapacityFraction17F to be greater than or equal to 0'],
                             'invalid-hvac-installation-quality' => ['Expected extension/AirflowDefectRatio to be greater than or equal to -0.9 [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/HeatPump[HeatPumpType="air-to-air"], id: "HeatPump1"]',
                                                                     'Expected extension/ChargeDefectRatio to be greater than or equal to -0.9 [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/HeatPump[HeatPumpType="air-to-air"], id: "HeatPump1"]'],
                             'invalid-hvac-installation-quality2' => ['Expected extension/AirflowDefectRatio to be less than or equal to 9 [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACPlant/HeatPump[HeatPumpType="air-to-air"], id: "HeatPump1"]',
@@ -240,8 +256,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'missing-attached-to-space-wall' => ['Expected 1 element(s) for xpath: AttachedToSpace'],
                             'missing-attached-to-space-slab' => ['Expected 1 element(s) for xpath: AttachedToSpace'],
                             'missing-attached-to-zone' => ['Expected 1 element(s) for xpath: AttachedToZone'],
-                            'missing-capacity-detailed-performance' => ['Expected 1 element(s) for xpath: ../../../HeatingCapacity',
-                                                                        'Expected 1 element(s) for xpath: ../../../CoolingCapacity'],
                             'missing-cfis-supplemental-fan' => ['Expected 1 element(s) for xpath: CFISControls/SupplementalFan'],
                             'missing-distribution-cfa-served' => ['Expected 1 element(s) for xpath: ../../../ConditionedFloorAreaServed [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution/DistributionSystemType/AirDistribution/Ducts[not(DuctSurfaceArea)], id: "Ducts1"]',
                                                                   'Expected 1 element(s) for xpath: ../../../ConditionedFloorAreaServed [context: /HPXML/Building/BuildingDetails/Systems/HVAC/HVACDistribution/DistributionSystemType/AirDistribution/Ducts[not(DuctSurfaceArea)], id: "Ducts2"]',
@@ -436,8 +450,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'heat-pump-capacity-17f'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].heating_capacity_17F = hpxml_bldg.heat_pumps[0].heating_capacity + 1000.0
-        hpxml_bldg.heat_pumps[0].heating_capacity_retention_fraction = nil
-        hpxml_bldg.heat_pumps[0].heating_capacity_retention_temp = nil
+        hpxml_bldg.heat_pumps[0].heating_capacity_fraction_17F = nil
       when 'heat-pump-lockout-temperatures'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed-lockout-temperatures.xml')
         hpxml_bldg.heat_pumps[0].compressor_lockout_temp = hpxml_bldg.heat_pumps[0].backup_heating_lockout_temp + 1
@@ -451,9 +464,72 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.heat_pumps[-1].id = 'HeatPump2'
         hpxml_bldg.heat_pumps[-1].primary_heating_system = false
         hpxml_bldg.heat_pumps[-1].primary_cooling_system = false
-      when 'hvac-detailed-performance-not-variable-speed'
+      when 'hvac-detailed-performance-bad-odbs'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml')
-        hpxml_bldg.heat_pumps[0].compressor_type = HPXML::HVACCompressorTypeTwoStage
+        # For heating, test invalid ODB
+        hpxml_bldg.heat_pumps[0].heating_detailed_performance_data.add(
+          outdoor_temperature: 7.0,
+          capacity_description: HPXML::CapacityDescriptionMinimum,
+          capacity: 1000.0,
+          efficiency_cop: 0.7
+        )
+        hpxml_bldg.heat_pumps[0].heating_detailed_performance_data.add(
+          outdoor_temperature: 7.0,
+          capacity_description: HPXML::CapacityDescriptionMaximum,
+          capacity: 10000.0,
+          efficiency_cop: 2.1
+        )
+        # For cooling, test invalid ODB
+        hpxml_bldg.heat_pumps[0].cooling_detailed_performance_data.add(
+          outdoor_temperature: 60.0,
+          capacity_description: HPXML::CapacityDescriptionMinimum,
+          capacity: 10000.0,
+          efficiency_cop: 6.0
+        )
+        hpxml_bldg.heat_pumps[0].cooling_detailed_performance_data.add(
+          outdoor_temperature: 60.0,
+          capacity_description: HPXML::CapacityDescriptionMaximum,
+          capacity: 20000.0,
+          efficiency_cop: 7.0
+        )
+      when 'hvac-detailed-performance-inconsistent-capacities'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml')
+        hpxml_bldg.heat_pumps[0].heating_capacity = 10000
+        hpxml_bldg.heat_pumps[0].cooling_capacity = 10000
+        hpxml_bldg.heat_pumps[0].heating_capacity_17F = 1000
+      when 'hvac-detailed-performance-inconsistent-capacity-fractions'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-var-speed-detailed-performance-normalized-capacities.xml')
+        hpxml_bldg.heat_pumps[0].cooling_detailed_performance_data[1].capacity_fraction_of_nominal = 0.98
+        hpxml_bldg.heat_pumps[0].heating_detailed_performance_data[1].capacity_fraction_of_nominal = 0.98
+      when 'hvac-detailed-performance-incomplete-pair'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml')
+        hpxml_bldg.heat_pumps[0].cooling_detailed_performance_data.add(
+          outdoor_temperature: 105.0,
+          capacity_description: HPXML::CapacityDescriptionMinimum,
+          capacity: 15000.0,
+          efficiency_cop: 7
+        )
+        hpxml_bldg.heat_pumps[0].heating_detailed_performance_data.add(
+          outdoor_temperature: -2.0,
+          capacity_description: HPXML::CapacityDescriptionMinimum,
+          capacity: 1500.0,
+          efficiency_cop: 0.7
+        )
+      when 'hvac-detailed-performance-invalid-data'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml')
+        min_dp_82F = hpxml_bldg.heat_pumps[0].cooling_detailed_performance_data.find { |dp| dp.capacity_description == HPXML::CapacityDescriptionMinimum && dp.outdoor_temperature == 82.0 }
+        max_dp_82F = hpxml_bldg.heat_pumps[0].cooling_detailed_performance_data.find { |dp| dp.capacity_description == HPXML::CapacityDescriptionMaximum && dp.outdoor_temperature == 82.0 }
+        min_dp_82F.efficiency_cop = 0.1 * max_dp_82F.efficiency_cop
+        min_dp_95F = hpxml_bldg.heat_pumps[0].cooling_detailed_performance_data.find { |dp| dp.capacity_description == HPXML::CapacityDescriptionMinimum && dp.outdoor_temperature == 95.0 }
+        max_dp_95F = hpxml_bldg.heat_pumps[0].cooling_detailed_performance_data.find { |dp| dp.capacity_description == HPXML::CapacityDescriptionMaximum && dp.outdoor_temperature == 95.0 }
+        min_dp_95F.capacity = 1.1 * max_dp_95F.capacity
+        min_dp_47F = hpxml_bldg.heat_pumps[0].heating_detailed_performance_data.find { |dp| dp.capacity_description == HPXML::CapacityDescriptionMinimum && dp.outdoor_temperature == 47.0 }
+        max_dp_47F = hpxml_bldg.heat_pumps[0].heating_detailed_performance_data.find { |dp| dp.capacity_description == HPXML::CapacityDescriptionMaximum && dp.outdoor_temperature == 47.0 }
+        min_dp_47F.efficiency_cop = 0.1 * max_dp_47F.efficiency_cop
+        min_dp_5F = hpxml_bldg.heat_pumps[0].heating_detailed_performance_data.find { |dp| dp.capacity_description == HPXML::CapacityDescriptionMinimum && dp.outdoor_temperature == 5.0 }
+        max_dp_5F = hpxml_bldg.heat_pumps[0].heating_detailed_performance_data.find { |dp| dp.capacity_description == HPXML::CapacityDescriptionMaximum && dp.outdoor_temperature == 5.0 }
+        min_dp_5F.capacity = 1.1 * max_dp_5F.capacity
+        min_dp_5F.efficiency_cop = 2 * max_dp_5F.efficiency_cop
       when 'hvac-distribution-return-duct-leakage-missing'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-evap-cooler-only-ducted.xml')
         hpxml_bldg.hvac_distributions[0].duct_leakage_measurements[-1].delete
@@ -500,6 +576,15 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'hvac-gshp-autosized-count-not-rectangle'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml')
         hpxml_bldg.geothermal_loops[0].num_bore_holes = nil
+      when 'hvac-invalid-fan-model-type'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
+        hpxml_bldg.heat_pumps[0].fan_motor_type = 'foo'
+      when 'hvac-invalid-eer'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
+        hpxml_bldg.heat_pumps[0].cooling_efficiency_eer = hpxml_bldg.heat_pumps[0].cooling_efficiency_seer + 1
+      when 'hvac-invalid-eer2'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed-seer2-hspf2.xml')
+        hpxml_bldg.heat_pumps[0].cooling_efficiency_eer2 = hpxml_bldg.heat_pumps[0].cooling_efficiency_seer2 + 1
       when 'hvac-location-heating-system'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-boiler-oil-only.xml')
         hpxml_bldg.heating_systems[0].location = HPXML::LocationBasementUnconditioned
@@ -515,9 +600,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'hvac-mshp-not-var-speed'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-mini-split-heat-pump-ductless.xml')
         hpxml_bldg.heat_pumps[0].compressor_type = HPXML::HVACCompressorTypeSingleStage
-      when 'hvac-shr-low'
-        hpxml, hpxml_bldg = _create_hpxml('base.xml')
-        hpxml_bldg.cooling_systems[0].cooling_shr = 0.4
       when 'hvac-sizing-humidity-setpoint'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.header.manualj_humidity_setpoint = 50
@@ -533,6 +615,10 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'invalid-airflow-defect-ratio'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-mini-split-heat-pump-ductless.xml')
         hpxml_bldg.heat_pumps[0].airflow_defect_ratio = -0.25
+      when 'invalid-airflow-rates'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.heating_systems[0].heating_design_airflow_cfm = -1
+        hpxml_bldg.cooling_systems[0].cooling_design_airflow_cfm = -1
       when 'invalid-assembly-effective-rvalue'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.walls[0].insulation_assembly_r_value = 0.0
@@ -581,16 +667,14 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'invalid-ground-diffusivity'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.site.ground_diffusivity = 0.0
-      when 'invalid-heat-pump-capacity-retention'
+      when 'invalid-heat-pump-capacity-fraction-17F'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].heating_capacity_17F = nil
-        hpxml_bldg.heat_pumps[0].heating_capacity_retention_fraction = 1.5
-        hpxml_bldg.heat_pumps[0].heating_capacity_retention_temp = 30
-      when 'invalid-heat-pump-capacity-retention2'
+        hpxml_bldg.heat_pumps[0].heating_capacity_fraction_17F = 1.5
+      when 'invalid-heat-pump-capacity-fraction-17F-2'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].heating_capacity_17F = nil
-        hpxml_bldg.heat_pumps[0].heating_capacity_retention_fraction = -1
-        hpxml_bldg.heat_pumps[0].heating_capacity_retention_temp = 5
+        hpxml_bldg.heat_pumps[0].heating_capacity_fraction_17F = -1
       when 'invalid-hvac-installation-quality'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].airflow_defect_ratio = -99
@@ -730,10 +814,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'missing-attached-to-zone'
         hpxml, hpxml_bldg = _create_hpxml('base-zones-spaces.xml')
         hpxml_bldg.hvac_systems[0].attached_to_zone_idref = nil
-      when 'missing-capacity-detailed-performance'
-        hpxml, hpxml_bldg = _create_hpxml('base-hvac-mini-split-heat-pump-ductless-detailed-performance.xml')
-        hpxml_bldg.heat_pumps[0].cooling_capacity = nil
-        hpxml_bldg.heat_pumps[0].heating_capacity = nil
       when 'missing-cfis-supplemental-fan'
         hpxml, hpxml_bldg = _create_hpxml('base-mechvent-cfis-supplemental-fan-exhaust.xml')
         hpxml_bldg.ventilation_fans[1].delete
@@ -893,6 +973,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                               'ev-charging-methods' => ['Electric vehicle charging was specified as both a PlugLoad and a Vehicle, the latter will be ignored.'],
                               'fuel-load-type-other' => ["Fuel load type 'other' is not currently handled, the fuel load will not be modeled."],
                               'garage-ventilation' => ['Ventilation fans for the garage are not currently modeled.'],
+                              'heat-pump-defrost-backup' => ['BackupHeatingActiveDuringDefrost does not apply when system has separate backup heating'],
                               'heat-pump-low-backup-switchover-temp' => ['BackupHeatingSwitchoverTemperature is below 30 deg-F; this may result in significant unmet hours if the heat pump does not have sufficient capacity.'],
                               'heat-pump-low-backup-lockout-temp' => ['BackupHeatingLockoutTemperature is below 30 deg-F; this may result in significant unmet hours if the heat pump does not have sufficient capacity.'],
                               'hvac-dse-low' => ['Heating DSE should typically be greater than or equal to 0.5.',
@@ -924,13 +1005,16 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                                           'AFUE should typically be greater than or equal to 0.5.',
                                                           'Percent efficiency should typically be greater than or equal to 0.5.',
                                                           'SEER should typically be greater than or equal to 8.',
-                                                          'EER should typically be greater than or equal to 8.',
+                                                          'EER should typically be greater than or equal to 6.',
+                                                          'EER should typically be greater than or equal to 6.',
                                                           'SEER should typically be greater than or equal to 8.',
                                                           'HSPF should typically be greater than or equal to 6.',
                                                           'SEER should typically be greater than or equal to 8.',
+                                                          'EER should typically be greater than or equal to 6.',
                                                           'HSPF should typically be greater than or equal to 6.',
-                                                          'EER should typically be greater than or equal to 8.',
+                                                          'EER should typically be greater than or equal to 6.',
                                                           'COP should typically be greater than or equal to 2.'],
+                              'hvac-fan-inputs-ignored' => ['Fan power watts per cfm or fan motor type is not used for simulation of this HVAC system type.'],
                               'hvac-research-features-onoff-thermostat-temperature-capacitance-multiplier-one' => ['TemperatureCapacitanceMultiplier should typically be greater than 1.'],
                               'hvac-setpoints-high' => ['Heating setpoint should typically be less than or equal to 76 deg-F.',
                                                         'Cooling setpoint should typically be less than or equal to 86 deg-F.'],
@@ -1004,6 +1088,9 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.ventilation_fans.add(id: 'VentilationFan1',
                                         used_for_garage_ventilation: true)
+      when 'heat-pump-defrost-backup'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-mini-split-heat-pump-ductless-backup-furnace.xml')
+        hpxml_bldg.heat_pumps[0].backup_heating_active_during_defrost = true
       when 'heat-pump-low-backup-switchover-temp'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-dual-fuel-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].backup_heating_switchover_temp = 25.0
@@ -1044,6 +1131,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
             case hvac_system.cooling_system_type
             when HPXML::HVACTypeCentralAirConditioner
               hvac_system.cooling_efficiency_seer = 0.1
+              hvac_system.cooling_efficiency_eer = 0.1
             when HPXML::HVACTypeRoomAirConditioner
               hvac_system.cooling_efficiency_eer = 0.1
             end
@@ -1052,6 +1140,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
             when HPXML::HVACTypeHeatPumpAirToAir,
                 HPXML::HVACTypeHeatPumpMiniSplit
               hvac_system.cooling_efficiency_seer = 0.1
+              hvac_system.cooling_efficiency_eer = 0.1
               hvac_system.heating_efficiency_hspf = 0.1
             when HPXML::HVACTypeHeatPumpGroundToAir
               hvac_system.cooling_efficiency_eer = 0.1
@@ -1059,6 +1148,10 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
             end
           end
         end
+      when 'hvac-fan-inputs-ignored'
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-pthp.xml')
+        hpxml_bldg.heat_pumps[0].fan_watts_per_cfm = 0.45
+        hpxml_bldg.heat_pumps[0].fan_motor_type = HPXML::HVACFanMotorTypePSC
       when 'hvac-setpoints-high'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.hvac_controls[0].heating_setpoint_temp = 100
@@ -1165,10 +1258,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'emissions-wrong-rows' => ['Emissions File has invalid number of rows'],
                             'geothermal-loop-multiple-attached-hps' => ["Multiple heat pumps found attached to geothermal loop 'GeothermalLoop1'."],
                             'heat-pump-backup-system-load-fraction' => ['Heat pump backup system cannot have a fraction heat load served specified.'],
-                            'hvac-cooling-detailed-performance-incomplete-pair' => ['Cooling detailed performance data for outdoor temperature = 82.0 is incomplete; there must be exactly one minimum and one maximum capacity datapoint.',
-                                                                                    'Cooling detailed performance data for outdoor temperature = 81.0 is incomplete; there must be exactly one minimum and one maximum capacity datapoint.'],
-                            'hvac-heating-detailed-performance-incomplete-pair' => ['Heating detailed performance data for outdoor temperature = 5.0 is incomplete; there must be exactly one minimum and one maximum capacity datapoint.',
-                                                                                    'Heating detailed performance data for outdoor temperature = 4.0 is incomplete; there must be exactly one minimum and one maximum capacity datapoint.'],
                             'heat-pump-switchover-temp-elec-backup' => ['Switchover temperature should only be used for a heat pump with fossil fuel backup; use compressor lockout temperature instead.'],
                             'heat-pump-lockout-temps-elec-backup' => ['Similar compressor/backup lockout temperatures should only be used for a heat pump with fossil fuel backup.'],
                             'hvac-attached-to-uncond-zone' => ["HVAC system 'HeatingSystem1' is attached to an unconditioned zone."],
@@ -1181,16 +1270,19 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'hvac-research-features-num-unit-greater-than-one' => ['NumberofUnits greater than 1 is not supported for on-off thermostat deadband.',
                                                                                    'NumberofUnits greater than 1 is not supported for multi-staging backup coil.'],
                             'hvac-gshp-invalid-num-bore-holes' => ["Number of bore holes (5) with borefield configuration 'Lopsided U' not supported."],
-                            'hvac-inconsistent-fan-powers' => ["Fan powers for heating system 'HeatingSystem1' and cooling system 'CoolingSystem1' are attached to a single distribution system and therefore must be the same."],
+                            'hvac-inconsistent-fan-powers' => ["Fan powers for heating system 'HeatingSystem1' (0.45 W/cfm) and cooling system 'CoolingSystem1' (0.55 W/cfm) are attached to a single distribution system and therefore must be the same."],
+                            'hvac-inconsistent-fan-motor types' => ["Fan motor types for heating system 'HeatingSystem1' (PSC) and cooling system 'CoolingSystem1' (BPM) are attached to a single distribution system and therefore must be the same."],
                             'hvac-invalid-distribution-system-type' => ["Incorrect HVAC distribution system type for HVAC type: 'Furnace'. Should be one of: ["],
                             'hvac-shared-boiler-multiple' => ['More than one shared heating system found.'],
                             'hvac-shared-chiller-multiple' => ['More than one shared cooling system found.'],
                             'hvac-shared-chiller-negative-seer-eq' => ["Negative SEER equivalent calculated for cooling system 'CoolingSystem1', double-check inputs."],
                             'inconsistent-belly-wing-skirt-present' => ['All belly-and-wing foundations must have the same SkirtPresent.'],
                             'inconsistent-cond-zone-assignment' => ["Surface 'Floor1' is not adjacent to conditioned space but was assigned to conditioned Zone 'ConditionedZone'."],
-                            'inconsistent-uncond-basement-within-infiltration-volume' => ['All unconditioned basements must have the same WithinInfiltrationVolume.'],
-                            'inconsistent-unvented-attic-within-infiltration-volume' => ['All unvented attics must have the same WithinInfiltrationVolume.'],
-                            'inconsistent-unvented-crawl-within-infiltration-volume' => ['All unvented crawlspaces must have the same WithinInfiltrationVolume.'],
+                            'inconsistent-cond-basement-within-infiltration-volume' => ['All conditioned basements must have the same WithinInfiltrationVolume value.'],
+                            'inconsistent-uncond-basement-within-infiltration-volume' => ['All unconditioned basements must have the same WithinInfiltrationVolume value.'],
+                            'inconsistent-unvented-attic-within-infiltration-volume' => ['All unvented attics must have the same WithinInfiltrationVolume value.'],
+                            'inconsistent-unvented-crawl-within-infiltration-volume' => ['All unvented crawlspaces must have the same WithinInfiltrationVolume value.'],
+                            'inconsistent-cond-crawl-within-infiltration-volume' => ['All conditioned crawlspaces must have the same WithinInfiltrationVolume value.'],
                             'inconsistent-vented-attic-ventilation-rate' => ['All vented attics must have the same VentilationRate.'],
                             'inconsistent-vented-attic-ventilation-rate2' => ['All vented attics must have the same VentilationRate.'],
                             'inconsistent-vented-crawl-ventilation-rate' => ['All vented crawlspaces must have the same VentilationRate.'],
@@ -1356,12 +1448,6 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
       when 'heat-pump-switchover-temp-elec-backup'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].backup_heating_switchover_temp = 35.0
-      when 'hvac-cooling-detailed-performance-incomplete-pair'
-        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml')
-        hpxml_bldg.heat_pumps[0].cooling_detailed_performance_data[-1].outdoor_temperature -= 1.0
-      when 'hvac-heating-detailed-performance-incomplete-pair'
-        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml')
-        hpxml_bldg.heat_pumps[0].heating_detailed_performance_data[-1].outdoor_temperature -= 1.0
       when 'heat-pump-lockout-temps-elec-backup'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].compressor_lockout_temp = 35.0
@@ -1424,6 +1510,10 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.cooling_systems[0].fan_watts_per_cfm = 0.55
         hpxml_bldg.heating_systems[0].fan_watts_per_cfm = 0.45
+      when 'hvac-inconsistent-fan-motor types'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.heating_systems[0].fan_motor_type = HPXML::HVACFanMotorTypePSC
+        hpxml_bldg.cooling_systems[0].fan_motor_type = HPXML::HVACFanMotorTypeBPM
       when 'hvac-shared-boiler-multiple'
         hpxml, hpxml_bldg = _create_hpxml('base-bldgtype-mf-unit-shared-boiler-only-baseboard.xml')
         hpxml_bldg.hvac_distributions << hpxml_bldg.hvac_distributions[0].dup
@@ -1457,6 +1547,12 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base-zones-spaces.xml')
         grg_ceiling = hpxml_bldg.floors.find { |f| f.interior_adjacent_to == HPXML::LocationGarage && f.exterior_adjacent_to == HPXML::LocationAtticUnvented }
         grg_ceiling.attached_to_space_idref = hpxml_bldg.conditioned_spaces[0].id
+      when 'inconsistent-cond-basement-within-infiltration-volume'
+        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        fnd = hpxml_bldg.foundations.find { |f| f.foundation_type == HPXML::FoundationTypeBasementConditioned }
+        hpxml_bldg.foundations << fnd.dup
+        hpxml_bldg.foundations[-1].id = 'Duplicate'
+        hpxml_bldg.foundations[-1].within_infiltration_volume = false
       when 'inconsistent-uncond-basement-within-infiltration-volume'
         hpxml, hpxml_bldg = _create_hpxml('base-foundation-unconditioned-basement.xml')
         fnd = hpxml_bldg.foundations.find { |f| f.foundation_type == HPXML::FoundationTypeBasementUnconditioned }
@@ -1475,6 +1571,12 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.foundations << fnd.dup
         hpxml_bldg.foundations[-1].id = 'Duplicate'
         hpxml_bldg.foundations[-1].within_infiltration_volume = true
+      when 'inconsistent-cond-crawl-within-infiltration-volume'
+        hpxml, hpxml_bldg = _create_hpxml('base-foundation-conditioned-crawlspace.xml')
+        fnd = hpxml_bldg.foundations.find { |f| f.foundation_type == HPXML::FoundationTypeCrawlspaceConditioned }
+        hpxml_bldg.foundations << fnd.dup
+        hpxml_bldg.foundations[-1].id = 'Duplicate'
+        hpxml_bldg.foundations[-1].within_infiltration_volume = false
       when 'inconsistent-vented-attic-ventilation-rate'
         hpxml, hpxml_bldg = _create_hpxml('base-atticroof-vented.xml')
         attic = hpxml_bldg.attics.find { |a| a.attic_type == HPXML::AtticTypeVented }

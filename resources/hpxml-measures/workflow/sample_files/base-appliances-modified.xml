@@ -455,8 +455,8 @@
           <SystemIdentifier id='ClothesDryer1'/>
           <Location>conditioned space</Location>
           <FuelType>electricity</FuelType>
+          <DryingMethod>condensing</DryingMethod>
           <EnergyFactor>4.29</EnergyFactor>
-          <Vented>false</Vented>
         </ClothesDryer>
         <Dishwasher>
           <SystemIdentifier id='Dishwasher1'/>

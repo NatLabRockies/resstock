@@ -500,7 +500,7 @@ class ScheduleGenerator
   # @param duration_probabilites_map [Hash] Map of event type to array containing durations and probabilities
   # @param event_type [String] Type of event to sample duration for (e.g. 'hot_water_clothes_washer')
   # @param precomputed_vals [Array] Precomputed values for weighted random sampling
-  # @return [Float] Duration in minutes for the sampled event
+  # @return [Double] Duration in minutes for the sampled event
   def sample_event_duration(prng, duration_probabilites_map, event_type, precomputed_vals = nil)
     durations = duration_probabilites_map[event_type][0]
     probabilities = duration_probabilites_map[event_type][1]
@@ -568,11 +568,11 @@ class ScheduleGenerator
   # Generate a random number from a Gaussian (normal) distribution with the given parameters.
   #
   # @param prng [Random] Random number generator to use
-  # @param mean [Float] The mean (average) value of the distribution
-  # @param std [Float] The standard deviation of the distribution
+  # @param mean [Double] The mean (average) value of the distribution
+  # @param std [Double] The standard deviation of the distribution
   # @param min [Float, nil] The minimum allowed value (defaults to 0.1)
   # @param max [Float, nil] The maximum allowed value (optional)
-  # @return [Float] A random number drawn from the specified Gaussian distribution, clipped to min/max if specified
+  # @return [Double] A random number drawn from the specified Gaussian distribution, clipped to min/max if specified
   def gaussian_rand(prng, mean, std, min = 0.1, max = nil)
     t = 2 * Math::PI * prng.rand
     r = Math.sqrt(-2 * Math.log(1 - prng.rand))
@@ -650,8 +650,8 @@ class ScheduleGenerator
   #
   # @param sch [Array] Array of hourly lighting schedule values
   # @param minute [Integer] Current minute in simulation
-  # @param active_occupant_percentage [Float] Percentage of occupants that are active (not sleeping/away)
-  # @return [Float] Scaled lighting schedule value based on occupancy
+  # @param active_occupant_percentage [Double] Percentage of occupants that are active (not sleeping/away)
+  # @return [Double] Scaled lighting schedule value based on occupancy
   def scale_lighting_by_occupancy(sch, minute, active_occupant_percentage)
     day_start = minute / @minutes_per_day
     day_sch = sch[day_start * 24, 24]
@@ -694,8 +694,8 @@ class ScheduleGenerator
   # Get the Building America lighting schedule based on location and time zone.
   #
   # @param time_zone_utc_offset [Integer] Offset from UTC in hours
-  # @param latitude [Float] Latitude in degrees
-  # @param longitude [Float] Longitude in degrees
+  # @param latitude [Double] Latitude (degrees)
+  # @param longitude [Double] Longitude (degrees)
   # @return [Array] Array of hourly lighting schedule values
   def get_building_america_lighting_schedule(time_zone_utc_offset, latitude, longitude)
     # Sunrise and sunset hours
@@ -810,7 +810,7 @@ class ScheduleGenerator
   # Generates EV battery charging and discharging schedules based on away schedule and annual driving hours.
   #
   # @param away_schedule [Array<Integer>] Array of 0s and 1s indicating when occupants are away (1) or home (0)
-  # @param hours_driven_per_year [Float] Number of hours the EV is driven per year
+  # @param hours_driven_per_year [Double] Number of hours the EV is driven per year
   # @return [Array<Array<Integer>>] Two arrays - [charging_schedule, discharging_schedule], each containing 0s and 1s
   def get_ev_battery_schedule(away_schedule, hours_driven_per_year)
     total_driving_minutes_per_year = (hours_driven_per_year * 60).ceil
@@ -939,8 +939,8 @@ class ScheduleGenerator
   #
   # @param args [Hash] Hash containing required parameters:
   # @option args [Integer] :time_zone_utc_offset Offset from UTC in hours
-  # @option args [Float] :latitude Latitude in degrees
-  # @option args [Float] :longitude Longitude in degrees
+  # @option args [Double] :latitude Latitude in degrees
+  # @option args [Double] :longitude Longitude in degrees
   # @return [Array<Float>] Array of hourly lighting schedule values normalized to 1.0
   def initialize_interior_lighting_schedule(args)
     sch = get_building_america_lighting_schedule(args[:time_zone_utc_offset], args[:latitude], args[:longitude])
@@ -1493,7 +1493,7 @@ class ScheduleGenerator
   # Apply random time shift and normalize schedule values.
   #
   # @param schedule [Array<Float>] Array of minute-level schedule values
-  # @param max_val [Float] Maximum value to normalize to. If nil, use the maximum value in the schedule.
+  # @param max_val [Double] Maximum value to normalize to. If nil, use the maximum value in the schedule.
   # @return [Array<Float>] Normalized schedule with random time shift applied
   def random_shift_and_normalize(schedule, max_val = nil)
     shifted_schedule = random_shift_and_aggregate(schedule)
