@@ -893,25 +893,25 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
       hvac_distribution.hvac_systems.each do |hvac_system|
         if hvac_system.is_a?(HPXML::HeatingSystem)
-          heating_airflow_cfm = hvac_system.heating_airflow_cfm
+          heating_airflow_cfm = hvac_system.heating_design_airflow_cfm
           if !heating_airflow_cfm.nil?
             fraction_heat_load_served = hvac_system.fraction_heat_load_served
             air_distribution_airflows << heating_airflow_cfm / fraction_heat_load_served
           end
         elsif hvac_system.is_a?(HPXML::CoolingSystem)
-          cooling_airflow_cfm = hvac_system.cooling_airflow_cfm
+          cooling_airflow_cfm = hvac_system.cooling_design_airflow_cfm
           if !cooling_airflow_cfm.nil?
             fraction_cool_load_served = hvac_system.fraction_cool_load_served
             air_distribution_airflows << cooling_airflow_cfm / fraction_cool_load_served
           end
         elsif hvac_system.is_a?(HPXML::HeatPump)
-          heating_airflow_cfm = hvac_system.heating_airflow_cfm
+          heating_airflow_cfm = hvac_system.heating_design_airflow_cfm
           if !heating_airflow_cfm.nil?
             fraction_heat_load_served = hvac_system.fraction_heat_load_served
             air_distribution_airflows << heating_airflow_cfm / fraction_heat_load_served
           end
 
-          cooling_airflow_cfm = hvac_system.cooling_airflow_cfm
+          cooling_airflow_cfm = hvac_system.cooling_design_airflow_cfm
           if !cooling_airflow_cfm.nil?
             fraction_cool_load_served = hvac_system.fraction_cool_load_served
             air_distribution_airflows << cooling_airflow_cfm / fraction_cool_load_served
