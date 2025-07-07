@@ -266,6 +266,7 @@ end
 
 def apply_hpxml_modification_hers_hvac_dse(hpxml_path, hpxml)
   # Set detailed HPXML values for HERS HVAC/DSE test files
+  hpxml.header.eri_calculation_versions = ['2022CE']
   hpxml_bldg = hpxml.buildings[0]
 
   if hpxml_path.include? 'HERS_HVAC'
@@ -295,6 +296,7 @@ end
 
 def apply_hpxml_modification_hers_hot_water(hpxml)
   # Set detailed HPXML values for HERS Hot Water test files
+  hpxml.header.eri_calculation_versions = ['2022CE']
   hpxml_bldg = hpxml.buildings[0]
 
   hpxml.header.xml_generated_by = 'tasks.rb'
@@ -384,6 +386,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     elsif ['base-atticroof-cathedral.xml'].include? hpxml_file
       hpxml_bldg.building_construction.number_of_conditioned_floors = 2
       hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade = 1
+      hpxml_bldg.building_construction.average_ceiling_height = hpxml_bldg.building_construction.conditioned_building_volume / 2700
       hpxml_bldg.building_construction.conditioned_floor_area = 2700
       hpxml_bldg.hvac_distributions[0].conditioned_floor_area_served = 2700
       hpxml_bldg.attics[0].attic_type = HPXML::AtticTypeCathedral
@@ -1979,8 +1982,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     end
     if hpxml_file.include? 'heating-capacity-17f'
       hpxml_bldg.heat_pumps[0].heating_capacity_17F = hpxml_bldg.heat_pumps[0].heating_capacity * 0.6
-      hpxml_bldg.heat_pumps[0].heating_capacity_retention_fraction = nil
-      hpxml_bldg.heat_pumps[0].heating_capacity_retention_temp = nil
+      hpxml_bldg.heat_pumps[0].heating_capacity_fraction_17F = nil
     end
     if hpxml_file.include? 'base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml'
       hpxml_bldg.geothermal_loops[0].shank_spacing = 2.5
@@ -2003,6 +2005,46 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
       elsif [HPXML::HVACTypeStove].include? heating_system.heating_system_type
         heating_system.fan_watts = 40
       end
+    end
+    if hpxml_file.include? 'base-hvac-install-quality'
+      hpxml_bldg.hvac_systems.each do |hvac_system|
+        if hvac_system.respond_to? :heating_design_airflow_cfm
+          if not hvac_system.heating_capacity.nil?
+            heating_capacity_tons = UnitConversions.convert(hvac_system.heating_capacity, 'Btu/hr', 'ton')
+          else
+            nom_dp_47F = hvac_system.heating_detailed_performance_data.find { |dp| dp.capacity_description == HPXML::CapacityDescriptionNominal && dp.outdoor_temperature == 47.0 }
+            heating_capacity_tons = UnitConversions.convert(nom_dp_47F.capacity, 'Btu/hr', 'ton')
+          end
+          if hvac_system.is_a?(HPXML::HeatingSystem) && hvac_system.heating_system_type == HPXML::HVACTypeFurnace
+            hvac_system.heating_design_airflow_cfm = (240 * heating_capacity_tons).round
+          else
+            hvac_system.heating_design_airflow_cfm = (360 * heating_capacity_tons).round
+          end
+        end
+        next unless hvac_system.respond_to? :cooling_design_airflow_cfm
+
+        if not hvac_system.cooling_capacity.nil?
+          cooling_capacity_tons = UnitConversions.convert(hvac_system.cooling_capacity, 'Btu/hr', 'ton')
+        else
+          nom_dp_95F = hvac_system.cooling_detailed_performance_data.find { |dp| dp.capacity_description == HPXML::CapacityDescriptionNominal && dp.outdoor_temperature == 95.0 }
+          cooling_capacity_tons = UnitConversions.convert(nom_dp_95F.capacity, 'Btu/hr', 'ton')
+        end
+        hvac_system.cooling_design_airflow_cfm = (360 * cooling_capacity_tons).round
+      end
+    end
+    if hpxml_file.include? 'space-constrained'
+      (hpxml_bldg.cooling_systems + hpxml_bldg.heat_pumps).each do |hvac_system|
+        hvac_system.equipment_type = HPXML::HVACEquipmentTypeSpaceConstrained
+      end
+    end
+    if hpxml_file.include? 'defrost-with-backup-heat-active'
+      hpxml_bldg.heat_pumps.each do |heat_pump|
+        heat_pump.backup_heating_active_during_defrost = true
+      end
+    end
+    if ['base-hvac-fan-motor-type.xml'].include? hpxml_file
+      hpxml_bldg.heating_systems[0].fan_motor_type = HPXML::HVACFanMotorTypeBPM
+      hpxml_bldg.cooling_systems[0].fan_motor_type = HPXML::HVACFanMotorTypeBPM
     end
 
     # ------------------ #

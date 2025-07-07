@@ -9,6 +9,9 @@
   <SoftwareInfo>
     <extension>
       <ApplyASHRAE140Assumptions>true</ApplyASHRAE140Assumptions>
+      <ERICalculation>
+        <Version>2022CE</Version>
+      </ERICalculation>
     </extension>
   </SoftwareInfo>
   <Building>

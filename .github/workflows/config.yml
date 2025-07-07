@@ -155,7 +155,7 @@ jobs:
 
   merge-results:
     runs-on: ubuntu-22.04
-    needs: [run-workflow1-tests, run-workflow2-tests, run-unit-tests]
+    needs: [run-workflow1-tests, run-workflow2-tests]
     steps:
       - uses: actions/checkout@v4
         with:

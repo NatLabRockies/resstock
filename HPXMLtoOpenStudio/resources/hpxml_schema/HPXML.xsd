@@ -5208,6 +5208,26 @@
 						0.1)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element minOccurs="0" name="SimplifiedModelCalibrationHeatingAbsoluteError" nillable="true" type="HPXMLDouble">
+				<xs:annotation>
+					<xs:documentation>Used to determine model calibration acceptance when bills fail Detailed criteria, but meet simple criteria. In either kWh for electricity or MBtu (million Btu) for all other fuels.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="SimplifiedModelCalibrationCoolingAbsoluteError" nillable="true" type="HPXMLDouble">
+				<xs:annotation>
+					<xs:documentation>Used to determine model calibration acceptance when bills fail Detailed criteria, but meet simple criteria. In either kWh for electricity or MBtu (million Btu) for all other fuels.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="SimplifiedModelCalibrationBaseloadAbsoluteError" nillable="true" type="HPXMLDouble">
+				<xs:annotation>
+					<xs:documentation>Used to determine model calibration acceptance when bills fail Detailed criteria, but meet simple criteria. In either kWh for electricity or MBtu (million Btu) for all other fuels.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="SimplifiedModelCalibrationTotalAbsoluteError" nillable="true" type="HPXMLDouble">
+				<xs:annotation>
+					<xs:documentation>Used to determine model calibration acceptance when bills fail Detailed criteria, but meet simple criteria. In either kWh for electricity or MBtu (million Btu) for all other fuels.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element minOccurs="0" ref="extension"/>
 		</xs:sequence>
 		<xs:attribute name="dataSource" type="DataSource"/>
