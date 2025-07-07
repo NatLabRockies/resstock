@@ -100,4 +100,4 @@ workflow_generator:
 
     # Files to keep
     server_directory_cleanup:
-      retain_schedules_csv: true
+      retain_schedules_csv: falses
