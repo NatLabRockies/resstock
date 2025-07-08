@@ -145,7 +145,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "Update documentation."
+            git commit -m "Update documentation. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -426,7 +426,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "Baseline integration tests results."
+            git commit -m "Baseline integration tests results. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -558,7 +558,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "SDR options analysis results."
+            git commit -m "SDR options analysis results. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -605,10 +605,18 @@ jobs:
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
-
+  
+      # Only replace existing files and tables in s3 and Athena for develop branch to prevent
+      # every branch/PR from fighting over the same s3 files and Athena tables.
+      # Each branch/PR will still be able to create local output files and commit them to the
+      # repo without conflict.
       - name: Run buildstockbatch
         run: |
-          buildstock_local --low-disk --replace_existing project_national/sdr_upgrades_tmy3.yml
+          EXTRA_ARGS=""
+          if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            EXTRA_ARGS="--replace_existing"
+          fi
+          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml
 
       - name: Unzip results
         run: |
@@ -651,7 +659,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "SDR integration tests results."
+            git commit -m "SDR integration tests results. [skip ci]"
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
