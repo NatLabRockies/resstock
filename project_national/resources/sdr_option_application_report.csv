@@ -15,53 +15,61 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,380161,69.1
 4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,389136,70.8
 4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,389136,70.8
-5,Air Sealing,1,Infiltration Reduction|30%,366250,66.6
-5,Air Sealing,-1,All,366250,66.6
-6,Attic Floor Insulation for Unfinished Attics,1,Insulation Ceiling|R-30,1502,0.3
-6,Attic Floor Insulation for Unfinished Attics,2,Insulation Ceiling|R-49,84557,15.4
-6,Attic Floor Insulation for Unfinished Attics,3,Insulation Ceiling|R-60,129264,23.5
-6,Attic Floor Insulation for Unfinished Attics,-1,All,215323,39.1
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",380161,69.1
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,2,HVAC Cooling Efficiency|Ducted Heat Pump,380161,69.1
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,389136,70.8
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,4,Insulation Ceiling|R-30,1081,0.2
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,5,Insulation Ceiling|R-49,74413,13.5
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,6,Insulation Ceiling|R-60,100949,18.4
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,7,Infiltration Reduction|30%,251290,45.7
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,-1,All,389136,70.8
-8,Electric Vehicle Adoption with Level 1 Charging,1,Electric Vehicle Ownership|Yes,477589,86.8
-8,Electric Vehicle Adoption with Level 1 Charging,2,Electric Vehicle Charger|Level 1 charger,477589,86.8
-8,Electric Vehicle Adoption with Level 1 Charging,-1,All,477589,86.8
-9,Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,483360,87.9
-9,Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
-9,Electric Vehicle Adoption with Level 2 Charging,-1,All,483360,87.9
-10,Efficient Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,483360,87.9
-10,Efficient Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
-10,Efficient Electric Vehicle Adoption with Level 2 Charging,3,Electric Vehicle Efficiency Increase|15%,483360,87.9
-10,Efficient Electric Vehicle Adoption with Level 2 Charging,-1,All,483360,87.9
-11,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,483360,87.9
-11,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
-11,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Demand Flexibility Electric Vehicle|Enabled,483360,87.9
-11,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Random Shift|30 minutes,483360,87.9
-11,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,483360,87.9
-12,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,483360,87.9
-12,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
-12,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Electric Vehicle Efficiency Increase|15%,483360,87.9
-12,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Electric Vehicle|Enabled,483360,87.9
-12,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,5,Demand Flexibility Random Shift|30 minutes,483360,87.9
-12,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,483360,87.9
-13,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset",548291,99.7
-13,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
-13,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",-1,All,548291,99.7
-14,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",548291,99.7
-14,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
-14,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",-1,All,548291,99.7
-15,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset",548291,99.7
-15,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
-15,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",-1,All,548291,99.7
-16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",548291,99.7
-16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
-16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",-1,All,548291,99.7
-17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",548291,99.7
-17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
-17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",-1,All,548291,99.7
+5,Heat Pumps Water Heater,1,Water Heater Fuel|Electricity,283736,51.6
+5,Heat Pumps Water Heater,2,"Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.78 UEF",199342,36.2
+5,Heat Pumps Water Heater,3,"Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.95 UEF",203979,37.1
+5,Heat Pumps Water Heater,4,"Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.98 UEF",144099,26.2
+5,Heat Pumps Water Heater,-1,All,547420,99.5
+6,High Efficiency Natural Gas Tankless Water Heater,1,Water Heater Fuel|Natural Gas,71784,13.1
+6,High Efficiency Natural Gas Tankless Water Heater,2,"Water Heater Efficiency|High Efficiency Natural Gas Tankless, Condensing",304731,55.4
+6,High Efficiency Natural Gas Tankless Water Heater,-1,All,304731,55.4
+7,Air Sealing,1,Infiltration Reduction|30%,366250,66.6
+7,Air Sealing,-1,All,366250,66.6
+8,Attic Floor Insulation for Unfinished Attics,1,Insulation Ceiling|R-30,1502,0.3
+8,Attic Floor Insulation for Unfinished Attics,2,Insulation Ceiling|R-49,84557,15.4
+8,Attic Floor Insulation for Unfinished Attics,3,Insulation Ceiling|R-60,129264,23.5
+8,Attic Floor Insulation for Unfinished Attics,-1,All,215323,39.1
+9,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",380161,69.1
+9,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,2,HVAC Cooling Efficiency|Ducted Heat Pump,380161,69.1
+9,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,389136,70.8
+9,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,4,Insulation Ceiling|R-30,1081,0.2
+9,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,5,Insulation Ceiling|R-49,74413,13.5
+9,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,6,Insulation Ceiling|R-60,100949,18.4
+9,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,7,Infiltration Reduction|30%,251290,45.7
+9,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,-1,All,389136,70.8
+10,Electric Vehicle Adoption with Level 1 Charging,1,Electric Vehicle Ownership|Yes,477589,86.8
+10,Electric Vehicle Adoption with Level 1 Charging,2,Electric Vehicle Charger|Level 1 charger,477589,86.8
+10,Electric Vehicle Adoption with Level 1 Charging,-1,All,477589,86.8
+11,Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,483360,87.9
+11,Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
+11,Electric Vehicle Adoption with Level 2 Charging,-1,All,483360,87.9
+12,Efficient Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,483360,87.9
+12,Efficient Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
+12,Efficient Electric Vehicle Adoption with Level 2 Charging,3,Electric Vehicle Efficiency Increase|15%,483360,87.9
+12,Efficient Electric Vehicle Adoption with Level 2 Charging,-1,All,483360,87.9
+13,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,483360,87.9
+13,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
+13,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Demand Flexibility Electric Vehicle|Enabled,483360,87.9
+13,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Random Shift|30 minutes,483360,87.9
+13,Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,483360,87.9
+14,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,1,Electric Vehicle Ownership|Yes,483360,87.9
+14,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
+14,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,3,Electric Vehicle Efficiency Increase|15%,483360,87.9
+14,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Electric Vehicle|Enabled,483360,87.9
+14,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,5,Demand Flexibility Random Shift|30 minutes,483360,87.9
+14,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,483360,87.9
+15,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset",548291,99.7
+15,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
+15,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",-1,All,548291,99.7
+16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",548291,99.7
+16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
+16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",-1,All,548291,99.7
+17,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset",548291,99.7
+17,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
+17,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",-1,All,548291,99.7
+18,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",548291,99.7
+18,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
+18,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",-1,All,548291,99.7
+19,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",548291,99.7
+19,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548291,99.7
+19,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",-1,All,548291,99.7
