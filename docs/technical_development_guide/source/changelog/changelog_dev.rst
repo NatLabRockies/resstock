@@ -8,10 +8,10 @@ Development Changelog
 
 
     .. change::
-        :tags: bug fix, hvac
+        :tags: bugfix, hvac
         :pullreq: 1441, 1254
 
-        **Date**: 2025-08-08
+        **Date**: 2025-07-08
 
         Title:
         Fix for BA seasons always enabled
@@ -186,7 +186,7 @@ Development Changelog
 
  
     .. change::
-        :tags: bug fix
+        :tags: bugfix
         :pullreq: 1362
 
         **Date**: 2025-04-18
