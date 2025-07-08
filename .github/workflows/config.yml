@@ -619,7 +619,7 @@ jobs:
             EXTRA_ARGS="--replace_existing"
           else
             echo "Not on develop branch, removing AWS config from YAML"
-            python scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_tmy3.yml
+            python .github/scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_tmy3.yml
           fi
           buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml
 
