@@ -11,6 +11,9 @@ import polars as pl
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, UpgradeInclusion, VacancyInclusion, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEnduses
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class DataProcessor:
@@ -28,13 +31,12 @@ class DataProcessor:
         """
         self.annual_results_dir = annual_results_dir
         self.upgrades = upgrades
-        self.lazyframes: dict[int, pl.LazyFrame] = {}
-        self._load_data()
-        self._combined_df = pl.concat(self.lazyframes.values(), how="diagonal")
-        self.all_cols: set[str] = set(self._combined_df.collect_schema().names())
+        self.combined_df = self._load_data()
+        self.all_cols: set[str] = set(self.combined_df.collect_schema().names())
 
-    def _load_data(self) -> None:
+    def _load_data(self) -> pl.LazyFrame:
         """Load data for each upgrade using Polars LazyFrames from CSV or Parquet files"""
+        lazyframes: dict[int, pl.LazyFrame] = {}
         for upgrade in self.upgrades:
             base_patterns = [f"up{upgrade:02d}", f"upgrade{upgrade:02d}"]
             if upgrade == 0:
@@ -42,10 +44,10 @@ class DataProcessor:
 
             # Use regex-like pattern matching to find files with the base pattern anywhere in the name
             matching_files: list[pathlib.Path] = []
-            for file_path in pathlib.Path(self.annual_results_dir).iterdir():
-                if file_path.suffix in (".csv", ".parquet") and any(
-                    pattern in file_path.name for pattern in base_patterns
-                ):
+            for pattern in base_patterns:
+                for file_path in pathlib.Path(self.annual_results_dir).glob(f"**/*{pattern}*.csv") or []:
+                    matching_files.append(file_path)
+                for file_path in pathlib.Path(self.annual_results_dir).glob(f"**/*{pattern}*.parquet") or []:
                     matching_files.append(file_path)
 
             if not matching_files:
@@ -56,15 +58,32 @@ class DataProcessor:
                 raise ValueError(f"Multiple result files found for upgrade {upgrade}: {matching_files}")
 
             file_path = matching_files[0]
-            self.lazyframes[upgrade] = (
-                pl.scan_csv(file_path) if file_path.suffix == ".csv" else pl.scan_parquet(file_path)
-            )
+            lazyframes[upgrade] = pl.scan_csv(file_path) if file_path.suffix == ".csv" else pl.scan_parquet(file_path)
 
             if upgrade == 0:
-                self.lazyframes[upgrade] = self.lazyframes[upgrade].with_columns(
-                    pl.lit("baseline").alias("upgrade_name")
+                lazyframes[upgrade] = lazyframes[upgrade].with_columns(pl.lit("baseline").alias("upgrade_name"))
+            elif "upgrade_name" not in lazyframes[upgrade].collect_schema().names():
+                lazyframes[upgrade] = lazyframes[upgrade].with_columns(
+                    pl.concat_str(pl.lit("Upgrade"), pl.col("upgrade").cast(pl.String)).alias("upgrade_name")
                 )
+
+            # ----- Data coercion -----------------------------------------------------------------
+            # Convert the 'applicability' column to Boolean if it exists and is not already Boolean.
+            # Can be removed after https://github.com/NREL/resstock/pull/1439 is merged.
+            schema = lazyframes[upgrade].collect_schema()
+            if "applicability" in schema and schema["applicability"] != pl.Boolean:
+                truthy_values = ["true", "True", "1"]
+                lazyframes[upgrade] = lazyframes[upgrade].with_columns(
+                    pl.when(pl.col("applicability").is_in(truthy_values))
+                    .then(True)
+                    .otherwise(False)
+                    .alias("applicability")
+                    .cast(pl.Boolean)
+                )
+            # ------------------------------------------------------------------------------------
+
             print(f"Scanned data for upgrade {upgrade}")
+        return pl.concat(lazyframes.values(), how="diagonal")
 
     def fill_missing_quantities(self, combined_df: pl.LazyFrame, quantities: list[str]) -> pl.LazyFrame:
         """
@@ -72,18 +91,30 @@ class DataProcessor:
         calculated by summing existing columns, it does so. Otherwise, it fills
         the quantity with 0.
         """
-        missing_quantity_cols: set[str] = set(quantities) - self.all_cols
+        missing_quantity_cols: set[str] = set(quantities) - set(self.all_cols)
 
         if not missing_quantity_cols:
             return combined_df
 
+        # They could be either be defined in EnduseGroupToEnduses or are truly missing
+        defined_quantity = [quantity for quantity in missing_quantity_cols if quantity in EnduseGroupToEnduses]
+        truly_missing_quantity = [quantity for quantity in missing_quantity_cols if quantity not in defined_quantity]
         new_column_exprs = []
-        for quantity in missing_quantity_cols:
-            expression = pl.lit(0, dtype=pl.Int32).alias(quantity)  # Default to 0 if quantity is missing
-            if quantity in EnduseGroupToEnduses:  # If quantity is enduse group and end uses are available, use that
-                enduse_cols_to_sum = [col for col in EnduseGroupToEnduses[quantity] if col in self.all_cols]
-                if enduse_cols_to_sum:
-                    expression = pl.sum_horizontal([pl.col(c) for c in enduse_cols_to_sum]).alias(quantity)
+        used_cols = []  # which of the cols in combined_df are used to calculate the missing quantity
+        for quantity in defined_quantity:
+            available_constituent_cols = [col for col in EnduseGroupToEnduses[quantity] if col in self.all_cols]
+            if available_constituent_cols:
+                expression = pl.sum_horizontal([pl.col(c) for c in available_constituent_cols]).alias(quantity)
+                new_column_exprs.append(expression)
+                used_cols.extend(available_constituent_cols)
+            else:
+                logger.warning(f"Quantity group {quantity} is defined but none of the constituent are available")
+                expression = pl.lit(0, dtype=pl.Int32).alias(quantity)
+                new_column_exprs.append(expression)
+        # Since they are truly missing, we will fill them with 0
+        for quantity in truly_missing_quantity:
+            logger.warning(f"Quantity {quantity} is not available and is not a defined group in end_use_dict")
+            expression = pl.lit(0, dtype=pl.Int32).alias(quantity)
             new_column_exprs.append(expression)
 
         return combined_df.with_columns(new_column_exprs)
@@ -106,7 +137,7 @@ class DataProcessor:
             if plot_spec.quantity.sum:
                 quantities.append(plot_spec.quantity.sum)
 
-        combined_df = self.fill_missing_quantities(self._combined_df, quantities)
+        combined_df = self.fill_missing_quantities(self.combined_df, quantities)
 
         if plot_spec.upgrade_inclusion == UpgradeInclusion.applied_only:
             combined_df = combined_df.filter(pl.col("applicability"))

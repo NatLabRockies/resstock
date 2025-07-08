@@ -62,15 +62,18 @@ class OutputManager:
             self.svg_time_spent += time.time() - start_time
 
         if self.should_save_data:
-            data_dir = output_dir / "data"
             start_time = time.time()
-            self.save_data(data_dir, df, file_name)
+            self.save_data(path_seg, df, file_name)
             self.data_time_spent += time.time() - start_time
 
-    def save_data(self, data_dir: Path, df: pl.DataFrame, file_name: str) -> None:
-        data_dir.mkdir(exist_ok=True)
-        data_file = data_dir / f"{file_name}.parquet"
-        df.write_parquet(data_file)
+    def get_data_path(self, path_seg: Path, file_name: str) -> Path:
+        data_dir = self.base_dir / path_seg / "data"
+        data_dir.mkdir(exist_ok=True, parents=True)
+        return data_dir / f"{file_name}.parquet"
+
+    def save_data(self, path_seg: Path, df: pl.DataFrame, file_name: str) -> None:
+        data_path = self.get_data_path(path_seg, file_name)
+        df.write_parquet(data_path)
 
     def print_time_spent(self) -> None:
         if self.should_save_image:

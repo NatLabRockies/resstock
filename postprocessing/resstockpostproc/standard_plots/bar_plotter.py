@@ -140,7 +140,8 @@ class BarPlotter(BasePlotter):
                     )  # Specify row and column for the trace
 
         self.theme.apply_layout(fig)
-        fig.update_layout(barmode="stack", legend={"traceorder": "reversed"})
+        # Use "relative" barmode so that negative values are stacked below the zero line
+        fig.update_layout(barmode="relative", legend={"traceorder": "reversed"})
         fig.update_yaxes(gridcolor="lightgray", gridwidth=0.5, title_text="Energy Consumption (kWh)")
         fig.update_xaxes(title_text="")
         if facet_column and facet_column in data.columns:

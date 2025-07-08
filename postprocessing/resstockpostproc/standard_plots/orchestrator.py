@@ -90,25 +90,28 @@ class PlotOrchestrator:
         plots_generated = 0
         if max_plots_to_gen is None:
             print(f"Generating all {len(plots_to_gen)} plots")
+            total_plots = len(plots_to_gen)
         else:
             print(f"Generating {max_plots_to_gen} plots")
+            total_plots = max_plots_to_gen
         for plots_generated, plot_spec in enumerate(plots_to_gen, 1):
             start_time = time.time()
             df = self.processor.prepare_data_for_plot(plot_spec)
             self.data_preparing_time += time.time() - start_time
             path_seg, name = plot_spec.get_path_and_name()
-            plotter = self._get_plotter(plot_spec.visualization_type)
+            plotter = PlotOrchestrator.get_plotter(plot_spec.visualization_type)
             start_time = time.time()
             fig = plotter.create_plot(df, plot_spec)
             self.figure_creation_time += time.time() - start_time
             start_time = time.time()
             self.out_mgr.save_plot(fig, path_seg, df, name)
             self.saving_time += time.time() - start_time
-            print(f"Saved plot for {path_seg}/{name}")
-            if max_plots_to_gen is not None and plots_generated >= max_plots_to_gen:
+            print(f"{plots_generated}/{total_plots}: Saved plot for {path_seg}/{name}")
+            if plots_generated >= total_plots:
                 return
 
-    def _get_plotter(self, viz: VizType):
+    @classmethod
+    def get_plotter(cls, viz: VizType):
         """Return a new plotter instance for the given visualization type."""
         if viz == VizType.bar:
             return BarPlotter()

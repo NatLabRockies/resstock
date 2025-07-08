@@ -23,7 +23,12 @@ for enduse_group, fuel in product(EnduseGroupToColor.keys(), EnduseFuelToPattern
 
 
 EnduseGroupToEnduses = {
-    "Electric Vehicle Charging, Electricity": ["out.electricity.electric_vehicle_charging.energy_consumption.kwh"],
+    "Generation, Electricity": [
+        "out.electricity.pv.energy_consumption.kwh",
+        "out.electricity.generator.energy_consumption.kwh",
+        "out.electricity.battery.energy_consumption.kwh",
+    ],
+    "Electric Vehicle Charging, Electricity": ["out.electricity.ev_charging.energy_consumption.kwh"],
     "Hot Water, Electricity": [
         "out.electricity.hot_water.energy_consumption.kwh",
     ],
@@ -35,17 +40,17 @@ EnduseGroupToEnduses = {
     ],
     "Hot Water, Propane": ["out.propane.hot_water.energy_consumption.kwh"],
     "Heating Heat Pump Backup, Electricity": [
-        "out.electricity.heating_heat_pump_backup.energy_consumption.kwh",
-        "out.electricity.heating_heat_pump_backup_fans_pumps.energy_consumption.kwh",
+        "out.electricity.heating_hp_bkup.energy_consumption.kwh",
+        "out.electricity.heating_hp_bkup_fa.energy_consumption.kwh",
     ],
     "Heating Heat Pump Backup, Natural Gas": [
-        "out.natural_gas.heating_heat_pump_backup.energy_consumption.kwh",
+        "out.natural_gas.heating_hp_bkup.energy_consumption.kwh",
     ],
     "Heating Heat Pump Backup, Fuel Oil": [
-        "out.fuel_oil.heating_heat_pump_backup.energy_consumption.kwh",
+        "out.fuel_oil.heating_hp_bkup.energy_consumption.kwh",
     ],
-    "Heating Heat Pump Backup, Propane": ["out.propane.heating_heat_pump_backup.energy_consumption.kwh"],
-    "Heating Fans Pumps, Electricity": ["out.electricity.heating_fans_pumps_m_btu.energy_consumption.kwh"],
+    "Heating Heat Pump Backup, Propane": ["out.propane.heating_hp_bkup.energy_consumption.kwh"],
+    "Heating Fans Pumps, Electricity": ["out.electricity.heating_fans_pumps.energy_consumption.kwh"],
     "Heating, Electricity": [
         "out.electricity.heating.energy_consumption.kwh",
     ],
@@ -56,7 +61,7 @@ EnduseGroupToEnduses = {
         "out.fuel_oil.heating.energy_consumption.kwh",
     ],
     "Heating, Propane": ["out.propane.heating.energy_consumption.kwh"],
-    "Cooling Fans Pumps, Electricity": ["out.electricity.cooling_fans_pumps_m_btu.energy_consumption.kwh"],
+    "Cooling Fans Pumps, Electricity": ["out.electricity.cooling_fans_pumps.energy_consumption.kwh"],
     "Cooling, Electricity": [
         "out.electricity.cooling.energy_consumption.kwh",
     ],
@@ -77,21 +82,28 @@ EnduseGroupToEnduses = {
     "Vent Fan, Electricity": [
         "out.electricity.mechanical_ventilation.energy_consumption.kwh",
         "out.electricity.ceiling_fan.energy_consumption.kwh",
+        "out.electricity.whole_house_fan.energy_consumption.kwh",
     ],
     "Miscellaneous, Electricity": [
         "out.electricity.plug_loads.energy_consumption.kwh",
         "out.electricity.pool_pump.energy_consumption.kwh",
         "out.electricity.pool_heater.energy_consumption.kwh",
+        "out.electricity.mech_vent_preheat.energy_consumption.kwh",
         "out.electricity.permanent_spa_pump.energy_consumption.kwh",
-        "out.electricity.permanent_spa_heater.energy_consumption.kwh",
+        "out.electricity.permanent_spa_heat.energy_consumption.kwh",
         "out.electricity.well_pump.energy_consumption.kwh",
+        "out.electricity.dehumidifier.energy_consumption.kwh",
+        "out.electricity.hot_water_solar_th.energy_consumption.kwh",
+        "out.electricity.mech_vent_precool.energy_consumption.kwh",
+        "out.electricity.television.energy_consumption.kwh",
+        "out.electricity.mech_vent.energy_consumption.kwh",
     ],
     "Miscellaneous, Natural Gas": [
         "out.natural_gas.fireplace.energy_consumption.kwh",
         "out.natural_gas.grill.energy_consumption.kwh",
-        "out.natural_gas.permanent_spa_heater.energy_consumption.kwh",
+        "out.natural_gas.permanent_spa_heat.energy_consumption.kwh",
         "out.natural_gas.pool_heater.energy_consumption.kwh",
-        "out.natural_gas.mech_vent_preheating.energy_consumption.kwh",
+        "out.natural_gas.mech_vent_preheat.energy_consumption.kwh",
         "out.natural_gas.generator.energy_consumption.kwh",
     ],
     "Miscellaneous, Fuel Oil": [
@@ -113,6 +125,7 @@ EnduseGroupToEnduses = {
         "out.electricity.freezer.energy_consumption.kwh",
         "out.electricity.refrigerator.energy_consumption.kwh",
         "out.electricity.range_oven.energy_consumption.kwh",
+        "out.electricity.hot_water_recirc_p.energy_consumption.kwh",
     ],
     "Appliances, Natural Gas": [
         "out.natural_gas.clothes_dryer.energy_consumption.kwh",

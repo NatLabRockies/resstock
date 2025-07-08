@@ -9,7 +9,7 @@ from __future__ import annotations
 from enum import Enum
 
 import yaml
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class NoExtraModel(BaseModel):
@@ -94,3 +94,11 @@ class WorkflowConfig(NoExtraModel):
             config_data = yaml.safe_load(f)
 
         return cls(**config_data)
+
+    @classmethod
+    @field_validator("upgrades")
+    def ensure_zero_in_upgrades(cls, v) -> list[int]:
+        """Ensure that upgrade 0 (baseline) is always included and first in the list of upgrades."""
+        if 0 not in v:
+            v = [0, *v]
+        return sorted(v)
