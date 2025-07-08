@@ -611,10 +611,15 @@ jobs:
       # Each branch/PR will still be able to create local output files and commit them to the
       # repo without conflict.
       - name: Run buildstockbatch
+        shell: bash
         run: |
           EXTRA_ARGS=""
           if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            echo "Running on develop branch, using --replace_existing"
             EXTRA_ARGS="--replace_existing"
+          else
+            echo "Not on develop branch, removing AWS config from YAML"
+            python scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_tmy3.yml
           fi
           buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml
 
