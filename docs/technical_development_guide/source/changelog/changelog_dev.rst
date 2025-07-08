@@ -6,6 +6,20 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+    .. change::
+        :tags: postprocessing
+        :pullreq: 1439
+
+        **Date**: 2025-07-08
+
+        Title:
+        Postprocessing output data type fix
+
+        Description:
+        Ensure postprocessing output data type for applicability is boolean. Previously, it was string
+        for upgrades and boolean for the baseline.
+
+        Assignees: Rajendra Adhikari
 
     .. change::
         :tags: standard data release
