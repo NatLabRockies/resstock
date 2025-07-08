@@ -9,6 +9,21 @@ Development Changelog
 
     .. change::
         :tags: standard data release
+        :pullreq: 1429, 1197
+
+        **Date**: 2025-06-18
+
+        Title:
+        Use HVAC Detailed Performance Option for a Ducted ASHP
+
+        Description:
+        Introduce an ASHP upgrade measure for SDR that is a typical cold climate ducted air source heat pump with detailed performance data. This pull request uses a couple detailed HVAC performance options to define the curves for a ducted version of a variable speed cold climate ASHP. Options are added to `options_lookup.tsv` and the cold climate ASHP upgrade is added to `sdr_upgrades_tmy3.yml`.
+
+        Assignees: Philip White, Joe Robertson, Anthony Fontanini
+
+
+    .. change::
+        :tags: standard data release
         :pullreq: 1429
 
         **Date**: 2025-06-11
@@ -20,6 +35,25 @@ Development Changelog
         Clean up the SDR yaml file by moving anchors to the reference section of the yaml. Remove non-SDR upgrades for the 9/30/2025 release.
 
         Assignees: Anthony Fontanini
+
+
+    .. change::
+        :tags: workflow, feature
+        :pullreq: 1408
+        :tickets: 1154
+
+        **Date**: 2025-06-17
+
+        Title:
+        Use Autosizing Limits and Maintain Duct System Curve
+
+        Description:
+        For ducted heat pump upgrades, adds the ability to limit the autosized heating/cooling capacity based on the existing duct system, and adjust the blower fan efficiency to maintain the duct system curve.
+        This feature is enabled by using setting a new ResStockArguments measure argument `heat_pump_sizing_is_duct_limited=true` for HVAC Heating Efficiency options.
+
+        OpenStudio-HPXML: `pull request 1584 <https://github.com/NREL/OpenStudio-HPXML/pull/1584>`_
+
+        Assignees: Joe Robertson
 
 
     .. change::
