@@ -21,6 +21,7 @@ class ComparisonTypes(str, Enum):
     """Different kinds of comparison between the upgrade and the baseline."""
 
     absolute = "absolute"  # raw values
+    mean = "mean"  # pre-aggregated mean across simulation rows
     savings = "savings"  # pre-aggregated mean across simulation rows
     percent_savings = "percent_savings"  # percentage savings compared to baseline
 

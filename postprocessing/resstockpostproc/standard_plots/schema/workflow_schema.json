@@ -4,6 +4,7 @@
       "description": "Different kinds of comparison between the upgrade and the baseline.",
       "enum": [
         "absolute",
+        "mean",
         "savings",
         "percent_savings"
       ],
