@@ -197,17 +197,11 @@ references:
         multiplier: Floor Area, Attic (ft^2)
     lifetime: 60
 
-  duct_insulate_only: &duct_insulate_only
-    option: Duct Leakage and Insulation|10% Leakage to Outside, R-8
-    apply_logic:
-      - or:
-        - Duct Leakage and Insulation|10% Leakage to Outside, R-4
-        - Duct Leakage and Insulation|10% Leakage to Outside, Uninsulated
-
   duct_seal_only_r6: &duct_seal_only_r6
     option: Duct Leakage and Insulation|5% Leakage to Outside, R-6
     apply_logic:
       - or:
+        - Duct Leakage and Insulation|10% Leakage to Outside, R-6
         - Duct Leakage and Insulation|20% Leakage to Outside, R-6
         - Duct Leakage and Insulation|30% Leakage to Outside, R-6
   
@@ -215,6 +209,7 @@ references:
     option: Duct Leakage and Insulation|5% Leakage to Outside, R-8
     apply_logic:
       - or:
+        - Duct Leakage and Insulation|10% Leakage to Outside, R-8
         - Duct Leakage and Insulation|20% Leakage to Outside, R-8
         - Duct Leakage and Insulation|30% Leakage to Outside, R-8
 
@@ -222,6 +217,8 @@ references:
     option: Duct Leakage and Insulation|5% Leakage to Outside, R-8
     apply_logic:
       - or:
+        - Duct Leakage and Insulation|10% Leakage to Outside, R-4
+        - Duct Leakage and Insulation|10% Leakage to Outside, Uninsulated
         - Duct Leakage and Insulation|20% Leakage to Outside, R-4
         - Duct Leakage and Insulation|20% Leakage to Outside, Uninsulated
         - Duct Leakage and Insulation|30% Leakage to Outside, R-4
@@ -455,7 +452,6 @@ upgrades:
 
   - upgrade_name: Duct Sealing and Insulation
     options:
-      - *duct_insulate_only
       - *duct_seal_only_r6
       - *duct_seal_only_r8
       - *duct_seal_and_insulate
