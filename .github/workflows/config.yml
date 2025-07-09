@@ -301,7 +301,7 @@ jobs:
         working-directory: postprocessing
         run: |
           uv venv
-          uv pip install -e . --all-groups
+          uv pip install -e . --group dev
 
       - name: Run standard plots tests
         working-directory: postprocessing
