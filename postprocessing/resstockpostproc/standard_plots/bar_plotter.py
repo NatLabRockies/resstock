@@ -6,6 +6,7 @@ Handles creation of plots using Plotly with consistent styling
 
 import plotly.express as px
 import plotly.graph_objects as go
+import textwrap
 import polars as pl
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
@@ -149,5 +150,16 @@ class BarPlotter(BasePlotter):
             for i in range(2, num_facets + 1):  # Remove y-axis titles for all but the first facet
                 fig.update_yaxes(title_text="", row=1, col=i)
             fig.update_layout(width=max(1000, min(1920, num_facets * self.theme.facet_width)))
-        fig.for_each_annotation(lambda a: a.update(text=a.text.replace("=", "<br>")))
+        # Show only the facet value and wrap long text based on theme's facet_title_width
+        fig.for_each_annotation(
+            lambda a: a.update(
+                text="<br>".join(
+                    textwrap.wrap(
+                        a.text.split("=")[-1].strip() if a.text is not None else "",
+                        width=self.theme.facet_title_width,
+                        break_long_words=False,
+                    )
+                )
+            )
+        )
         return fig

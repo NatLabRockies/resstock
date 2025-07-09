@@ -12,6 +12,7 @@ from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, UpgradeIn
 from resstockpostproc.standard_plots.schema.plot_spec import ComparisonTypes
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEnduses
+from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 import logging
 
 logger = logging.getLogger(__name__)
@@ -22,23 +23,23 @@ class DataProcessor:
     Processes simulation result data for plotting
     """
 
-    def __init__(self, annual_results_dir: str, upgrades: list[int]):
+    def __init__(self, workflow: WorkflowConfig):
         """
         Initialize the data processor
 
         Args:
-            annual_results_dir: Directory containing the simulation result CSV files
-            upgrades: List of upgrade numbers to process
+            workflow: WorkflowConfig object containing the workflow configuration
         """
-        self.annual_results_dir = annual_results_dir
-        self.upgrades = upgrades
+        self.annual_results_dir = workflow.annual_results_dir
+        self.upgrades = workflow.upgrades
+        self.upgrade_names = workflow.upgrade_names
         self.combined_df = self._load_data()
         self.all_cols: set[str] = set(self.combined_df.collect_schema().names())
 
     def _load_data(self) -> pl.LazyFrame:
         """Load data for each upgrade using Polars LazyFrames from CSV or Parquet files"""
         lazyframes: dict[int, pl.LazyFrame] = {}
-        for upgrade in self.upgrades:
+        for upgrade, upgrade_name in zip(self.upgrades, self.upgrade_names):
             base_patterns = [f"up{upgrade:02d}", f"upgrade{upgrade:02d}"]
             if upgrade == 0:
                 base_patterns.append("baseline")
@@ -61,13 +62,7 @@ class DataProcessor:
             file_path = matching_files[0]
             lazyframes[upgrade] = pl.scan_csv(file_path) if file_path.suffix == ".csv" else pl.scan_parquet(file_path)
 
-            if upgrade == 0:
-                lazyframes[upgrade] = lazyframes[upgrade].with_columns(pl.lit("baseline").alias("upgrade_name"))
-            elif "upgrade_name" not in lazyframes[upgrade].collect_schema().names():
-                lazyframes[upgrade] = lazyframes[upgrade].with_columns(
-                    pl.concat_str(pl.lit("Upgrade"), pl.col("upgrade").cast(pl.String)).alias("upgrade_name")
-                )
-
+            lazyframes[upgrade] = lazyframes[upgrade].with_columns(pl.lit(upgrade_name).alias("upgrade_name"))
             # ----- Data coercion -----------------------------------------------------------------
             # Convert the 'applicability' column to Boolean if it exists and is not already Boolean.
             # Can be removed after https://github.com/NREL/resstock/pull/1439 is merged.

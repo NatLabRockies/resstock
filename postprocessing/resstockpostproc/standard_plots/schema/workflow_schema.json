@@ -184,6 +184,14 @@
       "title": "Upgrades",
       "type": "array"
     },
+    "upgrade_names": {
+      "description": "List of upgrade names to include",
+      "items": {
+        "type": "string"
+      },
+      "title": "Upgrade Names",
+      "type": "array"
+    },
     "selection_logic": {
       "anyOf": [
         {
@@ -262,6 +270,7 @@
     "annual_results_dir",
     "output_dir",
     "upgrades",
+    "upgrade_names",
     "quantities",
     "group_by",
     "visualization_types",

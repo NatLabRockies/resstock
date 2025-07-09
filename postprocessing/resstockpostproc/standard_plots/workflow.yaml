@@ -4,7 +4,10 @@
 annual_results_dir: /Users/radhikar/Documents/buildstock2025/sdr_develop/pub_annual
 output_dir: /Users/radhikar/Documents/buildstock2025/sdr_plots/
 upgrades: [0, 1, 2] # corresponds to results_up00.csv, results_up01.csv, results_up02.csv
-
+upgrade_names:
+  - "Baseline"
+  - "Upgrade 1"
+  - "Upgrade 2"
 quantities:
   - name: total_energy_consumption
     constituents:
@@ -46,7 +49,7 @@ quantities:
       - Appliances, Fuel Oil
       - Appliances, Natural Gas
       - Appliances, Electricity
-    sum: out.site_energy.net.energy_consumption.kwh
+    sum: out.site_energy.total.energy_consumption.kwh
 
   - name: bills
     constituents:

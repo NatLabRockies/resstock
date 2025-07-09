@@ -70,6 +70,7 @@ class WorkflowConfig(NoExtraModel):
     annual_results_dir: str = Field(description="Path to folder containing annual results")
     output_dir: str = Field(description="Path to output directory")
     upgrades: list[int] = Field(description="List of upgrade indices to include")
+    upgrade_names: list[str] = Field(description="List of upgrade names to include")
     selection_logic: SelectionLogic | list[SelectionLogic] | list[str] | None = Field(
         None, description="Selection logic for"
     )
@@ -100,6 +101,14 @@ class WorkflowConfig(NoExtraModel):
     @field_validator("upgrades")
     def ensure_zero_in_upgrades(cls, v) -> list[int]:
         """Ensure that upgrade 0 (baseline) is always included and first in the list of upgrades."""
-        if 0 not in v:
-            v = [0, *v]
-        return sorted(v)
+        if v[0] != 0:
+            raise ValueError("Upgrade 0 (baseline) must be first in the list of upgrades")
+        return v
+
+    @classmethod
+    @field_validator("upgrade_names")
+    def ensure_upgrade_names(cls, v) -> list[str]:
+        """Verify the number of upgrade names matches the number of upgrades"""
+        if len(v) != len(cls.upgrades):
+            raise ValueError("Number of upgrade names must match number of upgrades")
+        return v

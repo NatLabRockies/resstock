@@ -8,7 +8,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import polars as pl
 from plotly.subplots import make_subplots
-
+import textwrap
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 
@@ -216,6 +216,8 @@ class BoxPlotter(BasePlotter):
             boxmode="group",
             width=250 * len(facet_values) + 150,
         )
+        num_facets = len(data[facet_column].unique())
+        fig.update_layout(width=max(1000, min(1920, num_facets * self.theme.facet_width)))
 
         # Format Y-axis - only show title on the far left facet
         for i in range(len(facet_values)):
@@ -236,4 +238,15 @@ class BoxPlotter(BasePlotter):
                 title="", tickvals=list(range(len(x_values))), ticktext=[str(val) for val in x_values], col=i + 1
             )
 
+        fig.for_each_annotation(
+            lambda a: a.update(
+                text="<br>".join(
+                    textwrap.wrap(
+                        a.text.split("=")[-1].strip() if a.text is not None else "",
+                        width=self.theme.facet_title_width,
+                        break_long_words=False,
+                    )
+                )
+            )
+        )
         return fig

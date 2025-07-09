@@ -19,6 +19,7 @@ from resstockpostproc.standard_plots.schema.workflow_schema import (
     VacancyInclusion,
     VizType,
 )
+from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 
 # -----------------------------------------------------------------------------
 # Helpers / fixtures
@@ -101,7 +102,21 @@ def processor(monkeypatch: pytest.MonkeyPatch, combined_df: pl.LazyFrame) -> Dat
 
     # Patch the private _load_data before instantiation
     monkeypatch.setattr(DataProcessor, "_load_data", _fake_load, raising=True)
-    proc = DataProcessor(annual_results_dir="dummy", upgrades=[0, 1])
+    proc = DataProcessor(
+        WorkflowConfig(
+            annual_results_dir="dummy",
+            output_dir="dummy",
+            upgrades=[0, 1, 2],
+            upgrade_names=["Baseline", "Upgrade1", "Upgrade2"],
+            selection_logic=None,
+            quantities=[QuantityGroup(name="dummy", constituents=["dummy"], sum="dummy")],
+            group_by=["in.heating_fuel"],
+            visualization_types=[VizType.bar],
+            comparison_types=[ComparisonTypes.absolute],
+            upgrade_inclusion=[UpgradeInclusion.all],
+            vacancy_inclusion=[VacancyInclusion.all],
+        )
+    )
     # all_cols is computed in __init__, but we ensure it matches our fixture
     proc.all_cols = set(combined_df.collect_schema().names())
     return proc

@@ -37,7 +37,7 @@ class PlotOrchestrator:
 
         # Setup the data processor
         start_time = time.time()
-        self.processor = DataProcessor(self.workflow.annual_results_dir, self.workflow.upgrades)
+        self.processor = DataProcessor(self.workflow)
         self.data_loading_time = time.time() - start_time
         self.out_mgr = OutputManager(
             self.workflow.output_dir, should_save_image=should_save_image, should_save_data=should_save_data
