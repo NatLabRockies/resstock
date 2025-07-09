@@ -334,6 +334,7 @@ if __name__ == '__main__':
                     '.bills_wood_pellets_energy',
                     '.bills_wood_pellets_fixed',
                     '.bills_wood_pellets_total',
+                    '.bills_total',
                     '.bills_2',
                     '.bills_3',
                     'upgrade_costs.',
