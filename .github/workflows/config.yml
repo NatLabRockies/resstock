@@ -285,7 +285,6 @@ jobs:
 
   standard-plots-tests:
     runs-on: ubuntu-22.04
-    needs: [unit-tests]
     steps:
       - uses: actions/checkout@v4
         with:
