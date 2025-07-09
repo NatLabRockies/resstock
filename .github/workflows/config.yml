@@ -283,6 +283,32 @@ jobs:
           sudo gem install simplecov-html
           ruby test/test_bsb_analysis.rb
 
+  standard-plots-tests:
+    runs-on: ubuntu-22.04
+    needs: [unit-tests]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install postprocessing dependencies
+        working-directory: postprocessing
+        run: |
+          uv venv
+          uv pip install -e . --all-groups
+
+      - name: Run standard plots tests
+        working-directory: postprocessing
+        run: |
+          uv run pytest resstockpostproc/standard_plots/tests -q
+
   compare-tools:
     runs-on: ubuntu-22.04
     needs: [analysis-tests, integration-tests]
