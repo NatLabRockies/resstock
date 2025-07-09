@@ -1,6 +1,6 @@
-----------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option1:'HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load'
-----------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option1:'HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate'
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
   not => 489600 (89.0%)
@@ -33,183 +33,9 @@ and => 530447 (96.4%)
 Overall applied to => 408859 (74.3%).
 -------------------------------------
 
---------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option2:'Cooling Setpoint Has Offset|No'
---------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
---------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option3:'Cooling Setpoint Offset Magnitude|0F'
---------------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
--------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option4:'Cooling Setpoint Offset Period|None'
--------------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
---------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option5:'Heating Setpoint Has Offset|No'
---------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
---------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option6:'Heating Setpoint Offset Magnitude|0F'
---------------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
--------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option7:'Heating Setpoint Offset Period|None'
--------------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
--------------------------------------
-
-------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option8:'HVAC Cooling Efficiency|Ducted Heat Pump'
-------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option2:'HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
   not => 489600 (89.0%)
@@ -242,13 +68,19 @@ and => 530447 (96.4%)
 Overall applied to => 408859 (74.3%).
 -------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Cold Climate Heat Pump with Electric Backup', Option9:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
-----------------------------------------------------------------------------------------------------------------------------------------------------
-or => 550000 (100.0%)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option3:'HVAC Cooling Efficiency|Ducted Heat Pump'
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+and => 413417 (75.2%)
   HVAC Has Ducts|Yes => 423608 (77.0%)
-  HVAC Has Ducts|No => 126392 (23.0%)
--------------------------------------
+  not => 489600 (89.0%)
+    or => 60400 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+-------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 530447 (96.4%)
@@ -268,38 +100,26 @@ and => 530447 (96.4%)
     and => 11268 (2.0%)
       Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
 ------------------------------------------------------------------------------------------
-Overall applied to => 530447 (96.4%).
+Overall applied to => 408859 (74.3%).
 -------------------------------------
 
 All of the options (and-ing) were applied to: 408859 (74.3%)
-Any of the options (or-ing) were applied to: 530447 (96.4%)
+Any of the options (or-ing) were applied to: 408859 (74.3%)
 --------------------------------------------------------------------------------
-Report of how the 9 options were applied to the buildings.
+Report of how the 3 options were applied to the buildings.
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================================================+=====================+==================+==================+
-|                   7 | cooling setpoint has offset, cooling setpoint      | 121588 (22.1%)      | 121588 (22.1%)   | 121588 (22.1%)   |
-|                     | offset magnitude, cooling setpoint offset period,  |                     |                  |                  |
-|                     | heating setpoint has offset, heating setpoint      |                     |                  |                  |
-|                     | offset magnitude, heating setpoint offset period,  |                     |                  |                  |
-|                     | hvac cooling partial space conditioning            |                     |                  |                  |
-+---------------------+----------------------------------------------------+---------------------+------------------+------------------+
-|                   9 | hvac heating efficiency, cooling setpoint has      | 408859 (74.3%)      | 408859 (74.3%)   | 530447 (96.4%)   |
-|                     | offset, cooling setpoint offset magnitude, cooling |                     |                  |                  |
-|                     | setpoint offset period, heating setpoint has       |                     |                  |                  |
-|                     | offset, heating setpoint offset magnitude, heating |                     |                  |                  |
-|                     | setpoint offset period, hvac cooling efficiency,   |                     |                  |                  |
-|                     | hvac cooling partial space conditioning            |                     |                  |                  |
+|                   3 | hvac heating efficiency, hvac detailed performance | 408859 (74.3%)      | 408859 (74.3%)   | 408859 (74.3%)   |
+|                     | data, hvac cooling efficiency                      |                     |                  |                  |
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
-Detailed report of how the 9 options were applied to the buildings.
-+---------------------+---------------------------+---------------------+------------------+------------------+
-|   Number of options | Applied options           | Applied buildings   | Cumulative sub   | Cumulative all   |
-+=====================+===========================+=====================+==================+==================+
-|                   7 | 2, 3, 4, 5, 6, 7, 9       | 121588 (22.1%)      | 121588 (22.1%)   | 121588 (22.1%)   |
-+---------------------+---------------------------+---------------------+------------------+------------------+
-|                   9 | 1, 2, 3, 4, 5, 6, 7, 8, 9 | 408859 (74.3%)      | 408859 (74.3%)   | 530447 (96.4%)   |
-+---------------------+---------------------------+---------------------+------------------+------------------+
+Detailed report of how the 3 options were applied to the buildings.
++---------------------+-------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+===================+=====================+==================+==================+
+|                   3 | 1, 2, 3           | 408859 (74.3%)      | 408859 (74.3%)   | 408859 (74.3%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade2:'Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option1:'HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8'

@@ -1,14 +1,8 @@
 upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
-1,Cold Climate Heat Pump with Electric Backup,1,"HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load",408859,74.3
-1,Cold Climate Heat Pump with Electric Backup,2,Cooling Setpoint Has Offset|No,530447,96.4
-1,Cold Climate Heat Pump with Electric Backup,3,Cooling Setpoint Offset Magnitude|0F,530447,96.4
-1,Cold Climate Heat Pump with Electric Backup,4,Cooling Setpoint Offset Period|None,530447,96.4
-1,Cold Climate Heat Pump with Electric Backup,5,Heating Setpoint Has Offset|No,530447,96.4
-1,Cold Climate Heat Pump with Electric Backup,6,Heating Setpoint Offset Magnitude|0F,530447,96.4
-1,Cold Climate Heat Pump with Electric Backup,7,Heating Setpoint Offset Period|None,530447,96.4
-1,Cold Climate Heat Pump with Electric Backup,8,HVAC Cooling Efficiency|Ducted Heat Pump,408859,74.3
-1,Cold Climate Heat Pump with Electric Backup,9,HVAC Cooling Partial Space Conditioning|100% Conditioned,530447,96.4
-1,Cold Climate Heat Pump with Electric Backup,-1,All,530447,96.4
+1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,1,"HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate",408859,74.3
+1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,408859,74.3
+1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,3,HVAC Cooling Efficiency|Ducted Heat Pump,408859,74.3
+1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,-1,All,408859,74.3
 2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8",380161,69.1
 2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,380161,69.1
 2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,389136,70.8

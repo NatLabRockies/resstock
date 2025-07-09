@@ -8,6 +8,39 @@ Development Changelog
 
 
     .. change::
+        :tags: bugfix, hvac
+        :pullreq: 1441, 1254
+
+        **Date**: 2025-07-08
+
+        Title:
+        Fix for BA seasons always enabled
+
+        Description:
+        A bug in the code does not allow auto seasons to be turned off. The intended behavior is to run without auto seasons. 
+        This pull request fixes this issue.
+
+        resstock-estimation: `pull request 416 <https://github.com/NREL/resstock-estimation/pull/416>`_
+
+        Assignees: Joe Robertson
+
+
+    .. change::
+        :tags: standard data release
+        :pullreq: 1429, 1197
+
+        **Date**: 2025-06-18
+
+        Title:
+        Use HVAC Detailed Performance Option for a Ducted ASHP
+
+        Description:
+        Introduce an ASHP upgrade measure for SDR that is a typical cold climate ducted air source heat pump with detailed performance data. This pull request uses a couple detailed HVAC performance options to define the curves for a ducted version of a variable speed cold climate ASHP. Options are added to `options_lookup.tsv` and the cold climate ASHP upgrade is added to `sdr_upgrades_tmy3.yml`.
+
+        Assignees: Philip White, Joe Robertson, Anthony Fontanini
+
+
+    .. change::
         :tags: standard data release
         :pullreq: 1429
 
@@ -153,7 +186,7 @@ Development Changelog
 
  
     .. change::
-        :tags: bug fix
+        :tags: bugfix
         :pullreq: 1362
 
         **Date**: 2025-04-18
