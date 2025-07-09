@@ -1,72 +1,81 @@
 # yaml-language-server: $schema=./schema/workflow_schema.json
 
 # results_csvs_folder: /Users/radhikar/Documents/buildstock2025/resstock2025/test/base_results/upgrades/sdr_annual
-annual_results_dir: /Users/radhikar/Documents/buildstock2025/resstock_amy2018_release_2/parquet
-output_dir: /Users/radhikar/Documents/buildstock2025/resstock_amy2018_release_2/plots_try2
-upgrades: [0, 1] # corresponds to results_up00.csv, results_up01.csv, results_up02.csv
+annual_results_dir: /Users/radhikar/Documents/buildstock2025/sdr_develop/pub_annual
+output_dir: /Users/radhikar/Documents/buildstock2025/sdr_plots/
+upgrades: [0] # corresponds to results_up00.csv, results_up01.csv, results_up02.csv
 
 quantities:
-  - name: energy_consumption
+  - name: net_energy_consumption
+    constituents:
+      - Generation, Electricity
+      - out.electricity.total.energy_consumption.kwh
+      - out.natural_gas.total.energy_consumption.kwh
+      - out.propane.total.energy_consumption.kwh
+      - out.fuel_oil.total.energy_consumption.kwh
+    sum: out.site_energy.net.energy_consumption.kwh
+  - name: total_energy_consumption
     constituents:
       - out.electricity.total.energy_consumption.kwh
       - out.natural_gas.total.energy_consumption.kwh
       - out.propane.total.energy_consumption.kwh
       - out.fuel_oil.total.energy_consumption.kwh
     sum: out.site_energy.total.energy_consumption.kwh
-  - name: End Use Groups
-    constituents:
-      - Electric Vehicle Charging, Electricity
-      - Hot Water, Propane
-      - Hot Water, Fuel Oil
-      - Hot Water, Natural Gas
-      - Hot Water, Electricity
-      - Heating Heat Pump Backup, Propane
-      - Heating Heat Pump Backup, Fuel Oil
-      - Heating Heat Pump Backup, Natural Gas
-      - Heating Heat Pump Backup, Electricity
-      - Heating Fans Pumps, Electricity
-      - Heating, Propane
-      - Heating, Fuel Oil
-      - Heating, Natural Gas
-      - Heating, Electricity
-      - Cooling Fans Pumps, Electricity
-      - Cooling, Electricity
-      - Lighting, Propane
-      - Lighting, Fuel Oil
-      - Lighting, Natural Gas
-      - Lighting, Electricity
-      - Vent Fan, Electricity
-      - Miscellaneous, Propane
-      - Miscellaneous, Fuel Oil
-      - Miscellaneous, Natural Gas
-      - Miscellaneous, Electricity
-      - Appliances, Propane
-      - Appliances, Fuel Oil
-      - Appliances, Natural Gas
-      - Appliances, Electricity
-    sum: out.site_energy.total.energy_consumption.kwh
+  # - name: End Use Groups
+  #   constituents:
+  #     - Generation, Electricity
+  #     - Electric Vehicle Charging, Electricity
+  #     - Hot Water, Propane
+  #     - Hot Water, Fuel Oil
+  #     - Hot Water, Natural Gas
+  #     - Hot Water, Electricity
+  #     - Heating Heat Pump Backup, Propane
+  #     - Heating Heat Pump Backup, Fuel Oil
+  #     - Heating Heat Pump Backup, Natural Gas
+  #     - Heating Heat Pump Backup, Electricity
+  #     - Heating Fans Pumps, Electricity
+  #     - Heating, Propane
+  #     - Heating, Fuel Oil
+  #     - Heating, Natural Gas
+  #     - Heating, Electricity
+  #     - Cooling Fans Pumps, Electricity
+  #     - Cooling, Electricity
+  #     - Lighting, Propane
+  #     - Lighting, Fuel Oil
+  #     - Lighting, Natural Gas
+  #     - Lighting, Electricity
+  #     - Vent Fan, Electricity
+  #     - Miscellaneous, Propane
+  #     - Miscellaneous, Fuel Oil
+  #     - Miscellaneous, Natural Gas
+  #     - Miscellaneous, Electricity
+  #     - Appliances, Propane
+  #     - Appliances, Fuel Oil
+  #     - Appliances, Natural Gas
+  #     - Appliances, Electricity
+  #   sum: out.site_energy.net.energy_consumption.kwh
 
-  - name: bills
-    constituents:
-      - out.bills.electricity.usd
-      - out.bills.natural_gas.usd
-      - out.bills.fuel_oil.usd
-      - out.bills.propane.usd
-    sum: out.bills.all_fuels.usd
-  - name: unmet_hours
-    constituents:
-      - out.unmet_hours.cooling.hour
-      - out.unmet_hours.heating.hour
-  - name: mid_case_emissions
-    constituents:
-      - out.emissions.electricity.lrmer_mid_case_25.co2e_kg
-      - out.emissions.natural_gas.lrmer_mid_case_25.co2e_kg
-      - out.emissions.propane.lrmer_mid_case_25.co2e_kg
-      - out.emissions.fuel_oil.lrmer_mid_case_25.co2e_kg
-    sum: out.emissions.all_fuels.lrmer_mid_case_25.co2e_kg
+  # - name: bills
+  #   constituents:
+  #     - out.bills.electricity.usd
+  #     - out.bills.natural_gas.usd
+  #     - out.bills.fuel_oil.usd
+  #     - out.bills.propane.usd
+  #   sum: out.bills.all_fuels.usd
+  # - name: unmet_hours
+  #   constituents:
+  #     - out.unmet_hours.cooling.hour
+  #     - out.unmet_hours.heating.hour
+  # - name: mid_case_emissions
+  #   constituents:
+  #     - out.emissions.electricity.lrmer_mid_case_25.co2e_kg
+  #     - out.emissions.natural_gas.lrmer_mid_case_25.co2e_kg
+  #     - out.emissions.propane.lrmer_mid_case_25.co2e_kg
+  #     - out.emissions.fuel_oil.lrmer_mid_case_25.co2e_kg
+  #   sum: out.emissions.all_fuels.lrmer_mid_case_25.co2e_kg
 visualization_types:
   - bar
-  - box
+  # - box
 group_by:
   - in.census_division
   - in.vintage
@@ -75,11 +84,11 @@ group_by:
   - in.vacancy_status
 comparison_types:
   - absolute
-  - savings
+  # - savings
   # - percent_savings
 upgrade_inclusion:
   - all
-  - applied_only
+  # - applied_only
 vacancy_inclusion:
   - all
-  - occupied_only
+  # - occupied_only
