@@ -208,7 +208,7 @@ def test_vacancy_filter(processor: DataProcessor):
 def test_upgrade_applied_only(processor: DataProcessor):
     """upgrade_inclusion=applied_only removes rows where applicability==False."""
 
-    spec = _build_base_spec(upgrade_inclusion=UpgradeInclusion.applied_only)
+    spec = _build_base_spec(upgrade_inclusion=UpgradeInclusion.applied_only, group_by="in.heating_fuel")
     df = processor.prepare_data_for_plot(spec)
 
     # After removing non-applicable rows, Gas should remain for each upgrade (baseline, 1, 2)
@@ -227,6 +227,7 @@ def test_quantity_group_mean_aggregation(processor: DataProcessor):
         visualization_type=VizType.bar,
         comparison_type=ComparisonTypes.mean,
         quantity=qgroup,
+        group_by="in.heating_fuel",
         quantity_group_name="energy",
     )
     df = processor.prepare_data_for_plot(spec)
