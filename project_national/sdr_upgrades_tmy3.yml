@@ -504,20 +504,11 @@ upgrades:
       - *partial_conditioning_100_percent_ducts_only
 
       ### -- Attic Floor Insulation -- ###
-      - *attic_insulation_sf_cz1
-      - *attic_insulation_sf_cz2
-      - *attic_insulation_sf_cz3
-      - *attic_insulation_sf_cz4_5
-      - *attic_insulation_sf_cz6_8
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
 
       ### -- Air Sealing -- ###
-      - *infiltration_cz1_2_sf_mf_20pct
-      - *infiltration_cz3_sf_53pct
-      - *infiltration_cz3_mf_63pct
-      - *infiltration_cz4_5_sf_mf_32pct
-      - *infiltration_cz6_8_sf_42pct
-      - *infiltration_cz6_8_mf_40pct
-      - *infiltration_all_cz_mobile_home_30pct
+      - *infiltration_all_cz_sf_mf_mb
 
   ### -- Electric Vehicles -- ###
   - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
