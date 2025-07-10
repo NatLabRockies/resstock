@@ -573,7 +573,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
       use_auto_season = "use_auto_#{htg_or_clg}_season".to_sym
       hvac_control_season_period = "hvac_control_#{htg_or_clg}_season_period".to_sym
-      if use_auto_season && hvac_control_season_period
+      if args[use_auto_season] && (args[hvac_control_season_period] == Constants::Auto)
         args[hvac_control_season_period] = Constants::BuildingAmerica
       end
     end
