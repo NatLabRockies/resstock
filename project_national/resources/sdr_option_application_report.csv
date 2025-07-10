@@ -21,11 +21,10 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 6,Attic Floor Insulation for Unfinished Attics,2,Insulation Ceiling|R-49,84557,15.4
 6,Attic Floor Insulation for Unfinished Attics,3,Insulation Ceiling|R-60,129264,23.5
 6,Attic Floor Insulation for Unfinished Attics,-1,All,215323,39.1
-7,Duct Sealing and Insulation,1,"Duct Leakage and Insulation|10% Leakage to Outside, R-8",51807,9.4
-7,Duct Sealing and Insulation,2,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",14008,2.5
-7,Duct Sealing and Insulation,3,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",27851,5.1
-7,Duct Sealing and Insulation,4,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",147453,26.8
-7,Duct Sealing and Insulation,-1,All,241119,43.8
+7,Duct Sealing and Insulation,1,"Duct Leakage and Insulation|5% Leakage to Outside, R-6",18930,3.4
+7,Duct Sealing and Insulation,2,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",37638,6.8
+7,Duct Sealing and Insulation,3,"Duct Leakage and Insulation|5% Leakage to Outside, R-8",199260,36.2
+7,Duct Sealing and Insulation,-1,All,255828,46.5
 8,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",380161,69.1
 8,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,2,HVAC Cooling Efficiency|Ducted Heat Pump,380161,69.1
 8,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,389136,70.8
