@@ -46,11 +46,11 @@ postprocessing:
   aws:
    region_name: us-west-2
    s3:
-     bucket: res-sdr
+     bucket: res_sdr
      prefix: testing-sdr-fy25
    athena:
      glue_service_role: service-role/AWSGlueServiceRole-default
-     database_name: res-sdr
+     database_name: res_sdr
      max_crawling_time: 1200
 
 # Workflow generator
