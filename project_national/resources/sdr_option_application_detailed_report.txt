@@ -523,340 +523,66 @@ Detailed report of how the 3 options were applied to the buildings.
 |                   3 | 1, 2, 3           | 380161 (69.1%)      | 380161 (69.1%)   | 389136 (70.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
---------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Air Sealing', Option1:'Infiltration Reduction|20%'
---------------------------------------------------------------------------------------
-and => 74293 (13.5%)
-  or => 84490 (15.4%)
+--------------------------------------------------------------------------------
+Option Apply Report for - Upgrade5:'Air Sealing', Option1:'Infiltration|5 ACH50'
+--------------------------------------------------------------------------------
+and => 507151 (92.2%)
+  or => 550000 (100.0%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
     ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
     ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
-  or => 515650 (93.8%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 525601 (95.6%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 74293 (13.5%).
-------------------------------------
-
---------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Air Sealing', Option2:'Infiltration Reduction|53%'
---------------------------------------------------------------------------------------
-and => 89388 (16.3%)
-  or => 137174 (24.9%)
     ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
     ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
     ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 370342 (67.3%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 89388 (16.3%).
-------------------------------------
-
---------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Air Sealing', Option3:'Infiltration Reduction|63%'
---------------------------------------------------------------------------------------
-and => 33988 (6.2%)
-  or => 137174 (24.9%)
-    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
-    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
-    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 145308 (26.4%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 33988 (6.2%).
------------------------------------
-
---------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Air Sealing', Option4:'Infiltration Reduction|32%'
---------------------------------------------------------------------------------------
-and => 264689 (48.1%)
-  or => 283301 (51.5%)
     ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
     ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
     ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
     ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
     ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
-  or => 515650 (93.8%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
+    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
+    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
+    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
+    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
+    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
+    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
+  or => 507151 (92.2%)
     Infiltration|6 ACH50 => 23492 (4.3%)
     Infiltration|7 ACH50 => 27163 (4.9%)
     Infiltration|8 ACH50 => 29418 (5.3%)
     Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
     Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
     Infiltration|20 ACH50 => 92403 (16.8%)
     Infiltration|25 ACH50 => 56884 (10.3%)
     Infiltration|30 ACH50 => 33647 (6.1%)
     Infiltration|40 ACH50 => 31185 (5.7%)
     Infiltration|50 ACH50 => 17543 (3.2%)
 -----------------------------------------
-Overall applied to => 264689 (48.1%).
+Overall applied to => 507151 (92.2%).
 -------------------------------------
 
---------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Air Sealing', Option5:'Infiltration Reduction|42%'
---------------------------------------------------------------------------------------
-and => 32032 (5.8%)
-  or => 45035 (8.2%)
-    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
-    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
-    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
-    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
-    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
-    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
-  or => 370342 (67.3%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-  or => 546044 (99.3%)
-    Infiltration|3 ACH50 => 7701 (1.4%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 32032 (5.8%).
------------------------------------
-
---------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Air Sealing', Option6:'Infiltration Reduction|40%'
---------------------------------------------------------------------------------------
-and => 9549 (1.7%)
-  or => 45035 (8.2%)
-    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
-    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
-    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
-    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
-    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
-    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
-  or => 145308 (26.4%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 546044 (99.3%)
-    Infiltration|3 ACH50 => 7701 (1.4%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 9549 (1.7%).
-----------------------------------
-
---------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Air Sealing', Option7:'Infiltration Reduction|30%'
---------------------------------------------------------------------------------------
-and => 33992 (6.2%)
-  Geometry Building Type RECS|Mobile Home => 34350 (6.2%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 33992 (6.2%).
------------------------------------
-
-All of the options (and-ing) were applied to: 0 (0.0%)
-Any of the options (or-ing) were applied to: 537931 (97.8%)
+All of the options (and-ing) were applied to: 507151 (92.2%)
+Any of the options (or-ing) were applied to: 507151 (92.2%)
 --------------------------------------------------------------------------------
 Report of how the 1 options were applied to the buildings.
-+---------------------+------------------------+---------------------+------------------+------------------+
-|   Number of options | Applied options        | Applied buildings   | Cumulative sub   | Cumulative all   |
-+=====================+========================+=====================+==================+==================+
-|                   1 | infiltration reduction | 537931 (97.8%)      | 537931 (97.8%)   | 537931 (97.8%)   |
-+---------------------+------------------------+---------------------+------------------+------------------+
++---------------------+-------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+===================+=====================+==================+==================+
+|                   1 | infiltration      | 507151 (92.2%)      | 507151 (92.2%)   | 507151 (92.2%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
-Detailed report of how the 7 options were applied to the buildings.
+Detailed report of how the 1 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options |   Applied options | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 |                 1 | 74293 (13.5%)       | 74293 (13.5%)    | 74293 (13.5%)    |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 2 | 89388 (16.3%)       | 163681 (29.8%)   | 163681 (29.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 3 | 33988 (6.2%)        | 197669 (35.9%)   | 197669 (35.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 4 | 264689 (48.1%)      | 462358 (84.1%)   | 462358 (84.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 5 | 32032 (5.8%)        | 494390 (89.9%)   | 494390 (89.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 6 | 9549 (1.7%)         | 503939 (91.6%)   | 503939 (91.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 7 | 33992 (6.2%)        | 537931 (97.8%)   | 537931 (97.8%)   |
+|                   1 |                 1 | 507151 (92.2%)      | 507151 (92.2%)   | 507151 (92.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option1:'Insulation Ceiling|R-28'
+Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option1:'Insulation Ceiling|R-49'
 --------------------------------------------------------------------------------------------------------------------
-and => 1639 (0.3%)
+and => 3191 (0.6%)
   or => 9867 (1.8%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 96715 (17.6%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
--------------------------------------------
-Overall applied to => 1639 (0.3%).
-----------------------------------
-
---------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option2:'Insulation Ceiling|R-30'
---------------------------------------------------------------------------------------------------------------------
-and => 14786 (2.7%)
-  or => 74623 (13.6%)
-    ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
-    ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 96715 (17.6%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
--------------------------------------------
-Overall applied to => 14786 (2.7%).
------------------------------------
-
---------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option3:'Insulation Ceiling|R-34'
---------------------------------------------------------------------------------------------------------------------
-and => 52387 (9.5%)
-  or => 137174 (24.9%)
-    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
-    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
-    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 175298 (31.9%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
-    Insulation Ceiling|R-30 => 78583 (14.3%)
---------------------------------------------
-Overall applied to => 52387 (9.5%).
------------------------------------
-
---------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option4:'Insulation Ceiling|R-44'
---------------------------------------------------------------------------------------------------------------------
-and => 110399 (20.1%)
-  or => 283301 (51.5%)
-    ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
-    ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
-    ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
-    ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
-    ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
   or => 235952 (42.9%)
     Geometry Attic Type|Vented Attic => 217730 (39.6%)
     Geometry Attic Type|Unvented Attic => 18222 (3.3%)
@@ -868,14 +594,24 @@ and => 110399 (20.1%)
     Insulation Ceiling|R-30 => 78583 (14.3%)
     Insulation Ceiling|R-38 => 45904 (8.3%)
 -------------------------------------------
-Overall applied to => 110399 (20.1%).
--------------------------------------
+Overall applied to => 3191 (0.6%).
+----------------------------------
 
 --------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option5:'Insulation Ceiling|R-60'
+Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option2:'Insulation Ceiling|R-60'
 --------------------------------------------------------------------------------------------------------------------
-and => 20338 (3.7%)
-  or => 45035 (8.2%)
+and => 232753 (42.3%)
+  or => 540133 (98.2%)
+    ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
+    ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
+    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
+    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
+    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
+    ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
+    ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
+    ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
+    ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
+    ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
     ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
     ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
     ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
@@ -894,32 +630,26 @@ and => 20338 (3.7%)
     Insulation Ceiling|R-38 => 45904 (8.3%)
     Insulation Ceiling|R-49 => 14750 (2.7%)
 -------------------------------------------
-Overall applied to => 20338 (3.7%).
------------------------------------
+Overall applied to => 232753 (42.3%).
+-------------------------------------
 
 All of the options (and-ing) were applied to: 0 (0.0%)
-Any of the options (or-ing) were applied to: 199549 (36.3%)
+Any of the options (or-ing) were applied to: 235944 (42.9%)
 --------------------------------------------------------------------------------
 Report of how the 1 options were applied to the buildings.
 +---------------------+--------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================+=====================+==================+==================+
-|                   1 | insulation ceiling | 199549 (36.3%)      | 199549 (36.3%)   | 199549 (36.3%)   |
+|                   1 | insulation ceiling | 235944 (42.9%)      | 235944 (42.9%)   | 235944 (42.9%)   |
 +---------------------+--------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
-Detailed report of how the 5 options were applied to the buildings.
+Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options |   Applied options | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 |                 1 | 1639 (0.3%)         | 1639 (0.3%)      | 1639 (0.3%)      |
+|                   1 |                 1 | 3191 (0.6%)         | 3191 (0.6%)      | 3191 (0.6%)      |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 2 | 14786 (2.7%)        | 16425 (3.0%)     | 16425 (3.0%)     |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 3 | 52387 (9.5%)        | 68812 (12.5%)    | 68812 (12.5%)    |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 4 | 110399 (20.1%)      | 179211 (32.6%)   | 179211 (32.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 5 | 20338 (3.7%)        | 199549 (36.3%)   | 199549 (36.3%)   |
+|                   1 |                 2 | 232753 (42.3%)      | 235944 (42.9%)   | 235944 (42.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -1004,311 +734,49 @@ Detailed report of how the 1 options were applied to the buildings.
 |                   1 |                 1 | 167618 (30.5%)      | 167618 (30.5%)   | 167618 (30.5%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
-------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option1:'Infiltration Reduction|20%'
-------------------------------------------------------------------------------------------------------------------------------
-and => 74293 (13.5%)
-  or => 84490 (15.4%)
+------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option1:'Infiltration|5 ACH50'
+------------------------------------------------------------------------------------------------------------------------
+and => 507151 (92.2%)
+  or => 550000 (100.0%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
     ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
     ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
-  or => 515650 (93.8%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 525601 (95.6%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 74293 (13.5%).
-------------------------------------
-
-------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option2:'Infiltration Reduction|53%'
-------------------------------------------------------------------------------------------------------------------------------
-and => 89388 (16.3%)
-  or => 137174 (24.9%)
     ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
     ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
     ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 370342 (67.3%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 89388 (16.3%).
-------------------------------------
-
-------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option3:'Infiltration Reduction|63%'
-------------------------------------------------------------------------------------------------------------------------------
-and => 33988 (6.2%)
-  or => 137174 (24.9%)
-    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
-    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
-    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 145308 (26.4%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 33988 (6.2%).
------------------------------------
-
-------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option4:'Infiltration Reduction|32%'
-------------------------------------------------------------------------------------------------------------------------------
-and => 264689 (48.1%)
-  or => 283301 (51.5%)
     ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
     ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
     ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
     ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
     ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
-  or => 515650 (93.8%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
+    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
+    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
+    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
+    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
+    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
+    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
+  or => 507151 (92.2%)
     Infiltration|6 ACH50 => 23492 (4.3%)
     Infiltration|7 ACH50 => 27163 (4.9%)
     Infiltration|8 ACH50 => 29418 (5.3%)
     Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
     Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
     Infiltration|20 ACH50 => 92403 (16.8%)
     Infiltration|25 ACH50 => 56884 (10.3%)
     Infiltration|30 ACH50 => 33647 (6.1%)
     Infiltration|40 ACH50 => 31185 (5.7%)
     Infiltration|50 ACH50 => 17543 (3.2%)
 -----------------------------------------
-Overall applied to => 264689 (48.1%).
+Overall applied to => 507151 (92.2%).
 -------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option5:'Infiltration Reduction|42%'
-------------------------------------------------------------------------------------------------------------------------------
-and => 32032 (5.8%)
-  or => 45035 (8.2%)
-    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
-    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
-    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
-    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
-    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
-    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
-  or => 370342 (67.3%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-  or => 546044 (99.3%)
-    Infiltration|3 ACH50 => 7701 (1.4%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 32032 (5.8%).
------------------------------------
-
-------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option6:'Infiltration Reduction|40%'
-------------------------------------------------------------------------------------------------------------------------------
-and => 9549 (1.7%)
-  or => 45035 (8.2%)
-    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
-    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
-    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
-    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
-    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
-    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
-  or => 145308 (26.4%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 546044 (99.3%)
-    Infiltration|3 ACH50 => 7701 (1.4%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 9549 (1.7%).
-----------------------------------
-
-------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option7:'Infiltration Reduction|30%'
-------------------------------------------------------------------------------------------------------------------------------
-and => 33992 (6.2%)
-  Geometry Building Type RECS|Mobile Home => 34350 (6.2%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 33992 (6.2%).
------------------------------------
-
 ---------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option8:'Insulation Ceiling|R-28'
+Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option2:'Insulation Ceiling|R-49'
 ---------------------------------------------------------------------------------------------------------------------------
-and => 1639 (0.3%)
+and => 3191 (0.6%)
   or => 9867 (1.8%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 96715 (17.6%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
--------------------------------------------
-Overall applied to => 1639 (0.3%).
-----------------------------------
-
----------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option9:'Insulation Ceiling|R-30'
----------------------------------------------------------------------------------------------------------------------------
-and => 14786 (2.7%)
-  or => 74623 (13.6%)
-    ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
-    ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 96715 (17.6%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
--------------------------------------------
-Overall applied to => 14786 (2.7%).
------------------------------------
-
-----------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option10:'Insulation Ceiling|R-34'
-----------------------------------------------------------------------------------------------------------------------------
-and => 52387 (9.5%)
-  or => 137174 (24.9%)
-    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
-    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
-    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 175298 (31.9%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
-    Insulation Ceiling|R-30 => 78583 (14.3%)
---------------------------------------------
-Overall applied to => 52387 (9.5%).
------------------------------------
-
-----------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option11:'Insulation Ceiling|R-44'
-----------------------------------------------------------------------------------------------------------------------------
-and => 110399 (20.1%)
-  or => 283301 (51.5%)
-    ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
-    ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
-    ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
-    ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
-    ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
   or => 235952 (42.9%)
     Geometry Attic Type|Vented Attic => 217730 (39.6%)
     Geometry Attic Type|Unvented Attic => 18222 (3.3%)
@@ -1320,14 +788,24 @@ and => 110399 (20.1%)
     Insulation Ceiling|R-30 => 78583 (14.3%)
     Insulation Ceiling|R-38 => 45904 (8.3%)
 -------------------------------------------
-Overall applied to => 110399 (20.1%).
--------------------------------------
+Overall applied to => 3191 (0.6%).
+----------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option12:'Insulation Ceiling|R-60'
-----------------------------------------------------------------------------------------------------------------------------
-and => 20338 (3.7%)
-  or => 45035 (8.2%)
+---------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option3:'Insulation Ceiling|R-60'
+---------------------------------------------------------------------------------------------------------------------------
+and => 232753 (42.3%)
+  or => 540133 (98.2%)
+    ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
+    ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
+    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
+    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
+    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
+    ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
+    ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
+    ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
+    ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
+    ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
     ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
     ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
     ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
@@ -1346,12 +824,12 @@ and => 20338 (3.7%)
     Insulation Ceiling|R-38 => 45904 (8.3%)
     Insulation Ceiling|R-49 => 14750 (2.7%)
 -------------------------------------------
-Overall applied to => 20338 (3.7%).
------------------------------------
+Overall applied to => 232753 (42.3%).
+-------------------------------------
 
------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option13:'Duct Leakage and Insulation|5% Leakage to Outside, R-6'
------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option4:'Duct Leakage and Insulation|5% Leakage to Outside, R-6'
+----------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 18930 (3.4%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-6 => 4922 (0.9%)
   Duct Leakage and Insulation|20% Leakage to Outside, R-6 => 8897 (1.6%)
@@ -1360,9 +838,9 @@ or => 18930 (3.4%)
 Overall applied to => 18930 (3.4%).
 -----------------------------------
 
------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option14:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option5:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
+----------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 37638 (6.8%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-8 => 9787 (1.8%)
   Duct Leakage and Insulation|20% Leakage to Outside, R-8 => 17689 (3.2%)
@@ -1371,9 +849,9 @@ or => 37638 (6.8%)
 Overall applied to => 37638 (6.8%).
 -----------------------------------
 
------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option15:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade9:'Air Sealing + Attic Floor Insulation + Duct sealing', Option6:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
+----------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 199260 (36.2%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-4 => 21537 (3.9%)
   Duct Leakage and Insulation|10% Leakage to Outside, Uninsulated => 30270 (5.5%)
@@ -1386,469 +864,122 @@ Overall applied to => 199260 (36.2%).
 -------------------------------------
 
 All of the options (and-ing) were applied to: 0 (0.0%)
-Any of the options (or-ing) were applied to: 547571 (99.6%)
+Any of the options (or-ing) were applied to: 538348 (97.9%)
 --------------------------------------------------------------------------------
 Report of how the 3 options were applied to the buildings.
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|   Number of options | Applied options                                  | Applied buildings   | Cumulative sub   | Cumulative all   |
-+=====================+==================================================+=====================+==================+==================+
-|                   1 | infiltration reduction                           | 232285 (42.2%)      | 232285 (42.2%)   | 232285 (42.2%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   1 | insulation ceiling                               | 1189 (0.2%)         | 233474 (42.4%)   | 233474 (42.4%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   1 | duct leakage and insulation                      | 4637 (0.8%)         | 238111 (43.3%)   | 238111 (43.3%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   2 | infiltration reduction, insulation ceiling       | 58269 (10.6%)       | 58269 (10.6%)    | 296380 (53.9%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   2 | infiltration reduction, duct leakage and         | 111100 (20.2%)      | 169369 (30.8%)   | 407480 (74.1%)   |
-|                     | insulation                                       |                     |                  |                  |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   2 | insulation ceiling, duct leakage and insulation  | 3814 (0.7%)         | 173183 (31.5%)   | 411294 (74.8%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   3 | infiltration reduction, insulation ceiling, duct | 136277 (24.8%)      | 136277 (24.8%)   | 547571 (99.6%)   |
-|                     | leakage and insulation                           |                     |                  |                  |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+====================================================+=====================+==================+==================+
+|                   1 | infiltration                                       | 217940 (39.6%)      | 217940 (39.6%)   | 217940 (39.6%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   1 | insulation ceiling                                 | 5469 (1.0%)         | 223409 (40.6%)   | 223409 (40.6%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   1 | duct leakage and insulation                        | 8383 (1.5%)         | 231792 (42.1%)   | 231792 (42.1%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   2 | infiltration, insulation ceiling                   | 59111 (10.7%)       | 59111 (10.7%)    | 290903 (52.9%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   2 | infiltration, duct leakage and insulation          | 76081 (13.8%)       | 135192 (24.6%)   | 366984 (66.7%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   2 | insulation ceiling, duct leakage and insulation    | 17345 (3.2%)        | 152537 (27.7%)   | 384329 (69.9%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   3 | infiltration, insulation ceiling, duct leakage and | 154019 (28.0%)      | 154019 (28.0%)   | 538348 (97.9%)   |
+|                     | insulation                                         |                     |                  |                  |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
-Detailed report of how the 15 options were applied to the buildings.
+Detailed report of how the 6 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 | 1                 | 31012 (5.6%)        | 31012 (5.6%)     | 31012 (5.6%)     |
+|                   1 | 1                 | 217940 (39.6%)      | 217940 (39.6%)   | 217940 (39.6%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 2                 | 12509 (2.3%)        | 43521 (7.9%)     | 43521 (7.9%)     |
+|                   1 | 2                 | 31 (0.0%)           | 217971 (39.6%)   | 217971 (39.6%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 3                 | 31075 (5.7%)        | 74596 (13.6%)    | 74596 (13.6%)    |
+|                   1 | 3                 | 5438 (1.0%)         | 223409 (40.6%)   | 223409 (40.6%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 4                 | 107974 (19.6%)      | 182570 (33.2%)   | 182570 (33.2%)   |
+|                   1 | 4                 | 1777 (0.3%)         | 225186 (40.9%)   | 225186 (40.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 5                 | 7366 (1.3%)         | 189936 (34.5%)   | 189936 (34.5%)   |
+|                   1 | 5                 | 2754 (0.5%)         | 227940 (41.4%)   | 227940 (41.4%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 6                 | 8357 (1.5%)         | 198293 (36.1%)   | 198293 (36.1%)   |
+|                   1 | 6                 | 3852 (0.7%)         | 231792 (42.1%)   | 231792 (42.1%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 7                 | 33992 (6.2%)        | 232285 (42.2%)   | 232285 (42.2%)   |
+|                   2 | 1, 2              | 689 (0.1%)          | 689 (0.1%)       | 232481 (42.3%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 8                 | 4 (0.0%)            | 232289 (42.2%)   | 232289 (42.2%)   |
+|                   2 | 1, 3              | 58422 (10.6%)       | 59111 (10.7%)    | 290903 (52.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 9                 | 9 (0.0%)            | 232298 (42.2%)   | 232298 (42.2%)   |
+|                   2 | 1, 4              | 5761 (1.0%)         | 64872 (11.8%)    | 296664 (53.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 10                | 81 (0.0%)           | 232379 (42.3%)   | 232379 (42.3%)   |
+|                   2 | 1, 5              | 5728 (1.0%)         | 70600 (12.8%)    | 302392 (55.0%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 11                | 915 (0.2%)          | 233294 (42.4%)   | 233294 (42.4%)   |
+|                   2 | 1, 6              | 64592 (11.7%)       | 135192 (24.6%)   | 366984 (66.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 12                | 180 (0.0%)          | 233474 (42.4%)   | 233474 (42.4%)   |
+|                   2 | 2, 4              | 2 (0.0%)            | 135194 (24.6%)   | 366986 (66.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 13                | 663 (0.1%)          | 234137 (42.6%)   | 234137 (42.6%)   |
+|                   2 | 2, 5              | 49 (0.0%)           | 135243 (24.6%)   | 367035 (66.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 14                | 2577 (0.5%)         | 236714 (43.0%)   | 236714 (43.0%)   |
+|                   2 | 2, 6              | 48 (0.0%)           | 135291 (24.6%)   | 367083 (66.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 15                | 1397 (0.3%)         | 238111 (43.3%)   | 238111 (43.3%)   |
+|                   2 | 3, 4              | 3073 (0.6%)         | 138364 (25.2%)   | 370156 (67.3%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 8              | 374 (0.1%)          | 374 (0.1%)       | 238485 (43.4%)   |
+|                   2 | 3, 5              | 7080 (1.3%)         | 145444 (26.4%)   | 377236 (68.6%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 9              | 1514 (0.3%)         | 1888 (0.3%)      | 239999 (43.6%)   |
+|                   2 | 3, 6              | 7093 (1.3%)         | 152537 (27.7%)   | 384329 (69.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 13             | 930 (0.2%)          | 2818 (0.5%)      | 240929 (43.8%)   |
+|                   3 | 1, 2, 4           | 28 (0.0%)           | 28 (0.0%)        | 384357 (69.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 14             | 10389 (1.9%)        | 13207 (2.4%)     | 251318 (45.7%)   |
+|                   3 | 1, 2, 5           | 298 (0.1%)          | 326 (0.1%)       | 384655 (69.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 15             | 15887 (2.9%)        | 29094 (5.3%)     | 267205 (48.6%)   |
+|                   3 | 1, 2, 6           | 2046 (0.4%)         | 2372 (0.4%)      | 386701 (70.3%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 2, 10             | 5791 (1.1%)         | 34885 (6.3%)     | 272996 (49.6%)   |
+|                   3 | 1, 3, 4           | 8289 (1.5%)         | 10661 (1.9%)     | 394990 (71.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 2, 13             | 1473 (0.3%)         | 36358 (6.6%)     | 274469 (49.9%)   |
+|                   3 | 1, 3, 5           | 21729 (4.0%)        | 32390 (5.9%)     | 416719 (75.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 2, 14             | 4910 (0.9%)         | 41268 (7.5%)     | 279379 (50.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 2, 15             | 19641 (3.6%)        | 60909 (11.1%)    | 299020 (54.4%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 3, 13             | 404 (0.1%)          | 61313 (11.1%)    | 299424 (54.4%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 3, 15             | 2509 (0.5%)         | 63822 (11.6%)    | 301933 (54.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 4, 11             | 40083 (7.3%)        | 103905 (18.9%)   | 342016 (62.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 4, 13             | 5164 (0.9%)         | 109069 (19.8%)   | 347180 (63.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 4, 14             | 3037 (0.6%)         | 112106 (20.4%)   | 350217 (63.7%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 4, 15             | 40876 (7.4%)        | 152982 (27.8%)   | 391093 (71.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 5, 12             | 10507 (1.9%)        | 163489 (29.7%)   | 401600 (73.0%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 5, 13             | 769 (0.1%)          | 164258 (29.9%)   | 402369 (73.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 5, 14             | 216 (0.0%)          | 164474 (29.9%)   | 402585 (73.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 5, 15             | 3703 (0.7%)         | 168177 (30.6%)   | 406288 (73.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 6, 13             | 244 (0.0%)          | 168421 (30.6%)   | 406532 (73.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 6, 15             | 948 (0.2%)          | 169369 (30.8%)   | 407480 (74.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 8, 14             | 3 (0.0%)            | 169372 (30.8%)   | 407483 (74.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 8, 15             | 9 (0.0%)            | 169381 (30.8%)   | 407492 (74.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 9, 13             | 6 (0.0%)            | 169387 (30.8%)   | 407498 (74.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 9, 14             | 112 (0.0%)          | 169499 (30.8%)   | 407610 (74.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 9, 15             | 207 (0.0%)          | 169706 (30.9%)   | 407817 (74.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 10, 13            | 216 (0.0%)          | 169922 (30.9%)   | 408033 (74.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 10, 14            | 713 (0.1%)          | 170635 (31.0%)   | 408746 (74.3%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 10, 15            | 522 (0.1%)          | 171157 (31.1%)   | 409268 (74.4%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 11, 13            | 520 (0.1%)          | 171677 (31.2%)   | 409788 (74.5%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 11, 14            | 646 (0.1%)          | 172323 (31.3%)   | 410434 (74.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 11, 15            | 680 (0.1%)          | 173003 (31.5%)   | 411114 (74.7%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 12, 13            | 90 (0.0%)           | 173093 (31.5%)   | 411204 (74.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 12, 14            | 34 (0.0%)           | 173127 (31.5%)   | 411238 (74.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 12, 15            | 56 (0.0%)           | 173183 (31.5%)   | 411294 (74.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 8, 13          | 8 (0.0%)            | 8 (0.0%)         | 411302 (74.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 8, 14          | 50 (0.0%)           | 58 (0.0%)        | 411352 (74.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 8, 15          | 1191 (0.2%)         | 1249 (0.2%)      | 412543 (75.0%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 9, 13          | 78 (0.0%)           | 1327 (0.2%)      | 412621 (75.0%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 9, 14          | 1091 (0.2%)         | 2418 (0.4%)      | 413712 (75.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 9, 15          | 11769 (2.1%)        | 14187 (2.6%)     | 425481 (77.4%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 2, 10, 13         | 2197 (0.4%)         | 16384 (3.0%)     | 427678 (77.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 2, 10, 14         | 7351 (1.3%)         | 23735 (4.3%)     | 435029 (79.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 2, 10, 15         | 35516 (6.5%)        | 59251 (10.8%)    | 470545 (85.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 4, 11, 13         | 4963 (0.9%)         | 64214 (11.7%)    | 475508 (86.5%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 4, 11, 14         | 5936 (1.1%)         | 70150 (12.8%)    | 481444 (87.5%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 4, 11, 15         | 56656 (10.3%)       | 126806 (23.1%)   | 538100 (97.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 5, 12, 13         | 1205 (0.2%)         | 128011 (23.3%)   | 539305 (98.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 5, 12, 14         | 573 (0.1%)          | 128584 (23.4%)   | 539878 (98.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 5, 12, 15         | 7693 (1.4%)         | 136277 (24.8%)   | 547571 (99.6%)   |
+|                   3 | 1, 3, 6           | 121629 (22.1%)      | 154019 (28.0%)   | 538348 (97.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option1:'Infiltration Reduction|20%'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 74293 (13.5%)
-  or => 84490 (15.4%)
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option1:'Infiltration|5 ACH50'
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+and => 507151 (92.2%)
+  or => 550000 (100.0%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
     ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
     ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
-  or => 515650 (93.8%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 525601 (95.6%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 74293 (13.5%).
-------------------------------------
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option2:'Infiltration Reduction|53%'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 89388 (16.3%)
-  or => 137174 (24.9%)
     ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
     ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
     ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 370342 (67.3%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 89388 (16.3%).
-------------------------------------
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option3:'Infiltration Reduction|63%'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 33988 (6.2%)
-  or => 137174 (24.9%)
-    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
-    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
-    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 145308 (26.4%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 33988 (6.2%).
------------------------------------
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option4:'Infiltration Reduction|32%'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 264689 (48.1%)
-  or => 283301 (51.5%)
     ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
     ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
     ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
     ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
     ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
-  or => 515650 (93.8%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
+    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
+    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
+    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
+    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
+    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
+    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
+  or => 507151 (92.2%)
     Infiltration|6 ACH50 => 23492 (4.3%)
     Infiltration|7 ACH50 => 27163 (4.9%)
     Infiltration|8 ACH50 => 29418 (5.3%)
     Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
     Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
     Infiltration|20 ACH50 => 92403 (16.8%)
     Infiltration|25 ACH50 => 56884 (10.3%)
     Infiltration|30 ACH50 => 33647 (6.1%)
     Infiltration|40 ACH50 => 31185 (5.7%)
     Infiltration|50 ACH50 => 17543 (3.2%)
 -----------------------------------------
-Overall applied to => 264689 (48.1%).
+Overall applied to => 507151 (92.2%).
 -------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option5:'Infiltration Reduction|42%'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 32032 (5.8%)
-  or => 45035 (8.2%)
-    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
-    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
-    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
-    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
-    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
-    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
-  or => 370342 (67.3%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-  or => 546044 (99.3%)
-    Infiltration|3 ACH50 => 7701 (1.4%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 32032 (5.8%).
------------------------------------
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option6:'Infiltration Reduction|40%'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 9549 (1.7%)
-  or => 45035 (8.2%)
-    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
-    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
-    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
-    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
-    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
-    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
-  or => 145308 (26.4%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 546044 (99.3%)
-    Infiltration|3 ACH50 => 7701 (1.4%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 9549 (1.7%).
-----------------------------------
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option7:'Infiltration Reduction|30%'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 33992 (6.2%)
-  Geometry Building Type RECS|Mobile Home => 34350 (6.2%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Overall applied to => 33992 (6.2%).
------------------------------------
-
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option8:'Insulation Ceiling|R-28'
+Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option2:'Insulation Ceiling|R-49'
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 1639 (0.3%)
+and => 3191 (0.6%)
   or => 9867 (1.8%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 96715 (17.6%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
--------------------------------------------
-Overall applied to => 1639 (0.3%).
-----------------------------------
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option9:'Insulation Ceiling|R-30'
--------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 14786 (2.7%)
-  or => 74623 (13.6%)
-    ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
-    ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 96715 (17.6%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
--------------------------------------------
-Overall applied to => 14786 (2.7%).
------------------------------------
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option10:'Insulation Ceiling|R-34'
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 52387 (9.5%)
-  or => 137174 (24.9%)
-    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
-    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
-    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 175298 (31.9%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
-    Insulation Ceiling|R-30 => 78583 (14.3%)
---------------------------------------------
-Overall applied to => 52387 (9.5%).
------------------------------------
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option11:'Insulation Ceiling|R-44'
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 110399 (20.1%)
-  or => 283301 (51.5%)
-    ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
-    ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
-    ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
-    ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
-    ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
   or => 235952 (42.9%)
     Geometry Attic Type|Vented Attic => 217730 (39.6%)
     Geometry Attic Type|Unvented Attic => 18222 (3.3%)
@@ -1860,14 +991,24 @@ and => 110399 (20.1%)
     Insulation Ceiling|R-30 => 78583 (14.3%)
     Insulation Ceiling|R-38 => 45904 (8.3%)
 -------------------------------------------
-Overall applied to => 110399 (20.1%).
--------------------------------------
+Overall applied to => 3191 (0.6%).
+----------------------------------
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option12:'Insulation Ceiling|R-60'
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 20338 (3.7%)
-  or => 45035 (8.2%)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option3:'Insulation Ceiling|R-60'
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+and => 232753 (42.3%)
+  or => 540133 (98.2%)
+    ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
+    ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
+    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
+    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
+    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
+    ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
+    ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
+    ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
+    ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
+    ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
     ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
     ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
     ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
@@ -1886,12 +1027,12 @@ and => 20338 (3.7%)
     Insulation Ceiling|R-38 => 45904 (8.3%)
     Insulation Ceiling|R-49 => 14750 (2.7%)
 -------------------------------------------
-Overall applied to => 20338 (3.7%).
------------------------------------
+Overall applied to => 232753 (42.3%).
+-------------------------------------
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option13:'Duct Leakage and Insulation|5% Leakage to Outside, R-6'
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option4:'Duct Leakage and Insulation|5% Leakage to Outside, R-6'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 18930 (3.4%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-6 => 4922 (0.9%)
   Duct Leakage and Insulation|20% Leakage to Outside, R-6 => 8897 (1.6%)
@@ -1900,9 +1041,9 @@ or => 18930 (3.4%)
 Overall applied to => 18930 (3.4%).
 -----------------------------------
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option14:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option5:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 37638 (6.8%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-8 => 9787 (1.8%)
   Duct Leakage and Insulation|20% Leakage to Outside, R-8 => 17689 (3.2%)
@@ -1911,9 +1052,9 @@ or => 37638 (6.8%)
 Overall applied to => 37638 (6.8%).
 -----------------------------------
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option15:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option6:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 199260 (36.2%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-4 => 21537 (3.9%)
   Duct Leakage and Insulation|10% Leakage to Outside, Uninsulated => 30270 (5.5%)
@@ -1925,255 +1066,129 @@ or => 199260 (36.2%)
 Overall applied to => 199260 (36.2%).
 -------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option16:'Insulation Wall|Wood Stud, R-13'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade10:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option7:'Insulation Wall|Wood Stud, R-13'
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Insulation Wall|Wood Stud, Uninsulated => 167618 (30.5%)
 --------------------------------------------------------
 Overall applied to => 167618 (30.5%).
 -------------------------------------
 
 All of the options (and-ing) were applied to: 0 (0.0%)
-Any of the options (or-ing) were applied to: 547721 (99.6%)
+Any of the options (or-ing) were applied to: 539189 (98.0%)
 --------------------------------------------------------------------------------
 Report of how the 4 options were applied to the buildings.
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|   Number of options | Applied options                                  | Applied buildings   | Cumulative sub   | Cumulative all   |
-+=====================+==================================================+=====================+==================+==================+
-|                   1 | infiltration reduction                           | 167851 (30.5%)      | 167851 (30.5%)   | 167851 (30.5%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   1 | insulation ceiling                               | 1101 (0.2%)         | 168952 (30.7%)   | 168952 (30.7%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   1 | duct leakage and insulation                      | 4475 (0.8%)         | 173427 (31.5%)   | 173427 (31.5%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   1 | insulation wall                                  | 150 (0.0%)          | 173577 (31.6%)   | 173577 (31.6%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   2 | infiltration reduction, insulation ceiling       | 34835 (6.3%)        | 34835 (6.3%)     | 208412 (37.9%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   2 | infiltration reduction, duct leakage and         | 78488 (14.3%)       | 113323 (20.6%)   | 286900 (52.2%)   |
-|                     | insulation                                       |                     |                  |                  |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   2 | infiltration reduction, insulation wall          | 64434 (11.7%)       | 177757 (32.3%)   | 351334 (63.9%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   2 | insulation ceiling, duct leakage and insulation  | 3627 (0.7%)         | 181384 (33.0%)   | 354961 (64.5%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   2 | insulation ceiling, insulation wall              | 88 (0.0%)           | 181472 (33.0%)   | 355049 (64.6%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   2 | duct leakage and insulation, insulation wall     | 162 (0.0%)          | 181634 (33.0%)   | 355211 (64.6%)   |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   3 | infiltration reduction, insulation ceiling, duct | 89726 (16.3%)       | 89726 (16.3%)    | 444937 (80.9%)   |
-|                     | leakage and insulation                           |                     |                  |                  |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   3 | infiltration reduction, insulation ceiling,      | 23434 (4.3%)        | 113160 (20.6%)   | 468371 (85.2%)   |
-|                     | insulation wall                                  |                     |                  |                  |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   3 | infiltration reduction, duct leakage and         | 32612 (5.9%)        | 145772 (26.5%)   | 500983 (91.1%)   |
-|                     | insulation, insulation wall                      |                     |                  |                  |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   3 | insulation ceiling, duct leakage and insulation, | 187 (0.0%)          | 145959 (26.5%)   | 501170 (91.1%)   |
-|                     | insulation wall                                  |                     |                  |                  |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
-|                   4 | infiltration reduction, insulation ceiling, duct | 46551 (8.5%)        | 46551 (8.5%)     | 547721 (99.6%)   |
-|                     | leakage and insulation, insulation wall          |                     |                  |                  |
-+---------------------+--------------------------------------------------+---------------------+------------------+------------------+
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+====================================================+=====================+==================+==================+
+|                   1 | infiltration                                       | 155905 (28.3%)      | 155905 (28.3%)   | 155905 (28.3%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   1 | insulation ceiling                                 | 4960 (0.9%)         | 160865 (29.2%)   | 160865 (29.2%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   1 | duct leakage and insulation                        | 7736 (1.4%)         | 168601 (30.7%)   | 168601 (30.7%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   1 | insulation wall                                    | 841 (0.2%)          | 169442 (30.8%)   | 169442 (30.8%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   2 | infiltration, insulation ceiling                   | 34390 (6.3%)        | 34390 (6.3%)     | 203832 (37.1%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   2 | infiltration, duct leakage and insulation          | 48733 (8.9%)        | 83123 (15.1%)    | 252565 (45.9%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   2 | infiltration, insulation wall                      | 62035 (11.3%)       | 145158 (26.4%)   | 314600 (57.2%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   2 | insulation ceiling, duct leakage and insulation    | 16303 (3.0%)        | 161461 (29.4%)   | 330903 (60.2%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   2 | insulation ceiling, insulation wall                | 509 (0.1%)          | 161970 (29.4%)   | 331412 (60.3%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   2 | duct leakage and insulation, insulation wall       | 647 (0.1%)          | 162617 (29.6%)   | 332059 (60.4%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   3 | infiltration, insulation ceiling, duct leakage and | 103544 (18.8%)      | 103544 (18.8%)   | 435603 (79.2%)   |
+|                     | insulation                                         |                     |                  |                  |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   3 | infiltration, insulation ceiling, insulation wall  | 24721 (4.5%)        | 128265 (23.3%)   | 460324 (83.7%)   |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   3 | infiltration, duct leakage and insulation,         | 27348 (5.0%)        | 155613 (28.3%)   | 487672 (88.7%)   |
+|                     | insulation wall                                    |                     |                  |                  |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   3 | insulation ceiling, duct leakage and insulation,   | 1042 (0.2%)         | 156655 (28.5%)   | 488714 (88.9%)   |
+|                     | insulation wall                                    |                     |                  |                  |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   4 | infiltration, insulation ceiling, duct leakage and | 50475 (9.2%)        | 50475 (9.2%)     | 539189 (98.0%)   |
+|                     | insulation, insulation wall                        |                     |                  |                  |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
-Detailed report of how the 16 options were applied to the buildings.
+Detailed report of how the 7 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 | 1                 | 25827 (4.7%)        | 25827 (4.7%)     | 25827 (4.7%)     |
+|                   1 | 1                 | 155905 (28.3%)      | 155905 (28.3%)   | 155905 (28.3%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 2                 | 6016 (1.1%)         | 31843 (5.8%)     | 31843 (5.8%)     |
+|                   1 | 2                 | 30 (0.0%)           | 155935 (28.4%)   | 155935 (28.4%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 3                 | 21100 (3.8%)        | 52943 (9.6%)     | 52943 (9.6%)     |
+|                   1 | 3                 | 4930 (0.9%)         | 160865 (29.2%)   | 160865 (29.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 4                 | 72540 (13.2%)       | 125483 (22.8%)   | 125483 (22.8%)   |
+|                   1 | 4                 | 1777 (0.3%)         | 162642 (29.6%)   | 162642 (29.6%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 5                 | 5979 (1.1%)         | 131462 (23.9%)   | 131462 (23.9%)   |
+|                   1 | 5                 | 2754 (0.5%)         | 165396 (30.1%)   | 165396 (30.1%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 6                 | 7264 (1.3%)         | 138726 (25.2%)   | 138726 (25.2%)   |
+|                   1 | 6                 | 3205 (0.6%)         | 168601 (30.7%)   | 168601 (30.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 7                 | 29125 (5.3%)        | 167851 (30.5%)   | 167851 (30.5%)   |
+|                   1 | 7                 | 841 (0.2%)          | 169442 (30.8%)   | 169442 (30.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 8                 | 4 (0.0%)            | 167855 (30.5%)   | 167855 (30.5%)   |
+|                   2 | 1, 2              | 437 (0.1%)          | 437 (0.1%)       | 169879 (30.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 9                 | 6 (0.0%)            | 167861 (30.5%)   | 167861 (30.5%)   |
+|                   2 | 1, 3              | 33953 (6.2%)        | 34390 (6.3%)     | 203832 (37.1%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 10                | 71 (0.0%)           | 167932 (30.5%)   | 167932 (30.5%)   |
+|                   2 | 1, 4              | 5761 (1.0%)         | 40151 (7.3%)     | 209593 (38.1%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 11                | 843 (0.2%)          | 168775 (30.7%)   | 168775 (30.7%)   |
+|                   2 | 1, 5              | 5728 (1.0%)         | 45879 (8.3%)     | 215321 (39.1%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 12                | 177 (0.0%)          | 168952 (30.7%)   | 168952 (30.7%)   |
+|                   2 | 1, 6              | 37244 (6.8%)        | 83123 (15.1%)    | 252565 (45.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 13                | 663 (0.1%)          | 169615 (30.8%)   | 169615 (30.8%)   |
+|                   2 | 1, 7              | 62035 (11.3%)       | 145158 (26.4%)   | 314600 (57.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 14                | 2577 (0.5%)         | 172192 (31.3%)   | 172192 (31.3%)   |
+|                   2 | 2, 4              | 2 (0.0%)            | 145160 (26.4%)   | 314602 (57.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 15                | 1235 (0.2%)         | 173427 (31.5%)   | 173427 (31.5%)   |
+|                   2 | 2, 5              | 49 (0.0%)           | 145209 (26.4%)   | 314651 (57.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 16                | 150 (0.0%)          | 173577 (31.6%)   | 173577 (31.6%)   |
+|                   2 | 2, 6              | 46 (0.0%)           | 145255 (26.4%)   | 314697 (57.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 8              | 209 (0.0%)          | 209 (0.0%)       | 173786 (31.6%)   |
+|                   2 | 2, 7              | 1 (0.0%)            | 145256 (26.4%)   | 314698 (57.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 9              | 810 (0.1%)          | 1019 (0.2%)      | 174596 (31.7%)   |
+|                   2 | 3, 4              | 3073 (0.6%)         | 148329 (27.0%)   | 317771 (57.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 13             | 930 (0.2%)          | 1949 (0.4%)      | 175526 (31.9%)   |
+|                   2 | 3, 5              | 7080 (1.3%)         | 155409 (28.3%)   | 324851 (59.1%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 14             | 10389 (1.9%)        | 12338 (2.2%)     | 185915 (33.8%)   |
+|                   2 | 3, 6              | 6053 (1.1%)         | 161462 (29.4%)   | 330904 (60.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 15             | 12514 (2.3%)        | 24852 (4.5%)     | 198429 (36.1%)   |
+|                   2 | 3, 7              | 508 (0.1%)          | 161970 (29.4%)   | 331412 (60.3%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 16             | 5185 (0.9%)         | 30037 (5.5%)     | 203614 (37.0%)   |
+|                   2 | 6, 7              | 647 (0.1%)          | 162617 (29.6%)   | 332059 (60.4%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 2, 10             | 2375 (0.4%)         | 32412 (5.9%)     | 205989 (37.5%)   |
+|                   3 | 1, 2, 4           | 28 (0.0%)           | 28 (0.0%)        | 332087 (60.4%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 2, 13             | 1473 (0.3%)         | 33885 (6.2%)     | 207462 (37.7%)   |
+|                   3 | 1, 2, 5           | 298 (0.1%)          | 326 (0.1%)       | 332385 (60.4%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 2, 14             | 4910 (0.9%)         | 38795 (7.1%)     | 212372 (38.6%)   |
+|                   3 | 1, 2, 6           | 1712 (0.3%)         | 2038 (0.4%)      | 334097 (60.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 2, 15             | 9624 (1.7%)         | 48419 (8.8%)     | 221996 (40.4%)   |
+|                   3 | 1, 2, 7           | 252 (0.0%)          | 2290 (0.4%)      | 334349 (60.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 2, 16             | 6493 (1.2%)         | 54912 (10.0%)    | 228489 (41.5%)   |
+|                   3 | 1, 3, 4           | 8289 (1.5%)         | 10579 (1.9%)     | 342638 (62.3%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 3, 13             | 404 (0.1%)          | 55316 (10.1%)    | 228893 (41.6%)   |
+|                   3 | 1, 3, 5           | 21729 (4.0%)        | 32308 (5.9%)     | 364367 (66.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 3, 15             | 1665 (0.3%)         | 56981 (10.4%)    | 230558 (41.9%)   |
+|                   3 | 1, 3, 6           | 71488 (13.0%)       | 103796 (18.9%)   | 435855 (79.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 3, 16             | 9975 (1.8%)         | 66956 (12.2%)    | 240533 (43.7%)   |
+|                   3 | 1, 3, 7           | 24469 (4.4%)        | 128265 (23.3%)   | 460324 (83.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 4, 11             | 23060 (4.2%)        | 90016 (16.4%)    | 263593 (47.9%)   |
+|                   3 | 1, 6, 7           | 27348 (5.0%)        | 155613 (28.3%)   | 487672 (88.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 4, 13             | 5164 (0.9%)         | 95180 (17.3%)    | 268757 (48.9%)   |
+|                   3 | 2, 6, 7           | 2 (0.0%)            | 155615 (28.3%)   | 487674 (88.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 4, 14             | 3037 (0.6%)         | 98217 (17.9%)    | 271794 (49.4%)   |
+|                   3 | 3, 6, 7           | 1040 (0.2%)         | 156655 (28.5%)   | 488714 (88.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 4, 15             | 23488 (4.3%)        | 121705 (22.1%)   | 295282 (53.7%)   |
+|                   4 | 1, 2, 6, 7        | 334 (0.1%)          | 334 (0.1%)       | 489048 (88.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 4, 16             | 35434 (6.4%)        | 157139 (28.6%)   | 330716 (60.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 5, 12             | 8381 (1.5%)         | 165520 (30.1%)   | 339097 (61.7%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 5, 13             | 769 (0.1%)          | 166289 (30.2%)   | 339866 (61.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 5, 14             | 216 (0.0%)          | 166505 (30.3%)   | 340082 (61.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 5, 15             | 2865 (0.5%)         | 169370 (30.8%)   | 342947 (62.4%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 5, 16             | 1387 (0.3%)         | 170757 (31.0%)   | 344334 (62.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 6, 13             | 244 (0.0%)          | 171001 (31.1%)   | 344578 (62.7%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 6, 15             | 796 (0.1%)          | 171797 (31.2%)   | 345374 (62.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 6, 16             | 1093 (0.2%)         | 172890 (31.4%)   | 346467 (63.0%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 7, 16             | 4867 (0.9%)         | 177757 (32.3%)   | 351334 (63.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 8, 14             | 3 (0.0%)            | 177760 (32.3%)   | 351337 (63.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 8, 15             | 9 (0.0%)            | 177769 (32.3%)   | 351346 (63.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 9, 13             | 6 (0.0%)            | 177775 (32.3%)   | 351352 (63.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 9, 14             | 112 (0.0%)          | 177887 (32.3%)   | 351464 (63.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 9, 15             | 188 (0.0%)          | 178075 (32.4%)   | 351652 (63.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 9, 16             | 3 (0.0%)            | 178078 (32.4%)   | 351655 (63.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 10, 13            | 216 (0.0%)          | 178294 (32.4%)   | 351871 (64.0%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 10, 14            | 713 (0.1%)          | 179007 (32.5%)   | 352584 (64.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 10, 15            | 444 (0.1%)          | 179451 (32.6%)   | 353028 (64.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 10, 16            | 10 (0.0%)           | 179461 (32.6%)   | 353038 (64.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 11, 13            | 520 (0.1%)          | 179981 (32.7%)   | 353558 (64.3%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 11, 14            | 646 (0.1%)          | 180627 (32.8%)   | 354204 (64.4%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 11, 15            | 590 (0.1%)          | 181217 (32.9%)   | 354794 (64.5%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 11, 16            | 72 (0.0%)           | 181289 (33.0%)   | 354866 (64.5%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 12, 13            | 90 (0.0%)           | 181379 (33.0%)   | 354956 (64.5%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 12, 14            | 34 (0.0%)           | 181413 (33.0%)   | 354990 (64.5%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 12, 15            | 56 (0.0%)           | 181469 (33.0%)   | 355046 (64.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 12, 16            | 3 (0.0%)            | 181472 (33.0%)   | 355049 (64.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 15, 16            | 162 (0.0%)          | 181634 (33.0%)   | 355211 (64.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 8, 13          | 8 (0.0%)            | 8 (0.0%)         | 355219 (64.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 8, 14          | 50 (0.0%)           | 58 (0.0%)        | 355269 (64.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 8, 15          | 983 (0.2%)          | 1041 (0.2%)      | 356252 (64.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 8, 16          | 165 (0.0%)          | 1206 (0.2%)      | 356417 (64.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 9, 13          | 78 (0.0%)           | 1284 (0.2%)      | 356495 (64.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 9, 14          | 1091 (0.2%)         | 2375 (0.4%)      | 357586 (65.0%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 9, 15          | 8582 (1.6%)         | 10957 (2.0%)     | 366168 (66.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 9, 16          | 704 (0.1%)          | 11661 (2.1%)     | 366872 (66.7%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 15, 16         | 3373 (0.6%)         | 15034 (2.7%)     | 370245 (67.3%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 2, 10, 13         | 2197 (0.4%)         | 17231 (3.1%)     | 372442 (67.7%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 2, 10, 14         | 7351 (1.3%)         | 24582 (4.5%)     | 379793 (69.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 2, 10, 15         | 19845 (3.6%)        | 44427 (8.1%)     | 399638 (72.7%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 2, 10, 16         | 3416 (0.6%)         | 47843 (8.7%)     | 403054 (73.3%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 2, 15, 16         | 10017 (1.8%)        | 57860 (10.5%)    | 413071 (75.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 3, 15, 16         | 844 (0.2%)          | 58704 (10.7%)    | 413915 (75.3%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 4, 11, 13         | 4963 (0.9%)         | 63667 (11.6%)    | 418878 (76.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 4, 11, 14         | 5936 (1.1%)         | 69603 (12.7%)    | 424814 (77.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 4, 11, 15         | 30890 (5.6%)        | 100493 (18.3%)   | 455704 (82.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 4, 11, 16         | 17023 (3.1%)        | 117516 (21.4%)   | 472727 (86.0%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 4, 15, 16         | 17388 (3.2%)        | 134904 (24.5%)   | 490115 (89.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 5, 12, 13         | 1205 (0.2%)         | 136109 (24.7%)   | 491320 (89.3%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 5, 12, 14         | 573 (0.1%)          | 136682 (24.9%)   | 491893 (89.4%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 5, 12, 15         | 5974 (1.1%)         | 142656 (25.9%)   | 497867 (90.5%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 5, 12, 16         | 2126 (0.4%)         | 144782 (26.3%)   | 499993 (90.9%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 5, 15, 16         | 838 (0.2%)          | 145620 (26.5%)   | 500831 (91.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 6, 15, 16         | 152 (0.0%)          | 145772 (26.5%)   | 500983 (91.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 9, 15, 16         | 19 (0.0%)           | 145791 (26.5%)   | 501002 (91.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 10, 15, 16        | 78 (0.0%)           | 145869 (26.5%)   | 501080 (91.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 11, 15, 16        | 90 (0.0%)           | 145959 (26.5%)   | 501170 (91.1%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 8, 15, 16      | 208 (0.0%)          | 208 (0.0%)       | 501378 (91.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 9, 15, 16      | 3187 (0.6%)         | 3395 (0.6%)      | 504565 (91.7%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 2, 10, 15, 16     | 15671 (2.8%)        | 19066 (3.5%)     | 520236 (94.6%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 4, 11, 15, 16     | 25766 (4.7%)        | 44832 (8.2%)     | 546002 (99.3%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 5, 12, 15, 16     | 1719 (0.3%)         | 46551 (8.5%)     | 547721 (99.6%)   |
+|                   4 | 1, 3, 6, 7        | 50141 (9.1%)        | 50475 (9.2%)     | 539189 (98.0%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2289,145 +1304,11 @@ Overall applied to => 389136 (70.8%).
 -------------------------------------
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option4:'Insulation Ceiling|R-28'
+Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option4:'Insulation Ceiling|R-49'
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 1639 (0.3%)
+and => 3191 (0.6%)
   or => 9867 (1.8%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 96715 (17.6%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
--------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-  not => 508434 (92.4%)
-    or => 41566 (7.6%)
-      Ground Thermal Conductivity|0.5 => 3236 (0.6%)
-      Ground Thermal Conductivity|0.8 => 38330 (7.0%)
------------------------------------------------------
-Overall applied to => 1175 (0.2%).
-----------------------------------
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option5:'Insulation Ceiling|R-30'
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 14786 (2.7%)
-  or => 74623 (13.6%)
-    ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
-    ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 96715 (17.6%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
--------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-  not => 508434 (92.4%)
-    or => 41566 (7.6%)
-      Ground Thermal Conductivity|0.5 => 3236 (0.6%)
-      Ground Thermal Conductivity|0.8 => 38330 (7.0%)
------------------------------------------------------
-Overall applied to => 13112 (2.4%).
------------------------------------
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option6:'Insulation Ceiling|R-34'
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 52387 (9.5%)
-  or => 137174 (24.9%)
-    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
-    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
-    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 235952 (42.9%)
-    Geometry Attic Type|Vented Attic => 217730 (39.6%)
-    Geometry Attic Type|Unvented Attic => 18222 (3.3%)
-  or => 175298 (31.9%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
-    Insulation Ceiling|R-30 => 78583 (14.3%)
---------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-  not => 508434 (92.4%)
-    or => 41566 (7.6%)
-      Ground Thermal Conductivity|0.5 => 3236 (0.6%)
-      Ground Thermal Conductivity|0.8 => 38330 (7.0%)
------------------------------------------------------
-Overall applied to => 44870 (8.2%).
------------------------------------
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option7:'Insulation Ceiling|R-44'
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 110399 (20.1%)
-  or => 283301 (51.5%)
-    ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
-    ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
-    ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
-    ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
-    ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
   or => 235952 (42.9%)
     Geometry Attic Type|Vented Attic => 217730 (39.6%)
     Geometry Attic Type|Unvented Attic => 18222 (3.3%)
@@ -2463,14 +1344,24 @@ and => 389136 (70.8%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 86506 (15.7%).
-------------------------------------
+Overall applied to => 2315 (0.4%).
+----------------------------------
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option8:'Insulation Ceiling|R-60'
+Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option5:'Insulation Ceiling|R-60'
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 20338 (3.7%)
-  or => 45035 (8.2%)
+and => 232753 (42.3%)
+  or => 540133 (98.2%)
+    ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
+    ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
+    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
+    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
+    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
+    ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
+    ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
+    ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
+    ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
+    ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
     ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
     ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
     ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
@@ -2513,208 +1404,37 @@ and => 389136 (70.8%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 15173 (2.8%).
------------------------------------
+Overall applied to => 190682 (34.7%).
+-------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option9:'Infiltration Reduction|20%'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 74293 (13.5%)
-  or => 84490 (15.4%)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option6:'Infiltration|5 ACH50'
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+and => 507151 (92.2%)
+  or => 550000 (100.0%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
     ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
     ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
-  or => 515650 (93.8%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 525601 (95.6%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-  not => 508434 (92.4%)
-    or => 41566 (7.6%)
-      Ground Thermal Conductivity|0.5 => 3236 (0.6%)
-      Ground Thermal Conductivity|0.8 => 38330 (7.0%)
------------------------------------------------------
-Overall applied to => 61498 (11.2%).
-------------------------------------
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option10:'Infiltration Reduction|53%'
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 89388 (16.3%)
-  or => 137174 (24.9%)
     ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
     ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
     ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 370342 (67.3%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-  not => 508434 (92.4%)
-    or => 41566 (7.6%)
-      Ground Thermal Conductivity|0.5 => 3236 (0.6%)
-      Ground Thermal Conductivity|0.8 => 38330 (7.0%)
------------------------------------------------------
-Overall applied to => 75496 (13.7%).
-------------------------------------
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option11:'Infiltration Reduction|63%'
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 33988 (6.2%)
-  or => 137174 (24.9%)
-    ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
-    ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
-    ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  or => 145308 (26.4%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-  not => 508434 (92.4%)
-    or => 41566 (7.6%)
-      Ground Thermal Conductivity|0.5 => 3236 (0.6%)
-      Ground Thermal Conductivity|0.8 => 38330 (7.0%)
------------------------------------------------------
-Overall applied to => 17316 (3.1%).
------------------------------------
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option12:'Infiltration Reduction|32%'
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 264689 (48.1%)
-  or => 283301 (51.5%)
     ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
     ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
     ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
     ASHRAE IECC Climate Zone 2004|5A => 123952 (22.5%)
     ASHRAE IECC Climate Zone 2004|5B => 20841 (3.8%)
-  or => 515650 (93.8%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
+    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
+    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
+    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
+    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
+    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
+    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
+  or => 507151 (92.2%)
     Infiltration|6 ACH50 => 23492 (4.3%)
     Infiltration|7 ACH50 => 27163 (4.9%)
     Infiltration|8 ACH50 => 29418 (5.3%)
     Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
     Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
     Infiltration|20 ACH50 => 92403 (16.8%)
     Infiltration|25 ACH50 => 56884 (10.3%)
     Infiltration|30 ACH50 => 33647 (6.1%)
@@ -2745,181 +1465,8 @@ and => 389136 (70.8%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 170626 (31.0%).
+Overall applied to => 355735 (64.7%).
 -------------------------------------
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option13:'Infiltration Reduction|42%'
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 32032 (5.8%)
-  or => 45035 (8.2%)
-    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
-    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
-    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
-    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
-    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
-    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
-  or => 370342 (67.3%)
-    Geometry Building Type RECS|Single-Family Detached => 338104 (61.5%)
-    Geometry Building Type RECS|Single-Family Attached => 32238 (5.9%)
-  or => 546044 (99.3%)
-    Infiltration|3 ACH50 => 7701 (1.4%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-  not => 508434 (92.4%)
-    or => 41566 (7.6%)
-      Ground Thermal Conductivity|0.5 => 3236 (0.6%)
-      Ground Thermal Conductivity|0.8 => 38330 (7.0%)
------------------------------------------------------
-Overall applied to => 23854 (4.3%).
------------------------------------
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option14:'Infiltration Reduction|40%'
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 9549 (1.7%)
-  or => 45035 (8.2%)
-    ASHRAE IECC Climate Zone 2004|6A => 33724 (6.1%)
-    ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
-    ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
-    ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
-    ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
-    ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
-  or => 145308 (26.4%)
-    Geometry Building Type RECS|Multi-Family with 2 - 4 Units => 44000 (8.0%)
-    Geometry Building Type RECS|Multi-Family with 5+ Units => 101308 (18.4%)
-  or => 546044 (99.3%)
-    Infiltration|3 ACH50 => 7701 (1.4%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-  not => 508434 (92.4%)
-    or => 41566 (7.6%)
-      Ground Thermal Conductivity|0.5 => 3236 (0.6%)
-      Ground Thermal Conductivity|0.8 => 38330 (7.0%)
------------------------------------------------------
-Overall applied to => 3511 (0.6%).
-----------------------------------
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade11:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option15:'Infiltration Reduction|30%'
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 33992 (6.2%)
-  Geometry Building Type RECS|Mobile Home => 34350 (6.2%)
-  or => 538343 (97.9%)
-    Infiltration|3.75 ACH50 => 0 (0.0%)
-    Infiltration|4 ACH50 => 12742 (2.3%)
-    Infiltration|4.5 ACH50 => 0 (0.0%)
-    Infiltration|5 ACH50 => 18450 (3.4%)
-    Infiltration|5.25 ACH50 => 0 (0.0%)
-    Infiltration|6 ACH50 => 23492 (4.3%)
-    Infiltration|7 ACH50 => 27163 (4.9%)
-    Infiltration|8 ACH50 => 29418 (5.3%)
-    Infiltration|10 ACH50 => 60828 (11.1%)
-    Infiltration|11.25 ACH50 => 0 (0.0%)
-    Infiltration|15 ACH50 => 134588 (24.5%)
-    Infiltration|18.5 ACH50 => 0 (0.0%)
-    Infiltration|20 ACH50 => 92403 (16.8%)
-    Infiltration|25 ACH50 => 56884 (10.3%)
-    Infiltration|30 ACH50 => 33647 (6.1%)
-    Infiltration|40 ACH50 => 31185 (5.7%)
-    Infiltration|50 ACH50 => 17543 (3.2%)
------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
-  not => 508434 (92.4%)
-    or => 41566 (7.6%)
-      Ground Thermal Conductivity|0.5 => 3236 (0.6%)
-      Ground Thermal Conductivity|0.8 => 38330 (7.0%)
------------------------------------------------------
-Overall applied to => 26930 (4.9%).
------------------------------------
 
 All of the options (and-ing) were applied to: 0 (0.0%)
 Any of the options (or-ing) were applied to: 389136 (70.8%)
@@ -2928,76 +1475,46 @@ Report of how the 5 options were applied to the buildings.
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================================================+=====================+==================+==================+
-|                   1 | hvac cooling partial space conditioning           | 58 (0.0%)           | 58 (0.0%)        | 58 (0.0%)        |
+|                   1 | hvac cooling partial space conditioning           | 405 (0.1%)          | 405 (0.1%)       | 405 (0.1%)       |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   2 | hvac cooling partial space conditioning,          | 8917 (1.6%)         | 8917 (1.6%)      | 8975 (1.6%)      |
-|                     | infiltration reduction                            |                     |                  |                  |
+|                   2 | hvac cooling partial space conditioning,          | 8570 (1.6%)         | 8570 (1.6%)      | 8975 (1.6%)      |
+|                     | infiltration                                      |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   3 | hvac heating efficiency, hvac cooling efficiency, | 5685 (1.0%)         | 5685 (1.0%)      | 14660 (2.7%)     |
+|                   3 | hvac heating efficiency, hvac cooling efficiency, | 13904 (2.5%)        | 13904 (2.5%)     | 22879 (4.2%)     |
 |                     | hvac cooling partial space conditioning           |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   4 | hvac heating efficiency, hvac cooling efficiency, | 4162 (0.8%)         | 4162 (0.8%)      | 18822 (3.4%)     |
+|                   4 | hvac heating efficiency, hvac cooling efficiency, | 19092 (3.5%)        | 19092 (3.5%)     | 41971 (7.6%)     |
 |                     | hvac cooling partial space conditioning,          |                     |                  |                  |
 |                     | insulation ceiling                                |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   4 | hvac heating efficiency, hvac cooling efficiency, | 213640 (38.8%)      | 217802 (39.6%)   | 232462 (42.3%)   |
+|                   4 | hvac heating efficiency, hvac cooling efficiency, | 173260 (31.5%)      | 192352 (35.0%)   | 215231 (39.1%)   |
 |                     | hvac cooling partial space conditioning,          |                     |                  |                  |
-|                     | infiltration reduction                            |                     |                  |                  |
+|                     | infiltration                                      |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   5 | hvac heating efficiency, hvac cooling efficiency, | 156674 (28.5%)      | 156674 (28.5%)   | 389136 (70.8%)   |
+|                   5 | hvac heating efficiency, hvac cooling efficiency, | 173905 (31.6%)      | 173905 (31.6%)   | 389136 (70.8%)   |
 |                     | hvac cooling partial space conditioning,          |                     |                  |                  |
-|                     | insulation ceiling, infiltration reduction        |                     |                  |                  |
+|                     | insulation ceiling, infiltration                  |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
-Detailed report of how the 15 options were applied to the buildings.
+Detailed report of how the 6 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 | 3                 | 58 (0.0%)           | 58 (0.0%)        | 58 (0.0%)        |
+|                   1 | 3                 | 405 (0.1%)          | 405 (0.1%)       | 405 (0.1%)       |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 3, 9              | 1828 (0.3%)         | 1828 (0.3%)      | 1886 (0.3%)      |
+|                   2 | 3, 6              | 8570 (1.6%)         | 8570 (1.6%)      | 8975 (1.6%)      |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 3, 11             | 2232 (0.4%)         | 4060 (0.7%)      | 4118 (0.7%)      |
+|                   3 | 1, 2, 3           | 13904 (2.5%)        | 13904 (2.5%)     | 22879 (4.2%)     |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 3, 12             | 4220 (0.8%)         | 8280 (1.5%)      | 8338 (1.5%)      |
+|                   4 | 1, 2, 3, 4        | 90 (0.0%)           | 90 (0.0%)        | 22969 (4.2%)     |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 3, 14             | 637 (0.1%)          | 8917 (1.6%)      | 8975 (1.6%)      |
+|                   4 | 1, 2, 3, 5        | 19002 (3.5%)        | 19092 (3.5%)     | 41971 (7.6%)     |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 2, 3           | 5685 (1.0%)         | 5685 (1.0%)      | 14660 (2.7%)     |
+|                   4 | 1, 2, 3, 6        | 173260 (31.5%)      | 192352 (35.0%)   | 215231 (39.1%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 4        | 10 (0.0%)           | 10 (0.0%)        | 14670 (2.7%)     |
+|                   5 | 1, 2, 3, 4, 6     | 2225 (0.4%)         | 2225 (0.4%)      | 217456 (39.5%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 5        | 321 (0.1%)          | 331 (0.1%)       | 14991 (2.7%)     |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 6        | 1399 (0.3%)         | 1730 (0.3%)      | 16390 (3.0%)     |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 7        | 2159 (0.4%)         | 3889 (0.7%)      | 18549 (3.4%)     |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 8        | 273 (0.0%)          | 4162 (0.8%)      | 18822 (3.4%)     |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 9        | 45714 (8.3%)        | 49876 (9.1%)     | 64536 (11.7%)    |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 10       | 32025 (5.8%)        | 81901 (14.9%)    | 96561 (17.6%)    |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 11       | 15084 (2.7%)        | 96985 (17.6%)    | 111645 (20.3%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 12       | 82059 (14.9%)       | 179044 (32.6%)   | 193704 (35.2%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 13       | 8954 (1.6%)         | 187998 (34.2%)   | 202658 (36.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 14       | 2874 (0.5%)         | 190872 (34.7%)   | 205532 (37.4%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 15       | 26930 (4.9%)        | 217802 (39.6%)   | 232462 (42.3%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   5 | 1, 2, 3, 4, 9     | 1165 (0.2%)         | 1165 (0.2%)      | 233627 (42.5%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   5 | 1, 2, 3, 5, 9     | 12791 (2.3%)        | 13956 (2.5%)     | 246418 (44.8%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   5 | 1, 2, 3, 6, 10    | 43471 (7.9%)        | 57427 (10.4%)    | 289889 (52.7%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   5 | 1, 2, 3, 7, 12    | 84347 (15.3%)       | 141774 (25.8%)   | 374236 (68.0%)   |
-+---------------------+-------------------+---------------------+------------------+------------------+
-|                   5 | 1, 2, 3, 8, 13    | 14900 (2.7%)        | 156674 (28.5%)   | 389136 (70.8%)   |
+|                   5 | 1, 2, 3, 5, 6     | 171680 (31.2%)      | 173905 (31.6%)   | 389136 (70.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -------------------------------------------------------------------------------------------------------------------------------
