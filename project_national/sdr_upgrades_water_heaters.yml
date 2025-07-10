@@ -50,7 +50,7 @@ postprocessing:
      prefix: testing-sdr-fy25
    athena:
      glue_service_role: service-role/AWSGlueServiceRole-default
-     database_name: res-sdr
+     database_name: res_sdr
      max_crawling_time: 1200
 
 # Workflow generator
