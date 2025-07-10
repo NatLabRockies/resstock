@@ -182,262 +182,272 @@ upgrades:
         lifetime: 15
 
   # - upgrade_name: reference case
-  #   # Only ducted homes, no high-rise/shared
-  #   package_apply_logic: &exclusion_ref
-  #     - *remove_high_rise_shared
-  #     - HVAC Has Ducts|Yes
+    # Only ducted homes, no high-rise/shared
+    package_apply_logic: &exclusion_ref
+      - *remove_high_rise_shared
+      - HVAC Has Ducts|Yes
 
-  #   options:
-  #     # ———————————————————————————————
-  #     # Furnace
-  #     # ———————————————————————————————
-  #     # Upgrade low-efficiency (<80%) to 80% AFUE
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - or:
-  #           - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
-  #       lifetime: 15
+    options:
+      # ———————————————————————————————
+      # Furnace
+      # ———————————————————————————————
+      # Upgrade low-efficiency (<80%) to 80% AFUE
+      - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Natural Gas
+          - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+        lifetime: 15
 
-  #     # Like-for-like replacements (>=80% keep their existing AFUE)
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Natural Gas
-  #         - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
-  #       lifetime: 15
+      - option: HVAC Heating Efficiency|Fuel Furnace, 83% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel| Fuel Oil
 
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Natural Gas
-  #         - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
-  #       lifetime: 15
+      # Like-for-like replacements (>=80% keep their existing AFUE)
+      - option: HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Natural Gas
+          - Heating Fuel|Propane
+          - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
+        lifetime: 15
 
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Natural Gas
-  #         - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
-  #       lifetime: 15
-
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Natural Gas
-  #         - HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
-  #       lifetime: 15
-
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Natural Gas
-  #         - HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
-  #       lifetime: 15
-
-
-  #     # ——————————————————————————————
-  #     # Propane like-for-like replacements (>80% AFUE)
-  #     # ——————————————————————————————
-  #     # Upgrade low-efficiency (<80%) to 80% AFUE
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Propane
-  #         - or:
-  #           - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-  #       lifetime: 15
-
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Propane
-  #         - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
-  #       lifetime: 15
-
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Propane
-  #         - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
-  #       lifetime: 15
-
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Propane
-  #         - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
-  #       lifetime: 15
-
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Propane
-  #         - HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
-  #       lifetime: 15
-
-
-  #     # ———————————————————————————————
-  #     # 3) Fuel-oil furnace (85% threshold) # needs to be 83% AFUE!
-  #     # ———————————————————————————————
-  #     # Upgrade low-efficiency (<80%) to 80% AFUE
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Fuel Oil
-  #         - or:
-  #           - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-  #       lifetime: 15
-
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 85% AFUE # TODO: Needs to be 83% in options look up
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Fuel Oil
-  #         - or:
-  #           - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
-  #           - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-  #       lifetime: 15
-
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Fuel Oil
-  #         - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
-  #       lifetime: 15
-      
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Fuel Oil
-  #         - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
-  #       lifetime: 15
-      
-  #     - option: HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - Heating Fuel|Fuel Oil
-  #         - HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
-  #       lifetime: 15
       
 
-  #     # ———————————————————————————————
-  #     # 4) Central AC — SEER 14.3 for Southeast and Southwest only
-  #     # ———————————————————————————————
-  #     - option: HVAC Cooling Efficiency|AC, SEER2 14.3 
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - and:
-  #           - or:
-  #               - State|AL
-  #               - State|AR
-  #               - State|DE
-  #               - State|FL
-  #               - State|GA
-  #               - State|HI
-  #               - State|KY
-  #               - State|LA
-  #               - State|MD
-  #               - State|MS
-  #               - State|NC
-  #               - State|OK
-  #               - State|SC
-  #               - State|TN
-  #               - State|TX
-  #               - State|VA
-  #               - State|DC
-  #               - State|AZ
-  #               - State|CA
-  #               - State|NV
-  #               - State|NM
-  #               # Optional additions:
-  #               # - State|PR
-  #               # - State|AS
-  #               # - State|GU
-  #               # - State|MP
-  #               # - State|VI
-  #         - or:
-  #             - HVAC Cooling Efficiency|AC, SEER 8
-  #             - HVAC Cooling Efficiency|AC, SEER 10
-  #             - HVAC Cooling Efficiency|AC, SEER 13
-  #             - HVAC Cooling Efficiency|AC, SEER 14
-  #       lifetime: 16
+      - option: HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Natural Gas
+          - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
+        lifetime: 15
 
-  #     # TODO: Technically this should be SEER2
-  #     # ———————————————————————————————
-  #     # All other states — SEER 13.4
-  #     # ———————————————————————————————
-  #     - option: HVAC Cooling Efficiency|AC, SEER2 13.4
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - not:
-  #             - or:
-  #                 - State|AL
-  #                 - State|AR
-  #                 - State|DE
-  #                 - State|FL
-  #                 - State|GA
-  #                 - State|HI
-  #                 - State|KY
-  #                 - State|LA
-  #                 - State|MD
-  #                 - State|MS
-  #                 - State|NC
-  #                 - State|OK
-  #                 - State|SC
-  #                 - State|TN
-  #                 - State|TX
-  #                 - State|VA
-  #                 - State|DC
-  #                 - State|AZ
-  #                 - State|CA
-  #                 - State|NV
-  #                 - State|NM
-  #         - or:
-  #             - HVAC Cooling Efficiency|AC, SEER 8
-  #             - HVAC Cooling Efficiency|AC, SEER 10
-  #             - HVAC Cooling Efficiency|AC, SEER 13
-  #       lifetime: 16
+      - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Natural Gas
+          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        lifetime: 15
 
-  #     # ———————————————————————————————
-  #     # 5) Central ASHP
-  #     # ———————————————————————————————
-  #     - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - or:
-  #           - HVAC Heating Efficiency|ASHP, SEER 10.0, 6.2 HSPF
-  #           - HVAC Heating Efficiency|ASHP, SEER 10.3, 7.0 HSPF
-  #           - HVAC Heating Efficiency|ASHP, SEER 11.5, 7.5 HSPF
-  #           - HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF
-  #           - HVAC Heating Efficiency|ASHP, SEER 13, 8.0 HSPF
-  #           - HVAC Heating Efficiency|ASHP, SEER 14, 8.2 HSPF
-  #           - HVAC Heating Efficiency|ASHP, SEER 14.3, 8.5 HSPF
-  #           - HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF #14.3 SEER2 == 15 SEER1, ducted
-  #           - HVAC Heating Efficiency|ASHP, SEER 15, 9.0 HSPF
-  #       lifetime: 15
+      - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Natural Gas
+          - HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
+        lifetime: 15
 
-  #     # ———————————————————————————————
-  #     # 6) Room (window) AC
-  #     # ———————————————————————————————
-  #     - option: HVAC Cooling Efficiency|Room AC, EER 12.0 #CEER 11.0; EER 12.0 single package
-  #       apply_logic:
-  #         - *exclusion_ref
-  #         - or:
-  #           - HVAC Cooling Efficiency|Room AC, EER 8.5
-  #           - HVAC Cooling Efficiency|Room AC, EER 9.8
-  #           - HVAC Cooling Efficiency|Room AC, EER 10.7
-  #       lifetime: 7
+      - option: HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Natural Gas
+          - HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
+        lifetime: 15
+
+
+      # ——————————————————————————————
+      # Propane like-for-like replacements (>80% AFUE)
+      # ——————————————————————————————
+      # Upgrade low-efficiency (<80%) to 80% AFUE
+      - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        lifetime: 15
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Propane
+          - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
+        lifetime: 15
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Propane
+          - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
+        lifetime: 15
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Propane
+          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        lifetime: 15
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Propane
+          - HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
+        lifetime: 15
+
+
+      # ———————————————————————————————
+      # 3) Fuel-oil furnace (85% threshold) # needs to be 83% AFUE!
+      # ———————————————————————————————
+      # Upgrade low-efficiency (<80%) to 80% AFUE
+      - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        lifetime: 15
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 85% AFUE # TODO: Needs to be 83% in options look up
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        lifetime: 15
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Fuel Oil
+          - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
+        lifetime: 15
+      
+      - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Fuel Oil
+          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        lifetime: 15
+      
+      - option: HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
+        apply_logic:
+          - *exclusion_ref
+          - Heating Fuel|Fuel Oil
+          - HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
+        lifetime: 15
+      
+
+      # ———————————————————————————————
+      # 4) Central AC — SEER 14.3 for Southeast and Southwest only
+      # ———————————————————————————————
+      - option: HVAC Cooling Efficiency|AC, SEER2 14.3 
+        apply_logic:
+          - *exclusion_ref
+          - and:
+            - or:
+                - State|AL
+                - State|AR
+                - State|DE
+                - State|FL
+                - State|GA
+                - State|HI
+                - State|KY
+                - State|LA
+                - State|MD
+                - State|MS
+                - State|NC
+                - State|OK
+                - State|SC
+                - State|TN
+                - State|TX
+                - State|VA
+                - State|DC
+                - State|AZ
+                - State|CA
+                - State|NV
+                - State|NM
+                # Optional additions:
+                # - State|PR
+                # - State|AS
+                # - State|GU
+                # - State|MP
+                # - State|VI
+          - or:
+              - HVAC Cooling Efficiency|AC, SEER 8
+              - HVAC Cooling Efficiency|AC, SEER 10
+              - HVAC Cooling Efficiency|AC, SEER 13
+              - HVAC Cooling Efficiency|AC, SEER 14
+        lifetime: 16
+
+      # TODO: Technically this should be SEER2
+      # ———————————————————————————————
+      # All other states — SEER 13.4
+      # ———————————————————————————————
+      - option: HVAC Cooling Efficiency|AC, SEER2 13.4
+        apply_logic:
+          - *exclusion_ref
+          - not:
+              - or:
+                  - State|AL
+                  - State|AR
+                  - State|DE
+                  - State|FL
+                  - State|GA
+                  - State|HI
+                  - State|KY
+                  - State|LA
+                  - State|MD
+                  - State|MS
+                  - State|NC
+                  - State|OK
+                  - State|SC
+                  - State|TN
+                  - State|TX
+                  - State|VA
+                  - State|DC
+                  - State|AZ
+                  - State|CA
+                  - State|NV
+                  - State|NM
+          - or:
+              - HVAC Cooling Efficiency|AC, SEER 8
+              - HVAC Cooling Efficiency|AC, SEER 10
+              - HVAC Cooling Efficiency|AC, SEER 13
+        lifetime: 16
+
+      # ———————————————————————————————
+      # 5) Central ASHP
+      # ———————————————————————————————
+      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
+        apply_logic:
+          - *exclusion_ref
+          - or:
+            - HVAC Heating Efficiency|ASHP, SEER 10.0, 6.2 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 10.3, 7.0 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 11.5, 7.5 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 13, 8.0 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 14, 8.2 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 14.3, 8.5 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF #14.3 SEER2 == 15 SEER1, ducted
+            - HVAC Heating Efficiency|ASHP, SEER 15, 9.0 HSPF
+        lifetime: 15
+
+      # ———————————————————————————————
+      # 6) Room (window) AC
+      # ———————————————————————————————
+      - option: HVAC Cooling Efficiency|Room AC, EER 12.0 #CEER 11.0; EER 12.0 single package
+        apply_logic:
+          - *exclusion_ref
+          - or:
+            - HVAC Cooling Efficiency|Room AC, EER 8.5
+            - HVAC Cooling Efficiency|Room AC, EER 9.8
+            - HVAC Cooling Efficiency|Room AC, EER 10.7
+        lifetime: 7
