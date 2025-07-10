@@ -300,7 +300,45 @@ if __name__ == '__main__':
       compare.results(args.aggregate_column, args.aggregate_function, excludes, enum_maps)
     elif action == 'visualize':
       excludes = ['buildstock.csv', 'results_characteristics.csv']
-      categories = ['.component_load_', '.emissions_', '.end_use_', '.energy_use_', '.fuel_use_', '.hot_water_', '.hvac_', '.load_', '.peak_', '.resilience_', '.unmet_hours_', '.electric_panel_', 'report_utility_bills.', 'upgrade_costs.', 'qoi_report.']
+      categories = ['.component_load_',
+                    '.emissions_',
+                    '.end_use_',
+                    '.energy_use_',
+                    '.fuel_use_',
+                    '.hot_water_',
+                    '.hvac_',
+                    '.load_',
+                    '.peak_',
+                    '.resilience_',
+                    '.unmet_hours_',
+                    '.electric_panel_',
+                    '.bills_electricity_energy',
+                    '.bills_electricity_fixed',
+                    '.bills_electricity_pv_credit',
+                    '.bills_electricity_total',
+                    '.bills_natural_gas_energy',
+                    '.bills_natural_gas_fixed',
+                    '.bills_natural_gas_total',
+                    '.bills_propane_energy',
+                    '.bills_propane_fixed',
+                    '.bills_propane_total',
+                    '.bills_fuel_oil_energy',
+                    '.bills_fuel_oil_fixed',
+                    '.bills_fuel_oil_total',
+                    '.bills_coal_energy',
+                    '.bills_coal_fixed',
+                    '.bills_coal_total',
+                    '.bills_wood_cord_energy',
+                    '.bills_wood_cord_fixed',
+                    '.bills_wood_cord_total',
+                    '.bills_wood_pellets_energy',
+                    '.bills_wood_pellets_fixed',
+                    '.bills_wood_pellets_total',
+                    '.bills_total',
+                    '.bills_2',
+                    '.bills_3',
+                    'upgrade_costs.',
+                    'qoi_report.']
       for category in categories:
         export_file, ext = args.export_file.split('.')
         export_file = '{}_{}.{}'.format(export_file, category.strip('.').rstrip('_'), ext)
