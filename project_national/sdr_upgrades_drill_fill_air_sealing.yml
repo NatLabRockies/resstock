@@ -3,8 +3,8 @@ os_version: 3.9.0
 os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: sdr_upgrades_tmy3
-weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+output_directory: sdr_upgrades_tmy3_drill_fill_air_v4 #change for kestrel run, make descriptive
+weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip #change weather location, check recording
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
@@ -15,20 +15,20 @@ baseline:
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: precomputed
+  type: precomputed #change precomputed and n_datapoints
   # type: residential_quota # For production run
   args:
-    sample_file: resources/sdr_minimal_buildstock.csv # For CI
+    sample_file: resources/sdr_filtered_buildstock_v2.csv # For CI
     # n_datapoints: 550000 # For production run
 
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 kestrel:
-  n_jobs: 600
-  minutes_per_sim: 10
-  account: <account>
+  n_jobs: 10
+  minutes_per_sim: 5
+  account: enduse
   postprocessing:
-    time: 800
+    time: 600
     n_workers: 20
     n_procs: 20
   sampling:
@@ -41,7 +41,7 @@ postprocessing:
   partition_columns:
     - State
     - County
-  publish_annual_results: true
+  publish_annual_results: true #change below section according to recording
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
   # aws:
   #  region_name: us-west-2
@@ -123,7 +123,7 @@ workflow_generator:
       retain_schedules_csv: true
       retain_in_osm: true
 
-    debug: true
+    debug: true #turn to false for large run because it takes so much space
 
 references:
   ### -- Anchors not dependent on other anchors -- ###
@@ -505,7 +505,7 @@ references:
 
   drill_and_fill_wall_insulation: &drill_and_fill_wall_insulation
     option: Insulation Wall|Wood Stud, R-13
-    apply logic:
+    apply_logic:
       - Insulation Wall|Wood Stud, Uninsulated
   
   ### -- Anchors dependent on other anchors -- ###
