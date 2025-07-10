@@ -19,7 +19,7 @@ sampler:
   type: residential_quota # For production run
   args:
     # sample_file: resources/buildstock_furnace_streamlined.csv # For CI
-    n_datapoints: 1000 # For production run
+    n_datapoints: 3 # For production run
 
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
@@ -181,7 +181,7 @@ upgrades:
           - Heating Fuel|Fuel Oil
         lifetime: 15
 
-  # - upgrade_name: reference case
+  - upgrade_name: reference case
     # Only ducted homes, no high-rise/shared
     package_apply_logic: &exclusion_ref
       - *remove_high_rise_shared
@@ -195,8 +195,9 @@ upgrades:
       - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
         apply_logic:
           - *exclusion_ref
-          - Heating Fuel|Natural Gas
-          - Heating Fuel|Propane
+          - or:
+            - Heating Fuel|Natural Gas
+            - Heating Fuel|Propane
           - or:
             - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
@@ -207,139 +208,43 @@ upgrades:
       - option: HVAC Heating Efficiency|Fuel Furnace, 83% AFUE
         apply_logic:
           - *exclusion_ref
-          - Heating Fuel| Fuel Oil
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        lifetime: 15     
 
-      # Like-for-like replacements (>=80% keep their existing AFUE)
+      # Like-for-like replacements (>=80% keep their existing AFUE and fuel type)
       - option: HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
         apply_logic:
           - *exclusion_ref
-          - Heating Fuel|Natural Gas
-          - Heating Fuel|Propane
           - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
         lifetime: 15
-
-      
 
       - option: HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
         apply_logic:
           - *exclusion_ref
-          - Heating Fuel|Natural Gas
           - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
         lifetime: 15
 
       - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
         apply_logic:
           - *exclusion_ref
-          - Heating Fuel|Natural Gas
           - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
         lifetime: 15
 
       - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
         apply_logic:
           - *exclusion_ref
-          - Heating Fuel|Natural Gas
           - HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
         lifetime: 15
 
       - option: HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
         apply_logic:
           - *exclusion_ref
-          - Heating Fuel|Natural Gas
-          - HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
-        lifetime: 15
-
-
-      # ——————————————————————————————
-      # Propane like-for-like replacements (>80% AFUE)
-      # ——————————————————————————————
-      # Upgrade low-efficiency (<80%) to 80% AFUE
-      - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-        apply_logic:
-          - *exclusion_ref
-          - Heating Fuel|Propane
-          - or:
-            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-        lifetime: 15
-
-      - option: HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
-        apply_logic:
-          - *exclusion_ref
-          - Heating Fuel|Propane
-          - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
-        lifetime: 15
-
-      - option: HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
-        apply_logic:
-          - *exclusion_ref
-          - Heating Fuel|Propane
-          - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
-        lifetime: 15
-
-      - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
-        apply_logic:
-          - *exclusion_ref
-          - Heating Fuel|Propane
-          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
-        lifetime: 15
-
-      - option: HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
-        apply_logic:
-          - *exclusion_ref
-          - Heating Fuel|Propane
-          - HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
-        lifetime: 15
-
-
-      # ———————————————————————————————
-      # 3) Fuel-oil furnace (85% threshold) # needs to be 83% AFUE!
-      # ———————————————————————————————
-      # Upgrade low-efficiency (<80%) to 80% AFUE
-      - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-        apply_logic:
-          - *exclusion_ref
-          - Heating Fuel|Fuel Oil
-          - or:
-            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-        lifetime: 15
-
-      - option: HVAC Heating Efficiency|Fuel Furnace, 85% AFUE # TODO: Needs to be 83% in options look up
-        apply_logic:
-          - *exclusion_ref
-          - Heating Fuel|Fuel Oil
-          - or:
-            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-        lifetime: 15
-
-      - option: HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
-        apply_logic:
-          - *exclusion_ref
-          - Heating Fuel|Fuel Oil
-          - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
-        lifetime: 15
-      
-      - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
-        apply_logic:
-          - *exclusion_ref
-          - Heating Fuel|Fuel Oil
-          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
-        lifetime: 15
-      
-      - option: HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
-        apply_logic:
-          - *exclusion_ref
-          - Heating Fuel|Fuel Oil
           - HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
         lifetime: 15
       
