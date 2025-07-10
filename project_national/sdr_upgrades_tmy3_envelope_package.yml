@@ -127,64 +127,17 @@ workflow_generator:
 
 references:
   ### -- Anchors not dependent on other anchors -- ###
-  attic_insulation_sf_cz1: &attic_insulation_sf_cz1
-    option: Insulation Ceiling|R-28
+  attic_insulation_cz1_sf: &attic_insulation_cz1_sf
+    option: Insulation Ceiling|R-49
     apply_logic:
       - or:
           - ASHRAE IECC Climate Zone 2004|1A
       - or:
           - Geometry Attic Type|Vented Attic
           - Geometry Attic Type|Unvented Attic
-      - or:
-          - Insulation Ceiling|Uninsulated
-          - Insulation Ceiling|R-7
-          - Insulation Ceiling|R-13
-          - Insulation Ceiling|R-19
-
-  attic_insulation_sf_cz2: &attic_insulation_sf_cz2
-    option: Insulation Ceiling|R-30
-    apply_logic:
-      - or:
-          - ASHRAE IECC Climate Zone 2004|2A
-          - ASHRAE IECC Climate Zone 2004|2B
-      - or:
-          - Geometry Attic Type|Vented Attic
-          - Geometry Attic Type|Unvented Attic
-      - or:
-          - Insulation Ceiling|Uninsulated
-          - Insulation Ceiling|R-7
-          - Insulation Ceiling|R-13
-          - Insulation Ceiling|R-19
-
-  attic_insulation_sf_cz3: &attic_insulation_sf_cz3
-    option: Insulation Ceiling|R-34
-    apply_logic:
-      - or:
-          - ASHRAE IECC Climate Zone 2004|3A
-          - ASHRAE IECC Climate Zone 2004|3B
-          - ASHRAE IECC Climate Zone 2004|3C
-      - or:
-          - Geometry Attic Type|Vented Attic
-          - Geometry Attic Type|Unvented Attic
-      - or:
-          - Insulation Ceiling|Uninsulated
-          - Insulation Ceiling|R-7
-          - Insulation Ceiling|R-13
-          - Insulation Ceiling|R-19
-          - Insulation Ceiling|R-30
-
-  attic_insulation_sf_cz4_5: &attic_insulation_sf_cz4_5
-    option: Insulation Ceiling|R-44
-    apply_logic:
-      - or:
-          - ASHRAE IECC Climate Zone 2004|4A
-          - ASHRAE IECC Climate Zone 2004|4B
-          - ASHRAE IECC Climate Zone 2004|4C
-          - ASHRAE IECC Climate Zone 2004|5A
-          - ASHRAE IECC Climate Zone 2004|5B
-      - or:
-          - Geometry Attic Type|Vented Attic
-          - Geometry Attic Type|Unvented Attic
+      # - or:  
+      #     - Geometry Building Type RECS|Single-Family Detached
+      #     - Geometry Building Type RECS|Single-Family Attached
       - or:
           - Insulation Ceiling|Uninsulated
           - Insulation Ceiling|R-7
@@ -193,10 +146,20 @@ references:
           - Insulation Ceiling|R-30
           - Insulation Ceiling|R-38
 
-  attic_insulation_sf_cz6_8: &attic_insulation_sf_cz6_8
+  attic_insulation_cz2_8_sf: &attic_insulation_cz2_8_sf
     option: Insulation Ceiling|R-60
     apply_logic:
       - or:
+          - ASHRAE IECC Climate Zone 2004|2A
+          - ASHRAE IECC Climate Zone 2004|2B
+          - ASHRAE IECC Climate Zone 2004|3A
+          - ASHRAE IECC Climate Zone 2004|3B
+          - ASHRAE IECC Climate Zone 2004|3C
+          - ASHRAE IECC Climate Zone 2004|4A
+          - ASHRAE IECC Climate Zone 2004|4B
+          - ASHRAE IECC Climate Zone 2004|4C
+          - ASHRAE IECC Climate Zone 2004|5A
+          - ASHRAE IECC Climate Zone 2004|5B
           - ASHRAE IECC Climate Zone 2004|6A
           - ASHRAE IECC Climate Zone 2004|6B
           - ASHRAE IECC Climate Zone 2004|7A
@@ -206,7 +169,11 @@ references:
       - or:
           - Geometry Attic Type|Vented Attic
           - Geometry Attic Type|Unvented Attic
+      # - or:
+      #     - Geometry Building Type RECS|Single-Family Detached
+      #     - Geometry Building Type RECS|Single-Family Attached
       - or:
+          #- Insulation Ceiling|None
           - Insulation Ceiling|Uninsulated
           - Insulation Ceiling|R-7
           - Insulation Ceiling|R-13
@@ -218,215 +185,40 @@ references:
   #Air sealing / infiltration reduction 
   #Note: CZ = Climate ZONE, PCT = percent infiltration reduction (due to air sealing)
   # Air sealing for CZ 1–2, SFD/SFA/MF, ACH50 > 4.0 → 20% reduction
-  infiltration_cz1_2_sf_mf_20pct: &infiltration_cz1_2_sf_mf_20pct  #add sf and mf for clearer naming
-    option: Infiltration Reduction|20%
+  infiltration_all_cz_sf_mf_mb: &infiltration_all_cz_sf_mf_mb  #add sf and mf for clearer naming
+    option: Infiltration|5 ACH50
     apply_logic:
       - or:
           - ASHRAE IECC Climate Zone 2004|1A
           - ASHRAE IECC Climate Zone 2004|2A
           - ASHRAE IECC Climate Zone 2004|2B
-      - or:
-          - Geometry Building Type RECS|Single-Family Detached
-          - Geometry Building Type RECS|Single-Family Attached
-          - Geometry Building Type RECS|Multi-Family with 2 - 4 Units
-          - Geometry Building Type RECS|Multi-Family with 5+ Units
-      - or:
-          - Infiltration|4.5 ACH50
-          - Infiltration|5 ACH50
-          - Infiltration|5.25 ACH50
-          - Infiltration|6 ACH50
-          - Infiltration|7 ACH50
-          - Infiltration|8 ACH50
-          - Infiltration|10 ACH50
-          - Infiltration|11.25 ACH50
-          - Infiltration|15 ACH50
-          - Infiltration|18.5 ACH50
-          - Infiltration|20 ACH50
-          - Infiltration|25 ACH50
-          - Infiltration|30 ACH50
-          - Infiltration|40 ACH50
-          - Infiltration|50 ACH50
-
-  # CZ 3, SFD/SFA → 53% reduction
-  infiltration_cz3_sf_53pct: &infiltration_cz3_sf_53pct
-    option: Infiltration Reduction|53%
-    apply_logic:
-      - or:
           - ASHRAE IECC Climate Zone 2004|3A
           - ASHRAE IECC Climate Zone 2004|3B
           - ASHRAE IECC Climate Zone 2004|3C
-      - or:
-          - Geometry Building Type RECS|Single-Family Detached
-          - Geometry Building Type RECS|Single-Family Attached
-      - or:
-          - Infiltration|3.75 ACH50
-          - Infiltration|4 ACH50
-          - Infiltration|4.5 ACH50
-          - Infiltration|5 ACH50
-          - Infiltration|5.25 ACH50
-          - Infiltration|6 ACH50
-          - Infiltration|7 ACH50
-          - Infiltration|8 ACH50
-          - Infiltration|10 ACH50
-          - Infiltration|11.25 ACH50
-          - Infiltration|15 ACH50
-          - Infiltration|18.5 ACH50
-          - Infiltration|20 ACH50
-          - Infiltration|25 ACH50
-          - Infiltration|30 ACH50
-          - Infiltration|40 ACH50
-          - Infiltration|50 ACH50
-
-  # CZ 3, MF → 63% reduction
-  infiltration_cz3_mf_63pct: &infiltration_cz3_mf_63pct
-    option: Infiltration Reduction|63%
-    apply_logic:
-      - or:
-          - ASHRAE IECC Climate Zone 2004|3A
-          - ASHRAE IECC Climate Zone 2004|3B
-          - ASHRAE IECC Climate Zone 2004|3C
-      - or:
-          - Geometry Building Type RECS|Multi-Family with 2 - 4 Units
-          - Geometry Building Type RECS|Multi-Family with 5+ Units
-      - or:
-          - Infiltration|3.75 ACH50
-          - Infiltration|4 ACH50
-          - Infiltration|4.5 ACH50
-          - Infiltration|5 ACH50
-          - Infiltration|5.25 ACH50
-          - Infiltration|6 ACH50
-          - Infiltration|7 ACH50
-          - Infiltration|8 ACH50
-          - Infiltration|10 ACH50
-          - Infiltration|11.25 ACH50
-          - Infiltration|15 ACH50
-          - Infiltration|18.5 ACH50
-          - Infiltration|20 ACH50
-          - Infiltration|25 ACH50
-          - Infiltration|30 ACH50
-          - Infiltration|40 ACH50
-          - Infiltration|50 ACH50
-
-  # CZ 4–5, all types → 32% reduction
-  infiltration_cz4_5_sf_mf_32pct: &infiltration_cz4_5_sf_mf_32pct
-    option: Infiltration Reduction|32%
-    apply_logic:
-      - or:
           - ASHRAE IECC Climate Zone 2004|4A
           - ASHRAE IECC Climate Zone 2004|4B
           - ASHRAE IECC Climate Zone 2004|4C
           - ASHRAE IECC Climate Zone 2004|5A
           - ASHRAE IECC Climate Zone 2004|5B
-      - or:
-          - Geometry Building Type RECS|Single-Family Detached
-          - Geometry Building Type RECS|Single-Family Attached
-          - Geometry Building Type RECS|Multi-Family with 2 - 4 Units
-          - Geometry Building Type RECS|Multi-Family with 5+ Units
-      - or:
-          - Infiltration|3.75 ACH50
-          - Infiltration|4 ACH50
-          - Infiltration|4.5 ACH50
-          - Infiltration|5 ACH50
-          - Infiltration|5.25 ACH50
-          - Infiltration|6 ACH50
-          - Infiltration|7 ACH50
-          - Infiltration|8 ACH50
-          - Infiltration|10 ACH50
-          - Infiltration|11.25 ACH50
-          - Infiltration|15 ACH50
-          - Infiltration|18.5 ACH50
-          - Infiltration|20 ACH50
-          - Infiltration|25 ACH50
-          - Infiltration|30 ACH50
-          - Infiltration|40 ACH50
-          - Infiltration|50 ACH50
-
-  # CZ 6–8, SFD/SFA → 42% reduction
-  infiltration_cz6_8_sf_42pct: &infiltration_cz6_8_sf_42pct
-    option: Infiltration Reduction|42%
-    apply_logic:
-      - or:
           - ASHRAE IECC Climate Zone 2004|6A
           - ASHRAE IECC Climate Zone 2004|6B
           - ASHRAE IECC Climate Zone 2004|7A
           - ASHRAE IECC Climate Zone 2004|7AK
           - ASHRAE IECC Climate Zone 2004|7B
           - ASHRAE IECC Climate Zone 2004|8AK
+      # - or:
+      #     - Geometry Building Type RECS|Single-Family Detached
+      #     - Geometry Building Type RECS|Single-Family Attached
+      #     - Geometry Building Type RECS|Multi-Family with 2 - 4 Units
+      #     - Geometry Building Type RECS|Multi-Family with 5+ Units
+      #     - Geometry Building Type RECS|Mobile Home
       - or:
-          - Geometry Building Type RECS|Single-Family Detached
-          - Geometry Building Type RECS|Single-Family Attached
-      - or:
-          - Infiltration|3 ACH50
-          - Infiltration|3.75 ACH50
-          - Infiltration|4 ACH50
-          - Infiltration|4.5 ACH50
-          - Infiltration|5 ACH50
-          - Infiltration|5.25 ACH50
+          #- Infiltration|5 ACH50
           - Infiltration|6 ACH50
           - Infiltration|7 ACH50
           - Infiltration|8 ACH50
           - Infiltration|10 ACH50
-          - Infiltration|11.25 ACH50
           - Infiltration|15 ACH50
-          - Infiltration|18.5 ACH50
-          - Infiltration|20 ACH50
-          - Infiltration|25 ACH50
-          - Infiltration|30 ACH50
-          - Infiltration|40 ACH50
-          - Infiltration|50 ACH50
-
-  # CZ 6–8, MF → 30% reduction
-  infiltration_cz6_8_mf_40pct: &infiltration_cz6_8_mf_40pct
-    option: Infiltration Reduction|40%
-    apply_logic:
-      - or:
-          - ASHRAE IECC Climate Zone 2004|6A
-          - ASHRAE IECC Climate Zone 2004|6B
-          - ASHRAE IECC Climate Zone 2004|7A
-          - ASHRAE IECC Climate Zone 2004|7AK
-          - ASHRAE IECC Climate Zone 2004|7B
-          - ASHRAE IECC Climate Zone 2004|8AK
-      - or:
-          - Geometry Building Type RECS|Multi-Family with 2 - 4 Units
-          - Geometry Building Type RECS|Multi-Family with 5+ Units
-      - or:
-          - Infiltration|3 ACH50
-          - Infiltration|3.75 ACH50
-          - Infiltration|4 ACH50
-          - Infiltration|4.5 ACH50
-          - Infiltration|5 ACH50
-          - Infiltration|5.25 ACH50
-          - Infiltration|6 ACH50
-          - Infiltration|7 ACH50
-          - Infiltration|8 ACH50
-          - Infiltration|10 ACH50
-          - Infiltration|11.25 ACH50
-          - Infiltration|15 ACH50
-          - Infiltration|18.5 ACH50
-          - Infiltration|20 ACH50
-          - Infiltration|25 ACH50
-          - Infiltration|30 ACH50
-          - Infiltration|40 ACH50
-          - Infiltration|50 ACH50
-
-  # All CZs, Mobile Homes → 30% reduction
-  infiltration_all_cz_mobile_home_30pct: &infiltration_all_cz_mobile_home_30pct
-    option: Infiltration Reduction|30%
-    apply_logic:
-      - Geometry Building Type RECS|Mobile Home
-      - or:
-          - Infiltration|3.75 ACH50
-          - Infiltration|4 ACH50
-          - Infiltration|4.5 ACH50
-          - Infiltration|5 ACH50
-          - Infiltration|5.25 ACH50
-          - Infiltration|6 ACH50
-          - Infiltration|7 ACH50
-          - Infiltration|8 ACH50
-          - Infiltration|10 ACH50
-          - Infiltration|11.25 ACH50
-          - Infiltration|15 ACH50
-          - Infiltration|18.5 ACH50
           - Infiltration|20 ACH50
           - Infiltration|25 ACH50
           - Infiltration|30 ACH50
@@ -470,21 +262,12 @@ upgrades:
   ### -- Envelope and Ducts -- ###
   - upgrade_name: Air Sealing
     options:
-      - *infiltration_cz1_2_sf_mf_20pct
-      - *infiltration_cz3_sf_53pct
-      - *infiltration_cz3_mf_63pct
-      - *infiltration_cz4_5_sf_mf_32pct
-      - *infiltration_cz6_8_sf_42pct
-      - *infiltration_cz6_8_mf_40pct
-      - *infiltration_all_cz_mobile_home_30pct
+      - *infiltration_all_cz_sf_mf_mb
 
   - upgrade_name: Attic Floor Insulation for Unfinished Attics
     options:
-      - *attic_insulation_sf_cz1
-      - *attic_insulation_sf_cz2
-      - *attic_insulation_sf_cz3
-      - *attic_insulation_sf_cz4_5
-      - *attic_insulation_sf_cz6_8
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
 
   - upgrade_name: Duct Sealing and Insulation
     options:
@@ -499,38 +282,19 @@ upgrades:
   ### -- Packages -- ###
   - upgrade_name: Air Sealing + Attic Floor Insulation + Duct sealing
     options:
-      - *infiltration_cz1_2_sf_mf_20pct
-      - *infiltration_cz3_sf_53pct
-      - *infiltration_cz3_mf_63pct
-      - *infiltration_cz4_5_sf_mf_32pct
-      - *infiltration_cz6_8_sf_42pct
-      - *infiltration_cz6_8_mf_40pct
-      - *infiltration_all_cz_mobile_home_30pct
-      - *attic_insulation_sf_cz1
-      - *attic_insulation_sf_cz2
-      - *attic_insulation_sf_cz3
-      - *attic_insulation_sf_cz4_5
-      - *attic_insulation_sf_cz6_8
+      - *infiltration_all_cz_sf_mf_mb
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
       - *duct_seal_only_r6
       - *duct_seal_only_r8
       - *duct_seal_and_insulate
 
   - upgrade_name: Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation
     options:
-      - *infiltration_cz1_2_sf_mf_20pct
-      - *infiltration_cz3_sf_53pct
-      - *infiltration_cz3_mf_63pct
-      - *infiltration_cz4_5_sf_mf_32pct
-      - *infiltration_cz6_8_sf_42pct
-      - *infiltration_cz6_8_mf_40pct
-      - *infiltration_all_cz_mobile_home_30pct
-      - *attic_insulation_sf_cz1
-      - *attic_insulation_sf_cz2
-      - *attic_insulation_sf_cz3
-      - *attic_insulation_sf_cz4_5
-      - *attic_insulation_sf_cz6_8
+      - *infiltration_all_cz_sf_mf_mb
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
       - *duct_seal_only_r6
       - *duct_seal_only_r8
       - *duct_seal_and_insulate
       - *drill_and_fill_wall
-  
