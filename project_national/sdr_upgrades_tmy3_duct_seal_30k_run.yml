@@ -3,11 +3,11 @@ os_version: 3.9.0
 os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: sdr_upgrades_tmy3_duct_seal
+output_directory: /kfs2/projects/enduse/sdr/runs/ylou/duct_seal_30k/
 # weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
-weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
-# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
+# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
+weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
 
 # Baseline number of units
 baseline:
@@ -24,13 +24,13 @@ sampler:
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 kestrel:
-  n_jobs: 50
-  minutes_per_sim: 10
+  n_jobs: 3
+  minutes_per_sim: 2
   account: enduse
   postprocessing:
-    time: 80
+    time: 120
     n_workers: 5
-    n_procs: 5
+    n_procs: 2
   sampling:
     time: 30
 
@@ -46,11 +46,11 @@ postprocessing:
   aws:
    region_name: us-west-2
    s3:
-     bucket: sdr_resstock
-     prefix: production_runs
+     bucket: res-sdr
+     prefix: testing-sdr-fy25
    athena:
      glue_service_role: service-role/AWSGlueServiceRole-default
-     database_name: sdr_resstock
+     database_name: res-sdr
      max_crawling_time: 1200
 
 # Workflow generator
@@ -127,76 +127,6 @@ workflow_generator:
 
 references:
   ### -- Anchors not dependent on other anchors -- ###
-  attic_insulation_iecc_cz1a: &attic_insulation_iecc_cz1a
-    option: Insulation Ceiling|R-30
-    apply_logic:
-      - ASHRAE IECC Climate Zone 2004|1A
-      - Geometry Attic Type|Vented Attic
-      - or:
-        - Insulation Ceiling|Uninsulated
-        - Insulation Ceiling|R-7
-        - Insulation Ceiling|R-13
-        - Insulation Ceiling|R-19
-    costs:
-      - value: 0.0482
-        multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
-      - value: 0.2163
-        multiplier: Floor Area, Attic (ft^2)
-    lifetime: 60
-
-  attic_insulation_iecc_cz2a_2b_3a_3b_3c: &attic_insulation_iecc_cz2a_2b_3a_3b_3c
-    option: Insulation Ceiling|R-49
-    apply_logic:
-      - or:
-        - ASHRAE IECC Climate Zone 2004|2A
-        - ASHRAE IECC Climate Zone 2004|2B
-        - ASHRAE IECC Climate Zone 2004|3A
-        - ASHRAE IECC Climate Zone 2004|3B
-        - ASHRAE IECC Climate Zone 2004|3C
-      - Geometry Attic Type|Vented Attic
-      - or:
-        - Insulation Ceiling|Uninsulated
-        - Insulation Ceiling|R-7
-        - Insulation Ceiling|R-13
-        - Insulation Ceiling|R-19
-        - Insulation Ceiling|R-30
-        - Insulation Ceiling|R-38
-    costs:
-      - value: 0.0482
-        multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
-      - value: 0.2163
-        multiplier: Floor Area, Attic (ft^2)
-    lifetime: 60
-
-  attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b: &attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b
-    option: Insulation Ceiling|R-60
-    apply_logic:
-      - or:
-        - ASHRAE IECC Climate Zone 2004|4A
-        - ASHRAE IECC Climate Zone 2004|4B
-        - ASHRAE IECC Climate Zone 2004|4C
-        - ASHRAE IECC Climate Zone 2004|5A
-        - ASHRAE IECC Climate Zone 2004|5B
-        - ASHRAE IECC Climate Zone 2004|6A
-        - ASHRAE IECC Climate Zone 2004|6B
-        - ASHRAE IECC Climate Zone 2004|7A
-        - ASHRAE IECC Climate Zone 2004|7B
-      - Geometry Attic Type|Vented Attic
-      - or:
-        - Insulation Ceiling|Uninsulated
-        - Insulation Ceiling|R-7
-        - Insulation Ceiling|R-13
-        - Insulation Ceiling|R-19
-        - Insulation Ceiling|R-30
-        - Insulation Ceiling|R-38
-        - Insulation Ceiling|R-49
-    costs:
-      - value: 0.0482
-        multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
-      - value: 0.2163
-        multiplier: Floor Area, Attic (ft^2)
-    lifetime: 60
-
   duct_seal_only_r6: &duct_seal_only_r6
     option: Duct Leakage and Insulation|5% Leakage to Outside, R-6
     apply_logic:
@@ -223,177 +153,6 @@ references:
         - Duct Leakage and Insulation|20% Leakage to Outside, Uninsulated
         - Duct Leakage and Insulation|30% Leakage to Outside, R-4
         - Duct Leakage and Insulation|30% Leakage to Outside, Uninsulated
-
-  costs_ashp_ducted_seer_20_11_hspf: &costs_ashp_ducted_seer_20_11_hspf
-    - value: 10229.58
-      multiplier: Fixed (1)
-    - value: 167.64
-      multiplier: Size, Heating System Primary (kBtu/h)
-
-  costs_ghp: &costs_ghp
-    - value: 999
-      multiplier: Fixed (1)
-    - value: 999
-      multiplier: Size, Heating System Primary (kBtu/h)
-
-  demand_flexibility_30_minute_random_shift: &demand_flexibility_30_minute_random_shift
-    option: Demand Flexibility Random Shift|30 minutes
-
-  demand_flexibility_electric_vehicle: &demand_flexibility_electric_vehicle
-    option: Demand Flexibility Electric Vehicle|Enabled
-
-  ducted_ashp_apply_logic: &ducted_ashp_apply_logic
-    - HVAC Has Ducts|Yes
-    - not:
-      - or:
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Cooling Only
-
-  ev_15_percent_efficiency: &ev_15_percent_efficiency
-    option: Electric Vehicle Efficiency Increase|15%
-
-  ev_l2_charger: &ev_l2_charger
-    option: Electric Vehicle Charger|Level 2 charger
-
-  ev_ownership_yes: &ev_ownership_yes
-    option: Electric Vehicle Ownership|Yes
-
-  has_cooling_or_heating: &has_cooling_or_heating
-    - or:
-      - not: HVAC Cooling Type|None
-      - not: HVAC Heating Type|None
-
-  infiltration_30_percent_reduction: &infiltration_30_percent_reduction
-    option: Infiltration Reduction|30%
-    apply_logic:
-      - or:
-        - Infiltration|50 ACH50
-        - Infiltration|40 ACH50
-        - Infiltration|30 ACH50
-        - Infiltration|25 ACH50
-        - Infiltration|20 ACH50
-        - Infiltration|18.5 ACH50
-        - Infiltration|15 ACH50
-        - Infiltration|11.25 ACH50
-    costs:
-      - value: 0.53
-        multiplier: Floor Area, Conditioned (ft^2)
-    lifetime: 60
-
-  lifetime_ducted_ashp: &lifetime_ducted_ashp 15
-
-  lifetime_ducted_ghp: &lifetime_ducted_ghp 15
-
-  occupied_only: &occupied_only
-    Vacancy Status|Occupied
-
-  partial_conditioning_100_percent_ducts_only: &partial_conditioning_100_percent_ducts_only
-    option: HVAC Cooling Partial Space Conditioning|100% Conditioned
-    apply_logic:
-      - HVAC Has Ducts|Yes
-
-  remove_high_rise_shared: &remove_high_rise_shared
-    - not: Heating Fuel|Wood
-    - not: Heating Fuel|Other Fuel
-    - not: Heating Fuel|None
-    - not:
-      - or:
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Cooling Only
-      - and:
-        - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
-
-  remove_nonducted_high_rise_shared: &remove_nonducted_high_rise_shared
-    - HVAC Has Ducts|Yes
-    - not: Heating Fuel|Wood
-    - not: Heating Fuel|Other Fuel
-    - not: Heating Fuel|None
-    - not:
-      - or:
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Cooling Only
-      - and:
-        - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
-
-  # FIXME: We'd prefer to apply GHP to 0.5 and 0.8, but we are actively working on fixing a bug here.
-  # When fixed, remove the following block and replace with use of remove_nonducted_high_rise_shared.
-  remove_nonducted_high_rise_shared_low_ground_conductivity: &remove_nonducted_high_rise_shared_low_ground_conductivity
-    - HVAC Has Ducts|Yes
-    - not: Heating Fuel|Wood
-    - not: Heating Fuel|Other Fuel
-    - not: Heating Fuel|None
-    - not:
-      - or:
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Cooling Only
-      - and:
-        - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
-    - not:
-      - or:
-        - Ground Thermal Conductivity|0.5
-        - Ground Thermal Conductivity|0.8
-
-  yes_and_no_has_ducts_apply_logic: &yes_and_no_has_ducts_apply_logic
-    - or:
-      - HVAC Has Ducts|Yes
-      - HVAC Has Ducts|No
-  
-  ### -- Anchors dependent on other anchors -- ###
-  cooling_setpoint_no_offset: &cooling_setpoint_no_offset
-      option: Cooling Setpoint Has Offset|No
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  cooling_setpoint_offset_magnitude_0: &cooling_setpoint_offset_magnitude_0
-      option: Cooling Setpoint Offset Magnitude|0F
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  cooling_setpoint_offset_period_none: &cooling_setpoint_offset_period_none
-      option: Cooling Setpoint Offset Period|None
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  ducted_ashp_seer_20_11_hspf_cchp_electric_backup: &ducted_ashp_seer_20_11_hspf_cchp_electric_backup
-      option: HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load
-      apply_logic: *ducted_ashp_apply_logic
-      costs: *costs_ashp_ducted_seer_20_11_hspf
-      lifetime: *lifetime_ducted_ashp
-
-  dual_speed_ducted_ghp: &dual_speed_ducted_ghp
-      option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
-      apply_logic: *ducted_ashp_apply_logic
-      costs: *costs_ghp
-      lifetime: *lifetime_ducted_ghp
-
-  heat_pump_cooling_efficiency_ducted: &heat_pump_cooling_efficiency_ducted
-      option: HVAC Cooling Efficiency|Ducted Heat Pump
-      apply_logic: *ducted_ashp_apply_logic
-
-  heating_setpoint_no_offset: &heating_setpoint_no_offset
-      option: Heating Setpoint Has Offset|No
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  heating_setpoint_offset_magnitude_0: &heating_setpoint_offset_magnitude_0
-      option: Heating Setpoint Offset Magnitude|0F
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  heating_setpoint_offset_period_none: &heating_setpoint_offset_period_none
-      option: Heating Setpoint Offset Period|None
-      apply_logic: *yes_and_no_has_ducts_apply_logic
-
-  partial_conditioning_100_percent: &partial_conditioning_100_percent
-      option: HVAC Cooling Partial Space Conditioning|100% Conditioned
-      apply_logic: *yes_and_no_has_ducts_apply_logic
 
 ### Standard Data Release - Residential -- ###
 upgrades:
