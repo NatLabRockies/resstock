@@ -27,7 +27,7 @@ class OutputManager:
         self.base_dir.mkdir(parents=True, exist_ok=True)
         self.time_spent: defaultdict[Literal["svg", "html", "parquet", "json", "csv"], float] = defaultdict(float)
         if not output_types:  # types needed by the dashboard
-            output_types = ["json", "parquet"]
+            output_types = ["json", "parquet", "html"]
         self.output_types = output_types
         self.write_workflow_snapshot(workflow)
 

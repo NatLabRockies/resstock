@@ -32,7 +32,7 @@ def main():
         help=(
             "Output file types to generate (svg, html, parquet, json, csv). "
             "May be specified multiple times or as a comma-separated list."
-            "Defaults to [json, parquet] if not specified."
+            "Defaults to [json, parquet, html] if not specified."
         ),
     )
     parser.add_argument(

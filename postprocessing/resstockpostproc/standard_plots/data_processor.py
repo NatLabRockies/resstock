@@ -81,10 +81,10 @@ class DataProcessor:
                 matches = [file for file in all_files if os.path.basename(file) == f"{pattern}.parquet"]
                 if matches:
                     matching_files.append((pattern, matches[0]))
-            if not matching_files:
-                raise ValueError(f"No files found for upgrade {upgrade}")
             if len(matching_files) > 1:
                 raise ValueError(f"Multiple files ({matching_files}) found for upgrade {upgrade}")
+            if not matching_files:
+                continue
             upgrade_to_file[upgrade] = matching_files[0][1]
         return upgrade_to_file
 

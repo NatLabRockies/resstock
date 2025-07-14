@@ -75,6 +75,7 @@ class BoxPlotter(BasePlotter):
                 upperfence=[row["upperfence"]],
                 boxpoints=False,
                 legendgroup=row[x_column],
+                name=row["upgrade_name"],
             )
             fig.add_trace(box_trace)
 
@@ -223,7 +224,7 @@ class BoxPlotter(BasePlotter):
         for i in range(len(facet_values)):
             title_text = y_label if y_label else y_column.split(".")[-1].replace("_", " ").title()
             fig.update_yaxes(
-                title=title_text if i == 0 else None,
+                title=title_text if i == 0 else "",
                 gridcolor="lightgray",
                 gridwidth=0.5,
                 zeroline=True,
