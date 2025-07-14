@@ -1,6 +1,6 @@
 """Tests for DataProcessor.prepare_data_for_plot
 
-These tests run fully in-memory: we monkeypatch the private _load_data method so
+These tests run fully in-memory: we monkeypatch the private load_data method so
 that no file-system access is required. Small Polars DataFrames are used that
 cover the core filter / aggregation logic.
 """
@@ -101,7 +101,8 @@ def processor(monkeypatch: pytest.MonkeyPatch, combined_df: pl.LazyFrame) -> Dat
         return combined_df
 
     # Patch the private _load_data before instantiation
-    monkeypatch.setattr(DataProcessor, "_load_data", _fake_load, raising=True)
+    monkeypatch.setattr(DataProcessor, "load_data", _fake_load, raising=True)
+    monkeypatch.setattr(DataProcessor, "get_available_upgrades", lambda _, __: [0, 1, 2], raising=True)
     proc = DataProcessor(
         WorkflowConfig(
             s3_results_dir="dummy",
