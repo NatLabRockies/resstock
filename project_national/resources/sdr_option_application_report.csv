@@ -15,20 +15,26 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,380161,69.1
 4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,389136,70.8
 4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,389136,70.8
-5,Air Sealing,1,Infiltration Reduction|30%,366250,66.6
-5,Air Sealing,-1,All,366250,66.6
-6,Attic Floor Insulation for Unfinished Attics,1,Insulation Ceiling|R-30,1502,0.3
-6,Attic Floor Insulation for Unfinished Attics,2,Insulation Ceiling|R-49,84557,15.4
-6,Attic Floor Insulation for Unfinished Attics,3,Insulation Ceiling|R-60,129264,23.5
-6,Attic Floor Insulation for Unfinished Attics,-1,All,215323,39.1
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",380161,69.1
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,2,HVAC Cooling Efficiency|Ducted Heat Pump,380161,69.1
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,389136,70.8
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,4,Insulation Ceiling|R-30,1081,0.2
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,5,Insulation Ceiling|R-49,74413,13.5
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,6,Insulation Ceiling|R-60,100949,18.4
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,7,Infiltration Reduction|30%,251290,45.7
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,-1,All,389136,70.8
+5,Attic Floor Insulation for Unfinished Attics,1,Insulation Ceiling|R-30,1502,0.3
+5,Attic Floor Insulation for Unfinished Attics,2,Insulation Ceiling|R-49,84557,15.4
+5,Attic Floor Insulation for Unfinished Attics,3,Insulation Ceiling|R-60,129264,23.5
+5,Attic Floor Insulation for Unfinished Attics,-1,All,215323,39.1
+6,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",380161,69.1
+6,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,2,HVAC Cooling Efficiency|Ducted Heat Pump,380161,69.1
+6,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,389136,70.8
+6,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,4,Insulation Ceiling|R-30,1081,0.2
+6,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,5,Insulation Ceiling|R-49,74413,13.5
+6,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,6,Insulation Ceiling|R-60,100949,18.4
+6,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,-1,All,389136,70.8
+7,Drill and Fill Wall Insulation with Air Sealing,1,"Insulation Wall|Wood Stud, R-13",167618,30.5
+7,Drill and Fill Wall Insulation with Air Sealing,2,Infiltration Reduction|20%,74293,13.5
+7,Drill and Fill Wall Insulation with Air Sealing,3,Infiltration Reduction|53%,89388,16.3
+7,Drill and Fill Wall Insulation with Air Sealing,4,Infiltration Reduction|63%,33988,6.2
+7,Drill and Fill Wall Insulation with Air Sealing,5,Infiltration Reduction|32%,264689,48.1
+7,Drill and Fill Wall Insulation with Air Sealing,6,Infiltration Reduction|42%,32032,5.8
+7,Drill and Fill Wall Insulation with Air Sealing,7,Infiltration Reduction|40%,9549,1.7
+7,Drill and Fill Wall Insulation with Air Sealing,8,Infiltration Reduction|30%,33992,6.2
+7,Drill and Fill Wall Insulation with Air Sealing,-1,All,538518,97.9
 8,Electric Vehicle Adoption with Level 1 Charging,1,Electric Vehicle Ownership|Yes,477589,86.8
 8,Electric Vehicle Adoption with Level 1 Charging,2,Electric Vehicle Charger|Level 1 charger,477589,86.8
 8,Electric Vehicle Adoption with Level 1 Charging,-1,All,477589,86.8
