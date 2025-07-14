@@ -3,11 +3,11 @@ os_version: 3.9.0
 os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: sdr_upgrades_tmy3_drill_fill_air_v4 #change for kestrel run, make descriptive
-weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip #change weather location, check recording
+output_directory: /kfs2/projects/enduse/sdr/runs/jstershi/drill_fill_air_sealing_30k/
+#weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip #change weather location, check recording
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
-# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
+weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
 
 # Baseline number of units
 baseline:
@@ -15,24 +15,24 @@ baseline:
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: precomputed #change precomputed and n_datapoints
-  # type: residential_quota # For production run
+  #type: precomputed #change precomputed and n_datapoints
+  type: residential_quota # For production run
   args:
-    sample_file: resources/sdr_filtered_buildstock_v2.csv # For CI
-    # n_datapoints: 550000 # For production run
+    #sample_file: resources/sdr_filtered_buildstock_v2.csv # For CI
+    n_datapoints: 30000 # For production run
 
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 kestrel:
-  n_jobs: 10
-  minutes_per_sim: 5
+  n_jobs: 20
+  minutes_per_sim: 2
   account: enduse
   postprocessing:
-    time: 600
-    n_workers: 20
-    n_procs: 20
+    time: 120
+    n_workers: 5
+    n_procs: 2
   sampling:
-    time: 60
+    time: 30
 
 # Post proccessing and Amazon Web Services
 postprocessing:
@@ -43,15 +43,15 @@ postprocessing:
     - County
   publish_annual_results: true #change below section according to recording
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
-  # aws:
-  #  region_name: us-west-2
-  #  s3:
-  #    bucket: sdr_resstock
-  #    prefix: production_runs
-  #  athena:
-  #    glue_service_role: service-role/AWSGlueServiceRole-default
-  #    database_name: sdr_resstock
-  #    max_crawling_time: 1200
+  aws:
+   region_name: us-west-2
+   s3:
+     bucket: res-sdr
+     prefix: testing-sdr-fy25
+   athena:
+     glue_service_role: service-role/AWSGlueServiceRole-default
+     database_name: res-sdr
+     max_crawling_time: 1200
 
 # Workflow generator
 workflow_generator:
