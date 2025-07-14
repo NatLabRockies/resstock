@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate JSON schema from WorkflowConfig Pydantic model. The schema is used for static YAML validation
-in VSCode and pre-commit hooks.
+in VSCode and pre-commit hooks. Can be automatically run by emeraldwalk.runonsave extension when the schema
+files are modified so that the schema json is always up to date.
 """
 
 import json

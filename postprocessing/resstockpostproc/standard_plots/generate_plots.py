@@ -8,6 +8,7 @@ import argparse
 import os
 import sys
 from pathlib import Path
+import re
 
 # Import dependencies that might be needed
 # Import our components
@@ -25,27 +26,35 @@ def main():
         help="Path to plot configuration YAML file",
         default=str(Path(__file__).parent / "workflow.yaml"),
     )
-    # By default, save data; allow users to opt-out with --no-save-data
     parser.add_argument(
-        "--no-save-data",
-        dest="save_data",
-        action="store_false",
-        help="Do not save the data used to generate the plots",
+        "--output",
+        action="append",
+        help=(
+            "Output file types to generate (svg, html, parquet, json, csv). "
+            "May be specified multiple times or as a comma-separated list."
+            "Defaults to [json, parquet] if not specified."
+        ),
     )
-    # Ensure the default is to save data if the flag is omitted
-    parser.set_defaults(save_data=True)
     parser.add_argument(
         "--max-plots",
         type=int,
         help="Maximum number of plots to generate",
     )
-    parser.add_argument(
-        "--save-image",
-        action="store_true",
-        help="Save the image used to generate the plots",
-    )
     args = parser.parse_args()
     config_path = args.config
+
+    # Parse and validate output types
+    allowed_types = {"svg", "html", "parquet", "json", "csv"}
+    output_types = []
+    output = args.output or []
+    for val in output:
+        for item in re.split(r"[,\s]+", val.strip()):
+            if item and item in allowed_types:
+                output_types.append(str(item))
+            else:
+                print(f"Warning: Invalid output file type: {item}. Skipping.")
+    if output_types:
+        print(f"Outputting: {output_types}")
 
     # Verify the config file exists
     if not os.path.exists(config_path):
@@ -53,7 +62,7 @@ def main():
         sys.exit(1)
 
     # Create the orchestrator and generate plots
-    orchestrator = PlotOrchestrator(config_path, should_save_image=args.save_image, should_save_data=args.save_data)
+    orchestrator = PlotOrchestrator(config_path, output_types=output_types)
     orchestrator.generate_all_plots(max_plots_to_gen=args.max_plots)
     orchestrator.print_time_spent()
     orchestrator.out_mgr.print_time_spent()

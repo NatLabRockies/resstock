@@ -166,14 +166,19 @@
   "additionalProperties": false,
   "description": "Configuration for plot generation",
   "properties": {
-    "annual_results_dir": {
-      "description": "Path to folder containing annual results",
-      "title": "Annual Results Dir",
+    "s3_results_dir": {
+      "description": "Path to s3 results directory",
+      "title": "S3 Results Dir",
       "type": "string"
     },
     "output_dir": {
       "description": "Path to output directory",
       "title": "Output Dir",
+      "type": "string"
+    },
+    "run_name": {
+      "description": "Name of the run to identify it later",
+      "title": "Run Name",
       "type": "string"
     },
     "upgrades": {
@@ -267,8 +272,9 @@
     }
   },
   "required": [
-    "annual_results_dir",
+    "s3_results_dir",
     "output_dir",
+    "run_name",
     "upgrades",
     "upgrade_names",
     "quantities",

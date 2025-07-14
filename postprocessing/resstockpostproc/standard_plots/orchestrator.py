@@ -13,6 +13,7 @@ from resstockpostproc.standard_plots.data_processor import DataProcessor
 from resstockpostproc.standard_plots.output_manager import OutputManager
 from resstockpostproc.standard_plots.schema.plot_spec import ComparisonTypes, PlotSpec, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
+from typing import Literal
 
 
 class PlotOrchestrator:
@@ -20,14 +21,13 @@ class PlotOrchestrator:
     Orchestrates the plot generation process
     """
 
-    def __init__(self, config_path: str, should_save_image: bool = False, should_save_data: bool = False):
+    def __init__(self, config_path: str, output_types: list[Literal["svg", "html", "parquet", "json", "csv"]] = []):
         """
         Initialize the orchestrator
 
         Args:
             config_path: Path to the workflow configuration YAML file
-            should_save_image: Whether to save the image of the plot
-            should_save_data: Whether to save the data used to generate the plot
+            output_file_types: List of file types to save
         """
         self.workflow = WorkflowConfig.from_yaml(config_path)
         self.data_loading_time: float = 0
@@ -39,9 +39,7 @@ class PlotOrchestrator:
         start_time = time.time()
         self.processor = DataProcessor(self.workflow)
         self.data_loading_time = time.time() - start_time
-        self.out_mgr = OutputManager(
-            self.workflow.output_dir, should_save_image=should_save_image, should_save_data=should_save_data
-        )
+        self.out_mgr = OutputManager(self.workflow, output_types=output_types)
 
     def generate_all_plots(self, *, max_plots_to_gen: int | None = None) -> None:
         """Generate all plots declared in YAML using the new PlotDef contract."""

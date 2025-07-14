@@ -104,8 +104,9 @@ def processor(monkeypatch: pytest.MonkeyPatch, combined_df: pl.LazyFrame) -> Dat
     monkeypatch.setattr(DataProcessor, "_load_data", _fake_load, raising=True)
     proc = DataProcessor(
         WorkflowConfig(
-            annual_results_dir="dummy",
+            s3_results_dir="dummy",
             output_dir="dummy",
+            run_name="dummy",
             upgrades=[0, 1, 2],
             upgrade_names=["Baseline", "Upgrade1", "Upgrade2"],
             selection_logic=None,

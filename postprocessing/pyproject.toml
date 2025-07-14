@@ -34,6 +34,9 @@ dependencies = [
     "pydantic>=2.11.5",
     "pyyaml",
     "s3fs",
+    "boto3[crt]>=1.39.4",
+    "boto3-stubs>=1.39.4",
+    "plotly-stubs>=0.0.5",
 ]
 
 [project.urls]
@@ -80,3 +83,12 @@ allow-direct-references = true
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.prefect.server.ephemeral]
+enabled = true
+[tool.prefect.server]
+analytics_enabled = false
+[tool.prefect.cloud]
+enable_orchestration_telemetry = false
+[tool.prefect.logging]
+level = "INFO"

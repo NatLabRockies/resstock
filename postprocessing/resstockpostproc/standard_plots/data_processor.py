@@ -14,8 +14,18 @@ from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEnduses
 from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 import logging
+import boto3
+from botocore.config import Config
+import os
+from pathlib import Path
+import time
+from prefect import task, flow
+from prefect.task_runners import ConcurrentTaskRunner
+from prefect.futures import wait
+
 
 logger = logging.getLogger(__name__)
+s3_client = boto3.client("s3", config=Config(read_timeout=60 * 60, max_pool_connections=50))
 
 
 class DataProcessor:
@@ -30,55 +40,120 @@ class DataProcessor:
         Args:
             workflow: WorkflowConfig object containing the workflow configuration
         """
-        self.annual_results_dir = workflow.annual_results_dir
+        self.workflow = workflow
+        self.local_results_dir = self.get_local_results_dir(workflow)
         self.upgrades = workflow.upgrades
         self.upgrade_names = workflow.upgrade_names
-        self.combined_df = self._load_data()
+        available_upgrades = self.get_available_upgrades(workflow)
+        if missing_upgrades := set(workflow.upgrades) - set(available_upgrades):
+            self.download_data(workflow, sorted(missing_upgrades))
+        else:
+            print("All upgrades are available, skipping download")
+        self.combined_df = self.load_data()
         self.all_cols: set[str] = set(self.combined_df.collect_schema().names())
 
-    def _load_data(self) -> pl.LazyFrame:
+    @staticmethod
+    def get_available_upgrades(workflow: WorkflowConfig) -> list[int]:
+        if workflow.storage_backend == "filesystem":
+            local_results_dir = DataProcessor.get_local_results_dir(workflow)
+            local_files = [str(file) for file in pathlib.Path(local_results_dir).glob("**/*.parquet")]
+            upgrade_to_file = DataProcessor.filter_upgrade_files(workflow, local_files)
+            return list(upgrade_to_file.keys())
+        else:
+            raise ValueError("Other storage backends not supported at this time")
+
+    @staticmethod
+    def filter_upgrade_files(workflow: WorkflowConfig, all_files: list[str]) -> dict[int, str]:
+        # Filter all_files to only include files that match the upgrade patterns
+        upgrade_to_file: dict[int, str] = {}
+        for upgrade in workflow.upgrades:
+            base_patterns = [
+                f"up{upgrade:02d}",
+                f"upgrade{upgrade:02d}",
+                f"results_up{upgrade:02d}",
+                f"results_upgrade{upgrade:02d}",
+                f"upgrade{upgrade:02d}_metadata_and_annual_results",
+            ]
+            if upgrade == 0:
+                base_patterns.extend(["baseline", "results_baseline", "baseline_metadata_and_annual_results"])
+            matching_files = []
+            for pattern in base_patterns:
+                matches = [file for file in all_files if os.path.basename(file) == f"{pattern}.parquet"]
+                if matches:
+                    matching_files.append((pattern, matches[0]))
+            if not matching_files:
+                raise ValueError(f"No files found for upgrade {upgrade}")
+            if len(matching_files) > 1:
+                raise ValueError(f"Multiple files ({matching_files}) found for upgrade {upgrade}")
+            upgrade_to_file[upgrade] = matching_files[0][1]
+        return upgrade_to_file
+
+    @staticmethod
+    def get_local_results_dir(workflow: WorkflowConfig) -> Path:
+        return Path(workflow.output_dir) / "s3_data" / workflow.s3_results_dir.removeprefix("s3://")
+
+    @staticmethod
+    @task(retries=3, retry_delay_seconds=1)
+    def download_file(bucket: str, key: str, local_file: str) -> str:
+        s3_client.download_file(Bucket=bucket, Key=key, Filename=local_file)
+        print(f"Downloaded {key} to {local_file}")
+        return local_file
+
+    @staticmethod
+    @flow(
+        timeout_seconds=60 * 60,
+        task_runner=ConcurrentTaskRunner(max_workers=5),  # type: ignore
+        log_prints=True,
+    )
+    def download_data(workflow: WorkflowConfig, missing_upgrades: list[int]):
+        # download the files from s3_results_dir to local_results_dir using boto3
+        s3_results_dir = workflow.s3_results_dir
+        bucket = s3_results_dir.removeprefix("s3://").split("/")[0]
+        s3_prefix = "/".join(s3_results_dir.removeprefix("s3://").split("/")[1:])
+        local_results_dir = DataProcessor.get_local_results_dir(workflow)
+        response = s3_client.list_objects_v2(Bucket=bucket, Prefix=s3_prefix)
+        all_files = [obj["Key"] for obj in response["Contents"]]
+        upgrade_to_file = DataProcessor.filter_upgrade_files(workflow, all_files)
+        local_results_dir.mkdir(parents=True, exist_ok=True)
+        start_time = time.time()
+        print(f"Downloading {len(upgrade_to_file)} files to {local_results_dir}")
+        downloaded_files = []
+        for upgrade in missing_upgrades:
+            file = upgrade_to_file[upgrade]
+            local_file = local_results_dir / os.path.basename(file)
+            local_path = local_file.parent
+            local_path.mkdir(parents=True, exist_ok=True)
+            print(f"Downloading {file} for upgrade {upgrade} to {local_file}")
+            downloaded_files.append(DataProcessor.download_file.submit(bucket, file, str(local_file)))
+        wait(downloaded_files)
+        print(f"Downloaded {len(upgrade_to_file)} files in {time.time() - start_time:.2f} seconds")
+
+    def load_data(self) -> pl.LazyFrame:
         """Load data for each upgrade using Polars LazyFrames from CSV or Parquet files"""
         lazyframes: dict[int, pl.LazyFrame] = {}
-        for upgrade, upgrade_name in zip(self.upgrades, self.upgrade_names):
-            base_patterns = [f"up{upgrade:02d}", f"upgrade{upgrade:02d}"]
-            if upgrade == 0:
-                base_patterns.append("baseline")
-
-            # Use regex-like pattern matching to find files with the base pattern anywhere in the name
-            matching_files: list[pathlib.Path] = []
-            for pattern in base_patterns:
-                for file_path in pathlib.Path(self.annual_results_dir).glob(f"**/*{pattern}*.csv") or []:
-                    matching_files.append(file_path)
-                for file_path in pathlib.Path(self.annual_results_dir).glob(f"**/*{pattern}*.parquet") or []:
-                    matching_files.append(file_path)
-
-            if not matching_files:
-                print(f"Warning: No result file found for upgrade {upgrade}")
-                continue
-
-            if len(matching_files) > 1:
-                raise ValueError(f"Multiple result files found for upgrade {upgrade}: {matching_files}")
-
-            file_path = matching_files[0]
-            lazyframes[upgrade] = pl.scan_csv(file_path) if file_path.suffix == ".csv" else pl.scan_parquet(file_path)
-
-            lazyframes[upgrade] = lazyframes[upgrade].with_columns(pl.lit(upgrade_name).alias("upgrade_name"))
-            # ----- Data coercion -----------------------------------------------------------------
-            # Convert the 'applicability' column to Boolean if it exists and is not already Boolean.
-            # Can be removed after https://github.com/NREL/resstock/pull/1439 is merged.
-            schema = lazyframes[upgrade].collect_schema()
-            if "applicability" in schema and schema["applicability"] != pl.Boolean:
-                truthy_values = ["true", "True", "1"]
-                lazyframes[upgrade] = lazyframes[upgrade].with_columns(
-                    pl.when(pl.col("applicability").is_in(truthy_values))
-                    .then(True)
-                    .otherwise(False)
-                    .alias("applicability")
-                    .cast(pl.Boolean)
-                )
-            # ------------------------------------------------------------------------------------
-
-            print(f"Scanned data for upgrade {upgrade}")
+        if self.workflow.storage_backend == "filesystem":
+            all_files = [str(file) for file in pathlib.Path(self.local_results_dir).glob("**/*.parquet")]
+            upgrade_to_file = self.filter_upgrade_files(self.workflow, all_files)
+            upgrade_to_name = dict(zip(self.workflow.upgrades, self.workflow.upgrade_names))
+            for upgrade, file in upgrade_to_file.items():
+                lazyframes[upgrade] = pl.scan_parquet(file)
+                upgrade_name = upgrade_to_name[upgrade]
+                lazyframes[upgrade] = lazyframes[upgrade].with_columns(pl.lit(upgrade_name).alias("upgrade_name"))
+                # ----- Data coercion -----------------------------------------------------------------
+                # Convert the 'applicability' column to Boolean if it exists and is not already Boolean.
+                # Can be removed after https://github.com/NREL/resstock/pull/1439 is merged.
+                schema = lazyframes[upgrade].collect_schema()
+                if "applicability" in schema and schema["applicability"] != pl.Boolean:
+                    truthy_values = ["true", "True", "1"]
+                    lazyframes[upgrade] = lazyframes[upgrade].with_columns(
+                        pl.when(pl.col("applicability").is_in(truthy_values))
+                        .then(True)
+                        .otherwise(False)
+                        .alias("applicability")
+                        .cast(pl.Boolean)
+                    )
+        if not lazyframes:
+            raise ValueError(f"No data found in {self.local_results_dir}. Make sure the s3_results_dir is synced.")
         return pl.concat(lazyframes.values(), how="diagonal")
 
     def fill_missing_quantities(self, combined_df: pl.LazyFrame, quantities: list[str]) -> pl.LazyFrame:

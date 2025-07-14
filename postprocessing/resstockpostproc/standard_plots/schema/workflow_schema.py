@@ -9,10 +9,18 @@ from __future__ import annotations
 from enum import Enum
 
 import yaml
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ValidationInfo
+from pydantic.json_schema import SkipJsonSchema
+from pydantic_settings import BaseSettings
+from typing import Literal
 
 
 class NoExtraModel(BaseModel):
+    class Config:
+        extra = "forbid"
+
+
+class NoExtraSettings(BaseSettings):
     class Config:
         extra = "forbid"
 
@@ -64,11 +72,12 @@ class SelectionLogic(BaseModel):
     not_: SelectionLogic | list[SelectionLogic | str] | str | None = Field(None, alias="not")
 
 
-class WorkflowConfig(NoExtraModel):
+class WorkflowConfig(NoExtraSettings):
     """Configuration for plot generation"""
 
-    annual_results_dir: str = Field(description="Path to folder containing annual results")
+    s3_results_dir: str = Field(description="Path to s3 results directory")
     output_dir: str = Field(description="Path to output directory")
+    run_name: str = Field(description="Name of the run to identify it later")
     upgrades: list[int] = Field(description="List of upgrade indices to include")
     upgrade_names: list[str] = Field(description="List of upgrade names to include")
     selection_logic: SelectionLogic | list[SelectionLogic] | list[str] | None = Field(
@@ -80,6 +89,9 @@ class WorkflowConfig(NoExtraModel):
     comparison_types: list[ComparisonTypes] = Field(description="List of comparison types to generate")
     upgrade_inclusion: list[UpgradeInclusion] = Field(description="Upgrade inclusion type")
     vacancy_inclusion: list[VacancyInclusion] = Field(description="Vacancy inclusion type")
+    storage_backend: SkipJsonSchema[Literal["minio", "filesystem"]] = Field(
+        description="Storage backend", default="filesystem"
+    )
 
     @classmethod
     def from_yaml(cls, yaml_path: str) -> WorkflowConfig:
@@ -97,18 +109,18 @@ class WorkflowConfig(NoExtraModel):
 
         return cls(**config_data)
 
-    @classmethod
     @field_validator("upgrades")
+    @classmethod
     def ensure_zero_in_upgrades(cls, v) -> list[int]:
         """Ensure that upgrade 0 (baseline) is always included and first in the list of upgrades."""
         if v[0] != 0:
             raise ValueError("Upgrade 0 (baseline) must be first in the list of upgrades")
         return v
 
-    @classmethod
     @field_validator("upgrade_names")
-    def ensure_upgrade_names(cls, v) -> list[str]:
+    @classmethod
+    def ensure_upgrade_names(cls, v, info: ValidationInfo) -> list[str]:
         """Verify the number of upgrade names matches the number of upgrades"""
-        if len(v) != len(cls.upgrades):
+        if len(v) != len(info.data["upgrades"]):
             raise ValueError("Number of upgrade names must match number of upgrades")
         return v
