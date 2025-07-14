@@ -22,6 +22,24 @@ Development Changelog
         Assignees: Rajendra Adhikari
 
     .. change::
+        :tags: bugfix, hvac
+        :pullreq: 1441, 1254
+
+        **Date**: 2025-07-08
+
+        Title:
+        Fix for BA seasons always enabled
+
+        Description:
+        A bug in the code does not allow auto seasons to be turned off. The intended behavior is to run without auto seasons. 
+        This pull request fixes this issue.
+
+        resstock-estimation: `pull request 416 <https://github.com/NREL/resstock-estimation/pull/416>`_
+
+        Assignees: Joe Robertson
+
+
+    .. change::
         :tags: standard data release
         :pullreq: 1429, 1197
 
@@ -182,7 +200,7 @@ Development Changelog
 
  
     .. change::
-        :tags: bug fix
+        :tags: bugfix
         :pullreq: 1362
 
         **Date**: 2025-04-18
