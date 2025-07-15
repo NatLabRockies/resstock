@@ -4,12 +4,9 @@ The aim is to pass **one** object of this class (``PlotSpec``) through the
 entire pipeline - data processing, figure creation, and output saving.
 """
 
-from __future__ import annotations
-
 from pathlib import Path
 
 from pydantic import BaseModel, Field, field_validator
-
 from resstockpostproc.standard_plots.schema.workflow_schema import (
     ComparisonTypes,
     QuantityGroup,

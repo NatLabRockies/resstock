@@ -4,25 +4,27 @@ Data processor module for standard plots
 Handles loading and processing of simulation result data using Polars
 """
 
-import pathlib
-
-import polars as pl
-
-from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, UpgradeInclusion, VacancyInclusion, VizType
-from resstockpostproc.standard_plots.schema.plot_spec import ValueTypes
-from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
-from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEnduses
-from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 import logging
-import boto3
-from botocore.config import Config
 import os
-from pathlib import Path
+import pathlib
 import time
-from prefect import task, flow
-from prefect.task_runners import ConcurrentTaskRunner
-from prefect.futures import wait
+from pathlib import Path
 
+import boto3
+import polars as pl
+import s3fs  # type: ignore[import-untyped]
+from botocore.config import Config
+from prefect import flow, task
+from prefect.futures import wait
+from prefect.task_runners import ConcurrentTaskRunner
+from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEnduses
+from resstockpostproc.standard_plots.schema.plot_spec import (
+    PlotSpec,
+    UpgradeInclusion,
+    VacancyInclusion,
+    VizType,
+)
+from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, ValueTypes, WorkflowConfig
 
 logger = logging.getLogger(__name__)
 s3_client = boto3.client("s3", config=Config(read_timeout=60 * 60, max_pool_connections=50))
@@ -44,23 +46,22 @@ class DataProcessor:
         self.local_results_dir = self.get_local_results_dir(workflow)
         self.upgrades = workflow.upgrades
         self.upgrade_names = workflow.upgrade_names
-        available_upgrades = self.get_available_upgrades(workflow)
-        if missing_upgrades := set(workflow.upgrades) - set(available_upgrades):
-            self.download_data(workflow, sorted(missing_upgrades))
-        else:
-            print("All upgrades are available, skipping download")
+        if workflow.storage_backend == "filesystem":
+            # These steps are already complete in the case of using MinIO
+            available_upgrades = self.get_available_upgrades(workflow)
+            if missing_upgrades := set(workflow.upgrades) - set(available_upgrades):
+                self.download_data(workflow, sorted(missing_upgrades))
+            else:
+                print("All upgrades are available, skipping download")
         self.combined_df = self.load_data()
-        self.all_cols: set[str] = set(self.combined_df.collect_schema().names())
+        self.all_cols = set(self.combined_df.collect_schema().names())
 
     @staticmethod
     def get_available_upgrades(workflow: WorkflowConfig) -> list[int]:
-        if workflow.storage_backend == "filesystem":
-            local_results_dir = DataProcessor.get_local_results_dir(workflow)
-            local_files = [str(file) for file in pathlib.Path(local_results_dir).glob("**/*.parquet")]
-            upgrade_to_file = DataProcessor.filter_upgrade_files(workflow, local_files)
-            return list(upgrade_to_file.keys())
-        else:
-            raise ValueError("Other storage backends not supported at this time")
+        local_results_dir = DataProcessor.get_local_results_dir(workflow)
+        local_files = [str(file) for file in pathlib.Path(local_results_dir).glob("**/*.parquet")]
+        upgrade_to_file = DataProcessor.filter_upgrade_files(workflow, local_files)
+        return list(upgrade_to_file.keys())
 
     @staticmethod
     def filter_upgrade_files(workflow: WorkflowConfig, all_files: list[str]) -> dict[int, str]:
@@ -129,29 +130,46 @@ class DataProcessor:
         print(f"Downloaded {len(upgrade_to_file)} files in {time.time() - start_time:.2f} seconds")
 
     def load_data(self) -> pl.LazyFrame:
-        """Load data for each upgrade using Polars LazyFrames from CSV or Parquet files"""
+        """Load data for each upgrade using Polars LazyFrames from Parquet files"""
         lazyframes: dict[int, pl.LazyFrame] = {}
+        minio_endpoint = "http://minio:10000"
+
         if self.workflow.storage_backend == "filesystem":
             all_files = [str(file) for file in pathlib.Path(self.local_results_dir).glob("**/*.parquet")]
-            upgrade_to_file = self.filter_upgrade_files(self.workflow, all_files)
-            upgrade_to_name = dict(zip(self.workflow.upgrades, self.workflow.upgrade_names))
-            for upgrade, file in upgrade_to_file.items():
+        else:
+            fs = s3fs.S3FileSystem(anon=True, client_kwargs={"endpoint_url": minio_endpoint})
+            all_files = [
+                f
+                for f in fs.find(self.workflow.s3_results_dir.removeprefix("s3://"), withdirs=False)
+                if f.endswith(".parquet")
+            ]
+
+        upgrade_to_file = self.filter_upgrade_files(self.workflow, all_files)
+        upgrade_to_name = dict(zip(self.workflow.upgrades, self.workflow.upgrade_names))
+        for upgrade, file in upgrade_to_file.items():
+            if self.workflow.storage_backend == "filesystem":
                 lazyframes[upgrade] = pl.scan_parquet(file)
-                upgrade_name = upgrade_to_name[upgrade]
-                lazyframes[upgrade] = lazyframes[upgrade].with_columns(pl.lit(upgrade_name).alias("upgrade_name"))
-                # ----- Data coercion -----------------------------------------------------------------
-                # Convert the 'applicability' column to Boolean if it exists and is not already Boolean.
-                # Can be removed after https://github.com/NREL/resstock/pull/1439 is merged.
-                schema = lazyframes[upgrade].collect_schema()
-                if "applicability" in schema and schema["applicability"] != pl.Boolean:
-                    truthy_values = ["true", "True", "1"]
-                    lazyframes[upgrade] = lazyframes[upgrade].with_columns(
-                        pl.when(pl.col("applicability").is_in(truthy_values))
-                        .then(True)
-                        .otherwise(False)
-                        .alias("applicability")
-                        .cast(pl.Boolean)
-                    )
+            else:
+                lazyframes[upgrade] = pl.scan_parquet(
+                    f"s3://{file}",
+                    storage_options={"endpoint_url": minio_endpoint, "skip_signature": "true"},
+                )
+            upgrade_name = upgrade_to_name[upgrade]
+            lazyframes[upgrade] = lazyframes[upgrade].with_columns(pl.lit(upgrade_name).alias("upgrade_name"))
+            # ----- Data coercion -----------------------------------------------------------------
+            # Convert the 'applicability' column to Boolean if it exists and is not already Boolean.
+            # Can be removed after https://github.com/NREL/resstock/pull/1439 is merged.
+            schema = lazyframes[upgrade].collect_schema()
+            if "applicability" in schema and schema["applicability"] != pl.Boolean:
+                truthy_values = ["true", "True", "1"]
+                lazyframes[upgrade] = lazyframes[upgrade].with_columns(
+                    pl.when(pl.col("applicability").is_in(truthy_values))
+                    .then(True)
+                    .otherwise(False)
+                    .alias("applicability")
+                    .cast(pl.Boolean)
+                )
+
         if not lazyframes:
             raise ValueError(f"No data found in {self.local_results_dir}. Make sure the s3_results_dir is synced.")
         return pl.concat(lazyframes.values(), how="diagonal")

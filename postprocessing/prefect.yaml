@@ -1,0 +1,47 @@
+# Generic metadata about this project
+name: resstock-postprocessing
+prefect-version: 3.4.7
+
+# pull section allows you to provide instructions for cloning this project in remote locations
+pull:
+  - prefect.deployments.steps.git_clone:
+      id: clone-step
+      repository: https://github.com/NREL/resstock.git
+      branch: prefect/std_plots
+  - prefect.deployments.steps.set_working_directory:
+      directory: /opt/prefect/{{ clone-step.directory }}/postprocessing
+  - prefect.deployments.steps.run_shell_script:
+      id: install-dependencies
+      script: |
+        uv export --no-hashes --no-header --no-annotate --no-dev -o requirements.txt
+        uv pip install --system -r requirements.txt
+
+# the deployments section allows you to provide configuration for deploying flows
+deployments:
+  - name: Generate Plots
+    version: null
+    tags: []
+    concurrency_limit: null
+    description: null
+    entrypoint: resstockpostproc/standard_plots/schema/workflow_schema.py:generate_plots
+    parameters: {}
+    work_pool:
+      name: docker-pool
+      work_queue_name: null
+      job_variables: {}
+    schedules: []
+    build: null
+
+  - name: Generate Plots (Full Schema)
+    version: null
+    tags: []
+    concurrency_limit: null
+    description: null
+    entrypoint: resstockpostproc/standard_plots/schema/workflow_schema.py:generate_plots_full_schema
+    parameters: {}
+    work_pool:
+      name: docker-pool
+      work_queue_name: null
+      job_variables: {}
+    schedules: []
+    build: null

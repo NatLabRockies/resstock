@@ -1,5 +1,3 @@
-from itertools import product
-
 EnduseFuelToPattern = {"Electricity": "", "Natural Gas": "/", "Propane": "x", "Fuel Oil": "+"}
 EnduseGroupToColor = {
     "Heating": "#EF1C21",
@@ -14,12 +12,16 @@ EnduseGroupToColor = {
     "Hot Water": "#FFB239",
     "Miscellaneous": "#B5B2B5",
 }
-EnduseToColor = {}
-for enduse_group, fuel in product(EnduseGroupToColor.keys(), EnduseFuelToPattern.keys()):
-    EnduseToColor[enduse_group + ", " + fuel] = EnduseGroupToColor[enduse_group]
-EnduseToPattern = {}
-for enduse_group, fuel in product(EnduseGroupToColor.keys(), EnduseFuelToPattern.keys()):
-    EnduseToPattern[enduse_group + ", " + fuel] = EnduseFuelToPattern[fuel]
+EnduseToColor = {
+    f"{enduse_group}, {fuel}": EnduseGroupToColor[enduse_group]
+    for enduse_group in EnduseGroupToColor
+    for fuel in EnduseFuelToPattern
+}
+EnduseToPattern = {
+    f"{enduse_group}, {fuel}": EnduseFuelToPattern[fuel]
+    for enduse_group in EnduseGroupToColor
+    for fuel in EnduseFuelToPattern
+}
 
 
 EnduseGroupToEnduses = {
@@ -28,7 +30,9 @@ EnduseGroupToEnduses = {
         "out.electricity.generator.energy_consumption.kwh",
         "out.electricity.battery.energy_consumption.kwh",
     ],
-    "Electric Vehicle Charging, Electricity": ["out.electricity.ev_charging.energy_consumption.kwh"],
+    "Electric Vehicle Charging, Electricity": [
+        "out.electricity.ev_charging.energy_consumption.kwh",
+    ],
     "Hot Water, Electricity": [
         "out.electricity.hot_water.energy_consumption.kwh",
     ],
@@ -38,7 +42,9 @@ EnduseGroupToEnduses = {
     "Hot Water, Fuel Oil": [
         "out.fuel_oil.hot_water.energy_consumption.kwh",
     ],
-    "Hot Water, Propane": ["out.propane.hot_water.energy_consumption.kwh"],
+    "Hot Water, Propane": [
+        "out.propane.hot_water.energy_consumption.kwh",
+    ],
     "Heating Heat Pump Backup, Electricity": [
         "out.electricity.heating_hp_bkup.energy_consumption.kwh",
         "out.electricity.heating_hp_bkup_fa.energy_consumption.kwh",
@@ -49,8 +55,12 @@ EnduseGroupToEnduses = {
     "Heating Heat Pump Backup, Fuel Oil": [
         "out.fuel_oil.heating_hp_bkup.energy_consumption.kwh",
     ],
-    "Heating Heat Pump Backup, Propane": ["out.propane.heating_hp_bkup.energy_consumption.kwh"],
-    "Heating Fans Pumps, Electricity": ["out.electricity.heating_fans_pumps.energy_consumption.kwh"],
+    "Heating Heat Pump Backup, Propane": [
+        "out.propane.heating_hp_bkup.energy_consumption.kwh",
+    ],
+    "Heating Fans Pumps, Electricity": [
+        "out.electricity.heating_fans_pumps.energy_consumption.kwh",
+    ],
     "Heating, Electricity": [
         "out.electricity.heating.energy_consumption.kwh",
     ],
@@ -60,8 +70,12 @@ EnduseGroupToEnduses = {
     "Heating, Fuel Oil": [
         "out.fuel_oil.heating.energy_consumption.kwh",
     ],
-    "Heating, Propane": ["out.propane.heating.energy_consumption.kwh"],
-    "Cooling Fans Pumps, Electricity": ["out.electricity.cooling_fans_pumps.energy_consumption.kwh"],
+    "Heating, Propane": [
+        "out.propane.heating.energy_consumption.kwh",
+    ],
+    "Cooling Fans Pumps, Electricity": [
+        "out.electricity.cooling_fans_pumps.energy_consumption.kwh",
+    ],
     "Cooling, Electricity": [
         "out.electricity.cooling.energy_consumption.kwh",
     ],

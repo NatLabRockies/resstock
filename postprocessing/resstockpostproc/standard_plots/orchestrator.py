@@ -6,14 +6,16 @@ Coordinates the generation of all plots based on the configuration
 
 import time
 from itertools import product
+from typing import Literal
+from uuid import UUID
 
+from prefect.artifacts import create_progress_artifact, update_progress_artifact
 from resstockpostproc.standard_plots.bar_plotter import BarPlotter
 from resstockpostproc.standard_plots.box_plotter import BoxPlotter
 from resstockpostproc.standard_plots.data_processor import DataProcessor
 from resstockpostproc.standard_plots.output_manager import OutputManager
 from resstockpostproc.standard_plots.schema.plot_spec import ComparisonTypes, PlotSpec, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
-from typing import Literal
 
 
 class PlotOrchestrator:
@@ -21,15 +23,18 @@ class PlotOrchestrator:
     Orchestrates the plot generation process
     """
 
-    def __init__(self, config_path: str, output_types: list[Literal["svg", "html", "parquet", "json", "csv"]] = []):
+    def __init__(self, config: str | dict, output_types: list[Literal["svg", "html", "parquet", "json", "csv"]] = []):
         """
         Initialize the orchestrator
 
         Args:
-            config_path: Path to the workflow configuration YAML file
-            output_file_types: List of file types to save
+            config: Path to the workflow configuration YAML file, or a dictionary containing the workflow configuration
+            output_types: List of file types to save
         """
-        self.workflow = WorkflowConfig.from_yaml(config_path)
+        if isinstance(config, str):
+            self.workflow = WorkflowConfig.from_yaml(config)
+        elif isinstance(config, dict):
+            self.workflow = WorkflowConfig(**config)
         self.data_loading_time: float = 0
         self.data_preparing_time: float = 0
         self.figure_creation_time: float = 0
@@ -40,6 +45,11 @@ class PlotOrchestrator:
         self.processor = DataProcessor(self.workflow)
         self.data_loading_time = time.time() - start_time
         self.out_mgr = OutputManager(self.workflow, output_types=output_types)
+
+        self.progress_artifact_id: UUID = create_progress_artifact(  # type: ignore[assignment]
+            progress=0,
+            description="Percentage of plots generated",
+        )
 
     def generate_all_plots(self, *, max_plots_to_gen: int | None = None) -> None:
         """Generate all plots declared in YAML using the new PlotDef contract."""
@@ -91,13 +101,12 @@ class PlotOrchestrator:
                     quantity_group_name=quantity_group.name,
                 )
                 plots_to_gen.append(plot_spec)
-        plots_generated = 0
         if max_plots_to_gen is None:
-            print(f"Generating all {len(plots_to_gen)} plots")
             total_plots = len(plots_to_gen)
+            print(f"Generating all {total_plots} plots")
         else:
-            print(f"Generating {max_plots_to_gen} plots")
             total_plots = max_plots_to_gen
+            print(f"Generating {total_plots} plots")
         for plots_generated, plot_spec in enumerate(plots_to_gen, 1):
             start_time = time.time()
             df = self.processor.prepare_data_for_plot(plot_spec)
@@ -111,6 +120,11 @@ class PlotOrchestrator:
             self.out_mgr.save_plot(fig, path_seg, df, name)
             self.saving_time += time.time() - start_time
             print(f"{plots_generated}/{total_plots}: Saved plot for {path_seg}/{name}")
+            update_progress_artifact(
+                artifact_id=self.progress_artifact_id,
+                description=f"Percentage of plots generated: {plots_generated:,}/{total_plots:,}",
+                progress=plots_generated / total_plots * 100,
+            )
             if plots_generated >= total_plots:
                 return
 

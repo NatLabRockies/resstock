@@ -1,11 +1,10 @@
-from __future__ import annotations
-
-from pathlib import Path
 import time
-from plotly.graph_objects import Figure
-import polars as pl
-from typing import Literal
 from collections import defaultdict
+from pathlib import Path
+from typing import Literal
+
+import polars as pl
+from plotly.graph_objects import Figure
 from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 
 # Lazy import to avoid circulars
@@ -34,7 +33,7 @@ class OutputManager:
     def write_workflow_snapshot(self, workflow: WorkflowConfig) -> None:
         """Writes a snapshot of the workflow used to generate the plots to a JSON file."""
         config_dir = self.base_dir / "workflow_snapshot.json"
-        config_dir.write_text(workflow.model_dump_json(indent=2))
+        config_dir.write_text(workflow.model_dump_json(indent=2), encoding="utf-8")
 
     def get_output_dir(self, path_seg: Path) -> Path:
         full_path = self.base_dir / path_seg
