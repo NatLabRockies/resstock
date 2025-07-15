@@ -145,7 +145,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "Update documentation. [skip ci]"
+            git commit -m "Update documentation."
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -426,7 +426,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "Baseline integration tests results. [skip ci]"
+            git commit -m "Baseline integration tests results."
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -558,7 +558,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "SDR options analysis results. [skip ci]"
+            git commit -m "SDR options analysis results."
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
@@ -664,7 +664,7 @@ jobs:
           if [[ $(git diff --cached --exit-code) ]]; then
             git config --global user.email "github-action@users.noreply.github.com"
             git config --global user.name "GitHub Action"
-            git commit -m "SDR integration tests results. [skip ci]"
+            git commit -m "SDR integration tests results."
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
