@@ -256,6 +256,47 @@ references:
         multiplier: Floor Area, Conditioned (ft^2)
     lifetime: 60
 
+  infiltration_30pct_reduction_windows: &infiltration_30pct_reduction_windows
+    option: Infiltration Reduction|30%
+    apply_logic:
+      - or:
+        - Windows|Single, Clear, Metal
+        - Windows|Single, Clear, Metal, Exterior Clear Storm
+        - Windows|Single, Clear, Non-metal
+        - Windows|Single, Clear, Non-metal, Exterior Clear Storm
+
+  infiltration_13pct_reduction_windows: &infiltration_13pct_reduction_windows
+    option: Infiltration Reduction|13%
+    apply_logic:
+      - or:
+        - Windows|Double, Clear, Metal, Air
+        - Windows|Double, Clear, Metal, Air, Exterior Clear Storm
+        - Windows|Double, Clear, Non-metal, Air
+        - Windows|Double, Clear, Non-metal, Air, Exterior Clear Storm
+        - Windows|Double, Low-E, Non-metal, Air, M-Gain
+        - Windows|Triple, Low-E, Non-metal, Air, L-Gain
+
+  energystar_window_northern: &energystar_window_northern
+    option: Windows|EnergyStar, Northern
+    apply_logic:
+      - Energystar Climate Zone 2023|Northern
+
+  energystar_window_north_central: &energystar_window_north_central
+    option: Windows|EnergyStar, North-Central
+    apply_logic:
+      - Energystar Climate Zone 2023|North-Central
+
+  energystar_window_south_central: &energystar_window_south_central
+    option: Windows|EnergyStar, South-Central
+    apply_logic:
+      - Energystar Climate Zone 2023|South-Central
+
+  energystar_window_southern: &energystar_window_southern
+    option: Windows|EnergyStar, Southern
+    apply_logic:
+      - Energystar Climate Zone 2023|Southern
+      - not: Windows|Triple, Low-E, Non-metal, Air, L-Gain
+
   lifetime_ducted_ashp: &lifetime_ducted_ashp 15
 
   lifetime_ducted_ghp: &lifetime_ducted_ghp 15
@@ -322,7 +363,7 @@ references:
     - or:
       - HVAC Has Ducts|Yes
       - HVAC Has Ducts|No
-  
+
   ### -- Anchors dependent on other anchors -- ###
   cooling_setpoint_no_offset: &cooling_setpoint_no_offset
       option: Cooling Setpoint Has Offset|No
@@ -418,10 +459,19 @@ upgrades:
       - *infiltration_30_percent_reduction
 
   - upgrade_name: Attic Floor Insulation for Unfinished Attics
-    options: 
+    options:
     - *attic_insulation_iecc_cz1a
     - *attic_insulation_iecc_cz2a_2b_3a_3b_3c
     - *attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b
+
+  - upgrade_name: EnergyStar Windows
+    options:
+      - *energystar_window_northern
+      - *energystar_window_north_central
+      - *energystar_window_south_central
+      - *energystar_window_southern
+      - *infiltration_30pct_reduction_windows
+      - *infiltration_13pct_reduction_windows
 
   ### -- Packages -- ###
   - upgrade_name: Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation
