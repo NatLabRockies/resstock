@@ -135,9 +135,6 @@ references:
       - or:
           - Geometry Attic Type|Vented Attic
           - Geometry Attic Type|Unvented Attic
-      # - or:  
-      #     - Geometry Building Type RECS|Single-Family Detached
-      #     - Geometry Building Type RECS|Single-Family Attached
       - or:
           - Insulation Ceiling|Uninsulated
           - Insulation Ceiling|R-7
@@ -149,31 +146,11 @@ references:
   attic_insulation_cz2_8_sf: &attic_insulation_cz2_8_sf
     option: Insulation Ceiling|R-60
     apply_logic:
-      - or:
-          - ASHRAE IECC Climate Zone 2004|2A
-          - ASHRAE IECC Climate Zone 2004|2B
-          - ASHRAE IECC Climate Zone 2004|3A
-          - ASHRAE IECC Climate Zone 2004|3B
-          - ASHRAE IECC Climate Zone 2004|3C
-          - ASHRAE IECC Climate Zone 2004|4A
-          - ASHRAE IECC Climate Zone 2004|4B
-          - ASHRAE IECC Climate Zone 2004|4C
-          - ASHRAE IECC Climate Zone 2004|5A
-          - ASHRAE IECC Climate Zone 2004|5B
-          - ASHRAE IECC Climate Zone 2004|6A
-          - ASHRAE IECC Climate Zone 2004|6B
-          - ASHRAE IECC Climate Zone 2004|7A
-          - ASHRAE IECC Climate Zone 2004|7AK
-          - ASHRAE IECC Climate Zone 2004|7B
-          - ASHRAE IECC Climate Zone 2004|8AK
+      - not: ASHRAE IECC Climate Zone 2004|1A
       - or:
           - Geometry Attic Type|Vented Attic
           - Geometry Attic Type|Unvented Attic
-      # - or:
-      #     - Geometry Building Type RECS|Single-Family Detached
-      #     - Geometry Building Type RECS|Single-Family Attached
       - or:
-          #- Insulation Ceiling|None
           - Insulation Ceiling|Uninsulated
           - Insulation Ceiling|R-7
           - Insulation Ceiling|R-13
@@ -189,31 +166,6 @@ references:
     option: Infiltration|5 ACH50
     apply_logic:
       - or:
-          - ASHRAE IECC Climate Zone 2004|1A
-          - ASHRAE IECC Climate Zone 2004|2A
-          - ASHRAE IECC Climate Zone 2004|2B
-          - ASHRAE IECC Climate Zone 2004|3A
-          - ASHRAE IECC Climate Zone 2004|3B
-          - ASHRAE IECC Climate Zone 2004|3C
-          - ASHRAE IECC Climate Zone 2004|4A
-          - ASHRAE IECC Climate Zone 2004|4B
-          - ASHRAE IECC Climate Zone 2004|4C
-          - ASHRAE IECC Climate Zone 2004|5A
-          - ASHRAE IECC Climate Zone 2004|5B
-          - ASHRAE IECC Climate Zone 2004|6A
-          - ASHRAE IECC Climate Zone 2004|6B
-          - ASHRAE IECC Climate Zone 2004|7A
-          - ASHRAE IECC Climate Zone 2004|7AK
-          - ASHRAE IECC Climate Zone 2004|7B
-          - ASHRAE IECC Climate Zone 2004|8AK
-      # - or:
-      #     - Geometry Building Type RECS|Single-Family Detached
-      #     - Geometry Building Type RECS|Single-Family Attached
-      #     - Geometry Building Type RECS|Multi-Family with 2 - 4 Units
-      #     - Geometry Building Type RECS|Multi-Family with 5+ Units
-      #     - Geometry Building Type RECS|Mobile Home
-      - or:
-          #- Infiltration|5 ACH50
           - Infiltration|6 ACH50
           - Infiltration|7 ACH50
           - Infiltration|8 ACH50
