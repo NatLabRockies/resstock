@@ -25,6 +25,7 @@ jobs:
             sparse-checkout: |
               test/
               .github/
+              postprocessing/
 
         - name: Set up Python (UV)
           uses: astral-sh/setup-uv@v6
@@ -64,10 +65,11 @@ jobs:
             all_diffs=""
             for f in $files; do
               echo "--- Processing file: $f ---"
-              diff_output=$(uv run .github/scripts/get_diff_report.py "$f")
+              plain_diff_output=$(uv run .github/scripts/get_diff_report.py "$f")
+              markdown_diff_output=$(uv run .github/scripts/get_diff_report.py "$f" --markdown)
               # Append current diff to the accumulator, separated by newlines
-              all_diffs="$all_diffs$'\n'$diff_output"
-              annots=$(jq --arg path "$f" --arg msg "$diff_output" \
+              all_diffs="$all_diffs$'\n'$markdown_diff_output"
+              annots=$(jq --arg path "$f" --arg msg "$plain_diff_output" \
                 '. += [{path:$path,start_line:1,end_line:1,annotation_level:"notice",message:$msg}]' <<< "$annots")
             done
 
