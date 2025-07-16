@@ -3,11 +3,11 @@ os_version: 3.9.0
 os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: sdr_upgrades_furn_v3
-weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+output_directory: /projects/enduse/sdr/runs/kstenger/sdr_30k_furnaces
+# weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
-# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
+weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
 
 # Baseline number of units
 baseline:
@@ -19,16 +19,16 @@ sampler:
   type: residential_quota # For production run
   args:
     # sample_file: resources/buildstock_furnace_streamlined.csv # For CI
-    n_datapoints: 3 # For production run
+    n_datapoints: 30000 # For production run
 
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 kestrel:
-  n_jobs: 600
-  minutes_per_sim: 10
-  account: <account>
+  n_jobs: 10
+  minutes_per_sim: 5
+  account: enduse
   postprocessing:
-    time: 800
+    time: 600
     n_workers: 20
     n_procs: 20
   sampling:
@@ -43,15 +43,15 @@ postprocessing:
     - County
   publish_annual_results: true
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
-  # aws:
-  #  region_name: us-west-2
-  #  s3:
-  #    bucket: sdr_resstock
-  #    prefix: production_runs
-  #  athena:
-  #    glue_service_role: service-role/AWSGlueServiceRole-default
-  #    database_name: sdr_resstock
-  #    max_crawling_time: 1200
+  aws:
+   region_name: us-west-2
+   s3:
+     bucket: res-sdr
+     prefix: testing-sdr-fy25
+   athena:
+     glue_service_role: service-role/AWSGlueServiceRole-default
+     database_name: res_sdr
+     max_crawling_time: 1200
 
 # Workflow generator
 workflow_generator:
@@ -304,7 +304,7 @@ upgrades:
       - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
         apply_logic:
           - or:
-            - HVAC Heating Efficiency|ASHP, SEER 10.0, 6.2 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 10, 6.2 HSPF
             - HVAC Heating Efficiency|ASHP, SEER 10.3, 7.0 HSPF
             - HVAC Heating Efficiency|ASHP, SEER 11.5, 7.5 HSPF
             - HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF
