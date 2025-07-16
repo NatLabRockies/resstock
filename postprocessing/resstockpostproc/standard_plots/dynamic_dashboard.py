@@ -34,6 +34,7 @@ from resstockpostproc.standard_plots.schema.plot_spec import (
     UpgradeInclusion,
     VacancyInclusion,
     VizType,
+    ValueTypes,
 )
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
 
@@ -174,7 +175,7 @@ app.layout = dbc.Container(
                                         ),
                                     ]
                                 ),
-                                md=3,
+                                md=2,
                             ),
                             dbc.Col(
                                 html.Div(
@@ -188,7 +189,7 @@ app.layout = dbc.Container(
                                         ),
                                     ]
                                 ),
-                                md=3,
+                                md=2,
                             ),
                             dbc.Col(
                                 html.Div(
@@ -202,7 +203,7 @@ app.layout = dbc.Container(
                                         ),
                                     ]
                                 ),
-                                md=3,
+                                md=2,
                             ),
                             dbc.Col(
                                 html.Div(
@@ -216,7 +217,22 @@ app.layout = dbc.Container(
                                         ),
                                     ]
                                 ),
-                                md=3,
+                                md=2,
+                            ),
+                            dbc.Col(
+                                html.Div(
+                                    [
+                                        html.Small("Value type", className="d-block fw-bold mb-1"),
+                                        dcc.RadioItems(
+                                            id="value-type",
+                                            options=[vt.value for vt in workflow.value_types],
+                                            value=workflow.value_types[0].value,
+                                            inline=True,
+                                        ),
+                                    ]
+                                ),
+                                md=2,
+                                id="value-type-col",
                             ),
                         ]
                     ),
@@ -448,8 +464,9 @@ def _update_run_info(run_folder: str):  # type: ignore[override]
     Output("quantity", "value"),
     Input("quantity-group", "value"),
     Input("viz-type", "value"),
+    State("quantity", "value"),
 )
-def _update_quantity_dd(qgroup_name: str, viz_type_val: str):
+def _update_quantity_dd(qgroup_name: str, viz_type_val: str, current_val: str | None):
     if not qgroup_name:
         raise PreventUpdate
 
@@ -466,7 +483,9 @@ def _update_quantity_dd(qgroup_name: str, viz_type_val: str):
     if viz_type == VizType.bar:
         opts.append({"label": "ALL - stacked", "value": "__group_stacked__"})
 
-    return opts, opts[0]["value"]  # default to first item
+    # Preserve current selection if still valid, else fall back to first option
+    default_val = current_val if current_val in {o["value"] for o in opts} else opts[0]["value"]
+    return opts, default_val
 
 
 # ----------------------------------------------------------------------------
@@ -480,6 +499,7 @@ def _update_quantity_dd(qgroup_name: str, viz_type_val: str):
     Input("upgrade-inclusion", "value"),
     Input("vacancy-inclusion", "value"),
     Input("comparison-type", "value"),
+    Input("value-type", "value"),
     Input("viz-type", "value"),
     Input("group-by", "value"),
     Input("quantity-group", "value"),
@@ -496,6 +516,7 @@ def _generate_figure(
     upgrade_incl: str,
     vacancy_incl: str,
     comp_type: str,
+    value_type: str,
     viz_type_val: str,
     group_by_val: str,
     qgroup_name: str,
@@ -515,6 +536,7 @@ def _generate_figure(
         upgrade_incl,
         vacancy_incl,
         comp_type,
+        value_type,
         viz_type_val,
         group_by_val,
         qgroup_name,
@@ -529,6 +551,21 @@ def _generate_figure(
 
 
 # ----------------------------------------------------------------------------
+#   CALLBACK - toggle value-type column visibility
+# ----------------------------------------------------------------------------
+@app.callback(
+    Output("value-type-col", "style"),
+    Input("viz-type", "value"),
+)
+def _toggle_value_type_visibility(viz_type_val: str):
+    """Show *Value type* only for bar plots."""
+    if VizType(viz_type_val) == VizType.bar:
+        return {}
+    # Hide via CSS when not bar
+    return {"display": "none"}
+
+
+# ----------------------------------------------------------------------------
 #   CALLBACKS - DOWNLOAD DATA & FIGURE
 # ----------------------------------------------------------------------------
 
@@ -537,6 +574,7 @@ def _build_plot_spec(
     upgrade_incl: str,
     vacancy_incl: str,
     comp_type: str,
+    value_type: str,
     viz_type_val: str,
     group_by_val: str,
     qgroup_name: str,
@@ -556,6 +594,7 @@ def _build_plot_spec(
         upgrade_inclusion=UpgradeInclusion(upgrade_incl),
         vacancy_inclusion=VacancyInclusion(vacancy_incl),
         comparison_type=ComparisonTypes(comp_type),
+        value_type=ValueTypes(value_type),
         visualization_type=viz_type,
         group_by=group_by,
         quantity=quantity,

@@ -54,13 +54,18 @@ class PlotOrchestrator:
                 self.workflow.visualization_types,
                 [None, *self.workflow.group_by],
                 self.workflow.quantities,
+                self.workflow.value_types,
             )
         )
         plots_to_gen: list[PlotSpec] = []
         for combination in all_combinations:
             comparison_type = combination[0]
+            upgrade_inclusion = combination[1]
+            vacancy_inclusion = combination[2]
             visualization_type = combination[3]
+            group_by = combination[4]
             quantity_group: QuantityGroup = combination[5].model_copy()
+            value_type = combination[6]
             if comparison_type == ComparisonTypes.savings:
                 quantity_group.constituents = [f"{col}.savings" for col in quantity_group.constituents]
                 quantity_group.sum = f"{quantity_group.sum}.savings" if quantity_group.sum else None
@@ -76,11 +81,12 @@ class PlotOrchestrator:
                 quantities.append(quantity_group)
             for quantity in quantities:
                 plot_spec = PlotSpec(
-                    comparison_type=combination[0],
-                    upgrade_inclusion=combination[1],
-                    vacancy_inclusion=combination[2],
-                    visualization_type=combination[3],
-                    group_by=combination[4],
+                    comparison_type=comparison_type,
+                    upgrade_inclusion=upgrade_inclusion,
+                    vacancy_inclusion=vacancy_inclusion,
+                    visualization_type=visualization_type,
+                    value_type=value_type,
+                    group_by=group_by,
                     quantity=quantity,
                     quantity_group_name=quantity_group.name,
                 )

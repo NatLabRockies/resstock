@@ -18,6 +18,7 @@ from resstockpostproc.standard_plots.schema.workflow_schema import (
     UpgradeInclusion,
     VacancyInclusion,
     VizType,
+    ValueTypes,
 )
 from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 
@@ -113,6 +114,7 @@ def processor(monkeypatch: pytest.MonkeyPatch, combined_df: pl.LazyFrame) -> Dat
             selection_logic=None,
             quantities=[QuantityGroup(name="dummy", constituents=["dummy"], sum="dummy")],
             group_by=["in.heating_fuel"],
+            value_types=[ValueTypes.total],
             visualization_types=[VizType.bar],
             comparison_types=[ComparisonTypes.absolute],
             upgrade_inclusion=[UpgradeInclusion.all],
@@ -137,6 +139,7 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
         "vacancy_inclusion": VacancyInclusion.all,
         "comparison_type": ComparisonTypes.absolute,
         "visualization_type": VizType.bar,
+        "value_type": ValueTypes.total,
         "group_by": None,
         "quantity": "elec_kwh",
         "quantity_group_name": "dummy_group",
@@ -160,10 +163,16 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
     ],
 )
 @pytest.mark.parametrize(
+    ("value_type"),
+    [
+        (ValueTypes.total),
+        (ValueTypes.average),
+    ],
+)
+@pytest.mark.parametrize(
     ("comparison_type"),
     [
         (ComparisonTypes.absolute),
-        (ComparisonTypes.mean),
         (ComparisonTypes.savings),
         (ComparisonTypes.percent_savings),
     ],
@@ -187,6 +196,7 @@ def test_prepare_basic(
     processor: DataProcessor,
     upgrade_inclusion: UpgradeInclusion,
     vacancy_inclusion: VacancyInclusion,
+    value_type: ValueTypes,
     comparison_type: ComparisonTypes,
     viz_type: VizType,
     group_by: str | None,
@@ -201,6 +211,7 @@ def test_prepare_basic(
         comparison_type=comparison_type,
         group_by=group_by,
         upgrade_inclusion=upgrade_inclusion,
+        value_type=value_type,
         vacancy_inclusion=vacancy_inclusion,
         quantity="elec_kwh",
         quantity_group_name="energy",
@@ -242,7 +253,8 @@ def test_quantity_group_mean_aggregation(processor: DataProcessor):
     )
     spec = _build_base_spec(
         visualization_type=VizType.bar,
-        comparison_type=ComparisonTypes.mean,
+        value_type=ValueTypes.average,
+        comparison_type=ComparisonTypes.absolute,
         quantity=qgroup,
         group_by="in.heating_fuel",
         quantity_group_name="energy",

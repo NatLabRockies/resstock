@@ -86,6 +86,9 @@ comparison_types:
   - absolute
   - savings
   # - percent_savings
+value_types:
+  - total
+  - average
 upgrade_inclusion:
   - all
   - applied_only

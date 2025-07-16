@@ -29,9 +29,15 @@ class ComparisonTypes(str, Enum):
     """Different kinds of comparison between the upgrade and the baseline."""
 
     absolute = "absolute"  # raw values
-    mean = "mean"  # pre-aggregated mean across simulation rows
     savings = "savings"  # pre-aggregated mean across simulation rows
     percent_savings = "percent_savings"  # percentage savings compared to baseline
+
+
+class ValueTypes(str, Enum):
+    """Different kinds of values to use for plot."""
+
+    total = "total"
+    average = "average"
 
 
 class VizType(str, Enum):
@@ -87,6 +93,7 @@ class WorkflowConfig(NoExtraSettings):
     group_by: list[str] = Field(description="List of grouping columns")
     visualization_types: list[VizType] = Field(description="List of visualization types to generate")
     comparison_types: list[ComparisonTypes] = Field(description="List of comparison types to generate")
+    value_types: list[ValueTypes] = Field(description="List of value types to generate")
     upgrade_inclusion: list[UpgradeInclusion] = Field(description="Upgrade inclusion type")
     vacancy_inclusion: list[VacancyInclusion] = Field(description="Vacancy inclusion type")
     storage_backend: SkipJsonSchema[Literal["minio", "filesystem"]] = Field(

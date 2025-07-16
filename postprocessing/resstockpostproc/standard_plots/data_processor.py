@@ -9,7 +9,7 @@ import pathlib
 import polars as pl
 
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, UpgradeInclusion, VacancyInclusion, VizType
-from resstockpostproc.standard_plots.schema.plot_spec import ComparisonTypes
+from resstockpostproc.standard_plots.schema.plot_spec import ValueTypes
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEnduses
 from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
@@ -219,9 +219,7 @@ class DataProcessor:
             assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
             return self.prepare_data_for_box_plot(combined_df, plot_spec.quantity, plot_spec.group_by)
         elif plot_spec.visualization_type == VizType.bar:
-            return self.prepare_data_for_bar_plot(
-                combined_df, quantities, plot_spec.group_by, plot_spec.comparison_type
-            )
+            return self.prepare_data_for_bar_plot(combined_df, quantities, plot_spec.group_by, plot_spec.value_type)
         else:
             raise ValueError(f"Unsupported visualization type: {plot_spec.visualization_type}")
 
@@ -254,7 +252,7 @@ class DataProcessor:
         return data.collect()
 
     def prepare_data_for_bar_plot(
-        self, combined_df: pl.LazyFrame, quantities: list[str], group_by: str | None, comparison_type: ComparisonTypes
+        self, combined_df: pl.LazyFrame, quantities: list[str], group_by: str | None, value_type: ValueTypes
     ) -> pl.DataFrame:
         """
         Prepare data for bar plotting by grouping and aggregating
@@ -263,6 +261,7 @@ class DataProcessor:
             combined_df: Combined DataFrame containing all data
             quantities: List of quantities to plot
             group_by: Column to group by
+            value_type: Whether to calculate average or sum
 
         Returns:
             DataFrame prepared for plotting with all requested quantities
@@ -274,7 +273,7 @@ class DataProcessor:
         columns_to_select = grouping_cols + quantities
         filtered_df = combined_df.select(columns_to_select)
 
-        if comparison_type == ComparisonTypes.mean:
+        if value_type == ValueTypes.average:
             agg_exprs = [pl.col(quantity).mean().alias(quantity) for quantity in quantities]
         else:
             agg_exprs = [pl.col(quantity).sum().alias(quantity) for quantity in quantities]

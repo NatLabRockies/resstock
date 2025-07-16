@@ -4,7 +4,6 @@
       "description": "Different kinds of comparison between the upgrade and the baseline.",
       "enum": [
         "absolute",
-        "mean",
         "savings",
         "percent_savings"
       ],
@@ -152,6 +151,15 @@
       "title": "VacancyInclusion",
       "type": "string"
     },
+    "ValueTypes": {
+      "description": "Different kinds of values to use for plot.",
+      "enum": [
+        "total",
+        "average"
+      ],
+      "title": "ValueTypes",
+      "type": "string"
+    },
     "VizType": {
       "description": "Supported chart templates.",
       "enum": [
@@ -254,6 +262,14 @@
       "title": "Comparison Types",
       "type": "array"
     },
+    "value_types": {
+      "description": "List of value types to generate",
+      "items": {
+        "$ref": "#/$defs/ValueTypes"
+      },
+      "title": "Value Types",
+      "type": "array"
+    },
     "upgrade_inclusion": {
       "description": "Upgrade inclusion type",
       "items": {
@@ -281,6 +297,7 @@
     "group_by",
     "visualization_types",
     "comparison_types",
+    "value_types",
     "upgrade_inclusion",
     "vacancy_inclusion"
   ],
