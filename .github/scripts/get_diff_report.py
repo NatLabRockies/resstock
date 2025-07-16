@@ -135,7 +135,7 @@ def main() -> int:  # pragma: no cover
 
     if markdown_output:
         output = (
-            f"Diff for `{csv_path}` vs `{REF_BRANCH}`\n"
+            f"Diff for `{csv_path}` vs `{REF_BRANCH}`: \n\n"
             f"{report_text}"
             "<details><summary>Full datacompy report</summary>\n\n"
             "```text\n"
