@@ -68,13 +68,13 @@ jobs:
               plain_diff_output=$(uv run .github/scripts/get_diff_report.py "$f")
               markdown_diff_output=$(uv run .github/scripts/get_diff_report.py "$f" --markdown)
               # Append current diff to the accumulator, separated by newlines
-              all_diffs="$all_diffs$'\n'$markdown_diff_output"
+              all_diffs+="$markdown_diff_output"
               annots=$(jq --arg path "$f" --arg msg "$plain_diff_output" \
                 '. += [{path:$path,start_line:1,end_line:1,annotation_level:"notice",message:$msg}]' <<< "$annots")
             done
 
             # 4. Complete check-run with annotations (up to 50 per call)
-            output_json=$(jq -n --argjson ann "$annots" --arg text "$all_diffs" '{title:"SDR results diff",summary:"Auto-generated diff annotations",text:$text,annotations:$ann}')
+            output_json=$(jq -n --argjson ann "$annots" --arg summary "$all_diffs" '{title:"SDR results diff",summary:$summary,annotations:$ann}')
             cat <<EOF | gh api repos/$REPO/check-runs/$check_run_id -X PATCH --input -
             {
               "conclusion": "success",
