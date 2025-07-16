@@ -4,16 +4,17 @@ on:
     workflows: [ "ci" ]
     types:
       - completed
+  workflow_dispatch:  # Allow manual trigger
 
 concurrency:
   # Cancel in-progress runs when a new workflow with the same concurrency group is queued
   # pull_requests[0].number exists only when the upstream run came from a PR. Fall back to head_branch otherwise.
-  group: ${{ github.workflow }}-${{ github.event.workflow_run.pull_requests[0].number || github.event.workflow_run.head_branch }}
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.pull_requests[0].number || github.event.workflow_run.head_branch || github.ref}}
   cancel-in-progress: true
 
 jobs:
   sdr-diff:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request') }}
     runs-on: ubuntu-latest
     permissions:
         pull-requests: write # This permission is sufficient
@@ -24,7 +25,7 @@ jobs:
           uses: actions/checkout@v4
           with:
             # Checkout the latest tip of the PR branch (may include commits pushed after the triggering run)
-            ref: ${{ github.event.workflow_run.pull_requests[0].head.ref }}
+            ref: ${{ github.event.workflow_run.pull_requests[0].head.ref || github.ref }}
             fetch-depth: 0
             sparse-checkout: |
               test/
@@ -39,7 +40,6 @@ jobs:
         - name: Annotate SDR diffs (Checks API)
           env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            PR_NUMBER: ${{ github.event.workflow_run.pull_requests[0].number || 0 }}
             REPO: ${{ github.repository }}
           run: |
             git fetch origin develop
