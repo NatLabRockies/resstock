@@ -54,26 +54,36 @@ _QG_BY_NAME: dict[str, QuantityGroup] = {qg.name: qg for qg in workflow.quantiti
 
 # Determine the parent directory containing multiple run folders and list them
 parent_dir = Path(workflow.output_dir).expanduser().resolve() / "plots"
-_run_folders = sorted([p.name for p in parent_dir.iterdir() if p.is_dir()])
-# read the workflow_snapshot.json file inside each of the _run_folders (if it exists)
-# and create a mapping of run_folder_name -> s3_path and s3_path -> run_folder_name
-run_to_workflow = {}
-for run_folder in _run_folders:
-    workflow_snapshot_path = parent_dir / run_folder / "workflow_snapshot.json"
-    if workflow_snapshot_path.exists():
-        with open(workflow_snapshot_path) as f:
-            workflow_snapshot = json.load(f)
-            run_to_workflow[run_folder] = workflow_snapshot
+
+# ---------------------------------------------------------------------------
+#   Helpers for run folders / snapshots
+# ---------------------------------------------------------------------------
+
+
+def _scan_run_folders() -> list[str]:
+    """Return sorted list of available run-folder names."""
+    return sorted([p.name for p in parent_dir.iterdir() if p.is_dir()])
+
+
+def _load_snapshot(run_folder: str) -> dict[str, Any] | None:
+    """Load workflow_snapshot.json for the given folder, if it exists."""
+    path = parent_dir / run_folder / "workflow_snapshot.json"
+    if path.exists():
+        with open(path) as f:
+            return json.load(f)
+    return None
+
 
 _orchestrators: dict[str, PlotOrchestrator] = {}
 
 
 def get_orchestrator_for_run(run_folder: str) -> PlotOrchestrator | None:
     if run_folder not in _orchestrators:
-        snapshot = run_to_workflow.get(run_folder)
+        snapshot = _load_snapshot(run_folder)
         if snapshot is None:
             return None
 
+        snapshot["run_name"] = run_folder  # override run_name to allow folder rename
         # load your base YAML into a dict
         base = yaml.safe_load(Path(WORKFLOW_YAML).read_text())
         # override the S3 path
@@ -112,6 +122,7 @@ app = DashProxy(
 # ----------------------------------------------------------------------------
 app.layout = dbc.Container(
     [
+        dcc.Location(id="url", refresh=False),
         dbc.Row(
             [
                 dbc.Col(html.H2("ResStock Dashboard"), width="auto"),
@@ -121,8 +132,8 @@ app.layout = dbc.Container(
                             html.Small("Run folder", className="d-block fw-bold mb-1"),
                             dcc.Dropdown(
                                 id="run-folder",
-                                options=_run_folders,
-                                value=_run_folders[0],
+                                options=[],
+                                value="",
                                 clearable=False,
                                 style={"minWidth": "250px"},
                             ),
@@ -416,7 +427,7 @@ app.layout = dbc.Container(
 def _update_run_info(run_folder: str):  # type: ignore[override]
     """Display S3 results directory and a summary of upgrades for the selected run folder."""
 
-    wf: dict[str, Any] | None = run_to_workflow.get(run_folder)
+    wf: dict[str, Any] | None = _load_snapshot(run_folder)
     if not wf:
         return html.Div("RUN INFO NOT AVAILABLE", className="text-center")
 
@@ -727,6 +738,24 @@ app.clientside_callback(
     State("df-parquet", "data"),
     prevent_initial_call=True,
 )
+
+
+# ----------------------------------------------------------------------------
+#   CALLBACK - refresh run-folder dropdown on page load
+# ----------------------------------------------------------------------------
+@app.callback(
+    Output("run-folder", "options"),
+    Output("run-folder", "value"),
+    Input("url", "href"),  # fires on every hard refresh
+    State("run-folder", "value"),
+    prevent_initial_call=True,
+)
+def _refresh_run_folders(_: str, current_val: str | None):
+    """Rescan directory on page load and update run-folder dropdown."""
+    folders = _scan_run_folders()
+    new_val = current_val if current_val in folders else (folders[0] if folders else None)
+    return folders, new_val
+
 
 # ----------------------------------------------------------------------------
 #   RUN APP
