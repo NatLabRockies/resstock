@@ -24,7 +24,7 @@ with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.St
     import datacompy
 
 # ─────────────────── project‑specific knobs ────────────────────
-REF_BRANCH = "develop"        # git reference to diff against
+REF_BRANCH = "origin/develop"        # git reference to diff against
 KEY_COLUMN = "bldg_id"     # unique row identifier(s)
 MAX_LIST_COLS = 20           # number of columns to list as mismatched
 # ───────────────────────────────────────────────────────────────
@@ -53,12 +53,6 @@ def main() -> int:  # pragma: no cover
 
     current_df = pl.read_csv(csv_path, infer_schema_length=0)
     ref_df = _load_csv(_git_show(REF_BRANCH, csv_path))
-
-    #current_df = current_df.drop("out.bills.electricity.usd.savings")
-    # add 10 to all columns that start with out.
-    current_df = current_df.with_columns([
-        (pl.col(c) + '0').alias(c) for c in current_df.columns if c.startswith("out.bills.")
-    ])
     
     if ref_df is None:
         print(f"{csv_path} is new on this branch (no counterpart on `{REF_BRANCH}`).")
@@ -103,8 +97,8 @@ def main() -> int:  # pragma: no cover
             report_text += f"All columns except {len(matched_cols)} columns have value changes\n"
     full_report = cmp.report().strip()
     markdown = (
-        f"Diff for `{csv_path}` vs `{REF_BRANCH}`\n\n"
-        f"{report_text}\n\n"
+        f"Diff for `{csv_path}` vs `{REF_BRANCH}`\n"
+        f"{report_text}\n"
         "<details><summary>Full datacompy report</summary>\n\n"
         "```text\n"
         f"{full_report}\n"
