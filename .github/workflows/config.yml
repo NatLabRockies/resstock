@@ -574,7 +574,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.1.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+          role-duration-seconds: 1200
+          role-session-name: MySession
+      - name: Who am I?
+        run: aws sts get-caller-identity
       - name: Download and Install OpenStudio
         run: |
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
@@ -596,10 +605,23 @@ jobs:
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
-
+  
+      # Only replace existing files and tables in s3 and Athena for develop branch to prevent
+      # every branch/PR from fighting over the same s3 files and Athena tables.
+      # Each branch/PR will still be able to create local output files and commit them to the
+      # repo without conflict.
       - name: Run buildstockbatch
+        shell: bash
         run: |
-          buildstock_local --low-disk project_national/sdr_upgrades_tmy3.yml
+          EXTRA_ARGS=""
+          if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            echo "Running on develop branch, using --replace_existing"
+            EXTRA_ARGS="--replace_existing"
+          else
+            echo "Not on develop branch, removing AWS config from YAML"
+            python .github/scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_tmy3.yml
+          fi
+          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml
 
       - name: Unzip results
         run: |
