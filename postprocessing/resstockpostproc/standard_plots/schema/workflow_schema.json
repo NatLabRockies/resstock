@@ -181,7 +181,7 @@
     },
     "output_dir": {
       "description": "Path to output directory",
-      "title": "Output Dir",
+      "title": "Output Directory",
       "type": "string"
     },
     "run_name": {

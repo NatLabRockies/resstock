@@ -17,9 +17,7 @@ requires-python = ">=3.11"
 dependencies = [
     "connectorx>=0.4.3",
     "dash-bootstrap-components>=2.0.3",
-    "dash-core-components>=2.0.0",
     "dash-extensions>=2.0.4",
-    "dash-html-components>=2.0.0",
     "dash>=3.0.4",
     "fsspec",
     "geopandas",
@@ -28,7 +26,7 @@ dependencies = [
     "nbformat>=4.2.0",
     "pandas",
     "plotly",
-    "polars",
+    "polars-lts-cpu",
     "prefect>=3.4.5",
     "pyarrow",
     "pydantic>=2.11.5",

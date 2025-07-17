@@ -1,19 +1,16 @@
+import base64
+import io
 import os
-import webbrowser
 from itertools import zip_longest
 from pathlib import Path
+from typing import Any
 
 import dash
-import dash_bootstrap_components as dbc  # type: ignore
+import dash_bootstrap_components as dbc  # type: ignore[import-untyped]
+import polars as pl
 from dash import ALL, dcc, html
-
-# import PreventUpdate
 from dash.exceptions import PreventUpdate
-from dash_extensions.enrich import DashProxy, MultiplexerTransform  # type: ignore
-
-import io
-import base64
-import polars as pl  # type: ignore
+from dash_extensions.enrich import DashProxy, MultiplexerTransform  # type: ignore[import-untyped]
 
 external_script = ["https://tailwindcss.com/", {"src": "https://cdn.tailwindcss.com"}]
 transforms = [MultiplexerTransform()]
@@ -26,59 +23,60 @@ app = DashProxy(
 )
 
 cur_dir = Path(__file__).parent
-ROOT_FOLDER = cur_dir / "buildstock_viz_plots"
-ROOT_FOLDER = Path("/Users/radhikar/Documents/buildstock2025/resstock_amy2018_release_2/plots_jun26")
+ROOT_FOLDER = (
+    os.environ["PLOTS_ROOT_FOLDER"] if "PLOTS_ROOT_FOLDER" in os.environ else str(cur_dir / "buildstock_viz_plots")
+)
 root_path = str(ROOT_FOLDER)
 
 
-def get_subdirectories(path):
+def get_subdirectories(path: str) -> list[str]:
     """
     Get a list of subdirectories for a given path.
     """
     return [name for name in os.listdir(path) if os.path.isdir(os.path.join(path, name))]
 
 
-def get_files(path):
+def get_files(path: str) -> list[str]:
     """
     Get a list of files for a given path.
     """
     return [name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))]
 
 
-def get_selection_row(entity_list, indx, initial_value):
+def get_selection_row(entity_list: list[str], index: int, initial_value: str) -> dbc.Row:
     if "=" in entity_list[0]:
         name = entity_list[0].split("=")[0]
-        labels = [f.split("=")[1] for f in entity_list]
+        labels = [f.split("=")[1].strip() for f in entity_list]
     else:
         name = ""
         labels = entity_list
     labels = [label.removesuffix(".html") for label in labels]
-    name_labels_text = name + ":" + "-".join(labels)
+    name_labels_text = f"{name}:{'-'.join(labels)}"
     row = dbc.Row(
         [
-            dbc.Col(html.Label(name), width="auto", style={"text-align": "left"}),
+            dbc.Col(html.Label(name), width="auto", style={"textAlign": "left"}),
             dbc.Col(
                 dcc.RadioItems(
-                    id={"type": "radio-selection", "index": indx, "name_labels_text": name_labels_text},
-                    options=[{"label": lbl, "value": val} for val, lbl in zip(entity_list, labels)],
+                    id={"type": "radio-selection", "index": index, "name_labels_text": name_labels_text},
+                    options=dict(zip(entity_list, labels)),
                     value=initial_value,
-                    labelStyle={"display": "inline-block", "margin-right": "10px"},
+                    labelStyle={"display": "inline-block", "marginRight": "10px"},
                 ),
                 width=6,
             ),
         ],
-        id={"type": "radio-row", "index": indx, "name_labels_text": name_labels_text},
+        id={"type": "radio-row", "index": index, "name_labels_text": name_labels_text},
         className="my-3 align-items-start",
         justify="start",
     )
     return row
 
 
-def get_downstream_rows(path, current_values, index):
+def get_downstream_rows(path: str, current_values: list[str], index: int) -> list[dbc.Row]:
     """
     Get the rows of radio buttons for all the subdirectories below a given path.
     """
-    rows = []
+    rows: list[dbc.Row] = []
     while True:
         entities = sorted(get_subdirectories(path))
         if not entities:
@@ -105,9 +103,7 @@ app.layout = dbc.Container(
     html.Div(
         [
             dcc.Location(id="url", refresh=False),
-            dbc.Row([dbc.Col(html.H1("Plots Viewer (beta)"), width="2")]),
-            # Dropdown menu to select the first-level plot subfolder
-            # html.Label('Enter root path: '),
+            dbc.Row([dbc.Col(html.H1("Plots Viewer (beta)", className="text-2xl"), width="2")]),
             dcc.Input(id="root-path", type="text", value=str(ROOT_FOLDER), size="100"),
             html.Br(),
             html.Br(),
@@ -151,7 +147,7 @@ app.layout = dbc.Container(
 @app.callback(
     dash.dependencies.Output("dropdown-container", "children"), [dash.dependencies.Input("root-path", "value")]
 )
-def update_dropdowns(root_path):
+def update_dropdowns(root_path: str) -> list[dbc.Row]:
     return get_downstream_rows(root_path, [], 0)
 
 
@@ -163,13 +159,15 @@ def update_dropdowns(root_path):
     dash.dependencies.State("dropdown-container", "children"),
     [dash.dependencies.Input({"type": "radio-selection", "index": ALL, "name_labels_text": ALL}, "value")],
 )
-def update_dropdowns2(root_path, current_children, selection):
+def update_dropdowns2(
+    root_path: str, current_children: list[dbc.Row], selection: list[str]
+) -> tuple[str, list[dbc.Row], str]:
     if not selection or not selection[0]:
         raise PreventUpdate()
     trigger_index = next(val["index"] for val in dash.callback_context.triggered_prop_ids.values())
     trigger_inputs = list(dash.callback_context.inputs.values())
     trigger_path = "/".join(trigger_inputs[: trigger_index + 1])
-    current_path = root_path + "/" + trigger_path
+    current_path = f"{root_path}/{trigger_path}"
 
     def get_value(child) -> str:
         if isinstance(child, dict):
@@ -196,16 +194,15 @@ def update_dropdowns2(root_path, current_children, selection):
                 new_children.append(new_row)
         current_children = new_children
     new_values: list[str] = [get_value(child) for child in current_children]
+    html_contents = ""
+    full_path = ""
     if ".html" in trigger_inputs[-1]:
-        full_path = root_path + "/" + "/".join(new_values[:-1]) + "/html/" + new_values[-1]
+        full_path = f"{root_path}/{'/'.join(new_values[:-1])}/html/{new_values[-1]}"
         try:
             with open(full_path, encoding="utf8") as f:
                 html_contents = f.read()
-        except Exception:  # noqa: BLE001
+        except (FileNotFoundError, OSError, PermissionError):
             html_contents = f"<p>Could not open {full_path}</p>"
-    else:
-        html_contents = ""
-        full_path = ""
     return html_contents, current_children, full_path
 
 
@@ -221,7 +218,7 @@ def update_dropdowns2(root_path, current_children, selection):
     dash.dependencies.State("current-html-path", "data"),
     prevent_initial_call=True,
 )
-def download_plot_data(n_csv, n_parquet, html_path):
+def download_plot_data(n_csv: int | None, n_parquet: int | None, html_path: str | None) -> dict[str, Any] | None:
     """Provide parquet or csv download for the currently displayed plot.
 
     Parameters
@@ -243,12 +240,12 @@ def download_plot_data(n_csv, n_parquet, html_path):
     # Identify which button was pressed
     # Dash >=2.12 provides ctx helper for callback context
     try:
-        from dash import ctx  # type: ignore
+        from dash import ctx
 
         triggered = ctx.triggered_id  # newest API
     except ImportError:
         # Fallback for older versions
-        triggered = dash.callback_context.triggered_id  # type: ignore[attr-defined]
+        triggered = dash.callback_context.triggered_id
     if triggered is None:
         raise PreventUpdate()
 
@@ -295,5 +292,10 @@ def download_plot_data(n_csv, n_parquet, html_path):
 
 
 if __name__ == "__main__":
-    webbrowser.open("http://127.0.0.1:8050")
-    app.run(debug=True, dev_tools_ui=True, dev_tools_props_check=True)
+    # webbrowser.open("http://127.0.0.1:8050")f
+    app.run(
+        host="0.0.0.0",  # noqa: S104
+        debug=False,
+        dev_tools_ui=False,
+        dev_tools_props_check=False,
+    )
