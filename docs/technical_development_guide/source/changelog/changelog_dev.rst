@@ -7,7 +7,7 @@ Development Changelog
     :released: pending
 
     .. change::
-        :tags: postprocessing
+        :tags: postprocessing, bugfix
         :pullreq: 1439
 
         **Date**: 2025-07-08
@@ -16,8 +16,9 @@ Development Changelog
         Postprocessing output data type fix
 
         Description:
-        Ensure postprocessing output data type for applicability is boolean. Previously, it was string
-        for upgrades and boolean for the baseline.
+        A bug in resstockpostprocessing was making the datatype of applicability to be boolean in baseline
+        but string in upgrades for the parquet files. This was causing the Athena query to fail. This PR fixes
+        the bug.
 
         Assignees: Rajendra Adhikari
 

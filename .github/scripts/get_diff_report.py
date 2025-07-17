@@ -5,10 +5,12 @@
 """
 Prints a CSV diff report for results and other csv files.
 Compares the working-tree CSV against the same path on the *develop* branch and
-prints a summary of differences.  Designed to be pasted directly as a pull-request comment.
+prints a summary of differences.  It is used by the post_run workflow to generate
+annotations for the SDR diff check-run so that the diff is visible in the PR.
 
 Usage
 -----
+Can be run locally with:
 uv run .github/scripts/get_diff_report.py path/to/file.csv
 
 """

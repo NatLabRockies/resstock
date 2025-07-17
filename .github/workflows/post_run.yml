@@ -1,3 +1,4 @@
+# This workflow runs after the `ci` workflow to generate diff annotations and mark required checks as passing.
 name: Post run
 on:
   workflow_run:
@@ -14,6 +15,9 @@ concurrency:
 
 jobs:
   sdr-diff:
+    # The built-in diffs typically do not provide meaninful diffs for csv files, so we use a custom script to generate diffs
+    # and attach them as annotations to the files so that they can be seen in the PR diff view. They can also be read in the
+    # check-run summary in the "Checks" tab of the PR.
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request') }}
     runs-on: ubuntu-latest
     permissions:
@@ -37,49 +41,64 @@ jobs:
           with:
             python-version: '3.11'
 
-        - name: Annotate SDR diffs (Checks API)
+        - name: Determine changed SDR CSV files
+          id: changed_files
+          run: |
+            git fetch origin develop
+            files=$(git diff --name-only origin/develop...HEAD -- 'test/base_results/upgrades/sdr_annual/*.csv')
+            # Expose list for downstream steps
+            echo "files<<EOF" >> "$GITHUB_OUTPUT"
+            echo "$files" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+
+        - name: Create SDR diff check run (if any files changed)
+          id: create-check
+          if: ${{ steps.changed_files.outputs.files != '' }}
           env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             REPO: ${{ github.repository }}
           run: |
-            git fetch origin develop
-            files=$(git diff --name-only origin/develop...HEAD -- 'test/base_results/upgrades/sdr_annual/*.csv')
-
-            # Capture the actual commit we just checked out (latest tip of the PR branch)
             SHA=$(git rev-parse HEAD)
-
-            # 1. Create (in-progress) check-run
             check_run_id=$(gh api repos/$REPO/check-runs \
               -F name='SDR diff' \
               -F head_sha="$SHA" \
               -F status='in_progress' --jq '.id')
+            echo "check_run_id=$check_run_id" >> "$GITHUB_OUTPUT"
+            echo "SHA=$SHA" >> "$GITHUB_OUTPUT"
 
-            # 2. If no files changed -> mark success and exit
-            if [ -z "$files" ]; then
-              output_json='{"title":"SDR diff","summary":"No SDR annual CSV changes."}'
-              gh api repos/$REPO/check-runs/$check_run_id \
-                -X PATCH \
-                --raw-field conclusion=success \
-                --raw-field status=completed \
-                --raw-field output="$output_json"
-              exit 0
-            fi
+        - name: Skip SDR diff (if no files changed)
+          if: ${{ steps.changed_files.outputs.files == '' }}
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            REPO: ${{ github.repository }}
+          run: |
+            SHA=$(git rev-parse HEAD)
+            gh api repos/$REPO/check-runs \
+              -F name='SDR diff' \
+              -F head_sha="$SHA" \
+              -F conclusion='success' \
+              -F status='completed' \
+              -F output='{ "title":"SDR diff", "summary":"No SDR annual CSV changes." }' >/dev/null
 
-            # 3. Build annotations JSON array
+        - name: Build annotations and complete check run
+          if: ${{ steps.changed_files.outputs.files != '' }}
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            REPO: ${{ github.repository }}
+          run: |
+            files="${{ steps.changed_files.outputs.files }}"
+            check_run_id="${{ steps.create-check.outputs.check_run_id }}"
+            # Accumulate annotations and markdown summary
             annots="[]"
-            # Accumulator for full diff text across all files
             all_diffs=""
             for f in $files; do
               echo "--- Processing file: $f ---"
               plain_diff_output=$(uv run .github/scripts/get_diff_report.py "$f")
               markdown_diff_output=$(uv run .github/scripts/get_diff_report.py "$f" --markdown)
-              # Append current diff to the accumulator, separated by newlines
               all_diffs+="$markdown_diff_output"
               annots=$(jq --arg path "$f" --arg msg "$plain_diff_output" \
                 '. += [{path:$path,start_line:1,end_line:1,annotation_level:"notice",message:$msg}]' <<< "$annots")
             done
-
-            # 4. Complete check-run with annotations (up to 50 per call)
             output_json=$(jq -n --argjson ann "$annots" --arg summary "$all_diffs" '{title:"SDR results diff",summary:$summary,annotations:$ann}')
             cat <<EOF | gh api repos/$REPO/check-runs/$check_run_id -X PATCH --input -
             {
@@ -89,15 +108,37 @@ jobs:
             }
             EOF
 
-            # 5. Mark other required CI checks as success so branch protection passes
-            required_checks=( \
-              "format-files" "unit-tests" "build-documentation" \
-              "analysis-tests" "integration-tests" \
-              "compare-tools" "compare-results" \
-              "update-results" "sdr-options-analysis" "sdr-integration-tests" )
-            for ctx in "${required_checks[@]}"; do
-              echo "Setting $ctx status to success"
-              gh api -X POST repos/$REPO/statuses/$SHA \
-                -f state=success \
-                -f context="$ctx" >/dev/null
-            done
+  pass-checks:
+    # Since this workflow is only run after the `ci` workflow is completed successfully,
+    # we can safely mark all required checks as passing so branch protection rules succeed.
+    # This is necessary because the `ci` workflow can create new commits and push them to the PR branch,
+    # which will trigger all the checks as pending again. This will mark the latest commit as passing.
+    needs: sdr-diff
+    if: ${{ needs.sdr-diff.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    steps:
+      - name: Checkout PR commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.pull_requests[0].head.ref || github.ref }}
+
+      - name: Mark required CI checks as success
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          SHA=$(git rev-parse HEAD)
+          required_checks=( \
+            "format-files" "unit-tests" "build-documentation" \
+            "analysis-tests" "integration-tests" \
+            "compare-tools" "compare-results" \
+            "update-results" "sdr-options-analysis" "sdr-integration-tests" )
+          for ctx in "${required_checks[@]}"; do
+            echo "Setting $ctx status to success"
+            gh api -X POST repos/$REPO/statuses/$SHA \
+              -f state=success \
+              -f context="$ctx" >/dev/null
+          done
