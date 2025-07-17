@@ -214,6 +214,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'error-different-simulation-control.xml' => 'base-sfd-header.xml',
       'error-same-emissions-scenario-name.xml' => 'base-sfd-header.xml',
       'error-same-utility-bill-scenario-name.xml' => 'base-sfd-header.xml',
+      'error-could-not-find-epw-file.xml' => 'base-sfd.xml',
 
       'warning-non-electric-heat-pump-water-heater.xml' => 'base-sfd.xml',
       'warning-sfd-slab-non-zero-foundation-height.xml' => 'base-sfd.xml',
@@ -281,7 +282,8 @@ class BuildResidentialHPXMLTest < Minitest::Test
                                                    "'Simulation Control: Run Period Calendar Year' cannot vary across dwelling units.",
                                                    "'Simulation Control: Temperature Capacitance Multiplier' cannot vary across dwelling units."],
       'error-same-emissions-scenario-name.xml' => ["HPXML header already includes an emissions scenario named 'Emissions' with type 'CO2e'."],
-      'error-same-utility-bill-scenario-name.xml' => ["HPXML header already includes a utility bill scenario named 'Bills'."]
+      'error-same-utility-bill-scenario-name.xml' => ["HPXML header already includes a utility bill scenario named 'Bills'."],
+      'error-could-not-find-epw-file.xml' => ['Could not find EPW file at']
     }
 
     expected_warnings = {
@@ -1282,6 +1284,8 @@ class BuildResidentialHPXMLTest < Minitest::Test
     when 'error-same-utility-bill-scenario-name.xml'
       args['existing_hpxml_path'] = File.join(File.dirname(__FILE__), 'extra_files/base-sfd-header.xml')
       args['utility_bill_electricity_fixed_charges'] = '13.0'
+    when 'error-could-not-find-epw-file.xml'
+      args['weather_station_epw_filepath'] = 'foo.epw'
     end
 
     # Warning

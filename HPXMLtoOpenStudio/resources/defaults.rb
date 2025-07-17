@@ -6977,13 +6977,13 @@ module Defaults
         next if !component_ids.include?(clothes_dryer.id)
         next if clothes_dryer.fuel_type != HPXML::FuelTypeElectricity
 
-        if clothes_dryer.is_vented
-          clothes_dryer.branch_circuits.each do |branch_circuit|
-            watts += get_default_panels_value(runner, default_panels_csv_data, 'dryer', 'PowerRating', branch_circuit.voltage)
-          end
-        else # HP
+        if clothes_dryer.drying_method == HPXML::DryingMethodHeatPump
           clothes_dryer.branch_circuits.each do |branch_circuit|
             watts += get_default_panels_value(runner, default_panels_csv_data, 'dryer_hp', 'PowerRating', branch_circuit.voltage)
+          end
+        else
+          clothes_dryer.branch_circuits.each do |branch_circuit|
+            watts += get_default_panels_value(runner, default_panels_csv_data, 'dryer', 'PowerRating', branch_circuit.voltage)
           end
         end
       end
