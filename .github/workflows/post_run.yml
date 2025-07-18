@@ -41,6 +41,7 @@ jobs:
           uses: astral-sh/setup-uv@v6
           with:
             python-version: '3.11'
+            enable-cache: false
 
         - name: Determine changed SDR CSV files
           id: changed_files
