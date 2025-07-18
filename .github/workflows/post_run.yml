@@ -122,6 +122,7 @@ jobs:
     permissions:
       contents: read
       checks: write
+      statuses: write
     steps:
       - name: Checkout PR commit
         uses: actions/checkout@v4
