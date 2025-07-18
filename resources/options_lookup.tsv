@@ -1,4 +1,6 @@
 Parameter Name	Option Name	Measure Dir	Measure Arg 1	Measure Arg 2	...
+AIANNH Area	No
+AIANNH Area	Yes
 AHS Region	"CBSA Atlanta-Sandy Springs-Roswell, GA"
 AHS Region	"CBSA Boston-Cambridge-Newton, MA-NH"
 AHS Region	"CBSA Chicago-Naperville-Elgin, IL-IN-WI"
@@ -23,8 +25,6 @@ AHS Region	Non-CBSA Pacific
 AHS Region	Non-CBSA South Atlantic
 AHS Region	Non-CBSA West North Central
 AHS Region	Non-CBSA West South Central
-AIANNH Area	No
-AIANNH Area	Yes
 ASHRAE IECC Climate Zone 2004	1A	ResStockArguments	site_iecc_zone=1A	site_type=auto
 ASHRAE IECC Climate Zone 2004	2A	ResStockArguments	site_iecc_zone=2A	site_type=auto
 ASHRAE IECC Climate Zone 2004	2B	ResStockArguments	site_iecc_zone=2B	site_type=auto
