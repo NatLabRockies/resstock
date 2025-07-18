@@ -46,7 +46,7 @@ jobs:
       - name: Commit the integration tests results
         shell: bash        
         run: |
-          branch_name="${{ github.head_ref }}"
+          branch_name="${{ github.head_ref || github.ref_name }}"
           git pull origin $branch_name
           git add resources/options_lookup.tsv
           git status
