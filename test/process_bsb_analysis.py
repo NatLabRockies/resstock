@@ -106,20 +106,28 @@ if __name__ == '__main__':
 
     dps = sorted(os.listdir('project_national/national_baseline/simulation_output/up00'))
     for dp in dps:
-      df_national = read_csv('project_national/national_baseline/simulation_output/up00/{}/run/results_timeseries.csv'.format(dp), index_col=index_col, skiprows=[1])
+      df_national = read_csv('project_national/national_baseline/simulation_output/up00/{}/run/results_timeseries.csv'.format(dp), skiprows=[1])
       df_national = df_national.drop(drops, axis=1)
       df_nationals.append(df_national)
 
     dps = sorted(os.listdir('project_testing/testing_baseline/simulation_output/up00'))
     for dp in dps:
-      df_testing = read_csv('project_testing/testing_baseline/simulation_output/up00/{}/run/results_timeseries.csv'.format(dp), index_col=index_col, skiprows=[1])
+      df_testing = read_csv('project_testing/testing_baseline/simulation_output/up00/{}/run/results_timeseries.csv'.format(dp), skiprows=[1])
       df_testing = df_testing.drop(drops, axis=1)
       df_testings.append(df_testing)
 
-    df_national = reduce(lambda x, y: x.add(y, fill_value=0), df_nationals).round(1)
+    def sum_round(df, index_col, round_digits=1):
+      # This is slower than df.groupby(index_col).sum().round(1) but is deterministic (won't produce floating point instability)
+      # vectorized additions of floating point numbers can be unstable due to underterministic order of operations
+      # see: https://github.com/rapidsai/cudf/issues/3464 for related discussion
+      return df.groupby(index_col).apply(lambda group_df: group_df.apply(lambda col: round(sum(col), round_digits)))
+
+    df_national = pd.concat(df_nationals)
+    df_national = sum_round(df_national, index_col, round_digits=1)
     df_national['PROJECT'] = 'project_national'
 
-    df_testing = reduce(lambda x, y: x.add(y, fill_value=0), df_testings).round(1)
+    df_testing = pd.concat(df_testings)
+    df_testing = sum_round(df_testing, index_col, round_digits=1)
     df_testing['PROJECT'] = 'project_testing'
 
     results_output = pd.concat([df_national, df_testing]).fillna(0)
@@ -149,12 +157,12 @@ if __name__ == '__main__':
 
     df_national = pd.concat(df_nationals).sort_values(['building_id', 'time'])
     df_national = df_national.drop(['building_id'], axis=1)
-    df_national = df_national.groupby(index_col).sum().round(1)
+    df_national = sum_round(df_national, index_col, round_digits=1)
     df_national['PROJECT'] = 'project_national'
 
     df_testing = pd.concat(df_testings).sort_values(['building_id', 'time'])
     df_testing = df_testing.drop(['building_id'], axis=1)
-    df_testing = df_testing.groupby(index_col).sum().round(1)
+    df_testing = sum_round(df_testing, index_col, round_digits=1)
     df_testing['PROJECT'] = 'project_testing'
 
     buildstockbatch = pd.concat([df_national, df_testing]).fillna(0)
