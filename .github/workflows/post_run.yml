@@ -75,11 +75,12 @@ jobs:
           run: |
             SHA=$(git rev-parse HEAD)
             gh api repos/$REPO/check-runs \
-              -F name='SDR diff' \
-              -F head_sha="$SHA" \
-              -F conclusion='success' \
-              -F status='completed' \
-              -F output='{ "title":"SDR diff", "summary":"No SDR annual CSV changes." }' >/dev/null
+              -f name='SDR diff' \
+              -f head_sha="$SHA" \
+              -f conclusion='success' \
+              -f status='completed' \
+              -f output[title]='SDR diff' \
+              -f output[summary]='No SDR annual CSV changes.' >/dev/null
 
         - name: Build annotations and complete check run
           if: ${{ steps.changed_files.outputs.files != '' }}
