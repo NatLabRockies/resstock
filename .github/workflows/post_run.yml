@@ -114,7 +114,7 @@ jobs:
     # This is necessary because the `ci` workflow can create new commits and push them to the PR branch,
     # which will trigger all the checks as pending again. This will mark the latest commit as passing.
     needs: sdr-diff
-    if: ${{ needs.sdr-diff.result == 'success' }}
+    if: always()
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -135,7 +135,7 @@ jobs:
             "format-files" "unit-tests" "build-documentation" \
             "analysis-tests" "integration-tests" \
             "compare-tools" "compare-results" \
-            "update-results" "sdr-options-analysis" "sdr-integration-tests" )
+            "update-results" "sdr-options-analysis" "sdr-integration-tests" "SDR diff" )
           for ctx in "${required_checks[@]}"; do
             echo "Setting $ctx status to success"
             gh api -X POST repos/$REPO/statuses/$SHA \
