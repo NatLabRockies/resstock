@@ -75,7 +75,14 @@ def main() -> int:  # pragma: no cover
         action="store_false",
         help="Output report as plain text (default).",
     )
+    md_group.add_argument(
+        "--short",
+        dest="short",
+        action="store_true",
+        help="Output only the short text report",
+    )
     parser.set_defaults(markdown=False)
+    parser.set_defaults(short=False)
 
     args = parser.parse_args()
     csv_path: Path = args.csv_path
@@ -132,6 +139,10 @@ def main() -> int:  # pragma: no cover
             )
         else:
             report_text += f"All columns except {len(matched_cols)} columns have value changes\n"
+
+    if args.short:
+        print(report_text)
+        return 0
 
     full_report = cmp.report().strip()
 
