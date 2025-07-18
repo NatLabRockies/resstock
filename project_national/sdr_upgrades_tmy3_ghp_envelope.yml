@@ -23,7 +23,7 @@ sampler:
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 kestrel:
-  n_jobs: 20
+  n_jobs: 30
   minutes_per_sim: 5
   account: geostock
   postprocessing:
@@ -36,10 +36,11 @@ kestrel:
 # Post proccessing and Amazon Web Services
 postprocessing:
   # Post simulation partitioning
-  # keep_individual_timeseries: true
-  # partition_columns:
-    # - State
-    # - County
+  keep_individual_timeseries: true
+  partition_columns:
+    - State
+    - County
+  publish_annual_results: true
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
   aws:
     region_name: us-west-2
