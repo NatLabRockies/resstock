@@ -107,13 +107,13 @@ if __name__ == '__main__':
     dps = sorted(os.listdir('project_national/national_baseline/simulation_output/up00'))
     for dp in dps:
       df_national = read_csv('project_national/national_baseline/simulation_output/up00/{}/run/results_timeseries.csv'.format(dp), skiprows=[1])
-      df_national = df_national.drop(drops, axis=1).fillna(0)
+      df_national = df_national.drop(drops, axis=1)
       df_nationals.append(df_national)
 
     dps = sorted(os.listdir('project_testing/testing_baseline/simulation_output/up00'))
     for dp in dps:
       df_testing = read_csv('project_testing/testing_baseline/simulation_output/up00/{}/run/results_timeseries.csv'.format(dp), skiprows=[1])
-      df_testing = df_testing.drop(drops, axis=1).fillna(0)
+      df_testing = df_testing.drop(drops, axis=1)
       df_testings.append(df_testing)
 
     def sum_round(df, index_col, round_digits=1):
@@ -122,11 +122,11 @@ if __name__ == '__main__':
       # see: https://github.com/rapidsai/cudf/issues/3464 for related discussion
       return df.groupby(index_col).apply(lambda group_df: group_df.apply(lambda col: round(sum(col), round_digits)))
 
-    df_national = pd.concat(df_nationals)
+    df_national = pd.concat(df_nationals).fillna(0)
     df_national = sum_round(df_national, index_col, round_digits=1)
     df_national['PROJECT'] = 'project_national'
 
-    df_testing = pd.concat(df_testings)
+    df_testing = pd.concat(df_testings).fillna(0)
     df_testing = sum_round(df_testing, index_col, round_digits=1)
     df_testing['PROJECT'] = 'project_testing'
 
@@ -146,21 +146,21 @@ if __name__ == '__main__':
     groups = sorted(os.listdir('project_national/national_baseline/parquet/timeseries/upgrade=0'))
     for group in groups:
         df_national = pd.read_parquet('project_national/national_baseline/parquet/timeseries/upgrade=0/{}'.format(group)).reset_index()
-        df_national = df_national.drop(drops, axis=1).fillna(0)
+        df_national = df_national.drop(drops, axis=1)
         df_nationals.append(df_national)
 
     groups = sorted(os.listdir('project_testing/testing_baseline/parquet/timeseries/upgrade=0'))
     for group in groups:
         df_testing = pd.read_parquet('project_testing/testing_baseline/parquet/timeseries/upgrade=0/{}'.format(group)).reset_index()
-        df_testing = df_testing.drop(drops, axis=1).fillna(0)
+        df_testing = df_testing.drop(drops, axis=1)
         df_testings.append(df_testing)
 
-    df_national = pd.concat(df_nationals).sort_values(['building_id', 'time'])
+    df_national = pd.concat(df_nationals).sort_values(['building_id', 'time']).fillna(0)
     df_national = df_national.drop(['building_id'], axis=1)
     df_national = sum_round(df_national, index_col, round_digits=1)
     df_national['PROJECT'] = 'project_national'
 
-    df_testing = pd.concat(df_testings).sort_values(['building_id', 'time'])
+    df_testing = pd.concat(df_testings).sort_values(['building_id', 'time']).fillna(0)
     df_testing = df_testing.drop(['building_id'], axis=1)
     df_testing = sum_round(df_testing, index_col, round_digits=1)
     df_testing['PROJECT'] = 'project_testing'
