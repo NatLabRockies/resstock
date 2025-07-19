@@ -107,13 +107,13 @@ if __name__ == '__main__':
     dps = sorted(os.listdir('project_national/national_baseline/simulation_output/up00'))
     for dp in dps:
       df_national = read_csv('project_national/national_baseline/simulation_output/up00/{}/run/results_timeseries.csv'.format(dp), skiprows=[1])
-      df_national = df_national.drop(drops, axis=1)
+      df_national = df_national.drop(drops, axis=1).fillna(0)
       df_nationals.append(df_national)
 
     dps = sorted(os.listdir('project_testing/testing_baseline/simulation_output/up00'))
     for dp in dps:
       df_testing = read_csv('project_testing/testing_baseline/simulation_output/up00/{}/run/results_timeseries.csv'.format(dp), skiprows=[1])
-      df_testing = df_testing.drop(drops, axis=1)
+      df_testing = df_testing.drop(drops, axis=1).fillna(0)
       df_testings.append(df_testing)
 
     def sum_round(df, index_col, round_digits=1):
@@ -146,13 +146,13 @@ if __name__ == '__main__':
     groups = sorted(os.listdir('project_national/national_baseline/parquet/timeseries/upgrade=0'))
     for group in groups:
         df_national = pd.read_parquet('project_national/national_baseline/parquet/timeseries/upgrade=0/{}'.format(group)).reset_index()
-        df_national = df_national.drop(drops, axis=1)
+        df_national = df_national.drop(drops, axis=1).fillna(0)
         df_nationals.append(df_national)
 
     groups = sorted(os.listdir('project_testing/testing_baseline/parquet/timeseries/upgrade=0'))
     for group in groups:
         df_testing = pd.read_parquet('project_testing/testing_baseline/parquet/timeseries/upgrade=0/{}'.format(group)).reset_index()
-        df_testing = df_testing.drop(drops, axis=1)
+        df_testing = df_testing.drop(drops, axis=1).fillna(0)
         df_testings.append(df_testing)
 
     df_national = pd.concat(df_nationals).sort_values(['building_id', 'time'])
