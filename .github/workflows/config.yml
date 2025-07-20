@@ -282,6 +282,7 @@ jobs:
           path: |
             project_national/national_baseline/simulation_output
             project_testing/testing_baseline/simulation_output
+          retention-days: 1  # This is typically about 2.5 GB. Delete quickly to save space.
           if-no-files-found: error
 
       - name: Run tests
