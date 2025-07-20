@@ -140,12 +140,12 @@ def print_changes(changes):
 def main() -> None:
     """CLI entry point.
 
-    Without arguments, prints diff reports for any changed SDR CSVs. If the
+    Without arguments, prints diff reports for any changed CSVs. If the
     optional ``--local`` flag is supplied, the script prints the diff reports
-    to the console and exits without creating a GitHub Check Run and annotations.
+    to the console and exits without creating a GitHub Check Run annotations.
     """
 
-    parser = argparse.ArgumentParser(description="Generate SDR CSV diffs and optionally annotate the commit.")
+    parser = argparse.ArgumentParser(description="Generate CSV diffs and optionally annotate the commit.")
     parser.add_argument(
         "--local",
         action="store_true",
@@ -205,14 +205,14 @@ def update_annotations(check_run, changes):
     for batch in chunk(annotations, 50):  # API limit = 50 annotations/request
         check_run.edit(
             status="in_progress",
-            output={"title": "SDR results diff", "annotations": batch, "summary": "Uploading annotation batch…"},
+            output={"title": "CSV diff results", "annotations": batch, "summary": "Uploading annotation batch…"},
         )
 
     # Step 2: final patch with summary
     check_run.edit(
         status="completed",
         conclusion="success",
-        output={"title": "SDR results diff", "summary": summary},
+        output={"title": "CSV diff results", "summary": summary},
     )
 
     print(f"Completed check run #{check_run.id} with {len(annotations)} annotation(s).")
