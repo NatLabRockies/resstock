@@ -120,6 +120,7 @@ if __name__ == '__main__':
       # This is slower than df.groupby(index_col).sum().round(1) but is deterministic (won't produce floating point instability)
       # vectorized additions of floating point numbers can be unstable due to underterministic order of operations
       # see: https://github.com/rapidsai/cudf/issues/3464 for related discussion
+      print(f"Hash of df: {pd.util.hash_pandas_object(df.reset_index()).sum()}")
       return df.groupby(index_col).apply(lambda group_df: group_df.apply(lambda col: round(sum(col), round_digits)))
 
     df_national = pd.concat(df_nationals).fillna(0)

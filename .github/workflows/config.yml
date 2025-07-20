@@ -275,6 +275,14 @@ jobs:
             project_national/national_baseline/results_csvs/results_up00.csv
             project_testing/testing_baseline/results_csvs/results_up00.csv
           if-no-files-found: error
+      - name: Upload raw simulation output
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw_simulation_output
+          path: |
+            project_national/national_baseline/simulation_output
+            project_testing/testing_baseline/simulation_output
+          if-no-files-found: error
 
       - name: Run tests
         run: |
