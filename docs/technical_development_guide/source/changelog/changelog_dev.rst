@@ -6,6 +6,39 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+    .. change::
+        :tags: postprocessing, bugfix
+        :pullreq: 1439
+
+        **Date**: 2025-07-08
+
+        Title:
+        Postprocessing output data type fix
+
+        Description:
+        A bug in resstockpostprocessing was making the datatype of applicability to be boolean in baseline
+        but string in upgrades for the parquet files. This was causing the Athena query to fail. This PR fixes
+        the bug.
+
+        Assignees: Rajendra Adhikari
+
+    .. change::
+        :tags: bugfix, hvac
+        :pullreq: 1441, 1254
+
+        **Date**: 2025-07-08
+
+        Title:
+        Fix for BA seasons always enabled
+
+        Description:
+        A bug in the code does not allow auto seasons to be turned off. The intended behavior is to run without auto seasons. 
+        This pull request fixes this issue.
+
+        resstock-estimation: `pull request 416 <https://github.com/NREL/resstock-estimation/pull/416>`_
+
+        Assignees: Joe Robertson
+
 
     .. change::
         :tags: standard data release
@@ -168,7 +201,7 @@ Development Changelog
 
  
     .. change::
-        :tags: bug fix
+        :tags: bugfix
         :pullreq: 1362
 
         **Date**: 2025-04-18

@@ -1,0 +1,81 @@
+# This workflow runs after the `ci` workflow to generate diff annotations and mark required checks as passing.
+name: Post run
+on:
+  workflow_run:
+    workflows: [ "ci" ]
+    types:
+      - completed
+  workflow_dispatch:  # Allow manual trigger
+
+concurrency:
+  # Cancel in-progress runs when a new workflow with the same concurrency group is queued
+  # pull_requests[0].number exists only when the upstream run came from a PR. Fall back to head_branch otherwise.
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.pull_requests[0].number || github.event.workflow_run.head_branch || github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  sdr-diff:
+    # The built-in diffs typically do not provide meaninful diffs for csv files, so we use a custom script to generate diffs
+    # and attach them as annotations to the files so that they can be seen in the PR diff view. They can also be read in the
+    # check-run summary in the "Checks" tab of the PR.
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request') }}
+    runs-on: ubuntu-latest
+    permissions:
+        pull-requests: write # This permission is sufficient
+        contents: read
+        checks: write
+        statuses: write
+    steps:
+        - name: Checkout PR commit
+          uses: actions/checkout@v4
+          with:
+            # Checkout the latest tip of the PR branch (may include commits pushed after the triggering run)
+            ref: ${{ github.event.workflow_run.pull_requests[0].head.ref || github.ref }}
+            fetch-depth: 0
+            sparse-checkout: |
+              test/
+              .github/
+              postprocessing/
+
+        - name: Set up Python (UV)
+          uses: astral-sh/setup-uv@v6
+          with:
+            python-version: '3.11'
+            enable-cache: false
+        - name: Run SDR diff integrator
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            BASE_REF: develop
+          run: uv run .github/scripts/diff_annotator.py
+
+  pass-checks:
+    needs: sdr-diff
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      statuses: write
+    steps:
+      - name: Checkout PR commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.pull_requests[0].head.ref || github.ref }}
+
+      - name: Mark required CI checks as success
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          SHA=$(git rev-parse HEAD)
+          required_checks=( \
+            "format-files" "unit-tests" "build-documentation" \
+            "analysis-tests" "integration-tests" \
+            "compare-tools" "compare-results" \
+            "update-results" "sdr-options-analysis" "sdr-integration-tests" "sdr-diff")
+          for ctx in "${required_checks[@]}"; do
+            echo "Setting $ctx status to success"
+            gh api -X POST repos/$REPO/statuses/$SHA \
+              -f state=success \
+              -f context="$ctx" >/dev/null
+          done

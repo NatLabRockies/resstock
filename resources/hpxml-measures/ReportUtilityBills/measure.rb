@@ -190,14 +190,6 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
 
     fuels = setup_fuel_outputs()
 
-    hpxml_fuel_map = { FT::Elec => HPXML::FuelTypeElectricity,
-                       FT::Gas => HPXML::FuelTypeNaturalGas,
-                       FT::Oil => HPXML::FuelTypeOil,
-                       FT::Propane => HPXML::FuelTypePropane,
-                       FT::WoodCord => HPXML::FuelTypeWoodCord,
-                       FT::WoodPellets => HPXML::FuelTypeWoodPellets,
-                       FT::Coal => HPXML::FuelTypeCoal }
-
     # Check for presence of fuels once
     has_fuel = hpxml.has_fuels()
 
@@ -206,7 +198,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
 
     # Fuel outputs
     fuels.each do |(fuel_type, is_production), fuel|
-      next unless has_fuel[hpxml_fuel_map[fuel_type]]
+      next unless has_fuel[get_hpxml_fuel(fuel_type)]
       next if is_production && !has_pv # we don't need to request this meter if there isn't pv
 
       result << OpenStudio::IdfObject.load("Output:Meter,#{fuel.meter},monthly;").get
@@ -304,15 +296,18 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
 
     num_units = @hpxml_buildings.collect { |hpxml_bldg| hpxml_bldg.building_construction.number_of_units }.sum
 
+    # Setup fuel outputs once
+    fuels = setup_fuel_outputs()
+
+    # Check for presence of fuels once
+    has_fuel = hpxml.has_fuels()
+
     monthly_data = []
     @hpxml_header.utility_bill_scenarios.each do |utility_bill_scenario|
       warnings = check_for_next_type_warnings(utility_bill_scenario)
       if register_warnings(runner, warnings)
         next
       end
-
-      # Setup fuel outputs
-      fuels = setup_fuel_outputs()
 
       # Get outputs
       get_outputs(fuels, utility_bill_scenario)
@@ -324,7 +319,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
       pv_monthly_fee = get_pv_monthly_fee(utility_bill_scenario, @hpxml_buildings)
 
       # Get utility rates
-      warnings = get_utility_rates(hpxml_path, fuels, utility_rates, utility_bill_scenario, pv_monthly_fee, num_units)
+      warnings = get_utility_rates(hpxml_path, has_fuel, utility_rates, utility_bill_scenario, pv_monthly_fee, num_units)
       if register_warnings(runner, warnings)
         next
       end
@@ -526,16 +521,16 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
   # Fill each UtilityRate object based on simple or detailed utility rate information.
   #
   # @param hpxml_path [String] Path to the HPXML file
-  # @param fuels [Hash] Fuel type, is_production => Fuel object
+  # @param has_fuel [Hash] Map of HPXML fuel type => boolean of whether fuel type is used
   # @param utility_rates [Hash] Fuel Type => UtilityRate object
   # @param bill_scenario [HPXML::UtilityBillScenario] HPXML Utility Bill Scenario object
   # @param pv_monthly_fee [Double] the sum of the monthly grid connection fees ($) across HPXML Buildings
   # @param num_units [Integer] total number of units represented by the HPXML file
   # @return [Array<String>] array of warnings
-  def get_utility_rates(hpxml_path, fuels, utility_rates, bill_scenario, pv_monthly_fee, num_units = 1)
+  def get_utility_rates(hpxml_path, has_fuel, utility_rates, bill_scenario, pv_monthly_fee, num_units = 1)
     warnings = []
     utility_rates.each do |fuel_type, rate|
-      next if fuels[[fuel_type, false]].timeseries.sum == 0
+      next unless has_fuel[get_hpxml_fuel(fuel_type)]
 
       case fuel_type
       when FT::Elec
@@ -771,6 +766,20 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
       vals << row[row.keys[0]][index] * unit_conv
     end
     return vals
+  end
+
+  # Get HPXML fuel type according to output reporting fuel type constant.
+  #
+  # @param fuel_type [String] Constant fuel type for output reporting
+  # @return [String] HPXML fuel type
+  def get_hpxml_fuel(fuel_type)
+    return { FT::Elec => HPXML::FuelTypeElectricity,
+             FT::Gas => HPXML::FuelTypeNaturalGas,
+             FT::Oil => HPXML::FuelTypeOil,
+             FT::Propane => HPXML::FuelTypePropane,
+             FT::WoodCord => HPXML::FuelTypeWoodCord,
+             FT::WoodPellets => HPXML::FuelTypeWoodPellets,
+             FT::Coal => HPXML::FuelTypeCoal }[fuel_type]
   end
 end
 
