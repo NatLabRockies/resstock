@@ -1,13 +1,11 @@
 """
 Heatmap Plotting module for standard plots
 -----------------------------------------
-Creates heat-map style visualisations using Plotly while adhering to the common
+Creates heatmap style visualizations using Plotly while adhering to the common
 ResStock post-processing theme. Designed to work in a very similar fashion to
 `BarPlotter.create_stacked_bar_plot` so downstream code can swap plotter
 classes with minimal changes.
 """
-
-from __future__ import annotations
 
 import textwrap
 
@@ -24,17 +22,17 @@ __all__ = ["HeatmapPlotter"]
 
 
 class HeatmapPlotter(BasePlotter):
-    """Generates heat-map plots with consistent styling.
+    """Generates heatmap plots with consistent styling.
 
-    A heat-map is useful when we want to show *multiple* quantities (rows) for
-    one or more categories (columns).  Each cell encodes the magnitude by
-    colour.  This implementation expects the data to already contain columns
-    corresponding to the desired quantities (e.g. end-uses) as well as a
+    A heatmap is useful when we want to show *multiple* quantities (rows) for
+    one or more categories (columns). Each cell encodes the magnitude by
+    color. This implementation expects the data to already contain columns
+    corresponding to the desired quantities (e.g., end-uses) as well as a
     *group_by* column that will become the X-axis categories (defaults to
     ``upgrade_name``).
 
-    If *plot_spec.group_by* is supplied then that column will be used for the
-    X-axis.  The quantities come from *plot_spec.quantity*.  When quantity is
+    If *plot_spec.group_by* is supplied, then that column will be used for the
+    X-axis. The quantities come from *plot_spec.quantity*. When quantity is
     a :class:`QuantityGroup` the ``constituents`` list defines the rows and the
     optional ``sum`` key is ignored.
     """
@@ -43,13 +41,13 @@ class HeatmapPlotter(BasePlotter):
     # Public helpers mirroring BarPlotter API
     # ------------------------------------------------------------------
     def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
-        """Create and return a heat-map figure based on *plot_spec*."""
+        """Create and return a heatmap figure based on *plot_spec*."""
         if not isinstance(plot_spec.quantity, QuantityGroup):
             raise ValueError("Heat-maps require a QuantityGroup (list of columns) as the quantity definition")
 
         constituent_cols: list[str] = plot_spec.quantity.constituents
         # If group_by is supplied, treat it as a faceting column so that each
-        # group appears as a separate heat-map.  The X-axis remains upgrade_name.
+        # group appears as a separate heatmap. The X-axis remains upgrade_name.
         facet_col: str | None = plot_spec.group_by if plot_spec.group_by else None
 
         return self.create_heatmap_plot(
@@ -83,10 +81,10 @@ class HeatmapPlotter(BasePlotter):
         z_values = data[constituent_cols].to_numpy().T
 
         # ------------------------------------------------------------------
-        # Build a custom colourscale with a *neutral* grey band around zero.
+        # Build a custom colorscale with a *neutral* gray band around zero.
         # Anything between ``-neutral_th`` and ``+neutral_th`` is mapped to
-        # plain grey so that small values do not visually blend with the
-        # diverging colours.  Outside this range the colours jump immediately
+        # plain gray so that small values do not visually blend with the
+        # diverging colors. Outside this range the colors jump immediately
         # to the negative (green) or positive (red) palette.
         # ------------------------------------------------------------------
         neutral_th: float = 1e-3  # ±0.001 band requested by the user
@@ -98,27 +96,27 @@ class HeatmapPlotter(BasePlotter):
             z_min -= 1e-6
             z_max += 1e-6
 
-        # Helper to convert a *real* z value into a 0-1 normalised position for
-        # the colourscale definition expected by Plotly.
+        # Helper to convert a *real* z value into a 0-1 normalized position for
+        # the colorscale definition expected by Plotly.
         def _norm(val: float) -> float:
             return (val - z_min) / (z_max - z_min)
 
         # Clip the neutral band to the available data range so that we never
-        # produce invalid ( <0 or >1 ) positions.
+        # produce invalid (<0 or >1) positions.
         neg_end = max(0.0, min(1.0, _norm(-neutral_th)))
         pos_start = max(0.0, min(1.0, _norm(neutral_th)))
 
         # ------------------------------------------------------------------
-        # Create a *gradient* colourscale.  We use multiple shades of green for
+        # Create a *gradient* colorscale. We use multiple shades of green for
         # negative values and shades of red for positive values while keeping a
-        # neutral grey band around zero.  This provides more visual nuance than
-        # the previous flat colours.
+        # neutral gray band around zero. This provides more visual nuance than
+        # the previous flat colors.
         # ------------------------------------------------------------------
-        # Build gradients using Plotly's sequential colour palettes.  Dark green
+        # Build gradients using Plotly's sequential color palettes. Dark green
         # represents the most negative change and dark red represents the most
-        # positive change.  Values close to zero fall in a narrow grey band.
-        # Use only the more saturated 75 % of each palette so the colour appears
-        # quickly without the very pale tints.  (Skip the lightest ~25 %.)
+        # positive change. Values close to zero fall in a narrow gray band.
+        # Use only the more saturated 75 % of each palette so the color appears
+        # quickly without the very pale tints. (Skip the lightest ~25 %.)
         greens_full: list[str] = px.colors.sequential.Greens  # dark → light
         reds_full: list[str] = px.colors.sequential.Reds  # light → dark
         trim_g: int = max(1, len(greens_full) // 4)  # ≈25 %
@@ -126,29 +124,29 @@ class HeatmapPlotter(BasePlotter):
         greens: list[str] = greens_full[trim_g:]  # drop lightest greens
         reds: list[str] = reds_full[trim_r:]  # drop lightest reds
 
-        colourscale: list[list[float | str]] = []
+        colorscale: list[list[float | str]] = []
 
         # Negative side (red).
         reds_neg: list[str] = reds[::-1]  # darkest red at most negative
-        for idx, colour in enumerate(reds_neg):
+        for idx, color in enumerate(reds_neg):
             n_frac: float = idx / (len(reds_neg) - 1) if len(reds_neg) > 1 else 0
-            colourscale.append([neg_end * n_frac, colour])
+            colorscale.append([neg_end * n_frac, color])
 
-        # Neutral grey band (flat so repeat boundaries).
-        colourscale.extend(
+        # Neutral gray band (flat so repeat boundaries).
+        colorscale.extend(
             [
-                [neg_end, "lightgrey"],
-                [pos_start, "lightgrey"],
+                [neg_end, "lightgray"],
+                [pos_start, "lightgray"],
             ]
         )
 
         # Positive side (green).
-        for idx, colour in enumerate(greens):
+        for idx, color in enumerate(greens):
             p_frac: float = idx / (len(greens) - 1) if len(greens) > 1 else 0
-            colourscale.append([pos_start + (1 - pos_start) * p_frac, colour])
+            colorscale.append([pos_start + (1 - pos_start) * p_frac, color])
 
-        # Ensure colourscale is sorted by the position value (first element).
-        colourscale.sort(key=lambda item: item[0])
+        # Ensure colorscale is sorted by the position value (first element).
+        colorscale.sort(key=lambda item: item[0])
 
         # --------------------------------------------------------
         # Build figure - single plot or faceted layout.
@@ -164,7 +162,7 @@ class HeatmapPlotter(BasePlotter):
                 subplot_titles=[self._format_label(str(val)) for val in facets],
             )
 
-            # Add one heat-map per facet.
+            # Add one heatmap per facet.
             for i, facet_val in enumerate(facets):
                 sub = data.filter(pl.col(facet_column) == facet_val)
                 z_sub = sub[constituent_cols].to_numpy().T
@@ -173,22 +171,22 @@ class HeatmapPlotter(BasePlotter):
                         z=z_sub,
                         x=sub[x_column].to_list(),
                         y=constituent_cols,  # type: ignore
-                        colorscale=colourscale,  # type: ignore
+                        colorscale=colorscale,  # type: ignore
                         zmin=z_min,
                         zmax=z_max,
                         coloraxis="coloraxis",
-                        showscale=(i == n_facets - 1),  # show colour bar only once
+                        showscale=(i == n_facets - 1),  # show color bar only once
                     ),
                     row=1,
                     col=i + 1,
                 )
                 # Tilt X tick labels for clarity
                 fig.update_xaxes(tickangle=45, row=1, col=i + 1)
-            # Set global colouraxis
+            # Set global coloraxis
             fig.update_layout(
-                coloraxis={"colorscale": colourscale, "cmin": z_min, "cmax": z_max, "colorbar": {"title": "Value"}}
+                coloraxis={"colorscale": colorscale, "cmin": z_min, "cmax": z_max, "colorbar": {"title": "Value"}}
             )
-            # Word-wrap long facet titles for readability (match BarPlotter behaviour).
+            # Word-wrap long facet titles for readability (match BarPlotter behavior).
             fig.for_each_annotation(
                 lambda a: a.update(
                     text="<br>".join(
@@ -206,7 +204,7 @@ class HeatmapPlotter(BasePlotter):
                     z=z_values,
                     x=data[x_column].to_list(),
                     y=constituent_cols,  # type: ignore
-                    colorscale=colourscale,  # type: ignore
+                    colorscale=colorscale,  # type: ignore
                     zmin=z_min,
                     zmax=z_max,
                     colorbar={"title": "Value"},
