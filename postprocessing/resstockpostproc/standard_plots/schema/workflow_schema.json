@@ -165,7 +165,8 @@
       "enum": [
         "bar",
         "box",
-        "histogram"
+        "histogram",
+        "heatmap"
       ],
       "title": "VizType",
       "type": "string"

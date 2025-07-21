@@ -57,6 +57,7 @@ class VizType(str, Enum):
     bar = "bar"
     box = "box"
     hist = "histogram"
+    heatmap = "heatmap"
 
 
 class QuantityGroup(NoExtraModel):

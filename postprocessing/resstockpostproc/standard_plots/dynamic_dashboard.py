@@ -317,7 +317,7 @@ app.layout = dbc.Container(
                                     min=300,
                                     max=1200,
                                     step=50,
-                                    value=600,
+                                    value=700,
                                     marks={i: str(i) for i in range(300, 1201, 300)},
                                 ),
                                 dbc.Checklist(
@@ -491,8 +491,10 @@ def _update_quantity_dd(qgroup_name: str, viz_type_val: str, current_val: str | 
     if qg.sum:
         opts.append({"label": qg.sum, "value": qg.sum})
     # Group stacked option only for bar plots - send special token
-    if viz_type == VizType.bar:
+    if viz_type in [VizType.bar]:
         opts.append({"label": "ALL - stacked", "value": "__group_stacked__"})
+    if viz_type in [VizType.heatmap]:
+        opts = [{"label": "ALL - stacked", "value": "__group_stacked__"}]
 
     # Preserve current selection if still valid, else fall back to first option
     default_val = current_val if current_val in {o["value"] for o in opts} else opts[0]["value"]
@@ -570,10 +572,9 @@ def _generate_figure(
 )
 def _toggle_value_type_visibility(viz_type_val: str):
     """Show *Value type* only for bar plots."""
-    if VizType(viz_type_val) == VizType.bar:
-        return {}
-    # Hide via CSS when not bar
-    return {"display": "none"}
+    if VizType(viz_type_val) == VizType.box:
+        return {"display": "none"}
+    return {}
 
 
 # ----------------------------------------------------------------------------
@@ -594,13 +595,12 @@ def _build_plot_spec(
     """Helper to build PlotSpec from control values (shared by callbacks)."""
     viz_type = VizType(viz_type_val)
     group_by = group_by_val if group_by_val != "__none__" else None
+
     if quantity_val == "__group_stacked__":
         quantity: str | QuantityGroup = _QG_BY_NAME[qgroup_name]
     else:
         quantity = quantity_val
 
-    if comp_type == ComparisonTypes.savings:
-        quantity = f"{quantity}.savings"
     return PlotSpec(
         upgrade_inclusion=UpgradeInclusion(upgrade_incl),
         vacancy_inclusion=VacancyInclusion(vacancy_incl),

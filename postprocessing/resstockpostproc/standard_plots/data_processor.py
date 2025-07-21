@@ -23,6 +23,7 @@ from resstockpostproc.standard_plots.schema.plot_spec import (
     UpgradeInclusion,
     VacancyInclusion,
     VizType,
+    ComparisonTypes,
 )
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, ValueTypes, WorkflowConfig
 
@@ -208,6 +209,52 @@ class DataProcessor:
 
         return combined_df.with_columns(new_column_exprs)
 
+    def convert_value_type(
+        self, combined_df: pl.LazyFrame, quantities: list[str], comparison_type: ComparisonTypes
+    ) -> pl.LazyFrame:
+        """Convert the values in ``combined_df`` according to the desired comparison type.
+
+        Args:
+            combined_df: LazyFrame containing all upgrades (including baseline with ``upgrade == 0``)
+            quantities: List of quantity columns that should be transformed.
+            comparison_type: Whether to convert to *absolute* values or *savings* (baseline - value).
+
+        Returns
+        -------
+        pl.LazyFrame
+            A LazyFrame where the requested ``quantities`` columns have been transformed as requested.
+        """
+        if comparison_type == ComparisonTypes.absolute:
+            # No transformation required
+            return combined_df
+
+        if comparison_type == ComparisonTypes.savings:
+            join_key = "bldg_id"
+            if join_key not in combined_df.collect_schema().names():
+                raise ValueError(f"'{join_key}' column not found in data - cannot compute savings per building.")
+            baseline_cols = [join_key, *quantities]
+            baseline_df = (
+                combined_df.filter(pl.col("upgrade") == 0)
+                .select(baseline_cols)
+                .rename({q: f"baseline_{q}" for q in quantities})
+            )
+
+            # 2. Join the baseline values back to the full dataset on `building_id`.
+            df_with_baseline = combined_df.join(baseline_df, on=join_key, how="left", validate="m:1")
+
+            # 3. Replace the quantity columns with the calculated savings.
+            savings_exprs = [(pl.col(f"baseline_{q}") - pl.col(q)).alias(q) for q in quantities]
+
+            result = (
+                df_with_baseline.with_columns(savings_exprs).drop(
+                    [f"baseline_{q}" for q in quantities]
+                )  # Clean-up helper columns
+            )
+
+            return result
+
+        raise ValueError(f"Unsupported comparison type: {comparison_type}")
+
     def prepare_data_for_plot(self, plot_spec: PlotSpec) -> pl.DataFrame:
         """
         Prepare data for plotting by grouping and aggregating using mean
@@ -227,6 +274,7 @@ class DataProcessor:
                 quantities.append(plot_spec.quantity.sum)
 
         combined_df = self.fill_missing_quantities(self.combined_df, quantities)
+        combined_df = self.convert_value_type(combined_df, quantities, plot_spec.comparison_type)
 
         if plot_spec.upgrade_inclusion == UpgradeInclusion.applied_only:
             combined_df = combined_df.filter(pl.col("applicability"))
@@ -236,7 +284,7 @@ class DataProcessor:
         if plot_spec.visualization_type == VizType.box:
             assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
             return self.prepare_data_for_box_plot(combined_df, plot_spec.quantity, plot_spec.group_by)
-        elif plot_spec.visualization_type == VizType.bar:
+        elif plot_spec.visualization_type in (VizType.bar, VizType.heatmap):
             return self.prepare_data_for_bar_plot(combined_df, quantities, plot_spec.group_by, plot_spec.value_type)
         else:
             raise ValueError(f"Unsupported visualization type: {plot_spec.visualization_type}")

@@ -34,7 +34,6 @@ dependencies = [
     "s3fs",
     "boto3[crt]>=1.39.4",
     "boto3-stubs>=1.39.4",
-    "plotly-stubs>=0.0.5",
     "gunicorn>=23.0.0",
 ]
 
@@ -59,7 +58,7 @@ dev = [
     "ipykernel",
     "mypy>=1.16.0",
     "pandas-stubs",
-    "plotly-stubs",
+    "plotly-stubs>=0.0.5",
     "pre-commit>=4.2.0",
     "pytest",
     "scipy-stubs",

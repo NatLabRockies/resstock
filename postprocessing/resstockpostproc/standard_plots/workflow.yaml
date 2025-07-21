@@ -72,6 +72,7 @@ quantities:
 visualization_types:
   - bar
   - box
+  - heatmap
 group_by:
   - in.census_division
   - in.vintage
