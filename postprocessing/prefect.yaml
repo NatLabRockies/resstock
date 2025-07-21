@@ -7,7 +7,7 @@ pull:
   - prefect.deployments.steps.git_clone:
       id: clone-step
       repository: https://github.com/NREL/resstock.git
-      branch: prefect/std_plots
+      branch: std_plots
   - prefect.deployments.steps.set_working_directory:
       directory: /opt/prefect/{{ clone-step.directory }}/postprocessing
   - prefect.deployments.steps.run_shell_script:
