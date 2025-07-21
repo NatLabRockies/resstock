@@ -287,14 +287,14 @@ async def generate_plots(
     on_crashed=[crash_handler],
 )
 async def generate_plots_full_schema(
-    base_config: FlowConfigBase,
-    config: WorkflowConfig = WorkflowConfig(**default_config.model_dump(exclude={"storage_backend"})),
+    config: FlowConfigBase,
+    workflow: WorkflowConfig = WorkflowConfig(**default_config.model_dump(exclude={"storage_backend"})),
 ):
     await _execute_plot_flow(
-        config,
-        username=base_config.username,
-        s3_results_dir=base_config.s3_results_dir,
-        s3_filename_filter=base_config.s3_filename_filter,
+        workflow,
+        username=config.username,
+        s3_results_dir=config.s3_results_dir,
+        s3_filename_filter=config.s3_filename_filter,
     )
 
 
@@ -318,12 +318,21 @@ if __name__ == "__main__":
 
     async def main():
         await generate_plots(
-            config=FlowConfig(
+            FlowConfig(
                 username="alex",
                 run_name="Test Run",
                 s3_results_dir="s3://res-sdr/testing-sdr-fy25/envelop_package_30k/",
             ),
-            advanced_config=AdvancedConfig(group_by=["in.vintage"]),
+            AdvancedConfig(group_by=["in.vintage"]),
         )
+
+        # await generate_plots_full_schema(
+        #     FlowConfigBase(
+        #         username="alex",
+        #         run_name="Test Run",
+        #         s3_results_dir="s3://res-sdr/testing-sdr-fy25/envelop_package_30k/",
+        #     ),
+        #     WorkflowConfig(**{**default_config.model_dump(exclude={"storage_backend"}), "group_by": ["in.vintage"]})
+        # )
 
     asyncio.run(main())
