@@ -48,8 +48,6 @@ workflow: WorkflowConfig = WorkflowConfig.from_yaml(WORKFLOW_YAML)  # convenienc
 # Build look-up dict for QuantityGroup by its name so we can easily instantiate
 # a PlotSpec from UI selections later.
 _QG_BY_NAME: dict[str, QuantityGroup] = {qg.name: qg for qg in workflow.quantities}
-
-# Determine the parent directory containing multiple run folders and list them
 parent_dir = Path(workflow.output_dir).expanduser().resolve() / "plots"
 
 # ---------------------------------------------------------------------------
@@ -561,6 +559,27 @@ def _generate_figure(
 
 
 # ----------------------------------------------------------------------------
+#   CALLBACK - dynamically restrict *Value type* options based on comparison-type
+# ----------------------------------------------------------------------------
+@app.callback(
+    Output("value-type", "options"),
+    Output("value-type", "value"),
+    Input("comparison-type", "value"),
+    State("value-type", "value"),
+)
+def _update_value_type_dd(comp_type_val: str, current_val: str):
+    """When *percent_savings* is selected allow only *average* value-type."""
+    if comp_type_val == ComparisonTypes.percent_savings.value:
+        opts = [{"label": ValueTypes.average.value, "value": ValueTypes.average.value}]
+        return opts, ValueTypes.average.value
+
+    # All value-types are available for other comparison types
+    all_opts = [{"label": vt.value, "value": vt.value} for vt in workflow.value_types]
+    new_val = current_val if current_val in {o["value"] for o in all_opts} else all_opts[0]["value"]
+    return all_opts, new_val
+
+
+# ----------------------------------------------------------------------------
 #   CALLBACK - toggle value-type column visibility
 # ----------------------------------------------------------------------------
 @app.callback(
@@ -598,11 +617,17 @@ def _build_plot_spec(
     else:
         quantity = quantity_val
 
+    # Force value-type to *average* when comparison-type is percent_savings
+    if ComparisonTypes(comp_type) == ComparisonTypes.percent_savings:
+        vtype_enum = ValueTypes.average
+    else:
+        vtype_enum = ValueTypes(value_type)
+
     return PlotSpec(
         upgrade_inclusion=UpgradeInclusion(upgrade_incl),
         vacancy_inclusion=VacancyInclusion(vacancy_incl),
         comparison_type=ComparisonTypes(comp_type),
-        value_type=ValueTypes(value_type),
+        value_type=vtype_enum,
         visualization_type=viz_type,
         group_by=group_by,
         quantity=quantity,

@@ -126,6 +126,10 @@ class WorkflowConfig(NoExtraSettings):
         with open(yaml_path) as f:
             config_data = yaml.safe_load(f)
 
+        if os.environ.get("PLOTS_ROOT_FOLDER"):
+            config_data["output_dir"] = os.environ.get("PLOTS_ROOT_FOLDER")
+        elif not os.path.isabs(config_data["output_dir"]):
+            config_data["output_dir"] = str(Path(yaml_path).parent / config_data["output_dir"])
         return cls(**config_data)
 
     @field_validator("upgrades")
@@ -205,9 +209,6 @@ async def _execute_plot_flow(
     workflow.run_name = f"{flow_run.get_name()}"
     workflow.s3_results_dir = check_s3_results_dir(s3_results_dir)
     workflow.storage_backend = "minio"
-
-    if "PLOTS_ROOT_FOLDER" in os.environ:
-        workflow.output_dir = os.environ["PLOTS_ROOT_FOLDER"]
 
     run_id = cast(UUID, flow_run.get_id())
     async with get_client() as client:

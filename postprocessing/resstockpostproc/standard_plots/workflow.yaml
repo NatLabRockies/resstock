@@ -81,7 +81,7 @@ group_by:
 comparison_types:
   - absolute
   - savings
-  # - percent_savings
+  - percent_savings
 value_types:
   - total
   - average

@@ -39,7 +39,7 @@ def combined_df() -> pl.LazyFrame:
     vacancy_status = ["Vacant", "Occupied", "Occupied", "Occupied"]
     building_type = ["Single Family", "Single Family", "Single Family", "Single Family"]
     # Base energy use: electric buildings draw all electricity, gas buildings draw mostly gas
-    elec_kwh_base = [100, 20, 110, 25]
+    elec_kwh_base = [100, 20, 110, 0]
     gas_kwh_base = [0, 80, 0, 75]
     total_kwh_base = [e + g for e, g in zip(elec_kwh_base, gas_kwh_base)]
 
@@ -91,6 +91,13 @@ def combined_df() -> pl.LazyFrame:
     upgrade2 = _make_upgrade(baseline, 2, not_applicable_ids=[1, 2], reduction=0.5)
 
     combined = pl.concat([baseline, upgrade1, upgrade2], how="vertical_relaxed")
+    # for building 4 in upgrade 2, make elec_kwh 10 to mimic fuel switch
+    combined = combined.with_columns(
+        pl.when((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4))
+        .then(10)
+        .otherwise(pl.col("elec_kwh"))
+        .alias("elec_kwh")
+    )
     return combined.lazy()
 
 
@@ -313,9 +320,31 @@ def test_percent_savings_calculation(processor: DataProcessor):
         group_by="bldg_id",
         comparison_type=ComparisonTypes.percent_savings,
         value_type=ValueTypes.average,  # mean over single-building groups -> identity
+        quantity="gas_kwh",
     )
     df = processor.prepare_data_for_plot(spec)
 
-    # Building 2, Upgrade 1: 18 / 20 * 100 = 90
-    pct = df.filter((pl.col("upgrade") == 1) & (pl.col("bldg_id") == 2)).select("elec_kwh").item()
-    assert pct == pytest.approx(90.0)
+    # Building 3, Upgrade 1: baseline 20 kWh -> 18 kWh after 10% reduction => savings = 2
+    pct = df.filter((pl.col("upgrade") == 1) & (pl.col("bldg_id") == 4)).select("gas_kwh").item()
+    assert pct == pytest.approx(10)
+    # Building 3, Upgrade 2: baseline 20 kWh -> 10 kWh after 50% reduction => savings = 10
+    pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("gas_kwh").item()
+    assert pct == pytest.approx(50)
+    # Building 2, Upgrade 2: non-applicable building should have 0% savings
+    pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 2)).select("gas_kwh").item()
+    assert pct == pytest.approx(0.0)
+    # Building 2, Upgrade 0: baseline should have 0% savings
+    pct_baseline = df.filter((pl.col("upgrade") == 0) & (pl.col("bldg_id") == 2)).select("gas_kwh").item()
+    assert pct_baseline == pytest.approx(0.0)
+
+    spec = _build_base_spec(
+        visualization_type=VizType.bar,
+        group_by="bldg_id",
+        comparison_type=ComparisonTypes.percent_savings,
+        value_type=ValueTypes.average,  # mean over single-building groups -> identity
+        quantity="elec_kwh",
+    )
+    df = processor.prepare_data_for_plot(spec)
+    # Building 4, Upgrade 2: baseline 0 kWh -> 10 kWh. Savings should be negative 100%
+    pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("elec_kwh").item()
+    assert pct == pytest.approx(-1e9)  # minimum assumed value for baseline is 1e-6 so, 100*10/(1e-6) = 1e9
