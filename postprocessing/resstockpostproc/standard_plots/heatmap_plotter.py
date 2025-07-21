@@ -1,0 +1,258 @@
+"""
+Heatmap Plotting module for standard plots
+-----------------------------------------
+Creates heat-map style visualisations using Plotly while adhering to the common
+ResStock post-processing theme. Designed to work in a very similar fashion to
+`BarPlotter.create_stacked_bar_plot` so downstream code can swap plotter
+classes with minimal changes.
+"""
+
+from __future__ import annotations
+
+import textwrap
+
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import polars as pl
+
+
+from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
+from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
+
+from .base_plotter import BasePlotter
+
+__all__ = ["HeatmapPlotter"]
+
+
+class HeatmapPlotter(BasePlotter):
+    """Generates heat-map plots with consistent styling.
+
+    A heat-map is useful when we want to show *multiple* quantities (rows) for
+    one or more categories (columns).  Each cell encodes the magnitude by
+    colour.  This implementation expects the data to already contain columns
+    corresponding to the desired quantities (e.g. end-uses) as well as a
+    *group_by* column that will become the X-axis categories (defaults to
+    ``upgrade_name``).
+
+    If *plot_spec.group_by* is supplied then that column will be used for the
+    X-axis.  The quantities come from *plot_spec.quantity*.  When quantity is
+    a :class:`QuantityGroup` the ``constituents`` list defines the rows and the
+    optional ``sum`` key is ignored.
+    """
+
+    # ------------------------------------------------------------------
+    # Public helpers mirroring BarPlotter API
+    # ------------------------------------------------------------------
+    def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
+        """Create and return a heat-map figure based on *plot_spec*."""
+        if not isinstance(plot_spec.quantity, QuantityGroup):
+            raise ValueError("Heat-maps require a QuantityGroup (list of columns) as the quantity definition")
+
+        constituent_cols: list[str] = plot_spec.quantity.constituents
+        # If group_by is supplied, treat it as a faceting column so that each
+        # group appears as a separate heat-map.  The X-axis remains upgrade_name.
+        facet_col: str | None = plot_spec.group_by if plot_spec.group_by else None
+
+        return self.create_heatmap_plot(
+            data=data,
+            constituent_cols=constituent_cols,
+            x_column="upgrade_name",
+            facet_column=facet_col,
+        )
+
+    # ------------------------------------------------------------------
+    # Core implementation
+    # ------------------------------------------------------------------
+    def create_heatmap_plot(
+        self,
+        *,
+        data: pl.DataFrame,
+        constituent_cols: list[str],
+        x_column: str = "upgrade_name",
+        facet_column: str | None = None,
+    ) -> go.Figure:
+        # Ensure required columns exist and sort by facet if requested so that
+        # upgrades appear in the same order across facets.
+        data = self._ensure_columns_exist(data, constituent_cols)
+        if facet_column and facet_column in data.columns:
+            data = data.sort([facet_column, x_column])
+
+        # --------------------------------------------------------
+        # When faceting we need global z-min/max so compute before
+        # sub-splitting.
+        # --------------------------------------------------------
+        z_values = data[constituent_cols].to_numpy().T
+
+        # ------------------------------------------------------------------
+        # Build a custom colourscale with a *neutral* grey band around zero.
+        # Anything between ``-neutral_th`` and ``+neutral_th`` is mapped to
+        # plain grey so that small values do not visually blend with the
+        # diverging colours.  Outside this range the colours jump immediately
+        # to the negative (green) or positive (red) palette.
+        # ------------------------------------------------------------------
+        neutral_th: float = 1e-3  # ±0.001 band requested by the user
+        z_min: float = float(z_values.min())
+        z_max: float = float(z_values.max())
+
+        # Guard against the (rare) case where z_min == z_max
+        if z_min == z_max:
+            z_min -= 1e-6
+            z_max += 1e-6
+
+        # Helper to convert a *real* z value into a 0-1 normalised position for
+        # the colourscale definition expected by Plotly.
+        def _norm(val: float) -> float:
+            return (val - z_min) / (z_max - z_min)
+
+        # Clip the neutral band to the available data range so that we never
+        # produce invalid ( <0 or >1 ) positions.
+        neg_end = max(0.0, min(1.0, _norm(-neutral_th)))
+        pos_start = max(0.0, min(1.0, _norm(neutral_th)))
+
+        # ------------------------------------------------------------------
+        # Create a *gradient* colourscale.  We use multiple shades of green for
+        # negative values and shades of red for positive values while keeping a
+        # neutral grey band around zero.  This provides more visual nuance than
+        # the previous flat colours.
+        # ------------------------------------------------------------------
+        # Build gradients using Plotly's sequential colour palettes.  Dark green
+        # represents the most negative change and dark red represents the most
+        # positive change.  Values close to zero fall in a narrow grey band.
+        # Use only the more saturated 75 % of each palette so the colour appears
+        # quickly without the very pale tints.  (Skip the lightest ~25 %.)
+        greens_full: list[str] = px.colors.sequential.Greens  # dark → light
+        reds_full: list[str] = px.colors.sequential.Reds  # light → dark
+        trim_g: int = max(1, len(greens_full) // 4)  # ≈25 %
+        trim_r: int = max(1, len(reds_full) // 4)
+        greens: list[str] = greens_full[trim_g:]  # drop lightest greens
+        reds: list[str] = reds_full[trim_r:]  # drop lightest reds
+
+        colourscale: list[list[float | str]] = []
+
+        # Negative side (red).
+        reds_neg: list[str] = reds[::-1]  # darkest red at most negative
+        for idx, colour in enumerate(reds_neg):
+            n_frac: float = idx / (len(reds_neg) - 1) if len(reds_neg) > 1 else 0
+            colourscale.append([neg_end * n_frac, colour])
+
+        # Neutral grey band (flat so repeat boundaries).
+        colourscale.extend(
+            [
+                [neg_end, "lightgrey"],
+                [pos_start, "lightgrey"],
+            ]
+        )
+
+        # Positive side (green).
+        for idx, colour in enumerate(greens):
+            p_frac: float = idx / (len(greens) - 1) if len(greens) > 1 else 0
+            colourscale.append([pos_start + (1 - pos_start) * p_frac, colour])
+
+        # Ensure colourscale is sorted by the position value (first element).
+        colourscale.sort(key=lambda item: item[0])
+
+        # --------------------------------------------------------
+        # Build figure - single plot or faceted layout.
+        # --------------------------------------------------------
+        if facet_column and facet_column in data.columns:
+            facets = data[facet_column].unique().sort()
+            n_facets = len(facets)
+            fig = make_subplots(
+                rows=1,
+                cols=n_facets,
+                shared_yaxes=True,
+                horizontal_spacing=0.03,
+                subplot_titles=[self._format_label(str(val)) for val in facets],
+            )
+
+            # Add one heat-map per facet.
+            for i, facet_val in enumerate(facets):
+                sub = data.filter(pl.col(facet_column) == facet_val)
+                z_sub = sub[constituent_cols].to_numpy().T
+                fig.add_trace(
+                    go.Heatmap(
+                        z=z_sub,
+                        x=sub[x_column].to_list(),
+                        y=constituent_cols,  # type: ignore
+                        colorscale=colourscale,  # type: ignore
+                        zmin=z_min,
+                        zmax=z_max,
+                        coloraxis="coloraxis",
+                        showscale=(i == n_facets - 1),  # show colour bar only once
+                    ),
+                    row=1,
+                    col=i + 1,
+                )
+                # Tilt X tick labels for clarity
+                fig.update_xaxes(tickangle=45, row=1, col=i + 1)
+            # Set global colouraxis
+            fig.update_layout(
+                coloraxis={"colorscale": colourscale, "cmin": z_min, "cmax": z_max, "colorbar": {"title": "Value"}}
+            )
+            # Word-wrap long facet titles for readability (match BarPlotter behaviour).
+            fig.for_each_annotation(
+                lambda a: a.update(
+                    text="<br>".join(
+                        textwrap.wrap(
+                            a.text.strip() if a.text else "",
+                            width=self.theme.facet_title_width,
+                            break_long_words=False,
+                        )
+                    )
+                )
+            )
+        else:
+            fig = go.Figure(
+                data=go.Heatmap(
+                    z=z_values,
+                    x=data[x_column].to_list(),
+                    y=constituent_cols,  # type: ignore
+                    colorscale=colourscale,  # type: ignore
+                    zmin=z_min,
+                    zmax=z_max,
+                    colorbar={"title": "Value"},
+                )
+            )
+
+        if not facet_column:
+            # Add vertical grid lines
+            x_values = data[x_column].to_list()
+            for i in range(1, len(x_values)):
+                fig.add_shape(
+                    type="line",
+                    x0=i - 0.5,
+                    x1=i - 0.5,
+                    y0=-0.5,
+                    y1=len(constituent_cols) - 0.5,
+                    line={"color": "white", "width": 1},
+                    layer="above",
+                )
+
+            # Add horizontal grid lines
+            for i in range(1, len(constituent_cols)):
+                fig.add_shape(
+                    type="line",
+                    x0=-0.5,
+                    x1=len(x_values) - 0.5,
+                    y0=i - 0.5,
+                    y1=i - 0.5,
+                    line={"color": "white", "width": 1},
+                    layer="above",
+                )
+
+        # Set empty axis titles
+        fig.update_xaxes(title_text="")
+        fig.update_yaxes(title_text="")
+        fig.update_layout(height=900)
+        return fig
+
+    # ------------------------------------------------------------------
+    # Internal helpers
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _format_label(label: str) -> str:
+        """Convert a column name to a human-readable axis label."""
+        if "." in label:
+            label = label.split(".")[-1]
+        return label.replace("in.", "").replace("_", " ").title()
