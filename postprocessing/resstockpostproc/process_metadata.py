@@ -56,10 +56,12 @@ def publish_upgrade_annual_results(
         on="bldg_id",
         how="anti",  # Keep rows from 'base' with no match in 'upgrade'
     )
-    missing_bldgs_df = missing_bldgs_df.with_columns([
-        pl.lit(False).alias("applicability"),
-        pl.lit(upgrade_num).alias("upgrade"),
-    ]).drop("upgrade_name")
+    missing_bldgs_df = missing_bldgs_df.with_columns(
+        [
+            pl.lit(False).alias("applicability"),
+            pl.lit(upgrade_num).alias("upgrade"),
+        ]
+    ).drop("upgrade_name")
     upgrade_cols = upgrade.collect_schema().names()
     missing_bldgs_df = missing_bldgs_df.join(upgrade_name_df, how="cross")
     upgrade = pl.concat([upgrade, missing_bldgs_df], how="diagonal_relaxed")
