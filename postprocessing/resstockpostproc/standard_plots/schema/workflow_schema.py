@@ -288,7 +288,7 @@ async def generate_plots(
 )
 async def generate_plots_full_schema(
     base_config: FlowConfigBase,
-    config: WorkflowConfig = WorkflowConfig(**default_config.model_dump()),
+    config: WorkflowConfig = WorkflowConfig(**default_config.model_dump(exclude={"storage_backend"})),
 ):
     await _execute_plot_flow(
         config,
