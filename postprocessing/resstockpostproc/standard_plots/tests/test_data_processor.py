@@ -17,10 +17,10 @@ from resstockpostproc.standard_plots.schema.workflow_schema import (
     QuantityGroup,
     UpgradeInclusion,
     VacancyInclusion,
-    VizType,
     ValueTypes,
+    VizType,
+    WorkflowConfig,
 )
-from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 
 # -----------------------------------------------------------------------------
 # Helpers / fixtures

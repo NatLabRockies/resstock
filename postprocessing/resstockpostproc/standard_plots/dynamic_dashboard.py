@@ -9,22 +9,23 @@ the annual results CSV/parquet files once (via `PlotOrchestrator`) and then
 creates the requested plot in real-time.
 """
 
-from __future__ import annotations
-
-from pathlib import Path
-import io
 import base64
+import io
+import json
+import tempfile
+from pathlib import Path
 from typing import Any
-from plotly.graph_objects import Figure
+
 import dash_bootstrap_components as dbc  # type: ignore
 import plotly.graph_objects as go  # type: ignore
+import plotly.io as pio  # type: ignore
+import polars as pl  # type: ignore
+import yaml
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import DashProxy, MultiplexerTransform  # type: ignore
-import json
-import yaml
-import tempfile
+from plotly.graph_objects import Figure
 
 # Local imports - all heavy lifting is done by these modules
 from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
@@ -33,14 +34,10 @@ from resstockpostproc.standard_plots.schema.plot_spec import (
     PlotSpec,
     UpgradeInclusion,
     VacancyInclusion,
-    VizType,
     ValueTypes,
+    VizType,
 )
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
-
-# Added imports for static figure loading
-import polars as pl  # type: ignore
-import plotly.io as pio  # type: ignore
 
 # ----------------------------------------------------------------------------
 #   INITIALISE THE ORCHESTRATOR (loads data only once!)

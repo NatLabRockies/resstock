@@ -12,16 +12,16 @@ import re
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import cast, Literal
+from typing import Literal, cast
 from uuid import UUID
 
 import yaml
-from prefect import flow, get_run_logger, task, get_client, State
+from prefect import State, flow, get_client, get_run_logger, task
 from prefect.artifacts import acreate_link_artifact
 from prefect.client.schemas.objects import FlowRun
 from prefect.deployments import run_deployment
 from prefect.runtime import flow_run
-from pydantic import BaseModel, Field, field_validator, ValidationInfo
+from pydantic import BaseModel, Field, ValidationInfo, field_validator
 from pydantic.json_schema import SkipJsonSchema
 from pydantic_settings import BaseSettings
 
@@ -305,7 +305,7 @@ def run_orchestrator(
     workflow: WorkflowConfig,
     output_types: list[Literal["csv", "html", "json", "parquet", "svg"]],
 ):
-    from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator  # type: ignore[import-untyped]
+    from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator  # noqa: PLC0415
 
     orchestrator = PlotOrchestrator(workflow.model_dump(), output_types=output_types)
     orchestrator.generate_all_plots()

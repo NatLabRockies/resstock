@@ -7,8 +7,8 @@ from abc import ABC
 
 import polars as pl
 
-from .schema.plot_spec import PlotSpec
-from .theme import ThemeManager
+from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
+from resstockpostproc.standard_plots.theme import ThemeManager
 
 
 class BasePlotter(ABC):

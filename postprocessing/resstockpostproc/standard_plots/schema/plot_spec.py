@@ -7,6 +7,7 @@ entire pipeline - data processing, figure creation, and output saving.
 from pathlib import Path
 
 from pydantic import BaseModel, Field, field_validator
+
 from resstockpostproc.standard_plots.schema.workflow_schema import (
     ComparisonTypes,
     QuantityGroup,

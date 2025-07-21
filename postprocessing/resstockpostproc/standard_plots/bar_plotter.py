@@ -4,13 +4,15 @@ Plotting module for standard plots
 Handles creation of plots using Plotly with consistent styling
 """
 
+import textwrap
+
 import plotly.express as px
 import plotly.graph_objects as go
-import textwrap
 import polars as pl
+
+from resstockpostproc.standard_plots.base_plotter import BasePlotter
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
-from resstockpostproc.standard_plots.base_plotter import BasePlotter
 
 
 class BarPlotter(BasePlotter):

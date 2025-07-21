@@ -6,9 +6,9 @@ Generates standard QC plots for ResStock simulation results based on YAML config
 
 import argparse
 import os
+import re
 import sys
 from pathlib import Path
-import re
 
 # Import dependencies that might be needed
 # Import our components

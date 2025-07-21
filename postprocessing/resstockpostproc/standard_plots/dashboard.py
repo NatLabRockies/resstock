@@ -240,7 +240,7 @@ def download_plot_data(n_csv: int | None, n_parquet: int | None, html_path: str 
     # Identify which button was pressed
     # Dash >=2.12 provides ctx helper for callback context
     try:
-        from dash import ctx
+        from dash import ctx  # noqa: PLC0415
 
         triggered = ctx.triggered_id  # newest API
     except ImportError:

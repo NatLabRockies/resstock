@@ -5,6 +5,7 @@ from typing import Literal
 
 import polars as pl
 from plotly.graph_objects import Figure
+
 from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 
 # Lazy import to avoid circulars

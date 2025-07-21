@@ -1,7 +1,7 @@
 files: ^postprocessing/
 repos:
   - repo: https://github.com/crate-ci/typos
-    rev: v1.33.1
+    rev: v1.34.0
     hooks:
       - id: typos
         exclude: '\.(csv|geojson|json|ipynb)$'
@@ -36,7 +36,7 @@ repos:
       - id: prettier
         types_or: [markdown, toml, yaml]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.16.0
+    rev: v1.17.0
     hooks:
       - id: mypy
         name: mypy
@@ -51,7 +51,7 @@ repos:
           ]
         pass_filenames: false
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.13
+    rev: v0.12.4
     hooks:
       # Run the linter
       - id: ruff-check

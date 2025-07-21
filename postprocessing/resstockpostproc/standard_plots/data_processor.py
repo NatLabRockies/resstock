@@ -17,13 +17,14 @@ from botocore.config import Config
 from prefect import flow, task
 from prefect.futures import wait
 from prefect.task_runners import ConcurrentTaskRunner
+
 from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEnduses
 from resstockpostproc.standard_plots.schema.plot_spec import (
+    ComparisonTypes,
     PlotSpec,
     UpgradeInclusion,
     VacancyInclusion,
     VizType,
-    ComparisonTypes,
 )
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, ValueTypes, WorkflowConfig
 
@@ -252,7 +253,7 @@ class DataProcessor:
             percent_savings_exprs = [(100 * pl.col(q) / pl.col(f"baseline_{q}")).alias(q) for q in quantities]
             result = df_with_baseline.with_columns(percent_savings_exprs).drop(
                 [f"baseline_{q}" for q in quantities]
-            )  # Clean-up helper columns
+            )  # Cleanup helper columns
             return result
         raise ValueError(f"Unsupported comparison type: {comparison_type}")
 

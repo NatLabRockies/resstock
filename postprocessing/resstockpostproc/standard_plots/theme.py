@@ -3,6 +3,7 @@ Centralizes style configuration so all plotters share a consistent look & feel.
 """
 
 import plotly.graph_objects as go
+
 from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseToColor, EnduseToPattern
 
 

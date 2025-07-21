@@ -10,6 +10,7 @@ from typing import Literal
 from uuid import UUID
 
 from prefect.artifacts import create_progress_artifact, update_progress_artifact
+
 from resstockpostproc.standard_plots.bar_plotter import BarPlotter
 from resstockpostproc.standard_plots.box_plotter import BoxPlotter
 from resstockpostproc.standard_plots.data_processor import DataProcessor

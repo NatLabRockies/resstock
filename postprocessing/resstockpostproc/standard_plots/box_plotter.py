@@ -4,15 +4,16 @@ Box Plotting module for standard plots
 Handles creation of box plots using Plotly with consistent styling
 """
 
+import textwrap
+
 import plotly.express as px
 import plotly.graph_objects as go
 import polars as pl
 from plotly.subplots import make_subplots
-import textwrap
+
+from resstockpostproc.standard_plots.base_plotter import BasePlotter
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
-
-from .base_plotter import BasePlotter
 
 
 class BoxPlotter(BasePlotter):
