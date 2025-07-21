@@ -297,6 +297,15 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.1.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+          role-duration-seconds: 1200
+          role-session-name: MySession
+
       - name: Install postprocessing dependencies
         working-directory: postprocessing
         run: |
@@ -307,6 +316,18 @@ jobs:
         working-directory: postprocessing
         run: |
           uv run pytest resstockpostproc/standard_plots/tests -q
+
+      - name: Generate all plots
+        working-directory: postprocessing
+        run: |
+          uv run python resstockpostproc/standard_plots/generate_plots.py
+
+      - name: Upload plots
+        uses: actions/upload-artifact@v4
+        with:
+          name: plots
+          path: postprocessing/sdr_plots/polts/sdr_plots_ci
+          if-no-files-found: error
 
   compare-tools:
     runs-on: ubuntu-22.04
