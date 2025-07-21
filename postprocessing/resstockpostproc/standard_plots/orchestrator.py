@@ -16,7 +16,7 @@ from resstockpostproc.standard_plots.box_plotter import BoxPlotter
 from resstockpostproc.standard_plots.data_processor import DataProcessor
 from resstockpostproc.standard_plots.heatmap_plotter import HeatmapPlotter
 from resstockpostproc.standard_plots.output_manager import OutputManager
-from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, VizType
+from resstockpostproc.standard_plots.schema.plot_spec import ComparisonTypes, PlotSpec, ValueTypes, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
 
 
@@ -78,6 +78,8 @@ class PlotOrchestrator:
             group_by = combination[4]
             quantity_group: QuantityGroup = combination[5].model_copy()
             value_type = combination[6]
+            if value_type == ValueTypes.total and comparison_type == ComparisonTypes.percent_savings:
+                continue
 
             # Usually, visualize each constituent quantity and the sum (if any) separately
             # Prepare a mutable list of quantities, starting with individual constituents and optional sum
