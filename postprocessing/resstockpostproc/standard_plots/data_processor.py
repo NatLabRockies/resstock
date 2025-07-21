@@ -228,7 +228,7 @@ class DataProcessor:
             # No transformation required
             return combined_df
 
-        if comparison_type == ComparisonTypes.savings:
+        if comparison_type in [ComparisonTypes.savings, ComparisonTypes.percent_savings]:
             join_key = "bldg_id"
             if join_key not in combined_df.collect_schema().names():
                 raise ValueError(f"'{join_key}' column not found in data - cannot compute savings per building.")
@@ -244,15 +244,16 @@ class DataProcessor:
 
             # 3. Replace the quantity columns with the calculated savings.
             savings_exprs = [(pl.col(f"baseline_{q}") - pl.col(q)).alias(q) for q in quantities]
-
-            result = (
-                df_with_baseline.with_columns(savings_exprs).drop(
-                    [f"baseline_{q}" for q in quantities]
-                )  # Clean-up helper columns
-            )
-
+            result = df_with_baseline.with_columns(savings_exprs)
+            if comparison_type == ComparisonTypes.savings:
+                result = result.drop([f"baseline_{q}" for q in quantities])  # Clean-up helper columns
+                return result
+            # percent savings
+            percent_savings_exprs = [(100 * pl.col(q) / pl.col(f"baseline_{q}")).alias(q) for q in quantities]
+            result = df_with_baseline.with_columns(percent_savings_exprs).drop(
+                [f"baseline_{q}" for q in quantities]
+            )  # Clean-up helper columns
             return result
-
         raise ValueError(f"Unsupported comparison type: {comparison_type}")
 
     def prepare_data_for_plot(self, plot_spec: PlotSpec) -> pl.DataFrame:

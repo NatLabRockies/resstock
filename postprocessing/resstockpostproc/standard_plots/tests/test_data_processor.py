@@ -283,3 +283,39 @@ def test_unsupported_viz_type_raises(processor: DataProcessor):
     spec = _build_base_spec(visualization_type=VizType.hist)
     with pytest.raises(ValueError, match="Unsupported visualization type"):
         _ = processor.prepare_data_for_plot(spec)
+
+
+def test_savings_calculation(processor: DataProcessor):
+    """Absolute savings should equal (baseline - upgrade) for applicable buildings."""
+
+    spec = _build_base_spec(
+        visualization_type=VizType.bar,
+        group_by="bldg_id",
+        comparison_type=ComparisonTypes.savings,
+        value_type=ValueTypes.average,  # mean over single-building groups -> identity
+    )
+    df = processor.prepare_data_for_plot(spec)
+
+    # Building 2, Upgrade 1: baseline 20 kWh -> 18 kWh after 10% reduction => savings = 2
+    saving = df.filter((pl.col("upgrade") == 1) & (pl.col("bldg_id") == 2)).select("elec_kwh").item()
+    assert saving == pytest.approx(2.0)
+
+    # Building 1, Upgrade 1 not applicable -> savings should be 0
+    saving_na = df.filter((pl.col("upgrade") == 1) & (pl.col("bldg_id") == 1)).select("elec_kwh").item()
+    assert saving_na == pytest.approx(0.0)
+
+
+def test_percent_savings_calculation(processor: DataProcessor):
+    """percent_savings should equal 100 * upgraded / baseline per current implementation."""
+
+    spec = _build_base_spec(
+        visualization_type=VizType.bar,
+        group_by="bldg_id",
+        comparison_type=ComparisonTypes.percent_savings,
+        value_type=ValueTypes.average,  # mean over single-building groups -> identity
+    )
+    df = processor.prepare_data_for_plot(spec)
+
+    # Building 2, Upgrade 1: 18 / 20 * 100 = 90
+    pct = df.filter((pl.col("upgrade") == 1) & (pl.col("bldg_id") == 2)).select("elec_kwh").item()
+    assert pct == pytest.approx(90.0)
