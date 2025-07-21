@@ -13,7 +13,7 @@ from prefect.artifacts import create_progress_artifact, update_progress_artifact
 from resstockpostproc.standard_plots.bar_plotter import BarPlotter
 from resstockpostproc.standard_plots.box_plotter import BoxPlotter
 from resstockpostproc.standard_plots.data_processor import DataProcessor
-# from resstockpostproc.standard_plots.heatmap_plotter import HeatmapPlotter
+from resstockpostproc.standard_plots.heatmap_plotter import HeatmapPlotter
 from resstockpostproc.standard_plots.output_manager import OutputManager
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
@@ -87,6 +87,9 @@ class PlotOrchestrator:
             if visualization_type == VizType.bar:
                 # For bar plots, additionally visualize all together as a group in stacked bar plot
                 quantities.append(quantity_group)
+            if visualization_type == VizType.heatmap:
+                # For heatmap plots, only everything together as a group is supported
+                quantities = [quantity_group]
             for quantity in quantities:
                 plot_spec = PlotSpec(
                     comparison_type=comparison_type,
@@ -133,8 +136,8 @@ class PlotOrchestrator:
             return BarPlotter()
         if viz == VizType.box:
             return BoxPlotter()
-        # if viz == VizType.heatmap:
-        #     return HeatmapPlotter()
+        if viz == VizType.heatmap:
+            return HeatmapPlotter()
         raise ValueError(f"Unsupported visualization type: {viz}")
 
     def print_time_spent(self) -> None:

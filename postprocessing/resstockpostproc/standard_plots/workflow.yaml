@@ -69,9 +69,9 @@ quantities:
       - out.emissions.fuel_oil.lrmer_mid_case_25.co2e_kg
     sum: out.emissions.all_fuels.lrmer_mid_case_25.co2e_kg
 visualization_types:
+  - heatmap
   - bar
   - box
-  # - heatmap
 group_by:
   - in.census_division
   - in.vintage
