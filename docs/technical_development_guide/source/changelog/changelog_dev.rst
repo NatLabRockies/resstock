@@ -6,6 +6,21 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+    .. change::
+        :tags: postprocessing, bugfix
+        :pullreq: 1439
+
+        **Date**: 2025-07-08
+
+        Title:
+        Postprocessing output data type fix
+
+        Description:
+        A bug in resstockpostprocessing was making the datatype of applicability to be boolean in baseline
+        but string in upgrades for the parquet files. This was causing the Athena query to fail. This PR fixes
+        the bug.
+
+        Assignees: Rajendra Adhikari
 
     .. change::
         :tags: bugfix, hvac
