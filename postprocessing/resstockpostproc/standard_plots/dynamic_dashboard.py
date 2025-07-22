@@ -26,7 +26,7 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import DashProxy, MultiplexerTransform  # type: ignore
 from plotly.graph_objects import Figure
-from prefect import flow
+from prefect import flow, get_run_logger
 
 # Local imports - all heavy lifting is done by these modules
 from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
@@ -646,6 +646,7 @@ def _prepare_df_fig(
     run_folder_val: str,
 ):
     """Return dataframe and fully styled figure for given PlotSpec and layout inputs."""
+    logger = get_run_logger()
     df = pl.DataFrame()
     fig = go.Figure()
     if not run_folder_val:
@@ -662,16 +663,16 @@ def _prepare_df_fig(
                 fig = go.Figure(fig_dict)
                 df = pl.read_parquet(str(parquet_path))
             except Exception:  # noqa: BLE001 catch blind exception
-                print(f"Failed to load plot from {fig_path}. Generating them on the fly.")
+                logger.warning(f"Failed to load plot from {fig_path}. Generating them on the fly.")
                 dynamic_mode = True
         else:
-            print(f"Missing {fig_path} or {parquet_path}. Generating them on the fly.")
+            logger.warning(f"Missing {fig_path} or {parquet_path}. Generating them on the fly.")
             dynamic_mode = True
 
     if dynamic_mode:
         orchestrator = get_orchestrator_for_run(run_folder_val)
         if orchestrator is None:
-            print(
+            logger.warning(
                 f"Run folder {run_folder_val} does not have workflow_snapshot.json. Cannot dynamically generate plots."
             )
             raise PreventUpdate
