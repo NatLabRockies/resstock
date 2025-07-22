@@ -1,4 +1,4 @@
-State	electricity_fixed_charge	electricity_marginal_rate	natural_gas_fixed_charge	natural_gas_marginal_rate	propane_fixed_charge	propane_marginal_rate	fuel_oil_fixed_charge	fuel_oil_marginal_rate	wood_fixed_charge	wood_marginal_rate
+State	elec_fixed_charge	elec_marginal_rate	natural_gas_fixed_charge	natural_gas_marginal_rate	propane_fixed_charge	propane_marginal_rate	fuel_oil_fixed_charge	fuel_oil_marginal_rate	wood_fixed_charge	wood_marginal_rate
 AL	10	0.128835397	11.25	1.198450941	0	2.994192308	0	3.032692308		
 AR	10	0.111922976	11.25	0.993341588	0	2.326846154	0	3.032692308		
 AZ	10	0.124597967	11.25	1.062876183	0	2.486807692	0	3.032692308		
