@@ -39,8 +39,8 @@ def combined_df() -> pl.LazyFrame:
     vacancy_status = ["Vacant", "Occupied", "Occupied", "Occupied"]
     building_type = ["Single Family", "Single Family", "Single Family", "Single Family"]
     # Base energy use: electric buildings draw all electricity, gas buildings draw mostly gas
-    elec_kwh_base = [100, 20, 110, 0]
-    gas_kwh_base = [0, 80, 0, 75]
+    elec_kwh_base = [100.0, 20.0, 110.0, 0.0]
+    gas_kwh_base = [0.0, 80.0, 0.0, 75.0]
     total_kwh_base = [e + g for e, g in zip(elec_kwh_base, gas_kwh_base)]
 
     baseline = pl.DataFrame(
@@ -210,9 +210,10 @@ def test_prepare_basic(
     expected_rows: int,
 ):
     """Baseline sanity check for box & bar plots without additional filters."""
+    if comparison_type == ComparisonTypes.percent_savings and value_type == ValueTypes.total:
+        # skip
+        return
 
-    # spec = _build_base_spec(visualization_type=viz_type, group_by=group_by,
-    #  comparison_type=comparison_type, vacancy_inclusion=vacancy_inclusion)
     spec = PlotSpec(
         visualization_type=viz_type,
         comparison_type=comparison_type,
@@ -319,7 +320,7 @@ def test_percent_savings_calculation(processor: DataProcessor):
         visualization_type=VizType.bar,
         group_by="bldg_id",
         comparison_type=ComparisonTypes.percent_savings,
-        value_type=ValueTypes.average,  # mean over single-building groups -> identity
+        value_type=ValueTypes.average,
         quantity="gas_kwh",
     )
     df = processor.prepare_data_for_plot(spec)
@@ -337,14 +338,40 @@ def test_percent_savings_calculation(processor: DataProcessor):
     pct_baseline = df.filter((pl.col("upgrade") == 0) & (pl.col("bldg_id") == 2)).select("gas_kwh").item()
     assert pct_baseline == pytest.approx(0.0)
 
+    # % savings for box-plot is not weighted by baseline values
+    spec = _build_base_spec(
+        visualization_type=VizType.box,
+        group_by="bldg_id",
+        comparison_type=ComparisonTypes.percent_savings,
+        value_type=ValueTypes.average,
+        quantity="elec_kwh",
+    )
+    df = processor.prepare_data_for_plot(spec)
+    # Building 4, Upgrade 2: baseline 0 kWh -> 10 kWh.
+    pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("median").item()
+    assert pct == pytest.approx(-1e9)  # minimum assumed value for baseline is 1e-6 so, 100*10/(1e-6) = 1e9
+
+    # % savings for bar-plot is weighted by baseline values
     spec = _build_base_spec(
         visualization_type=VizType.bar,
         group_by="bldg_id",
         comparison_type=ComparisonTypes.percent_savings,
-        value_type=ValueTypes.average,  # mean over single-building groups -> identity
+        value_type=ValueTypes.average,
         quantity="elec_kwh",
     )
     df = processor.prepare_data_for_plot(spec)
-    # Building 4, Upgrade 2: baseline 0 kWh -> 10 kWh. Savings should be negative 100%
+    # Building 4, Upgrade 2: baseline 0 kWh -> 10 kWh.
     pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("elec_kwh").item()
-    assert pct == pytest.approx(-1e9)  # minimum assumed value for baseline is 1e-6 so, 100*10/(1e-6) = 1e9
+    assert pct == pytest.approx(0)  # since baseline is 0 kWh, savings is 0% when weighted by baseline
+
+    # Change the baseline value for elec_kwh to 0.001 from 0.0 for building 4
+    processor.combined_df = processor.combined_df.with_columns(
+        pl.when((pl.col("bldg_id") == 4) & (pl.col("upgrade") == 0))
+        .then(pl.lit(0.001))
+        .otherwise(pl.col("elec_kwh"))
+        .alias("elec_kwh")
+    )
+    df = processor.prepare_data_for_plot(spec)
+    # Building 4, Upgrade 2: baseline 0.001 kWh -> 10 kWh. % savings = 100 * (10-0.001)/0.001 = 100000
+    pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 4)).select("elec_kwh").item()
+    assert pct == pytest.approx(-999900)

@@ -30,6 +30,7 @@ from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 
 logger = logging.getLogger(__name__)
 s3_client = boto3.client("s3", config=Config(read_timeout=60 * 60, max_pool_connections=50))
+MIN_BASELINE = 1e-6  # used in denominator of percent savings calculation to avoid division by zero
 
 
 class DataProcessor:
@@ -250,7 +251,20 @@ class DataProcessor:
                 result = result.drop([f"baseline_{q}" for q in quantities])  # Clean-up helper columns
                 return result
             # percent savings
-            percent_savings_exprs = [(100 * pl.col(q) / (pl.col(f"baseline_{q}") + 1e-6)).alias(q) for q in quantities]
+            percent_savings_exprs = [
+                (
+                    100
+                    * pl.col(q)
+                    / pl.when(pl.col(f"baseline_{q}").abs() < MIN_BASELINE)
+                    .then(
+                        pl.when(pl.col(f"baseline_{q}").sign() == 0)
+                        .then(MIN_BASELINE)
+                        .otherwise(pl.col(f"baseline_{q}").sign() * MIN_BASELINE)
+                    )
+                    .otherwise(pl.col(f"baseline_{q}"))
+                ).alias(q)
+                for q in quantities
+            ]
             # Keep the baseline values for the percent savings so they can be used for weighted average
             result = result.with_columns(percent_savings_exprs)
             return result
@@ -348,10 +362,18 @@ class DataProcessor:
 
         if value_type == ValueTypes.average and comparison_type == ComparisonTypes.percent_savings:
             # Calculate weighted average of percent savings using baseline values as weights
+            # weighted_average = (sum(savings * baseline)) / (non_zero(sum(baseline)))
+            # where non_zero ensures that denominator is at least MIN_BASELINE
             agg_exprs = [
                 (
                     (pl.col(quantity) * pl.col(f"baseline_{quantity}")).sum()
-                    / (pl.col(f"baseline_{quantity}").sum() + 1e-6)
+                    / pl.when(pl.col(f"baseline_{quantity}").sum().abs() < MIN_BASELINE)
+                    .then(
+                        pl.when(pl.col(f"baseline_{quantity}").sum().sign() == 0)
+                        .then(MIN_BASELINE)
+                        .otherwise(pl.col(f"baseline_{quantity}").sum().sign() * MIN_BASELINE)
+                    )
+                    .otherwise(pl.col(f"baseline_{quantity}").sum())
                 ).alias(quantity)
                 for quantity in quantities
             ]
