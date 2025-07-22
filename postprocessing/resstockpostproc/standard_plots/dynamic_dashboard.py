@@ -780,7 +780,7 @@ def _refresh_run_folders(_: str, current_val: str | None):
     return folders, new_val
 
 
-@flow
+@flow(log_prints=True)
 def run_dashboard():
     app.run(debug=False, port=8051, host="0.0.0.0")  # noqa: S104
 
