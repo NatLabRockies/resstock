@@ -326,7 +326,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: plots
-          path: postprocessing/sdr_plots/plots/sdr_plots_ci
+          path: postprocessing/resstockpostproc/standard_plots/sdr_plots/plots/sdr_plots_ci
           if-no-files-found: error
 
   compare-tools:
