@@ -26,6 +26,7 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import DashProxy, MultiplexerTransform  # type: ignore
 from plotly.graph_objects import Figure
+from prefect import flow
 
 # Local imports - all heavy lifting is done by these modules
 from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
@@ -779,8 +780,10 @@ def _refresh_run_folders(_: str, current_val: str | None):
     return folders, new_val
 
 
-# ----------------------------------------------------------------------------
-#   RUN APP
-# ----------------------------------------------------------------------------
+@flow
+def run_dashboard():
+    app.run(debug=False, port=8051, host="0.0.0.0")  # noqa: S104
+
+
 if __name__ == "__main__":
-    app.run(debug=False, port=8051)
+    run_dashboard()
