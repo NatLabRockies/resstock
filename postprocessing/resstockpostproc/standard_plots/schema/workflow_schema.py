@@ -22,7 +22,6 @@ from prefect.client.schemas.objects import FlowRun
 from prefect.deployments import run_deployment
 from prefect.runtime import flow_run
 from pydantic import BaseModel, Field, ValidationInfo, field_validator
-from pydantic.json_schema import SkipJsonSchema
 from pydantic_settings import BaseSettings
 
 
@@ -108,9 +107,7 @@ class WorkflowConfig(NoExtraSettings):
     value_types: list[ValueTypes] = Field(description="List of value types to generate")
     upgrade_inclusion: list[UpgradeInclusion] = Field(description="Upgrade inclusion type")
     vacancy_inclusion: list[VacancyInclusion] = Field(description="Vacancy inclusion type")
-    storage_backend: SkipJsonSchema[Literal["minio", "filesystem"]] = Field(
-        description="Storage backend", default="filesystem"
-    )
+    storage_backend: Literal["minio", "filesystem"] = Field(description="Storage backend", default="filesystem")
 
     @classmethod
     def from_yaml(cls, yaml_path: str) -> WorkflowConfig:
@@ -288,7 +285,7 @@ async def generate_plots(
 )
 async def generate_plots_full_schema(
     config: FlowConfigBase,
-    workflow: WorkflowConfig = WorkflowConfig(**default_config.model_dump(exclude={"storage_backend"})),
+    workflow: WorkflowConfig = WorkflowConfig(**default_config.model_dump()),
 ):
     await _execute_plot_flow(
         workflow,
@@ -332,7 +329,7 @@ if __name__ == "__main__":
         #         run_name="Test Run",
         #         s3_results_dir="s3://res-sdr/testing-sdr-fy25/envelop_package_30k/",
         #     ),
-        #     WorkflowConfig(**{**default_config.model_dump(exclude={"storage_backend"}), "group_by": ["in.vintage"]})
+        #     WorkflowConfig(**{**default_config.model_dump(), "group_by": ["in.vintage"]})
         # )
 
     asyncio.run(main())

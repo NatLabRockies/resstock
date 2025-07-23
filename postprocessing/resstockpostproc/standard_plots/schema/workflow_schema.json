@@ -286,6 +286,16 @@
       },
       "title": "Vacancy Inclusion",
       "type": "array"
+    },
+    "storage_backend": {
+      "default": "filesystem",
+      "description": "Storage backend",
+      "enum": [
+        "minio",
+        "filesystem"
+      ],
+      "title": "Storage Backend",
+      "type": "string"
     }
   },
   "required": [
