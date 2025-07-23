@@ -274,7 +274,7 @@ def download_plot_data(n_csv: int | None, n_parquet: int | None, html_path: str 
     if triggered == "btn-csv":
         parquet_path = os.path.join(data_dir, f"{file_stem}.parquet")
         try:
-            df = pl.read_parquet(parquet_path)
+            df = pl.read_parquet(parquet_path, glob=False)
         except FileNotFoundError:
             raise PreventUpdate()
 

@@ -151,7 +151,7 @@ class DataProcessor:
         upgrade_to_name = dict(zip(self.workflow.upgrades, self.workflow.upgrade_names))
         for upgrade, file in upgrade_to_file.items():
             if self.workflow.storage_backend == "filesystem":
-                lazyframes[upgrade] = pl.scan_parquet(file)
+                lazyframes[upgrade] = pl.scan_parquet(file, glob=False)
             else:
                 lazyframes[upgrade] = pl.scan_parquet(
                     f"s3://{file}",

@@ -668,7 +668,7 @@ def get_app(logger) -> DashProxy:
                 try:
                     fig_dict = pio.read_json(str(fig_path))
                     fig = go.Figure(fig_dict)
-                    df = pl.read_parquet(str(parquet_path))
+                    df = pl.read_parquet(str(parquet_path), glob=False)
                     logger.info(f"Loaded plot from {fig_path}")
                 except Exception:  # noqa: BLE001 catch blind exception
                     logger.warning(
