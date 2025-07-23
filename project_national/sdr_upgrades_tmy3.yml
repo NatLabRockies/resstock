@@ -3,11 +3,11 @@ os_version: 3.9.0
 os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: sdr_upgrades_tmy3
-weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+output_directory: /kfs2/projects/geostock/resstock/test_run_ghp_envelope
+# weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
-# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
+weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
 
 # Baseline number of units
 baseline:
@@ -15,21 +15,20 @@ baseline:
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: precomputed
-  # type: residential_quota # For production run
+  type: residential_quota
   args:
-    sample_file: resources/sdr_minimal_buildstock.csv # For CI
+    n_datapoints: 30000 # 10k-30k for testing
     # n_datapoints: 550000 # For production run
 
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
 kestrel:
-  n_jobs: 600
-  minutes_per_sim: 10
-  account: <account>
+  n_jobs: 30
+  minutes_per_sim: 5
+  account: geostock
   postprocessing:
-    time: 800
-    n_workers: 20
+    time: 600
+    n_workers: 4
     n_procs: 20
   sampling:
     time: 60
@@ -44,14 +43,14 @@ postprocessing:
   publish_annual_results: true
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
   aws:
-   region_name: us-west-2
-   s3:
-     bucket: resstock-core
-     prefix: resstock_ci
-   athena:
-     glue_service_role: service-role/AWSGlueServiceRole-default
-     database_name: resstock_core
-     max_crawling_time: 1200
+    region_name: us-west-2
+    s3:
+      bucket: geostock
+      prefix: ghp_fy25_tests
+    athena:
+      glue_service_role: service-role/AWSGlueServiceRole-default
+      database_name: ghp_fy25_tests
+      max_crawling_time: 1200
 
 # Workflow generator
 workflow_generator:
@@ -74,15 +73,15 @@ workflow_generator:
       - scenario_name: LRMER_LowRECost_15
         type: CO2e
         elec_folder: data/emissions/cambium/2022/LRMER_LowRECost_15
-      - scenario_name: LRMER_MidCase_15
-        type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_15
-      - scenario_name: LRMER_HighRECost_15
-        type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_HighRECost_15
-      - scenario_name: LRMER_MidCase_25
-        type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_25
+      # - scenario_name: LRMER_MidCase_15
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2022/LRMER_MidCase_15
+      # - scenario_name: LRMER_HighRECost_15
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2022/LRMER_HighRECost_15
+      # - scenario_name: LRMER_MidCase_25
+        # type: CO2e
+        # elec_folder: data/emissions/cambium/2022/LRMER_MidCase_25
 
     # Utility bill rates
     utility_bills:
@@ -100,14 +99,16 @@ workflow_generator:
       include_timeseries_emission_end_uses: false
       include_timeseries_hot_water_uses: true
       include_timeseries_total_loads: true
-      include_timeseries_component_loads: true
+      include_timeseries_component_loads: false
       include_timeseries_unmet_hours: true
       include_timeseries_zone_temperatures: true
       include_timeseries_zone_conditions: true
       include_timeseries_airflows: true
       include_timeseries_weather: true
-      include_timeseries_resilience: true
       output_variables:
+        - name: Site Outdoor Air Drybulb Temperature
+        - name: Zone Mean Air Temperature
+        - name: Zone Air Relative Humidity
         - name: People Sensible Heating Rate
         - name: People Total Heating Rate
         - name: Site Outdoor Air Humidity Ratio
@@ -115,7 +116,7 @@ workflow_generator:
     # Other reporting measures to run
     reporting_measures:
       - measure_dir_name: QOIReport
-      - measure_dir_name: ServerDirectoryCleanup # tack this on so we can save some disk space (when using debug: true)
+      # - measure_dir_name: ServerDirectoryCleanup # tack this on so we can save some disk space (when using debug: true)
 
     # Files to keep
     server_directory_cleanup:
@@ -123,10 +124,128 @@ workflow_generator:
       retain_schedules_csv: true
       retain_in_osm: true
 
-    debug: true
+    # debug: true
 
 references:
   ### -- Anchors not dependent on other anchors -- ###
+  attic_insulation_cz1_sf: &attic_insulation_cz1_sf
+    option: Insulation Ceiling|R-49
+    apply_logic:
+      - or:
+          - ASHRAE IECC Climate Zone 2004|1A
+      - or:
+          - Geometry Attic Type|Vented Attic
+          - Geometry Attic Type|Unvented Attic
+      - or:
+          - Insulation Ceiling|Uninsulated
+          - Insulation Ceiling|R-7
+          - Insulation Ceiling|R-13
+          - Insulation Ceiling|R-19
+          - Insulation Ceiling|R-30
+          - Insulation Ceiling|R-38
+
+  attic_insulation_cz2_8_sf: &attic_insulation_cz2_8_sf
+    option: Insulation Ceiling|R-60
+    apply_logic:
+      - not: ASHRAE IECC Climate Zone 2004|1A
+      - or:
+          - Geometry Attic Type|Vented Attic
+          - Geometry Attic Type|Unvented Attic
+      - or:
+          - Insulation Ceiling|Uninsulated
+          - Insulation Ceiling|R-7
+          - Insulation Ceiling|R-13
+          - Insulation Ceiling|R-19
+          - Insulation Ceiling|R-30
+          - Insulation Ceiling|R-38
+          - Insulation Ceiling|R-49
+
+  #Air sealing / infiltration reduction 
+  #Note: CZ = Climate ZONE, PCT = percent infiltration reduction (due to air sealing)
+  # Air sealing for CZ 1–2, SFD/SFA/MF, ACH50 > 4.0 → 20% reduction
+  infiltration_all_cz_sf_mf_mb: &infiltration_all_cz_sf_mf_mb  #add sf and mf for clearer naming
+    option: Infiltration|5 ACH50
+    apply_logic:
+      - or:
+          - Infiltration|6 ACH50
+          - Infiltration|7 ACH50
+          - Infiltration|8 ACH50
+          - Infiltration|10 ACH50
+          - Infiltration|15 ACH50
+          - Infiltration|20 ACH50
+          - Infiltration|25 ACH50
+          - Infiltration|30 ACH50
+          - Infiltration|40 ACH50
+          - Infiltration|50 ACH50
+
+  duct_seal_only_r6: &duct_seal_only_r6
+    option: Duct Leakage and Insulation|5% Leakage to Outside, R-6
+    apply_logic:
+      - or:
+        - Duct Leakage and Insulation|10% Leakage to Outside, R-6
+        - Duct Leakage and Insulation|20% Leakage to Outside, R-6
+        - Duct Leakage and Insulation|30% Leakage to Outside, R-6
+  
+  duct_seal_only_r8: &duct_seal_only_r8
+    option: Duct Leakage and Insulation|5% Leakage to Outside, R-8
+    apply_logic:
+      - or:
+        - Duct Leakage and Insulation|10% Leakage to Outside, R-8
+        - Duct Leakage and Insulation|20% Leakage to Outside, R-8
+        - Duct Leakage and Insulation|30% Leakage to Outside, R-8
+
+  duct_seal_and_insulate: &duct_seal_and_insulate
+    option: Duct Leakage and Insulation|5% Leakage to Outside, R-8
+    apply_logic:
+      - or:
+        - Duct Leakage and Insulation|10% Leakage to Outside, R-4
+        - Duct Leakage and Insulation|10% Leakage to Outside, Uninsulated
+        - Duct Leakage and Insulation|20% Leakage to Outside, R-4
+        - Duct Leakage and Insulation|20% Leakage to Outside, Uninsulated
+        - Duct Leakage and Insulation|30% Leakage to Outside, R-4
+        - Duct Leakage and Insulation|30% Leakage to Outside, Uninsulated
+
+  remove_shared_heating_cooling_ghp: &remove_shared_heating_cooling_ghp
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+    - HVAC Has Ducts|Yes      
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+
+  ducted_ASHP_apply_logic: &ducted_ASHP_apply_logic
+    - HVAC Has Ducts|Yes
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+
+  costs_GTHP: &costs_GTHP
+    - value: 999
+      multiplier: Fixed (1)
+    - value: 999
+      multiplier: Size, Heating System Primary (kBtu/h)
+
+  lifetime_ducted_GTHP: &lifetime_ducted_GTHP 15
+
+  ### -- Anchors dependent on other anchors -- ###
+  HP_cooling_efficiency_ducted: &HP_cooling_efficiency_ducted
+    option: HVAC Cooling Efficiency|Ducted Heat Pump
+    apply_logic: *ducted_ASHP_apply_logic
+  
+  100_percent_conditioned_ducts_only: &100_percent_conditioned_ducts_only
+    option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+    apply_logic:
+      - HVAC Has Ducts|Yes
+
   attic_insulation_iecc_cz1a: &attic_insulation_iecc_cz1a
     option: Insulation Ceiling|R-30
     apply_logic:
@@ -370,6 +489,37 @@ references:
 
 ### Standard Data Release - Residential -- ###
 upgrades:
+### -- Packages -- ###
+  - upgrade_name: GHPTwoSpeed
+    
+    package_apply_logic: *remove_shared_heating_cooling_ghp
+
+    options:
+      - option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
+        apply_logic: *ducted_ASHP_apply_logic
+        costs: *costs_GTHP
+        lifetime: *lifetime_ducted_GTHP
+
+      - *HP_cooling_efficiency_ducted
+      - *100_percent_conditioned_ducts_only
+  
+  - upgrade_name: GHPTwoSpeed + Air Sealing + Attic Floor Insulation + Duct sealing
+    options:
+      - option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
+        apply_logic: *ducted_ASHP_apply_logic
+        costs: *costs_GTHP
+        lifetime: *lifetime_ducted_GTHP
+
+      - *HP_cooling_efficiency_ducted
+      - *100_percent_conditioned_ducts_only
+
+      - *infiltration_all_cz_sf_mf_mb
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate
+
   ### -- HVAC: Air Source Heat Pumps -- ###
   - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data
     package_apply_logic: *remove_high_rise_shared
