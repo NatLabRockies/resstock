@@ -84,7 +84,7 @@ def get_app(logger) -> DashProxy:
             base = yaml.safe_load(Path(workflow_yaml).read_text())
             # override the S3 path
             base["s3_results_dir"] = snapshot["s3_results_dir"]
-            base["output_dir"] = snapshot["output_dir"]
+            base["output_dir"] = str(parent_dir)
             base["run_name"] = snapshot["run_name"]
             base["upgrades"] = snapshot["upgrades"]
             base["upgrade_names"] = snapshot["upgrade_names"]
@@ -549,7 +549,12 @@ def get_app(logger) -> DashProxy:
             qgroup_name,
             quantity_val,
         )
-        df, fig = _prepare_df_fig(plot_spec, fig_w, fig_h, legend_show, legend_pos, dynamic_mode, run_folder_val)
+        logger.info(f"Generating figure for plot spec: {plot_spec}")
+        try:
+            df, fig = _prepare_df_fig(plot_spec, fig_w, fig_h, legend_show, legend_pos, dynamic_mode, run_folder_val)
+        except Exception:  # noqa: BLE001 catch blind exception
+            logger.error(f"Failed to generate figure for plot spec: {plot_spec}. Error: {traceback.format_exc()}")
+            raise PreventUpdate
         csv_str = df.write_csv(file=None)
         buf = io.BytesIO()
         df.write_parquet(buf)
@@ -655,7 +660,8 @@ def get_app(logger) -> DashProxy:
                     fig = go.Figure(fig_dict)
                     df = pl.read_parquet(str(parquet_path))
                 except Exception:  # noqa: BLE001 catch blind exception
-                    logger.warning(f"Failed to load plot from {fig_path}. Generating them on the fly.")
+                    logger.warning(f"Failed to load plot from {fig_path} due to {traceback.format_exc()}")
+                    logger.info("Generating them on the fly.")
                     dynamic_mode = True
             else:
                 logger.warning(f"Missing {fig_path} or {parquet_path}. Generating them on the fly.")
