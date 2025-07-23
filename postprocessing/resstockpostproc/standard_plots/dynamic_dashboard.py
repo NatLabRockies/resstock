@@ -1,7 +1,7 @@
 """Dynamic Dash dashboard for ResStock plots.
 
 This dashboard exposes a fixed set of controls ("knobs") at the top so the
-user can choose what they would like to visualise.  The figure is generated on
+user can choose what they would like to visualize. The figure is generated on
 -the-fly using the new PlotSpec + PlotOrchestrator data pipeline.
 
 This file does **NOT** rely on any pre-generated HTML files - it simply loads
@@ -12,6 +12,9 @@ creates the requested plot in real-time.
 import base64
 import io
 import json
+import logging
+import os
+import textwrap
 import traceback
 from pathlib import Path
 from typing import Any
@@ -25,8 +28,6 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import DashProxy, MultiplexerTransform  # type: ignore
 from plotly.graph_objects import Figure
-from prefect import flow, get_run_logger
-import textwrap
 
 # Local imports - all heavy lifting is done by these modules
 from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
@@ -40,13 +41,20 @@ from resstockpostproc.standard_plots.schema.plot_spec import (
 )
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
 
+logger = logging.getLogger(__name__)
 
-def get_app(logger) -> DashProxy:
+
+def get_app() -> DashProxy:
     # ----------------------------------------------------------------------------
     #   INITIALISE THE ORCHESTRATOR (loads data only once!)
     # ----------------------------------------------------------------------------
     workflow_yaml = str(Path(__file__).with_name("workflow.yaml"))
     workflow: WorkflowConfig = WorkflowConfig.from_yaml(workflow_yaml)  # convenience alias
+
+    if plots_root_folder := os.environ.get("PLOTS_ROOT_FOLDER"):
+        workflow.output_dir = plots_root_folder
+        workflow.storage_backend = "minio"
+
     print(f"Output dir: {workflow.output_dir}")
 
     # Build look-up dict for QuantityGroup by its name so we can easily instantiate
@@ -86,13 +94,18 @@ def get_app(logger) -> DashProxy:
             new_workflow.upgrade_names = snapshot["upgrade_names"]
             # Support both what's in the default list and what's in the snapshot
             new_workflow.group_by.extend([g for g in snapshot["group_by"] if g not in new_workflow.group_by])
+
+            if plots_root_folder:
+                new_workflow.output_dir = plots_root_folder
+                new_workflow.storage_backend = "minio"
+
             # will never overwrite existing files but can save new files/plots
             _orchestrators[run_folder] = PlotOrchestrator(new_workflow, overwrite=False)
 
         return _orchestrators[run_folder]
 
     # ----------------------------------------------------------------------------
-    #   DASH APP INITIALISATION
+    #   DASH APP INITIALIZATION
     # ----------------------------------------------------------------------------
     external_scripts = [
         "https://cdn.tailwindcss.com",  # provides Tailwind classes (optional)
@@ -425,7 +438,7 @@ def get_app(logger) -> DashProxy:
             return html.Div("Run folder does not have orchestrator. Cannot give run info.")
         baseline_df = orchestrator.processor.combined_df.filter(pl.col("upgrade") == 0)
         num_data_points = baseline_df.select(pl.len()).collect().item()
-        # calculate the % of buildigns with applicability = True for each upgrade in the combined_df
+        # calculate the % of buildings with applicability = True for each upgrade in the combined_df
         upgrade_text = ""
         for upgrade in upgrades:
             upgrade_df = orchestrator.processor.combined_df.filter(pl.col("upgrade") == upgrade)
@@ -613,7 +626,7 @@ def get_app(logger) -> DashProxy:
     # ----------------------------------------------------------------------------
     def _get_dummy_df_fig(error_msg: str):
         fig = go.Figure()
-        # Wrap the error message so it does not overflow the figure.  ``textwrap.fill``
+        # Wrap the error message so it does not overflow the figure. ``textwrap.fill``
         # inserts ``\n`` line-breaks which Plotly ignores, so convert them to ``<br>``.
         wrapped_msg = textwrap.fill(error_msg, width=200, break_long_words=False)
         wrapped_msg = wrapped_msg.replace("\n", "<br>")
@@ -823,15 +836,13 @@ def get_app(logger) -> DashProxy:
     return app
 
 
-@flow(log_prints=True)
 def run_dashboard(port: int = 8051):
-    logger = get_run_logger()
     try:
-        app = get_app(logger)
+        app = get_app()
         app.run(debug=False, port=port, host="0.0.0.0")  # noqa: S104
     except Exception:  # noqa: BLE001 catch blind exception
         logger.error(f"Failed to run dashboard: {traceback.format_exc()}")
 
 
 if __name__ == "__main__":
-    run_dashboard(port=8053)
+    run_dashboard()

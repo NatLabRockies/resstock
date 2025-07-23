@@ -156,6 +156,7 @@ class DataProcessor:
                 lazyframes[upgrade] = pl.scan_parquet(
                     f"s3://{file}",
                     storage_options={"endpoint_url": minio_endpoint, "skip_signature": "true"},
+                    glob=False,
                 )
             upgrade_name = upgrade_to_name[upgrade]
             lazyframes[upgrade] = lazyframes[upgrade].with_columns(pl.lit(upgrade_name).alias("upgrade_name"))
