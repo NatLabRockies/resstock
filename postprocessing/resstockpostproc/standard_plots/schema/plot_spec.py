@@ -46,6 +46,23 @@ class PlotSpec(BaseModel):
             raise ValueError("Box plots cannot be generated from stacked quantities")
         return v
 
+    @classmethod
+    def get_valid_value_types(cls, visualization_type: VizType) -> list[str]:
+        """Return list of valid value types for the given visualization type."""
+        if visualization_type in [VizType.box, VizType.hist, VizType.heatmap]:
+            return [ValueTypes.average]
+        return [ValueTypes.total, ValueTypes.average]
+
+    def is_valid(self) -> bool:
+        """Return True if the plot spec is valid."""
+        if self.value_type not in self.get_valid_value_types(self.visualization_type):
+            return False
+        if self.visualization_type == VizType.box and not isinstance(self.quantity, str):
+            return False
+        if self.visualization_type == VizType.heatmap and not isinstance(self.quantity, QuantityGroup):  # noqa: SIM103
+            return False
+        return True
+
     def get_path_and_name(self) -> tuple[Path, str]:
         """Return path sub-segments derived from the definition."""
         path_segment = Path(f"Included Buildings = {self.upgrade_inclusion.value}")

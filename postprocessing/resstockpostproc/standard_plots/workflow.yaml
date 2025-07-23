@@ -68,16 +68,20 @@ quantities:
       - out.emissions.propane.lrmer_mid_case_25.co2e_kg
       - out.emissions.fuel_oil.lrmer_mid_case_25.co2e_kg
     sum: out.emissions.all_fuels.lrmer_mid_case_25.co2e_kg
+
 visualization_types:
-  - heatmap
   - bar
   - box
+  - histogram
+  - heatmap
+
 group_by:
   - in.census_division
   - in.vintage
   - in.geometry_building_type_recs
   - in.heating_fuel
   - in.vacancy_status
+
 comparison_types:
   - absolute
   - savings
@@ -86,9 +90,11 @@ comparison_types:
 value_types:
   - total
   - average
+
 upgrade_inclusion:
   - all
   - applied_only
+
 vacancy_inclusion:
   - all
   - occupied_only

@@ -296,6 +296,14 @@ class DataProcessor:
         if plot_spec.vacancy_inclusion == VacancyInclusion.occupied_only:
             combined_df = combined_df.filter(pl.col("in.vacancy_status") == "Occupied")
 
+        if (
+            plot_spec.comparison_type in [ComparisonTypes.savings, ComparisonTypes.percent_savings]
+            or plot_spec.upgrade_inclusion == UpgradeInclusion.applied_only
+        ):
+            # remove baseline for savings calculation or applied only
+            # TODO: support showing baseline when using applied_only
+            combined_df = combined_df.filter(pl.col("upgrade") != 0)
+
         if plot_spec.visualization_type == VizType.box:
             assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
             return self.prepare_data_for_box_plot(combined_df, plot_spec.quantity, plot_spec.group_by)
@@ -303,8 +311,87 @@ class DataProcessor:
             return self.prepare_data_for_bar_plot(
                 combined_df, quantities, plot_spec.group_by, plot_spec.value_type, plot_spec.comparison_type
             )
+        elif plot_spec.visualization_type == VizType.hist:
+            assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
+            return self.prepare_data_for_histogram_plot(combined_df, plot_spec.quantity, plot_spec.group_by)
         else:
             raise ValueError(f"Unsupported visualization type: {plot_spec.visualization_type}")
+
+    def prepare_data_for_histogram_plot(
+        self,
+        combined_df: pl.LazyFrame,
+        quantity: str,
+        group_by: str | None = None,
+    ) -> pl.DataFrame:
+        """
+        Build a 102-bin histogram of `quantity`:
+        • bin -1:  values <   1-percentile
+        • bin 0-99: 100 equal-width bins from 1- to 99-percentile
+        • bin 100: values >= 99-percentile
+        Counts are returned per bin and (optionally) per `group_by`.
+        """
+        # ---------- 1.  Percentile bounds ----------
+        q1, q99 = (
+            combined_df.select(
+                pl.col(quantity).quantile(0.01, "midpoint").alias("q1"),
+                pl.col(quantity).quantile(0.99, "midpoint").alias("q99"),
+            )
+            .collect()
+            .row(0)
+        )
+
+        if q1 > q99:
+            raise ValueError(f"{quantity!r} has identical 1% and 99% quantiles ({q1}). Cannot build histogram.")
+
+        bin_width = (q99 - q1) / 100.0
+
+        # ---------- 2.  Bin assignment ----------
+        bin_expr = (
+            pl.when(pl.col(quantity) < q1)
+            .then(-1)  # below-tail
+            .when(pl.col(quantity) > q99)
+            .then(100)  # above-tail
+            .otherwise(((pl.col(quantity) - q1) / (q99 - q1) * 100.0).floor().cast(pl.Int32))
+            .alias("bin")
+        )
+
+        lf_binned = combined_df.with_columns(bin_expr)
+
+        # ---------- 3.  Aggregation ----------
+        group_keys = ["upgrade", "upgrade_name", group_by, "bin"] if group_by else ["upgrade", "upgrade_name", "bin"]
+
+        hist_lf = (
+            lf_binned.group_by(group_keys)
+            .agg(pl.count().alias("count"))
+            # ---------- 4.  Bin boundaries ----------
+            .with_columns(
+                pl.when(pl.col("bin") == -1)
+                .then(float("-inf"))
+                .when(pl.col("bin") == 100)  # noqa: PLR2004
+                .then(q99)
+                .otherwise(pl.col("bin") * bin_width + q1)
+                .alias("bin_left"),
+                pl.when(pl.col("bin") == -1)
+                .then(q1)
+                .when(pl.col("bin") == 100)  # noqa: PLR2004
+                .then(float("inf"))
+                .otherwise((pl.col("bin") + 1) * bin_width + q1)
+                .alias("bin_right"),
+            )
+            .sort(group_keys)
+            .select(
+                "upgrade",
+                "upgrade_name",
+                *(group_by,) if group_by else (),
+                "bin",
+                "bin_left",
+                "bin_right",
+                "count",
+            )
+        )
+
+        # ---------- 5.  Materialise ----------
+        return hist_lf.collect()
 
     def prepare_data_for_box_plot(self, combined_df: pl.LazyFrame, quantity: str, group_by: str | None) -> pl.DataFrame:
         """

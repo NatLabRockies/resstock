@@ -577,7 +577,7 @@ def get_app(logger) -> DashProxy:
     )
     def _toggle_value_type_visibility(viz_type_val: str):
         """Show *Value type* only for bar plots."""
-        if VizType(viz_type_val) == VizType.box:
+        if VizType(viz_type_val) in [VizType.box, VizType.hist]:
             return {"display": "none"}
         return {}
 

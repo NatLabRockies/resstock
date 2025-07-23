@@ -15,8 +15,9 @@ from resstockpostproc.standard_plots.bar_plotter import BarPlotter
 from resstockpostproc.standard_plots.box_plotter import BoxPlotter
 from resstockpostproc.standard_plots.data_processor import DataProcessor
 from resstockpostproc.standard_plots.heatmap_plotter import HeatmapPlotter
+from resstockpostproc.standard_plots.histogram_plotter import HistogramPlotter
 from resstockpostproc.standard_plots.output_manager import OutputManager
-from resstockpostproc.standard_plots.schema.plot_spec import ComparisonTypes, PlotSpec, ValueTypes, VizType
+from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
 
 
@@ -86,8 +87,6 @@ class PlotOrchestrator:
             group_by = combination[4]
             quantity_group: QuantityGroup = combination[5].model_copy()
             value_type = combination[6]
-            if value_type == ValueTypes.total and comparison_type == ComparisonTypes.percent_savings:
-                continue
 
             # Usually, visualize each constituent quantity and the sum (if any) separately
             # Prepare a mutable list of quantities, starting with individual constituents and optional sum
@@ -95,12 +94,6 @@ class PlotOrchestrator:
             quantities.extend(quantity_group.constituents)
             if quantity_group.sum:
                 quantities.append(quantity_group.sum)
-            if visualization_type == VizType.bar:
-                # For bar plots, additionally visualize all together as a group in stacked bar plot
-                quantities.append(quantity_group)
-            if visualization_type == VizType.heatmap:
-                # For heatmap plots, only everything together as a group is supported
-                quantities = [quantity_group]
             for quantity in quantities:
                 plot_spec = PlotSpec(
                     comparison_type=comparison_type,
@@ -112,6 +105,8 @@ class PlotOrchestrator:
                     quantity=quantity,
                     quantity_group_name=quantity_group.name,
                 )
+                if not plot_spec.is_valid():
+                    continue
                 plots_to_gen.append(plot_spec)
         if max_plots_to_gen is None:
             total_plots = len(plots_to_gen)
@@ -149,6 +144,8 @@ class PlotOrchestrator:
             return BoxPlotter()
         if viz == VizType.heatmap:
             return HeatmapPlotter()
+        if viz == VizType.hist:
+            return HistogramPlotter()
         raise ValueError(f"Unsupported visualization type: {viz}")
 
     def print_time_spent(self) -> None:
