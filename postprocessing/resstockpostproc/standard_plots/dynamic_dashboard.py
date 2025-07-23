@@ -417,20 +417,17 @@ def get_app(logger) -> DashProxy:
 
         s3_dir = wf.get("s3_results_dir", "N/A")
         upgrades = wf.get("upgrades", [])
-        max_upgrades = 20
         orchestrator = get_orchestrator_for_run(run_folder)
         if orchestrator is None:
             return html.Div("Run folder does not have orchestrator. Cannot give run info.")
         baseline_df = orchestrator.processor.combined_df.filter(pl.col("upgrade") == 0)
         num_data_points = baseline_df.select(pl.len()).collect().item()
-
-        if isinstance(upgrades, list):
-            preview = upgrades[:max_upgrades]
-            upgrade_text = ", ".join(str(u) for u in preview)
-            if len(upgrades) > max_upgrades:
-                upgrade_text += f", … (+{len(upgrades) - 20} more)"
-        else:
-            upgrade_text = str(upgrades)
+        # calculate the % of buildigns with applicability = True for each upgrade in the combined_df
+        upgrade_text = ""
+        for upgrade in upgrades:
+            upgrade_df = orchestrator.processor.combined_df.filter(pl.col("upgrade") == upgrade)
+            num_applicable = upgrade_df.filter(pl.col("applicability")).select(pl.len()).collect().item()
+            upgrade_text += f"{upgrade}({num_applicable / num_data_points * 100:.1f}%), "
 
         return html.Div(
             [
@@ -440,7 +437,7 @@ def get_app(logger) -> DashProxy:
                     style={"fontSize": "0.75rem", "wordBreak": "break-all"},
                 ),
                 html.Div(
-                    [html.Span("Upgrades: ", className="fw-bold"), html.Span(upgrade_text)],
+                    [html.Span("Upgrades (applied %): ", className="fw-bold"), html.Span(upgrade_text)],
                     style={"fontSize": "0.75rem"},
                 ),
                 html.Div(
