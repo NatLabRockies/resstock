@@ -203,11 +203,51 @@ references:
         - Duct Leakage and Insulation|20% Leakage to Outside, Uninsulated
         - Duct Leakage and Insulation|30% Leakage to Outside, R-4
         - Duct Leakage and Insulation|30% Leakage to Outside, Uninsulated
-
+  
   drill_and_fill_wall: &drill_and_fill_wall
     option: Insulation Wall|Wood Stud, R-13
     apply_logic:
       - Insulation Wall|Wood Stud, Uninsulated
+
+  remove_shared_heating_cooling_ghp: &remove_shared_heating_cooling_ghp
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+    - HVAC Has Ducts|Yes      
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+
+  ducted_ASHP_apply_logic: &ducted_ASHP_apply_logic
+    - HVAC Has Ducts|Yes
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+
+  costs_GTHP: &costs_GTHP
+    - value: 999
+      multiplier: Fixed (1)
+    - value: 999
+      multiplier: Size, Heating System Primary (kBtu/h)
+
+  lifetime_ducted_GTHP: &lifetime_ducted_GTHP 15
+
+  HP_cooling_efficiency_ducted: &HP_cooling_efficiency_ducted
+    option: HVAC Cooling Efficiency|Ducted Heat Pump
+    apply_logic: *ducted_ASHP_apply_logic
+  
+  100_percent_conditioned_ducts_only: &100_percent_conditioned_ducts_only
+    option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+    apply_logic:
+      - HVAC Has Ducts|Yes
 
   costs_ashp_ducted_seer_20_11_hspf: &costs_ashp_ducted_seer_20_11_hspf
     - value: 10229.58
@@ -365,6 +405,37 @@ references:
 
 ### Standard Data Release - Residential -- ###
 upgrades:
+  ### -- Packages -- ###
+  - upgrade_name: GHPTwoSpeed
+    
+    package_apply_logic: *remove_shared_heating_cooling_ghp
+
+    options:
+      - option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
+        apply_logic: *ducted_ASHP_apply_logic
+        costs: *costs_GTHP
+        lifetime: *lifetime_ducted_GTHP
+
+      - *HP_cooling_efficiency_ducted
+      - *100_percent_conditioned_ducts_only
+  
+  - upgrade_name: GHPTwoSpeed + Air Sealing + Attic Floor Insulation + Duct sealing
+    options:
+      - option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
+        apply_logic: *ducted_ASHP_apply_logic
+        costs: *costs_GTHP
+        lifetime: *lifetime_ducted_GTHP
+
+      - *HP_cooling_efficiency_ducted
+      - *100_percent_conditioned_ducts_only
+
+      - *infiltration_all_cz_sf_mf_mb
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate
+
   ### -- HVAC: Air Source Heat Pumps -- ###
   - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data
     package_apply_logic: *remove_high_rise_shared
