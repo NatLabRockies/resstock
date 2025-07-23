@@ -470,25 +470,11 @@ Level,Parameter,Option,Saturation
 1,Census Region,Northeast,0.2
 1,Census Region,South,0.2
 1,Census Region,West,0.4
-1,Generation And Emissions Assessment Region,CAISO,0.0526316
-1,Generation And Emissions Assessment Region,ERCOT,0.0526316
-1,Generation And Emissions Assessment Region,FRCC,0.0526316
-1,Generation And Emissions Assessment Region,ISONE,0.0526316
-1,Generation And Emissions Assessment Region,MISO Central,0.0526316
-1,Generation And Emissions Assessment Region,MISO North,0.0526316
-1,Generation And Emissions Assessment Region,MISO South,0.0526316
-1,Generation And Emissions Assessment Region,None,0.0526316
-1,Generation And Emissions Assessment Region,Northern Grid East,0.0526316
-1,Generation And Emissions Assessment Region,Northern Grid South,0.0526316
-1,Generation And Emissions Assessment Region,Northern Grid West,0.0526316
-1,Generation And Emissions Assessment Region,NYISO,0.0526316
-1,Generation And Emissions Assessment Region,PJM East,0.0526316
-1,Generation And Emissions Assessment Region,PJM West,0.0526316
-1,Generation And Emissions Assessment Region,SERTP,0.0526316
-1,Generation And Emissions Assessment Region,SPP North,0.0526316
-1,Generation And Emissions Assessment Region,SPP South,0.0526316
-1,Generation And Emissions Assessment Region,West Connect North,0.0526316
-1,Generation And Emissions Assessment Region,West Connect South,0.0526316
+1,Generation And Emissions Assessment Region,CAISO,0.2
+1,Generation And Emissions Assessment Region,ERCOT,0.2
+1,Generation And Emissions Assessment Region,None,0.2
+1,Generation And Emissions Assessment Region,NYISO,0.2
+1,Generation And Emissions Assessment Region,PJM West,0.2
 1,REEDS Balancing Area,10,0.2
 1,REEDS Balancing Area,67,0.2
 1,REEDS Balancing Area,80,0.2
