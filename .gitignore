@@ -33,6 +33,3 @@ buildstockbatch_crash_details.log
 .DS_Store
 **/.ipynb_checkpoints/*
 **/.bsq_cache/
-
-# Data directories
-**/data/*
