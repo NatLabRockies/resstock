@@ -25,7 +25,11 @@ class PlotOrchestrator:
     Orchestrates the plot generation process
     """
 
-    def __init__(self, config: str | dict, output_types: list[Literal["svg", "html", "parquet", "json", "csv"]] = []):
+    def __init__(
+        self,
+        config: str | dict | WorkflowConfig,
+        output_types: list[Literal["svg", "html", "parquet", "json", "csv"]] = [],
+    ):
         """
         Initialize the orchestrator
 
@@ -37,6 +41,10 @@ class PlotOrchestrator:
             self.workflow = WorkflowConfig.from_yaml(config)
         elif isinstance(config, dict):
             self.workflow = WorkflowConfig(**config)
+        elif isinstance(config, WorkflowConfig):
+            self.workflow = config
+        else:
+            raise ValueError(f"Unsupported type for config: {type(config)}")
         self.data_loading_time: float = 0
         self.data_preparing_time: float = 0
         self.figure_creation_time: float = 0

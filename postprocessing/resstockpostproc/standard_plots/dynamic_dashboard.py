@@ -12,7 +12,6 @@ creates the requested plot in real-time.
 import base64
 import io
 import json
-import tempfile
 import traceback
 from pathlib import Path
 from typing import Any
@@ -21,13 +20,13 @@ import dash_bootstrap_components as dbc  # type: ignore
 import plotly.graph_objects as go  # type: ignore
 import plotly.io as pio  # type: ignore
 import polars as pl  # type: ignore
-import yaml
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import DashProxy, MultiplexerTransform  # type: ignore
 from plotly.graph_objects import Figure
 from prefect import flow, get_run_logger
+import textwrap
 
 # Local imports - all heavy lifting is done by these modules
 from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
@@ -53,7 +52,7 @@ def get_app(logger) -> DashProxy:
     # Build look-up dict for QuantityGroup by its name so we can easily instantiate
     # a PlotSpec from UI selections later.
     qg_by_name: dict[str, QuantityGroup] = {qg.name: qg for qg in workflow.quantities}
-    parent_dir = Path(workflow.output_dir).expanduser().resolve() / "plots"
+    plots_dir = Path(workflow.output_dir).expanduser().resolve() / "plots"
 
     # ---------------------------------------------------------------------------
     #   Helpers for run folders / snapshots
@@ -61,11 +60,11 @@ def get_app(logger) -> DashProxy:
 
     def _scan_run_folders() -> list[str]:
         """Return sorted list of available run-folder names."""
-        return sorted([p.name for p in parent_dir.iterdir() if p.is_dir()])
+        return sorted([p.name for p in plots_dir.iterdir() if p.is_dir()])
 
     def _load_snapshot(run_folder: str) -> dict[str, Any] | None:
         """Load workflow_snapshot.json for the given folder, if it exists."""
-        path = parent_dir / run_folder / "workflow_snapshot.json"
+        path = plots_dir / run_folder / "workflow_snapshot.json"
         if path.exists():
             with open(path) as f:
                 return json.load(f)
@@ -80,23 +79,12 @@ def get_app(logger) -> DashProxy:
                 return None
 
             snapshot["run_name"] = run_folder  # override run_name to allow folder rename
-            # load your base YAML into a dict
-            base = yaml.safe_load(Path(workflow_yaml).read_text())
-            # override the S3 path
-            base["s3_results_dir"] = snapshot["s3_results_dir"]
-            base["output_dir"] = str(parent_dir)
-            base["run_name"] = snapshot["run_name"]
-            base["upgrades"] = snapshot["upgrades"]
-            base["upgrade_names"] = snapshot["upgrade_names"]
-            # (and if you snapshot includes other keys you need—e.g. input_dir, etc.—override those too)
-
-            # write a tiny, oneoff temp YAML
-            fd, tmp = tempfile.mkstemp(suffix=".yaml")
-            with open(tmp, "w") as f:
-                yaml.safe_dump(base, f)
-
-            # instantiate a fresh orchestrator
-            _orchestrators[run_folder] = PlotOrchestrator(tmp)
+            new_workflow = WorkflowConfig.from_yaml(workflow_yaml)
+            new_workflow.s3_results_dir = snapshot["s3_results_dir"]
+            new_workflow.run_name = snapshot["run_name"]
+            new_workflow.upgrades = snapshot["upgrades"]
+            new_workflow.upgrade_names = snapshot["upgrade_names"]
+            _orchestrators[run_folder] = PlotOrchestrator(new_workflow)
 
         return _orchestrators[run_folder]
 
@@ -553,8 +541,10 @@ def get_app(logger) -> DashProxy:
         try:
             df, fig = _prepare_df_fig(plot_spec, fig_w, fig_h, legend_show, legend_pos, dynamic_mode, run_folder_val)
         except Exception:  # noqa: BLE001 catch blind exception
-            logger.error(f"Failed to generate figure for plot spec: {plot_spec}. Error: {traceback.format_exc()}")
-            raise PreventUpdate
+            error = f"Failed to generate figure for plot spec: {plot_spec}. Error: {traceback.format_exc()}"
+            logger.error(error)
+            df, fig = _get_dummy_df_fig(error)
+
         csv_str = df.write_csv(file=None)
         buf = io.BytesIO()
         df.write_parquet(buf)
@@ -597,6 +587,28 @@ def get_app(logger) -> DashProxy:
     # ----------------------------------------------------------------------------
     #   CALLBACKS - DOWNLOAD DATA & FIGURE
     # ----------------------------------------------------------------------------
+    def _get_dummy_df_fig(error_msg: str):
+        fig = go.Figure()
+        # Wrap the error message so it does not overflow the figure.  ``textwrap.fill``
+        # inserts ``\n`` line-breaks which Plotly ignores, so convert them to ``<br>``.
+        wrapped_msg = textwrap.fill(error_msg, width=200, break_long_words=False)
+        wrapped_msg = wrapped_msg.replace("\n", "<br>")
+        fig.add_annotation(
+            text=wrapped_msg,
+            xref="paper",
+            yref="paper",
+            x=0.5,
+            y=0.5,
+            showarrow=False,
+            font={"size": 10, "color": "red"},
+        )
+        fig.update_layout(
+            title="Error Occurred",
+            title_subtitle_text="",
+            xaxis={"showgrid": False, "showticklabels": False, "title": ""},
+            yaxis={"showgrid": False, "showticklabels": False, "title": ""},
+        )
+        return pl.DataFrame(), fig
 
     def _build_plot_spec(
         upgrade_incl: str,
@@ -648,6 +660,7 @@ def get_app(logger) -> DashProxy:
         fig = go.Figure()
         if not run_folder_val:
             raise PreventUpdate
+        orchestrator = get_orchestrator_for_run(run_folder_val)
         if not dynamic_mode:
             # Construct expected file locations using the OutputManager schema
             path_seg, name = spec.get_path_and_name()
@@ -659,6 +672,7 @@ def get_app(logger) -> DashProxy:
                     fig_dict = pio.read_json(str(fig_path))
                     fig = go.Figure(fig_dict)
                     df = pl.read_parquet(str(parquet_path))
+                    logger.info(f"Loaded plot from {fig_path}")
                 except Exception:  # noqa: BLE001 catch blind exception
                     logger.warning(f"Failed to load plot from {fig_path} due to {traceback.format_exc()}")
                     logger.info("Generating them on the fly.")
@@ -668,12 +682,14 @@ def get_app(logger) -> DashProxy:
                 dynamic_mode = True
 
         if dynamic_mode:
-            orchestrator = get_orchestrator_for_run(run_folder_val)
             if orchestrator is None:
-                logger.warning(
-                    f"{run_folder_val} folder does not have workflow_snapshot.json. Cannot dynamically generate plots."
-                )
-                raise PreventUpdate
+                warning = f"{run_folder_val} folder does not have workflow_snapshot.json."
+                warning += "\nCannot dynamically generate plots."
+                logger.warning(warning)
+                user_warning = "This old run cannot be viewed in the new dashboard"
+                user_warning += "\nPlease view it in the old dashboard or re-run the flow."
+                df, fig = _get_dummy_df_fig(user_warning)
+                return df, fig
             df = orchestrator.processor.prepare_data_for_plot(spec)
             plotter = PlotOrchestrator.get_plotter(spec.visualization_type)
             fig = plotter.create_plot(df, spec)
@@ -699,6 +715,9 @@ def get_app(logger) -> DashProxy:
             legend_cfg = {"x": 0, "y": 0, "xanchor": "left", "yanchor": "bottom"}
 
         fig.update_layout(width=fig_w, height=fig_h, showlegend=show_legend, legend=legend_cfg)
+        path_seg, name = spec.get_path_and_name()
+        if orchestrator is not None:
+            orchestrator.out_mgr.save_plot(fig, path_seg, df, name)
         return df, fig
 
     @app.callback(
