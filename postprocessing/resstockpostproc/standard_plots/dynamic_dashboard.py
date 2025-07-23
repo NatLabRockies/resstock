@@ -671,8 +671,10 @@ def get_app(logger) -> DashProxy:
                     df = pl.read_parquet(str(parquet_path))
                     logger.info(f"Loaded plot from {fig_path}")
                 except Exception:  # noqa: BLE001 catch blind exception
-                    logger.warning(f"Failed to load plot from {fig_path} due to {traceback.format_exc()}")
-                    logger.info("Generating them on the fly.")
+                    logger.warning(
+                        f"Failed to load data/figure from {fig_path} or {parquet_path}"
+                        "due to error:\n{traceback.format_exc()}\nGenerating them on the fly."
+                    )
                     dynamic_mode = True
             else:
                 logger.warning(f"Missing {fig_path} or {parquet_path}. Generating them on the fly.")
