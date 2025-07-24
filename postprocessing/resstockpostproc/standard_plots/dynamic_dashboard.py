@@ -84,6 +84,8 @@ def get_app(logger) -> DashProxy:
             new_workflow.run_name = snapshot["run_name"]
             new_workflow.upgrades = snapshot["upgrades"]
             new_workflow.upgrade_names = snapshot["upgrade_names"]
+            # Replace default group_by with the list from the snapshot so the UI matches the run configuration
+            new_workflow.group_by.extend([g for g in snapshot["group_by"] if g not in new_workflow.group_by])
             _orchestrators[run_folder] = PlotOrchestrator(new_workflow)
 
         return _orchestrators[run_folder]
@@ -580,6 +582,29 @@ def get_app(logger) -> DashProxy:
         if VizType(viz_type_val) in [VizType.box, VizType.hist]:
             return {"display": "none"}
         return {}
+
+    # ----------------------------------------------------------------------------
+    #   CALLBACK - update Group By dropdown when run folder changes
+    # ----------------------------------------------------------------------------
+    @app.callback(
+        Output("group-by", "options"),
+        Output("group-by", "value"),
+        Input("run-folder", "value"),
+        State("group-by", "value"),
+    )
+    def _update_group_by_options(run_folder: str, current_val: str | None):  # type: ignore[override]
+        """Refresh the Group By dropdown to reflect the selected run's workflow configuration."""
+
+        orchestrator = get_orchestrator_for_run(run_folder)
+        if orchestrator is None:
+            raise PreventUpdate
+
+        group_by_list = orchestrator.workflow.group_by
+        options = {"__none__": "None", **{col: col for col in group_by_list}}
+
+        # Preserve the currently selected value if still valid, else default to "None"
+        value = current_val if current_val in options else "__none__"
+        return options, value
 
     # ----------------------------------------------------------------------------
     #   CALLBACKS - DOWNLOAD DATA & FIGURE
