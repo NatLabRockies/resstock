@@ -8,7 +8,7 @@ from abc import ABC
 import polars as pl
 from plotly.graph_objects import Figure
 
-from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
+from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, ComparisonTypes, QuantityGroup
 from resstockpostproc.standard_plots.theme import ThemeManager
 
 
@@ -36,3 +36,10 @@ class BasePlotter(ABC):
     def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec) -> Figure:
         """Placeholder fallback; subclasses typically override for convenience."""
         raise NotImplementedError("Subclasses should implement `create_plot` or use specific helpers.")
+
+    def get_y_title(self, plot_spec: PlotSpec) -> str:
+        """Get the y-axis title based on the plot spec."""
+        y_val = "Percentage" if plot_spec.comparison_type == ComparisonTypes.percent_savings else plot_spec.quantity
+        if isinstance(y_val, QuantityGroup):
+            return y_val.name
+        return y_val

@@ -13,7 +13,7 @@ from plotly.subplots import make_subplots
 
 from resstockpostproc.standard_plots.base_plotter import BasePlotter
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
-from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
+from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, ComparisonTypes
 
 
 class BoxPlotter(BasePlotter):
@@ -28,15 +28,20 @@ class BoxPlotter(BasePlotter):
         """Create a box plot using Plotly to show distribution and outliers"""
         if isinstance(plot_spec.quantity, QuantityGroup):
             raise ValueError("QuantityGroup is not supported for box plots")
+
+        ytitle = "Percentage" if plot_spec.comparison_type == ComparisonTypes.percent_savings else plot_spec.quantity
         if plot_spec.group_by:
             fig = self.create_faceted_box_plot(
-                data, x_column="upgrade_name", y_column=plot_spec.quantity, facet_column=plot_spec.group_by
+                data,
+                x_column="upgrade_name",
+                facet_column=plot_spec.group_by,
+                y_title=ytitle,
             )
         else:
             fig = self.create_box_plot(
                 data,
                 x_column="upgrade_name",
-                y_column=plot_spec.quantity,
+                y_title=ytitle,
             )
         return fig
 
@@ -44,7 +49,7 @@ class BoxPlotter(BasePlotter):
         self,
         data: pl.DataFrame,
         x_column: str,
-        y_column: str,
+        y_title: str,
     ) -> go.Figure:
         """
         Create a box plot using Plotly to show distribution and outliers
@@ -84,7 +89,7 @@ class BoxPlotter(BasePlotter):
         self.theme.apply_layout(fig)
         fig.update_layout(boxmode="group")
         fig.update_xaxes(title_text=x_column.replace("_", " ").title())
-        fig.update_yaxes(title_text=y_column.replace("_", " ").title())
+        fig.update_yaxes(title_text=y_title)
         fig.update_yaxes(gridcolor="lightgrey")
 
         return fig
@@ -93,10 +98,9 @@ class BoxPlotter(BasePlotter):
         self,
         data: pl.DataFrame,
         x_column: str,
-        y_column: str,
         facet_column: str = "in.building_type",
         hue: str | None = "upgrade_name",
-        y_label: str | None = None,
+        y_title: str | None = None,
         show_outliers: bool = True,  # This ensures outliers are shown by default
         notched: bool = False,
     ) -> go.Figure:
@@ -111,7 +115,7 @@ class BoxPlotter(BasePlotter):
             hue: Name of the column to use for color grouping (set to None for no color grouping)
             title: Optional plot title
             x_label: Optional x-axis label
-            y_label: Optional y-axis label
+            y_title: Optional y-axis label
             show_outliers: Whether to show outliers as individual points (default: True)
             notched: Whether to create notched box plots (notches represent 95% confidence interval)
 
@@ -223,9 +227,8 @@ class BoxPlotter(BasePlotter):
 
         # Format Y-axis - only show title on the far left facet
         for i in range(len(facet_values)):
-            title_text = y_label if y_label else y_column.split(".")[-1].replace("_", " ").title()
             fig.update_yaxes(
-                title=title_text if i == 0 else "",
+                title=y_title if i == 0 else "",
                 gridcolor="lightgray",
                 gridwidth=0.5,
                 zeroline=True,

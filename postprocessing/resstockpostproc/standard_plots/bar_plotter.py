@@ -37,6 +37,7 @@ class BarPlotter(BasePlotter):
                 constituent_cols=plot_spec.quantity.constituents,
                 sum_col=plot_spec.quantity.sum,
                 facet_column=plot_spec.group_by,
+                y_title=self.get_y_title(plot_spec),
             )
 
         # For simple bars, the quantity is the y-axis
@@ -46,6 +47,7 @@ class BarPlotter(BasePlotter):
             y_column=plot_spec.quantity,
             group_column="upgrade_name" if plot_spec.group_by else None,
             title=self._format_label(plot_spec.quantity),
+            y_title=self.get_y_title(plot_spec),
         )
 
     def create_bar_plot(
@@ -54,6 +56,7 @@ class BarPlotter(BasePlotter):
         data: pl.DataFrame,
         x_column: str,
         y_column: str,
+        y_title: str,
         group_column: str | None = None,
         title: str | None = None,
     ) -> go.Figure:
@@ -75,7 +78,7 @@ class BarPlotter(BasePlotter):
             legend_title_text=self._format_label(group_column or ""),
             xaxis_tickangle=45 if x_column != "upgrade_name" else 0,
         )
-        fig.update_yaxes(gridcolor="lightgray", gridwidth=0.5)
+        fig.update_yaxes(gridcolor="lightgray", gridwidth=0.5, title_text=y_title)
         return fig
 
     def create_stacked_bar_plot(
@@ -85,6 +88,7 @@ class BarPlotter(BasePlotter):
         constituent_cols: list[str],
         sum_col: str | None = None,
         x_column: str = "upgrade_name",
+        y_title: str,
         facet_column: str | None = None,
     ) -> go.Figure:
         """Creates a stacked, optionally faceted bar plot by first reshaping the data."""
@@ -145,7 +149,7 @@ class BarPlotter(BasePlotter):
         self.theme.apply_layout(fig)
         # Use "relative" barmode so that negative values are stacked below the zero line
         fig.update_layout(barmode="relative", legend={"traceorder": "reversed"})
-        fig.update_yaxes(gridcolor="lightgray", gridwidth=0.5, title_text="Energy Consumption (kWh)")
+        fig.update_yaxes(gridcolor="lightgray", gridwidth=0.5, title_text=y_title)
         fig.update_xaxes(title_text="")
         if facet_column and facet_column in data.columns:
             num_facets = len(data[facet_column].unique())

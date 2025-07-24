@@ -9,6 +9,7 @@ import os
 import pathlib
 import time
 from pathlib import Path
+import math
 
 import boto3
 import polars as pl
@@ -357,7 +358,7 @@ class DataProcessor:
         if q1 == q99:
             q1, q99 = minimum, maximum
 
-        is_degenerate = q1 == q99
+        is_degenerate = math.isclose(q1, q99, rel_tol=1e-9, abs_tol=1e-12)
         bin_width = 1.0 if is_degenerate else (q99 - q1) / 100.0
 
         # ---------- 2. Bin assignment ----------
@@ -377,7 +378,8 @@ class DataProcessor:
                 .then(-1)
                 .when(pl.col(quantity) > q99)
                 .then(100)
-                .otherwise(((pl.col(quantity) - q1 - 1e-9) / bin_width).floor().cast(pl.Int32))
+                .otherwise(((pl.col(quantity) - q1 - 1e-9) / bin_width).floor())
+                .cast(pl.Int32)
                 .alias("bin")
             )
 

@@ -269,7 +269,7 @@ def get_app() -> DashProxy:
                                             html.Small("Group by", className="d-block fw-bold mb-1"),
                                             dcc.Dropdown(
                                                 id="group-by",
-                                                options={"__none__": "None", **{col: col for col in workflow.group_by}},
+                                                options=[],
                                                 value="__none__",
                                                 clearable=False,
                                             ),
@@ -646,19 +646,63 @@ def get_app() -> DashProxy:
         State("group-by", "value"),
     )
     def _update_group_by_options(run_folder: str, current_val: str | None):
-        """Refresh the Group By dropdown to reflect the selected run's workflow configuration."""
+        """Refresh the Group By dropdown to reflect the selected run's workflow configuration.
+
+        In addition to the *group_by* list defined in the workflow YAML, we now also
+        surface **additional building characteristics** (columns whose names start
+        with ``in.`` and whose baseline records have between 2 and 20 distinct
+        values).  These are shown in a separate section underneath the original
+        items, separated by a disabled label row so the UI is easy to navigate.
+        """
 
         orchestrator = get_orchestrator_for_run(run_folder)
         if orchestrator is None:
             raise PreventUpdate
 
-        group_by_list = orchestrator.workflow.group_by
-        options = {"__none__": "None", **{col: col for col in group_by_list}}
+        # ---------------------------------------------------------------------
+        #   Original workflow-defined group_by columns
+        # ---------------------------------------------------------------------
+        workflow_group_by: list[str] = orchestrator.workflow.group_by
 
-        # Preserve the currently selected value if still valid, else default to "None"
-        value = current_val if current_val in options else "__none__"
-        logger.info(f"Updating group by options: {options}")
-        return options, value
+        # ---------------------------------------------------------------------
+        #   Dynamically discover low-cardinality input columns
+        # ---------------------------------------------------------------------
+        small_chars: list[str] = []
+        try:
+            # Only baseline (upgrade == 0) records are considered when counting uniques
+            base_df: pl.LazyFrame = orchestrator.processor.combined_df.filter(pl.col("upgrade") == 0)
+            in_cols = [c for c in base_df.collect_schema().names() if c.startswith("in.")]
+            if in_cols:
+                # Compute unique counts in a single pass
+                unique_df = base_df.select([pl.col(c).n_unique().alias(c) for c in in_cols]).collect()
+                unique_counts = dict(zip(in_cols, unique_df.row(0)))  # type: ignore[arg-type]
+                small_chars = sorted([c for c, n in unique_counts.items() if 1 < n <= 20])  # noqa: PLR2004
+        except Exception as exc:  # noqa: BLE001
+            logger.warning(f"Failed to compute additional group-by characteristics: {exc}")
+
+        # ---------------------------------------------------------------------
+        #   Build Dropdown options with separators
+        # ---------------------------------------------------------------------
+        opts: list[dict] = [
+            {"label": "None", "value": "__none__"},
+            {"label": "— Workflow group-by —", "value": "__sep_wf__", "disabled": True},
+            *[{"label": col, "value": col} for col in workflow_group_by],
+        ]
+
+        if small_chars:
+            opts.extend(
+                [
+                    {"label": "— Additional characteristics —", "value": "__sep_extra__", "disabled": True},
+                    *[{"label": col, "value": col} for col in small_chars],
+                ]
+            )
+
+        # Determine the new selected value, ignoring separator rows
+        valid_values = {o["value"] for o in opts if not o.get("disabled", False)}
+        new_val = current_val if current_val in valid_values else "__none__"
+
+        logger.info("Updating group by options: %s", [o["label"] for o in opts])
+        return opts, new_val
 
     # ----------------------------------------------------------------------------
     #   CALLBACK - update Upgrade Inclusion dropdown when run folder changes
