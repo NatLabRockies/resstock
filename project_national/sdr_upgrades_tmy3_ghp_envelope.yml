@@ -217,7 +217,7 @@ references:
         - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
         - HVAC Shared Efficiencies|Fan Coil Cooling Only
 
-  ducted_ASHP_apply_logic: &ducted_ASHP_apply_logic
+  ducted_ashp_apply_logic: &ducted_ashp_apply_logic
     - HVAC Has Ducts|Yes
     - not:
       - or:
@@ -227,18 +227,18 @@ references:
         - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
         - HVAC Shared Efficiencies|Fan Coil Cooling Only
 
-  costs_ghp: &costs_GTHP
+  costs_ghp: &costs_gthp
     - value: 999
       multiplier: Fixed (1)
     - value: 999
       multiplier: Size, Heating System Primary (kBtu/h)
 
-  lifetime_ducted_GTHP: &lifetime_ducted_GTHP 15
+  lifetime_ducted_gthp: &lifetime_ducted_gthp 15
 
   ### -- Anchors dependent on other anchors -- ###
   HP_cooling_efficiency_ducted: &HP_cooling_efficiency_ducted
     option: HVAC Cooling Efficiency|Ducted Heat Pump
-    apply_logic: *ducted_ASHP_apply_logic
+    apply_logic: *ducted_ashp_apply_logic
   
   100_percent_conditioned_ducts_only: &100_percent_conditioned_ducts_only
     option: HVAC Cooling Partial Space Conditioning|100% Conditioned
@@ -255,9 +255,9 @@ upgrades:
 
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
-        apply_logic: *ducted_ASHP_apply_logic
-        costs: *costs_GTHP
-        lifetime: *lifetime_ducted_GTHP
+        apply_logic: *ducted_ashp_apply_logic
+        costs: *costs_gthp
+        lifetime: *lifetime_ducted_gthp
 
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
@@ -265,9 +265,9 @@ upgrades:
   - upgrade_name: GHPTwoSpeed + Air Sealing + Attic Floor Insulation + Duct sealing
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
-        apply_logic: *ducted_ASHP_apply_logic
-        costs: *costs_GTHP
-        lifetime: *lifetime_ducted_GTHP
+        apply_logic: *ducted_ashp_apply_logic
+        costs: *costs_gthp
+        lifetime: *lifetime_ducted_gthp
 
       - *HP_cooling_efficiency_ducted
       - *100_percent_conditioned_ducts_only
