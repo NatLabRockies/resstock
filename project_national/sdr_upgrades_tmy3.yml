@@ -1,9 +1,9 @@
-schema_version: '0.6'
+sschema_version: '0.6'
 os_version: 3.9.0
 os_sha: c77fbb9569
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
-output_directory: /kfs2/projects/geostock/resstock/test_run_ghp_envelope
+output_directory: /kfs2/projects/enduse/sdr/runs/ylou/ghp_envelope_30k_20250721/
 # weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
 # weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
 # weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
@@ -25,7 +25,7 @@ sampler:
 kestrel:
   n_jobs: 30
   minutes_per_sim: 5
-  account: geostock
+  account: enduse
   postprocessing:
     time: 600
     n_workers: 4
