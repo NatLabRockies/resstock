@@ -33,8 +33,10 @@ class OutputManager:
 
     def write_workflow_snapshot(self, workflow: WorkflowConfig) -> None:
         """Writes a snapshot of the workflow used to generate the plots to a JSON file."""
-        config_dir = self.base_dir / "workflow_snapshot.json"
-        config_dir.write_text(workflow.model_dump_json(indent=2), encoding="utf-8")
+        config_file = self.base_dir / "workflow_snapshot.json"
+        if config_file.exists():
+            return
+        config_file.write_text(workflow.model_dump_json(indent=2), encoding="utf-8")
 
     def get_output_dir(self, path_seg: Path) -> Path:
         full_path = self.base_dir / path_seg
