@@ -1,3 +1,4 @@
+import json
 import time
 from collections import defaultdict
 from pathlib import Path
@@ -39,7 +40,11 @@ class OutputManager:
         """Writes a snapshot of the workflow used to generate the plots to a JSON file."""
         config_file = self.base_dir / "workflow_snapshot.json"
         if config_file.exists():  # never overwrite the snapshot
-            return
+            with config_file.open("r") as f:
+                existing_workflow = json.load(f)
+            if existing_workflow["s3_results_dir"] == workflow.s3_results_dir:
+                return
+            raise FileExistsError(f"{workflow.s3_results_dir} has results from a different s3_results_dir")
         config_file.write_text(workflow.model_dump_json(indent=2), encoding="utf-8")
 
     def get_output_dir(self, path_seg: Path) -> Path:

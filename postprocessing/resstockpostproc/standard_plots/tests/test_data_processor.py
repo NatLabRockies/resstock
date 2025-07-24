@@ -15,7 +15,7 @@ from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import (
     ComparisonTypes,
     QuantityGroup,
-    UpgradeInclusion,
+    BuildingInclusion,
     VacancyInclusion,
     ValueTypes,
     VizType,
@@ -124,7 +124,7 @@ def processor(monkeypatch: pytest.MonkeyPatch, combined_df: pl.LazyFrame) -> Dat
             value_types=[ValueTypes.total],
             visualization_types=[VizType.bar],
             comparison_types=[ComparisonTypes.absolute],
-            upgrade_inclusion=[UpgradeInclusion.all],
+            building_inclusion=[BuildingInclusion.all],
             vacancy_inclusion=[VacancyInclusion.all],
         )
     )
@@ -142,7 +142,7 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
     """Convenience for building PlotSpec objects with sensible defaults."""
 
     defaults = {
-        "upgrade_inclusion": UpgradeInclusion.all,
+        "building_inclusion": BuildingInclusion.all,
         "vacancy_inclusion": VacancyInclusion.all,
         "comparison_type": ComparisonTypes.absolute,
         "visualization_type": VizType.bar,
@@ -156,10 +156,10 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
 
 
 @pytest.mark.parametrize(
-    ("upgrade_inclusion"),
+    ("building_inclusion"),
     [
-        (UpgradeInclusion.all),
-        (UpgradeInclusion.applied_only),
+        (BuildingInclusion.all),
+        (BuildingInclusion.applied_only),
     ],
 )
 @pytest.mark.parametrize(
@@ -201,7 +201,7 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
 )
 def test_prepare_basic(
     processor: DataProcessor,
-    upgrade_inclusion: UpgradeInclusion,
+    building_inclusion: BuildingInclusion,
     vacancy_inclusion: VacancyInclusion,
     value_type: ValueTypes,
     comparison_type: ComparisonTypes,
@@ -218,14 +218,16 @@ def test_prepare_basic(
         visualization_type=viz_type,
         comparison_type=comparison_type,
         group_by=group_by,
-        upgrade_inclusion=upgrade_inclusion,
+        building_inclusion=building_inclusion,
         value_type=value_type,
         vacancy_inclusion=vacancy_inclusion,
         quantity="elec_kwh",
         quantity_group_name="energy",
     )
     df = processor.prepare_data_for_plot(spec)
-    if comparison_type in [ComparisonTypes.percent_savings, ComparisonTypes.savings]:
+    if comparison_type in [ComparisonTypes.percent_savings, ComparisonTypes.savings] or (
+        building_inclusion == BuildingInclusion.applied_only
+    ):
         expected_rows = (expected_rows * 2) // 3  # No baseline
     assert isinstance(df, pl.DataFrame)
     assert df.height == expected_rows
@@ -244,13 +246,14 @@ def test_vacancy_filter(processor: DataProcessor):
 
 
 def test_upgrade_applied_only(processor: DataProcessor):
-    """upgrade_inclusion=applied_only removes rows where applicability==False."""
+    """building_inclusion=applied_only removes rows where applicability==False."""
 
-    spec = _build_base_spec(upgrade_inclusion=UpgradeInclusion.applied_only, group_by="in.heating_fuel")
+    spec = _build_base_spec(building_inclusion=BuildingInclusion.applied_only, group_by="in.heating_fuel")
     df = processor.prepare_data_for_plot(spec)
 
-    # After removing non-applicable rows, Gas should remain for each upgrade (baseline, 1, 2)
-    assert (df["in.heating_fuel"] == "Gas").sum() == 3
+    # After removing non-applicable rows, Gas should remain for each upgrade (1, 2)
+    # Baseline should be gone since we haven't picked an upgrade
+    assert (df["in.heating_fuel"] == "Gas").sum() == 2
 
 
 def test_quantity_group_mean_aggregation(processor: DataProcessor):

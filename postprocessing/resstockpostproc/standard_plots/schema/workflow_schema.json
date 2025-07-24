@@ -1,5 +1,14 @@
 {
   "$defs": {
+    "BuildingInclusion": {
+      "description": "Different ways to include a quantity in a plot.",
+      "enum": [
+        "all",
+        "applied_only"
+      ],
+      "title": "BuildingInclusion",
+      "type": "string"
+    },
     "ComparisonTypes": {
       "description": "Different kinds of comparison between the upgrade and the baseline.",
       "enum": [
@@ -133,15 +142,6 @@
       "title": "SelectionLogic",
       "type": "object"
     },
-    "UpgradeInclusion": {
-      "description": "Different ways to include a quantity in a plot.",
-      "enum": [
-        "all",
-        "applied_only"
-      ],
-      "title": "UpgradeInclusion",
-      "type": "string"
-    },
     "VacancyInclusion": {
       "description": "Different ways to include a quantity in a plot.",
       "enum": [
@@ -271,12 +271,12 @@
       "title": "Value Types",
       "type": "array"
     },
-    "upgrade_inclusion": {
-      "description": "Upgrade inclusion type",
+    "building_inclusion": {
+      "description": "Building inclusion type",
       "items": {
-        "$ref": "#/$defs/UpgradeInclusion"
+        "$ref": "#/$defs/BuildingInclusion"
       },
-      "title": "Upgrade Inclusion",
+      "title": "Building Inclusion",
       "type": "array"
     },
     "vacancy_inclusion": {
@@ -309,7 +309,7 @@
     "visualization_types",
     "comparison_types",
     "value_types",
-    "upgrade_inclusion",
+    "building_inclusion",
     "vacancy_inclusion"
   ],
   "title": "WorkflowConfig",

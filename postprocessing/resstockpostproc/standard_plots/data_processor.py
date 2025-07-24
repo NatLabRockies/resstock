@@ -22,7 +22,7 @@ from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEn
 from resstockpostproc.standard_plots.schema.plot_spec import (
     ComparisonTypes,
     PlotSpec,
-    UpgradeInclusion,
+    BuildingInclusion,
     VacancyInclusion,
     VizType,
 )
@@ -292,8 +292,23 @@ class DataProcessor:
         combined_df = self.fill_missing_quantities(self.combined_df, quantities)
         combined_df = self.convert_value_type(combined_df, quantities, plot_spec.comparison_type)
 
-        if plot_spec.upgrade_inclusion == UpgradeInclusion.applied_only:
-            combined_df = combined_df.filter(pl.col("applicability"))
+        if plot_spec.upgrade is not None:
+            combined_df = combined_df.filter(pl.col("upgrade").is_in([0, plot_spec.upgrade]))
+
+        if plot_spec.building_inclusion == BuildingInclusion.applied_only:
+            # Include all buildings from baseline and applicable (in that upgrade) buildings from each upgrades
+            if plot_spec.upgrade is None:
+                # Can't have baseline if no upgrade is selected since we don't know which upgrade to use
+                # to filter baseline
+                combined_df = combined_df.filter(pl.col("applicability") & (pl.col("upgrade") != 0))
+            else:  # Include only buildings where the upgrade was applicable from baseline and that upgrade
+                is_upgrade_applicable = (
+                    ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability")).any().over("bldg_id")
+                )
+                combined_df = combined_df.filter(
+                    ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability"))
+                    | ((pl.col("upgrade") == 0) & is_upgrade_applicable)
+                )
         if plot_spec.vacancy_inclusion == VacancyInclusion.occupied_only:
             combined_df = combined_df.filter(pl.col("in.vacancy_status") == "Occupied")
 
@@ -321,13 +336,11 @@ class DataProcessor:
         group_by: str | None = None,
     ) -> pl.DataFrame:
         """
-        Build a 102-bin histogram of `quantity`:
-        • bin -1:  values <   1-percentile
-        • bin 0-99: 100 equal-width bins from 1- to 99-percentile
-        • bin 100: values >= 99-percentile
-        Counts are returned per bin and (optionally) per `group_by`.
+        Build a 102-bin histogram of `quantity` per (upgrade, upgrade_name[, group_by]).
+        Every bin (-1, 0-99, 100) is present; empty bins have count == 0.
         """
-        # ---------- 1.  Percentile bounds ----------
+
+        # ---------- 1. Percentile bounds ----------
         q1, q99 = (
             combined_df.select(
                 pl.col(quantity).quantile(0.01, "midpoint").alias("q1"),
@@ -336,46 +349,73 @@ class DataProcessor:
             .collect()
             .row(0)
         )
-
-        if q1 > q99:
-            raise ValueError(f"{quantity!r} has identical 1% and 99% quantiles ({q1}). Cannot build histogram.")
-
-        bin_width = (q99 - q1) / 100.0
-
-        # ---------- 2.  Bin assignment ----------
-        bin_expr = (
-            pl.when(pl.col(quantity) < q1)
-            .then(-1)  # below-tail
-            .when(pl.col(quantity) > q99)
-            .then(100)  # above-tail
-            .otherwise(((pl.col(quantity) - q1) / (q99 - q1) * 100.0).floor().cast(pl.Int32))
-            .alias("bin")
+        minimum, maximum = (
+            combined_df.select(pl.col(quantity).min().alias("minimum"), pl.col(quantity).max().alias("maximum"))
+            .collect()
+            .row(0)
         )
+        if q1 == q99:
+            q1, q99 = minimum, maximum
+
+        is_degenerate = q1 == q99
+        bin_width = 1.0 if is_degenerate else (q99 - q1) / 100.0
+
+        # ---------- 2. Bin assignment ----------
+        if is_degenerate:
+            # avoid divide-by-zero while keeping the same control-flow
+            bin_expr = (
+                pl.when(pl.col(quantity) < q1)
+                .then(-1)
+                .when(pl.col(quantity) > q1)
+                .then(100)
+                .otherwise(0)  # everything equal to q1 ends up here
+                .alias("bin")
+            )
+        else:
+            bin_expr = (
+                pl.when(pl.col(quantity) < q1)
+                .then(-1)
+                .when(pl.col(quantity) > q99)
+                .then(100)
+                .otherwise(((pl.col(quantity) - q1 - 1e-9) / bin_width).floor().cast(pl.Int32))
+                .alias("bin")
+            )
 
         lf_binned = combined_df.with_columns(bin_expr)
 
-        # ---------- 3.  Aggregation ----------
+        # ---------- 3. Aggregate real counts ----------
         group_keys = ["upgrade", "upgrade_name", group_by, "bin"] if group_by else ["upgrade", "upgrade_name", "bin"]
+        counts = lf_binned.group_by(group_keys).agg(pl.count().alias("count"))
 
-        hist_lf = (
-            lf_binned.group_by(group_keys)
-            .agg(pl.count().alias("count"))
-            # ---------- 4.  Bin boundaries ----------
+        # ---------- 4. Build full grid ----------
+        full_bins = pl.Series("bin", [-1, *list(range(100)), 100], dtype=pl.Int32)
+
+        groups = combined_df.select("upgrade", "upgrade_name", *(group_by,) if group_by else ()).unique()
+
+        grid = groups.lazy().join(pl.DataFrame({"bin": full_bins}).lazy(), how="cross")
+
+        # ---------- 5. Merge counts → zerofill ----------
+        hist_full = (
+            grid.join(counts.lazy(), on=group_keys, how="left")
+            .with_columns(pl.col("count").fill_null(0).cast(pl.UInt32))
+            # ---------- 6. Bin boundaries ----------
             .with_columns(
+                # left edge
                 pl.when(pl.col("bin") == -1)
-                .then(float("-inf"))
+                .then(minimum)
                 .when(pl.col("bin") == 100)  # noqa: PLR2004
                 .then(q99)
-                .otherwise(pl.col("bin") * bin_width + q1)
+                .otherwise(q1 + pl.col("bin") * bin_width)
                 .alias("bin_left"),
+                # right edge
                 pl.when(pl.col("bin") == -1)
                 .then(q1)
                 .when(pl.col("bin") == 100)  # noqa: PLR2004
-                .then(float("inf"))
-                .otherwise((pl.col("bin") + 1) * bin_width + q1)
+                .then(maximum)
+                .otherwise(q1 + (pl.col("bin") + 1) * bin_width)
                 .alias("bin_right"),
             )
-            .sort(group_keys)
+            .with_columns(((pl.col("bin_left") + pl.col("bin_right")) / 2).alias("bin_center"))
             .select(
                 "upgrade",
                 "upgrade_name",
@@ -385,10 +425,11 @@ class DataProcessor:
                 "bin_right",
                 "count",
             )
+            .sort(group_keys)
+            .collect()
         )
 
-        # ---------- 5.  Materialise ----------
-        return hist_lf.collect()
+        return hist_full
 
     def prepare_data_for_box_plot(self, combined_df: pl.LazyFrame, quantity: str, group_by: str | None) -> pl.DataFrame:
         """

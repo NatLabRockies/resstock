@@ -70,9 +70,9 @@ quantities:
     sum: out.emissions.all_fuels.lrmer_mid_case_25.co2e_kg
 
 visualization_types:
+  - histogram
   - bar
   - box
-  - histogram
   - heatmap
 
 group_by:
@@ -91,7 +91,7 @@ value_types:
   - total
   - average
 
-upgrade_inclusion:
+building_inclusion:
   - all
   - applied_only
 

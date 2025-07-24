@@ -129,6 +129,8 @@ class HistogramPlotter(BasePlotter):
                     name=upgrade,
                     marker_color=self.theme.color_palette.get(upgrade),
                     showlegend=(r == 1 and c == 1),  # one legend entry per upgrade
+                    customdata=list(zip(sub["bin_left"].to_list(), sub["bin_right"].to_list())),  # type: ignore[arg-type]
+                    hovertemplate="%{customdata[0]:.1f} to %{customdata[1]:.1f}<br>Count: %{y}<extra></extra>",
                     row=r,
                     col=c,
                 )

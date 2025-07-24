@@ -19,6 +19,7 @@ import traceback
 from pathlib import Path
 from typing import Any
 
+import dash
 import dash_bootstrap_components as dbc  # type: ignore
 import plotly.graph_objects as go  # type: ignore
 import plotly.io as pio  # type: ignore
@@ -34,7 +35,7 @@ from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
 from resstockpostproc.standard_plots.schema.plot_spec import (
     ComparisonTypes,
     PlotSpec,
-    UpgradeInclusion,
+    BuildingInclusion,
     VacancyInclusion,
     ValueTypes,
     VizType,
@@ -122,6 +123,15 @@ def get_app() -> DashProxy:
     app.layout = dbc.Container(
         [
             dcc.Location(id="url", refresh=False),
+            # Modal to display invalid plot-spec errors
+            dbc.Modal(
+                [
+                    dbc.ModalHeader(dbc.ModalTitle("Alert")),
+                    dbc.ModalBody(id="invalid-spec-msg"),
+                ],
+                id="invalid-spec-modal",
+                is_open=False,
+            ),
             dbc.Row(
                 [
                     dbc.Col(html.H2("ResStock Dashboard"), width="auto"),
@@ -176,12 +186,15 @@ def get_app() -> DashProxy:
                                 dbc.Col(
                                     html.Div(
                                         [
-                                            html.Small("Upgrade inclusion", className="d-block fw-bold mb-1"),
-                                            dcc.RadioItems(
-                                                id="upgrade-inclusion",
-                                                options=[ui.value for ui in workflow.upgrade_inclusion],
-                                                value=workflow.upgrade_inclusion[0].value,
-                                                inline=True,
+                                            html.Small("Building Inclusion", className="d-block fw-bold mb-1"),
+                                            dcc.Dropdown(
+                                                id="building-inclusion",
+                                                options={
+                                                    "__all__": "All",
+                                                    "applied_all": "Applied in respective upgrades",
+                                                },
+                                                value="__all__",
+                                                clearable=False,
                                             ),
                                         ]
                                     ),
@@ -409,6 +422,17 @@ def get_app() -> DashProxy:
                     ),
                 ],
             ),
+            # Cached plot indicator anchored bottom-left
+            html.Div(
+                id="cache-indicator",
+                className="text-muted",
+                style={
+                    "fontSize": "0.75rem",
+                    "position": "fixed",
+                    "left": "10px",
+                    "bottom": "5px",
+                },
+            ),
             # Stores for clientside downloads
             dcc.Store(id="df-parquet", storage_type="memory"),
             dcc.Store(id="df-csv", storage_type="memory"),
@@ -501,10 +525,13 @@ def get_app() -> DashProxy:
     # ----------------------------------------------------------------------------
     @app.callback(
         Output("plot-graph", "figure"),
+        Output("cache-indicator", "children"),
         Output("df-parquet", "data"),
         Output("df-csv", "data"),
+        Output("invalid-spec-modal", "is_open"),
+        Output("invalid-spec-msg", "children"),
         Input("generate-btn", "n_clicks"),
-        Input("upgrade-inclusion", "value"),
+        Input("building-inclusion", "value"),
         Input("vacancy-inclusion", "value"),
         Input("comparison-type", "value"),
         Input("value-type", "value"),
@@ -521,7 +548,7 @@ def get_app() -> DashProxy:
     )
     def _generate_figure(
         _: int | None,
-        upgrade_incl: str,
+        building_incl: str,
         vacancy_incl: str,
         comp_type: str,
         value_type: str,
@@ -541,7 +568,7 @@ def get_app() -> DashProxy:
 
         # Build the PlotSpec from current UI selections
         plot_spec = _build_plot_spec(
-            upgrade_incl,
+            building_incl,
             vacancy_incl,
             comp_type,
             value_type,
@@ -550,19 +577,31 @@ def get_app() -> DashProxy:
             qgroup_name,
             quantity_val,
         )
+        if not plot_spec.is_valid():
+            warning = f"Invalid plot spec: {plot_spec.get_error()}"
+            logger.warning(warning)
+            _df, fig = _get_dummy_df_fig(warning)
+            # Open modal with message and return empty data strings
+            return dash.no_update, dash.no_update, dash.no_update, dash.no_update, True, warning
+
         logger.info(f"Generating figure for plot spec: {plot_spec}")
         try:
-            df, fig = _prepare_df_fig(plot_spec, fig_w, fig_h, legend_show, legend_pos, dynamic_mode, run_folder_val)
+            df, fig, cached = _prepare_df_fig(
+                plot_spec, fig_w, fig_h, legend_show, legend_pos, dynamic_mode, run_folder_val
+            )
         except Exception:  # noqa: BLE001 catch blind exception
             error = f"Failed to generate figure for plot spec: {plot_spec}. Error: {traceback.format_exc()}"
             logger.error(error)
             df, fig = _get_dummy_df_fig(error)
+            cached = False
 
         csv_str = df.write_csv(file=None)
         buf = io.BytesIO()
         df.write_parquet(buf)
         parquet_b64 = base64.b64encode(buf.getvalue()).decode("ascii")
-        return fig, parquet_b64, csv_str
+        # Close modal (if open) and leave its message unchanged
+        cache_text = "(loaded from cache)" if cached else "(generated dynamically)"
+        return fig, cache_text, parquet_b64, csv_str, False, dash.no_update
 
     # ----------------------------------------------------------------------------
     #   CALLBACK - dynamically restrict *Value type* options based on comparison-type
@@ -606,7 +645,7 @@ def get_app() -> DashProxy:
         Input("run-folder", "value"),
         State("group-by", "value"),
     )
-    def _update_group_by_options(run_folder: str, current_val: str | None):  # type: ignore[override]
+    def _update_group_by_options(run_folder: str, current_val: str | None):
         """Refresh the Group By dropdown to reflect the selected run's workflow configuration."""
 
         orchestrator = get_orchestrator_for_run(run_folder)
@@ -620,6 +659,31 @@ def get_app() -> DashProxy:
         value = current_val if current_val in options else "__none__"
         logger.info(f"Updating group by options: {options}")
         return options, value
+
+    # ----------------------------------------------------------------------------
+    #   CALLBACK - update Upgrade Inclusion dropdown when run folder changes
+    # ----------------------------------------------------------------------------
+    @app.callback(
+        Output("building-inclusion", "options"),
+        Output("building-inclusion", "value"),
+        Input("run-folder", "value"),
+        State("building-inclusion", "value"),
+    )
+    def _update_upgrade_inclusion_dd(run_folder: str, current_val: str):
+        """Refresh the Upgrade Inclusion dropdown based on available upgrades for the selected run."""
+        orchestrator = get_orchestrator_for_run(run_folder)
+        if orchestrator is None:
+            raise PreventUpdate
+
+        upgrades = [u for u in orchestrator.workflow.upgrades if u != 0]  # exclude baseline 0
+        opts = [
+            {"label": "All", "value": "__all__"},
+            {"label": "Applied in respective upgrades", "value": "applied_all"},
+            *[{"label": f"Applied in Upgrade {u}", "value": str(u)} for u in upgrades],
+        ]
+
+        new_val = current_val if current_val in {o["value"] for o in opts} else "__all__"
+        return opts, new_val
 
     # ----------------------------------------------------------------------------
     #   CALLBACKS - DOWNLOAD DATA & FIGURE
@@ -648,7 +712,7 @@ def get_app() -> DashProxy:
         return pl.DataFrame(), fig
 
     def _build_plot_spec(
-        upgrade_incl: str,
+        building_incl: str,
         vacancy_incl: str,
         comp_type: str,
         value_type: str,
@@ -667,13 +731,27 @@ def get_app() -> DashProxy:
             quantity = quantity_val
 
         # Force value-type to *average* when comparison-type is percent_savings
-        if ComparisonTypes(comp_type) == ComparisonTypes.percent_savings:
+        if ComparisonTypes(comp_type) in [ComparisonTypes.percent_savings] or VizType(viz_type_val) in [
+            VizType.box,
+            VizType.hist,
+            VizType.heatmap,
+        ]:
             vtype_enum = ValueTypes.average
         else:
             vtype_enum = ValueTypes(value_type)
 
+        if building_incl == "__all__":
+            upg_incl_enum = BuildingInclusion.all
+            upgrade_num = None
+        elif building_incl == "applied_all":
+            upg_incl_enum = BuildingInclusion.applied_only
+            upgrade_num = None
+        else:
+            upg_incl_enum = BuildingInclusion.applied_only
+            upgrade_num = int(building_incl)
+
         return PlotSpec(
-            upgrade_inclusion=UpgradeInclusion(upgrade_incl),
+            building_inclusion=upg_incl_enum,
             vacancy_inclusion=VacancyInclusion(vacancy_incl),
             comparison_type=ComparisonTypes(comp_type),
             value_type=vtype_enum,
@@ -681,6 +759,7 @@ def get_app() -> DashProxy:
             group_by=group_by,
             quantity=quantity,
             quantity_group_name=qgroup_name,
+            upgrade=upgrade_num,
         )
 
     def _prepare_df_fig(
@@ -698,6 +777,7 @@ def get_app() -> DashProxy:
         if not run_folder_val:
             raise PreventUpdate
         orchestrator = get_orchestrator_for_run(run_folder_val)
+        loaded_from_file = False  # Track if we used cached artefacts
         if not dynamic_mode:
             # Construct expected file locations using the OutputManager schema
             path_seg, name = spec.get_path_and_name()
@@ -710,6 +790,7 @@ def get_app() -> DashProxy:
                     fig = go.Figure(fig_dict)
                     df = pl.read_parquet(str(parquet_path), glob=False)
                     logger.info(f"Loaded plot from {fig_path}")
+                    loaded_from_file = True  # mark that we loaded cached plot
                 except Exception:  # noqa: BLE001 catch blind exception
                     logger.warning(
                         f"Failed to load data/figure from {fig_path} or {parquet_path} "
@@ -728,7 +809,7 @@ def get_app() -> DashProxy:
                 user_warning = "This old run cannot be viewed in the new dashboard"
                 user_warning += "\nPlease view it in the old dashboard or re-run the flow."
                 df, fig = _get_dummy_df_fig(user_warning)
-                return df, fig
+                return df, fig, False
             df = orchestrator.processor.prepare_data_for_plot(spec)
             plotter = PlotOrchestrator.get_plotter(spec.visualization_type)
             fig = plotter.create_plot(df, spec)
@@ -757,7 +838,7 @@ def get_app() -> DashProxy:
         path_seg, name = spec.get_path_and_name()
         if orchestrator is not None:
             orchestrator.out_mgr.save_plot(fig, path_seg, df, name)
-        return df, fig
+        return df, fig, loaded_from_file
 
     @app.callback(
         Output("download-pdf", "data"),

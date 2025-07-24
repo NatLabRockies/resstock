@@ -67,7 +67,7 @@ class QuantityGroup(NoExtraModel):
     sum: str | None = Field(None, description="Column name for the sum quantity")
 
 
-class UpgradeInclusion(str, Enum):
+class BuildingInclusion(str, Enum):
     """Different ways to include a quantity in a plot."""
 
     all = "all"
@@ -105,7 +105,7 @@ class WorkflowConfig(NoExtraSettings):
     visualization_types: list[VizType] = Field(description="List of visualization types to generate")
     comparison_types: list[ComparisonTypes] = Field(description="List of comparison types to generate")
     value_types: list[ValueTypes] = Field(description="List of value types to generate")
-    upgrade_inclusion: list[UpgradeInclusion] = Field(description="Upgrade inclusion type")
+    building_inclusion: list[BuildingInclusion] = Field(description="Building inclusion type")
     vacancy_inclusion: list[VacancyInclusion] = Field(description="Vacancy inclusion type")
     storage_backend: Literal["minio", "filesystem"] = Field(description="Storage backend", default="filesystem")
 

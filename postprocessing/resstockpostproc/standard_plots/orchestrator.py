@@ -71,26 +71,29 @@ class PlotOrchestrator:
 
         # Get all configuration elements for iteration
         # Create all possible combinations of parameters
+        upgrades = [None, *self.workflow.upgrades]
         all_combinations = list(
             product(
                 self.workflow.comparison_types,
-                self.workflow.upgrade_inclusion,
+                self.workflow.building_inclusion,
                 self.workflow.vacancy_inclusion,
                 self.workflow.visualization_types,
                 [None, *self.workflow.group_by],
                 self.workflow.quantities,
                 self.workflow.value_types,
+                upgrades,
             )
         )
         plots_to_gen: list[PlotSpec] = []
         for combination in all_combinations:
             comparison_type = combination[0]
-            upgrade_inclusion = combination[1]
+            building_inclusion = combination[1]
             vacancy_inclusion = combination[2]
             visualization_type = combination[3]
             group_by = combination[4]
             quantity_group: QuantityGroup = combination[5].model_copy()
             value_type = combination[6]
+            upgrade = combination[7]
 
             # Usually, visualize each constituent quantity and the sum (if any) separately
             # Prepare a mutable list of quantities, starting with individual constituents and optional sum
@@ -101,13 +104,14 @@ class PlotOrchestrator:
             for quantity in quantities:
                 plot_spec = PlotSpec(
                     comparison_type=comparison_type,
-                    upgrade_inclusion=upgrade_inclusion,
+                    building_inclusion=building_inclusion,
                     vacancy_inclusion=vacancy_inclusion,
                     visualization_type=visualization_type,
                     value_type=value_type,
                     group_by=group_by,
                     quantity=quantity,
                     quantity_group_name=quantity_group.name,
+                    upgrade=upgrade,
                 )
                 if not plot_spec.is_valid():
                     continue
