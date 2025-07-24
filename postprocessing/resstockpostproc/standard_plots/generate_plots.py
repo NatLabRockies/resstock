@@ -36,6 +36,11 @@ def main():
         ),
     )
     parser.add_argument(
+        "--overwrite",
+        action="store_true",
+        help="Overwrite existing output files",
+    )
+    parser.add_argument(
         "--max-plots",
         type=int,
         help="Maximum number of plots to generate",
@@ -62,7 +67,7 @@ def main():
         sys.exit(1)
 
     # Create the orchestrator and generate plots
-    orchestrator = PlotOrchestrator(config_path, output_types=output_types)
+    orchestrator = PlotOrchestrator(config_path, output_types=output_types, overwrite=args.overwrite)
     orchestrator.generate_all_plots(max_plots_to_gen=args.max_plots)
     orchestrator.print_time_spent()
     orchestrator.out_mgr.print_time_spent()

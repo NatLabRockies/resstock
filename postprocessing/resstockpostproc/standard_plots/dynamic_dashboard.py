@@ -84,9 +84,10 @@ def get_app(logger) -> DashProxy:
             new_workflow.run_name = snapshot["run_name"]
             new_workflow.upgrades = snapshot["upgrades"]
             new_workflow.upgrade_names = snapshot["upgrade_names"]
-            # Replace default group_by with the list from the snapshot so the UI matches the run configuration
+            # Support both what's in the default list and what's in the snapshot
             new_workflow.group_by.extend([g for g in snapshot["group_by"] if g not in new_workflow.group_by])
-            _orchestrators[run_folder] = PlotOrchestrator(new_workflow)
+            # will never overwrite existing files but can save new files/plots
+            _orchestrators[run_folder] = PlotOrchestrator(new_workflow, overwrite=False)
 
         return _orchestrators[run_folder]
 

@@ -21,7 +21,10 @@ class OutputManager:
     """
 
     def __init__(
-        self, workflow: WorkflowConfig, output_types: list[Literal["svg", "html", "parquet", "json", "csv"]] = []
+        self,
+        workflow: WorkflowConfig,
+        output_types: list[Literal["svg", "html", "parquet", "json", "csv"]] = [],
+        overwrite: bool = False,
     ):
         self.base_dir = Path(workflow.output_dir).expanduser().resolve() / "plots" / workflow.run_name
         self.base_dir.mkdir(parents=True, exist_ok=True)
@@ -29,12 +32,13 @@ class OutputManager:
         if not output_types:  # types needed by the dashboard
             output_types = ["json", "parquet", "html"]
         self.output_types = output_types
+        self.overwrite = overwrite
         self.write_workflow_snapshot(workflow)
 
     def write_workflow_snapshot(self, workflow: WorkflowConfig) -> None:
         """Writes a snapshot of the workflow used to generate the plots to a JSON file."""
         config_file = self.base_dir / "workflow_snapshot.json"
-        if config_file.exists():
+        if config_file.exists():  # never overwrite the snapshot
             return
         config_file.write_text(workflow.model_dump_json(indent=2), encoding="utf-8")
 
@@ -87,8 +91,11 @@ class OutputManager:
         start_time = time.time()
         html_dir = output_dir / "html"
         html_dir.mkdir(exist_ok=True)
+        file_path = html_dir / f"{file_name}.html"
+        if not self.overwrite and file_path.exists():
+            return
         fig.write_html(
-            html_dir / f"{file_name}.html",
+            file_path,
             include_plotlyjs="cdn",
             include_mathjax="cdn",
             config={
@@ -105,28 +112,40 @@ class OutputManager:
         start_time = time.time()
         svg_dir = output_dir / "svg"
         svg_dir.mkdir(exist_ok=True)
-        fig.write_image(svg_dir / f"{file_name}.svg")
+        file_path = svg_dir / f"{file_name}.svg"
+        if not self.overwrite and file_path.exists():
+            return
+        fig.write_image(file_path)
         self.time_spent["svg"] += time.time() - start_time
 
     def write_parquet(self, df: pl.DataFrame, output_dir: Path, file_name: str) -> None:
         start_time = time.time()
         data_dir = output_dir / "data"
         data_dir.mkdir(exist_ok=True, parents=True)
-        df.write_parquet(data_dir / f"{file_name}.parquet")
+        file_path = data_dir / f"{file_name}.parquet"
+        if not self.overwrite and file_path.exists():
+            return
+        df.write_parquet(file_path)
         self.time_spent["parquet"] += time.time() - start_time
 
     def write_json(self, fig: Figure, output_dir: Path, file_name: str) -> None:
         start_time = time.time()
         fig_dir = output_dir / "figure_json"
         fig_dir.mkdir(exist_ok=True)
-        fig.write_json(fig_dir / f"{file_name}.json")
+        file_path = fig_dir / f"{file_name}.json"
+        if not self.overwrite and file_path.exists():
+            return
+        fig.write_json(file_path)
         self.time_spent["json"] += time.time() - start_time
 
     def write_csv(self, df: pl.DataFrame, output_dir: Path, file_name: str) -> None:
         start_time = time.time()
         data_dir = output_dir / "data"
         data_dir.mkdir(exist_ok=True, parents=True)
-        df.write_csv(data_dir / f"{file_name}.csv")
+        file_path = data_dir / f"{file_name}.csv"
+        if not self.overwrite and file_path.exists():
+            return
+        df.write_csv(file_path)
         self.time_spent["csv"] += time.time() - start_time
 
     def get_file_path(

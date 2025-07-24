@@ -30,6 +30,7 @@ class PlotOrchestrator:
         self,
         config: str | dict | WorkflowConfig,
         output_types: list[Literal["svg", "html", "parquet", "json", "csv"]] = [],
+        overwrite: bool = False,
     ):
         """
         Initialize the orchestrator
@@ -55,7 +56,7 @@ class PlotOrchestrator:
         start_time = time.time()
         self.processor = DataProcessor(self.workflow)
         self.data_loading_time = time.time() - start_time
-        self.out_mgr = OutputManager(self.workflow, output_types=output_types)
+        self.out_mgr = OutputManager(self.workflow, output_types=output_types, overwrite=overwrite)
 
         self.progress_artifact_id: UUID = create_progress_artifact(  # type: ignore[assignment]
             progress=0,
