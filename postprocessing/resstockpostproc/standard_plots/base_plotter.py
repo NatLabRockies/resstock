@@ -6,6 +6,7 @@ Provides shared helpers (theme access, column guards, etc.) so concrete plotters
 from abc import ABC
 
 import polars as pl
+from plotly.graph_objects import Figure
 
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.theme import ThemeManager
@@ -32,6 +33,6 @@ class BasePlotter(ABC):
     # ------------------------------------------------------------------
     # Mandatory interface
     # ------------------------------------------------------------------
-    def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec):
+    def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec) -> Figure:
         """Placeholder fallback; subclasses typically override for convenience."""
         raise NotImplementedError("Subclasses should implement `create_plot` or use specific helpers.")

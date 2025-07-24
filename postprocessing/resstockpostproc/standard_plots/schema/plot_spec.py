@@ -67,6 +67,8 @@ class PlotSpec(BaseModel):
             return "Box plots cannot be generated from stacked quantities"
         if self.visualization_type == VizType.heatmap and not isinstance(self.quantity, QuantityGroup):
             return "Heatmap cannot be generated from stacked quantities"
+        if self.upgrade == 0:
+            return "Baseline can't be passed as an upgrade to plot."
         return ""
 
     def is_valid(self) -> bool:

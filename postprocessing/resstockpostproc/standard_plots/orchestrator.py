@@ -129,7 +129,11 @@ class PlotOrchestrator:
             path_seg, name = plot_spec.get_path_and_name()
             plotter = PlotOrchestrator.get_plotter(plot_spec.visualization_type)
             start_time = time.time()
-            fig = plotter.create_plot(df, plot_spec)
+            try:
+                fig = plotter.create_plot(df, plot_spec)
+            except Exception as e:
+                print(f"Error creating plot for {plot_spec}: {e}")
+                raise
             self.figure_creation_time += time.time() - start_time
             start_time = time.time()
             self.out_mgr.save_plot(fig, path_seg, df, name)

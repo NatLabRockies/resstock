@@ -317,11 +317,15 @@ jobs:
         run: |
           uv run pytest resstockpostproc/standard_plots/tests -q
 
-      - name: Generate all plots
+      - name: Generate some plots (FAIL FAST)
+        working-directory: postprocessing
+        run: |
+          uv run python resstockpostproc/standard_plots/generate_plots.py --quantity_group=unmet_hours
+
+      - name: Generate rest of the plots
         working-directory: postprocessing
         run: |
           uv run python resstockpostproc/standard_plots/generate_plots.py
-
       - name: Upload plots
         uses: actions/upload-artifact@v4
         with:

@@ -13,6 +13,7 @@ from pathlib import Path
 # Import dependencies that might be needed
 # Import our components
 from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
+from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
 
 
 def main():
@@ -33,6 +34,14 @@ def main():
             "Output file types to generate (svg, html, parquet, json, csv). "
             "May be specified multiple times or as a comma-separated list."
             "Defaults to [json, parquet, html] if not specified."
+        ),
+    )
+    parser.add_argument(
+        "--quantity_group",
+        action="append",
+        help=(
+            "Name of a quantity group to include in plot generation. "
+            "May be specified multiple times. If omitted, all quantity groups in the workflow are processed."
         ),
     )
     parser.add_argument(
@@ -66,8 +75,27 @@ def main():
         print(f"Error: Configuration file not found at {config_path}")
         sys.exit(1)
 
+    # Load workflow configuration so we can optionally filter quantity groups
+    workflow = WorkflowConfig.from_yaml(config_path)
+
+    # Apply quantity group filter if provided
+    if args.quantity_group:
+        selected_set = set(args.quantity_group)
+        print(f"Selected quantity groups: {selected_set}")
+        filtered_qs = [q for q in workflow.quantities if q.name in selected_set]
+        if not filtered_qs:
+            print(
+                "Error: None of the specified --quantity_group values match the quantities defined in the workflow."
+                f"Available quantity groups: {', '.join(q.name for q in workflow.quantities)}"
+            )
+            sys.exit(1)
+        workflow.quantities = filtered_qs
+        missing = selected_set - {q.name for q in filtered_qs}
+        if missing:
+            print(f"Warning: The following quantity groups were not found and will be ignored: {', '.join(missing)}")
+
     # Create the orchestrator and generate plots
-    orchestrator = PlotOrchestrator(config_path, output_types=output_types, overwrite=args.overwrite)
+    orchestrator = PlotOrchestrator(workflow, output_types=output_types, overwrite=args.overwrite)
     orchestrator.generate_all_plots(max_plots_to_gen=args.max_plots)
     orchestrator.print_time_spent()
     orchestrator.out_mgr.print_time_spent()
