@@ -604,6 +604,7 @@ def get_app(logger) -> DashProxy:
 
         # Preserve the currently selected value if still valid, else default to "None"
         value = current_val if current_val in options else "__none__"
+        logger.info(f"Updating group by options: {options}")
         return options, value
 
     # ----------------------------------------------------------------------------
