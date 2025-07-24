@@ -296,12 +296,8 @@ class DataProcessor:
         if plot_spec.vacancy_inclusion == VacancyInclusion.occupied_only:
             combined_df = combined_df.filter(pl.col("in.vacancy_status") == "Occupied")
 
-        if (
-            plot_spec.comparison_type in [ComparisonTypes.savings, ComparisonTypes.percent_savings]
-            or plot_spec.upgrade_inclusion == UpgradeInclusion.applied_only
-        ):
-            # remove baseline for savings calculation or applied only
-            # TODO: support showing baseline when using applied_only
+        if plot_spec.comparison_type in [ComparisonTypes.savings, ComparisonTypes.percent_savings]:
+            # remove baseline for savings calculation
             combined_df = combined_df.filter(pl.col("upgrade") != 0)
 
         if plot_spec.visualization_type == VizType.box:

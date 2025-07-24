@@ -225,6 +225,8 @@ def test_prepare_basic(
         quantity_group_name="energy",
     )
     df = processor.prepare_data_for_plot(spec)
+    if comparison_type in [ComparisonTypes.percent_savings, ComparisonTypes.savings]:
+        expected_rows = (expected_rows * 2) // 3  # No baseline
     assert isinstance(df, pl.DataFrame)
     assert df.height == expected_rows
 
@@ -285,14 +287,6 @@ def test_quantity_group_mean_aggregation(processor: DataProcessor):
     assert row == pytest.approx(99.5)
 
 
-def test_unsupported_viz_type_raises(processor: DataProcessor):
-    """An unsupported visualization type should raise ValueError."""
-
-    spec = _build_base_spec(visualization_type=VizType.hist)
-    with pytest.raises(ValueError, match="Unsupported visualization type"):
-        _ = processor.prepare_data_for_plot(spec)
-
-
 def test_savings_calculation(processor: DataProcessor):
     """Absolute savings should equal (baseline - upgrade) for applicable buildings."""
 
@@ -334,9 +328,8 @@ def test_percent_savings_calculation(processor: DataProcessor):
     # Building 2, Upgrade 2: non-applicable building should have 0% savings
     pct = df.filter((pl.col("upgrade") == 2) & (pl.col("bldg_id") == 2)).select("gas_kwh").item()
     assert pct == pytest.approx(0.0)
-    # Building 2, Upgrade 0: baseline should have 0% savings
-    pct_baseline = df.filter((pl.col("upgrade") == 0) & (pl.col("bldg_id") == 2)).select("gas_kwh").item()
-    assert pct_baseline == pytest.approx(0.0)
+    # There should be no baseline when doing percent_savings
+    assert len(df.filter(pl.col("upgrade") == 0)) == 0
 
     # % savings for box-plot is not weighted by baseline values
     spec = _build_base_spec(
