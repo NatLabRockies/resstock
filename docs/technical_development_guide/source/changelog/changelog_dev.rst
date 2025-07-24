@@ -7,6 +7,89 @@ Development Changelog
     :released: pending
 
     .. change::
+        :tags: postprocessing, bugfix
+        :pullreq: 1439
+
+        **Date**: 2025-07-08
+
+        Title:
+        Postprocessing output data type fix
+
+        Description:
+        A bug in resstockpostprocessing was making the datatype of applicability to be boolean in baseline
+        but string in upgrades for the parquet files. This was causing the Athena query to fail. This PR fixes
+        the bug.
+
+        Assignees: Rajendra Adhikari
+
+    .. change::
+        :tags: bugfix, hvac
+        :pullreq: 1441, 1254
+
+        **Date**: 2025-07-08
+
+        Title:
+        Fix for BA seasons always enabled
+
+        Description:
+        A bug in the code does not allow auto seasons to be turned off. The intended behavior is to run without auto seasons. 
+        This pull request fixes this issue.
+
+        resstock-estimation: `pull request 416 <https://github.com/NREL/resstock-estimation/pull/416>`_
+
+        Assignees: Joe Robertson
+
+
+    .. change::
+        :tags: standard data release
+        :pullreq: 1429, 1197
+
+        **Date**: 2025-06-18
+
+        Title:
+        Use HVAC Detailed Performance Option for a Ducted ASHP
+
+        Description:
+        Introduce an ASHP upgrade measure for SDR that is a typical cold climate ducted air source heat pump with detailed performance data. This pull request uses a couple detailed HVAC performance options to define the curves for a ducted version of a variable speed cold climate ASHP. Options are added to `options_lookup.tsv` and the cold climate ASHP upgrade is added to `sdr_upgrades_tmy3.yml`.
+
+        Assignees: Philip White, Joe Robertson, Anthony Fontanini
+
+
+    .. change::
+        :tags: standard data release
+        :pullreq: 1429
+
+        **Date**: 2025-06-11
+
+        Title:
+        Clean up the SDR yaml file
+
+        Description:
+        Clean up the SDR yaml file by moving anchors to the reference section of the yaml. Remove non-SDR upgrades for the 9/30/2025 release.
+
+        Assignees: Anthony Fontanini
+
+
+    .. change::
+        :tags: workflow, feature
+        :pullreq: 1408
+        :tickets: 1154
+
+        **Date**: 2025-06-17
+
+        Title:
+        Use Autosizing Limits and Maintain Duct System Curve
+
+        Description:
+        For ducted heat pump upgrades, adds the ability to limit the autosized heating/cooling capacity based on the existing duct system, and adjust the blower fan efficiency to maintain the duct system curve.
+        This feature is enabled by using setting a new ResStockArguments measure argument `heat_pump_sizing_is_duct_limited=true` for HVAC Heating Efficiency options.
+
+        OpenStudio-HPXML: `pull request 1584 <https://github.com/NREL/OpenStudio-HPXML/pull/1584>`_
+
+        Assignees: Joe Robertson
+
+
+    .. change::
         :tags: feature, standard data release
         :pullreq: 1398, 1412
 
@@ -38,15 +121,16 @@ Development Changelog
 
     .. change::
         :tags: standard data release
-        :pullreq: 1372
+        :pullreq: 1372, 1420
 
-        **Date**: 2025-04-30
+        **Date**: 2025-05-28
 
         Title:
         Two Speed and Variable Speed Geothermal Heat Pumps
 
         Description:
-        Add upgrades to the SDR yml file for single speed, dual speed (w/out light touch, w/light touch, and w/light touch + appliance electrification), and variable speed geothermal heat pumps.
+        Add/modify upgrades defined in the SDR yml file for single-speed, dual-speed (with and without light touch envelope), and variable-speed geothermal heat pumps (GHPs).
+        Use the same package apply logic as ASHP, but only for dwelling units with ducts.
 
         OpenStudio-HPXML: `pull request 1878 <https://github.com/NREL/OpenStudio-HPXML/pull/1878>`_
 
@@ -117,7 +201,7 @@ Development Changelog
 
  
     .. change::
-        :tags: bug fix
+        :tags: bugfix
         :pullreq: 1362
 
         **Date**: 2025-04-18

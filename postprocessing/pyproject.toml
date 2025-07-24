@@ -1,0 +1,59 @@
+[project]
+name = "resstockpostproc"
+version = "0.1.0" # This should be replaced with the actual version from __version__.py
+description = "Placeholder description" # This should be replaced with the actual description from __version__.py
+authors = [
+    { name = "NREL", email = "resstock@nrel.gov" } # Replace with actual author and email from __version__.py
+]
+readme = "README.md"
+license = { text = "See top level LICENSE.txt file for license terms." } # Replace with actual license from __version__.py
+keywords = ["resstock", "postprocessing"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.11",
+]
+requires-python = ">=3.11"
+dependencies = [
+    "pandas",
+    "geopandas",
+    "plotly",
+    "pyarrow",
+    "fsspec",
+    "s3fs",
+    "polars",
+    "buildstock_query @ git+https://github.com/NREL/buildstock-query@main",
+    "kaleido==0.2.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/NREL/resstock" # Replace with actual URL from __version__.py
+
+[project.scripts]
+resstockpostproc = "resstockpostproc.entry_points:main"
+
+[tool.setuptools.packages.find]
+include = ["resstockpostproc"]
+
+[tool.setuptools.package-data]
+resstockpostproc = [
+    "resources/gisdata/*.geojson",
+    "resources/gisdata/*.csv",
+    "resources/publication/sdr_column_definitions.csv"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "autopep8",
+    "ipykernel",
+]
+
+[tool.hatch.metadata]  # To allow direct references to git dependencies
+allow-direct-references = true
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
