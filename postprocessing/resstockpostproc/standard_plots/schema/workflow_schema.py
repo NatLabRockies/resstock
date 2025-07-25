@@ -24,6 +24,8 @@ from prefect.runtime import flow_run
 from pydantic import BaseModel, Field, ValidationInfo, field_validator
 from pydantic_settings import BaseSettings
 
+from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEnduses
+
 
 class NoExtraModel(BaseModel):
     class Config:
@@ -65,6 +67,43 @@ class QuantityGroup(NoExtraModel):
     name: str = Field(description="Name of the quantity group")
     constituents: list[str] = Field(description="List of constituent columns")
     sum: str | None = Field(None, description="Column name for the sum quantity")
+
+    @classmethod
+    def combine_quantity_groups(cls, quantity_groups: list[QuantityGroup], new_name: str) -> QuantityGroup:
+        """
+        Combine multiple quantity groups into a single quantity group.
+
+        Args:
+            quantity_groups: List of quantity groups to combine
+            new_name: Name of the new quantity group
+
+        Returns:
+            New quantity group with combined constituents. Sum is set to None.
+        """
+        constituents = [constituent for qg in quantity_groups for constituent in qg.constituents]
+        return cls(name=new_name, constituents=constituents, sum=None)
+
+    @classmethod
+    def resolve_quantities(cls, quantities: list[str]) -> list[str]:
+        """
+        Resolve the quantities to their constituent columns using EnduseGroupToEnduses.
+
+        Args:
+            quantities: List of quantities to resolve, consisting of either the raw column names or quantity group names
+                defined in EnduseGroupToEnduses
+
+        Returns:
+            List of resolved quantities, which are the raw column names available in the dataset.
+        """
+        resolvable_quantities: set[str] = set(EnduseGroupToEnduses.keys()).intersection(set(quantities))
+        if not resolvable_quantities:
+            return quantities
+
+        resolved_quantities = [q for q in quantities if q not in resolvable_quantities]
+        for quantity in resolvable_quantities:
+            resolved_quantities.extend(EnduseGroupToEnduses[quantity])
+
+        return list(set(resolved_quantities))
 
 
 class BuildingInclusion(str, Enum):
@@ -144,6 +183,11 @@ class WorkflowConfig(NoExtraSettings):
         if len(v) != len(info.data["upgrades"]):
             raise ValueError("Number of upgrade names must match number of upgrades")
         return v
+
+    def model_post_init(self, __context):
+        everything = QuantityGroup.combine_quantity_groups(self.quantities, "Everything")
+        everything.constituents = QuantityGroup.resolve_quantities(everything.constituents)
+        self.quantities.append(everything)
 
 
 default_config_path = str(Path(__file__).resolve().parents[1] / "workflow.yaml")

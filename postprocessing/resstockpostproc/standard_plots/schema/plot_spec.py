@@ -69,6 +69,11 @@ class PlotSpec(BaseModel):
             return "Heatmap cannot be generated from stacked quantities"
         if self.upgrade == 0:
             return "Baseline can't be passed as an upgrade to plot."
+        # if self.quantity_group_name == "Everything":
+        #     if self.visualization_type != VizType.heatmap:
+        #         return "Everything quantity group can only be used in a heatmap."
+        #     if not isinstance(self.quantity, QuantityGroup):
+        #         return "Everything quantity group can only be visualized together in a heatmap."
         return ""
 
     def is_valid(self) -> bool:

@@ -9,15 +9,15 @@ upgrade_names:
   - "Upgrade 1"
   - "Upgrade 2"
 quantities:
-  - name: total_energy_consumption
+  - name: Fuel Totals
     constituents:
-      - Generation, Electricity
       - out.electricity.total.energy_consumption.kwh
       - out.natural_gas.total.energy_consumption.kwh
       - out.propane.total.energy_consumption.kwh
       - out.fuel_oil.total.energy_consumption.kwh
+      - Generation, Electricity
     sum: out.site_energy.total.energy_consumption.kwh
-  - name: End Use Groups
+  - name: All Fuels End Uses
     constituents:
       - Generation, Electricity
       - Electric Vehicle Charging, Electricity
@@ -50,24 +50,85 @@ quantities:
       - Appliances, Natural Gas
       - Appliances, Electricity
     sum: out.site_energy.total.energy_consumption.kwh
-  - name: bills
+  - name: Electricity End Uses
+    constituents:
+      - Generation, Electricity
+      - Electric Vehicle Charging, Electricity
+      - Hot Water, Electricity
+      - Heating Heat Pump Backup, Electricity
+      - Heating Fans Pumps, Electricity
+      - Heating, Electricity
+      - Cooling Fans Pumps, Electricity
+      - Cooling, Electricity
+      - Lighting, Electricity
+      - Vent Fan, Electricity
+      - Miscellaneous, Electricity
+      - Appliances, Electricity
+    sum: out.electricity.total.energy_consumption.kwh
+  - name: Natural Gas End Uses
+    constituents:
+      - Hot Water, Natural Gas
+      - Heating Heat Pump Backup, Natural Gas
+      - Heating, Natural Gas
+      - Lighting, Natural Gas
+      - Miscellaneous, Natural Gas
+      - Appliances, Natural Gas
+    sum: out.natural_gas.total.energy_consumption.kwh
+  - name: Propane End Uses
+    constituents:
+      - Hot Water, Propane
+      - Heating Heat Pump Backup, Propane
+      - Heating, Propane
+      - Lighting, Propane
+      - Miscellaneous, Propane
+      - Appliances, Propane
+    sum: out.propane.total.energy_consumption.kwh
+  - name: Fuel Oil End Uses
+    constituents:
+      - Hot Water, Fuel Oil
+      - Heating Heat Pump Backup, Fuel Oil
+      - Heating, Fuel Oil
+      - Lighting, Fuel Oil
+      - Miscellaneous, Fuel Oil
+      - Appliances, Fuel Oil
+    sum: out.fuel_oil.total.energy_consumption.kwh
+  - name: Bills
     constituents:
       - out.bills.electricity.usd
       - out.bills.natural_gas.usd
       - out.bills.fuel_oil.usd
       - out.bills.propane.usd
     sum: out.bills.all_fuels.usd
-  - name: unmet_hours
+  - name: Unmet Hours
     constituents:
       - out.unmet_hours.cooling.hour
       - out.unmet_hours.heating.hour
-  - name: mid_case_emissions
+  - name: Emissions
     constituents:
       - out.emissions.electricity.lrmer_mid_case_25.co2e_kg
       - out.emissions.natural_gas.lrmer_mid_case_25.co2e_kg
       - out.emissions.propane.lrmer_mid_case_25.co2e_kg
       - out.emissions.fuel_oil.lrmer_mid_case_25.co2e_kg
     sum: out.emissions.all_fuels.lrmer_mid_case_25.co2e_kg
+  - name: Hot Water Usage
+    constituents:
+      - out.hot_water.clothes_washer.gal
+      - out.hot_water.dishwasher.gal
+      - out.hot_water.distribution_waste.gal
+      - out.hot_water.fixtures.gal
+  - name: Energy Delivered
+    constituents:
+      - out.load.cooling.energy_delivered.kbtu
+      - out.load.heating.energy_delivered.kbtu
+      - out.load.hot_water.energy_delivered.kbtu
+  - name: Peak Power
+    constituents:
+      - out.electricity.summer.peak.kw
+      - out.electricity.winter.peak.kw
+  - name: Peak Load
+    constituents:
+      - out.load.cooling.peak.kbtu_hr
+      - out.load.heating.peak.kbtu_hr
 
 visualization_types:
   - histogram

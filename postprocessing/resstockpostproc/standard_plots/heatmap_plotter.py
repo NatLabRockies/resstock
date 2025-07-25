@@ -239,7 +239,7 @@ class HeatmapPlotter(BasePlotter):
 
         # Set empty axis titles
         fig.update_xaxes(title_text="")
-        fig.update_yaxes(title_text="")
+        fig.update_yaxes(title_text="", type="category", tickmode="array", tickvals=constituent_cols)
         fig.update_layout(height=900)
         return fig
 

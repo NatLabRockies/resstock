@@ -313,47 +313,117 @@ def get_app() -> DashProxy:
                         dbc.Card(
                             dbc.CardBody(
                                 [
-                                    html.Small("Figure width (px)", className="d-block fw-bold mb-1"),
-                                    dcc.Slider(
-                                        id="fig-width",
-                                        min=400,
-                                        max=2000,
-                                        step=100,
-                                        value=1000,
-                                        marks={i: str(i) for i in range(400, 2001, 400)},
+                                    # ---------------- FIGURE ADJUSTMENT BLOCK ----------------
+                                    html.Div(
+                                        [
+                                            html.Small("Figure adjustment", className="d-block fw-bold mb-1"),
+                                            dbc.Checklist(
+                                                id="fig-editable",
+                                                options=[{"label": "Edit text", "value": "editable"}],
+                                                value=[],
+                                                switch=True,
+                                                className="mb-2",
+                                            ),
+                                            html.Small("Width (px)", className="d-block fw-bold mb-1"),
+                                            dcc.Slider(
+                                                id="fig-width",
+                                                min=400,
+                                                max=2500,
+                                                step=100,
+                                                value=1000,
+                                                marks={i: str(i) for i in range(400, 2501, 400)},
+                                            ),
+                                            html.Small("Height (px)", className="d-block fw-bold mb-1"),
+                                            dcc.Slider(
+                                                id="fig-height",
+                                                min=300,
+                                                max=1800,
+                                                step=50,
+                                                value=700,
+                                                marks={i: str(i) for i in range(300, 1801, 300)},
+                                            ),
+                                        ],
+                                        id="figure-adjustment-box",
+                                        className="border rounded p-2 mb-2",
                                     ),
-                                    html.Br(),
-                                    html.Small("Figure height (px)", className="d-block fw-bold mb-1"),
-                                    dcc.Slider(
-                                        id="fig-height",
-                                        min=300,
-                                        max=1200,
-                                        step=50,
-                                        value=700,
-                                        marks={i: str(i) for i in range(300, 1201, 300)},
+                                    # ---------------- LEGEND ADJUSTMENT BLOCK ----------------
+                                    html.Div(
+                                        [
+                                            html.Small("Legend adjustment", className="d-block fw-bold mb-1"),
+                                            dbc.Checklist(
+                                                id="legend-show",
+                                                options=[{"label": "Show legend", "value": "show"}],
+                                                value=["show"],
+                                                switch=True,
+                                                className="mb-2",
+                                            ),
+                                            html.Small("Legend position", className="d-block fw-bold mb-1"),
+                                            dcc.Dropdown(
+                                                id="legend-position",
+                                                options={
+                                                    "right": "Right (outside)",
+                                                    "bottom": "Bottom (outside)",
+                                                    "tr": "Top-right (inside)",
+                                                    "br": "Bottom-right (inside)",
+                                                    "tl": "Top-left (inside)",
+                                                    "bl": "Bottom-left (inside)",
+                                                },
+                                                value="right",
+                                                clearable=False,
+                                                className="mb-2",
+                                            ),
+                                        ],
+                                        id="legend-adjustment-box",
+                                        className="border rounded p-2 mb-2",
                                     ),
-                                    dbc.Checklist(
-                                        id="legend-show",
-                                        options=[{"label": "Show legend", "value": "show"}],
-                                        value=["show"],
-                                        switch=True,
-                                        className="mb-2",
+                                    # ---------------- FACET ADJUSTMENT BLOCK ----------------
+                                    html.Div(
+                                        [
+                                            html.Small(
+                                                "Facet adjustment",
+                                                className="d-block fw-bold mb-1",
+                                            ),
+                                            html.Div(
+                                                dbc.Checklist(
+                                                    id="facet-vertical",
+                                                    options=[{"label": "Orientation", "value": "vertical"}],
+                                                    value=[],
+                                                    switch=True,
+                                                ),
+                                                id="facet-title-orientation-div",
+                                                className="mb-2",
+                                                style={"display": "none"},
+                                            ),
+                                            html.Div(
+                                                [
+                                                    html.Small(
+                                                        "Text wrap width",
+                                                        className="d-block fw-bold mb-1",
+                                                    ),
+                                                    dcc.Slider(
+                                                        id="facet-wrap-width",
+                                                        min=5,
+                                                        max=80,
+                                                        step=5,
+                                                        value=20,
+                                                        marks={i: str(i) for i in range(5, 81, 5)},
+                                                        tooltip={
+                                                            "placement": "bottom",
+                                                            "always_visible": False,
+                                                        },
+                                                        className="mt-2",
+                                                    ),
+                                                ],
+                                                id="facet-wrap-width-div",
+                                                className="mb-2",
+                                                style={"display": "none"},
+                                            ),
+                                        ],
+                                        id="facet-adjustment-box",
+                                        className="border rounded p-2 mb-2",
+                                        style={"display": "none"},
                                     ),
-                                    html.Small("Legend position", className="d-block fw-bold mb-1"),
-                                    dcc.Dropdown(
-                                        id="legend-position",
-                                        options={
-                                            "right": "Right (outside)",
-                                            "bottom": "Bottom (outside)",
-                                            "tr": "Top-right (inside)",
-                                            "br": "Bottom-right (inside)",
-                                            "tl": "Top-left (inside)",
-                                            "bl": "Bottom-left (inside)",
-                                        },
-                                        value="right",
-                                        clearable=False,
-                                        className="mb-2",
-                                    ),
+                                    # Title adjustment feature removed (was causing issues)
                                     # Download buttons row
                                     dbc.Row(
                                         [
@@ -406,7 +476,6 @@ def get_app() -> DashProxy:
                             dcc.Graph(
                                 id="plot-graph",
                                 config={
-                                    "editable": True,
                                     "autosizable": True,
                                     "responsive": True,
                                     "displaylogo": False,
@@ -543,6 +612,8 @@ def get_app() -> DashProxy:
         Input("fig-height", "value"),
         Input("legend-show", "value"),
         Input("legend-position", "value"),
+        Input("facet-vertical", "value"),
+        Input("facet-wrap-width", "value"),
         Input("dynamic-toggle", "value"),  # NE dynamic on/off
         Input("run-folder", "value"),  # NEW - selected run folder
     )
@@ -560,6 +631,8 @@ def get_app() -> DashProxy:
         fig_h: int,
         legend_show: list[str],
         legend_pos: str,
+        facet_orientation: list[str],
+        wrap_width: int,
         dynamic_mode: bool,  # receives value from dynamic-toggle
         run_folder_val: str,  # receives selected run folder
     ):
@@ -587,7 +660,15 @@ def get_app() -> DashProxy:
         logger.info(f"Generating figure for plot spec: {plot_spec}")
         try:
             df, fig, cached = _prepare_df_fig(
-                plot_spec, fig_w, fig_h, legend_show, legend_pos, dynamic_mode, run_folder_val
+                plot_spec,
+                fig_w,
+                fig_h,
+                legend_show,
+                legend_pos,
+                facet_orientation,
+                wrap_width,
+                dynamic_mode,
+                run_folder_val,
             )
         except Exception:  # noqa: BLE001 catch blind exception
             error = f"Failed to generate figure for plot spec: {plot_spec}. Error: {traceback.format_exc()}"
@@ -596,12 +677,38 @@ def get_app() -> DashProxy:
             cached = False
 
         csv_str = df.write_csv(file=None)
+        # Note: Plotly Layout does not support "editable"; this was causing a validation error.
+        #       We omit this call for now - figure interactivity can be controlled via the Graph config.
+        fig.update_layout(width=fig_w, height=fig_h)
         buf = io.BytesIO()
         df.write_parquet(buf)
         parquet_b64 = base64.b64encode(buf.getvalue()).decode("ascii")
+
         # Close modal (if open) and leave its message unchanged
         cache_text = "(loaded from cache)" if cached else "(generated dynamically)"
         return fig, cache_text, parquet_b64, csv_str, False, dash.no_update
+
+    # ----------------------------------------------------------------------------
+    #   CALLBACK - update Graph config editable flag
+    # ----------------------------------------------------------------------------
+    @app.callback(
+        Output("plot-graph", "config"),
+        Input("fig-editable", "value"),
+    )
+    def _update_graph_config(editable_vals: list[str]):  # type: ignore[override]
+        """Toggle graph text-editing based on switch."""
+        base_cfg = {
+            "autosizable": True,
+            "responsive": True,
+            "displaylogo": False,
+            "modeBarButtons": [
+                ["toImage"],
+                ["zoom2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d"],
+            ],
+        }
+        if "editable" in editable_vals:
+            base_cfg["editable"] = True
+        return base_cfg
 
     # ----------------------------------------------------------------------------
     #   CALLBACK - dynamically restrict *Value type* options based on comparison-type
@@ -812,6 +919,8 @@ def get_app() -> DashProxy:
         fig_h: int,
         legend_show: list[str],
         legend_pos: str,
+        facet_orientation: list[str],
+        wrap_width: int,
         dynamic_mode: bool,
         run_folder_val: str,
     ):
@@ -882,7 +991,34 @@ def get_app() -> DashProxy:
         path_seg, name = spec.get_path_and_name()
         if orchestrator is not None:
             orchestrator.out_mgr.save_plot(fig, path_seg, df, name)
+        _apply_facet_orientation(fig, bool(facet_orientation), wrap_width)
         return df, fig, loaded_from_file
+
+    def _apply_facet_orientation(fig: Figure, vertical: bool, wrap_width: int | None = None):
+        """Rotate facet titles and wrap text."""
+        if not fig.layout.annotations:
+            return
+        angle = -90 if vertical else 0
+        for ann in fig.layout.annotations:
+            # Wrap text if width specified
+            if wrap_width and wrap_width > 0:
+                wrapped = textwrap.fill(str(ann.text).replace("<br>", " "), width=wrap_width, break_long_words=False)
+                wrapped = wrapped.replace("\n", "<br>")
+                ann.update(text=wrapped)
+            ann.update(textangle=angle)
+
+        # Increase top margin if vertical titles might overflow
+        if vertical:
+            # estimate longest title length (without <br>)
+            longest = max(
+                (max(len(part) for part in str(a.text).split("<br>")) for a in fig.layout.annotations), default=0
+            )
+            # heuristic: 6 px per character capped between 80 and 300
+            extra_top = min(600, max(80, longest * 9))
+            cur_margin = fig.layout.margin.t if fig.layout.margin and fig.layout.margin.t is not None else 0
+            if extra_top > cur_margin:
+                existing_margin = fig.layout.margin.to_plotly_json() if fig.layout.margin else {}
+                fig.update_layout(margin={**existing_margin, "t": extra_top})
 
     @app.callback(
         Output("download-pdf", "data"),
@@ -941,6 +1077,41 @@ def get_app() -> DashProxy:
         State("df-parquet", "data"),
         prevent_initial_call=True,
     )
+
+    @app.callback(
+        Output("facet-title-orientation-div", "style"),
+        Input("plot-graph", "figure"),
+    )
+    def _toggle_facet_toggle_visibility(fig_dict: dict):  # type: ignore[override]
+        if not fig_dict:
+            raise PreventUpdate
+        layout = fig_dict.get("layout", {})
+        has_facet = any(k.startswith("xaxis") and k != "xaxis" for k in layout)
+        return {} if has_facet else {"display": "none"}
+
+    @app.callback(
+        Output("facet-wrap-width-div", "style"),
+        Input("plot-graph", "figure"),
+    )
+    def _toggle_facet_wrap_width_visibility(fig_dict: dict):  # type: ignore[override]
+        if not fig_dict:
+            raise PreventUpdate
+        layout = fig_dict.get("layout", {})
+        has_facet = any(k.startswith("xaxis") and k != "xaxis" for k in layout)
+        return {} if has_facet else {"display": "none"}
+
+    # Show/hide the entire facet-adjustment box depending on whether
+    # the current figure uses faceting.
+    @app.callback(
+        Output("facet-adjustment-box", "style"),
+        Input("plot-graph", "figure"),
+    )
+    def _toggle_facet_adjustment_visibility(fig_dict: dict):  # type: ignore[override]
+        if not fig_dict:
+            raise PreventUpdate
+        layout = fig_dict.get("layout", {})
+        has_facet = any(k.startswith("xaxis") and k != "xaxis" for k in layout)
+        return {} if has_facet else {"display": "none"}
 
     # ----------------------------------------------------------------------------
     #   CALLBACK - refresh run-folder dropdown on page load
