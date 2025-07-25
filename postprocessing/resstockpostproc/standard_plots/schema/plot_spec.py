@@ -50,7 +50,7 @@ class PlotSpec(BaseModel):
     @classmethod
     def get_valid_value_types(cls, visualization_type: VizType) -> list[str]:
         """Return list of valid value types for the given visualization type."""
-        if visualization_type in [VizType.box, VizType.hist, VizType.heatmap]:
+        if visualization_type in [VizType.box, VizType.hist]:
             return [ValueTypes.average]
         return [ValueTypes.total, ValueTypes.average]
 

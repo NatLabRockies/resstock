@@ -184,10 +184,15 @@ class WorkflowConfig(NoExtraSettings):
             raise ValueError("Number of upgrade names must match number of upgrades")
         return v
 
-    def model_post_init(self, __context):
-        everything = QuantityGroup.combine_quantity_groups(self.quantities, "Everything")
-        everything.constituents = QuantityGroup.resolve_quantities(everything.constituents)
-        self.quantities.append(everything)
+    def add_everything_group(self):
+        """Add an "Everything" quantity group to the workflow. This is used by the
+        dynamic dashboard to generate plots for all quantities together for diagnostic
+        purposes."""
+        # Add an "Everything" quantity group if it doesn't exist already
+        if not any(q.name == "Everything" for q in self.quantities):
+            everything = QuantityGroup.combine_quantity_groups(self.quantities, "Everything")
+            everything.constituents = QuantityGroup.resolve_quantities(everything.constituents)
+            self.quantities.append(everything)
 
 
 default_config_path = str(Path(__file__).resolve().parents[1] / "workflow.yaml")

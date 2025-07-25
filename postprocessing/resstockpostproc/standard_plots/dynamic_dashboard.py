@@ -51,6 +51,7 @@ def get_app() -> DashProxy:
     # ----------------------------------------------------------------------------
     workflow_yaml = str(Path(__file__).with_name("workflow.yaml"))
     workflow: WorkflowConfig = WorkflowConfig.from_yaml(workflow_yaml)  # convenience alias
+    workflow.add_everything_group()
 
     if plots_root_folder := os.environ.get("PLOTS_ROOT_FOLDER"):
         workflow.output_dir = plots_root_folder
@@ -89,6 +90,7 @@ def get_app() -> DashProxy:
 
             snapshot["run_name"] = run_folder  # override run_name to allow folder rename
             new_workflow = WorkflowConfig.from_yaml(workflow_yaml)
+            new_workflow.add_everything_group()
             new_workflow.s3_results_dir = snapshot["s3_results_dir"]
             new_workflow.run_name = snapshot["run_name"]
             new_workflow.upgrades = snapshot["upgrades"]
@@ -885,7 +887,6 @@ def get_app() -> DashProxy:
         if ComparisonTypes(comp_type) in [ComparisonTypes.percent_savings] or VizType(viz_type_val) in [
             VizType.box,
             VizType.hist,
-            VizType.heatmap,
         ]:
             vtype_enum = ValueTypes.average
         else:
