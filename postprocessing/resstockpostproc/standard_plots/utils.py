@@ -22,12 +22,12 @@ def human_sort(df: pl.LazyFrame, cols: str | Sequence[str]) -> pl.LazyFrame:
         num_col = f"__num_{c}"  # temp names
 
         # Extract numeric part from string and handle special cases
-        numeric_expr = pl.col(c).str.extract(r"(-?\d+(?:\.\d+)?)", 1).cast(pl.Float64)
+        numeric_expr = pl.col(c).cast(pl.String).str.extract(r"(-?\d+(?:\.\d+)?)", 1).cast(pl.Float64)
 
         helpers.append(
-            pl.when(pl.col(c).str.starts_with("<"))
+            pl.when(pl.col(c).cast(pl.String).str.starts_with("<"))
             .then(numeric_expr - 0.5)
-            .when(pl.col(c).str.ends_with("+"))
+            .when(pl.col(c).cast(pl.String).str.ends_with("+"))
             .then(numeric_expr + 0.5)
             .otherwise(numeric_expr)
             .fill_null(math.inf)
