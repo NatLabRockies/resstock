@@ -28,6 +28,7 @@ from resstockpostproc.standard_plots.schema.plot_spec import (
     VizType,
 )
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, ValueTypes, WorkflowConfig
+from resstockpostproc.standard_plots.utils import human_sort
 
 logger = logging.getLogger(__name__)
 s3_client = boto3.client("s3", config=Config(read_timeout=60 * 60, max_pool_connections=50))
@@ -319,16 +320,21 @@ class DataProcessor:
 
         if plot_spec.visualization_type == VizType.box:
             assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
-            return self.prepare_data_for_box_plot(combined_df, plot_spec.quantity, plot_spec.group_by)
+            plot_data = self.prepare_data_for_box_plot(combined_df, plot_spec.quantity, plot_spec.group_by)
         elif plot_spec.visualization_type in (VizType.bar, VizType.heatmap):
-            return self.prepare_data_for_bar_plot(
+            plot_data = self.prepare_data_for_bar_plot(
                 combined_df, quantities, plot_spec.group_by, plot_spec.value_type, plot_spec.comparison_type
             )
         elif plot_spec.visualization_type == VizType.hist:
             assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
-            return self.prepare_data_for_histogram_plot(combined_df, plot_spec.quantity, plot_spec.group_by)
+            plot_data = self.prepare_data_for_histogram_plot(combined_df, plot_spec.quantity, plot_spec.group_by)
         else:
             raise ValueError(f"Unsupported visualization type: {plot_spec.visualization_type}")
+
+        if plot_spec.group_by:
+            plot_data = human_sort(plot_data.lazy(), plot_spec.group_by).collect()
+
+        return plot_data
 
     def prepare_data_for_histogram_plot(
         self,
