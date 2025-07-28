@@ -1,83 +1,136 @@
-.. _integrity_checks:
+Integrity Checks and Testing
+============================
 
-Integrity Checks
-================
+Overview
+--------
 
-This file contains various integrity checks for ensuring the consistency and validity of `housing_characteristics` data and related files used in a project directory. It verifies the structure and dependencies of `.tsv` files and ensures that parameters and options conform to expected formats. The main goal of the file is to prevent errors in simulations due to improperly formatted or inconsistent data.
+This section documents both the **integrity checking logic** and the **corresponding test suite** that ensures correctness of ResStock input configurations. These two components work in tandem:
 
-Specifically this is documentation for the `test/integrity_checks.rb` file.
+- The `integrity_checks.rb` file provides programmatic validation of `.tsv` input files, ensuring they are well-formed, consistent, and complete.
+- The `test_integrity_check.rb` file contains unit tests that exercise this logic under various failure scenarios, ensuring that errors are correctly caught and reported.
+
+Together, they form a robust validation pipeline to prevent invalid configurations from entering the simulation workflow.
+
+This documentation applies to the following files:
+
+- `test/integrity_checks.rb`
+- `test/test_integrity_check.rb`
+
+The `integrity_checks.rb` file **implements** the core validation logic for `.tsv` parameter files, `options_lookup.tsv`, and `buildstock.csv`. The `test_integrity_check.rb` file **tests** this logic by executing a wide range of expected failure and success conditions.
+Each test case corresponds directly to a branch or condition within the `integrity_check`, `check_buildstock`, or related functions.
+This separation allows robust unit testing of the validation logic before it is used in full simulation runs.
+
+
+Core Integrity Checking Logic
+-----------------------------
+
+This section describes the contents and functionality of `integrity_checks.rb`.
+
+**Purpose:** The `integrity_checks.rb` file provides logic to validate input `.tsv` files under `housing_characteristics/` and the associated `options_lookup.tsv`. These checks are essential to prevent simulation errors due to malformed or logically inconsistent configuration data.
 
 **Dependencies**
 
 - `buildstock.rb`
 - `run_sampling_lib.rb`
-- `CSV` library
+- Ruby standard `CSV` library
 
-These dependencies are required for reading `.tsv` files, validating options, and performing sampling.
+These dependencies provide utilities for parsing files and performing sampling.
 
-`integrity_check` Function
---------------------------
+Functions
+---------
 
-The `integrity_check` function ensures that the `.tsv` files in the project directory are formatted correctly, all dependencies are accounted for, and parameters are valid. It checks for multiple types of issues and validates the integrity of files before they are used in further processing.
+`integrity_check`
+~~~~~~~~~~~~~~~~~
 
-Key Steps:
+This is the main validation method for parameter `.tsv` files. It verifies:
 
-- **Loading Helper Files:** The function begins by loading helper files like `buildstock.rb` and `run_sampling_lib.rb` from the `resources` directory. It also checks if a `lookup_file` (defaulting to `options_lookup.tsv`) exists.
-  
-- **Parameter Processing:** The function reads through each parameter defined in the `options_lookup.tsv` and checks if corresponding `.tsv` files exist in the `housing_characteristics` directory. 
+- File structure and formatting (e.g., proper newlines).
+- That all referenced parameters and their dependencies exist.
+- That dependencies are resolved before use.
+- That sampling probabilities sum to 1.0 for each dependency set.
+- That each option defined is valid and present in `options_lookup.tsv`.
 
-- **Dependency Checks:** It validates that all parameters' dependencies are properly handled. If any parameters depend on others that are not processed yet, it waits until the dependencies are resolved.
+`integrity_check_options_lookup_tsv`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- **Option Validation:** For each parameter, it ensures that the option names are valid by cross-referencing with `options_lookup.tsv`. The function tests for all possible combinations of dependency values and checks that they correspond to valid options.
+This function validates the `options_lookup.tsv` file itself. It checks that:
 
-- **File Format Validation:** Each `.tsv` file is checked for consistency in format, ensuring that line endings and other aspects follow expected standards.
+- No illegal characters appear in parameter/option names (`(`, `)`, `|`, `&`).
+- Measure arguments are properly defined and not duplicated.
+- All options listed are tied to valid measures and arguments.
 
-- **Unprocessed Parameters:** If a parameter cannot be processed due to missing dependencies or invalid formats, an error is raised detailing which parameters are problematic.
+`check_buildstock`
+~~~~~~~~~~~~~~~~~~
 
-- **Final Sampling:** After the integrity checks, the function runs a sampling process to generate the output file, which is then validated against `lookup_file` (by default `options_lookup.tsv`).
+This function validates a `buildstock.csv` file generated by sampling. It ensures that:
 
-Example of Execution Flow:
+- Every parameter and option in the CSV is valid per `options_lookup.tsv`.
+- There are no missing or extraneous arguments or assignments.
+- Measure argument duplication across parameters is not present.
 
-- The function loops over all parameters and processes them.
-- If a dependency file is missing or invalid, an error message is raised.
-- If all checks pass, the function performs the sampling and validation steps.
+Helper Functions
+~~~~~~~~~~~~~~~~
 
-`integrity_check_options_lookup_tsv` Function
----------------------------------------------
+- `check_for_illegal_chars`: Verifies parameter and option names do not contain restricted characters.
+- `check_parameter_file_format`: Ensures consistent newline characters (`\r\n`) across files.
 
-This function checks the integrity of the `options_lookup.tsv` file, ensuring that all parameters and options defined in the file are valid. It also checks that each option has associated measure arguments and that these measures do not conflict with others.
+Test Suite for Integrity Checks
+-------------------------------
 
-Key Steps:
+This section describes the test suite defined in `test_integrity_check.rb`.
 
-- **Option Validation:** It iterates over each parameter defined in the `options_lookup.tsv` file and checks if the options related to each parameter are defined properly.
-  
-- **Illegal Character Check:** It ensures that no illegal characters (e.g., `(`, `)`, `|`, `&`) appear in the parameter or option names.
-  
-- **Measure Arguments Validation:** The function checks the measure arguments associated with each option, ensuring that there are no duplicate assignments across parameters.
+**Purpose:** The test suite systematically tests invalid input scenarios to confirm that the integrity check functions correctly catch and report errors. It also validates successful scenarios to confirm proper integration between sampling, configuration, and CLI invocation.
 
-- **Error Handling:** If any errors are encountered, such as missing measure definitions or illegal characters, an error is raised.
+Test Environment
+~~~~~~~~~~~~~~~~
 
-`check_buildstock` Function
----------------------------
+- Test lookup file: `resources/test_options_lookup.tsv`
+- Invalid test folders: `test/tests_housing_characteristics/*`
+- CSV test inputs: `test/tests_buildstock_csvs/*`
 
-This function is responsible for validating the `output_file` generated during the sampling process. It ensures that all parameters and options defined in the file are valid and conform to the structure defined in `options_lookup.tsv`.
+Test Class: `TestResStockErrors`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Key Steps:
+The `TestResStockErrors` class extends `Minitest::Test` and includes:
 
-- **Opening Files:** The function opens the `output_file` and `lookup_file` to check for consistency in the data.
-  
-- **Parameter and Option Validation:** It verifies that all parameters in the `output_file` correspond to options defined in `options_lookup.tsv`. If a parameter is missing, an error is raised.
-  
-- **Argument Duplication Check:** The function ensures that there are no duplicate measure arguments across different parameters.
-  
-- **Error Handling:** If issues are detected in the `output_file`, such as missing options or incorrect argument assignments, an error message is generated.
+- Setup for defining project directories and loading configuration.
+- 18 test cases covering different failure and success modes.
 
-`check_for_illegal_chars` Function
-----------------------------------
+Test Scenarios
+~~~~~~~~~~~~~~
 
-This helper function checks for illegal characters in parameter or option names. The illegal characters `(`, `)`, `|`, and `&` are reserved for specific logic and should not appear in parameter or option names.
+1. **Newline Characters:** Detects incorrect newline formatting in `.tsv` files.
 
-`check_parameter_file_format` Function
---------------------------------------
+2. **Sum Not Equal to One:** Validates probability weights for sampling sum to 1.0.
 
-This helper function checks the file format of `.tsv` files, ensuring that each file adheres to the required newline format (`\r\n`). If an incorrect newline character is found, an error is raised.
+3. **Duplicate Rows:** Identifies redundant parameter rows with identical dependencies.
+
+4. **Missing Sampling Row:** Checks that every possible sampling value maps to an option.
+
+5. **Non-Numeric Values:** Ensures values meant to be numeric are not text strings.
+
+6. **Missing Parent Parameter File:** Fails if a parameter’s dependency is not defined via its own `.tsv`.
+
+7. **Unused TSV File:** Detects files not referenced in `options_lookup.tsv`.
+
+8. **Missing Measure Argument:** Validates that required measure arguments are not omitted.
+
+9. **Extra Measure Argument:** Flags undefined arguments passed to measures.
+
+10. **Invalid Argument Value:** Ensures measure arguments have allowed enumerated values.
+
+11. **Missing Measure Definition:** Ensures each referenced measure exists and is accessible.
+
+12. **Invalid Dependency Option:** Checks for undefined values in a parameter’s dependency.
+
+13. **Duplicate Measure Argument Assignment:** Detects repeated assignments of the same argument across parameters.
+
+14. **Missing Option in Lookup File:**  Catches mismatches between `.tsv` parameter files and the lookup file.
+
+15. **Option Spelling Errors:** Fails if option names do not match due to typos or case errors.
+
+16. **Valid CSV Input:** Confirms that a well-formed `buildstock.csv` file passes validation both via Ruby method and CLI.
+
+17. **Invalid CSV Parameters:** Tests presence of parameters not listed in `options_lookup.tsv`.
+
+18. **Invalid CSV Options:** Flags values in `buildstock.csv` that do not map to any known options.
