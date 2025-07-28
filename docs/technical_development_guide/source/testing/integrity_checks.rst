@@ -16,17 +16,10 @@ This documentation applies to the following files:
 - `test/integrity_checks.rb`
 - `test/test_integrity_check.rb`
 
+The purpose of the `integrity_checks.rb` file provides logic to validate input `.tsv` files under `housing_characteristics/` and the associated `options_lookup.tsv`. These checks are essential to prevent simulation errors due to malformed or logically inconsistent configuration data. 
 The `integrity_checks.rb` file **implements** the core validation logic for `.tsv` parameter files, `options_lookup.tsv`, and `buildstock.csv`. The `test_integrity_check.rb` file **tests** this logic by executing a wide range of expected failure and success conditions.
 Each test case corresponds directly to a branch or condition within the `integrity_check`, `check_buildstock`, or related functions.
 This separation allows robust unit testing of the validation logic before it is used in full simulation runs.
-
-
-Core Integrity Checking Logic
------------------------------
-
-This section describes the contents and functionality of `integrity_checks.rb`.
-
-**Purpose:** The `integrity_checks.rb` file provides logic to validate input `.tsv` files under `housing_characteristics/` and the associated `options_lookup.tsv`. These checks are essential to prevent simulation errors due to malformed or logically inconsistent configuration data.
 
 **Dependencies**
 

@@ -17,4 +17,5 @@ Tests include:
    :maxdepth: 2
 
    integrity_checks
+   run_analysis_tests
    test_analysis_tools
