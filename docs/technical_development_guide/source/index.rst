@@ -24,8 +24,6 @@ ResStock Technical Development Guide
    advanced_tutorial/index
    workflow_inputs/index
    workflow_outputs/index
-   continuous_integration/index
-   testing/index
    resource_files/index
 
 Updates & Changelog
