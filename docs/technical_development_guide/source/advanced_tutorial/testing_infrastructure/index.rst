@@ -21,7 +21,7 @@ CI is triggered automatically on pull requests, merges to key branches, or via m
 .. note:: To merge pull requests, it is highly recommended that CI passes (the green check mark on the latest branch commit) before merging a new feature or bug fix. There are some situations where a CI failure is okay (example: synching between BuildStock-Batch repository changes) temporarily while repository management accross the software stack is being changed.
 
 Functions
-=========
+---------
 
 The CI infrastructure performs the following core functions:
 
@@ -33,7 +33,7 @@ The CI infrastructure performs the following core functions:
 - Validates and publishes SDR upgrade results
 
 Test Scenarios
-==============
+--------------
 
 The test suite covers:
 
@@ -45,7 +45,7 @@ The test suite covers:
 - Specialized SDR simulations and data formatting
 
 CI Triggering Conditions
-========================
+------------------------
 
 CI is triggered on:
 
@@ -55,14 +55,12 @@ CI is triggered on:
 - Completion of dependent workflow runs
 
 Concurrency Control
-===================
+-------------------
 
-To avoid test queue congestion:
-
-- CI jobs from the same branch or PR are automatically canceled if a new run is queued
+To avoid test queue congestion, CI jobs from the same branch or PR are automatically canceled if a new run is queued.
 
 Environment Variables
-=====================
+---------------------
 
 Shared environment variables define:
 
@@ -87,8 +85,8 @@ Each CI job is defined in the main workflow and other supporting workflows. They
 
 A brief overview will be provided of each job. For some of the more complicated jobs and testing suites they have their own page discussing the contents of the tests in more detail.
 
-The Main CI Workflow
---------------------
+Main CI Workflow
+----------------
 
 Format Files
 ~~~~~~~~~~~~
@@ -243,8 +241,8 @@ Commits:
 
 .. note:: Check the ``buildstockbatch_results_sdr_published_csvs`` artifact to see how results will show up on OEDI. If you do not see a column or new output, then the data dictionaries have not been updated.
 
-Other CI Jobs
--------------
+Supporting CI Jobs
+------------------
 
 These CI Jobs are outside the main GitHub actions workflow for new feature development and bug fixes. They are used to help with the organization of the software development or assist with the new features and bug fixes.
 
@@ -273,25 +271,25 @@ Runs after the main CI completes successfully:
   - Updates GitHub commit status using the CLI
 
 Artifacts Produced
-==================
+------------------
 
 Artifacts produced if tests are successful:
 
 - `options_lookup.tsv` : A sorted and formated version of `options_lookup.tsv`` that allows diffs to easily be seen.
-- `feature_samples.csv`: The samples simulated in the feature branch for the analysis and integration tests
-- `coverage/` : Coverage logs
+- `feature_samples.csv`: The samples simulated in the feature branch for the analysis and integration tests.
+- `coverage/` : Coverage logs.
 - `precomputed_buildstocks/` : Precomputed `buildstock.csv` for ``test/test_yml_files/``.
 - `documentation/` : A current version of the ResStock documentation in Read-the-Docs and the Technical Reference Guide PDF.
-- `run_analysis_results_csvs/` : Annual results from the analysis tests
-- `buildstockbatch_results_csvs/` : Annual results from the integration tests
+- `run_analysis_results_csvs/` : Annual results from the analysis tests.
+- `buildstockbatch_results_csvs/` : Annual results from the integration tests.
 - `comparisons/` : Plots that show the difference in the results between the base branch and feature branch. Helpful during model changes, not characteristics changes.
 - `national_550ksamples.csv.gz` : The current 550,000 sample in ResStock that will be simulated. Used in the SDR integration tests.
 - `sdr_options_analysis/` : Analysis of the upgrade options and their percent applicability based on the current national 550,000 sample. The minimal buildstock for SDR integration tests.
-- `buildstockbatch_results_sdr_raw_csvs/` : The results.csv files from the ResStock SDR upgrades project file being run with BuildStock-Batch
+- `buildstockbatch_results_sdr_raw_csvs/` : The results.csv files from the ResStock SDR upgrades project file being run with BuildStock-Batch.
 - `buildstockbatch_results_sdr_published_csvs/` : The results.csv files from the ResStock SDR upgrades project file being run with Buildstock-Batch transformed into what is being published on OEDI.
 
-Detailed Description of Test Suites
-===================================
+Test Suites and Files
+=====================
 
 .. toctree::
    :maxdepth: 2
