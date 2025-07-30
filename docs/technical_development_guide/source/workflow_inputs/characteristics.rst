@@ -40197,7 +40197,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 14.5
      - auto
      - auto
-     - 0.57
+     - auto
      - auto
      - auto
      - 1
@@ -40245,7 +40245,7 @@ From ``project_national`` the list of options, option stock sturation, and optio
      - 29.3
      - auto
      - auto
-     - 0.76
+     - auto
      - auto
      - auto
      - 1
