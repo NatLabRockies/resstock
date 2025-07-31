@@ -72,8 +72,7 @@ if ARGV[0].to_sym == :update_measures
   puts 'Updating measure.xmls...'
   Dir['measures/**/measure.xml'].each do |measure_xml|
     measure_dir = File.dirname(measure_xml)
-    # Using classic to work around https://github.com/NREL/OpenStudio/issues/5045
-    command = "#{OpenStudio.getOpenStudioCLI} classic measure -u '#{measure_dir}'"
+    command = "#{OpenStudio.getOpenStudioCLI} measure -u '#{measure_dir}'"
     system(command, [:out, :err] => File::NULL)
   end
 
