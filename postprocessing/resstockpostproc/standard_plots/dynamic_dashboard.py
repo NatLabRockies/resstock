@@ -1177,6 +1177,7 @@ def get_app() -> DashProxy:
 
 def run_dashboard(port: int = 8051):
     try:
+        print(f"Running dashboard on port {port}")
         app = get_app()
         app.run(debug=False, port=port, host="0.0.0.0")  # noqa: S104
     except Exception:  # noqa: BLE001 catch blind exception
@@ -1184,4 +1185,4 @@ def run_dashboard(port: int = 8051):
 
 
 if __name__ == "__main__":
-    run_dashboard(8053)
+    run_dashboard()
