@@ -90,7 +90,7 @@ The soil and moisture type.
 
 - **Required:** ``false``
 
-- **Choices:** `Unknown`, `Clay, Dry`, `Clay, Mixed`, `Clay, Wet`, `Gravel, Dry`, `Gravel, Mixed`, `Gravel, Wet`, `Loam, Dry`, `Loam, Mixed`, `Loam, Wet`, `Sand, Dry`, `Sand, Mixed`, `Sand, Wet`, `Silt, Dry`, `Silt, Mixed`, `Silt, Wet`, `0.5 Conductivity`, `0.8 Conductivity`, `1.1 Conductivity`, `1.4 Conductivity`, `1.7 Conductivity`, `2.0 Conductivity`, `2.3 Conductivity`, `2.6 Conductivity`, `Detailed Example: Sand, Dry, 0.03 Diffusivity`
+- **Choices:** `Unknown`, `Clay, Dry`, `Clay, Mixed`, `Clay, Wet`, `Gravel, Dry`, `Gravel, Mixed`, `Gravel, Wet`, `Loam, Dry`, `Loam, Mixed`, `Loam, Wet`, `Sand, Dry`, `Sand, Mixed`, `Sand, Wet`, `Silt, Dry`, `Silt, Mixed`, `Silt, Wet`, `0.5 Btu/hr-ft-F`, `0.8 Btu/hr-ft-F`, `1.1 Btu/hr-ft-F`, `1.4 Btu/hr-ft-F`, `1.7 Btu/hr-ft-F`, `2.0 Btu/hr-ft-F`, `2.3 Btu/hr-ft-F`, `2.6 Btu/hr-ft-F`, `Detailed Example: Sand, Dry, 0.03 Diffusivity`
 
 <br/>
 
@@ -166,7 +166,7 @@ Direction of the front of the unit.
 
 - **Required:** ``true``
 
-- **Choices:** `North`, `Northeast`, `East`, `Southeast`, `South`, `Southwest`, `West`, `Northwest`
+- **Choices:** `North`, `North-Northeast`, `Northeast`, `East-Northeast`, `East`, `East-Southeast`, `Southeast`, `South-Southeast`, `South`, `South-Southwest`, `Southwest`, `West-Southwest`, `West`, `West-Northwest`, `Northwest`, `North-Northwest`
 
 <br/>
 
@@ -179,7 +179,7 @@ The number of bedrooms in the unit.
 
 - **Required:** ``true``
 
-- **Choices:** `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`
+- **Choices:** `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`
 
 <br/>
 
@@ -192,7 +192,7 @@ The number of bathrooms in the unit. Defaults to NumberofBedrooms/2 + 0.5.
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`
+- **Choices:** `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`
 
 <br/>
 
@@ -205,7 +205,7 @@ The number of occupants in the unit. Defaults to an *asset* calculation assuming
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`
+- **Choices:** `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`
 
 <br/>
 
@@ -296,7 +296,7 @@ The presence and geometry of neighboring buildings, for shading purposes.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Left/Right at 5ft`, `Left/Right at 10ft`, `Left/Right at 15ft`, `Left/Right at 20ft`, `Left/Right at 25ft`, `Left at 5ft`, `Left at 10ft`, `Left at 15ft`, `Left at 20ft`, `Left at 25ft`, `Right at 5ft`, `Right at 10ft`, `Right at 15ft`, `Right at 20ft`, `Right at 25ft`, `Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height`
+- **Choices:** `None`, `Left/Right at 2ft`, `Left/Right at 5ft`, `Left/Right at 10ft`, `Left/Right at 15ft`, `Left/Right at 20ft`, `Left/Right at 25ft`, `Left at 2ft`, `Left at 5ft`, `Left at 10ft`, `Left at 15ft`, `Left at 20ft`, `Left at 25ft`, `Right at 2ft`, `Right at 5ft`, `Right at 10ft`, `Right at 15ft`, `Right at 20ft`, `Right at 25ft`, `Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height`
 
 <br/>
 
@@ -617,7 +617,7 @@ The amount of air leakage coming from outside. If a qualitative leakiness descri
 
 - **Required:** ``false``
 
-- **Choices:** `Very Tight`, `Tight`, `Average`, `Leaky`, `Very Leaky`, `0.25 ACH50`, `0.5 ACH50`, `0.75 ACH50`, `1 ACH50`, `1.5 ACH50`, `2 ACH50`, `2.25 ACH50`, `3 ACH50`, `3.75 ACH50`, `4 ACH50`, `4.5 ACH50`, `5 ACH50`, `5.25 ACH50`, `6 ACH50`, `7 ACH50`, `7.5 ACH50`, `8 ACH50`, `10 ACH50`, `11.25 ACH50`, `15 ACH50`, `18.5 ACH50`, `20 ACH50`, `25 ACH50`, `30 ACH50`, `40 ACH50`, `50 ACH50`, `2.8 ACH45`, `0.2 nACH`, `0.335 nACH`, `0.67 nACH`, `1.5 nACH`, `Detailed Example: 3.57 ACH50`, `Detailed Example: 12.16 ACH50`, `Detailed Example: 0.375 nACH`, `Detailed Example: 72 nCFM`, `Detailed Example: 79.8 sq. in. ELA`, `Detailed Example: 123 sq. in. ELA`, `Detailed Example: 1080 CFM50`, `Detailed Example: 1010 CFM45`
+- **Choices:** `Very Tight`, `Tight`, `Average`, `Leaky`, `Very Leaky`, `1 ACH50`, `2 ACH50`, `3 ACH50`, `4 ACH50`, `6 ACH50`, `8 ACH50`, `10 ACH50`, `15 ACH50`, `20 ACH50`, `25 ACH50`, `30 ACH50`, `40 ACH50`, `50 ACH50`, `0.2 nACH`, `0.3 nACH`, `0.335 nACH`, `0.5 nACH`, `0.67 nACH`, `1.0 nACH`, `1.5 nACH`, `Detailed Example: 3.57 ACH50`, `Detailed Example: 12.16 ACH50`, `Detailed Example: 2.8 ACH45`, `Detailed Example: 0.375 nACH`, `Detailed Example: 72 nCFM`, `Detailed Example: 79.8 sq. in. ELA`, `Detailed Example: 123 sq. in. ELA`, `Detailed Example: 1080 CFM50`, `Detailed Example: 1010 CFM45`
 
 <br/>
 
@@ -630,7 +630,7 @@ The type and efficiency of the heating system. Use 'None' if there is no heating
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Electric Resistance`, `Central Furnace, 60% AFUE`, `Central Furnace, 64% AFUE`, `Central Furnace, 68% AFUE`, `Central Furnace, 72% AFUE`, `Central Furnace, 76% AFUE`, `Central Furnace, 78% AFUE`, `Central Furnace, 80% AFUE`, `Central Furnace, 85% AFUE`, `Central Furnace, 90% AFUE`, `Central Furnace, 92% AFUE`, `Central Furnace, 92.5% AFUE`, `Central Furnace, 96% AFUE`, `Central Furnace, 98% AFUE`, `Central Furnace, 100% AFUE`, `Wall Furnace, 60% AFUE`, `Wall Furnace, 68% AFUE`, `Wall Furnace, 82% AFUE`, `Wall Furnace, 98% AFUE`, `Wall Furnace, 100% AFUE`, `Floor Furnace, 60% AFUE`, `Floor Furnace, 70% AFUE`, `Floor Furnace, 80% AFUE`, `Boiler, 60% AFUE`, `Boiler, 72% AFUE`, `Boiler, 76% AFUE`, `Boiler, 80% AFUE`, `Boiler, 82% AFUE`, `Boiler, 85% AFUE`, `Boiler, 90% AFUE`, `Boiler, 92% AFUE`, `Boiler, 92.5% AFUE`, `Boiler, 95% AFUE`, `Boiler, 96% AFUE`, `Boiler, 98% AFUE`, `Boiler, 100% AFUE`, `Stove, 60% Efficiency`, `Stove, 70% Efficiency`, `Stove, 80% Efficiency`, `Space Heater, 60% Efficiency`, `Space Heater, 70% Efficiency`, `Space Heater, 80% Efficiency`, `Space Heater, 92% Efficiency`, `Space Heater, 100% Efficiency`, `Fireplace, 60% Efficiency`, `Fireplace, 70% Efficiency`, `Fireplace, 80% Efficiency`, `Fireplace, 100% Efficiency`, `Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light`
+- **Choices:** `None`, `Electric Resistance`, `Central Furnace, 60% AFUE`, `Central Furnace, 64% AFUE`, `Central Furnace, 68% AFUE`, `Central Furnace, 72% AFUE`, `Central Furnace, 76% AFUE`, `Central Furnace, 78% AFUE`, `Central Furnace, 80% AFUE`, `Central Furnace, 85% AFUE`, `Central Furnace, 90% AFUE`, `Central Furnace, 92% AFUE`, `Central Furnace, 92.5% AFUE`, `Central Furnace, 96% AFUE`, `Central Furnace, 98% AFUE`, `Central Furnace, 100% AFUE`, `Wall Furnace, 60% AFUE`, `Wall Furnace, 68% AFUE`, `Wall Furnace, 82% AFUE`, `Wall Furnace, 98% AFUE`, `Wall Furnace, 100% AFUE`, `Floor Furnace, 60% AFUE`, `Floor Furnace, 70% AFUE`, `Floor Furnace, 80% AFUE`, `Boiler, 60% AFUE`, `Boiler, 72% AFUE`, `Boiler, 76% AFUE`, `Boiler, 78% AFUE`, `Boiler, 80% AFUE`, `Boiler, 82% AFUE`, `Boiler, 85% AFUE`, `Boiler, 90% AFUE`, `Boiler, 92% AFUE`, `Boiler, 92.5% AFUE`, `Boiler, 95% AFUE`, `Boiler, 96% AFUE`, `Boiler, 98% AFUE`, `Boiler, 100% AFUE`, `Stove, 60% Efficiency`, `Stove, 70% Efficiency`, `Stove, 80% Efficiency`, `Space Heater, 60% Efficiency`, `Space Heater, 70% Efficiency`, `Space Heater, 80% Efficiency`, `Space Heater, 92% Efficiency`, `Space Heater, 100% Efficiency`, `Fireplace, 60% Efficiency`, `Fireplace, 70% Efficiency`, `Fireplace, 80% Efficiency`, `Fireplace, 100% Efficiency`, `Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light`
 
 <br/>
 
@@ -851,7 +851,7 @@ The type and efficiency of the second heating system. If a heat pump is specifie
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Electric Resistance`, `Central Furnace, 60% AFUE`, `Central Furnace, 64% AFUE`, `Central Furnace, 68% AFUE`, `Central Furnace, 72% AFUE`, `Central Furnace, 76% AFUE`, `Central Furnace, 78% AFUE`, `Central Furnace, 80% AFUE`, `Central Furnace, 85% AFUE`, `Central Furnace, 90% AFUE`, `Central Furnace, 92% AFUE`, `Central Furnace, 92.5% AFUE`, `Central Furnace, 96% AFUE`, `Central Furnace, 98% AFUE`, `Central Furnace, 100% AFUE`, `Wall Furnace, 60% AFUE`, `Wall Furnace, 68% AFUE`, `Wall Furnace, 82% AFUE`, `Wall Furnace, 98% AFUE`, `Wall Furnace, 100% AFUE`, `Floor Furnace, 60% AFUE`, `Floor Furnace, 70% AFUE`, `Floor Furnace, 80% AFUE`, `Boiler, 60% AFUE`, `Boiler, 72% AFUE`, `Boiler, 76% AFUE`, `Boiler, 80% AFUE`, `Boiler, 82% AFUE`, `Boiler, 85% AFUE`, `Boiler, 90% AFUE`, `Boiler, 92% AFUE`, `Boiler, 92.5% AFUE`, `Boiler, 95% AFUE`, `Boiler, 96% AFUE`, `Boiler, 98% AFUE`, `Boiler, 100% AFUE`, `Stove, 60% Efficiency`, `Stove, 70% Efficiency`, `Stove, 80% Efficiency`, `Space Heater, 60% Efficiency`, `Space Heater, 70% Efficiency`, `Space Heater, 80% Efficiency`, `Space Heater, 92% Efficiency`, `Space Heater, 100% Efficiency`, `Fireplace, 60% Efficiency`, `Fireplace, 70% Efficiency`, `Fireplace, 80% Efficiency`, `Fireplace, 100% Efficiency`, `Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light`
+- **Choices:** `None`, `Electric Resistance`, `Central Furnace, 60% AFUE`, `Central Furnace, 64% AFUE`, `Central Furnace, 68% AFUE`, `Central Furnace, 72% AFUE`, `Central Furnace, 76% AFUE`, `Central Furnace, 78% AFUE`, `Central Furnace, 80% AFUE`, `Central Furnace, 85% AFUE`, `Central Furnace, 90% AFUE`, `Central Furnace, 92% AFUE`, `Central Furnace, 92.5% AFUE`, `Central Furnace, 96% AFUE`, `Central Furnace, 98% AFUE`, `Central Furnace, 100% AFUE`, `Wall Furnace, 60% AFUE`, `Wall Furnace, 68% AFUE`, `Wall Furnace, 82% AFUE`, `Wall Furnace, 98% AFUE`, `Wall Furnace, 100% AFUE`, `Floor Furnace, 60% AFUE`, `Floor Furnace, 70% AFUE`, `Floor Furnace, 80% AFUE`, `Boiler, 60% AFUE`, `Boiler, 72% AFUE`, `Boiler, 76% AFUE`, `Boiler, 78% AFUE`, `Boiler, 80% AFUE`, `Boiler, 82% AFUE`, `Boiler, 85% AFUE`, `Boiler, 90% AFUE`, `Boiler, 92% AFUE`, `Boiler, 92.5% AFUE`, `Boiler, 95% AFUE`, `Boiler, 96% AFUE`, `Boiler, 98% AFUE`, `Boiler, 100% AFUE`, `Stove, 60% Efficiency`, `Stove, 70% Efficiency`, `Stove, 80% Efficiency`, `Space Heater, 60% Efficiency`, `Space Heater, 70% Efficiency`, `Space Heater, 80% Efficiency`, `Space Heater, 92% Efficiency`, `Space Heater, 100% Efficiency`, `Fireplace, 60% Efficiency`, `Fireplace, 70% Efficiency`, `Fireplace, 80% Efficiency`, `Fireplace, 100% Efficiency`, `Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light`
 
 <br/>
 
@@ -982,7 +982,7 @@ The primary location of the supply ducts. The remainder of the supply ducts are 
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `Conditioned Space, 100%`, `Basement, Unconditioned, 100%`, `Basement, Unconditioned, 75%`, `Basement, Unconditioned, 50%`, `Basement, Conditioned, 100%`, `Basement, Conditioned, 75%`, `Basement, Conditioned, 50%`, `Crawlspace, Unvented, 100%`, `Crawlspace, Unvented, 75%`, `Crawlspace, Unvented, 50%`, `Crawlspace, Vented, 100%`, `Crawlspace, Vented, 75%`, `Crawlspace, Vented, 50%`, `Crawlspace, Conditioned, 100%`, `Crawlspace, Conditioned, 75%`, `Crawlspace, Conditioned, 50%`, `Attic, Unvented, 100%`, `Attic, Unvented, 75%`, `Attic, Unvented, 50%`, `Attic, Vented, 100%`, `Attic, Vented, 75%`, `Attic, Vented, 50%`, `Garage, 100%`, `Garage, 75%`, `Garage, 50%`, `Outside, 100%`, `Outside, 75%`, `Outside, 50%`, `Exterior Wall, 100%`, `Exterior Wall, 75%`, `Exterior Wall, 50%`, `Under Slab, 100%`, `Under Slab, 75%`, `Under Slab, 50%`, `Roof Deck, 100%`, `Roof Deck, 75%`, `Roof Deck, 50%`, `Manufactured Home Belly, 100%`, `Manufactured Home Belly, 75%`, `Manufactured Home Belly, 50%`
+- **Choices:** `Default`, `Conditioned Space`, `Basement`, `Crawlspace`, `Attic`, `Garage`, `Outside`, `Exterior Wall`, `Under Slab`, `Roof Deck`, `Manufactured Home Belly`, `Detailed Example: Attic, 75%`
 
 <br/>
 
@@ -995,7 +995,7 @@ The primary location of the return ducts. The remainder of the return ducts are 
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `Conditioned Space, 100%`, `Basement, Unconditioned, 100%`, `Basement, Unconditioned, 75%`, `Basement, Unconditioned, 50%`, `Basement, Conditioned, 100%`, `Basement, Conditioned, 75%`, `Basement, Conditioned, 50%`, `Crawlspace, Unvented, 100%`, `Crawlspace, Unvented, 75%`, `Crawlspace, Unvented, 50%`, `Crawlspace, Vented, 100%`, `Crawlspace, Vented, 75%`, `Crawlspace, Vented, 50%`, `Crawlspace, Conditioned, 100%`, `Crawlspace, Conditioned, 75%`, `Crawlspace, Conditioned, 50%`, `Attic, Unvented, 100%`, `Attic, Unvented, 75%`, `Attic, Unvented, 50%`, `Attic, Vented, 100%`, `Attic, Vented, 75%`, `Attic, Vented, 50%`, `Garage, 100%`, `Garage, 75%`, `Garage, 50%`, `Outside, 100%`, `Outside, 75%`, `Outside, 50%`, `Exterior Wall, 100%`, `Exterior Wall, 75%`, `Exterior Wall, 50%`, `Under Slab, 100%`, `Under Slab, 75%`, `Under Slab, 50%`, `Roof Deck, 100%`, `Roof Deck, 75%`, `Roof Deck, 50%`, `Manufactured Home Belly, 100%`, `Manufactured Home Belly, 75%`, `Manufactured Home Belly, 50%`
+- **Choices:** `Default`, `Conditioned Space`, `Basement`, `Crawlspace`, `Attic`, `Garage`, `Outside`, `Exterior Wall`, `Under Slab`, `Roof Deck`, `Manufactured Home Belly`, `Detailed Example: Attic, 75%`
 
 <br/>
 
@@ -1073,7 +1073,7 @@ The location of the water heater. Defaults based on the foundation/garage type.
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `Conditioned Space`, `Basement, Unconditioned`, `Basement, Conditioned`, `Garage`, `Crawlspace, Vented`, `Crawlspace, Unvented`, `Crawlspace, Conditioned`, `Attic, Vented`, `Attic, Unvented`, `Outside`
+- **Choices:** `Default`, `Conditioned Space`, `Basement`, `Garage`, `Crawlspace`, `Attic`, `Other Heated Space`, `Outside`
 
 <br/>
 
@@ -1162,7 +1162,7 @@ The azimuth and tilt of the solar thermal system collectors.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Roof Pitch, West`, `Roof Pitch, Southwest`, `Roof Pitch, South`, `Roof Pitch, Southeast`, `Roof Pitch, East`, `0 Degrees`, `5 Degrees, West`, `5 Degrees, Southwest`, `5 Degrees, South`, `5 Degrees, Southeast`, `5 Degrees, East`, `10 Degrees, West`, `10 Degrees, Southwest`, `10 Degrees, South`, `10 Degrees, Southeast`, `10 Degrees, East`, `15 Degrees, West`, `15 Degrees, Southwest`, `15 Degrees, South`, `15 Degrees, Southeast`, `15 Degrees, East`, `20 Degrees, West`, `20 Degrees, Southwest`, `20 Degrees, South`, `20 Degrees, Southeast`, `20 Degrees, East`, `25 Degrees, West`, `25 Degrees, Southwest`, `25 Degrees, South`, `25 Degrees, Southeast`, `25 Degrees, East`, `30 Degrees, West`, `30 Degrees, Southwest`, `30 Degrees, South`, `30 Degrees, Southeast`, `30 Degrees, East`, `35 Degrees, West`, `35 Degrees, Southwest`, `35 Degrees, South`, `35 Degrees, Southeast`, `35 Degrees, East`, `40 Degrees, West`, `40 Degrees, Southwest`, `40 Degrees, South`, `40 Degrees, Southeast`, `40 Degrees, East`, `45 Degrees, West`, `45 Degrees, Southwest`, `45 Degrees, South`, `45 Degrees, Southeast`, `45 Degrees, East`, `50 Degrees, West`, `50 Degrees, Southwest`, `50 Degrees, South`, `50 Degrees, Southeast`, `50 Degrees, East`
+- **Choices:** `Roof Pitch, West`, `Roof Pitch, Southwest`, `Roof Pitch, South`, `Roof Pitch, Southeast`, `Roof Pitch, East`, `Roof Pitch, Northeast`, `Roof Pitch, North`, `Roof Pitch, Northwest`, `0 Degrees`, `5 Degrees, West`, `5 Degrees, Southwest`, `5 Degrees, South`, `5 Degrees, Southeast`, `5 Degrees, East`, `10 Degrees, West`, `10 Degrees, Southwest`, `10 Degrees, South`, `10 Degrees, Southeast`, `10 Degrees, East`, `15 Degrees, West`, `15 Degrees, Southwest`, `15 Degrees, South`, `15 Degrees, Southeast`, `15 Degrees, East`, `20 Degrees, West`, `20 Degrees, Southwest`, `20 Degrees, South`, `20 Degrees, Southeast`, `20 Degrees, East`, `25 Degrees, West`, `25 Degrees, Southwest`, `25 Degrees, South`, `25 Degrees, Southeast`, `25 Degrees, East`, `30 Degrees, West`, `30 Degrees, Southwest`, `30 Degrees, South`, `30 Degrees, Southeast`, `30 Degrees, East`, `35 Degrees, West`, `35 Degrees, Southwest`, `35 Degrees, South`, `35 Degrees, Southeast`, `35 Degrees, East`, `40 Degrees, West`, `40 Degrees, Southwest`, `40 Degrees, South`, `40 Degrees, Southeast`, `40 Degrees, East`, `45 Degrees, West`, `45 Degrees, Southwest`, `45 Degrees, South`, `45 Degrees, Southeast`, `45 Degrees, East`, `50 Degrees, West`, `50 Degrees, Southwest`, `50 Degrees, South`, `50 Degrees, Southeast`, `50 Degrees, East`
 
 <br/>
 
@@ -1175,7 +1175,7 @@ The size and type of the PV system.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `0.5 kW`, `1.0 kW`, `1.5 kW`, `1.5 kW, Premium Module`, `1.5 kW, Thin Film Module`, `2.0 kW`, `2.5 kW`, `3.0 kW`, `3.5 kW`, `4.0 kW`, `4.5 kW`, `5.0 kW`, `5.5 kW`, `6.0 kW`, `6.5 kW`, `7.0 kW`, `7.5 kW`, `8.0 kW`, `8.5 kW`, `9.0 kW`, `9.5 kW`, `10.0 kW`, `10.5 kW`, `11.0 kW`, `11.5 kW`, `12.0 kW`
+- **Choices:** `None`, `0.5 kW`, `1.0 kW`, `1.5 kW`, `2.0 kW`, `2.5 kW`, `3.0 kW`, `3.5 kW`, `4.0 kW`, `4.5 kW`, `5.0 kW`, `5.5 kW`, `6.0 kW`, `6.5 kW`, `7.0 kW`, `7.5 kW`, `8.0 kW`, `8.5 kW`, `9.0 kW`, `9.5 kW`, `10.0 kW`, `10.5 kW`, `11.0 kW`, `11.5 kW`, `12.0 kW`, `12.5 kW`, `13.0 kW`, `13.5 kW`, `14.0 kW`, `14.5 kW`, `15.0 kW`, `Detailed Example: 10.0 kW, Standard, 14% System Losses, 96% Inverter Efficiency`, `Detailed Example: 1.5 kW, Premium`, `Detailed Example: 1.5 kW, Thin Film`
 
 <br/>
 
@@ -1188,7 +1188,7 @@ The azimuth and tilt of the PV system array.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Roof Pitch, West`, `Roof Pitch, Southwest`, `Roof Pitch, South`, `Roof Pitch, Southeast`, `Roof Pitch, East`, `0 Degrees`, `5 Degrees, West`, `5 Degrees, Southwest`, `5 Degrees, South`, `5 Degrees, Southeast`, `5 Degrees, East`, `10 Degrees, West`, `10 Degrees, Southwest`, `10 Degrees, South`, `10 Degrees, Southeast`, `10 Degrees, East`, `15 Degrees, West`, `15 Degrees, Southwest`, `15 Degrees, South`, `15 Degrees, Southeast`, `15 Degrees, East`, `20 Degrees, West`, `20 Degrees, Southwest`, `20 Degrees, South`, `20 Degrees, Southeast`, `20 Degrees, East`, `25 Degrees, West`, `25 Degrees, Southwest`, `25 Degrees, South`, `25 Degrees, Southeast`, `25 Degrees, East`, `30 Degrees, West`, `30 Degrees, Southwest`, `30 Degrees, South`, `30 Degrees, Southeast`, `30 Degrees, East`, `35 Degrees, West`, `35 Degrees, Southwest`, `35 Degrees, South`, `35 Degrees, Southeast`, `35 Degrees, East`, `40 Degrees, West`, `40 Degrees, Southwest`, `40 Degrees, South`, `40 Degrees, Southeast`, `40 Degrees, East`, `45 Degrees, West`, `45 Degrees, Southwest`, `45 Degrees, South`, `45 Degrees, Southeast`, `45 Degrees, East`, `50 Degrees, West`, `50 Degrees, Southwest`, `50 Degrees, South`, `50 Degrees, Southeast`, `50 Degrees, East`
+- **Choices:** `Roof Pitch, West`, `Roof Pitch, Southwest`, `Roof Pitch, South`, `Roof Pitch, Southeast`, `Roof Pitch, East`, `Roof Pitch, Northeast`, `Roof Pitch, North`, `Roof Pitch, Northwest`, `0 Degrees`, `5 Degrees, West`, `5 Degrees, Southwest`, `5 Degrees, South`, `5 Degrees, Southeast`, `5 Degrees, East`, `10 Degrees, West`, `10 Degrees, Southwest`, `10 Degrees, South`, `10 Degrees, Southeast`, `10 Degrees, East`, `15 Degrees, West`, `15 Degrees, Southwest`, `15 Degrees, South`, `15 Degrees, Southeast`, `15 Degrees, East`, `20 Degrees, West`, `20 Degrees, Southwest`, `20 Degrees, South`, `20 Degrees, Southeast`, `20 Degrees, East`, `25 Degrees, West`, `25 Degrees, Southwest`, `25 Degrees, South`, `25 Degrees, Southeast`, `25 Degrees, East`, `30 Degrees, West`, `30 Degrees, Southwest`, `30 Degrees, South`, `30 Degrees, Southeast`, `30 Degrees, East`, `35 Degrees, West`, `35 Degrees, Southwest`, `35 Degrees, South`, `35 Degrees, Southeast`, `35 Degrees, East`, `40 Degrees, West`, `40 Degrees, Southwest`, `40 Degrees, South`, `40 Degrees, Southeast`, `40 Degrees, East`, `45 Degrees, West`, `45 Degrees, Southwest`, `45 Degrees, South`, `45 Degrees, Southeast`, `45 Degrees, East`, `50 Degrees, West`, `50 Degrees, Southwest`, `50 Degrees, South`, `50 Degrees, Southeast`, `50 Degrees, East`
 
 <br/>
 
@@ -1201,7 +1201,7 @@ The size and type of the second PV system.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `0.5 kW`, `1.0 kW`, `1.5 kW`, `1.5 kW, Premium Module`, `1.5 kW, Thin Film Module`, `2.0 kW`, `2.5 kW`, `3.0 kW`, `3.5 kW`, `4.0 kW`, `4.5 kW`, `5.0 kW`, `5.5 kW`, `6.0 kW`, `6.5 kW`, `7.0 kW`, `7.5 kW`, `8.0 kW`, `8.5 kW`, `9.0 kW`, `9.5 kW`, `10.0 kW`, `10.5 kW`, `11.0 kW`, `11.5 kW`, `12.0 kW`
+- **Choices:** `None`, `0.5 kW`, `1.0 kW`, `1.5 kW`, `2.0 kW`, `2.5 kW`, `3.0 kW`, `3.5 kW`, `4.0 kW`, `4.5 kW`, `5.0 kW`, `5.5 kW`, `6.0 kW`, `6.5 kW`, `7.0 kW`, `7.5 kW`, `8.0 kW`, `8.5 kW`, `9.0 kW`, `9.5 kW`, `10.0 kW`, `10.5 kW`, `11.0 kW`, `11.5 kW`, `12.0 kW`, `12.5 kW`, `13.0 kW`, `13.5 kW`, `14.0 kW`, `14.5 kW`, `15.0 kW`, `Detailed Example: 10.0 kW, Standard, 14% System Losses`, `Detailed Example: 1.5 kW, Premium`, `Detailed Example: 1.5 kW, Thin Film`
 
 <br/>
 
@@ -1214,7 +1214,7 @@ The azimuth and tilt of the second PV system array.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Roof Pitch, West`, `Roof Pitch, Southwest`, `Roof Pitch, South`, `Roof Pitch, Southeast`, `Roof Pitch, East`, `0 Degrees`, `5 Degrees, West`, `5 Degrees, Southwest`, `5 Degrees, South`, `5 Degrees, Southeast`, `5 Degrees, East`, `10 Degrees, West`, `10 Degrees, Southwest`, `10 Degrees, South`, `10 Degrees, Southeast`, `10 Degrees, East`, `15 Degrees, West`, `15 Degrees, Southwest`, `15 Degrees, South`, `15 Degrees, Southeast`, `15 Degrees, East`, `20 Degrees, West`, `20 Degrees, Southwest`, `20 Degrees, South`, `20 Degrees, Southeast`, `20 Degrees, East`, `25 Degrees, West`, `25 Degrees, Southwest`, `25 Degrees, South`, `25 Degrees, Southeast`, `25 Degrees, East`, `30 Degrees, West`, `30 Degrees, Southwest`, `30 Degrees, South`, `30 Degrees, Southeast`, `30 Degrees, East`, `35 Degrees, West`, `35 Degrees, Southwest`, `35 Degrees, South`, `35 Degrees, Southeast`, `35 Degrees, East`, `40 Degrees, West`, `40 Degrees, Southwest`, `40 Degrees, South`, `40 Degrees, Southeast`, `40 Degrees, East`, `45 Degrees, West`, `45 Degrees, Southwest`, `45 Degrees, South`, `45 Degrees, Southeast`, `45 Degrees, East`, `50 Degrees, West`, `50 Degrees, Southwest`, `50 Degrees, South`, `50 Degrees, Southeast`, `50 Degrees, East`
+- **Choices:** `Roof Pitch, West`, `Roof Pitch, Southwest`, `Roof Pitch, South`, `Roof Pitch, Southeast`, `Roof Pitch, East`, `Roof Pitch, Northeast`, `Roof Pitch, North`, `Roof Pitch, Northwest`, `0 Degrees`, `5 Degrees, West`, `5 Degrees, Southwest`, `5 Degrees, South`, `5 Degrees, Southeast`, `5 Degrees, East`, `10 Degrees, West`, `10 Degrees, Southwest`, `10 Degrees, South`, `10 Degrees, Southeast`, `10 Degrees, East`, `15 Degrees, West`, `15 Degrees, Southwest`, `15 Degrees, South`, `15 Degrees, Southeast`, `15 Degrees, East`, `20 Degrees, West`, `20 Degrees, Southwest`, `20 Degrees, South`, `20 Degrees, Southeast`, `20 Degrees, East`, `25 Degrees, West`, `25 Degrees, Southwest`, `25 Degrees, South`, `25 Degrees, Southeast`, `25 Degrees, East`, `30 Degrees, West`, `30 Degrees, Southwest`, `30 Degrees, South`, `30 Degrees, Southeast`, `30 Degrees, East`, `35 Degrees, West`, `35 Degrees, Southwest`, `35 Degrees, South`, `35 Degrees, Southeast`, `35 Degrees, East`, `40 Degrees, West`, `40 Degrees, Southwest`, `40 Degrees, South`, `40 Degrees, Southeast`, `40 Degrees, East`, `45 Degrees, West`, `45 Degrees, Southwest`, `45 Degrees, South`, `45 Degrees, Southeast`, `45 Degrees, East`, `50 Degrees, West`, `50 Degrees, Southwest`, `50 Degrees, South`, `50 Degrees, Southeast`, `50 Degrees, East`
 
 <br/>
 
@@ -1500,7 +1500,7 @@ The type of pool (pump & heater).
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Pool, Unheated, 25% Usage`, `Pool, Unheated, 50% Usage`, `Pool, Unheated, 75% Usage`, `Pool, Unheated, 100% Usage`, `Pool, Unheated, 150% Usage`, `Pool, Unheated, 200% Usage`, `Pool, Unheated, 400% Usage`, `Pool, Electric Resistance Heater, 25% Usage`, `Pool, Electric Resistance Heater, 50% Usage`, `Pool, Electric Resistance Heater, 75% Usage`, `Pool, Electric Resistance Heater, 100% Usage`, `Pool, Electric Resistance Heater, 150% Usage`, `Pool, Electric Resistance Heater, 200% Usage`, `Pool, Electric Resistance Heater, 400% Usage`, `Pool, Heat Pump Heater, 25% Usage`, `Pool, Heat Pump Heater, 50% Usage`, `Pool, Heat Pump Heater, 75% Usage`, `Pool, Heat Pump Heater, 100% Usage`, `Pool, Heat Pump Heater, 150% Usage`, `Pool, Heat Pump Heater, 200% Usage`, `Pool, Heat Pump Heater, 400% Usage`, `Pool, Natural Gas Heater, 25% Usage`, `Pool, Natural Gas Heater, 50% Usage`, `Pool, Natural Gas Heater, 75% Usage`, `Pool, Natural Gas Heater, 100% Usage`, `Pool, Natural Gas Heater, 150% Usage`, `Pool, Natural Gas Heater, 200% Usage`, `Pool, Natural Gas Heater, 400% Usage`, `Detailed Example: Pool, 2700 kWh/yr Pump, Unheated`, `Detailed Example: Pool, 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater`
+- **Choices:** `None`, `Unheated, 25% Usage`, `Unheated, 50% Usage`, `Unheated, 75% Usage`, `Unheated, 100% Usage`, `Unheated, 150% Usage`, `Unheated, 200% Usage`, `Unheated, 400% Usage`, `Electric Resistance Heater, 25% Usage`, `Electric Resistance Heater, 50% Usage`, `Electric Resistance Heater, 75% Usage`, `Electric Resistance Heater, 100% Usage`, `Electric Resistance Heater, 150% Usage`, `Electric Resistance Heater, 200% Usage`, `Electric Resistance Heater, 400% Usage`, `Heat Pump Heater, 25% Usage`, `Heat Pump Heater, 50% Usage`, `Heat Pump Heater, 75% Usage`, `Heat Pump Heater, 100% Usage`, `Heat Pump Heater, 150% Usage`, `Heat Pump Heater, 200% Usage`, `Heat Pump Heater, 400% Usage`, `Natural Gas Heater, 25% Usage`, `Natural Gas Heater, 50% Usage`, `Natural Gas Heater, 75% Usage`, `Natural Gas Heater, 100% Usage`, `Natural Gas Heater, 150% Usage`, `Natural Gas Heater, 200% Usage`, `Natural Gas Heater, 400% Usage`, `Detailed Example: 2700 kWh/yr Pump, Unheated`, `Detailed Example: 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater`
 
 <br/>
 
@@ -1513,7 +1513,7 @@ The type of permanent spa (pump & heater).
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Spa, Unheated, 25% Usage`, `Spa, Unheated, 50% Usage`, `Spa, Unheated, 75% Usage`, `Spa, Unheated, 100% Usage`, `Spa, Unheated, 150% Usage`, `Spa, Unheated, 200% Usage`, `Spa, Unheated, 400% Usage`, `Spa, Electric Resistance Heater, 25% Usage`, `Spa, Electric Resistance Heater, 50% Usage`, `Spa, Electric Resistance Heater, 75% Usage`, `Spa, Electric Resistance Heater, 100% Usage`, `Spa, Electric Resistance Heater, 150% Usage`, `Spa, Electric Resistance Heater, 200% Usage`, `Spa, Electric Resistance Heater, 400% Usage`, `Spa, Heat Pump Heater, 25% Usage`, `Spa, Heat Pump Heater, 50% Usage`, `Spa, Heat Pump Heater, 75% Usage`, `Spa, Heat Pump Heater, 100% Usage`, `Spa, Heat Pump Heater, 150% Usage`, `Spa, Heat Pump Heater, 200% Usage`, `Spa, Heat Pump Heater, 400% Usage`, `Spa, Natural Gas Heater, 25% Usage`, `Spa, Natural Gas Heater, 50% Usage`, `Spa, Natural Gas Heater, 75% Usage`, `Spa, Natural Gas Heater, 100% Usage`, `Spa, Natural Gas Heater, 150% Usage`, `Spa, Natural Gas Heater, 200% Usage`, `Spa, Natural Gas Heater, 400% Usage`, `Detailed Example: Spa, 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater`, `Detailed Example: Spa, 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater`
+- **Choices:** `None`, `Unheated, 25% Usage`, `Unheated, 50% Usage`, `Unheated, 75% Usage`, `Unheated, 100% Usage`, `Unheated, 150% Usage`, `Unheated, 200% Usage`, `Unheated, 400% Usage`, `Electric Resistance Heater, 25% Usage`, `Electric Resistance Heater, 50% Usage`, `Electric Resistance Heater, 75% Usage`, `Electric Resistance Heater, 100% Usage`, `Electric Resistance Heater, 150% Usage`, `Electric Resistance Heater, 200% Usage`, `Electric Resistance Heater, 400% Usage`, `Heat Pump Heater, 25% Usage`, `Heat Pump Heater, 50% Usage`, `Heat Pump Heater, 75% Usage`, `Heat Pump Heater, 100% Usage`, `Heat Pump Heater, 150% Usage`, `Heat Pump Heater, 200% Usage`, `Heat Pump Heater, 400% Usage`, `Natural Gas Heater, 25% Usage`, `Natural Gas Heater, 50% Usage`, `Natural Gas Heater, 75% Usage`, `Natural Gas Heater, 100% Usage`, `Natural Gas Heater, 150% Usage`, `Natural Gas Heater, 200% Usage`, `Natural Gas Heater, 400% Usage`, `Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater`, `Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater`
 
 <br/>
 

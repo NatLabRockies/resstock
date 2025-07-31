@@ -1,14 +1,11 @@
 Option Name	Location
 Default	
 Conditioned Space	conditioned space
-"Basement, Unconditioned"	basement - unconditioned
-"Basement, Conditioned"	basement - conditioned
+Basement	basement
 Garage	garage
-"Crawlspace, Vented"	crawlspace - vented
-"Crawlspace, Unvented"	crawlspace - unvented
-"Crawlspace, Conditioned"	crawlspace - conditioned
-"Attic, Vented"	attic - vented
-"Attic, Unvented"	attic - unvented
+Crawlspace	crawlspace
+Attic	attic
+Other Heated Space	other heated space
 Outside	other exterior
 	
 Location: The location of the water heater.	

@@ -222,13 +222,13 @@
     "hvac_cooling_system": "Central AC, SEER 10",
     "hvac_cooling_system_cooling_load_served": "100%",
     "hvac_ducts": "0 CFM25 per 100ft2, Uninsulated",
-    "hvac_ducts_supply_location": "Conditioned Space, 100%",
-    "hvac_ducts_return_location": "Conditioned Space, 100%"
+    "hvac_ducts_supply_location": "Conditioned Space",
+    "hvac_ducts_return_location": "Conditioned Space"
   },
   "tests/HERS_DSE/HVAC3b.xml": {
     "parent_hpxml": "tests/HERS_DSE/HVAC3a.xml",
-    "hvac_ducts_supply_location": "Basement, Unconditioned, 100%",
-    "hvac_ducts_return_location": "Basement, Unconditioned, 100%"
+    "hvac_ducts_supply_location": "Basement",
+    "hvac_ducts_return_location": "Basement"
   },
   "tests/HERS_DSE/HVAC3c.xml": {
     "parent_hpxml": "tests/HERS_DSE/HVAC3b.xml",
@@ -246,13 +246,13 @@
     "hvac_cooling_system": "Central AC, SEER 10",
     "hvac_cooling_system_cooling_load_served": "100%",
     "hvac_ducts": "0 CFM25 per 100ft2, Uninsulated",
-    "hvac_ducts_supply_location": "Conditioned Space, 100%",
-    "hvac_ducts_return_location": "Conditioned Space, 100%"
+    "hvac_ducts_supply_location": "Conditioned Space",
+    "hvac_ducts_return_location": "Conditioned Space"
   },
   "tests/HERS_DSE/HVAC3f.xml": {
     "parent_hpxml": "tests/HERS_DSE/HVAC3e.xml",
-    "hvac_ducts_supply_location": "Attic, Vented, 100%",
-    "hvac_ducts_return_location": "Attic, Vented, 100%"
+    "hvac_ducts_supply_location": "Attic",
+    "hvac_ducts_return_location": "Attic"
   },
   "tests/HERS_DSE/HVAC3g.xml": {
     "parent_hpxml": "tests/HERS_DSE/HVAC3f.xml",
@@ -396,8 +396,8 @@
     "hvac_control_cooling_weekday_setpoint": "78",
     "hvac_control_cooling_weekend_setpoint": "78",
     "hvac_ducts": "Detailed Example: 4 CFM25 per 100ft2 (75% Supply), R-4",
-    "hvac_ducts_supply_location": "Attic, Unvented, 75%",
-    "hvac_ducts_return_location": "Attic, Unvented, 75%",
+    "hvac_ducts_supply_location": "Attic",
+    "hvac_ducts_return_location": "Attic",
     "dhw_water_heater": "Electricity, Tank, UEF=0.94",
     "dhw_water_heater_location": "Conditioned Space",
     "lighting": "Detailed Example: 40% CFL, 10% LFL, 25% LED",
@@ -476,8 +476,8 @@
     "enclosure_roof": "R-30",
     "geometry_window_areas_or_wwrs": "108, 108, 120, 120",
     "hvac_ducts": "0 CFM25 per 100ft2, R-4",
-    "hvac_ducts_supply_location": "Conditioned Space, 100%",
-    "hvac_ducts_return_location": "Conditioned Space, 100%"
+    "hvac_ducts_supply_location": "Conditioned Space",
+    "hvac_ducts_return_location": "Conditioned Space"
   },
   "sample_files/base-atticroof-conditioned.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -485,9 +485,9 @@
     "geometry_unit_conditioned_floor_area": "3600",
     "geometry_attic_type": "Attic, Conditioned, Gable",
     "hvac_ducts": "1 CFM25 per 100ft2, Uninsulated",
-    "hvac_ducts_supply_location": "Conditioned Space, 100%",
-    "hvac_ducts_return_location": "Conditioned Space, 100%",
-    "dhw_water_heater_location": "Basement, Conditioned",
+    "hvac_ducts_supply_location": "Conditioned Space",
+    "hvac_ducts_return_location": "Conditioned Space",
+    "dhw_water_heater_location": "Basement",
     "appliance_clothes_washer": "Detailed Example: Standard, 2008-2017, Conditioned Basement",
     "appliance_clothes_dryer": "Detailed Example: Electricity, Standard, Conditioned Basement",
     "appliance_dishwasher": "Detailed Example: Federal Minimum, Standard, Conditioned Basement",
@@ -499,8 +499,8 @@
     "geometry_attic_type": "Flat Roof",
     "enclosure_roof": "R-30",
     "hvac_ducts": "0 CFM25 per 100ft2, R-4",
-    "hvac_ducts_supply_location": "Basement, Conditioned, 100%",
-    "hvac_ducts_return_location": "Basement, Conditioned, 100%"
+    "hvac_ducts_supply_location": "Basement",
+    "hvac_ducts_return_location": "Basement"
   },
   "sample_files/base-atticroof-radiant-barrier.xml": {
     "parent_hpxml": "sample_files/base-location-dallas-tx.xml",
@@ -519,9 +519,9 @@
   "sample_files/base-atticroof-vented.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_attic_type": "Attic, Vented, Gable",
-    "hvac_ducts_supply_location": "Attic, Vented, 75%",
-    "hvac_ducts_return_location": "Attic, Vented, 75%",
-    "dhw_water_heater_location": "Attic, Vented"
+    "hvac_ducts_supply_location": "Detailed Example: Attic, 75%",
+    "hvac_ducts_return_location": "Detailed Example: Attic, 75%",
+    "dhw_water_heater_location": "Attic"
   },
   "sample_files/base-battery.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -605,8 +605,8 @@
     "parent_hpxml": "sample_files/base-bldgtype-sfa-unit-2stories.xml",
     "geometry_attic_type": "Attic, Conditioned, Gable",
     "hvac_ducts": "0 CFM25 per 100ft2, R-4",
-    "hvac_ducts_supply_location": "Conditioned Space, 100%",
-    "hvac_ducts_return_location": "Conditioned Space, 100%"
+    "hvac_ducts_supply_location": "Conditioned Space",
+    "hvac_ducts_return_location": "Conditioned Space"
   },
   "sample_files/base-bldgtype-sfa-unit-infil-compartmentalization-test.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-sfa-unit.xml",
@@ -625,8 +625,8 @@
     "hvac_heating_system_capacity": "10 kBtu/hr",
     "hvac_cooling_system_capacity": "1.0 tons",
     "hvac_ducts": "0 CFM25 per 100ft2, Uninsulated",
-    "hvac_ducts_supply_location": "Conditioned Space, 100%",
-    "hvac_ducts_return_location": "Conditioned Space, 100%"
+    "hvac_ducts_supply_location": "Conditioned Space",
+    "hvac_ducts_return_location": "Conditioned Space"
   },
   "sample_files/base-bldgtype-mf-unit-adjacent-to-multifamily-buffer-space.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml"
@@ -767,7 +767,7 @@
   },
   "sample_files/base-bldgtype-mf-unit-shared-pv.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
-    "pv_system": "12.0 kW",
+    "pv_system": "Detailed Example: 10.0 kW, Standard, 14% System Losses, 96% Inverter Efficiency",
     "pv_system_direction": "30 Degrees, Southwest"
   },
   "sample_files/base-bldgtype-mf-unit-shared-pv-battery.xml": {
@@ -1096,8 +1096,8 @@
     "parent_hpxml": "sample_files/base.xml",
     "geometry_garage_type": "3 Car, Right, Fully Protruding",
     "geometry_window_areas_or_wwrs": "12, 108, 72, 72",
-    "hvac_ducts_supply_location": "Garage, 100%",
-    "hvac_ducts_return_location": "Garage, 100%",
+    "hvac_ducts_supply_location": "Garage",
+    "hvac_ducts_return_location": "Garage",
     "dhw_water_heater_location": "Garage",
     "appliance_clothes_washer": "Detailed Example: Standard, 2008-2017, Garage",
     "appliance_clothes_dryer": "Detailed Example: Electricity, Standard, Garage",
@@ -1107,7 +1107,7 @@
   },
   "sample_files/base-enclosure-infil-ach-house-pressure.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "enclosure_air_leakage": "2.8 ACH45"
+    "enclosure_air_leakage": "Detailed Example: 2.8 ACH45"
   },
   "sample_files/base-enclosure-infil-cfm-house-pressure.xml": {
     "parent_hpxml": "sample_files/base-enclosure-infil-cfm50.xml",
@@ -1227,8 +1227,8 @@
   },
   "sample_files/base-foundation-ambient.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "hvac_ducts_supply_location": "Attic, Unvented, 100%",
-    "hvac_ducts_return_location": "Attic, Unvented, 100%",
+    "hvac_ducts_supply_location": "Attic",
+    "hvac_ducts_return_location": "Attic",
     "geometry_unit_conditioned_floor_area": "1350",
     "geometry_foundation_type": "Ambient",
     "enclosure_floor_over_foundation": "Wood Frame, R-15"
@@ -1243,9 +1243,9 @@
     "geometry_foundation_type": "Belly and Wing, With Skirt",
     "geometry_roof_pitch": "3:12",
     "geometry_window_areas_or_wwrs": "140, 140, 20, 20",
-    "hvac_ducts_supply_location": "Manufactured Home Belly, 100%",
     "hvac_ducts": "20% Leakage, Uninsulated",
-    "hvac_ducts_return_location": "Manufactured Home Belly, 100%"
+    "hvac_ducts_supply_location": "Manufactured Home Belly",
+    "hvac_ducts_return_location": "Manufactured Home Belly"
   },
   "sample_files/base-foundation-belly-wing-no-skirt.xml": {
     "parent_hpxml": "sample_files/base-foundation-belly-wing-skirt.xml",
@@ -1272,17 +1272,17 @@
     "geometry_foundation_type": "Crawlspace, Conditioned",
     "enclosure_floor_over_foundation": "Wood Frame, R-15",
     "hvac_ducts": "0 CFM25 per 100ft2, R-4",
-    "hvac_ducts_supply_location": "Crawlspace, Conditioned, 100%",
-    "hvac_ducts_return_location": "Crawlspace, Conditioned, 100%",
-    "dhw_water_heater_location": "Crawlspace, Conditioned"
+    "hvac_ducts_supply_location": "Crawlspace",
+    "hvac_ducts_return_location": "Crawlspace",
+    "dhw_water_heater_location": "Crawlspace"
   },
   "sample_files/base-foundation-slab.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_conditioned_floor_area": "1350",
     "geometry_foundation_type": "Slab-on-Grade",
     "enclosure_slab": "Detailed Example: Whole Slab, R-5, 100% R-2.5 Carpet",
-    "hvac_ducts_supply_location": "Under Slab, 100%",
-    "hvac_ducts_return_location": "Under Slab, 100%"
+    "hvac_ducts_supply_location": "Under Slab",
+    "hvac_ducts_return_location": "Under Slab"
   },
   "sample_files/base-foundation-slab-exterior-horizontal-insulation.xml": {
     "parent_hpxml": "sample_files/base-foundation-slab.xml",
@@ -1298,9 +1298,9 @@
     "enclosure_floor_over_foundation": "Wood Frame, R-15",
     "enclosure_foundation_wall": "Solid Concrete, Uninsulated",
     "enclosure_rim_joist": "Uninsulated",
-    "hvac_ducts_supply_location": "Basement, Unconditioned, 100%",
-    "hvac_ducts_return_location": "Basement, Unconditioned, 100%",
-    "dhw_water_heater_location": "Basement, Unconditioned",
+    "hvac_ducts_supply_location": "Basement",
+    "hvac_ducts_return_location": "Basement",
+    "dhw_water_heater_location": "Basement",
     "appliance_clothes_washer": "Detailed Example: Standard, 2008-2017, Unconditioned Basement",
     "appliance_clothes_dryer": "Detailed Example: Electricity, Standard, Unconditioned Basement",
     "appliance_dishwasher": "Detailed Example: Federal Minimum, Standard, Unconditioned Basement",
@@ -1325,18 +1325,18 @@
     "geometry_unit_conditioned_floor_area": "1350",
     "geometry_foundation_type": "Crawlspace, Unvented",
     "enclosure_floor_over_foundation": "Wood Frame, R-15",
-    "hvac_ducts_supply_location": "Crawlspace, Unvented, 100%",
-    "hvac_ducts_return_location": "Crawlspace, Unvented, 100%",
-    "dhw_water_heater_location": "Crawlspace, Unvented"
+    "hvac_ducts_supply_location": "Crawlspace",
+    "hvac_ducts_return_location": "Crawlspace",
+    "dhw_water_heater_location": "Crawlspace"
   },
   "sample_files/base-foundation-vented-crawlspace.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_conditioned_floor_area": "1350",
     "geometry_foundation_type": "Crawlspace, Vented",
     "enclosure_floor_over_foundation": "Wood Frame, R-15",
-    "hvac_ducts_supply_location": "Crawlspace, Vented, 100%",
-    "hvac_ducts_return_location": "Crawlspace, Vented, 100%",
-    "dhw_water_heater_location": "Crawlspace, Vented"
+    "hvac_ducts_supply_location": "Crawlspace",
+    "hvac_ducts_return_location": "Crawlspace",
+    "dhw_water_heater_location": "Crawlspace"
   },
   "sample_files/base-foundation-vented-crawlspace-above-grade.xml": {
     "parent_hpxml": "sample_files/base-foundation-vented-crawlspace.xml",
@@ -2345,7 +2345,7 @@
   },
   "sample_files/base-misc-ground-conductivity.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "location_soil_type": "0.8 Conductivity"
+    "location_soil_type": "0.8 Btu/hr-ft-F"
   },
   "sample_files/base-misc-loads-large-uncommon.xml": {
     "parent_hpxml": "sample_files/base-schedules-simple.xml",
@@ -2361,13 +2361,13 @@
     "misc_grill": "Detailed Example: Propane, 25 therm/yr",
     "misc_gas_lighting": "Detailed Example: Natural Gas, 28 therm/yr",
     "misc_fireplace": "Detailed Example: Wood, 55 therm/yr",
-    "misc_pool": "Detailed Example: Pool, 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater",
-    "misc_permanent_spa": "Detailed Example: Spa, 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater"
+    "misc_pool": "Detailed Example: 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater",
+    "misc_permanent_spa": "Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater"
   },
   "sample_files/base-misc-loads-large-uncommon2.xml": {
     "parent_hpxml": "sample_files/base-misc-loads-large-uncommon.xml",
-    "misc_pool": "Detailed Example: Pool, 2700 kWh/yr Pump, Unheated",
-    "misc_permanent_spa": "Detailed Example: Spa, 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater"
+    "misc_pool": "Detailed Example: 2700 kWh/yr Pump, Unheated",
+    "misc_permanent_spa": "Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater"
   },
   "sample_files/base-misc-loads-none.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2403,8 +2403,8 @@
     "misc_grill": "Propane, 75% Usage",
     "misc_gas_lighting": "Natural Gas, 75% Usage",
     "misc_fireplace": "Wood, 75% Usage",
-    "misc_pool": "Pool, Natural Gas Heater, 75% Usage",
-    "misc_permanent_spa": "Spa, Electric Resistance Heater, 75% Usage",
+    "misc_pool": "Natural Gas Heater, 75% Usage",
+    "misc_permanent_spa": "Electric Resistance Heater, 75% Usage",
     "electric_vehicle": "Midsize, 200 Mile Range, 75% Usage",
     "electric_vehicle_charger": "Level 1, 50% Charging at Home"
   },
@@ -2433,14 +2433,14 @@
     "parent_hpxml": "sample_files/base.xml",
     "pv_system": "4.0 kW",
     "pv_system_direction": "20 Degrees, South",
-    "pv_system_2": "1.5 kW, Premium Module",
+    "pv_system_2": "Detailed Example: 1.5 kW, Premium",
     "pv_system_2_direction": "20 Degrees, East"
   },
   "sample_files/base-pv-battery.xml": {
     "parent_hpxml": "sample_files/base-battery.xml",
     "pv_system": "4.0 kW",
     "pv_system_direction": "20 Degrees, South",
-    "pv_system_2": "1.5 kW, Premium Module",
+    "pv_system_2": "Detailed Example: 1.5 kW, Premium",
     "pv_system_2_direction": "20 Degrees, East"
   },
   "sample_files/base-pv-battery-ah.xml": {
@@ -2450,7 +2450,7 @@
     "parent_hpxml": "sample_files/base-enclosure-garage.xml",
     "pv_system": "4.0 kW",
     "pv_system_direction": "20 Degrees, South",
-    "pv_system_2": "1.5 kW, Premium Module",
+    "pv_system_2": "Detailed Example: 1.5 kW, Premium",
     "pv_system_2_direction": "20 Degrees, East",
     "battery": "Detailed Example: 20.0 kWh, 6 kW, Garage"
   },
@@ -2491,8 +2491,8 @@
     "misc_gas_lighting": "Natural Gas, 100% Usage",
     "misc_fireplace": "Wood, 100% Usage",
     "misc_electric_vehicle_charging": "100% Usage",
-    "misc_pool": "Pool, Natural Gas Heater, 100% Usage",
-    "misc_permanent_spa": "Spa, Electric Resistance Heater, 100% Usage"
+    "misc_pool": "Natural Gas Heater, 100% Usage",
+    "misc_permanent_spa": "Electric Resistance Heater, 100% Usage"
   },
   "sample_files/base-residents-1-misc-loads-large-uncommon2.xml": {
     "parent_hpxml": "sample_files/base-misc-loads-large-uncommon2.xml",
@@ -2504,8 +2504,8 @@
     "misc_gas_lighting": "Natural Gas, 100% Usage",
     "misc_fireplace": "Wood, 100% Usage",
     "misc_electric_vehicle_charging": "100% Usage",
-    "misc_pool": "Pool, Unheated, 100% Usage",
-    "misc_permanent_spa": "Spa, Heat Pump Heater, 100% Usage"
+    "misc_pool": "Unheated, 100% Usage",
+    "misc_permanent_spa": "Heat Pump Heater, 100% Usage"
   },
   "sample_files/base-residents-5-5.xml": {
     "parent_hpxml": "sample_files/base-misc-defaults.xml"

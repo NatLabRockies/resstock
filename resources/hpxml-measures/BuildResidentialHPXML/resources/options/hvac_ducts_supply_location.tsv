@@ -1,45 +1,16 @@
 Option Name	Location	Location Fraction [frac]
 Default		
-"Conditioned Space, 100%"	conditioned space	1
-"Basement, Unconditioned, 100%"	basement - unconditioned	1
-"Basement, Unconditioned, 75%"	basement - unconditioned	0.75
-"Basement, Unconditioned, 50%"	basement - unconditioned	0.5
-"Basement, Conditioned, 100%"	basement - conditioned	1
-"Basement, Conditioned, 75%"	basement - conditioned	0.75
-"Basement, Conditioned, 50%"	basement - conditioned	0.5
-"Crawlspace, Unvented, 100%"	crawlspace - unvented	1
-"Crawlspace, Unvented, 75%"	crawlspace - unvented	0.75
-"Crawlspace, Unvented, 50%"	crawlspace - unvented	0.5
-"Crawlspace, Vented, 100%"	crawlspace - vented	1
-"Crawlspace, Vented, 75%"	crawlspace - vented	0.75
-"Crawlspace, Vented, 50%"	crawlspace - vented	0.5
-"Crawlspace, Conditioned, 100%"	crawlspace - conditioned	1
-"Crawlspace, Conditioned, 75%"	crawlspace - conditioned	0.75
-"Crawlspace, Conditioned, 50%"	crawlspace - conditioned	0.5
-"Attic, Unvented, 100%"	attic - unvented	1
-"Attic, Unvented, 75%"	attic - unvented	0.75
-"Attic, Unvented, 50%"	attic - unvented	0.5
-"Attic, Vented, 100%"	attic - vented	1
-"Attic, Vented, 75%"	attic - vented	0.75
-"Attic, Vented, 50%"	attic - vented	0.5
-"Garage, 100%"	garage	1
-"Garage, 75%"	garage	0.75
-"Garage, 50%"	garage	0.5
-"Outside, 100%"	outside	1
-"Outside, 75%"	outside	0.75
-"Outside, 50%"	outside	0.5
-"Exterior Wall, 100%"	exterior wall	1
-"Exterior Wall, 75%"	exterior wall	0.75
-"Exterior Wall, 50%"	exterior wall	0.5
-"Under Slab, 100%"	under slab	1
-"Under Slab, 75%"	under slab	0.75
-"Under Slab, 50%"	under slab	0.5
-"Roof Deck, 100%"	roof deck	1
-"Roof Deck, 75%"	roof deck	0.75
-"Roof Deck, 50%"	roof deck	0.5
-"Manufactured Home Belly, 100%"	manufactured home belly	1
-"Manufactured Home Belly, 75%"	manufactured home belly	0.75
-"Manufactured Home Belly, 50%"	manufactured home belly	0.5
+Conditioned Space	conditioned space	
+Basement	basement	
+Crawlspace	crawlspace	
+Attic	attic	
+Garage	garage	
+Outside	outside	
+Exterior Wall	exterior wall	
+Under Slab	under slab	
+Roof Deck	roof deck	
+Manufactured Home Belly	manufactured home belly	
+"Detailed Example: Attic, 75%"	attic	0.75
 		
 Location: The primary location of the supply ducts.		
 Location Fraction: The fraction of supply ducts in this location. The remainder are assumed to be in conditioned space.		

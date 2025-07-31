@@ -15,14 +15,14 @@ Unknown	unknown	mixed
 "Silt, Dry"	silt	dry		
 "Silt, Mixed"	silt	mixed		
 "Silt, Wet"	silt	wet		
-0.5 Conductivity			0.5	
-0.8 Conductivity			0.8	
-1.1 Conductivity			1.1	
-1.4 Conductivity			1.4	
-1.7 Conductivity			1.7	
-2.0 Conductivity			2	
-2.3 Conductivity			2.3	
-2.6 Conductivity			2.6	
+0.5 Btu/hr-ft-F			0.5	
+0.8 Btu/hr-ft-F			0.8	
+1.1 Btu/hr-ft-F			1.1	
+1.4 Btu/hr-ft-F			1.4	
+1.7 Btu/hr-ft-F			1.7	
+2.0 Btu/hr-ft-F			2	
+2.3 Btu/hr-ft-F			2.3	
+2.6 Btu/hr-ft-F			2.6	
 "Detailed Example: Sand, Dry, 0.03 Diffusivity"	sand	dry		0.03
 				
 Soil Type: The soil type.				

@@ -2734,12 +2734,9 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
            'base-bldgtype-mf-unit-shared-pv-battery.xml'].include? hpxml_file
       hpxml_bldg.pv_systems[0].is_shared_system = true
       hpxml_bldg.pv_systems[0].location = HPXML::LocationGround
-      hpxml_bldg.pv_systems[0].module_type = HPXML::PVModuleTypeStandard
       hpxml_bldg.pv_systems[0].tracking = HPXML::PVTrackingTypeFixed
       hpxml_bldg.pv_systems[0].max_power_output = 30000
-      hpxml_bldg.pv_systems[0].system_losses_fraction = 0.14
       hpxml_bldg.pv_systems[0].number_of_bedrooms_served = 18
-      hpxml_bldg.inverters[0].inverter_efficiency = 0.96
     end
 
     # -------------------- #

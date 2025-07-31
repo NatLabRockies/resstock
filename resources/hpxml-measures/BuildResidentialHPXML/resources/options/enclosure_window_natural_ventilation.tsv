@@ -8,37 +8,3 @@ None	0
 		
 "Fraction Operable: Total window area for operable windows divided by total window area. The total open window area for natural ventilation is calculated using A) the operable fraction, B) the assumption that only some of the area of operable windows can be open, and C) the assumption that only some of that openable area is actually opened by occupants whenever outdoor conditions are favorable."		
 Availability: How many days per week windows can be opened by occupants.		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-U-Factor: Full-assembly NFRC U-factor.		
-SHGC: Full-assembly NFRC solar heat gain coefficient.		

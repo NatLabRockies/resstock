@@ -139,7 +139,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     args << arg
 
     num_br_choices = OpenStudio::StringVector.new
-    for i in 0..10
+    for i in 0..11
       num_br_choices << i.to_s
     end
 
@@ -151,7 +151,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
     num_bath_occ_choices = OpenStudio::StringVector.new
     num_bath_occ_choices << 'Default'
-    for i in 0..10
+    for i in 0..11
       num_bath_occ_choices << i.to_s
     end
 
@@ -1339,12 +1339,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     return true
   end
 
-  # Set header properties, including:
-  # - vacancy periods
-  # - power outage periods
-  # - software info program
-  # - simulation control
-  # - utility bill scenarios
+  # Set HPXML header properties.
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param hpxml [HPXML] HPXML object
@@ -2907,9 +2902,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     return args[:geometry_unit_conditioned_floor_area] * max_fraction_load_served
   end
 
-  # Set the duct leakages properties, including:
-  # - type
-  # - leakage type, units, and value
+  # Sets the HPXML ducts leakage properties.
   #
   # @param args [Hash] Map of :argument_name => value
   # @param hvac_distribution [HPXML::HVACDistribution] HPXML HVAC Distribution object
@@ -2945,11 +2938,12 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
   # Get the specific HPXML foundation or attic location based on general HPXML location and specific HPXML foundation or attic type.
   #
+  # @param building_component [String] the building component of interest
   # @param location [String] the location of interest (HPXML::LocationCrawlspace or HPXML::LocationAttic)
   # @param foundation_type [String] the specific HPXML foundation type (unvented crawlspace, vented crawlspace, conditioned crawlspace)
   # @param attic_type [String] the specific HPXML attic type (unvented attic, vented attic, conditioned attic)
   # @return [nil]
-  def get_location(location, foundation_type, attic_type)
+  def get_location(building_component, location, foundation_type, attic_type)
     return if location.nil?
 
     if location == HPXML::LocationCrawlspace
@@ -2961,7 +2955,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       when HPXML::FoundationTypeCrawlspaceConditioned
         return HPXML::LocationCrawlspaceConditioned
       else
-        fail "Specified '#{location}' but foundation type is '#{foundation_type}'."
+        fail "Specified '#{location}' for #{building_component} location but foundation type is '#{foundation_type}'."
       end
     elsif location == HPXML::LocationAttic
       case attic_type
@@ -2972,25 +2966,49 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       when HPXML::AtticTypeConditioned
         return HPXML::LocationConditionedSpace
       else
-        fail "Specified '#{location}' but attic type is '#{attic_type}'."
+        fail "Specified '#{location}' for #{building_component} location but attic type is '#{attic_type}'."
+      end
+    elsif location == HPXML::LocationBasement
+      case foundation_type
+      when HPXML::FoundationTypeBasementConditioned
+        return HPXML::LocationBasementConditioned
+      when HPXML::FoundationTypeBasementUnconditioned
+        return HPXML::LocationBasementUnconditioned
+      else
+        fail "Specified '#{location}' for #{building_component} location but foundation type is '#{foundation_type}'."
       end
     end
     return location
   end
 
-  # Set the ducts properties, including:
-  # - type
-  # - insulation R-value
-  # - location
-  # - surface area
+  # Sets the HPXML ducts insulation properties.
   #
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param args [Hash] Map of :argument_name => value
   # @param hvac_distribution [HPXML::HVACDistribution] HPXML HVAC Distribution object
   # @return [nil]
   def set_ducts(hpxml_bldg, args, hvac_distribution)
-    ducts_supply_location = get_location(args[:hvac_ducts_supply_location_location], hpxml_bldg.foundations[-1].foundation_type, hpxml_bldg.attics[-1].attic_type)
-    ducts_return_location = get_location(args[:hvac_ducts_return_location_location], hpxml_bldg.foundations[-1].foundation_type, hpxml_bldg.attics[-1].attic_type)
+    ducts_supply_location = get_location('supply ducts', args[:hvac_ducts_supply_location_location], hpxml_bldg.foundations[-1].foundation_type, hpxml_bldg.attics[-1].attic_type)
+    ducts_return_location = get_location('return ducts', args[:hvac_ducts_return_location_location], hpxml_bldg.foundations[-1].foundation_type, hpxml_bldg.attics[-1].attic_type)
+
+    ncfl = hpxml_bldg.building_construction.number_of_conditioned_floors
+    ncfl_ag = hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade
+
+    if (not ducts_supply_location.nil?) && args[:hvac_ducts_supply_location_location_fraction].nil?
+      if ducts_supply_location == HPXML::LocationConditionedSpace
+        args[:hvac_ducts_supply_location_location_fraction] = 1.0
+      else
+        args[:hvac_ducts_supply_location_location_fraction] = Defaults.get_duct_primary_fraction(ducts_supply_location, ncfl, ncfl_ag)
+      end
+    end
+
+    if (not ducts_return_location.nil?) && args[:hvac_ducts_return_location_location_fraction].nil?
+      if ducts_return_location == HPXML::LocationConditionedSpace
+        args[:hvac_ducts_return_location_location_fraction] = 1.0
+      else
+        args[:hvac_ducts_return_location_location_fraction] = Defaults.get_duct_primary_fraction(ducts_return_location, ncfl, ncfl_ag)
+      end
+    end
 
     hvac_distribution.ducts.add(id: "Ducts#{hvac_distribution.ducts.size + 1}",
                                 duct_type: HPXML::DuctTypeSupply,
@@ -3217,7 +3235,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       args[:dhw_water_heater_fuel_type] = HPXML::FuelTypeElectricity
     end
 
-    location = get_location(args[:dhw_water_heater_location_location], hpxml_bldg.foundations[-1].foundation_type, hpxml_bldg.attics[-1].attic_type)
+    location = get_location('water heater', args[:dhw_water_heater_location_location], hpxml_bldg.foundations[-1].foundation_type, hpxml_bldg.attics[-1].attic_type)
 
     if not [HPXML::WaterHeaterTypeCombiStorage, HPXML::WaterHeaterTypeCombiTankless].include? water_heater_type
       case args[:dhw_water_heater_efficiency_type]
@@ -3394,7 +3412,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     hpxml_bldg.pv_systems.add(id: "PVSystem#{hpxml_bldg.pv_systems.size + 1}",
                               location: args[:pv_system_location],
                               module_type: args[:pv_system_module_type],
-                              tracking: args[:pv_system_tracking],
                               array_azimuth: args[:pv_system_direction_array_azimuth],
                               array_tilt: Geometry.get_absolute_tilt(tilt: args[:pv_system_direction_array_tilt], roof_pitch: args[:geometry_roof_pitch]),
                               max_power_output: args[:pv_system_maximum_power_output],
@@ -3404,7 +3421,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       hpxml_bldg.pv_systems.add(id: "PVSystem#{hpxml_bldg.pv_systems.size + 1}",
                                 location: args[:pv_system_2_location],
                                 module_type: args[:pv_system_2_module_type],
-                                tracking: args[:pv_system_2_tracking],
                                 array_azimuth: args[:pv_system_2_direction_array_azimuth],
                                 array_tilt: Geometry.get_absolute_tilt(tilt: args[:pv_system_2_direction_array_tilt], roof_pitch: args[:geometry_roof_pitch]),
                                 max_power_output: args[:pv_system_2_maximum_power_output],
@@ -3427,11 +3443,9 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   def set_battery(hpxml_bldg, args)
     return if args[:battery] == 'None'
 
-    location = get_location(args[:battery_location], hpxml_bldg.foundations[-1].foundation_type, hpxml_bldg.attics[-1].attic_type)
-
     hpxml_bldg.batteries.add(id: "Battery#{hpxml_bldg.batteries.size + 1}",
                              type: HPXML::BatteryTypeLithiumIon,
-                             location: location,
+                             location: args[:battery_location],
                              rated_power_output: args[:battery_rated_power_output],
                              nominal_capacity_kwh: args[:battery_nominal_capacity],
                              usable_capacity_kwh: args[:battery_usable_capacity],

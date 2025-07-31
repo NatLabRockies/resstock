@@ -1,15 +1,18 @@
 Option Name	Left Distance [ft]	Right Distance [ft]	Back Distance [ft]	Front Distance [ft]	Left Height [ft]	Right Height [ft]	Back Height [ft]	Front Height [ft]
 None								
+Left/Right at 2ft	2	2						
 Left/Right at 5ft	5	5						
 Left/Right at 10ft	10	10						
 Left/Right at 15ft	15	15						
 Left/Right at 20ft	20	20						
 Left/Right at 25ft	25	25						
+Left at 2ft	2							
 Left at 5ft	5							
 Left at 10ft	10							
 Left at 15ft	15							
 Left at 20ft	20							
 Left at 25ft	25							
+Right at 2ft		2						
 Right at 5ft		5						
 Right at 10ft		10						
 Right at 15ft		15						
