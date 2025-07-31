@@ -4866,6 +4866,8 @@ module HPXMLFile
           pv_net_metering_annual_excess_sellback_rate = nil
         end
 
+        pv_monthly_grid_connection_fee_dollars = nil
+        pv_monthly_grid_connection_fee_dollars_per_kw = nil
         if pv_monthly_grid_connection_fee_unit == HPXML::UnitsDollarsPerkW
           pv_monthly_grid_connection_fee_dollars_per_kw = Float(pv_monthly_grid_connection_fee) rescue nil
         elsif pv_monthly_grid_connection_fee_unit == HPXML::UnitsDollars
@@ -5104,7 +5106,7 @@ module HPXMLFile
     hpxml_bldg.building_construction.conditioned_building_volume = args[:geometry_unit_cfa] * args[:geometry_average_ceiling_height]
     hpxml_bldg.building_construction.average_ceiling_height = args[:geometry_average_ceiling_height]
     hpxml_bldg.building_construction.residential_facility_type = args[:geometry_unit_type]
-    hpxml_bldg.building_construction.number_of_units_in_building = args[:geometry_building_num_units]
+    # hpxml_bldg.building_construction.number_of_units_in_building = args[:geometry_building_num_units]
     hpxml_bldg.building_construction.year_built = args[:year_built]
     hpxml_bldg.building_construction.number_of_units = args[:unit_multiplier]
     hpxml_bldg.building_construction.unit_height_above_grade = args[:geometry_unit_height_above_grade]
@@ -5519,13 +5521,16 @@ module HPXMLFile
   # @param sorted_surfaces [Array<OpenStudio::Model::Surface>] surfaces sorted by deterministically assigned Index
   # @return [nil]
   def self.set_floors(hpxml_bldg, args, sorted_surfaces)
+    uninsulated_floor_r = 5.3
+    uninsulated_ceiling_r = 2.1
+
     if [HPXML::FoundationTypeBasementConditioned,
-        HPXML::FoundationTypeCrawlspaceConditioned].include?(args[:geometry_foundation_type]) && (args[:floor_over_foundation_assembly_r] > 2.1)
-      args[:floor_over_foundation_assembly_r] = 2.1 # Uninsulated
+        HPXML::FoundationTypeCrawlspaceConditioned].include?(args[:geometry_foundation_type]) && (args[:floor_over_foundation_assembly_r] > uninsulated_floor_r)
+      args[:floor_over_foundation_assembly_r] = uninsulated_floor_r
     end
 
-    if [HPXML::AtticTypeConditioned].include?(args[:geometry_attic_type]) && (args[:ceiling_assembly_r] > 2.1)
-      args[:ceiling_assembly_r] = 2.1 # Uninsulated
+    if [HPXML::AtticTypeConditioned].include?(args[:geometry_attic_type]) && (args[:ceiling_assembly_r] > uninsulated_ceiling_r)
+      args[:ceiling_assembly_r] = uninsulated_ceiling_r
     end
 
     sorted_surfaces.each do |surface|
@@ -5578,7 +5583,11 @@ module HPXMLFile
           hpxml_bldg.floors[-1].insulation_assembly_r_value = args[:floor_over_foundation_assembly_r]
         end
       else
-        hpxml_bldg.floors[-1].insulation_assembly_r_value = 2.1 # Uninsulated
+        if floor_or_ceiling == HPXML::FloorOrCeilingFloor
+          hpxml_bldg.floors[-1].insulation_assembly_r_value = uninsulated_floor_r
+        else
+          hpxml_bldg.floors[-1].insulation_assembly_r_value = uninsulated_ceiling_r
+        end
       end
 
       next unless args[:radiant_barrier_attic_location].to_s == HPXML::RadiantBarrierLocationAtticFloor
@@ -6091,6 +6100,7 @@ module HPXMLFile
                                                                                       hvac_perf_data_cooling_nom_speed_cops,
                                                                                       hvac_perf_data_cooling_max_speed_cops)
       cooling_perf_data_data_points.each do |cooling_perf_data_data_point|
+        cooling_perf_data_data_point = cooling_perf_data_data_point.map { |v| v.nil? ? nil : (v.empty? ? nil : v) }
         outdoor_temperature, min_speed_cap_or_frac, nom_speed_cap_or_frac, max_speed_cap_or_frac, min_speed_cop, nom_speed_cop, max_speed_cop = cooling_perf_data_data_point
 
         case hvac_perf_data_capacity_type
@@ -6280,6 +6290,7 @@ module HPXMLFile
                                                                                         hvac_perf_data_heating_nom_speed_cops,
                                                                                         hvac_perf_data_heating_max_speed_cops)
         heating_perf_data_data_points.each do |heating_perf_data_data_point|
+          heating_perf_data_data_point = heating_perf_data_data_point.map { |v| v.nil? ? nil : (v.empty? ? nil : v) }
           outdoor_temperature, min_speed_cap_or_frac, nom_speed_cap_or_frac, max_speed_cap_or_frac, min_speed_cop, nom_speed_cop, max_speed_cop = heating_perf_data_data_point
 
           case hvac_perf_data_capacity_type
@@ -6345,6 +6356,7 @@ module HPXMLFile
                                                                                         hvac_perf_data_cooling_nom_speed_cops,
                                                                                         hvac_perf_data_cooling_max_speed_cops)
         cooling_perf_data_data_points.each do |cooling_perf_data_data_point|
+          cooling_perf_data_data_point = cooling_perf_data_data_point.map { |v| v.nil? ? nil : (v.empty? ? nil : v) }
           outdoor_temperature, min_speed_cap_or_frac, nom_speed_cap_or_frac, max_speed_cap_or_frac, min_speed_cop, nom_speed_cop, max_speed_cop = cooling_perf_data_data_point
 
           case hvac_perf_data_capacity_type
@@ -6530,9 +6542,6 @@ module HPXMLFile
 
     if [HPXML::HVACTypeEvaporativeCooler].include?(args[:cooling_system_type]) && hpxml_bldg.heating_systems.size == 0 && hpxml_bldg.heat_pumps.size == 0
       args[:ducts_number_of_return_registers] = nil
-      if args[:cooling_system_is_ducted]
-        args[:ducts_number_of_return_registers] = 0
-      end
     end
 
     if air_distribution_systems.size > 0
@@ -7326,7 +7335,12 @@ module HPXMLFile
   # @param args [Hash] Map of :argument_name => value
   # @return [nil]
   def self.set_electric_panel(hpxml_bldg, args)
-    return if args[:electric_panel_service_feeders_load_calculation_types].nil?
+    return if (args[:electric_panel_service_voltage].nil? &&
+               args[:electric_panel_breaker_spaces_headroom].nil? &&
+               args[:electric_panel_breaker_spaces_rated_total].nil? &&
+               args[:electric_panel_load_heating_system_power_rating].nil? &&
+               args[:electric_panel_load_cooling_system_power_rating].nil? &&
+               args[:electric_panel_baseline_peak_power].nil?)
 
     hpxml_bldg.electric_panels.add(id: "ElectricPanel#{hpxml_bldg.electric_panels.size + 1}",
                                    voltage: args[:electric_panel_service_voltage],

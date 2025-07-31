@@ -3371,7 +3371,7 @@ Allowed combinations of CapacityDescription and OutdoorTemperature for a given d
   .. [#] Only two stage and variable speed equipment will use CapacityDescription="minimum".
   .. [#] Only variable speed equipment will use CapacityDescription="maximum".
   .. [#] For variable speed equipment, minimum/maximum datapoints must both be provided or both be omitted.
-  .. [#] Nominal datapoint at 82F is require for single/two stage equipment and optional for variable speed equipment.
+  .. [#] Nominal datapoint at 82F is required for single/two stage equipment and optional for variable speed equipment.
 
 Note that when detailed cooling performance data is provided, some other inputs (like SEER) are ignored.
 
@@ -5016,6 +5016,7 @@ If not entered, the simulation will not include a detailed electric vehicle mode
   ``VehicleType/BatteryElectricVehicle/Battery/NominalVoltage``                                    double  V          >= 0                     No                       Nominal voltage
   ``VehicleType/BatteryElectricVehicle/FractionChargedLocation[Location="Home"]/Percentage``       double  frac       >= 0                     No        See [#]_       Fraction of EV charging energy provided by home charger
   ``VehicleType/BatteryElectricVehicle/ConnectedCharger``                                          idref              See [#]_                 No                       ID of connected EV charger [#]_
+  ``VehicleType/BatteryElectricVehicle/extension/UsageMultiplier``                                 double             >= 0                     No        1.0            Multiplier on energy use
   ``VehicleType/BatteryElectricVehicle/extension/WeekdayScheduleFractions``                        array                                       No        See [#]_       24 comma-separated weekday fractions
   ``VehicleType/BatteryElectricVehicle/extension/WeekendScheduleFractions``                        array                                       No                       24 comma-separated weekday fractions
   ``VehicleType/BatteryElectricVehicle/extension/MonthlyScheduleMultipliers``                      array                                       No        See [#]_       12 comma-separated monthly multipliers

@@ -59,7 +59,7 @@ module Vehicle
     elsif vehicle.fuel_economy_units == HPXML::UnitsMPGe
       kwh_per_mile = 33.705 / vehicle.fuel_economy_combined # Per EPA, one gallon of gasoline is equal to 33.705 kWh
     end
-    ev_annl_energy = kwh_per_mile * vehicle.miles_per_year # kWh/year
+    ev_annl_energy = kwh_per_mile * vehicle.miles_per_year * vehicle.ev_usage_multiplier # kWh/year
 
     # Create schedule
     charging_schedule, discharging_schedule = nil, nil

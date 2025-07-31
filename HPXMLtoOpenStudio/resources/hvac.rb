@@ -4317,9 +4317,10 @@ module HVAC
       # Program
       temp_override_program = Model.add_ems_program(
         model,
-        name: "#{heating_sch.name} program"
+        name: "#{heating_sch.name} max heating temp program"
       )
-      temp_override_program.addLine("If #{tout_db_sensor.name} > #{UnitConversions.convert(max_heating_temp, 'F', 'C')}")
+      temp_override_program.addLine("Set max_heating_temp = #{UnitConversions.convert(max_heating_temp, 'F', 'C')}")
+      temp_override_program.addLine("If #{tout_db_sensor.name} > max_heating_temp")
       temp_override_program.addLine("  Set #{actuator.name} = 0")
       temp_override_program.addLine('Else')
       temp_override_program.addLine("  Set #{actuator.name} = NULL") # Allow normal operation

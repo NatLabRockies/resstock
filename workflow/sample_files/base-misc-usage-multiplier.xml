@@ -8,12 +8,9 @@
   </XMLTransactionHeaderInformation>
   <SoftwareInfo>
     <extension>
-      <SimulationControl>
-        <Timestep>60</Timestep>
-      </SimulationControl>
       <UtilityBillScenarios>
         <UtilityBillScenario>
-          <Name>Bills</Name>
+          <Name>Default</Name>
         </UtilityBillScenario>
       </UtilityBillScenarios>
     </extension>
@@ -32,7 +29,6 @@
     <BuildingDetails>
       <BuildingSummary>
         <Site>
-          <SiteType>suburban</SiteType>
           <Surroundings>stand-alone</Surroundings>
           <VerticalSurroundings>no units above or below</VerticalSurroundings>
           <AzimuthOfFrontOfHome>180</AzimuthOfFrontOfHome>
@@ -135,7 +131,7 @@
             <Emittance>0.92</Emittance>
             <Insulation>
               <SystemIdentifier id='RimJoist1Insulation'/>
-              <AssemblyEffectiveRValue>23.0</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>21.8</AssemblyEffectiveRValue>
             </Insulation>
           </RimJoist>
         </RimJoists>
@@ -156,7 +152,7 @@
             </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='Wall1Insulation'/>
-              <AssemblyEffectiveRValue>23.0</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>22.7</AssemblyEffectiveRValue>
             </Insulation>
           </Wall>
           <Wall>
@@ -217,7 +213,7 @@
             </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='Floor1Insulation'/>
-              <AssemblyEffectiveRValue>39.3</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>39.6</AssemblyEffectiveRValue>
             </Insulation>
           </Floor>
         </Floors>
@@ -252,12 +248,11 @@
             <SystemIdentifier id='Window1'/>
             <Area>108.0</Area>
             <Azimuth>0</Azimuth>
-            <UFactor>0.33</UFactor>
-            <SHGC>0.45</SHGC>
+            <UFactor>0.35</UFactor>
+            <SHGC>0.44</SHGC>
             <InteriorShading>
               <SystemIdentifier id='Window1InteriorShading'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <Type>light curtains</Type>
             </InteriorShading>
             <FractionOperable>0.67</FractionOperable>
             <AttachedToWall idref='Wall1'/>
@@ -266,12 +261,11 @@
             <SystemIdentifier id='Window2'/>
             <Area>72.0</Area>
             <Azimuth>90</Azimuth>
-            <UFactor>0.33</UFactor>
-            <SHGC>0.45</SHGC>
+            <UFactor>0.35</UFactor>
+            <SHGC>0.44</SHGC>
             <InteriorShading>
               <SystemIdentifier id='Window2InteriorShading'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <Type>light curtains</Type>
             </InteriorShading>
             <FractionOperable>0.67</FractionOperable>
             <AttachedToWall idref='Wall1'/>
@@ -280,12 +274,11 @@
             <SystemIdentifier id='Window3'/>
             <Area>108.0</Area>
             <Azimuth>180</Azimuth>
-            <UFactor>0.33</UFactor>
-            <SHGC>0.45</SHGC>
+            <UFactor>0.35</UFactor>
+            <SHGC>0.44</SHGC>
             <InteriorShading>
               <SystemIdentifier id='Window3InteriorShading'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <Type>light curtains</Type>
             </InteriorShading>
             <FractionOperable>0.67</FractionOperable>
             <AttachedToWall idref='Wall1'/>
@@ -294,12 +287,11 @@
             <SystemIdentifier id='Window4'/>
             <Area>72.0</Area>
             <Azimuth>270</Azimuth>
-            <UFactor>0.33</UFactor>
-            <SHGC>0.45</SHGC>
+            <UFactor>0.35</UFactor>
+            <SHGC>0.44</SHGC>
             <InteriorShading>
               <SystemIdentifier id='Window4InteriorShading'/>
-              <SummerShadingCoefficient>0.7</SummerShadingCoefficient>
-              <WinterShadingCoefficient>0.85</WinterShadingCoefficient>
+              <Type>light curtains</Type>
             </InteriorShading>
             <FractionOperable>0.67</FractionOperable>
             <AttachedToWall idref='Wall1'/>
@@ -415,18 +407,13 @@
             <FuelType>electricity</FuelType>
             <WaterHeaterType>storage water heater</WaterHeaterType>
             <Location>conditioned space</Location>
-            <TankVolume>40.0</TankVolume>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
-            <HeatingCapacity>18767.0</HeatingCapacity>
-            <EnergyFactor>0.95</EnergyFactor>
-            <HotWaterTemperature>125.0</HotWaterTemperature>
+            <UniformEnergyFactor>0.94</UniformEnergyFactor>
           </WaterHeatingSystem>
           <HotWaterDistribution>
             <SystemIdentifier id='HotWaterDistribution1'/>
             <SystemType>
-              <Standard>
-                <PipingLength>50.0</PipingLength>
-              </Standard>
+              <Standard/>
             </SystemType>
             <PipeInsulation>
               <PipeRValue>0.0</PipeRValue>
@@ -435,7 +422,7 @@
           <WaterFixture>
             <SystemIdentifier id='WaterFixture1'/>
             <WaterFixtureType>shower head</WaterFixtureType>
-            <LowFlow>true</LowFlow>
+            <LowFlow>false</LowFlow>
           </WaterFixture>
           <WaterFixture>
             <SystemIdentifier id='WaterFixture2'/>
@@ -443,14 +430,47 @@
             <LowFlow>false</LowFlow>
           </WaterFixture>
           <extension>
-            <WaterFixturesUsageMultiplier>0.9</WaterFixturesUsageMultiplier>
+            <WaterFixturesUsageMultiplier>0.75</WaterFixturesUsageMultiplier>
           </extension>
         </WaterHeating>
+        <Vehicles>
+          <Vehicle>
+            <SystemIdentifier id='Vehicle1'/>
+            <VehicleType>
+              <BatteryElectricVehicle>
+                <Battery>
+                  <UsableCapacity>
+                    <Units>kWh</Units>
+                    <Value>41.978</Value>
+                  </UsableCapacity>
+                </Battery>
+                <FractionChargedLocation>
+                  <Location>Home</Location>
+                  <Percentage>0.5</Percentage>
+                </FractionChargedLocation>
+                <ConnectedCharger idref='EVCharger1'/>
+                <extension>
+                  <UsageMultiplier>0.75</UsageMultiplier>
+                </extension>
+              </BatteryElectricVehicle>
+            </VehicleType>
+            <FuelEconomyCombined>
+              <Units>kWh/mile</Units>
+              <Value>0.219174</Value>
+            </FuelEconomyCombined>
+          </Vehicle>
+        </Vehicles>
+        <ElectricVehicleChargers>
+          <ElectricVehicleCharger>
+            <SystemIdentifier id='EVCharger1'/>
+            <ChargingLevel>1</ChargingLevel>
+            <ChargingPower>1600.0</ChargingPower>
+          </ElectricVehicleCharger>
+        </ElectricVehicleChargers>
       </Systems>
       <Appliances>
         <ClothesWasher>
           <SystemIdentifier id='ClothesWasher1'/>
-          <Location>conditioned space</Location>
           <IntegratedModifiedEnergyFactor>1.21</IntegratedModifiedEnergyFactor>
           <RatedAnnualkWh>380.0</RatedAnnualkWh>
           <LabelElectricRate>0.12</LabelElectricRate>
@@ -459,22 +479,20 @@
           <LabelUsage>6.0</LabelUsage>
           <Capacity>3.2</Capacity>
           <extension>
-            <UsageMultiplier>0.9</UsageMultiplier>
+            <UsageMultiplier>0.75</UsageMultiplier>
           </extension>
         </ClothesWasher>
         <ClothesDryer>
           <SystemIdentifier id='ClothesDryer1'/>
-          <Location>conditioned space</Location>
           <FuelType>electricity</FuelType>
           <DryingMethod>conventional</DryingMethod>
           <CombinedEnergyFactor>3.73</CombinedEnergyFactor>
           <extension>
-            <UsageMultiplier>0.9</UsageMultiplier>
+            <UsageMultiplier>0.75</UsageMultiplier>
           </extension>
         </ClothesDryer>
         <Dishwasher>
           <SystemIdentifier id='Dishwasher1'/>
-          <Location>conditioned space</Location>
           <RatedAnnualkWh>307.0</RatedAnnualkWh>
           <PlaceSettingCapacity>12</PlaceSettingCapacity>
           <LabelElectricRate>0.12</LabelElectricRate>
@@ -482,12 +500,11 @@
           <LabelAnnualGasCost>22.32</LabelAnnualGasCost>
           <LabelUsage>4.0</LabelUsage>
           <extension>
-            <UsageMultiplier>0.9</UsageMultiplier>
+            <UsageMultiplier>0.75</UsageMultiplier>
           </extension>
         </Dishwasher>
         <Refrigerator>
           <SystemIdentifier id='Refrigerator1'/>
-          <Location>conditioned space</Location>
           <RatedAnnualkWh>650.0</RatedAnnualkWh>
           <extension>
             <UsageMultiplier>0.9</UsageMultiplier>
@@ -495,8 +512,7 @@
         </Refrigerator>
         <Freezer>
           <SystemIdentifier id='Freezer1'/>
-          <Location>conditioned space</Location>
-          <RatedAnnualkWh>300.0</RatedAnnualkWh>
+          <RatedAnnualkWh>354.0</RatedAnnualkWh>
           <extension>
             <UsageMultiplier>0.9</UsageMultiplier>
             <WeekdayScheduleFractions>0.040, 0.039, 0.038, 0.037, 0.036, 0.036, 0.038, 0.040, 0.041, 0.041, 0.040, 0.040, 0.042, 0.042, 0.042, 0.041, 0.044, 0.048, 0.050, 0.048, 0.047, 0.046, 0.044, 0.041</WeekdayScheduleFractions>
@@ -517,11 +533,10 @@
         </Freezer>
         <CookingRange>
           <SystemIdentifier id='CookingRange1'/>
-          <Location>conditioned space</Location>
           <FuelType>electricity</FuelType>
           <IsInduction>false</IsInduction>
           <extension>
-            <UsageMultiplier>0.9</UsageMultiplier>
+            <UsageMultiplier>0.75</UsageMultiplier>
           </extension>
         </CookingRange>
         <Oven>
@@ -533,7 +548,7 @@
         <LightingGroup>
           <SystemIdentifier id='LightingGroup1'/>
           <Location>interior</Location>
-          <FractionofUnitsInLocation>0.4</FractionofUnitsInLocation>
+          <FractionofUnitsInLocation>0.0</FractionofUnitsInLocation>
           <LightingType>
             <CompactFluorescent/>
           </LightingType>
@@ -541,7 +556,7 @@
         <LightingGroup>
           <SystemIdentifier id='LightingGroup2'/>
           <Location>interior</Location>
-          <FractionofUnitsInLocation>0.1</FractionofUnitsInLocation>
+          <FractionofUnitsInLocation>0.0</FractionofUnitsInLocation>
           <LightingType>
             <FluorescentTube/>
           </LightingType>
@@ -557,7 +572,7 @@
         <LightingGroup>
           <SystemIdentifier id='LightingGroup4'/>
           <Location>exterior</Location>
-          <FractionofUnitsInLocation>0.4</FractionofUnitsInLocation>
+          <FractionofUnitsInLocation>0.0</FractionofUnitsInLocation>
           <LightingType>
             <CompactFluorescent/>
           </LightingType>
@@ -565,7 +580,7 @@
         <LightingGroup>
           <SystemIdentifier id='LightingGroup5'/>
           <Location>exterior</Location>
-          <FractionofUnitsInLocation>0.1</FractionofUnitsInLocation>
+          <FractionofUnitsInLocation>0.0</FractionofUnitsInLocation>
           <LightingType>
             <FluorescentTube/>
           </LightingType>
@@ -579,8 +594,8 @@
           </LightingType>
         </LightingGroup>
         <extension>
-          <InteriorUsageMultiplier>0.9</InteriorUsageMultiplier>
-          <ExteriorUsageMultiplier>0.9</ExteriorUsageMultiplier>
+          <InteriorUsageMultiplier>0.75</InteriorUsageMultiplier>
+          <ExteriorUsageMultiplier>0.75</ExteriorUsageMultiplier>
         </extension>
       </Lighting>
       <Pools>
@@ -591,12 +606,8 @@
             <Pump>
               <SystemIdentifier id='Pool1Pump'/>
               <Type>unknown</Type>
-              <Load>
-                <Units>kWh/year</Units>
-                <Value>2700.0</Value>
-              </Load>
               <extension>
-                <UsageMultiplier>0.9</UsageMultiplier>
+                <UsageMultiplier>0.75</UsageMultiplier>
                 <WeekdayScheduleFractions>0.003, 0.003, 0.003, 0.004, 0.008, 0.015, 0.026, 0.044, 0.084, 0.121, 0.127, 0.121, 0.120, 0.090, 0.075, 0.061, 0.037, 0.023, 0.013, 0.008, 0.004, 0.003, 0.003, 0.003</WeekdayScheduleFractions>
                 <WeekendScheduleFractions>0.003, 0.003, 0.003, 0.004, 0.008, 0.015, 0.026, 0.044, 0.084, 0.121, 0.127, 0.121, 0.120, 0.090, 0.075, 0.061, 0.037, 0.023, 0.013, 0.008, 0.004, 0.003, 0.003, 0.003</WeekendScheduleFractions>
                 <MonthlyScheduleMultipliers>1.154, 1.161, 1.013, 1.010, 1.013, 0.888, 0.883, 0.883, 0.888, 0.978, 0.974, 1.154</MonthlyScheduleMultipliers>
@@ -606,12 +617,8 @@
           <Heater>
             <SystemIdentifier id='Pool1Heater'/>
             <Type>gas fired</Type>
-            <Load>
-              <Units>therm/year</Units>
-              <Value>500.0</Value>
-            </Load>
             <extension>
-              <UsageMultiplier>0.9</UsageMultiplier>
+              <UsageMultiplier>0.75</UsageMultiplier>
               <WeekdayScheduleFractions>0.003, 0.003, 0.003, 0.004, 0.008, 0.015, 0.026, 0.044, 0.084, 0.121, 0.127, 0.121, 0.120, 0.090, 0.075, 0.061, 0.037, 0.023, 0.013, 0.008, 0.004, 0.003, 0.003, 0.003</WeekdayScheduleFractions>
               <WeekendScheduleFractions>0.003, 0.003, 0.003, 0.004, 0.008, 0.015, 0.026, 0.044, 0.084, 0.121, 0.127, 0.121, 0.120, 0.090, 0.075, 0.061, 0.037, 0.023, 0.013, 0.008, 0.004, 0.003, 0.003, 0.003</WeekendScheduleFractions>
               <MonthlyScheduleMultipliers>1.154, 1.161, 1.013, 1.010, 1.013, 0.888, 0.883, 0.883, 0.888, 0.978, 0.974, 1.154</MonthlyScheduleMultipliers>
@@ -627,12 +634,8 @@
             <Pump>
               <SystemIdentifier id='PermanentSpa1Pump'/>
               <Type>unknown</Type>
-              <Load>
-                <Units>kWh/year</Units>
-                <Value>1000.0</Value>
-              </Load>
               <extension>
-                <UsageMultiplier>0.9</UsageMultiplier>
+                <UsageMultiplier>0.75</UsageMultiplier>
                 <WeekdayScheduleFractions>0.024, 0.029, 0.024, 0.029, 0.047, 0.067, 0.057, 0.024, 0.024, 0.019, 0.015, 0.014, 0.014, 0.014, 0.024, 0.058, 0.126, 0.122, 0.068, 0.061, 0.051, 0.043, 0.024, 0.024</WeekdayScheduleFractions>
                 <WeekendScheduleFractions>0.024, 0.029, 0.024, 0.029, 0.047, 0.067, 0.057, 0.024, 0.024, 0.019, 0.015, 0.014, 0.014, 0.014, 0.024, 0.058, 0.126, 0.122, 0.068, 0.061, 0.051, 0.043, 0.024, 0.024</WeekendScheduleFractions>
                 <MonthlyScheduleMultipliers>0.837, 0.835, 1.084, 1.084, 1.084, 1.096, 1.096, 1.096, 1.096, 0.931, 0.925, 0.837</MonthlyScheduleMultipliers>
@@ -642,12 +645,8 @@
           <Heater>
             <SystemIdentifier id='PermanentSpa1Heater'/>
             <Type>electric resistance</Type>
-            <Load>
-              <Units>kWh/year</Units>
-              <Value>1300.0</Value>
-            </Load>
             <extension>
-              <UsageMultiplier>0.9</UsageMultiplier>
+              <UsageMultiplier>0.75</UsageMultiplier>
               <WeekdayScheduleFractions>0.024, 0.029, 0.024, 0.029, 0.047, 0.067, 0.057, 0.024, 0.024, 0.019, 0.015, 0.014, 0.014, 0.014, 0.024, 0.058, 0.126, 0.122, 0.068, 0.061, 0.051, 0.043, 0.024, 0.024</WeekdayScheduleFractions>
               <WeekendScheduleFractions>0.024, 0.029, 0.024, 0.029, 0.047, 0.067, 0.057, 0.024, 0.024, 0.019, 0.015, 0.014, 0.014, 0.014, 0.024, 0.058, 0.126, 0.122, 0.068, 0.061, 0.051, 0.043, 0.024, 0.024</WeekendScheduleFractions>
               <MonthlyScheduleMultipliers>0.921, 0.928, 0.921, 0.915, 0.921, 1.160, 1.158, 1.158, 1.160, 0.921, 0.915, 0.921</MonthlyScheduleMultipliers>
@@ -660,14 +659,14 @@
           <SystemIdentifier id='PlugLoad1'/>
           <PlugLoadType>TV other</PlugLoadType>
           <extension>
-            <UsageMultiplier>0.9</UsageMultiplier>
+            <UsageMultiplier>0.75</UsageMultiplier>
           </extension>
         </PlugLoad>
         <PlugLoad>
           <SystemIdentifier id='PlugLoad2'/>
           <PlugLoadType>other</PlugLoadType>
           <extension>
-            <UsageMultiplier>0.9</UsageMultiplier>
+            <UsageMultiplier>0.75</UsageMultiplier>
           </extension>
         </PlugLoad>
         <FuelLoad>
@@ -675,7 +674,7 @@
           <FuelLoadType>grill</FuelLoadType>
           <FuelType>propane</FuelType>
           <extension>
-            <UsageMultiplier>0.9</UsageMultiplier>
+            <UsageMultiplier>0.75</UsageMultiplier>
             <WeekdayScheduleFractions>0.004, 0.001, 0.001, 0.002, 0.007, 0.012, 0.029, 0.046, 0.044, 0.041, 0.044, 0.046, 0.042, 0.038, 0.049, 0.059, 0.110, 0.161, 0.115, 0.070, 0.044, 0.019, 0.013, 0.007</WeekdayScheduleFractions>
             <WeekendScheduleFractions>0.004, 0.001, 0.001, 0.002, 0.007, 0.012, 0.029, 0.046, 0.044, 0.041, 0.044, 0.046, 0.042, 0.038, 0.049, 0.059, 0.110, 0.161, 0.115, 0.070, 0.044, 0.019, 0.013, 0.007</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
@@ -686,7 +685,7 @@
           <FuelLoadType>lighting</FuelLoadType>
           <FuelType>natural gas</FuelType>
           <extension>
-            <UsageMultiplier>0.9</UsageMultiplier>
+            <UsageMultiplier>0.75</UsageMultiplier>
             <WeekdayScheduleFractions>0.044, 0.023, 0.019, 0.015, 0.016, 0.018, 0.026, 0.033, 0.033, 0.032, 0.033, 0.033, 0.032, 0.032, 0.032, 0.033, 0.045, 0.057, 0.066, 0.076, 0.081, 0.086, 0.075, 0.065</WeekdayScheduleFractions>
             <WeekendScheduleFractions>0.044, 0.023, 0.019, 0.015, 0.016, 0.018, 0.026, 0.033, 0.033, 0.032, 0.033, 0.033, 0.032, 0.032, 0.032, 0.033, 0.045, 0.057, 0.066, 0.076, 0.081, 0.086, 0.075, 0.065</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>
@@ -697,7 +696,7 @@
           <FuelLoadType>fireplace</FuelLoadType>
           <FuelType>wood</FuelType>
           <extension>
-            <UsageMultiplier>0.9</UsageMultiplier>
+            <UsageMultiplier>0.75</UsageMultiplier>
             <WeekdayScheduleFractions>0.044, 0.023, 0.019, 0.015, 0.016, 0.018, 0.026, 0.033, 0.033, 0.032, 0.033, 0.033, 0.032, 0.032, 0.032, 0.033, 0.045, 0.057, 0.066, 0.076, 0.081, 0.086, 0.075, 0.065</WeekdayScheduleFractions>
             <WeekendScheduleFractions>0.044, 0.023, 0.019, 0.015, 0.016, 0.018, 0.026, 0.033, 0.033, 0.032, 0.033, 0.033, 0.032, 0.032, 0.032, 0.033, 0.045, 0.057, 0.066, 0.076, 0.081, 0.086, 0.075, 0.065</WeekendScheduleFractions>
             <MonthlyScheduleMultipliers>1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0</MonthlyScheduleMultipliers>

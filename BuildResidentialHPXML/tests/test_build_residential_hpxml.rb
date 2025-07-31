@@ -70,7 +70,9 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'extra-battery-attic.xml' => 'base-sfd.xml',
       'extra-vehicle-ev.xml' => 'extra-enclosure-garage-partially-protruded.xml',
       'extra-two-batteries.xml' => 'base-sfd.xml',
-      'extra-detailed-performance-autosize.xml' => 'base-sfd.xml',
+      'extra-detailed-performance-autosize-cooling-system.xml' => 'base-sfd.xml',
+      'extra-detailed-performance-autosize-heat-pump.xml' => 'base-sfd.xml',
+      'extra-detailed-performance-autosize-heat-pump2.xml' => 'extra-detailed-performance-autosize-heat-pump.xml',
       'extra-power-outage-periods.xml' => 'base-sfd.xml',
 
       'extra-sfa-atticroof-flat.xml' => 'base-sfa.xml',
@@ -943,7 +945,18 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['vehicle_type'] = HPXML::VehicleTypeBEV
       args['battery_present'] = true
       args['battery_location'] = HPXML::LocationAttic
-    when 'extra-detailed-performance-autosize.xml'
+    when 'extra-detailed-performance-autosize-cooling-system.xml'
+      args['cooling_system_compressor_type'] = HPXML::HVACCompressorTypeVariableSpeed
+      args.delete('cooling_system_cooling_capacity')
+      args['hvac_perf_data_capacity_type'] = 'Normalized capacity fractions'
+      args['hvac_perf_data_cooling_outdoor_temperatures'] = '125.0, 95.0, 82.0'
+      args['hvac_perf_data_cooling_min_speed_capacities'] = '0.267, 0.333, 0.368'
+      args['hvac_perf_data_cooling_nom_speed_capacities'] = ', 1.000'
+      args['hvac_perf_data_cooling_max_speed_capacities'] = '0.847, 1.017, 1.090'
+      args['hvac_perf_data_cooling_min_speed_cops'] = '1.918, 3.870, 5.860'
+      args['hvac_perf_data_cooling_nom_speed_cops'] = ', 3.236'
+      args['hvac_perf_data_cooling_max_speed_cops'] = '2.017, 3.220, 4.140'
+    when 'extra-detailed-performance-autosize-heat-pump.xml'
       args['heating_system_type'] = Constants::None
       args['cooling_system_type'] = Constants::None
       args['heat_pump_type'] = HPXML::HVACTypeHeatPumpAirToAir
@@ -967,6 +980,21 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['hvac_perf_data_cooling_min_speed_cops'] = '4.47, 6.34'
       args['hvac_perf_data_cooling_nom_speed_cops'] = '3.8, 5.0'
       args['hvac_perf_data_cooling_max_speed_cops'] = '2.71, 3.53'
+    when 'extra-detailed-performance-autosize-heat-pump2.xml'
+      args['hvac_perf_data_heating_outdoor_temperatures'] = '47.0, 17.0, 5.0, -15.0'
+      args['hvac_perf_data_heating_min_speed_capacities'] = '0.308, 0.353, 0.371, 0.331'
+      args['hvac_perf_data_heating_nom_speed_capacities'] = '1.000, 0.745'
+      args['hvac_perf_data_heating_max_speed_capacities'] = '1.028, 0.766, 0.688, 0.507'
+      args['hvac_perf_data_heating_min_speed_cops'] = '4.390, 2.550, 2.050, 1.660'
+      args['hvac_perf_data_heating_nom_speed_cops'] = '3.410, 2.341'
+      args['hvac_perf_data_heating_max_speed_cops'] = '3.370, 2.330, 1.980, 1.490'
+      args['hvac_perf_data_cooling_outdoor_temperatures'] = '125.0, 95.0, 82.0'
+      args['hvac_perf_data_cooling_min_speed_capacities'] = '0.267, 0.333, 0.368'
+      args['hvac_perf_data_cooling_nom_speed_capacities'] = ', 1.000'
+      args['hvac_perf_data_cooling_max_speed_capacities'] = '0.847, 1.017, 1.090'
+      args['hvac_perf_data_cooling_min_speed_cops'] = '1.918, 3.870, 5.860'
+      args['hvac_perf_data_cooling_nom_speed_cops'] = ', 3.236'
+      args['hvac_perf_data_cooling_max_speed_cops'] = '2.017, 3.220, 4.140'
     when 'extra-power-outage-periods.xml'
       args['schedules_unavailable_period_types'] = 'Power Outage, Power Outage'
       args['schedules_unavailable_period_dates'] = 'Jan 1 - Jan 5, Jan 7 - Jan 9'

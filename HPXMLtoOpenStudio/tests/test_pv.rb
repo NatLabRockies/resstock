@@ -6,16 +6,16 @@ require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require_relative '../measure.rb'
 require_relative '../resources/util.rb'
+require_relative 'util.rb'
 
 class HPXMLtoOpenStudioPVTest < Minitest::Test
-  def teardown
-    File.delete(File.join(File.dirname(__FILE__), 'in.schedules.csv')) if File.exist? File.join(File.dirname(__FILE__), 'in.schedules.csv')
-    File.delete(File.join(File.dirname(__FILE__), 'results_annual.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_annual.csv')
-    File.delete(File.join(File.dirname(__FILE__), 'results_design_load_details.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_design_load_details.csv')
+  def setup
+    @root_path = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..'))
+    @sample_files_path = File.join(@root_path, 'workflow', 'sample_files')
   end
 
-  def sample_files_dir
-    return File.join(File.dirname(__FILE__), '..', '..', 'workflow', 'sample_files')
+  def teardown
+    cleanup_results_files
   end
 
   def get_generator_inverter(model, name)
@@ -34,7 +34,7 @@ class HPXMLtoOpenStudioPVTest < Minitest::Test
 
   def test_pv
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(sample_files_dir, 'base-pv.xml'))
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-pv.xml'))
     model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     hpxml_bldg.pv_systems.each_with_index do |pv_system, i|
@@ -59,7 +59,7 @@ class HPXMLtoOpenStudioPVTest < Minitest::Test
 
   def test_pv_shared
     args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(sample_files_dir, 'base-bldgtype-mf-unit-shared-pv.xml'))
+    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-bldgtype-mf-unit-shared-pv.xml'))
     model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
     hpxml_bldg.pv_systems.each do |pv_system|
@@ -110,7 +110,7 @@ class HPXMLtoOpenStudioPVTest < Minitest::Test
     # assert that it ran correctly
     assert_equal('Success', result.value.valueName)
 
-    hpxml = HPXML.new(hpxml_path: args_hash['hpxml_path'])
+    hpxml = HPXML.new(hpxml_path: File.join(File.dirname(__FILE__), 'in.xml'))
 
     File.delete(File.join(File.dirname(__FILE__), 'in.xml'))
 
