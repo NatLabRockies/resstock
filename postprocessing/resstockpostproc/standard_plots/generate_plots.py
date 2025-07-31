@@ -82,14 +82,14 @@ def main():
     if args.quantity_group:
         selected_set = set(args.quantity_group)
         print(f"Selected quantity groups: {selected_set}")
-        filtered_qs = [q for q in workflow.quantities if q.name in selected_set]
+        filtered_qs = tuple(q for q in workflow.quantities if q.name in selected_set)
         if not filtered_qs:
             print(
                 "Error: None of the specified --quantity_group values match the quantities defined in the workflow."
                 f"Available quantity groups: {', '.join(q.name for q in workflow.quantities)}"
             )
             sys.exit(1)
-        workflow.quantities = filtered_qs
+        workflow.set_quantities(filtered_qs)
         missing = selected_set - {q.name for q in filtered_qs}
         if missing:
             print(f"Warning: The following quantity groups were not found and will be ignored: {', '.join(missing)}")
