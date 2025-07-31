@@ -212,6 +212,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.base.sha }}
+
+      - name: Upload base results
+        uses: actions/upload-artifact@v4
+        with:
+          name: base_results
+          path: test/base_results
+          if-no-files-found: error
+
+      - uses: actions/checkout@v4
+        with:
           ref: ${{ github.head_ref }}
 
       - uses: actions/setup-python@v5
@@ -283,53 +294,6 @@ jobs:
           sudo gem install simplecov-html
           ruby test/test_bsb_analysis.rb
 
-  compare-tools:
-    runs-on: ubuntu-22.04
-    needs: [analysis-tests, integration-tests]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Download buildstockbatch results
-        uses: actions/download-artifact@v4
-        with:
-          path: buildstockbatch
-          name: buildstockbatch_results_csvs
-
-      - name: Download run_analysis results
-        uses: actions/download-artifact@v4
-        with:
-          path: run_analysis
-          name: run_analysis_results_csvs
-
-      - name: Run tests
-        run: |
-          sudo gem install minitest-reporters
-          sudo gem install simplecov
-          sudo gem install simplecov-html
-          ruby test/test_analysis_tools.rb
-
-  compare-results:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-22.04
-    needs: [integration-tests]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.sha }}
-
-      - name: Upload base results
-        uses: actions/upload-artifact@v4
-        with:
-          name: base_results
-          path: test/base_results
-          if-no-files-found: error
-
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
       - name: Download base results
         uses: actions/download-artifact@v4
         with:
@@ -372,6 +336,33 @@ jobs:
           name: comparisons
           path: test/base_results/comparisons
           if-no-files-found: error
+
+  compare-tools:
+    runs-on: ubuntu-22.04
+    needs: [analysis-tests, integration-tests]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Download buildstockbatch results
+        uses: actions/download-artifact@v4
+        with:
+          path: buildstockbatch
+          name: buildstockbatch_results_csvs
+
+      - name: Download run_analysis results
+        uses: actions/download-artifact@v4
+        with:
+          path: run_analysis
+          name: run_analysis_results_csvs
+
+      - name: Run tests
+        run: |
+          sudo gem install minitest-reporters
+          sudo gem install simplecov
+          sudo gem install simplecov-html
+          ruby test/test_analysis_tools.rb
 
   update-results:
     runs-on: ubuntu-22.04
@@ -569,11 +560,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.base.sha }}
+
+      - name: Upload base results
+        uses: actions/upload-artifact@v4
+        with:
+          name: base_results
+          path: test/base_results
+          if-no-files-found: error
+
+      - uses: actions/checkout@v4
+        with:
           ref: ${{ github.head_ref }}
 
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4.1.0
         with:
@@ -582,8 +585,10 @@ jobs:
           aws-region: us-east-2
           role-duration-seconds: 1200
           role-session-name: MySession
+
       - name: Who am I?
         run: aws sts get-caller-identity
+
       - name: Download and Install OpenStudio
         run: |
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
@@ -668,3 +673,37 @@ jobs:
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
+
+      - name: Download base results
+        uses: actions/download-artifact@v4
+        with:
+          path: base_results
+          name: base_results
+
+      - name: Download feature results
+        uses: actions/download-artifact@v4
+        with:
+          path: results
+          name: feature_results
+
+      - name: Compare samples and results
+        run: |          
+          pip install numpy
+          pip install pandas
+          pip install plotly
+          pip install kaleido
+          
+          # results_characteristics.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f base_results/upgrades/sdr_annual/results_up00.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f results/upgrades/sdr_annual/results_up00.csv
+          
+          # upgrades annual
+          mkdir -p test/base_results/sdr_comparisons/upgrades/sdr_annual
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/upgrades/sdr_annual -f results/upgrades/sdr_annual -e test/base_results/sdr_comparisons/upgrades/sdr_annual # *.html
+
+      - name: Upload comparisons
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdr_comparisons
+          path: test/base_results/sdr_comparisons
+          if-no-files-found: error
