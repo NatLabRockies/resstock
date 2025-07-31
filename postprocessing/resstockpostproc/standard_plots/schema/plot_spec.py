@@ -91,17 +91,20 @@ class PlotSpec(BaseModel):
     def get_path_and_name(self) -> tuple[Path, str]:
         """Return path sub-segments derived from the definition."""
         if self.building_inclusion == BuildingInclusion.applied_only:
-            path_segment = Path(f"Included Buildings = Applied in {self.upgrade}")
+            if self.upgrade:
+                path_segment = Path(f"Included Buildings = Applied in {self.upgrade}")
+            else:
+                path_segment = Path("Included Buildings = Applied in respective upgrades")
         else:
-            path_segment = Path(f"Included Buildings = {self.building_inclusion.value}")
+            path_segment = Path("Included Buildings = All")
         path_segment /= f"Vacancy = {self.vacancy_inclusion.value}"
         path_segment /= f"Quantity Type = {self.quantity_type.value}"
+        path_segment /= f"Aggregation Type = {self.aggregation_type.value}"
         path_segment /= f"Visualization Type = {self.visualization_type.value}"
-        path_segment /= f"Value Type = {self.aggregation_type.value}"
         if self.group_by:
-            path_segment /= f"Group By = {self.group_by}"
+            path_segment /= f"Grouped By = {self.group_by}"
         else:
-            path_segment /= "Group By = all"
+            path_segment /= "Grouped By = No grouping"
         path_segment /= f"Quantity Group = {self.quantity_group_name}"
         name = "all_stacked" if isinstance(self.quantity, QuantityGroup) else f"{self.quantity}"
         return path_segment, name

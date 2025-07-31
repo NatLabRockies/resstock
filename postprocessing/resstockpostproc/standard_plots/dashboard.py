@@ -23,9 +23,7 @@ app = DashProxy(
 )
 
 cur_dir = Path(__file__).parent
-ROOT_FOLDER = (
-    os.environ["PLOTS_ROOT_FOLDER"] if "PLOTS_ROOT_FOLDER" in os.environ else str(cur_dir / "buildstock_viz_plots")
-)
+ROOT_FOLDER = os.environ["PLOTS_ROOT_FOLDER"] if "PLOTS_ROOT_FOLDER" in os.environ else str(cur_dir / "sdr_plots/plots")
 root_path = str(ROOT_FOLDER)
 
 

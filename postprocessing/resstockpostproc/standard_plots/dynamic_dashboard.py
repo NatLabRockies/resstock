@@ -191,7 +191,7 @@ def get_app() -> DashProxy:
                                                     "__all__": "All",
                                                     "applied_all": "Applied in respective upgrades",
                                                 },
-                                                value="__all__",
+                                                value="applied_all",
                                                 clearable=False,
                                             ),
                                         ]
@@ -219,7 +219,7 @@ def get_app() -> DashProxy:
                                             dcc.Dropdown(
                                                 id="quantity-type",
                                                 options=[ct.value for ct in workflow.quantity_types],
-                                                value=workflow.quantity_types[0].value,
+                                                value="savings",
                                                 clearable=False,
                                                 style={"minWidth": "180px"},
                                             ),
@@ -234,7 +234,7 @@ def get_app() -> DashProxy:
                                             dcc.RadioItems(
                                                 id="aggregation-type",
                                                 options=[vt.value for vt in workflow.aggregation_types],
-                                                value=workflow.aggregation_types[0].value,
+                                                value="distribution",
                                                 inline=True,
                                             ),
                                         ]
@@ -249,7 +249,7 @@ def get_app() -> DashProxy:
                                             dcc.RadioItems(
                                                 id="viz-type",
                                                 options=[vt.value for vt in workflow.visualization_types],
-                                                value=workflow.visualization_types[0].value,
+                                                value="box",
                                                 inline=True,
                                             ),
                                         ]
@@ -283,7 +283,7 @@ def get_app() -> DashProxy:
                                             dcc.Dropdown(
                                                 id="quantity-group",
                                                 options=list(qg_by_name.keys()),
-                                                value=next(iter(qg_by_name.keys())),
+                                                value="Bills",
                                                 clearable=False,
                                             ),
                                         ]
@@ -294,7 +294,7 @@ def get_app() -> DashProxy:
                                     html.Div(
                                         [
                                             html.Small("Quantity", className="d-block fw-bold mb-1"),
-                                            dcc.Dropdown(id="quantity", clearable=False),
+                                            dcc.Dropdown(id="quantity", clearable=False, value="__group_stacked__"),
                                         ]
                                     ),
                                     md=4,
