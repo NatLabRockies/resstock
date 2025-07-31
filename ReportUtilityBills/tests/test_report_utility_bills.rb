@@ -227,7 +227,7 @@ class ReportUtilityBillsTest < Minitest::Test
     hpxml = HPXML.new(hpxml_path: File.join(@sample_files_path, 'base-location-AMY-2012.xml'))
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     actual_bills, actual_monthly_bills = _test_measure()
-    assert_operator(actual_bills['Bills: Total (USD)'], :>, 0)
+    assert_operator(actual_bills['Default: Total (USD)'], :>, 0)
     _check_monthly_bills(actual_bills, actual_monthly_bills)
   end
 
@@ -236,7 +236,7 @@ class ReportUtilityBillsTest < Minitest::Test
     hpxml = HPXML.new(hpxml_path: File.join(@sample_files_path, 'base-simcontrol-runperiod-1-month.xml'))
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     actual_bills, actual_monthly_bills = _test_measure()
-    assert_operator(actual_bills['Bills: Total (USD)'], :>, 0)
+    assert_operator(actual_bills['Default: Total (USD)'], :>, 0)
     _check_monthly_bills(actual_bills, actual_monthly_bills)
   end
 
@@ -254,8 +254,8 @@ class ReportUtilityBillsTest < Minitest::Test
     hpxml = HPXML.new(hpxml_path: File.join(@sample_files_path, 'base-location-honolulu-hi.xml'))
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     actual_bills, actual_monthly_bills = _test_measure()
-    assert_operator(actual_bills['Bills: Natural Gas: Fixed (USD)'], :>, 0)
-    assert_equal(0.0, actual_bills['Bills: Natural Gas: Energy (USD)'])
+    assert_operator(actual_bills['Default: Natural Gas: Fixed (USD)'], :>, 0)
+    assert_equal(0.0, actual_bills['Default: Natural Gas: Energy (USD)'])
     _check_monthly_bills(actual_bills, actual_monthly_bills)
   end
 
