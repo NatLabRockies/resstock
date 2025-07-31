@@ -8,6 +8,8 @@ require_relative '../measure.rb'
 require 'csv'
 require_relative '../resources/xmlhelper.rb'
 require_relative '../resources/xmlvalidator.rb'
+require_relative 'util.rb'
+
 class HPXMLtoOpenStudioValidationTest < Minitest::Test
   def setup
     @root_path = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..'))
@@ -29,9 +31,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
     File.delete(@tmp_hpxml_path) if File.exist? @tmp_hpxml_path
     File.delete(@tmp_csv_path) if File.exist? @tmp_csv_path
     FileUtils.rm_rf(@tmp_output_path)
-    File.delete(File.join(File.dirname(__FILE__), 'in.schedules.csv')) if File.exist? File.join(File.dirname(__FILE__), 'in.schedules.csv')
-    File.delete(File.join(File.dirname(__FILE__), 'results_annual.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_annual.csv')
-    File.delete(File.join(File.dirname(__FILE__), 'results_design_load_details.csv')) if File.exist? File.join(File.dirname(__FILE__), 'results_design_load_details.csv')
+    cleanup_results_files
   end
 
   def test_validation_of_schematron_doc
@@ -317,10 +317,11 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base-dhw-multiple.xml')
         hpxml_bldg.water_heating_systems[0].fraction_dhw_load_served = 0.35
       when 'dhw-invalid-ef-tank'
-        hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-gas-ef.xml')
         hpxml_bldg.water_heating_systems[0].energy_factor = 1.0
+        hpxml_bldg.water_heating_systems[0].recovery_efficiency = nil
       when 'dhw-invalid-uef-tank-heat-pump'
-        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump-uef.xml')
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-heat-pump.xml')
         hpxml_bldg.water_heating_systems[0].uniform_energy_factor = 1.0
       when 'dishwasher-location'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
@@ -927,7 +928,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
         hpxml_bldg.water_heating_systems[0].location = HPXML::LocationUnconditionedSpace
       when 'water-heater-recovery-efficiency'
-        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-gas.xml')
+        hpxml, hpxml_bldg = _create_hpxml('base-dhw-tank-gas-ef.xml')
         hpxml_bldg.water_heating_systems[0].recovery_efficiency = hpxml_bldg.water_heating_systems[0].energy_factor
       when 'wrong-infiltration-method-blower-door'
         hpxml, hpxml_bldg = _create_hpxml('base-enclosure-infil-leakiness-description.xml')
@@ -1331,7 +1332,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                             'solar-thermal-system-with-combi-tankless' => ["Water heating system 'WaterHeatingSystem1' connected to solar thermal system 'SolarThermalSystem1' cannot be a space-heating boiler."],
                             'solar-thermal-system-with-desuperheater' => ["Water heating system 'WaterHeatingSystem1' connected to solar thermal system 'SolarThermalSystem1' cannot be attached to a desuperheater."],
                             'solar-thermal-system-with-dhw-indirect' => ["Water heating system 'WaterHeatingSystem1' connected to solar thermal system 'SolarThermalSystem1' cannot be a space-heating boiler."],
-                            'storm-windows-unexpected-window-ufactor' => ['Storm windows are currently restricted to windows with U-factor >= 0.45, while base window U-Factor was 0.33.'],
+                            'storm-windows-unexpected-window-ufactor' => ['Storm windows are currently restricted to windows with U-factor >= 0.45, while base window U-Factor was 0.35.'],
                             'surface-attached-to-uncond-space' => ["Surface 'Wall2Space2' is attached to the space of an unconditioned zone."],
                             'surface-attached-to-uncond-space2' => ["Surface 'Slab2Space4' is attached to the space of an unconditioned zone."],
                             'unattached-cfis' => ["Attached HVAC distribution system 'foobar' not found for ventilation fan 'VentilationFan1'."],
@@ -2175,6 +2176,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
                                 temperature_coefficients: '0.019, 0.016, 0.017, 0.016, 0.018, 0.021, 0.019, 0.015, 0.015, 0.019, 0.018, 0.018, 0.016, 0.017, 0.015, 0.015, 0.020, 0.020, 0.017, 0.014, 0.016, 0.017, 0.019, 0.020')
       when 'schedule-file-and-setpoints'
         hpxml, hpxml_bldg = _create_hpxml('base.xml')
+        hpxml_bldg.water_heating_systems[0].temperature = 125
         hpxml_bldg.header.schedules_filepaths << File.join(File.dirname(__FILE__), '../resources/schedule_files/setpoints.csv')
         hpxml_bldg.header.schedules_filepaths << File.join(File.dirname(__FILE__), '../resources/schedule_files/water-heater-setpoints.csv')
       when 'schedule-file-and-operating-mode'

@@ -1,0 +1,11 @@
+Option Name	Azimuth [deg]
+North	0
+Northeast	45
+East	90
+Southeast	135
+South	180
+Southwest	225
+West	270
+Northwest	315
+	
+"Azimuth: The unit's front as measured clockwise from north (e.g., North=0, East=90, South=180, West=270)."	
