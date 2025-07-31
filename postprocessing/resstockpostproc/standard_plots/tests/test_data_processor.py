@@ -35,6 +35,7 @@ def combined_df() -> pl.LazyFrame:
     # Baseline (upgrade 0)
     # ---------------------------
     bldg_ids = [1, 2, 3, 4]
+    weights = [10, 10, 10, 10]
     heating_fuel = ["Electric", "Gas", "Electric", "Gas"]
     vacancy_status = ["Vacant", "Occupied", "Occupied", "Occupied"]
     building_type = ["Single Family", "Single Family", "Single Family", "Single Family"]
@@ -48,6 +49,7 @@ def combined_df() -> pl.LazyFrame:
             "upgrade": 0,
             "upgrade_name": "baseline",
             "bldg_id": bldg_ids,
+            "weight": weights,
             "in.building_type": building_type,
             "applicability": True,
             "in.vacancy_status": vacancy_status,
@@ -256,8 +258,12 @@ def test_upgrade_applied_only(processor: DataProcessor):
     assert (df["in.heating_fuel"] == "Gas").sum() == 2
 
 
-def test_quantity_group_mean_aggregation(processor: DataProcessor):
-    """Mean aggregation with a quantity group returns expected columns & values."""
+@pytest.mark.parametrize(
+    "aggregation_type",
+    [AggregationType.average, AggregationType.total],
+)
+def test_quantity_group_mean_aggregation(processor: DataProcessor, aggregation_type: AggregationType):
+    """Quantity group aggregation returns expected columns & values."""
 
     qgroup = QuantityGroup(
         name="energy",
@@ -266,7 +272,7 @@ def test_quantity_group_mean_aggregation(processor: DataProcessor):
     )
     spec = _build_base_spec(
         visualization_type=VizType.bar,
-        aggregation_type=AggregationType.average,
+        aggregation_type=aggregation_type,
         quantity_type=QuantityType.absolute,
         quantity=qgroup,
         group_by="in.heating_fuel",
@@ -284,26 +290,31 @@ def test_quantity_group_mean_aggregation(processor: DataProcessor):
         "total_kwh",
     }
     assert expected_cols.issubset(set(df.columns))
-
-    # For upgrade=1 & Electric fuel, mean(elec_kwh) should be ≈99.5 ((100 + 99) / 2)
     row = df.filter((pl.col("upgrade") == 1) & (pl.col("in.heating_fuel") == "Electric")).select("elec_kwh").item()
-    assert row == pytest.approx(99.5)
+    multiplier = 1 if aggregation_type == AggregationType.average else 20  # weight of 10 and two samples
+    assert row == pytest.approx(99.5 * multiplier)
 
 
-def test_savings_calculation(processor: DataProcessor):
+@pytest.mark.parametrize(
+    "aggregation_type",
+    [AggregationType.average, AggregationType.total],
+)
+def test_savings_calculation(processor: DataProcessor, aggregation_type: AggregationType):
     """Absolute savings should equal (baseline - upgrade) for applicable buildings."""
 
     spec = _build_base_spec(
         visualization_type=VizType.bar,
         group_by="bldg_id",
         quantity_type=QuantityType.savings,
-        aggregation_type=AggregationType.average,  # mean over single-building groups -> identity
+        aggregation_type=aggregation_type,  # test both average and total
     )
     df = processor.prepare_data_for_plot(spec)
 
+    multiplier = 1 if aggregation_type == AggregationType.average else 10
+
     # Building 2, Upgrade 1: baseline 20 kWh -> 18 kWh after 10% reduction => savings = 2
     saving = df.filter((pl.col("upgrade") == 1) & (pl.col("bldg_id") == 2)).select("elec_kwh").item()
-    assert saving == pytest.approx(2.0)
+    assert saving == pytest.approx(2.0 * multiplier)
 
     # Building 1, Upgrade 1 not applicable -> savings should be 0
     saving_na = df.filter((pl.col("upgrade") == 1) & (pl.col("bldg_id") == 1)).select("elec_kwh").item()
