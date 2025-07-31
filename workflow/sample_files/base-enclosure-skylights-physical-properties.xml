@@ -296,7 +296,7 @@
           <Skylight>
             <SystemIdentifier id='Skylight1'/>
             <Area>15.0</Area>
-            <Azimuth>0</Azimuth>
+            <Azimuth>180</Azimuth>
             <FrameType>
               <Wood/>
             </FrameType>
@@ -319,7 +319,7 @@
           <Skylight>
             <SystemIdentifier id='Skylight2'/>
             <Area>15.0</Area>
-            <Azimuth>180</Azimuth>
+            <Azimuth>0</Azimuth>
             <FrameType>
               <Metal>
                 <ThermalBreak>true</ThermalBreak>
