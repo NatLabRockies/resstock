@@ -273,9 +273,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: feature_results
-          path: |
-            baseline
-            upgrades
+          path: baseline
           if-no-files-found: error
 
       - name: Upload buildstockbatch results
@@ -306,18 +304,16 @@ jobs:
           path: samples
           name: feature_samples
 
-      - name: Download feature results
-        uses: actions/download-artifact@v4
-        with:
-          path: results
-          name: feature_results
-
       - name: Compare samples and results
         run: |          
           pip install numpy
           pip install pandas
           pip install plotly
           pip install kaleido
+          
+          # feature_results
+          mkdir -p results
+          cp -r baseline results
           
           # baseline annual
           mkdir -p test/base_results/comparisons/baseline/annual
@@ -560,17 +556,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.base.sha }}
-
-      - name: Upload base results
-        uses: actions/upload-artifact@v4
-        with:
-          name: base_results
-          path: test/base_results
-          if-no-files-found: error
-
-      - uses: actions/checkout@v4
-        with:
           ref: ${{ github.head_ref }}
 
       - uses: actions/setup-python@v5
@@ -680,18 +665,16 @@ jobs:
           path: base_results
           name: base_results
 
-      - name: Download feature results
-        uses: actions/download-artifact@v4
-        with:
-          path: results
-          name: feature_results
-
       - name: Compare samples and results
         run: |          
           pip install numpy
           pip install pandas
           pip install plotly
           pip install kaleido
+          
+          # feature_results
+          mkdir -p results
+          cp -r test/base_results/upgrades results
           
           # results_characteristics.csv
           python test/base_results/upgrades/create_results_characteristics.py -f base_results/upgrades/sdr_annual/results_up00.csv
