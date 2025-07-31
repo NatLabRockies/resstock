@@ -64,6 +64,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(false)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('air_leakage_percent_reduction', false)
+    arg.setDisplayName('Air Leakage: Value Reduction')
+    arg.setDescription('Reduction (%) on the air exchange rate value.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('building_id', false)
     arg.setDisplayName('Building Unit ID')
     arg.setDescription('The building unit number (between 1 and the number of samples).')
@@ -81,50 +86,52 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Parse user arguments and assign to variables
     args = runner.getArgumentValues(arguments(model), user_arguments)
-    if skip_post_hpxml?(args)
-      runner.registerInfo('Skipping ResStockArgumentsPostHPXML')
-      return true
-    end
     @args = args
 
     @hpxml_path = args[:hpxml_path]
     @hpxml_path = File.expand_path(@hpxml_path) unless (Pathname.new @hpxml_path).absolute?
     raise "'#{@hpxml_path}' does not exist or is not an .xml file." unless File.exist?(@hpxml_path) && @hpxml_path.downcase.end_with?('.xml')
 
-    output_csv_path = File.dirname(@hpxml_path)
-
     # Load HPXML
     @hpxml = HPXML.new(hpxml_path: @hpxml_path)
-    @prng = Random.new(args[:building_id].to_i)
-    @minutes_per_step = @hpxml.header.timestep
-    max_random_shift_steps = (args[:flex_random_shift_minutes] / @minutes_per_step).to_i
-    @random_shift_steps = @prng.rand(-max_random_shift_steps..max_random_shift_steps)
 
-    # Process each building
-    @hpxml.buildings.each_with_index do |hpxml_bldg, index|
-      if hpxml_bldg.hvac_controls.to_a.length != 0 && !skip_hvac_flexibility?(args)
-        hvac_schedule = create_hvac_schedule(index)
-        modified_schedule = modify_hvac_schedule(hpxml_bldg, hvac_schedule)
-        write_schedule(modified_schedule, hpxml_bldg, index, output_csv_path)
+    # Infiltration Reduction
+    if not args[:air_leakage_percent_reduction].nil?
+      @hpxml.buildings.each do |hpxml_bldg|
+        hpxml_bldg.air_infiltration_measurements.each do |air_infiltration_measurement|
+          air_infiltration_measurement.air_leakage *= (1.0 - args[:air_leakage_percent_reduction] / 100.0)
+        end
       end
-      next unless !skip_ev_flexibility?(args)
+      runner.registerInfo("Wrote file: #{@hpxml_path} with modified <AirLeakage>.")
+    end
 
-      ev_schedule = get_ev_schedule(hpxml_bldg)
-      next if ev_schedule.nil?
+    if not skip_hvac_flexibility?(args)
+      # define variables needed for hvac_flexibility adjustment
+      output_csv_path = File.dirname(@hpxml_path)
+      @prng = Random.new(args[:building_id].to_i)
+      @minutes_per_step = @hpxml.header.timestep
+      max_random_shift_steps = (args[:flex_random_shift_minutes] / @minutes_per_step).to_i
+      @random_shift_steps = @prng.rand(-max_random_shift_steps..max_random_shift_steps)
 
-      modified_ev_schedule = modify_ev_schedule(hpxml_bldg, ev_schedule)
-      write_schedule(modified_ev_schedule, hpxml_bldg, index, output_csv_path)
+      # Process each building
+      doc_buildings.each_with_index do |building, index|
+        hpxml_bldg = @hpxml.buildings[index]
+        if hpxml_bldg.hvac_controls.to_a.length == 0
+          runner.registerInfo("Skipping hvac flexibility for building #{index + 1} since it has no HVAC controls.")
+          next
+        end
+        hvac_schedule = create_hvac_schedule(index)
+        modified_schedule = modify_hvac_schedule(index, hvac_schedule)
+        write_schedule(modified_schedule, building, index, output_csv_path)
+      end
+      runner.registerInfo("Wrote file: #{@hpxml_path} with modified schedules.")
+    else
+      runner.registerInfo('Skipping hvac flexibility since hvac_flex_peak_offset and hvac_flex_pre_peak_duration_hours are both 0')
     end
 
     # Write out the modified hpxml
     XMLHelper.write_file(@hpxml.to_doc(), @hpxml_path)
-    runner.registerInfo("Wrote file: #{@hpxml_path} with modified schedules.")
     return true
-  end
-
-  # Determines if the post-processing step for HPXML should be skipped
-  def skip_post_hpxml?(args)
-    return skip_hvac_flexibility?(args) && skip_ev_flexibility?(args)
   end
 
   # Determines if HVAC flexibility modifications should be skipped

@@ -7,6 +7,7 @@ require 'openstudio'
 require_relative 'resources/constants'
 require_relative 'resources/electrical_panel'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
+require_relative '../../resources/hpxml-measures/BuildResidentialHPXML/resources/options'
 
 # start the measure
 class ResStockArguments < OpenStudio::Measure::ModelMeasure
@@ -37,12 +38,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
     @build_residential_hpxml_measure_arguments.each do |arg|
       next if Constants::BuildResidentialHPXMLExcludes.include? arg.name
-
-      # Following are arguments with the same name but different options
-      next if arg.name == 'geometry_unit_cfa'
-      next if arg.name == 'heat_pump_backup_type'
-      next if arg.name == 'heat_pump_backup_fuel'
-      next if arg.name == 'heat_pump_backup_heating_efficiency'
 
       # Convert optional arguments to string arguments that allow Constants::Auto for defaulting
       if !arg.required
@@ -84,19 +79,21 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The building unit number (between 1 and the number of samples).')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeStringArgument('schedules_vacancy_periods', false)
-    arg.setDisplayName('Schedules: Vacancy Periods')
-    arg.setDescription('Specifies the vacancy periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.')
+    unit_type_choices = OpenStudio::StringVector.new
+    unit_type_choices << HPXML::ResidentialTypeSFD
+    unit_type_choices << HPXML::ResidentialTypeSFA
+    unit_type_choices << HPXML::ResidentialTypeApartment
+    unit_type_choices << HPXML::ResidentialTypeManufactured
+
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('geometry_unit_type', unit_type_choices, true)
+    arg.setDisplayName('Unit Type')
+    arg.setDescription('The type of dwelling unit.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeStringArgument('schedules_power_outage_periods', false)
-    arg.setDisplayName('Schedules: Power Outage Periods')
-    arg.setDescription('Specifies the power outage periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument.makeStringArgument('schedules_power_outage_periods_window_natvent_availability', false)
-    arg.setDisplayName('Schedules: Power Outage Periods Window Natural Ventilation Availability')
-    arg.setDescription("The availability of the natural ventilation schedule during the power outage periods. Valid choices are '#{[HPXML::ScheduleRegular, HPXML::ScheduleAvailable, HPXML::ScheduleUnavailable].join("', '")}'. If multiple periods, use a comma-separated list.")
+    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('geometry_building_num_units', false)
+    arg.setDisplayName('Building Number of Units')
+    arg.setUnits('#')
+    arg.setDescription('The number of units in the building.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('schedules_space_heating_unavailable_days', false)
@@ -115,7 +112,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue('2000-2499')
     args << arg
 
-    # Adds a geometry_unit_cfa argument similar to the BuildResidentialHPXML measure, but as a string with "auto" allowed
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('geometry_unit_cfa', true)
     arg.setDisplayName('Geometry: Unit Conditioned Floor Area')
     arg.setDescription("The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or '#{Constants::Auto}'.")
@@ -126,13 +122,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('vintage', false)
     arg.setDisplayName('Building Construction: Vintage')
     arg.setDescription('The building vintage, used for informational purposes only.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument.makeDoubleArgument('exterior_finish_r', true)
-    arg.setDisplayName('Building Construction: Exterior Finish R-Value')
-    arg.setUnits('h-ft^2-R/Btu')
-    arg.setDescription('R-value of the exterior finish.')
-    arg.setDefaultValue(0.6)
     args << arg
 
     level_choices = OpenStudio::StringVector.new
@@ -180,63 +169,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setUnits('ft')
     arg.setDescription("The width of the corridor. Only applies to #{HPXML::ResidentialTypeApartment}s.")
     arg.setDefaultValue(10.0)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('wall_continuous_exterior_r', false)
-    arg.setDisplayName('Wall: Continuous Exterior Insulation Nominal R-value')
-    arg.setUnits('h-ft^2-R/Btu')
-    arg.setDescription('Nominal R-value for the wall continuous exterior insulation.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ceiling_insulation_r', true)
-    arg.setDisplayName('Ceiling: Insulation Nominal R-value')
-    arg.setUnits('h-ft^2-R/Btu')
-    arg.setDescription('Nominal R-value for the ceiling (attic floor).')
-    arg.setDefaultValue(0)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('rim_joist_continuous_exterior_r', true)
-    arg.setDisplayName('Rim Joist: Continuous Exterior Insulation Nominal R-value')
-    arg.setUnits('h-ft^2-R/Btu')
-    arg.setDescription('Nominal R-value for the rim joist continuous exterior insulation. Only applies to basements/crawlspaces.')
-    arg.setDefaultValue(0)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('rim_joist_continuous_interior_r', true)
-    arg.setDisplayName('Rim Joist: Continuous Interior Insulation Nominal R-value')
-    arg.setUnits('h-ft^2-R/Btu')
-    arg.setDescription('Nominal R-value for the rim joist continuous interior insulation that runs parallel to floor joists. Only applies to basements/crawlspaces.')
-    arg.setDefaultValue(0)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('rim_joist_assembly_interior_r', true)
-    arg.setDisplayName('Rim Joist: Interior Assembly R-value')
-    arg.setUnits('h-ft^2-R/Btu')
-    arg.setDescription('Assembly R-value for the rim joist assembly interior insulation that runs perpendicular to floor joists. Only applies to basements/crawlspaces.')
-    arg.setDefaultValue(0)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('air_leakage_percent_reduction', false)
-    arg.setDisplayName('Air Leakage: Value Reduction')
-    arg.setDescription('Reduction (%) on the air exchange rate value.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_television_2_usage_multiplier', true)
-    arg.setDisplayName('Plug Loads: Television Usage Multiplier 2')
-    arg.setDescription('Additional multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(1.0)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_other_2_usage_multiplier', true)
-    arg.setDisplayName('Plug Loads: Other Usage Multiplier 2')
-    arg.setDescription('Additional multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(1.0)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_well_pump_2_usage_multiplier', true)
-    arg.setDisplayName('Plug Loads: Well Pump Usage Multiplier 2')
-    arg.setDescription('Additional multiplier on the well pump energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(0.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_control_heating_weekday_setpoint_temp', true)
@@ -331,123 +263,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('heating_system_has_flue_or_chimney', true)
-    arg.setDisplayName('Heating System: Has Flue or Chimney')
-    arg.setDescription('Whether the heating system has a flue or chimney.')
-    arg.setDefaultValue(Constants::Auto)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('heating_system_2_has_flue_or_chimney', true)
-    arg.setDisplayName('Heating System 2: Has Flue or Chimney')
-    arg.setDescription('Whether the second heating system has a flue or chimney.')
-    arg.setDefaultValue(Constants::Auto)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('water_heater_has_flue_or_chimney', true)
-    arg.setDisplayName('Water Heater: Has Flue or Chimney')
-    arg.setDescription('Whether the water heater has a flue or chimney.')
-    arg.setDefaultValue(Constants::Auto)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_rated_cfm_per_ton', false)
-    arg.setDisplayName('Heating System: Rated CFM Per Ton')
-    arg.setDescription('The rated cfm per ton of the heating system.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_actual_cfm_per_ton', false)
-    arg.setDisplayName('Heating System: Actual CFM Per Ton')
-    arg.setDescription('The actual cfm per ton of the heating system.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_rated_cfm_per_ton', false)
-    arg.setDisplayName('Cooling System: Rated CFM Per Ton')
-    arg.setDescription('The rated cfm per ton of the cooling system.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_actual_cfm_per_ton', false)
-    arg.setDisplayName('Cooling System: Actual CFM Per Ton')
-    arg.setDescription('The actual cfm per ton of the cooling system.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_frac_manufacturer_charge', false)
-    arg.setDisplayName('Cooling System: Fraction of Manufacturer Recommended Charge')
-    arg.setDescription('The fraction of manufacturer recommended charge of the cooling system.')
-    arg.setUnits('Frac')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_rated_cfm_per_ton', false)
-    arg.setDisplayName('Heat Pump: Rated CFM Per Ton')
-    arg.setDescription('The rated cfm per ton of the heat pump.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_actual_cfm_per_ton', false)
-    arg.setDisplayName('Heat Pump: Actual CFM Per Ton')
-    arg.setDescription('The actual cfm per ton of the heat pump.')
-    arg.setUnits('cfm/ton')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_frac_manufacturer_charge', false)
-    arg.setDisplayName('Heat Pump: Fraction of Manufacturer Recommended Charge')
-    arg.setDescription('The fraction of manufacturer recommended charge of the heat pump.')
-    arg.setUnits('Frac')
-    args << arg
-
-    # Adds a heat_pump_backup_type argument similar to the BuildResidentialHPXML measure, but with "auto" allowed
-    arg = @build_residential_hpxml_measure_arguments.find { |arg| arg.name == 'heat_pump_backup_type' }
-    heat_pump_backup_type_choices = arg.choiceValues.map(&:to_s)
-    heat_pump_backup_type_choices.unshift(Constants::Auto)
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_type', heat_pump_backup_type_choices, true)
-    arg.setDisplayName('Heat Pump: Backup Type')
-    arg.setDescription("The backup type of the heat pump. If '#{HPXML::HeatPumpBackupTypeIntegrated}', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If '#{HPXML::HeatPumpBackupTypeSeparate}', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use '#{Constants::None}' if there is no backup heating. E.g., '#{HPXML::HeatPumpBackupTypeIntegrated}' or '#{Constants::Auto}'. Use '#{Constants::Auto}' when Backup Use Existing System is true.")
-    arg.setDefaultValue(HPXML::HeatPumpBackupTypeIntegrated)
-    args << arg
-
-    # Adds a heat_pump_backup_fuel argument similar to the BuildResidentialHPXML measure, but with "auto" allowed
-    arg = @build_residential_hpxml_measure_arguments.find { |arg| arg.name == 'heat_pump_backup_fuel' }
-    heat_pump_backup_fuel_choices = arg.choiceValues.map(&:to_s)
-    heat_pump_backup_fuel_choices.unshift(Constants::Auto)
-
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_fuel', heat_pump_backup_fuel_choices, true)
-    arg.setDisplayName('Heat Pump: Backup Fuel Type')
-    arg.setDescription("The backup fuel type of the heat pump. Only applies if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. E.g., '#{HPXML::FuelTypeElectricity}' or '#{Constants::Auto}'. Use '#{Constants::Auto}' when Backup Use Existing System is true.")
-    arg.setDefaultValue(HPXML::FuelTypeElectricity)
-    args << arg
-
-    # Adds a heat_pump_backup_heating_efficiency argument similar to the BuildResidentialHPXML measure, but as a string with "auto" allowed
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('heat_pump_backup_heating_efficiency', true)
-    arg.setDisplayName('Heat Pump: Backup Rated Efficiency')
-    arg.setDescription("The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. E.g., '1' or '#{Constants::Auto}'. Use '#{Constants::Auto}' when Backup Use Existing System is true.")
-    arg.setDefaultValue('1')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('heat_pump_backup_use_existing_system', false)
-    arg.setDisplayName('Heat Pump: Backup Use Existing System')
-    arg.setDescription("Whether the heat pump uses the existing heating system as backup. If true and backup type of the heat pump is '#{HPXML::HeatPumpBackupTypeIntegrated}', heat_pump_backup_xxx arguments are assigned values based on the existing heating system. If true and backup type of the heat pump is '#{HPXML::HeatPumpBackupTypeSeparate}', heating_system_2_xxx arguments are assigned values based on the existing heating system. This argument is only applicable for heat pump upgrades.")
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('heat_pump_sizing_is_duct_limited', false)
-    arg.setDisplayName('Heat Pump: Sizing Is Duct Limited')
-    arg.setDescription('Whether the (ducted) heat pump has an upper limit for autosized heating/cooling capacity and an adjusted blower fan efficiency (W/CFM) value. This argument is only applicable for heat pump upgrades.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_average_mph', false)
-    arg.setDisplayName('Electric Vehicle: Average Miles Per Hour')
-    arg.setDescription('The average miles/hour driven by the vehicle.')
-    arg.setUnits('miles/hour')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_efficiency_percent_increase', false)
-    arg.setDisplayName('Electric Vehicle: Efficiency Improvement')
-    arg.setDescription('The increase (fraction) in efficiency of the electric vehicle.')
-    arg.setUnits('Frac')
-    args << arg
-
     return args
   end
 
@@ -476,6 +291,8 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     args_to_delete = args.keys - arg_names # these are the extra ones added in the arguments section
+
+    new_arg_keys = update_args_hash_with_detailed_properties(args: args)
 
     # Conditioned floor area
     if args[:geometry_unit_cfa] == Constants::Auto
@@ -521,14 +338,14 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
         runner.registerError("ResStockArguments: Could not look up conditioned floor area for '#{args[:geometry_unit_cfa_bin]}' and '#{args[:geometry_unit_type]}'.")
         return false
       end
-      args[:geometry_unit_cfa] = Float(cfa)
+      args[:geometry_unit_conditioned_floor_area] = Float(cfa)
     else
-      args[:geometry_unit_cfa] = args[:geometry_unit_cfa]
+      args[:geometry_unit_conditioned_floor_area] = args[:geometry_unit_cfa]
     end
 
     # Vintage
-    if !args[:vintage].nil? && args[:year_built] == Constants::Auto
-      args[:year_built] = Integer(Float(args[:vintage].gsub(/[^0-9]/, ''))) # strip non-numeric
+    if !args[:vintage].nil? && args[:building_year_built] == Constants::Auto
+      args[:building_year_built] = Integer(Float(args[:vintage].gsub(/[^0-9]/, ''))) # strip non-numeric
     end
 
     # Num Occupants
@@ -537,24 +354,10 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # Plug Loads
-    args[:misc_plug_loads_television_usage_multiplier] = args[:misc_plug_loads_television_usage_multiplier] * args[:misc_plug_loads_television_2_usage_multiplier]
-    args[:misc_plug_loads_other_usage_multiplier] = args[:misc_plug_loads_other_usage_multiplier] * args[:misc_plug_loads_other_2_usage_multiplier]
-    args[:misc_plug_loads_well_pump_usage_multiplier] = args[:misc_plug_loads_well_pump_usage_multiplier] * args[:misc_plug_loads_well_pump_2_usage_multiplier]
+    args[:misc_plug_loads_television_usage_multiplier] = args[:misc_plug_loads_television_usage_multiplier]
+    args[:misc_plug_loads_other_usage_multiplier] = args[:misc_plug_loads_other_usage_multiplier]
+    args[:misc_plug_loads_well_pump_usage_multiplier] = args[:misc_plug_loads_well_pump_usage_multiplier]
     args[:misc_plug_loads_vehicle_present] = false
-
-    # PV
-    if args[:pv_system_present]
-      args[:pv_system_num_bedrooms_served] = args[:geometry_unit_num_bedrooms]
-    else
-      args[:pv_system_num_bedrooms_served] = 0
-    end
-
-    # Battery
-    if args[:battery_present]
-      args[:battery_num_bedrooms_served] = args[:geometry_unit_num_bedrooms]
-    else
-      args[:battery_num_bedrooms_served] = 0
-    end
 
     # HVAC Setpoints
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
@@ -575,40 +378,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       hvac_control_season_period = "hvac_control_#{htg_or_clg}_season_period".to_sym
       if args[use_auto_season] && (args[hvac_control_season_period] == Constants::Auto)
         args[hvac_control_season_period] = Constants::BuildingAmerica
-      end
-    end
-
-    # Unavailable Periods
-    schedules_unavailable_period_types = []
-    schedules_unavailable_period_dates = []
-    schedules_unavailable_period_window_natvent_availabilities = []
-
-    # Vacancy
-    if !args[:schedules_vacancy_periods].nil?
-      schedules_vacancy_periods = args[:schedules_vacancy_periods].split(',').map(&:strip)
-      schedules_vacancy_periods.each do |schedules_vacancy_period|
-        schedules_unavailable_period_types << 'Vacancy'
-        schedules_unavailable_period_dates << schedules_vacancy_period
-        schedules_unavailable_period_window_natvent_availabilities << ''
-      end
-    end
-
-    # Power Outage
-    if !args[:schedules_power_outage_periods].nil?
-      schedules_power_outage_periods = args[:schedules_power_outage_periods].split(',').map(&:strip)
-
-      natvent_availabilities = []
-      if not args[:schedules_power_outage_periods_window_natvent_availability].nil?
-        natvent_availabilities = args[:schedules_power_outage_periods_window_natvent_availability].split(',').map(&:strip)
-      end
-
-      schedules_power_outage_periods = schedules_power_outage_periods.zip(natvent_availabilities)
-      schedules_power_outage_periods.each do |schedules_power_outage_period|
-        outage_period, natvent_availability = schedules_power_outage_period
-
-        schedules_unavailable_period_types << 'Power Outage'
-        schedules_unavailable_period_dates << outage_period
-        schedules_unavailable_period_window_natvent_availabilities << natvent_availability
       end
     end
 
@@ -672,17 +441,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     args[:schedules_unavailable_period_dates] = schedules_unavailable_period_dates.join(', ')
     args[:schedules_unavailable_period_window_natvent_availabilities] = schedules_unavailable_period_window_natvent_availabilities.join(', ')
 
-    # Flue or Chimney
-    if (args[:heating_system_has_flue_or_chimney] == 'false') &&
-       (args[:heating_system_2_has_flue_or_chimney] == 'false') &&
-       (args[:water_heater_has_flue_or_chimney] == 'false')
-      args[:air_leakage_has_flue_or_chimney_in_conditioned_space] = false
-    elsif (args[:heating_system_type] != 'none' && args[:heating_system_has_flue_or_chimney] == 'true') ||
-          (args[:heating_system_2_type] != 'none' && args[:heating_system_2_has_flue_or_chimney] == 'true') ||
-          (args[:water_heater_type] != 'none' && args[:water_heater_has_flue_or_chimney] == 'true')
-      args[:air_leakage_has_flue_or_chimney_in_conditioned_space] = true
-    end
-
     # HVAC Secondary
     if args[:heating_system_2_type] != 'none'
       if args[:heating_system_type] != 'none'
@@ -702,27 +460,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    # HVAC Faults
-    if !args[:heating_system_rated_cfm_per_ton].nil? && !args[:heating_system_actual_cfm_per_ton].nil?
-      args[:heating_system_airflow_defect_ratio] = (args[:heating_system_actual_cfm_per_ton] - args[:heating_system_rated_cfm_per_ton]) / args[:heating_system_rated_cfm_per_ton]
-    end
-
-    if !args[:cooling_system_rated_cfm_per_ton].nil? && !args[:cooling_system_actual_cfm_per_ton].nil?
-      args[:cooling_system_airflow_defect_ratio] = (args[:cooling_system_actual_cfm_per_ton] - args[:cooling_system_rated_cfm_per_ton]) / args[:cooling_system_rated_cfm_per_ton]
-    end
-
-    if !args[:cooling_system_frac_manufacturer_charge].nil?
-      args[:cooling_system_charge_defect_ratio] = args[:cooling_system_frac_manufacturer_charge] - 1.0
-    end
-
-    if !args[:heat_pump_rated_cfm_per_ton].nil? && !args[:heat_pump_actual_cfm_per_ton].nil?
-      args[:heat_pump_airflow_defect_ratio] = (args[:heat_pump_actual_cfm_per_ton] - args[:heat_pump_rated_cfm_per_ton]) / args[:heat_pump_rated_cfm_per_ton]
-    end
-
-    if !args[:heat_pump_frac_manufacturer_charge].nil?
-      args[:heat_pump_charge_defect_ratio] = args[:heat_pump_frac_manufacturer_charge] - 1.0
-    end
-
     # Error check geometry inputs
     corridor_width = args[:geometry_corridor_width]
     corridor_position = args[:geometry_corridor_position]
@@ -739,10 +476,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # Adiabatic Walls
-    args[:geometry_unit_left_wall_is_adiabatic] = false
-    args[:geometry_unit_right_wall_is_adiabatic] = false
-    args[:geometry_unit_front_wall_is_adiabatic] = false
-    args[:geometry_unit_back_wall_is_adiabatic] = false
+    fblr_walls_are_adiabatic = [false, false, false, false]
 
     # Map corridor arguments to adiabatic walls and shading
     if [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include? args[:geometry_unit_type]
@@ -752,24 +486,19 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
       if args[:geometry_unit_type] == HPXML::ResidentialTypeApartment
         n_units_per_floor = n_units / n_floors
+        has_rear_units = false
         if n_units_per_floor >= 4 && (corridor_position == 'Double Exterior' || corridor_position == 'None')
           has_rear_units = true
-          args[:geometry_unit_back_wall_is_adiabatic] = true
+          fblr_walls_are_adiabatic[0] = true # front
         elsif n_units_per_floor >= 4 && (corridor_position == 'Double-Loaded Interior')
           has_rear_units = true
-          args[:geometry_unit_front_wall_is_adiabatic] = true
+          fblr_walls_are_adiabatic[0] = true # front
         elsif (n_units_per_floor == 2) && (horiz_location == 'None') && (corridor_position == 'Double Exterior' || corridor_position == 'None')
           has_rear_units = true
-          args[:geometry_unit_back_wall_is_adiabatic] = true
+          fblr_walls_are_adiabatic[1] = true # back
         elsif (n_units_per_floor == 2) && (horiz_location == 'None') && (corridor_position == 'Double-Loaded Interior')
           has_rear_units = true
-          args[:geometry_unit_front_wall_is_adiabatic] = true
-        elsif corridor_position == 'Single Exterior (Front)'
-          has_rear_units = false
-          args[:geometry_unit_front_wall_is_adiabatic] = false
-        else
-          has_rear_units = false
-          args[:geometry_unit_front_wall_is_adiabatic] = false
+          fblr_walls_are_adiabatic[0] = true # front
         end
 
         # Error check MF & SFA geometry
@@ -808,26 +537,39 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       end
 
       if horiz_location == 'Left'
-        args[:geometry_unit_right_wall_is_adiabatic] = true
+        fblr_walls_are_adiabatic[3] = true # right
       elsif horiz_location == 'Middle'
-        args[:geometry_unit_left_wall_is_adiabatic] = true
-        args[:geometry_unit_right_wall_is_adiabatic] = true
+        fblr_walls_are_adiabatic[2] = true # left
+        fblr_walls_are_adiabatic[3] = true # right
       elsif horiz_location == 'Right'
-        args[:geometry_unit_left_wall_is_adiabatic] = true
+        fblr_walls_are_adiabatic[2] = true # left
       end
     end
 
-    # Infiltration Reduction
-    if not args[:air_leakage_percent_reduction].nil?
-      args[:air_leakage_value] *= (1.0 - args[:air_leakage_percent_reduction] / 100.0)
-    end
+    args[:geometry_attached_walls] = {
+      [false, false, false, false] => 'None',
+      [true, false, false, false] => '1 Side: Front',
+      [false, true, false, false] => '1 Side: Back',
+      [false, false, true, false] => '1 Side: Left',
+      [false, false, false, true] => '1 Side: Right',
+      [true, false, true, false] => '2 Sides: Front, Left',
+      [true, false, false, true] => '2 Sides: Front, Right',
+      [false, true, true, false] => '2 Sides: Back, Left',
+      [false, true, false, true] => '2 Sides: Back, Right',
+      [true, true, false, false] => '2 Sides: Front, Back',
+      [false, false, true, true] => '2 Sides: Left, Right',
+      [true, true, true, false] => '3 Sides: Front, Back, Left',
+      [true, true, false, true] => '3 Sides: Front, Back, Right',
+      [true, false, true, true] => '3 Sides: Front, Left, Right',
+      [false, true, true, true] => '3 Sides: Back, Left, Right',
+    }[fblr_walls_are_adiabatic]
 
-    # Num Floors
+    # Unit Type
     if args[:geometry_unit_type] == HPXML::ResidentialTypeApartment
-      args[:geometry_unit_num_floors_above_grade] = 1
-    else
-      args[:geometry_unit_num_floors_above_grade] = args[:geometry_num_floors_above_grade]
+      args[:geometry_num_floors_above_grade] = 1
     end
+    stories_str = (args[:geometry_num_floors_above_grade] == 1 ? '1 Story' : "#{args[:geometry_num_floors_above_grade]} Stories")
+    args[:geometry_unit_type] = "#{geometry_unit_type}, #{stories_str}"
 
     # Adiabatic Floor/Ceiling
     if not args[:geometry_unit_level].nil?
@@ -857,50 +599,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       end
     else
       args[:geometry_unit_height_above_grade] = Constants::Auto
-    end
-
-    # Wall Assembly R-Value
-    args[:wall_assembly_r] += args[:exterior_finish_r]
-
-    if not args[:wall_continuous_exterior_r].nil?
-      args[:wall_assembly_r] += args[:wall_continuous_exterior_r]
-    end
-
-    # Rim Joist Assembly R-Value
-    rim_joist_assembly_r = 0
-    if args[:geometry_rim_joist_height] > 0
-      drywall_assembly_r = 0.9
-      uninsulated_wall_assembly_r = 3.4
-
-      assembly_exterior_r = args[:exterior_finish_r] + args[:rim_joist_continuous_exterior_r]
-
-      if args[:rim_joist_continuous_interior_r] > 0 && args[:rim_joist_assembly_interior_r] > 0
-        # rim joist assembly = siding + half continuous interior insulation + half rim joist assembly - drywall
-        # (rim joist assembly = nominal cavity + 1/2 in sheathing + 1/2 in drywall)
-        assembly_interior_r = (args[:rim_joist_continuous_interior_r] + uninsulated_wall_assembly_r - drywall_assembly_r) / 2.0 # parallel to floor joists
-        assembly_interior_r += (args[:rim_joist_assembly_interior_r]) / 2.0 # derated
-      elsif args[:rim_joist_continuous_interior_r] > 0 || args[:rim_joist_assembly_interior_r] > 0
-        runner.registerError('ResStockArguments: For rim joist interior insulation, must provide both continuous and assembly R-values.')
-        return false
-      else # uninsulated interior
-        # rim joist assembly = siding + continuous foundation insulation + uninsulated wall - drywall
-        # (uninsulated wall is nominal cavity + 1/2 in sheathing + 1/2 in drywall)
-        assembly_interior_r = uninsulated_wall_assembly_r - drywall_assembly_r
-      end
-
-      rim_joist_assembly_r = assembly_exterior_r + assembly_interior_r
-    end
-    args[:rim_joist_assembly_r] = rim_joist_assembly_r
-
-    # Vehicle arguments
-    if (not args[:vehicle_miles_driven_per_year].nil?) && (not args[:ev_average_mph].nil?)
-      hours_per_year = args[:vehicle_miles_driven_per_year] / args[:ev_average_mph]
-      args[:vehicle_hours_driven_per_week] = (hours_per_year / UnitConversions.convert(1, 'yr', 'day')) * 7
-    end
-
-    if not args[:ev_efficiency_percent_increase].nil?
-      # Adjust efficiency (in kWh/mile) to reflect a percentage improvement in efficiency.
-      args[:vehicle_fuel_economy_combined] = args[:vehicle_fuel_economy_combined] / (1 + args[:ev_efficiency_percent_increase])
     end
 
     # Electric Panel
@@ -961,6 +659,8 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
     # Register values to runner
     args.each do |arg_name, arg_value|
+      next if new_arg_keys.include?(arg_name)
+
       if args_to_delete.include?(arg_name) || (arg_value == Constants::Auto)
         arg_value = '' # don't assign these to BuildResidentialHPXML or BuildResidentialScheduleFile
       end
@@ -1030,6 +730,27 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       end
     end
     return args
+  end
+
+  def update_args_hash_with_detailed_properties(args:)
+    # update ResStockArguments args hash w/ OS-HPXML detailed properties based on choice dropdown for options based arguments
+    # makes detailed properties available in the args hash
+    orig_args = args.dup
+
+    Dir["#{File.dirname(__FILE__)}../../resources/hpxml-measures/BuildResidentialHPXML/resources/options/*.tsv"].each do |tsv_filepath|
+      tsv_filename = File.basename(tsv_filepath)
+      arg_name = File.basename(tsv_filename, File.extname(tsv_filename)).to_sym
+      get_option_properties(args, tsv_filename, args[arg_name])
+    end
+
+    get_option_properties(args, 'heating_system.tsv', args[:heating_system])
+    get_option_properties(args, 'cooling_system.tsv', args[:cooling_system])
+    get_option_properties(args, 'heat_pump.tsv', args[:heat_pump])
+    get_option_properties(args, 'heat_pump_backup.tsv', args[:heat_pump_backup])
+    get_option_properties(args, 'heating_system_2.tsv', args[:heating_system_2])
+
+    new_arg_keys = args.keys - orig_args.keys
+    return new_arg_keys
   end
 end
 

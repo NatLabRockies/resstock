@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>9656da29-b7f5-42d6-93ec-e43ad00505cc</version_id>
-  <version_modified>2025-07-07T19:02:58Z</version_modified>
+  <version_id>d69633c1-5b2a-458a-b169-d36281f8d9ee</version_id>
+  <version_modified>2025-07-31T20:35:21Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -75,6 +75,14 @@
       </choices>
     </argument>
     <argument>
+      <name>air_leakage_percent_reduction</name>
+      <display_name>Air Leakage: Value Reduction</display_name>
+      <description>Reduction (%) on the air exchange rate value.</description>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>building_id</name>
       <display_name>Building Unit ID</display_name>
       <description>The building unit number (between 1 and the number of samples).</description>
@@ -105,7 +113,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>4D34E2BF</checksum>
+      <checksum>DCC89AEB</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

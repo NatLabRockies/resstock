@@ -1,9 +1,0 @@
-Dependency=Lighting	Option=95% Usage	Option=100% Usage	Option=None	sampling_probability
-100% CFL	0.5	0.5	0	0.166667
-100% Incandescent	0.5	0.5	0	0.166667
-100% LED	0.5	0.5	0	0.166667
-20% LED	0.5	0.5	0	0.166667
-60% CFL	0.5	0.5	0	0.166667
-None	0	0	1	0.166667
-# Created by: sources\other\tsv_maker.py
-# Description: Interior lighting usage relative to the national average.
