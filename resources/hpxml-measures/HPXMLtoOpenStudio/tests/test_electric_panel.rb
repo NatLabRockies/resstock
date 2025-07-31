@@ -6,6 +6,7 @@ require 'openstudio/measure/ShowRunnerOutput'
 require 'fileutils'
 require_relative '../measure.rb'
 require_relative '../resources/util.rb'
+require_relative 'util.rb'
 
 class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
   def setup
@@ -16,15 +17,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
 
   def teardown
     File.delete(@tmp_hpxml_path) if File.exist? @tmp_hpxml_path
-    ['csv', 'json'].each do |file_ext|
-      File.delete(File.join(File.dirname(__FILE__), "results_annual.#{file_ext}")) if File.exist? File.join(File.dirname(__FILE__), "results_annual.#{file_ext}")
-      File.delete(File.join(File.dirname(__FILE__), "results_panel.#{file_ext}")) if File.exist? File.join(File.dirname(__FILE__), "results_panel.#{file_ext}")
-      File.delete(File.join(File.dirname(__FILE__), "results_design_load_details.#{file_ext}")) if File.exist? File.join(File.dirname(__FILE__), "results_design_load_details.#{file_ext}")
-    end
-  end
-
-  def sample_files_dir
-    return File.join(File.dirname(__FILE__), '..', '..', 'workflow', 'sample_files')
+    cleanup_results_files
   end
 
   def test_ashp_upgrade
@@ -624,7 +617,7 @@ class HPXMLtoOpenStudioElectricPanelTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeWaterHeater, 1064)
+    _test_service_feeder_power(hpxml_bldg, HPXML::ElectricPanelLoadTypeWaterHeater, 804)
     _test_occupied_spaces(hpxml_bldg, [HPXML::ElectricPanelLoadTypeWaterHeater], 2)
   end
 

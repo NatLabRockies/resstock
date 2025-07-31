@@ -744,7 +744,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                             interior_adjacent_to: HPXML::LocationConditionedSpace,
                             floor_type: HPXML::FloorTypeWoodFrame,
                             area: 150,
-                            insulation_assembly_r_value: 2.1,
+                            insulation_assembly_r_value: 5.3,
                             floor_or_ceiling: HPXML::FloorOrCeilingFloor)
       wall = hpxml_bldg.walls.select { |w|
                w.interior_adjacent_to == HPXML::LocationConditionedSpace &&
@@ -1113,6 +1113,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
 
         rim_joist.exterior_adjacent_to = HPXML::LocationCrawlspaceUnvented
         rim_joist.siding = nil
+        rim_joist.insulation_assembly_r_value = 4.0
       end
       hpxml_bldg.rim_joists.add(id: "RimJoist#{hpxml_bldg.rim_joists.size + 1}",
                                 exterior_adjacent_to: HPXML::LocationOutside,
@@ -2093,7 +2094,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
         hpxml_bldg.water_heating_systems << hpxml_bldg.water_heating_systems[0].dup
         hpxml_bldg.water_heating_systems[1].id = "WaterHeatingSystem#{hpxml_bldg.water_heating_systems.size}"
       end
-    elsif ['base-dhw-tank-gas-uef-fhr.xml'].include? hpxml_file
+    elsif ['base-dhw-tank-gas-fhr.xml'].include? hpxml_file
       hpxml_bldg.water_heating_systems[0].first_hour_rating = 56.0
       hpxml_bldg.water_heating_systems[0].usage_bin = nil
     elsif ['base-dhw-tankless-electric-outside.xml'].include? hpxml_file
@@ -2431,6 +2432,11 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
       hpxml_bldg.vehicles[0].ev_weekday_fractions = '0.0714, 0.0714, 0.0714, 0.0714, 0.0714, 0.0714, 0.0714, -0.3535, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.3221, -0.3244, 0.0714, 0.0714, 0.0714, 0.0714, 0.0714, 0.0714, 0.0714'
       hpxml_bldg.vehicles[0].ev_weekend_fractions = '0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, -0.3334, 0, 0, 0, 0, -0.3293, -0.3372, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588, 0.0588'
       hpxml_bldg.vehicles[0].ev_monthly_multipliers = '1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0'
+    end
+    if ['base-vehicle-ev-charger-undercharged.xml'].include? hpxml_file
+      hpxml_bldg.vehicles[0].ev_usage_multiplier = 2.0
+    elsif ['base-misc-usage-multiplier.xml'].include? hpxml_file
+      hpxml_bldg.vehicles[0].ev_usage_multiplier = 0.75
     end
 
     # ---------------- #
