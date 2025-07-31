@@ -95,6 +95,7 @@ class BarPlotter(BasePlotter):
         traces: list[go.Bar] = []
         xtitle: str | None = ""
         ytitle: str | None = ""
+        ytickvals: list[str] | None = None
         # ------------------------------------------------------------------ #
         # NO SECOND-LEVEL CATEGORY  →  ONE STACK (OR ONE TRACE)              #
         # ------------------------------------------------------------------ #
@@ -118,7 +119,7 @@ class BarPlotter(BasePlotter):
                 else:
                     marker_color = colors
                     marker_pattern_shape = ""
-
+                ytickvals = y_data
                 traces.append(
                     go.Bar(
                         name=self.format_label(qcol),
@@ -183,6 +184,7 @@ class BarPlotter(BasePlotter):
                             customdata=model_counts,
                         )
                     )
+                    ytickvals = yvals
             xtitle, ytitle = (
                 (quantity_title, second_category_title)
                 if orientation == "h"
@@ -202,6 +204,7 @@ class BarPlotter(BasePlotter):
                 template=self.theme.template,
             ),
         )
+        fig.update_yaxes(title_text="", type="category", tickmode="array", tickvals=ytickvals)
         if orientation == "h":
             fig.update_layout(legend_traceorder="reversed")
         self.theme.apply_layout(fig)
