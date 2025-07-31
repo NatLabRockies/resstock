@@ -8,16 +8,17 @@ from abc import ABC
 import polars as pl
 from plotly.graph_objects import Figure
 
-from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, ComparisonTypes, QuantityGroup
+from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, QuantityType, QuantityGroup
 from resstockpostproc.standard_plots.theme import ThemeManager
+from typing import overload
 
 
 class BasePlotter(ABC):
     """Abstract base plotter - every concrete plotter inherits this."""
 
-    def __init__(self, theme_cfg: dict | None = None):
+    def __init__(self, theme: ThemeManager):
         # Centralized style/theme manager
-        self.theme = ThemeManager(theme_cfg)
+        self.theme = theme
 
     # ------------------------------------------------------------------
     # Shared helpers
@@ -37,9 +38,48 @@ class BasePlotter(ABC):
         """Placeholder fallback; subclasses typically override for convenience."""
         raise NotImplementedError("Subclasses should implement `create_plot` or use specific helpers.")
 
-    def get_y_title(self, plot_spec: PlotSpec) -> str:
+    def get_quantity_unit(self, quantity: str | QuantityGroup):
+        if isinstance(quantity, QuantityGroup):
+            constituents = QuantityGroup.resolve_quantities(quantity.constituents)
+            return constituents[0].split(".")[-1]
+        return quantity.split(".")[-1]
+
+    def get_quantity_name(self, quantity: str | QuantityGroup) -> str:
+        if isinstance(quantity, QuantityGroup):
+            return self.format_label(quantity.name)
+        if quantity == "bldg_id":
+            return "Number of Models"
+        return self.format_label(quantity)
+
+    @overload
+    def format_label(self, label: None) -> None: ...
+
+    @overload
+    def format_label(self, label: str) -> str: ...
+
+    def format_label(self, label: str | None) -> str | None:
+        """Cleans up a column name to be a human-readable label."""
+        if label is None:
+            return None
+        if "." in label and label.startswith("out."):  # the last portion is unit - remove it
+            label = ".".join(label.split(".")[:-1])
+        label = (label.removeprefix("in.").removeprefix("out.").replace("_", " ").replace(".", " ")).title()
+        return label
+
+    def get_quantity_title(self, plot_spec: PlotSpec) -> str:
         """Get the y-axis title based on the plot spec."""
-        y_val = "Percentage" if plot_spec.comparison_type == ComparisonTypes.percent_savings else plot_spec.quantity
-        if isinstance(y_val, QuantityGroup):
-            return y_val.name
-        return y_val
+        type_suffix, unit_suffix = "", ""
+        if plot_spec.quantity_type == QuantityType.model_count:
+            type_suffix = ""
+            unit_suffix = ""
+        elif plot_spec.quantity_type == QuantityType.percent_savings:
+            type_suffix = " Percentage Savings"
+            unit_suffix = ""
+        elif plot_spec.quantity_type == QuantityType.savings:
+            type_suffix = " Savings"
+            unit_suffix = f" ({self.get_quantity_unit(plot_spec.quantity)})"
+        else:
+            type_suffix = ""
+            unit_suffix = f" ({self.get_quantity_unit(plot_spec.quantity)})"
+        name = self.get_quantity_name(plot_spec.quantity)
+        return f"{name}{type_suffix}{unit_suffix}"

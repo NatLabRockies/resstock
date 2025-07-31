@@ -1,5 +1,15 @@
 {
   "$defs": {
+    "AggregationType": {
+      "description": "Different kinds of aggregation to use for plot.",
+      "enum": [
+        "total",
+        "average",
+        "distribution"
+      ],
+      "title": "AggregationType",
+      "type": "string"
+    },
     "BuildingInclusion": {
       "description": "Different ways to include a quantity in a plot.",
       "enum": [
@@ -7,16 +17,6 @@
         "applied_only"
       ],
       "title": "BuildingInclusion",
-      "type": "string"
-    },
-    "ComparisonTypes": {
-      "description": "Different kinds of comparison between the upgrade and the baseline.",
-      "enum": [
-        "absolute",
-        "savings",
-        "percent_savings"
-      ],
-      "title": "ComparisonTypes",
       "type": "string"
     },
     "QuantityGroup": {
@@ -56,6 +56,17 @@
       ],
       "title": "QuantityGroup",
       "type": "object"
+    },
+    "QuantityType": {
+      "description": "Different kinds of values to use for plot.",
+      "enum": [
+        "absolute",
+        "savings",
+        "percent_savings",
+        "model_count"
+      ],
+      "title": "QuantityType",
+      "type": "string"
     },
     "SelectionLogic": {
       "description": "Selection logic for plots based on upgrade apply logic rules",
@@ -149,15 +160,6 @@
         "occupied_only"
       ],
       "title": "VacancyInclusion",
-      "type": "string"
-    },
-    "ValueTypes": {
-      "description": "Different kinds of values to use for plot.",
-      "enum": [
-        "total",
-        "average"
-      ],
-      "title": "ValueTypes",
       "type": "string"
     },
     "VizType": {
@@ -255,20 +257,20 @@
       "title": "Visualization Types",
       "type": "array"
     },
-    "comparison_types": {
-      "description": "List of comparison types to generate",
+    "quantity_types": {
+      "description": "List of quantity types to generate",
       "items": {
-        "$ref": "#/$defs/ComparisonTypes"
+        "$ref": "#/$defs/QuantityType"
       },
-      "title": "Comparison Types",
+      "title": "Quantity Types",
       "type": "array"
     },
-    "value_types": {
-      "description": "List of value types to generate",
+    "aggregation_types": {
+      "description": "List of aggregation types to generate",
       "items": {
-        "$ref": "#/$defs/ValueTypes"
+        "$ref": "#/$defs/AggregationType"
       },
-      "title": "Value Types",
+      "title": "Aggregation Types",
       "type": "array"
     },
     "building_inclusion": {
@@ -307,8 +309,8 @@
     "quantities",
     "group_by",
     "visualization_types",
-    "comparison_types",
-    "value_types",
+    "quantity_types",
+    "aggregation_types",
     "building_inclusion",
     "vacancy_inclusion"
   ],

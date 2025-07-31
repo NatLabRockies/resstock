@@ -13,11 +13,11 @@ import pytest
 from resstockpostproc.standard_plots.data_processor import DataProcessor
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import (
-    ComparisonTypes,
+    QuantityType,
     QuantityGroup,
     BuildingInclusion,
     VacancyInclusion,
-    ValueTypes,
+    AggregationType,
     VizType,
     WorkflowConfig,
 )
@@ -116,16 +116,16 @@ def processor(monkeypatch: pytest.MonkeyPatch, combined_df: pl.LazyFrame) -> Dat
             s3_results_dir="dummy",
             output_dir="dummy",
             run_name="dummy",
-            upgrades=[0, 1, 2],
-            upgrade_names=["Baseline", "Upgrade1", "Upgrade2"],
+            upgrades=(0, 1, 2),
+            upgrade_names=("Baseline", "Upgrade1", "Upgrade2"),
             selection_logic=None,
-            quantities=[QuantityGroup(name="dummy", constituents=["dummy"], sum="dummy")],
-            group_by=["in.heating_fuel"],
-            value_types=[ValueTypes.total],
-            visualization_types=[VizType.bar],
-            comparison_types=[ComparisonTypes.absolute],
-            building_inclusion=[BuildingInclusion.all],
-            vacancy_inclusion=[VacancyInclusion.all],
+            quantities=(QuantityGroup(name="dummy", constituents=("dummy",), sum="dummy"),),
+            group_by=("in.heating_fuel",),
+            aggregation_types=(AggregationType.total,),
+            visualization_types=(VizType.bar,),
+            quantity_types=(QuantityType.absolute,),
+            building_inclusion=(BuildingInclusion.all,),
+            vacancy_inclusion=(VacancyInclusion.all,),
         )
     )
     # all_cols is computed in __init__, but we ensure it matches our fixture
@@ -144,9 +144,9 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
     defaults = {
         "building_inclusion": BuildingInclusion.all,
         "vacancy_inclusion": VacancyInclusion.all,
-        "comparison_type": ComparisonTypes.absolute,
+        "quantity_type": QuantityType.absolute,
         "visualization_type": VizType.bar,
-        "value_type": ValueTypes.total,
+        "aggregation_type": AggregationType.total,
         "group_by": None,
         "quantity": "elec_kwh",
         "quantity_group_name": "dummy_group",
@@ -170,18 +170,18 @@ def _build_base_spec(**kwargs) -> PlotSpec:  # type: ignore[return-value]
     ],
 )
 @pytest.mark.parametrize(
-    ("value_type"),
+    ("aggregation_type"),
     [
-        (ValueTypes.total),
-        (ValueTypes.average),
+        (AggregationType.total),
+        (AggregationType.average),
     ],
 )
 @pytest.mark.parametrize(
-    ("comparison_type"),
+    ("quantity_type"),
     [
-        (ComparisonTypes.absolute),
-        (ComparisonTypes.savings),
-        (ComparisonTypes.percent_savings),
+        (QuantityType.absolute),
+        (QuantityType.savings),
+        (QuantityType.percent_savings),
     ],
 )
 @pytest.mark.parametrize(
@@ -203,29 +203,29 @@ def test_prepare_basic(
     processor: DataProcessor,
     building_inclusion: BuildingInclusion,
     vacancy_inclusion: VacancyInclusion,
-    value_type: ValueTypes,
-    comparison_type: ComparisonTypes,
+    aggregation_type: AggregationType,
+    quantity_type: QuantityType,
     viz_type: VizType,
     group_by: str | None,
     expected_rows: int,
 ):
     """Baseline sanity check for box & bar plots without additional filters."""
-    if comparison_type == ComparisonTypes.percent_savings and value_type == ValueTypes.total:
+    if quantity_type == QuantityType.percent_savings and aggregation_type == AggregationType.total:
         # skip
         return
 
     spec = PlotSpec(
         visualization_type=viz_type,
-        comparison_type=comparison_type,
+        quantity_type=quantity_type,
         group_by=group_by,
         building_inclusion=building_inclusion,
-        value_type=value_type,
+        aggregation_type=aggregation_type,
         vacancy_inclusion=vacancy_inclusion,
         quantity="elec_kwh",
         quantity_group_name="energy",
     )
     df = processor.prepare_data_for_plot(spec)
-    if comparison_type in [ComparisonTypes.percent_savings, ComparisonTypes.savings] or (
+    if quantity_type in [QuantityType.percent_savings, QuantityType.savings] or (
         building_inclusion == BuildingInclusion.applied_only
     ):
         expected_rows = (expected_rows * 2) // 3  # No baseline
@@ -261,13 +261,13 @@ def test_quantity_group_mean_aggregation(processor: DataProcessor):
 
     qgroup = QuantityGroup(
         name="energy",
-        constituents=["elec_kwh", "gas_kwh"],
+        constituents=("elec_kwh", "gas_kwh"),
         sum="total_kwh",
     )
     spec = _build_base_spec(
         visualization_type=VizType.bar,
-        value_type=ValueTypes.average,
-        comparison_type=ComparisonTypes.absolute,
+        aggregation_type=AggregationType.average,
+        quantity_type=QuantityType.absolute,
         quantity=qgroup,
         group_by="in.heating_fuel",
         quantity_group_name="energy",
@@ -296,8 +296,8 @@ def test_savings_calculation(processor: DataProcessor):
     spec = _build_base_spec(
         visualization_type=VizType.bar,
         group_by="bldg_id",
-        comparison_type=ComparisonTypes.savings,
-        value_type=ValueTypes.average,  # mean over single-building groups -> identity
+        quantity_type=QuantityType.savings,
+        aggregation_type=AggregationType.average,  # mean over single-building groups -> identity
     )
     df = processor.prepare_data_for_plot(spec)
 
@@ -316,8 +316,8 @@ def test_percent_savings_calculation(processor: DataProcessor):
     spec = _build_base_spec(
         visualization_type=VizType.bar,
         group_by="bldg_id",
-        comparison_type=ComparisonTypes.percent_savings,
-        value_type=ValueTypes.average,
+        quantity_type=QuantityType.percent_savings,
+        aggregation_type=AggregationType.average,
         quantity="gas_kwh",
     )
     df = processor.prepare_data_for_plot(spec)
@@ -338,8 +338,8 @@ def test_percent_savings_calculation(processor: DataProcessor):
     spec = _build_base_spec(
         visualization_type=VizType.box,
         group_by="bldg_id",
-        comparison_type=ComparisonTypes.percent_savings,
-        value_type=ValueTypes.average,
+        quantity_type=QuantityType.percent_savings,
+        aggregation_type=AggregationType.average,
         quantity="elec_kwh",
     )
     df = processor.prepare_data_for_plot(spec)
@@ -351,8 +351,8 @@ def test_percent_savings_calculation(processor: DataProcessor):
     spec = _build_base_spec(
         visualization_type=VizType.bar,
         group_by="bldg_id",
-        comparison_type=ComparisonTypes.percent_savings,
-        value_type=ValueTypes.average,
+        quantity_type=QuantityType.percent_savings,
+        aggregation_type=AggregationType.average,
         quantity="elec_kwh",
     )
     df = processor.prepare_data_for_plot(spec)

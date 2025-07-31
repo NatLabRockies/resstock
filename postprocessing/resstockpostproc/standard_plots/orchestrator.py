@@ -20,6 +20,7 @@ from resstockpostproc.standard_plots.histogram_plotter import HistogramPlotter
 from resstockpostproc.standard_plots.output_manager import OutputManager
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec, VizType
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
+from resstockpostproc.standard_plots.theme import ThemeManager
 
 
 class PlotOrchestrator:
@@ -58,6 +59,7 @@ class PlotOrchestrator:
         self.processor = DataProcessor(self.workflow)
         self.data_loading_time = time.time() - start_time
         self.out_mgr = OutputManager(self.workflow, output_types=output_types, overwrite=overwrite)
+        self.theme = ThemeManager(self.workflow)
 
         # Only create artifacts if we're running a flow
         if flow_run.id:
@@ -74,25 +76,25 @@ class PlotOrchestrator:
         upgrades = [None, *self.workflow.upgrades]
         all_combinations = list(
             product(
-                self.workflow.comparison_types,
+                self.workflow.quantity_types,
                 self.workflow.building_inclusion,
                 self.workflow.vacancy_inclusion,
                 self.workflow.visualization_types,
                 [None, *self.workflow.group_by],
                 self.workflow.quantities,
-                self.workflow.value_types,
+                self.workflow.aggregation_types,
                 upgrades,
             )
         )
         plots_to_gen: list[PlotSpec] = []
         for combination in all_combinations:
-            comparison_type = combination[0]
+            quantity_type = combination[0]
             building_inclusion = combination[1]
             vacancy_inclusion = combination[2]
             visualization_type = combination[3]
             group_by = combination[4]
             quantity_group: QuantityGroup = combination[5].model_copy()
-            value_type = combination[6]
+            aggregation_type = combination[6]
             upgrade = combination[7]
 
             # Usually, visualize each constituent quantity and the sum (if any) separately
@@ -103,11 +105,11 @@ class PlotOrchestrator:
                 quantities.append(quantity_group.sum)
             for quantity in quantities:
                 plot_spec = PlotSpec(
-                    comparison_type=comparison_type,
+                    quantity_type=quantity_type,
                     building_inclusion=building_inclusion,
                     vacancy_inclusion=vacancy_inclusion,
                     visualization_type=visualization_type,
-                    value_type=value_type,
+                    aggregation_type=aggregation_type,
                     group_by=group_by,
                     quantity=quantity,
                     quantity_group_name=quantity_group.name,
@@ -127,7 +129,7 @@ class PlotOrchestrator:
             df = self.processor.prepare_data_for_plot(plot_spec)
             self.data_preparing_time += time.time() - start_time
             path_seg, name = plot_spec.get_path_and_name()
-            plotter = PlotOrchestrator.get_plotter(plot_spec.visualization_type)
+            plotter = self.get_plotter(plot_spec.visualization_type)
             start_time = time.time()
             try:
                 fig = plotter.create_plot(df, plot_spec)
@@ -148,17 +150,16 @@ class PlotOrchestrator:
             if plots_generated >= total_plots:
                 return
 
-    @classmethod
-    def get_plotter(cls, viz: VizType):
+    def get_plotter(self, viz: VizType):
         """Return a new plotter instance for the given visualization type."""
         if viz == VizType.bar:
-            return BarPlotter()
+            return BarPlotter(theme=self.theme)
         if viz == VizType.box:
-            return BoxPlotter()
+            return BoxPlotter(theme=self.theme)
         if viz == VizType.heatmap:
-            return HeatmapPlotter()
+            return HeatmapPlotter(theme=self.theme)
         if viz == VizType.hist:
-            return HistogramPlotter()
+            return HistogramPlotter(theme=self.theme)
         raise ValueError(f"Unsupported visualization type: {viz}")
 
     def print_time_spent(self) -> None:

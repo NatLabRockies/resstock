@@ -30,26 +30,30 @@ from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEn
 class NoExtraModel(BaseModel):
     class Config:
         extra = "forbid"
+        frozen = True
 
 
 class NoExtraSettings(BaseSettings):
     class Config:
         extra = "forbid"
+        frozen = True
 
 
-class ComparisonTypes(str, Enum):
-    """Different kinds of comparison between the upgrade and the baseline."""
+class QuantityType(str, Enum):
+    """Different kinds of values to use for plot."""
 
     absolute = "absolute"  # raw values
     savings = "savings"  # pre-aggregated mean across simulation rows
     percent_savings = "percent_savings"  # percentage savings compared to baseline
+    model_count = "model_count"
 
 
-class ValueTypes(str, Enum):
-    """Different kinds of values to use for plot."""
+class AggregationType(str, Enum):
+    """Different kinds of aggregation to use for plot."""
 
     total = "total"
     average = "average"
+    distribution = "distribution"
 
 
 class VizType(str, Enum):
@@ -65,7 +69,7 @@ class QuantityGroup(NoExtraModel):
     """Definition of a quantity group with constituents and sum"""
 
     name: str = Field(description="Name of the quantity group")
-    constituents: list[str] = Field(description="List of constituent columns")
+    constituents: tuple[str, ...] = Field(description="List of constituent columns")
     sum: str | None = Field(None, description="Column name for the sum quantity")
 
     @classmethod
@@ -80,11 +84,11 @@ class QuantityGroup(NoExtraModel):
         Returns:
             New quantity group with combined constituents. Sum is set to None.
         """
-        constituents = [constituent for qg in quantity_groups for constituent in qg.constituents]
+        constituents = tuple([constituent for qg in quantity_groups for constituent in qg.constituents])
         return cls(name=new_name, constituents=constituents, sum=None)
 
     @classmethod
-    def resolve_quantities(cls, quantities: list[str]) -> list[str]:
+    def resolve_quantities(cls, quantities: tuple[str, ...]) -> tuple[str, ...]:
         """
         Resolve the quantities to their constituent columns using EnduseGroupToEnduses.
 
@@ -97,13 +101,13 @@ class QuantityGroup(NoExtraModel):
         """
         resolvable_quantities: set[str] = set(EnduseGroupToEnduses.keys()).intersection(set(quantities))
         if not resolvable_quantities:
-            return quantities
+            return tuple(quantities)
 
         resolved_quantities = [q for q in quantities if q not in resolvable_quantities]
         for quantity in resolvable_quantities:
             resolved_quantities.extend(EnduseGroupToEnduses[quantity])
 
-        return list(set(resolved_quantities))
+        return tuple(set(resolved_quantities))
 
 
 class BuildingInclusion(str, Enum):
@@ -134,19 +138,37 @@ class WorkflowConfig(NoExtraSettings):
     s3_results_dir: str = Field(description="Path to s3 results directory")
     output_dir: str = Field(title="Output Directory", description="Path to output directory")
     run_name: str = Field(description="Name of the run to identify it later")
-    upgrades: list[int] = Field(description="List of upgrade indices to include")
-    upgrade_names: list[str] = Field(description="List of upgrade names to include")
+    upgrades: tuple[int, ...] = Field(description="List of upgrade indices to include")
+    upgrade_names: tuple[str, ...] = Field(description="List of upgrade names to include")
     selection_logic: SelectionLogic | list[SelectionLogic] | list[str] | None = Field(
         None, description="Selection logic for"
     )
-    quantities: list[QuantityGroup] = Field(description="List of quantity groups to generate plots for")
-    group_by: list[str] = Field(description="List of grouping columns")
-    visualization_types: list[VizType] = Field(description="List of visualization types to generate")
-    comparison_types: list[ComparisonTypes] = Field(description="List of comparison types to generate")
-    value_types: list[ValueTypes] = Field(description="List of value types to generate")
-    building_inclusion: list[BuildingInclusion] = Field(description="Building inclusion type")
-    vacancy_inclusion: list[VacancyInclusion] = Field(description="Vacancy inclusion type")
+    quantities: tuple[QuantityGroup, ...] = Field(description="List of quantity groups to generate plots for")
+    group_by: tuple[str, ...] = Field(description="List of grouping columns")
+    visualization_types: tuple[VizType, ...] = Field(description="List of visualization types to generate")
+    quantity_types: tuple[QuantityType, ...] = Field(description="List of quantity types to generate")
+    aggregation_types: tuple[AggregationType, ...] = Field(description="List of aggregation types to generate")
+    building_inclusion: tuple[BuildingInclusion, ...] = Field(description="Building inclusion type")
+    vacancy_inclusion: tuple[VacancyInclusion, ...] = Field(description="Vacancy inclusion type")
     storage_backend: Literal["minio", "filesystem"] = Field(description="Storage backend", default="filesystem")
+
+    def set_s3_results_dir(self, s3_results_dir: str):
+        object.__setattr__(self, "s3_results_dir", s3_results_dir)
+
+    def set_output_dir(self, output_dir: str):
+        object.__setattr__(self, "output_dir", output_dir)
+
+    def set_run_name(self, run_name: str):
+        object.__setattr__(self, "run_name", run_name)
+
+    def set_upgrades(self, upgrades: tuple[int, ...]):
+        object.__setattr__(self, "upgrades", upgrades)
+
+    def set_storage_backend(self, storage_backend: Literal["minio", "filesystem"]):
+        object.__setattr__(self, "storage_backend", storage_backend)
+
+    def set_upgrade_names(self, upgrade_names: tuple[str, ...]):
+        object.__setattr__(self, "upgrade_names", upgrade_names)
 
     @classmethod
     def from_yaml(cls, yaml_path: str) -> WorkflowConfig:
@@ -190,9 +212,10 @@ class WorkflowConfig(NoExtraSettings):
         purposes."""
         # Add an "Everything" quantity group if it doesn't exist already
         if not any(q.name == "Everything" for q in self.quantities):
-            everything = QuantityGroup.combine_quantity_groups(self.quantities, "Everything")
-            everything.constituents = QuantityGroup.resolve_quantities(everything.constituents)
-            self.quantities.append(everything)
+            everything = QuantityGroup.combine_quantity_groups(list(self.quantities), "Everything")
+            resolved_quantities = QuantityGroup.resolve_quantities(everything.constituents)
+            object.__setattr__(everything, "constituents", resolved_quantities)
+            object.__setattr__(self, "quantities", [*self.quantities, everything])
 
 
 default_config_path = str(Path(__file__).resolve().parents[1] / "workflow.yaml")
@@ -228,12 +251,12 @@ class FlowConfigBase(BaseModel):
 class FlowConfig(FlowConfigBase):
     """Configuration for plot generation"""
 
-    upgrades: list[int] = Field(
+    upgrades: tuple[int, ...] = Field(
         default=default_config.upgrades,
         description=WorkflowConfig.model_fields["upgrades"].description,
         json_schema_extra={"position": 4},
     )
-    upgrade_names: list[str] = Field(
+    upgrade_names: tuple[str, ...] = Field(
         default=default_config.upgrade_names,
         description=WorkflowConfig.model_fields["upgrade_names"].description,
         json_schema_extra={"position": 5},
@@ -241,7 +264,7 @@ class FlowConfig(FlowConfigBase):
 
 
 class AdvancedConfig(BaseModel):
-    group_by: list[str] = Field(default=default_config.group_by, description="List of grouping columns")
+    group_by: tuple[str, ...] = Field(default=default_config.group_by, description="List of grouping columns")
 
 
 async def _execute_plot_flow(

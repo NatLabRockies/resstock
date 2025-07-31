@@ -19,7 +19,6 @@ quantities:
     sum: out.site_energy.total.energy_consumption.kwh
   - name: All Fuels End Uses
     constituents:
-      - Generation, Electricity
       - Electric Vehicle Charging, Electricity
       - Hot Water, Propane
       - Hot Water, Fuel Oil
@@ -49,10 +48,10 @@ quantities:
       - Appliances, Fuel Oil
       - Appliances, Natural Gas
       - Appliances, Electricity
+      - Generation, Electricity
     sum: out.site_energy.total.energy_consumption.kwh
   - name: Electricity End Uses
     constituents:
-      - Generation, Electricity
       - Electric Vehicle Charging, Electricity
       - Hot Water, Electricity
       - Heating Heat Pump Backup, Electricity
@@ -64,6 +63,7 @@ quantities:
       - Vent Fan, Electricity
       - Miscellaneous, Electricity
       - Appliances, Electricity
+      - Generation, Electricity
     sum: out.electricity.total.energy_consumption.kwh
   - name: Natural Gas End Uses
     constituents:
@@ -143,14 +143,16 @@ group_by:
   - in.heating_fuel
   - in.vacancy_status
 
-comparison_types:
+quantity_types:
   - absolute
   - savings
   - percent_savings
+  - model_count
 
-value_types:
+aggregation_types:
   - total
   - average
+  - distribution
 
 building_inclusion:
   - all

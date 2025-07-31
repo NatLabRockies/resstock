@@ -45,14 +45,14 @@ class HeatmapPlotter(BasePlotter):
         if not isinstance(plot_spec.quantity, QuantityGroup):
             raise ValueError("Heat-maps require a QuantityGroup (list of columns) as the quantity definition")
 
-        constituent_cols: list[str] = plot_spec.quantity.constituents
+        constituent_cols: tuple[str, ...] = plot_spec.quantity.constituents
         # If group_by is supplied, treat it as a faceting column so that each
         # group appears as a separate heatmap. The X-axis remains upgrade_name.
         facet_col: str | None = plot_spec.group_by if plot_spec.group_by else None
 
         return self.create_heatmap_plot(
             data=data,
-            constituent_cols=constituent_cols,
+            constituent_cols=list(constituent_cols),
             x_column="upgrade_name",
             facet_column=facet_col,
         )
@@ -71,8 +71,6 @@ class HeatmapPlotter(BasePlotter):
         # Ensure required columns exist and sort by facet if requested so that
         # upgrades appear in the same order across facets.
         data = self._ensure_columns_exist(data, constituent_cols)
-        if facet_column and facet_column in data.columns:
-            data = data.sort([facet_column, x_column])
 
         # --------------------------------------------------------
         # When faceting we need global z-min/max so compute before
@@ -95,6 +93,10 @@ class HeatmapPlotter(BasePlotter):
         if z_min == z_max:
             z_min -= 1e-6
             z_max += 1e-6
+
+        # Pre-compute tick values for colorbar to ensure the minimum,
+        # zero, and maximum values are always labelled on the legend.
+        tickvals: list[float] = sorted({z_min, 0.0, z_max})
 
         # Helper to convert a *real* z value into a 0-1 normalized position for
         # the colorscale definition expected by Plotly.
@@ -152,14 +154,16 @@ class HeatmapPlotter(BasePlotter):
         # Build figure - single plot or faceted layout.
         # --------------------------------------------------------
         if facet_column and facet_column in data.columns:
-            facets = data[facet_column].unique().sort()
+            facets = data[facet_column].unique(maintain_order=True)
             n_facets = len(facets)
             fig = make_subplots(
                 rows=1,
                 cols=n_facets,
-                shared_yaxes=True,
-                horizontal_spacing=0.03,
-                subplot_titles=[self._format_label(str(val)) for val in facets],
+                shared_yaxes="all",
+                shared_xaxes="all",
+                x_title="",
+                horizontal_spacing=0.01,
+                subplot_titles=[self.format_label(str(val)) for val in facets],
             )
 
             # Add one heatmap per facet.
@@ -181,10 +185,15 @@ class HeatmapPlotter(BasePlotter):
                     col=i + 1,
                 )
                 # Tilt X tick labels for clarity
-                fig.update_xaxes(tickangle=45, row=1, col=i + 1)
+                fig.update_xaxes(tickangle=-90, row=1, col=i + 1)
             # Set global coloraxis
             fig.update_layout(
-                coloraxis={"colorscale": colorscale, "cmin": z_min, "cmax": z_max, "colorbar": {"title": "Value"}}
+                coloraxis={
+                    "colorscale": colorscale,
+                    "cmin": z_min,
+                    "cmax": z_max,
+                    "colorbar": {"title": "Value", "tickvals": tickvals},
+                }
             )
             # Word-wrap long facet titles for readability (match BarPlotter behavior).
             fig.for_each_annotation(
@@ -207,7 +216,7 @@ class HeatmapPlotter(BasePlotter):
                     colorscale=colorscale,  # type: ignore
                     zmin=z_min,
                     zmax=z_max,
-                    colorbar={"title": "Value"},
+                    colorbar={"title": "Value", "tickvals": tickvals},
                 )
             )
 
@@ -242,13 +251,3 @@ class HeatmapPlotter(BasePlotter):
         fig.update_yaxes(title_text="", type="category", tickmode="array", tickvals=constituent_cols)
         fig.update_layout(height=900)
         return fig
-
-    # ------------------------------------------------------------------
-    # Internal helpers
-    # ------------------------------------------------------------------
-    @staticmethod
-    def _format_label(label: str) -> str:
-        """Convert a column name to a human-readable axis label."""
-        if "." in label:
-            label = label.split(".")[-1]
-        return label.replace("in.", "").replace("_", " ").title()

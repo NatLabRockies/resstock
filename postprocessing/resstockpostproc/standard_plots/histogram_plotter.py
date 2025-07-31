@@ -6,20 +6,12 @@ from plotly.subplots import make_subplots
 
 from resstockpostproc.standard_plots.base_plotter import BasePlotter
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
-from resstockpostproc.standard_plots.schema.workflow_schema import ComparisonTypes, QuantityGroup
+from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
 
 __all__ = ["HistogramPlotter"]
 
 
 class HistogramPlotter(BasePlotter):
-    """Generates (optionally faceted) histograms with consistent styling."""
-
-    def __init__(self, theme_cfg: dict | None = None):
-        super().__init__(theme_cfg)
-
-    # ------------------------------------------------------------------
-    # Public helpers mirroring other plotters
-    # ------------------------------------------------------------------
     def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
         """Create and return a histogram figure based on *plot_spec*."""
         # Histograms currently support *single* quantity only.
@@ -28,16 +20,12 @@ class HistogramPlotter(BasePlotter):
 
         facet_col: str | None = plot_spec.group_by if plot_spec.group_by else None
         assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
-        name = "Percent Savings" if plot_spec.comparison_type == ComparisonTypes.percent_savings else plot_spec.quantity
         return self.create_histogram_plot(
             data=data,
-            name=name,
+            name=self.get_quantity_title(plot_spec),
             facet_column=facet_col,
         )
 
-    # ------------------------------------------------------------------
-    # Core implementation
-    # ------------------------------------------------------------------
     def create_histogram_plot(
         self,
         *,
@@ -56,7 +44,7 @@ class HistogramPlotter(BasePlotter):
             ['bin', 'bin_left', 'bin_right', 'count', 'upgrade_name']
             plus an optional `facet_column`.
         name :
-            Human-readable label for X-axis (will be run through `_format_label`).
+            Human-readable label for X-axis (will be run through `format_label`).
         facet_column :
             Optional column to facet by (creates additional columns of sub-plots).
 
@@ -94,15 +82,15 @@ class HistogramPlotter(BasePlotter):
         # ------------------------------------------------------------------
         # 2. Prepare facet grid
         # ------------------------------------------------------------------
-        upgrades = df["upgrade_name"].unique().to_list()
-        facets = df[facet_column].unique().to_list() if facet_column else [None]
+        upgrades = df["upgrade_name"].unique(maintain_order=True).to_list()
+        facets = df[facet_column].unique(maintain_order=True).to_list() if facet_column else [None]
 
         n_rows, n_cols = len(upgrades), len(facets)
         fig = make_subplots(
             rows=n_rows,
             cols=n_cols,
-            shared_yaxes=False,
-            shared_xaxes=False,
+            shared_yaxes="all",
+            shared_xaxes="all",
             row_titles=upgrades,
             column_titles=[str(f) for f in facets] if facet_column else None,
             horizontal_spacing=0.01,
@@ -127,8 +115,9 @@ class HistogramPlotter(BasePlotter):
                     y=sub["count"].to_list(),
                     width=sub["_bar_width"].to_list(),
                     name=upgrade,
-                    marker_color=self.theme.color_palette.get(upgrade),
-                    showlegend=(r == 1 and c == 1),  # one legend entry per upgrade
+                    marker_color=self.theme.upgrade_palette.get(upgrade),
+                    showlegend=(c == 1),  # one legend entry per upgrade
+                    legendgroup=upgrade,
                     customdata=list(zip(sub["bin_left"].to_list(), sub["bin_right"].to_list())),  # type: ignore[arg-type]
                     hovertemplate="%{customdata[0]:.1f} to %{customdata[1]:.1f}<br>Count: %{y}<extra></extra>",
                     row=r,
@@ -165,21 +154,16 @@ class HistogramPlotter(BasePlotter):
         fig.update_xaxes(range=[x_min, x_max])
         fig.update_yaxes(range=[0, y_max])
 
-        #  Put Xaxis title only on the bottom row
-        x_title = self._format_label(name)
-
         # Put Y-axis title and ticks only on the left column
         for r in range(1, n_rows + 1):
-            fig.update_yaxes(title_text="Count", row=r, col=1)
+            fig.update_yaxes(title_text="Number of models in bin", row=r, col=1)
             for c in range(2, n_cols + 1):
                 fig.update_yaxes(title_text="", showticklabels=False, row=r, col=c)
 
         # Put X-axis title only on the bottom row
         for c in range(1, n_cols + 1):
-            fig.update_xaxes(title_text=x_title, row=n_rows, col=c)
-            for r in range(1, n_rows):
+            for r in range(1, n_rows + 1):
                 fig.update_xaxes(title_text="", row=r, col=c)
-
         # ── 4c.  Facet annotation wrapping & overall width ─────────────────
         if facet_column:
             wrap = self.theme.facet_title_width
@@ -194,17 +178,18 @@ class HistogramPlotter(BasePlotter):
                     )
                 )
             )
-
+        fig.add_annotation(
+            text=name,
+            xref="paper",
+            yref="paper",
+            x=0.5,
+            y=-0.07,  # center at bottom
+            xanchor="center",
+            yanchor="top",
+            showarrow=False,
+            font={"size": 14},
+            name="xtitle",
+        )
         #  Adjust figure width
-        fig.update_layout(width=max(1000, min(1920, n_cols * self.theme.facet_width)))
+        fig.update_layout(width=max(1000, min(1920, n_cols * self.theme.facet_width)), margin={"b": 100})
         return fig
-
-    # ------------------------------------------------------------------
-    # Internal helpers
-    # ------------------------------------------------------------------
-    @staticmethod
-    def _format_label(label: str) -> str:
-        """Convert a column name to a human-readable axis label."""
-        if "." in label:
-            label = label.split(".")[-1]
-        return label.replace("in.", "").replace("_", " ").title()

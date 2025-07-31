@@ -6,22 +6,78 @@ EnduseGroupToColor = {
     "Cooling Fans Pumps": "#EF1C21",
     "Lighting": "#F7DF10",
     "Appliances": "#4A4D4A",
-    "Electric Vehicle Charging": "Blue",
+    "Electric Vehicle Charging": "#C1EE86",
     "Vent Fan": "#FF79AD",
     "Heating Heat Pump Backup": "#d95f0e",
     "Hot Water": "#FFB239",
     "Miscellaneous": "#B5B2B5",
+    "Generation": "#9ECE42",
 }
-EnduseToColor = {
+fuel_colors = {
+    "electricity": "#EE9521",  # EE9521 orange
+    "natural_gas": "#0079C2",  # 0079C2 blue
+    "propane": "#A16911",  # A16911  # brown
+    "fuel_oil": "#626D72",  # 626D72 gray
+}
+summer_winter_color = {
+    "summer": "#EF1C21",
+    "winter": "#0079C2",
+}
+
+column2color = {
     f"{enduse_group}, {fuel}": EnduseGroupToColor[enduse_group]
     for enduse_group in EnduseGroupToColor
     for fuel in EnduseFuelToPattern
 }
-EnduseToPattern = {
+column2pattern = {
     f"{enduse_group}, {fuel}": EnduseFuelToPattern[fuel]
     for enduse_group in EnduseGroupToColor
     for fuel in EnduseFuelToPattern
 }
+
+
+column2color.update(
+    {
+        f"out.bills.{fuel}.usd": fuel_colors.get(fuel, "#3A4246")
+        for fuel in ["electricity", "natural_gas", "propane", "fuel_oil"]
+    }
+)
+column2color.update(
+    {
+        f"out.{fuel}.total.energy_consumption.kwh": fuel_colors.get(fuel, "#3A4246")
+        for fuel in ["electricity", "natural_gas", "propane", "fuel_oil"]
+    }
+)
+column2color.update(
+    {
+        f"out.unmet_hours.{heat_cool.lower()}.hour": EnduseGroupToColor.get(heat_cool, "#3A4246")
+        for heat_cool in ["Heating", "Cooling"]
+    }
+)
+column2color.update(
+    {
+        f"out.load.{load_type.lower()}.energy_delivered.kbtu": EnduseGroupToColor.get(load_type, "#3A4246")
+        for load_type in ["Heating", "Cooling", "Hot Water"]
+    }
+)
+column2color.update(
+    {
+        f"out.electricity.{summer_winter.lower()}.peak.kw": summer_winter_color.get(summer_winter, "#3A4246")
+        for summer_winter in ["summer", "winter"]
+    }
+)
+column2color.update(
+    {
+        f"out.load.{load_type.lower()}.peak.kbtu_hr": EnduseGroupToColor.get(load_type, "#3A4246")
+        for load_type in ["Heating", "Cooling"]
+    }
+)
+column2color.update(
+    {
+        f"out.emissions.{fuel}.lrmer_mid_case_25.co2e_kg": fuel_colors.get(fuel, "#3A4246")
+        for fuel in ["electricity", "natural_gas", "propane", "fuel_oil"]
+    }
+)
 
 
 EnduseGroupToEnduses = {

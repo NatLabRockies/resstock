@@ -10,6 +10,8 @@ import pathlib
 import time
 from pathlib import Path
 import math
+from scipy.stats import gaussian_kde
+import numpy as np
 
 import boto3
 import polars as pl
@@ -21,13 +23,13 @@ from prefect.task_runners import ConcurrentTaskRunner
 
 from resstockpostproc.standard_plots.schema.end_use_dicts import EnduseGroupToEnduses
 from resstockpostproc.standard_plots.schema.plot_spec import (
-    ComparisonTypes,
+    QuantityType,
     PlotSpec,
     BuildingInclusion,
     VacancyInclusion,
     VizType,
 )
-from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, ValueTypes, WorkflowConfig
+from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, AggregationType, WorkflowConfig
 from resstockpostproc.standard_plots.utils import human_sort
 
 logger = logging.getLogger(__name__)
@@ -214,26 +216,26 @@ class DataProcessor:
 
         return combined_df.with_columns(new_column_exprs)
 
-    def convert_value_type(
-        self, combined_df: pl.LazyFrame, quantities: list[str], comparison_type: ComparisonTypes
+    def convert_quantity_type(
+        self, combined_df: pl.LazyFrame, quantities: list[str], quantity_type: QuantityType
     ) -> pl.LazyFrame:
-        """Convert the values in ``combined_df`` according to the desired comparison type.
+        """Convert the values in ``combined_df`` according to the desired quantity type.
 
         Args:
             combined_df: LazyFrame containing all upgrades (including baseline with ``upgrade == 0``)
             quantities: List of quantity columns that should be transformed.
-            comparison_type: Whether to convert to *absolute* values or *savings* (baseline - value).
+            quantity_type: Whether to convert to *absolute* values or *savings* (baseline - value).
 
         Returns
         -------
         pl.LazyFrame
             A LazyFrame where the requested ``quantities`` columns have been transformed as requested.
         """
-        if comparison_type == ComparisonTypes.absolute:
+        if quantity_type in [QuantityType.absolute, QuantityType.model_count]:
             # No transformation required
             return combined_df
 
-        if comparison_type in [ComparisonTypes.savings, ComparisonTypes.percent_savings]:
+        if quantity_type in [QuantityType.savings, QuantityType.percent_savings]:
             join_key = "bldg_id"
             if join_key not in combined_df.collect_schema().names():
                 raise ValueError(f"'{join_key}' column not found in data - cannot compute savings per building.")
@@ -250,7 +252,7 @@ class DataProcessor:
             # 3. Replace the quantity columns with the calculated savings.
             savings_exprs = [(pl.col(f"baseline_{q}") - pl.col(q)).alias(q) for q in quantities]
             result = df_with_baseline.with_columns(savings_exprs)
-            if comparison_type == ComparisonTypes.savings:
+            if quantity_type == QuantityType.savings:
                 result = result.drop([f"baseline_{q}" for q in quantities])  # Clean-up helper columns
                 return result
             # percent savings
@@ -271,7 +273,7 @@ class DataProcessor:
             # Keep the baseline values for the percent savings so they can be used for weighted average
             result = result.with_columns(percent_savings_exprs)
             return result
-        raise ValueError(f"Unsupported comparison type: {comparison_type}")
+        raise ValueError(f"Unsupported quantity type: {quantity_type}")
 
     def prepare_data_for_plot(self, plot_spec: PlotSpec) -> pl.DataFrame:
         """
@@ -283,6 +285,7 @@ class DataProcessor:
         Returns:
             DataFrame prepared for plotting with aggregated (mean) values
         """
+
         quantities = []
         if isinstance(plot_spec.quantity, str):
             quantities.append(plot_spec.quantity)
@@ -292,18 +295,15 @@ class DataProcessor:
                 quantities.append(plot_spec.quantity.sum)
 
         combined_df = self.fill_missing_quantities(self.combined_df, quantities)
-        combined_df = self.convert_value_type(combined_df, quantities, plot_spec.comparison_type)
+        combined_df = self.convert_quantity_type(combined_df, quantities, plot_spec.quantity_type)
 
         if plot_spec.upgrade is not None:
             combined_df = combined_df.filter(pl.col("upgrade").is_in([0, plot_spec.upgrade]))
 
         if plot_spec.building_inclusion == BuildingInclusion.applied_only:
-            # Include all buildings from baseline and applicable (in that upgrade) buildings from each upgrades
-            if plot_spec.upgrade is None:
-                # Can't have baseline if no upgrade is selected since we don't know which upgrade to use
-                # to filter baseline
+            if plot_spec.upgrade is None:  # Applied in respective upgrades (No Baseline)
                 combined_df = combined_df.filter(pl.col("applicability") & (pl.col("upgrade") != 0))
-            else:  # Include only buildings where the upgrade was applicable from baseline and that upgrade
+            else:  # Applied in a specific upgrade including baseline filtered to applicable buildings in that upgrade
                 is_upgrade_applicable = (
                     ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability")).any().over("bldg_id")
                 )
@@ -311,19 +311,31 @@ class DataProcessor:
                     ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability"))
                     | ((pl.col("upgrade") == 0) & is_upgrade_applicable)
                 )
+
         if plot_spec.vacancy_inclusion == VacancyInclusion.occupied_only:
             combined_df = combined_df.filter(pl.col("in.vacancy_status") == "Occupied")
 
-        if plot_spec.comparison_type in [ComparisonTypes.savings, ComparisonTypes.percent_savings]:
+        if plot_spec.quantity_type in [QuantityType.savings, QuantityType.percent_savings]:
             # remove baseline for savings calculation
             combined_df = combined_df.filter(pl.col("upgrade") != 0)
 
         if plot_spec.visualization_type == VizType.box:
-            assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
-            plot_data = self.prepare_data_for_box_plot(combined_df, plot_spec.quantity, plot_spec.group_by)
+            if not isinstance(plot_spec.quantity, str):
+                combined_df = combined_df.unpivot(
+                    quantities,
+                    index=["upgrade", "upgrade_name", "bldg_id"],
+                    variable_name="End Use",
+                    value_name="value (kWh)",
+                )
+                quantity = "value (kWh)"
+                group_by: str | None = "End Use"
+            else:
+                quantity = plot_spec.quantity
+                group_by = plot_spec.group_by
+            plot_data = self.prepare_data_for_box_plot(combined_df, quantity, group_by)
         elif plot_spec.visualization_type in (VizType.bar, VizType.heatmap):
             plot_data = self.prepare_data_for_bar_plot(
-                combined_df, quantities, plot_spec.group_by, plot_spec.value_type, plot_spec.comparison_type
+                combined_df, quantities, plot_spec.group_by, plot_spec.aggregation_type, plot_spec.quantity_type
             )
         elif plot_spec.visualization_type == VizType.hist:
             assert isinstance(plot_spec.quantity, str)  # noqa: S101 Use of `assert` detected
@@ -393,12 +405,14 @@ class DataProcessor:
 
         # ---------- 3. Aggregate real counts ----------
         group_keys = ["upgrade", "upgrade_name", group_by, "bin"] if group_by else ["upgrade", "upgrade_name", "bin"]
-        counts = lf_binned.group_by(group_keys).agg(pl.count().alias("count"))
+        counts = lf_binned.group_by(group_keys, maintain_order=True).agg(pl.count().alias("count"))
 
         # ---------- 4. Build full grid ----------
         full_bins = pl.Series("bin", [-1, *list(range(100)), 100], dtype=pl.Int32)
 
-        groups = combined_df.select("upgrade", "upgrade_name", *(group_by,) if group_by else ()).unique()
+        groups = combined_df.select("upgrade", "upgrade_name", *(group_by,) if group_by else ()).unique(
+            maintain_order=True
+        )
 
         grid = groups.lazy().join(pl.DataFrame({"bin": full_bins}).lazy(), how="cross")
 
@@ -433,47 +447,144 @@ class DataProcessor:
                 "bin_right",
                 "count",
             )
-            .sort(group_keys)
             .collect()
         )
 
         return hist_full
 
-    def prepare_data_for_box_plot(self, combined_df: pl.LazyFrame, quantity: str, group_by: str | None) -> pl.DataFrame:
+    def prepare_data_for_box_plot(
+        self,
+        combined_df: pl.LazyFrame,
+        quantity: str,
+        group_by: str | None = None,
+        *,
+        include_kde: bool = True,
+        kde_points: int = 100,
+    ) -> pl.DataFrame:
         """
-        Prepare data for box plotting WITHOUT aggregation to preserve distribution
+        Return one row per group with:
+            q1, median, q3, mean, n_points,
+            lower_whisker, upper_whisker, outliers [list]
+        +   kde_x / kde_y                (only when include_kde=True)
 
-        Args:
-            combined_df: Combined DataFrame containing all data
-            quantity: List of quantities to plot
-            group_by: List of columns to group by
-
-        Returns:
-            DataFrame prepared for box plotting with all individual data points preserved
+        All cheap stats stay in Polars.  SciPy's gaussian_kde is called
+        *per group* only when include_kde=True.
         """
-        group_by_cols = ["upgrade", "upgrade_name"]
+        # ─── 1. keys ──────────────────────────────────────────────────────────────
+        gcols = ["upgrade", "upgrade_name"]
         if group_by:
-            group_by_cols.append(group_by)
-        columns_to_select = [*group_by_cols, quantity]
-        data = combined_df.select(columns_to_select).sort(group_by_cols)
+            gcols.append(group_by)
 
-        data = data.group_by(group_by_cols).agg(
-            pl.col(quantity).quantile(0.25).alias("q1"),
-            pl.col(quantity).median().alias("median"),
-            pl.col(quantity).quantile(0.75).alias("q3"),
-            pl.col(quantity).min().alias("lowerfence"),
-            pl.col(quantity).max().alias("upperfence"),
-            pl.col(quantity).count().alias("n_points"),
+        lazy = (
+            combined_df.fill_null(0)
+            .group_by(gcols, maintain_order=True)
+            .agg(
+                pl.col(quantity).alias("vals"),
+                pl.col("bldg_id").alias("bldg_ids"),
+                pl.col(quantity).quantile(0.25).alias("q1"),
+                pl.col(quantity).median().alias("median"),
+                pl.col(quantity).quantile(0.75).alias("q3"),
+                pl.col(quantity).mean().alias("mean"),
+                pl.count().alias("n_points"),
+            )
+            .with_columns(
+                (iqr_col := (pl.col("q3") - pl.col("q1")).alias("iqr")),
+                (pl.col("q1") - 1.5 * iqr_col).alias("lower_fence"),
+                (pl.col("q3") + 1.5 * iqr_col).alias("upper_fence"),
+            )
+            .with_columns(
+                [
+                    pl.struct(["vals", "lower_fence"])
+                    .map_elements(
+                        lambda s: float(min((v for v in s["vals"] if v >= s["lower_fence"]), default=np.nan)),
+                        return_dtype=pl.Float64,
+                    )
+                    .alias("lower_whisker"),
+                    pl.struct(["vals", "upper_fence"])
+                    .map_elements(
+                        lambda s: float(max((v for v in s["vals"] if v <= s["upper_fence"]), default=np.nan)),
+                        return_dtype=pl.Float64,
+                    )
+                    .alias("upper_whisker"),
+                ]
+            )
+            .with_columns(
+                pl.struct(["vals", "lower_whisker", "upper_whisker"])
+                .map_elements(
+                    lambda s: [v for v in s["vals"] if (v < s["lower_whisker"]) or (v > s["upper_whisker"])],
+                    return_dtype=pl.List(pl.Float64),
+                )
+                .alias("outliers"),
+            )
+            .with_columns(
+                pl.struct(["vals", "bldg_ids", "lower_whisker", "upper_whisker"])
+                .map_elements(
+                    lambda s: [
+                        b
+                        for v, b in zip(s["vals"], s["bldg_ids"])
+                        if (v < s["lower_whisker"]) or (v > s["upper_whisker"])
+                    ],
+                    return_dtype=pl.List(pl.Int32),
+                )
+                .alias("outlier_buildings"),
+            )
+            .drop(["iqr", "lower_fence", "upper_fence"])
         )
-        return data.collect()
+
+        df = lazy.collect()
+
+        # ─── 3. optional KDE step ─────────────────────────────────────────────────
+        if include_kde:
+            kde_x_all, kde_y_all = [], []  # will append in group order
+
+            for i, vals in enumerate(df["vals"]):
+                arr = np.asarray(vals)
+                lower_fence = df["lower_whisker"][i]
+                upper_fence = df["upper_whisker"][i]
+
+                if len(arr) < 2 or np.isclose(arr.max(), arr.min()):  # noqa: PLR2004
+                    # degenerate group
+                    xs = np.array([arr.min()])
+                    ys = np.array([1.0])
+                else:
+                    # Filter data between fences for KDE calculation
+                    filtered_arr = arr[(arr >= lower_fence) & (arr <= upper_fence)]
+                    if len(filtered_arr) < 2:  # noqa: PLR2004
+                        # If not enough points after filtering, use a single point
+                        xs = np.array([np.mean(filtered_arr) if len(filtered_arr) > 0 else arr.mean()])
+                        ys = np.array([1.0])
+                    else:
+                        try:
+                            kde = gaussian_kde(filtered_arr)
+                            xs = np.linspace(filtered_arr.min(), filtered_arr.max(), kde_points)
+                            ys = kde(xs)
+                        except np.linalg.LinAlgError:
+                            xs = np.linspace(filtered_arr.min(), filtered_arr.max(), kde_points)
+                            ys = np.array([1.0])
+
+                kde_x_all.append(xs.tolist())
+                kde_y_all.append(ys.tolist())
+
+            df = df.with_columns(
+                pl.Series("kde_x", kde_x_all, dtype=pl.List(pl.Float64)),
+                pl.Series("kde_y", kde_y_all, dtype=pl.List(pl.Float64)),
+            )
+
+        # ─── 4. final tidy ────────────────────────────────────────────────────────
+        return df.drop(["vals", "bldg_ids"]).with_columns(  # raw vectors no longer needed
+            [
+                pl.col("lower_whisker").cast(pl.Float64),
+                pl.col("upper_whisker").cast(pl.Float64),
+            ]
+        )
 
     def prepare_data_for_bar_plot(
         self,
         combined_df: pl.LazyFrame,
         quantities: list[str],
         group_by: str | None,
-        value_type: ValueTypes,
-        comparison_type: ComparisonTypes,
+        aggregation_type: AggregationType,
+        quantity_type: QuantityType,
     ) -> pl.DataFrame:
         """
         Prepare data for bar plotting by grouping and aggregating
@@ -482,7 +593,8 @@ class DataProcessor:
             combined_df: Combined DataFrame containing all data
             quantities: List of quantities to plot
             group_by: Column to group by
-            value_type: Whether to calculate average or sum
+            aggregation_type: Whether to calculate average or sum
+            quantity_type: Whether to calculate absolute or savings
 
         Returns:
             DataFrame prepared for plotting with all requested quantities
@@ -491,9 +603,11 @@ class DataProcessor:
         grouping_cols = ["upgrade", "upgrade_name"]
         if group_by:
             grouping_cols.append(group_by)
-        columns_to_select = grouping_cols + quantities
+        columns_to_select = grouping_cols + quantities + ["model_count"]
 
-        if value_type == ValueTypes.average and comparison_type == ComparisonTypes.percent_savings:
+        if quantity_type == QuantityType.model_count:
+            agg_exprs = [pl.col(quantity).count().alias(quantity) for quantity in quantities]
+        elif aggregation_type == AggregationType.average and quantity_type == QuantityType.percent_savings:
             # Calculate weighted average of percent savings using baseline values as weights
             # weighted_average = (sum(savings * baseline)) / (non_zero(sum(baseline)))
             # where non_zero ensures that denominator is at least MIN_BASELINE
@@ -510,14 +624,15 @@ class DataProcessor:
                 ).alias(quantity)
                 for quantity in quantities
             ]
-        elif value_type == ValueTypes.total and comparison_type == ComparisonTypes.percent_savings:
+        elif aggregation_type == AggregationType.total and quantity_type == QuantityType.percent_savings:
             raise ValueError("Percent savings can only be aggregated as weighted average")
-        elif value_type == ValueTypes.average:
+        elif aggregation_type == AggregationType.average:
             agg_exprs = [pl.col(quantity).mean().alias(quantity) for quantity in quantities]
-        elif value_type == ValueTypes.total:
-            agg_exprs = [pl.col(quantity).sum().alias(quantity) for quantity in quantities]
+        elif aggregation_type == AggregationType.total:
+            agg_exprs = [(pl.col(quantity) * pl.col("weight")).sum().alias(quantity) for quantity in quantities]
         else:
-            raise ValueError(f"Unsupported value type: {value_type}")
-        result = combined_df.group_by(grouping_cols).agg(agg_exprs).sort(grouping_cols)
+            raise ValueError(f"Unsupported value type: {aggregation_type}")
+        agg_exprs.append(pl.col("bldg_id").count().alias("model_count"))
+        result = combined_df.group_by(grouping_cols, maintain_order=True).agg(agg_exprs)
         result = result.select(columns_to_select)
         return result.collect()

@@ -34,6 +34,7 @@ dependencies = [
     "pydantic>=2.11.5",
     "pyyaml",
     "s3fs",
+    "scipy>=1.16.1",
 ]
 
 [project.urls]

@@ -4,168 +4,208 @@ Plotting module for standard plots
 Handles creation of plots using Plotly with consistent styling
 """
 
-import textwrap
-
-import plotly.express as px
 import plotly.graph_objects as go
 import polars as pl
 
 from resstockpostproc.standard_plots.base_plotter import BasePlotter
 from resstockpostproc.standard_plots.schema.plot_spec import PlotSpec
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup
+from typing import Literal
 
 
 class BarPlotter(BasePlotter):
-    """Generates standardized bar / stacked bar plots with consistent styling."""
-
-    def __init__(self, theme_cfg: dict | None = None):
-        super().__init__(theme_cfg)
-
-    def _format_label(self, label: str) -> str:
-        """Cleans up a column name to be a human-readable label."""
-        # Handle cases like 'bills.electricity' -> 'Electricity'
-        if "." in label:
-            label = label.split(".")[-1]
-        return label.replace("in.", "").replace("_", " ").title()
-
     def create_plot(self, data: pl.DataFrame, plot_spec: PlotSpec) -> go.Figure:
         """Create a plot based on the plot spec."""
         if isinstance(plot_spec.quantity, QuantityGroup):
-            # For stacked bars, the quantity group defines what to stack
-            return self.create_stacked_bar_plot(
-                data=data,
-                constituent_cols=plot_spec.quantity.constituents,
-                sum_col=plot_spec.quantity.sum,
-                facet_column=plot_spec.group_by,
-                y_title=self.get_y_title(plot_spec),
-            )
+            if plot_spec.group_by:  # show as stacked bar plot
+                return self.create_bar_plot(
+                    data=data,
+                    quantity_column=list(reversed(plot_spec.quantity.constituents)),
+                    first_category_column="upgrade_name",
+                    second_category_column=plot_spec.group_by,
+                    second_category_title=self.format_label(plot_spec.group_by) if plot_spec.group_by else "",
+                    quantity_title=self.get_quantity_title(plot_spec),
+                    first_category_title="Upgrade Scenario",
+                    orientation="h",
+                )
+            else:  # show as grouped bar plot where y-axis is various constituents of the quantity group
+                quantities = list(plot_spec.quantity.constituents)
+                quantities += [plot_spec.quantity.sum] if plot_spec.quantity.sum else []
+                quantity_name = self.get_quantity_name(plot_spec.quantity)
+                quantity_title = self.get_quantity_title(plot_spec)
+                data = data.unpivot(
+                    quantities,
+                    index=["upgrade", "upgrade_name", "model_count"],
+                    variable_name=quantity_name,
+                    value_name="Value",
+                )
+                return self.create_bar_plot(
+                    data=data,
+                    quantity_column="Value",
+                    first_category_column="upgrade_name",
+                    second_category_column=quantity_name,
+                    second_category_title=quantity_title,
+                    quantity_title=quantity_title,
+                    first_category_title="Upgrade Scenario",
+                    orientation="h",
+                )
 
-        # For simple bars, the quantity is the y-axis
+        # For simple bars, the quantity is the x-axis
         return self.create_bar_plot(
             data=data,
-            x_column=plot_spec.group_by or "upgrade_name",
-            y_column=plot_spec.quantity,
-            group_column="upgrade_name" if plot_spec.group_by else None,
-            title=self._format_label(plot_spec.quantity),
-            y_title=self.get_y_title(plot_spec),
+            quantity_column=plot_spec.quantity,
+            first_category_column="upgrade_name",
+            second_category_column=plot_spec.group_by,
+            second_category_title=self.format_label(plot_spec.group_by) if plot_spec.group_by else "",
+            quantity_title=self.get_quantity_title(plot_spec),
+            first_category_title="Upgrade Scenario",
+            orientation="h",
         )
 
     def create_bar_plot(
         self,
         *,
         data: pl.DataFrame,
-        x_column: str,
-        y_column: str,
-        y_title: str,
-        group_column: str | None = None,
-        title: str | None = None,
+        quantity_column: list[str] | str,  # <- now Union
+        first_category_column: str,
+        second_category_column: str | None = None,
+        quantity_title: str,
+        first_category_title: str,
+        second_category_title: str | None = None,
+        orientation: Literal["h", "v"] = "h",
     ) -> go.Figure:
-        """Creates a simple or grouped bar plot using Plotly Express."""
-        fig = px.bar(
-            data,  # Use Polars DataFrame directly
-            x=x_column,
-            y=y_column,
-            color=group_column,
-            barmode="group",
-            title=title,
-            labels={col: self._format_label(col) for col in [x_column, y_column, group_column] if col},
-            template=self.theme.template,
-            color_discrete_map=self.theme.color_palette,
-        )
+        """
+        Creates a simple, grouped or stacked bar plot.
 
-        self.theme.apply_layout(fig)
-        fig.update_layout(
-            legend_title_text=self._format_label(group_column or ""),
-            xaxis_tickangle=45 if x_column != "upgrade_name" else 0,
+        * If ``quantity_column`` is a single string (as before) → 1 trace /
+        group (“simple” or “grouped”).
+        * If ``quantity_column`` is a list of strings → stacked bars whose
+        segments correspond to those columns, using the order given in the
+        list (last item plotted first so it ends up on top).
+        """
+        # ------------------------------------------------------------------ #
+        # NORMALISE INPUT                                                    #
+        # ------------------------------------------------------------------ #
+        is_stacked = not (isinstance(quantity_column, str) or second_category_column is None)
+        quantity_cols = (
+            [quantity_column]
+            if isinstance(quantity_column, str)  # old behaviour
+            else list(quantity_column)  # keep caller order
         )
-        fig.update_yaxes(gridcolor="lightgray", gridwidth=0.5, title_text=y_title)
-        return fig
+        traces: list[go.Bar] = []
+        xtitle: str | None = ""
+        ytitle: str | None = ""
+        # ------------------------------------------------------------------ #
+        # NO SECOND-LEVEL CATEGORY  →  ONE STACK (OR ONE TRACE)              #
+        # ------------------------------------------------------------------ #
+        if second_category_column is None:
+            legend_title = None
+            for qcol in quantity_cols[::-1]:  # reverse so first col is at bottom
+                if orientation == "h":
+                    x_data = list(reversed(data[qcol]))
+                    y_data = list(reversed(data[first_category_column]))
+                    xtitle, ytitle = quantity_title, first_category_title
+                    colors = [self.theme.upgrade_palette.get(y) for y in y_data]
+                else:
+                    x_data = list(reversed(data[first_category_column]))
+                    y_data = list(reversed(data[qcol]))
+                    xtitle, ytitle = first_category_title, quantity_title
+                    colors = [self.theme.upgrade_palette.get(x) for x in x_data]
 
-    def create_stacked_bar_plot(
-        self,
-        *,
-        data: pl.DataFrame,
-        constituent_cols: list[str],
-        sum_col: str | None = None,
-        x_column: str = "upgrade_name",
-        y_title: str,
-        facet_column: str | None = None,
-    ) -> go.Figure:
-        """Creates a stacked, optionally faceted bar plot by first reshaping the data."""
-        id_cols = ["upgrade", "upgrade_name"]
-        if facet_column:
-            id_cols.append(facet_column)
-        if sum_col:
-            melted_data = data.drop(sum_col).unpivot(index=id_cols, variable_name="enduse")
+                if len(quantity_cols) > 1:
+                    marker_pattern_shape = self.theme.end_use_to_pattern.get(qcol, None)
+                    marker_color: list[str | None] | str | None = self.theme.end_use_to_color.get(qcol, None)
+                else:
+                    marker_color = colors
+                    marker_pattern_shape = ""
+
+                traces.append(
+                    go.Bar(
+                        name=self.format_label(qcol),
+                        x=x_data,
+                        y=y_data,
+                        orientation=orientation,
+                        marker_color=marker_color,
+                        marker_pattern_shape=marker_pattern_shape,
+                        marker_line_width=5,
+                        showlegend=is_stacked,  # hide legend when single trace
+                        hovertemplate="%{x}<br>%{y}" if orientation == "h" else "%{y}<br>%{x}",
+                    )
+                )
+        # ------------------------------------------------------------------ #
+        # SECOND-LEVEL CATEGORY  →  GROUPED (AND *OPTIONALLY* STACKED)       #
+        # ------------------------------------------------------------------ #
         else:
-            melted_data = data.unpivot(index=id_cols, variable_name="enduse")
+            unique_groups = data[first_category_column].unique(maintain_order=True).to_list()
+            legend_title = first_category_title if not is_stacked else quantity_title
 
-        fig = px.bar(
-            melted_data,
-            x=x_column,
-            y="value",
-            color="enduse",
-            color_discrete_map=self.theme.end_use_to_color,
-            facet_col=facet_column,
-            template=self.theme.template,
-            pattern_shape="enduse",
-            pattern_shape_map=self.theme.end_use_to_pattern,
-            category_orders={"enduse": constituent_cols[::-1]},
-        )
+            for q_idx, qcol in enumerate(quantity_cols[::-1]):  # stack order inside each offsetgroup
+                for idx, group_name in enumerate(unique_groups):
+                    group_data = data.filter(pl.col(first_category_column) == group_name)
+                    if len(quantity_cols) > 1:
+                        marker_pattern_shape = self.theme.end_use_to_pattern.get(qcol, None)
+                        marker_color = self.theme.end_use_to_color.get(qcol, None)
+                    else:
+                        marker_color = self.theme.upgrade_palette.get(group_name, None)
+                        marker_pattern_shape = ""
 
-        if sum_col and sum_col in data.columns:
-            # If there are no facets, add the trace directly
-            if not facet_column:
-                fig.add_trace(
-                    go.Scatter(
-                        x=data[x_column].to_list(),
-                        y=data[sum_col].to_list(),
-                        mode="markers",
-                        marker={"symbol": "diamond", "color": "black", "size": 10},
-                        name=sum_col,
-                        legendgroup=sum_col,
-                        showlegend=True,
+                    if orientation == "h":  # reverse for visual top-to-bottom
+                        xvals = list(reversed(group_data[qcol]))
+                        yvals = list(reversed(group_data[second_category_column]))
+                        model_counts = list(reversed(group_data["model_count"]))
+                    else:
+                        xvals = group_data[second_category_column].to_list()
+                        yvals = group_data[qcol].to_list()
+                        model_counts = group_data["model_count"].to_list()
+
+                    # Include upgrade label only on the topmost segment of each stack
+                    text_vals = None
+                    if is_stacked and q_idx == 0:
+                        text_vals = [""] * (len(xvals) - 1) + [group_name]
+                    traces.append(
+                        go.Bar(
+                            name=self.format_label(qcol) if is_stacked else group_name,
+                            legendgroup=self.format_label(qcol),  # one legend per qcol
+                            offsetgroup=str(group_name),  # separate clusters per group
+                            x=xvals,
+                            y=yvals,
+                            orientation=orientation,
+                            marker_color=marker_color,
+                            marker_pattern_shape=marker_pattern_shape,
+                            text=text_vals,
+                            textposition="outside",
+                            textfont={"color": "black"},
+                            insidetextanchor="middle",
+                            cliponaxis=False,
+                            showlegend=(idx == 0) or (not is_stacked),
+                            hovertext=[f"Number of models: {mc}" for mc in model_counts],
+                            hoverinfo="all",
+                            customdata=model_counts,
+                        )
                     )
-                )
-            # If there are facets, iterate and add a trace to each subplot
-            else:
-                facets = data[facet_column].unique().sort()
-                for i, facet_value in enumerate(facets):
-                    facet_data = data.filter(pl.col(facet_column) == facet_value)
-                    fig.add_trace(
-                        go.Scatter(
-                            x=facet_data[x_column].to_list(),
-                            y=facet_data[sum_col].to_list(),
-                            mode="markers",
-                            marker={"symbol": "diamond", "color": "black", "size": 10},
-                            name=sum_col,
-                            legendgroup=sum_col,
-                            showlegend=(i == 0),  # Only show legend for the first trace
-                        ),
-                        row=1,
-                        col=i + 1,
-                    )  # Specify row and column for the trace
-
-        self.theme.apply_layout(fig)
-        # Use "relative" barmode so that negative values are stacked below the zero line
-        fig.update_layout(barmode="relative", legend={"traceorder": "reversed"})
-        fig.update_yaxes(gridcolor="lightgray", gridwidth=0.5, title_text=y_title)
-        fig.update_xaxes(title_text="")
-        if facet_column and facet_column in data.columns:
-            num_facets = len(data[facet_column].unique())
-            for i in range(2, num_facets + 1):  # Remove y-axis titles for all but the first facet
-                fig.update_yaxes(title_text="", row=1, col=i)
-            fig.update_layout(width=max(1000, min(1920, num_facets * self.theme.facet_width)))
-        # Show only the facet value and wrap long text based on theme's facet_title_width
-        fig.for_each_annotation(
-            lambda a: a.update(
-                text="<br>".join(
-                    textwrap.wrap(
-                        a.text.split("=")[-1].strip() if a.text is not None else "",
-                        width=self.theme.facet_title_width,
-                        break_long_words=False,
-                    )
-                )
+            xtitle, ytitle = (
+                (quantity_title, second_category_title)
+                if orientation == "h"
+                else (second_category_title, quantity_title)
             )
+
+        # ------------------------------------------------------------------ #
+        # FIGURE ASSEMBLY                                                    #
+        # ------------------------------------------------------------------ #
+        fig = go.Figure(
+            data=traces[::-1] if orientation == "h" else traces,
+            layout=go.Layout(
+                title_text="",
+                barmode="relative" if is_stacked else "group",  # <-- key change
+                xaxis_title=xtitle,
+                yaxis_title=ytitle,
+                template=self.theme.template,
+            ),
         )
+        if orientation == "h":
+            fig.update_layout(legend_traceorder="reversed")
+        self.theme.apply_layout(fig)
+        if legend_title:
+            fig.update_layout(legend_title_text=legend_title, legend={"xanchor": "left", "x": 1.12})
+
         return fig

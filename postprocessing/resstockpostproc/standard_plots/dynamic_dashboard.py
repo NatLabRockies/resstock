@@ -33,11 +33,11 @@ from plotly.graph_objects import Figure
 # Local imports - all heavy lifting is done by these modules
 from resstockpostproc.standard_plots.orchestrator import PlotOrchestrator
 from resstockpostproc.standard_plots.schema.plot_spec import (
-    ComparisonTypes,
+    QuantityType,
     PlotSpec,
     BuildingInclusion,
     VacancyInclusion,
-    ValueTypes,
+    AggregationType,
     VizType,
 )
 from resstockpostproc.standard_plots.schema.workflow_schema import QuantityGroup, WorkflowConfig
@@ -88,19 +88,15 @@ def get_app() -> DashProxy:
             if snapshot is None:
                 return None
 
-            snapshot["run_name"] = run_folder  # override run_name to allow folder rename
             new_workflow = WorkflowConfig.from_yaml(workflow_yaml)
+            new_workflow.set_run_name(run_folder)
             new_workflow.add_everything_group()
-            new_workflow.s3_results_dir = snapshot["s3_results_dir"]
-            new_workflow.run_name = snapshot["run_name"]
-            new_workflow.upgrades = snapshot["upgrades"]
-            new_workflow.upgrade_names = snapshot["upgrade_names"]
-            # Support both what's in the default list and what's in the snapshot
-            new_workflow.group_by.extend([g for g in snapshot["group_by"] if g not in new_workflow.group_by])
-
+            new_workflow.set_s3_results_dir(snapshot["s3_results_dir"])
+            new_workflow.set_upgrades(snapshot["upgrades"])
+            new_workflow.set_upgrade_names(snapshot["upgrade_names"])
             if plots_root_folder:
-                new_workflow.output_dir = plots_root_folder
-                new_workflow.storage_backend = "minio"
+                new_workflow.set_output_dir(plots_root_folder)
+                new_workflow.set_storage_backend("minio")
 
             # will never overwrite existing files but can save new files/plots
             _orchestrators[run_folder] = PlotOrchestrator(new_workflow, overwrite=False)
@@ -182,7 +178,7 @@ def get_app() -> DashProxy:
             dbc.Card(
                 dbc.CardBody(
                     [
-                        # Row 1 - main controls (upgrade/vacancy/comparison/viz)
+                        # Row 1 - main controls (upgrade/vacancy/quantity_type/viz)
                         dbc.Row(
                             [
                                 dbc.Col(
@@ -219,16 +215,32 @@ def get_app() -> DashProxy:
                                 dbc.Col(
                                     html.Div(
                                         [
-                                            html.Small("Comparison type", className="d-block fw-bold mb-1"),
+                                            html.Small("Quantity type", className="d-block fw-bold mb-1"),
+                                            dcc.Dropdown(
+                                                id="quantity-type",
+                                                options=[ct.value for ct in workflow.quantity_types],
+                                                value=workflow.quantity_types[0].value,
+                                                clearable=False,
+                                                style={"minWidth": "180px"},
+                                            ),
+                                        ]
+                                    ),
+                                    md=2,
+                                ),
+                                dbc.Col(
+                                    html.Div(
+                                        [
+                                            html.Small("Aggregation Type", className="d-block fw-bold mb-1"),
                                             dcc.RadioItems(
-                                                id="comparison-type",
-                                                options=[ct.value for ct in workflow.comparison_types],
-                                                value=workflow.comparison_types[0].value,
+                                                id="aggregation-type",
+                                                options=[vt.value for vt in workflow.aggregation_types],
+                                                value=workflow.aggregation_types[0].value,
                                                 inline=True,
                                             ),
                                         ]
                                     ),
                                     md=2,
+                                    id="aggregation-type-col",
                                 ),
                                 dbc.Col(
                                     html.Div(
@@ -243,21 +255,6 @@ def get_app() -> DashProxy:
                                         ]
                                     ),
                                     md=2,
-                                ),
-                                dbc.Col(
-                                    html.Div(
-                                        [
-                                            html.Small("Value type", className="d-block fw-bold mb-1"),
-                                            dcc.RadioItems(
-                                                id="value-type",
-                                                options=[vt.value for vt in workflow.value_types],
-                                                value=workflow.value_types[0].value,
-                                                inline=True,
-                                            ),
-                                        ]
-                                    ),
-                                    md=2,
-                                    id="value-type-col",
                                 ),
                             ]
                         ),
@@ -566,9 +563,15 @@ def get_app() -> DashProxy:
         Output("quantity", "value"),
         Input("quantity-group", "value"),
         Input("viz-type", "value"),
+        Input("group-by", "value"),
         State("quantity", "value"),
     )
-    def _update_quantity_dd(qgroup_name: str, viz_type_val: str, current_val: str | None):
+    def _update_quantity_dd(
+        qgroup_name: str,
+        viz_type_val: str,
+        group_by_val: str,
+        current_val: str | None,
+    ):
         if not qgroup_name:
             raise PreventUpdate
 
@@ -581,9 +584,11 @@ def get_app() -> DashProxy:
         # Sum column if any
         if qg.sum:
             opts.append({"label": qg.sum, "value": qg.sum})
-        # Group stacked option only for bar plots - send special token
-        if viz_type in [VizType.bar]:
+        # Stacked option logic --------------------------------------------------
+        if viz_type in [VizType.bar] or (viz_type == VizType.box and group_by_val in (None, "__none__")):
             opts.append({"label": "ALL - stacked", "value": "__group_stacked__"})
+
+        # Heatmap forces stacked only
         if viz_type in [VizType.heatmap]:
             opts = [{"label": "ALL - stacked", "value": "__group_stacked__"}]
 
@@ -604,8 +609,8 @@ def get_app() -> DashProxy:
         Input("generate-btn", "n_clicks"),
         Input("building-inclusion", "value"),
         Input("vacancy-inclusion", "value"),
-        Input("comparison-type", "value"),
-        Input("value-type", "value"),
+        Input("quantity-type", "value"),
+        Input("aggregation-type", "value"),
         Input("viz-type", "value"),
         Input("group-by", "value"),
         Input("quantity-group", "value"),
@@ -624,7 +629,7 @@ def get_app() -> DashProxy:
         building_incl: str,
         vacancy_incl: str,
         comp_type: str,
-        value_type: str,
+        aggregation_type: str,
         viz_type_val: str,
         group_by_val: str,
         qgroup_name: str,
@@ -646,7 +651,7 @@ def get_app() -> DashProxy:
             building_incl,
             vacancy_incl,
             comp_type,
-            value_type,
+            aggregation_type,
             viz_type_val,
             group_by_val,
             qgroup_name,
@@ -677,7 +682,8 @@ def get_app() -> DashProxy:
             logger.error(error)
             df, fig = _get_dummy_df_fig(error)
             cached = False
-
+        # drop any columns that are list dtypes
+        df = df.drop([col for col in df.columns if df[col].dtype == pl.List])
         csv_str = df.write_csv(file=None)
         # Note: Plotly Layout does not support "editable"; this was causing a validation error.
         #       We omit this call for now - figure interactivity can be controlled via the Graph config.
@@ -713,37 +719,68 @@ def get_app() -> DashProxy:
         return base_cfg
 
     # ----------------------------------------------------------------------------
-    #   CALLBACK - dynamically restrict *Value type* options based on comparison-type
+    #   CALLBACK - disable Quantity Group & Quantity dropdowns for Model Count
     # ----------------------------------------------------------------------------
     @app.callback(
-        Output("value-type", "options"),
-        Output("value-type", "value"),
-        Input("comparison-type", "value"),
-        State("value-type", "value"),
+        Output("quantity-group", "disabled"),
+        Output("quantity", "disabled"),
+        Input("quantity-type", "value"),
     )
-    def _update_value_type_dd(comp_type_val: str, current_val: str):
-        """When *percent_savings* is selected allow only *average* value-type."""
-        if comp_type_val == ComparisonTypes.percent_savings.value:
-            opts = [{"label": ValueTypes.average.value, "value": ValueTypes.average.value}]
-            return opts, ValueTypes.average.value
-
-        # All value-types are available for other comparison types
-        all_opts = [{"label": vt.value, "value": vt.value} for vt in workflow.value_types]
-        new_val = current_val if current_val in {o["value"] for o in all_opts} else all_opts[0]["value"]
-        return all_opts, new_val
+    def _toggle_quantity_controls(quantity_type_val: str):
+        try:
+            qtype = QuantityType(quantity_type_val)
+        except ValueError:
+            raise PreventUpdate
+        disabled = qtype == QuantityType.model_count
+        return disabled, disabled
 
     # ----------------------------------------------------------------------------
-    #   CALLBACK - toggle value-type column visibility
+    #   CALLBACK - dynamically restrict *Aggregation type* options based on quantity-type
     # ----------------------------------------------------------------------------
     @app.callback(
-        Output("value-type-col", "style"),
-        Input("viz-type", "value"),
+        Output("aggregation-type", "options"),
+        Output("aggregation-type", "value"),
+        Input("quantity-type", "value"),
+        State("aggregation-type", "value"),
     )
-    def _toggle_value_type_visibility(viz_type_val: str):
-        """Show *Value type* only for bar plots."""
-        if VizType(viz_type_val) in [VizType.box, VizType.hist]:
-            return {"display": "none"}
-        return {}
+    def _update_aggregation_type_dd(quantity_type_val: str, current_val: str):
+        """Update Aggregation type options whenever Quantity type changes."""
+        try:
+            qtype = QuantityType(quantity_type_val)
+        except ValueError:
+            raise PreventUpdate
+
+        allowed = PlotSpec.get_valid_aggregation_types(qtype)
+        opts = [{"label": at.name, "value": at.value} for at in allowed]
+        new_val = current_val if current_val in {o["value"] for o in opts} else opts[0]["value"]
+        return opts, new_val
+
+    # ----------------------------------------------------------------------------
+    #   CALLBACK - dynamically restrict *Visualization type* options based on aggregation-type
+    # ----------------------------------------------------------------------------
+    @app.callback(
+        Output("viz-type", "options"),
+        Output("viz-type", "value"),
+        Input("aggregation-type", "value"),
+        Input("quantity-type", "value"),
+        State("viz-type", "value"),
+    )
+    def _update_viz_type_dd(aggregation_type_val: str, quantity_type_val: str, current_val: str):
+        """Update Visualization type options whenever Aggregation type changes."""
+        try:
+            agg_type = AggregationType(aggregation_type_val)
+        except ValueError:
+            raise PreventUpdate
+
+        try:
+            qtype = QuantityType(quantity_type_val)
+        except ValueError:
+            raise PreventUpdate
+
+        valid_viz_types = PlotSpec.get_valid_visualization_types(qtype, agg_type)
+        opts = [{"label": vt.name, "value": vt.value} for vt in valid_viz_types]
+        new_val = current_val if current_val in {o["value"] for o in opts} else opts[0]["value"]
+        return opts, new_val
 
     # ----------------------------------------------------------------------------
     #   CALLBACK - update Group By dropdown when run folder changes
@@ -771,7 +808,7 @@ def get_app() -> DashProxy:
         # ---------------------------------------------------------------------
         #   Original workflow-defined group_by columns
         # ---------------------------------------------------------------------
-        workflow_group_by: list[str] = orchestrator.workflow.group_by
+        workflow_group_by: tuple[str, ...] = orchestrator.workflow.group_by
 
         # ---------------------------------------------------------------------
         #   Dynamically discover low-cardinality input columns
@@ -802,7 +839,7 @@ def get_app() -> DashProxy:
             opts.extend(
                 [
                     {"label": "— Additional characteristics —", "value": "__sep_extra__", "disabled": True},
-                    *[{"label": col, "value": col} for col in small_chars],
+                    *[{"label": col, "value": col} for col in small_chars if col not in workflow_group_by],
                 ]
             )
 
@@ -829,10 +866,13 @@ def get_app() -> DashProxy:
             raise PreventUpdate
 
         upgrades = [u for u in orchestrator.workflow.upgrades if u != 0]  # exclude baseline 0
-        opts = [
+
+        # Core options
+        opts: list[dict[str, str]] = [
             {"label": "All", "value": "__all__"},
             {"label": "Applied in respective upgrades", "value": "applied_all"},
-            *[{"label": f"Applied in Upgrade {u}", "value": str(u)} for u in upgrades],
+            # Applied only in a specific upgrade
+            *[{"label": f"Applied in Upgrade {u}", "value": f"applied_{u}"} for u in upgrades],
         ]
 
         new_val = current_val if current_val in {o["value"] for o in opts} else "__all__"
@@ -867,8 +907,8 @@ def get_app() -> DashProxy:
     def _build_plot_spec(
         building_incl: str,
         vacancy_incl: str,
-        comp_type: str,
-        value_type: str,
+        quantity_type: str,
+        aggregation_type: str,
         viz_type_val: str,
         group_by_val: str,
         qgroup_name: str,
@@ -883,30 +923,26 @@ def get_app() -> DashProxy:
         else:
             quantity = quantity_val
 
-        # Force value-type to *average* when comparison-type is percent_savings
-        if ComparisonTypes(comp_type) in [ComparisonTypes.percent_savings] or VizType(viz_type_val) in [
-            VizType.box,
-            VizType.hist,
-        ]:
-            vtype_enum = ValueTypes.average
-        else:
-            vtype_enum = ValueTypes(value_type)
-
         if building_incl == "__all__":
             upg_incl_enum = BuildingInclusion.all
             upgrade_num = None
+
         elif building_incl == "applied_all":
             upg_incl_enum = BuildingInclusion.applied_only
             upgrade_num = None
-        else:
+        elif building_incl.startswith("applied_"):
             upg_incl_enum = BuildingInclusion.applied_only
+            upgrade_num = int(building_incl.split("_")[1])
+        # Baseline only ("0") or Upgrade N only ("1", "2", ...)
+        else:
+            upg_incl_enum = BuildingInclusion.all
             upgrade_num = int(building_incl)
 
         return PlotSpec(
             building_inclusion=upg_incl_enum,
             vacancy_inclusion=VacancyInclusion(vacancy_incl),
-            comparison_type=ComparisonTypes(comp_type),
-            value_type=vtype_enum,
+            quantity_type=QuantityType(quantity_type),
+            aggregation_type=AggregationType(aggregation_type),
             visualization_type=viz_type,
             group_by=group_by,
             quantity=quantity,
@@ -965,7 +1001,7 @@ def get_app() -> DashProxy:
                 df, fig = _get_dummy_df_fig(user_warning)
                 return df, fig, False
             df = orchestrator.processor.prepare_data_for_plot(spec)
-            plotter = PlotOrchestrator.get_plotter(spec.visualization_type)
+            plotter = orchestrator.get_plotter(spec.visualization_type)
             fig = plotter.create_plot(df, spec)
 
         # styling tweaks similar to original implementation
@@ -976,23 +1012,27 @@ def get_app() -> DashProxy:
         show_legend = "show" in legend_show
         legend_cfg: dict[str, Any] = {}
         if legend_pos == "right":
-            legend_cfg = {"orientation": "v", "x": 1.02, "y": 1, "xanchor": "left", "yanchor": "top"}
+            legend_cfg = {"orientation": "v", "x": 1.12, "y": 1, "xanchor": "left", "yanchor": "top"}
         elif legend_pos == "bottom":
             legend_cfg = {"orientation": "h", "x": 0, "y": -0.2, "xanchor": "left", "yanchor": "top"}
         elif legend_pos == "tr":
-            legend_cfg = {"x": 1, "y": 1, "xanchor": "right", "yanchor": "top"}
+            legend_cfg = {"x": 1.12, "y": 1, "xanchor": "right", "yanchor": "top"}
         elif legend_pos == "br":
-            legend_cfg = {"x": 1, "y": 0, "xanchor": "right", "yanchor": "bottom"}
+            legend_cfg = {"x": 1.12, "y": 0, "xanchor": "right", "yanchor": "bottom"}
         elif legend_pos == "tl":
             legend_cfg = {"x": 0, "y": 1, "xanchor": "left", "yanchor": "top"}
         elif legend_pos == "bl":
             legend_cfg = {"x": 0, "y": 0, "xanchor": "left", "yanchor": "bottom"}
 
+        # Apply facet orientation and text wrapping requested via UI controls
+        vertical = bool(facet_orientation and "vertical" in facet_orientation)
+        wrap_val = wrap_width if wrap_width and wrap_width > 0 else None
+        _apply_facet_orientation(fig, vertical=vertical, wrap_width=wrap_val)
+
         fig.update_layout(width=fig_w, height=fig_h, showlegend=show_legend, legend=legend_cfg)
         path_seg, name = spec.get_path_and_name()
         if orchestrator is not None:
             orchestrator.out_mgr.save_plot(fig, path_seg, df, name)
-        _apply_facet_orientation(fig, bool(facet_orientation), wrap_width)
         return df, fig, loaded_from_file
 
     def _apply_facet_orientation(fig: Figure, vertical: bool, wrap_width: int | None = None):
@@ -1001,6 +1041,8 @@ def get_app() -> DashProxy:
             return
         angle = -90 if vertical else 0
         for ann in fig.layout.annotations:
+            if ann.name == "xtitle":
+                continue
             # Wrap text if width specified
             if wrap_width and wrap_width > 0:
                 wrapped = textwrap.fill(str(ann.text).replace("<br>", " "), width=wrap_width, break_long_words=False)
@@ -1142,4 +1184,4 @@ def run_dashboard(port: int = 8051):
 
 
 if __name__ == "__main__":
-    run_dashboard()
+    run_dashboard(8053)
