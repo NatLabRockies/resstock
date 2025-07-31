@@ -278,9 +278,9 @@ async def _execute_plot_flow(
 ) -> None:
     logger = get_run_logger()
 
-    workflow.run_name = f"{flow_run.get_name()}"
-    workflow.s3_results_dir = check_s3_results_dir(s3_results_dir)
-    workflow.storage_backend = "minio"
+    workflow.set_run_name(f"{flow_run.get_name()}")
+    workflow.set_s3_results_dir(s3_results_dir)
+    workflow.set_storage_backend("minio")
 
     run_id = cast(UUID, flow_run.get_id())
     async with get_client() as client:

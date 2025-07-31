@@ -54,8 +54,8 @@ def get_app() -> DashProxy:
     workflow.add_everything_group()
 
     if plots_root_folder := os.environ.get("PLOTS_ROOT_FOLDER"):
-        workflow.output_dir = plots_root_folder
-        workflow.storage_backend = "minio"
+        workflow.set_output_dir(plots_root_folder)
+        workflow.set_storage_backend("minio")
 
     print(f"Output dir: {workflow.output_dir}")
 
