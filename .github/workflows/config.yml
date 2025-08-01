@@ -263,13 +263,6 @@ jobs:
           pip install plotly
           python test/process_bsb_analysis.py
 
-      - name: Upload integration results
-        uses: actions/upload-artifact@v4
-        with:
-          name: feature_results
-          path: baseline
-          if-no-files-found: error
-
       - name: Upload buildstockbatch results
         uses: actions/upload-artifact@v4
         with:
@@ -285,47 +278,6 @@ jobs:
           sudo gem install simplecov
           sudo gem install simplecov-html
           ruby test/test_bsb_analysis.rb
-
-      - name: Download base results
-        uses: actions/download-artifact@v4
-        with:
-          path: base_results
-          name: base_results
-
-      - name: Download feature samples
-        uses: actions/download-artifact@v4
-        with:
-          path: samples
-          name: feature_samples
-
-      - name: Compare samples and results
-        run: |          
-          pip install numpy
-          pip install pandas
-          pip install plotly
-          pip install kaleido
-          
-          # feature_results
-          mkdir -p results
-          cp -r baseline results
-          
-          # baseline annual
-          mkdir -p test/base_results/comparisons/baseline/annual
-          python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
-          python test/compare.py -a results -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
-          python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
-          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
-          
-          # baseline timeseries
-          mkdir test/base_results/comparisons/baseline/timeseries
-          python test/compare.py -a timeseries -b base_results/baseline/timeseries -f results/baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
-
-      - name: Upload comparisons
-        uses: actions/upload-artifact@v4
-        with:
-          name: comparisons
-          path: test/base_results/comparisons
-          if-no-files-found: error
 
       - name: Install software
         run: |
@@ -370,6 +322,41 @@ jobs:
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
+
+      - name: Download base results
+        uses: actions/download-artifact@v4
+        with:
+          path: base_results
+          name: base_results
+
+      - name: Compare samples and results
+        run: |          
+          pip install numpy
+          pip install pandas
+          pip install plotly
+          pip install kaleido
+          
+          # feature_results
+          mkdir -p results
+          cp -r baseline results
+          
+          # baseline annual
+          mkdir -p test/base_results/comparisons/baseline/annual
+          python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
+          python test/compare.py -a results -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
+          python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
+          
+          # baseline timeseries
+          mkdir test/base_results/comparisons/baseline/timeseries
+          python test/compare.py -a timeseries -b base_results/baseline/timeseries -f results/baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
+
+      - name: Upload comparisons
+        uses: actions/upload-artifact@v4
+        with:
+          name: comparisons
+          path: test/base_results/comparisons
+          if-no-files-found: error
 
   compare-tools:
     runs-on: ubuntu-22.04
