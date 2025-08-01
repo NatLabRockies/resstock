@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>a3da6fa7-b62e-4112-891e-76f6cafa67a2</version_id>
-  <version_modified>2025-07-31T21:17:54Z</version_modified>
+  <version_id>82ecf0e1-5c54-47a7-b313-f66329dec75e</version_id>
+  <version_modified>2025-08-01T01:01:43Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -162,36 +162,36 @@
           <display_name>Silt, Wet</display_name>
         </choice>
         <choice>
-          <value>0.5 Conductivity</value>
-          <display_name>0.5 Conductivity</display_name>
+          <value>0.5 Btu/hr-ft-F</value>
+          <display_name>0.5 Btu/hr-ft-F</display_name>
         </choice>
         <choice>
-          <value>0.8 Conductivity</value>
-          <display_name>0.8 Conductivity</display_name>
+          <value>0.8 Btu/hr-ft-F</value>
+          <display_name>0.8 Btu/hr-ft-F</display_name>
         </choice>
         <choice>
-          <value>1.1 Conductivity</value>
-          <display_name>1.1 Conductivity</display_name>
+          <value>1.1 Btu/hr-ft-F</value>
+          <display_name>1.1 Btu/hr-ft-F</display_name>
         </choice>
         <choice>
-          <value>1.4 Conductivity</value>
-          <display_name>1.4 Conductivity</display_name>
+          <value>1.4 Btu/hr-ft-F</value>
+          <display_name>1.4 Btu/hr-ft-F</display_name>
         </choice>
         <choice>
-          <value>1.7 Conductivity</value>
-          <display_name>1.7 Conductivity</display_name>
+          <value>1.7 Btu/hr-ft-F</value>
+          <display_name>1.7 Btu/hr-ft-F</display_name>
         </choice>
         <choice>
-          <value>2.0 Conductivity</value>
-          <display_name>2.0 Conductivity</display_name>
+          <value>2.0 Btu/hr-ft-F</value>
+          <display_name>2.0 Btu/hr-ft-F</display_name>
         </choice>
         <choice>
-          <value>2.3 Conductivity</value>
-          <display_name>2.3 Conductivity</display_name>
+          <value>2.3 Btu/hr-ft-F</value>
+          <display_name>2.3 Btu/hr-ft-F</display_name>
         </choice>
         <choice>
-          <value>2.6 Conductivity</value>
-          <display_name>2.6 Conductivity</display_name>
+          <value>2.6 Btu/hr-ft-F</value>
+          <display_name>2.6 Btu/hr-ft-F</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Sand, Dry, 0.03 Diffusivity</value>
@@ -272,16 +272,6 @@
       </choices>
     </argument>
     <argument>
-      <name>geometry_unit_conditioned_floor_area</name>
-      <display_name>Geometry: Unit Conditioned Floor Area</display_name>
-      <description>The total floor area of the unit's conditioned space (including any conditioned basement/attic floor area).</description>
-      <type>Double</type>
-      <units>ft2</units>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>2000</default_value>
-    </argument>
-    <argument>
       <name>geometry_unit_aspect_ratio</name>
       <display_name>Geometry: Unit Aspect Ratio</display_name>
       <description>The ratio of front/back wall length to left/right wall length for the unit, excluding any protruding garage wall area.</description>
@@ -305,32 +295,64 @@
           <display_name>North</display_name>
         </choice>
         <choice>
+          <value>North-Northeast</value>
+          <display_name>North-Northeast</display_name>
+        </choice>
+        <choice>
           <value>Northeast</value>
           <display_name>Northeast</display_name>
+        </choice>
+        <choice>
+          <value>East-Northeast</value>
+          <display_name>East-Northeast</display_name>
         </choice>
         <choice>
           <value>East</value>
           <display_name>East</display_name>
         </choice>
         <choice>
+          <value>East-Southeast</value>
+          <display_name>East-Southeast</display_name>
+        </choice>
+        <choice>
           <value>Southeast</value>
           <display_name>Southeast</display_name>
+        </choice>
+        <choice>
+          <value>South-Southeast</value>
+          <display_name>South-Southeast</display_name>
         </choice>
         <choice>
           <value>South</value>
           <display_name>South</display_name>
         </choice>
         <choice>
+          <value>South-Southwest</value>
+          <display_name>South-Southwest</display_name>
+        </choice>
+        <choice>
           <value>Southwest</value>
           <display_name>Southwest</display_name>
+        </choice>
+        <choice>
+          <value>West-Southwest</value>
+          <display_name>West-Southwest</display_name>
         </choice>
         <choice>
           <value>West</value>
           <display_name>West</display_name>
         </choice>
         <choice>
+          <value>West-Northwest</value>
+          <display_name>West-Northwest</display_name>
+        </choice>
+        <choice>
           <value>Northwest</value>
           <display_name>Northwest</display_name>
+        </choice>
+        <choice>
+          <value>North-Northwest</value>
+          <display_name>North-Northwest</display_name>
         </choice>
       </choices>
     </argument>
@@ -386,6 +408,10 @@
         <choice>
           <value>10</value>
           <display_name>10</display_name>
+        </choice>
+        <choice>
+          <value>11</value>
+          <display_name>11</display_name>
         </choice>
       </choices>
     </argument>
@@ -450,6 +476,10 @@
           <value>10</value>
           <display_name>10</display_name>
         </choice>
+        <choice>
+          <value>11</value>
+          <display_name>11</display_name>
+        </choice>
       </choices>
     </argument>
     <argument>
@@ -512,6 +542,10 @@
         <choice>
           <value>10</value>
           <display_name>10</display_name>
+        </choice>
+        <choice>
+          <value>11</value>
+          <display_name>11</display_name>
         </choice>
       </choices>
     </argument>
@@ -951,6 +985,10 @@
           <display_name>None</display_name>
         </choice>
         <choice>
+          <value>Left/Right at 2ft</value>
+          <display_name>Left/Right at 2ft</display_name>
+        </choice>
+        <choice>
           <value>Left/Right at 5ft</value>
           <display_name>Left/Right at 5ft</display_name>
         </choice>
@@ -971,6 +1009,10 @@
           <display_name>Left/Right at 25ft</display_name>
         </choice>
         <choice>
+          <value>Left at 2ft</value>
+          <display_name>Left at 2ft</display_name>
+        </choice>
+        <choice>
           <value>Left at 5ft</value>
           <display_name>Left at 5ft</display_name>
         </choice>
@@ -989,6 +1031,10 @@
         <choice>
           <value>Left at 25ft</value>
           <display_name>Left at 25ft</display_name>
+        </choice>
+        <choice>
+          <value>Right at 2ft</value>
+          <display_name>Right at 2ft</display_name>
         </choice>
         <choice>
           <value>Right at 5ft</value>
@@ -3156,68 +3202,24 @@
           <display_name>Very Leaky</display_name>
         </choice>
         <choice>
-          <value>0.25 ACH50</value>
-          <display_name>0.25 ACH50</display_name>
-        </choice>
-        <choice>
-          <value>0.5 ACH50</value>
-          <display_name>0.5 ACH50</display_name>
-        </choice>
-        <choice>
-          <value>0.75 ACH50</value>
-          <display_name>0.75 ACH50</display_name>
-        </choice>
-        <choice>
           <value>1 ACH50</value>
           <display_name>1 ACH50</display_name>
-        </choice>
-        <choice>
-          <value>1.5 ACH50</value>
-          <display_name>1.5 ACH50</display_name>
         </choice>
         <choice>
           <value>2 ACH50</value>
           <display_name>2 ACH50</display_name>
         </choice>
         <choice>
-          <value>2.25 ACH50</value>
-          <display_name>2.25 ACH50</display_name>
-        </choice>
-        <choice>
           <value>3 ACH50</value>
           <display_name>3 ACH50</display_name>
-        </choice>
-        <choice>
-          <value>3.75 ACH50</value>
-          <display_name>3.75 ACH50</display_name>
         </choice>
         <choice>
           <value>4 ACH50</value>
           <display_name>4 ACH50</display_name>
         </choice>
         <choice>
-          <value>4.5 ACH50</value>
-          <display_name>4.5 ACH50</display_name>
-        </choice>
-        <choice>
-          <value>5 ACH50</value>
-          <display_name>5 ACH50</display_name>
-        </choice>
-        <choice>
-          <value>5.25 ACH50</value>
-          <display_name>5.25 ACH50</display_name>
-        </choice>
-        <choice>
           <value>6 ACH50</value>
           <display_name>6 ACH50</display_name>
-        </choice>
-        <choice>
-          <value>7 ACH50</value>
-          <display_name>7 ACH50</display_name>
-        </choice>
-        <choice>
-          <value>7.5 ACH50</value>
-          <display_name>7.5 ACH50</display_name>
         </choice>
         <choice>
           <value>8 ACH50</value>
@@ -3228,16 +3230,8 @@
           <display_name>10 ACH50</display_name>
         </choice>
         <choice>
-          <value>11.25 ACH50</value>
-          <display_name>11.25 ACH50</display_name>
-        </choice>
-        <choice>
           <value>15 ACH50</value>
           <display_name>15 ACH50</display_name>
-        </choice>
-        <choice>
-          <value>18.5 ACH50</value>
-          <display_name>18.5 ACH50</display_name>
         </choice>
         <choice>
           <value>20 ACH50</value>
@@ -3260,20 +3254,28 @@
           <display_name>50 ACH50</display_name>
         </choice>
         <choice>
-          <value>2.8 ACH45</value>
-          <display_name>2.8 ACH45</display_name>
-        </choice>
-        <choice>
           <value>0.2 nACH</value>
           <display_name>0.2 nACH</display_name>
+        </choice>
+        <choice>
+          <value>0.3 nACH</value>
+          <display_name>0.3 nACH</display_name>
         </choice>
         <choice>
           <value>0.335 nACH</value>
           <display_name>0.335 nACH</display_name>
         </choice>
         <choice>
+          <value>0.5 nACH</value>
+          <display_name>0.5 nACH</display_name>
+        </choice>
+        <choice>
           <value>0.67 nACH</value>
           <display_name>0.67 nACH</display_name>
+        </choice>
+        <choice>
+          <value>1.0 nACH</value>
+          <display_name>1.0 nACH</display_name>
         </choice>
         <choice>
           <value>1.5 nACH</value>
@@ -3286,6 +3288,10 @@
         <choice>
           <value>Detailed Example: 12.16 ACH50</value>
           <display_name>Detailed Example: 12.16 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 2.8 ACH45</value>
+          <display_name>Detailed Example: 2.8 ACH45</display_name>
         </choice>
         <choice>
           <value>Detailed Example: 0.375 nACH</value>
@@ -3429,6 +3435,10 @@
         <choice>
           <value>Boiler, 76% AFUE</value>
           <display_name>Boiler, 76% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 78% AFUE</value>
+          <display_name>Boiler, 78% AFUE</display_name>
         </choice>
         <choice>
           <value>Boiler, 80% AFUE</value>
@@ -5260,6 +5270,10 @@
           <display_name>Boiler, 76% AFUE</display_name>
         </choice>
         <choice>
+          <value>Boiler, 78% AFUE</value>
+          <display_name>Boiler, 78% AFUE</display_name>
+        </choice>
+        <choice>
           <value>Boiler, 80% AFUE</value>
           <display_name>Boiler, 80% AFUE</display_name>
         </choice>
@@ -5965,164 +5979,48 @@
           <display_name>Default</display_name>
         </choice>
         <choice>
-          <value>Conditioned Space, 100%</value>
-          <display_name>Conditioned Space, 100%</display_name>
+          <value>Conditioned Space</value>
+          <display_name>Conditioned Space</display_name>
         </choice>
         <choice>
-          <value>Basement, Unconditioned, 100%</value>
-          <display_name>Basement, Unconditioned, 100%</display_name>
+          <value>Basement</value>
+          <display_name>Basement</display_name>
         </choice>
         <choice>
-          <value>Basement, Unconditioned, 75%</value>
-          <display_name>Basement, Unconditioned, 75%</display_name>
+          <value>Crawlspace</value>
+          <display_name>Crawlspace</display_name>
         </choice>
         <choice>
-          <value>Basement, Unconditioned, 50%</value>
-          <display_name>Basement, Unconditioned, 50%</display_name>
+          <value>Attic</value>
+          <display_name>Attic</display_name>
         </choice>
         <choice>
-          <value>Basement, Conditioned, 100%</value>
-          <display_name>Basement, Conditioned, 100%</display_name>
+          <value>Garage</value>
+          <display_name>Garage</display_name>
         </choice>
         <choice>
-          <value>Basement, Conditioned, 75%</value>
-          <display_name>Basement, Conditioned, 75%</display_name>
+          <value>Outside</value>
+          <display_name>Outside</display_name>
         </choice>
         <choice>
-          <value>Basement, Conditioned, 50%</value>
-          <display_name>Basement, Conditioned, 50%</display_name>
+          <value>Exterior Wall</value>
+          <display_name>Exterior Wall</display_name>
         </choice>
         <choice>
-          <value>Crawlspace, Unvented, 100%</value>
-          <display_name>Crawlspace, Unvented, 100%</display_name>
+          <value>Under Slab</value>
+          <display_name>Under Slab</display_name>
         </choice>
         <choice>
-          <value>Crawlspace, Unvented, 75%</value>
-          <display_name>Crawlspace, Unvented, 75%</display_name>
+          <value>Roof Deck</value>
+          <display_name>Roof Deck</display_name>
         </choice>
         <choice>
-          <value>Crawlspace, Unvented, 50%</value>
-          <display_name>Crawlspace, Unvented, 50%</display_name>
+          <value>Manufactured Home Belly</value>
+          <display_name>Manufactured Home Belly</display_name>
         </choice>
         <choice>
-          <value>Crawlspace, Vented, 100%</value>
-          <display_name>Crawlspace, Vented, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Crawlspace, Vented, 75%</value>
-          <display_name>Crawlspace, Vented, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Crawlspace, Vented, 50%</value>
-          <display_name>Crawlspace, Vented, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Crawlspace, Conditioned, 100%</value>
-          <display_name>Crawlspace, Conditioned, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Crawlspace, Conditioned, 75%</value>
-          <display_name>Crawlspace, Conditioned, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Crawlspace, Conditioned, 50%</value>
-          <display_name>Crawlspace, Conditioned, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Unvented, 100%</value>
-          <display_name>Attic, Unvented, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Unvented, 75%</value>
-          <display_name>Attic, Unvented, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Unvented, 50%</value>
-          <display_name>Attic, Unvented, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Vented, 100%</value>
-          <display_name>Attic, Vented, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Vented, 75%</value>
-          <display_name>Attic, Vented, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Vented, 50%</value>
-          <display_name>Attic, Vented, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Garage, 100%</value>
-          <display_name>Garage, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Garage, 75%</value>
-          <display_name>Garage, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Garage, 50%</value>
-          <display_name>Garage, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Outside, 100%</value>
-          <display_name>Outside, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Outside, 75%</value>
-          <display_name>Outside, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Outside, 50%</value>
-          <display_name>Outside, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Exterior Wall, 100%</value>
-          <display_name>Exterior Wall, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Exterior Wall, 75%</value>
-          <display_name>Exterior Wall, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Exterior Wall, 50%</value>
-          <display_name>Exterior Wall, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Under Slab, 100%</value>
-          <display_name>Under Slab, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Under Slab, 75%</value>
-          <display_name>Under Slab, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Under Slab, 50%</value>
-          <display_name>Under Slab, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Roof Deck, 100%</value>
-          <display_name>Roof Deck, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Roof Deck, 75%</value>
-          <display_name>Roof Deck, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Roof Deck, 50%</value>
-          <display_name>Roof Deck, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Manufactured Home Belly, 100%</value>
-          <display_name>Manufactured Home Belly, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Manufactured Home Belly, 75%</value>
-          <display_name>Manufactured Home Belly, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Manufactured Home Belly, 50%</value>
-          <display_name>Manufactured Home Belly, 50%</display_name>
+          <value>Detailed Example: Attic, 75%</value>
+          <display_name>Detailed Example: Attic, 75%</display_name>
         </choice>
       </choices>
     </argument>
@@ -6144,164 +6042,48 @@
           <display_name>Default</display_name>
         </choice>
         <choice>
-          <value>Conditioned Space, 100%</value>
-          <display_name>Conditioned Space, 100%</display_name>
+          <value>Conditioned Space</value>
+          <display_name>Conditioned Space</display_name>
         </choice>
         <choice>
-          <value>Basement, Unconditioned, 100%</value>
-          <display_name>Basement, Unconditioned, 100%</display_name>
+          <value>Basement</value>
+          <display_name>Basement</display_name>
         </choice>
         <choice>
-          <value>Basement, Unconditioned, 75%</value>
-          <display_name>Basement, Unconditioned, 75%</display_name>
+          <value>Crawlspace</value>
+          <display_name>Crawlspace</display_name>
         </choice>
         <choice>
-          <value>Basement, Unconditioned, 50%</value>
-          <display_name>Basement, Unconditioned, 50%</display_name>
+          <value>Attic</value>
+          <display_name>Attic</display_name>
         </choice>
         <choice>
-          <value>Basement, Conditioned, 100%</value>
-          <display_name>Basement, Conditioned, 100%</display_name>
+          <value>Garage</value>
+          <display_name>Garage</display_name>
         </choice>
         <choice>
-          <value>Basement, Conditioned, 75%</value>
-          <display_name>Basement, Conditioned, 75%</display_name>
+          <value>Outside</value>
+          <display_name>Outside</display_name>
         </choice>
         <choice>
-          <value>Basement, Conditioned, 50%</value>
-          <display_name>Basement, Conditioned, 50%</display_name>
+          <value>Exterior Wall</value>
+          <display_name>Exterior Wall</display_name>
         </choice>
         <choice>
-          <value>Crawlspace, Unvented, 100%</value>
-          <display_name>Crawlspace, Unvented, 100%</display_name>
+          <value>Under Slab</value>
+          <display_name>Under Slab</display_name>
         </choice>
         <choice>
-          <value>Crawlspace, Unvented, 75%</value>
-          <display_name>Crawlspace, Unvented, 75%</display_name>
+          <value>Roof Deck</value>
+          <display_name>Roof Deck</display_name>
         </choice>
         <choice>
-          <value>Crawlspace, Unvented, 50%</value>
-          <display_name>Crawlspace, Unvented, 50%</display_name>
+          <value>Manufactured Home Belly</value>
+          <display_name>Manufactured Home Belly</display_name>
         </choice>
         <choice>
-          <value>Crawlspace, Vented, 100%</value>
-          <display_name>Crawlspace, Vented, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Crawlspace, Vented, 75%</value>
-          <display_name>Crawlspace, Vented, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Crawlspace, Vented, 50%</value>
-          <display_name>Crawlspace, Vented, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Crawlspace, Conditioned, 100%</value>
-          <display_name>Crawlspace, Conditioned, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Crawlspace, Conditioned, 75%</value>
-          <display_name>Crawlspace, Conditioned, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Crawlspace, Conditioned, 50%</value>
-          <display_name>Crawlspace, Conditioned, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Unvented, 100%</value>
-          <display_name>Attic, Unvented, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Unvented, 75%</value>
-          <display_name>Attic, Unvented, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Unvented, 50%</value>
-          <display_name>Attic, Unvented, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Vented, 100%</value>
-          <display_name>Attic, Vented, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Vented, 75%</value>
-          <display_name>Attic, Vented, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Vented, 50%</value>
-          <display_name>Attic, Vented, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Garage, 100%</value>
-          <display_name>Garage, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Garage, 75%</value>
-          <display_name>Garage, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Garage, 50%</value>
-          <display_name>Garage, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Outside, 100%</value>
-          <display_name>Outside, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Outside, 75%</value>
-          <display_name>Outside, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Outside, 50%</value>
-          <display_name>Outside, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Exterior Wall, 100%</value>
-          <display_name>Exterior Wall, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Exterior Wall, 75%</value>
-          <display_name>Exterior Wall, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Exterior Wall, 50%</value>
-          <display_name>Exterior Wall, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Under Slab, 100%</value>
-          <display_name>Under Slab, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Under Slab, 75%</value>
-          <display_name>Under Slab, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Under Slab, 50%</value>
-          <display_name>Under Slab, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Roof Deck, 100%</value>
-          <display_name>Roof Deck, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Roof Deck, 75%</value>
-          <display_name>Roof Deck, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Roof Deck, 50%</value>
-          <display_name>Roof Deck, 50%</display_name>
-        </choice>
-        <choice>
-          <value>Manufactured Home Belly, 100%</value>
-          <display_name>Manufactured Home Belly, 100%</display_name>
-        </choice>
-        <choice>
-          <value>Manufactured Home Belly, 75%</value>
-          <display_name>Manufactured Home Belly, 75%</display_name>
-        </choice>
-        <choice>
-          <value>Manufactured Home Belly, 50%</value>
-          <display_name>Manufactured Home Belly, 50%</display_name>
+          <value>Detailed Example: Attic, 75%</value>
+          <display_name>Detailed Example: Attic, 75%</display_name>
         </choice>
       </choices>
     </argument>
@@ -6758,36 +6540,24 @@
           <display_name>Conditioned Space</display_name>
         </choice>
         <choice>
-          <value>Basement, Unconditioned</value>
-          <display_name>Basement, Unconditioned</display_name>
-        </choice>
-        <choice>
-          <value>Basement, Conditioned</value>
-          <display_name>Basement, Conditioned</display_name>
+          <value>Basement</value>
+          <display_name>Basement</display_name>
         </choice>
         <choice>
           <value>Garage</value>
           <display_name>Garage</display_name>
         </choice>
         <choice>
-          <value>Crawlspace, Vented</value>
-          <display_name>Crawlspace, Vented</display_name>
+          <value>Crawlspace</value>
+          <display_name>Crawlspace</display_name>
         </choice>
         <choice>
-          <value>Crawlspace, Unvented</value>
-          <display_name>Crawlspace, Unvented</display_name>
+          <value>Attic</value>
+          <display_name>Attic</display_name>
         </choice>
         <choice>
-          <value>Crawlspace, Conditioned</value>
-          <display_name>Crawlspace, Conditioned</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Vented</value>
-          <display_name>Attic, Vented</display_name>
-        </choice>
-        <choice>
-          <value>Attic, Unvented</value>
-          <display_name>Attic, Unvented</display_name>
+          <value>Other Heated Space</value>
+          <display_name>Other Heated Space</display_name>
         </choice>
         <choice>
           <value>Outside</value>
@@ -7195,10 +6965,6 @@
           <display_name>auto</display_name>
         </choice>
         <choice>
-          <value>None</value>
-          <display_name>None</display_name>
-        </choice>
-        <choice>
           <value>Roof Pitch, West</value>
           <display_name>Roof Pitch, West</display_name>
         </choice>
@@ -7217,6 +6983,18 @@
         <choice>
           <value>Roof Pitch, East</value>
           <display_name>Roof Pitch, East</display_name>
+        </choice>
+        <choice>
+          <value>Roof Pitch, Northeast</value>
+          <display_name>Roof Pitch, Northeast</display_name>
+        </choice>
+        <choice>
+          <value>Roof Pitch, North</value>
+          <display_name>Roof Pitch, North</display_name>
+        </choice>
+        <choice>
+          <value>Roof Pitch, Northwest</value>
+          <display_name>Roof Pitch, Northwest</display_name>
         </choice>
         <choice>
           <value>0 Degrees</value>
@@ -7454,14 +7232,6 @@
           <display_name>1.5 kW</display_name>
         </choice>
         <choice>
-          <value>1.5 kW, Premium Module</value>
-          <display_name>1.5 kW, Premium Module</display_name>
-        </choice>
-        <choice>
-          <value>1.5 kW, Thin Film Module</value>
-          <display_name>1.5 kW, Thin Film Module</display_name>
-        </choice>
-        <choice>
           <value>2.0 kW</value>
           <display_name>2.0 kW</display_name>
         </choice>
@@ -7545,6 +7315,42 @@
           <value>12.0 kW</value>
           <display_name>12.0 kW</display_name>
         </choice>
+        <choice>
+          <value>12.5 kW</value>
+          <display_name>12.5 kW</display_name>
+        </choice>
+        <choice>
+          <value>13.0 kW</value>
+          <display_name>13.0 kW</display_name>
+        </choice>
+        <choice>
+          <value>13.5 kW</value>
+          <display_name>13.5 kW</display_name>
+        </choice>
+        <choice>
+          <value>14.0 kW</value>
+          <display_name>14.0 kW</display_name>
+        </choice>
+        <choice>
+          <value>14.5 kW</value>
+          <display_name>14.5 kW</display_name>
+        </choice>
+        <choice>
+          <value>15.0 kW</value>
+          <display_name>15.0 kW</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 10.0 kW, Standard, 14% System Losses, 96% Inverter Efficiency</value>
+          <display_name>Detailed Example: 10.0 kW, Standard, 14% System Losses, 96% Inverter Efficiency</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 1.5 kW, Premium</value>
+          <display_name>Detailed Example: 1.5 kW, Premium</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 1.5 kW, Thin Film</value>
+          <display_name>Detailed Example: 1.5 kW, Thin Film</display_name>
+        </choice>
       </choices>
     </argument>
     <argument>
@@ -7559,10 +7365,6 @@
         <choice>
           <value>auto</value>
           <display_name>auto</display_name>
-        </choice>
-        <choice>
-          <value>None</value>
-          <display_name>None</display_name>
         </choice>
         <choice>
           <value>Roof Pitch, West</value>
@@ -7583,6 +7385,18 @@
         <choice>
           <value>Roof Pitch, East</value>
           <display_name>Roof Pitch, East</display_name>
+        </choice>
+        <choice>
+          <value>Roof Pitch, Northeast</value>
+          <display_name>Roof Pitch, Northeast</display_name>
+        </choice>
+        <choice>
+          <value>Roof Pitch, North</value>
+          <display_name>Roof Pitch, North</display_name>
+        </choice>
+        <choice>
+          <value>Roof Pitch, Northwest</value>
+          <display_name>Roof Pitch, Northwest</display_name>
         </choice>
         <choice>
           <value>0 Degrees</value>
@@ -7820,14 +7634,6 @@
           <display_name>1.5 kW</display_name>
         </choice>
         <choice>
-          <value>1.5 kW, Premium Module</value>
-          <display_name>1.5 kW, Premium Module</display_name>
-        </choice>
-        <choice>
-          <value>1.5 kW, Thin Film Module</value>
-          <display_name>1.5 kW, Thin Film Module</display_name>
-        </choice>
-        <choice>
           <value>2.0 kW</value>
           <display_name>2.0 kW</display_name>
         </choice>
@@ -7911,6 +7717,42 @@
           <value>12.0 kW</value>
           <display_name>12.0 kW</display_name>
         </choice>
+        <choice>
+          <value>12.5 kW</value>
+          <display_name>12.5 kW</display_name>
+        </choice>
+        <choice>
+          <value>13.0 kW</value>
+          <display_name>13.0 kW</display_name>
+        </choice>
+        <choice>
+          <value>13.5 kW</value>
+          <display_name>13.5 kW</display_name>
+        </choice>
+        <choice>
+          <value>14.0 kW</value>
+          <display_name>14.0 kW</display_name>
+        </choice>
+        <choice>
+          <value>14.5 kW</value>
+          <display_name>14.5 kW</display_name>
+        </choice>
+        <choice>
+          <value>15.0 kW</value>
+          <display_name>15.0 kW</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 10.0 kW, Standard, 14% System Losses</value>
+          <display_name>Detailed Example: 10.0 kW, Standard, 14% System Losses</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 1.5 kW, Premium</value>
+          <display_name>Detailed Example: 1.5 kW, Premium</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: 1.5 kW, Thin Film</value>
+          <display_name>Detailed Example: 1.5 kW, Thin Film</display_name>
+        </choice>
       </choices>
     </argument>
     <argument>
@@ -7925,10 +7767,6 @@
         <choice>
           <value>auto</value>
           <display_name>auto</display_name>
-        </choice>
-        <choice>
-          <value>None</value>
-          <display_name>None</display_name>
         </choice>
         <choice>
           <value>Roof Pitch, West</value>
@@ -7949,6 +7787,18 @@
         <choice>
           <value>Roof Pitch, East</value>
           <display_name>Roof Pitch, East</display_name>
+        </choice>
+        <choice>
+          <value>Roof Pitch, Northeast</value>
+          <display_name>Roof Pitch, Northeast</display_name>
+        </choice>
+        <choice>
+          <value>Roof Pitch, North</value>
+          <display_name>Roof Pitch, North</display_name>
+        </choice>
+        <choice>
+          <value>Roof Pitch, Northwest</value>
+          <display_name>Roof Pitch, Northwest</display_name>
         </choice>
         <choice>
           <value>0 Degrees</value>
@@ -10509,124 +10359,124 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Pool, Unheated, 25% Usage</value>
-          <display_name>Pool, Unheated, 25% Usage</display_name>
+          <value>Unheated, 25% Usage</value>
+          <display_name>Unheated, 25% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Unheated, 50% Usage</value>
-          <display_name>Pool, Unheated, 50% Usage</display_name>
+          <value>Unheated, 50% Usage</value>
+          <display_name>Unheated, 50% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Unheated, 75% Usage</value>
-          <display_name>Pool, Unheated, 75% Usage</display_name>
+          <value>Unheated, 75% Usage</value>
+          <display_name>Unheated, 75% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Unheated, 100% Usage</value>
-          <display_name>Pool, Unheated, 100% Usage</display_name>
+          <value>Unheated, 100% Usage</value>
+          <display_name>Unheated, 100% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Unheated, 150% Usage</value>
-          <display_name>Pool, Unheated, 150% Usage</display_name>
+          <value>Unheated, 150% Usage</value>
+          <display_name>Unheated, 150% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Unheated, 200% Usage</value>
-          <display_name>Pool, Unheated, 200% Usage</display_name>
+          <value>Unheated, 200% Usage</value>
+          <display_name>Unheated, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Unheated, 400% Usage</value>
-          <display_name>Pool, Unheated, 400% Usage</display_name>
+          <value>Unheated, 400% Usage</value>
+          <display_name>Unheated, 400% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Electric Resistance Heater, 25% Usage</value>
-          <display_name>Pool, Electric Resistance Heater, 25% Usage</display_name>
+          <value>Electric Resistance Heater, 25% Usage</value>
+          <display_name>Electric Resistance Heater, 25% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Electric Resistance Heater, 50% Usage</value>
-          <display_name>Pool, Electric Resistance Heater, 50% Usage</display_name>
+          <value>Electric Resistance Heater, 50% Usage</value>
+          <display_name>Electric Resistance Heater, 50% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Electric Resistance Heater, 75% Usage</value>
-          <display_name>Pool, Electric Resistance Heater, 75% Usage</display_name>
+          <value>Electric Resistance Heater, 75% Usage</value>
+          <display_name>Electric Resistance Heater, 75% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Electric Resistance Heater, 100% Usage</value>
-          <display_name>Pool, Electric Resistance Heater, 100% Usage</display_name>
+          <value>Electric Resistance Heater, 100% Usage</value>
+          <display_name>Electric Resistance Heater, 100% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Electric Resistance Heater, 150% Usage</value>
-          <display_name>Pool, Electric Resistance Heater, 150% Usage</display_name>
+          <value>Electric Resistance Heater, 150% Usage</value>
+          <display_name>Electric Resistance Heater, 150% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Electric Resistance Heater, 200% Usage</value>
-          <display_name>Pool, Electric Resistance Heater, 200% Usage</display_name>
+          <value>Electric Resistance Heater, 200% Usage</value>
+          <display_name>Electric Resistance Heater, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Electric Resistance Heater, 400% Usage</value>
-          <display_name>Pool, Electric Resistance Heater, 400% Usage</display_name>
+          <value>Electric Resistance Heater, 400% Usage</value>
+          <display_name>Electric Resistance Heater, 400% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Heat Pump Heater, 25% Usage</value>
-          <display_name>Pool, Heat Pump Heater, 25% Usage</display_name>
+          <value>Heat Pump Heater, 25% Usage</value>
+          <display_name>Heat Pump Heater, 25% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Heat Pump Heater, 50% Usage</value>
-          <display_name>Pool, Heat Pump Heater, 50% Usage</display_name>
+          <value>Heat Pump Heater, 50% Usage</value>
+          <display_name>Heat Pump Heater, 50% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Heat Pump Heater, 75% Usage</value>
-          <display_name>Pool, Heat Pump Heater, 75% Usage</display_name>
+          <value>Heat Pump Heater, 75% Usage</value>
+          <display_name>Heat Pump Heater, 75% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Heat Pump Heater, 100% Usage</value>
-          <display_name>Pool, Heat Pump Heater, 100% Usage</display_name>
+          <value>Heat Pump Heater, 100% Usage</value>
+          <display_name>Heat Pump Heater, 100% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Heat Pump Heater, 150% Usage</value>
-          <display_name>Pool, Heat Pump Heater, 150% Usage</display_name>
+          <value>Heat Pump Heater, 150% Usage</value>
+          <display_name>Heat Pump Heater, 150% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Heat Pump Heater, 200% Usage</value>
-          <display_name>Pool, Heat Pump Heater, 200% Usage</display_name>
+          <value>Heat Pump Heater, 200% Usage</value>
+          <display_name>Heat Pump Heater, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Heat Pump Heater, 400% Usage</value>
-          <display_name>Pool, Heat Pump Heater, 400% Usage</display_name>
+          <value>Heat Pump Heater, 400% Usage</value>
+          <display_name>Heat Pump Heater, 400% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Natural Gas Heater, 25% Usage</value>
-          <display_name>Pool, Natural Gas Heater, 25% Usage</display_name>
+          <value>Natural Gas Heater, 25% Usage</value>
+          <display_name>Natural Gas Heater, 25% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Natural Gas Heater, 50% Usage</value>
-          <display_name>Pool, Natural Gas Heater, 50% Usage</display_name>
+          <value>Natural Gas Heater, 50% Usage</value>
+          <display_name>Natural Gas Heater, 50% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Natural Gas Heater, 75% Usage</value>
-          <display_name>Pool, Natural Gas Heater, 75% Usage</display_name>
+          <value>Natural Gas Heater, 75% Usage</value>
+          <display_name>Natural Gas Heater, 75% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Natural Gas Heater, 100% Usage</value>
-          <display_name>Pool, Natural Gas Heater, 100% Usage</display_name>
+          <value>Natural Gas Heater, 100% Usage</value>
+          <display_name>Natural Gas Heater, 100% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Natural Gas Heater, 150% Usage</value>
-          <display_name>Pool, Natural Gas Heater, 150% Usage</display_name>
+          <value>Natural Gas Heater, 150% Usage</value>
+          <display_name>Natural Gas Heater, 150% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Natural Gas Heater, 200% Usage</value>
-          <display_name>Pool, Natural Gas Heater, 200% Usage</display_name>
+          <value>Natural Gas Heater, 200% Usage</value>
+          <display_name>Natural Gas Heater, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Pool, Natural Gas Heater, 400% Usage</value>
-          <display_name>Pool, Natural Gas Heater, 400% Usage</display_name>
+          <value>Natural Gas Heater, 400% Usage</value>
+          <display_name>Natural Gas Heater, 400% Usage</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Pool, 2700 kWh/yr Pump, Unheated</value>
-          <display_name>Detailed Example: Pool, 2700 kWh/yr Pump, Unheated</display_name>
+          <value>Detailed Example: 2700 kWh/yr Pump, Unheated</value>
+          <display_name>Detailed Example: 2700 kWh/yr Pump, Unheated</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Pool, 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater</value>
-          <display_name>Detailed Example: Pool, 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater</display_name>
+          <value>Detailed Example: 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater</value>
+          <display_name>Detailed Example: 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater</display_name>
         </choice>
       </choices>
     </argument>
@@ -10648,124 +10498,124 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Spa, Unheated, 25% Usage</value>
-          <display_name>Spa, Unheated, 25% Usage</display_name>
+          <value>Unheated, 25% Usage</value>
+          <display_name>Unheated, 25% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Unheated, 50% Usage</value>
-          <display_name>Spa, Unheated, 50% Usage</display_name>
+          <value>Unheated, 50% Usage</value>
+          <display_name>Unheated, 50% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Unheated, 75% Usage</value>
-          <display_name>Spa, Unheated, 75% Usage</display_name>
+          <value>Unheated, 75% Usage</value>
+          <display_name>Unheated, 75% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Unheated, 100% Usage</value>
-          <display_name>Spa, Unheated, 100% Usage</display_name>
+          <value>Unheated, 100% Usage</value>
+          <display_name>Unheated, 100% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Unheated, 150% Usage</value>
-          <display_name>Spa, Unheated, 150% Usage</display_name>
+          <value>Unheated, 150% Usage</value>
+          <display_name>Unheated, 150% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Unheated, 200% Usage</value>
-          <display_name>Spa, Unheated, 200% Usage</display_name>
+          <value>Unheated, 200% Usage</value>
+          <display_name>Unheated, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Unheated, 400% Usage</value>
-          <display_name>Spa, Unheated, 400% Usage</display_name>
+          <value>Unheated, 400% Usage</value>
+          <display_name>Unheated, 400% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Electric Resistance Heater, 25% Usage</value>
-          <display_name>Spa, Electric Resistance Heater, 25% Usage</display_name>
+          <value>Electric Resistance Heater, 25% Usage</value>
+          <display_name>Electric Resistance Heater, 25% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Electric Resistance Heater, 50% Usage</value>
-          <display_name>Spa, Electric Resistance Heater, 50% Usage</display_name>
+          <value>Electric Resistance Heater, 50% Usage</value>
+          <display_name>Electric Resistance Heater, 50% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Electric Resistance Heater, 75% Usage</value>
-          <display_name>Spa, Electric Resistance Heater, 75% Usage</display_name>
+          <value>Electric Resistance Heater, 75% Usage</value>
+          <display_name>Electric Resistance Heater, 75% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Electric Resistance Heater, 100% Usage</value>
-          <display_name>Spa, Electric Resistance Heater, 100% Usage</display_name>
+          <value>Electric Resistance Heater, 100% Usage</value>
+          <display_name>Electric Resistance Heater, 100% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Electric Resistance Heater, 150% Usage</value>
-          <display_name>Spa, Electric Resistance Heater, 150% Usage</display_name>
+          <value>Electric Resistance Heater, 150% Usage</value>
+          <display_name>Electric Resistance Heater, 150% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Electric Resistance Heater, 200% Usage</value>
-          <display_name>Spa, Electric Resistance Heater, 200% Usage</display_name>
+          <value>Electric Resistance Heater, 200% Usage</value>
+          <display_name>Electric Resistance Heater, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Electric Resistance Heater, 400% Usage</value>
-          <display_name>Spa, Electric Resistance Heater, 400% Usage</display_name>
+          <value>Electric Resistance Heater, 400% Usage</value>
+          <display_name>Electric Resistance Heater, 400% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Heat Pump Heater, 25% Usage</value>
-          <display_name>Spa, Heat Pump Heater, 25% Usage</display_name>
+          <value>Heat Pump Heater, 25% Usage</value>
+          <display_name>Heat Pump Heater, 25% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Heat Pump Heater, 50% Usage</value>
-          <display_name>Spa, Heat Pump Heater, 50% Usage</display_name>
+          <value>Heat Pump Heater, 50% Usage</value>
+          <display_name>Heat Pump Heater, 50% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Heat Pump Heater, 75% Usage</value>
-          <display_name>Spa, Heat Pump Heater, 75% Usage</display_name>
+          <value>Heat Pump Heater, 75% Usage</value>
+          <display_name>Heat Pump Heater, 75% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Heat Pump Heater, 100% Usage</value>
-          <display_name>Spa, Heat Pump Heater, 100% Usage</display_name>
+          <value>Heat Pump Heater, 100% Usage</value>
+          <display_name>Heat Pump Heater, 100% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Heat Pump Heater, 150% Usage</value>
-          <display_name>Spa, Heat Pump Heater, 150% Usage</display_name>
+          <value>Heat Pump Heater, 150% Usage</value>
+          <display_name>Heat Pump Heater, 150% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Heat Pump Heater, 200% Usage</value>
-          <display_name>Spa, Heat Pump Heater, 200% Usage</display_name>
+          <value>Heat Pump Heater, 200% Usage</value>
+          <display_name>Heat Pump Heater, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Heat Pump Heater, 400% Usage</value>
-          <display_name>Spa, Heat Pump Heater, 400% Usage</display_name>
+          <value>Heat Pump Heater, 400% Usage</value>
+          <display_name>Heat Pump Heater, 400% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Natural Gas Heater, 25% Usage</value>
-          <display_name>Spa, Natural Gas Heater, 25% Usage</display_name>
+          <value>Natural Gas Heater, 25% Usage</value>
+          <display_name>Natural Gas Heater, 25% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Natural Gas Heater, 50% Usage</value>
-          <display_name>Spa, Natural Gas Heater, 50% Usage</display_name>
+          <value>Natural Gas Heater, 50% Usage</value>
+          <display_name>Natural Gas Heater, 50% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Natural Gas Heater, 75% Usage</value>
-          <display_name>Spa, Natural Gas Heater, 75% Usage</display_name>
+          <value>Natural Gas Heater, 75% Usage</value>
+          <display_name>Natural Gas Heater, 75% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Natural Gas Heater, 100% Usage</value>
-          <display_name>Spa, Natural Gas Heater, 100% Usage</display_name>
+          <value>Natural Gas Heater, 100% Usage</value>
+          <display_name>Natural Gas Heater, 100% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Natural Gas Heater, 150% Usage</value>
-          <display_name>Spa, Natural Gas Heater, 150% Usage</display_name>
+          <value>Natural Gas Heater, 150% Usage</value>
+          <display_name>Natural Gas Heater, 150% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Natural Gas Heater, 200% Usage</value>
-          <display_name>Spa, Natural Gas Heater, 200% Usage</display_name>
+          <value>Natural Gas Heater, 200% Usage</value>
+          <display_name>Natural Gas Heater, 200% Usage</display_name>
         </choice>
         <choice>
-          <value>Spa, Natural Gas Heater, 400% Usage</value>
-          <display_name>Spa, Natural Gas Heater, 400% Usage</display_name>
+          <value>Natural Gas Heater, 400% Usage</value>
+          <display_name>Natural Gas Heater, 400% Usage</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Spa, 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater</value>
-          <display_name>Detailed Example: Spa, 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater</display_name>
+          <value>Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater</value>
+          <display_name>Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Spa, 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater</value>
-          <display_name>Detailed Example: Spa, 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater</display_name>
+          <value>Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater</value>
+          <display_name>Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater</display_name>
         </choice>
       </choices>
     </argument>
@@ -10802,6 +10652,15 @@
           <display_name>manufactured home</display_name>
         </choice>
       </choices>
+    </argument>
+    <argument>
+      <name>geometry_building_num_units</name>
+      <display_name>Building Number of Units</display_name>
+      <description>The number of units in the building.</description>
+      <type>Integer</type>
+      <units>#</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>schedules_space_heating_unavailable_days</name>
@@ -11112,7 +10971,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>ECD3CDFA</checksum>
+      <checksum>9EAE1EFE</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -11129,13 +10988,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>B794224E</checksum>
+      <checksum>5D7A12B0</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>3E80AAD0</checksum>
+      <checksum>CDEAF66D</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>
@@ -11171,7 +11030,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>0549D872</checksum>
+      <checksum>A68B12CF</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>
