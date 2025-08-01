@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>d69633c1-5b2a-458a-b169-d36281f8d9ee</version_id>
-  <version_modified>2025-07-31T20:35:21Z</version_modified>
+  <version_id>62872c7a-cd42-43c2-9c18-1c7472de9691</version_id>
+  <version_modified>2025-08-01T15:39:27Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -83,10 +83,141 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>refrigerator_usage_multiplier</name>
+      <display_name>Appliances: Refrigerator Usage Multiplier</display_name>
+      <description>Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants.</description>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>clothes_dryer_usage_multiplier</name>
+      <display_name>Appliances: Clothes Dryer Usage Multiplier</display_name>
+      <description>Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants.</description>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>clothes_washer_usage_multiplier</name>
+      <display_name>Appliances: Clothes Washer Usage Multiplier</display_name>
+      <description>Multiplier on the clothes washer energy usage that can reflect, e.g., high/low usage occupants.</description>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>cooking_range_oven_usage_multiplier</name>
+      <display_name>Appliances: Cooking Range/Oven Usage Multiplier</display_name>
+      <description>Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants.</description>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>dishwasher_usage_multiplier</name>
+      <display_name>Appliances: Dishwasher Usage Multiplier</display_name>
+      <description>Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants.</description>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>extra_refrigerator_usage_multiplier</name>
+      <display_name>Appliances: Extra Refrigerator Usage Multiplier</display_name>
+      <description>Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants.</description>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>freezer_usage_multiplier</name>
+      <display_name>Appliances: Freezer Usage Multiplier</display_name>
+      <description>Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants.</description>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>misc_plug_loads_television_usage_multiplier</name>
+      <display_name>Plug Loads: Television Usage Multiplier</display_name>
+      <description>Multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.</description>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>misc_plug_loads_other_usage_multiplier</name>
+      <display_name>Plug Loads: Other Usage Multiplier</display_name>
+      <description>Multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.</description>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>bathroom_fans_start_hour</name>
+      <display_name>Ventilation: Bathroom Fans Start Hour</display_name>
+      <description>The hour of the day when the bathroom fans run.</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>kitchen_fans_start_hour</name>
+      <display_name>Ventilation: Kitchen Fans Start Hour</display_name>
+      <description>The hour of the day when the kitchen fans run.</description>
+      <type>Integer</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>schedules_vacancy_periods</name>
+      <display_name>Schedules: Vacancy Periods</display_name>
+      <description>Specifies the vacancy periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>building_id</name>
       <display_name>Building Unit ID</display_name>
       <description>The building unit number (between 1 and the number of samples).</description>
       <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>ev_miles_driven_per_year</name>
+      <display_name>Electric Vehicle: Miles Driven Per Year</display_name>
+      <description>The annual miles the electric vehicle is driven.</description>
+      <type>Double</type>
+      <units>miles</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>ev_fraction_charged_home</name>
+      <display_name>Electric Vehicle: Fraction Charged at Home</display_name>
+      <description>The fraction of charging energy provided by the at-home charger to the electric vehicle.</description>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>ev_efficiency_percent_increase</name>
+      <display_name>Electric Vehicle: Efficiency Improvement</display_name>
+      <description>The increase (fraction) in efficiency of the electric vehicle.</description>
+      <type>Double</type>
+      <units>Frac</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -113,7 +244,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>DCC89AEB</checksum>
+      <checksum>EB16654F</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

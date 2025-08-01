@@ -10,6 +10,7 @@ module Constants
   # Exclude these BuildResidentialHPXML arguments as ResStockArguments arguments
   BuildResidentialHPXMLExcludes = ['hpxml_path',
                                    'whole_sfa_or_mf_building_sim',
+                                   'geometry_unit_type',
                                    'schedules_paths',
                                    'simulation_control_timestep',
                                    'simulation_control_run_period',

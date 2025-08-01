@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>82ecf0e1-5c54-47a7-b313-f66329dec75e</version_id>
-  <version_modified>2025-08-01T01:01:43Z</version_modified>
+  <version_id>3994dfb7-7adb-4101-995e-dd2fb1246aa3</version_id>
+  <version_modified>2025-08-01T06:33:07Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -207,69 +207,6 @@
       <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>geometry_unit_type</name>
-      <display_name>Geometry: Unit Type</display_name>
-      <description>The type of dwelling unit and number of stories. Includes conditioned attics and excludes conditioned basements.</description>
-      <type>Choice</type>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>Single-Family Detached, 2 Stories</default_value>
-      <choices>
-        <choice>
-          <value>Single-Family Detached, 1 Story</value>
-          <display_name>Single-Family Detached, 1 Story</display_name>
-        </choice>
-        <choice>
-          <value>Single-Family Detached, 2 Stories</value>
-          <display_name>Single-Family Detached, 2 Stories</display_name>
-        </choice>
-        <choice>
-          <value>Single-Family Detached, 3 Stories</value>
-          <display_name>Single-Family Detached, 3 Stories</display_name>
-        </choice>
-        <choice>
-          <value>Single-Family Detached, 4 Stories</value>
-          <display_name>Single-Family Detached, 4 Stories</display_name>
-        </choice>
-        <choice>
-          <value>Single-Family Attached, 1 Story</value>
-          <display_name>Single-Family Attached, 1 Story</display_name>
-        </choice>
-        <choice>
-          <value>Single-Family Attached, 2 Stories</value>
-          <display_name>Single-Family Attached, 2 Stories</display_name>
-        </choice>
-        <choice>
-          <value>Single-Family Attached, 3 Stories</value>
-          <display_name>Single-Family Attached, 3 Stories</display_name>
-        </choice>
-        <choice>
-          <value>Single-Family Attached, 4 Stories</value>
-          <display_name>Single-Family Attached, 4 Stories</display_name>
-        </choice>
-        <choice>
-          <value>Apartment Unit, 1 Story</value>
-          <display_name>Apartment Unit, 1 Story</display_name>
-        </choice>
-        <choice>
-          <value>Manufactured Home, 1 Story</value>
-          <display_name>Manufactured Home, 1 Story</display_name>
-        </choice>
-        <choice>
-          <value>Manufactured Home, 2 Stories</value>
-          <display_name>Manufactured Home, 2 Stories</display_name>
-        </choice>
-        <choice>
-          <value>Manufactured Home, 3 Stories</value>
-          <display_name>Manufactured Home, 3 Stories</display_name>
-        </choice>
-        <choice>
-          <value>Manufactured Home, 4 Stories</value>
-          <display_name>Manufactured Home, 4 Stories</display_name>
-        </choice>
-      </choices>
     </argument>
     <argument>
       <name>geometry_unit_aspect_ratio</name>
@@ -10628,9 +10565,9 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>geometry_unit_type</name>
-      <display_name>Unit Type</display_name>
-      <description>The type of dwelling unit.</description>
+      <name>geometry_facility_type</name>
+      <display_name>Facility Type</display_name>
+      <description>The facility type of the dwelling unit.</description>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -10971,7 +10908,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>9EAE1EFE</checksum>
+      <checksum>9EE1B008</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -10988,13 +10925,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>5D7A12B0</checksum>
+      <checksum>E95C0B76</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CDEAF66D</checksum>
+      <checksum>E0237EAB</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>

@@ -69,12 +69,98 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Reduction (%) on the air exchange rate value.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('refrigerator_usage_multiplier', true)
+    arg.setDisplayName('Appliances: Refrigerator Usage Multiplier')
+    arg.setDescription('Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants.')
+    arg.setDefaultValue(1.0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('clothes_dryer_usage_multiplier', true)
+    arg.setDisplayName('Appliances: Clothes Dryer Usage Multiplier')
+    arg.setDescription('Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants.')
+    arg.setDefaultValue(1.0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('clothes_washer_usage_multiplier', true)
+    arg.setDisplayName('Appliances: Clothes Washer Usage Multiplier')
+    arg.setDescription('Multiplier on the clothes washer energy usage that can reflect, e.g., high/low usage occupants.')
+    arg.setDefaultValue(1.0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooking_range_oven_usage_multiplier', true)
+    arg.setDisplayName('Appliances: Cooking Range/Oven Usage Multiplier')
+    arg.setDescription('Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants.')
+    arg.setDefaultValue(1.0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('dishwasher_usage_multiplier', true)
+    arg.setDisplayName('Appliances: Dishwasher Usage Multiplier')
+    arg.setDescription('Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants.')
+    arg.setDefaultValue(1.0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('extra_refrigerator_usage_multiplier', true)
+    arg.setDisplayName('Appliances: Extra Refrigerator Usage Multiplier')
+    arg.setDescription('Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants.')
+    arg.setDefaultValue(1.0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('freezer_usage_multiplier', true)
+    arg.setDisplayName('Appliances: Freezer Usage Multiplier')
+    arg.setDescription('Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants.')
+    arg.setDefaultValue(1.0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_television_usage_multiplier', true)
+    arg.setDisplayName('Plug Loads: Television Usage Multiplier')
+    arg.setDescription('Multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.')
+    arg.setDefaultValue(1.0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_other_usage_multiplier', true)
+    arg.setDisplayName('Plug Loads: Other Usage Multiplier')
+    arg.setDescription('Multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.')
+    arg.setDefaultValue(1.0)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('bathroom_fans_start_hour', true)
+    arg.setDisplayName('Ventilation: Bathroom Fans Start Hour')
+    arg.setDescription('The hour of the day when the bathroom fans run.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('kitchen_fans_start_hour', true)
+    arg.setDisplayName('Ventilation: Kitchen Fans Start Hour')
+    arg.setDescription('The hour of the day when the kitchen fans run.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('schedules_vacancy_periods', false)
+    arg.setDisplayName('Schedules: Vacancy Periods')
+    arg.setDescription('Specifies the vacancy periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('building_id', false)
     arg.setDisplayName('Building Unit ID')
     arg.setDescription('The building unit number (between 1 and the number of samples).')
     args << arg
 
-    args
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_miles_driven_per_year', false)
+    arg.setDisplayName('Electric Vehicle: Miles Driven Per Year')
+    arg.setDescription('The annual miles the electric vehicle is driven.')
+    arg.setUnits('miles')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_fraction_charged_home', false)
+    arg.setDisplayName('Electric Vehicle: Fraction Charged at Home')
+    arg.setDescription('The fraction of charging energy provided by the at-home charger to the electric vehicle.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_efficiency_percent_increase', false)
+    arg.setDisplayName('Electric Vehicle: Efficiency Improvement')
+    arg.setDescription('The increase (fraction) in efficiency of the electric vehicle.')
+    arg.setUnits('Frac')
+    args << arg
+
+    return args
   end
 
   # Run the measure
@@ -94,6 +180,77 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Load HPXML
     @hpxml = HPXML.new(hpxml_path: @hpxml_path)
+
+    # Usage Multipliers
+    @hpxml.plug_loads.each do |plug_load|
+      if plug_load.plug_load_type == HPXML::PlugLoadTypeTelevision
+        plug_load.usage_multiplier *= args[:misc_plug_loads_television_2_usage_multiplier]
+      elsif plug_load.plug_load_type == HPXML::PlugLoadTypeOther
+        plug_load.usage_multiplier *= args[:misc_plug_loads_other_2_usage_multiplier]
+      end
+    end
+    @hpxml.refrigerators.each do |refrigerator|
+      if refrigerator.primary_indicator
+        refrigerator.usage_multiplier *= args[:refrigerator_usage_multiplier]
+      else
+        refrigerator.usage_multiplier *= args[:extra_refrigerator_usage_multiplier]
+      end
+    end
+    @hpxml.clothes_dryers.each do |clothes_dryer|
+      clothes_dryer.usage_multiplier *= args[:clothes_dryer_usage_multiplier]
+    end
+    @hpxml.clothes_washers.each do |clothes_washer|
+      clothes_washer.usage_multiplier *= args[:clothes_washer_usage_multiplier]
+    end
+    @hpxml.cooking_ranges.each do |cooking_range|
+      cooking_range.usage_multiplier *= args[:cooking_range_oven_usage_multiplier]
+    end
+    @hpxml.dishwashers.each do |dishwasher|
+      dishwasher.usage_multiplier *= args[:dishwasher_usage_multiplier]
+    end
+    @hpxml.freezers.each do |freezer|
+      freezer.usage_multiplier *= args[:freezer_usage_multiplier]
+    end
+
+    # Ventilation Start Hours
+    @hpxml.ventilation_fans.each do |ventilation_fan|
+      next unless ventilation_fan.used_for_local_ventilation
+
+      if ventilation_fan.fan_location == HPXML::LocationKitchen
+        ventilation_fan.start_hour = args[:kitchen_fans_start_hour]
+      elsif ventilation_fan.fan_location == HPXML::LocationBath
+        ventilation_fan.start_hour = args[:bathroom_fans_start_hour]
+      end
+    end
+
+    # Vacancy
+    schedules_vacancy_periods = args[:schedules_vacancy_periods].split(',').map(&:strip)
+    schedules_vacancy_periods.each do |schedule_vacancy_period|
+      begin_month, begin_day, begin_hour, end_month, end_day, end_hour = Calendar.parse_date_time_range(schedule_vacancy_period)
+      @hpxml.header.unavailable_periods.add(column_name: 'Vacancy',
+                                            begin_month: begin_month,
+                                            begin_day: begin_day,
+                                            begin_hour: begin_hour,
+                                            end_month: end_month,
+                                            end_day: end_day,
+                                            end_hour: end_hour)
+    end
+
+    # EVs
+    @vehicles.each do |vehicle|
+      next unless vehicle.vehicle_type == HPXML::VehicleTypeBEV
+
+      if not args[:ev_efficiency_percent_increase].nil?
+        # Adjust efficiency (in kWh/mile) to reflect a percentage improvement in efficiency.
+        vehicle.fuel_economy_combined /= 1 + args[:ev_efficiency_percent_increase]
+      end
+      if not args[:ev_fraction_charged_home].nil?
+        vehicle.fraction_charged_home = args[:ev_fraction_charged_home]
+      end
+      if not args[:ev_miles_driven_per_year].nil?
+        vehicle.miles_per_year = args[:ev_miles_driven_per_year]
+      end
+    end
 
     # Infiltration Reduction
     if not args[:air_leakage_percent_reduction].nil?

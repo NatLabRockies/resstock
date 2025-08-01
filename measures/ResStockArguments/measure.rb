@@ -85,9 +85,9 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     unit_type_choices << HPXML::ResidentialTypeApartment
     unit_type_choices << HPXML::ResidentialTypeManufactured
 
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('geometry_unit_type', unit_type_choices, true)
-    arg.setDisplayName('Unit Type')
-    arg.setDescription('The type of dwelling unit.')
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('geometry_facility_type', unit_type_choices, true)
+    arg.setDisplayName('Facility Type')
+    arg.setDescription('The facility type of the dwelling unit.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('geometry_building_num_units', false)
@@ -333,9 +333,9 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
                ['4000+', HPXML::ResidentialTypeSFA] => 7414, # AHS 2019, 1 attached
                ['4000+', HPXML::ResidentialTypeApartment] => 6348, # AHS 2021, 4,000 or more all unit average
                ['4000+', HPXML::ResidentialTypeManufactured] => 5587 } # AHS 2021, 1 detached and mobile home weighted average
-      cfa = cfas[[args[:geometry_unit_cfa_bin], args[:geometry_unit_type]]]
+      cfa = cfas[[args[:geometry_unit_cfa_bin], args[:geometry_facility_type]]]
       if cfa.nil?
-        runner.registerError("ResStockArguments: Could not look up conditioned floor area for '#{args[:geometry_unit_cfa_bin]}' and '#{args[:geometry_unit_type]}'.")
+        runner.registerError("ResStockArguments: Could not look up conditioned floor area for '#{args[:geometry_unit_cfa_bin]}' and '#{args[:geometry_facility_type]}'.")
         return false
       end
       args[:geometry_unit_conditioned_floor_area] = Float(cfa)
@@ -479,12 +479,12 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     fblr_walls_are_adiabatic = [false, false, false, false]
 
     # Map corridor arguments to adiabatic walls and shading
-    if [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include? args[:geometry_unit_type]
+    if [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include? args[:geometry_facility_type]
       n_floors = Float(args[:geometry_num_floors_above_grade])
       n_units = Float(args[:geometry_building_num_units])
       horiz_location = args[:geometry_unit_horizontal_location]
 
-      if args[:geometry_unit_type] == HPXML::ResidentialTypeApartment
+      if args[:geometry_facility_type] == HPXML::ResidentialTypeApartment
         n_units_per_floor = n_units / n_floors
         has_rear_units = false
         if n_units_per_floor >= 4 && (corridor_position == 'Double Exterior' || corridor_position == 'None')
@@ -513,7 +513,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
           args[:overhangs_front_distance_to_top_of_window] = 1
         end
 
-      elsif args[:geometry_unit_type] == HPXML::ResidentialTypeSFA
+      elsif args[:geometry_facility_type] == HPXML::ResidentialTypeSFA
         n_units_per_floor = n_units
         has_rear_units = false
       end
@@ -565,11 +565,12 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     }[fblr_walls_are_adiabatic]
 
     # Unit Type
-    if args[:geometry_unit_type] == HPXML::ResidentialTypeApartment
-      args[:geometry_num_floors_above_grade] = 1
+    num_stories = args[:geometry_num_floors_above_grade]
+    if args[:geometry_facility_type] == HPXML::ResidentialTypeApartment
+      num_stories = 1
     end
-    stories_str = (args[:geometry_num_floors_above_grade] == 1 ? '1 Story' : "#{args[:geometry_num_floors_above_grade]} Stories")
-    args[:geometry_unit_type] = "#{geometry_unit_type}, #{stories_str}"
+    stories_str = (num_stories == 1 ? '1 Story' : "#{num_stories} Stories")
+    args[:geometry_unit_type] = "#{geometry_facility_type}, #{stories_str}"
 
     # Adiabatic Floor/Ceiling
     if not args[:geometry_unit_level].nil?
@@ -586,7 +587,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # Height Above Grade
-    if args[:geometry_unit_type] == HPXML::ResidentialTypeApartment
+    if args[:geometry_facility_type] == HPXML::ResidentialTypeApartment
       n_floors = Float(args[:geometry_num_floors_above_grade])
       avg_ceiling_height = args[:geometry_average_ceiling_height]
 

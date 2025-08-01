@@ -70,19 +70,6 @@ The year the building was built.
 
 <br/>
 
-**Geometry: Unit Type**
-
-The type of dwelling unit and number of stories. Includes conditioned attics and excludes conditioned basements.
-
-- **Name:** ``geometry_unit_type``
-- **Type:** ``Choice``
-
-- **Required:** ``true``
-
-- **Choices:** `Single-Family Detached, 1 Story`, `Single-Family Detached, 2 Stories`, `Single-Family Detached, 3 Stories`, `Single-Family Detached, 4 Stories`, `Single-Family Attached, 1 Story`, `Single-Family Attached, 2 Stories`, `Single-Family Attached, 3 Stories`, `Single-Family Attached, 4 Stories`, `Apartment Unit, 1 Story`, `Manufactured Home, 1 Story`, `Manufactured Home, 2 Stories`, `Manufactured Home, 3 Stories`, `Manufactured Home, 4 Stories`
-
-<br/>
-
 **Geometry: Unit Aspect Ratio**
 
 The ratio of front/back wall length to left/right wall length for the unit, excluding any protruding garage wall area.
@@ -1397,11 +1384,11 @@ The building unit number (between 1 and the number of samples).
 
 <br/>
 
-**Unit Type**
+**Facility Type**
 
-The type of dwelling unit.
+The facility type of the dwelling unit.
 
-- **Name:** ``geometry_unit_type``
+- **Name:** ``geometry_facility_type``
 - **Type:** ``Choice``
 
 - **Required:** ``true``
