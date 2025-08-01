@@ -55,16 +55,10 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue('hpxml.xml')
     args << arg
 
-    timestep_choices = OpenStudio::StringVector.new
-    [60, 30, 20, 15, 12, 10, 6, 5, 4, 3, 2, 1].each do |timestep|
-      timestep_choices << timestep.to_s
-    end
-
-    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('simulation_control_timestep', timestep_choices, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('simulation_control_timestep', choices[:simulation_control_timestep], false)
     arg.setDisplayName('Simulation Control: Timestep')
-    arg.setUnits('min')
     arg.setDescription('The timestep for the simulation; defaults to hourly calculations for fastest runtime.')
-    arg.setDefaultValue('60')
+    arg.setDefaultValue('60 minutes')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('simulation_control_run_period', false)
@@ -113,11 +107,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue('None')
     args << arg
 
-    num_flag_choices = OpenStudio::StringVector.new
-    for i in 1..3
-      num_flag_choices << i.to_s
-    end
-
     arg = OpenStudio::Measure::OSArgument.makeDoubleArgument('geometry_unit_conditioned_floor_area', true)
     arg.setDisplayName('Geometry: Unit Conditioned Floor Area')
     arg.setUnits('ft2')
@@ -138,45 +127,28 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue('South')
     args << arg
 
-    num_br_choices = OpenStudio::StringVector.new
-    for i in 0..11
-      num_br_choices << i.to_s
-    end
-
-    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('geometry_unit_num_bedrooms', num_br_choices, true)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('geometry_unit_num_bedrooms', choices[:geometry_unit_num_bedrooms], true)
     arg.setDisplayName('Geometry: Unit Number of Bedrooms')
     arg.setDescription('The number of bedrooms in the unit.')
-    arg.setDefaultValue('3')
+    arg.setDefaultValue('3 Bedrooms')
     args << arg
 
-    num_bath_occ_choices = OpenStudio::StringVector.new
-    num_bath_occ_choices << 'Default'
-    for i in 0..11
-      num_bath_occ_choices << i.to_s
-    end
-
-    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('geometry_unit_num_bathrooms', num_bath_occ_choices, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('geometry_unit_num_bathrooms', choices[:geometry_unit_num_bathrooms], false)
     arg.setDisplayName('Geometry: Unit Number of Bathrooms')
     arg.setDescription('The number of bathrooms in the unit. Defaults to NumberofBedrooms/2 + 0.5.')
     arg.setDefaultValue('Default')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('geometry_unit_num_occupants', num_bath_occ_choices, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('geometry_unit_num_occupants', choices[:geometry_unit_num_occupants], false)
     arg.setDisplayName('Geometry: Unit Number of Occupants')
     arg.setDescription('The number of occupants in the unit. Defaults to an *asset* calculation assuming standard occupancy, in which various end use defaults (e.g., plug loads, appliances, and hot water usage) are calculated based on Number of Bedrooms and Conditioned Floor Area. If provided, an *operational* calculation is instead performed in which the end use defaults reflect real-world data (where possible).')
     arg.setDefaultValue('Default')
     args << arg
 
-    ceil_ht_choices = OpenStudio::StringVector.new
-    for i in 12..30
-      ceil_ht_choices << (i / 2.0).to_s
-    end
-
-    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('geometry_average_ceiling_height', ceil_ht_choices, false)
-    arg.setDisplayName('Geometry: Average Ceiling Height')
-    arg.setUnits('ft')
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('geometry_ceiling_height', choices[:geometry_ceiling_height], false)
+    arg.setDisplayName('Geometry: Ceiling Height')
     arg.setDescription('Average distance from the floor to the ceiling.')
-    arg.setDefaultValue('8.0')
+    arg.setDefaultValue('8.0 ft')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('geometry_garage_type', choices[:geometry_garage_type], false)
@@ -373,25 +345,16 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue('Average')
     args << arg
 
-    heating_system_fuel_choices = OpenStudio::StringVector.new
-    heating_system_fuel_choices << HPXML::FuelTypeElectricity
-    heating_system_fuel_choices << HPXML::FuelTypeNaturalGas
-    heating_system_fuel_choices << HPXML::FuelTypeOil
-    heating_system_fuel_choices << HPXML::FuelTypePropane
-    heating_system_fuel_choices << HPXML::FuelTypeWoodCord
-    heating_system_fuel_choices << HPXML::FuelTypeWoodPellets
-    heating_system_fuel_choices << HPXML::FuelTypeCoal
-
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_heating_system', choices[:hvac_heating_system], true)
     arg.setDisplayName('HVAC: Heating System')
     arg.setDescription("The type and efficiency of the heating system. Use 'None' if there is no heating system or if there is a heat pump serving a heating load.")
     arg.setDefaultValue('Central Furnace, 78% AFUE')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_heating_system_fuel', heating_system_fuel_choices, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_heating_system_fuel', choices[:hvac_heating_system_fuel], false)
     arg.setDisplayName('HVAC: Heating System Fuel Type')
     arg.setDescription("The fuel type of the heating system. Ignored for #{HPXML::HVACTypeElectricResistance}.")
-    arg.setDefaultValue(HPXML::FuelTypeNaturalGas)
+    arg.setDefaultValue('Natural Gas')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_heating_system_capacity', choices[:hvac_heating_system_capacity], false)
@@ -490,10 +453,10 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue('None')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_heating_system_2_fuel', heating_system_fuel_choices, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_heating_system_2_fuel', choices[:hvac_heating_system_2_fuel], false)
     arg.setDisplayName('HVAC: Heating System 2 Fuel Type')
     arg.setDescription("The fuel type of the second heating system. Ignored for #{HPXML::HVACTypeElectricResistance}.")
-    arg.setDefaultValue(HPXML::FuelTypeElectricity)
+    arg.setDefaultValue('Electricity')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('hvac_heating_system_2_capacity', choices[:hvac_heating_system_2_capacity], false)
@@ -593,25 +556,13 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('dhw_water_heater', choices[:dhw_water_heater], true)
     arg.setDisplayName('DHW: Water Heater')
     arg.setDescription('The type and efficiency of the water heater.')
-    arg.setDefaultValue('Electricity, Tank, UEF=0.92')
+    arg.setDefaultValue('Electricity, Tank, UEF 0.92')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('dhw_water_heater_location', choices[:dhw_water_heater_location], false)
     arg.setDisplayName('DHW: Water Heater Location')
     arg.setDescription('The location of the water heater. Defaults based on the foundation/garage type.')
     arg.setDefaultValue('Default')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('dhw_water_heater_jacket', choices[:dhw_water_heater_jacket], false)
-    arg.setDisplayName('DHW: Water Heater Jacket Insulation')
-    arg.setDescription("The type of water heater jacket/blanket insulation. Doesn't apply to tankless systems or space-heating boilers.")
-    arg.setDefaultValue('None')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('dhw_water_heater_uses_desuperheater', false)
-    arg.setDisplayName('DHW: Water Heater Uses Desuperheater')
-    arg.setDescription("Whether the water heater uses a desuperheater. Requires that the dwelling unit has a #{HPXML::HVACTypeHeatPumpAirToAir}, #{HPXML::HVACTypeHeatPumpMiniSplit}, or #{HPXML::HVACTypeHeatPumpGroundToAir} heat pump or a #{HPXML::HVACTypeCentralAirConditioner} or #{HPXML::HVACTypeMiniSplitAirConditioner} air conditioner.")
-    arg.setDefaultValue(false)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('dhw_distribution', choices[:dhw_distribution], false)
@@ -945,21 +896,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   # @param args [Hash] Map of :argument_name => value
   # @return [Array<String>, Array<String>] arrays of warnings and errors
   def validate_arguments(args)
-    args[:simulation_control_timestep] = Float(args[:simulation_control_timestep])
-    args[:geometry_unit_type_number_of_stories] = Float(args[:geometry_unit_type_number_of_stories])
-    args[:geometry_unit_num_bedrooms] = Float(args[:geometry_unit_num_bedrooms])
-    if args[:geometry_unit_num_bathrooms] == 'Default'
-      args[:geometry_unit_num_bathrooms] = nil
-    else
-      args[:geometry_unit_num_bathrooms] = Float(args[:geometry_unit_num_bathrooms])
-    end
-    if args[:geometry_unit_num_occupants] == 'Default'
-      args[:geometry_unit_num_occupants] = nil
-    else
-      args[:geometry_unit_num_occupants] = Float(args[:geometry_unit_num_occupants])
-    end
-    args[:geometry_average_ceiling_height] = Float(args[:geometry_average_ceiling_height])
-
     warnings = argument_warnings(args)
     errors = argument_errors(args)
 
@@ -1357,12 +1293,10 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     hpxml.header.software_program_used = 'BuildResidentialHPXML measure'
     hpxml.header.software_program_version = Version::OS_HPXML_Version
 
-    if args[:simulation_control_timestep] != 60 # 60 is the OS-HPXML default, no need to write it
-      if (not hpxml.header.timestep.nil?) && (hpxml.header.timestep != args[:simulation_control_timestep])
-        errors << "'Simulation Control: Timestep' cannot vary across dwelling units."
-      end
-      hpxml.header.timestep = args[:simulation_control_timestep]
+    if (not hpxml.header.timestep.nil?) && (hpxml.header.timestep != args[:simulation_control_timestep_length])
+      errors << "'Simulation Control: Timestep' cannot vary across dwelling units."
     end
+    hpxml.header.timestep = args[:simulation_control_timestep_length]
 
     if (not args[:simulation_control_run_period].nil?) && (args[:simulation_control_run_period] != 'Jan 1 - Dec 31') # Jan 1 - Dec 31 is the OS-HPXML default, no need to write it
       begin_month, begin_day, _begin_hour, end_month, end_day, _end_hour = Calendar.parse_date_time_range(args[:simulation_control_run_period])
@@ -1598,7 +1532,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   # @param args [Hash] Map of :argument_name => value
   # @return [nil]
   def set_building_occupancy(hpxml_bldg, args)
-    hpxml_bldg.building_occupancy.number_of_residents = args[:geometry_unit_num_occupants]
+    hpxml_bldg.building_occupancy.number_of_residents = args[:geometry_unit_num_occupants_number]
   end
 
   # Sets the HPXML building construction properties.
@@ -1615,11 +1549,11 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
     hpxml_bldg.building_construction.number_of_conditioned_floors = number_of_conditioned_floors
     hpxml_bldg.building_construction.number_of_conditioned_floors_above_grade = number_of_conditioned_floors_above_grade
-    hpxml_bldg.building_construction.number_of_bedrooms = args[:geometry_unit_num_bedrooms]
-    hpxml_bldg.building_construction.number_of_bathrooms = args[:geometry_unit_num_bathrooms]
+    hpxml_bldg.building_construction.number_of_bedrooms = args[:geometry_unit_num_bedrooms_number]
+    hpxml_bldg.building_construction.number_of_bathrooms = args[:geometry_unit_num_bathrooms_number]
     hpxml_bldg.building_construction.conditioned_floor_area = args[:geometry_unit_conditioned_floor_area]
-    hpxml_bldg.building_construction.conditioned_building_volume = args[:geometry_unit_conditioned_floor_area] * args[:geometry_average_ceiling_height]
-    hpxml_bldg.building_construction.average_ceiling_height = args[:geometry_average_ceiling_height]
+    hpxml_bldg.building_construction.conditioned_building_volume = args[:geometry_unit_conditioned_floor_area] * args[:geometry_ceiling_height_height]
+    hpxml_bldg.building_construction.average_ceiling_height = args[:geometry_ceiling_height_height]
     hpxml_bldg.building_construction.residential_facility_type = args[:geometry_unit_type_facility_type]
     if args[:building_year_built] != 0
       hpxml_bldg.building_construction.year_built = args[:building_year_built]
@@ -2159,7 +2093,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
         overhangs_distance_to_bottom_of_window = args[:enclosure_overhangs_distance_to_bottom_of_window]
       elsif args[:geometry_eaves_depth] > 0
         # Get max z coordinate of eaves
-        eaves_z = args[:geometry_average_ceiling_height] * args[:geometry_unit_type_number_of_stories] + args[:geometry_foundation_type_rim_joist_height]
+        eaves_z = args[:geometry_ceiling_height_height] * args[:geometry_unit_type_number_of_stories] + args[:geometry_foundation_type_rim_joist_height]
         if args[:geometry_attic_type_attic_type] == HPXML::AtticTypeConditioned
           eaves_z += Geometry.get_conditioned_attic_height(model.getSpaces)
         end
@@ -2378,7 +2312,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     heating_system_type = args[:hvac_heating_system_type]
 
     if [HPXML::HVACTypeElectricResistance].include? heating_system_type
-      args[:hvac_heating_system_fuel] = HPXML::FuelTypeElectricity
+      args[:hvac_heating_system_fuel_type] = HPXML::FuelTypeElectricity
     end
 
     if [HPXML::HVACTypeFurnace,
@@ -2392,7 +2326,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       heating_efficiency_percent = args[:hvac_heating_system_heating_efficiency]
     end
 
-    if args[:hvac_heating_system_fuel] != HPXML::FuelTypeElectricity
+    if args[:hvac_heating_system_fuel_type] != HPXML::FuelTypeElectricity
       pilot_light_btuh = args[:hvac_heating_system_pilot_light].to_f
       if pilot_light_btuh > 0
         pilot_light = true
@@ -2401,7 +2335,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
     hpxml_bldg.heating_systems.add(id: "HeatingSystem#{hpxml_bldg.heating_systems.size + 1}",
                                    heating_system_type: heating_system_type,
-                                   heating_system_fuel: args[:hvac_heating_system_fuel],
+                                   heating_system_fuel: args[:hvac_heating_system_fuel_type],
                                    heating_capacity: args[:hvac_heating_system_capacity_capacity],
                                    heating_autosizing_factor: args[:hvac_heating_system_capacity_autosizing_factor],
                                    heating_autosizing_limit: args[:hvac_heating_system_capacity_autosizing_limit],
@@ -2784,8 +2718,8 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
     heating_system_type = args[:hvac_heating_system_2_type]
 
-    if args[:hvac_heating_system_2_fuel] == HPXML::HVACTypeElectricResistance
-      args[:hvac_heating_system_2_fuel] = HPXML::FuelTypeElectricity
+    if args[:hvac_heating_system_2_fuel_type] == HPXML::HVACTypeElectricResistance
+      args[:hvac_heating_system_2_fuel_type] = HPXML::FuelTypeElectricity
     end
 
     if [HPXML::HVACTypeFurnace, HPXML::HVACTypeWallFurnace, HPXML::HVACTypeFloorFurnace].include?(heating_system_type) || heating_system_type.include?(HPXML::HVACTypeBoiler)
@@ -2802,7 +2736,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       fraction_heat_load_served = args[:hvac_heating_system_2_heating_load_served_fraction]
     end
 
-    if args[:hvac_heating_system_2_fuel] != HPXML::FuelTypeElectricity
+    if args[:hvac_heating_system_2_fuel_type] != HPXML::FuelTypeElectricity
       pilot_light_btuh = args[:hvac_heating_system_2_pilot_light].to_f
       if pilot_light_btuh > 0
         pilot_light = true
@@ -2811,7 +2745,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
     hpxml_bldg.heating_systems.add(id: "HeatingSystem#{hpxml_bldg.heating_systems.size + 1}",
                                    heating_system_type: heating_system_type,
-                                   heating_system_fuel: args[:hvac_heating_system_2_fuel],
+                                   heating_system_fuel: args[:hvac_heating_system_2_fuel_type],
                                    heating_capacity: args[:hvac_heating_system_2_capacity_capacity],
                                    heating_autosizing_factor: args[:hvac_heating_system_2_capacity_autosizing_factor],
                                    heating_autosizing_limit: args[:hvac_heating_system_2_capacity_autosizing_limit],
@@ -3267,32 +3201,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    if not [HPXML::WaterHeaterTypeTankless, HPXML::WaterHeaterTypeCombiTankless].include? water_heater_type
-      if args[:dhw_water_heater_jacket] != 'None' # None is the OS-HPXML default, no need to write it
-        jacket_r_value = args[:dhw_water_heater_jacket_r_value]
-      end
-    end
-
-    if args[:dhw_water_heater_uses_desuperheater]
-      uses_desuperheater = true
-    end
-    if uses_desuperheater
-      related_hvac_idref = nil
-      hpxml_bldg.cooling_systems.each do |cooling_system|
-        next unless [HPXML::HVACTypeCentralAirConditioner,
-                     HPXML::HVACTypeMiniSplitAirConditioner].include? cooling_system.cooling_system_type
-
-        related_hvac_idref = cooling_system.id
-      end
-      hpxml_bldg.heat_pumps.each do |heat_pump|
-        next unless [HPXML::HVACTypeHeatPumpAirToAir,
-                     HPXML::HVACTypeHeatPumpMiniSplit,
-                     HPXML::HVACTypeHeatPumpGroundToAir].include? heat_pump.heat_pump_type
-
-        related_hvac_idref = heat_pump.id
-      end
-    end
-
     hpxml_bldg.water_heating_systems.add(id: "WaterHeatingSystem#{hpxml_bldg.water_heating_systems.size + 1}",
                                          water_heater_type: water_heater_type,
                                          fuel_type: args[:dhw_water_heater_fuel_type],
@@ -3303,9 +3211,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                          uniform_energy_factor: uniform_energy_factor,
                                          usage_bin: usage_bin,
                                          recovery_efficiency: recovery_efficiency,
-                                         uses_desuperheater: uses_desuperheater,
                                          related_hvac_idref: related_hvac_idref,
-                                         jacket_r_value: jacket_r_value,
                                          temperature: args[:dhw_water_heater_temperature])
   end
 

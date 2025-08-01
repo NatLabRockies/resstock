@@ -6,9 +6,9 @@
     "geometry_unit_conditioned_floor_area": "1539",
     "geometry_unit_aspect_ratio": "2.111111111",
     "geometry_unit_direction": "South",
-    "geometry_unit_num_bedrooms": "3",
-    "geometry_unit_num_occupants": "0",
-    "geometry_average_ceiling_height": "8.0",
+    "geometry_unit_num_bedrooms": "3 Bedrooms",
+    "geometry_unit_num_occupants": "0 Occupants",
+    "geometry_ceiling_height": "8.0 ft",
     "geometry_foundation_type": "Ambient",
     "geometry_attic_type": "Attic, Vented, Gable",
     "geometry_roof_pitch": "4:12",
@@ -174,7 +174,7 @@
   "tests/HERS_HVAC/HVAC1a.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AL.xml",
     "hvac_heating_system": "Central Furnace, 78% AFUE",
-    "hvac_heating_system_fuel": "natural gas",
+    "hvac_heating_system_fuel": "Natural Gas",
     "hvac_heating_system_heating_load_served": "100%",
     "hvac_cooling_system": "Central AC, SEER 10",
     "hvac_cooling_system_cooling_load_served": "100%"
@@ -207,7 +207,7 @@
   },
   "tests/HERS_HVAC/HVAC2e.xml": {
     "parent_hpxml": "tests/HERS_HVAC/HVAC2a.xml",
-    "hvac_heating_system_fuel": "electricity",
+    "hvac_heating_system_fuel": "Electricity",
     "hvac_heating_system": "Central Furnace, 100% AFUE"
   },
   "tests/HERS_DSE/HVAC3a.xml": {
@@ -216,7 +216,7 @@
     "geometry_unit_conditioned_floor_area": "1539",
     "enclosure_air_leakage": "0.67 nACH",
     "enclosure_floor_over_foundation": "Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor",
-    "hvac_heating_system_fuel": "natural gas",
+    "hvac_heating_system_fuel": "Natural Gas",
     "hvac_heating_system": "Central Furnace, 78% AFUE",
     "hvac_heating_system_heating_load_served": "100%",
     "hvac_cooling_system": "Central AC, SEER 10",
@@ -240,7 +240,7 @@
   },
   "tests/HERS_DSE/HVAC3e.xml": {
     "parent_hpxml": "tests/ASHRAE_Standard_140/L100AL.xml",
-    "hvac_heating_system_fuel": "natural gas",
+    "hvac_heating_system_fuel": "Natural Gas",
     "hvac_heating_system": "Central Furnace, 78% AFUE",
     "hvac_heating_system_heating_load_served": "100%",
     "hvac_cooling_system": "Central AC, SEER 10",
@@ -267,21 +267,21 @@
     "geometry_unit_num_occupants": "Default",
     "enclosure_air_leakage": "Detailed Example: 79.8 sq. in. ELA",
     "location_epw_path": "USA_MN_Duluth.Intl.AP.727450_TMY3.epw",
-    "geometry_unit_num_bedrooms": "2",
+    "geometry_unit_num_bedrooms": "2 Bedrooms",
     "enclosure_roof_material": "Detailed Example: 0.75 Solar Absorptance",
     "enclosure_wall_siding": "Detailed Example: 0.75 Solar Absorptance",
     "enclosure_wall": "Wood Stud, IECC U-0.057",
     "enclosure_floor_over_foundation": "Wood Frame, IECC U-0.033",
     "enclosure_ceiling": "IECC U-0.026",
     "enclosure_door": "IECC U-0.35",
-    "enclosure_window": "IECC U-0.35, SHGC=0.40",
+    "enclosure_window": "IECC U-0.35, SHGC 0.40",
     "enclosure_window_interior_shading": null,
-    "hvac_heating_system_fuel": "natural gas",
+    "hvac_heating_system_fuel": "Natural Gas",
     "hvac_heating_system": "Central Furnace, 78% AFUE",
     "hvac_heating_system_heating_load_served": "100%",
     "hvac_cooling_system": "Central AC, SEER 13",
     "hvac_cooling_system_cooling_load_served": "100%",
-    "dhw_water_heater": "Detailed Example: Natural Gas, Tank, 40 gal, EF=0.56, RE=0.78",
+    "dhw_water_heater": "Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78",
     "dhw_water_heater_location": "Conditioned Space",
     "appliance_clothes_washer": "Detailed Example: ERI Reference 2006",
     "appliance_clothes_dryer": "Detailed Example: Electricity, ERI Reference 2006",
@@ -295,11 +295,11 @@
   "tests/HERS_Hot_Water/L100AD-HW-02.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-01.xml",
     "appliance_refrigerator": "Detailed Example: ERI Reference 2006, 4-Bedroom Home",
-    "geometry_unit_num_bedrooms": "4"
+    "geometry_unit_num_bedrooms": "4 Bedrooms"
   },
   "tests/HERS_Hot_Water/L100AD-HW-03.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-01.xml",
-    "dhw_water_heater": "Detailed Example: Natural Gas, Tank, 40 gal, EF=0.62, RE=0.78"
+    "dhw_water_heater": "Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78"
   },
   "tests/HERS_Hot_Water/L100AD-HW-04.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-02.xml",
@@ -323,7 +323,7 @@
     "enclosure_wall": "Wood Stud, IECC U-0.082",
     "enclosure_floor_over_foundation": "Wood Frame, IECC U-0.064",
     "enclosure_ceiling": "IECC U-0.035",
-    "enclosure_window": "IECC U-1.20, SHGC=0.40",
+    "enclosure_window": "IECC U-1.20, SHGC 0.40",
     "enclosure_door": "IECC U-1.20"
   },
   "tests/HERS_Hot_Water/L100AM-HW-02.xml": {
@@ -351,16 +351,16 @@
     "location_epw_path": "USA_FL_Miami.Intl.AP.722020_TMY3.epw"
   },
   "sample_files/base.xml": {
-    "simulation_control_timestep": "60",
+    "simulation_control_timestep": "60 minutes",
     "building_year_built": "0",
     "location_epw_path": "USA_CO_Denver.Intl.AP.725650_TMY3.epw",
     "geometry_unit_type": "Single-Family Detached, 1 Story",
     "geometry_unit_conditioned_floor_area": "2700",
     "geometry_unit_aspect_ratio": "1.5",
     "geometry_unit_direction": "South",
-    "geometry_unit_num_bedrooms": "3",
-    "geometry_unit_num_bathrooms": "2",
-    "geometry_average_ceiling_height": "8.0",
+    "geometry_unit_num_bedrooms": "3 Bedrooms",
+    "geometry_unit_num_bathrooms": "2 Bathrooms",
+    "geometry_ceiling_height": "8.0 ft",
     "geometry_foundation_type": "Basement, Conditioned",
     "geometry_attic_type": "Attic, Unvented, Gable",
     "geometry_roof_pitch": "6:12",
@@ -382,7 +382,7 @@
     "geometry_door_area": "40",
     "enclosure_door": "Detailed Example: Insulated Fiberglass/Steel, R-4.4",
     "enclosure_air_leakage": "3 ACH50",
-    "hvac_heating_system_fuel": "natural gas",
+    "hvac_heating_system_fuel": "Natural Gas",
     "hvac_heating_system": "Central Furnace, 92% AFUE",
     "hvac_heating_system_capacity": "35 kBtu/hr",
     "hvac_heating_system_heating_load_served": "100%",
@@ -398,7 +398,7 @@
     "hvac_ducts": "Detailed Example: 4 CFM25 per 100ft2 (75% Supply), R-4",
     "hvac_ducts_supply_location": "Attic",
     "hvac_ducts_return_location": "Attic",
-    "dhw_water_heater": "Electricity, Tank, UEF=0.94",
+    "dhw_water_heater": "Electricity, Tank, UEF 0.94",
     "dhw_water_heater_location": "Conditioned Space",
     "lighting": "Detailed Example: 40% CFL, 10% LFL, 25% LED",
     "appliance_clothes_washer": "Standard, 2008-2017, 100% Usage",
@@ -419,7 +419,7 @@
   },
   "sample_files/base-appliances-dehumidifier.xml": {
     "parent_hpxml": "sample_files/base-location-dallas-tx.xml",
-    "appliance_dehumidifier": "Detailed Example: Portable, 40 pints/day, EF=1.8"
+    "appliance_dehumidifier": "Detailed Example: Portable, 40 pints/day, EF 1.8"
   },
   "sample_files/base-appliances-dehumidifier-ief-portable.xml": {
     "parent_hpxml": "sample_files/base-appliances-dehumidifier.xml",
@@ -450,9 +450,9 @@
   },
   "sample_files/base-appliances-modified.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "appliance_clothes_washer": "Detailed Example: MEF=1.65",
-    "appliance_clothes_dryer": "Detailed Example: Electricity, EF=4.29",
-    "appliance_dishwasher": "Detailed Example: EF=0.7, Compact"
+    "appliance_clothes_washer": "Detailed Example: MEF 1.65",
+    "appliance_clothes_dryer": "Detailed Example: Electricity, EF 4.29",
+    "appliance_dishwasher": "Detailed Example: EF 0.7, Compact"
   },
   "sample_files/base-appliances-none.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -671,7 +671,7 @@
   },
   "sample_files/base-bldgtype-mf-unit-residents-1.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
-    "geometry_unit_num_occupants": "1"
+    "geometry_unit_num_occupants": "1 Occupant"
   },
   "sample_files/base-bldgtype-mf-unit-shared-boiler-chiller-baseboard.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
@@ -776,18 +776,18 @@
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
-    "dhw_water_heater": "Natural Gas, Tank, UEF=0.60"
+    "dhw_water_heater": "Natural Gas, Tank, UEF 0.60"
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater-heat-pump.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
-    "dhw_water_heater": "Electricity, Heat Pump, UEF=3.50"
+    "dhw_water_heater": "Electricity, Heat Pump, UEF 3.50"
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater-recirc.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-water-heater.xml"
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater-recirc-beds-0.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-water-heater.xml",
-    "geometry_unit_num_bedrooms": "0"
+    "geometry_unit_num_bedrooms": "0 Bedrooms"
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater-recirc-scheduled.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-water-heater-recirc.xml"
@@ -801,29 +801,23 @@
     "dhw_water_heater_location": "Outside"
   },
   "sample_files/base-dhw-desuperheater.xml": {
-    "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
-    "dhw_water_heater_uses_desuperheater": true
+    "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml"
   },
   "sample_files/base-dhw-desuperheater-2-speed.xml": {
-    "parent_hpxml": "sample_files/base-hvac-central-ac-only-2-speed.xml",
-    "dhw_water_heater_uses_desuperheater": true
+    "parent_hpxml": "sample_files/base-hvac-central-ac-only-2-speed.xml"
   },
   "sample_files/base-dhw-desuperheater-ghp.xml": {
-    "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml",
-    "dhw_water_heater_uses_desuperheater": true
+    "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml"
   },
   "sample_files/base-dhw-desuperheater-hpwh.xml": {
-    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml",
-    "dhw_water_heater_uses_desuperheater": true
+    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml"
   },
   "sample_files/base-dhw-desuperheater-tankless.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
-    "dhw_water_heater": "Electricity, Tankless, UEF=0.98",
-    "dhw_water_heater_uses_desuperheater": true
+    "dhw_water_heater": "Electricity, Tankless, UEF 0.98"
   },
   "sample_files/base-dhw-desuperheater-var-speed.xml": {
-    "parent_hpxml": "sample_files/base-hvac-central-ac-only-var-speed.xml",
-    "dhw_water_heater_uses_desuperheater": true
+    "parent_hpxml": "sample_files/base-hvac-central-ac-only-var-speed.xml"
   },
   "sample_files/base-dhw-dwhr.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -852,20 +846,16 @@
     "dhw_solar_thermal": "65% Solar Fraction"
   },
   "sample_files/base-dhw-jacket-indirect.xml": {
-    "parent_hpxml": "sample_files/base-dhw-indirect.xml",
-    "dhw_water_heater_jacket": "R-10"
+    "parent_hpxml": "sample_files/base-dhw-indirect.xml"
   },
   "sample_files/base-dhw-jacket-electric.xml": {
-    "parent_hpxml": "sample_files/base.xml",
-    "dhw_water_heater_jacket": "R-10"
+    "parent_hpxml": "sample_files/base.xml"
   },
   "sample_files/base-dhw-jacket-gas.xml": {
-    "parent_hpxml": "sample_files/base-dhw-tank-gas.xml",
-    "dhw_water_heater_jacket": "R-10"
+    "parent_hpxml": "sample_files/base-dhw-tank-gas.xml"
   },
   "sample_files/base-dhw-jacket-hpwh.xml": {
-    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml",
-    "dhw_water_heater_jacket": "R-10"
+    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml"
   },
   "sample_files/base-dhw-low-flow-fixtures.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -935,15 +925,15 @@
   },
   "sample_files/base-dhw-tank-elec-ef.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "dhw_water_heater": "Detailed Example: Electricity, Tank, 40 gal, EF=0.93"
+    "dhw_water_heater": "Detailed Example: Electricity, Tank, 40 gal, EF 0.93"
   },
   "sample_files/base-dhw-tank-gas.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "dhw_water_heater": "Natural Gas, Tank, UEF=0.60"
+    "dhw_water_heater": "Natural Gas, Tank, UEF 0.60"
   },
   "sample_files/base-dhw-tank-gas-ef.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-gas.xml",
-    "dhw_water_heater": "Detailed Example: Natural Gas, Tank, 50 gal, EF=0.59, RE=0.76"
+    "dhw_water_heater": "Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76"
   },
   "sample_files/base-dhw-tank-gas-fhr.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-gas.xml"
@@ -954,7 +944,7 @@
   },
   "sample_files/base-dhw-tank-heat-pump.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "dhw_water_heater": "Electricity, Heat Pump, UEF=3.50"
+    "dhw_water_heater": "Electricity, Heat Pump, UEF 3.50"
   },
   "sample_files/base-dhw-tank-heat-pump-capacities.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml"
@@ -965,7 +955,7 @@
   },
   "sample_files/base-dhw-tank-heat-pump-ef.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml",
-    "dhw_water_heater": "Detailed Example: Electricity, Heat Pump, 80 gal, EF=3.1"
+    "dhw_water_heater": "Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1"
   },
   "sample_files/base-dhw-tank-heat-pump-with-solar.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml",
@@ -992,14 +982,14 @@
   },
   "sample_files/base-dhw-tank-oil.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-gas.xml",
-    "dhw_water_heater": "Fuel Oil, Tank, UEF=0.61"
+    "dhw_water_heater": "Fuel Oil, Tank, UEF 0.61"
   },
   "sample_files/base-dhw-tank-wood.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-gas.xml"
   },
   "sample_files/base-dhw-tankless-electric.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "dhw_water_heater": "Electricity, Tankless, UEF=0.98"
+    "dhw_water_heater": "Electricity, Tankless, UEF 0.98"
   },
   "sample_files/base-dhw-tankless-electric-outside.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-electric.xml",
@@ -1007,15 +997,15 @@
   },
   "sample_files/base-dhw-tankless-electric-ef.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-electric.xml",
-    "dhw_water_heater": "Detailed Example: Electricity, Tankless, EF=0.96"
+    "dhw_water_heater": "Detailed Example: Electricity, Tankless, EF 0.96"
   },
   "sample_files/base-dhw-tankless-gas.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "dhw_water_heater": "Natural Gas, Tankless, UEF=0.82"
+    "dhw_water_heater": "Natural Gas, Tankless, UEF 0.82"
   },
   "sample_files/base-dhw-tankless-gas-ef.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-gas.xml",
-    "dhw_water_heater": "Detailed Example: Natural Gas, Tankless, EF=0.95"
+    "dhw_water_heater": "Detailed Example: Natural Gas, Tankless, EF 0.95"
   },
   "sample_files/base-dhw-tankless-gas-with-solar.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-gas.xml",
@@ -1028,7 +1018,7 @@
   },
   "sample_files/base-dhw-tankless-propane.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-gas.xml",
-    "dhw_water_heater": "Propane, Tankless, UEF=0.82"
+    "dhw_water_heater": "Propane, Tankless, UEF 0.82"
   },
   "sample_files/base-dhw-tankless-detailed-setpoints.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-gas.xml",
@@ -1036,14 +1026,14 @@
   },
   "sample_files/base-dhw-setpoint-temperature.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "dhw_water_heater": "Detailed Example: Electricity, Tank, UEF=0.94, Setpoint=135F"
+    "dhw_water_heater": "Detailed Example: Electricity, Tank, UEF 0.94, 135F"
   },
   "sample_files/base-detailed-electric-panel.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_conditioned_floor_area": "1228",
     "hvac_heating_system_capacity": "50 kBtu/hr",
     "hvac_cooling_system_capacity": "1.5 tons",
-    "dhw_water_heater": "Natural Gas, Tank, UEF=0.64",
+    "dhw_water_heater": "Natural Gas, Tank, UEF 0.64",
     "appliance_cooking_range_oven": "Natural Gas, Non-Convection, 100% Usage",
     "appliance_clothes_dryer": "Natural Gas, Standard, 100% Usage",
     "appliance_dishwasher": "None",
@@ -1069,22 +1059,22 @@
   },
   "sample_files/base-enclosure-beds-1.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_bedrooms": "1",
-    "geometry_unit_num_bathrooms": "1"
+    "geometry_unit_num_bedrooms": "1 Bedroom",
+    "geometry_unit_num_bathrooms": "1 Bathroom"
   },
   "sample_files/base-enclosure-beds-2.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_bedrooms": "2",
-    "geometry_unit_num_bathrooms": "1"
+    "geometry_unit_num_bedrooms": "2 Bedrooms",
+    "geometry_unit_num_bathrooms": "1 Bathroom"
   },
   "sample_files/base-enclosure-beds-4.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_bedrooms": "4"
+    "geometry_unit_num_bedrooms": "4 Bedrooms"
   },
   "sample_files/base-enclosure-beds-5.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_bedrooms": "5",
-    "geometry_unit_num_bathrooms": "3"
+    "geometry_unit_num_bedrooms": "5 Bedrooms",
+    "geometry_unit_num_bathrooms": "3 Bathrooms"
   },
   "sample_files/base-enclosure-ceilingtypes.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -1195,7 +1185,7 @@
   },
   "sample_files/base-enclosure-windows-interior-shading-coefficients.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "enclosure_window_interior_shading": "Summer=0.7, Winter=0.8"
+    "enclosure_window_interior_shading": "Summer 0.7, Winter 0.8"
   },
   "sample_files/base-enclosure-windows-natural-ventilation-availability.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1395,7 +1385,7 @@
   "sample_files/base-hvac-air-to-air-heat-pump-1-speed-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed-lockout-temperatures.xml",
     "location_epw_path": "USA_MN_Duluth.Intl.AP.727450_TMY3.epw",
-    "simulation_control_timestep": "1",
+    "simulation_control_timestep": "1 minute",
     "hvac_heat_pump_backup_capacity": "10 kW",
     "advanced_feature": "On/Off Thermostat Deadband, 2F",
     "advanced_feature_2": "Heat Pump Backup Staging, 5 kW"
@@ -1418,7 +1408,7 @@
   "sample_files/base-hvac-air-to-air-heat-pump-2-speed-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml",
     "location_epw_path": "USA_MN_Duluth.Intl.AP.727450_TMY3.epw",
-    "simulation_control_timestep": "1",
+    "simulation_control_timestep": "1 minute",
     "hvac_heat_pump_backup_capacity": "10 kW",
     "advanced_feature": "On/Off Thermostat Deadband, 2F",
     "advanced_feature_2": "Heat Pump Backup Staging, 5 kW"
@@ -1438,7 +1428,7 @@
     "hvac_heat_pump_capacity": "1.5 tons",
     "hvac_heat_pump_backup": "Separate Heating System",
     "hvac_heating_system_2": "Boiler, 80% AFUE",
-    "hvac_heating_system_2_fuel": "natural gas",
+    "hvac_heating_system_2_fuel": "Natural Gas",
     "hvac_heating_system_2_capacity": "60 kBtu/hr"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler-hvac-seasons.xml": {
@@ -1474,7 +1464,7 @@
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv",
-    "simulation_control_timestep": "60"
+    "simulation_control_timestep": "60 minutes"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-two-systems.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
@@ -1484,7 +1474,7 @@
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-10-mins.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv",
-    "simulation_control_timestep": "10"
+    "simulation_control_timestep": "10 minutes"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
@@ -1506,7 +1496,7 @@
   },
   "sample_files/base-hvac-autosize-sizing-controls.xml": {
     "parent_hpxml": "sample_files/base-hvac-autosize.xml",
-    "geometry_unit_num_occupants": "5",
+    "geometry_unit_num_occupants": "5 Occupants",
     "hvac_control_heating_weekday_setpoint": "60",
     "hvac_control_heating_weekend_setpoint": "60",
     "hvac_control_cooling_weekday_setpoint": "80",
@@ -1514,11 +1504,11 @@
   },
   "sample_files/base-hvac-boiler-coal-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-boiler-gas-only.xml",
-    "hvac_heating_system_fuel": "coal"
+    "hvac_heating_system_fuel": "Coal"
   },
   "sample_files/base-hvac-boiler-elec-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "hvac_heating_system_fuel": "electricity",
+    "hvac_heating_system_fuel": "Electricity",
     "hvac_heating_system": "Boiler, 98% AFUE",
     "hvac_cooling_system": "None"
   },
@@ -1537,15 +1527,15 @@
   },
   "sample_files/base-hvac-boiler-oil-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-boiler-gas-only.xml",
-    "hvac_heating_system_fuel": "fuel oil"
+    "hvac_heating_system_fuel": "Fuel Oil"
   },
   "sample_files/base-hvac-boiler-propane-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-boiler-gas-only.xml",
-    "hvac_heating_system_fuel": "propane"
+    "hvac_heating_system_fuel": "Propane"
   },
   "sample_files/base-hvac-boiler-wood-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-boiler-gas-only.xml",
-    "hvac_heating_system_fuel": "wood"
+    "hvac_heating_system_fuel": "Wood Cord"
   },
   "sample_files/base-hvac-central-ac-only-1-speed.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1671,7 +1661,7 @@
   },
   "sample_files/base-hvac-elec-resistance-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "hvac_heating_system_fuel": "electricity",
+    "hvac_heating_system_fuel": "Electricity",
     "hvac_heating_system": "Electric Resistance",
     "hvac_cooling_system": "None"
   },
@@ -1693,25 +1683,25 @@
   "sample_files/base-hvac-fireplace-wood-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-stove-oil-only.xml",
     "hvac_heating_system": "Fireplace, 80% Efficiency",
-    "hvac_heating_system_fuel": "wood"
+    "hvac_heating_system_fuel": "Wood Cord"
   },
   "sample_files/base-hvac-floor-furnace-propane-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-stove-oil-only.xml",
-    "hvac_heating_system_fuel": "propane",
+    "hvac_heating_system_fuel": "Propane",
     "hvac_heating_system": "Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light"
   },
   "sample_files/base-hvac-furnace-coal-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-furnace-gas-only.xml",
-    "hvac_heating_system_fuel": "coal"
+    "hvac_heating_system_fuel": "Coal"
   },
   "sample_files/base-hvac-furnace-elec-central-ac-1-speed.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "hvac_heating_system_fuel": "electricity",
+    "hvac_heating_system_fuel": "Electricity",
     "hvac_heating_system": "Central Furnace, 100% AFUE"
   },
   "sample_files/base-hvac-furnace-elec-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "hvac_heating_system_fuel": "electricity",
+    "hvac_heating_system_fuel": "Electricity",
     "hvac_heating_system": "Central Furnace, 98% AFUE",
     "hvac_cooling_system": "None"
   },
@@ -1758,15 +1748,15 @@
   },
   "sample_files/base-hvac-furnace-oil-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-furnace-gas-only.xml",
-    "hvac_heating_system_fuel": "fuel oil"
+    "hvac_heating_system_fuel": "Fuel Oil"
   },
   "sample_files/base-hvac-furnace-propane-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-furnace-gas-only.xml",
-    "hvac_heating_system_fuel": "propane"
+    "hvac_heating_system_fuel": "Propane"
   },
   "sample_files/base-hvac-furnace-wood-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-furnace-gas-only.xml",
-    "hvac_heating_system_fuel": "wood"
+    "hvac_heating_system_fuel": "Wood Cord"
   },
   "sample_files/base-hvac-furnace-x3-dse.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -1810,7 +1800,7 @@
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml",
     "hvac_heat_pump_backup": "Separate Heating System",
     "hvac_heating_system_2": "Stove, 60% Efficiency",
-    "hvac_heating_system_2_fuel": "fuel oil",
+    "hvac_heating_system_2_fuel": "Fuel Oil",
     "hvac_heating_system_2_capacity": "60 kBtu/hr"
   },
   "sample_files/base-hvac-ground-to-air-heat-pump-detailed-geothermal-loop.xml": {
@@ -1951,13 +1941,13 @@
     "hvac_heat_pump_capacity": "1.5 tons",
     "hvac_heat_pump_backup": "Separate Heating System",
     "hvac_heating_system_2": "Stove, 60% Efficiency",
-    "hvac_heating_system_2_fuel": "fuel oil",
+    "hvac_heating_system_2_fuel": "Fuel Oil",
     "hvac_heating_system_2_capacity": "60 kBtu/hr"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-baseboard.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-stove.xml",
     "hvac_heating_system_2": "Electric Resistance",
-    "hvac_heating_system_2_fuel": "electricity"
+    "hvac_heating_system_2_fuel": "Electricity"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-integrated.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless.xml",
@@ -1969,7 +1959,7 @@
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-stove.xml",
     "hvac_heating_system_2": "Central Furnace, 80% AFUE",
-    "hvac_heating_system_2_fuel": "natural gas"
+    "hvac_heating_system_2_fuel": "Natural Gas"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace-ducts-defaults.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace.xml",
@@ -2050,7 +2040,7 @@
   },
   "sample_files/base-hvac-room-ac-only-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-room-ac-only-detailed-setpoints.xml",
-    "simulation_control_timestep": "1",
+    "simulation_control_timestep": "1 minute",
     "advanced_feature": "On/Off Thermostat Deadband, 2F"
   },
   "sample_files/base-hvac-seasons.xml": {
@@ -2082,13 +2072,13 @@
   },
   "sample_files/base-hvac-stove-oil-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "hvac_heating_system_fuel": "fuel oil",
+    "hvac_heating_system_fuel": "Fuel Oil",
     "hvac_heating_system": "Stove, 80% Efficiency",
     "hvac_cooling_system": "None"
   },
   "sample_files/base-hvac-stove-wood-pellets-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-stove-oil-only.xml",
-    "hvac_heating_system_fuel": "wood pellets"
+    "hvac_heating_system_fuel": "Wood Pellets"
   },
   "sample_files/base-hvac-undersized.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2102,7 +2092,7 @@
   },
   "sample_files/base-hvac-wall-furnace-elec-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "hvac_heating_system_fuel": "electricity",
+    "hvac_heating_system_fuel": "Electricity",
     "hvac_heating_system": "Wall Furnace, 98% AFUE",
     "hvac_cooling_system": "None"
   },
@@ -2199,7 +2189,7 @@
   },
   "sample_files/base-mechvent-cfis-15-mins.xml": {
     "parent_hpxml": "sample_files/base-mechvent-cfis.xml",
-    "simulation_control_timestep": "15"
+    "simulation_control_timestep": "15 minutes"
   },
   "sample_files/base-mechvent-cfis-airflow-fraction-zero.xml": {
     "parent_hpxml": "sample_files/base-mechvent-cfis.xml"
@@ -2226,7 +2216,7 @@
   },
   "sample_files/base-mechvent-cfis-supplemental-fan-exhaust-15-mins.xml": {
     "parent_hpxml": "sample_files/base-mechvent-cfis-supplemental-fan-exhaust.xml",
-    "simulation_control_timestep": "15"
+    "simulation_control_timestep": "15 minutes"
   },
   "sample_files/base-mechvent-cfis-supplemental-fan-exhaust-synchronized.xml": {
     "parent_hpxml": "sample_files/base-mechvent-cfis-supplemental-fan-exhaust.xml"
@@ -2421,7 +2411,7 @@
     "geometry_door_area": "20",
     "hvac_cooling_system": "Room AC, EER 8.5",
     "hvac_cooling_system_capacity": "1.0 tons",
-    "hvac_heating_system_fuel": "electricity",
+    "hvac_heating_system_fuel": "Electricity",
     "hvac_heating_system": "Electric Resistance",
     "hvac_heating_system_capacity": "10 kBtu/hr",
     "appliance_clothes_dryer": "None"
@@ -2475,15 +2465,15 @@
   },
   "sample_files/base-residents-0.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_occupants": "0"
+    "geometry_unit_num_occupants": "0 Occupants"
   },
   "sample_files/base-residents-1.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_occupants": "1"
+    "geometry_unit_num_occupants": "1 Occupant"
   },
   "sample_files/base-residents-1-misc-loads-large-uncommon.xml": {
     "parent_hpxml": "sample_files/base-misc-loads-large-uncommon.xml",
-    "geometry_unit_num_occupants": "1",
+    "geometry_unit_num_occupants": "1 Occupant",
     "misc_plug_loads": "100% Usage",
     "misc_television": "100% Usage",
     "misc_well_pump": "Typical Efficiency",
@@ -2496,7 +2486,7 @@
   },
   "sample_files/base-residents-1-misc-loads-large-uncommon2.xml": {
     "parent_hpxml": "sample_files/base-misc-loads-large-uncommon2.xml",
-    "geometry_unit_num_occupants": "1",
+    "geometry_unit_num_occupants": "1 Occupant",
     "misc_plug_loads": "100% Usage",
     "misc_television": "100% Usage",
     "misc_well_pump": "Typical Efficiency",
@@ -2602,11 +2592,11 @@
   },
   "sample_files/base-simcontrol-temperature-capacitance-multiplier.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "advanced_feature": "Temperature Capacitance Multiplier = 10"
+    "advanced_feature": "Temperature Capacitance Multiplier, 10"
   },
   "sample_files/base-simcontrol-timestep-10-mins.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "simulation_control_timestep": "10"
+    "simulation_control_timestep": "10 minutes"
   },
   "sample_files/base-simcontrol-timestep-10-mins-occupancy-stochastic-10-mins.xml": {
     "parent_hpxml": "sample_files/base-simcontrol-timestep-10-mins.xml",
@@ -2618,7 +2608,7 @@
   },
   "sample_files/base-simcontrol-timestep-30-mins.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "simulation_control_timestep": "30"
+    "simulation_control_timestep": "30 minutes"
   },
   "sample_files/base-zones-spaces.xml": {
     "parent_hpxml": "sample_files/base-enclosure-garage.xml"
