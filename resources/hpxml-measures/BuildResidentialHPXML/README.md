@@ -31,7 +31,7 @@ The timestep for the simulation; defaults to hourly calculations for fastest run
 
 - **Required:** ``false``
 
-- **Choices:** `60 minutes`, `30 minutes`, `20 minutes`, `15 minutes`, `12 minutes`, `10 minutes`, `6 minutes`, `5 minutes`, `4 minutes`, `3 minutes`, `2 minutes`, `1 minute`
+- **Choices:** `60`, `30`, `20`, `15`, `12`, `10`, `6`, `5`, `4`, `3`, `2`, `1`
 
 <br/>
 
@@ -179,7 +179,7 @@ The number of bedrooms in the unit.
 
 - **Required:** ``true``
 
-- **Choices:** `0 Bedrooms`, `1 Bedroom`, `2 Bedrooms`, `3 Bedrooms`, `4 Bedrooms`, `5 Bedrooms`, `6 Bedrooms`, `7 Bedrooms`, `8 Bedrooms`, `9 Bedrooms`, `10 Bedrooms`, `11 Bedrooms`, `12 Bedrooms`
+- **Choices:** `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`
 
 <br/>
 
@@ -192,7 +192,7 @@ The number of bathrooms in the unit. Defaults to NumberofBedrooms/2 + 0.5.
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `0 Bathrooms`, `1 Bathroom`, `2 Bathrooms`, `3 Bathrooms`, `4 Bathrooms`, `5 Bathrooms`, `6 Bathrooms`, `7 Bathrooms`, `8 Bathrooms`, `9 Bathrooms`, `10 Bathrooms`, `11 Bathrooms`, `12 Bathrooms`
+- **Choices:** `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`
 
 <br/>
 
@@ -205,7 +205,7 @@ The number of occupants in the unit. Defaults to an *asset* calculation assuming
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `0 Occupants`, `1 Occupant`, `2 Occupants`, `3 Occupants`, `4 Occupants`, `5 Occupants`, `6 Occupants`, `7 Occupants`, `8 Occupants`, `9 Occupants`, `10 Occupants`, `11 Occupants`, `12 Occupants`
+- **Choices:** `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`
 
 <br/>
 

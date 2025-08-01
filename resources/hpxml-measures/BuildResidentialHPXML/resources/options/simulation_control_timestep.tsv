@@ -1,15 +1,15 @@
 Option Name	Length [minutes]
-60 minutes	
-30 minutes	30
-20 minutes	20
-15 minutes	15
-12 minutes	12
-10 minutes	10
-6 minutes	6
-5 minutes	5
-4 minutes	4
-3 minutes	3
-2 minutes	2
-1 minute	1
+60	
+30	30
+20	20
+15	15
+12	12
+10	10
+6	6
+5	5
+4	4
+3	3
+2	2
+1	1
 	
 Length: Length of the EnergyPlus zone timestep.	

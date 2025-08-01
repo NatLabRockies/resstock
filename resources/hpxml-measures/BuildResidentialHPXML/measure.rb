@@ -57,8 +57,9 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('simulation_control_timestep', choices[:simulation_control_timestep], false)
     arg.setDisplayName('Simulation Control: Timestep')
+    arg.setUnits('min')
     arg.setDescription('The timestep for the simulation; defaults to hourly calculations for fastest runtime.')
-    arg.setDefaultValue('60 minutes')
+    arg.setDefaultValue('60')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('simulation_control_run_period', false)
@@ -130,7 +131,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('geometry_unit_num_bedrooms', choices[:geometry_unit_num_bedrooms], true)
     arg.setDisplayName('Geometry: Unit Number of Bedrooms')
     arg.setDescription('The number of bedrooms in the unit.')
-    arg.setDefaultValue('3 Bedrooms')
+    arg.setDefaultValue('3')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('geometry_unit_num_bathrooms', choices[:geometry_unit_num_bathrooms], false)
