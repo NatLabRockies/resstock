@@ -21,7 +21,7 @@ env:
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.9.0
   BUILDSTOCK_BRANCH: develop
-  BUILDSTOCK_QUERY_BRANCH: main
+  BUILDSTOCK_QUERY_BRANCH: set_cover
 
 jobs:
   format-files:
@@ -504,7 +504,7 @@ jobs:
       - name: Generate minimal buildstock and other files
         run: |
           cd project_national/resources
-          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
+          python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --prev_minimal_buildstock_file sdr_minimal_buildstock.csv --output_prefix sdr_
           rm national_550ksamples.csv
           rm national_550ksamples.csv.gz
 
