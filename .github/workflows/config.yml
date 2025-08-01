@@ -404,8 +404,8 @@ jobs:
           branch_name="${{ github.head_ref }}"
           git pull origin $branch_name
           cp -r samples/buildstock*.csv test/base_results/baseline/annual
-          cp -r results/baseline/annual/results*.csv test/base_results/baseline/annual
-          cp -r results/baseline/timeseries/*.csv test/base_results/baseline/timeseries
+          cp -r results/annual/results*.csv test/base_results/baseline/annual
+          cp -r results/timeseries/*.csv test/base_results/baseline/timeseries
           git add test/base_results
           git add resources/options_lookup.tsv
           git add test/tests_yml_files
