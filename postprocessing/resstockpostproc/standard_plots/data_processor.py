@@ -481,9 +481,11 @@ class DataProcessor:
             .agg(
                 pl.col(quantity).alias("vals"),
                 pl.col("bldg_id").alias("bldg_ids"),
+                pl.col(quantity).quantile(0.01).alias("lower_cutoff"),
                 pl.col(quantity).quantile(0.25).alias("q1"),
                 pl.col(quantity).median().alias("median"),
                 pl.col(quantity).quantile(0.75).alias("q3"),
+                pl.col(quantity).quantile(0.99).alias("upper_cutoff"),
                 pl.col(quantity).mean().alias("mean"),
                 pl.count().alias("n_points"),
             )
@@ -509,20 +511,20 @@ class DataProcessor:
                 ]
             )
             .with_columns(
-                pl.struct(["vals", "lower_whisker", "upper_whisker"])
+                pl.struct(["vals", "lower_cutoff", "upper_cutoff"])
                 .map_elements(
-                    lambda s: [v for v in s["vals"] if (v < s["lower_whisker"]) or (v > s["upper_whisker"])],
+                    lambda s: [v for v in s["vals"] if (v < s["lower_cutoff"]) or (v > s["upper_cutoff"])],
                     return_dtype=pl.List(pl.Float64),
                 )
                 .alias("outliers"),
             )
             .with_columns(
-                pl.struct(["vals", "bldg_ids", "lower_whisker", "upper_whisker"])
+                pl.struct(["vals", "bldg_ids", "lower_cutoff", "upper_cutoff"])
                 .map_elements(
                     lambda s: [
                         b
                         for v, b in zip(s["vals"], s["bldg_ids"])
-                        if (v < s["lower_whisker"]) or (v > s["upper_whisker"])
+                        if (v < s["lower_cutoff"]) or (v > s["upper_cutoff"])
                     ],
                     return_dtype=pl.List(pl.Int32),
                 )
@@ -539,8 +541,8 @@ class DataProcessor:
 
             for i, vals in enumerate(df["vals"]):
                 arr = np.asarray(vals)
-                lower_fence = df["lower_whisker"][i]
-                upper_fence = df["upper_whisker"][i]
+                lower_cutoff = df["lower_cutoff"][i]
+                upper_cutoff = df["upper_cutoff"][i]
 
                 if len(arr) < 2 or np.isclose(arr.max(), arr.min()):  # noqa: PLR2004
                     # degenerate group
@@ -548,7 +550,7 @@ class DataProcessor:
                     ys = np.array([1.0])
                 else:
                     # Filter data between fences for KDE calculation
-                    filtered_arr = arr[(arr >= lower_fence) & (arr <= upper_fence)]
+                    filtered_arr = arr[(arr >= lower_cutoff) & (arr <= upper_cutoff)]
                     if len(filtered_arr) < 2:  # noqa: PLR2004
                         # If not enough points after filtering, use a single point
                         xs = np.array([np.mean(filtered_arr) if len(filtered_arr) > 0 else arr.mean()])
