@@ -309,8 +309,8 @@ jobs:
           branch_name="${{ github.head_ref }}"
           git pull origin $branch_name
           cp -r samples/buildstock*.csv test/base_results/baseline/annual
-          cp -r results/baseline/annual/results*.csv test/base_results/baseline/annual
-          cp -r results/baseline/timeseries/*.csv test/base_results/baseline/timeseries
+          cp -r baseline/annual/results*.csv test/base_results/baseline/annual
+          cp -r baseline/timeseries/*.csv test/base_results/baseline/timeseries
           git add test/base_results
           git add resources/options_lookup.tsv
           git add test/tests_yml_files
@@ -336,16 +336,12 @@ jobs:
           pip install plotly
           pip install kaleido
           
-          # feature_results
-          mkdir -p results
-          cp -r baseline results
-          
           # baseline annual
           mkdir -p test/base_results/comparisons/baseline/annual
           python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
-          python test/compare.py -a results -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
-          python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
-          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
+          python test/compare.py -a results -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
+          python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
           
           # baseline timeseries
           mkdir test/base_results/comparisons/baseline/timeseries
@@ -639,17 +635,13 @@ jobs:
           pip install plotly
           pip install kaleido
           
-          # feature_results
-          mkdir -p results
-          cp -r test/base_results/upgrades results
-          
           # results_characteristics.csv
           python test/base_results/upgrades/create_results_characteristics.py -f base_results/upgrades/sdr_annual/results_up00.csv
-          python test/base_results/upgrades/create_results_characteristics.py -f results/upgrades/sdr_annual/results_up00.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f test/base_results/upgrades/sdr_annual/results_up00.csv
           
           # upgrades annual
           mkdir -p test/base_results/sdr_comparisons/upgrades/sdr_annual
-          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/upgrades/sdr_annual -f results/upgrades/sdr_annual -e test/base_results/sdr_comparisons/upgrades/sdr_annual # *.html
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/upgrades/sdr_annual -f test/base_results/upgrades/sdr_annual -e test/base_results/sdr_comparisons/upgrades/sdr_annual # *.html
 
       - name: Upload comparisons
         uses: actions/upload-artifact@v4
