@@ -288,6 +288,9 @@ class BuildResidentialHPXMLTest < Minitest::Test
       puts "  Number of options: #{option_names.size} (unique: #{option_names.uniq.size})"
       assert_operator(option_names.size, :>, 0)
       assert_equal(option_names.size, option_names.uniq.size) # Make sure there are no duplicates
+      option_names.each do |option_name|
+        refute(option_name.include?('=')) # don't allow "=" in option names for resstock
+      end
 
       # Check we can retrieve properties for each option
       option_names.each_with_index do |option_name, i|
@@ -328,21 +331,21 @@ class BuildResidentialHPXMLTest < Minitest::Test
     # Base
     case hpxml_file
     when 'base-sfd.xml'
-      args['simulation_control_timestep'] = '60'
+      args['simulation_control_timestep'] = '60 minutes'
       args['location_epw_path'] = 'USA_CO_Denver.Intl.AP.725650_TMY3.epw'
       args['location_site_type'] = 'Suburban, Normal'
       args['geometry_unit_type'] = 'Single-Family Detached, 1 Story'
       args['geometry_unit_conditioned_floor_area'] = '2700.0'
-      args['geometry_average_ceiling_height'] = '8.0'
+      args['geometry_ceiling_height'] = '8.0 ft'
       args['geometry_unit_direction'] = 'South'
       args['geometry_unit_aspect_ratio'] = '1.5'
       args['geometry_foundation_type'] = 'Basement, Conditioned'
       args['geometry_roof_pitch'] = '6:12'
       args['geometry_attic_type'] = 'Attic, Unvented, Gable'
       args['geometry_eaves'] = 'None'
-      args['geometry_unit_num_bedrooms'] = '3'
-      args['geometry_unit_num_bathrooms'] = '2'
-      args['geometry_unit_num_occupants'] = '3'
+      args['geometry_unit_num_bedrooms'] = '3 Bedrooms'
+      args['geometry_unit_num_bathrooms'] = '2 Bathrooms'
+      args['geometry_unit_num_occupants'] = '3 Occupants'
       args['enclosure_rim_joist'] = 'R-13'
       args['enclosure_air_leakage'] = '3 ACH50'
       args['enclosure_ceiling'] = 'R-38'
@@ -354,10 +357,10 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['enclosure_window'] = 'Double, Low-E, Insulated, Air, Med Gain'
       args['geometry_window_areas_or_wwrs'] = '108, 108, 72, 72'
       args['enclosure_window_natural_ventilation'] = '67% Operable Windows'
-      args['enclosure_window_interior_shading'] = 'Summer=0.7, Winter=0.8'
+      args['enclosure_window_interior_shading'] = 'Summer 0.7, Winter 0.8'
       args['geometry_door_area'] = '40.0'
       args['enclosure_door'] = 'Solid Wood, R-2'
-      args['hvac_heating_system_fuel'] = 'natural gas'
+      args['hvac_heating_system_fuel'] = 'Natural Gas'
       args['hvac_heating_system'] = 'Central Furnace, 92% AFUE'
       args['hvac_heating_system_capacity'] = '40 kBtu/hr'
       args['hvac_heating_system_heating_load_served'] = '100%'
@@ -377,9 +380,9 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['hvac_ducts'] = '4 CFM25 per 100ft2, R-4'
       args['hvac_ducts_supply_location'] = 'Attic'
       args['hvac_ducts_return_location'] = 'Attic'
-      args['hvac_heating_system_2_fuel'] = 'electricity'
+      args['hvac_heating_system_2_fuel'] = 'Electricity'
       args['hvac_heating_system_2_heating_load_served'] = '25%'
-      args['dhw_water_heater'] = 'Electricity, Tank, UEF=0.94'
+      args['dhw_water_heater'] = 'Electricity, Tank, UEF 0.94'
       args['lighting'] = '25% LED, 100% Usage'
       args['appliance_clothes_washer'] = 'Standard, 2008-2017, 100% Usage'
       args['appliance_clothes_dryer'] = 'Electricity, Standard, 100% Usage'
@@ -413,7 +416,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
     when 'base-sfd-header.xml'
       args['simulation_control_run_period'] = 'Jan 1 - Dec 31'
       args['utility_bill_scenario'] = 'Default (EIA Average Rates)'
-      args['advanced_feature'] = 'Temperature Capacitance Multiplier = 1'
+      args['advanced_feature'] = 'Temperature Capacitance Multiplier, 1'
     end
 
     # Extras
@@ -427,7 +430,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['dhw_solar_thermal'] = 'Indirect, Flat Plate, 40 sqft'
       args['dhw_solar_thermal_direction'] = 'Roof Pitch, South'
     when 'extra-second-heating-system-portable-heater-to-heating-system.xml'
-      args['hvac_heating_system_fuel'] = 'electricity'
+      args['hvac_heating_system_fuel'] = 'Electricity'
       args['hvac_heating_system_capacity'] = '50 kBtu/hr'
       args['hvac_heating_system_heating_load_served'] = '75%'
       args['hvac_ducts'] = '0 CFM25 per 100ft2, Uninsulated'
@@ -436,7 +439,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['hvac_heating_system_2'] = 'Space Heater, 100% Efficiency'
       args['hvac_heating_system_2_capacity'] = '15 kBtu/hr'
     when 'extra-second-heating-system-fireplace-to-heating-system.xml'
-      args['hvac_heating_system_fuel'] = 'electricity'
+      args['hvac_heating_system_fuel'] = 'Electricity'
       args['hvac_heating_system'] = 'Electric Resistance'
       args['hvac_heating_system_capacity'] = '50 kBtu/hr'
       args['hvac_heating_system_heating_load_served'] = '75%'
@@ -475,8 +478,8 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['hvac_heat_pump_heating_load_served'] = '75%'
       args['hvac_heating_system_2'] = 'Boiler, 100% AFUE'
     when 'extra-enclosure-windows-shading.xml'
-      args['enclosure_window_interior_shading'] = 'Summer=0.5, Winter=0.9'
-      args['enclosure_window_exterior_shading'] = 'Summer=0.25, Winter=1.00'
+      args['enclosure_window_interior_shading'] = 'Summer 0.5, Winter 0.9'
+      args['enclosure_window_exterior_shading'] = 'Summer 0.25, Winter 1.00'
     when 'extra-enclosure-garage-partially-protruded.xml'
       args['geometry_garage_type'] = '1 Car, Right, Half Protruding'
     when 'extra-enclosure-garage-atticroof-conditioned.xml'

@@ -7,7 +7,7 @@ module Geometry
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param geometry_unit_conditioned_floor_area [Double] conditioned floor area (ft2)
-  # @param geometry_average_ceiling_height [Double] average ceiling height (ft)
+  # @param geometry_ceiling_height_height [Double] average ceiling height (ft)
   # @param geometry_unit_type_number_of_stories [Integer] number of floors above grade
   # @param geometry_unit_aspect_ratio [Double] ratio of front/back wall length to left/right wall length (frac)
   # @param geometry_garage_type_width [Double] width of the garage (ft)
@@ -23,7 +23,7 @@ module Geometry
   # @return [Boolean] true if model is successfully updated with a single-family detached unit
   def self.create_single_family_detached(runner, model,
                                          geometry_unit_conditioned_floor_area:,
-                                         geometry_average_ceiling_height:,
+                                         geometry_ceiling_height_height:,
                                          geometry_unit_type_number_of_stories:,
                                          geometry_unit_aspect_ratio:,
                                          geometry_garage_type_width:,
@@ -38,7 +38,7 @@ module Geometry
                                          geometry_roof_pitch:,
                                          **)
     cfa = geometry_unit_conditioned_floor_area
-    average_ceiling_height = geometry_average_ceiling_height
+    average_ceiling_height = geometry_ceiling_height_height
     num_floors = geometry_unit_type_number_of_stories
     aspect_ratio = geometry_unit_aspect_ratio
     garage_width = geometry_garage_type_width
@@ -655,7 +655,7 @@ module Geometry
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param geometry_unit_conditioned_floor_area [Double] conditioned floor area (ft2)
-  # @param geometry_average_ceiling_height [Double] average ceiling height (ft)
+  # @param geometry_ceiling_height_height [Double] average ceiling height (ft)
   # @param geometry_unit_type_number_of_stories [Integer] number of floors above grade
   # @param geometry_unit_aspect_ratio [Double] ratio of front/back wall length to left/right wall length (frac)
   # @param geometry_foundation_type_type [String] foundation type of the building
@@ -671,7 +671,7 @@ module Geometry
   # @return [Boolean] true if model is successfully updated with a single-family attached unit
   def self.create_single_family_attached(model,
                                          geometry_unit_conditioned_floor_area:,
-                                         geometry_average_ceiling_height:,
+                                         geometry_ceiling_height_height:,
                                          geometry_unit_type_number_of_stories:,
                                          geometry_unit_aspect_ratio:,
                                          geometry_foundation_type_type:,
@@ -687,7 +687,7 @@ module Geometry
                                          **)
 
     cfa = geometry_unit_conditioned_floor_area
-    average_ceiling_height = geometry_average_ceiling_height
+    average_ceiling_height = geometry_ceiling_height_height
     num_floors = geometry_unit_type_number_of_stories
     aspect_ratio = geometry_unit_aspect_ratio
     foundation_type = geometry_foundation_type_type
@@ -957,7 +957,7 @@ module Geometry
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param geometry_unit_conditioned_floor_area [Double] conditioned floor area (ft2)
-  # @param geometry_average_ceiling_height [Double] average ceiling height (ft)
+  # @param geometry_ceiling_height_height [Double] average ceiling height (ft)
   # @param geometry_unit_type_number_of_stories [Integer] number of floors above grade
   # @param geometry_unit_aspect_ratio [Double] ratio of front/back wall length to left/right wall length (frac)
   # @param geometry_foundation_type_type [String] foundation type of the building
@@ -973,7 +973,7 @@ module Geometry
   # @return [Boolean] true if model is successfully updated with an apartment unit
   def self.create_apartment(model,
                             geometry_unit_conditioned_floor_area:,
-                            geometry_average_ceiling_height:,
+                            geometry_ceiling_height_height:,
                             geometry_unit_type_number_of_stories:,
                             geometry_unit_aspect_ratio:,
                             geometry_foundation_type_type:,
@@ -989,7 +989,7 @@ module Geometry
                             **)
 
     cfa = geometry_unit_conditioned_floor_area
-    average_ceiling_height = geometry_average_ceiling_height
+    average_ceiling_height = geometry_ceiling_height_height
     num_floors = geometry_unit_type_number_of_stories
     aspect_ratio = geometry_unit_aspect_ratio
     foundation_type = geometry_foundation_type_type

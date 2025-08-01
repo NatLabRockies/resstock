@@ -2443,6 +2443,25 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     if hpxml_file.include? 'base-dhw-tank-model-type-stratified'
       hpxml_bldg.water_heating_systems[0].tank_model_type = HPXML::WaterHeaterTankModelTypeStratified
     end
+    if hpxml_file.include? 'dhw-jacket'
+      hpxml_bldg.water_heating_systems[0].jacket_r_value = 10.0
+    end
+    if hpxml_file.include? 'dhw-desuperheater'
+      hpxml_bldg.water_heating_systems[0].uses_desuperheater = true
+      hpxml_bldg.cooling_systems.each do |cooling_system|
+        next unless [HPXML::HVACTypeCentralAirConditioner,
+                     HPXML::HVACTypeMiniSplitAirConditioner].include? cooling_system.cooling_system_type
+
+        hpxml_bldg.water_heating_systems[0].related_hvac_idref = cooling_system.id
+      end
+      hpxml_bldg.heat_pumps.each do |heat_pump|
+        next unless [HPXML::HVACTypeHeatPumpAirToAir,
+                     HPXML::HVACTypeHeatPumpMiniSplit,
+                     HPXML::HVACTypeHeatPumpGroundToAir].include? heat_pump.heat_pump_type
+
+        hpxml_bldg.water_heating_systems[0].related_hvac_idref = heat_pump.id
+      end
+    end
 
     # -------------------- #
     # HPXML VentilationFan #

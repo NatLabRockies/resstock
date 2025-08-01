@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>8e84004d-b535-43ed-ba74-89cf96b6140b</version_id>
-  <version_modified>2025-07-31T23:04:46Z</version_modified>
+  <version_id>d9e0d4c5-fb7e-42f3-a484-b93be1a17ad8</version_id>
+  <version_modified>2025-08-01T15:27:30Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -25,58 +25,57 @@
       <display_name>Simulation Control: Timestep</display_name>
       <description>The timestep for the simulation; defaults to hourly calculations for fastest runtime.</description>
       <type>Choice</type>
-      <units>min</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>60</default_value>
+      <default_value>60 minutes</default_value>
       <choices>
         <choice>
-          <value>60</value>
-          <display_name>60</display_name>
+          <value>60 minutes</value>
+          <display_name>60 minutes</display_name>
         </choice>
         <choice>
-          <value>30</value>
-          <display_name>30</display_name>
+          <value>30 minutes</value>
+          <display_name>30 minutes</display_name>
         </choice>
         <choice>
-          <value>20</value>
-          <display_name>20</display_name>
+          <value>20 minutes</value>
+          <display_name>20 minutes</display_name>
         </choice>
         <choice>
-          <value>15</value>
-          <display_name>15</display_name>
+          <value>15 minutes</value>
+          <display_name>15 minutes</display_name>
         </choice>
         <choice>
-          <value>12</value>
-          <display_name>12</display_name>
+          <value>12 minutes</value>
+          <display_name>12 minutes</display_name>
         </choice>
         <choice>
-          <value>10</value>
-          <display_name>10</display_name>
+          <value>10 minutes</value>
+          <display_name>10 minutes</display_name>
         </choice>
         <choice>
-          <value>6</value>
-          <display_name>6</display_name>
+          <value>6 minutes</value>
+          <display_name>6 minutes</display_name>
         </choice>
         <choice>
-          <value>5</value>
-          <display_name>5</display_name>
+          <value>5 minutes</value>
+          <display_name>5 minutes</display_name>
         </choice>
         <choice>
-          <value>4</value>
-          <display_name>4</display_name>
+          <value>4 minutes</value>
+          <display_name>4 minutes</display_name>
         </choice>
         <choice>
-          <value>3</value>
-          <display_name>3</display_name>
+          <value>3 minutes</value>
+          <display_name>3 minutes</display_name>
         </choice>
         <choice>
-          <value>2</value>
-          <display_name>2</display_name>
+          <value>2 minutes</value>
+          <display_name>2 minutes</display_name>
         </choice>
         <choice>
-          <value>1</value>
-          <display_name>1</display_name>
+          <value>1 minute</value>
+          <display_name>1 minute</display_name>
         </choice>
       </choices>
     </argument>
@@ -512,55 +511,59 @@
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>3</default_value>
+      <default_value>3 Bedrooms</default_value>
       <choices>
         <choice>
-          <value>0</value>
-          <display_name>0</display_name>
+          <value>0 Bedrooms</value>
+          <display_name>0 Bedrooms</display_name>
         </choice>
         <choice>
-          <value>1</value>
-          <display_name>1</display_name>
+          <value>1 Bedroom</value>
+          <display_name>1 Bedroom</display_name>
         </choice>
         <choice>
-          <value>2</value>
-          <display_name>2</display_name>
+          <value>2 Bedrooms</value>
+          <display_name>2 Bedrooms</display_name>
         </choice>
         <choice>
-          <value>3</value>
-          <display_name>3</display_name>
+          <value>3 Bedrooms</value>
+          <display_name>3 Bedrooms</display_name>
         </choice>
         <choice>
-          <value>4</value>
-          <display_name>4</display_name>
+          <value>4 Bedrooms</value>
+          <display_name>4 Bedrooms</display_name>
         </choice>
         <choice>
-          <value>5</value>
-          <display_name>5</display_name>
+          <value>5 Bedrooms</value>
+          <display_name>5 Bedrooms</display_name>
         </choice>
         <choice>
-          <value>6</value>
-          <display_name>6</display_name>
+          <value>6 Bedrooms</value>
+          <display_name>6 Bedrooms</display_name>
         </choice>
         <choice>
-          <value>7</value>
-          <display_name>7</display_name>
+          <value>7 Bedrooms</value>
+          <display_name>7 Bedrooms</display_name>
         </choice>
         <choice>
-          <value>8</value>
-          <display_name>8</display_name>
+          <value>8 Bedrooms</value>
+          <display_name>8 Bedrooms</display_name>
         </choice>
         <choice>
-          <value>9</value>
-          <display_name>9</display_name>
+          <value>9 Bedrooms</value>
+          <display_name>9 Bedrooms</display_name>
         </choice>
         <choice>
-          <value>10</value>
-          <display_name>10</display_name>
+          <value>10 Bedrooms</value>
+          <display_name>10 Bedrooms</display_name>
         </choice>
         <choice>
-          <value>11</value>
-          <display_name>11</display_name>
+          <value>11 Bedrooms</value>
+          <display_name>11 Bedrooms</display_name>
+        </choice>
+        <choice>
+          <value>12 Bedrooms</value>
+          <display_name>12 Bedrooms</display_name>
         </choice>
       </choices>
     </argument>
@@ -578,52 +581,56 @@
           <display_name>Default</display_name>
         </choice>
         <choice>
-          <value>0</value>
-          <display_name>0</display_name>
+          <value>0 Bathrooms</value>
+          <display_name>0 Bathrooms</display_name>
         </choice>
         <choice>
-          <value>1</value>
-          <display_name>1</display_name>
+          <value>1 Bathroom</value>
+          <display_name>1 Bathroom</display_name>
         </choice>
         <choice>
-          <value>2</value>
-          <display_name>2</display_name>
+          <value>2 Bathrooms</value>
+          <display_name>2 Bathrooms</display_name>
         </choice>
         <choice>
-          <value>3</value>
-          <display_name>3</display_name>
+          <value>3 Bathrooms</value>
+          <display_name>3 Bathrooms</display_name>
         </choice>
         <choice>
-          <value>4</value>
-          <display_name>4</display_name>
+          <value>4 Bathrooms</value>
+          <display_name>4 Bathrooms</display_name>
         </choice>
         <choice>
-          <value>5</value>
-          <display_name>5</display_name>
+          <value>5 Bathrooms</value>
+          <display_name>5 Bathrooms</display_name>
         </choice>
         <choice>
-          <value>6</value>
-          <display_name>6</display_name>
+          <value>6 Bathrooms</value>
+          <display_name>6 Bathrooms</display_name>
         </choice>
         <choice>
-          <value>7</value>
-          <display_name>7</display_name>
+          <value>7 Bathrooms</value>
+          <display_name>7 Bathrooms</display_name>
         </choice>
         <choice>
-          <value>8</value>
-          <display_name>8</display_name>
+          <value>8 Bathrooms</value>
+          <display_name>8 Bathrooms</display_name>
         </choice>
         <choice>
-          <value>9</value>
-          <display_name>9</display_name>
+          <value>9 Bathrooms</value>
+          <display_name>9 Bathrooms</display_name>
         </choice>
         <choice>
-          <value>10</value>
-          <display_name>10</display_name>
+          <value>10 Bathrooms</value>
+          <display_name>10 Bathrooms</display_name>
         </choice>
         <choice>
-          <value>11</value>
-          <display_name>11</display_name>
+          <value>11 Bathrooms</value>
+          <display_name>11 Bathrooms</display_name>
+        </choice>
+        <choice>
+          <value>12 Bathrooms</value>
+          <display_name>12 Bathrooms</display_name>
         </choice>
       </choices>
     </argument>
@@ -641,140 +648,143 @@
           <display_name>Default</display_name>
         </choice>
         <choice>
-          <value>0</value>
-          <display_name>0</display_name>
+          <value>0 Occupants</value>
+          <display_name>0 Occupants</display_name>
         </choice>
         <choice>
-          <value>1</value>
-          <display_name>1</display_name>
+          <value>1 Occupant</value>
+          <display_name>1 Occupant</display_name>
         </choice>
         <choice>
-          <value>2</value>
-          <display_name>2</display_name>
+          <value>2 Occupants</value>
+          <display_name>2 Occupants</display_name>
         </choice>
         <choice>
-          <value>3</value>
-          <display_name>3</display_name>
+          <value>3 Occupants</value>
+          <display_name>3 Occupants</display_name>
         </choice>
         <choice>
-          <value>4</value>
-          <display_name>4</display_name>
+          <value>4 Occupants</value>
+          <display_name>4 Occupants</display_name>
         </choice>
         <choice>
-          <value>5</value>
-          <display_name>5</display_name>
+          <value>5 Occupants</value>
+          <display_name>5 Occupants</display_name>
         </choice>
         <choice>
-          <value>6</value>
-          <display_name>6</display_name>
+          <value>6 Occupants</value>
+          <display_name>6 Occupants</display_name>
         </choice>
         <choice>
-          <value>7</value>
-          <display_name>7</display_name>
+          <value>7 Occupants</value>
+          <display_name>7 Occupants</display_name>
         </choice>
         <choice>
-          <value>8</value>
-          <display_name>8</display_name>
+          <value>8 Occupants</value>
+          <display_name>8 Occupants</display_name>
         </choice>
         <choice>
-          <value>9</value>
-          <display_name>9</display_name>
+          <value>9 Occupants</value>
+          <display_name>9 Occupants</display_name>
         </choice>
         <choice>
-          <value>10</value>
-          <display_name>10</display_name>
+          <value>10 Occupants</value>
+          <display_name>10 Occupants</display_name>
         </choice>
         <choice>
-          <value>11</value>
-          <display_name>11</display_name>
+          <value>11 Occupants</value>
+          <display_name>11 Occupants</display_name>
+        </choice>
+        <choice>
+          <value>12 Occupants</value>
+          <display_name>12 Occupants</display_name>
         </choice>
       </choices>
     </argument>
     <argument>
-      <name>geometry_average_ceiling_height</name>
-      <display_name>Geometry: Average Ceiling Height</display_name>
+      <name>geometry_ceiling_height</name>
+      <display_name>Geometry: Ceiling Height</display_name>
       <description>Average distance from the floor to the ceiling.</description>
       <type>Choice</type>
-      <units>ft</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>8.0</default_value>
+      <default_value>8.0 ft</default_value>
       <choices>
         <choice>
-          <value>6.0</value>
-          <display_name>6.0</display_name>
+          <value>6.0 ft</value>
+          <display_name>6.0 ft</display_name>
         </choice>
         <choice>
-          <value>6.5</value>
-          <display_name>6.5</display_name>
+          <value>6.5 ft</value>
+          <display_name>6.5 ft</display_name>
         </choice>
         <choice>
-          <value>7.0</value>
-          <display_name>7.0</display_name>
+          <value>7.0 ft</value>
+          <display_name>7.0 ft</display_name>
         </choice>
         <choice>
-          <value>7.5</value>
-          <display_name>7.5</display_name>
+          <value>7.5 ft</value>
+          <display_name>7.5 ft</display_name>
         </choice>
         <choice>
-          <value>8.0</value>
-          <display_name>8.0</display_name>
+          <value>8.0 ft</value>
+          <display_name>8.0 ft</display_name>
         </choice>
         <choice>
-          <value>8.5</value>
-          <display_name>8.5</display_name>
+          <value>8.5 ft</value>
+          <display_name>8.5 ft</display_name>
         </choice>
         <choice>
-          <value>9.0</value>
-          <display_name>9.0</display_name>
+          <value>9.0 ft</value>
+          <display_name>9.0 ft</display_name>
         </choice>
         <choice>
-          <value>9.5</value>
-          <display_name>9.5</display_name>
+          <value>9.5 ft</value>
+          <display_name>9.5 ft</display_name>
         </choice>
         <choice>
-          <value>10.0</value>
-          <display_name>10.0</display_name>
+          <value>10.0 ft</value>
+          <display_name>10.0 ft</display_name>
         </choice>
         <choice>
-          <value>10.5</value>
-          <display_name>10.5</display_name>
+          <value>10.5 ft</value>
+          <display_name>10.5 ft</display_name>
         </choice>
         <choice>
-          <value>11.0</value>
-          <display_name>11.0</display_name>
+          <value>11.0 ft</value>
+          <display_name>11.0 ft</display_name>
         </choice>
         <choice>
-          <value>11.5</value>
-          <display_name>11.5</display_name>
+          <value>11.5 ft</value>
+          <display_name>11.5 ft</display_name>
         </choice>
         <choice>
-          <value>12.0</value>
-          <display_name>12.0</display_name>
+          <value>12.0 ft</value>
+          <display_name>12.0 ft</display_name>
         </choice>
         <choice>
-          <value>12.5</value>
-          <display_name>12.5</display_name>
+          <value>12.5 ft</value>
+          <display_name>12.5 ft</display_name>
         </choice>
         <choice>
-          <value>13.0</value>
-          <display_name>13.0</display_name>
+          <value>13.0 ft</value>
+          <display_name>13.0 ft</display_name>
         </choice>
         <choice>
-          <value>13.5</value>
-          <display_name>13.5</display_name>
+          <value>13.5 ft</value>
+          <display_name>13.5 ft</display_name>
         </choice>
         <choice>
-          <value>14.0</value>
-          <display_name>14.0</display_name>
+          <value>14.0 ft</value>
+          <display_name>14.0 ft</display_name>
         </choice>
         <choice>
-          <value>14.5</value>
-          <display_name>14.5</display_name>
+          <value>14.5 ft</value>
+          <display_name>14.5 ft</display_name>
         </choice>
         <choice>
-          <value>15.0</value>
-          <display_name>15.0</display_name>
+          <value>15.0 ft</value>
+          <display_name>15.0 ft</display_name>
         </choice>
       </choices>
     </argument>
@@ -2560,64 +2570,64 @@
           <display_name>Triple, Low-E, Insulated, Gas, Low Gain</display_name>
         </choice>
         <choice>
-          <value>IECC U-1.20, SHGC=0.40</value>
-          <display_name>IECC U-1.20, SHGC=0.40</display_name>
+          <value>IECC U-1.20, SHGC 0.40</value>
+          <display_name>IECC U-1.20, SHGC 0.40</display_name>
         </choice>
         <choice>
-          <value>IECC U-1.20, SHGC=0.30</value>
-          <display_name>IECC U-1.20, SHGC=0.30</display_name>
+          <value>IECC U-1.20, SHGC 0.30</value>
+          <display_name>IECC U-1.20, SHGC 0.30</display_name>
         </choice>
         <choice>
-          <value>IECC U-1.20, SHGC=0.25</value>
-          <display_name>IECC U-1.20, SHGC=0.25</display_name>
+          <value>IECC U-1.20, SHGC 0.25</value>
+          <display_name>IECC U-1.20, SHGC 0.25</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.75, SHGC=0.40</value>
-          <display_name>IECC U-0.75, SHGC=0.40</display_name>
+          <value>IECC U-0.75, SHGC 0.40</value>
+          <display_name>IECC U-0.75, SHGC 0.40</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.65, SHGC=0.40</value>
-          <display_name>IECC U-0.65, SHGC=0.40</display_name>
+          <value>IECC U-0.65, SHGC 0.40</value>
+          <display_name>IECC U-0.65, SHGC 0.40</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.65, SHGC=0.30</value>
-          <display_name>IECC U-0.65, SHGC=0.30</display_name>
+          <value>IECC U-0.65, SHGC 0.30</value>
+          <display_name>IECC U-0.65, SHGC 0.30</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.50, SHGC=0.30</value>
-          <display_name>IECC U-0.50, SHGC=0.30</display_name>
+          <value>IECC U-0.50, SHGC 0.30</value>
+          <display_name>IECC U-0.50, SHGC 0.30</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.50, SHGC=0.25</value>
-          <display_name>IECC U-0.50, SHGC=0.25</display_name>
+          <value>IECC U-0.50, SHGC 0.25</value>
+          <display_name>IECC U-0.50, SHGC 0.25</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.40, SHGC=0.40</value>
-          <display_name>IECC U-0.40, SHGC=0.40</display_name>
+          <value>IECC U-0.40, SHGC 0.40</value>
+          <display_name>IECC U-0.40, SHGC 0.40</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.40, SHGC=0.25</value>
-          <display_name>IECC U-0.40, SHGC=0.25</display_name>
+          <value>IECC U-0.40, SHGC 0.25</value>
+          <display_name>IECC U-0.40, SHGC 0.25</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.35, SHGC=0.40</value>
-          <display_name>IECC U-0.35, SHGC=0.40</display_name>
+          <value>IECC U-0.35, SHGC 0.40</value>
+          <display_name>IECC U-0.35, SHGC 0.40</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.35, SHGC=0.30</value>
-          <display_name>IECC U-0.35, SHGC=0.30</display_name>
+          <value>IECC U-0.35, SHGC 0.30</value>
+          <display_name>IECC U-0.35, SHGC 0.30</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.35, SHGC=0.25</value>
-          <display_name>IECC U-0.35, SHGC=0.25</display_name>
+          <value>IECC U-0.35, SHGC 0.25</value>
+          <display_name>IECC U-0.35, SHGC 0.25</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.32, SHGC=0.25</value>
-          <display_name>IECC U-0.32, SHGC=0.25</display_name>
+          <value>IECC U-0.32, SHGC 0.25</value>
+          <display_name>IECC U-0.32, SHGC 0.25</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.30, SHGC=0.25</value>
-          <display_name>IECC U-0.30, SHGC=0.25</display_name>
+          <value>IECC U-0.30, SHGC 0.25</value>
+          <display_name>IECC U-0.30, SHGC 0.25</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Single, Clear, Aluminum w/ Thermal Break</value>
@@ -2714,64 +2724,64 @@
           <display_name>Blinds, Dark</display_name>
         </choice>
         <choice>
-          <value>Summer=0.5, Winter=0.5</value>
-          <display_name>Summer=0.5, Winter=0.5</display_name>
+          <value>Summer 0.5, Winter 0.5</value>
+          <display_name>Summer 0.5, Winter 0.5</display_name>
         </choice>
         <choice>
-          <value>Summer=0.5, Winter=0.6</value>
-          <display_name>Summer=0.5, Winter=0.6</display_name>
+          <value>Summer 0.5, Winter 0.6</value>
+          <display_name>Summer 0.5, Winter 0.6</display_name>
         </choice>
         <choice>
-          <value>Summer=0.5, Winter=0.7</value>
-          <display_name>Summer=0.5, Winter=0.7</display_name>
+          <value>Summer 0.5, Winter 0.7</value>
+          <display_name>Summer 0.5, Winter 0.7</display_name>
         </choice>
         <choice>
-          <value>Summer=0.5, Winter=0.8</value>
-          <display_name>Summer=0.5, Winter=0.8</display_name>
+          <value>Summer 0.5, Winter 0.8</value>
+          <display_name>Summer 0.5, Winter 0.8</display_name>
         </choice>
         <choice>
-          <value>Summer=0.5, Winter=0.9</value>
-          <display_name>Summer=0.5, Winter=0.9</display_name>
+          <value>Summer 0.5, Winter 0.9</value>
+          <display_name>Summer 0.5, Winter 0.9</display_name>
         </choice>
         <choice>
-          <value>Summer=0.6, Winter=0.6</value>
-          <display_name>Summer=0.6, Winter=0.6</display_name>
+          <value>Summer 0.6, Winter 0.6</value>
+          <display_name>Summer 0.6, Winter 0.6</display_name>
         </choice>
         <choice>
-          <value>Summer=0.6, Winter=0.7</value>
-          <display_name>Summer=0.6, Winter=0.7</display_name>
+          <value>Summer 0.6, Winter 0.7</value>
+          <display_name>Summer 0.6, Winter 0.7</display_name>
         </choice>
         <choice>
-          <value>Summer=0.6, Winter=0.8</value>
-          <display_name>Summer=0.6, Winter=0.8</display_name>
+          <value>Summer 0.6, Winter 0.8</value>
+          <display_name>Summer 0.6, Winter 0.8</display_name>
         </choice>
         <choice>
-          <value>Summer=0.6, Winter=0.9</value>
-          <display_name>Summer=0.6, Winter=0.9</display_name>
+          <value>Summer 0.6, Winter 0.9</value>
+          <display_name>Summer 0.6, Winter 0.9</display_name>
         </choice>
         <choice>
-          <value>Summer=0.7, Winter=0.7</value>
-          <display_name>Summer=0.7, Winter=0.7</display_name>
+          <value>Summer 0.7, Winter 0.7</value>
+          <display_name>Summer 0.7, Winter 0.7</display_name>
         </choice>
         <choice>
-          <value>Summer=0.7, Winter=0.8</value>
-          <display_name>Summer=0.7, Winter=0.8</display_name>
+          <value>Summer 0.7, Winter 0.8</value>
+          <display_name>Summer 0.7, Winter 0.8</display_name>
         </choice>
         <choice>
-          <value>Summer=0.7, Winter=0.9</value>
-          <display_name>Summer=0.7, Winter=0.9</display_name>
+          <value>Summer 0.7, Winter 0.9</value>
+          <display_name>Summer 0.7, Winter 0.9</display_name>
         </choice>
         <choice>
-          <value>Summer=0.8, Winter=0.8</value>
-          <display_name>Summer=0.8, Winter=0.8</display_name>
+          <value>Summer 0.8, Winter 0.8</value>
+          <display_name>Summer 0.8, Winter 0.8</display_name>
         </choice>
         <choice>
-          <value>Summer=0.8, Winter=0.9</value>
-          <display_name>Summer=0.8, Winter=0.9</display_name>
+          <value>Summer 0.8, Winter 0.9</value>
+          <display_name>Summer 0.8, Winter 0.9</display_name>
         </choice>
         <choice>
-          <value>Summer=0.9, Winter=0.9</value>
-          <display_name>Summer=0.9, Winter=0.9</display_name>
+          <value>Summer 0.9, Winter 0.9</value>
+          <display_name>Summer 0.9, Winter 0.9</display_name>
         </choice>
       </choices>
     </argument>
@@ -2797,68 +2807,68 @@
           <display_name>Solar Screen</display_name>
         </choice>
         <choice>
-          <value>Summer=0.25, Winter=0.25</value>
-          <display_name>Summer=0.25, Winter=0.25</display_name>
+          <value>Summer 0.25, Winter 0.25</value>
+          <display_name>Summer 0.25, Winter 0.25</display_name>
         </choice>
         <choice>
-          <value>Summer=0.25, Winter=0.50</value>
-          <display_name>Summer=0.25, Winter=0.50</display_name>
+          <value>Summer 0.25, Winter 0.50</value>
+          <display_name>Summer 0.25, Winter 0.50</display_name>
         </choice>
         <choice>
-          <value>Summer=0.25, Winter=0.75</value>
-          <display_name>Summer=0.25, Winter=0.75</display_name>
+          <value>Summer 0.25, Winter 0.75</value>
+          <display_name>Summer 0.25, Winter 0.75</display_name>
         </choice>
         <choice>
-          <value>Summer=0.25, Winter=1.00</value>
-          <display_name>Summer=0.25, Winter=1.00</display_name>
+          <value>Summer 0.25, Winter 1.00</value>
+          <display_name>Summer 0.25, Winter 1.00</display_name>
         </choice>
         <choice>
-          <value>Summer=0.50, Winter=0.25</value>
-          <display_name>Summer=0.50, Winter=0.25</display_name>
+          <value>Summer 0.50, Winter 0.25</value>
+          <display_name>Summer 0.50, Winter 0.25</display_name>
         </choice>
         <choice>
-          <value>Summer=0.50, Winter=0.50</value>
-          <display_name>Summer=0.50, Winter=0.50</display_name>
+          <value>Summer 0.50, Winter 0.50</value>
+          <display_name>Summer 0.50, Winter 0.50</display_name>
         </choice>
         <choice>
-          <value>Summer=0.50, Winter=0.75</value>
-          <display_name>Summer=0.50, Winter=0.75</display_name>
+          <value>Summer 0.50, Winter 0.75</value>
+          <display_name>Summer 0.50, Winter 0.75</display_name>
         </choice>
         <choice>
-          <value>Summer=0.50, Winter=1.00</value>
-          <display_name>Summer=0.50, Winter=1.00</display_name>
+          <value>Summer 0.50, Winter 1.00</value>
+          <display_name>Summer 0.50, Winter 1.00</display_name>
         </choice>
         <choice>
-          <value>Summer=0.75, Winter=0.25</value>
-          <display_name>Summer=0.75, Winter=0.25</display_name>
+          <value>Summer 0.75, Winter 0.25</value>
+          <display_name>Summer 0.75, Winter 0.25</display_name>
         </choice>
         <choice>
-          <value>Summer=0.75, Winter=0.50</value>
-          <display_name>Summer=0.75, Winter=0.50</display_name>
+          <value>Summer 0.75, Winter 0.50</value>
+          <display_name>Summer 0.75, Winter 0.50</display_name>
         </choice>
         <choice>
-          <value>Summer=0.75, Winter=0.75</value>
-          <display_name>Summer=0.75, Winter=0.75</display_name>
+          <value>Summer 0.75, Winter 0.75</value>
+          <display_name>Summer 0.75, Winter 0.75</display_name>
         </choice>
         <choice>
-          <value>Summer=0.75, Winter=1.00</value>
-          <display_name>Summer=0.75, Winter=1.00</display_name>
+          <value>Summer 0.75, Winter 1.00</value>
+          <display_name>Summer 0.75, Winter 1.00</display_name>
         </choice>
         <choice>
-          <value>Summer=1.00, Winter=0.25</value>
-          <display_name>Summer=1.00, Winter=0.25</display_name>
+          <value>Summer 1.00, Winter 0.25</value>
+          <display_name>Summer 1.00, Winter 0.25</display_name>
         </choice>
         <choice>
-          <value>Summer=1.00, Winter=0.50</value>
-          <display_name>Summer=1.00, Winter=0.50</display_name>
+          <value>Summer 1.00, Winter 0.50</value>
+          <display_name>Summer 1.00, Winter 0.50</display_name>
         </choice>
         <choice>
-          <value>Summer=1.00, Winter=0.75</value>
-          <display_name>Summer=1.00, Winter=0.75</display_name>
+          <value>Summer 1.00, Winter 0.75</value>
+          <display_name>Summer 1.00, Winter 0.75</display_name>
         </choice>
         <choice>
-          <value>Summer=1.00, Winter=1.00</value>
-          <display_name>Summer=1.00, Winter=1.00</display_name>
+          <value>Summer 1.00, Winter 1.00</value>
+          <display_name>Summer 1.00, Winter 1.00</display_name>
         </choice>
       </choices>
     </argument>
@@ -3109,44 +3119,44 @@
           <display_name>Triple, Clear, Non-Metal</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.75, SHGC=0.40</value>
-          <display_name>IECC U-0.75, SHGC=0.40</display_name>
+          <value>IECC U-0.75, SHGC 0.40</value>
+          <display_name>IECC U-0.75, SHGC 0.40</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.75, SHGC=0.30</value>
-          <display_name>IECC U-0.75, SHGC=0.30</display_name>
+          <value>IECC U-0.75, SHGC 0.30</value>
+          <display_name>IECC U-0.75, SHGC 0.30</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.75, SHGC=0.25</value>
-          <display_name>IECC U-0.75, SHGC=0.25</display_name>
+          <value>IECC U-0.75, SHGC 0.25</value>
+          <display_name>IECC U-0.75, SHGC 0.25</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.65, SHGC=0.40</value>
-          <display_name>IECC U-0.65, SHGC=0.40</display_name>
+          <value>IECC U-0.65, SHGC 0.40</value>
+          <display_name>IECC U-0.65, SHGC 0.40</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.65, SHGC=0.30</value>
-          <display_name>IECC U-0.65, SHGC=0.30</display_name>
+          <value>IECC U-0.65, SHGC 0.30</value>
+          <display_name>IECC U-0.65, SHGC 0.30</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.65, SHGC=0.25</value>
-          <display_name>IECC U-0.65, SHGC=0.25</display_name>
+          <value>IECC U-0.65, SHGC 0.25</value>
+          <display_name>IECC U-0.65, SHGC 0.25</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.60, SHGC=0.40</value>
-          <display_name>IECC U-0.60, SHGC=0.40</display_name>
+          <value>IECC U-0.60, SHGC 0.40</value>
+          <display_name>IECC U-0.60, SHGC 0.40</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.60, SHGC=0.30</value>
-          <display_name>IECC U-0.60, SHGC=0.30</display_name>
+          <value>IECC U-0.60, SHGC 0.30</value>
+          <display_name>IECC U-0.60, SHGC 0.30</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.55, SHGC=0.40</value>
-          <display_name>IECC U-0.55, SHGC=0.40</display_name>
+          <value>IECC U-0.55, SHGC 0.40</value>
+          <display_name>IECC U-0.55, SHGC 0.40</display_name>
         </choice>
         <choice>
-          <value>IECC U-0.55, SHGC=0.25</value>
-          <display_name>IECC U-0.55, SHGC=0.25</display_name>
+          <value>IECC U-0.55, SHGC 0.25</value>
+          <display_name>IECC U-0.55, SHGC 0.25</display_name>
         </choice>
       </choices>
     </argument>
@@ -3602,35 +3612,35 @@
       <type>Choice</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>natural gas</default_value>
+      <default_value>Natural Gas</default_value>
       <choices>
         <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
+          <value>Electricity</value>
+          <display_name>Electricity</display_name>
         </choice>
         <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
+          <value>Natural Gas</value>
+          <display_name>Natural Gas</display_name>
         </choice>
         <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
+          <value>Fuel Oil</value>
+          <display_name>Fuel Oil</display_name>
         </choice>
         <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
+          <value>Propane</value>
+          <display_name>Propane</display_name>
         </choice>
         <choice>
-          <value>wood</value>
-          <display_name>wood</display_name>
+          <value>Wood Cord</value>
+          <display_name>Wood Cord</display_name>
         </choice>
         <choice>
-          <value>wood pellets</value>
-          <display_name>wood pellets</display_name>
+          <value>Wood Pellets</value>
+          <display_name>Wood Pellets</display_name>
         </choice>
         <choice>
-          <value>coal</value>
-          <display_name>coal</display_name>
+          <value>Coal</value>
+          <display_name>Coal</display_name>
         </choice>
       </choices>
     </argument>
@@ -5613,35 +5623,35 @@
       <type>Choice</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>electricity</default_value>
+      <default_value>Electricity</default_value>
       <choices>
         <choice>
-          <value>electricity</value>
-          <display_name>electricity</display_name>
+          <value>Electricity</value>
+          <display_name>Electricity</display_name>
         </choice>
         <choice>
-          <value>natural gas</value>
-          <display_name>natural gas</display_name>
+          <value>Natural Gas</value>
+          <display_name>Natural Gas</display_name>
         </choice>
         <choice>
-          <value>fuel oil</value>
-          <display_name>fuel oil</display_name>
+          <value>Fuel Oil</value>
+          <display_name>Fuel Oil</display_name>
         </choice>
         <choice>
-          <value>propane</value>
-          <display_name>propane</display_name>
+          <value>Propane</value>
+          <display_name>Propane</display_name>
         </choice>
         <choice>
-          <value>wood</value>
-          <display_name>wood</display_name>
+          <value>Wood Cord</value>
+          <display_name>Wood Cord</display_name>
         </choice>
         <choice>
-          <value>wood pellets</value>
-          <display_name>wood pellets</display_name>
+          <value>Wood Pellets</value>
+          <display_name>Wood Pellets</display_name>
         </choice>
         <choice>
-          <value>coal</value>
-          <display_name>coal</display_name>
+          <value>Coal</value>
+          <display_name>Coal</display_name>
         </choice>
       </choices>
     </argument>
@@ -6585,127 +6595,127 @@
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>Electricity, Tank, UEF=0.92</default_value>
+      <default_value>Electricity, Tank, UEF 0.92</default_value>
       <choices>
         <choice>
           <value>None</value>
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Electricity, Tank, UEF=0.90</value>
-          <display_name>Electricity, Tank, UEF=0.90</display_name>
+          <value>Electricity, Tank, UEF 0.90</value>
+          <display_name>Electricity, Tank, UEF 0.90</display_name>
         </choice>
         <choice>
-          <value>Electricity, Tank, UEF=0.92</value>
-          <display_name>Electricity, Tank, UEF=0.92</display_name>
+          <value>Electricity, Tank, UEF 0.92</value>
+          <display_name>Electricity, Tank, UEF 0.92</display_name>
         </choice>
         <choice>
-          <value>Electricity, Tank, UEF=0.94</value>
-          <display_name>Electricity, Tank, UEF=0.94</display_name>
+          <value>Electricity, Tank, UEF 0.94</value>
+          <display_name>Electricity, Tank, UEF 0.94</display_name>
         </choice>
         <choice>
-          <value>Electricity, Tankless, UEF=0.94</value>
-          <display_name>Electricity, Tankless, UEF=0.94</display_name>
+          <value>Electricity, Tankless, UEF 0.94</value>
+          <display_name>Electricity, Tankless, UEF 0.94</display_name>
         </choice>
         <choice>
-          <value>Electricity, Tankless, UEF=0.98</value>
-          <display_name>Electricity, Tankless, UEF=0.98</display_name>
+          <value>Electricity, Tankless, UEF 0.98</value>
+          <display_name>Electricity, Tankless, UEF 0.98</display_name>
         </choice>
         <choice>
-          <value>Electricity, Heat Pump, UEF=3.50</value>
-          <display_name>Electricity, Heat Pump, UEF=3.50</display_name>
+          <value>Electricity, Heat Pump, UEF 3.50</value>
+          <display_name>Electricity, Heat Pump, UEF 3.50</display_name>
         </choice>
         <choice>
-          <value>Electricity, Heat Pump, UEF=3.75</value>
-          <display_name>Electricity, Heat Pump, UEF=3.75</display_name>
+          <value>Electricity, Heat Pump, UEF 3.75</value>
+          <display_name>Electricity, Heat Pump, UEF 3.75</display_name>
         </choice>
         <choice>
-          <value>Electricity, Heat Pump, UEF=4.00</value>
-          <display_name>Electricity, Heat Pump, UEF=4.00</display_name>
+          <value>Electricity, Heat Pump, UEF 4.00</value>
+          <display_name>Electricity, Heat Pump, UEF 4.00</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Tank, UEF=0.57</value>
-          <display_name>Natural Gas, Tank, UEF=0.57</display_name>
+          <value>Natural Gas, Tank, UEF 0.57</value>
+          <display_name>Natural Gas, Tank, UEF 0.57</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Tank, UEF=0.60</value>
-          <display_name>Natural Gas, Tank, UEF=0.60</display_name>
+          <value>Natural Gas, Tank, UEF 0.60</value>
+          <display_name>Natural Gas, Tank, UEF 0.60</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Tank, UEF=0.64</value>
-          <display_name>Natural Gas, Tank, UEF=0.64</display_name>
+          <value>Natural Gas, Tank, UEF 0.64</value>
+          <display_name>Natural Gas, Tank, UEF 0.64</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Tank, UEF=0.67</value>
-          <display_name>Natural Gas, Tank, UEF=0.67</display_name>
+          <value>Natural Gas, Tank, UEF 0.67</value>
+          <display_name>Natural Gas, Tank, UEF 0.67</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Tank, UEF=0.70</value>
-          <display_name>Natural Gas, Tank, UEF=0.70</display_name>
+          <value>Natural Gas, Tank, UEF 0.70</value>
+          <display_name>Natural Gas, Tank, UEF 0.70</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Tank, UEF=0.80</value>
-          <display_name>Natural Gas, Tank, UEF=0.80</display_name>
+          <value>Natural Gas, Tank, UEF 0.80</value>
+          <display_name>Natural Gas, Tank, UEF 0.80</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Tankless, UEF=0.82</value>
-          <display_name>Natural Gas, Tankless, UEF=0.82</display_name>
+          <value>Natural Gas, Tankless, UEF 0.82</value>
+          <display_name>Natural Gas, Tankless, UEF 0.82</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Tankless, UEF=0.93</value>
-          <display_name>Natural Gas, Tankless, UEF=0.93</display_name>
+          <value>Natural Gas, Tankless, UEF 0.93</value>
+          <display_name>Natural Gas, Tankless, UEF 0.93</display_name>
         </choice>
         <choice>
-          <value>Natural Gas, Tankless, UEF=0.96</value>
-          <display_name>Natural Gas, Tankless, UEF=0.96</display_name>
+          <value>Natural Gas, Tankless, UEF 0.96</value>
+          <display_name>Natural Gas, Tankless, UEF 0.96</display_name>
         </choice>
         <choice>
-          <value>Fuel Oil, Tank, UEF=0.61</value>
-          <display_name>Fuel Oil, Tank, UEF=0.61</display_name>
+          <value>Fuel Oil, Tank, UEF 0.61</value>
+          <display_name>Fuel Oil, Tank, UEF 0.61</display_name>
         </choice>
         <choice>
-          <value>Fuel Oil, Tank, UEF=0.64</value>
-          <display_name>Fuel Oil, Tank, UEF=0.64</display_name>
+          <value>Fuel Oil, Tank, UEF 0.64</value>
+          <display_name>Fuel Oil, Tank, UEF 0.64</display_name>
         </choice>
         <choice>
-          <value>Fuel Oil, Tank, UEF=0.67</value>
-          <display_name>Fuel Oil, Tank, UEF=0.67</display_name>
+          <value>Fuel Oil, Tank, UEF 0.67</value>
+          <display_name>Fuel Oil, Tank, UEF 0.67</display_name>
         </choice>
         <choice>
-          <value>Propane, Tank, UEF=0.57</value>
-          <display_name>Propane, Tank, UEF=0.57</display_name>
+          <value>Propane, Tank, UEF 0.57</value>
+          <display_name>Propane, Tank, UEF 0.57</display_name>
         </choice>
         <choice>
-          <value>Propane, Tank, UEF=0.60</value>
-          <display_name>Propane, Tank, UEF=0.60</display_name>
+          <value>Propane, Tank, UEF 0.60</value>
+          <display_name>Propane, Tank, UEF 0.60</display_name>
         </choice>
         <choice>
-          <value>Propane, Tank, UEF=0.64</value>
-          <display_name>Propane, Tank, UEF=0.64</display_name>
+          <value>Propane, Tank, UEF 0.64</value>
+          <display_name>Propane, Tank, UEF 0.64</display_name>
         </choice>
         <choice>
-          <value>Propane, Tank, UEF=0.67</value>
-          <display_name>Propane, Tank, UEF=0.67</display_name>
+          <value>Propane, Tank, UEF 0.67</value>
+          <display_name>Propane, Tank, UEF 0.67</display_name>
         </choice>
         <choice>
-          <value>Propane, Tank, UEF=0.70</value>
-          <display_name>Propane, Tank, UEF=0.70</display_name>
+          <value>Propane, Tank, UEF 0.70</value>
+          <display_name>Propane, Tank, UEF 0.70</display_name>
         </choice>
         <choice>
-          <value>Propane, Tank, UEF=0.80</value>
-          <display_name>Propane, Tank, UEF=0.80</display_name>
+          <value>Propane, Tank, UEF 0.80</value>
+          <display_name>Propane, Tank, UEF 0.80</display_name>
         </choice>
         <choice>
-          <value>Propane, Tankless, UEF=0.82</value>
-          <display_name>Propane, Tankless, UEF=0.82</display_name>
+          <value>Propane, Tankless, UEF 0.82</value>
+          <display_name>Propane, Tankless, UEF 0.82</display_name>
         </choice>
         <choice>
-          <value>Propane, Tankless, UEF=0.93</value>
-          <display_name>Propane, Tankless, UEF=0.93</display_name>
+          <value>Propane, Tankless, UEF 0.93</value>
+          <display_name>Propane, Tankless, UEF 0.93</display_name>
         </choice>
         <choice>
-          <value>Propane, Tankless, UEF=0.96</value>
-          <display_name>Propane, Tankless, UEF=0.96</display_name>
+          <value>Propane, Tankless, UEF 0.96</value>
+          <display_name>Propane, Tankless, UEF 0.96</display_name>
         </choice>
         <choice>
           <value>Space-Heating Boiler w/ Storage Tank</value>
@@ -6716,36 +6726,36 @@
           <display_name>Space-Heating Boiler w/ Tankless Coil</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Electricity, Tank, 40 gal, EF=0.93</value>
-          <display_name>Detailed Example: Electricity, Tank, 40 gal, EF=0.93</display_name>
+          <value>Detailed Example: Electricity, Tank, 40 gal, EF 0.93</value>
+          <display_name>Detailed Example: Electricity, Tank, 40 gal, EF 0.93</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Electricity, Tank, UEF=0.94, Setpoint=135F</value>
-          <display_name>Detailed Example: Electricity, Tank, UEF=0.94, Setpoint=135F</display_name>
+          <value>Detailed Example: Electricity, Tank, UEF 0.94, 135F</value>
+          <display_name>Detailed Example: Electricity, Tank, UEF 0.94, 135F</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Electricity, Tankless, EF=0.96</value>
-          <display_name>Detailed Example: Electricity, Tankless, EF=0.96</display_name>
+          <value>Detailed Example: Electricity, Tankless, EF 0.96</value>
+          <display_name>Detailed Example: Electricity, Tankless, EF 0.96</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Electricity, Heat Pump, 80 gal, EF=3.1</value>
-          <display_name>Detailed Example: Electricity, Heat Pump, 80 gal, EF=3.1</display_name>
+          <value>Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1</value>
+          <display_name>Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Natural Gas, Tank, 40 gal, EF=0.56, RE=0.78</value>
-          <display_name>Detailed Example: Natural Gas, Tank, 40 gal, EF=0.56, RE=0.78</display_name>
+          <value>Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78</value>
+          <display_name>Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Natural Gas, Tank, 40 gal, EF=0.62, RE=0.78</value>
-          <display_name>Detailed Example: Natural Gas, Tank, 40 gal, EF=0.62, RE=0.78</display_name>
+          <value>Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78</value>
+          <display_name>Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Natural Gas, Tank, 50 gal, EF=0.59, RE=0.76</value>
-          <display_name>Detailed Example: Natural Gas, Tank, 50 gal, EF=0.59, RE=0.76</display_name>
+          <value>Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76</value>
+          <display_name>Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Natural Gas, Tankless, EF=0.95</value>
-          <display_name>Detailed Example: Natural Gas, Tankless, EF=0.95</display_name>
+          <value>Detailed Example: Natural Gas, Tankless, EF 0.95</value>
+          <display_name>Detailed Example: Natural Gas, Tankless, EF 0.95</display_name>
         </choice>
       </choices>
     </argument>
@@ -6789,64 +6799,6 @@
         <choice>
           <value>Outside</value>
           <display_name>Outside</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>dhw_water_heater_jacket</name>
-      <display_name>DHW: Water Heater Jacket Insulation</display_name>
-      <description>The type of water heater jacket/blanket insulation. Doesn't apply to tankless systems or space-heating boilers.</description>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <default_value>None</default_value>
-      <choices>
-        <choice>
-          <value>None</value>
-          <display_name>None</display_name>
-        </choice>
-        <choice>
-          <value>R-5</value>
-          <display_name>R-5</display_name>
-        </choice>
-        <choice>
-          <value>R-6</value>
-          <display_name>R-6</display_name>
-        </choice>
-        <choice>
-          <value>R-7</value>
-          <display_name>R-7</display_name>
-        </choice>
-        <choice>
-          <value>R-8</value>
-          <display_name>R-8</display_name>
-        </choice>
-        <choice>
-          <value>R-9</value>
-          <display_name>R-9</display_name>
-        </choice>
-        <choice>
-          <value>R-10</value>
-          <display_name>R-10</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
-      <name>dhw_water_heater_uses_desuperheater</name>
-      <display_name>DHW: Water Heater Uses Desuperheater</display_name>
-      <description>Whether the water heater uses a desuperheater. Requires that the dwelling unit has a air-to-air, mini-split, or ground-to-air heat pump or a central air conditioner or mini-split air conditioner.</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <default_value>false</default_value>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
         </choice>
       </choices>
     </argument>
@@ -8680,8 +8632,8 @@
           <display_name>Detailed Example: ERI Reference 2006</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: MEF=1.65</value>
-          <display_name>Detailed Example: MEF=1.65</display_name>
+          <value>Detailed Example: MEF 1.65</value>
+          <display_name>Detailed Example: MEF 1.65</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Standard, 2008-2017, Conditioned Basement</value>
@@ -8839,8 +8791,8 @@
           <display_name>Detailed Example: Natural Gas, ERI Reference 2006</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Electricity, EF=4.29</value>
-          <display_name>Detailed Example: Electricity, EF=4.29</display_name>
+          <value>Detailed Example: Electricity, EF 4.29</value>
+          <display_name>Detailed Example: Electricity, EF 4.29</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Electricity, Standard, Conditioned Basement</value>
@@ -8934,8 +8886,8 @@
           <display_name>Detailed Example: ERI Reference 2006</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: EF=0.7, Compact</value>
-          <display_name>Detailed Example: EF=0.7, Compact</display_name>
+          <value>Detailed Example: EF 0.7, Compact</value>
+          <display_name>Detailed Example: EF 0.7, Compact</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Federal Minimum, Standard, Conditioned Basement</value>
@@ -9601,8 +9553,8 @@
           <display_name>Whole-Home, 125 pints/day</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Portable, 40 pints/day, EF=1.8</value>
-          <display_name>Detailed Example: Portable, 40 pints/day, EF=1.8</display_name>
+          <value>Detailed Example: Portable, 40 pints/day, EF 1.8</value>
+          <display_name>Detailed Example: Portable, 40 pints/day, EF 1.8</display_name>
         </choice>
       </choices>
     </argument>
@@ -10732,20 +10684,20 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Temperature Capacitance Multiplier = 1</value>
-          <display_name>Temperature Capacitance Multiplier = 1</display_name>
+          <value>Temperature Capacitance Multiplier, 1</value>
+          <display_name>Temperature Capacitance Multiplier, 1</display_name>
         </choice>
         <choice>
-          <value>Temperature Capacitance Multiplier = 4</value>
-          <display_name>Temperature Capacitance Multiplier = 4</display_name>
+          <value>Temperature Capacitance Multiplier, 4</value>
+          <display_name>Temperature Capacitance Multiplier, 4</display_name>
         </choice>
         <choice>
-          <value>Temperature Capacitance Multiplier = 10</value>
-          <display_name>Temperature Capacitance Multiplier = 10</display_name>
+          <value>Temperature Capacitance Multiplier, 10</value>
+          <display_name>Temperature Capacitance Multiplier, 10</display_name>
         </choice>
         <choice>
-          <value>Temperature Capacitance Multiplier = 15</value>
-          <display_name>Temperature Capacitance Multiplier = 15</display_name>
+          <value>Temperature Capacitance Multiplier, 15</value>
+          <display_name>Temperature Capacitance Multiplier, 15</display_name>
         </choice>
         <choice>
           <value>On/Off Thermostat Deadband, 1F</value>
@@ -10791,20 +10743,20 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Temperature Capacitance Multiplier = 1</value>
-          <display_name>Temperature Capacitance Multiplier = 1</display_name>
+          <value>Temperature Capacitance Multiplier, 1</value>
+          <display_name>Temperature Capacitance Multiplier, 1</display_name>
         </choice>
         <choice>
-          <value>Temperature Capacitance Multiplier = 4</value>
-          <display_name>Temperature Capacitance Multiplier = 4</display_name>
+          <value>Temperature Capacitance Multiplier, 4</value>
+          <display_name>Temperature Capacitance Multiplier, 4</display_name>
         </choice>
         <choice>
-          <value>Temperature Capacitance Multiplier = 10</value>
-          <display_name>Temperature Capacitance Multiplier = 10</display_name>
+          <value>Temperature Capacitance Multiplier, 10</value>
+          <display_name>Temperature Capacitance Multiplier, 10</display_name>
         </choice>
         <choice>
-          <value>Temperature Capacitance Multiplier = 15</value>
-          <display_name>Temperature Capacitance Multiplier = 15</display_name>
+          <value>Temperature Capacitance Multiplier, 15</value>
+          <display_name>Temperature Capacitance Multiplier, 15</display_name>
         </choice>
         <choice>
           <value>On/Off Thermostat Deadband, 1F</value>
@@ -11091,7 +11043,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>ADE8582F</checksum>
+      <checksum>A25557A7</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -11108,7 +11060,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>AC83D7AC</checksum>
+      <checksum>B067B9E9</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
@@ -11120,31 +11072,31 @@
       <filename>geometry.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>B8B18FC4</checksum>
+      <checksum>3538B821</checksum>
     </file>
     <file>
       <filename>options/advanced_feature.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D11B1772</checksum>
+      <checksum>339E65AB</checksum>
     </file>
     <file>
       <filename>options/advanced_feature_2.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D11B1772</checksum>
+      <checksum>339E65AB</checksum>
     </file>
     <file>
       <filename>options/appliance_clothes_dryer.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CC8E760F</checksum>
+      <checksum>9C405FB4</checksum>
     </file>
     <file>
       <filename>options/appliance_clothes_washer.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7C02528D</checksum>
+      <checksum>6D294E8F</checksum>
     </file>
     <file>
       <filename>options/appliance_cooking_range_oven.tsv</filename>
@@ -11156,7 +11108,7 @@
       <filename>options/appliance_dehumidifier.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CC1B0920</checksum>
+      <checksum>CFC51386</checksum>
     </file>
     <file>
       <filename>options/appliance_dehumidifier_setpoint.tsv</filename>
@@ -11168,7 +11120,7 @@
       <filename>options/appliance_dishwasher.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E7231E90</checksum>
+      <checksum>99361B71</checksum>
     </file>
     <file>
       <filename>options/appliance_extra_refrigerator.tsv</filename>
@@ -11234,13 +11186,7 @@
       <filename>options/dhw_water_heater.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E1853EC6</checksum>
-    </file>
-    <file>
-      <filename>options/dhw_water_heater_jacket.tsv</filename>
-      <filetype>tsv</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>90E8E3E7</checksum>
+      <checksum>4293F3CC</checksum>
     </file>
     <file>
       <filename>options/dhw_water_heater_location.tsv</filename>
@@ -11330,7 +11276,7 @@
       <filename>options/enclosure_skylight.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>6DFA70A3</checksum>
+      <checksum>956BA0B7</checksum>
     </file>
     <file>
       <filename>options/enclosure_slab.tsv</filename>
@@ -11360,13 +11306,13 @@
       <filename>options/enclosure_window.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>987765AF</checksum>
+      <checksum>6BC9A6E3</checksum>
     </file>
     <file>
       <filename>options/enclosure_window_exterior_shading.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>853591FA</checksum>
+      <checksum>1975DBF6</checksum>
     </file>
     <file>
       <filename>options/enclosure_window_insect_screens.tsv</filename>
@@ -11378,7 +11324,7 @@
       <filename>options/enclosure_window_interior_shading.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>B45D0A3A</checksum>
+      <checksum>1372255B</checksum>
     </file>
     <file>
       <filename>options/enclosure_window_natural_ventilation.tsv</filename>
@@ -11403,6 +11349,12 @@
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
       <checksum>0FBEDDB9</checksum>
+    </file>
+    <file>
+      <filename>options/geometry_ceiling_height.tsv</filename>
+      <filetype>tsv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>2EA171F9</checksum>
     </file>
     <file>
       <filename>options/geometry_eaves.tsv</filename>
@@ -11433,6 +11385,24 @@
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
       <checksum>085204E8</checksum>
+    </file>
+    <file>
+      <filename>options/geometry_unit_num_bathrooms.tsv</filename>
+      <filetype>tsv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>4A26CEA6</checksum>
+    </file>
+    <file>
+      <filename>options/geometry_unit_num_bedrooms.tsv</filename>
+      <filetype>tsv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>A5073C53</checksum>
+    </file>
+    <file>
+      <filename>options/geometry_unit_num_occupants.tsv</filename>
+      <filetype>tsv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>797D0944</checksum>
     </file>
     <file>
       <filename>options/geometry_unit_type.tsv</filename>
@@ -11555,6 +11525,12 @@
       <checksum>A4402A2D</checksum>
     </file>
     <file>
+      <filename>options/hvac_heating_system_2_fuel.tsv</filename>
+      <filetype>tsv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>9F5AC12C</checksum>
+    </file>
+    <file>
       <filename>options/hvac_heating_system_2_heating_load_served.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
@@ -11565,6 +11541,12 @@
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
       <checksum>A4402A2D</checksum>
+    </file>
+    <file>
+      <filename>options/hvac_heating_system_fuel.tsv</filename>
+      <filetype>tsv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>9F5AC12C</checksum>
     </file>
     <file>
       <filename>options/hvac_heating_system_heating_load_served.tsv</filename>
@@ -11669,6 +11651,12 @@
       <checksum>210F3420</checksum>
     </file>
     <file>
+      <filename>options/simulation_control_timestep.tsv</filename>
+      <filetype>tsv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>A2C3E643</checksum>
+    </file>
+    <file>
       <filename>options/utility_bill_scenario.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
@@ -11720,7 +11708,7 @@
       <filename>test_build_residential_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>9D160A41</checksum>
+      <checksum>F3846321</checksum>
     </file>
   </files>
 </measure>
