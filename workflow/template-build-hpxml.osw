@@ -14,7 +14,7 @@
         "geometry_roof_pitch": "6:12",
         "geometry_unit_aspect_ratio": "1.5",
         "geometry_unit_conditioned_floor_area": "2700.0",
-        "geometry_unit_num_bedrooms": "3 Bedrooms",
+        "geometry_unit_num_bedrooms": "3",
         "geometry_unit_direction": "South",
         "geometry_unit_type": "Single-Family Detached, 1 Story",
         "geometry_window_areas_or_wwrs": "108, 108, 72, 72",

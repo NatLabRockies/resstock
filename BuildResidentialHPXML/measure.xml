@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>d9e0d4c5-fb7e-42f3-a484-b93be1a17ad8</version_id>
-  <version_modified>2025-08-01T15:27:30Z</version_modified>
+  <version_id>3b22d6df-8752-4452-a38d-507ce9e94662</version_id>
+  <version_modified>2025-08-01T16:08:11Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -25,57 +25,58 @@
       <display_name>Simulation Control: Timestep</display_name>
       <description>The timestep for the simulation; defaults to hourly calculations for fastest runtime.</description>
       <type>Choice</type>
+      <units>min</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>60 minutes</default_value>
+      <default_value>60</default_value>
       <choices>
         <choice>
-          <value>60 minutes</value>
-          <display_name>60 minutes</display_name>
+          <value>60</value>
+          <display_name>60</display_name>
         </choice>
         <choice>
-          <value>30 minutes</value>
-          <display_name>30 minutes</display_name>
+          <value>30</value>
+          <display_name>30</display_name>
         </choice>
         <choice>
-          <value>20 minutes</value>
-          <display_name>20 minutes</display_name>
+          <value>20</value>
+          <display_name>20</display_name>
         </choice>
         <choice>
-          <value>15 minutes</value>
-          <display_name>15 minutes</display_name>
+          <value>15</value>
+          <display_name>15</display_name>
         </choice>
         <choice>
-          <value>12 minutes</value>
-          <display_name>12 minutes</display_name>
+          <value>12</value>
+          <display_name>12</display_name>
         </choice>
         <choice>
-          <value>10 minutes</value>
-          <display_name>10 minutes</display_name>
+          <value>10</value>
+          <display_name>10</display_name>
         </choice>
         <choice>
-          <value>6 minutes</value>
-          <display_name>6 minutes</display_name>
+          <value>6</value>
+          <display_name>6</display_name>
         </choice>
         <choice>
-          <value>5 minutes</value>
-          <display_name>5 minutes</display_name>
+          <value>5</value>
+          <display_name>5</display_name>
         </choice>
         <choice>
-          <value>4 minutes</value>
-          <display_name>4 minutes</display_name>
+          <value>4</value>
+          <display_name>4</display_name>
         </choice>
         <choice>
-          <value>3 minutes</value>
-          <display_name>3 minutes</display_name>
+          <value>3</value>
+          <display_name>3</display_name>
         </choice>
         <choice>
-          <value>2 minutes</value>
-          <display_name>2 minutes</display_name>
+          <value>2</value>
+          <display_name>2</display_name>
         </choice>
         <choice>
-          <value>1 minute</value>
-          <display_name>1 minute</display_name>
+          <value>1</value>
+          <display_name>1</display_name>
         </choice>
       </choices>
     </argument>
@@ -511,59 +512,59 @@
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>3 Bedrooms</default_value>
+      <default_value>3</default_value>
       <choices>
         <choice>
-          <value>0 Bedrooms</value>
-          <display_name>0 Bedrooms</display_name>
+          <value>0</value>
+          <display_name>0</display_name>
         </choice>
         <choice>
-          <value>1 Bedroom</value>
-          <display_name>1 Bedroom</display_name>
+          <value>1</value>
+          <display_name>1</display_name>
         </choice>
         <choice>
-          <value>2 Bedrooms</value>
-          <display_name>2 Bedrooms</display_name>
+          <value>2</value>
+          <display_name>2</display_name>
         </choice>
         <choice>
-          <value>3 Bedrooms</value>
-          <display_name>3 Bedrooms</display_name>
+          <value>3</value>
+          <display_name>3</display_name>
         </choice>
         <choice>
-          <value>4 Bedrooms</value>
-          <display_name>4 Bedrooms</display_name>
+          <value>4</value>
+          <display_name>4</display_name>
         </choice>
         <choice>
-          <value>5 Bedrooms</value>
-          <display_name>5 Bedrooms</display_name>
+          <value>5</value>
+          <display_name>5</display_name>
         </choice>
         <choice>
-          <value>6 Bedrooms</value>
-          <display_name>6 Bedrooms</display_name>
+          <value>6</value>
+          <display_name>6</display_name>
         </choice>
         <choice>
-          <value>7 Bedrooms</value>
-          <display_name>7 Bedrooms</display_name>
+          <value>7</value>
+          <display_name>7</display_name>
         </choice>
         <choice>
-          <value>8 Bedrooms</value>
-          <display_name>8 Bedrooms</display_name>
+          <value>8</value>
+          <display_name>8</display_name>
         </choice>
         <choice>
-          <value>9 Bedrooms</value>
-          <display_name>9 Bedrooms</display_name>
+          <value>9</value>
+          <display_name>9</display_name>
         </choice>
         <choice>
-          <value>10 Bedrooms</value>
-          <display_name>10 Bedrooms</display_name>
+          <value>10</value>
+          <display_name>10</display_name>
         </choice>
         <choice>
-          <value>11 Bedrooms</value>
-          <display_name>11 Bedrooms</display_name>
+          <value>11</value>
+          <display_name>11</display_name>
         </choice>
         <choice>
-          <value>12 Bedrooms</value>
-          <display_name>12 Bedrooms</display_name>
+          <value>12</value>
+          <display_name>12</display_name>
         </choice>
       </choices>
     </argument>
@@ -581,56 +582,56 @@
           <display_name>Default</display_name>
         </choice>
         <choice>
-          <value>0 Bathrooms</value>
-          <display_name>0 Bathrooms</display_name>
+          <value>0</value>
+          <display_name>0</display_name>
         </choice>
         <choice>
-          <value>1 Bathroom</value>
-          <display_name>1 Bathroom</display_name>
+          <value>1</value>
+          <display_name>1</display_name>
         </choice>
         <choice>
-          <value>2 Bathrooms</value>
-          <display_name>2 Bathrooms</display_name>
+          <value>2</value>
+          <display_name>2</display_name>
         </choice>
         <choice>
-          <value>3 Bathrooms</value>
-          <display_name>3 Bathrooms</display_name>
+          <value>3</value>
+          <display_name>3</display_name>
         </choice>
         <choice>
-          <value>4 Bathrooms</value>
-          <display_name>4 Bathrooms</display_name>
+          <value>4</value>
+          <display_name>4</display_name>
         </choice>
         <choice>
-          <value>5 Bathrooms</value>
-          <display_name>5 Bathrooms</display_name>
+          <value>5</value>
+          <display_name>5</display_name>
         </choice>
         <choice>
-          <value>6 Bathrooms</value>
-          <display_name>6 Bathrooms</display_name>
+          <value>6</value>
+          <display_name>6</display_name>
         </choice>
         <choice>
-          <value>7 Bathrooms</value>
-          <display_name>7 Bathrooms</display_name>
+          <value>7</value>
+          <display_name>7</display_name>
         </choice>
         <choice>
-          <value>8 Bathrooms</value>
-          <display_name>8 Bathrooms</display_name>
+          <value>8</value>
+          <display_name>8</display_name>
         </choice>
         <choice>
-          <value>9 Bathrooms</value>
-          <display_name>9 Bathrooms</display_name>
+          <value>9</value>
+          <display_name>9</display_name>
         </choice>
         <choice>
-          <value>10 Bathrooms</value>
-          <display_name>10 Bathrooms</display_name>
+          <value>10</value>
+          <display_name>10</display_name>
         </choice>
         <choice>
-          <value>11 Bathrooms</value>
-          <display_name>11 Bathrooms</display_name>
+          <value>11</value>
+          <display_name>11</display_name>
         </choice>
         <choice>
-          <value>12 Bathrooms</value>
-          <display_name>12 Bathrooms</display_name>
+          <value>12</value>
+          <display_name>12</display_name>
         </choice>
       </choices>
     </argument>
@@ -648,56 +649,56 @@
           <display_name>Default</display_name>
         </choice>
         <choice>
-          <value>0 Occupants</value>
-          <display_name>0 Occupants</display_name>
+          <value>0</value>
+          <display_name>0</display_name>
         </choice>
         <choice>
-          <value>1 Occupant</value>
-          <display_name>1 Occupant</display_name>
+          <value>1</value>
+          <display_name>1</display_name>
         </choice>
         <choice>
-          <value>2 Occupants</value>
-          <display_name>2 Occupants</display_name>
+          <value>2</value>
+          <display_name>2</display_name>
         </choice>
         <choice>
-          <value>3 Occupants</value>
-          <display_name>3 Occupants</display_name>
+          <value>3</value>
+          <display_name>3</display_name>
         </choice>
         <choice>
-          <value>4 Occupants</value>
-          <display_name>4 Occupants</display_name>
+          <value>4</value>
+          <display_name>4</display_name>
         </choice>
         <choice>
-          <value>5 Occupants</value>
-          <display_name>5 Occupants</display_name>
+          <value>5</value>
+          <display_name>5</display_name>
         </choice>
         <choice>
-          <value>6 Occupants</value>
-          <display_name>6 Occupants</display_name>
+          <value>6</value>
+          <display_name>6</display_name>
         </choice>
         <choice>
-          <value>7 Occupants</value>
-          <display_name>7 Occupants</display_name>
+          <value>7</value>
+          <display_name>7</display_name>
         </choice>
         <choice>
-          <value>8 Occupants</value>
-          <display_name>8 Occupants</display_name>
+          <value>8</value>
+          <display_name>8</display_name>
         </choice>
         <choice>
-          <value>9 Occupants</value>
-          <display_name>9 Occupants</display_name>
+          <value>9</value>
+          <display_name>9</display_name>
         </choice>
         <choice>
-          <value>10 Occupants</value>
-          <display_name>10 Occupants</display_name>
+          <value>10</value>
+          <display_name>10</display_name>
         </choice>
         <choice>
-          <value>11 Occupants</value>
-          <display_name>11 Occupants</display_name>
+          <value>11</value>
+          <display_name>11</display_name>
         </choice>
         <choice>
-          <value>12 Occupants</value>
-          <display_name>12 Occupants</display_name>
+          <value>12</value>
+          <display_name>12</display_name>
         </choice>
       </choices>
     </argument>
@@ -11043,7 +11044,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>A25557A7</checksum>
+      <checksum>0142B871</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -11060,7 +11061,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>B067B9E9</checksum>
+      <checksum>FAD78D56</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
@@ -11390,19 +11391,19 @@
       <filename>options/geometry_unit_num_bathrooms.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4A26CEA6</checksum>
+      <checksum>FB54AEDA</checksum>
     </file>
     <file>
       <filename>options/geometry_unit_num_bedrooms.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>A5073C53</checksum>
+      <checksum>7A45A87A</checksum>
     </file>
     <file>
       <filename>options/geometry_unit_num_occupants.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>797D0944</checksum>
+      <checksum>11DC7334</checksum>
     </file>
     <file>
       <filename>options/geometry_unit_type.tsv</filename>
@@ -11654,7 +11655,7 @@
       <filename>options/simulation_control_timestep.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>A2C3E643</checksum>
+      <checksum>667792AE</checksum>
     </file>
     <file>
       <filename>options/utility_bill_scenario.tsv</filename>
@@ -11708,7 +11709,7 @@
       <filename>test_build_residential_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>F3846321</checksum>
+      <checksum>A13986ED</checksum>
     </file>
   </files>
 </measure>

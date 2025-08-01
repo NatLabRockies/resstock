@@ -6,8 +6,8 @@
     "geometry_unit_conditioned_floor_area": "1539",
     "geometry_unit_aspect_ratio": "2.111111111",
     "geometry_unit_direction": "South",
-    "geometry_unit_num_bedrooms": "3 Bedrooms",
-    "geometry_unit_num_occupants": "0 Occupants",
+    "geometry_unit_num_bedrooms": "3",
+    "geometry_unit_num_occupants": "0",
     "geometry_ceiling_height": "8.0 ft",
     "geometry_foundation_type": "Ambient",
     "geometry_attic_type": "Attic, Vented, Gable",
@@ -267,7 +267,7 @@
     "geometry_unit_num_occupants": "Default",
     "enclosure_air_leakage": "Detailed Example: 79.8 sq. in. ELA",
     "location_epw_path": "USA_MN_Duluth.Intl.AP.727450_TMY3.epw",
-    "geometry_unit_num_bedrooms": "2 Bedrooms",
+    "geometry_unit_num_bedrooms": "2",
     "enclosure_roof_material": "Detailed Example: 0.75 Solar Absorptance",
     "enclosure_wall_siding": "Detailed Example: 0.75 Solar Absorptance",
     "enclosure_wall": "Wood Stud, IECC U-0.057",
@@ -295,7 +295,7 @@
   "tests/HERS_Hot_Water/L100AD-HW-02.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-01.xml",
     "appliance_refrigerator": "Detailed Example: ERI Reference 2006, 4-Bedroom Home",
-    "geometry_unit_num_bedrooms": "4 Bedrooms"
+    "geometry_unit_num_bedrooms": "4"
   },
   "tests/HERS_Hot_Water/L100AD-HW-03.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-01.xml",
@@ -351,15 +351,15 @@
     "location_epw_path": "USA_FL_Miami.Intl.AP.722020_TMY3.epw"
   },
   "sample_files/base.xml": {
-    "simulation_control_timestep": "60 minutes",
+    "simulation_control_timestep": "60",
     "building_year_built": "0",
     "location_epw_path": "USA_CO_Denver.Intl.AP.725650_TMY3.epw",
     "geometry_unit_type": "Single-Family Detached, 1 Story",
     "geometry_unit_conditioned_floor_area": "2700",
     "geometry_unit_aspect_ratio": "1.5",
     "geometry_unit_direction": "South",
-    "geometry_unit_num_bedrooms": "3 Bedrooms",
-    "geometry_unit_num_bathrooms": "2 Bathrooms",
+    "geometry_unit_num_bedrooms": "3",
+    "geometry_unit_num_bathrooms": "2",
     "geometry_ceiling_height": "8.0 ft",
     "geometry_foundation_type": "Basement, Conditioned",
     "geometry_attic_type": "Attic, Unvented, Gable",
@@ -671,7 +671,7 @@
   },
   "sample_files/base-bldgtype-mf-unit-residents-1.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
-    "geometry_unit_num_occupants": "1 Occupant"
+    "geometry_unit_num_occupants": "1"
   },
   "sample_files/base-bldgtype-mf-unit-shared-boiler-chiller-baseboard.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
@@ -787,7 +787,7 @@
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater-recirc-beds-0.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-water-heater.xml",
-    "geometry_unit_num_bedrooms": "0 Bedrooms"
+    "geometry_unit_num_bedrooms": "0"
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater-recirc-scheduled.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-water-heater-recirc.xml"
@@ -1059,22 +1059,22 @@
   },
   "sample_files/base-enclosure-beds-1.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_bedrooms": "1 Bedroom",
-    "geometry_unit_num_bathrooms": "1 Bathroom"
+    "geometry_unit_num_bedrooms": "1",
+    "geometry_unit_num_bathrooms": "1"
   },
   "sample_files/base-enclosure-beds-2.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_bedrooms": "2 Bedrooms",
-    "geometry_unit_num_bathrooms": "1 Bathroom"
+    "geometry_unit_num_bedrooms": "2",
+    "geometry_unit_num_bathrooms": "1"
   },
   "sample_files/base-enclosure-beds-4.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_bedrooms": "4 Bedrooms"
+    "geometry_unit_num_bedrooms": "4"
   },
   "sample_files/base-enclosure-beds-5.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_bedrooms": "5 Bedrooms",
-    "geometry_unit_num_bathrooms": "3 Bathrooms"
+    "geometry_unit_num_bedrooms": "5",
+    "geometry_unit_num_bathrooms": "3"
   },
   "sample_files/base-enclosure-ceilingtypes.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -1385,7 +1385,7 @@
   "sample_files/base-hvac-air-to-air-heat-pump-1-speed-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed-lockout-temperatures.xml",
     "location_epw_path": "USA_MN_Duluth.Intl.AP.727450_TMY3.epw",
-    "simulation_control_timestep": "1 minute",
+    "simulation_control_timestep": "1",
     "hvac_heat_pump_backup_capacity": "10 kW",
     "advanced_feature": "On/Off Thermostat Deadband, 2F",
     "advanced_feature_2": "Heat Pump Backup Staging, 5 kW"
@@ -1408,7 +1408,7 @@
   "sample_files/base-hvac-air-to-air-heat-pump-2-speed-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml",
     "location_epw_path": "USA_MN_Duluth.Intl.AP.727450_TMY3.epw",
-    "simulation_control_timestep": "1 minute",
+    "simulation_control_timestep": "1",
     "hvac_heat_pump_backup_capacity": "10 kW",
     "advanced_feature": "On/Off Thermostat Deadband, 2F",
     "advanced_feature_2": "Heat Pump Backup Staging, 5 kW"
@@ -1464,7 +1464,7 @@
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv",
-    "simulation_control_timestep": "60 minutes"
+    "simulation_control_timestep": "60"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-two-systems.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
@@ -1474,7 +1474,7 @@
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-10-mins.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv",
-    "simulation_control_timestep": "10 minutes"
+    "simulation_control_timestep": "10"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
@@ -1496,7 +1496,7 @@
   },
   "sample_files/base-hvac-autosize-sizing-controls.xml": {
     "parent_hpxml": "sample_files/base-hvac-autosize.xml",
-    "geometry_unit_num_occupants": "5 Occupants",
+    "geometry_unit_num_occupants": "5",
     "hvac_control_heating_weekday_setpoint": "60",
     "hvac_control_heating_weekend_setpoint": "60",
     "hvac_control_cooling_weekday_setpoint": "80",
@@ -2040,7 +2040,7 @@
   },
   "sample_files/base-hvac-room-ac-only-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-room-ac-only-detailed-setpoints.xml",
-    "simulation_control_timestep": "1 minute",
+    "simulation_control_timestep": "1",
     "advanced_feature": "On/Off Thermostat Deadband, 2F"
   },
   "sample_files/base-hvac-seasons.xml": {
@@ -2189,7 +2189,7 @@
   },
   "sample_files/base-mechvent-cfis-15-mins.xml": {
     "parent_hpxml": "sample_files/base-mechvent-cfis.xml",
-    "simulation_control_timestep": "15 minutes"
+    "simulation_control_timestep": "15"
   },
   "sample_files/base-mechvent-cfis-airflow-fraction-zero.xml": {
     "parent_hpxml": "sample_files/base-mechvent-cfis.xml"
@@ -2216,7 +2216,7 @@
   },
   "sample_files/base-mechvent-cfis-supplemental-fan-exhaust-15-mins.xml": {
     "parent_hpxml": "sample_files/base-mechvent-cfis-supplemental-fan-exhaust.xml",
-    "simulation_control_timestep": "15 minutes"
+    "simulation_control_timestep": "15"
   },
   "sample_files/base-mechvent-cfis-supplemental-fan-exhaust-synchronized.xml": {
     "parent_hpxml": "sample_files/base-mechvent-cfis-supplemental-fan-exhaust.xml"
@@ -2465,15 +2465,15 @@
   },
   "sample_files/base-residents-0.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_occupants": "0 Occupants"
+    "geometry_unit_num_occupants": "0"
   },
   "sample_files/base-residents-1.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_occupants": "1 Occupant"
+    "geometry_unit_num_occupants": "1"
   },
   "sample_files/base-residents-1-misc-loads-large-uncommon.xml": {
     "parent_hpxml": "sample_files/base-misc-loads-large-uncommon.xml",
-    "geometry_unit_num_occupants": "1 Occupant",
+    "geometry_unit_num_occupants": "1",
     "misc_plug_loads": "100% Usage",
     "misc_television": "100% Usage",
     "misc_well_pump": "Typical Efficiency",
@@ -2486,7 +2486,7 @@
   },
   "sample_files/base-residents-1-misc-loads-large-uncommon2.xml": {
     "parent_hpxml": "sample_files/base-misc-loads-large-uncommon2.xml",
-    "geometry_unit_num_occupants": "1 Occupant",
+    "geometry_unit_num_occupants": "1",
     "misc_plug_loads": "100% Usage",
     "misc_television": "100% Usage",
     "misc_well_pump": "Typical Efficiency",
@@ -2596,7 +2596,7 @@
   },
   "sample_files/base-simcontrol-timestep-10-mins.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "simulation_control_timestep": "10 minutes"
+    "simulation_control_timestep": "10"
   },
   "sample_files/base-simcontrol-timestep-10-mins-occupancy-stochastic-10-mins.xml": {
     "parent_hpxml": "sample_files/base-simcontrol-timestep-10-mins.xml",
@@ -2608,7 +2608,7 @@
   },
   "sample_files/base-simcontrol-timestep-30-mins.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "simulation_control_timestep": "30 minutes"
+    "simulation_control_timestep": "30"
   },
   "sample_files/base-zones-spaces.xml": {
     "parent_hpxml": "sample_files/base-enclosure-garage.xml"

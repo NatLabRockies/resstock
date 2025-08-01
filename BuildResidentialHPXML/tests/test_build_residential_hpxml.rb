@@ -331,7 +331,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
     # Base
     case hpxml_file
     when 'base-sfd.xml'
-      args['simulation_control_timestep'] = '60 minutes'
+      args['simulation_control_timestep'] = '60'
       args['location_epw_path'] = 'USA_CO_Denver.Intl.AP.725650_TMY3.epw'
       args['location_site_type'] = 'Suburban, Normal'
       args['geometry_unit_type'] = 'Single-Family Detached, 1 Story'
@@ -343,9 +343,9 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['geometry_roof_pitch'] = '6:12'
       args['geometry_attic_type'] = 'Attic, Unvented, Gable'
       args['geometry_eaves'] = 'None'
-      args['geometry_unit_num_bedrooms'] = '3 Bedrooms'
-      args['geometry_unit_num_bathrooms'] = '2 Bathrooms'
-      args['geometry_unit_num_occupants'] = '3 Occupants'
+      args['geometry_unit_num_bedrooms'] = '3'
+      args['geometry_unit_num_bathrooms'] = '2'
+      args['geometry_unit_num_occupants'] = '3'
       args['enclosure_rim_joist'] = 'R-13'
       args['enclosure_air_leakage'] = '3 ACH50'
       args['enclosure_ceiling'] = 'R-38'
