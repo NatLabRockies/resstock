@@ -237,12 +237,6 @@ jobs:
           openstudio openstudio_version
           which openstudio
 
-      - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
-        with:
-          path: resources
-          name: options_lookup
-
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
@@ -333,6 +327,50 @@ jobs:
           path: test/base_results/comparisons
           if-no-files-found: error
 
+      - name: Install software
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt update
+          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
+
+      - name: Download feature samples
+        uses: actions/download-artifact@v4
+        with:
+          path: samples
+          name: feature_samples
+
+      - name: Download formatted options_lookup
+        uses: actions/download-artifact@v4
+        with:
+          path: resources
+          name: options_lookup
+
+      - name: Download precomputed buildstocks
+        uses: actions/download-artifact@v4
+        with:
+          path: test/tests_yml_files
+          name: precomputed_buildstocks
+
+      - name: Commit the integration tests results
+        shell: bash        
+        run: |
+          branch_name="${{ github.head_ref }}"
+          git pull origin $branch_name
+          cp -r samples/buildstock*.csv test/base_results/baseline/annual
+          cp -r results/baseline/annual/results*.csv test/base_results/baseline/annual
+          cp -r results/baseline/timeseries/*.csv test/base_results/baseline/timeseries
+          git add test/base_results
+          git add resources/options_lookup.tsv
+          git add test/tests_yml_files
+          git status
+          if [[ $(git diff --cached --exit-code) ]]; then
+            git config --global user.email "github-action@users.noreply.github.com"
+            git config --global user.name "GitHub Action"
+            git commit -m "Baseline integration tests results."
+            echo "Pushing to branch: $branch_name"
+            git push -u origin $branch_name
+          fi
+
   compare-tools:
     runs-on: ubuntu-22.04
     needs: [analysis-tests, integration-tests]
@@ -359,64 +397,6 @@ jobs:
           sudo gem install simplecov
           sudo gem install simplecov-html
           ruby test/test_analysis_tools.rb
-
-  update-results:
-    runs-on: ubuntu-22.04
-    needs: [analysis-tests, integration-tests]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Install software
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
-
-      - name: Download feature samples
-        uses: actions/download-artifact@v4
-        with:
-          path: samples
-          name: feature_samples
-
-      - name: Download feature results
-        uses: actions/download-artifact@v4
-        with:
-          path: results
-          name: feature_results
-
-      - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
-        with:
-          path: resources
-          name: options_lookup
-
-      - name: Download precomputed buildstocks
-        uses: actions/download-artifact@v4
-        with:
-          path: test/tests_yml_files
-          name: precomputed_buildstocks
-
-      - name: Commit the integration tests results
-        shell: bash        
-        run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
-          cp -r samples/buildstock*.csv test/base_results/baseline/annual
-          cp -r results/annual/results*.csv test/base_results/baseline/annual
-          cp -r results/timeseries/*.csv test/base_results/baseline/timeseries
-          git add test/base_results
-          git add resources/options_lookup.tsv
-          git add test/tests_yml_files
-          git status
-          if [[ $(git diff --cached --exit-code) ]]; then
-            git config --global user.email "github-action@users.noreply.github.com"
-            git config --global user.name "GitHub Action"
-            git commit -m "Baseline integration tests results."
-            echo "Pushing to branch: $branch_name"
-            git push -u origin $branch_name
-          fi
 
   sdr-options-analysis:
     runs-on: ubuntu-22.04
