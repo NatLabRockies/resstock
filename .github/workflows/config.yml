@@ -20,7 +20,7 @@ env:
   OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.9.0
-  BUILDSTOCK_BRANCH: develop
+  BUILDSTOCK_BATCH_BRANCH: fix-ts-perf-warning
   BUILDSTOCK_QUERY_BRANCH: main
 
 jobs:
@@ -240,7 +240,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone --single-branch --branch $BUILDSTOCK_BRANCH https://github.com/NREL/buildstockbatch.git
+          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
@@ -345,7 +345,7 @@ jobs:
           
           # baseline timeseries
           mkdir test/base_results/comparisons/baseline/timeseries
-          python test/compare.py -a timeseries -b base_results/baseline/timeseries -f results/baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
+          python test/compare.py -a timeseries -b base_results/baseline/timeseries -f baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
 
       - name: Upload comparisons
         uses: actions/upload-artifact@v4
@@ -554,7 +554,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone --single-branch --branch $BUILDSTOCK_BRANCH https://github.com/NREL/buildstockbatch.git
+          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
