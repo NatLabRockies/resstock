@@ -12771,9 +12771,6 @@ Level,Parameter,Option,Saturation
 6,Water Heater In Unit,Yes,0.856723
 7,Battery,None,1
 7,Battery,10 kWh,0
-7,Battery,"20 kWh, Outside",0
-7,Battery,"20 kWh, Garage",0
-7,Battery,"20 kWh, 80% Round Trip Efficiency",0
 7,PV Orientation,East,0.00161683
 7,PV Orientation,None,0.989785
 7,PV Orientation,North,0.000170797
@@ -12910,7 +12907,7 @@ Level,Parameter,Option,Saturation
 8,HVAC Secondary Heating Partial Space Conditioning,20%,8.20741e-05
 8,HVAC Secondary Heating Partial Space Conditioning,30%,0.000136533
 8,HVAC Secondary Heating Partial Space Conditioning,40%,6.10411e-05
-8,HVAC Secondary Heating Partial Space Conditioning,49%,6.02766e-05
+8,HVAC Secondary Heating Partial Space Conditioning,50%,6.02766e-05
 8,HVAC Secondary Heating Partial Space Conditioning,Void,0
 8,Insulation Rim Joist,None,0.481809
 8,Insulation Rim Joist,Uninsulated,0.473216
