@@ -8,6 +8,7 @@ require_relative 'resources/hvac_flexibility/detailed_schedule_generator'
 require_relative 'resources/hvac_flexibility/setpoint_modifier'
 require_relative 'resources/ev_flexibility/ev_schedule_modifier'
 require_relative 'resources/electrical_panel'
+require_relative '../ResStockArguments/resources/constants'
 
 # OpenStudio Measure class to process ResStock arguments after HPXML generation
 class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
@@ -64,6 +65,16 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(0)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('schedules_space_heating_unavailable_days', false)
+    arg.setDisplayName('Schedules: Space Heating Unavailability')
+    arg.setDescription('Number of days space heating equipment is unavailable.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('schedules_space_cooling_unavailable_days', false)
+    arg.setDisplayName('Schedules: Space Cooling Unavailability')
+    arg.setDescription('Number of days space cooling equipment is unavailable.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('flex_random_shift_minutes', false)
     arg.setDisplayName('Load Flexibility: Random Shift (minutes)')
     arg.setDescription('Number of minutes to randomly shift the peak period. If minutes is less than timestep, it will be assumed to be 0.')
@@ -81,66 +92,66 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Reduction (%) on the air exchange rate value.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('refrigerator_usage_multiplier', true)
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('refrigerator_usage_multiplier', false)
     arg.setDisplayName('Appliances: Refrigerator Usage Multiplier')
     arg.setDescription('Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants.')
     arg.setDefaultValue(1.0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('clothes_dryer_usage_multiplier', true)
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('clothes_dryer_usage_multiplier', false)
     arg.setDisplayName('Appliances: Clothes Dryer Usage Multiplier')
     arg.setDescription('Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants.')
     arg.setDefaultValue(1.0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('clothes_washer_usage_multiplier', true)
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('clothes_washer_usage_multiplier', false)
     arg.setDisplayName('Appliances: Clothes Washer Usage Multiplier')
     arg.setDescription('Multiplier on the clothes washer energy usage that can reflect, e.g., high/low usage occupants.')
     arg.setDefaultValue(1.0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooking_range_oven_usage_multiplier', true)
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooking_range_oven_usage_multiplier', false)
     arg.setDisplayName('Appliances: Cooking Range/Oven Usage Multiplier')
     arg.setDescription('Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants.')
     arg.setDefaultValue(1.0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('dishwasher_usage_multiplier', true)
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('dishwasher_usage_multiplier', false)
     arg.setDisplayName('Appliances: Dishwasher Usage Multiplier')
     arg.setDescription('Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants.')
     arg.setDefaultValue(1.0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('extra_refrigerator_usage_multiplier', true)
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('extra_refrigerator_usage_multiplier', false)
     arg.setDisplayName('Appliances: Extra Refrigerator Usage Multiplier')
     arg.setDescription('Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants.')
     arg.setDefaultValue(1.0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('freezer_usage_multiplier', true)
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('freezer_usage_multiplier', false)
     arg.setDisplayName('Appliances: Freezer Usage Multiplier')
     arg.setDescription('Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants.')
     arg.setDefaultValue(1.0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_television_usage_multiplier', true)
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_television_usage_multiplier', false)
     arg.setDisplayName('Plug Loads: Television Usage Multiplier')
     arg.setDescription('Multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.')
     arg.setDefaultValue(1.0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_other_usage_multiplier', true)
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_other_usage_multiplier', false)
     arg.setDisplayName('Plug Loads: Other Usage Multiplier')
     arg.setDescription('Multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.')
     arg.setDefaultValue(1.0)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('bathroom_fans_start_hour', true)
+    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('bathroom_fans_start_hour', false)
     arg.setDisplayName('Ventilation: Bathroom Fans Start Hour')
     arg.setDescription('The hour of the day when the bathroom fans run.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('kitchen_fans_start_hour', true)
+    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('kitchen_fans_start_hour', false)
     arg.setDisplayName('Ventilation: Kitchen Fans Start Hour')
     arg.setDescription('The hour of the day when the kitchen fans run.')
     args << arg
@@ -150,7 +161,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Specifies the vacancy periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeStringArgument('building_id', false)
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('building_id', false)
     arg.setDisplayName('Building Unit ID')
     arg.setDescription('The building unit number (between 1 and the number of samples).')
     args << arg
@@ -383,6 +394,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Parse user arguments and assign to variables
     args = runner.getArgumentValues(arguments(model), user_arguments)
+    args = convert_args(arguments(model), args)
     @args = args
 
     @hpxml_path = args[:hpxml_path]
@@ -391,7 +403,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Load HPXML
     @hpxml = HPXML.new(hpxml_path: @hpxml_path)
-    epw_path = File.join(File.dirname(@hpxml_path), @hpxml.buildings[0].climate_and_risk_zones.weather_station_epw_filepath)
+    epw_path = Location.get_epw_path(@hpxml.buildings[0], @hpxml_path)
     weather = WeatherFile.new(epw_path: epw_path, runner: nil)
 
     # Software info
@@ -402,7 +414,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     @hpxml.header.whole_sfa_or_mf_building_sim = args[:whole_sfa_or_mf_building_sim]
 
     # Simulation controls
-    @hpxml.header.sim_calendar_year = args[:simulation_control_run_period_calendar_year]
+    @hpxml.header.sim_calendar_year = Location.get_sim_calendar_year(args[:simulation_control_run_period_calendar_year], weather)
 
     # Emissions
     @hpxml.header.emissions_scenarios.clear
@@ -495,6 +507,46 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       )
     end
 
+    # HVAC Unavailability
+    if (args[:schedules_space_heating_unavailable_days].to_i > 0) || (args[:schedules_space_cooling_unavailable_days].to_i > 0)
+      heating_months, cooling_months, sim_calendar_year = get_heating_and_cooling_seasons(@hpxml.buildings[0].latitude, weather)
+    end
+
+    [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
+      unavailable_days = args["schedules_space_#{htg_or_clg}_unavailable_days".to_sym].to_i
+      next unless unavailable_days > 0
+
+      if unavailable_days < 365 # partial-year unavailability
+        months = (htg_or_clg == Constants::Heating ? heating_months : cooling_months)
+
+        if months.sum > 0 # has defined BA heating/cooling months
+          begin_month, begin_day, end_month, end_day = Calendar.get_begin_and_end_dates_from_monthly_array(months, sim_calendar_year)
+        else # no defined BA heating/cooling months
+          if htg_or_clg == Constants::Heating # Dec/Jan/Feb
+            begin_month, begin_day, end_month, end_day = 12, 1, 2, 28
+            end_day += 1 if Date.leap?(sim_calendar_year)
+          elsif htg_or_clg == Constants::Cooling # Jun/Jul/Aug
+            begin_month, begin_day, end_month, end_day = 6, 1, 8, 31
+          end
+        end
+
+        begin_day_num = Calendar.get_day_num_from_month_day(sim_calendar_year, begin_month, begin_day)
+        end_day_num = Calendar.get_day_num_from_month_day(sim_calendar_year, end_month, end_day)
+
+        begin_month, begin_day, end_month, end_day = get_begin_end_day_nums(args[:building_id], unavailable_days, begin_day_num, end_day_num, sim_calendar_year)
+      else # year-round unavailability
+        begin_month, begin_day, end_month, end_day = 1, 1, 12, 31
+      end
+
+      @hpxml.header.unavailable_periods.add(
+        column_name: "No Space #{htg_or_clg.capitalize}",
+        begin_month: begin_month,
+        begin_day: begin_day,
+        end_month: end_month,
+        end_day: end_day
+      )
+    end
+
     @hpxml.buildings.each do |hpxml_bldg|
       # Usage Multipliers
       hpxml_bldg.plug_loads.each do |plug_load|
@@ -539,9 +591,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       hpxml_bldg.ventilation_fans.each do |ventilation_fan|
         next unless ventilation_fan.used_for_local_ventilation
 
-        if ventilation_fan.fan_location == HPXML::LocationKitchen
+        if ventilation_fan.fan_location == HPXML::LocationKitchen && (not args[:kitchen_fans_start_hour].nil?)
           ventilation_fan.start_hour = args[:kitchen_fans_start_hour]
-        elsif ventilation_fan.fan_location == HPXML::LocationBath
+        elsif ventilation_fan.fan_location == HPXML::LocationBath && (not args[:bathroom_fans_start_hour].nil?)
           ventilation_fan.start_hour = args[:bathroom_fans_start_hour]
         end
       end
@@ -578,35 +630,38 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       set_electric_panel(runner, hpxml_bldg, args)
     end
 
-    if not skip_hvac_flexibility?(args)
-      # define variables needed for hvac_flexibility adjustment
-      output_csv_path = File.dirname(@hpxml_path)
-      @prng = Random.new(args[:building_id].to_i)
-      @minutes_per_step = @hpxml.header.timestep
-      max_random_shift_steps = (args[:flex_random_shift_minutes] / @minutes_per_step).to_i
-      @random_shift_steps = @prng.rand(-max_random_shift_steps..max_random_shift_steps)
-
-      # Process each building
-      doc_buildings.each_with_index do |building, index|
-        hpxml_bldg = @hpxml.buildings[index]
-        if hpxml_bldg.hvac_controls.to_a.length == 0
-          runner.registerInfo("Skipping hvac flexibility for building #{index + 1} since it has no HVAC controls.")
-          next
-        end
+    # HVAC Flexibility
+    output_csv_path = File.dirname(@hpxml_path)
+    @prng = Random.new(args[:building_id])
+    @minutes_per_step = @hpxml.header.timestep.nil? ? 60 : @hpxml.header.timestep
+    max_random_shift_steps = (args[:flex_random_shift_minutes].to_f / @minutes_per_step).to_i
+    @random_shift_steps = @prng.rand(-max_random_shift_steps..max_random_shift_steps)
+    @hpxml.buildings.each_with_index do |hpxml_bldg, index|
+      if hpxml_bldg.hvac_controls.to_a.length != 0 && !skip_hvac_flexibility?(args)
         hvac_schedule = create_hvac_schedule(index)
-        modified_schedule = modify_hvac_schedule(index, hvac_schedule)
-        write_schedule(modified_schedule, building, index, output_csv_path)
+        modified_schedule = modify_hvac_schedule(hpxml_bldg, hvac_schedule)
+        write_schedule(modified_schedule, hpxml_bldg, index, output_csv_path)
       end
-      runner.registerInfo("Wrote file: #{@hpxml_path} with modified schedules.")
-    else
-      runner.registerInfo('Skipping hvac flexibility since hvac_flex_peak_offset and hvac_flex_pre_peak_duration_hours are both 0')
+      next unless !skip_ev_flexibility?(args)
+
+      ev_schedule = get_ev_schedule(hpxml_bldg)
+      next if ev_schedule.nil?
+
+      modified_ev_schedule = modify_ev_schedule(hpxml_bldg, ev_schedule)
+      write_schedule(modified_ev_schedule, hpxml_bldg, index, output_csv_path)
     end
 
     # Apply defaults
     @hpxml.buildings.each do |hpxml_bldg|
       # Get a schedules_file object so that we don't end up with simple weekday/weekend/month schedules
       # when we apply defaults.
-      schedules_file = SchedulesFile.new(schedules_paths: hpxml_bldg.header.schedules_filepaths,
+      schedules_filepaths = hpxml_bldg.header.schedules_filepaths
+      schedules_filepaths.each_with_index do |schedules_filepath, i|
+        next if Pathname.new(schedules_filepath).absolute?
+
+        schedules_filepaths[i] = File.join(File.dirname(@hpxml_path), schedules_filepath)
+      end
+      schedules_file = SchedulesFile.new(schedules_paths: schedules_filepaths,
                                          year: @hpxml.header.sim_calendar_year,
                                          output_path: nil)
       Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
@@ -716,7 +771,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           csv << row
         end
       end
-      hpxml_bldg.header.schedules_filepaths << schedule_file
+      hpxml_bldg.header.schedules_filepaths << File.basename(schedule_file)
     else
       # Process existing schedule file and update values
       data = CSV.read(schedule_file, headers: true)
@@ -761,10 +816,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   end
 
   def set_electric_panel(runner, hpxml_bldg, args)
-    building_id = Integer(args[:building_id])
-
     # Assign miscellaneous permanently connected appliance loads
-    panel_sampler = ElectricalPanelSampler.new(runner, building_id, hpxml_bldg)
+    panel_sampler = ElectricalPanelSampler.new(runner, args[:building_id], hpxml_bldg)
     cap_bin, cap_val = panel_sampler.assign_rated_capacity()
 
     if args[:electric_panel_breaker_spaces_headroom].nil?
@@ -784,7 +837,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     end
 
     garbage_disposal_ownership = 0.52 # AHS 2013
-    if Random.new(building_id).rand > garbage_disposal_ownership
+    if Random.new(args[:building_id]).rand > garbage_disposal_ownership
       garbage_disposal_power = 0
     else
       # Power estimated from avg load amp not HP rating, from InSinkErators
@@ -1003,6 +1056,36 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     end
   end
 
+  def get_heating_and_cooling_seasons(latitude, weather)
+    latitude = Defaults.get_latitude(latitude, weather)
+
+    heating_months, cooling_months = HVAC.get_building_america_hvac_seasons(weather, latitude)
+    sim_calendar_year = @hpxml.header.sim_calendar_year
+
+    return heating_months, cooling_months, sim_calendar_year
+  end
+
+  def get_begin_end_day_nums(building_id, n_days, begin_day_num, end_day_num, year)
+    if begin_day_num > end_day_num
+      num_days = Calendar.num_days_in_year(year)
+      begin_day_nums = (begin_day_num..num_days).to_a + (1..end_day_num).to_a
+    else
+      begin_day_nums = (begin_day_num..end_day_num).to_a
+    end
+
+    unavail_begin_day_nums = begin_day_nums.sample(1, random: Random.new(building_id))
+    unavail_begin_day_num = unavail_begin_day_nums[0]
+    unavail_begin_date = OpenStudio::Date::fromDayOfYear(unavail_begin_day_num, year)
+    unavail_begin_month = unavail_begin_date.monthOfYear.value
+    unavail_begin_day = unavail_begin_date.dayOfMonth
+
+    unavail_end_date = unavail_begin_date + OpenStudio::Time.new(n_days - 1)
+    unavail_end_month = unavail_end_date.monthOfYear.value
+    unavail_end_day = unavail_end_date.dayOfMonth
+
+    return unavail_begin_month, unavail_begin_day, unavail_end_month, unavail_end_day
+  end
+
   def resstock_fuels(include_electricity:)
     fuels = []
     fuels << HPXML::FuelTypeElectricity if include_electricity
@@ -1011,6 +1094,22 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     fuels << HPXML::FuelTypeOil
     fuels << HPXML::FuelTypeWoodCord
     return fuels
+  end
+
+  def convert_args(measure_arguments, args)
+    measure_arguments.each do |arg|
+      arg_name = arg.name.to_sym
+      value = args[arg_name]
+      next if value.nil? || (value == Constants::Auto)
+
+      case arg.type.valueName.downcase
+      when 'double'
+        args[arg_name] = Float(value)
+      when 'integer'
+        args[arg_name] = Integer(value)
+      end
+    end
+    return args
   end
 end
 

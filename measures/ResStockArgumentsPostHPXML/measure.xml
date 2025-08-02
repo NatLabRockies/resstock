@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>e3067286-5047-410e-b59e-fbc81450b176</version_id>
-  <version_modified>2025-08-02T00:31:20Z</version_modified>
+  <version_id>bbe4c381-c4ce-4e00-bc3c-2e980217271f</version_id>
+  <version_modified>2025-08-02T21:03:27Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -74,6 +74,22 @@
       <default_value>0</default_value>
     </argument>
     <argument>
+      <name>schedules_space_heating_unavailable_days</name>
+      <display_name>Schedules: Space Heating Unavailability</display_name>
+      <description>Number of days space heating equipment is unavailable.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>schedules_space_cooling_unavailable_days</name>
+      <display_name>Schedules: Space Cooling Unavailability</display_name>
+      <description>Number of days space cooling equipment is unavailable.</description>
+      <type>Integer</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>flex_random_shift_minutes</name>
       <display_name>Load Flexibility: Random Shift (minutes)</display_name>
       <description>Number of minutes to randomly shift the peak period. If minutes is less than timestep, it will be assumed to be 0.</description>
@@ -114,7 +130,7 @@
       <display_name>Appliances: Refrigerator Usage Multiplier</display_name>
       <description>Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants.</description>
       <type>Double</type>
-      <required>true</required>
+      <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
     </argument>
@@ -123,7 +139,7 @@
       <display_name>Appliances: Clothes Dryer Usage Multiplier</display_name>
       <description>Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants.</description>
       <type>Double</type>
-      <required>true</required>
+      <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
     </argument>
@@ -132,7 +148,7 @@
       <display_name>Appliances: Clothes Washer Usage Multiplier</display_name>
       <description>Multiplier on the clothes washer energy usage that can reflect, e.g., high/low usage occupants.</description>
       <type>Double</type>
-      <required>true</required>
+      <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
     </argument>
@@ -141,7 +157,7 @@
       <display_name>Appliances: Cooking Range/Oven Usage Multiplier</display_name>
       <description>Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants.</description>
       <type>Double</type>
-      <required>true</required>
+      <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
     </argument>
@@ -150,7 +166,7 @@
       <display_name>Appliances: Dishwasher Usage Multiplier</display_name>
       <description>Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants.</description>
       <type>Double</type>
-      <required>true</required>
+      <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
     </argument>
@@ -159,7 +175,7 @@
       <display_name>Appliances: Extra Refrigerator Usage Multiplier</display_name>
       <description>Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants.</description>
       <type>Double</type>
-      <required>true</required>
+      <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
     </argument>
@@ -168,7 +184,7 @@
       <display_name>Appliances: Freezer Usage Multiplier</display_name>
       <description>Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants.</description>
       <type>Double</type>
-      <required>true</required>
+      <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
     </argument>
@@ -177,7 +193,7 @@
       <display_name>Plug Loads: Television Usage Multiplier</display_name>
       <description>Multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.</description>
       <type>Double</type>
-      <required>true</required>
+      <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
     </argument>
@@ -186,7 +202,7 @@
       <display_name>Plug Loads: Other Usage Multiplier</display_name>
       <description>Multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.</description>
       <type>Double</type>
-      <required>true</required>
+      <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>1</default_value>
     </argument>
@@ -195,7 +211,7 @@
       <display_name>Ventilation: Bathroom Fans Start Hour</display_name>
       <description>The hour of the day when the bathroom fans run.</description>
       <type>Integer</type>
-      <required>true</required>
+      <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
@@ -203,7 +219,7 @@
       <display_name>Ventilation: Kitchen Fans Start Hour</display_name>
       <description>The hour of the day when the kitchen fans run.</description>
       <type>Integer</type>
-      <required>true</required>
+      <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
@@ -218,7 +234,7 @@
       <name>building_id</name>
       <display_name>Building Unit ID</display_name>
       <description>The building unit number (between 1 and the number of samples).</description>
-      <type>String</type>
+      <type>Integer</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -845,7 +861,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>DF9D9432</checksum>
+      <checksum>66DE300E</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -899,7 +915,7 @@
       <filename>electrical_panel.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>DF7A3CEF</checksum>
+      <checksum>89EA8EF0</checksum>
     </file>
     <file>
       <filename>ev_flexibility/ev_schedule_modifier.rb</filename>
@@ -935,13 +951,13 @@
       <filename>test_resstock_arguments_post_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>A4CE490F</checksum>
+      <checksum>C16008A1</checksum>
     </file>
     <file>
       <filename>test_template.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>79820C4A</checksum>
+      <checksum>02659954</checksum>
     </file>
   </files>
 </measure>

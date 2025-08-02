@@ -151,20 +151,13 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     corridor_position_choices = OpenStudio::StringVector.new
     corridor_position_choices << 'Double-Loaded Interior'
     corridor_position_choices << 'Double Exterior'
-    corridor_position_choices << 'Single Exterior (Front)'
+    corridor_position_choices << 'Single Exterior Front'
     corridor_position_choices << 'None'
 
     arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('geometry_corridor_position', corridor_position_choices, true)
     arg.setDisplayName('Geometry: Corridor Position')
     arg.setDescription("The position of the corridor. Only applies to #{HPXML::ResidentialTypeSFA} and #{HPXML::ResidentialTypeApartment}s. Exterior corridors are shaded, but not enclosed. Interior corridors are enclosed and conditioned.")
     arg.setDefaultValue('Inside')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('geometry_corridor_width', true)
-    arg.setDisplayName('Geometry: Corridor Width')
-    arg.setUnits('ft')
-    arg.setDescription("The width of the corridor. Only applies to #{HPXML::ResidentialTypeApartment}s.")
-    arg.setDefaultValue(10.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_control_heating_weekday_setpoint_temp', true)
@@ -257,16 +250,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('Use Auto Cooling Season')
     arg.setDescription('Specifies whether to automatically define the cooling season based on the weather file.')
     arg.setDefaultValue(false)
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('schedules_space_heating_unavailable_days', false)
-    arg.setDisplayName('Schedules: Space Heating Unavailability')
-    arg.setDescription('Number of days space heating equipment is unavailable.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('schedules_space_cooling_unavailable_days', false)
-    arg.setDisplayName('Schedules: Space Cooling Unavailability')
-    arg.setDescription('Number of days space cooling equipment is unavailable.')
     args << arg
 
     return args
@@ -371,6 +354,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # HVAC Setpoints
+    # FIXME Move to PostHPXML
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
       [Constants::Weekday, Constants::Weekend].each do |wkdy_or_wked|
         schedule = [args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_temp".to_sym]] * 24
@@ -384,6 +368,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # HVAC Seasons
+    # FIXME Move to PostHPXML
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
       use_auto_season = "use_auto_#{htg_or_clg}_season".to_sym
       hvac_control_season_period = "hvac_control_#{htg_or_clg}_season_period".to_sym
@@ -391,72 +376,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
         args[hvac_control_season_period] = Constants::BuildingAmerica
       end
     end
-
-    # Unavailable Periods
-    # FIXME: Move to ResStockArgumentsPostHPXML
-    schedules_unavailable_period_types = []
-    schedules_unavailable_period_dates = []
-    schedules_unavailable_period_window_natvent_availabilities = []
-
-    # HVAC Unavailability
-    if (args[:schedules_space_heating_unavailable_days] > 0) || (args[:schedules_space_cooling_unavailable_days] > 0)
-      epw_path = File.absolute_path(File.join(File.dirname(__FILE__), '../../weather', File.basename(args[:weather_station_epw_filepath])))
-      if not File.exist? epw_path
-        runner.registerError("ResStockArguments: Could not find EPW file at '#{epw_path}'.")
-        return false
-      end
-      weather = WeatherFile.new(epw_path: epw_path, runner: nil)
-
-      heating_months, cooling_months, sim_calendar_year = get_heating_and_cooling_seasons(args, weather)
-    end
-
-    [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
-      unavailable_days = args["schedules_space_#{htg_or_clg}_unavailable_days".to_sym]
-      unavailable_period = "#{htg_or_clg}_unavailable_period"
-      args[unavailable_period] = 'Never'
-
-      next unless unavailable_days > 0
-
-      if unavailable_days < 365 # partial-year unavailability
-        if htg_or_clg == Constants::Heating
-          months = heating_months
-        elsif htg_or_clg == Constants::Cooling
-          months = cooling_months
-        end
-
-        if months.sum > 0 # has defined BA heating/cooling months
-          begin_month, begin_day, end_month, end_day = Calendar.get_begin_and_end_dates_from_monthly_array(months, sim_calendar_year)
-        else # no defined BA heating/cooling months
-          if htg_or_clg == Constants::Heating # Dec/Jan/Feb
-            begin_month, begin_day, end_month, end_day = 12, 1, 2, 28
-            end_day += 1 if Date.leap?(sim_calendar_year)
-          elsif htg_or_clg == Constants::Cooling # Jun/Jul/Aug
-            begin_month, begin_day, end_month, end_day = 6, 1, 8, 31
-          end
-        end
-
-        begin_day_num = Calendar.get_day_num_from_month_day(sim_calendar_year, begin_month, begin_day)
-        end_day_num = Calendar.get_day_num_from_month_day(sim_calendar_year, end_month, end_day)
-
-        unavail_begin_day_num, unavail_end_day_num = get_begin_end_day_nums(args[:building_id], unavailable_days, begin_day_num, end_day_num, sim_calendar_year)
-      else # year-round unavailability
-        unavail_begin_day_num, unavail_end_day_num = 1, 365
-        unavail_end_day_num += 1 if Date.leap?(sim_calendar_year)
-      end
-
-      unavail_begin_date = get_month_day_from_day_num(unavail_begin_day_num, sim_calendar_year)
-      unavail_end_date = get_month_day_from_day_num(unavail_end_day_num, sim_calendar_year)
-      unavailable_period_dates = "#{unavail_begin_date} - #{unavail_end_date}"
-      args[unavailable_period] = unavailable_period_dates
-
-      schedules_unavailable_period_types << "No Space #{htg_or_clg.capitalize}"
-      schedules_unavailable_period_dates << unavailable_period_dates
-      schedules_unavailable_period_window_natvent_availabilities << ''
-    end
-
-    args[:schedules_unavailable_period_types] = schedules_unavailable_period_types.join(', ')
-    args[:schedules_unavailable_period_dates] = schedules_unavailable_period_dates.join(', ')
-    args[:schedules_unavailable_period_window_natvent_availabilities] = schedules_unavailable_period_window_natvent_availabilities.join(', ')
 
     # HVAC Secondary
     if args[:hvac_heating_system_2] != 'None'
@@ -477,25 +396,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    # Error check geometry inputs
-    corridor_width = args[:geometry_corridor_width]
-    corridor_position = args[:geometry_corridor_position]
-
-    if (corridor_width == 0) && (corridor_position != 'None')
-      corridor_position = 'None'
-    end
-    if corridor_position == 'None'
-      corridor_width = 0
-    end
-    if corridor_width < 0
-      runner.registerError('ResStockArguments: Invalid corridor width entered.')
-      return false
-    end
-
     # Adiabatic Walls
     fblr_walls_are_adiabatic = [false, false, false, false]
 
     # Map corridor arguments to adiabatic walls and shading
+    corridor_position = args[:geometry_corridor_position]
     if [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include? unit_type
       if unit_type == HPXML::ResidentialTypeApartment
         n_units_per_floor = n_units / n_floors
@@ -516,14 +421,13 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
         # Error check MF & SFA geometry
         if !has_rear_units && ((corridor_position == 'Double-Loaded Interior') || (corridor_position == 'Double Exterior'))
-          corridor_position = 'Single Exterior (Front)'
+          corridor_position = 'Single Exterior Front'
           runner.registerWarning("Specified incompatible corridor; setting corridor position to '#{corridor_position}'.")
         end
 
         # Model exterior corridors as overhangs
-        if (corridor_position.include? 'Exterior') && corridor_width > 0
-          args[:overhangs_front_depth] = corridor_width
-          args[:overhangs_front_distance_to_top_of_window] = 1
+        if corridor_position.include? 'Exterior'
+          args[:enclosure_overhangs] = '10ft, Front Windows'
         end
 
       elsif unit_type == HPXML::ResidentialTypeSFA
@@ -613,6 +517,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
     # Electric Vehicle
     # Prevent OS-HPXML warning about EV w/o an EV charger
+    # FIXME Move to PostHPXML?
     if args[:electric_vehicle_charger] == 'None'
       args[:electric_vehicle] = 'None'
     end
@@ -636,43 +541,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       schedule[i] += offset_magnitude * direction
     end
     return schedule
-  end
-
-  def get_heating_and_cooling_seasons(args, weather)
-    latitude = args[:site_latitude]
-    latitude = nil if latitude == Constants::Auto
-    latitude = Defaults.get_latitude(latitude, weather)
-
-    heating_months, cooling_months = HVAC.get_building_america_hvac_seasons(weather, latitude)
-    sim_calendar_year = Location.get_sim_calendar_year(nil, weather)
-
-    return heating_months, cooling_months, sim_calendar_year
-  end
-
-  def get_begin_end_day_nums(building_id, n_days, begin_day_num, end_day_num, year)
-    if begin_day_num > end_day_num
-      num_days = Calendar.num_days_in_year(year)
-      begin_day_nums = (begin_day_num..num_days).to_a + (1..end_day_num).to_a
-    else
-      begin_day_nums = (begin_day_num..end_day_num).to_a
-    end
-
-    unavail_begin_day_nums = begin_day_nums.sample(1, random: Random.new(building_id))
-    unavail_begin_day_num = unavail_begin_day_nums[0]
-    unavail_begin_date = OpenStudio::Date::fromDayOfYear(unavail_begin_day_num, year)
-    unavail_end_date = unavail_begin_date + OpenStudio::Time.new(n_days - 1)
-    unavail_end_month = unavail_end_date.monthOfYear.value
-    unavail_end_day = unavail_end_date.dayOfMonth
-    unavail_end_day_num = Calendar.get_day_num_from_month_day(year, unavail_end_month, unavail_end_day)
-
-    return unavail_begin_day_num, unavail_end_day_num
-  end
-
-  def get_month_day_from_day_num(day_num, year)
-    date = OpenStudio::Date::fromDayOfYear(day_num, year)
-    month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    month_day = "#{month_names[date.monthOfYear.value - 1]} #{date.dayOfMonth}"
-    return month_day
   end
 
   def convert_args(args)

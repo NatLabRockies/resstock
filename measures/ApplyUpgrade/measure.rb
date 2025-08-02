@@ -426,7 +426,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
   def set_header(measures, hpxml, values)
     # Whole SFA/MF Building Simulation?
-    measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = hpxml.header.whole_sfa_or_mf_building_sim
+    measures['ResStockArgumentsPostHPXML'][0]['whole_sfa_or_mf_building_sim'] = hpxml.header.whole_sfa_or_mf_building_sim
 
     # Simulation Control
     measures['BuildResidentialHPXML'][0]['simulation_control_timestep'] = values['simulation_control_timestep']
@@ -437,40 +437,40 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       end_day = values['simulation_control_run_period_end_day_of_month']
       measures['BuildResidentialHPXML'][0]['simulation_control_run_period'] = "#{begin_month} #{begin_day} - #{end_month} #{end_day}"
     end
-    measures['BuildResidentialHPXML'][0]['simulation_control_run_period_calendar_year'] = values['simulation_control_run_period_calendar_year']
+    measures['ResStockArgumentsPostHPXML'][0]['simulation_control_run_period_calendar_year'] = values['simulation_control_run_period_calendar_year']
 
     # Emissions
-    if values.keys.include?('emissions_electricity_values_or_filepaths')
-      measures['BuildResidentialHPXML'][0]['emissions_scenario_names'] = values['emissions_scenario_names']
-      measures['BuildResidentialHPXML'][0]['emissions_types'] = values['emissions_types']
-      measures['BuildResidentialHPXML'][0]['emissions_electricity_units'] = values['emissions_electricity_units']
-      measures['BuildResidentialHPXML'][0]['emissions_electricity_values_or_filepaths'] = values['emissions_electricity_values_or_filepaths']
-      measures['BuildResidentialHPXML'][0]['emissions_fossil_fuel_units'] = values['emissions_fossil_fuel_units']
-      measures['BuildResidentialHPXML'][0]['emissions_natural_gas_values'] = values['emissions_natural_gas_values']
-      measures['BuildResidentialHPXML'][0]['emissions_propane_values'] = values['emissions_propane_values']
-      measures['BuildResidentialHPXML'][0]['emissions_fuel_oil_values'] = values['emissions_fuel_oil_values']
-      measures['BuildResidentialHPXML'][0]['emissions_wood_values'] = values['emissions_wood_values']
+    if values.keys.include?('emissions_electricity_filepaths')
+      measures['ResStockArgumentsPostHPXML'][0]['emissions_scenario_names'] = values['emissions_scenario_names']
+      measures['ResStockArgumentsPostHPXML'][0]['emissions_types'] = values['emissions_types']
+      measures['ResStockArgumentsPostHPXML'][0]['emissions_electricity_units'] = values['emissions_electricity_units']
+      measures['ResStockArgumentsPostHPXML'][0]['emissions_electricity_filepaths'] = values['emissions_electricity_filepaths']
+      measures['ResStockArgumentsPostHPXML'][0]['emissions_fossil_fuel_units'] = values['emissions_fossil_fuel_units']
+      measures['ResStockArgumentsPostHPXML'][0]['emissions_natural_gas_values'] = values['emissions_natural_gas_values']
+      measures['ResStockArgumentsPostHPXML'][0]['emissions_propane_values'] = values['emissions_propane_values']
+      measures['ResStockArgumentsPostHPXML'][0]['emissions_fuel_oil_values'] = values['emissions_fuel_oil_values']
+      measures['ResStockArgumentsPostHPXML'][0]['emissions_wood_values'] = values['emissions_wood_values']
     end
 
     # Utility Bills
-    measures['BuildResidentialHPXML'][0]['utility_bill_scenario_names'] = values['utility_bill_scenario_names']
-    measures['BuildResidentialHPXML'][0]['utility_bill_electricity_filepaths'] = values['utility_bill_electricity_filepaths']
-    measures['BuildResidentialHPXML'][0]['utility_bill_electricity_fixed_charges'] = values['utility_bill_electricity_fixed_charges']
-    measures['BuildResidentialHPXML'][0]['utility_bill_electricity_marginal_rates'] = values['utility_bill_electricity_marginal_rates']
-    measures['BuildResidentialHPXML'][0]['utility_bill_natural_gas_fixed_charges'] = values['utility_bill_natural_gas_fixed_charges']
-    measures['BuildResidentialHPXML'][0]['utility_bill_natural_gas_marginal_rates'] = values['utility_bill_natural_gas_marginal_rates']
-    measures['BuildResidentialHPXML'][0]['utility_bill_propane_fixed_charges'] = values['utility_bill_propane_fixed_charges']
-    measures['BuildResidentialHPXML'][0]['utility_bill_propane_marginal_rates'] = values['utility_bill_propane_marginal_rates']
-    measures['BuildResidentialHPXML'][0]['utility_bill_fuel_oil_fixed_charges'] = values['utility_bill_fuel_oil_fixed_charges']
-    measures['BuildResidentialHPXML'][0]['utility_bill_fuel_oil_marginal_rates'] = values['utility_bill_fuel_oil_marginal_rates']
-    measures['BuildResidentialHPXML'][0]['utility_bill_wood_fixed_charges'] = values['utility_bill_wood_fixed_charges']
-    measures['BuildResidentialHPXML'][0]['utility_bill_wood_marginal_rates'] = values['utility_bill_wood_marginal_rates']
-    measures['BuildResidentialHPXML'][0]['utility_bill_pv_compensation_types'] = values['utility_bill_pv_compensation_types']
-    measures['BuildResidentialHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rate_types'] = values['utility_bill_pv_net_metering_annual_excess_sellback_rate_types']
-    measures['BuildResidentialHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rates'] = values['utility_bill_pv_net_metering_annual_excess_sellback_rates']
-    measures['BuildResidentialHPXML'][0]['utility_bill_pv_feed_in_tariff_rates'] = values['utility_bill_pv_feed_in_tariff_rates']
-    measures['BuildResidentialHPXML'][0]['utility_bill_pv_monthly_grid_connection_fee_units'] = values['utility_bill_pv_monthly_grid_connection_fee_units']
-    measures['BuildResidentialHPXML'][0]['utility_bill_pv_monthly_grid_connection_fees'] = values['utility_bill_pv_monthly_grid_connection_fees']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_scenario_names'] = values['utility_bill_scenario_names']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_electricity_filepaths'] = values['utility_bill_electricity_filepaths']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_electricity_fixed_charges'] = values['utility_bill_electricity_fixed_charges']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_electricity_marginal_rates'] = values['utility_bill_electricity_marginal_rates']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_natural_gas_fixed_charges'] = values['utility_bill_natural_gas_fixed_charges']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_natural_gas_marginal_rates'] = values['utility_bill_natural_gas_marginal_rates']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_propane_fixed_charges'] = values['utility_bill_propane_fixed_charges']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_propane_marginal_rates'] = values['utility_bill_propane_marginal_rates']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_fuel_oil_fixed_charges'] = values['utility_bill_fuel_oil_fixed_charges']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_fuel_oil_marginal_rates'] = values['utility_bill_fuel_oil_marginal_rates']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_wood_fixed_charges'] = values['utility_bill_wood_fixed_charges']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_wood_marginal_rates'] = values['utility_bill_wood_marginal_rates']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_pv_compensation_types'] = values['utility_bill_pv_compensation_types']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rate_types'] = values['utility_bill_pv_net_metering_annual_excess_sellback_rate_types']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_pv_net_metering_annual_excess_sellback_rates'] = values['utility_bill_pv_net_metering_annual_excess_sellback_rates']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_pv_feed_in_tariff_rates'] = values['utility_bill_pv_feed_in_tariff_rates']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_pv_monthly_grid_connection_fee_units'] = values['utility_bill_pv_monthly_grid_connection_fee_units']
+    measures['ResStockArgumentsPostHPXML'][0]['utility_bill_pv_monthly_grid_connection_fees'] = values['utility_bill_pv_monthly_grid_connection_fees']
   end
 
   def set_resstock_arguments(measures, child_runner)
@@ -484,7 +484,9 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def set_building_construction(measures, hpxml_bldg)
-    measures['BuildResidentialHPXML'][0]['unit_multiplier'] = hpxml_bldg.building_construction.number_of_units
+    if hpxml_bldg.building_construction.number_of_units > 1
+      measures['BuildResidentialHPXML'][0]['unit_multiplier'] = hpxml_bldg.building_construction.number_of_units
+    end
   end
 
   def set_building_header(measures)
@@ -509,6 +511,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
+    return # FIXME
     measures['ResStockArgumentsPostHPXML'][0]['electric_panel_service_max_current_rating'] = hpxml_bldg.electric_panels[0].max_current_rating
     measures['ResStockArgumentsPostHPXML'][0]['electric_panel_breaker_spaces_rated_total'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
 
@@ -517,6 +520,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
+    return # FIXME
     # Retain (calculated) HVAC capacities if upgrade is not HVAC system related
     # Do not retain HVAC autosizing factors and defect ratios if upgrade is HVAC system related
     hvac_system_upgrades = get_hvac_system_upgrades(hpxml_bldg, upgrade_args_hash)
@@ -539,6 +543,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
   def set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
     # Retain Existing Heating System as Heat Pump Backup
+    # FIXME
     if measures['ResStockArguments'][0]['heat_pump_backup_use_existing_system'] == 'true'
       heating_system = get_heating_system(hpxml_bldg)
       heat_pump_type = measures['BuildResidentialHPXML'][0]['heat_pump_type']
@@ -606,6 +611,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def set_autosizing_limits(runner, measures, hpxml_bldg)
+    # FIXME
     # Use Autosizing Limits and Maintain Duct System Curve (Part 1)
     # Set the autosizing limit based on the baseline airflow.
     if measures['ResStockArguments'][0]['heat_pump_sizing_is_duct_limited'] == 'true'
@@ -643,6 +649,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def set_adjusted_fan_efficiency(runner, measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
+    # FIXME
     # Use Autosizing Limits and Maintain Duct System Curve (Part 2)
     # - Get the upgrade airflow cfm.
     # - Use it along with the baseline airflow cfm and upgrade blower fan W/cfm.
@@ -717,7 +724,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     hvac_system_upgrades = []
     args_hash.keys.each do |arg|
       # Detect whether we are upgrading the heating system
-      if arg.start_with?('heating_system_') && (not arg.start_with?('heating_system_2_'))
+      if arg == 'hvac_heating_system'
         hpxml_bldg.heating_systems.each do |heating_system|
           next unless heating_system.primary_system
 
@@ -726,7 +733,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       end
 
       # Detect whether we are upgrading the secondary heating system
-      if arg.start_with?('heating_system_2_')
+      if arg == 'hvac_heating_system_2'
         hpxml_bldg.heating_systems.each do |heating_system|
           next if heating_system.primary_system
 
@@ -735,14 +742,14 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       end
 
       # Detect whether we are upgrading the cooling system
-      if arg.start_with?('cooling_system_')
+      if arg == 'hvac_cooling_system'
         hpxml_bldg.cooling_systems.each do |cooling_system|
           hvac_system_upgrades << cooling_system.id
         end
       end
 
       # Detect whether we are upgrading the heat pump
-      next unless arg.start_with?('heat_pump_')
+      next if arg != 'hvac_heat_pump'
 
       hpxml_bldg.heat_pumps.each do |heat_pump|
         hvac_system_upgrades << heat_pump.id

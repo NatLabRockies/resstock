@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>b9feaf58-b6d6-43df-adee-17f6daa477f2</version_id>
-  <version_modified>2025-08-02T00:29:17Z</version_modified>
+  <version_id>d3f3938d-6180-4e76-b3be-f4af8f22672a</version_id>
+  <version_modified>2025-08-02T20:50:06Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -3167,8 +3167,16 @@
           <display_name>4 ACH50</display_name>
         </choice>
         <choice>
+          <value>5 ACH50</value>
+          <display_name>5 ACH50</display_name>
+        </choice>
+        <choice>
           <value>6 ACH50</value>
           <display_name>6 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>7 ACH50</value>
+          <display_name>7 ACH50</display_name>
         </choice>
         <choice>
           <value>8 ACH50</value>
@@ -8717,6 +8725,18 @@
           <display_name>748 kWh/yr, 110% Usage</display_name>
         </choice>
         <choice>
+          <value>727 kWh/yr, 90% Usage</value>
+          <display_name>727 kWh/yr, 90% Usage</display_name>
+        </choice>
+        <choice>
+          <value>727 kWh/yr, 100% Usage</value>
+          <display_name>727 kWh/yr, 100% Usage</display_name>
+        </choice>
+        <choice>
+          <value>727 kWh/yr, 110% Usage</value>
+          <display_name>727 kWh/yr, 110% Usage</display_name>
+        </choice>
+        <choice>
           <value>650 kWh/yr, 90% Usage</value>
           <display_name>650 kWh/yr, 90% Usage</display_name>
         </choice>
@@ -8878,6 +8898,18 @@
         <choice>
           <value>748 kWh/yr, 110% Usage</value>
           <display_name>748 kWh/yr, 110% Usage</display_name>
+        </choice>
+        <choice>
+          <value>727 kWh/yr, 90% Usage</value>
+          <display_name>727 kWh/yr, 90% Usage</display_name>
+        </choice>
+        <choice>
+          <value>727 kWh/yr, 100% Usage</value>
+          <display_name>727 kWh/yr, 100% Usage</display_name>
+        </choice>
+        <choice>
+          <value>727 kWh/yr, 110% Usage</value>
+          <display_name>727 kWh/yr, 110% Usage</display_name>
         </choice>
         <choice>
           <value>650 kWh/yr, 90% Usage</value>
@@ -10657,24 +10689,14 @@
           <display_name>Double Exterior</display_name>
         </choice>
         <choice>
-          <value>Single Exterior (Front)</value>
-          <display_name>Single Exterior (Front)</display_name>
+          <value>Single Exterior Front</value>
+          <display_name>Single Exterior Front</display_name>
         </choice>
         <choice>
           <value>None</value>
           <display_name>None</display_name>
         </choice>
       </choices>
-    </argument>
-    <argument>
-      <name>geometry_corridor_width</name>
-      <display_name>Geometry: Corridor Width</display_name>
-      <description>The width of the corridor. Only applies to apartment units.</description>
-      <type>Double</type>
-      <units>ft</units>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>10</default_value>
     </argument>
     <argument>
       <name>hvac_control_heating_weekday_setpoint_temp</name>
@@ -10830,22 +10852,6 @@
         </choice>
       </choices>
     </argument>
-    <argument>
-      <name>schedules_space_heating_unavailable_days</name>
-      <display_name>Schedules: Space Heating Unavailability</display_name>
-      <description>Number of days space heating equipment is unavailable.</description>
-      <type>Integer</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>schedules_space_cooling_unavailable_days</name>
-      <display_name>Schedules: Space Cooling Unavailability</display_name>
-      <description>Number of days space cooling equipment is unavailable.</description>
-      <type>Integer</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
   </arguments>
   <outputs />
   <provenances />
@@ -10864,7 +10870,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>59FE5A5F</checksum>
+      <checksum>9C372231</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -10881,7 +10887,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>09043506</checksum>
+      <checksum>3917428E</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>apply_upgrade</name>
   <uid>33f1654c-f734-43d1-b35d-9d2856e41b5a</uid>
-  <version_id>14860ab3-9c5e-4a96-8f13-526e628cc4b0</version_id>
-  <version_modified>2025-08-02T00:30:04Z</version_modified>
+  <version_id>b9f61877-38f7-46c4-862b-a5963c3a1666</version_id>
+  <version_modified>2025-08-02T20:50:02Z</version_modified>
   <xml_checksum>9339BE01</xml_checksum>
   <class_name>ApplyUpgrade</class_name>
   <display_name>Apply Upgrade</display_name>
@@ -25025,7 +25025,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>F6CBF2F6</checksum>
+      <checksum>4675B803</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

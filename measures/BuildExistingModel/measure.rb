@@ -711,10 +711,8 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
   end
 
   def set_dehumidifier(measures, unit_multiplier)
-    if not unit_multiplier.nil?
-      if unit_multiplier > 1
-        measures['BuildResidentialHPXML'][0]['dehumidifier_type'] = 'none' # limitation of OS-HPXML
-      end
+    if unit_multiplier.to_i > 1
+      measures['BuildResidentialHPXML'][0]['dehumidifier_type'] = 'none' # limitation of OS-HPXML
     end
   end
 

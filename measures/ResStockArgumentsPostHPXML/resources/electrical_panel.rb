@@ -41,7 +41,6 @@ class ElectricalPanelSampler
     end
 
     year_built = hpxml_bldg.building_construction.year_built
-    year_built = 1960 if year_built.nil? # get default year_built if nil (for project_testing)
     if year_built < 1940
       @vintage = '<1940'
     elsif year_built < 1950
@@ -58,7 +57,7 @@ class ElectricalPanelSampler
       @vintage = '1990s'
     elsif year_built < 2010
       @vintage = '2000s'
-    elsif year_built < 2020
+    else
       @vintage = '2010s'
     end
   end
@@ -282,9 +281,7 @@ class ElectricalPanelSampler
   end
 
   def simplify_fuel(fuel)
-    if fuel.nil?
-      return 'none'
-    elsif fuel == HPXML::FuelTypeElectricity
+    if fuel == HPXML::FuelTypeElectricity
       return fuel
     else
       return 'non-electricity'

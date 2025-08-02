@@ -1366,20 +1366,20 @@ Cooling Setpoint Offset Period	Night Setup -3h	ResStockArguments	hvac_control_co
 Cooling Setpoint Offset Period	Night Setup -4h	ResStockArguments	hvac_control_cooling_weekday_setpoint_schedule=1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1	hvac_control_cooling_weekend_setpoint_schedule=1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1
 Cooling Setpoint Offset Period	Night Setup -5h	ResStockArguments	hvac_control_cooling_weekday_setpoint_schedule=1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1	hvac_control_cooling_weekend_setpoint_schedule=1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1
 Cooling Setpoint Offset Period	None	ResStockArguments	hvac_control_cooling_weekday_setpoint_schedule=0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	hvac_control_cooling_weekend_setpoint_schedule=0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Cooling Unavailable Days	1 day	ResStockArguments	schedules_space_cooling_unavailable_days=1
-Cooling Unavailable Days	1 month	ResStockArguments	schedules_space_cooling_unavailable_days=30
-Cooling Unavailable Days	1 week	ResStockArguments	schedules_space_cooling_unavailable_days=7
-Cooling Unavailable Days	2 weeks	ResStockArguments	schedules_space_cooling_unavailable_days=14
-Cooling Unavailable Days	3 days	ResStockArguments	schedules_space_cooling_unavailable_days=3
-Cooling Unavailable Days	3 months	ResStockArguments	schedules_space_cooling_unavailable_days=90
-Cooling Unavailable Days	Never	ResStockArguments	schedules_space_cooling_unavailable_days=0
+Cooling Unavailable Days	1 day	ResStockArgumentsPostHPXML	schedules_space_cooling_unavailable_days=1
+Cooling Unavailable Days	1 month	ResStockArgumentsPostHPXML	schedules_space_cooling_unavailable_days=30
+Cooling Unavailable Days	1 week	ResStockArgumentsPostHPXML	schedules_space_cooling_unavailable_days=7
+Cooling Unavailable Days	2 weeks	ResStockArgumentsPostHPXML	schedules_space_cooling_unavailable_days=14
+Cooling Unavailable Days	3 days	ResStockArgumentsPostHPXML	schedules_space_cooling_unavailable_days=3
+Cooling Unavailable Days	3 months	ResStockArgumentsPostHPXML	schedules_space_cooling_unavailable_days=90
+Cooling Unavailable Days	Never	ResStockArgumentsPostHPXML	schedules_space_cooling_unavailable_days=0
 Cooling Unavailable Days	Void
-Cooling Unavailable Days	Year round	ResStockArguments	schedules_space_cooling_unavailable_days=365
-Corridor	Double Exterior	ResStockArguments	geometry_corridor_position=Double Exterior	geometry_corridor_width=10
-Corridor	Double-Loaded Interior	ResStockArguments	geometry_corridor_position=Double-Loaded Interior	geometry_corridor_width=10
-Corridor	None	ResStockArguments	geometry_corridor_position=None	geometry_corridor_width=0
-Corridor	Not Applicable	ResStockArguments	geometry_corridor_position=None	geometry_corridor_width=0
-Corridor	Single Exterior Front	ResStockArguments	geometry_corridor_position=Single Exterior (Front)	geometry_corridor_width=10
+Cooling Unavailable Days	Year round	ResStockArgumentsPostHPXML	schedules_space_cooling_unavailable_days=365
+Corridor	Double Exterior	ResStockArguments	geometry_corridor_position=Double Exterior
+Corridor	Double-Loaded Interior	ResStockArguments	geometry_corridor_position=Double-Loaded Interior
+Corridor	None	ResStockArguments	geometry_corridor_position=None
+Corridor	Not Applicable	ResStockArguments	geometry_corridor_position=None
+Corridor	Single Exterior Front	ResStockArguments	geometry_corridor_position=Single Exterior Front
 County	AK, Aleutians East Borough	ResStockArguments	location_epw_path=../../../weather/G0200130.epw	location_zip_code=99661
 County	AK, Aleutians West Census Area	ResStockArguments	location_epw_path=../../../weather/G0200160.epw	location_zip_code=99685
 County	AK, Anchorage Municipality	ResStockArguments	location_epw_path=../../../weather/G0200200.epw	location_zip_code=99501
@@ -9843,14 +9843,14 @@ Heating Setpoint Offset Period	Night -3h	ResStockArguments	hvac_control_heating_
 Heating Setpoint Offset Period	Night -4h	ResStockArguments	hvac_control_heating_weekday_setpoint_schedule=-1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1	hvac_control_heating_weekend_setpoint_schedule=-1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1
 Heating Setpoint Offset Period	Night -5h	ResStockArguments	hvac_control_heating_weekday_setpoint_schedule=-1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1	hvac_control_heating_weekend_setpoint_schedule=-1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1
 Heating Setpoint Offset Period	None	ResStockArguments	hvac_control_heating_weekday_setpoint_schedule=0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	hvac_control_heating_weekend_setpoint_schedule=0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Heating Unavailable Days	1 day	ResStockArguments	schedules_space_heating_unavailable_days=1
-Heating Unavailable Days	1 month	ResStockArguments	schedules_space_heating_unavailable_days=30
-Heating Unavailable Days	1 week	ResStockArguments	schedules_space_heating_unavailable_days=7
-Heating Unavailable Days	2 weeks	ResStockArguments	schedules_space_heating_unavailable_days=14
-Heating Unavailable Days	3 days	ResStockArguments	schedules_space_heating_unavailable_days=3
-Heating Unavailable Days	3 months	ResStockArguments	schedules_space_heating_unavailable_days=90
-Heating Unavailable Days	Never	ResStockArguments	schedules_space_heating_unavailable_days=0
-Heating Unavailable Days	Year round	ResStockArguments	schedules_space_heating_unavailable_days=365
+Heating Unavailable Days	1 day	ResStockArgumentsPostHPXML	schedules_space_heating_unavailable_days=1
+Heating Unavailable Days	1 month	ResStockArgumentsPostHPXML	schedules_space_heating_unavailable_days=30
+Heating Unavailable Days	1 week	ResStockArgumentsPostHPXML	schedules_space_heating_unavailable_days=7
+Heating Unavailable Days	2 weeks	ResStockArgumentsPostHPXML	schedules_space_heating_unavailable_days=14
+Heating Unavailable Days	3 days	ResStockArgumentsPostHPXML	schedules_space_heating_unavailable_days=3
+Heating Unavailable Days	3 months	ResStockArgumentsPostHPXML	schedules_space_heating_unavailable_days=90
+Heating Unavailable Days	Never	ResStockArgumentsPostHPXML	schedules_space_heating_unavailable_days=0
+Heating Unavailable Days	Year round	ResStockArgumentsPostHPXML	schedules_space_heating_unavailable_days=365
 Holiday Lighting	No Exterior Use
 Hot Water Distribution	Uninsulated	ResStockArguments	dhw_distribution=Uninsulated, Standard	dhw_drain_water_heat_recovery=None
 Hot Water Distribution	Insulated	ResStockArguments	dhw_distribution=Insulated, Standard	dhw_drain_water_heat_recovery=None
