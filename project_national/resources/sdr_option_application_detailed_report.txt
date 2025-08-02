@@ -1,116 +1,116 @@
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option1:'HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+and => 413443 (75.2%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 489588 (89.0%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
 -------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 530500 (96.5%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
 ------------------------------------------------------------------------------------------
-Overall applied to => 408859 (74.3%).
+Overall applied to => 408862 (74.3%).
 -------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option2:'HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+and => 413443 (75.2%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 489588 (89.0%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
 -------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 530500 (96.5%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
 ------------------------------------------------------------------------------------------
-Overall applied to => 408859 (74.3%).
+Overall applied to => 408862 (74.3%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option3:'HVAC Cooling Efficiency|Ducted Heat Pump'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+and => 413443 (75.2%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 489588 (89.0%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
 -------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 530447 (96.4%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 530500 (96.5%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
 ------------------------------------------------------------------------------------------
-Overall applied to => 408859 (74.3%).
+Overall applied to => 408862 (74.3%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 408859 (74.3%)
-Any of the options (or-ing) were applied to: 408859 (74.3%)
+All of the options (and-ing) were applied to: 408862 (74.3%)
+Any of the options (or-ing) were applied to: 408862 (74.3%)
 --------------------------------------------------------------------------------
 Report of how the 3 options were applied to the buildings.
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================================================+=====================+==================+==================+
-|                   3 | hvac heating efficiency, hvac detailed performance | 408859 (74.3%)      | 408859 (74.3%)   | 408859 (74.3%)   |
+|                   3 | hvac heating efficiency, hvac detailed performance | 408862 (74.3%)      | 408862 (74.3%)   | 408862 (74.3%)   |
 |                     | data, hvac cooling efficiency                      |                     |                  |                  |
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -118,131 +118,131 @@ Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   3 | 1, 2, 3           | 408859 (74.3%)      | 408859 (74.3%)   | 408859 (74.3%)   |
+|                   3 | 1, 2, 3           | 408862 (74.3%)      | 408862 (74.3%)   | 408862 (74.3%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade2:'Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option1:'HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8'
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+and => 413443 (75.2%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 489588 (89.0%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
 -------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 380161 (69.1%).
+Overall applied to => 380003 (69.1%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade2:'Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+and => 413443 (75.2%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 489588 (89.0%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
 -------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 380161 (69.1%).
+Overall applied to => 380003 (69.1%).
 -------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade2:'Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-HVAC Has Ducts|Yes => 423608 (77.0%)
+HVAC Has Ducts|Yes => 423636 (77.0%)
 ------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 389136 (70.8%).
+Overall applied to => 388962 (70.7%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 380161 (69.1%)
-Any of the options (or-ing) were applied to: 389136 (70.8%)
+All of the options (and-ing) were applied to: 380003 (69.1%)
+Any of the options (or-ing) were applied to: 388962 (70.7%)
 --------------------------------------------------------------------------------
 Report of how the 3 options were applied to the buildings.
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================================================+=====================+==================+==================+
-|                   1 | hvac cooling partial space conditioning           | 8975 (1.6%)         | 8975 (1.6%)      | 8975 (1.6%)      |
+|                   1 | hvac cooling partial space conditioning           | 8959 (1.6%)         | 8959 (1.6%)      | 8959 (1.6%)      |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   3 | hvac heating efficiency, hvac cooling efficiency, | 380161 (69.1%)      | 380161 (69.1%)   | 389136 (70.8%)   |
+|                   3 | hvac heating efficiency, hvac cooling efficiency, | 380003 (69.1%)      | 380003 (69.1%)   | 388962 (70.7%)   |
 |                     | hvac cooling partial space conditioning           |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -250,133 +250,133 @@ Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 | 3                 | 8975 (1.6%)         | 8975 (1.6%)      | 8975 (1.6%)      |
+|                   1 | 3                 | 8959 (1.6%)         | 8959 (1.6%)      | 8959 (1.6%)      |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 2, 3           | 380161 (69.1%)      | 380161 (69.1%)   | 389136 (70.8%)   |
+|                   3 | 1, 2, 3           | 380003 (69.1%)      | 380003 (69.1%)   | 388962 (70.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade3:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option1:'HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0'
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+and => 413443 (75.2%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 489588 (89.0%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
 -------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 380161 (69.1%).
+Overall applied to => 380003 (69.1%).
 -------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade3:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+and => 413443 (75.2%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 489588 (89.0%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
 -------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 380161 (69.1%).
+Overall applied to => 380003 (69.1%).
 -------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade3:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-HVAC Has Ducts|Yes => 423608 (77.0%)
+HVAC Has Ducts|Yes => 423636 (77.0%)
 ------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 389136 (70.8%).
+Overall applied to => 388962 (70.7%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 380161 (69.1%)
-Any of the options (or-ing) were applied to: 389136 (70.8%)
+All of the options (and-ing) were applied to: 380003 (69.1%)
+Any of the options (or-ing) were applied to: 388962 (70.7%)
 --------------------------------------------------------------------------------
 Report of how the 3 options were applied to the buildings.
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================================================+=====================+==================+==================+
-|                   1 | hvac cooling partial space conditioning           | 8975 (1.6%)         | 8975 (1.6%)      | 8975 (1.6%)      |
+|                   1 | hvac cooling partial space conditioning           | 8959 (1.6%)         | 8959 (1.6%)      | 8959 (1.6%)      |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   3 | hvac heating efficiency, hvac cooling efficiency, | 380161 (69.1%)      | 380161 (69.1%)   | 389136 (70.8%)   |
+|                   3 | hvac heating efficiency, hvac cooling efficiency, | 380003 (69.1%)      | 380003 (69.1%)   | 388962 (70.7%)   |
 |                     | hvac cooling partial space conditioning           |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -384,133 +384,133 @@ Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 | 3                 | 8975 (1.6%)         | 8975 (1.6%)      | 8975 (1.6%)      |
+|                   1 | 3                 | 8959 (1.6%)         | 8959 (1.6%)      | 8959 (1.6%)      |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 2, 3           | 380161 (69.1%)      | 380161 (69.1%)   | 389136 (70.8%)   |
+|                   3 | 1, 2, 3           | 380003 (69.1%)      | 380003 (69.1%)   | 388962 (70.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade4:'Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option1:'HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+and => 413443 (75.2%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 489588 (89.0%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
 -------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 380161 (69.1%).
+Overall applied to => 380003 (69.1%).
 -------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade4:'Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+and => 413443 (75.2%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 489588 (89.0%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
 -------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 380161 (69.1%).
+Overall applied to => 380003 (69.1%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade4:'Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-HVAC Has Ducts|Yes => 423608 (77.0%)
+HVAC Has Ducts|Yes => 423636 (77.0%)
 ------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 389136 (70.8%).
+Overall applied to => 388962 (70.7%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 380161 (69.1%)
-Any of the options (or-ing) were applied to: 389136 (70.8%)
+All of the options (and-ing) were applied to: 380003 (69.1%)
+Any of the options (or-ing) were applied to: 388962 (70.7%)
 --------------------------------------------------------------------------------
 Report of how the 3 options were applied to the buildings.
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================================================+=====================+==================+==================+
-|                   1 | hvac cooling partial space conditioning           | 8975 (1.6%)         | 8975 (1.6%)      | 8975 (1.6%)      |
+|                   1 | hvac cooling partial space conditioning           | 8959 (1.6%)         | 8959 (1.6%)      | 8959 (1.6%)      |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   3 | hvac heating efficiency, hvac cooling efficiency, | 380161 (69.1%)      | 380161 (69.1%)   | 389136 (70.8%)   |
+|                   3 | hvac heating efficiency, hvac cooling efficiency, | 380003 (69.1%)      | 380003 (69.1%)   | 388962 (70.7%)   |
 |                     | hvac cooling partial space conditioning           |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -518,85 +518,85 @@ Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 | 3                 | 8975 (1.6%)         | 8975 (1.6%)      | 8975 (1.6%)      |
+|                   1 | 3                 | 8959 (1.6%)         | 8959 (1.6%)      | 8959 (1.6%)      |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 2, 3           | 380161 (69.1%)      | 380161 (69.1%)   | 389136 (70.8%)   |
+|                   3 | 1, 2, 3           | 380003 (69.1%)      | 380003 (69.1%)   | 388962 (70.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade5:'Air Sealing', Option1:'Infiltration Reduction|30%'
 --------------------------------------------------------------------------------------
-or => 366250 (66.6%)
-  Infiltration|50 ACH50 => 17543 (3.2%)
-  Infiltration|40 ACH50 => 31185 (5.7%)
-  Infiltration|30 ACH50 => 33647 (6.1%)
-  Infiltration|25 ACH50 => 56884 (10.3%)
-  Infiltration|20 ACH50 => 92403 (16.8%)
+or => 366283 (66.6%)
+  Infiltration|50 ACH50 => 17547 (3.2%)
+  Infiltration|40 ACH50 => 31179 (5.7%)
+  Infiltration|30 ACH50 => 33629 (6.1%)
+  Infiltration|25 ACH50 => 56894 (10.3%)
+  Infiltration|20 ACH50 => 92430 (16.8%)
   Infiltration|18.5 ACH50 => 0 (0.0%)
-  Infiltration|15 ACH50 => 134588 (24.5%)
+  Infiltration|15 ACH50 => 134604 (24.5%)
   Infiltration|11.25 ACH50 => 0 (0.0%)
 --------------------------------------
-Overall applied to => 366250 (66.6%).
+Overall applied to => 366283 (66.6%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 366250 (66.6%)
-Any of the options (or-ing) were applied to: 366250 (66.6%)
+All of the options (and-ing) were applied to: 366283 (66.6%)
+Any of the options (or-ing) were applied to: 366283 (66.6%)
 --------------------------------------------------------------------------------
 Report of how the 1 options were applied to the buildings.
 +---------------------+------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options        | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+========================+=====================+==================+==================+
-|                   1 | infiltration reduction | 366250 (66.6%)      | 366250 (66.6%)   | 366250 (66.6%)   |
+|                   1 | infiltration reduction | 366283 (66.6%)      | 366283 (66.6%)   | 366283 (66.6%)   |
 +---------------------+------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
 Detailed report of how the 1 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options |   Applied options | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 |                 1 | 366250 (66.6%)      | 366250 (66.6%)   | 366250 (66.6%)   |
+|                   1 |                 1 | 366283 (66.6%)      | 366283 (66.6%)   | 366283 (66.6%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option1:'Insulation Ceiling|R-30'
 --------------------------------------------------------------------------------------------------------------------
-and => 1502 (0.3%)
+and => 1528 (0.3%)
   ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
-  Geometry Attic Type|Vented Attic => 217730 (39.6%)
-  or => 96715 (17.6%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
+  Geometry Attic Type|Vented Attic => 217768 (39.6%)
+  or => 96800 (17.6%)
+    Insulation Ceiling|Uninsulated => 6577 (1.2%)
+    Insulation Ceiling|R-7 => 15081 (2.7%)
+    Insulation Ceiling|R-13 => 29075 (5.3%)
+    Insulation Ceiling|R-19 => 46067 (8.4%)
 -------------------------------------------
-Overall applied to => 1502 (0.3%).
+Overall applied to => 1528 (0.3%).
 ----------------------------------
 
 --------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option2:'Insulation Ceiling|R-49'
 --------------------------------------------------------------------------------------------------------------------
-and => 84557 (15.4%)
+and => 84481 (15.4%)
   or => 211797 (38.5%)
     ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
     ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
     ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
     ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
     ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  Geometry Attic Type|Vented Attic => 217730 (39.6%)
-  or => 221202 (40.2%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
-    Insulation Ceiling|R-30 => 78583 (14.3%)
-    Insulation Ceiling|R-38 => 45904 (8.3%)
+  Geometry Attic Type|Vented Attic => 217768 (39.6%)
+  or => 221225 (40.2%)
+    Insulation Ceiling|Uninsulated => 6577 (1.2%)
+    Insulation Ceiling|R-7 => 15081 (2.7%)
+    Insulation Ceiling|R-13 => 29075 (5.3%)
+    Insulation Ceiling|R-19 => 46067 (8.4%)
+    Insulation Ceiling|R-30 => 78554 (14.3%)
+    Insulation Ceiling|R-38 => 45871 (8.3%)
 -------------------------------------------
-Overall applied to => 84557 (15.4%).
+Overall applied to => 84481 (15.4%).
 ------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade6:'Attic Floor Insulation for Unfinished Attics', Option3:'Insulation Ceiling|R-60'
 --------------------------------------------------------------------------------------------------------------------
-and => 129264 (23.5%)
+and => 129282 (23.5%)
   or => 327067 (59.5%)
     ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
     ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
@@ -607,241 +607,241 @@ and => 129264 (23.5%)
     ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
     ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
     ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
-  Geometry Attic Type|Vented Attic => 217730 (39.6%)
-  or => 235952 (42.9%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
-    Insulation Ceiling|R-30 => 78583 (14.3%)
-    Insulation Ceiling|R-38 => 45904 (8.3%)
+  Geometry Attic Type|Vented Attic => 217768 (39.6%)
+  or => 235975 (42.9%)
+    Insulation Ceiling|Uninsulated => 6577 (1.2%)
+    Insulation Ceiling|R-7 => 15081 (2.7%)
+    Insulation Ceiling|R-13 => 29075 (5.3%)
+    Insulation Ceiling|R-19 => 46067 (8.4%)
+    Insulation Ceiling|R-30 => 78554 (14.3%)
+    Insulation Ceiling|R-38 => 45871 (8.3%)
     Insulation Ceiling|R-49 => 14750 (2.7%)
 -------------------------------------------
-Overall applied to => 129264 (23.5%).
+Overall applied to => 129282 (23.5%).
 -------------------------------------
 
 All of the options (and-ing) were applied to: 0 (0.0%)
-Any of the options (or-ing) were applied to: 215323 (39.1%)
+Any of the options (or-ing) were applied to: 215291 (39.1%)
 --------------------------------------------------------------------------------
 Report of how the 1 options were applied to the buildings.
 +---------------------+--------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================+=====================+==================+==================+
-|                   1 | insulation ceiling | 215323 (39.1%)      | 215323 (39.1%)   | 215323 (39.1%)   |
+|                   1 | insulation ceiling | 215291 (39.1%)      | 215291 (39.1%)   | 215291 (39.1%)   |
 +---------------------+--------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
 Detailed report of how the 3 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options |   Applied options | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 |                 1 | 1502 (0.3%)         | 1502 (0.3%)      | 1502 (0.3%)      |
+|                   1 |                 1 | 1528 (0.3%)         | 1528 (0.3%)      | 1528 (0.3%)      |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 2 | 84557 (15.4%)       | 86059 (15.6%)    | 86059 (15.6%)    |
+|                   1 |                 2 | 84481 (15.4%)       | 86009 (15.6%)    | 86009 (15.6%)    |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 |                 3 | 129264 (23.5%)      | 215323 (39.1%)   | 215323 (39.1%)   |
+|                   1 |                 3 | 129282 (23.5%)      | 215291 (39.1%)   | 215291 (39.1%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option1:'HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+and => 413443 (75.2%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 489588 (89.0%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
 -------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 380161 (69.1%).
+Overall applied to => 380003 (69.1%).
 -------------------------------------
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413417 (75.2%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 489600 (89.0%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
+and => 413443 (75.2%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 489588 (89.0%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
 -------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 380161 (69.1%).
+Overall applied to => 380003 (69.1%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-HVAC Has Ducts|Yes => 423608 (77.0%)
+HVAC Has Ducts|Yes => 423636 (77.0%)
 ------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 389136 (70.8%).
+Overall applied to => 388962 (70.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option4:'Insulation Ceiling|R-30'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 1502 (0.3%)
+and => 1528 (0.3%)
   ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
-  Geometry Attic Type|Vented Attic => 217730 (39.6%)
-  or => 96715 (17.6%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
+  Geometry Attic Type|Vented Attic => 217768 (39.6%)
+  or => 96800 (17.6%)
+    Insulation Ceiling|Uninsulated => 6577 (1.2%)
+    Insulation Ceiling|R-7 => 15081 (2.7%)
+    Insulation Ceiling|R-13 => 29075 (5.3%)
+    Insulation Ceiling|R-19 => 46067 (8.4%)
 -------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 1081 (0.2%).
+Overall applied to => 1092 (0.2%).
 ----------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option5:'Insulation Ceiling|R-49'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 84557 (15.4%)
+and => 84481 (15.4%)
   or => 211797 (38.5%)
     ASHRAE IECC Climate Zone 2004|2A => 63764 (11.6%)
     ASHRAE IECC Climate Zone 2004|2B => 10859 (2.0%)
     ASHRAE IECC Climate Zone 2004|3A => 73177 (13.3%)
     ASHRAE IECC Climate Zone 2004|3B => 51102 (9.3%)
     ASHRAE IECC Climate Zone 2004|3C => 12895 (2.3%)
-  Geometry Attic Type|Vented Attic => 217730 (39.6%)
-  or => 221202 (40.2%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
-    Insulation Ceiling|R-30 => 78583 (14.3%)
-    Insulation Ceiling|R-38 => 45904 (8.3%)
+  Geometry Attic Type|Vented Attic => 217768 (39.6%)
+  or => 221225 (40.2%)
+    Insulation Ceiling|Uninsulated => 6577 (1.2%)
+    Insulation Ceiling|R-7 => 15081 (2.7%)
+    Insulation Ceiling|R-13 => 29075 (5.3%)
+    Insulation Ceiling|R-19 => 46067 (8.4%)
+    Insulation Ceiling|R-30 => 78554 (14.3%)
+    Insulation Ceiling|R-38 => 45871 (8.3%)
 -------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 74413 (13.5%).
+Overall applied to => 74314 (13.5%).
 ------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option6:'Insulation Ceiling|R-60'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 129264 (23.5%)
+and => 129282 (23.5%)
   or => 327067 (59.5%)
     ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
     ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
@@ -852,107 +852,107 @@ and => 129264 (23.5%)
     ASHRAE IECC Climate Zone 2004|6B => 5077 (0.9%)
     ASHRAE IECC Climate Zone 2004|7A => 4343 (0.8%)
     ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
-  Geometry Attic Type|Vented Attic => 217730 (39.6%)
-  or => 235952 (42.9%)
-    Insulation Ceiling|Uninsulated => 6580 (1.2%)
-    Insulation Ceiling|R-7 => 15062 (2.7%)
-    Insulation Ceiling|R-13 => 29032 (5.3%)
-    Insulation Ceiling|R-19 => 46041 (8.4%)
-    Insulation Ceiling|R-30 => 78583 (14.3%)
-    Insulation Ceiling|R-38 => 45904 (8.3%)
+  Geometry Attic Type|Vented Attic => 217768 (39.6%)
+  or => 235975 (42.9%)
+    Insulation Ceiling|Uninsulated => 6577 (1.2%)
+    Insulation Ceiling|R-7 => 15081 (2.7%)
+    Insulation Ceiling|R-13 => 29075 (5.3%)
+    Insulation Ceiling|R-19 => 46067 (8.4%)
+    Insulation Ceiling|R-30 => 78554 (14.3%)
+    Insulation Ceiling|R-38 => 45871 (8.3%)
     Insulation Ceiling|R-49 => 14750 (2.7%)
 -------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 100949 (18.4%).
+Overall applied to => 100993 (18.4%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade7:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation', Option7:'Infiltration Reduction|30%'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-or => 366250 (66.6%)
-  Infiltration|50 ACH50 => 17543 (3.2%)
-  Infiltration|40 ACH50 => 31185 (5.7%)
-  Infiltration|30 ACH50 => 33647 (6.1%)
-  Infiltration|25 ACH50 => 56884 (10.3%)
-  Infiltration|20 ACH50 => 92403 (16.8%)
+or => 366283 (66.6%)
+  Infiltration|50 ACH50 => 17547 (3.2%)
+  Infiltration|40 ACH50 => 31179 (5.7%)
+  Infiltration|30 ACH50 => 33629 (6.1%)
+  Infiltration|25 ACH50 => 56894 (10.3%)
+  Infiltration|20 ACH50 => 92430 (16.8%)
   Infiltration|18.5 ACH50 => 0 (0.0%)
-  Infiltration|15 ACH50 => 134588 (24.5%)
+  Infiltration|15 ACH50 => 134604 (24.5%)
   Infiltration|11.25 ACH50 => 0 (0.0%)
 --------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 389136 (70.8%)
-  HVAC Has Ducts|Yes => 423608 (77.0%)
-  not => 541444 (98.4%)
-    Heating Fuel|Wood => 8556 (1.6%)
-  not => 548119 (99.7%)
-    Heating Fuel|Other Fuel => 1881 (0.3%)
-  not => 545936 (99.3%)
-    Heating Fuel|None => 4064 (0.7%)
-  not => 544870 (99.1%)
-    or => 60400 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15757 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23765 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7468 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5802 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7608 (1.4%)
-    and => 11268 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11268 (2.0%)
+and => 388962 (70.7%)
+  HVAC Has Ducts|Yes => 423636 (77.0%)
+  not => 541477 (98.5%)
+    Heating Fuel|Wood => 8523 (1.5%)
+  not => 548115 (99.7%)
+    Heating Fuel|Other Fuel => 1885 (0.3%)
+  not => 545937 (99.3%)
+    Heating Fuel|None => 4063 (0.7%)
+  not => 544889 (99.1%)
+    or => 60412 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
+    and => 11265 (2.0%)
+      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
   not => 508434 (92.4%)
     or => 41566 (7.6%)
       Ground Thermal Conductivity|0.5 => 3236 (0.6%)
       Ground Thermal Conductivity|0.8 => 38330 (7.0%)
 -----------------------------------------------------
-Overall applied to => 251290 (45.7%).
+Overall applied to => 250952 (45.6%).
 -------------------------------------
 
 All of the options (and-ing) were applied to: 0 (0.0%)
-Any of the options (or-ing) were applied to: 389136 (70.8%)
+Any of the options (or-ing) were applied to: 388962 (70.7%)
 --------------------------------------------------------------------------------
 Report of how the 5 options were applied to the buildings.
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================================================+=====================+==================+==================+
-|                   1 | hvac cooling partial space conditioning           | 2739 (0.5%)         | 2739 (0.5%)      | 2739 (0.5%)      |
+|                   1 | hvac cooling partial space conditioning           | 2736 (0.5%)         | 2736 (0.5%)      | 2736 (0.5%)      |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   2 | hvac cooling partial space conditioning,          | 6236 (1.1%)         | 6236 (1.1%)      | 8975 (1.6%)      |
+|                   2 | hvac cooling partial space conditioning,          | 6223 (1.1%)         | 6223 (1.1%)      | 8959 (1.6%)      |
 |                     | infiltration reduction                            |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   3 | hvac heating efficiency, hvac cooling efficiency, | 69021 (12.5%)       | 69021 (12.5%)    | 77996 (14.2%)    |
+|                   3 | hvac heating efficiency, hvac cooling efficiency, | 69639 (12.7%)       | 69639 (12.7%)    | 78598 (14.3%)    |
 |                     | hvac cooling partial space conditioning           |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   4 | hvac heating efficiency, hvac cooling efficiency, | 66086 (12.0%)       | 66086 (12.0%)    | 144082 (26.2%)   |
+|                   4 | hvac heating efficiency, hvac cooling efficiency, | 65635 (11.9%)       | 65635 (11.9%)    | 144233 (26.2%)   |
 |                     | hvac cooling partial space conditioning,          |                     |                  |                  |
 |                     | insulation ceiling                                |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   4 | hvac heating efficiency, hvac cooling efficiency, | 134697 (24.5%)      | 200783 (36.5%)   | 278779 (50.7%)   |
+|                   4 | hvac heating efficiency, hvac cooling efficiency, | 133965 (24.4%)      | 199600 (36.3%)   | 278198 (50.6%)   |
 |                     | hvac cooling partial space conditioning,          |                     |                  |                  |
 |                     | infiltration reduction                            |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
-|                   5 | hvac heating efficiency, hvac cooling efficiency, | 110357 (20.1%)      | 110357 (20.1%)   | 389136 (70.8%)   |
+|                   5 | hvac heating efficiency, hvac cooling efficiency, | 110764 (20.1%)      | 110764 (20.1%)   | 388962 (70.7%)   |
 |                     | hvac cooling partial space conditioning,          |                     |                  |                  |
 |                     | insulation ceiling, infiltration reduction        |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
@@ -961,25 +961,25 @@ Detailed report of how the 7 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 | 3                 | 2739 (0.5%)         | 2739 (0.5%)      | 2739 (0.5%)      |
+|                   1 | 3                 | 2736 (0.5%)         | 2736 (0.5%)      | 2736 (0.5%)      |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 3, 7              | 6236 (1.1%)         | 6236 (1.1%)      | 8975 (1.6%)      |
+|                   2 | 3, 7              | 6223 (1.1%)         | 6223 (1.1%)      | 8959 (1.6%)      |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 1, 2, 3           | 69021 (12.5%)       | 69021 (12.5%)    | 77996 (14.2%)    |
+|                   3 | 1, 2, 3           | 69639 (12.7%)       | 69639 (12.7%)    | 78598 (14.3%)    |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 4        | 176 (0.0%)          | 176 (0.0%)       | 78172 (14.2%)    |
+|                   4 | 1, 2, 3, 4        | 162 (0.0%)          | 162 (0.0%)       | 78760 (14.3%)    |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 5        | 29621 (5.4%)        | 29797 (5.4%)     | 107793 (19.6%)   |
+|                   4 | 1, 2, 3, 5        | 29259 (5.3%)        | 29421 (5.3%)     | 108019 (19.6%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 6        | 36289 (6.6%)        | 66086 (12.0%)    | 144082 (26.2%)   |
+|                   4 | 1, 2, 3, 6        | 36214 (6.6%)        | 65635 (11.9%)    | 144233 (26.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   4 | 1, 2, 3, 7        | 134697 (24.5%)      | 200783 (36.5%)   | 278779 (50.7%)   |
+|                   4 | 1, 2, 3, 7        | 133965 (24.4%)      | 199600 (36.3%)   | 278198 (50.6%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   5 | 1, 2, 3, 4, 7     | 905 (0.2%)          | 905 (0.2%)       | 279684 (50.9%)   |
+|                   5 | 1, 2, 3, 4, 7     | 930 (0.2%)          | 930 (0.2%)       | 279128 (50.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   5 | 1, 2, 3, 5, 7     | 44792 (8.1%)        | 45697 (8.3%)     | 324476 (59.0%)   |
+|                   5 | 1, 2, 3, 5, 7     | 45055 (8.2%)        | 45985 (8.4%)     | 324183 (58.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   5 | 1, 2, 3, 6, 7     | 64660 (11.8%)       | 110357 (20.1%)   | 389136 (70.8%)   |
+|                   5 | 1, 2, 3, 6, 7     | 64779 (11.8%)       | 110764 (20.1%)   | 388962 (70.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -987,11 +987,11 @@ Option Apply Report for - Upgrade8:'Electric Vehicle Adoption with Level 1 Charg
 ------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 477589 (86.8%)
-  Electric Vehicle Ownership|No => 544229 (99.0%)
+and => 477561 (86.8%)
+  Electric Vehicle Ownership|No => 544201 (98.9%)
   Vacancy Status|Occupied => 483360 (87.9%)
 -------------------------------------------
-Overall applied to => 477589 (86.8%).
+Overall applied to => 477561 (86.8%).
 -------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------
@@ -999,21 +999,21 @@ Option Apply Report for - Upgrade8:'Electric Vehicle Adoption with Level 1 Charg
 ----------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 477589 (86.8%)
-  Electric Vehicle Ownership|No => 544229 (99.0%)
+and => 477561 (86.8%)
+  Electric Vehicle Ownership|No => 544201 (98.9%)
   Vacancy Status|Occupied => 483360 (87.9%)
 -------------------------------------------
-Overall applied to => 477589 (86.8%).
+Overall applied to => 477561 (86.8%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 477589 (86.8%)
-Any of the options (or-ing) were applied to: 477589 (86.8%)
+All of the options (and-ing) were applied to: 477561 (86.8%)
+Any of the options (or-ing) were applied to: 477561 (86.8%)
 --------------------------------------------------------------------------------
 Report of how the 2 options were applied to the buildings.
 +---------------------+----------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                              | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+==============================================+=====================+==================+==================+
-|                   2 | electric vehicle ownership, electric vehicle | 477589 (86.8%)      | 477589 (86.8%)   | 477589 (86.8%)   |
+|                   2 | electric vehicle ownership, electric vehicle | 477561 (86.8%)      | 477561 (86.8%)   | 477561 (86.8%)   |
 |                     | charger                                      |                     |                  |                  |
 +---------------------+----------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -1021,7 +1021,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   2 | 1, 2              | 477589 (86.8%)      | 477589 (86.8%)   | 477589 (86.8%)   |
+|                   2 | 1, 2              | 477561 (86.8%)      | 477561 (86.8%)   | 477561 (86.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -1244,13 +1244,13 @@ Option Apply Report for - Upgrade13:'HVAC Demand Flexibility - On-peak Load Shed
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-or => 548291 (99.7%)
-  not => 492796 (89.6%)
-    HVAC Cooling Type|None => 57204 (10.4%)
-  not => 545936 (99.3%)
-    HVAC Heating Type|None => 4064 (0.7%)
+or => 548288 (99.7%)
+  not => 492785 (89.6%)
+    HVAC Cooling Type|None => 57215 (10.4%)
+  not => 545937 (99.3%)
+    HVAC Heating Type|None => 4063 (0.7%)
 -----------------------------------------
-Overall applied to => 548291 (99.7%).
+Overall applied to => 548288 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1258,23 +1258,23 @@ Option Apply Report for - Upgrade13:'HVAC Demand Flexibility - On-peak Load Shed
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-or => 548291 (99.7%)
-  not => 492796 (89.6%)
-    HVAC Cooling Type|None => 57204 (10.4%)
-  not => 545936 (99.3%)
-    HVAC Heating Type|None => 4064 (0.7%)
+or => 548288 (99.7%)
+  not => 492785 (89.6%)
+    HVAC Cooling Type|None => 57215 (10.4%)
+  not => 545937 (99.3%)
+    HVAC Heating Type|None => 4063 (0.7%)
 -----------------------------------------
-Overall applied to => 548291 (99.7%).
+Overall applied to => 548288 (99.7%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 548291 (99.7%)
-Any of the options (or-ing) were applied to: 548291 (99.7%)
+All of the options (and-ing) were applied to: 548288 (99.7%)
+Any of the options (or-ing) were applied to: 548288 (99.7%)
 --------------------------------------------------------------------------------
 Report of how the 2 options were applied to the buildings.
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================================================+=====================+==================+==================+
-|                   2 | demand flexibility hvac, demand flexibility random | 548291 (99.7%)      | 548291 (99.7%)   | 548291 (99.7%)   |
+|                   2 | demand flexibility hvac, demand flexibility random | 548288 (99.7%)      | 548288 (99.7%)   | 548288 (99.7%)   |
 |                     | shift                                              |                     |                  |                  |
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -1282,7 +1282,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   2 | 1, 2              | 548291 (99.7%)      | 548291 (99.7%)   | 548291 (99.7%)   |
+|                   2 | 1, 2              | 548288 (99.7%)      | 548288 (99.7%)   | 548288 (99.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1290,13 +1290,13 @@ Option Apply Report for - Upgrade14:'HVAC Demand Flexibility - Pre-peak Load Shi
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-or => 548291 (99.7%)
-  not => 492796 (89.6%)
-    HVAC Cooling Type|None => 57204 (10.4%)
-  not => 545936 (99.3%)
-    HVAC Heating Type|None => 4064 (0.7%)
+or => 548288 (99.7%)
+  not => 492785 (89.6%)
+    HVAC Cooling Type|None => 57215 (10.4%)
+  not => 545937 (99.3%)
+    HVAC Heating Type|None => 4063 (0.7%)
 -----------------------------------------
-Overall applied to => 548291 (99.7%).
+Overall applied to => 548288 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1304,23 +1304,23 @@ Option Apply Report for - Upgrade14:'HVAC Demand Flexibility - Pre-peak Load Shi
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-or => 548291 (99.7%)
-  not => 492796 (89.6%)
-    HVAC Cooling Type|None => 57204 (10.4%)
-  not => 545936 (99.3%)
-    HVAC Heating Type|None => 4064 (0.7%)
+or => 548288 (99.7%)
+  not => 492785 (89.6%)
+    HVAC Cooling Type|None => 57215 (10.4%)
+  not => 545937 (99.3%)
+    HVAC Heating Type|None => 4063 (0.7%)
 -----------------------------------------
-Overall applied to => 548291 (99.7%).
+Overall applied to => 548288 (99.7%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 548291 (99.7%)
-Any of the options (or-ing) were applied to: 548291 (99.7%)
+All of the options (and-ing) were applied to: 548288 (99.7%)
+Any of the options (or-ing) were applied to: 548288 (99.7%)
 --------------------------------------------------------------------------------
 Report of how the 2 options were applied to the buildings.
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================================================+=====================+==================+==================+
-|                   2 | demand flexibility hvac, demand flexibility random | 548291 (99.7%)      | 548291 (99.7%)   | 548291 (99.7%)   |
+|                   2 | demand flexibility hvac, demand flexibility random | 548288 (99.7%)      | 548288 (99.7%)   | 548288 (99.7%)   |
 |                     | shift                                              |                     |                  |                  |
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -1328,7 +1328,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   2 | 1, 2              | 548291 (99.7%)      | 548291 (99.7%)   | 548291 (99.7%)   |
+|                   2 | 1, 2              | 548288 (99.7%)      | 548288 (99.7%)   | 548288 (99.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1336,13 +1336,13 @@ Option Apply Report for - Upgrade15:'HVAC Demand Flexibility - On-peak Load Shed
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-or => 548291 (99.7%)
-  not => 492796 (89.6%)
-    HVAC Cooling Type|None => 57204 (10.4%)
-  not => 545936 (99.3%)
-    HVAC Heating Type|None => 4064 (0.7%)
+or => 548288 (99.7%)
+  not => 492785 (89.6%)
+    HVAC Cooling Type|None => 57215 (10.4%)
+  not => 545937 (99.3%)
+    HVAC Heating Type|None => 4063 (0.7%)
 -----------------------------------------
-Overall applied to => 548291 (99.7%).
+Overall applied to => 548288 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1350,23 +1350,23 @@ Option Apply Report for - Upgrade15:'HVAC Demand Flexibility - On-peak Load Shed
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-or => 548291 (99.7%)
-  not => 492796 (89.6%)
-    HVAC Cooling Type|None => 57204 (10.4%)
-  not => 545936 (99.3%)
-    HVAC Heating Type|None => 4064 (0.7%)
+or => 548288 (99.7%)
+  not => 492785 (89.6%)
+    HVAC Cooling Type|None => 57215 (10.4%)
+  not => 545937 (99.3%)
+    HVAC Heating Type|None => 4063 (0.7%)
 -----------------------------------------
-Overall applied to => 548291 (99.7%).
+Overall applied to => 548288 (99.7%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 548291 (99.7%)
-Any of the options (or-ing) were applied to: 548291 (99.7%)
+All of the options (and-ing) were applied to: 548288 (99.7%)
+Any of the options (or-ing) were applied to: 548288 (99.7%)
 --------------------------------------------------------------------------------
 Report of how the 2 options were applied to the buildings.
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================================================+=====================+==================+==================+
-|                   2 | demand flexibility hvac, demand flexibility random | 548291 (99.7%)      | 548291 (99.7%)   | 548291 (99.7%)   |
+|                   2 | demand flexibility hvac, demand flexibility random | 548288 (99.7%)      | 548288 (99.7%)   | 548288 (99.7%)   |
 |                     | shift                                              |                     |                  |                  |
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -1374,7 +1374,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   2 | 1, 2              | 548291 (99.7%)      | 548291 (99.7%)   | 548291 (99.7%)   |
+|                   2 | 1, 2              | 548288 (99.7%)      | 548288 (99.7%)   | 548288 (99.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1382,13 +1382,13 @@ Option Apply Report for - Upgrade16:'HVAC Demand Flexibility - Pre-peak Load Shi
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-or => 548291 (99.7%)
-  not => 492796 (89.6%)
-    HVAC Cooling Type|None => 57204 (10.4%)
-  not => 545936 (99.3%)
-    HVAC Heating Type|None => 4064 (0.7%)
+or => 548288 (99.7%)
+  not => 492785 (89.6%)
+    HVAC Cooling Type|None => 57215 (10.4%)
+  not => 545937 (99.3%)
+    HVAC Heating Type|None => 4063 (0.7%)
 -----------------------------------------
-Overall applied to => 548291 (99.7%).
+Overall applied to => 548288 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1396,23 +1396,23 @@ Option Apply Report for - Upgrade16:'HVAC Demand Flexibility - Pre-peak Load Shi
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-or => 548291 (99.7%)
-  not => 492796 (89.6%)
-    HVAC Cooling Type|None => 57204 (10.4%)
-  not => 545936 (99.3%)
-    HVAC Heating Type|None => 4064 (0.7%)
+or => 548288 (99.7%)
+  not => 492785 (89.6%)
+    HVAC Cooling Type|None => 57215 (10.4%)
+  not => 545937 (99.3%)
+    HVAC Heating Type|None => 4063 (0.7%)
 -----------------------------------------
-Overall applied to => 548291 (99.7%).
+Overall applied to => 548288 (99.7%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 548291 (99.7%)
-Any of the options (or-ing) were applied to: 548291 (99.7%)
+All of the options (and-ing) were applied to: 548288 (99.7%)
+Any of the options (or-ing) were applied to: 548288 (99.7%)
 --------------------------------------------------------------------------------
 Report of how the 2 options were applied to the buildings.
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================================================+=====================+==================+==================+
-|                   2 | demand flexibility hvac, demand flexibility random | 548291 (99.7%)      | 548291 (99.7%)   | 548291 (99.7%)   |
+|                   2 | demand flexibility hvac, demand flexibility random | 548288 (99.7%)      | 548288 (99.7%)   | 548288 (99.7%)   |
 |                     | shift                                              |                     |                  |                  |
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -1420,7 +1420,7 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   2 | 1, 2              | 548291 (99.7%)      | 548291 (99.7%)   | 548291 (99.7%)   |
+|                   2 | 1, 2              | 548288 (99.7%)      | 548288 (99.7%)   | 548288 (99.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1428,13 +1428,13 @@ Option Apply Report for - Upgrade17:'HVAC Demand Flexibility - Pre-peak Load Shi
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-or => 548291 (99.7%)
-  not => 492796 (89.6%)
-    HVAC Cooling Type|None => 57204 (10.4%)
-  not => 545936 (99.3%)
-    HVAC Heating Type|None => 4064 (0.7%)
+or => 548288 (99.7%)
+  not => 492785 (89.6%)
+    HVAC Cooling Type|None => 57215 (10.4%)
+  not => 545937 (99.3%)
+    HVAC Heating Type|None => 4063 (0.7%)
 -----------------------------------------
-Overall applied to => 548291 (99.7%).
+Overall applied to => 548288 (99.7%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1442,23 +1442,23 @@ Option Apply Report for - Upgrade17:'HVAC Demand Flexibility - Pre-peak Load Shi
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-or => 548291 (99.7%)
-  not => 492796 (89.6%)
-    HVAC Cooling Type|None => 57204 (10.4%)
-  not => 545936 (99.3%)
-    HVAC Heating Type|None => 4064 (0.7%)
+or => 548288 (99.7%)
+  not => 492785 (89.6%)
+    HVAC Cooling Type|None => 57215 (10.4%)
+  not => 545937 (99.3%)
+    HVAC Heating Type|None => 4063 (0.7%)
 -----------------------------------------
-Overall applied to => 548291 (99.7%).
+Overall applied to => 548288 (99.7%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 548291 (99.7%)
-Any of the options (or-ing) were applied to: 548291 (99.7%)
+All of the options (and-ing) were applied to: 548288 (99.7%)
+Any of the options (or-ing) were applied to: 548288 (99.7%)
 --------------------------------------------------------------------------------
 Report of how the 2 options were applied to the buildings.
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================================================+=====================+==================+==================+
-|                   2 | demand flexibility hvac, demand flexibility random | 548291 (99.7%)      | 548291 (99.7%)   | 548291 (99.7%)   |
+|                   2 | demand flexibility hvac, demand flexibility random | 548288 (99.7%)      | 548288 (99.7%)   | 548288 (99.7%)   |
 |                     | shift                                              |                     |                  |                  |
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -1466,6 +1466,6 @@ Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   2 | 1, 2              | 548291 (99.7%)      | 548291 (99.7%)   | 548291 (99.7%)   |
+|                   2 | 1, 2              | 548288 (99.7%)      | 548288 (99.7%)   | 548288 (99.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
