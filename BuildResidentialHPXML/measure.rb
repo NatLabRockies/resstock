@@ -1242,14 +1242,6 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
     args[:geometry_foundation_type_rim_joist_height] = args[:geometry_foundation_type_rim_joist_height].to_f / 12.0
 
-    if args[:geometry_foundation_type_type] == HPXML::FoundationTypeSlab
-      args[:geometry_foundation_type_height] = 0.0
-      args[:geometry_foundation_type_height_above_grade] = 0.0
-      args[:geometry_foundation_type_rim_joist_height] = 0.0
-    elsif (args[:geometry_foundation_type_type] == HPXML::FoundationTypeAmbient) || args[:geometry_foundation_type_type].start_with?(HPXML::FoundationTypeBellyAndWing)
-      args[:geometry_foundation_type_rim_joist_height] = 0.0
-    end
-
     if model.getSpaces.size > 0
       runner.registerError('Starting model is not empty.')
       return false
@@ -1677,8 +1669,10 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
 
       if hpxml_bldg.roofs[-1].is_thermal_boundary
         hpxml_bldg.roofs[-1].insulation_assembly_r_value = args[:enclosure_roof_conditioned_assembly_r_value]
-      else
+      elsif hpxml_bldg.roofs[-1].interior_adjacent_to != HPXML::LocationGarage
         hpxml_bldg.roofs[-1].insulation_assembly_r_value = args[:enclosure_roof_unconditioned_assembly_r_value]
+      else
+        hpxml_bldg.roofs[-1].insulation_assembly_r_value = 2.3 # Uninsulated
       end
 
       next unless [HPXML::RadiantBarrierLocationAtticRoofOnly, HPXML::RadiantBarrierLocationAtticRoofAndGableWalls].include?(args[:enclosure_radiant_barrier_location].to_s)
