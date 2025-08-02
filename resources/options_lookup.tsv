@@ -9351,11 +9351,11 @@ Geometry Building Type Height	Mobile Home
 Geometry Building Type Height	Multi-Family with 2 - 4 Units
 Geometry Building Type Height	Single-Family Attached
 Geometry Building Type Height	Single-Family Detached
-Geometry Building Type RECS	Mobile Home	ResStockArguments	geometry_facility_type=manufactured home	geometry_average_ceiling_height=8.0	geometry_unit_aspect_ratio=1.8
-Geometry Building Type RECS	Multi-Family with 2 - 4 Units	ResStockArguments	geometry_facility_type=apartment unit	geometry_average_ceiling_height=8.0	geometry_unit_aspect_ratio=0.5556
-Geometry Building Type RECS	Multi-Family with 5+ Units	ResStockArguments	geometry_facility_type=apartment unit	geometry_average_ceiling_height=8.0	geometry_unit_aspect_ratio=0.5556
-Geometry Building Type RECS	Single-Family Attached	ResStockArguments	geometry_facility_type=single-family attached	geometry_average_ceiling_height=8.0	geometry_unit_aspect_ratio=0.5556
-Geometry Building Type RECS	Single-Family Detached	ResStockArguments	geometry_facility_type=single-family detached	geometry_average_ceiling_height=8.0	geometry_unit_aspect_ratio=1.8
+Geometry Building Type RECS	Mobile Home	ResStockArguments	geometry_facility_type=manufactured home	geometry_ceiling_height=8.0 ft	geometry_unit_aspect_ratio=1.8
+Geometry Building Type RECS	Multi-Family with 2 - 4 Units	ResStockArguments	geometry_facility_type=apartment unit	geometry_ceiling_height=8.0 ft	geometry_unit_aspect_ratio=0.5556
+Geometry Building Type RECS	Multi-Family with 5+ Units	ResStockArguments	geometry_facility_type=apartment unit	geometry_ceiling_height=8.0 ft	geometry_unit_aspect_ratio=0.5556
+Geometry Building Type RECS	Single-Family Attached	ResStockArguments	geometry_facility_type=single-family attached	geometry_ceiling_height=8.0 ft	geometry_unit_aspect_ratio=0.5556
+Geometry Building Type RECS	Single-Family Detached	ResStockArguments	geometry_facility_type=single-family detached	geometry_ceiling_height=8.0 ft	geometry_unit_aspect_ratio=1.8
 Geometry Floor Area	0-499	ResStockArguments	geometry_unit_cfa_bin=0-499	geometry_unit_cfa=auto
 Geometry Floor Area	500-749	ResStockArguments	geometry_unit_cfa_bin=500-749	geometry_unit_cfa=auto
 Geometry Floor Area	750-999	ResStockArguments	geometry_unit_cfa_bin=750-999	geometry_unit_cfa=auto
@@ -9676,25 +9676,25 @@ HVAC Has Shared System	Void
 HVAC Has Zonal Electric Heating	No
 HVAC Has Zonal Electric Heating	Yes
 HVAC Heating Autosizing Factor	None
-HVAC Heating Efficiency	None	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	ASHP, SEER 10, 6.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 10, 6.2 HSPF	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	ASHP, SEER 13, 7.7 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 13, 7.7 HSPF	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	ASHP, SEER 15, 8.5 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 15, 8.5 HSPF	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Electric Baseboard, 100% Efficiency	ResStockArguments	hvac_heating_system=Electric Resistance	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Electric Boiler, 100% AFUE	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Electric Furnace, 100% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Electric Wall Furnace, 100% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Boiler, 76% AFUE	ResStockArguments	hvac_heating_system=Boiler, 76% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Boiler, 80% AFUE	ResStockArguments	hvac_heating_system=Boiler, 80% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Boiler, 90% AFUE	ResStockArguments	hvac_heating_system=Boiler, 90% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Furnace, 60% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 60% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Furnace, 76% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 76% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Furnace, 80% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 80% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Furnace, 92.5% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 92.5% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 60% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 60% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 68% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 68% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	MSHP, SEER 14.5, 8.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 14.5, 8.2 HSPF	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	MSHP, SEER 29.3, 14 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 29.3, 14 HSPF	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	None	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	ASHP, SEER 10, 6.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 10, 6.2 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	ASHP, SEER 13, 7.7 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 13, 7.7 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	ASHP, SEER 15, 8.5 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 15, 8.5 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Electric Baseboard, 100% Efficiency	ResStockArguments	hvac_heating_system=Electric Resistance	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Electric Boiler, 100% AFUE	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Electric Furnace, 100% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Electric Wall Furnace, 100% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Fuel Boiler, 76% AFUE	ResStockArguments	hvac_heating_system=Boiler, 76% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Fuel Boiler, 80% AFUE	ResStockArguments	hvac_heating_system=Boiler, 80% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Fuel Boiler, 90% AFUE	ResStockArguments	hvac_heating_system=Boiler, 90% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Fuel Furnace, 60% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 60% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Fuel Furnace, 76% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 76% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Fuel Furnace, 80% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 80% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Fuel Furnace, 92.5% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 92.5% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 60% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 60% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 68% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 68% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	MSHP, SEER 14.5, 8.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 14.5, 8.2 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	MSHP, SEER 29.3, 14 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 29.3, 14 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
 HVAC Heating Efficiency	Shared Heating
 HVAC Heating Efficiency	Void
 HVAC Heating Type	Ducted Heat Pump
@@ -9745,13 +9745,13 @@ HVAC Secondary Heating Efficiency	Fuel Wall/Floor Furnace, 60% AFUE	ResStockArgu
 HVAC Secondary Heating Efficiency	Fuel Wall/Floor Furnace, 68% AFUE	ResStockArguments	hvac_heating_system_2=Wall Furnace, 68% AFUE	hvac_heating_system_2_capacity=Autosize
 HVAC Secondary Heating Efficiency	Shared Heating	ResStockArguments	hvac_heating_system_2=None	hvac_heating_system_2_capacity=Autosize
 HVAC Secondary Heating Efficiency	Void
-HVAC Secondary Heating Fuel	Electricity	ResStockArguments	hvac_heating_system_2_fuel=electricity
-HVAC Secondary Heating Fuel	Fuel Oil	ResStockArguments	hvac_heating_system_2_fuel=fuel oil
-HVAC Secondary Heating Fuel	Natural Gas	ResStockArguments	hvac_heating_system_2_fuel=natural gas
-HVAC Secondary Heating Fuel	None	ResStockArguments	hvac_heating_system_2_fuel=electricity
-HVAC Secondary Heating Fuel	Other Fuel	ResStockArguments	hvac_heating_system_2_fuel=wood
-HVAC Secondary Heating Fuel	Propane	ResStockArguments	hvac_heating_system_2_fuel=propane
-HVAC Secondary Heating Fuel	Wood	ResStockArguments	hvac_heating_system_2_fuel=wood
+HVAC Secondary Heating Fuel	Electricity	ResStockArguments	hvac_heating_system_2_fuel=Electricity
+HVAC Secondary Heating Fuel	Fuel Oil	ResStockArguments	hvac_heating_system_2_fuel=Fuel Oil
+HVAC Secondary Heating Fuel	Natural Gas	ResStockArguments	hvac_heating_system_2_fuel=Natural Gas
+HVAC Secondary Heating Fuel	None	ResStockArguments	hvac_heating_system_2_fuel=Electricity
+HVAC Secondary Heating Fuel	Other Fuel	ResStockArguments	hvac_heating_system_2_fuel=Wood Cord
+HVAC Secondary Heating Fuel	Propane	ResStockArguments	hvac_heating_system_2_fuel=Propane
+HVAC Secondary Heating Fuel	Wood	ResStockArguments	hvac_heating_system_2_fuel=Wood Cord
 HVAC Secondary Heating Partial Space Conditioning	None	ResStockArguments	hvac_heating_system_2_heating_load_served=0%
 HVAC Secondary Heating Partial Space Conditioning	0%	ResStockArguments	hvac_heating_system_2_heating_load_served=0%
 HVAC Secondary Heating Partial Space Conditioning	10%	ResStockArguments	hvac_heating_system_2_heating_load_served=10%
@@ -9763,10 +9763,10 @@ HVAC Secondary Heating Partial Space Conditioning	Void
 HVAC Secondary Heating Type	Ducted Heating
 HVAC Secondary Heating Type	Non-Ducted Heating
 HVAC Secondary Heating Type	None
-HVAC Shared Efficiencies	Boiler Baseboards Heating Only, Electricity	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Shared Efficiencies	Boiler Baseboards Heating Only, Fuel	ResStockArguments	hvac_heating_system=Boiler, 78% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Electricity	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Fuel	ResStockArguments	hvac_heating_system=Boiler, 78% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Shared Efficiencies	Boiler Baseboards Heating Only, Electricity	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Shared Efficiencies	Boiler Baseboards Heating Only, Fuel	ResStockArguments	hvac_heating_system=Boiler, 78% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Electricity	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Fuel	ResStockArguments	hvac_heating_system=Boiler, 78% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
 HVAC Shared Efficiencies	Fan Coil Cooling Only	ResStockArguments	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize
 HVAC Shared Efficiencies	None
 HVAC Shared Efficiencies	Void
@@ -9774,13 +9774,13 @@ HVAC System Is Scaled	No
 HVAC System Is Scaled	Yes
 Has PV	No
 Has PV	Yes
-Heating Fuel	Electricity	ResStockArguments	hvac_heating_system_fuel=electricity
-Heating Fuel	Fuel Oil	ResStockArguments	hvac_heating_system_fuel=fuel oil
-Heating Fuel	Natural Gas	ResStockArguments	hvac_heating_system_fuel=natural gas
-Heating Fuel	None	ResStockArguments	hvac_heating_system_fuel=natural gas
-Heating Fuel	Other Fuel	ResStockArguments	hvac_heating_system_fuel=wood
-Heating Fuel	Propane	ResStockArguments	hvac_heating_system_fuel=propane
-Heating Fuel	Wood	ResStockArguments	hvac_heating_system_fuel=wood
+Heating Fuel	Electricity	ResStockArguments	hvac_heating_system_fuel=Electricity
+Heating Fuel	Fuel Oil	ResStockArguments	hvac_heating_system_fuel=Fuel Oil
+Heating Fuel	Natural Gas	ResStockArguments	hvac_heating_system_fuel=Natural Gas
+Heating Fuel	None	ResStockArguments	hvac_heating_system_fuel=Natural Gas
+Heating Fuel	Other Fuel	ResStockArguments	hvac_heating_system_fuel=Wood Cord
+Heating Fuel	Propane	ResStockArguments	hvac_heating_system_fuel=Propane
+Heating Fuel	Wood	ResStockArguments	hvac_heating_system_fuel=Wood Cord
 Heating Setpoint	55F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=55	hvac_control_heating_weekend_setpoint_temp=55	use_auto_heating_season=false	hvac_control_heating_season_period=auto
 Heating Setpoint	60F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=60	hvac_control_heating_weekend_setpoint_temp=60	use_auto_heating_season=false	hvac_control_heating_season_period=auto
 Heating Setpoint	62F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=62	hvac_control_heating_weekend_setpoint_temp=62	use_auto_heating_season=false	hvac_control_heating_season_period=auto
@@ -9852,20 +9852,20 @@ Heating Unavailable Days	Year round	ResStockArguments	schedules_space_heating_un
 Holiday Lighting	No Exterior Use
 Hot Water Distribution	Uninsulated	ResStockArguments	dhw_distribution=Uninsulated, Standard	dhw_drain_water_heat_recovery=None
 Hot Water Fixtures	50% Usage	ResStockArguments	dhw_fixtures=Standard, 50% Usage
-Hot Water Fixtures	60% Usage	ResStockArguments	dhw_fixtures=Standard, 60% Usage
-Hot Water Fixtures	70% Usage	ResStockArguments	dhw_fixtures=Standard, 70% Usage
-Hot Water Fixtures	80% Usage	ResStockArguments	dhw_fixtures=Standard, 80% Usage
-Hot Water Fixtures	90% Usage	ResStockArguments	dhw_fixtures=Standard, 90% Usage
+Hot Water Fixtures	60% Usage	ResStockArguments	dhw_fixtures=Standard, 50% Usage
+Hot Water Fixtures	70% Usage	ResStockArguments	dhw_fixtures=Standard, 75% Usage
+Hot Water Fixtures	80% Usage	ResStockArguments	dhw_fixtures=Standard, 75% Usage
+Hot Water Fixtures	90% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
 Hot Water Fixtures	100% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
-Hot Water Fixtures	110% Usage	ResStockArguments	dhw_fixtures=Standard, 110% Usage
-Hot Water Fixtures	120% Usage	ResStockArguments	dhw_fixtures=Standard, 120% Usage
-Hot Water Fixtures	130% Usage	ResStockArguments	dhw_fixtures=Standard, 130% Usage
-Hot Water Fixtures	140% Usage	ResStockArguments	dhw_fixtures=Standard, 140% Usage
+Hot Water Fixtures	110% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
+Hot Water Fixtures	120% Usage	ResStockArguments	dhw_fixtures=Standard, 125% Usage
+Hot Water Fixtures	130% Usage	ResStockArguments	dhw_fixtures=Standard, 125% Usage
+Hot Water Fixtures	140% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
 Hot Water Fixtures	150% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
-Hot Water Fixtures	160% Usage	ResStockArguments	dhw_fixtures=Standard, 160% Usage
-Hot Water Fixtures	170% Usage	ResStockArguments	dhw_fixtures=Standard, 170% Usage
-Hot Water Fixtures	180% Usage	ResStockArguments	dhw_fixtures=Standard, 180% Usage
-Hot Water Fixtures	190% Usage	ResStockArguments	dhw_fixtures=Standard, 190% Usage
+Hot Water Fixtures	160% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
+Hot Water Fixtures	170% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
+Hot Water Fixtures	180% Usage	ResStockArguments	dhw_fixtures=Standard, 200% Usage
+Hot Water Fixtures	190% Usage	ResStockArguments	dhw_fixtures=Standard, 200% Usage
 Hot Water Fixtures	200% Usage	ResStockArguments	dhw_fixtures=Standard, 200% Usage
 Household Has Tribal Persons	No
 Household Has Tribal Persons	Not Available
@@ -9933,15 +9933,15 @@ Infiltration Reduction	15%	ResStockArgumentsPostHPXML	air_leakage_percent_reduct
 Infiltration Reduction	20%	ResStockArgumentsPostHPXML	air_leakage_percent_reduction=20
 Infiltration Reduction	25%	ResStockArgumentsPostHPXML	air_leakage_percent_reduction=25
 Infiltration Reduction	30%	ResStockArgumentsPostHPXML	air_leakage_percent_reduction=30
-Insulation Ceiling	None	ResStockArguments	enclosure_ceiling=Uninsulated
-Insulation Ceiling	Uninsulated	ResStockArguments	enclosure_ceiling=Uninsulated
-Insulation Ceiling	R-7	ResStockArguments	enclosure_ceiling=R-7
-Insulation Ceiling	R-13	ResStockArguments	enclosure_ceiling=R-13
-Insulation Ceiling	R-19	ResStockArguments	enclosure_ceiling=R-19
-Insulation Ceiling	R-30	ResStockArguments	enclosure_ceiling=R-30
-Insulation Ceiling	R-38	ResStockArguments	enclosure_ceiling=R-38
-Insulation Ceiling	R-49	ResStockArguments	enclosure_ceiling=R-49
-Insulation Ceiling	R-60	ResStockArguments	enclosure_ceiling=R-60
+Insulation Ceiling	None	ResStockArguments	enclosure_ceiling=Uninsulated	ceiling_insulation_r=0
+Insulation Ceiling	Uninsulated	ResStockArguments	enclosure_ceiling=Uninsulated	ceiling_insulation_r=0
+Insulation Ceiling	R-7	ResStockArguments	enclosure_ceiling=R-7	ceiling_insulation_r=7
+Insulation Ceiling	R-13	ResStockArguments	enclosure_ceiling=R-13	ceiling_insulation_r=13
+Insulation Ceiling	R-19	ResStockArguments	enclosure_ceiling=R-19	ceiling_insulation_r=19
+Insulation Ceiling	R-30	ResStockArguments	enclosure_ceiling=R-30	ceiling_insulation_r=30
+Insulation Ceiling	R-38	ResStockArguments	enclosure_ceiling=R-38	ceiling_insulation_r=38
+Insulation Ceiling	R-49	ResStockArguments	enclosure_ceiling=R-49	ceiling_insulation_r=49
+Insulation Ceiling	R-60	ResStockArguments	enclosure_ceiling=R-60	ceiling_insulation_r=60
 Insulation Floor	None	ResStockArguments	enclosure_floor_over_foundation=Wood Frame, Uninsulated	enclosure_floor_over_garage=Wood Frame, Uninsulated
 Insulation Floor	Uninsulated	ResStockArguments	enclosure_floor_over_foundation=Wood Frame, Uninsulated	enclosure_floor_over_garage=Wood Frame, Uninsulated
 Insulation Floor	Ceiling R-13	ResStockArguments	enclosure_floor_over_foundation=Wood Frame, R-13	enclosure_floor_over_garage=Wood Frame, R-13
@@ -9955,9 +9955,9 @@ Insulation Foundation Wall	Wall R-10, Exterior	ResStockArguments	enclosure_found
 Insulation Foundation Wall	Wall R-15, Exterior	ResStockArguments	enclosure_foundation_wall=Solid Concrete, Whole Wall, R-15
 Insulation Rim Joist	None	ResStockArguments	enclosure_rim_joist=Uninsulated
 Insulation Rim Joist	Uninsulated	ResStockArguments	enclosure_rim_joist=Uninsulated
-Insulation Rim Joist	R-5, Exterior	ResStockArguments	enclosure_rim_joist=R-5
-Insulation Rim Joist	R-10, Exterior	ResStockArguments	enclosure_rim_joist=R-10
-Insulation Rim Joist	R-15, Exterior	ResStockArguments	enclosure_rim_joist=R-15
+Insulation Rim Joist	R-5, Exterior	ResStockArguments	enclosure_rim_joist=Uninsulated
+Insulation Rim Joist	R-10, Exterior	ResStockArguments	enclosure_rim_joist=Uninsulated
+Insulation Rim Joist	R-15, Exterior	ResStockArguments	enclosure_rim_joist=Uninsulated
 Insulation Roof	Unfinished, Uninsulated	ResStockArguments	enclosure_roof=Uninsulated
 Insulation Roof	Finished, Uninsulated	ResStockArguments	enclosure_roof=Uninsulated
 Insulation Roof	Finished, R-7	ResStockArguments	enclosure_roof=R-7
@@ -13572,9 +13572,9 @@ Refrigerator	EF 17.6	ResStockArguments	appliance_refrigerator=434 kWh/yr, 100% U
 Refrigerator	EF 19.9	ResStockArguments	appliance_refrigerator=384 kWh/yr, 100% Usage
 Refrigerator	EF 21.9	ResStockArguments	appliance_refrigerator=348 kWh/yr, 100% Usage
 Refrigerator	Void
-Refrigerator Usage Level	95% Usage	ResStockArgumentsPostHPXML	refrigerator_usage_multiplier=95%
-Refrigerator Usage Level	100% Usage	ResStockArgumentsPostHPXML	refrigerator_usage_multiplier=100%
-Refrigerator Usage Level	105% Usage	ResStockArgumentsPostHPXML	refrigerator_usage_multiplier=105%
+Refrigerator Usage Level	95% Usage	ResStockArgumentsPostHPXML	refrigerator_usage_multiplier=0.95
+Refrigerator Usage Level	100% Usage	ResStockArgumentsPostHPXML	refrigerator_usage_multiplier=1.0
+Refrigerator Usage Level	105% Usage	ResStockArgumentsPostHPXML	refrigerator_usage_multiplier=1.05
 Roof Material	Asphalt Shingles, Medium	ResStockArguments	enclosure_roof_material=Asphalt/Fiberglass Shingles, Medium
 Roof Material	Composition Shingles	ResStockArguments	enclosure_roof_material=Asphalt/Fiberglass Shingles, Medium
 Roof Material	Metal, Dark	ResStockArguments	enclosure_roof_material=Metal, Dark
@@ -13666,30 +13666,30 @@ Vintage ACS	1960-79
 Vintage ACS	1980-99
 Vintage ACS	2000-09
 Vintage ACS	2010s
-Water Heater Efficiency	Electric Standard	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF=0.92	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Electric Premium	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF=0.94	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Electric Tankless	ResStockArguments	dhw_water_heater=lectricity, Tankless, UEF=0.94	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Electric Heat Pump, 50 gal, 3.45 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF=3.50	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Electric Heat Pump, 66 gal, 3.35 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF=3.50	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Electric Heat Pump, 80 gal, 3.45 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF=3.50	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Natural Gas Standard	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF=0.60	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Natural Gas Premium	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF=0.70	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Natural Gas Tankless	ResStockArguments	dhw_water_heater=Natural Gas, Tankless, UEF=0.82	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Propane Standard	ResStockArguments	dhw_water_heater=Propane, Tank, UEF=0.60	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Propane Premium	ResStockArguments	dhw_water_heater=Propane, Tank, UEF=0.67	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Propane Tankless	ResStockArguments	dhw_water_heater=Propane, Tankless, UEF=0.82	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Fuel Oil Standard	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF=0.64	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Fuel Oil Premium	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF=0.67	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	FIXME Fuel Oil Indirect	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF=0.61	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Other Fuel	ResStockArguments	dhw_water_heater=None	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Wood	ResStockArguments	dhw_water_heater=None	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=None	dhw_solar_thermal_direction=None
-Water Heater Efficiency	Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF=0.92	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, East
-Water Heater Efficiency	Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF=0.92	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, North
-Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF=0.92	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF=0.64	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF=0.60	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup	ResStockArguments	dhw_water_heater=Propane, Tank, UEF=0.60	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF=0.92	dhw_water_heater_jacket=None	dhw_water_heater_uses_desuperheater=false	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, West
+Water Heater Efficiency	Electric Standard	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Electric Premium	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.94	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Electric Tankless	ResStockArguments	dhw_water_heater=Electricity, Tankless, UEF 0.94	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Electric Heat Pump, 50 gal, 3.45 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF 3.50	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Electric Heat Pump, 66 gal, 3.35 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF 3.50	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Electric Heat Pump, 80 gal, 3.45 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF 3.50	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Natural Gas Standard	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF 0.60	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Natural Gas Premium	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF 0.70	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Natural Gas Tankless	ResStockArguments	dhw_water_heater=Natural Gas, Tankless, UEF 0.82	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Propane Standard	ResStockArguments	dhw_water_heater=Propane, Tank, UEF 0.60	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Propane Premium	ResStockArguments	dhw_water_heater=Propane, Tank, UEF 0.67	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Propane Tankless	ResStockArguments	dhw_water_heater=Propane, Tankless, UEF 0.82	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Fuel Oil Standard	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF 0.64	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Fuel Oil Premium	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF 0.67	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	FIXME Fuel Oil Indirect	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF 0.61	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Other Fuel	ResStockArguments	dhw_water_heater=None	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Wood	ResStockArguments	dhw_water_heater=None	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, East
+Water Heater Efficiency	Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, North
+Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF 0.64	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF 0.60	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup	ResStockArguments	dhw_water_heater=Propane, Tank, UEF 0.60	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, West
 Water Heater Fuel	Electricity
 Water Heater Fuel	Fuel Oil
 Water Heater Fuel	Natural Gas

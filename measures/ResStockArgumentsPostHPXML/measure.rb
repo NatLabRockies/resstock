@@ -7,6 +7,7 @@
 require_relative 'resources/hvac_flexibility/detailed_schedule_generator'
 require_relative 'resources/hvac_flexibility/setpoint_modifier'
 require_relative 'resources/ev_flexibility/ev_schedule_modifier'
+require_relative 'resources/electrical_panel'
 
 # OpenStudio Measure class to process ResStock arguments after HPXML generation
 class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
@@ -32,6 +33,17 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('hpxml_path', false)
     arg.setDisplayName('HPXML File Path')
     arg.setDescription('Absolute/relative path of the HPXML file.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('whole_sfa_or_mf_building_sim', false)
+    arg.setDisplayName('Whole SFA/MF Building Simulation?')
+    arg.setDescription('If the HPXML file represents a single family-attached/multifamily building with multiple dwelling units defined, specifies whether to run the HPXML file as a single whole building model.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('simulation_control_run_period_calendar_year', false)
+    arg.setDisplayName('Simulation Control: Run Period Calendar Year')
+    arg.setUnits('year')
+    arg.setDescription('This numeric field should contain the calendar year that determines the start day of week. If you are running simulations using AMY weather files, the value entered for calendar year will not be used; it will be overridden by the actual year found in the AMY weather file.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('hvac_flex_peak_offset', false)
@@ -160,6 +172,205 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setUnits('Frac')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('electric_panel_breaker_spaces_headroom', false)
+    arg.setDisplayName('Electric Panel: Breaker Spaces Headroom')
+    arg.setDescription('The unoccupied number of breaker spaces on the electric panel.')
+    arg.setUnits('#')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('electric_panel_breaker_spaces_rated_total', false)
+    arg.setDisplayName('Electric Panel: Breaker Spaces Rated Total')
+    arg.setDescription('The rated total number of breaker spaces on the electric panel.')
+    arg.setUnits('#')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_heating_system_new_load', false)
+    arg.setDisplayName('Electric Panel: Heating System New Load')
+    arg.setDescription('Whether the heating system is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_cooling_system_new_load', false)
+    arg.setDisplayName('Electric Panel: Cooling System New Load')
+    arg.setDescription('Whether the cooling system is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_heat_pump_new_load', false)
+    arg.setDisplayName('Electric Panel: Heat Pump New Load')
+    arg.setDescription('Whether the heat pump is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_heating_system_2_new_load', false)
+    arg.setDisplayName('Electric Panel: Heating System 2 New Load')
+    arg.setDescription('Whether the second heating system is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_mech_vent_fan_new_load', false)
+    arg.setDisplayName('Electric Panel: Mechanical Ventilation New Load')
+    arg.setDescription('Whether the mechanical ventilation is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_whole_house_fan_new_load', false)
+    arg.setDisplayName('Electric Panel: Whole House Fan New Load')
+    arg.setDescription('Whether the whole house fan is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_kitchen_fans_new_load', false)
+    arg.setDisplayName('Electric Panel: Kitchen Fans New Load')
+    arg.setDescription('Whether the kitchen fans is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_bathroom_fans_new_load', false)
+    arg.setDisplayName('Electric Panel: Bathroom Fans New Load')
+    arg.setDescription('Whether the bathroom fans is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_water_heater_new_load', false)
+    arg.setDisplayName('Electric Panel: Electric Water Heater New Load')
+    arg.setDescription('Whether the water heater is a new panel load addition to an existing service panel. Only applies to electric water heater.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_clothes_dryer_new_load', false)
+    arg.setDisplayName('Electric Panel: Electric Clothes Dryer New Load')
+    arg.setDescription('Whether the clothes dryer is a new panel load addition to an existing service panel. Only applies to electric clothes dryer.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_dishwasher_new_load', false)
+    arg.setDisplayName('Electric Panel: Dishwasher New Load')
+    arg.setDescription('Whether the dishwasher is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_cooking_range_new_load', false)
+    arg.setDisplayName('Electric Panel: Electric Cooking Range/Oven New Load')
+    arg.setDescription('Whether the cooking range is a new panel load addition to an existing service panel. Only applies to electric cooking range/oven.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_misc_plug_loads_well_pump_new_load', false)
+    arg.setDisplayName('Electric Panel: Misc Plug Loads Well Pump New Load')
+    arg.setDescription('Whether the well pump is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_misc_plug_loads_vehicle_new_load', false)
+    arg.setDisplayName('Electric Panel: Misc Plug Loads Vehicle New Load')
+    arg.setDescription('Whether the electric vehicle is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_pool_pump_new_load', false)
+    arg.setDisplayName('Electric Panel: Pool Pump New Load')
+    arg.setDescription('Whether the panel load pool pump is an addition.')
+    arg.setDescription('Whether the pool pump is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_pool_heater_new_load', false)
+    arg.setDisplayName('Electric Panel: Electric Pool Heater New Load')
+    arg.setDescription('Whether the pool heater is a new panel load addition to an existing service panel. Only applies to electric pool heater.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_permanent_spa_pump_new_load', false)
+    arg.setDisplayName('Electric Panel: Permanent Spa Pump New Load')
+    arg.setDescription('Whether the spa pump is a new panel load addition to an existing service panel.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_electric_permanent_spa_heater_new_load', false)
+    arg.setDisplayName('Electric Panel: Electric Permanent Spa Heater New Load')
+    arg.setDescription('Whether the spa heater is a new panel load addition to an existing service panel. Only applies to electric permanent spa heater.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('electric_panel_load_other_power_rating', false)
+    arg.setDisplayName('Electric Panel: Other Power Rating')
+    arg.setDescription('Specifies the panel load other power rating. This represents the total of all other electric loads that are fastened in place, permanently connected, or located on a specific circuit. For example, garbage disposal, built-in microwave.')
+    arg.setUnits('W')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('electric_panel_load_other_new_load', false)
+    arg.setDisplayName('Electric Panel: Other New Load')
+    arg.setDescription('Whether the other load is a new panel load addition to an existing service panel.')
+    args <<
+      arg = OpenStudio::Measure::OSArgument.makeStringArgument('emissions_scenario_names', false)
+    arg.setDisplayName('Emissions: Scenario Names')
+    arg.setDescription('Names of emissions scenarios. If multiple scenarios, use a comma-separated list. If not provided, no emissions scenarios are calculated.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('emissions_types', false)
+    arg.setDisplayName('Emissions: Types')
+    arg.setDescription('Types of emissions (e.g., CO2e, NOx, etc.). If multiple scenarios, use a comma-separated list.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('emissions_electricity_units', false)
+    arg.setDisplayName('Emissions: Electricity Units')
+    arg.setDescription('Electricity emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MWh and kg/MWh are allowed.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('emissions_electricity_filepaths', false)
+    arg.setDisplayName('Emissions: Electricity File Paths')
+    arg.setDescription('Electricity emissions factors values, specified as an absolute/relative path to a file with hourly factors. If multiple scenarios, use a comma-separated list.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('emissions_fossil_fuel_units', false)
+    arg.setDisplayName('Emissions: Fossil Fuel Units')
+    arg.setDescription('Fossil fuel emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MBtu and kg/MBtu are allowed.')
+    args << arg
+
+    resstock_fuels(include_electricity: false).each do |fuel|
+      arg = OpenStudio::Measure::OSArgument.makeStringArgument("emissions_#{OpenStudio::toUnderscoreCase(fuel)}_values", false)
+      arg.setDisplayName("Emissions: #{fuel.split(' ').map(&:capitalize).join(' ')} Values")
+      arg.setDescription("#{fuel.capitalize} emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.")
+      args << arg
+    end
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_scenario_names', false)
+    arg.setDisplayName('Utility Bills: Scenario Names')
+    arg.setDescription('Names of utility bill scenarios. If multiple scenarios, use a comma-separated list. If not provided, no utility bills scenarios are calculated.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_electricity_filepaths', false)
+    arg.setDisplayName('Utility Bills: Electricity File Paths')
+    arg.setDescription('Electricity tariff file specified as an absolute/relative path to a file with utility rate structure information. Tariff file must be formatted to OpenEI API version 7. If multiple scenarios, use a comma-separated list.')
+    args << arg
+
+    resstock_fuels(include_electricity: true).each do |fuel|
+      arg = OpenStudio::Measure::OSArgument.makeStringArgument("utility_bill_#{OpenStudio::toUnderscoreCase(fuel)}_fixed_charges", false)
+      arg.setDisplayName("Utility Bills: #{fuel.split(' ').map(&:capitalize).join(' ')} Fixed Charges")
+      arg.setDescription("#{fuel.capitalize} utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list.")
+      args << arg
+    end
+
+    resstock_fuels(include_electricity: true).each do |fuel|
+      arg = OpenStudio::Measure::OSArgument.makeStringArgument("utility_bill_#{OpenStudio::toUnderscoreCase(fuel)}_marginal_rates", false)
+      arg.setDisplayName("Utility Bills: #{fuel.split(' ').map(&:capitalize).join(' ')} Marginal Rates")
+      arg.setDescription("#{fuel.capitalize} utility bill marginal rates. If multiple scenarios, use a comma-separated list.")
+      args << arg
+    end
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_pv_compensation_types', false)
+    arg.setDisplayName('Utility Bills: PV Compensation Types')
+    arg.setDescription('Utility bill PV compensation types. If multiple scenarios, use a comma-separated list.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_pv_net_metering_annual_excess_sellback_rate_types', false)
+    arg.setDisplayName('Utility Bills: PV Net Metering Annual Excess Sellback Rate Types')
+    arg.setDescription("Utility bill PV net metering annual excess sellback rate types. Only applies if the PV compensation type is '#{HPXML::PVCompensationTypeNetMetering}'. If multiple scenarios, use a comma-separated list.")
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_pv_net_metering_annual_excess_sellback_rates', false)
+    arg.setDisplayName('Utility Bills: PV Net Metering Annual Excess Sellback Rates')
+    arg.setDescription("Utility bill PV net metering annual excess sellback rates. Only applies if the PV compensation type is '#{HPXML::PVCompensationTypeNetMetering}' and the PV annual excess sellback rate type is '#{HPXML::PVAnnualExcessSellbackRateTypeUserSpecified}'. If multiple scenarios, use a comma-separated list.")
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_pv_feed_in_tariff_rates', false)
+    arg.setDisplayName('Utility Bills: PV Feed-In Tariff Rates')
+    arg.setDescription("Utility bill PV annual full/gross feed-in tariff rates. Only applies if the PV compensation type is '#{HPXML::PVCompensationTypeFeedInTariff}'. If multiple scenarios, use a comma-separated list.")
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_pv_monthly_grid_connection_fee_units', false)
+    arg.setDisplayName('Utility Bills: PV Monthly Grid Connection Fee Units')
+    arg.setDescription('Utility bill PV monthly grid connection fee units. If multiple scenarios, use a comma-separated list.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('utility_bill_pv_monthly_grid_connection_fees', false)
+    arg.setDisplayName('Utility Bills: PV Monthly Grid Connection Fees')
+    arg.setDescription('Utility bill PV monthly grid connection fees. If multiple scenarios, use a comma-separated list.')
+    args << arg
+
     return args
   end
 
@@ -180,86 +391,191 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Load HPXML
     @hpxml = HPXML.new(hpxml_path: @hpxml_path)
+    epw_path = File.join(File.dirname(@hpxml_path), @hpxml.buildings[0].climate_and_risk_zones.weather_station_epw_filepath)
+    weather = WeatherFile.new(epw_path: epw_path, runner: nil)
 
-    # Usage Multipliers
-    @hpxml.plug_loads.each do |plug_load|
-      if plug_load.plug_load_type == HPXML::PlugLoadTypeTelevision
-        plug_load.usage_multiplier *= args[:misc_plug_loads_television_2_usage_multiplier]
-      elsif plug_load.plug_load_type == HPXML::PlugLoadTypeOther
-        plug_load.usage_multiplier *= args[:misc_plug_loads_other_2_usage_multiplier]
+    # Software info
+    @hpxml.header.software_program_used = 'ResStock'
+    @hpxml.header.software_program_version = Version::ResStock_Version
+
+    # Whole SFA/MF Building Simulation?
+    @hpxml.header.whole_sfa_or_mf_building_sim = args[:whole_sfa_or_mf_building_sim]
+
+    # Simulation controls
+    @hpxml.header.sim_calendar_year = args[:simulation_control_run_period_calendar_year]
+
+    # Emissions
+    @hpxml.header.emissions_scenarios.clear
+    if not args[:emissions_scenario_names].nil?
+      for i in 0..(args[:emissions_scenario_names].split(',').size - 1)
+        @hpxml.header.emissions_scenarios.add(
+          name: (args[:emissions_scenario_names].split(',').map(&:strip)[i] rescue nil),
+          emissions_type: (args[:emissions_types].split(',').map(&:strip)[i] rescue nil),
+          elec_units: (args[:emissions_electricity_units].split(',').map(&:strip)[i] rescue nil),
+          elec_schedule_filepath: (args[:emissions_electricity_filepaths].split(',').map(&:strip)[i] rescue nil),
+          natural_gas_units: (args[:emissions_fossil_fuel_units].split(',').map(&:strip)[i] rescue nil),
+          natural_gas_value: (Float(args[:emissions_natural_gas_values].split(',').map(&:strip)[i]) rescue nil),
+          propane_units: (args[:emissions_fossil_fuel_units].split(',').map(&:strip)[i] rescue nil),
+          propane_value: (Float(args[:emissions_natural_gas_values].split(',').map(&:strip)[i]) rescue nil),
+          fuel_oil_units: (args[:emissions_fossil_fuel_units].split(',').map(&:strip)[i] rescue nil),
+          fuel_oil_value: (Float(args[:emissions_natural_gas_values].split(',').map(&:strip)[i]) rescue nil),
+          wood_units: (args[:emissions_fossil_fuel_units].split(',').map(&:strip)[i] rescue nil),
+          wood_value: (Float(args[:emissions_natural_gas_values].split(',').map(&:strip)[i]) rescue nil)
+        )
       end
     end
-    @hpxml.refrigerators.each do |refrigerator|
-      if refrigerator.primary_indicator
-        refrigerator.usage_multiplier *= args[:refrigerator_usage_multiplier]
-      else
-        refrigerator.usage_multiplier *= args[:extra_refrigerator_usage_multiplier]
+
+    # Utility Bills
+    @hpxml.header.utility_bill_scenarios.clear
+    if not args[:utility_bill_scenario_names].nil?
+      for i in 0..(args[:utility_bill_scenario_names].split(',').size - 1)
+        pv_compensation_type = (args[:utility_bill_pv_compensation_types].split(',').map(&:strip)[i] rescue nil)
+        pv_net_metering_annual_excess_sellback_rate_type = (args[:utility_bill_pv_net_metering_annual_excess_sellback_rate_types].split(',').map(&:strip)[i] rescue nil)
+        pv_net_metering_annual_excess_sellback_rate = (Float(args[:utility_bill_pv_net_metering_annual_excess_sellback_rates].split(',').map(&:strip)[i]) rescue nil)
+        pv_feed_in_tariff_rate = (Float(args[:utility_bill_pv_feed_in_tariff_rates].split(',').map(&:strip)[i]) rescue nil)
+        pv_monthly_grid_connection_fee_unit = (args[:utility_bill_pv_monthly_grid_connection_fee_units].split(',').map(&:strip)[i] rescue nil)
+        pv_monthly_grid_connection_fee = (Float(args[:utility_bill_pv_monthly_grid_connection_fees].split(',').map(&:strip)[i]) rescue nil)
+
+        if pv_compensation_type == HPXML::PVCompensationTypeNetMetering
+          if pv_net_metering_annual_excess_sellback_rate_type != HPXML::PVAnnualExcessSellbackRateTypeUserSpecified
+            pv_net_metering_annual_excess_sellback_rate = nil
+          end
+          pv_feed_in_tariff_rate = nil
+        elsif pv_compensation_type == HPXML::PVCompensationTypeFeedInTariff
+          pv_net_metering_annual_excess_sellback_rate_type = nil
+          pv_net_metering_annual_excess_sellback_rate = nil
+        end
+
+        if pv_monthly_grid_connection_fee_unit == HPXML::UnitsDollarsPerkW
+          pv_monthly_grid_connection_fee_dollars_per_kw = pv_monthly_grid_connection_fee
+          pv_monthly_grid_connection_fee_dollars = nil
+        elsif pv_monthly_grid_connection_fee_unit == HPXML::UnitsDollars
+          pv_monthly_grid_connection_fee_dollars = pv_monthly_grid_connection_fee
+          pv_monthly_grid_connection_fee_dollars_per_kw = nil
+        end
+
+        @hpxml.header.utility_bill_scenarios.add(
+          name: args[:utility_bill_scenario_names].split(',').map(&:strip)[i],
+          elec_tariff_filepath: (args[:utility_bill_electricity_filepaths].split(',').map(&:strip)[i] rescue nil),
+          elec_fixed_charge: (Float(args[:utility_bill_electricity_fixed_charges].split(',').map(&:strip)[i]) rescue nil),
+          natural_gas_fixed_charge: (Float(args[:utility_bill_natural_gas_fixed_charges].split(',').map(&:strip)[i]) rescue nil),
+          propane_fixed_charge: (Float(args[:utility_bill_propane_fixed_charges].split(',').map(&:strip)[i]) rescue nil),
+          fuel_oil_fixed_charge: (Float(args[:utility_bill_fuel_oil_fixed_charges].split(',').map(&:strip)[i]) rescue nil),
+          wood_fixed_charge: (Float(args[:utility_bill_wood_fixed_charges].split(',').map(&:strip)[i]) rescue nil),
+          elec_marginal_rate: (Float(args[:utility_bill_electricity_marginal_rates].split(',').map(&:strip)[i]) rescue nil),
+          natural_gas_marginal_rate: (Float(args[:utility_bill_natural_gas_marginal_rates].split(',').map(&:strip)[i]) rescue nil),
+          propane_marginal_rate: (Float(args[:utility_bill_propane_marginal_rates].split(',').map(&:strip)[i]) rescue nil),
+          fuel_oil_marginal_rate: (Float(args[:utility_bill_fuel_oil_marginal_rates].split(',').map(&:strip)[i]) rescue nil),
+          wood_marginal_rate: (Float(args[:utility_bill_wood_marginal_rates].split(',').map(&:strip)[i]) rescue nil),
+          pv_compensation_type: pv_compensation_type,
+          pv_net_metering_annual_excess_sellback_rate_type: pv_net_metering_annual_excess_sellback_rate_type,
+          pv_net_metering_annual_excess_sellback_rate: pv_net_metering_annual_excess_sellback_rate,
+          pv_feed_in_tariff_rate: pv_feed_in_tariff_rate,
+          pv_monthly_grid_connection_fee_dollars_per_kw: pv_monthly_grid_connection_fee_dollars_per_kw,
+          pv_monthly_grid_connection_fee_dollars: pv_monthly_grid_connection_fee_dollars
+        )
       end
     end
-    @hpxml.clothes_dryers.each do |clothes_dryer|
-      clothes_dryer.usage_multiplier *= args[:clothes_dryer_usage_multiplier]
-    end
-    @hpxml.clothes_washers.each do |clothes_washer|
-      clothes_washer.usage_multiplier *= args[:clothes_washer_usage_multiplier]
-    end
-    @hpxml.cooking_ranges.each do |cooking_range|
-      cooking_range.usage_multiplier *= args[:cooking_range_oven_usage_multiplier]
-    end
-    @hpxml.dishwashers.each do |dishwasher|
-      dishwasher.usage_multiplier *= args[:dishwasher_usage_multiplier]
-    end
-    @hpxml.freezers.each do |freezer|
-      freezer.usage_multiplier *= args[:freezer_usage_multiplier]
-    end
 
-    # Ventilation Start Hours
-    @hpxml.ventilation_fans.each do |ventilation_fan|
-      next unless ventilation_fan.used_for_local_ventilation
-
-      if ventilation_fan.fan_location == HPXML::LocationKitchen
-        ventilation_fan.start_hour = args[:kitchen_fans_start_hour]
-      elsif ventilation_fan.fan_location == HPXML::LocationBath
-        ventilation_fan.start_hour = args[:bathroom_fans_start_hour]
-      end
-    end
+    # Electric Panel calculations
+    @hpxml.header.service_feeders_load_calculation_types = [HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased]
 
     # Vacancy
-    schedules_vacancy_periods = args[:schedules_vacancy_periods].split(',').map(&:strip)
+    schedules_vacancy_periods = args[:schedules_vacancy_periods].to_s.split(',').map(&:strip)
     schedules_vacancy_periods.each do |schedule_vacancy_period|
       begin_month, begin_day, begin_hour, end_month, end_day, end_hour = Calendar.parse_date_time_range(schedule_vacancy_period)
-      @hpxml.header.unavailable_periods.add(column_name: 'Vacancy',
-                                            begin_month: begin_month,
-                                            begin_day: begin_day,
-                                            begin_hour: begin_hour,
-                                            end_month: end_month,
-                                            end_day: end_day,
-                                            end_hour: end_hour)
+      @hpxml.header.unavailable_periods.add(
+        column_name: 'Vacancy',
+        begin_month: begin_month,
+        begin_day: begin_day,
+        begin_hour: begin_hour,
+        end_month: end_month,
+        end_day: end_day,
+        end_hour: end_hour
+      )
     end
 
-    # EVs
-    @vehicles.each do |vehicle|
-      next unless vehicle.vehicle_type == HPXML::VehicleTypeBEV
-
-      if not args[:ev_efficiency_percent_increase].nil?
-        # Adjust efficiency (in kWh/mile) to reflect a percentage improvement in efficiency.
-        vehicle.fuel_economy_combined /= 1 + args[:ev_efficiency_percent_increase]
-      end
-      if not args[:ev_fraction_charged_home].nil?
-        vehicle.fraction_charged_home = args[:ev_fraction_charged_home]
-      end
-      if not args[:ev_miles_driven_per_year].nil?
-        vehicle.miles_per_year = args[:ev_miles_driven_per_year]
-      end
-    end
-
-    # Infiltration Reduction
-    if not args[:air_leakage_percent_reduction].nil?
-      @hpxml.buildings.each do |hpxml_bldg|
-        hpxml_bldg.air_infiltration_measurements.each do |air_infiltration_measurement|
-          air_infiltration_measurement.air_leakage *= (1.0 - args[:air_leakage_percent_reduction] / 100.0)
+    @hpxml.buildings.each do |hpxml_bldg|
+      # Usage Multipliers
+      hpxml_bldg.plug_loads.each do |plug_load|
+        if (plug_load.plug_load_type == HPXML::PlugLoadTypeTelevision) && (not args[:misc_plug_loads_television_usage_multiplier].nil?)
+          plug_load.usage_multiplier = 1.0 if plug_load.usage_multiplier.nil?
+          plug_load.usage_multiplier *= args[:misc_plug_loads_television_usage_multiplier]
+        elsif (plug_load.plug_load_type == HPXML::PlugLoadTypeOther) && (not args[:misc_plug_loads_other_usage_multiplier].nil?)
+          plug_load.usage_multiplier = 1.0 if plug_load.usage_multiplier.nil?
+          plug_load.usage_multiplier *= args[:misc_plug_loads_other_usage_multiplier]
         end
       end
+      if (not hpxml_bldg.refrigerators.empty?) && (not args[:refrigerator_usage_multiplier].nil?)
+        hpxml_bldg.refrigerators[0].usage_multiplier = 1.0 if hpxml_bldg.refrigerators[0].usage_multiplier.nil?
+        hpxml_bldg.refrigerators[0].usage_multiplier *= args[:refrigerator_usage_multiplier]
+        if (hpxml_bldg.refrigerators.size > 1) && (not args[:extra_refrigerator_usage_multiplier].nil?)
+          hpxml_bldg.refrigerators[1].usage_multiplier = 1.0 if hpxml_bldg.refrigerators[1].usage_multiplier.nil?
+          hpxml_bldg.refrigerators[1].usage_multiplier *= args[:extra_refrigerator_usage_multiplier]
+        end
+      end
+      if (not hpxml_bldg.clothes_dryers.empty?) && (not args[:clothes_dryer_usage_multiplier].nil?)
+        hpxml_bldg.clothes_dryers[0].usage_multiplier = 1.0 if hpxml_bldg.clothes_dryers[0].usage_multiplier.nil?
+        hpxml_bldg.clothes_dryers[0].usage_multiplier *= args[:clothes_dryer_usage_multiplier]
+      end
+      if (not hpxml_bldg.clothes_washers.empty?) && (not args[:clothes_washer_usage_multiplier].nil?)
+        hpxml_bldg.clothes_washers[0].usage_multiplier = 1.0 if hpxml_bldg.clothes_washers[0].usage_multiplier.nil?
+        hpxml_bldg.clothes_washers[0].usage_multiplier *= args[:clothes_washer_usage_multiplier]
+      end
+      if (not hpxml_bldg.cooking_ranges.empty?) && (not args[:cooking_range_oven_usage_multiplier].nil?)
+        hpxml_bldg.cooking_ranges[0].usage_multiplier = 1.0 if hpxml_bldg.cooking_ranges[0].usage_multiplier.nil?
+        hpxml_bldg.cooking_ranges[0].usage_multiplier *= args[:cooking_range_oven_usage_multiplier]
+      end
+      if (not hpxml_bldg.dishwashers.empty?) && (not args[:dishwasher_usage_multiplier].nil?)
+        hpxml_bldg.dishwashers[0].usage_multiplier = 1.0 if hpxml_bldg.dishwashers[0].usage_multiplier.nil?
+        hpxml_bldg.dishwashers[0].usage_multiplier *= args[:dishwasher_usage_multiplier]
+      end
+      if (not hpxml_bldg.freezers.empty?) && (not args[:freezer_usage_multiplier].nil?)
+        hpxml_bldg.freezers[0].usage_multiplier = 1.0 if hpxml_bldg.freezers[0].usage_multiplier.nil?
+        hpxml_bldg.freezers[0].usage_multiplier *= args[:freezer_usage_multiplier]
+      end
+
+      # Ventilation Start Hours
+      hpxml_bldg.ventilation_fans.each do |ventilation_fan|
+        next unless ventilation_fan.used_for_local_ventilation
+
+        if ventilation_fan.fan_location == HPXML::LocationKitchen
+          ventilation_fan.start_hour = args[:kitchen_fans_start_hour]
+        elsif ventilation_fan.fan_location == HPXML::LocationBath
+          ventilation_fan.start_hour = args[:bathroom_fans_start_hour]
+        end
+      end
+
+      # EVs
+      hpxml_bldg.vehicles.each do |vehicle|
+        next unless vehicle.vehicle_type == HPXML::VehicleTypeBEV
+
+        if not args[:ev_efficiency_percent_increase].nil?
+          # Adjust efficiency (in kWh/mile) to reflect a percentage improvement in efficiency.
+          vehicle.fuel_economy_combined /= 1 + args[:ev_efficiency_percent_increase]
+        end
+        if not args[:ev_fraction_charged_home].nil?
+          vehicle.fraction_charged_home = args[:ev_fraction_charged_home]
+        end
+        if not args[:ev_miles_driven_per_year].nil?
+          vehicle.miles_per_year = args[:ev_miles_driven_per_year]
+        end
+      end
+
+      # Infiltration - Treat input as total (not exterior only) for attached units
+      if [HPXML::ResidentialTypeSFA,
+          HPXML::ResidentialTypeApartment].include? hpxml_bldg.building_construction.residential_facility_type
+        hpxml_bldg.air_infiltration_measurements[0].infiltration_type = HPXML::InfiltrationTypeUnitTotal
+      end
+
+      # Infiltration Reduction
+      if not args[:air_leakage_percent_reduction].nil?
+        hpxml_bldg.air_infiltration_measurements[0].air_leakage *= (1.0 - args[:air_leakage_percent_reduction] / 100.0)
+      end
       runner.registerInfo("Wrote file: #{@hpxml_path} with modified <AirLeakage>.")
+
+      # Electric Panel
+      set_electric_panel(runner, hpxml_bldg, args)
     end
 
     if not skip_hvac_flexibility?(args)
@@ -284,6 +600,16 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       runner.registerInfo("Wrote file: #{@hpxml_path} with modified schedules.")
     else
       runner.registerInfo('Skipping hvac flexibility since hvac_flex_peak_offset and hvac_flex_pre_peak_duration_hours are both 0')
+    end
+
+    # Apply defaults
+    @hpxml.buildings.each do |hpxml_bldg|
+      # Get a schedules_file object so that we don't end up with simple weekday/weekend/month schedules
+      # when we apply defaults.
+      schedules_file = SchedulesFile.new(schedules_paths: hpxml_bldg.header.schedules_filepaths,
+                                         year: @hpxml.header.sim_calendar_year,
+                                         output_path: nil)
+      Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
     end
 
     # Write out the modified hpxml
@@ -432,6 +758,259 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       schedule_file = File.join(File.dirname(@hpxml_path), schedule_file)
     end
     return schedule_file
+  end
+
+  def set_electric_panel(runner, hpxml_bldg, args)
+    building_id = Integer(args[:building_id])
+
+    # Assign miscellaneous permanently connected appliance loads
+    panel_sampler = ElectricalPanelSampler.new(runner, building_id, hpxml_bldg)
+    cap_bin, cap_val = panel_sampler.assign_rated_capacity()
+
+    if args[:electric_panel_breaker_spaces_headroom].nil?
+      breaker_spaces_headroom = panel_sampler.assign_breaker_space_headroom(cap_bin)
+      args[:electric_panel_breaker_spaces_headroom] = breaker_spaces_headroom
+    end
+
+    n_beds = hpxml_bldg.building_construction.number_of_bedrooms
+
+    # Assume all homes have a microwave
+    if n_beds <= 2
+      microwave_power = 900 # W, small, <= 0.9 cu ft, 1-2 ppl
+    elsif n_beds <= 4
+      microwave_power = 1100 # W, medium, <= 1.6 cu ft, 3-4 ppl
+    else
+      microwave_power = 1250 # W, large, 1.7-2.2 cu ft, 5+ ppl
+    end
+
+    garbage_disposal_ownership = 0.52 # AHS 2013
+    if Random.new(building_id).rand > garbage_disposal_ownership
+      garbage_disposal_power = 0
+    else
+      # Power estimated from avg load amp not HP rating, from InSinkErators
+      if n_beds <= 1
+        garbage_disposal_power = 672 # W, 1/3 HP, avg load 5.6A, 1-2 ppl
+      elsif n_beds <= 3
+        garbage_disposal_power = 756 # W, 1/2 HP, avg load 6.3A, 2-4 ppl
+      elsif n_beds <= 4
+        garbage_disposal_power = 1140 # W, 3/4 HP, avg load 9.5A, 3-5 ppl
+      else
+        garbage_disposal_power = 1224 # W, 1 HP, avg load 10.2A, 4+ ppl
+      end
+    end
+
+    if hpxml_bldg.has_location(HPXML::LocationGarage)
+      # Assume one automatic door opener if has garage, regardless of no. garages
+      garage_door_power = 373 # W, 1/2 HP (1 mech HP = 745.7 W)
+    else
+      garage_door_power = 0
+    end
+
+    electric_panel_load_other_power_rating = args[:electric_panel_load_other_power_rating].to_f
+    electric_panel_load_other_power_rating += microwave_power
+    electric_panel_load_other_power_rating += garbage_disposal_power
+    electric_panel_load_other_power_rating += garage_door_power
+
+    # Assign ElectricPanels objects
+    hpxml_bldg.electric_panels.add(id: "ElectricPanel#{hpxml_bldg.electric_panels.size + 1}",
+                                   max_current_rating: cap_val,
+                                   headroom_spaces: args[:electric_panel_breaker_spaces_headroom],
+                                   rated_total_spaces: args[:electric_panel_breaker_spaces_rated_total])
+
+    electric_panel = hpxml_bldg.electric_panels[0]
+    branch_circuits = electric_panel.branch_circuits
+    service_feeders = electric_panel.service_feeders
+
+    hpxml_bldg.heating_systems.each do |heating_system|
+      next if heating_system.is_shared_system
+      next if heating_system.fraction_heat_load_served == 0
+
+      if heating_system.primary_system
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                            type: HPXML::ElectricPanelLoadTypeHeating,
+                            is_new_load: args[:electric_panel_load_heating_system_new_load],
+                            component_idrefs: [heating_system.id])
+      else
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                            type: HPXML::ElectricPanelLoadTypeHeating,
+                            is_new_load: args[:electric_panel_load_heating_system_2_new_load],
+                            component_idrefs: [heating_system.id])
+      end
+    end
+
+    hpxml_bldg.cooling_systems.each do |cooling_system|
+      next if cooling_system.is_shared_system
+      next if cooling_system.fraction_cool_load_served == 0
+
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypeCooling,
+                          is_new_load: args[:electric_panel_load_cooling_system_new_load],
+                          component_idrefs: [cooling_system.id])
+    end
+
+    hpxml_bldg.heat_pumps.each do |heat_pump|
+      next if heat_pump.is_shared_system
+
+      if heat_pump.fraction_heat_load_served != 0
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                            type: HPXML::ElectricPanelLoadTypeHeating,
+                            is_new_load: args[:electric_panel_load_heat_pump_new_load],
+                            component_idrefs: [heat_pump.id])
+      end
+      next unless heat_pump.fraction_cool_load_served != 0
+
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypeCooling,
+                          is_new_load: args[:electric_panel_load_heat_pump_new_load],
+                          component_idrefs: [heat_pump.id])
+    end
+
+    hpxml_bldg.water_heating_systems.each do |water_heating_system|
+      next if water_heating_system.fuel_type != HPXML::FuelTypeElectricity
+
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypeWaterHeater,
+                          is_new_load: args[:electric_panel_load_electric_water_heater_new_load],
+                          component_idrefs: [water_heating_system.id])
+    end
+
+    hpxml_bldg.clothes_dryers.each do |clothes_dryer|
+      next if clothes_dryer.fuel_type != HPXML::FuelTypeElectricity
+
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypeClothesDryer,
+                          is_new_load: args[:electric_panel_load_electric_clothes_dryer_new_load],
+                          component_idrefs: [clothes_dryer.id])
+    end
+
+    hpxml_bldg.dishwashers.each do |dishwasher|
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypeDishwasher,
+                          is_new_load: args[:electric_panel_load_dishwasher_new_load],
+                          component_idrefs: [dishwasher.id])
+    end
+
+    hpxml_bldg.cooking_ranges.each do |cooking_range|
+      next if cooking_range.fuel_type != HPXML::FuelTypeElectricity
+
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypeRangeOven,
+                          is_new_load: args[:electric_panel_load_electric_cooking_range_new_load],
+                          component_idrefs: [cooking_range.id])
+    end
+
+    hpxml_bldg.ventilation_fans.each do |ventilation_fan|
+      if ventilation_fan.used_for_whole_building_ventilation
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                            type: HPXML::ElectricPanelLoadTypeMechVent,
+                            is_new_load: args[:electric_panel_load_mech_vent_fan_new_load],
+                            component_idrefs: [ventilation_fans[0].id])
+      elsif ventilation_fan.used_for_local_ventilation # Kitchen / Bathroom Fans
+        if ventilation_fan.fan_location == HPXML::LocationKitchen
+          service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                              type: HPXML::ElectricPanelLoadTypeMechVent,
+                              is_new_load: args[:electric_panel_load_kitchen_fans_new_load],
+                              component_idrefs: [ventilation_fan.id])
+        elsif ventilation_fan.fan_location == HPXML::LocationBath
+          service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                              type: HPXML::ElectricPanelLoadTypeMechVent,
+                              is_new_load: args[:electric_panel_load_bathroom_fans_new_load],
+                              component_idrefs: [ventilation_fan.id])
+        end
+      elsif ventilation_fan.used_for_seasonal_cooling_load_reduction # Whole House Fan
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                            type: HPXML::ElectricPanelLoadTypeMechVent,
+                            is_new_load: args[:electric_panel_load_whole_house_fan_new_load],
+                            component_idrefs: [ventilation_fan.id])
+      end
+    end
+
+    hpxml_bldg.permanent_spas.each do |permanent_spa|
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypePermanentSpaPump,
+                          is_new_load: args[:electric_panel_load_permanent_spa_pump_new_load],
+                          component_idrefs: [permanent_spa.pump_id])
+
+      next unless [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(permanent_spa.heater_type)
+
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypePermanentSpaHeater,
+                          is_new_load: args[:electric_panel_load_electric_permanent_spa_heater_new_load],
+                          component_idrefs: [permanent_spa.heater_id])
+    end
+
+    hpxml_bldg.pools.each do |pool|
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypePoolPump,
+                          is_new_load: args[:electric_panel_load_pool_pump_new_load],
+                          component_idrefs: [pool.pump_id])
+
+      next unless [HPXML::HeaterTypeElectricResistance, HPXML::HeaterTypeHeatPump].include?(pool.heater_type)
+
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypePoolHeater,
+                          is_new_load: args[:electric_panel_load_electric_pool_heater_new_load],
+                          component_idrefs: [pool.heater_id])
+    end
+
+    hpxml_bldg.plug_loads.each do |plug_load|
+      if plug_load.plug_load_type == HPXML::PlugLoadTypeWellPump
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                            type: HPXML::ElectricPanelLoadTypeWellPump,
+                            is_new_load: args[:electric_panel_load_misc_plug_loads_well_pump_new_load],
+                            component_idrefs: [plug_load.id])
+      elsif plug_load.plug_load_type == HPXML::PlugLoadTypeElectricVehicleCharging
+        service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                            type: HPXML::ElectricPanelLoadTypeElectricVehicleCharging,
+                            is_new_load: args[:electric_panel_load_misc_plug_loads_vehicle_new_load],
+                            component_idrefs: [plug_load.id])
+      end
+    end
+
+    hpxml_bldg.ev_chargers.each do |ev_charger|
+      if not ev_charger.charging_level.nil?
+        voltage = { 1 => HPXML::ElectricPanelVoltage120,
+                    2 => HPXML::ElectricPanelVoltage240,
+                    3 => HPXML::ElectricPanelVoltage240 }[ev_charger.charging_level]
+      end
+
+      if not ev_charger.charging_power.nil?
+        power = ev_charger.charging_power
+      end
+
+      if not voltage.nil?
+        branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
+                            voltage: voltage,
+                            component_idrefs: [ev_charger.id])
+      end
+
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypeElectricVehicleCharging,
+                          power: power,
+                          is_new_load: args[:electric_panel_load_misc_plug_loads_vehicle_new_load],
+                          component_idrefs: [ev_charger.id])
+    end
+
+    if !electric_panel_load_other_power_rating.nil? || !args[:electric_panel_load_other_new_load].nil?
+      branch_circuits.add(id: "BranchCircuit#{branch_circuits.size + 1}",
+                          occupied_spaces: 1,
+                          component_idrefs: [])
+      service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
+                          type: HPXML::ElectricPanelLoadTypeOther,
+                          power: electric_panel_load_other_power_rating,
+                          is_new_load: args[:electric_panel_load_other_new_load],
+                          component_idrefs: [])
+    end
+  end
+
+  def resstock_fuels(include_electricity:)
+    fuels = []
+    fuels << HPXML::FuelTypeElectricity if include_electricity
+    fuels << HPXML::FuelTypeNaturalGas
+    fuels << HPXML::FuelTypePropane
+    fuels << HPXML::FuelTypeOil
+    fuels << HPXML::FuelTypeWoodCord
+    return fuels
   end
 end
 

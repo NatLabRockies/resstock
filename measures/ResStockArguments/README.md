@@ -105,7 +105,7 @@ The number of bedrooms in the unit.
 
 - **Required:** ``true``
 
-- **Choices:** `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`
+- **Choices:** `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`
 
 <br/>
 
@@ -118,7 +118,7 @@ The number of bathrooms in the unit. Defaults to NumberofBedrooms/2 + 0.5.
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`
+- **Choices:** `auto`, `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`
 
 <br/>
 
@@ -131,20 +131,20 @@ The number of occupants in the unit. Defaults to an *asset* calculation assuming
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`
+- **Choices:** `auto`, `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`
 
 <br/>
 
-**Geometry: Average Ceiling Height**
+**Geometry: Ceiling Height**
 
 Average distance from the floor to the ceiling.
 
-- **Name:** ``geometry_average_ceiling_height``
+- **Name:** ``geometry_ceiling_height``
 - **Type:** ``Choice``
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `6.0`, `6.5`, `7.0`, `7.5`, `8.0`, `8.5`, `9.0`, `9.5`, `10.0`, `10.5`, `11.0`, `11.5`, `12.0`, `12.5`, `13.0`, `13.5`, `14.0`, `14.5`, `15.0`
+- **Choices:** `auto`, `6.0 ft`, `6.5 ft`, `7.0 ft`, `7.5 ft`, `8.0 ft`, `8.5 ft`, `9.0 ft`, `9.5 ft`, `10.0 ft`, `10.5 ft`, `11.0 ft`, `11.5 ft`, `12.0 ft`, `12.5 ft`, `13.0 ft`, `13.5 ft`, `14.0 ft`, `14.5 ft`, `15.0 ft`
 
 <br/>
 
@@ -424,7 +424,7 @@ The type of windows.
 
 - **Required:** ``true``
 
-- **Choices:** `Single, Clear, Metal`, `Single, Clear, Non-Metal`, `Double, Clear, Metal, Air`, `Double, Clear, Thermal-Break, Air`, `Double, Clear, Non-Metal, Air`, `Double, Low-E, Non-Metal, Air, High Gain`, `Double, Low-E, Non-Metal, Air, Med Gain`, `Double, Low-E, Non-Metal, Air, Low Gain`, `Double, Low-E, Non-Metal, Gas, High Gain`, `Double, Low-E, Non-Metal, Gas, Med Gain`, `Double, Low-E, Non-Metal, Gas, Low Gain`, `Double, Low-E, Insulated, Air, High Gain`, `Double, Low-E, Insulated, Air, Med Gain`, `Double, Low-E, Insulated, Air, Low Gain`, `Double, Low-E, Insulated, Gas, High Gain`, `Double, Low-E, Insulated, Gas, Med Gain`, `Double, Low-E, Insulated, Gas, Low Gain`, `Triple, Low-E, Non-Metal, Air, High Gain`, `Triple, Low-E, Non-Metal, Air, Low Gain`, `Triple, Low-E, Non-Metal, Gas, High Gain`, `Triple, Low-E, Non-Metal, Gas, Low Gain`, `Triple, Low-E, Insulated, Air, High Gain`, `Triple, Low-E, Insulated, Air, Low Gain`, `Triple, Low-E, Insulated, Gas, High Gain`, `Triple, Low-E, Insulated, Gas, Low Gain`, `IECC U-1.20, SHGC=0.40`, `IECC U-1.20, SHGC=0.30`, `IECC U-1.20, SHGC=0.25`, `IECC U-0.75, SHGC=0.40`, `IECC U-0.65, SHGC=0.40`, `IECC U-0.65, SHGC=0.30`, `IECC U-0.50, SHGC=0.30`, `IECC U-0.50, SHGC=0.25`, `IECC U-0.40, SHGC=0.40`, `IECC U-0.40, SHGC=0.25`, `IECC U-0.35, SHGC=0.40`, `IECC U-0.35, SHGC=0.30`, `IECC U-0.35, SHGC=0.25`, `IECC U-0.32, SHGC=0.25`, `IECC U-0.30, SHGC=0.25`, `Detailed Example: Single, Clear, Aluminum w/ Thermal Break`, `Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer`
+- **Choices:** `Single, Clear, Metal`, `Single, Clear, Non-Metal`, `Double, Clear, Metal, Air`, `Double, Clear, Thermal-Break, Air`, `Double, Clear, Non-Metal, Air`, `Double, Low-E, Non-Metal, Air, High Gain`, `Double, Low-E, Non-Metal, Air, Med Gain`, `Double, Low-E, Non-Metal, Air, Low Gain`, `Double, Low-E, Non-Metal, Gas, High Gain`, `Double, Low-E, Non-Metal, Gas, Med Gain`, `Double, Low-E, Non-Metal, Gas, Low Gain`, `Double, Low-E, Insulated, Air, High Gain`, `Double, Low-E, Insulated, Air, Med Gain`, `Double, Low-E, Insulated, Air, Low Gain`, `Double, Low-E, Insulated, Gas, High Gain`, `Double, Low-E, Insulated, Gas, Med Gain`, `Double, Low-E, Insulated, Gas, Low Gain`, `Triple, Low-E, Non-Metal, Air, High Gain`, `Triple, Low-E, Non-Metal, Air, Low Gain`, `Triple, Low-E, Non-Metal, Gas, High Gain`, `Triple, Low-E, Non-Metal, Gas, Low Gain`, `Triple, Low-E, Insulated, Air, High Gain`, `Triple, Low-E, Insulated, Air, Low Gain`, `Triple, Low-E, Insulated, Gas, High Gain`, `Triple, Low-E, Insulated, Gas, Low Gain`, `IECC U-1.20, SHGC 0.40`, `IECC U-1.20, SHGC 0.30`, `IECC U-1.20, SHGC 0.25`, `IECC U-0.75, SHGC 0.40`, `IECC U-0.65, SHGC 0.40`, `IECC U-0.65, SHGC 0.30`, `IECC U-0.50, SHGC 0.30`, `IECC U-0.50, SHGC 0.25`, `IECC U-0.40, SHGC 0.40`, `IECC U-0.40, SHGC 0.25`, `IECC U-0.35, SHGC 0.40`, `IECC U-0.35, SHGC 0.30`, `IECC U-0.35, SHGC 0.25`, `IECC U-0.32, SHGC 0.25`, `IECC U-0.30, SHGC 0.25`, `Detailed Example: Single, Clear, Aluminum w/ Thermal Break`, `Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer`
 
 <br/>
 
@@ -450,7 +450,7 @@ The type of window interior shading. If shading coefficients are selected, note 
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `None`, `Curtains, Light`, `Curtains, Medium`, `Curtains, Dark`, `Shades, Light`, `Shades, Medium`, `Shades, Dark`, `Blinds, Light`, `Blinds, Medium`, `Blinds, Dark`, `Summer=0.5, Winter=0.5`, `Summer=0.5, Winter=0.6`, `Summer=0.5, Winter=0.7`, `Summer=0.5, Winter=0.8`, `Summer=0.5, Winter=0.9`, `Summer=0.6, Winter=0.6`, `Summer=0.6, Winter=0.7`, `Summer=0.6, Winter=0.8`, `Summer=0.6, Winter=0.9`, `Summer=0.7, Winter=0.7`, `Summer=0.7, Winter=0.8`, `Summer=0.7, Winter=0.9`, `Summer=0.8, Winter=0.8`, `Summer=0.8, Winter=0.9`, `Summer=0.9, Winter=0.9`
+- **Choices:** `auto`, `None`, `Curtains, Light`, `Curtains, Medium`, `Curtains, Dark`, `Shades, Light`, `Shades, Medium`, `Shades, Dark`, `Blinds, Light`, `Blinds, Medium`, `Blinds, Dark`, `Summer 0.5, Winter 0.5`, `Summer 0.5, Winter 0.6`, `Summer 0.5, Winter 0.7`, `Summer 0.5, Winter 0.8`, `Summer 0.5, Winter 0.9`, `Summer 0.6, Winter 0.6`, `Summer 0.6, Winter 0.7`, `Summer 0.6, Winter 0.8`, `Summer 0.6, Winter 0.9`, `Summer 0.7, Winter 0.7`, `Summer 0.7, Winter 0.8`, `Summer 0.7, Winter 0.9`, `Summer 0.8, Winter 0.8`, `Summer 0.8, Winter 0.9`, `Summer 0.9, Winter 0.9`
 
 <br/>
 
@@ -463,7 +463,7 @@ The type of window exterior shading. If shading coefficients are selected, note 
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `None`, `Solar Film`, `Solar Screen`, `Summer=0.25, Winter=0.25`, `Summer=0.25, Winter=0.50`, `Summer=0.25, Winter=0.75`, `Summer=0.25, Winter=1.00`, `Summer=0.50, Winter=0.25`, `Summer=0.50, Winter=0.50`, `Summer=0.50, Winter=0.75`, `Summer=0.50, Winter=1.00`, `Summer=0.75, Winter=0.25`, `Summer=0.75, Winter=0.50`, `Summer=0.75, Winter=0.75`, `Summer=0.75, Winter=1.00`, `Summer=1.00, Winter=0.25`, `Summer=1.00, Winter=0.50`, `Summer=1.00, Winter=0.75`, `Summer=1.00, Winter=1.00`
+- **Choices:** `auto`, `None`, `Solar Film`, `Solar Screen`, `Summer 0.25, Winter 0.25`, `Summer 0.25, Winter 0.50`, `Summer 0.25, Winter 0.75`, `Summer 0.25, Winter 1.00`, `Summer 0.50, Winter 0.25`, `Summer 0.50, Winter 0.50`, `Summer 0.50, Winter 0.75`, `Summer 0.50, Winter 1.00`, `Summer 0.75, Winter 0.25`, `Summer 0.75, Winter 0.50`, `Summer 0.75, Winter 0.75`, `Summer 0.75, Winter 1.00`, `Summer 1.00, Winter 0.25`, `Summer 1.00, Winter 0.50`, `Summer 1.00, Winter 0.75`, `Summer 1.00, Winter 1.00`
 
 <br/>
 
@@ -515,7 +515,7 @@ The type of skylights.
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `Single, Clear, Metal`, `Single, Clear, Non-Metal`, `Double, Clear, Metal`, `Double, Clear, Non-Metal`, `Double, Low-E, Metal, High Gain`, `Double, Low-E, Non-Metal, High Gain`, `Double, Low-E, Metal, Med Gain`, `Double, Low-E, Non-Metal, Med Gain`, `Double, Low-E, Metal, Low Gain`, `Double, Low-E, Non-Metal, Low Gain`, `Triple, Clear, Metal`, `Triple, Clear, Non-Metal`, `IECC U-0.75, SHGC=0.40`, `IECC U-0.75, SHGC=0.30`, `IECC U-0.75, SHGC=0.25`, `IECC U-0.65, SHGC=0.40`, `IECC U-0.65, SHGC=0.30`, `IECC U-0.65, SHGC=0.25`, `IECC U-0.60, SHGC=0.40`, `IECC U-0.60, SHGC=0.30`, `IECC U-0.55, SHGC=0.40`, `IECC U-0.55, SHGC=0.25`
+- **Choices:** `auto`, `Single, Clear, Metal`, `Single, Clear, Non-Metal`, `Double, Clear, Metal`, `Double, Clear, Non-Metal`, `Double, Low-E, Metal, High Gain`, `Double, Low-E, Non-Metal, High Gain`, `Double, Low-E, Metal, Med Gain`, `Double, Low-E, Non-Metal, Med Gain`, `Double, Low-E, Metal, Low Gain`, `Double, Low-E, Non-Metal, Low Gain`, `Triple, Clear, Metal`, `Triple, Clear, Non-Metal`, `IECC U-0.75, SHGC 0.40`, `IECC U-0.75, SHGC 0.30`, `IECC U-0.75, SHGC 0.25`, `IECC U-0.65, SHGC 0.40`, `IECC U-0.65, SHGC 0.30`, `IECC U-0.65, SHGC 0.25`, `IECC U-0.60, SHGC 0.40`, `IECC U-0.60, SHGC 0.30`, `IECC U-0.55, SHGC 0.40`, `IECC U-0.55, SHGC 0.25`
 
 <br/>
 
@@ -567,7 +567,7 @@ The fuel type of the heating system. Ignored for ElectricResistance.
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
+- **Choices:** `auto`, `Electricity`, `Natural Gas`, `Fuel Oil`, `Propane`, `Wood Cord`, `Wood Pellets`, `Coal`
 
 <br/>
 
@@ -762,7 +762,7 @@ The fuel type of the second heating system. Ignored for ElectricResistance.
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
+- **Choices:** `auto`, `Electricity`, `Natural Gas`, `Fuel Oil`, `Propane`, `Wood Cord`, `Wood Pellets`, `Coal`
 
 <br/>
 
@@ -914,7 +914,7 @@ The type and efficiency of the water heater.
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Electricity, Tank, UEF=0.90`, `Electricity, Tank, UEF=0.92`, `Electricity, Tank, UEF=0.94`, `Electricity, Tankless, UEF=0.94`, `Electricity, Tankless, UEF=0.98`, `Electricity, Heat Pump, UEF=3.50`, `Electricity, Heat Pump, UEF=3.75`, `Electricity, Heat Pump, UEF=4.00`, `Natural Gas, Tank, UEF=0.57`, `Natural Gas, Tank, UEF=0.60`, `Natural Gas, Tank, UEF=0.64`, `Natural Gas, Tank, UEF=0.67`, `Natural Gas, Tank, UEF=0.70`, `Natural Gas, Tank, UEF=0.80`, `Natural Gas, Tankless, UEF=0.82`, `Natural Gas, Tankless, UEF=0.93`, `Natural Gas, Tankless, UEF=0.96`, `Fuel Oil, Tank, UEF=0.61`, `Fuel Oil, Tank, UEF=0.64`, `Fuel Oil, Tank, UEF=0.67`, `Propane, Tank, UEF=0.57`, `Propane, Tank, UEF=0.60`, `Propane, Tank, UEF=0.64`, `Propane, Tank, UEF=0.67`, `Propane, Tank, UEF=0.70`, `Propane, Tank, UEF=0.80`, `Propane, Tankless, UEF=0.82`, `Propane, Tankless, UEF=0.93`, `Propane, Tankless, UEF=0.96`, `Space-Heating Boiler w/ Storage Tank`, `Space-Heating Boiler w/ Tankless Coil`, `Detailed Example: Electricity, Tank, 40 gal, EF=0.93`, `Detailed Example: Electricity, Tank, UEF=0.94, Setpoint=135F`, `Detailed Example: Electricity, Tankless, EF=0.96`, `Detailed Example: Electricity, Heat Pump, 80 gal, EF=3.1`, `Detailed Example: Natural Gas, Tank, 40 gal, EF=0.56, RE=0.78`, `Detailed Example: Natural Gas, Tank, 40 gal, EF=0.62, RE=0.78`, `Detailed Example: Natural Gas, Tank, 50 gal, EF=0.59, RE=0.76`, `Detailed Example: Natural Gas, Tankless, EF=0.95`
+- **Choices:** `None`, `Electricity, Tank, UEF 0.90`, `Electricity, Tank, UEF 0.92`, `Electricity, Tank, UEF 0.94`, `Electricity, Tankless, UEF 0.94`, `Electricity, Tankless, UEF 0.98`, `Electricity, Heat Pump, UEF 3.50`, `Electricity, Heat Pump, UEF 3.75`, `Electricity, Heat Pump, UEF 4.00`, `Natural Gas, Tank, UEF 0.57`, `Natural Gas, Tank, UEF 0.60`, `Natural Gas, Tank, UEF 0.64`, `Natural Gas, Tank, UEF 0.67`, `Natural Gas, Tank, UEF 0.70`, `Natural Gas, Tank, UEF 0.80`, `Natural Gas, Tankless, UEF 0.82`, `Natural Gas, Tankless, UEF 0.93`, `Natural Gas, Tankless, UEF 0.96`, `Fuel Oil, Tank, UEF 0.61`, `Fuel Oil, Tank, UEF 0.64`, `Fuel Oil, Tank, UEF 0.67`, `Propane, Tank, UEF 0.57`, `Propane, Tank, UEF 0.60`, `Propane, Tank, UEF 0.64`, `Propane, Tank, UEF 0.67`, `Propane, Tank, UEF 0.70`, `Propane, Tank, UEF 0.80`, `Propane, Tankless, UEF 0.82`, `Propane, Tankless, UEF 0.93`, `Propane, Tankless, UEF 0.96`, `Space-Heating Boiler w/ Storage Tank`, `Space-Heating Boiler w/ Tankless Coil`, `Detailed Example: Electricity, Tank, 40 gal, EF 0.93`, `Detailed Example: Electricity, Tank, UEF 0.94, 135F`, `Detailed Example: Electricity, Tankless, EF 0.96`, `Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78`, `Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76`, `Detailed Example: Natural Gas, Tankless, EF 0.95`
 
 <br/>
 
@@ -928,32 +928,6 @@ The location of the water heater. Defaults based on the foundation/garage type.
 - **Required:** ``false``
 
 - **Choices:** `auto`, `Default`, `Conditioned Space`, `Basement`, `Garage`, `Crawlspace`, `Attic`, `Other Heated Space`, `Outside`
-
-<br/>
-
-**DHW: Water Heater Jacket Insulation**
-
-The type of water heater jacket/blanket insulation. Doesn't apply to tankless systems or space-heating boilers.
-
-- **Name:** ``dhw_water_heater_jacket``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `auto`, `None`, `R-5`, `R-6`, `R-7`, `R-8`, `R-9`, `R-10`
-
-<br/>
-
-**DHW: Water Heater Uses Desuperheater**
-
-Whether the water heater uses a desuperheater. Requires that the dwelling unit has a air-to-air, mini-split, or ground-to-air heat pump or a central air conditioner or mini-split air conditioner.
-
-- **Name:** ``dhw_water_heater_uses_desuperheater``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `auto`, `true`, `false`
 
 <br/>
 
@@ -1122,7 +1096,7 @@ The type and usage of clothes washer.
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `None`, `Standard, 2008-2017, 50% Usage`, `Standard, 2008-2017, 75% Usage`, `Standard, 2008-2017, 100% Usage`, `Standard, 2008-2017, 150% Usage`, `Standard, 2008-2017, 200% Usage`, `Standard, 2018-present, 50% Usage`, `Standard, 2018-present, 75% Usage`, `Standard, 2018-present, 100% Usage`, `Standard, 2018-present, 150% Usage`, `Standard, 2018-present, 200% Usage`, `EnergyStar, 2006-2017, 50% Usage`, `EnergyStar, 2006-2017, 75% Usage`, `EnergyStar, 2006-2017, 100% Usage`, `EnergyStar, 2006-2017, 150% Usage`, `EnergyStar, 2006-2017, 200% Usage`, `EnergyStar, 2018-present, 50% Usage`, `EnergyStar, 2018-present, 75% Usage`, `EnergyStar, 2018-present, 100% Usage`, `EnergyStar, 2018-present, 150% Usage`, `EnergyStar, 2018-present, 200% Usage`, `CEE Tier II, 2018, 50% Usage`, `CEE Tier II, 2018, 75% Usage`, `CEE Tier II, 2018, 100% Usage`, `CEE Tier II, 2018, 150% Usage`, `CEE Tier II, 2018, 200% Usage`, `Detailed Example: ERI Reference 2006`, `Detailed Example: MEF=1.65`, `Detailed Example: Standard, 2008-2017, Conditioned Basement`, `Detailed Example: Standard, 2008-2017, Unconditioned Basement`, `Detailed Example: Standard, 2008-2017, Garage`
+- **Choices:** `auto`, `None`, `Standard, 2008-2017, 50% Usage`, `Standard, 2008-2017, 75% Usage`, `Standard, 2008-2017, 100% Usage`, `Standard, 2008-2017, 150% Usage`, `Standard, 2008-2017, 200% Usage`, `Standard, 2018-present, 50% Usage`, `Standard, 2018-present, 75% Usage`, `Standard, 2018-present, 100% Usage`, `Standard, 2018-present, 150% Usage`, `Standard, 2018-present, 200% Usage`, `EnergyStar, 2006-2017, 50% Usage`, `EnergyStar, 2006-2017, 75% Usage`, `EnergyStar, 2006-2017, 100% Usage`, `EnergyStar, 2006-2017, 150% Usage`, `EnergyStar, 2006-2017, 200% Usage`, `EnergyStar, 2018-present, 50% Usage`, `EnergyStar, 2018-present, 75% Usage`, `EnergyStar, 2018-present, 100% Usage`, `EnergyStar, 2018-present, 150% Usage`, `EnergyStar, 2018-present, 200% Usage`, `CEE Tier II, 2018, 50% Usage`, `CEE Tier II, 2018, 75% Usage`, `CEE Tier II, 2018, 100% Usage`, `CEE Tier II, 2018, 150% Usage`, `CEE Tier II, 2018, 200% Usage`, `Detailed Example: ERI Reference 2006`, `Detailed Example: MEF 1.65`, `Detailed Example: Standard, 2008-2017, Conditioned Basement`, `Detailed Example: Standard, 2008-2017, Unconditioned Basement`, `Detailed Example: Standard, 2008-2017, Garage`
 
 <br/>
 
@@ -1135,7 +1109,7 @@ The type and usage of clothes dryer.
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `None`, `Electricity, Standard, 50% Usage`, `Electricity, Standard, 75% Usage`, `Electricity, Standard, 100% Usage`, `Electricity, Standard, 150% Usage`, `Electricity, Standard, 200% Usage`, `Electricity, Premium, 50% Usage`, `Electricity, Premium, 75% Usage`, `Electricity, Premium, 100% Usage`, `Electricity, Premium, 150% Usage`, `Electricity, Premium, 200% Usage`, `Electricity, Heat Pump, 50% Usage`, `Electricity, Heat Pump, 75% Usage`, `Electricity, Heat Pump, 100% Usage`, `Electricity, Heat Pump, 150% Usage`, `Electricity, Heat Pump, 200% Usage`, `Natural Gas, Standard, 50% Usage`, `Natural Gas, Standard, 75% Usage`, `Natural Gas, Standard, 100% Usage`, `Natural Gas, Standard, 150% Usage`, `Natural Gas, Standard, 200% Usage`, `Natural Gas, Premium, 50% Usage`, `Natural Gas, Premium, 75% Usage`, `Natural Gas, Premium, 100% Usage`, `Natural Gas, Premium, 150% Usage`, `Natural Gas, Premium, 200% Usage`, `Propane, Standard, 50% Usage`, `Propane, Standard, 75% Usage`, `Propane, Standard, 100% Usage`, `Propane, Standard, 150% Usage`, `Propane, Standard, 200% Usage`, `Detailed Example: Electricity, ERI Reference 2006`, `Detailed Example: Natural Gas, ERI Reference 2006`, `Detailed Example: Electricity, EF=4.29`, `Detailed Example: Electricity, Standard, Conditioned Basement`, `Detailed Example: Electricity, Standard, Unconditioned Basement`, `Detailed Example: Electricity, Standard, Garage`
+- **Choices:** `auto`, `None`, `Electricity, Standard, 50% Usage`, `Electricity, Standard, 75% Usage`, `Electricity, Standard, 100% Usage`, `Electricity, Standard, 150% Usage`, `Electricity, Standard, 200% Usage`, `Electricity, Premium, 50% Usage`, `Electricity, Premium, 75% Usage`, `Electricity, Premium, 100% Usage`, `Electricity, Premium, 150% Usage`, `Electricity, Premium, 200% Usage`, `Electricity, Heat Pump, 50% Usage`, `Electricity, Heat Pump, 75% Usage`, `Electricity, Heat Pump, 100% Usage`, `Electricity, Heat Pump, 150% Usage`, `Electricity, Heat Pump, 200% Usage`, `Natural Gas, Standard, 50% Usage`, `Natural Gas, Standard, 75% Usage`, `Natural Gas, Standard, 100% Usage`, `Natural Gas, Standard, 150% Usage`, `Natural Gas, Standard, 200% Usage`, `Natural Gas, Premium, 50% Usage`, `Natural Gas, Premium, 75% Usage`, `Natural Gas, Premium, 100% Usage`, `Natural Gas, Premium, 150% Usage`, `Natural Gas, Premium, 200% Usage`, `Propane, Standard, 50% Usage`, `Propane, Standard, 75% Usage`, `Propane, Standard, 100% Usage`, `Propane, Standard, 150% Usage`, `Propane, Standard, 200% Usage`, `Detailed Example: Electricity, ERI Reference 2006`, `Detailed Example: Natural Gas, ERI Reference 2006`, `Detailed Example: Electricity, EF 4.29`, `Detailed Example: Electricity, Standard, Conditioned Basement`, `Detailed Example: Electricity, Standard, Unconditioned Basement`, `Detailed Example: Electricity, Standard, Garage`
 
 <br/>
 
@@ -1148,7 +1122,7 @@ The type and usage of dishwasher.
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `None`, `Federal Minimum, Standard, 50% Usage`, `Federal Minimum, Standard, 75% Usage`, `Federal Minimum, Standard, 100% Usage`, `Federal Minimum, Standard, 150% Usage`, `Federal Minimum, Standard, 200% Usage`, `EnergyStar, Standard, 50% Usage`, `EnergyStar, Standard, 75% Usage`, `EnergyStar, Standard, 100% Usage`, `EnergyStar, Standard, 150% Usage`, `EnergyStar, Standard, 200% Usage`, `EnergyStar, Compact, 50% Usage`, `EnergyStar, Compact, 75% Usage`, `EnergyStar, Compact, 100% Usage`, `EnergyStar, Compact, 150% Usage`, `EnergyStar, Compact, 200% Usage`, `Detailed Example: ERI Reference 2006`, `Detailed Example: EF=0.7, Compact`, `Detailed Example: Federal Minimum, Standard, Conditioned Basement`, `Detailed Example: Federal Minimum, Standard, Unconditioned Basement`, `Detailed Example: Federal Minimum, Standard, Garage`
+- **Choices:** `auto`, `None`, `Federal Minimum, Standard, 50% Usage`, `Federal Minimum, Standard, 75% Usage`, `Federal Minimum, Standard, 100% Usage`, `Federal Minimum, Standard, 150% Usage`, `Federal Minimum, Standard, 200% Usage`, `EnergyStar, Standard, 50% Usage`, `EnergyStar, Standard, 75% Usage`, `EnergyStar, Standard, 100% Usage`, `EnergyStar, Standard, 150% Usage`, `EnergyStar, Standard, 200% Usage`, `EnergyStar, Compact, 50% Usage`, `EnergyStar, Compact, 75% Usage`, `EnergyStar, Compact, 100% Usage`, `EnergyStar, Compact, 150% Usage`, `EnergyStar, Compact, 200% Usage`, `Detailed Example: ERI Reference 2006`, `Detailed Example: EF 0.7, Compact`, `Detailed Example: Federal Minimum, Standard, Conditioned Basement`, `Detailed Example: Federal Minimum, Standard, Unconditioned Basement`, `Detailed Example: Federal Minimum, Standard, Garage`
 
 <br/>
 
@@ -1213,7 +1187,7 @@ The type of dehumidifier.
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `None`, `Portable, 15 pints/day`, `Portable, 20 pints/day`, `Portable, 30 pints/day`, `Portable, 40 pints/day`, `Whole-Home, 60 pints/day`, `Whole-Home, 75 pints/day`, `Whole-Home, 95 pints/day`, `Whole-Home, 125 pints/day`, `Detailed Example: Portable, 40 pints/day, EF=1.8`
+- **Choices:** `auto`, `None`, `Portable, 15 pints/day`, `Portable, 20 pints/day`, `Portable, 30 pints/day`, `Portable, 40 pints/day`, `Whole-Home, 60 pints/day`, `Whole-Home, 75 pints/day`, `Whole-Home, 95 pints/day`, `Whole-Home, 125 pints/day`, `Detailed Example: Portable, 40 pints/day, EF 1.8`
 
 <br/>
 
@@ -1384,6 +1358,17 @@ The building unit number (between 1 and the number of samples).
 
 <br/>
 
+**Building Construction: Vintage**
+
+The building vintage, used for informational purposes only.
+
+- **Name:** ``vintage``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **Facility Type**
 
 The facility type of the dwelling unit.
@@ -1410,25 +1395,16 @@ The number of units in the building.
 
 <br/>
 
-**Schedules: Space Heating Unavailability**
+**Ceiling: Insulation Nominal R-value**
 
-Number of days space heating equipment is unavailable.
+Nominal R-value for the ceiling (attic floor).
 
-- **Name:** ``schedules_space_heating_unavailable_days``
-- **Type:** ``Integer``
+- **Name:** ``ceiling_insulation_r``
+- **Type:** ``Double``
 
-- **Required:** ``false``
+- **Units:** ``h-ft^2-R/Btu``
 
-<br/>
-
-**Schedules: Space Cooling Unavailability**
-
-Number of days space cooling equipment is unavailable.
-
-- **Name:** ``schedules_space_cooling_unavailable_days``
-- **Type:** ``Integer``
-
-- **Required:** ``false``
+- **Required:** ``true``
 
 <br/>
 
@@ -1451,17 +1427,6 @@ The total floor area of the unit's conditioned space (including any conditioned 
 - **Type:** ``String``
 
 - **Required:** ``true``
-
-<br/>
-
-**Building Construction: Vintage**
-
-The building vintage, used for informational purposes only.
-
-- **Name:** ``vintage``
-- **Type:** ``String``
-
-- **Required:** ``false``
 
 <br/>
 
@@ -1697,6 +1662,28 @@ Specifies whether to automatically define the cooling season based on the weathe
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
+<br/>
+
+**Schedules: Space Heating Unavailability**
+
+Number of days space heating equipment is unavailable.
+
+- **Name:** ``schedules_space_heating_unavailable_days``
+- **Type:** ``Integer``
+
+- **Required:** ``false``
+
+<br/>
+
+**Schedules: Space Cooling Unavailability**
+
+Number of days space cooling equipment is unavailable.
+
+- **Name:** ``schedules_space_cooling_unavailable_days``
+- **Type:** ``Integer``
+
+- **Required:** ``false``
 
 <br/>
 

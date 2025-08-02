@@ -327,7 +327,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # Set arguments for the BuildResidentialHPXML measure
     hpxml_path = File.expand_path('../upgraded.xml')
     measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
-    measures['BuildResidentialHPXML'][0]['apply_defaults'] = true
     measures['BuildResidentialHPXML'][0]['apply_validation'] = true
 
     set_header(measures, hpxml, values)
@@ -429,10 +428,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # Whole SFA/MF Building Simulation?
     measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = hpxml.header.whole_sfa_or_mf_building_sim
 
-    # Software Info
-    measures['BuildResidentialHPXML'][0]['software_info_program_used'] = hpxml.header.software_program_used
-    measures['BuildResidentialHPXML'][0]['software_info_program_version'] = hpxml.header.software_program_version
-
     # Simulation Control
     measures['BuildResidentialHPXML'][0]['simulation_control_timestep'] = values['simulation_control_timestep']
     if !values['simulation_control_run_period_begin_month'].nil? && !values['simulation_control_run_period_begin_day_of_month'].nil? && !values['simulation_control_run_period_end_month'].nil? && !values['simulation_control_run_period_end_day_of_month'].nil?
@@ -514,11 +509,11 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def set_electric_panel(measures, hpxml_bldg, upgrade_args_hash)
-    measures['BuildResidentialHPXML'][0]['electric_panel_service_max_current_rating'] = hpxml_bldg.electric_panels[0].max_current_rating
-    measures['BuildResidentialHPXML'][0]['electric_panel_breaker_spaces_rated_total'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
+    measures['ResStockArgumentsPostHPXML'][0]['electric_panel_service_max_current_rating'] = hpxml_bldg.electric_panels[0].max_current_rating
+    measures['ResStockArgumentsPostHPXML'][0]['electric_panel_breaker_spaces_rated_total'] = hpxml_bldg.electric_panels[0].breaker_spaces_total
 
     panel_system_additions = get_panel_system_additions(upgrade_args_hash)
-    measures['BuildResidentialHPXML'][0].update(panel_system_additions)
+    measures['ResStockArgumentsPostHPXML'][0].update(panel_system_additions)
   end
 
   def set_hvac_systems(measures, hpxml_bldg, upgrade_args_hash)
@@ -816,43 +811,41 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   def get_panel_system_additions(args_hash)
     panel_system_additions = {}
     args_hash.each do |arg_name, _value|
-      if arg_name.start_with?('heating_system_') && (not arg_name.start_with?('heating_system_2_'))
+      if arg_name == 'hvac_heating_system'
         panel_system_additions['electric_panel_load_heating_system_new_load'] = true
-      elsif arg_name.start_with?('cooling_system_')
+      elsif arg_name == 'hvac_cooling_system'
         panel_system_additions['electric_panel_load_cooling_system_new_load'] = true
-      elsif arg_name.start_with?('heat_pump_')
+      elsif arg_name == 'hvac_heat_pump'
         panel_system_additions['electric_panel_load_heat_pump_new_load'] = true
-      elsif arg_name.start_with?('heating_system_2_')
+      elsif arg_name == 'hvac_heating_system_2'
         panel_system_additions['electric_panel_load_heating_system_2_new_load'] = true
-      elsif arg_name.start_with?('mech_vent_') && (not arg_name.start_with?('mech_vent_2_'))
+      elsif arg_name == 'ventilation_mechanical'
         panel_system_additions['electric_panel_load_mech_vent_fan_new_load'] = true
-      elsif arg_name.start_with?('mech_vent_2_')
-        panel_system_additions['electric_panel_load_mech_vent_2_new_load'] = true
-      elsif arg_name.start_with?('whole_house_fan_')
+      elsif arg_name == 'ventilation_whole_house_fan'
         panel_system_additions['electric_panel_load_whole_house_fan_new_load'] = true
-      elsif arg_name.start_with?('kitchen_fans_')
+      elsif arg_name == 'ventilation_kitchen'
         panel_system_additions['electric_panel_load_kitchen_fans_new_load'] = true
-      elsif arg_name.start_with?('bathroom_fans_')
+      elsif arg_name == 'ventilation_bathroom'
         panel_system_additions['electric_panel_load_bathroom_fans_new_load'] = true
-      elsif arg_name.start_with?('water_heater_')
+      elsif arg_name == 'dhw_wather_heater'
         panel_system_additions['electric_panel_load_electric_water_heater_new_load'] = true
-      elsif arg_name.start_with?('clothes_dryer_')
+      elsif arg_name == 'appliance_clothes_dryer'
         panel_system_additions['electric_panel_load_electric_clothes_dryer_new_load'] = true
-      elsif arg_name.start_with?('dishwasher_')
+      elsif arg_name == 'appliance_dishwasher'
         panel_system_additions['electric_panel_load_dishwasher_new_load'] = true
-      elsif arg_name.start_with?('cooking_range_oven_')
+      elsif arg_name == 'appliance_cooking_range_oven'
         panel_system_additions['electric_panel_load_electric_cooking_range_new_load'] = true
-      elsif arg_name.start_with?('misc_plug_loads_well_pump_')
+      elsif arg_name == 'misc_well_pump'
         panel_system_additions['electric_panel_load_misc_plug_loads_well_pump_new_load'] = true
-      elsif arg_name.start_with?('misc_plug_loads_vehicle_')
+      elsif arg_name == 'misc_electric_vehicle_charging'
         panel_system_additions['electric_panel_load_misc_plug_loads_vehicle_new_load'] = true
-      elsif arg_name.start_with?('pool_pump_')
+      elsif arg_name == 'misc_pool'
+        # FIXME: Need to check for pump and/or heater
         panel_system_additions['electric_panel_load_pool_pump_new_load'] = true
-      elsif arg_name.start_with?('pool_heater_')
         panel_system_additions['electric_panel_load_electric_pool_heater_new_load'] = true
-      elsif arg_name.start_with?('permanent_spa_pump_')
+      elsif arg_name == 'misc_permanent_spa'
+        # FIXME: Need to check for pump and/or heater
         panel_system_additions['electric_panel_load_permanent_spa_pump_new_load'] = true
-      elsif arg_name.start_with?('permanent_spa_heater_')
         panel_system_additions['electric_panel_load_electric_permanent_spa_heater_new_load'] = true
         # else
         # panel_system_additions['electric_panel_load_other_addition'] = true

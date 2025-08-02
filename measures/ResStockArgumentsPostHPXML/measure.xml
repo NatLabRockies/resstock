@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>62872c7a-cd42-43c2-9c18-1c7472de9691</version_id>
-  <version_modified>2025-08-01T15:39:27Z</version_modified>
+  <version_id>e3067286-5047-410e-b59e-fbc81450b176</version_id>
+  <version_modified>2025-08-02T00:31:20Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -16,6 +16,33 @@
       <display_name>HPXML File Path</display_name>
       <description>Absolute/relative path of the HPXML file.</description>
       <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>whole_sfa_or_mf_building_sim</name>
+      <display_name>Whole SFA/MF Building Simulation?</display_name>
+      <description>If the HPXML file represents a single family-attached/multifamily building with multiple dwelling units defined, specifies whether to run the HPXML file as a single whole building model.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>simulation_control_run_period_calendar_year</name>
+      <display_name>Simulation Control: Run Period Calendar Year</display_name>
+      <description>This numeric field should contain the calendar year that determines the start day of week. If you are running simulations using AMY weather files, the value entered for calendar year will not be used; it will be overridden by the actual year found in the AMY weather file.</description>
+      <type>Integer</type>
+      <units>year</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -221,6 +248,580 @@
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
+    <argument>
+      <name>electric_panel_breaker_spaces_headroom</name>
+      <display_name>Electric Panel: Breaker Spaces Headroom</display_name>
+      <description>The unoccupied number of breaker spaces on the electric panel.</description>
+      <type>Integer</type>
+      <units>#</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_breaker_spaces_rated_total</name>
+      <display_name>Electric Panel: Breaker Spaces Rated Total</display_name>
+      <description>The rated total number of breaker spaces on the electric panel.</description>
+      <type>Integer</type>
+      <units>#</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_load_heating_system_new_load</name>
+      <display_name>Electric Panel: Heating System New Load</display_name>
+      <description>Whether the heating system is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_cooling_system_new_load</name>
+      <display_name>Electric Panel: Cooling System New Load</display_name>
+      <description>Whether the cooling system is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_heat_pump_new_load</name>
+      <display_name>Electric Panel: Heat Pump New Load</display_name>
+      <description>Whether the heat pump is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_heating_system_2_new_load</name>
+      <display_name>Electric Panel: Heating System 2 New Load</display_name>
+      <description>Whether the second heating system is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_mech_vent_fan_new_load</name>
+      <display_name>Electric Panel: Mechanical Ventilation New Load</display_name>
+      <description>Whether the mechanical ventilation is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_whole_house_fan_new_load</name>
+      <display_name>Electric Panel: Whole House Fan New Load</display_name>
+      <description>Whether the whole house fan is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_kitchen_fans_new_load</name>
+      <display_name>Electric Panel: Kitchen Fans New Load</display_name>
+      <description>Whether the kitchen fans is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_bathroom_fans_new_load</name>
+      <display_name>Electric Panel: Bathroom Fans New Load</display_name>
+      <description>Whether the bathroom fans is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_water_heater_new_load</name>
+      <display_name>Electric Panel: Electric Water Heater New Load</display_name>
+      <description>Whether the water heater is a new panel load addition to an existing service panel. Only applies to electric water heater.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_clothes_dryer_new_load</name>
+      <display_name>Electric Panel: Electric Clothes Dryer New Load</display_name>
+      <description>Whether the clothes dryer is a new panel load addition to an existing service panel. Only applies to electric clothes dryer.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_dishwasher_new_load</name>
+      <display_name>Electric Panel: Dishwasher New Load</display_name>
+      <description>Whether the dishwasher is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_cooking_range_new_load</name>
+      <display_name>Electric Panel: Electric Cooking Range/Oven New Load</display_name>
+      <description>Whether the cooking range is a new panel load addition to an existing service panel. Only applies to electric cooking range/oven.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_misc_plug_loads_well_pump_new_load</name>
+      <display_name>Electric Panel: Misc Plug Loads Well Pump New Load</display_name>
+      <description>Whether the well pump is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_misc_plug_loads_vehicle_new_load</name>
+      <display_name>Electric Panel: Misc Plug Loads Vehicle New Load</display_name>
+      <description>Whether the electric vehicle is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_pool_pump_new_load</name>
+      <display_name>Electric Panel: Pool Pump New Load</display_name>
+      <description>Whether the pool pump is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_pool_heater_new_load</name>
+      <display_name>Electric Panel: Electric Pool Heater New Load</display_name>
+      <description>Whether the pool heater is a new panel load addition to an existing service panel. Only applies to electric pool heater.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_permanent_spa_pump_new_load</name>
+      <display_name>Electric Panel: Permanent Spa Pump New Load</display_name>
+      <description>Whether the spa pump is a new panel load addition to an existing service panel.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_electric_permanent_spa_heater_new_load</name>
+      <display_name>Electric Panel: Electric Permanent Spa Heater New Load</display_name>
+      <description>Whether the spa heater is a new panel load addition to an existing service panel. Only applies to electric permanent spa heater.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>electric_panel_load_other_power_rating</name>
+      <display_name>Electric Panel: Other Power Rating</display_name>
+      <description>Specifies the panel load other power rating. This represents the total of all other electric loads that are fastened in place, permanently connected, or located on a specific circuit. For example, garbage disposal, built-in microwave.</description>
+      <type>Double</type>
+      <units>W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>emissions_scenario_names</name>
+      <display_name>emissions_scenario_names</display_name>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>emissions_scenario_names</name>
+      <display_name>Emissions: Scenario Names</display_name>
+      <description>Names of emissions scenarios. If multiple scenarios, use a comma-separated list. If not provided, no emissions scenarios are calculated.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>emissions_types</name>
+      <display_name>Emissions: Types</display_name>
+      <description>Types of emissions (e.g., CO2e, NOx, etc.). If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>emissions_electricity_units</name>
+      <display_name>Emissions: Electricity Units</display_name>
+      <description>Electricity emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MWh and kg/MWh are allowed.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>emissions_electricity_filepaths</name>
+      <display_name>Emissions: Electricity File Paths</display_name>
+      <description>Electricity emissions factors values, specified as an absolute/relative path to a file with hourly factors. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>emissions_fossil_fuel_units</name>
+      <display_name>Emissions: Fossil Fuel Units</display_name>
+      <description>Fossil fuel emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MBtu and kg/MBtu are allowed.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>emissions_natural_gas_values</name>
+      <display_name>Emissions: Natural Gas Values</display_name>
+      <description>Natural gas emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>emissions_propane_values</name>
+      <display_name>Emissions: Propane Values</display_name>
+      <description>Propane emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>emissions_fuel_oil_values</name>
+      <display_name>Emissions: Fuel Oil Values</display_name>
+      <description>Fuel oil emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>emissions_wood_values</name>
+      <display_name>Emissions: Wood Values</display_name>
+      <description>Wood emissions factors values, specified as an annual factor. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_scenario_names</name>
+      <display_name>Utility Bills: Scenario Names</display_name>
+      <description>Names of utility bill scenarios. If multiple scenarios, use a comma-separated list. If not provided, no utility bills scenarios are calculated.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_electricity_filepaths</name>
+      <display_name>Utility Bills: Electricity File Paths</display_name>
+      <description>Electricity tariff file specified as an absolute/relative path to a file with utility rate structure information. Tariff file must be formatted to OpenEI API version 7. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_electricity_fixed_charges</name>
+      <display_name>Utility Bills: Electricity Fixed Charges</display_name>
+      <description>Electricity utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_natural_gas_fixed_charges</name>
+      <display_name>Utility Bills: Natural Gas Fixed Charges</display_name>
+      <description>Natural gas utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_propane_fixed_charges</name>
+      <display_name>Utility Bills: Propane Fixed Charges</display_name>
+      <description>Propane utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_fuel_oil_fixed_charges</name>
+      <display_name>Utility Bills: Fuel Oil Fixed Charges</display_name>
+      <description>Fuel oil utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_wood_fixed_charges</name>
+      <display_name>Utility Bills: Wood Fixed Charges</display_name>
+      <description>Wood utility bill monthly fixed charges. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_electricity_marginal_rates</name>
+      <display_name>Utility Bills: Electricity Marginal Rates</display_name>
+      <description>Electricity utility bill marginal rates. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_natural_gas_marginal_rates</name>
+      <display_name>Utility Bills: Natural Gas Marginal Rates</display_name>
+      <description>Natural gas utility bill marginal rates. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_propane_marginal_rates</name>
+      <display_name>Utility Bills: Propane Marginal Rates</display_name>
+      <description>Propane utility bill marginal rates. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_fuel_oil_marginal_rates</name>
+      <display_name>Utility Bills: Fuel Oil Marginal Rates</display_name>
+      <description>Fuel oil utility bill marginal rates. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_wood_marginal_rates</name>
+      <display_name>Utility Bills: Wood Marginal Rates</display_name>
+      <description>Wood utility bill marginal rates. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_pv_compensation_types</name>
+      <display_name>Utility Bills: PV Compensation Types</display_name>
+      <description>Utility bill PV compensation types. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_pv_net_metering_annual_excess_sellback_rate_types</name>
+      <display_name>Utility Bills: PV Net Metering Annual Excess Sellback Rate Types</display_name>
+      <description>Utility bill PV net metering annual excess sellback rate types. Only applies if the PV compensation type is 'NetMetering'. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_pv_net_metering_annual_excess_sellback_rates</name>
+      <display_name>Utility Bills: PV Net Metering Annual Excess Sellback Rates</display_name>
+      <description>Utility bill PV net metering annual excess sellback rates. Only applies if the PV compensation type is 'NetMetering' and the PV annual excess sellback rate type is 'User-Specified'. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_pv_feed_in_tariff_rates</name>
+      <display_name>Utility Bills: PV Feed-In Tariff Rates</display_name>
+      <description>Utility bill PV annual full/gross feed-in tariff rates. Only applies if the PV compensation type is 'FeedInTariff'. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_pv_monthly_grid_connection_fee_units</name>
+      <display_name>Utility Bills: PV Monthly Grid Connection Fee Units</display_name>
+      <description>Utility bill PV monthly grid connection fee units. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>utility_bill_pv_monthly_grid_connection_fees</name>
+      <display_name>Utility Bills: PV Monthly Grid Connection Fees</display_name>
+      <description>Utility bill PV monthly grid connection fees. If multiple scenarios, use a comma-separated list.</description>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
   </arguments>
   <outputs />
   <provenances />
@@ -244,7 +845,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>EB16654F</checksum>
+      <checksum>DF9D9432</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -269,6 +870,36 @@
       <filetype>json</filetype>
       <usage_type>resource</usage_type>
       <checksum>055326E7</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>E902477F</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_rated_capacity__multi_family.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>49D707DF</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_rated_capacity__single_family_electric_heating.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>AAC795D7</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel/electrical_panel_rated_capacity__single_family_nonelectric_heating.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>FFF0B8A5</checksum>
+    </file>
+    <file>
+      <filename>electrical_panel.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>DF7A3CEF</checksum>
     </file>
     <file>
       <filename>ev_flexibility/ev_schedule_modifier.rb</filename>

@@ -5,7 +5,6 @@
 
 require 'openstudio'
 require_relative 'resources/constants'
-require_relative 'resources/electrical_panel'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
 require_relative '../../resources/hpxml-measures/BuildResidentialHPXML/resources/options'
 
@@ -79,6 +78,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The building unit number (between 1 and the number of samples).')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('vintage', false)
+    arg.setDisplayName('Building Construction: Vintage')
+    arg.setDescription('The building vintage, used for informational purposes only.')
+    args << arg
+
     unit_type_choices = OpenStudio::StringVector.new
     unit_type_choices << HPXML::ResidentialTypeSFD
     unit_type_choices << HPXML::ResidentialTypeSFA
@@ -96,14 +100,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The number of units in the building.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('schedules_space_heating_unavailable_days', false)
-    arg.setDisplayName('Schedules: Space Heating Unavailability')
-    arg.setDescription('Number of days space heating equipment is unavailable.')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('schedules_space_cooling_unavailable_days', false)
-    arg.setDisplayName('Schedules: Space Cooling Unavailability')
-    arg.setDescription('Number of days space cooling equipment is unavailable.')
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ceiling_insulation_r', true)
+    arg.setDisplayName('Ceiling: Insulation Nominal R-value')
+    arg.setUnits('h-ft^2-R/Btu')
+    arg.setDescription('Nominal R-value for the ceiling (attic floor).')
+    arg.setDefaultValue(0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('geometry_unit_cfa_bin', true)
@@ -117,11 +118,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription("The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or '#{Constants::Auto}'.")
     arg.setUnits('ft^2')
     arg.setDefaultValue('2000')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument.makeStringArgument('vintage', false)
-    arg.setDisplayName('Building Construction: Vintage')
-    arg.setDescription('The building vintage, used for informational purposes only.')
     args << arg
 
     level_choices = OpenStudio::StringVector.new
@@ -263,6 +259,16 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(false)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('schedules_space_heating_unavailable_days', false)
+    arg.setDisplayName('Schedules: Space Heating Unavailability')
+    arg.setDescription('Number of days space heating equipment is unavailable.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('schedules_space_cooling_unavailable_days', false)
+    arg.setDisplayName('Schedules: Space Cooling Unavailability')
+    arg.setDescription('Number of days space cooling equipment is unavailable.')
+    args << arg
+
     return args
   end
 
@@ -292,10 +298,25 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
     args_to_delete = args.keys - arg_names # these are the extra ones added in the arguments section
 
+    # Make all the detailed properties in the option TSVs available to this measure too
     new_arg_keys = update_args_hash_with_detailed_properties(args: args)
 
+    # Get inputs
+    cfa = args[:geometry_unit_cfa]
+    cfa_bin = args[:geometry_unit_cfa_bin]
+    unit_type = args[:geometry_facility_type]
+    vintage = args[:vintage]
+    year_built = args[:building_year_built]
+    n_floors = Float(args[:geometry_num_floors_above_grade])
+    # avg_ceiling_height = Float(args[:geometry_ceiling_height_height])
+    if [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include? args[:geometry_facility_type]
+      n_units = Float(args[:geometry_building_num_units])
+      horiz_location = args[:geometry_unit_horizontal_location]
+      unit_level = args[:geometry_unit_level]
+    end
+
     # Conditioned floor area
-    if args[:geometry_unit_cfa] == Constants::Auto
+    if cfa == Constants::Auto
       # TODO: Disaggregate detached and mobile home
       cfas = { ['0-499', HPXML::ResidentialTypeSFD] => 298, # AHS 2021, 1 detached and mobile home weighted average
                ['0-499', HPXML::ResidentialTypeSFA] => 273, # AHS 2021, 1 attached
@@ -333,31 +354,21 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
                ['4000+', HPXML::ResidentialTypeSFA] => 7414, # AHS 2019, 1 attached
                ['4000+', HPXML::ResidentialTypeApartment] => 6348, # AHS 2021, 4,000 or more all unit average
                ['4000+', HPXML::ResidentialTypeManufactured] => 5587 } # AHS 2021, 1 detached and mobile home weighted average
-      cfa = cfas[[args[:geometry_unit_cfa_bin], args[:geometry_facility_type]]]
+      cfa = cfas[[cfa_bin, unit_type]]
       if cfa.nil?
-        runner.registerError("ResStockArguments: Could not look up conditioned floor area for '#{args[:geometry_unit_cfa_bin]}' and '#{args[:geometry_facility_type]}'.")
+        runner.registerError("ResStockArguments: Could not look up conditioned floor area for '#{cfa_bin}' and '#{unit_type}'.")
         return false
       end
       args[:geometry_unit_conditioned_floor_area] = Float(cfa)
     else
-      args[:geometry_unit_conditioned_floor_area] = args[:geometry_unit_cfa]
+      args[:geometry_unit_conditioned_floor_area] = cfa
     end
 
     # Vintage
-    if !args[:vintage].nil? && args[:building_year_built] == Constants::Auto
-      args[:building_year_built] = Integer(Float(args[:vintage].gsub(/[^0-9]/, ''))) # strip non-numeric
+    if !vintage.nil? && year_built == Constants::Auto
+      year_built = Integer(Float(vintage.gsub(/[^0-9]/, ''))) # strip non-numeric
+      args[:building_year_built] = year_built
     end
-
-    # Num Occupants
-    if args[:geometry_unit_num_occupants] == Constants::Auto
-      args[:geometry_unit_num_occupants] = Geometry.get_occupancy_default_num(args[:geometry_unit_num_bedrooms])
-    end
-
-    # Plug Loads
-    args[:misc_plug_loads_television_usage_multiplier] = args[:misc_plug_loads_television_usage_multiplier]
-    args[:misc_plug_loads_other_usage_multiplier] = args[:misc_plug_loads_other_usage_multiplier]
-    args[:misc_plug_loads_well_pump_usage_multiplier] = args[:misc_plug_loads_well_pump_usage_multiplier]
-    args[:misc_plug_loads_vehicle_present] = false
 
     # HVAC Setpoints
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
@@ -380,6 +391,12 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
         args[hvac_control_season_period] = Constants::BuildingAmerica
       end
     end
+
+    # Unavailable Periods
+    # FIXME: Move to ResStockArgumentsPostHPXML
+    schedules_unavailable_period_types = []
+    schedules_unavailable_period_dates = []
+    schedules_unavailable_period_window_natvent_availabilities = []
 
     # HVAC Unavailability
     if (args[:schedules_space_heating_unavailable_days] > 0) || (args[:schedules_space_cooling_unavailable_days] > 0)
@@ -442,19 +459,19 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     args[:schedules_unavailable_period_window_natvent_availabilities] = schedules_unavailable_period_window_natvent_availabilities.join(', ')
 
     # HVAC Secondary
-    if args[:heating_system_2_type] != 'none'
-      if args[:heating_system_type] != 'none'
-        if ((args[:heating_system_fraction_heat_load_served] + args[:heating_system_2_fraction_heat_load_served]) > 1.0)
-          info_msg = "Adjusted fraction of heat load served by the primary heating system (#{args[:heating_system_fraction_heat_load_served]}"
-          args[:heating_system_fraction_heat_load_served] = 1.0 - args[:heating_system_2_fraction_heat_load_served]
-          info_msg += " to #{args[:heating_system_fraction_heat_load_served]}) to allow for a secondary heating system (#{args[:heating_system_2_fraction_heat_load_served]})."
+    if args[:hvac_heating_system_2] != 'None'
+      if args[:hvac_heating_system] != 'None'
+        if ((args[:hvac_heating_system_heating_load_served].to_f + args[:hvac_heating_system_2_heating_load_served].to_f) > 1.0)
+          info_msg = "Adjusted fraction of heat load served by the primary heating system (#{args[:hvac_heating_system_heating_load_served]}"
+          args[:hvac_heating_system_heating_load_served] = "#{1.0 - args[:hvac_heating_system_2_heating_load_served].to_f}%"
+          info_msg += " to #{args[:hvac_heating_system_heating_load_served]}) to allow for a secondary heating system (#{args[:hvac_heating_system_2_heating_load_served]})."
           runner.registerInfo(info_msg)
         end
-      elsif args[:heat_pump_type] != 'none'
-        if ((args[:heat_pump_fraction_heat_load_served] + args[:heating_system_2_fraction_heat_load_served]) > 1.0)
-          info_msg = "Adjusted fraction of heat load served by the primary heating system (#{args[:heat_pump_fraction_heat_load_served]}"
-          args[:heat_pump_fraction_heat_load_served] = 1.0 - args[:heating_system_2_fraction_heat_load_served]
-          info_msg += " to #{args[:heat_pump_fraction_heat_load_served]}) to allow for a secondary heating system (#{args[:heating_system_2_fraction_heat_load_served]})."
+      elsif args[:hvac_heat_pump] != 'none'
+        if ((args[:hvac_heat_pump_heating_load_served].to_f + args[:hvac_heating_system_2_heating_load_served].to_f) > 1.0)
+          info_msg = "Adjusted fraction of heat load served by the primary heating system (#{args[:hvac_heat_pump_heating_load_served]}"
+          args[:hvac_heat_pump_heating_load_served] = "#{1.0 - args[:hvac_heating_system_2_heating_load_served].to_f}%"
+          info_msg += " to #{args[:hvac_heat_pump_heating_load_served]}) to allow for a secondary heating system (#{args[:hvac_heating_system_2_heating_load_served]})."
           runner.registerInfo(info_msg)
         end
       end
@@ -479,12 +496,8 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     fblr_walls_are_adiabatic = [false, false, false, false]
 
     # Map corridor arguments to adiabatic walls and shading
-    if [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include? args[:geometry_facility_type]
-      n_floors = Float(args[:geometry_num_floors_above_grade])
-      n_units = Float(args[:geometry_building_num_units])
-      horiz_location = args[:geometry_unit_horizontal_location]
-
-      if args[:geometry_facility_type] == HPXML::ResidentialTypeApartment
+    if [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include? unit_type
+      if unit_type == HPXML::ResidentialTypeApartment
         n_units_per_floor = n_units / n_floors
         has_rear_units = false
         if n_units_per_floor >= 4 && (corridor_position == 'Double Exterior' || corridor_position == 'None')
@@ -513,7 +526,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
           args[:overhangs_front_distance_to_top_of_window] = 1
         end
 
-      elsif args[:geometry_facility_type] == HPXML::ResidentialTypeSFA
+      elsif unit_type == HPXML::ResidentialTypeSFA
         n_units_per_floor = n_units
         has_rear_units = false
       end
@@ -565,98 +578,44 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     }[fblr_walls_are_adiabatic]
 
     # Unit Type
-    num_stories = args[:geometry_num_floors_above_grade]
-    if args[:geometry_facility_type] == HPXML::ResidentialTypeApartment
-      num_stories = 1
-    end
-    stories_str = (num_stories == 1 ? '1 Story' : "#{num_stories} Stories")
-    args[:geometry_unit_type] = "#{geometry_facility_type}, #{stories_str}"
+    stories_str = (unit_type == HPXML::ResidentialTypeApartment || n_floors == 1 ? '1 Story' : "#{Integer(n_floors)} Stories")
+    unit_str = { HPXML::ResidentialTypeSFD => 'Single-Family Detached',
+                 HPXML::ResidentialTypeSFA => 'Single-Family Attached',
+                 HPXML::ResidentialTypeApartment => 'Apartment Unit',
+                 HPXML::ResidentialTypeManufactured => 'Manufactured Home' }[unit_type]
+    args[:geometry_unit_type] = "#{unit_str}, #{stories_str}"
 
     # Adiabatic Floor/Ceiling
-    if not args[:geometry_unit_level].nil?
-      if args[:geometry_unit_level] == 'Bottom'
-        if args[:geometry_num_floors_above_grade] > 1 # this could be "bottom" of a 1-story building
-          args[:geometry_attic_type] = HPXML::AtticTypeBelowApartment
-        end
-      elsif args[:geometry_unit_level] == 'Middle'
-        args[:geometry_foundation_type] = HPXML::FoundationTypeAboveApartment
-        args[:geometry_attic_type] = HPXML::AtticTypeBelowApartment
-      elsif args[:geometry_unit_level] == 'Top'
-        args[:geometry_foundation_type] = HPXML::FoundationTypeAboveApartment
+    if not unit_level.nil? && n_floors > 1
+      if unit_level == 'Bottom'
+        args[:geometry_attic_type] = 'Below Apartment'
+      elsif unit_level == 'Middle'
+        args[:geometry_foundation_type] = 'Above Apartment'
+        args[:geometry_attic_type] = 'Below Apartment'
+      elsif unit_level == 'Top'
+        args[:geometry_foundation_type] = 'Above Apartment'
       end
     end
 
     # Height Above Grade
-    if args[:geometry_facility_type] == HPXML::ResidentialTypeApartment
-      n_floors = Float(args[:geometry_num_floors_above_grade])
-      avg_ceiling_height = args[:geometry_average_ceiling_height]
+    # FIXME
+    # if unit_type == HPXML::ResidentialTypeApartment
+    # if unit_level == 'Top'
+    # args[:geometry_unit_height_above_grade] = (n_floors - 1) * avg_ceiling_height
+    # elsif unit_level == 'Middle'
+    # args[:geometry_unit_height_above_grade] = (n_floors - 1) / 2.0 * avg_ceiling_height
+    # elsif unit_level == 'Bottom'
+    # args[:geometry_unit_height_above_grade] = Constants::Auto
+    # end
+    # else
+    # args[:geometry_unit_height_above_grade] = Constants::Auto
+    # end
 
-      if args[:geometry_unit_level] == 'Top'
-        args[:geometry_unit_height_above_grade] = (n_floors - 1) * avg_ceiling_height
-      elsif args[:geometry_unit_level] == 'Middle'
-        args[:geometry_unit_height_above_grade] = (n_floors - 1) / 2.0 * avg_ceiling_height
-      elsif args[:geometry_unit_level] == 'Bottom'
-        args[:geometry_unit_height_above_grade] = Constants::Auto
-      end
-    else
-      args[:geometry_unit_height_above_grade] = Constants::Auto
+    # Electric Vehicle
+    # Prevent OS-HPXML warning about EV w/o an EV charger
+    if args[:electric_vehicle_charger] == 'None'
+      args[:electric_vehicle] = 'None'
     end
-
-    # Electric Panel
-    args[:electric_panel_service_feeders_load_calculation_types] = "#{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased}"
-    # FIXME Ideas for supporting meter-based calculations in upgrades:
-    # - populate the electric_panel_baseline_peak_electricity_power argument from ApplyUpgrade with values from (pre-run) baseline simulations
-    # - record an additional, e.g., report_simulation_output.electric_panel_load_new, output so that we can post-process the meter-based calculation
-    # args[:electric_panel_service_feeders_load_calculation_types] += ", #{HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingMeterBased}"
-
-    panel_sampler = ElectricalPanelSampler.new(runner: runner, **args)
-    cap_bin, cap_val = panel_sampler.assign_rated_capacity(args: args)
-
-    args[:electric_panel_service_max_current_rating_bin] = cap_bin
-    args[:electric_panel_service_max_current_rating] = cap_val
-
-    breaker_spaces_headroom = panel_sampler.assign_breaker_space_headroom(args: args)
-    args[:electric_panel_breaker_spaces_headroom] = breaker_spaces_headroom
-
-    # Assign miscellaneous permanently connected appliance loads
-    if args[:electric_panel_load_other_power_rating].nil?
-      args[:electric_panel_load_other_power_rating] = 0
-    end
-    # Assume all homes have a microwave
-    if args[:geometry_unit_num_bedrooms] <= 2
-      microwave_power = 900 # W, small, <= 0.9 cu ft, 1-2 ppl
-    elsif args[:geometry_unit_num_bedrooms] <= 4
-      microwave_power = 1100 # W, medium, <= 1.6 cu ft, 3-4 ppl
-    else
-      microwave_power = 1250 # W, large, 1.7-2.2 cu ft, 5+ ppl
-    end
-
-    garbage_disposal_ownership = 0.52 # AHS 2013
-    if Random.new(args[:building_id]).rand > garbage_disposal_ownership
-      garbage_disposal_power = 0
-    else
-      # Power estimated from avg load amp not HP rating, from InSinkErators
-      if args[:geometry_unit_num_bedrooms] <= 1
-        garbage_disposal_power = 672 # W, 1/3 HP, avg load 5.6A, 1-2 ppl
-      elsif args[:geometry_unit_num_bedrooms] <= 3
-        garbage_disposal_power = 756 # W, 1/2 HP, avg load 6.3A, 2-4 ppl
-      elsif args[:geometry_unit_num_bedrooms] <= 4
-        garbage_disposal_power = 1140 # W, 3/4 HP, avg load 9.5A, 3-5 ppl
-      else
-        garbage_disposal_power = 1224 # W, 1 HP, avg load 10.2A, 4+ ppl
-      end
-    end
-
-    if args[:geometry_garage_width] == 0 && args[:geometry_garage_depth] == 0
-      garage_door_power = 0
-    else
-      # Assume one automatic door opener if has garage, regardless of no. garages
-      garage_door_power = 373 # W, 1/2 HP (1 mech HP = 745.7 W)
-    end
-
-    args[:electric_panel_load_other_power_rating] += microwave_power
-    args[:electric_panel_load_other_power_rating] += garbage_disposal_power
-    args[:electric_panel_load_other_power_rating] += garage_door_power
 
     # Register values to runner
     args.each do |arg_name, arg_value|
@@ -738,17 +697,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # makes detailed properties available in the args hash
     orig_args = args.dup
 
-    Dir["#{File.dirname(__FILE__)}../../resources/hpxml-measures/BuildResidentialHPXML/resources/options/*.tsv"].each do |tsv_filepath|
+    Dir["#{File.dirname(__FILE__)}/../../resources/hpxml-measures/BuildResidentialHPXML/resources/options/*.tsv"].each do |tsv_filepath|
       tsv_filename = File.basename(tsv_filepath)
       arg_name = File.basename(tsv_filename, File.extname(tsv_filename)).to_sym
       get_option_properties(args, tsv_filename, args[arg_name])
     end
-
-    get_option_properties(args, 'heating_system.tsv', args[:heating_system])
-    get_option_properties(args, 'cooling_system.tsv', args[:cooling_system])
-    get_option_properties(args, 'heat_pump.tsv', args[:heat_pump])
-    get_option_properties(args, 'heat_pump_backup.tsv', args[:heat_pump_backup])
-    get_option_properties(args, 'heating_system_2.tsv', args[:heating_system_2])
 
     new_arg_keys = args.keys - orig_args.keys
     return new_arg_keys

@@ -28,7 +28,7 @@
         "hvac_heat_pump_backup": "Integrated, Electricity, 100% Efficiency",
         "hvac_heat_pump_backup_capacity": "100 kBtu/hr",
         "hvac_ducts": "15% Leakage, Uninsulated",
-        "dhw_water_heater": "Electricity, Heat Pump, UEF=3.50",
+        "dhw_water_heater": "Electricity, Heat Pump, UEF 3.50",
         "enclosure_air_leakage": "3 ACH50",
         "enclosure_ceiling": "R-38",
         "enclosure_roof": "Uninsulated",
