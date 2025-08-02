@@ -1,7 +1,4 @@
-Dependency=Geometry Garage	Option=None	Option=10 kWh	Option=20 kWh, Outside	Option=20 kWh, Garage	Option=20 kWh, 80% Round Trip Efficiency	sampling_probability
-None	0.25	0.25	0.25	0	0.25	0.94976
-1 Car	0.2	0.2	0.2	0.2	0.2	0.0286351
-2 Car	0.2	0.2	0.2	0.2	0.2	0.0149177
-3 Car	0.2	0.2	0.2	0.2	0.2	0.00668725
+Option=None	Option=10 kWh	Option=20 kWh	sampling_probability
+0.333333333	0.333333333	0.333333333	1
 # Created by: manually created
 # Description: The presence, size, location, and efficiency of an onsite battery (not modeled in project_national).

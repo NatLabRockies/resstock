@@ -1,4 +1,4 @@
-Option=None	Option=65 pints/day, 50% RH	Option=65 pints/day, 60% RH	Option=65 pints/day, 50% RH, 2.0 EF	sampling_probability
-0.25	0.25	0.25	0.25	1
+Option=None	sampling_probability
+1	1
 # Created by: manually created
 # Description: Presence, water removal rate, and humidity setpoint of the dehumidifier.

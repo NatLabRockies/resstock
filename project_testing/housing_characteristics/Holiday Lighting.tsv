@@ -1,9 +1,4 @@
-Dependency=Lighting	Option=No Exterior Use	Option=None	sampling_probability
-100% CFL	1	0	0.166667
-100% Incandescent	1	0	0.166667
-100% LED	1	0	0.166667
-20% LED	1	0	0.166667
-60% CFL	1	0	0.166667
-None	0	1	0.166667
+Option=No Exterior Use	sampling_probability
+1	1
 # Created by: sources\other\tsv_maker.py
 # Description: Use of holiday lighting (not currently modeled separately from other exterior lighting).

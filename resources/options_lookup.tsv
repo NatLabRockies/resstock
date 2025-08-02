@@ -42,10 +42,10 @@ ASHRAE IECC Climate Zone 2004	7A	ResStockArguments	location_site_type=Default
 ASHRAE IECC Climate Zone 2004	7AK	ResStockArguments	location_site_type=Default
 ASHRAE IECC Climate Zone 2004	7B	ResStockArguments	location_site_type=Default
 ASHRAE IECC Climate Zone 2004	8AK	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	2A - FL, GA, AL, MS
-ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	2A - TX, LA
 ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	1A - FL
 ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	1A - HI
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	2A - FL, GA, AL, MS
+ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	2A - TX, LA
 ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	2B
 ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	3A
 ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	3B
@@ -71,14 +71,6 @@ Area Median Income	80-100%
 Area Median Income	Not Available
 Bathroom Spot Vent Hour	Hour0	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=0
 Bathroom Spot Vent Hour	Hour1	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=1
-Bathroom Spot Vent Hour	Hour2	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=2
-Bathroom Spot Vent Hour	Hour3	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=3
-Bathroom Spot Vent Hour	Hour4	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=4
-Bathroom Spot Vent Hour	Hour5	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=5
-Bathroom Spot Vent Hour	Hour6	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=6
-Bathroom Spot Vent Hour	Hour7	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=7
-Bathroom Spot Vent Hour	Hour8	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=8
-Bathroom Spot Vent Hour	Hour9	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=9
 Bathroom Spot Vent Hour	Hour10	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=10
 Bathroom Spot Vent Hour	Hour11	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=11
 Bathroom Spot Vent Hour	Hour12	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=12
@@ -89,13 +81,21 @@ Bathroom Spot Vent Hour	Hour16	ResStockArgumentsPostHPXML	bathroom_fans_start_ho
 Bathroom Spot Vent Hour	Hour17	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=17
 Bathroom Spot Vent Hour	Hour18	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=18
 Bathroom Spot Vent Hour	Hour19	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=19
+Bathroom Spot Vent Hour	Hour2	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=2
 Bathroom Spot Vent Hour	Hour20	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=20
 Bathroom Spot Vent Hour	Hour21	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=21
 Bathroom Spot Vent Hour	Hour22	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=22
 Bathroom Spot Vent Hour	Hour23	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=23
-Battery	None	ResStockArguments	battery=None
+Bathroom Spot Vent Hour	Hour3	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=3
+Bathroom Spot Vent Hour	Hour4	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=4
+Bathroom Spot Vent Hour	Hour5	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=5
+Bathroom Spot Vent Hour	Hour6	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=6
+Bathroom Spot Vent Hour	Hour7	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=7
+Bathroom Spot Vent Hour	Hour8	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=8
+Bathroom Spot Vent Hour	Hour9	ResStockArgumentsPostHPXML	bathroom_fans_start_hour=9
 Battery	10 kWh	ResStockArguments	battery=10.0 kWh
 Battery	20 kWh	ResStockArguments	battery=20.0 kWh
+Battery	None	ResStockArguments	battery=None
 Bedrooms	1	ResStockArguments	geometry_unit_num_bedrooms=1	geometry_unit_num_bathrooms=Default
 Bedrooms	2	ResStockArguments	geometry_unit_num_bedrooms=2	geometry_unit_num_bathrooms=Default
 Bedrooms	3	ResStockArguments	geometry_unit_num_bedrooms=3	geometry_unit_num_bathrooms=Default
@@ -198,13 +198,13 @@ City	AZ, Mesa
 City	AZ, Oro Valley
 City	AZ, Peoria
 City	AZ, Phoenix
-City	AZ, Prescott Valley
 City	AZ, Prescott
+City	AZ, Prescott Valley
 City	AZ, San Tan Valley
 City	AZ, Scottsdale
 City	AZ, Sierra Vista
-City	AZ, Sun City West
 City	AZ, Sun City
+City	AZ, Sun City West
 City	AZ, Surprise
 City	AZ, Tempe
 City	AZ, Tucson
@@ -236,8 +236,8 @@ City	CA, Castro Valley
 City	CA, Cathedral City
 City	CA, Cerritos
 City	CA, Chico
-City	CA, Chino Hills
 City	CA, Chino
+City	CA, Chino Hills
 City	CA, Chula Vista
 City	CA, Citrus Heights
 City	CA, Clovis
@@ -509,15 +509,15 @@ City	FL, Marco Island
 City	FL, Margate
 City	FL, Melbourne
 City	FL, Merritt Island
+City	FL, Miami
 City	FL, Miami Beach
 City	FL, Miami Gardens
-City	FL, Miami
 City	FL, Miramar
 City	FL, Naples
 City	FL, New Smyrna Beach
 City	FL, North Fort Myers
-City	FL, North Miami Beach
 City	FL, North Miami
+City	FL, North Miami Beach
 City	FL, North Port
 City	FL, Oakland Park
 City	FL, Ocala
@@ -527,8 +527,8 @@ City	FL, Palm Bay
 City	FL, Palm Beach Gardens
 City	FL, Palm Coast
 City	FL, Palm Harbor
-City	FL, Panama City Beach
 City	FL, Panama City
+City	FL, Panama City Beach
 City	FL, Pembroke Pines
 City	FL, Pensacola
 City	FL, Pine Hills
@@ -680,6 +680,7 @@ City	IN, Portage
 City	IN, Richmond
 City	IN, South Bend
 City	IN, Terre Haute
+City	In another census Place
 City	KS, Hutchinson
 City	KS, Kansas City
 City	KS, Lawrence
@@ -778,8 +779,8 @@ City	ME, Portland
 City	MI, Ann Arbor
 City	MI, Battle Creek
 City	MI, Bay City
-City	MI, Dearborn Heights
 City	MI, Dearborn
+City	MI, Dearborn Heights
 City	MI, Detroit
 City	MI, Farmington Hills
 City	MI, Flint
@@ -962,13 +963,14 @@ City	NY, Utica
 City	NY, West Seneca
 City	NY, White Plains
 City	NY, Yonkers
+City	Not in a census Place
 City	OH, Akron
 City	OH, Beavercreek
 City	OH, Boardman
 City	OH, Canton
 City	OH, Cincinnati
-City	OH, Cleveland Heights
 City	OH, Cleveland
+City	OH, Cleveland Heights
 City	OH, Columbus
 City	OH, Cuyahoga Falls
 City	OH, Dayton
@@ -1225,8 +1227,8 @@ City	WA, Sammamish
 City	WA, Seattle
 City	WA, Shoreline
 City	WA, South Hill
-City	WA, Spokane Valley
 City	WA, Spokane
+City	WA, Spokane Valley
 City	WA, Tacoma
 City	WA, Vancouver
 City	WA, Yakima
@@ -1256,19 +1258,17 @@ City	WV, Huntington
 City	WV, Parkersburg
 City	WY, Casper
 City	WY, Cheyenne
-City	In another census Place
-City	Not in a census Place
-Clothes Dryer	None	ResStockArguments	appliance_clothes_dryer=None
 Clothes Dryer	Electric	ResStockArguments	appliance_clothes_dryer=Electricity, Standard, 100% Usage
 Clothes Dryer	Gas	ResStockArguments	appliance_clothes_dryer=Natural Gas, Standard, 100% Usage
+Clothes Dryer	None	ResStockArguments	appliance_clothes_dryer=None
 Clothes Dryer	Propane	ResStockArguments	appliance_clothes_dryer=Propane, Standard, 100% Usage
 Clothes Dryer	Void
 Clothes Dryer Usage Level	100% Usage	ResStockArgumentsPostHPXML	clothes_dryer_usage_multiplier=1.0
 Clothes Dryer Usage Level	120% Usage	ResStockArgumentsPostHPXML	clothes_dryer_usage_multiplier=1.2
 Clothes Dryer Usage Level	80% Usage	ResStockArgumentsPostHPXML	clothes_dryer_usage_multiplier=0.8
+Clothes Washer	EnergyStar	ResStockArguments	appliance_clothes_washer=EnergyStar, 2006-2017, 100% Usage
 Clothes Washer	None	ResStockArguments	appliance_clothes_washer=None
 Clothes Washer	Standard	ResStockArguments	appliance_clothes_washer=Standard, 2008-2017, 100% Usage
-Clothes Washer	EnergyStar	ResStockArguments	appliance_clothes_washer=EnergyStar, 2006-2017, 100% Usage
 Clothes Washer	Void
 Clothes Washer Presence	None
 Clothes Washer Presence	Void
@@ -1276,10 +1276,10 @@ Clothes Washer Presence	Yes
 Clothes Washer Usage Level	100% Usage	ResStockArgumentsPostHPXML	clothes_washer_usage_multiplier=1.0
 Clothes Washer Usage Level	120% Usage	ResStockArgumentsPostHPXML	clothes_washer_usage_multiplier=1.2
 Clothes Washer Usage Level	80% Usage	ResStockArgumentsPostHPXML	clothes_washer_usage_multiplier=0.8
-Cooking Range	None	ResStockArguments	appliance_cooking_range_oven=None
-Cooking Range	Electric Resistance	ResStockArguments	appliance_cooking_range_oven=Electricity, Standard, Non-Convection, 100% Usage
 Cooking Range	Electric Induction	ResStockArguments	appliance_cooking_range_oven=Electricity, Induction, Non-Convection, 100% Usage
+Cooking Range	Electric Resistance	ResStockArguments	appliance_cooking_range_oven=Electricity, Standard, Non-Convection, 100% Usage
 Cooking Range	Gas	ResStockArguments	appliance_cooking_range_oven=Natural Gas, Non-Convection, 100% Usage
+Cooking Range	None	ResStockArguments	appliance_cooking_range_oven=None
 Cooking Range	Propane	ResStockArguments	appliance_cooking_range_oven=Propane, Non-Convection, 100% Usage
 Cooking Range	Void
 Cooking Range Usage Level	100% Usage	ResStockArgumentsPostHPXML	cooking_range_oven_usage_multiplier=1.0
@@ -1366,15 +1366,15 @@ Cooling Setpoint Offset Period	Night Setup -3h	ResStockArguments	hvac_control_co
 Cooling Setpoint Offset Period	Night Setup -4h	ResStockArguments	hvac_control_cooling_weekday_setpoint_schedule=1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1	hvac_control_cooling_weekend_setpoint_schedule=1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1
 Cooling Setpoint Offset Period	Night Setup -5h	ResStockArguments	hvac_control_cooling_weekday_setpoint_schedule=1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1	hvac_control_cooling_weekend_setpoint_schedule=1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1
 Cooling Setpoint Offset Period	None	ResStockArguments	hvac_control_cooling_weekday_setpoint_schedule=0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	hvac_control_cooling_weekend_setpoint_schedule=0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Cooling Unavailable Days	Never	ResStockArguments	schedules_space_cooling_unavailable_days=0
 Cooling Unavailable Days	1 day	ResStockArguments	schedules_space_cooling_unavailable_days=1
-Cooling Unavailable Days	3 days	ResStockArguments	schedules_space_cooling_unavailable_days=3
+Cooling Unavailable Days	1 month	ResStockArguments	schedules_space_cooling_unavailable_days=30
 Cooling Unavailable Days	1 week	ResStockArguments	schedules_space_cooling_unavailable_days=7
 Cooling Unavailable Days	2 weeks	ResStockArguments	schedules_space_cooling_unavailable_days=14
-Cooling Unavailable Days	1 month	ResStockArguments	schedules_space_cooling_unavailable_days=30
+Cooling Unavailable Days	3 days	ResStockArguments	schedules_space_cooling_unavailable_days=3
 Cooling Unavailable Days	3 months	ResStockArguments	schedules_space_cooling_unavailable_days=90
-Cooling Unavailable Days	Year round	ResStockArguments	schedules_space_cooling_unavailable_days=365
+Cooling Unavailable Days	Never	ResStockArguments	schedules_space_cooling_unavailable_days=0
 Cooling Unavailable Days	Void
+Cooling Unavailable Days	Year round	ResStockArguments	schedules_space_cooling_unavailable_days=365
 Corridor	Double Exterior	ResStockArguments	geometry_corridor_position=Double Exterior	geometry_corridor_width=10
 Corridor	Double-Loaded Interior	ResStockArguments	geometry_corridor_position=Double-Loaded Interior	geometry_corridor_width=10
 Corridor	None	ResStockArguments	geometry_corridor_position=None	geometry_corridor_width=0
@@ -9161,9 +9161,9 @@ Demand Flexibility HVAC	Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
 Demand Flexibility HVAC	Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=2
 Demand Flexibility HVAC	Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=4
 Demand Flexibility Random Shift	30 minutes	ResStockArgumentsPostHPXML	flex_random_shift_minutes=30
-Dishwasher	None	ResStockArguments	appliance_dishwasher=None
 Dishwasher	290 Rated kWh	ResStockArguments	appliance_dishwasher=EnergyStar, Standard, 100% Usage
 Dishwasher	318 Rated kWh	ResStockArguments	appliance_dishwasher=Federal Minimum, Standard, 100% Usage
+Dishwasher	None	ResStockArguments	appliance_dishwasher=None
 Dishwasher	Void
 Dishwasher Usage Level	100% Usage	ResStockArgumentsPostHPXML	dishwasher_usage_multiplier=1.0
 Dishwasher Usage Level	120% Usage	ResStockArgumentsPostHPXML	dishwasher_usage_multiplier=1.2
@@ -9171,32 +9171,34 @@ Dishwasher Usage Level	80% Usage	ResStockArgumentsPostHPXML	dishwasher_usage_mul
 Door Area	20 ft^2	ResStockArguments	geometry_door_area=20
 Door Area	30 ft^2	ResStockArguments	geometry_door_area=30
 Door Area	40 ft^2	ResStockArguments	geometry_door_area=40
+Doors	Wood	ResStockArguments	enclosure_door=Solid Wood, R-2
 Doors	Fiberglass	ResStockArguments	enclosure_door=Insulated Fiberglass/Steel, R-5
+Doors	Steel	ResStockArguments	enclosure_door=Insulated Fiberglass/Steel, R-5
 Duct Leakage and Insulation	0% Leakage to Outside, Uninsulated	ResStockArguments	hvac_ducts=0% Leakage, Uninsulated
-Duct Leakage and Insulation	10% Leakage to Outside, Uninsulated	ResStockArguments	hvac_ducts=10% Leakage, Uninsulated
 Duct Leakage and Insulation	10% Leakage to Outside, R-4	ResStockArguments	hvac_ducts=10% Leakage, R-4
 Duct Leakage and Insulation	10% Leakage to Outside, R-6	ResStockArguments	hvac_ducts=10% Leakage, R-6
 Duct Leakage and Insulation	10% Leakage to Outside, R-8	ResStockArguments	hvac_ducts=10% Leakage, R-8
-Duct Leakage and Insulation	20% Leakage to Outside, Uninsulated	ResStockArguments	hvac_ducts=20% Leakage, Uninsulated
+Duct Leakage and Insulation	10% Leakage to Outside, Uninsulated	ResStockArguments	hvac_ducts=10% Leakage, Uninsulated
 Duct Leakage and Insulation	20% Leakage to Outside, R-4	ResStockArguments	hvac_ducts=20% Leakage, R-4
 Duct Leakage and Insulation	20% Leakage to Outside, R-6	ResStockArguments	hvac_ducts=20% Leakage, R-6
 Duct Leakage and Insulation	20% Leakage to Outside, R-8	ResStockArguments	hvac_ducts=20% Leakage, R-8
-Duct Leakage and Insulation	30% Leakage to Outside, Uninsulated	ResStockArguments	hvac_ducts=30% Leakage, Uninsulated
+Duct Leakage and Insulation	20% Leakage to Outside, Uninsulated	ResStockArguments	hvac_ducts=20% Leakage, Uninsulated
 Duct Leakage and Insulation	30% Leakage to Outside, R-4	ResStockArguments	hvac_ducts=30% Leakage, R-4
 Duct Leakage and Insulation	30% Leakage to Outside, R-6	ResStockArguments	hvac_ducts=30% Leakage, R-6
 Duct Leakage and Insulation	30% Leakage to Outside, R-8	ResStockArguments	hvac_ducts=30% Leakage, R-8
+Duct Leakage and Insulation	30% Leakage to Outside, Uninsulated	ResStockArguments	hvac_ducts=30% Leakage, Uninsulated
 Duct Leakage and Insulation	None	ResStockArguments	hvac_ducts=None
-Duct Location	None	ResStockArguments	hvac_ducts_supply_location=Conditioned Space	hvac_ducts_return_location=Conditioned Space
 Duct Location	Attic	ResStockArguments	hvac_ducts_supply_location=Attic	hvac_ducts_return_location=Attic
 Duct Location	Crawlspace	ResStockArguments	hvac_ducts_supply_location=Crawlspace	hvac_ducts_return_location=Crawlspace
 Duct Location	Garage	ResStockArguments	hvac_ducts_supply_location=Garage	hvac_ducts_return_location=Garage
 Duct Location	Heated Basement	ResStockArguments	hvac_ducts_supply_location=Basement	hvac_ducts_return_location=Basement
 Duct Location	Living Space	ResStockArguments	hvac_ducts_supply_location=Conditioned Space	hvac_ducts_return_location=Conditioned Space
+Duct Location	None	ResStockArguments	hvac_ducts_supply_location=Conditioned Space	hvac_ducts_return_location=Conditioned Space
 Duct Location	Unheated Basement	ResStockArguments	hvac_ducts_supply_location=Basement	hvac_ducts_return_location=Basement
-Eaves	None	ResStockArguments	geometry_eaves=None
 Eaves	1 ft	ResStockArguments	geometry_eaves=1 ft
 Eaves	2 ft	ResStockArguments	geometry_eaves=2 ft
 Eaves	3 ft	ResStockArguments	geometry_eaves=3 ft
+Eaves	None	ResStockArguments	geometry_eaves=None
 Electric Vehicle Battery	Compact, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Compact, 200 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
 Electric Vehicle Battery	Compact, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Compact, 300 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
 Electric Vehicle Battery	Midsize, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Midsize, 200 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
@@ -9206,27 +9208,27 @@ Electric Vehicle Battery	Pickup, Battery Electric Vehicle, 300 mile range	ResSto
 Electric Vehicle Battery	SUV, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=SUV, 200 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
 Electric Vehicle Battery	SUV, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=SUV, 300 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
 Electric Vehicle Charge At Home	0-19%	ResStockArgumentsPostHPXML	ev_fraction_charged_home=0.10
+Electric Vehicle Charge At Home	100%	ResStockArgumentsPostHPXML	ev_fraction_charged_home=1.00
 Electric Vehicle Charge At Home	20-39%	ResStockArgumentsPostHPXML	ev_fraction_charged_home=0.30
 Electric Vehicle Charge At Home	40-59%	ResStockArgumentsPostHPXML	ev_fraction_charged_home=0.50
 Electric Vehicle Charge At Home	60-79%	ResStockArgumentsPostHPXML	ev_fraction_charged_home=0.70
 Electric Vehicle Charge At Home	80-99%	ResStockArgumentsPostHPXML	ev_fraction_charged_home=0.90
-Electric Vehicle Charge At Home	100%	ResStockArgumentsPostHPXML	ev_fraction_charged_home=1.00
-Electric Vehicle Charger	None	ResStockArguments	electric_vehicle_charger=None
 Electric Vehicle Charger	Level 1 charger	ResStockArguments	electric_vehicle_charger=Level 1, 100% Charging at Home
 Electric Vehicle Charger	Level 2 charger	ResStockArguments	electric_vehicle_charger=Level 2, 100% Charging at Home
+Electric Vehicle Charger	None	ResStockArguments	electric_vehicle_charger=None
 Electric Vehicle Charger	Void
 Electric Vehicle Efficiency Increase	15%	ResStockArgumentsPostHPXML	ev_efficiency_percent_increase=0.15
 Electric Vehicle Miles Traveled	1000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=1000
-Electric Vehicle Miles Traveled	3000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=3000
-Electric Vehicle Miles Traveled	5000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=5000
-Electric Vehicle Miles Traveled	7000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=7000
-Electric Vehicle Miles Traveled	9000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=9000
 Electric Vehicle Miles Traveled	11000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=11000
 Electric Vehicle Miles Traveled	13000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=13000
 Electric Vehicle Miles Traveled	15000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=15000
 Electric Vehicle Miles Traveled	17000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=17000
 Electric Vehicle Miles Traveled	19000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=19000
 Electric Vehicle Miles Traveled	22500	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=22500
+Electric Vehicle Miles Traveled	3000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=3000
+Electric Vehicle Miles Traveled	5000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=5000
+Electric Vehicle Miles Traveled	7000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=7000
+Electric Vehicle Miles Traveled	9000	ResStockArgumentsPostHPXML	ev_miles_driven_per_year=9000
 Electric Vehicle Outlet Access	No
 Electric Vehicle Outlet Access	Void
 Electric Vehicle Outlet Access	Yes
@@ -9266,8 +9268,8 @@ Generation And Emissions Assessment Region	SRMWc
 Generation And Emissions Assessment Region	SRSOc
 Generation And Emissions Assessment Region	SRTVc
 Generation And Emissions Assessment Region	SRVCc
-Geometry Attic Type	None	ResStockArguments	geometry_attic_type=Flat Roof	geometry_roof_pitch=6:12
 Geometry Attic Type	Finished Attic or Cathedral Ceilings	ResStockArguments	geometry_attic_type=Attic, Conditioned, Gable	geometry_roof_pitch=6:12
+Geometry Attic Type	None	ResStockArguments	geometry_attic_type=Flat Roof	geometry_roof_pitch=6:12
 Geometry Attic Type	Unvented Attic	ResStockArguments	geometry_attic_type=Attic, Unvented, Gable	geometry_roof_pitch=6:12
 Geometry Attic Type	Vented Attic	ResStockArguments	geometry_attic_type=Attic, Vented, Gable	geometry_roof_pitch=6:12
 Geometry Building Horizontal Location MF	Left	ResStockArguments	geometry_unit_horizontal_location=Left
@@ -9283,17 +9285,10 @@ Geometry Building Level MF	Bottom	ResStockArguments	geometry_unit_level=Bottom
 Geometry Building Level MF	Middle	ResStockArguments	geometry_unit_level=Middle
 Geometry Building Level MF	None
 Geometry Building Level MF	Top	ResStockArguments	geometry_unit_level=Top
-Geometry Building Number Units MF	None
-Geometry Building Number Units MF	2	ResStockArguments	geometry_building_num_units=2
-Geometry Building Number Units MF	3	ResStockArguments	geometry_building_num_units=3
-Geometry Building Number Units MF	4	ResStockArguments	geometry_building_num_units=4
-Geometry Building Number Units MF	5	ResStockArguments	geometry_building_num_units=5
-Geometry Building Number Units MF	6	ResStockArguments	geometry_building_num_units=6
-Geometry Building Number Units MF	7	ResStockArguments	geometry_building_num_units=7
-Geometry Building Number Units MF	8	ResStockArguments	geometry_building_num_units=8
-Geometry Building Number Units MF	9	ResStockArguments	geometry_building_num_units=9
 Geometry Building Number Units MF	10	ResStockArguments	geometry_building_num_units=10
+Geometry Building Number Units MF	102	ResStockArguments	geometry_building_num_units=102
 Geometry Building Number Units MF	11	ResStockArguments	geometry_building_num_units=11
+Geometry Building Number Units MF	116	ResStockArguments	geometry_building_num_units=116
 Geometry Building Number Units MF	12	ResStockArguments	geometry_building_num_units=12
 Geometry Building Number Units MF	13	ResStockArguments	geometry_building_num_units=13
 Geometry Building Number Units MF	14	ResStockArguments	geometry_building_num_units=14
@@ -9301,54 +9296,61 @@ Geometry Building Number Units MF	15	ResStockArguments	geometry_building_num_uni
 Geometry Building Number Units MF	16	ResStockArguments	geometry_building_num_units=16
 Geometry Building Number Units MF	17	ResStockArguments	geometry_building_num_units=17
 Geometry Building Number Units MF	18	ResStockArguments	geometry_building_num_units=18
+Geometry Building Number Units MF	183	ResStockArguments	geometry_building_num_units=183
 Geometry Building Number Units MF	19	ResStockArguments	geometry_building_num_units=19
+Geometry Building Number Units MF	2	ResStockArguments	geometry_building_num_units=2
 Geometry Building Number Units MF	20	ResStockArguments	geometry_building_num_units=20
 Geometry Building Number Units MF	21	ResStockArguments	geometry_building_num_units=21
 Geometry Building Number Units MF	24	ResStockArguments	geometry_building_num_units=24
+Geometry Building Number Units MF	3	ResStockArguments	geometry_building_num_units=3
 Geometry Building Number Units MF	30	ResStockArguments	geometry_building_num_units=30
-Geometry Building Number Units MF	36	ResStockArguments	geometry_building_num_units=36
-Geometry Building Number Units MF	43	ResStockArguments	geometry_building_num_units=43
-Geometry Building Number Units MF	67	ResStockArguments	geometry_building_num_units=67
-Geometry Building Number Units MF	102	ResStockArguments	geometry_building_num_units=102
-Geometry Building Number Units MF	116	ResStockArguments	geometry_building_num_units=116
-Geometry Building Number Units MF	183	ResStockArguments	geometry_building_num_units=183
 Geometry Building Number Units MF	323	ResStockArguments	geometry_building_num_units=323
 Geometry Building Number Units MF	326	ResStockArguments	geometry_building_num_units=326
-Geometry Building Number Units SFA	None
+Geometry Building Number Units MF	36	ResStockArguments	geometry_building_num_units=36
+Geometry Building Number Units MF	4	ResStockArguments	geometry_building_num_units=4
+Geometry Building Number Units MF	43	ResStockArguments	geometry_building_num_units=43
+Geometry Building Number Units MF	5	ResStockArguments	geometry_building_num_units=5
+Geometry Building Number Units MF	6	ResStockArguments	geometry_building_num_units=6
+Geometry Building Number Units MF	67	ResStockArguments	geometry_building_num_units=67
+Geometry Building Number Units MF	7	ResStockArguments	geometry_building_num_units=7
+Geometry Building Number Units MF	8	ResStockArguments	geometry_building_num_units=8
+Geometry Building Number Units MF	9	ResStockArguments	geometry_building_num_units=9
+Geometry Building Number Units MF	None
+Geometry Building Number Units SFA	10	ResStockArguments	geometry_building_num_units=10
+Geometry Building Number Units SFA	12	ResStockArguments	geometry_building_num_units=12
+Geometry Building Number Units SFA	144	ResStockArguments	geometry_building_num_units=144
+Geometry Building Number Units SFA	15	ResStockArguments	geometry_building_num_units=15
+Geometry Building Number Units SFA	16	ResStockArguments	geometry_building_num_units=16
 Geometry Building Number Units SFA	2	ResStockArguments	geometry_building_num_units=2
+Geometry Building Number Units SFA	20	ResStockArguments	geometry_building_num_units=20
+Geometry Building Number Units SFA	24	ResStockArguments	geometry_building_num_units=24
 Geometry Building Number Units SFA	3	ResStockArguments	geometry_building_num_units=3
+Geometry Building Number Units SFA	30	ResStockArguments	geometry_building_num_units=30
+Geometry Building Number Units SFA	36	ResStockArguments	geometry_building_num_units=36
 Geometry Building Number Units SFA	4	ResStockArguments	geometry_building_num_units=4
 Geometry Building Number Units SFA	5	ResStockArguments	geometry_building_num_units=5
+Geometry Building Number Units SFA	50	ResStockArguments	geometry_building_num_units=50
 Geometry Building Number Units SFA	6	ResStockArguments	geometry_building_num_units=6
+Geometry Building Number Units SFA	60	ResStockArguments	geometry_building_num_units=60
 Geometry Building Number Units SFA	7	ResStockArguments	geometry_building_num_units=7
 Geometry Building Number Units SFA	8	ResStockArguments	geometry_building_num_units=8
 Geometry Building Number Units SFA	9	ResStockArguments	geometry_building_num_units=9
-Geometry Building Number Units SFA	10	ResStockArguments	geometry_building_num_units=10
-Geometry Building Number Units SFA	12	ResStockArguments	geometry_building_num_units=12
-Geometry Building Number Units SFA	15	ResStockArguments	geometry_building_num_units=15
-Geometry Building Number Units SFA	16	ResStockArguments	geometry_building_num_units=16
-Geometry Building Number Units SFA	20	ResStockArguments	geometry_building_num_units=20
-Geometry Building Number Units SFA	24	ResStockArguments	geometry_building_num_units=24
-Geometry Building Number Units SFA	30	ResStockArguments	geometry_building_num_units=30
-Geometry Building Number Units SFA	36	ResStockArguments	geometry_building_num_units=36
-Geometry Building Number Units SFA	50	ResStockArguments	geometry_building_num_units=50
-Geometry Building Number Units SFA	60	ResStockArguments	geometry_building_num_units=60
 Geometry Building Number Units SFA	90	ResStockArguments	geometry_building_num_units=90
-Geometry Building Number Units SFA	144	ResStockArguments	geometry_building_num_units=144
-Geometry Building Type ACS	Single-Family Detached
-Geometry Building Type ACS	Single-Family Attached
+Geometry Building Number Units SFA	None
+Geometry Building Type ACS	10 to 19 Unit
 Geometry Building Type ACS	2 Unit
+Geometry Building Type ACS	20 to 49 Unit
 Geometry Building Type ACS	3 or 4 Unit
 Geometry Building Type ACS	5 to 9 Unit
-Geometry Building Type ACS	10 to 19 Unit
-Geometry Building Type ACS	20 to 49 Unit
 Geometry Building Type ACS	50 or more Unit
 Geometry Building Type ACS	Mobile Home
+Geometry Building Type ACS	Single-Family Attached
+Geometry Building Type ACS	Single-Family Detached
+Geometry Building Type Height	Mobile Home
+Geometry Building Type Height	Multi-Family with 2 - 4 Units
 Geometry Building Type Height	Multi-Family with 5+ Units, 1-3 Stories
 Geometry Building Type Height	Multi-Family with 5+ Units, 4-7 Stories
 Geometry Building Type Height	Multi-Family with 5+ Units, 8+ Stories
-Geometry Building Type Height	Mobile Home
-Geometry Building Type Height	Multi-Family with 2 - 4 Units
 Geometry Building Type Height	Single-Family Attached
 Geometry Building Type Height	Single-Family Detached
 Geometry Building Type RECS	Mobile Home	ResStockArguments	geometry_facility_type=manufactured home	geometry_ceiling_height=8.0 ft	geometry_unit_aspect_ratio=1.8
@@ -9357,14 +9359,14 @@ Geometry Building Type RECS	Multi-Family with 5+ Units	ResStockArguments	geometr
 Geometry Building Type RECS	Single-Family Attached	ResStockArguments	geometry_facility_type=single-family attached	geometry_ceiling_height=8.0 ft	geometry_unit_aspect_ratio=0.5556
 Geometry Building Type RECS	Single-Family Detached	ResStockArguments	geometry_facility_type=single-family detached	geometry_ceiling_height=8.0 ft	geometry_unit_aspect_ratio=1.8
 Geometry Floor Area	0-499	ResStockArguments	geometry_unit_cfa_bin=0-499	geometry_unit_cfa=auto
-Geometry Floor Area	500-749	ResStockArguments	geometry_unit_cfa_bin=500-749	geometry_unit_cfa=auto
-Geometry Floor Area	750-999	ResStockArguments	geometry_unit_cfa_bin=750-999	geometry_unit_cfa=auto
 Geometry Floor Area	1000-1499	ResStockArguments	geometry_unit_cfa_bin=1000-1499	geometry_unit_cfa=auto
 Geometry Floor Area	1500-1999	ResStockArguments	geometry_unit_cfa_bin=1500-1999	geometry_unit_cfa=auto
 Geometry Floor Area	2000-2499	ResStockArguments	geometry_unit_cfa_bin=2000-2499	geometry_unit_cfa=auto
 Geometry Floor Area	2500-2999	ResStockArguments	geometry_unit_cfa_bin=2500-2999	geometry_unit_cfa=auto
 Geometry Floor Area	3000-3999	ResStockArguments	geometry_unit_cfa_bin=3000-3999	geometry_unit_cfa=auto
 Geometry Floor Area	4000+	ResStockArguments	geometry_unit_cfa_bin=4000+	geometry_unit_cfa=auto
+Geometry Floor Area	500-749	ResStockArguments	geometry_unit_cfa_bin=500-749	geometry_unit_cfa=auto
+Geometry Floor Area	750-999	ResStockArguments	geometry_unit_cfa_bin=750-999	geometry_unit_cfa=auto
 Geometry Floor Area Bin	0-1499
 Geometry Floor Area Bin	1500-2499
 Geometry Floor Area Bin	2500-3999
@@ -9376,17 +9378,17 @@ Geometry Foundation Type	Slab	ResStockArguments	geometry_foundation_type=Slab-on
 Geometry Foundation Type	Unheated Basement	ResStockArguments	geometry_foundation_type=Basement, Unconditioned
 Geometry Foundation Type	Unvented Crawlspace	ResStockArguments	geometry_foundation_type=Crawlspace, Unvented
 Geometry Foundation Type	Vented Crawlspace	ResStockArguments	geometry_foundation_type=Crawlspace, Vented
-Geometry Garage	None	ResStockArguments	geometry_garage_type=None
 Geometry Garage	1 Car	ResStockArguments	geometry_garage_type=1 Car, Right, Half Protruding
 Geometry Garage	2 Car	ResStockArguments	geometry_garage_type=2 Car, Right, Half Protruding
 Geometry Garage	3 Car	ResStockArguments	geometry_garage_type=3 Car, Right, Half Protruding
+Geometry Garage	None	ResStockArguments	geometry_garage_type=None
 Geometry Heated Basement	No
 Geometry Heated Basement	Yes
-Geometry Number Units ACS bins	<5
-Geometry Number Units ACS bins	5 to 9 Units
 Geometry Number Units ACS bins	10 to 19 Units
 Geometry Number Units ACS bins	20 to 49 Units
+Geometry Number Units ACS bins	5 to 9 Units
 Geometry Number Units ACS bins	50 or more
+Geometry Number Units ACS bins	<5
 Geometry Space Combination	Mobile Home, Ambient, No Attic, No Garage
 Geometry Space Combination	Multi-Family with 2 - 4 Units Bottom Unit, Slab, No Attic, No Garage
 Geometry Space Combination	Multi-Family with 2 - 4 Units Bottom Unit, Unheated Basement, No Attic, No Garage
@@ -9613,11 +9615,11 @@ Geometry Stories Low Rise	3
 Geometry Stories Low Rise	4+
 Geometry Story Bin	8+
 Geometry Story Bin	<8
-Geometry Wall Exterior Finish	None	ResStockArguments	enclosure_wall_siding=None
 Geometry Wall Exterior Finish	Aluminum, Light	ResStockArguments	enclosure_wall_siding=Aluminum, Light
 Geometry Wall Exterior Finish	Brick, Light	ResStockArguments	enclosure_wall_siding=Brick, Light
 Geometry Wall Exterior Finish	Brick, Medium/Dark	ResStockArguments	enclosure_wall_siding=Brick, Medium Dark
 Geometry Wall Exterior Finish	Fiber-Cement, Light	ResStockArguments	enclosure_wall_siding=Fiber-Cement, Light
+Geometry Wall Exterior Finish	None	ResStockArguments	enclosure_wall_siding=None
 Geometry Wall Exterior Finish	Shingle, Asbestos, Medium	ResStockArguments	enclosure_wall_siding=Asbestos, Medium
 Geometry Wall Exterior Finish	Shingle, Composition, Medium	ResStockArguments	enclosure_wall_siding=Composition Shingle, Medium
 Geometry Wall Exterior Finish	Stucco, Light	ResStockArguments	enclosure_wall_siding=Stucco, Light
@@ -9634,30 +9636,30 @@ Ground Thermal Conductivity	0.8	ResStockArguments	location_soil_type=0.8 Btu/hr-
 Ground Thermal Conductivity	1.1	ResStockArguments	location_soil_type=1.1 Btu/hr-ft-F
 Ground Thermal Conductivity	1.4	ResStockArguments	location_soil_type=1.4 Btu/hr-ft-F
 Ground Thermal Conductivity	1.7	ResStockArguments	location_soil_type=1.7 Btu/hr-ft-F
-Ground Thermal Conductivity	2	ResStockArguments	location_soil_type=2.0 Btu/hr-ft-F
+Ground Thermal Conductivity	2.0	ResStockArguments	location_soil_type=2.0 Btu/hr-ft-F
 Ground Thermal Conductivity	2.3	ResStockArguments	location_soil_type=2.3 Btu/hr-ft-F
 Ground Thermal Conductivity	2.6	ResStockArguments	location_soil_type=2.6 Btu/hr-ft-F
 HVAC Cooling Autosizing Factor	None
-HVAC Cooling Efficiency	None	ResStockArguments	hvac_cooling_system=None	hvac_cooling_system_capacity=Autosize
-HVAC Cooling Efficiency	AC, SEER 8	ResStockArguments	hvac_cooling_system=Central AC, SEER 8	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	AC, SEER 10	ResStockArguments	hvac_cooling_system=Central AC, SEER 10	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	AC, SEER 13	ResStockArguments	hvac_cooling_system=Central AC, SEER 13	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	AC, SEER 15	ResStockArguments	hvac_cooling_system=Central AC, SEER 15	hvac_cooling_system_capacity=Autosize
-HVAC Cooling Efficiency	Room AC, EER 8.5	ResStockArguments	hvac_cooling_system=Room AC, EER 8.5	hvac_cooling_system_capacity=Autosize
-HVAC Cooling Efficiency	Room AC, EER 9.8	ResStockArguments	hvac_cooling_system=Room AC, EER 9.8	hvac_cooling_system_capacity=Autosize
+HVAC Cooling Efficiency	AC, SEER 8	ResStockArguments	hvac_cooling_system=Central AC, SEER 8	hvac_cooling_system_capacity=Autosize
+HVAC Cooling Efficiency	Ducted Heat Pump	ResStockArguments	hvac_cooling_system=None	hvac_cooling_system_capacity=Autosize
+HVAC Cooling Efficiency	Evaporative Cooler	ResStockArguments	hvac_cooling_system=Evaporative Cooler	hvac_cooling_system_capacity=Autosize
+HVAC Cooling Efficiency	Non-Ducted Heat Pump	ResStockArguments	hvac_cooling_system=None	hvac_cooling_system_capacity=Autosize
+HVAC Cooling Efficiency	None	ResStockArguments	hvac_cooling_system=None	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	Room AC, EER 10.7	ResStockArguments	hvac_cooling_system=Room AC, EER 10.7	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	Room AC, EER 12.0	ResStockArguments	hvac_cooling_system=Room AC, EER 12.0	hvac_cooling_system_capacity=Autosize
-HVAC Cooling Efficiency	Evaporative Cooler	ResStockArguments	hvac_cooling_system=Evaporative Cooler	hvac_cooling_system_capacity=Autosize
-HVAC Cooling Efficiency	Ducted Heat Pump	ResStockArguments	hvac_cooling_system=None	hvac_cooling_system_capacity=Autosize
-HVAC Cooling Efficiency	Non-Ducted Heat Pump	ResStockArguments	hvac_cooling_system=None	hvac_cooling_system_capacity=Autosize
+HVAC Cooling Efficiency	Room AC, EER 8.5	ResStockArguments	hvac_cooling_system=Room AC, EER 8.5	hvac_cooling_system_capacity=Autosize
+HVAC Cooling Efficiency	Room AC, EER 9.8	ResStockArguments	hvac_cooling_system=Room AC, EER 9.8	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	Shared Cooling
-HVAC Cooling Partial Space Conditioning	None	ResStockArguments	hvac_cooling_system_cooling_load_served=0%
-HVAC Cooling Partial Space Conditioning	<10% Conditioned	ResStockArguments	hvac_cooling_system_cooling_load_served=10%
+HVAC Cooling Partial Space Conditioning	100% Conditioned	ResStockArguments	hvac_cooling_system_cooling_load_served=100%
 HVAC Cooling Partial Space Conditioning	20% Conditioned	ResStockArguments	hvac_cooling_system_cooling_load_served=20%
 HVAC Cooling Partial Space Conditioning	40% Conditioned	ResStockArguments	hvac_cooling_system_cooling_load_served=40%
 HVAC Cooling Partial Space Conditioning	60% Conditioned	ResStockArguments	hvac_cooling_system_cooling_load_served=60%
 HVAC Cooling Partial Space Conditioning	80% Conditioned	ResStockArguments	hvac_cooling_system_cooling_load_served=80%
-HVAC Cooling Partial Space Conditioning	100% Conditioned	ResStockArguments	hvac_cooling_system_cooling_load_served=100%
+HVAC Cooling Partial Space Conditioning	<10% Conditioned	ResStockArguments	hvac_cooling_system_cooling_load_served=10%
+HVAC Cooling Partial Space Conditioning	None	ResStockArguments	hvac_cooling_system_cooling_load_served=0%
 HVAC Cooling Partial Space Conditioning	Void
 HVAC Cooling Type	Central AC
 HVAC Cooling Type	Ducted Heat Pump
@@ -9666,8 +9668,8 @@ HVAC Cooling Type	Non-Ducted Heat Pump
 HVAC Cooling Type	None
 HVAC Cooling Type	Room AC
 HVAC Has Ducts	No	ResStockArguments
-HVAC Has Ducts	Yes	ResStockArguments
 HVAC Has Ducts	Void
+HVAC Has Ducts	Yes	ResStockArguments
 HVAC Has Shared System	Cooling Only
 HVAC Has Shared System	Heating Only
 HVAC Has Shared System	Heating and Cooling
@@ -9676,7 +9678,6 @@ HVAC Has Shared System	Void
 HVAC Has Zonal Electric Heating	No
 HVAC Has Zonal Electric Heating	Yes
 HVAC Heating Autosizing Factor	None
-HVAC Heating Efficiency	None	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
 HVAC Heating Efficiency	ASHP, SEER 10, 6.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 10, 6.2 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
 HVAC Heating Efficiency	ASHP, SEER 13, 7.7 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 13, 7.7 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
 HVAC Heating Efficiency	ASHP, SEER 15, 8.5 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 15, 8.5 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
@@ -9695,6 +9696,7 @@ HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 60% AFUE	ResStockArguments	hvac
 HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 68% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 68% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
 HVAC Heating Efficiency	MSHP, SEER 14.5, 8.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 14.5, 8.2 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
 HVAC Heating Efficiency	MSHP, SEER 29.3, 14 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 29.3, 14 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	None	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
 HVAC Heating Efficiency	Shared Heating
 HVAC Heating Efficiency	Void
 HVAC Heating Type	Ducted Heat Pump
@@ -9728,7 +9730,6 @@ HVAC Heating Type And Fuel	Propane Fuel Furnace
 HVAC Heating Type And Fuel	Propane Fuel Wall/Floor Furnace
 HVAC Heating Type And Fuel	Propane Shared Heating
 HVAC Heating Type And Fuel	Void
-HVAC Secondary Heating Efficiency	None	ResStockArguments	hvac_heating_system_2=None	hvac_heating_system_2_capacity=Autosize
 HVAC Secondary Heating Efficiency	Electric Baseboard, 100% Efficiency	ResStockArguments	hvac_heating_system_2=Electric Resistance	hvac_heating_system_2_capacity=Autosize
 HVAC Secondary Heating Efficiency	Electric Portable Heater, 100% Efficiency	ResStockArguments	hvac_heating_system_2=Space Heater, 100% Efficiency	hvac_heating_system_2_capacity=Autosize
 HVAC Secondary Heating Efficiency	Fuel Boiler, 60% AFUE	ResStockArguments	hvac_heating_system_2=Boiler, 60% AFUE	hvac_heating_system_2_capacity=Autosize
@@ -9743,6 +9744,7 @@ HVAC Secondary Heating Efficiency	Fuel Furnace, 80% AFUE	ResStockArguments	hvac_
 HVAC Secondary Heating Efficiency	Fuel Furnace, 92.5% AFUE	ResStockArguments	hvac_heating_system_2=Central Furnace, 92.5% AFUE	hvac_heating_system_2_capacity=Autosize
 HVAC Secondary Heating Efficiency	Fuel Wall/Floor Furnace, 60% AFUE	ResStockArguments	hvac_heating_system_2=Wall Furnace, 60% AFUE	hvac_heating_system_2_capacity=Autosize
 HVAC Secondary Heating Efficiency	Fuel Wall/Floor Furnace, 68% AFUE	ResStockArguments	hvac_heating_system_2=Wall Furnace, 68% AFUE	hvac_heating_system_2_capacity=Autosize
+HVAC Secondary Heating Efficiency	None	ResStockArguments	hvac_heating_system_2=None	hvac_heating_system_2_capacity=Autosize
 HVAC Secondary Heating Efficiency	Shared Heating	ResStockArguments	hvac_heating_system_2=None	hvac_heating_system_2_capacity=Autosize
 HVAC Secondary Heating Efficiency	Void
 HVAC Secondary Heating Fuel	Electricity	ResStockArguments	hvac_heating_system_2_fuel=Electricity
@@ -9752,22 +9754,22 @@ HVAC Secondary Heating Fuel	None	ResStockArguments	hvac_heating_system_2_fuel=El
 HVAC Secondary Heating Fuel	Other Fuel	ResStockArguments	hvac_heating_system_2_fuel=Wood Cord
 HVAC Secondary Heating Fuel	Propane	ResStockArguments	hvac_heating_system_2_fuel=Propane
 HVAC Secondary Heating Fuel	Wood	ResStockArguments	hvac_heating_system_2_fuel=Wood Cord
-HVAC Secondary Heating Partial Space Conditioning	None	ResStockArguments	hvac_heating_system_2_heating_load_served=0%
 HVAC Secondary Heating Partial Space Conditioning	0%	ResStockArguments	hvac_heating_system_2_heating_load_served=0%
 HVAC Secondary Heating Partial Space Conditioning	10%	ResStockArguments	hvac_heating_system_2_heating_load_served=10%
 HVAC Secondary Heating Partial Space Conditioning	20%	ResStockArguments	hvac_heating_system_2_heating_load_served=20%
 HVAC Secondary Heating Partial Space Conditioning	30%	ResStockArguments	hvac_heating_system_2_heating_load_served=30%
 HVAC Secondary Heating Partial Space Conditioning	40%	ResStockArguments	hvac_heating_system_2_heating_load_served=40%
-HVAC Secondary Heating Partial Space Conditioning	49%	ResStockArguments	hvac_heating_system_2_heating_load_served=49%
+HVAC Secondary Heating Partial Space Conditioning	50%	ResStockArguments	hvac_heating_system_2_heating_load_served=50%
+HVAC Secondary Heating Partial Space Conditioning	None	ResStockArguments	hvac_heating_system_2_heating_load_served=0%
 HVAC Secondary Heating Partial Space Conditioning	Void
 HVAC Secondary Heating Type	Ducted Heating
 HVAC Secondary Heating Type	Non-Ducted Heating
 HVAC Secondary Heating Type	None
 HVAC Shared Efficiencies	Boiler Baseboards Heating Only, Electricity	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
 HVAC Shared Efficiencies	Boiler Baseboards Heating Only, Fuel	ResStockArguments	hvac_heating_system=Boiler, 78% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Shared Efficiencies	Fan Coil Cooling Only	ResStockArguments	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize
 HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Electricity	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
 HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Fuel	ResStockArguments	hvac_heating_system=Boiler, 78% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Shared Efficiencies	Fan Coil Cooling Only	ResStockArguments	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize
 HVAC Shared Efficiencies	None
 HVAC Shared Efficiencies	Void
 HVAC System Is Scaled	No
@@ -9841,25 +9843,21 @@ Heating Setpoint Offset Period	Night -3h	ResStockArguments	hvac_control_heating_
 Heating Setpoint Offset Period	Night -4h	ResStockArguments	hvac_control_heating_weekday_setpoint_schedule=-1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1	hvac_control_heating_weekend_setpoint_schedule=-1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1
 Heating Setpoint Offset Period	Night -5h	ResStockArguments	hvac_control_heating_weekday_setpoint_schedule=-1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1	hvac_control_heating_weekend_setpoint_schedule=-1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1
 Heating Setpoint Offset Period	None	ResStockArguments	hvac_control_heating_weekday_setpoint_schedule=0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	hvac_control_heating_weekend_setpoint_schedule=0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Heating Unavailable Days	Never	ResStockArguments	schedules_space_heating_unavailable_days=0
 Heating Unavailable Days	1 day	ResStockArguments	schedules_space_heating_unavailable_days=1
-Heating Unavailable Days	3 days	ResStockArguments	schedules_space_heating_unavailable_days=3
+Heating Unavailable Days	1 month	ResStockArguments	schedules_space_heating_unavailable_days=30
 Heating Unavailable Days	1 week	ResStockArguments	schedules_space_heating_unavailable_days=7
 Heating Unavailable Days	2 weeks	ResStockArguments	schedules_space_heating_unavailable_days=14
-Heating Unavailable Days	1 month	ResStockArguments	schedules_space_heating_unavailable_days=30
+Heating Unavailable Days	3 days	ResStockArguments	schedules_space_heating_unavailable_days=3
 Heating Unavailable Days	3 months	ResStockArguments	schedules_space_heating_unavailable_days=90
+Heating Unavailable Days	Never	ResStockArguments	schedules_space_heating_unavailable_days=0
 Heating Unavailable Days	Year round	ResStockArguments	schedules_space_heating_unavailable_days=365
 Holiday Lighting	No Exterior Use
 Hot Water Distribution	Uninsulated	ResStockArguments	dhw_distribution=Uninsulated, Standard	dhw_drain_water_heat_recovery=None
-Hot Water Fixtures	50% Usage	ResStockArguments	dhw_fixtures=Standard, 50% Usage
-Hot Water Fixtures	60% Usage	ResStockArguments	dhw_fixtures=Standard, 50% Usage
-Hot Water Fixtures	70% Usage	ResStockArguments	dhw_fixtures=Standard, 75% Usage
-Hot Water Fixtures	80% Usage	ResStockArguments	dhw_fixtures=Standard, 75% Usage
-Hot Water Fixtures	90% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
+Hot Water Distribution	Insulated	ResStockArguments	dhw_distribution=Insulated, Standard	dhw_drain_water_heat_recovery=None
 Hot Water Fixtures	100% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
 Hot Water Fixtures	110% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
-Hot Water Fixtures	120% Usage	ResStockArguments	dhw_fixtures=Standard, 125% Usage
-Hot Water Fixtures	130% Usage	ResStockArguments	dhw_fixtures=Standard, 125% Usage
+Hot Water Fixtures	120% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
+Hot Water Fixtures	130% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
 Hot Water Fixtures	140% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
 Hot Water Fixtures	150% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
 Hot Water Fixtures	160% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
@@ -9867,6 +9865,11 @@ Hot Water Fixtures	170% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usag
 Hot Water Fixtures	180% Usage	ResStockArguments	dhw_fixtures=Standard, 200% Usage
 Hot Water Fixtures	190% Usage	ResStockArguments	dhw_fixtures=Standard, 200% Usage
 Hot Water Fixtures	200% Usage	ResStockArguments	dhw_fixtures=Standard, 200% Usage
+Hot Water Fixtures	50% Usage	ResStockArguments	dhw_fixtures=Standard, 50% Usage
+Hot Water Fixtures	60% Usage	ResStockArguments	dhw_fixtures=Standard, 50% Usage
+Hot Water Fixtures	70% Usage	ResStockArguments	dhw_fixtures=Standard, 75% Usage
+Hot Water Fixtures	80% Usage	ResStockArguments	dhw_fixtures=Standard, 75% Usage
+Hot Water Fixtures	90% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
 Household Has Tribal Persons	No
 Household Has Tribal Persons	Not Available
 Household Has Tribal Persons	Yes
@@ -9915,81 +9918,81 @@ Income RECS2020	60000-99999
 Income RECS2020	<20000
 Income RECS2020	Not Available
 Infiltration	1 ACH50	ResStockArguments	enclosure_air_leakage=1 ACH50
+Infiltration	10 ACH50	ResStockArguments	enclosure_air_leakage=10 ACH50
+Infiltration	15 ACH50	ResStockArguments	enclosure_air_leakage=15 ACH50
 Infiltration	2 ACH50	ResStockArguments	enclosure_air_leakage=2 ACH50
+Infiltration	20 ACH50	ResStockArguments	enclosure_air_leakage=20 ACH50
+Infiltration	25 ACH50	ResStockArguments	enclosure_air_leakage=25 ACH50
 Infiltration	3 ACH50	ResStockArguments	enclosure_air_leakage=3 ACH50
+Infiltration	30 ACH50	ResStockArguments	enclosure_air_leakage=30 ACH50
 Infiltration	4 ACH50	ResStockArguments	enclosure_air_leakage=4 ACH50
+Infiltration	40 ACH50	ResStockArguments	enclosure_air_leakage=40 ACH50
 Infiltration	5 ACH50	ResStockArguments	enclosure_air_leakage=5 ACH50
+Infiltration	50 ACH50	ResStockArguments	enclosure_air_leakage=50 ACH50
 Infiltration	6 ACH50	ResStockArguments	enclosure_air_leakage=6 ACH50
 Infiltration	7 ACH50	ResStockArguments	enclosure_air_leakage=7 ACH50
 Infiltration	8 ACH50	ResStockArguments	enclosure_air_leakage=8 ACH50
-Infiltration	10 ACH50	ResStockArguments	enclosure_air_leakage=10 ACH50
-Infiltration	15 ACH50	ResStockArguments	enclosure_air_leakage=15 ACH50
-Infiltration	20 ACH50	ResStockArguments	enclosure_air_leakage=20 ACH50
-Infiltration	25 ACH50	ResStockArguments	enclosure_air_leakage=25 ACH50
-Infiltration	30 ACH50	ResStockArguments	enclosure_air_leakage=30 ACH50
-Infiltration	40 ACH50	ResStockArguments	enclosure_air_leakage=40 ACH50
-Infiltration	50 ACH50	ResStockArguments	enclosure_air_leakage=50 ACH50
 Infiltration Reduction	15%	ResStockArgumentsPostHPXML	air_leakage_percent_reduction=15
 Infiltration Reduction	20%	ResStockArgumentsPostHPXML	air_leakage_percent_reduction=20
 Infiltration Reduction	25%	ResStockArgumentsPostHPXML	air_leakage_percent_reduction=25
 Infiltration Reduction	30%	ResStockArgumentsPostHPXML	air_leakage_percent_reduction=30
 Insulation Ceiling	None	ResStockArguments	enclosure_ceiling=Uninsulated	ceiling_insulation_r=0
-Insulation Ceiling	Uninsulated	ResStockArguments	enclosure_ceiling=Uninsulated	ceiling_insulation_r=0
-Insulation Ceiling	R-7	ResStockArguments	enclosure_ceiling=R-7	ceiling_insulation_r=7
 Insulation Ceiling	R-13	ResStockArguments	enclosure_ceiling=R-13	ceiling_insulation_r=13
 Insulation Ceiling	R-19	ResStockArguments	enclosure_ceiling=R-19	ceiling_insulation_r=19
 Insulation Ceiling	R-30	ResStockArguments	enclosure_ceiling=R-30	ceiling_insulation_r=30
 Insulation Ceiling	R-38	ResStockArguments	enclosure_ceiling=R-38	ceiling_insulation_r=38
 Insulation Ceiling	R-49	ResStockArguments	enclosure_ceiling=R-49	ceiling_insulation_r=49
 Insulation Ceiling	R-60	ResStockArguments	enclosure_ceiling=R-60	ceiling_insulation_r=60
-Insulation Floor	None	ResStockArguments	enclosure_floor_over_foundation=Wood Frame, Uninsulated	enclosure_floor_over_garage=Wood Frame, Uninsulated
-Insulation Floor	Uninsulated	ResStockArguments	enclosure_floor_over_foundation=Wood Frame, Uninsulated	enclosure_floor_over_garage=Wood Frame, Uninsulated
+Insulation Ceiling	R-7	ResStockArguments	enclosure_ceiling=R-7	ceiling_insulation_r=7
+Insulation Ceiling	Uninsulated	ResStockArguments	enclosure_ceiling=Uninsulated	ceiling_insulation_r=0
 Insulation Floor	Ceiling R-13	ResStockArguments	enclosure_floor_over_foundation=Wood Frame, R-13	enclosure_floor_over_garage=Wood Frame, R-13
 Insulation Floor	Ceiling R-19	ResStockArguments	enclosure_floor_over_foundation=Wood Frame, R-19	enclosure_floor_over_garage=Wood Frame, R-19
 Insulation Floor	Ceiling R-30	ResStockArguments	enclosure_floor_over_foundation=Wood Frame, R-30	enclosure_floor_over_garage=Wood Frame, R-30
 Insulation Floor	Ceiling R-38	ResStockArguments	enclosure_floor_over_foundation=Wood Frame, R-38	enclosure_floor_over_garage=Wood Frame, R-38
+Insulation Floor	None	ResStockArguments	enclosure_floor_over_foundation=Wood Frame, Uninsulated	enclosure_floor_over_garage=Wood Frame, Uninsulated
+Insulation Floor	Uninsulated	ResStockArguments	enclosure_floor_over_foundation=Wood Frame, Uninsulated	enclosure_floor_over_garage=Wood Frame, Uninsulated
 Insulation Foundation Wall	None	ResStockArguments	enclosure_foundation_wall=Solid Concrete, Uninsulated
 Insulation Foundation Wall	Uninsulated	ResStockArguments	enclosure_foundation_wall=Solid Concrete, Uninsulated
-Insulation Foundation Wall	Wall R-5, Exterior	ResStockArguments	enclosure_foundation_wall=Solid Concrete, Whole Wall, R-5
 Insulation Foundation Wall	Wall R-10, Exterior	ResStockArguments	enclosure_foundation_wall=Solid Concrete, Whole Wall, R-10
 Insulation Foundation Wall	Wall R-15, Exterior	ResStockArguments	enclosure_foundation_wall=Solid Concrete, Whole Wall, R-15
+Insulation Foundation Wall	Wall R-5, Exterior	ResStockArguments	enclosure_foundation_wall=Solid Concrete, Whole Wall, R-5
 Insulation Rim Joist	None	ResStockArguments	enclosure_rim_joist=Uninsulated
-Insulation Rim Joist	Uninsulated	ResStockArguments	enclosure_rim_joist=Uninsulated
-Insulation Rim Joist	R-5, Exterior	ResStockArguments	enclosure_rim_joist=Uninsulated
 Insulation Rim Joist	R-10, Exterior	ResStockArguments	enclosure_rim_joist=Uninsulated
 Insulation Rim Joist	R-15, Exterior	ResStockArguments	enclosure_rim_joist=Uninsulated
-Insulation Roof	Unfinished, Uninsulated	ResStockArguments	enclosure_roof=Uninsulated
-Insulation Roof	Finished, Uninsulated	ResStockArguments	enclosure_roof=Uninsulated
-Insulation Roof	Finished, R-7	ResStockArguments	enclosure_roof=R-7
+Insulation Rim Joist	R-5, Exterior	ResStockArguments	enclosure_rim_joist=Uninsulated
+Insulation Rim Joist	Uninsulated	ResStockArguments	enclosure_rim_joist=Uninsulated
 Insulation Roof	Finished, R-13	ResStockArguments	enclosure_roof=R-13
 Insulation Roof	Finished, R-19	ResStockArguments	enclosure_roof=R-19
 Insulation Roof	Finished, R-30	ResStockArguments	enclosure_roof=R-30
 Insulation Roof	Finished, R-38	ResStockArguments	enclosure_roof=R-38
 Insulation Roof	Finished, R-49	ResStockArguments	enclosure_roof=R-49
-Insulation Slab	None	ResStockArguments	enclosure_slab=Uninsulated
-Insulation Slab	Uninsulated	ResStockArguments	enclosure_slab=Uninsulated
-Insulation Slab	2ft R5 Under, Horizontal	ResStockArguments	enclosure_slab=Under Slab, 2ft, R-5
-Insulation Slab	2ft R10 Under, Horizontal	ResStockArguments	enclosure_slab=Under Slab, 2ft, R-10
-Insulation Slab	4ft R5 Under, Horizontal	ResStockArguments	enclosure_slab=Under Slab, 4ft, R-5
-Insulation Slab	2ft R5 Perimeter, Vertical	ResStockArguments	enclosure_slab=Perimeter, 2ft, R-5
+Insulation Roof	Finished, R-7	ResStockArguments	enclosure_roof=R-7
+Insulation Roof	Finished, Uninsulated	ResStockArguments	enclosure_roof=Uninsulated
+Insulation Roof	Unfinished, Uninsulated	ResStockArguments	enclosure_roof=Uninsulated
 Insulation Slab	2ft R10 Perimeter, Vertical	ResStockArguments	enclosure_slab=Perimeter, 2ft, R-10
+Insulation Slab	2ft R10 Under, Horizontal	ResStockArguments	enclosure_slab=Under Slab, 2ft, R-10
+Insulation Slab	2ft R5 Perimeter, Vertical	ResStockArguments	enclosure_slab=Perimeter, 2ft, R-5
+Insulation Slab	2ft R5 Under, Horizontal	ResStockArguments	enclosure_slab=Under Slab, 2ft, R-5
+Insulation Slab	4ft R5 Under, Horizontal	ResStockArguments	enclosure_slab=Under Slab, 4ft, R-5
+Insulation Slab	None	ResStockArguments	enclosure_slab=Uninsulated
 Insulation Slab	R10 Whole Slab, Horizontal	ResStockArguments	enclosure_slab=Whole Slab, R-10
-Insulation Wall	Wood Stud, Uninsulated	ResStockArguments	enclosure_wall=Wood Stud, Uninsulated	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	Wood Stud, R-7	ResStockArguments	enclosure_wall=Wood Stud, R-7	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	Wood Stud, R-11	ResStockArguments	enclosure_wall=Wood Stud, R-11	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	Wood Stud, R-15	ResStockArguments	enclosure_wall=Wood Stud, R-15	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	Wood Stud, R-19	ResStockArguments	enclosure_wall=Wood Stud, R-19	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	CMU, 6-in Hollow, Uninsulated	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, Uninsulated	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	CMU, 6-in Hollow, R-7	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-7	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	CMU, 6-in Hollow, R-11	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-11	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	CMU, 6-in Hollow, R-15	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-15	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	CMU, 6-in Hollow, R-19	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-19	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	Brick, 12-in, 3-wythe, Uninsulated	ResStockArguments	enclosure_wall=Structural Brick, Uninsulated	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	Brick, 12-in, 3-wythe, R-7	ResStockArguments	enclosure_wall=Structural Brick, R-7	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Slab	Uninsulated	ResStockArguments	enclosure_slab=Uninsulated
 Insulation Wall	Brick, 12-in, 3-wythe, R-11	ResStockArguments	enclosure_wall=Structural Brick, R-11	enclosure_wall_continuous_insulation=Uninsulated
 Insulation Wall	Brick, 12-in, 3-wythe, R-15	ResStockArguments	enclosure_wall=Structural Brick, R-15	enclosure_wall_continuous_insulation=Uninsulated
 Insulation Wall	Brick, 12-in, 3-wythe, R-19	ResStockArguments	enclosure_wall=Structural Brick, R-19	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	Brick, 12-in, 3-wythe, R-7	ResStockArguments	enclosure_wall=Structural Brick, R-7	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	Brick, 12-in, 3-wythe, Uninsulated	ResStockArguments	enclosure_wall=Structural Brick, Uninsulated	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	CMU, 6-in Hollow, R-11	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-11	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	CMU, 6-in Hollow, R-15	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-15	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	CMU, 6-in Hollow, R-19	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-19	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	CMU, 6-in Hollow, R-7	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-7	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	CMU, 6-in Hollow, Uninsulated	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, Uninsulated	enclosure_wall_continuous_insulation=Uninsulated
 Insulation Wall	Void
+Insulation Wall	Wood Stud, R-11	ResStockArguments	enclosure_wall=Wood Stud, R-11	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	Wood Stud, R-15	ResStockArguments	enclosure_wall=Wood Stud, R-15	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	Wood Stud, R-19	ResStockArguments	enclosure_wall=Wood Stud, R-19	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	Wood Stud, R-7	ResStockArguments	enclosure_wall=Wood Stud, R-7	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	Wood Stud, Uninsulated	ResStockArguments	enclosure_wall=Wood Stud, Uninsulated	enclosure_wall_continuous_insulation=Uninsulated
 Interior Shading	Summer = 0.7, Winter = 0.85	ResStockArguments	enclosure_window_interior_shading=Curtains, Light
 Lighting	100% CFL	ResStockArguments	lighting=100% CFL, 100% Usage
 Lighting	100% Incandescent	ResStockArguments	lighting=100% Incandescent, 100% Usage
@@ -10606,6 +10609,7 @@ Metropolitan and Micropolitan Statistical Area	Newport, TN MicroSA
 Metropolitan and Micropolitan Statistical Area	Newton, IA MicroSA
 Metropolitan and Micropolitan Statistical Area	Niles-Benton Harbor, MI MSA
 Metropolitan and Micropolitan Statistical Area	Nogales, AZ MicroSA
+Metropolitan and Micropolitan Statistical Area	None
 Metropolitan and Micropolitan Statistical Area	Norfolk, NE MicroSA
 Metropolitan and Micropolitan Statistical Area	North Platte, NE MicroSA
 Metropolitan and Micropolitan Statistical Area	North Port-Sarasota-Bradenton, FL MSA
@@ -10924,51 +10928,51 @@ Metropolitan and Micropolitan Statistical Area	Yuba City, CA MSA
 Metropolitan and Micropolitan Statistical Area	Yuma, AZ MSA
 Metropolitan and Micropolitan Statistical Area	Zanesville, OH MicroSA
 Metropolitan and Micropolitan Statistical Area	Zapata, TX MicroSA
-Metropolitan and Micropolitan Statistical Area	None
-Misc Extra Refrigerator	None	ResStockArguments	appliance_extra_refrigerator=None
-Misc Extra Refrigerator	EF 6.7	ResStockArguments	appliance_extra_refrigerator=1139 kWh/yr, 100% Usage
 Misc Extra Refrigerator	EF 10.2	ResStockArguments	appliance_extra_refrigerator=748 kWh/yr, 100% Usage
 Misc Extra Refrigerator	EF 10.5	ResStockArguments	appliance_extra_refrigerator=727 kWh/yr, 100% Usage
 Misc Extra Refrigerator	EF 15.9	ResStockArguments	appliance_extra_refrigerator=480 kWh/yr, 100% Usage
 Misc Extra Refrigerator	EF 17.6	ResStockArguments	appliance_extra_refrigerator=434 kWh/yr, 100% Usage
 Misc Extra Refrigerator	EF 19.9	ResStockArguments	appliance_extra_refrigerator=384 kWh/yr, 100% Usage
 Misc Extra Refrigerator	EF 21.9	ResStockArguments	appliance_extra_refrigerator=348 kWh/yr, 100% Usage
+Misc Extra Refrigerator	EF 6.7	ResStockArguments	appliance_extra_refrigerator=1139 kWh/yr, 100% Usage
+Misc Extra Refrigerator	None	ResStockArguments	appliance_extra_refrigerator=None
 Misc Extra Refrigerator	Void
-Misc Freezer	None	ResStockArguments	appliance_freezer=None
 Misc Freezer	EF 12, National Average	ResStockArguments	appliance_freezer=935 kWh/yr, 100% Usage
+Misc Freezer	None	ResStockArguments	appliance_freezer=None
 Misc Freezer	Void
-Misc Gas Fireplace	None	ResStockArguments	misc_fireplace=None
 Misc Gas Fireplace	Gas Fireplace	ResStockArguments	misc_fireplace=Natural Gas, 100% Usage
-Misc Gas Grill	None	ResStockArguments	misc_grill=None
+Misc Gas Fireplace	None	ResStockArguments	misc_fireplace=None
 Misc Gas Grill	Gas Grill	ResStockArguments	misc_grill=Natural Gas, 100% Usage
-Misc Gas Lighting	None	ResStockArguments	misc_gas_lighting=None
+Misc Gas Grill	None	ResStockArguments	misc_grill=None
 Misc Gas Lighting	Gas Lighting	ResStockArguments	misc_gas_lighting=Natural Gas, 100% Usage
-Misc Hot Tub Spa	None	ResStockArguments	misc_permanent_spa=None
+Misc Gas Lighting	None	ResStockArguments	misc_gas_lighting=None
 Misc Hot Tub Spa	Electricity	ResStockArguments	misc_permanent_spa=Electric Resistance Heater, 100% Usage
 Misc Hot Tub Spa	Natural Gas	ResStockArguments	misc_permanent_spa=Natural Gas Heater, 100% Usage
+Misc Hot Tub Spa	None	ResStockArguments	misc_permanent_spa=None
 Misc Hot Tub Spa	Other Fuel	ResStockArguments	misc_permanent_spa=Unheated, 100% Usage
 Misc Hot Tub Spa	Void
-Misc Pool	None
 Misc Pool	Has Pool
+Misc Pool	None
 Misc Pool	Void
-Misc Pool Heater	None	ResStockArguments	misc_pool=None
-Misc Pool Heater	Electricity	ResStockArguments	misc_pool=Electric Resistance Heater, 100% Usage
 Misc Pool Heater	Electric Heat Pump	ResStockArguments	misc_pool=Heat Pump Heater, 100% Usage
+Misc Pool Heater	Electricity	ResStockArguments	misc_pool=Electric Resistance Heater, 100% Usage
 Misc Pool Heater	Natural Gas	ResStockArguments	misc_pool=Natural Gas Heater, 100% Usage
+Misc Pool Heater	None	ResStockArguments	misc_pool=None
 Misc Pool Heater	Other Fuel	ResStockArguments	misc_pool=Unheated, 100% Usage
 Misc Well Pump	None	ResStockArguments	misc_well_pump=None
 Misc Well Pump	Typical Efficiency	ResStockArguments	misc_well_pump=Typical Efficiency
-Natural Ventilation	None	ResStockArguments	enclosure_window_natural_ventilation=None
 Natural Ventilation	Cooling Season, 7 days/wk	ResStockArguments	enclosure_window_natural_ventilation=67% Operable Windows
-Neighbors	None	ResStockArguments	geometry_neighbor_buildings=None
+Natural Ventilation	None	ResStockArguments	enclosure_window_natural_ventilation=None
+Neighbors	12	ResStockArguments	geometry_neighbor_buildings=Left/Right at 10ft
 Neighbors	2	ResStockArguments	geometry_neighbor_buildings=Left/Right at 5ft
+Neighbors	27	ResStockArguments	geometry_neighbor_buildings=Left/Right at 25ft
 Neighbors	4	ResStockArguments	geometry_neighbor_buildings=Left/Right at 5ft
 Neighbors	7	ResStockArguments	geometry_neighbor_buildings=Left/Right at 5ft
-Neighbors	12	ResStockArguments	geometry_neighbor_buildings=Left/Right at 10ft
 Neighbors	Left/Right at 15ft	ResStockArguments	geometry_neighbor_buildings=Left/Right at 15ft
-Neighbors	27	ResStockArguments	geometry_neighbor_buildings=Left/Right at 25ft
+Neighbors	None	ResStockArguments	geometry_neighbor_buildings=None
 Occupants	0	ResStockArguments	geometry_unit_num_occupants=0
 Occupants	1	ResStockArguments	geometry_unit_num_occupants=1
+Occupants	10+	ResStockArguments	geometry_unit_num_occupants=10
 Occupants	2	ResStockArguments	geometry_unit_num_occupants=2
 Occupants	3	ResStockArguments	geometry_unit_num_occupants=3
 Occupants	4	ResStockArguments	geometry_unit_num_occupants=4
@@ -10977,12 +10981,11 @@ Occupants	6	ResStockArguments	geometry_unit_num_occupants=6
 Occupants	7	ResStockArguments	geometry_unit_num_occupants=7
 Occupants	8	ResStockArguments	geometry_unit_num_occupants=8
 Occupants	9	ResStockArguments	geometry_unit_num_occupants=9
-Occupants	10+	ResStockArguments	geometry_unit_num_occupants=10
 Orientation	ENE	ResStockArguments	geometry_unit_direction=East-Northeast
 Orientation	ESE	ResStockArguments	geometry_unit_direction=East-Southeast
 Orientation	East	ResStockArguments	geometry_unit_direction=East
 Orientation	NNE	ResStockArguments	geometry_unit_direction=North-Northeast
-Orientation	NNW	ResStockArguments	geometry_unit_direction=Noth-Northwest
+Orientation	NNW	ResStockArguments	geometry_unit_direction=North-Northwest
 Orientation	North	ResStockArguments	geometry_unit_direction=North
 Orientation	Northeast	ResStockArguments	geometry_unit_direction=Northeast
 Orientation	Northwest	ResStockArguments	geometry_unit_direction=Northwest
@@ -13349,8 +13352,8 @@ PUMA	WY, 00500	ResStockArguments
 PUMA Metro Status	In metro area, not/partially in principal city
 PUMA Metro Status	In metro area, principal city
 PUMA Metro Status	Not/partially in metro area
-PV Orientation	None	ResStockArguments	pv_system_direction=Roof Pitch, South
 PV Orientation	East	ResStockArguments	pv_system_direction=Roof Pitch, East
+PV Orientation	None	ResStockArguments	pv_system_direction=Roof Pitch, South
 PV Orientation	North	ResStockArguments	pv_system_direction=Roof Pitch, North
 PV Orientation	Northeast	ResStockArguments	pv_system_direction=Roof Pitch, Northeast
 PV Orientation	Northwest	ResStockArguments	pv_system_direction=Roof Pitch, Northwest
@@ -13358,31 +13361,19 @@ PV Orientation	South	ResStockArguments	pv_system_direction=Roof Pitch, South
 PV Orientation	Southeast	ResStockArguments	pv_system_direction=Roof Pitch, Southeast
 PV Orientation	Southwest	ResStockArguments	pv_system_direction=Roof Pitch, Southwest
 PV Orientation	West	ResStockArguments	pv_system_direction=Roof Pitch, West
-PV System Size	None	ResStockArguments	pv_system=None
 PV System Size	1.0 kWDC	ResStockArguments	pv_system=1.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
+PV System Size	11.0 kWDC	ResStockArguments	pv_system=11.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
+PV System Size	13.0 kWDC	ResStockArguments	pv_system=13.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
 PV System Size	3.0 kWDC	ResStockArguments	pv_system=3.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
 PV System Size	5.0 kWDC	ResStockArguments	pv_system=5.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
 PV System Size	7.0 kWDC	ResStockArguments	pv_system=7.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
 PV System Size	9.0 kWDC	ResStockArguments	pv_system=9.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
-PV System Size	11.0 kWDC	ResStockArguments	pv_system=11.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
-PV System Size	13.0 kWDC	ResStockArguments	pv_system=13.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
-Plug Load Diversity	50%	ResStockArguments	misc_plug_loads=50% Usage	misc_television=50% Usage
+PV System Size	None	ResStockArguments	pv_system=None
 Plug Load Diversity	100%	ResStockArguments	misc_plug_loads=100% Usage	misc_television=100% Usage
 Plug Load Diversity	200%	ResStockArguments	misc_plug_loads=200% Usage	misc_television=200% Usage
-Plug Loads	78%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.78	misc_plug_loads_television_usage_multiplier=0.78
-Plug Loads	79%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.79	misc_plug_loads_television_usage_multiplier=0.79
-Plug Loads	82%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.82	misc_plug_loads_television_usage_multiplier=0.82
-Plug Loads	84%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.84	misc_plug_loads_television_usage_multiplier=0.84
-Plug Loads	85%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.85	misc_plug_loads_television_usage_multiplier=0.85
-Plug Loads	86%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.86	misc_plug_loads_television_usage_multiplier=0.86
-Plug Loads	89%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.89	misc_plug_loads_television_usage_multiplier=0.89
-Plug Loads	91%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.91	misc_plug_loads_television_usage_multiplier=0.91
-Plug Loads	93%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.93	misc_plug_loads_television_usage_multiplier=0.93
-Plug Loads	94%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.94	misc_plug_loads_television_usage_multiplier=0.94
-Plug Loads	95%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.95	misc_plug_loads_television_usage_multiplier=0.95
-Plug Loads	96%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.96	misc_plug_loads_television_usage_multiplier=0.96
-Plug Loads	97%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.97	misc_plug_loads_television_usage_multiplier=0.97
-Plug Loads	99%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.99	misc_plug_loads_television_usage_multiplier=0.99
+Plug Load Diversity	25%	ResStockArguments	misc_plug_loads=25% Usage	misc_television=25% Usage
+Plug Load Diversity	400%	ResStockArguments	misc_plug_loads=400% Usage	misc_television=400% Usage
+Plug Load Diversity	50%	ResStockArguments	misc_plug_loads=50% Usage	misc_television=50% Usage
 Plug Loads	100%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=1.0	misc_plug_loads_television_usage_multiplier=1.0
 Plug Loads	101%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=1.01	misc_plug_loads_television_usage_multiplier=1.01
 Plug Loads	102%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=1.02	misc_plug_loads_television_usage_multiplier=1.02
@@ -13401,6 +13392,20 @@ Plug Loads	137%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplie
 Plug Loads	140%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=1.4	misc_plug_loads_television_usage_multiplier=1.4
 Plug Loads	144%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=1.44	misc_plug_loads_television_usage_multiplier=1.44
 Plug Loads	166%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=1.66	misc_plug_loads_television_usage_multiplier=1.66
+Plug Loads	78%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.78	misc_plug_loads_television_usage_multiplier=0.78
+Plug Loads	79%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.79	misc_plug_loads_television_usage_multiplier=0.79
+Plug Loads	82%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.82	misc_plug_loads_television_usage_multiplier=0.82
+Plug Loads	84%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.84	misc_plug_loads_television_usage_multiplier=0.84
+Plug Loads	85%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.85	misc_plug_loads_television_usage_multiplier=0.85
+Plug Loads	86%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.86	misc_plug_loads_television_usage_multiplier=0.86
+Plug Loads	89%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.89	misc_plug_loads_television_usage_multiplier=0.89
+Plug Loads	91%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.91	misc_plug_loads_television_usage_multiplier=0.91
+Plug Loads	93%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.93	misc_plug_loads_television_usage_multiplier=0.93
+Plug Loads	94%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.94	misc_plug_loads_television_usage_multiplier=0.94
+Plug Loads	95%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.95	misc_plug_loads_television_usage_multiplier=0.95
+Plug Loads	96%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.96	misc_plug_loads_television_usage_multiplier=0.96
+Plug Loads	97%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.97	misc_plug_loads_television_usage_multiplier=0.97
+Plug Loads	99%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.99	misc_plug_loads_television_usage_multiplier=0.99
 REEDS Balancing Area	1
 REEDS Balancing Area	10
 REEDS Balancing Area	100
@@ -13536,19 +13541,11 @@ REEDS Balancing Area	97
 REEDS Balancing Area	98
 REEDS Balancing Area	99
 REEDS Balancing Area	None
-Radiant Barrier	None	ResStockArguments	enclosure_radiant_barrier=None
 Radiant Barrier	No	ResStockArguments	enclosure_radiant_barrier=None
+Radiant Barrier	None	ResStockArguments	enclosure_radiant_barrier=None
 Radiant Barrier	Yes	ResStockArguments	enclosure_radiant_barrier=Attic Roof Only
 Range Spot Vent Hour	Hour0	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=0
 Range Spot Vent Hour	Hour1	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=1
-Range Spot Vent Hour	Hour2	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=2
-Range Spot Vent Hour	Hour3	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=3
-Range Spot Vent Hour	Hour4	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=4
-Range Spot Vent Hour	Hour5	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=5
-Range Spot Vent Hour	Hour6	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=6
-Range Spot Vent Hour	Hour7	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=7
-Range Spot Vent Hour	Hour8	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=8
-Range Spot Vent Hour	Hour9	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=9
 Range Spot Vent Hour	Hour10	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=10
 Range Spot Vent Hour	Hour11	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=11
 Range Spot Vent Hour	Hour12	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=12
@@ -13559,22 +13556,30 @@ Range Spot Vent Hour	Hour16	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=1
 Range Spot Vent Hour	Hour17	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=17
 Range Spot Vent Hour	Hour18	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=18
 Range Spot Vent Hour	Hour19	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=19
+Range Spot Vent Hour	Hour2	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=2
 Range Spot Vent Hour	Hour20	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=20
 Range Spot Vent Hour	Hour21	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=21
 Range Spot Vent Hour	Hour22	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=22
 Range Spot Vent Hour	Hour23	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=23
-Refrigerator	None	ResStockArguments	appliance_refrigerator=None
-Refrigerator	EF 6.7	ResStockArguments	appliance_refrigerator=1139 kWh/yr, 100% Usage
+Range Spot Vent Hour	Hour3	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=3
+Range Spot Vent Hour	Hour4	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=4
+Range Spot Vent Hour	Hour5	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=5
+Range Spot Vent Hour	Hour6	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=6
+Range Spot Vent Hour	Hour7	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=7
+Range Spot Vent Hour	Hour8	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=8
+Range Spot Vent Hour	Hour9	ResStockArgumentsPostHPXML	kitchen_fans_start_hour=9
 Refrigerator	EF 10.2	ResStockArguments	appliance_refrigerator=748 kWh/yr, 100% Usage
 Refrigerator	EF 10.5	ResStockArguments	appliance_refrigerator=727 kWh/yr, 100% Usage
 Refrigerator	EF 15.9	ResStockArguments	appliance_refrigerator=480 kWh/yr, 100% Usage
 Refrigerator	EF 17.6	ResStockArguments	appliance_refrigerator=434 kWh/yr, 100% Usage
 Refrigerator	EF 19.9	ResStockArguments	appliance_refrigerator=384 kWh/yr, 100% Usage
 Refrigerator	EF 21.9	ResStockArguments	appliance_refrigerator=348 kWh/yr, 100% Usage
+Refrigerator	EF 6.7	ResStockArguments	appliance_refrigerator=1139 kWh/yr, 100% Usage
+Refrigerator	None	ResStockArguments	appliance_refrigerator=None
 Refrigerator	Void
-Refrigerator Usage Level	95% Usage	ResStockArgumentsPostHPXML	refrigerator_usage_multiplier=0.95
 Refrigerator Usage Level	100% Usage	ResStockArgumentsPostHPXML	refrigerator_usage_multiplier=1.0
 Refrigerator Usage Level	105% Usage	ResStockArgumentsPostHPXML	refrigerator_usage_multiplier=1.05
+Refrigerator Usage Level	95% Usage	ResStockArgumentsPostHPXML	refrigerator_usage_multiplier=0.95
 Roof Material	Asphalt Shingles, Medium	ResStockArguments	enclosure_roof_material=Asphalt/Fiberglass Shingles, Medium
 Roof Material	Composition Shingles	ResStockArguments	enclosure_roof_material=Asphalt/Fiberglass Shingles, Medium
 Roof Material	Metal, Dark	ResStockArguments	enclosure_roof_material=Metal, Dark
@@ -13634,12 +13639,12 @@ State	WI	ResStockArgumentsPostHPXML	extra_refrigerator_usage_multiplier=1.74	fre
 State	WV	ResStockArgumentsPostHPXML	extra_refrigerator_usage_multiplier=1.68	freezer_usage_multiplier=1.15
 State	WY	ResStockArgumentsPostHPXML	extra_refrigerator_usage_multiplier=1.80	freezer_usage_multiplier=1.32
 State Metro Median Income	0-30%
-State Metro Median Income	30-60%
-State Metro Median Income	60-80%
-State Metro Median Income	80-100%
 State Metro Median Income	100-120%
 State Metro Median Income	120-150%
 State Metro Median Income	150%+
+State Metro Median Income	30-60%
+State Metro Median Income	60-80%
+State Metro Median Income	80-100%
 State Metro Median Income	Not Available
 Tenure	Not Available
 Tenure	Owner
@@ -13660,29 +13665,28 @@ Vintage	2000s	ResStockArguments	vintage=2000s	building_year_built=auto
 Vintage	2010s	ResStockArguments	vintage=2010s	building_year_built=auto
 Vintage	<1940	ResStockArguments	vintage=<1940	building_year_built=auto
 Vintage	<1950	ResStockArguments	vintage=<1950	building_year_built=auto
-Vintage ACS	<1940
 Vintage ACS	1940-59
 Vintage ACS	1960-79
 Vintage ACS	1980-99
 Vintage ACS	2000-09
 Vintage ACS	2010s
-Water Heater Efficiency	Electric Standard	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Electric Premium	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.94	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Electric Tankless	ResStockArguments	dhw_water_heater=Electricity, Tankless, UEF 0.94	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Vintage ACS	<1940
 Water Heater Efficiency	Electric Heat Pump, 50 gal, 3.45 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF 3.50	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Electric Heat Pump, 66 gal, 3.35 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF 3.50	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Electric Heat Pump, 80 gal, 3.45 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF 3.50	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Natural Gas Standard	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF 0.60	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Natural Gas Premium	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF 0.70	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Natural Gas Tankless	ResStockArguments	dhw_water_heater=Natural Gas, Tankless, UEF 0.82	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Propane Standard	ResStockArguments	dhw_water_heater=Propane, Tank, UEF 0.60	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Propane Premium	ResStockArguments	dhw_water_heater=Propane, Tank, UEF 0.67	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Propane Tankless	ResStockArguments	dhw_water_heater=Propane, Tankless, UEF 0.82	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Fuel Oil Standard	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF 0.64	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Fuel Oil Premium	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF 0.67	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Electric Premium	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.94	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Electric Standard	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Electric Tankless	ResStockArguments	dhw_water_heater=Electricity, Tankless, UEF 0.94	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	FIXME Fuel Oil Indirect	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF 0.61	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Fuel Oil Premium	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF 0.67	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Fuel Oil Standard	ResStockArguments	dhw_water_heater=Fuel Oil, Tank, UEF 0.64	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Natural Gas Premium	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF 0.70	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Natural Gas Standard	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF 0.60	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Natural Gas Tankless	ResStockArguments	dhw_water_heater=Natural Gas, Tankless, UEF 0.82	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Other Fuel	ResStockArguments	dhw_water_heater=None	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Wood	ResStockArguments	dhw_water_heater=None	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Propane Premium	ResStockArguments	dhw_water_heater=Propane, Tank, UEF 0.67	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Propane Standard	ResStockArguments	dhw_water_heater=Propane, Tank, UEF 0.60	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Propane Tankless	ResStockArguments	dhw_water_heater=Propane, Tankless, UEF 0.82	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, East
 Water Heater Efficiency	Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, North
 Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
@@ -13690,6 +13694,7 @@ Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Stan
 Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF 0.60	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup	ResStockArguments	dhw_water_heater=Propane, Tank, UEF 0.60	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, West
+Water Heater Efficiency	Wood	ResStockArguments	dhw_water_heater=None	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Fuel	Electricity
 Water Heater Fuel	Fuel Oil
 Water Heater Fuel	Natural Gas
@@ -13707,20 +13712,14 @@ Water Heater Location	Heated Basement	ResStockArguments	dhw_water_heater_locatio
 Water Heater Location	Living Space	ResStockArguments	dhw_water_heater_location=Conditioned Space
 Water Heater Location	Outside	ResStockArguments	dhw_water_heater_location=Outside
 Water Heater Location	Unheated Basement	ResStockArguments	dhw_water_heater_location=Basement
-Window Areas	F6 B6 L6 R6	ResStockArguments	geometry_window_areas_or_wwrs=0.06, 0.06, 0.06, 0.06	geometry_skylight_areas=0, 0, 0, 0
-Window Areas	F9 B9 L9 R9	ResStockArguments	geometry_window_areas_or_wwrs=0.09, 0.09, 0.09, 0.09	geometry_skylight_areas=0, 0, 0, 0
 Window Areas	F10 B30 L10 R10	ResStockArguments	geometry_window_areas_or_wwrs=0.1, 0.3, 0.1, 0.1	geometry_skylight_areas=0, 0, 0, 0
 Window Areas	F12 B12 L12 R12	ResStockArguments	geometry_window_areas_or_wwrs=0.12, 0.12, 0.12, 0.12	geometry_skylight_areas=0, 0, 0, 0
 Window Areas	F15 B15 L0 R0	ResStockArguments	geometry_window_areas_or_wwrs=0.15, 0.15, 0, 0	geometry_skylight_areas=0, 0, 0, 0
 Window Areas	F15 B15 L15 R15	ResStockArguments	geometry_window_areas_or_wwrs=0.15, 0.15, 0.15, 0.15	geometry_skylight_areas=0, 0, 0, 0
 Window Areas	F18 B18 L18 R18	ResStockArguments	geometry_window_areas_or_wwrs=0.18, 0.18, 0.18, 0.18	geometry_skylight_areas=0, 0, 0, 0
 Window Areas	F30 B30 L30 R30	ResStockArguments	geometry_window_areas_or_wwrs=0.30, 0.30, 0.30, 0.30	geometry_skylight_areas=0, 0, 0, 0
-Windows	Single, Clear, Metal	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Single, Clear, Metal, Exterior Clear Storm	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Single, Clear, Metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Single, Clear, Non-metal	ResStockArguments	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Single, Clear, Non-metal, Exterior Clear Storm	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
-Windows	Single, Clear, Non-metal, Exterior Low-E Storm	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
+Window Areas	F6 B6 L6 R6	ResStockArguments	geometry_window_areas_or_wwrs=0.06, 0.06, 0.06, 0.06	geometry_skylight_areas=0, 0, 0, 0
+Window Areas	F9 B9 L9 R9	ResStockArguments	geometry_window_areas_or_wwrs=0.09, 0.09, 0.09, 0.09	geometry_skylight_areas=0, 0, 0, 0
 Windows	Double, Clear, Metal, Air	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
 Windows	Double, Clear, Metal, Air, Exterior Clear Storm	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
 Windows	Double, Clear, Metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
@@ -13732,6 +13731,12 @@ Windows	Double, Low-E, H-Gain	ResStockArguments	enclosure_window=Double, Low-E, 
 Windows	Double, Low-E, L-Gain	ResStockArguments	enclosure_window=Double, Low-E, Insulated, Gas, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
 Windows	Double, Low-E, Non-metal, Air, L-Gain	ResStockArguments	enclosure_window=Double, Low-E, Non-Metal, Air, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
 Windows	Double, Low-E, Non-metal, Air, M-Gain	ResStockArguments	enclosure_window=Double, Low-E, Non-Metal, Air, Med Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
+Windows	Single, Clear, Metal	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
+Windows	Single, Clear, Metal, Exterior Clear Storm	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
+Windows	Single, Clear, Metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Single, Clear, Metal	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
+Windows	Single, Clear, Non-metal	ResStockArguments	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
+Windows	Single, Clear, Non-metal, Exterior Clear Storm	ResStockArguments	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
+Windows	Single, Clear, Non-metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Single, Clear, Non-Metal	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
 Windows	Triple, Low-E, Insulated, Argon, H-Gain	ResStockArguments	enclosure_window=Triple, Low-E, Insulated, Gas, High Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
 Windows	Triple, Low-E, Insulated, Argon, L-Gain	ResStockArguments	enclosure_window=Triple, Low-E, Insulated, Gas, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
 Windows	Triple, Low-E, Non-metal, Air, L-Gain	ResStockArguments	enclosure_window=Triple, Low-E, Non-Metal, Air, Low Gain	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
