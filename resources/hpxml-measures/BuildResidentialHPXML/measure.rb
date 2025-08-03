@@ -7477,9 +7477,9 @@ module HPXMLFile
       if not args[:electric_panel_load_misc_plug_loads_vehicle_voltage].nil?
         voltage = args[:electric_panel_load_misc_plug_loads_vehicle_voltage]
       elsif not ev_charger.charging_level.nil?
-        voltage = { '1' => HPXML::ElectricPanelVoltage120,
-                    '2' => HPXML::ElectricPanelVoltage240,
-                    '3' => HPXML::ElectricPanelVoltage240 }[ev_charger.charging_level]
+        voltage = { 1 => HPXML::ElectricPanelVoltage120,
+                    2 => HPXML::ElectricPanelVoltage240,
+                    3 => HPXML::ElectricPanelVoltage240 }[ev_charger.charging_level]
       end
 
       if not args[:electric_panel_load_misc_plug_loads_vehicle_power].nil?
@@ -7571,7 +7571,7 @@ module HPXMLFile
     if args[:ev_charger_present]
       charger_id = "EVCharger#{hpxml_bldg.ev_chargers.size + 1}"
       hpxml_bldg.ev_chargers.add(id: charger_id,
-                                 charging_level: args[:ev_charger_level],
+                                 charging_level: (Integer(args[:ev_charger_level]) rescue nil),
                                  charging_power: args[:ev_charger_power])
     end
 
