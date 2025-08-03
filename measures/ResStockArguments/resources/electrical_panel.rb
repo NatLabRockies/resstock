@@ -132,9 +132,9 @@ class ElectricalPanelSampler
     has_elec_drying = electric_fuel_and_presence(args[:clothes_dryer_present], args[:clothes_dryer_fuel_type])
     has_elec_cooking = electric_fuel_and_presence(args[:cooking_range_oven_present], args[:cooking_range_fuel_type])
     # has pv
-    has_pv = bool_to_numeric(args[:pv_system_present])
+    has_pv = to_numeric(args[:pv_system_present])
     # has ev charging
-    has_ev_charging = bool_to_numeric(args[:ev_charger_present])
+    has_ev_charging = to_numeric(args[:ev_charger_present])
 
     load_vars = [
       has_elec_heating_primary,
@@ -267,8 +267,10 @@ class ElectricalPanelSampler
     end
   end
 
-  def bool_to_numeric(is_present)
-    if is_present
+  def to_numeric(is_present)
+    if is_present.is_a? String
+      return is_present.downcase == 'true' ? 1 : 0
+    elsif is_present
       return 1
     else
       return 0

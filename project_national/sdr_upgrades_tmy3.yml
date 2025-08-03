@@ -248,9 +248,7 @@ references:
         - Infiltration|30 ACH50
         - Infiltration|25 ACH50
         - Infiltration|20 ACH50
-        - Infiltration|18.5 ACH50
         - Infiltration|15 ACH50
-        - Infiltration|11.25 ACH50
     costs:
       - value: 0.53
         multiplier: Floor Area, Conditioned (ft^2)
@@ -322,7 +320,7 @@ references:
     - or:
       - HVAC Has Ducts|Yes
       - HVAC Has Ducts|No
-  
+
   ### -- Anchors dependent on other anchors -- ###
   cooling_setpoint_no_offset: &cooling_setpoint_no_offset
       option: Cooling Setpoint Has Offset|No
@@ -418,7 +416,7 @@ upgrades:
       - *infiltration_30_percent_reduction
 
   - upgrade_name: Attic Floor Insulation for Unfinished Attics
-    options: 
+    options:
     - *attic_insulation_iecc_cz1a
     - *attic_insulation_iecc_cz2a_2b_3a_3b_3c
     - *attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b
