@@ -147,6 +147,8 @@ references:
       - Heating Fuel|Natural Gas
       - Clothes Dryer|Gas
       - Cooking Range|Gas
+      - Misc Pool Heater|Natural Gas
+      - Misc Hot Tub Spa|Natural Gas
 
   change_water_heater_fuel_to_electricity: &change_water_heater_fuel_to_electricity
     option: Water Heater Fuel|Electricity
