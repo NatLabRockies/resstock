@@ -93,9 +93,9 @@ Bathroom Spot Vent Hour	Hour6	ResStockArguments	bathroom_fans_quantity=auto	bath
 Bathroom Spot Vent Hour	Hour7	ResStockArguments	bathroom_fans_quantity=auto	bathroom_fans_start_hour=7	bathroom_fans_flow_rate=auto	bathroom_fans_hours_in_operation=auto	bathroom_fans_power=auto
 Bathroom Spot Vent Hour	Hour8	ResStockArguments	bathroom_fans_quantity=auto	bathroom_fans_start_hour=8	bathroom_fans_flow_rate=auto	bathroom_fans_hours_in_operation=auto	bathroom_fans_power=auto
 Bathroom Spot Vent Hour	Hour9	ResStockArguments	bathroom_fans_quantity=auto	bathroom_fans_start_hour=9	bathroom_fans_flow_rate=auto	bathroom_fans_hours_in_operation=auto	bathroom_fans_power=auto
-Battery	"20 kWh, 80% Round Trip Efficiency"	ResStockArguments	battery_present=true	battery_location=auto	battery_power=20	battery_capacity=auto	battery_usable_capacity=auto	battery_round_trip_efficiency=0.8
-Battery	"20 kWh, Garage"	ResStockArguments	battery_present=true	battery_location=garage	battery_power=20	battery_capacity=auto	battery_usable_capacity=auto	battery_round_trip_efficiency=auto
-Battery	"20 kWh, Outside"	ResStockArguments	battery_present=true	battery_location=outside	battery_power=20	battery_capacity=auto	battery_usable_capacity=auto	battery_round_trip_efficiency=auto
+Battery	"20 kWh, 80% Round Trip Efficiency"	ResStockArguments	battery_present=true	battery_location=auto	battery_power=auto	battery_capacity=20	battery_usable_capacity=auto	battery_round_trip_efficiency=0.8
+Battery	"20 kWh, Garage"	ResStockArguments	battery_present=true	battery_location=garage	battery_power=auto	battery_capacity=20	battery_usable_capacity=auto	battery_round_trip_efficiency=auto
+Battery	"20 kWh, Outside"	ResStockArguments	battery_present=true	battery_location=outside	battery_power=auto	battery_capacity=20	battery_usable_capacity=auto	battery_round_trip_efficiency=auto
 Battery	10 kWh	ResStockArguments	battery_present=true	battery_location=auto	battery_power=auto	battery_capacity=10	battery_usable_capacity=auto	battery_round_trip_efficiency=auto
 Battery	None	ResStockArguments	battery_present=false	battery_location=auto	battery_power=auto	battery_capacity=auto	battery_usable_capacity=auto	battery_round_trip_efficiency=auto
 Bedrooms	1	ResStockArguments	geometry_unit_num_bedrooms=1	geometry_unit_num_bathrooms=auto
