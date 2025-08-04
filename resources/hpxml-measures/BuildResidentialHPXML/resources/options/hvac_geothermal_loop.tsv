@@ -1,7 +1,8 @@
 Option Name	Configuration	Borefield Configuration	Loop Flow [gpm]	Boreholes Count [#]	Boreholes Length [ft]	Boreholes Spacing [ft]	Boreholes Diameter [in]	Grout Type	Pipe Type	Pipe Diameter	Pipe Shank Spacing [in]
 Default											
-"Vertical Loop, Enhanced Grout"								enhanced			
-"Vertical Loop, Enhanced Pipe"									enhanced		
+"Vertical Loop, Enhanced Grout"	vertical							thermally enhanced			
+"Vertical Loop, Enhanced Pipe"	vertical								thermally enhanced		
+"Vertical Loop, Enhanced Grout & Pipe"	vertical							thermally enhanced	thermally enhanced		
 "Detailed Example: Lopsided U Configuration, 10 Boreholes"	vertical	Lopsided U	10	9	315	16.4	5.9	standard	standard	"1"" pipe"	2.5
 											
 Configuration: Configuration of the geothermal loop for ground-to-air heat pumps.											

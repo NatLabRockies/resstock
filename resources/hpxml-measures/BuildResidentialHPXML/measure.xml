@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>61c622e0-b9a1-49a8-ad43-f0c0b225d131</version_id>
-  <version_modified>2025-08-02T17:59:36Z</version_modified>
+  <version_id>d84e14fc-52be-4f97-9d21-2107cde9028d</version_id>
+  <version_modified>2025-08-04T22:22:02Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -1122,12 +1122,24 @@
           <display_name>Left/Right at 2ft</display_name>
         </choice>
         <choice>
+          <value>Left/Right at 4ft</value>
+          <display_name>Left/Right at 4ft</display_name>
+        </choice>
+        <choice>
           <value>Left/Right at 5ft</value>
           <display_name>Left/Right at 5ft</display_name>
         </choice>
         <choice>
+          <value>Left/Right at 7ft</value>
+          <display_name>Left/Right at 7ft</display_name>
+        </choice>
+        <choice>
           <value>Left/Right at 10ft</value>
           <display_name>Left/Right at 10ft</display_name>
+        </choice>
+        <choice>
+          <value>Left/Right at 12ft</value>
+          <display_name>Left/Right at 12ft</display_name>
         </choice>
         <choice>
           <value>Left/Right at 15ft</value>
@@ -1142,16 +1154,32 @@
           <display_name>Left/Right at 25ft</display_name>
         </choice>
         <choice>
+          <value>Left/Right at 27ft</value>
+          <display_name>Left/Right at 27ft</display_name>
+        </choice>
+        <choice>
           <value>Left at 2ft</value>
           <display_name>Left at 2ft</display_name>
+        </choice>
+        <choice>
+          <value>Left at 4ft</value>
+          <display_name>Left at 4ft</display_name>
         </choice>
         <choice>
           <value>Left at 5ft</value>
           <display_name>Left at 5ft</display_name>
         </choice>
         <choice>
+          <value>Left at 7ft</value>
+          <display_name>Left at 7ft</display_name>
+        </choice>
+        <choice>
           <value>Left at 10ft</value>
           <display_name>Left at 10ft</display_name>
+        </choice>
+        <choice>
+          <value>Left at 12ft</value>
+          <display_name>Left at 12ft</display_name>
         </choice>
         <choice>
           <value>Left at 15ft</value>
@@ -1166,16 +1194,32 @@
           <display_name>Left at 25ft</display_name>
         </choice>
         <choice>
+          <value>Left at 27ft</value>
+          <display_name>Left at 27ft</display_name>
+        </choice>
+        <choice>
           <value>Right at 2ft</value>
           <display_name>Right at 2ft</display_name>
+        </choice>
+        <choice>
+          <value>Right at 4ft</value>
+          <display_name>Right at 4ft</display_name>
         </choice>
         <choice>
           <value>Right at 5ft</value>
           <display_name>Right at 5ft</display_name>
         </choice>
         <choice>
+          <value>Right at 7ft</value>
+          <display_name>Right at 7ft</display_name>
+        </choice>
+        <choice>
           <value>Right at 10ft</value>
           <display_name>Right at 10ft</display_name>
+        </choice>
+        <choice>
+          <value>Right at 12ft</value>
+          <display_name>Right at 12ft</display_name>
         </choice>
         <choice>
           <value>Right at 15ft</value>
@@ -1188,6 +1232,10 @@
         <choice>
           <value>Right at 25ft</value>
           <display_name>Right at 25ft</display_name>
+        </choice>
+        <choice>
+          <value>Right at 27ft</value>
+          <display_name>Right at 27ft</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height</value>
@@ -4664,6 +4712,10 @@
           <display_name>Geothermal HP, EER 18.2, COP 3.7</display_name>
         </choice>
         <choice>
+          <value>Geothermal HP, EER 18.6, COP 3.8</value>
+          <display_name>Geothermal HP, EER 18.6, COP 3.8</display_name>
+        </choice>
+        <choice>
           <value>Geothermal HP, EER 19.4, COP 3.8</value>
           <display_name>Geothermal HP, EER 19.4, COP 3.8</display_name>
         </choice>
@@ -5395,6 +5447,10 @@
         <choice>
           <value>Vertical Loop, Enhanced Pipe</value>
           <display_name>Vertical Loop, Enhanced Pipe</display_name>
+        </choice>
+        <choice>
+          <value>Vertical Loop, Enhanced Grout &amp; Pipe</value>
+          <display_name>Vertical Loop, Enhanced Grout &amp; Pipe</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Lopsided U Configuration, 10 Boreholes</value>
@@ -11076,7 +11132,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>D078830B</checksum>
+      <checksum>9C3CED1E</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -11093,7 +11149,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9B6E60D7</checksum>
+      <checksum>3F554BE4</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
@@ -11411,7 +11467,7 @@
       <filename>options/geometry_neighbor_buildings.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>EBAF9A60</checksum>
+      <checksum>FCA37A69</checksum>
     </file>
     <file>
       <filename>options/geometry_unit_direction.tsv</filename>
@@ -11495,13 +11551,13 @@
       <filename>options/hvac_geothermal_loop.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>34B284DB</checksum>
+      <checksum>9DF930DA</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>34BFC6EF</checksum>
+      <checksum>9A927DE6</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump_backup.tsv</filename>
