@@ -36110,7 +36110,7 @@ Generation And Emissions Assessment Region
 Description
 ***********
 
-The generation and carbon emissions assessment region that the sample is located.
+The generation and carbon emissions assessment region that the sample is located in.
 
 Created by
 **********
@@ -36120,7 +36120,7 @@ Created by
 Source
 ******
 
-- \Pieter Gagnon, Will Frazier, Wesley Cole, and Elaine Hale. 2021. Cambium Documentation: Version 2021. Golden, CO.: National Renewable Energy Laboratory. NREL/TP-6A40-81611. https://www.nrel.gov/docs/fy22osti/81611.pdf
+- \Gagnon, Pieter, Sanchez Perez, Pedro Andres, Obika, Kodi, et al., Cambium 2023 Scenario Descriptions and Documentation, (2024), https://doi.org/10.2172/2316014f
 
 
 Options
@@ -36136,48 +36136,44 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
 
-   * - AZNMc
-     - 3.6%
-   * - CAMXc
+   * - CAISO
      - 10%
-   * - ERCTc
+   * - ERCOT
      - 6.8%
-   * - FRCCc
+   * - FRCC
      - 6.5%
-   * - MROEc
-     - 0.97%
-   * - MROWc
-     - 4.3%
-   * - NEWEc
+   * - ISONE
      - 4.8%
+   * - MISO Central
+     - 7.6%
+   * - MISO North
+     - 5%
+   * - MISO South
+     - 3.3%
    * - None
      - 0.63%
-   * - NWPPc
-     - 5.5%
-   * - NYSTc
+   * - Northern Grid East
+     - 0.95%
+   * - Northern Grid South
+     - 1.7%
+   * - Northern Grid West
+     - 3.5%
+   * - NYISO
      - 6.1%
-   * - RFCEc
-     - 8.2%
-   * - RFCMc
-     - 3.3%
-   * - RFCWc
-     - 12%
-   * - RMPAc
+   * - PJM East
+     - 17%
+   * - PJM West
+     - 3%
+   * - SERTP
+     - 13%
+   * - SPP North
+     - 0.94%
+   * - SPP South
+     - 3.8%
+   * - West Connect North
      - 1.9%
-   * - SPNOc
-     - 1.8%
-   * - SPSOc
-     - 2.1%
-   * - SRMVc
-     - 3.3%
-   * - SRMWc
-     - 2.3%
-   * - SRSOc
-     - 5.1%
-   * - SRTVc
-     - 3.7%
-   * - SRVCc
-     - 7.1%
+   * - West Connect South
+     - 3%
 
 .. _geometry_attic_type:
 

@@ -2,16 +2,16 @@
 
 In this section, we overview each of the input housing characteristics for ResStock in detail including ResStock options, associated ResStock arguments, and the details of each of those arguments. In ResStock, each input characteristic gets its own input file. The full set of housing characteristic input files is available in the main \href{https://github.com/NREL/resstock/tree/v3.3.0/project_national}{ResStock GitHub repository}.  We discuss each of these input files as well as the general theory for how different systems and components are modeled. Within each section we also provide the national-level stock saturation of each option within a characteristic. These top-level saturations collapse much of the detail and nuance in ResStock's probability distributions, but the saturations serve to give a sense of how common different options are, generally, in the United States.
 
-We organize this discussion by the major types of inputs: Geography, Geometry, Envelope, HVAC, Water Heating, Appliances, Lighting, Plug Loads, and Household characteristics. For each of these major sections, we discuss ResStock's approach to these input types, highlighting where it might vary from OS-HPXML. In the argument tables, a selection of ``auto'' means that the value is being calculated or defaulted in OS-HPXML. Additionally, we discuss weather inputs to ResStock, which is specified separately from the main input files. 
+We organize this discussion by the major types of inputs: Geography, Geometry, Envelope, HVAC, Water Heating, Appliances, Lighting, Plug Loads, and Household characteristics. For each of these major sections, we discuss ResStock's approach to these input types, highlighting where it might vary from OS-HPXML. In the argument tables, a selection of ``auto'' means that the value is being calculated or defaulted in OS-HPXML. Additionally, we discuss weather inputs to ResStock, which is specified separately from the main input files.
 
 \section{Geography}
 ResStock provides a wide range of geographic inputs and outputs. These fields allow for detailed input probability distributions for the U.S.~residential building stock characterization. These geography fields are also useful for aggregating and analyzing ResStock outputs.
 
-All the geography fields are compiled into a geography lookup table that contains census block-level resolution. For reference, the Geography Hierarchy Diagram for Census geographies can be found on the \href{https://www2.census.gov/geo/pdfs/reference/geodiagram.pdf}{Geography Hierarchy Diagram} U.S.~Census website. This diagram shows that the fundamental geography is a census block. All other census geographies stem from this definition. This hierarchy is used to create a lookup table for all geography characteristics in ResStock. 
+All the geography fields are compiled into a geography lookup table that contains census block-level resolution. For reference, the Geography Hierarchy Diagram for Census geographies can be found on the \href{https://www2.census.gov/geo/pdfs/reference/geodiagram.pdf}{Geography Hierarchy Diagram} U.S.~Census website. This diagram shows that the fundamental geography is a census block. All other census geographies stem from this definition. This hierarchy is used to create a lookup table for all geography characteristics in ResStock.
 
 Added to this table are occupied and vacant unit counts for each census block from the \href{https://www.census.gov/programs-surveys/decennial-census/about/rdo.html}{2020 U.S.~Census Redistricting Data} and ACS 5-year 2016 data. The ACS number of units is specified by census tract and downscaled to the census block level using the 2020 Redistricting data. The 2020 census block data are converted to 2010 census blocks using the National Historical Geographic Information System (NHGIS) \href{https://www.nhgis.org/geographic-crosswalks}{Geographic Crosswalks}. All the characteristics and distributions of housing characteristics are pivoted from this lookup table relating the geography definitions and housing unit counts. Also in this lookup file is the NHGIS GISJOIN codes that help join this file to other geography fields not in the lookup table or the ResStock outputs.
 
-The ACS housing unit data are typically used by ResStock to specify in the project file the number of housing units in the United States. The ACS data are a 5-year average compared to the single-year 2020 Redistricting data. Consistency for using ACS for unit counts at the census geographies is also achieved except for the ``City'' characteristic. The City characteristic uses the downscaled data from the ACS to census block, because City boundaries are specified by census blocks. 
+The ACS housing unit data are typically used by ResStock to specify in the project file the number of housing units in the United States. The ACS data are a 5-year average compared to the single-year 2020 Redistricting data. Consistency for using ACS for unit counts at the census geographies is also achieved except for the ``City'' characteristic. The City characteristic uses the downscaled data from the ACS to census block, because City boundaries are specified by census blocks.
 
 The census geographies are set to be consistent with the U.S.~Census Bureau's definitions as of July 1, 2015. The 2010 Census geography definitions and changes between the 2010 Census and July 1, 2015, can be found on the \href{https://www.census.gov/programs-surveys/decennial-census/decade.html}{U.S.~Census Bureau Decennial Census} website.
 
@@ -41,7 +41,7 @@ This section contains ResStock characteristics based on the U.S.~Census geograph
 The U.S.~Census Region where the sample is located. The regions are a collection of U.S.~Census Divisions.
 
 \paragraph{Distribution Data Source(s)}
-\begin{itemize} 
+\begin{itemize}
 \item
   Spatial definitions are from the U.S.~Census Bureau as of July 1,
   2015.
@@ -50,7 +50,7 @@ The U.S.~Census Region where the sample is located. The regions are a collection
 \end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
-\begin{itemize} 
+\begin{itemize}
 \item Census Division.
 \end{itemize}
 
@@ -65,7 +65,7 @@ No assumptions are made.
 The U.S.~Census Division where the sample is located. The regions are a collection of U.S.~states.
 
 \paragraph{Distribution Data Source(s)}
-\begin{itemize} 
+\begin{itemize}
 \item
   Spatial definitions are from the U.S.~Census Bureau as of July 1,
   2015.
@@ -74,7 +74,7 @@ The U.S.~Census Division where the sample is located. The regions are a collecti
 \end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
-\begin{itemize} 
+\begin{itemize}
 \item State.
 \end{itemize}
 
@@ -89,7 +89,7 @@ No assumptions are made.
 The U.S.~state where the sample is located. In ResStock, States are defined by a collection of Counties.
 
 \paragraph{Distribution Data Source(s)}
-\begin{itemize} 
+\begin{itemize}
 \item
   Spatial definitions are from the U.S.~Census Bureau as of July 1,
   2015.
@@ -98,7 +98,7 @@ The U.S.~state where the sample is located. In ResStock, States are defined by a
 \end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
-\begin{itemize} 
+\begin{itemize}
 \item County.
 \end{itemize}
 
@@ -129,7 +129,7 @@ No assumptions are made.
 The U.S.~County where the sample is located.
 
 \paragraph{Distribution Data Source(s)}
-\begin{itemize} 
+\begin{itemize}
 \item
   Spatial definitions are from the U.S.~Census Bureau as of July 1,
   2015.
@@ -143,9 +143,9 @@ The U.S.~County where the sample is located.
 \end{itemize}
 
 \paragraph{Options}
-The County characteristic options are structured using the State name and County name. An example of the option corresponding to Denver County in Colorado would be ``CO, Denver County''. The ResStock arguments \texttt{simulation\_control\_daylight\_saving\_enabled}, \texttt{site\_zip\_code}, \texttt{site\_time\_zone\_utc\_offset}, and \texttt{weather\_station\_epw\_filepath} are not constant across all the County options. 
+The County characteristic options are structured using the State name and County name. An example of the option corresponding to Denver County in Colorado would be ``CO, Denver County''. The ResStock arguments \texttt{simulation\_control\_daylight\_saving\_enabled}, \texttt{site\_zip\_code}, \texttt{site\_time\_zone\_utc\_offset}, and \texttt{weather\_station\_epw\_filepath} are not constant across all the County options.
 
-The \texttt{simulation\_control\_daylight\_saving\_enabled} argument is set to ``true'' except in Arizona where all the counties are set to ``false.'' 
+The \texttt{simulation\_control\_daylight\_saving\_enabled} argument is set to ``true'' except in Arizona where all the counties are set to ``false.''
 
 The \texttt{site\_zip\_code} argument is assigned by using a single zip code for the entire county.
 
@@ -189,7 +189,7 @@ The Public Use Microdata Area (PUMA) from 2010 U.S.~Census that the sample is lo
 \end{figure}
 
 \paragraph{Distribution Data Source(s)}
-\begin{itemize} 
+\begin{itemize}
 \item
   Spatial definitions are from the U.S.~Census Bureau as of July 1,
   2015.
@@ -234,7 +234,7 @@ The GISJOIN identifier for the County and the PUMA where the sample is located. 
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   Spatial definitions are from the U.S.~Census Bureau as of July 1,
   2015.
@@ -258,7 +258,7 @@ The U.S.~Metropolitan Statistical Area (MSA) or Micropolitan Statistical Area (M
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   Spatial definitions are from the U.S.~Census Bureau as of July 1,
   2015.
@@ -288,7 +288,7 @@ The City where the sample is located.
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   Spatial definitions are from the U.S.~Census Bureau as of July 1,
   2015.
@@ -354,7 +354,7 @@ American Indian/Alaska Native/Native Hawaiian (AIANNH) Area where the sample is 
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
-    \item 2010 Census Tract to American Indian Area (AIA) Relationship File provides the percent housing units in the census tract that belong to AIA. 
+    \item 2010 Census Tract to American Indian Area (AIA) Relationship File provides the percent housing units in the census tract that belong to AIA.
     \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
     \item Unit counts are from the American Community Survey 5-year 2016.
 \end{itemize}
@@ -410,7 +410,7 @@ The PUMA metropolitan status where the housing unit is located.
 \end{itemize}
 
 \paragraph{Options}
-The options are either (1) In metro area, not/partially in principal city, (2) In metro area, principal city, or (3) Not/partially in metro area. 
+The options are either (1) In metro area, not/partially in principal city, (2) In metro area, principal city, or (3) Not/partially in metro area.
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -448,13 +448,13 @@ Climate zone according to ASHRAE 169 in 2004 and IECC in 2012 where the sample i
 There are no direct conditional dependencies.
 
 \paragraph{Options}
-A set of counties defines each climate and moisture zone. Climate zones range from 1--8 and moisture zones are indicated by A, B, and C. 
+A set of counties defines each climate and moisture zone. Climate zones range from 1--8 and moisture zones are indicated by A, B, and C.
 
 The ASHRAE IECC Climate Zone 2004 sets the \texttt{site\_type} and \texttt{site\_iecc\_zone} arguments. The \texttt{site\_type} is always set to ``auto.'' The \texttt{site\_iecc\_zone} argument matches the climate zone with the exception of climate zones 7 and 8 in Alaska. ResStock departs from the climate zone definitions by using 7AK and 8AK instead of 7 and 8 from the standards.
 
 \begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1.1cm}|p{4.4cm}|p{4cm}| }
-{The ResStock arguments set in the ASHRAE IECC Climate Zone 2004 characteristic} {table:hc_arg_def_ashrae_2004}  
-{Name & Required & Type & Choices & Description} 
+{The ResStock arguments set in the ASHRAE IECC Climate Zone 2004 characteristic} {table:hc_arg_def_ashrae_2004}
+{Name & Required & Type & Choices & Description}
 \texttt{site\_type} & false & Choice & auto, suburban, urban, rural &
 The type of site.  \\
 \hline
@@ -565,7 +565,7 @@ Climate zones for windows, doors, and skylights per ENERGY STAR guidelines as of
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
-    \item Area definition approximated based on published map retrieved in May 2023 from the \href{https://www.energystar.gov/products/residential_windows_doors_and_skylights/key_product_criteria}{ENERGY STAR windows, doors, and skylights key product criteria} website. 
+    \item Area definition approximated based on published map retrieved in May 2023 from the \href{https://www.energystar.gov/products/residential_windows_doors_and_skylights/key_product_criteria}{ENERGY STAR windows, doors, and skylights key product criteria} website.
 \end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
@@ -575,7 +575,7 @@ Climate zones for windows, doors, and skylights per ENERGY STAR guidelines as of
 \end{itemize}
 
 \paragraph{Options}
-The options for the ENERGY STAR Climate Zone 2023 characteristic are the same as climate zones: North-Central, Northern, South-Central, and Southern. 
+The options for the ENERGY STAR Climate Zone 2023 characteristic are the same as climate zones: North-Central, Northern, South-Central, and Southern.
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -608,7 +608,7 @@ The Regional Energy Deployment System Model (ReEDS) balancing area where the sam
     \item Spatial definitions are from the U.S.~Census Bureau as of July 1, 2015.
     \item Unit counts are from the American Community Survey 5-year 2016.
     \item Regional Energy Deployment System (ReEDS) Model Documentation: Version 2019 (\cite{Brown2019})
-    
+
 
 \end{itemize}
 
@@ -623,28 +623,28 @@ No assumptions are made.
 
 \subsubsection{Generation and Emissions Assessment (GEA) Region}
 \paragraph{Description}
-The 2021 Cambium generation and carbon emissions assessment region where the sample is located. See Figure \ref{fig:cambium_gea_map} for a map of these regions.
+The 2023 and later Cambium generation and carbon emissions assessment region where the sample is located. See Figure \ref{fig:cambium_gea_map} for a map of these regions.
 
 \begin{figure}
     \centering
-    \includegraphics[width=1\linewidth]{images/Cambium_GEAs_2021.png}
-    \caption{ Map of the \href{https://www.nrel.gov/analysis/cambium.html}{Cambium} 2021 Generation and Emission Assessment Regions}
+    \includegraphics[width=1\linewidth]{images/Cambium_GEA_map_2023.png}
+    \caption{ Map of the \href{https://www.nrel.gov/analysis/cambium.html}{Cambium} 2023 Generation and Emission Assessment Regions}
     \label{fig:cambium_gea_map}
 \end{figure}
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
-    \item Cambium Documentation: Version 2021 (\cite{Gagnon2021}).
+    \item Cambium Documentation: Version 2024 (\cite{Gagnon2025}).
 
 \end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
 \begin{itemize}
-    \item REEDS Balancing Area.
+    \item County.
 \end{itemize}
 
 \paragraph{Options}
-The options follow the Cambium GEA region names: AZNMc, CAMXc, ERCTc, FRCCc, MROEc, MROWc, NEWEc, NWPPc, NYSTc, RFCEc, RFCMc, RFCWc, RMPAc, SPNOc, SPSOc, SRMVc, SRMWc, SRSOc, SRTVc, and SRVCc. The None option is set for Alaska and Hawaii as these states do not have a ReEDS balancing area.
+The options follow the Cambium GEA region names: CAISO, ERCOT, FRCC, ISONE, MISO Central, MISO North, MISO South, None, Northern Grid East, Northern Grid South, Northern Grid West, NYISO, PJM East, PJM West, SERTP, SPP North, SPP South, West Connect North, and West Connect South. The None option is set for Alaska and Hawaii as these states are not modeled in Cambium.
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.
@@ -789,19 +789,19 @@ Weather data are closely related to the specification of geography inputs, since
 
 As is standard in most building energy models, ResStock can be run with either Typical Meteorological Year (TMY) or Actual Meteorological Year (AMY) data. Hypothetically, ResStock could be run with any other weather data in EPW format, but all data releases to date have been based upon TMY or AMY data. TMY are synthetically constructed files based upon historic weather where each month of the year is picked from the most representative (i.e., ``typical'') real month from the previous 30 years (\cite{Wilcox2008}). This has the advantage of avoiding extreme or unusual weather, and can be appropriate for analyses that aggregate annual energy use. However, TMY files, by design, will not capture worst-case or extreme situations. Also, given that TMYs are constructed upon historical weather, it is unlikely they truly represent what is ``typical'' for a location given the reality of accelerating climate change. ``Typical'' is a moving target, and what was typical 10 years ago is less likely to be typical today. Furthermore, TMY has the disadvantage that adjacent weather stations might not use the same historical years for the same months. For example, a TMY in Denver, CO, might use 2012 for the July file, but 30 miles (40 kilometers) away, the Boulder, CO, TMY station might use 1999 for July. This misalignment of weather years can lead to modeling of non-coincident temporal energy use in ResStock and will likely lead to the underrepresentation of electricity peaks when considering geographies spread across more than one weather file.
 
-AMY weather files overcome the location misalignment issue by using real weather data from a recent historical year. Having a recent file also helps with some of the historical bias from constructing files from data up to 30 years old, but it does not capture future climate change-driven weather patterns. A potential problem with AMY is that it inherits any abnormalities that occurred in a given year. For example, if a particular year was unusually cold, cooling demands would be lower than you might generally see and heating loads a bit higher.  In ResStock, we generally run our models with both 2018 AMY and TMY weather~\citep{Bianchi2021}. 2018 is a year for which we have sufficient metered data for comparison, and it is also a compatible year for many grid simulation tools. 
+AMY weather files overcome the location misalignment issue by using real weather data from a recent historical year. Having a recent file also helps with some of the historical bias from constructing files from data up to 30 years old, but it does not capture future climate change-driven weather patterns. A potential problem with AMY is that it inherits any abnormalities that occurred in a given year. For example, if a particular year was unusually cold, cooling demands would be lower than you might generally see and heating loads a bit higher.  In ResStock, we generally run our models with both 2018 AMY and TMY weather~\citep{Bianchi2021}. 2018 is a year for which we have sufficient metered data for comparison, and it is also a compatible year for many grid simulation tools.
 
 \subsubsection{Weather File Development}
 
-Since ResStock is a composite model of many EnergyPlus models, it employs the standard EnergyPlus Weather (EPW) files (\cite{BigLadderSoftware2015}). The EPW weather format provides a timeseries dataset of a wide array of weather variables across all 8,760 hours of a non-leap year. These weather variables provide the climatic inputs for simulating heat transfer at each time step for each model within ResStock. For the TMY files, we use the most recent release, TMY3 from \citet{Wilcox2008}.\footnote{In review of the TMY3 data, we have identified some outliers in the initially published TMY3 data (e.g., erroneous temperature spikes). We have corrected those for ResStock use and published our corrected versions \citep{Bianchi2021}. }  For AMY,  we construct our own EPW files for internal use that are not available to the public. Some of the weather variables needed to construct an EPW are available on the \href{https://data.openei.org/submissions/4520}{Load Profiles OEDI submission}. 
+Since ResStock is a composite model of many EnergyPlus models, it employs the standard EnergyPlus Weather (EPW) files (\cite{BigLadderSoftware2015}). The EPW weather format provides a timeseries dataset of a wide array of weather variables across all 8,760 hours of a non-leap year. These weather variables provide the climatic inputs for simulating heat transfer at each time step for each model within ResStock. For the TMY files, we use the most recent release, TMY3 from \citet{Wilcox2008}.\footnote{In review of the TMY3 data, we have identified some outliers in the initially published TMY3 data (e.g., erroneous temperature spikes). We have corrected those for ResStock use and published our corrected versions \citep{Bianchi2021}. }  For AMY,  we construct our own EPW files for internal use that are not available to the public. Some of the weather variables needed to construct an EPW are available on the \href{https://data.openei.org/submissions/4520}{Load Profiles OEDI submission}.
 
-We develop custom AMY weather data files by pulling historic hourly temperature, humidity, wind speed/direction, and atmospheric pressure from the \href{https://www.ncei.noaa.gov/products/land-based-station/integrated-surface-database}{Integrated Surface Database}, developed by the National Oceanic and Atmospheric Administration's National Climatic Data Center. Additionally, we add in satellite-derived solar radiation data from NREL’s National Solar Radiation Database~\citep{nsrdb}. Ground-based solar radiation data are not widely collected, so using satellite-derived solar radiation data is standard practice for both the solar industry and building energy modelers using historical weather data. Caveats and further information on the data compilation and gap filling of this custom AMY approach can be found in Section 2.4 of \citet{Wilson2022}. 
+We develop custom AMY weather data files by pulling historic hourly temperature, humidity, wind speed/direction, and atmospheric pressure from the \href{https://www.ncei.noaa.gov/products/land-based-station/integrated-surface-database}{Integrated Surface Database}, developed by the National Oceanic and Atmospheric Administration's National Climatic Data Center. Additionally, we add in satellite-derived solar radiation data from NREL’s National Solar Radiation Database~\citep{nsrdb}. Ground-based solar radiation data are not widely collected, so using satellite-derived solar radiation data is standard practice for both the solar industry and building energy modelers using historical weather data. Caveats and further information on the data compilation and gap filling of this custom AMY approach can be found in Section 2.4 of \citet{Wilson2022}.
 
 \subsubsection{Mapping Weather Files to ResStock Samples}
-To produce weather files for ResStock, we develop AMY EPWs for approximately 1,200 weather stations pulling data from the year 2018---with the 2018 AMY roughly mapping to the locations of the TMY3 data.\footnote{Occasionally nearby stations are used if data are missing from the target weather station.} In ResStock, each county is assigned one of these available 1,200  weather stations. Each county will receive a weather station that is located in the county if one is available; if not, the county will be assigned a weather station closest to the county's population centroid, with prioritization of stations in the same climate zone. Timestamps are shifted if the chosen weather file is in a different time zone. All housing units within a given county will use the assigned weather data for that county for simulations. Within the model, actual weather file assignment occurs in the options\_lookup.tsv as a parameter input into the ResStockArguments script. 
+To produce weather files for ResStock, we develop AMY EPWs for approximately 1,200 weather stations pulling data from the year 2018---with the 2018 AMY roughly mapping to the locations of the TMY3 data.\footnote{Occasionally nearby stations are used if data are missing from the target weather station.} In ResStock, each county is assigned one of these available 1,200  weather stations. Each county will receive a weather station that is located in the county if one is available; if not, the county will be assigned a weather station closest to the county's population centroid, with prioritization of stations in the same climate zone. Timestamps are shifted if the chosen weather file is in a different time zone. All housing units within a given county will use the assigned weather data for that county for simulations. Within the model, actual weather file assignment occurs in the options\_lookup.tsv as a parameter input into the ResStockArguments script.
 
 \subsubsection{Weather Files and Equipment Sizing}
-In addition to the 8,760 timeseries of weather variables in the timeseries energy simulation, EPW files also provide a header with basic information on the weather location. ResStock uses some of this header information for sizing HVAC equipment---see Table \ref{Tab:Packages}. 
+In addition to the 8,760 timeseries of weather variables in the timeseries energy simulation, EPW files also provide a header with basic information on the weather location. ResStock uses some of this header information for sizing HVAC equipment---see Table \ref{Tab:Packages}.
 %% FUTURE More detail on how we do sizing from headers
 
 \begin{table}[!h]
@@ -814,7 +814,7 @@ In addition to the 8,760 timeseries of weather variables in the timeseries energ
       \midrule
       %accessibility & tagged & generates the document structure and tagging \\
       LOCATION &     OS-HPXML &                  OpenStudio-HPXML uses the stated latitude, longitude, and elevation in the EPW header. At the moment, this does not control much in the simulation, but could be important for controlling solar water heating (not currently in ResStock). \\
-      DESIGN CONDITIONS  & OS-HPXML                      & The design conditions of the EPW header are used in sizing HVAC equipment according to ACCA Manual J and system selection according to ACCA Manual S.\\                                          
+      DESIGN CONDITIONS  & OS-HPXML                      & The design conditions of the EPW header are used in sizing HVAC equipment according to ACCA Manual J and system selection according to ACCA Manual S.\\
       GROUND TEMPERATURES  & N/A                      & Unused by ResStock. Instead OS-HPXML uses an analytical method to convert weather station temperatures to ground temperatures \citep{Xing2014}. \\
       HOLIDAYS/DAYLIGHT SAVINGS  & ResStock                      & ResStock does not run daylight savings, so the ``No'' is passed through ResStock to OS-HPXML. \\
       \bottomrule
@@ -822,14 +822,14 @@ In addition to the 8,760 timeseries of weather variables in the timeseries energ
   \end{table}
 \section{Geometry}
 
-In this section, we discuss the inputs that control the actual geometry of the building energy model used for simulation of each sample. We discuss the geometry parameters in five categories: housing unit location, building type, construction year, housing unit geometry, and space geometry. 
+In this section, we discuss the inputs that control the actual geometry of the building energy model used for simulation of each sample. We discuss the geometry parameters in five categories: housing unit location, building type, construction year, housing unit geometry, and space geometry.
 
 \subsection{Housing Unit Location}
 
-There are two reference frames for locating the housing units modeled in ResStock: (1) the building frame of reference and (2) the polar reference frame. The building frame defines the front, back, top, bottom, left, and right sides of the unit. The polar reference frame defines the orientation of the unit's front door with respect to the cardinal directions north, south, east, and west. 
+There are two reference frames for locating the housing units modeled in ResStock: (1) the building frame of reference and (2) the polar reference frame. The building frame defines the front, back, top, bottom, left, and right sides of the unit. The polar reference frame defines the orientation of the unit's front door with respect to the cardinal directions north, south, east, and west.
 
 In ResStock, housing units are modeled as single zones, regardless if they are in larger buildings. To do this, adiabatic walls are assigned/modeled for walls, ceilings, or floors shared between the modeled housing unit, an adjacent unit, and a corridor.
-%For identifying adiabatic walls, the process starts with distributions for the number of units in the building where the unit model is located. There are different distributions for the number of units in the building for single-family attached and multi-family units. The number of units characteristics are Geometry Building Number of Units MF and Geometry Building Number of Units SFA. Next, the number of stories is sampled in the Geometry Stories characteristic. Once a number of units for the building and the number of stories are sampled for the model, the horizontal and vertical locations of the unit are sampled in the Geometry Building Horizontal Location MF, Geometry Building Horizontal Location SFA, and Geometry Building Level MF characteristics. 
+%For identifying adiabatic walls, the process starts with distributions for the number of units in the building where the unit model is located. There are different distributions for the number of units in the building for single-family attached and multi-family units. The number of units characteristics are Geometry Building Number of Units MF and Geometry Building Number of Units SFA. Next, the number of stories is sampled in the Geometry Stories characteristic. Once a number of units for the building and the number of stories are sampled for the model, the horizontal and vertical locations of the unit are sampled in the Geometry Building Horizontal Location MF, Geometry Building Horizontal Location SFA, and Geometry Building Level MF characteristics.
 
 %Single-family attached units have the possibility of their right and left sides being adiabatic. If the single-family attached unit is an end unit, one of the walls are adiabatic (the right or the left side). If the single-family attached unit is a middle unit both the left and right walls of the unit are adiabatic. Multi-family units follow the same rules as single-family attached, but add if the unit is a top, bottom, or middle unit. If the multi-family unit is a middle unit the top, bottom, left, and right walls are adiabatic. If the multi-family unit is a top unit, the bottom wall (floor) is adiabatic. If the multi-family unit is a bottom unit the top wall (ceiling) is adiabatic. For top and bottom multi-family units, left and right adiabatic walls are determined using the horizontal position {\footnote{see discussion of single-family attached units previously in this paragraph}. Single-family attached units the front and back are heat transfer surfaces. Multi-family units in ResStock have a front heat transfer surface, while the back is adiabatic (connected to an interior double corridor)}.
 
@@ -870,7 +870,7 @@ No direct conditional dependencies.
 \paragraph{Options}
 The options for the Orientation characteristic are east, west, northeast, southwest, north, south, northwest, and southeast. The options set the \texttt{geometry\_unit\_orientation} ResStock argument; see Table \ref{table:hc_opt_orient}. The argument definition can be found in Table \ref{table:hc_arg_def_oient}.
 
-\begin{longtable}[]{ |p{4.cm}|p{2cm}|p{6cm}| } \caption{Orientation options and arguments that vary for each option} \label{table:hc_opt_orient} \\  
+\begin{longtable}[]{ |p{4.cm}|p{2cm}|p{6cm}| } \caption{Orientation options and arguments that vary for each option} \label{table:hc_opt_orient} \\
 \toprule\noalign{}
 Option name & Stock saturation & \texttt{geometry\_unit\_orientation} \\
 \midrule\noalign{}
@@ -878,7 +878,7 @@ Option name & Stock saturation & \texttt{geometry\_unit\_orientation} \\
 \bottomrule\noalign{}
 \endlastfoot
 East & 17\% & 90 \\
-West & 17\% & 270 \\ 
+West & 17\% & 270 \\
 Northeast & 7.2\% & 45 \\
 Southwest & 7.2\% & 225 \\
 North & 18\% & 0 \\
@@ -949,7 +949,7 @@ Option name & Stock saturation &
 15 & 0.12\% & 15 \\
 20 & 0.21\% & 20 \\
 21 & 0.66\% & 21 \\
-35 & 0.11\% & 35 \\ 
+35 & 0.11\% & 35 \\
 \end{longtable}
 
 For the argument definitions, see Table \ref{table:hc_arg_def_geom_stories}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-construction}{Building Construction} documentation for the available HPXML schema elements, default values, and constraints.
@@ -1028,7 +1028,7 @@ The 2009 U.S.~EIA RECS building type with multifamily buildings split out by low
 \end{itemize}
 
 \paragraph{Options}
-The options break up the Geometry Building Type RECS multi-family 5+ unit buildings into low-rise (1--3 stories), mid-rise (4--7 stories), and high-rise (8+ stories). No arguments are directly assigned based on the options in this input file. 
+The options break up the Geometry Building Type RECS multi-family 5+ unit buildings into low-rise (1--3 stories), mid-rise (4--7 stories), and high-rise (8+ stories). No arguments are directly assigned based on the options in this input file.
 
 \begin{longtable}[]{@{}ll@{}}
 \caption{Options and saturation for Geometry Building Type Height} \\
@@ -1124,7 +1124,7 @@ Option name & Stock saturation &
 116 & 1.2\% & 116 \\
 183 & 0.62\% & 183 \\
 326 & 1\% & 326 \\
-None & 74\% & \\ 
+None & 74\% & \\
 \end{longtable}
 
 For the argument definitions, see Table~\ref{table:hc_arg_def_geom_build_units_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#whole-sfa-mf-buildings}{Whole-SFA-MF-Buildings} documentation for the available HPXML schema elements, default values, and constraints.
@@ -1165,10 +1165,10 @@ The number of housing units in the single-family attached (SFA) building.
 \end{itemize}
 
 \paragraph{Options}
-The options for the Geometry Building Level SFA characteristic are a set of integers between 2 and 144; see Table \ref{table:hc_opt_geom_build_units_sfa}. The ``None'' option is used for all building types other than SFA. 
+The options for the Geometry Building Level SFA characteristic are a set of integers between 2 and 144; see Table \ref{table:hc_opt_geom_build_units_sfa}. The ``None'' option is used for all building types other than SFA.
 
 \begin{customLongTable}{ |p{3.cm}|p{4cm}|p{4cm}| }
-{Geometry Building Level Number of Units SFA options and arguments that vary for each option} {table:hc_opt_geom_build_units_sfa}  
+{Geometry Building Level Number of Units SFA options and arguments that vary for each option} {table:hc_opt_geom_build_units_sfa}
 {Option name & Stock saturation &
 \texttt{geometry\_building\_num\_units}} \hline
 None & 94\% & \\ \hline
@@ -1191,7 +1191,7 @@ None & 94\% & \\ \hline
 50 & 0.13\% & 50 \\ \hline
 60 & 0.1\% & 60 \\ \hline
 90 & 0.086\% & 90 \\ \hline
-144 & 0.11\% & 144 \\ 
+144 & 0.11\% & 144 \\
 \end{customLongTable}
 
 For the argument definitions, see Table~\ref{table:hc_arg_def_geom_build_units_mf}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#whole-sfa-mf-buildings}{Whole-SFA-MF-Buildings} documentation for the available HPXML schema elements, default values, and constraints.
@@ -1268,7 +1268,7 @@ Location of the multifamily unit horizontally within the building (left, middle,
 \end{itemize}
 
 \paragraph{Options}
-The options of the Geometry Building Horizontal Location MF characteristic are None, Left, Middle, Right, and Not Applicable. The characteristic sets the \texttt{geometry\_unit\_horizontal\_location} ResStock argument; see Table \ref{table:hc_opt_geom_build_hor_loc_mf}. The ``Not Applicable'' option is used for a pair of number of units and stories that cannot be sampled. For example, a 9-story, 2-unit multifamily building is unlikely to exist in reality and cannot be modeled in ResStock. ResStock does not model units in buildings with more stories than units. All building types other than multifamily receive the ``None'' option. For the argument definitions, see Table \ref{table:hc_arg_def_geom_build_hor_loc_mf}. 
+The options of the Geometry Building Horizontal Location MF characteristic are None, Left, Middle, Right, and Not Applicable. The characteristic sets the \texttt{geometry\_unit\_horizontal\_location} ResStock argument; see Table \ref{table:hc_opt_geom_build_hor_loc_mf}. The ``Not Applicable'' option is used for a pair of number of units and stories that cannot be sampled. For example, a 9-story, 2-unit multifamily building is unlikely to exist in reality and cannot be modeled in ResStock. ResStock does not model units in buildings with more stories than units. All building types other than multifamily receive the ``None'' option. For the argument definitions, see Table \ref{table:hc_arg_def_geom_build_hor_loc_mf}.
 
 
 \begin{longtable}[]{ |p{3.cm}|p{4cm}| p{4cm}|}
@@ -1426,7 +1426,7 @@ Type of corridor attached to multifamily units.
 
 \paragraph{Modeling Approach}
 Single-family attached and multifamily buildings can have corridors, which are passageways between units. Interior corridors are enclosed and assumed to be conditioned, which are modeled by adiabatic walls being created for the wall of the unit that is adjacent to the corridor. Exterior corridors provide shading, but are not enclosed. The way this is modeled is to add a shading object to the front and/or the back of the unit. ResStock only allows multifamily units to have a double-loaded interior corridor. ResStock does not model energy use (e.g., lighting, plug load, or HVAC) associated with corridors; it only models their impact on the multifamily housing units.
- 
+
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
     \item Engineering judgment.
@@ -1512,7 +1512,7 @@ ACS considers nine building types, which are tagged in ResStock based on PUMA. N
 
 \begin{customLongTable}
 {@{}ll@{}}
-{Options and saturation for Geometry Building Type ACS} 
+{Options and saturation for Geometry Building Type ACS}
 {table:test}
 {Option name & Stock saturation} \\\hline
 2 Unit & 3.6\% \\
@@ -1658,7 +1658,7 @@ informational purposes only. \\
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
-    \item Where sample counts are less than 10 (812 / 21024 rows), the State average distribution has been inserted. 
+    \item Where sample counts are less than 10 (812 / 21024 rows), the State average distribution has been inserted.
     \item ``Mobile Home'' does not exist in the PUMS DC sample and is replaced by ``Single-Family Detached.''
 \end{itemize}
 
@@ -1681,8 +1681,8 @@ Time period in which the housing unit was constructed as defined by the U.S.~Cen
 The options for Vintage ACS are the same vintage bins as ACS, \ref{table:hc_vintage_acs}. They are roughly 20-year bins. No arguments are set based on this input file.
 
 \begin{customLongTable}{ |p{4.cm}|p{4cm}|p{4cm}| }
-{Option and saturation for Vintage ACS} {table:hc_vintage_acs} 
-{Option name & Stock saturation} 
+{Option and saturation for Vintage ACS} {table:hc_vintage_acs}
+{Option name & Stock saturation}
 \textless1940 & 13\% \\ \hline
 1940--59 & 15\% \\ \hline
 1960--79 & 26\% \\ \hline
@@ -1806,7 +1806,7 @@ Only applies to single-family detached units. \\
   Sub-input file 4 has dependencies: \textquotesingle Census Division\textquotesingle,
   \textquotesingle PUMA Metro Status\textquotesingle,
   \textquotesingle Income RECS2020\textquotesingle,
-  \textquotesingle Tenure\textquotesingle. 
+  \textquotesingle Tenure\textquotesingle.
 \item For each sub-input file, rows with
   \textless10 samples are replaced with coarsening dependency Census
   Region, followed by the national distribution.
@@ -1814,7 +1814,7 @@ Only applies to single-family detached units. \\
 
 \subsubsection{Geometry Floor Area Bin}
 \paragraph{Description}
-The finished floor area of the housing unit using bins. 
+The finished floor area of the housing unit using bins.
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
@@ -1958,7 +1958,7 @@ of the attic. Ignored if the building has a flat roof. \\
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item Multifamily building types and Mobile Homes have Flat Roof (None) only.
-    \item 1-story Single-Family building types cannot have Finished Attic/Cathedral Ceiling because that attic type is modeled as a new story, and 1-story does not have a second story. 
+    \item 1-story Single-Family building types cannot have Finished Attic/Cathedral Ceiling because that attic type is modeled as a new story, and 1-story does not have a second story.
     \item 4+story Single-family and mobile homes are an impossible combination. The None option is assigned but not sampled.
 \end{itemize}
 
@@ -2110,8 +2110,8 @@ Most of the assumptions below are not from the survey data, but are constraints 
     \item Single-family detached units that are 0--1499 square feet and 3+ stories cannot have a garage.
     \item The geometry stories distributions are all the same except for 0--1499 square feet and 3 stories.
     \item Single-family detached units that are 1500--2499 square feet cannot have a 3-car garage.
-    \item Single-family detached units that are 2500--3999 square feet and a heated basement cannot have a 3-car garage. 
-    \item Due to low sample sizes, the following sets of dependencies are progressively lumped together. 
+    \item Single-family detached units that are 2500--3999 square feet and a heated basement cannot have a 3-car garage.
+    \item Due to low sample sizes, the following sets of dependencies are progressively lumped together.
     \begin{itemize}
     \item [1] Crawl, basements, and slab are lumped.
     \item [2] Story levels are lumped together.
@@ -2139,7 +2139,7 @@ Valid combinations of building type, building level mf, attic, foundation, and g
 \end{itemize}
 
 \paragraph{Options}
-The options are a direct mapping of Geometry Building Type, Geometry Building Level MF, Geometry Foundation Type, Geometry Attic Type, and Geometry Garage. 
+The options are a direct mapping of Geometry Building Type, Geometry Building Level MF, Geometry Foundation Type, Geometry Attic Type, and Geometry Garage.
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made. The options of the dependencies are directly mapped into options of this characteristic.
@@ -2148,7 +2148,7 @@ No assumptions are made. The options of the dependencies are directly mapped int
 
 \section{Envelope}
 
-The envelope components of ResStock inputs interface closely with the Geometry inputs, but focus more on the materials and thermal properties of the envelope. In this section, we discuss the various input files that control the modeled envelope in ResStock by envelope component. 
+The envelope components of ResStock inputs interface closely with the Geometry inputs, but focus more on the materials and thermal properties of the envelope. In this section, we discuss the various input files that control the modeled envelope in ResStock by envelope component.
 
 
 \subsection{Walls}
@@ -2160,7 +2160,7 @@ There are three major input files to ResStock that control the wall properties:
     \item Insulation Wall.
 \end{itemize}
 
-Collectively, they specify the material choices and R-value of the housing unit walls. 
+Collectively, they specify the material choices and R-value of the housing unit walls.
 
 \subsubsection{Geometry Wall Type}\label{geometry_wall_type}
 \paragraph{Description}
@@ -2168,7 +2168,7 @@ The wall material used for thermal mass calculations of exterior walls.
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   HIFLD Parcel data.
 \end{itemize}
@@ -2186,7 +2186,7 @@ ResStock models four different wall types: Brick, Concrete, Steel Frame, and Woo
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
- 
+
 \item
   Rows where sample size \textless{} 10 are replaced with aggregated
   values down-scaled from dep=\textquotesingle State\textquotesingle{}
@@ -2199,12 +2199,12 @@ ResStock models four different wall types: Brick, Concrete, Steel Frame, and Woo
 Wall siding material and color. This is the main input file that provides the thermal property arguments for the exterior cladding of a wall.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   HIFLD Parcel data.
 \end{itemize}
 \paragraph{Direct Conditional Dependencies}
- 
+
 \begin{itemize}
     \item Geometry Wall Type
     \item State
@@ -2213,7 +2213,7 @@ Wall siding material and color. This is the main input file that provides the th
 \paragraph{Option(s)}
 ResStock uses 11 options (see Table \ref{table:hc_opt_geo_wall_ext_fin}) for the exterior finish of the walls---correlated with the Geometry Wall Type via the input dependencies. A portion of the wall R-value is attributable to this exterior finish.
 
-\begin{longtable}[]{|p{3.5cm}|p{2.5cm}|p{3.cm}|p{2.5cm}|p{2.5cm}|} \caption{Geometry Wall Exterior Finish options and arguments that vary for each option} \label{table:hc_opt_geo_wall_ext_fin} \\  
+\begin{longtable}[]{|p{3.5cm}|p{2.5cm}|p{3.cm}|p{2.5cm}|p{2.5cm}|} \caption{Geometry Wall Exterior Finish options and arguments that vary for each option} \label{table:hc_opt_geo_wall_ext_fin} \\
 
 \toprule\noalign{}
 Option name & \texttt{wall\_siding\_type} &
@@ -2275,22 +2275,22 @@ R-value of the exterior finish. \\
 
 \subsubsection{Insulation Wall}\label{insulation_wall}
 \paragraph{Description}
-Wall construction type and insulation level. Provides the main R-value for the walls of the home. This is in addition to the R-values provided by the exterior wall cladding. 
+Wall construction type and insulation level. Provides the main R-value for the walls of the home. This is in addition to the R-values provided by the exterior wall cladding.
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   \textit{Single-Family Heating and Cooling Requirements: Assumptions, Methods, and Summary Results} (\cite{Ritschard1992}).
 \item
-  
-  \textit{Data Collection-Data Characterization Summary} from the NorthernSTAR Building America Partnership (\cite{Nettleton2012}), as described in 
+
+  \textit{Data Collection-Data Characterization Summary} from the NorthernSTAR Building America Partnership (\cite{Nettleton2012}), as described in
   Roberts et al., \textit{Assessment of the U.S.~Department of
   Energy's Home Energy Score Tool} (2012),
   and Merket et al., \textit{Building America Field Data Repository} webinar (2014).
 \end{itemize}
 \paragraph{Direct Conditional Dependencies}
- 
+
 \begin{itemize}
     \item Location Region
     \item Geometry Wall Type
@@ -2299,7 +2299,7 @@ Wall construction type and insulation level. Provides the main R-value for the w
 \paragraph{Option(s)}
 ResStock models 15 different Insulation Wall levels; see Table \ref{table:hc_ins_wall}. These are based upon the Geometry Wall Type defined, but provide a distribution of insulation levels for each of those options.
 
-\begin{longtable}[]{|p{5.5cm}|p{4cm}|p{3.2cm}|p{3cm}|} \caption{Insulation Wall options and arguments that vary for each option} \label{table:hc_ins_wall} \\  
+\begin{longtable}[]{|p{5.5cm}|p{4cm}|p{3.2cm}|p{3cm}|} \caption{Insulation Wall options and arguments that vary for each option} \label{table:hc_ins_wall} \\
 \toprule\noalign{}
 Option name & \texttt{wall\_type} &
 \texttt{wall\_assembly\_r} \\
@@ -2344,7 +2344,7 @@ Assembly R-value of the walls. \\
 % Template starting-place header swap: %{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
- 
+
 \item
   Updated per new wall type from Lightbox, all wall type-specific
   distributions follow that of {Wood Frame} ({WoodStud}).
@@ -2366,7 +2366,7 @@ A major assumption in ResStock is that multifamily buildings and mobile homes do
 
 \subsubsection{Insulation Roof}\label{insulation_roof}
 \paragraph{Description}
-Finished roof insulation level. Insulation levels for unfinished attics covered separately. 
+Finished roof insulation level. Insulation levels for unfinished attics covered separately.
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
@@ -2376,15 +2376,15 @@ Finished roof insulation level. Insulation levels for unfinished attics covered 
       NEEA Residential Building Stock Assessment, 2012.
 \end{itemize}
 \paragraph{Direct Conditional Dependencies}
- 
+
 \begin{itemize}
     \item Geometry Attic Type.
 \end{itemize}
 \paragraph{Option(s)}
-Insulation roof options correspond to the amount of insulation at the roof deck and if the roof is finished; see Table \ref{table:hc_ins_roof}. A finished roof is a cathedralized construction of the roof. An unfinished roof corresponds to the roof deck being open to the attic. 
+Insulation roof options correspond to the amount of insulation at the roof deck and if the roof is finished; see Table \ref{table:hc_ins_roof}. A finished roof is a cathedralized construction of the roof. An unfinished roof corresponds to the roof deck being open to the attic.
 
 \begin{longtable}[]{|p{3.5cm}|p{3.5cm}|}
-\caption{Insulation Roof options and arguments that vary for each option} \label{table:hc_ins_roof} \\  
+\caption{Insulation Roof options and arguments that vary for each option} \label{table:hc_ins_roof} \\
 \toprule\noalign{}
 Option name & \texttt{roof\_assembly\_r} \\
 \midrule\noalign{}
@@ -2424,21 +2424,21 @@ Presence of radiant barrier in the attic (not currently used in
 ResStock).
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   Not applicable
 \item
   All homes are assumed to not have attic radiant barriers installed.
 \end{itemize}
 \paragraph{Direct Conditional Dependencies}
- 
+
 \begin{itemize}
     \item Geometry Building Type RECS.
 \end{itemize}
 \paragraph{Option(s)}
 Three options for radiant barriers are available in ResStock: ``Yes,'' ``No,'' and ``None''; see Table \ref{table:hc_opt_rad_bar}. ``No'' is assigned to homes with attics but without radiant barriers, while ``None'' is assigned to homes without attics. No homes in ResStock currently have the ``Yes'' option assigned.
 
-\begin{longtable}[]{|p{2.5cm}|p{2.5cm}|p{3cm}|p{3cm}|} \caption{Radiant Barrier options and arguments that vary for each option} \label{table:hc_opt_rad_bar} \\  
+\begin{longtable}[]{|p{2.5cm}|p{2.5cm}|p{3cm}|p{3cm}|} \caption{Radiant Barrier options and arguments that vary for each option} \label{table:hc_opt_rad_bar} \\
 
 \toprule\noalign{}
 Option name &
@@ -2478,12 +2478,12 @@ None
 Roof material and color.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   U.S.~EIA 2020 RECS microdata.
 \end{itemize}
 \paragraph{Direct Conditional Dependencies}
- 
+
 \begin{itemize}
     \item Census Division RECS
     \item Geometry Building Type RECS
@@ -2492,11 +2492,11 @@ Roof material and color.
 \paragraph{Option(s)}
 Seven roof material options are used in the ResStock baseline; see Table \ref{table:hc_opt_roof_mat}. These correspond to options available within OpenStudio-HPXML and have thermal properties associated with each within OpenStudio-HPXML, but this is not specified at the ResStock level.
 
-\begin{customLongTable}{|p{3.5cm}|p{4.cm}|p{2.3cm}|} 
+\begin{customLongTable}{|p{3.5cm}|p{4.cm}|p{2.3cm}|}
 {Roof Material options and arguments that vary for each option}
 {table:hc_opt_roof_mat}
 {Option name & \texttt{roof\_material\_type} &
-\texttt{roof\_color}} 
+\texttt{roof\_color}}
 Asphalt Shingles, Medium & asphalt or fiberglass shingles &
 medium \\ \hline
 Composition Shingles & asphalt or fiberglass shingles & medium \\ \hline
@@ -2529,7 +2529,7 @@ medium dark, reflective & The color of the roof \\
 \paragraph{Distribution Assumption(s)}
 
 \begin{itemize}
- 
+
 \item
   Multifamily with 5+ Units is assigned `Asphalt
   Shingles, Medium' only.
@@ -2545,11 +2545,11 @@ medium dark, reflective & The color of the roof \\
 
 \subsubsection{Insulation Ceiling}\label{insulation_ceiling}
 \paragraph{Description}
-This characteristic in ResStock specifies the insulation level of the ceiling on the top floor of the home in housing units with vented or unvented attics. 
+This characteristic in ResStock specifies the insulation level of the ceiling on the top floor of the home in housing units with vented or unvented attics.
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   NEEA Residential Building Stock Assessment, 2012.
 \item
@@ -2569,9 +2569,9 @@ This characteristic in ResStock specifies the insulation level of the ceiling on
     \item Vintage.
 \end{itemize}
 \paragraph{Option(s)}
-The options are levels of ceiling insulation by R-value; see Table \ref{table:hc_opt_ins_ceil}. Uninsulated indicates that the housing unit could have ceiling insulation, but doesn't, whereas ``None'' indicates the housing unit cannot have ceiling insulation because it does not have an unfinished attic. 
+The options are levels of ceiling insulation by R-value; see Table \ref{table:hc_opt_ins_ceil}. Uninsulated indicates that the housing unit could have ceiling insulation, but doesn't, whereas ``None'' indicates the housing unit cannot have ceiling insulation because it does not have an unfinished attic.
 
-\begin{longtable}[]{|p{3.5cm}|p{3.3cm}|p{3.3cm}|} \caption{Insulation Ceiling options and arguments that vary for each option} \label{table:hc_opt_ins_ceil} \\  
+\begin{longtable}[]{|p{3.5cm}|p{3.3cm}|p{3.3cm}|} \caption{Insulation Ceiling options and arguments that vary for each option} \label{table:hc_opt_ins_ceil} \\
 \toprule\noalign{}
 Option name & \texttt{ceiling\_assembly\_r} &
 \texttt{ceiling\_insulation\_r} \\
@@ -2588,7 +2588,7 @@ R-30 & 31.6 & 30 \\
 R-38 & 39.6 & 38 \\
 R-49 & 50.6 & 49 \\
 \end{longtable}
- 
+
 For the argument definitions, see Table \ref{table:hc_arg_def_ins_ceil}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-attics}{Attics} documentation for the available HPXML schema elements, default values, and constraints.
 \begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{4.3cm}|} \caption{The ResStock argument definitions set in the Insulation Ceiling characteristic} \label{table:hc_arg_def_ins_ceil} \\
 
@@ -2598,16 +2598,16 @@ Name & Required & Units & Type &  Description \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-\texttt{ceiling\_assembly\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double & 
+\texttt{ceiling\_assembly\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double &
 Assembly R-value for the ceiling (attic floor). \\
 \hline
-\texttt{ceiling\_insulation\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double & 
+\texttt{ceiling\_insulation\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double &
 Nominal R-value for the ceiling (attic floor). \\
 \end{longtable}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
- 
+
 \item
   Vented Attic has the same distribution as Unvented Attic
 \item
@@ -2627,14 +2627,14 @@ Five input files specify insulation and heat transfer parameters with the ground
     \item Ground Thermal Conductivity.
 \end{itemize}
 
-The inputs starting with ``Insulation'' specify insulation levels that vary depending upon Geometry Foundation Type (Section \ref{geometry_foundation_type}). 
+The inputs starting with ``Insulation'' specify insulation levels that vary depending upon Geometry Foundation Type (Section \ref{geometry_foundation_type}).
 %%%%%%%%%%%%%%%
 \subsubsection{Insulation Floor}\label{insulation_floor}
 \paragraph{Description}
-Sets the insulation levels of all foundation types except for slab-on-grade. 
+Sets the insulation levels of all foundation types except for slab-on-grade.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   Derived from Home Innovation Research Labs 1982--2007 Data
 \item
@@ -2651,7 +2651,7 @@ Sets the insulation levels of all foundation types except for slab-on-grade.
 \paragraph{Option(s)}
 ResStock has three different levels of floor insulation, plus a None option that is assigned to buildings with an illegible foundation type for the Insulation Floor characteristic; see Table \ref{table:hc_opt_ins_floor}. All options set the \texttt{floor\_type} to \texttt{WoodFrame}.
 
-\begin{longtable}[]{|p{3.5cm}|p{3cm}|p{3cm}|} \caption{Insulation Floor options and arguments that vary for each option} \label{table:hc_opt_ins_floor} \\  
+\begin{longtable}[]{|p{3.5cm}|p{3cm}|p{3cm}|} \caption{Insulation Floor options and arguments that vary for each option} \label{table:hc_opt_ins_floor} \\
 \toprule\noalign{}
 Option name &
 \texttt{floor\_over\_foundation\_assembly\_r} &
@@ -2687,7 +2687,7 @@ floors. \\
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
- 
+
 \item
   CRHI is a copy of CR09
 \item
@@ -2706,7 +2706,7 @@ Defines the insulation level for all slab-on-grade foundation types.
 \end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
- 
+
 \begin{itemize}
     \item Location Region
     \item Vintage
@@ -2717,7 +2717,7 @@ Defines the insulation level for all slab-on-grade foundation types.
 ResStock uses eight different options for Insulation Slab, plus a ``None'' flag for homes without a slab-on-grade foundation; see Table \ref{table:hc_opt_ins_slab}. The options specify both the R-value as well as the location of the slab insulation. The ResStock arguments \texttt{slab\_thickness},\texttt{slab\_carpet\_fraction}, and
 \texttt{slab\_carpet\_r} are constant across all the options and are all set to auto. The ResStock arguments \texttt{slab\_under\_insulation\_width}, \texttt{slab\_exterior\_horizontal\_insulation\_width}, and \texttt{lab\_exterior\_horizontal\_insulation\_depth\_below\_grade} are constant and set to 0.
 
-\begin{customLongTable}{|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|} {Insulation Slab options and arguments that vary for each option} {table:hc_opt_ins_slab} 
+\begin{customLongTable}{|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|} {Insulation Slab options and arguments that vary for each option} {table:hc_opt_ins_slab}
 {Option name & \texttt{slab\_perimeter\_insulation\_r}
 & \texttt{slab\_perimeter\_depth} & \texttt{slab\_under\_insulation\_r}
 & \texttt{slab\_under\_insulation\_width}}
@@ -2734,8 +2734,8 @@ R10 Whole Slab, Horizontal & 0 & 0 & 10 & 999  \\
 For the argument definitions, see Table \ref{table:hc_arg_def_ins_slab}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-slabs}{
 Slabs} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} {The ResStock argument definitions set in the Insulation Slab characteristic} {table:hc_arg_def_ins_slab} 
-{Name & Required & Units & Type & Choices & Description} 
+\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} {The ResStock argument definitions set in the Insulation Slab characteristic} {table:hc_arg_def_ins_slab}
+{Name & Required & Units & Type & Choices & Description}
 \texttt{slab\_perimeter\_insulation\_r} & true & h-ft\textsuperscript{2}-R/Btu &
 Double & & Nominal R-value of the vertical slab perimeter insulation.
 Applies to slab-on-grade foundations and basement/crawlspace floors. \\ \hline
@@ -2762,7 +2762,7 @@ R-value of the slab carpet. \\
 \paragraph{Distribution Assumption(s)}
 
 \begin{itemize}
- 
+
 \item
   CRHI is a copy of CR09
 \item
@@ -2776,7 +2776,7 @@ Specifies the insulation level of foundation types with foundation walls (i.e., 
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   Derived from Home Innovation Research Labs 1982--2007 Data
 \item
@@ -2791,29 +2791,29 @@ Specifies the insulation level of foundation types with foundation walls (i.e., 
     \item Geometry Foundation Type.
 \end{itemize}
 \paragraph{Option(s)}
-ResStock provides four different options for Insulation Foundation Wall, plus a ``None'' flag for homes without foundation walls (Table \ref{table:hc_opt_ins_found_wall}). Several ResStock arguments are constant across all options: 
-\texttt{foundation\_wall\_thickness} and \texttt{foundation\_wall\_assembly\_r} are always set to \textit{auto}, \texttt{foundation\_wall\_insulation\_location} is always \textit{exterior}, and \texttt{foundation\_wall\_insulation\_distance\_to\_top}  is 0. 
+ResStock provides four different options for Insulation Foundation Wall, plus a ``None'' flag for homes without foundation walls (Table \ref{table:hc_opt_ins_found_wall}). Several ResStock arguments are constant across all options:
+\texttt{foundation\_wall\_thickness} and \texttt{foundation\_wall\_assembly\_r} are always set to \textit{auto}, \texttt{foundation\_wall\_insulation\_location} is always \textit{exterior}, and \texttt{foundation\_wall\_insulation\_distance\_to\_top}  is 0.
 
-\begin{customLongTable}{|p{3.5cm}|p{3.3cm}|p{3.1cm}|p{3.cm}|} {Insulation Foundation Wall options and arguments that vary for each option} {table:hc_opt_ins_found_wall} 
+\begin{customLongTable}{|p{3.5cm}|p{3.3cm}|p{3.1cm}|p{3.cm}|} {Insulation Foundation Wall options and arguments that vary for each option} {table:hc_opt_ins_found_wall}
 {Option name & \texttt{foundation\_wall\_type} &
 
 \texttt{foundation\_wall\_insulation\_r} &
 
 
-\texttt{foundation\_wall\_insulation\_distance\_to\_bottom}} 
+\texttt{foundation\_wall\_insulation\_distance\_to\_bottom}}
 None & solid concrete &  0 &  0 \\
 Uninsulated & solid concrete &  0 &  0  \\
-Wall R-5, Exterior & solid concrete &  5 & 
+Wall R-5, Exterior & solid concrete &  5 &
 auto \\
-Wall R-10, Exterior & solid concrete  & 10 
+Wall R-10, Exterior & solid concrete  & 10
 & auto \\
-Wall R-15, Exterior & solid concrete  & 15 
+Wall R-15, Exterior & solid concrete  & 15
 & auto  \\
 \end{customLongTable}
 
 
 For the argument definitions, see Table \ref{table:hc_arg_def_ins_found_wall}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-foundation-walls}{Foundation Walls} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} {The ResStock argument definitions set in the Insulation Foundation Wall characteristic} {table:hc_arg_def_ins_found_wall} 
+\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} {The ResStock argument definitions set in the Insulation Foundation Wall characteristic} {table:hc_arg_def_ins_found_wall}
 {Name & Required & Units & Type & Choices & Description}
 \texttt{foundation\_wall\_type} & false & & Choice & auto, solid
 concrete, concrete block, concrete block foam core, concrete block
@@ -2851,7 +2851,7 @@ wall insulation inputs. \\
 \paragraph{Distribution Assumption(s)}
 
 \begin{itemize}
- 
+
 \item
   CRHI is a copy of CR09
 \item
@@ -2869,7 +2869,7 @@ Insulation level for rim joists. Set the same as the insulation level for the fo
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   Engineering judgment.
 \end{itemize}
@@ -2880,8 +2880,8 @@ Insulation level for rim joists. Set the same as the insulation level for the fo
 \end{itemize}
 
 \paragraph{Option(s)}
-ResStock uses four different levels of rim-joist insulation as well as a ``None'' flag for homes without rim joists. These options map directly to the foundation wall insulation levels. The ResStock argument for 
-\texttt{rim\_joist\_assembly\_r} is always set to \textit{auto}, and 
+ResStock uses four different levels of rim-joist insulation as well as a ``None'' flag for homes without rim joists. These options map directly to the foundation wall insulation levels. The ResStock argument for
+\texttt{rim\_joist\_assembly\_r} is always set to \textit{auto}, and
 \texttt{rim\_joist\_continuous\_interior\_r} and
 \texttt{rim\_joist\_assembly\_interior\_r} are both set to 0 for all options.
 
@@ -2889,8 +2889,8 @@ ResStock uses four different levels of rim-joist insulation as well as a ``None'
 \begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{3.5cm}|}
 \caption{Options and saturation for Insulation Rim Joist} \\
 \toprule\noalign{}
-Option name & Stock saturation & 
-\texttt{rim\_joist\_continuous\_exterior\_r} 
+Option name & Stock saturation &
+\texttt{rim\_joist\_continuous\_exterior\_r}
  \\
 \midrule\noalign{}
 \endhead
@@ -2936,7 +2936,7 @@ basements/crawlspaces. \\
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
- 
+
 \item
   Rim joist insulation is the same value as the foundation wall
   insulation.
@@ -2950,7 +2950,7 @@ foundation and geothermal heat pump heat transfer calculations.
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   Data from the Southern Methodist University Geothermal Laboratory. The data are from the Thermal Conductivity Observation in Content Model Format dataset. The data are available at \url{https://www.smu.edu/dedman/academics/departments/earth-sciences/research/geothermallab/datamaps/ngds-project}.
 \end{itemize}
@@ -2966,10 +2966,10 @@ ResStock uses 8 options for Thermal Ground Conductivity, which is expressed in B
 \texttt{site\_ground\_diffusivity}, both receive \texttt{auto} assignment, regardless of the ResStock option.
 
 
-\begin{longtable}[]{|p{3.5cm}|p{2.5cm}|p{3.3cm}|} \caption{Ground Thermal Conductivity options and arguments that vary for each option} \label{table:hc_opt_ground_k} \\  
+\begin{longtable}[]{|p{3.5cm}|p{2.5cm}|p{3.3cm}|} \caption{Ground Thermal Conductivity options and arguments that vary for each option} \label{table:hc_opt_ground_k} \\
 
 \toprule\noalign{}
-Option name & \texttt{site\_ground\_conductivity} 
+Option name & \texttt{site\_ground\_conductivity}
 \\
 \midrule\noalign{}
 \endhead
@@ -3061,18 +3061,18 @@ Discussed also in this section are building features that might impact shading i
 Area of exterior doors. All ResStock models currently receive the same option.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   Engineering judgment.
 \end{itemize}
 \paragraph{Direct Conditional Dependencies}
- 
+
 \begin{itemize}
     \item None.
 \end{itemize}
 \paragraph{Option(s)}
 All ResStock housing units currently receive an option of 20 ft\textsuperscript{2} for the exterior area of doors; see Table \ref{table:hc_opt_door_area}.
-\begin{longtable}[]{|p{3.5cm}|p{3.3cm}|} \caption{Door Area options and arguments that vary for each option} \label{table:hc_opt_door_area} \\  
+\begin{longtable}[]{|p{3.5cm}|p{3.3cm}|} \caption{Door Area options and arguments that vary for each option} \label{table:hc_opt_door_area} \\
 \toprule\noalign{}
 Option name & \texttt{door\_area} \\
 \midrule\noalign{}
@@ -3080,7 +3080,7 @@ Option name & \texttt{door\_area} \\
 \bottomrule\noalign{}
 \endlastfoot
 20 ft\textsuperscript{2} & 20 \\
-\end{longtable} 
+\end{longtable}
 For the argument definitions, see Table \ref{table:hc_arg_def_door_area}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-doors}{Doors} documentation for the available HPXML schema elements, default values, and constraints.
 \begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the Door Area characteristic} \label{table:hc_arg_def_door_area} \\
 
@@ -3104,19 +3104,19 @@ None
 Exterior door material and properties.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   Engineering judgment.
 \end{itemize}
 \paragraph{Direct Conditional Dependencies}
- 
+
 \begin{itemize}
     \item None
 \end{itemize}
 \paragraph{Option(s)}
 All homes in ResStock receive Fiberglass doors with an R-value of 5 (Table \ref{table:hc_opt_door}).
 
-\begin{longtable}[]{|p{3.5cm}|p{3.3cm}|} \caption{Door options and arguments that vary for each option} \label{table:hc_opt_door} \\  
+\begin{longtable}[]{|p{3.5cm}|p{3.3cm}|} \caption{Door options and arguments that vary for each option} \label{table:hc_opt_door} \\
 
 \toprule\noalign{}
 Option name & \texttt{door\_rvalue} \\
@@ -3150,7 +3150,7 @@ None.
 Construction type and efficiency levels of windows.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   U.S.~EIA 2020 RECS microdata.
 \end{itemize}
@@ -3167,17 +3167,17 @@ Construction type and efficiency levels of windows.
 
 \paragraph{Option(s)}
 ResStock uses 10 window options in the baseline, with variation across number of panes, low-emissivity coating, and frame material. Across all Window options, multiple ResStock arguments are constant (Table \ref{table:hc_opt_window}). \texttt{window\_natvent\_availability},
-\texttt{window\_exterior\_shading\_winter}, 
-\texttt{window\_exterior\_shading\_summer}, 
-\texttt{window\_shading\_summer\_season}, and 
-\texttt{skylight\_storm\_type} are all set to \textit{auto}. Furthermore, two skylight window parameters are constant: 
+\texttt{window\_exterior\_shading\_winter},
+\texttt{window\_exterior\_shading\_summer},
+\texttt{window\_shading\_summer\_season}, and
+\texttt{skylight\_storm\_type} are all set to \textit{auto}. Furthermore, two skylight window parameters are constant:
 \texttt{skylight\_ufactor} is always set to 0.37
 and \texttt{skylight\_shgc} is always 0.3.
 
 \begin{customLongTable}
-{|p{6.0cm}|p{3cm}|p{3cm}|} 
-{Windows options and arguments that vary for each option} {table:hc_opt_window}   
-{Option name & \texttt{window\_ufactor} & \texttt{window\_shgc}} 
+{|p{6.0cm}|p{3cm}|p{3cm}|}
+{Windows options and arguments that vary for each option} {table:hc_opt_window}
+{Option name & \texttt{window\_ufactor} & \texttt{window\_shgc}}
 
 Single, Clear, Metal & 1.16 & 0.76 \\ \hline
 Single, Clear, Metal, Exterior Clear Storm & 0.67 & 0.56
@@ -3196,8 +3196,8 @@ Triple, Low-E, Non-metal, Air, L-Gain & 0.29 & 0.26  \\
 
 \end{customLongTable}
 For the argument definitions, see Table \ref{table:hc_arg_def_wind}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-windows}{Windows} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{1.5cm}|p{5cm}|} {The ResStock argument definitions set in the Windows characteristic} {table:hc_arg_def_wind} 
-{Name & Required & Units & Type & Choices & Description} 
+\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{1.5cm}|p{5cm}|} {The ResStock argument definitions set in the Windows characteristic} {table:hc_arg_def_wind}
+{Name & Required & Units & Type & Choices & Description}
 \texttt{window\_natvent\_availability} & false & Days/week & Integer &
 auto & For operable windows, the number of days/week that windows can be
 opened by occupants for natural ventilation.  \\
@@ -3248,7 +3248,7 @@ storm. \\
   Due to low sample sizes, the following adjustments are made:
 
   \begin{itemize}
-   
+
   \item
     Vintage data are grouped into: (1) \textless1960, (2) 1960--79,
     (3) 1980--99, (4) 2000s, (5) 2010s.
@@ -3257,10 +3257,10 @@ storm. \\
     Detached, Single-Family Attached, and Mobile homes, and (2)
     Multifamily 2--4 units and Multifamily 5+ units.
   \item
-    Climate zones are grouped into: 
+    Climate zones are grouped into:
     \begin{itemize}
         \item 1A, 2A, 2B
-  
+
 \item 3A, 3B, 3C, 4B
 \item 4A, 4C
 \item 5A, 5B
@@ -3270,7 +3270,7 @@ storm. \\
   \end{itemize}
 
   \begin{itemize}
-   
+
   \item
     Federal Poverty Levels are progressively grouped together
     until all bins are combined.
@@ -3297,12 +3297,12 @@ storm. \\
 Window-to-wall ratios for the front, back, left, and right walls.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   2016--17 Residential Building Stock Assessment (RBSA) II microdata.
 \end{itemize}
 \paragraph{Direct Conditional Dependencies}
- 
+
 \begin{itemize}
     \item Geometry Building Type Height.
 \end{itemize}
@@ -3310,10 +3310,10 @@ Window-to-wall ratios for the front, back, left, and right walls.
 ResStock arguments use window-to-wall ratios to specify the window area instead of defining absolute window areas. Therefore, the following wall area constants are all set to zero in ResStock:
 \begin{itemize}
     \item  \texttt{window\_area\_front} = 0
-    \item \texttt{window\_area\_back} = 0 
+    \item \texttt{window\_area\_back} = 0
     \item \texttt{window\_area\_left} = 0
     \item \texttt{window\_area\_right} = 0
-    \item \texttt{skylight\_area\_front} = 0 
+    \item \texttt{skylight\_area\_front} = 0
     \item \texttt{skylight\_area\_back} = 0
     \item \texttt{skylight\_area\_left} = 0
     \item \texttt{skylight\_area\_right} = 0.
@@ -3324,20 +3324,20 @@ ResStock has six different levels of window-to-wall ratios between 0.06 and 0.3 
 
 Additionally, the \texttt{window\_aspect\_ratio} is set to 1.333 for all ResStock options.
 
-\begin{longtable}[]{|p{3.cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|} \caption{Window Area options and arguments that vary for each option} \label{table:hc_opt_window_area} \\  
+\begin{longtable}[]{|p{3.cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|} \caption{Window Area options and arguments that vary for each option} \label{table:hc_opt_window_area} \\
 
 \toprule\noalign{}
 Option name & \texttt{window\_front\_wwr} &
 \texttt{window\_back\_wwr} & \texttt{window\_left\_wwr} &
-\texttt{window\_right\_wwr}  
+\texttt{window\_right\_wwr}
  \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-F6 B6 L6 R6 & 0.06 & 0.06 & 0.06 & 0.06 
+F6 B6 L6 R6 & 0.06 & 0.06 & 0.06 & 0.06
  \\
-F9 B9 L9 R9 & 0.09 & 0.09 & 0.09 & 0.09   
+F9 B9 L9 R9 & 0.09 & 0.09 & 0.09 & 0.09
  \\
 F12 B12 L12 R12 & 0.12 & 0.12 & 0.12 & 0.12  \\
 F15 B15 L15 R15  & 0.15 & 0.15 & 0.15 & 0.15 \\
@@ -3346,8 +3346,8 @@ F30 B30 L30 R30 & 0.30 & 0.30 & 0.30 & 0.30\\
 \end{longtable}
 For the argument definitions, see Table \ref{table:hc_arg_window_area}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-windows}{Windows} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{5cm}|} {The ResStock argument definitions set in the Window Area characteristic} {table:hc_arg_window_area} 
-{Name & Required & Units & Type & Description} 
+\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{5cm}|} {The ResStock argument definitions set in the Window Area characteristic} {table:hc_arg_window_area}
+{Name & Required & Units & Type & Description}
 \texttt{window\_front\_wwr} & true & Frac & Double & The ratio of
 window area to wall area for the unit's front facade.
 Enter 0 if specifying Front Window Area instead. \\
@@ -3403,7 +3403,7 @@ facade (when viewed from the front). \\
 \end{customLongTable}
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
- 
+
 \item
   The window-to-wall ratios (WWR) are exponential weibull distributed
 \item
@@ -3432,20 +3432,20 @@ Presence, depth, and location of window overhangs (not currently used in ResStoc
     \item None.
 \end{itemize}
 \paragraph{Option(s)}
-ResStock currently assumes all buildings have no overhang. Therefore, all models are assigned the option of ``None'' for this characteristic, and receive the following ResStock arguments: 
+ResStock currently assumes all buildings have no overhang. Therefore, all models are assigned the option of ``None'' for this characteristic, and receive the following ResStock arguments:
 \begin{itemize}
     \item \texttt{overhangs\_front\_depth} = 0
-\item \texttt{overhangs\_front\_distance\_to\_top\_of\_window} = 0 
-\item \texttt{overhangs\_front\_distance\_to\_bottom\_of\_window} = 4 
+\item \texttt{overhangs\_front\_distance\_to\_top\_of\_window} = 0
+\item \texttt{overhangs\_front\_distance\_to\_bottom\_of\_window} = 4
 \item \texttt{overhangs\_back\_depth} = 0
 \item \texttt{overhangs\_back\_distance\_to\_top\_of\_window} = 0
 \item \texttt{overhangs\_back\_distance\_to\_bottom\_of\_window} = 4
 \item \texttt{overhangs\_left\_depth} = 0
-\item \texttt{overhangs\_left\_distance\_to\_top\_of\_window} = 0 
+\item \texttt{overhangs\_left\_distance\_to\_top\_of\_window} = 0
 \item \texttt{overhangs\_left\_distance\_to\_bottom\_of\_window} = 4
-\item \texttt{overhangs\_right\_depth} = 0 
-\item \texttt{overhangs\_right\_distance\_to\_top\_of\_window} = 0 
-\item \texttt{overhangs\_right\_distance\_to\_bottom\_of\_window} = 4  
+\item \texttt{overhangs\_right\_depth} = 0
+\item \texttt{overhangs\_right\_distance\_to\_top\_of\_window} = 0
+\item \texttt{overhangs\_right\_distance\_to\_bottom\_of\_window} = 4
 \end{itemize}
 
 For the argument definitions, see Table \ref{table:hc_arg_def_overhang}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-overhangs}{Overhangs} documentation for the available HPXML schema elements, default values, and constraints.
@@ -3507,9 +3507,9 @@ right facade. \\
 Depth of roof eaves.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
-  Building America House Simulation Protocols (\cite{Wilson2014}). 
+  Building America House Simulation Protocols (\cite{Wilson2014}).
 \end{itemize}
 \paragraph{Direct Conditional Dependencies}
 
@@ -3518,7 +3518,7 @@ None.
 
 \paragraph{Option(s)}
 
-All buildings receive the same value of 2 feet for \texttt{geometry\_eaves\_depth}. 
+All buildings receive the same value of 2 feet for \texttt{geometry\_eaves\_depth}.
 
 
 For the argument definitions, see Table \ref{table:hc_arg_def_eaves}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-enclosure}{Enclosure} documentation for the available HPXML schema elements, default values, and constraints.
@@ -3542,19 +3542,19 @@ None.
 Amount of window shading in the summer and winter.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   ANSI/RESNET/ICC 301 Standard.
 \end{itemize}
 \paragraph{Direct Conditional Dependencies}
- 
+
 \begin{itemize}
     \item None.
 \end{itemize}
 \paragraph{Option(s)}
 All models in ResStock receive the same shading option (Table \ref{table:hc_opt_int_shade}).
 \begin{longtable}[]
-{|p{4.5cm}|p{4.cm}|p{4.cm}|} \caption{Interior Shading options and arguments that vary for each option} \label{table:hc_opt_int_shade} \\  
+{|p{4.5cm}|p{4.cm}|p{4.cm}|} \caption{Interior Shading options and arguments that vary for each option} \label{table:hc_opt_int_shade} \\
 \toprule\noalign{}
 Option name &
 \texttt{window\_interior\_shading\_winter} &
@@ -3584,16 +3584,16 @@ auto & Interior shading coefficient for the summer season. 1.0 indicates
 no reduction in solar gain, 0.85 indicates 15\% reduction, etc.  \\
 \end{longtable}
 \paragraph{Distribution Assumption(s)}
-None. 
+None.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Infiltration}
-Infiltration is air leakage between the envelope and the outdoor environment. In the U.S.~residential sector, it is the leading driver of heating and cooling loads (compared to, for example, heat transfer through other parts of the envelope). In ResStock, infiltration is controlled by a single input file that provides a whole-home infiltration rate. 
+Infiltration is air leakage between the envelope and the outdoor environment. In the U.S.~residential sector, it is the leading driver of heating and cooling loads (compared to, for example, heat transfer through other parts of the envelope). In ResStock, infiltration is controlled by a single input file that provides a whole-home infiltration rate.
 \subsubsection{Infiltration}\label{infiltration}
 \paragraph{Description}
 Total infiltration to the dwelling unit.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
- 
+
 \item
   Distributions are based on the cumulative distribution functions from
   the \href{http://resdb.lbl.gov/}{Residential Diagnostics Database (ResDB)}.
@@ -3606,7 +3606,7 @@ Total infiltration to the dwelling unit.
 
 
 \paragraph{Direct Conditional Dependencies}
- 
+
 \begin{itemize}
     \item ASHRAE IECC Climate Zone 2004
     \item Geometry Floor Area
@@ -3629,12 +3629,12 @@ CFMnatural, EffectiveLeakageArea & The unit of measure for the air leakage if pr
 \texttt{air\_leakage\_house\_pressure} & false & Pa & Double & & The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM. \\
 \hline
 \texttt{air\_leakage\_value} & false & & string & & Numeric air leakage value. For \textquotesingle EffectiveLeakageArea\textquotesingle, provide value in sq. in. If provided, overrides Leakiness Description input. \\
-\hline 
+\hline
 \texttt{air\_leakage\_type} & false & & Choice & auto, unit total, unit
 exterior only & Type of air leakage. Type of air leakage if providing a numeric air leakage value. If \textquotesingle unit total\textquotesingle, represents the total infiltration to the unit as measured by a compartmentalization test, in which case the air leakage value will be adjusted by the ratio of exterior envelope surface area to total envelope surface area. Otherwise, if \textquotesingle unit exterior only\textquotesingle, represents the infiltration to the unit from outside only as measured by a guarded test. Required when unit type is single-family attached or apartment unit. \\
 \end{customLongTable}
 
-The options of the Infiltration characteristic range between 1 ACH 50 to 50 ACH 50 and set the \texttt{air\_leakage\_value} ResStock argument, Table \ref{table:hc_opt_infil}. 
+The options of the Infiltration characteristic range between 1 ACH 50 to 50 ACH 50 and set the \texttt{air\_leakage\_value} ResStock argument, Table \ref{table:hc_opt_infil}.
 
 Below is a list of arguments and their values that are constant across all the options.
 \begin{itemize}
@@ -3643,12 +3643,12 @@ Below is a list of arguments and their values that are constant across all the o
 	\item \texttt{air\_leakage\_house\_pressure} = 50
 	\item \texttt{air\_leakage\_type} = unit total
 	\item \texttt{site\_shielding\_of\_home} = normal
-\end{itemize} 
- 
- 
-\begin{longtable}[]{|p{2.cm}|p{3.5cm}|} \caption{Infiltration options and arguments that vary for each option} \label{table:hc_opt_infil} \\  
+\end{itemize}
+
+
+\begin{longtable}[]{|p{2.cm}|p{3.5cm}|} \caption{Infiltration options and arguments that vary for each option} \label{table:hc_opt_infil} \\
 \toprule\noalign{}
-Option name & 
+Option name &
 
 \texttt{air\_leakage\_value}  \\
 \midrule\noalign{}
@@ -3675,7 +3675,7 @@ Option name &
 \paragraph{Distribution Assumption(s)}
 
 \begin{itemize}
- 
+
 \item
   All ACH50 are based on Single-Family Detached blower door tests.
 \item
@@ -3698,13 +3698,3 @@ Option name &
   For Alaska, Infiltration ACH50 values are calculated based on CFM50
   from blower door test and estimated volume of the home.
 \end{itemize}
-
-
-
-
-
-
-
-
-
-
