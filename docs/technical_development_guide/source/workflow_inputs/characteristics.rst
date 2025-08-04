@@ -30062,7 +30062,7 @@ Arguments
      - true
      - 
      - Choice
-     - None, Central HP, SEER 8, 6.0 HSPF, Central HP, SEER 10, 6.2 HSPF, Central HP, SEER 10, 6.8 HSPF, Central HP, SEER 10.3, 7.0 HSPF, Central HP, SEER 11.5, 7.5 HSPF, Central HP, SEER 13, 7.7 HSPF, Central HP, SEER 13, 8.0 HSPF, Central HP, SEER 13, 9.85 HSPF, Central HP, SEER 14, 8.2 HSPF, Central HP, SEER 14.3, 8.5 HSPF, Central HP, SEER 15, 8.5 HSPF, Central HP, SEER 15, 9.0 HSPF, Central HP, SEER 16, 9.0 HSPF, Central HP, SEER 17, 8.7 HSPF, Central HP, SEER 18, 9.3 HSPF, Central HP, SEER 20, 11 HSPF, Central HP, SEER 22, 10 HSPF, Central HP, SEER 24, 13 HSPF, Mini-Split HP, SEER 14.5, 8.2 HSPF, Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted, Mini-Split HP, SEER 16, 9.2 HSPF, Mini-Split HP, SEER 17, 9.5 HSPF, Mini-Split HP, SEER 17, 9.5 HSPF, Ducted, Mini-Split HP, SEER 18.0, 9.6 HSPF, Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted, Mini-Split HP, SEER 19, 10 HSPF, Ducted, Mini-Split HP, SEER 19, 10 HSPF, Mini-Split HP, SEER 20, 11 HSPF, Mini-Split HP, SEER 24, 13 HSPF, Mini-Split HP, SEER 25, 12.7 HSPF, Mini-Split HP, SEER 25, 12.7 HSPF, Ducted, Mini-Split HP, SEER 29.3, 14 HSPF, Mini-Split HP, SEER 29.3, 14 HSPF, Ducted, Mini-Split HP, SEER 33, 13.3 HSPF, Mini-Split HP, SEER 33, 13.3 HSPF, Ducted, Geothermal HP, EER 16.6, COP 3.6, Geothermal HP, EER 18.2, COP 3.7, Geothermal HP, EER 19.4, COP 3.8, Geothermal HP, EER 20.2, COP 4.2, Geothermal HP, EER 20.5, COP 4.0, Geothermal HP, EER 30.9, COP 4.4, Packaged Terminal HP, EER 11.4, COP 3.6, Room AC w/ Reverse Cycle, EER 11.4, COP 3.6, Detailed Example: Central HP, SEER2 12.4, HSPF2 6.5, Detailed Example: Central HP, SEER 13, 7.7 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 18, 9.3 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance, Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance, Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance, Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance, Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance
+     - None, Central HP, SEER 8, 6.0 HSPF, Central HP, SEER 10, 6.2 HSPF, Central HP, SEER 10, 6.8 HSPF, Central HP, SEER 10.3, 7.0 HSPF, Central HP, SEER 11.5, 7.5 HSPF, Central HP, SEER 13, 7.7 HSPF, Central HP, SEER 13, 8.0 HSPF, Central HP, SEER 13, 9.85 HSPF, Central HP, SEER 14, 8.2 HSPF, Central HP, SEER 14.3, 8.5 HSPF, Central HP, SEER 15, 8.5 HSPF, Central HP, SEER 15, 9.0 HSPF, Central HP, SEER 16, 9.0 HSPF, Central HP, SEER 17, 8.7 HSPF, Central HP, SEER 18, 9.3 HSPF, Central HP, SEER 20, 11 HSPF, Central HP, SEER 22, 10 HSPF, Central HP, SEER 24, 13 HSPF, Mini-Split HP, SEER 14.5, 8.2 HSPF, Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted, Mini-Split HP, SEER 16, 9.2 HSPF, Mini-Split HP, SEER 17, 9.5 HSPF, Mini-Split HP, SEER 17, 9.5 HSPF, Ducted, Mini-Split HP, SEER 18.0, 9.6 HSPF, Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted, Mini-Split HP, SEER 19, 10 HSPF, Ducted, Mini-Split HP, SEER 19, 10 HSPF, Mini-Split HP, SEER 20, 11 HSPF, Mini-Split HP, SEER 24, 13 HSPF, Mini-Split HP, SEER 25, 12.7 HSPF, Mini-Split HP, SEER 25, 12.7 HSPF, Ducted, Mini-Split HP, SEER 29.3, 14 HSPF, Mini-Split HP, SEER 29.3, 14 HSPF, Ducted, Mini-Split HP, SEER 33, 13.3 HSPF, Mini-Split HP, SEER 33, 13.3 HSPF, Ducted, Geothermal HP, EER 16.6, COP 3.6, Geothermal HP, EER 18.2, COP 3.7, Geothermal HP, EER 18.6, COP 3.8, Geothermal HP, EER 19.4, COP 3.8, Geothermal HP, EER 20.2, COP 4.2, Geothermal HP, EER 20.5, COP 4.0, Geothermal HP, EER 30.9, COP 4.4, Packaged Terminal HP, EER 11.4, COP 3.6, Room AC w/ Reverse Cycle, EER 11.4, COP 3.6, Detailed Example: Central HP, SEER2 12.4, HSPF2 6.5, Detailed Example: Central HP, SEER 13, 7.7 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 18, 9.3 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance, Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance, Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance, Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance, Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance
      - The type and efficiency of the heat pump.
    * - ``hvac_heat_pump_capacity``
      - false
@@ -30104,8 +30104,14 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Default, Vertical Loop, Enhanced Grout, Vertical Loop, Enhanced Pipe, Detailed Example: Lopsided U Configuration, 10 Boreholes
+     - auto, Default, Vertical Loop, Enhanced Grout, Vertical Loop, Enhanced Pipe, Vertical Loop, Enhanced Grout & Pipe, Detailed Example: Lopsided U Configuration, 10 Boreholes
      - The geothermal loop configuration if there's a ground-to-air heat pump.
+   * - ``advanced_feature``
+     - false
+     - 
+     - Choice
+     - auto, None, Temperature Capacitance Multiplier, 1, Temperature Capacitance Multiplier, 4, Temperature Capacitance Multiplier, 10, Temperature Capacitance Multiplier, 15, On/Off Thermostat Deadband, 1F, On/Off Thermostat Deadband, 2F, On/Off Thermostat Deadband, 3F, Heat Pump Backup Staging, 5 kW, Heat Pump Backup Staging, 10 kW, Experimental Ground-to-Air Heat Pump Model, HVAC Allow Increased Fixed Capacities
+     - Select an advanced research feature to use in the model, if desired.
 
 Options
 *******
@@ -30130,6 +30136,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``hvac_heat_pump_backup``
      - ``hvac_heat_pump_backup_capacity``
      - ``hvac_geothermal_loop``
+     - ``advanced_feature``
 
    * - ASHP, SEER 10, 6.2 HSPF
      - 0.72%
@@ -30144,6 +30151,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Integrated, Electricity, 100% Efficiency
      - Autosize
      - Default
+     - None
    * - ASHP, SEER 13, 7.7 HSPF
      - 7.4%
      - None
@@ -30157,6 +30165,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Integrated, Electricity, 100% Efficiency
      - Autosize
      - Default
+     - None
    * - ASHP, SEER 15, 8.5 HSPF
      - 7.2%
      - None
@@ -30170,6 +30179,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Integrated, Electricity, 100% Efficiency
      - Autosize
      - Default
+     - None
    * - Electric Baseboard, 100% Efficiency
      - 6.3%
      - Electric Resistance
@@ -30183,6 +30193,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Electric Boiler, 100% AFUE
      - 0.21%
      - Boiler, 100% AFUE
@@ -30196,6 +30207,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Electric Furnace, 100% AFUE
      - 11%
      - Central Furnace, 100% AFUE
@@ -30209,6 +30221,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Electric Wall Furnace, 100% AFUE
      - 1.1%
      - Wall Furnace, 100% AFUE
@@ -30222,6 +30235,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Fuel Boiler, 76% AFUE
      - 0.89%
      - Boiler, 76% AFUE
@@ -30235,6 +30249,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Fuel Boiler, 80% AFUE
      - 3.3%
      - Boiler, 80% AFUE
@@ -30248,6 +30263,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Fuel Boiler, 90% AFUE
      - 0.49%
      - Boiler, 90% AFUE
@@ -30261,6 +30277,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Fuel Furnace, 60% AFUE
      - 0.49%
      - Central Furnace, 60% AFUE
@@ -30274,6 +30291,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Fuel Furnace, 76% AFUE
      - 2.8%
      - Central Furnace, 76% AFUE
@@ -30287,6 +30305,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Fuel Furnace, 80% AFUE
      - 25%
      - Central Furnace, 80% AFUE
@@ -30300,6 +30319,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Fuel Furnace, 92.5% AFUE
      - 15%
      - Central Furnace, 92.5% AFUE
@@ -30313,6 +30333,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Fuel Wall/Floor Furnace, 60% AFUE
      - 3.2%
      - Wall Furnace, 60% AFUE
@@ -30326,6 +30347,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Fuel Wall/Floor Furnace, 68% AFUE
      - 2.8%
      - Wall Furnace, 68% AFUE
@@ -30339,6 +30361,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - MSHP, SEER 14.5, 8.2 HSPF
      - 0.96%
      - None
@@ -30352,6 +30375,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Integrated, Electricity, 100% Efficiency
      - Autosize
      - Default
+     - None
    * - MSHP, SEER 29.3, 14 HSPF
      - 0.015%
      - None
@@ -30365,6 +30389,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Integrated, Electricity, 100% Efficiency
      - Autosize
      - Default
+     - None
    * - None
      - 1.1%
      - None
@@ -30378,6 +30403,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Shared Heating
      - 9.6%
      - 
@@ -30391,8 +30417,10 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
+     - 
    * - Void
      - 0%
+     - 
      - 
      - 
      - 
@@ -30967,7 +30995,7 @@ Arguments
      - true
      - 
      - Choice
-     - None, Central HP, SEER 8, 6.0 HSPF, Central HP, SEER 10, 6.2 HSPF, Central HP, SEER 10, 6.8 HSPF, Central HP, SEER 10.3, 7.0 HSPF, Central HP, SEER 11.5, 7.5 HSPF, Central HP, SEER 13, 7.7 HSPF, Central HP, SEER 13, 8.0 HSPF, Central HP, SEER 13, 9.85 HSPF, Central HP, SEER 14, 8.2 HSPF, Central HP, SEER 14.3, 8.5 HSPF, Central HP, SEER 15, 8.5 HSPF, Central HP, SEER 15, 9.0 HSPF, Central HP, SEER 16, 9.0 HSPF, Central HP, SEER 17, 8.7 HSPF, Central HP, SEER 18, 9.3 HSPF, Central HP, SEER 20, 11 HSPF, Central HP, SEER 22, 10 HSPF, Central HP, SEER 24, 13 HSPF, Mini-Split HP, SEER 14.5, 8.2 HSPF, Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted, Mini-Split HP, SEER 16, 9.2 HSPF, Mini-Split HP, SEER 17, 9.5 HSPF, Mini-Split HP, SEER 17, 9.5 HSPF, Ducted, Mini-Split HP, SEER 18.0, 9.6 HSPF, Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted, Mini-Split HP, SEER 19, 10 HSPF, Ducted, Mini-Split HP, SEER 19, 10 HSPF, Mini-Split HP, SEER 20, 11 HSPF, Mini-Split HP, SEER 24, 13 HSPF, Mini-Split HP, SEER 25, 12.7 HSPF, Mini-Split HP, SEER 25, 12.7 HSPF, Ducted, Mini-Split HP, SEER 29.3, 14 HSPF, Mini-Split HP, SEER 29.3, 14 HSPF, Ducted, Mini-Split HP, SEER 33, 13.3 HSPF, Mini-Split HP, SEER 33, 13.3 HSPF, Ducted, Geothermal HP, EER 16.6, COP 3.6, Geothermal HP, EER 18.2, COP 3.7, Geothermal HP, EER 19.4, COP 3.8, Geothermal HP, EER 20.2, COP 4.2, Geothermal HP, EER 20.5, COP 4.0, Geothermal HP, EER 30.9, COP 4.4, Packaged Terminal HP, EER 11.4, COP 3.6, Room AC w/ Reverse Cycle, EER 11.4, COP 3.6, Detailed Example: Central HP, SEER2 12.4, HSPF2 6.5, Detailed Example: Central HP, SEER 13, 7.7 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 18, 9.3 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance, Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance, Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance, Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance, Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance
+     - None, Central HP, SEER 8, 6.0 HSPF, Central HP, SEER 10, 6.2 HSPF, Central HP, SEER 10, 6.8 HSPF, Central HP, SEER 10.3, 7.0 HSPF, Central HP, SEER 11.5, 7.5 HSPF, Central HP, SEER 13, 7.7 HSPF, Central HP, SEER 13, 8.0 HSPF, Central HP, SEER 13, 9.85 HSPF, Central HP, SEER 14, 8.2 HSPF, Central HP, SEER 14.3, 8.5 HSPF, Central HP, SEER 15, 8.5 HSPF, Central HP, SEER 15, 9.0 HSPF, Central HP, SEER 16, 9.0 HSPF, Central HP, SEER 17, 8.7 HSPF, Central HP, SEER 18, 9.3 HSPF, Central HP, SEER 20, 11 HSPF, Central HP, SEER 22, 10 HSPF, Central HP, SEER 24, 13 HSPF, Mini-Split HP, SEER 14.5, 8.2 HSPF, Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted, Mini-Split HP, SEER 16, 9.2 HSPF, Mini-Split HP, SEER 17, 9.5 HSPF, Mini-Split HP, SEER 17, 9.5 HSPF, Ducted, Mini-Split HP, SEER 18.0, 9.6 HSPF, Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted, Mini-Split HP, SEER 19, 10 HSPF, Ducted, Mini-Split HP, SEER 19, 10 HSPF, Mini-Split HP, SEER 20, 11 HSPF, Mini-Split HP, SEER 24, 13 HSPF, Mini-Split HP, SEER 25, 12.7 HSPF, Mini-Split HP, SEER 25, 12.7 HSPF, Ducted, Mini-Split HP, SEER 29.3, 14 HSPF, Mini-Split HP, SEER 29.3, 14 HSPF, Ducted, Mini-Split HP, SEER 33, 13.3 HSPF, Mini-Split HP, SEER 33, 13.3 HSPF, Ducted, Geothermal HP, EER 16.6, COP 3.6, Geothermal HP, EER 18.2, COP 3.7, Geothermal HP, EER 18.6, COP 3.8, Geothermal HP, EER 19.4, COP 3.8, Geothermal HP, EER 20.2, COP 4.2, Geothermal HP, EER 20.5, COP 4.0, Geothermal HP, EER 30.9, COP 4.4, Packaged Terminal HP, EER 11.4, COP 3.6, Room AC w/ Reverse Cycle, EER 11.4, COP 3.6, Detailed Example: Central HP, SEER2 12.4, HSPF2 6.5, Detailed Example: Central HP, SEER 13, 7.7 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 18, 9.3 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance, Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance, Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance, Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance, Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance, Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance
      - The type and efficiency of the heat pump.
    * - ``hvac_heat_pump_capacity``
      - false
@@ -31009,8 +31037,14 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Default, Vertical Loop, Enhanced Grout, Vertical Loop, Enhanced Pipe, Detailed Example: Lopsided U Configuration, 10 Boreholes
+     - auto, Default, Vertical Loop, Enhanced Grout, Vertical Loop, Enhanced Pipe, Vertical Loop, Enhanced Grout & Pipe, Detailed Example: Lopsided U Configuration, 10 Boreholes
      - The geothermal loop configuration if there's a ground-to-air heat pump.
+   * - ``advanced_feature``
+     - false
+     - 
+     - Choice
+     - auto, None, Temperature Capacitance Multiplier, 1, Temperature Capacitance Multiplier, 4, Temperature Capacitance Multiplier, 10, Temperature Capacitance Multiplier, 15, On/Off Thermostat Deadband, 1F, On/Off Thermostat Deadband, 2F, On/Off Thermostat Deadband, 3F, Heat Pump Backup Staging, 5 kW, Heat Pump Backup Staging, 10 kW, Experimental Ground-to-Air Heat Pump Model, HVAC Allow Increased Fixed Capacities
+     - Select an advanced research feature to use in the model, if desired.
 
 Options
 *******
@@ -31037,6 +31071,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``hvac_heat_pump_backup``
      - ``hvac_heat_pump_backup_capacity``
      - ``hvac_geothermal_loop``
+     - ``advanced_feature``
 
    * - Boiler Baseboards Heating Only, Electricity
      - 2.8%
@@ -31053,6 +31088,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Boiler Baseboards Heating Only, Fuel
      - 4.4%
      - Boiler, 78% AFUE
@@ -31068,6 +31104,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Fan Coil Cooling Only
      - 1.4%
      - 
@@ -31075,6 +31112,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - Mini-Split AC, SEER 13
      - Autosize
+     - 
      - 
      - 
      - 
@@ -31098,6 +31136,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - Fan Coil Heating and Cooling, Fuel
      - 1.1%
      - Boiler, 78% AFUE
@@ -31113,6 +31152,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
    * - None
      - 89%
      - 
@@ -31128,8 +31168,10 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
+     - 
    * - Void
      - 0%
+     - 
      - 
      - 
      - 
@@ -36566,19 +36608,19 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Left/Right at 15ft
    * - 2
      - 0.19%
-     - Left/Right at 5ft
+     - Left/Right at 2ft
    * - 4
      - 3.4%
-     - Left/Right at 5ft
+     - Left/Right at 4ft
    * - 7
      - 5%
-     - Left/Right at 5ft
+     - Left/Right at 7ft
    * - 12
      - 9.2%
-     - Left/Right at 10ft
+     - Left/Right at 12ft
    * - 27
      - 13%
-     - Left/Right at 25ft
+     - Left/Right at 27ft
    * - None
      - 1.3%
      - None
