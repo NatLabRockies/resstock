@@ -1,7 +1,6 @@
 upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,1,"HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate",408862,74.3
-1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,408862,74.3
-1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,3,HVAC Cooling Efficiency|Ducted Heat Pump,408862,74.3
+1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,2,HVAC Cooling Efficiency|Ducted Heat Pump,408862,74.3
 1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,-1,All,408862,74.3
 2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8",380003,69.1
 2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,380003,69.1

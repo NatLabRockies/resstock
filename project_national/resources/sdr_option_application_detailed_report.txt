@@ -33,43 +33,8 @@ and => 530500 (96.5%)
 Overall applied to => 408862 (74.3%).
 -------------------------------------
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option2:'HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted'
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 413443 (75.2%)
-  HVAC Has Ducts|Yes => 423636 (77.0%)
-  not => 489588 (89.0%)
-    or => 60412 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
--------------------------------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 530500 (96.5%)
-  not => 541477 (98.5%)
-    Heating Fuel|Wood => 8523 (1.5%)
-  not => 548115 (99.7%)
-    Heating Fuel|Other Fuel => 1885 (0.3%)
-  not => 545937 (99.3%)
-    Heating Fuel|None => 4063 (0.7%)
-  not => 544889 (99.1%)
-    or => 60412 (11.0%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15956 (2.9%)
-      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23570 (4.3%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7457 (1.4%)
-      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5826 (1.1%)
-      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7603 (1.4%)
-    and => 11265 (2.0%)
-      Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories => 11265 (2.0%)
-------------------------------------------------------------------------------------------
-Overall applied to => 408862 (74.3%).
--------------------------------------
-
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option3:'HVAC Cooling Efficiency|Ducted Heat Pump'
+Option Apply Report for - Upgrade1:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413443 (75.2%)
   HVAC Has Ducts|Yes => 423636 (77.0%)
@@ -106,19 +71,18 @@ Overall applied to => 408862 (74.3%).
 All of the options (and-ing) were applied to: 408862 (74.3%)
 Any of the options (or-ing) were applied to: 408862 (74.3%)
 --------------------------------------------------------------------------------
-Report of how the 3 options were applied to the buildings.
-+---------------------+----------------------------------------------------+---------------------+------------------+------------------+
-|   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
-+=====================+====================================================+=====================+==================+==================+
-|                   3 | hvac heating efficiency, hvac detailed performance | 408862 (74.3%)      | 408862 (74.3%)   | 408862 (74.3%)   |
-|                     | data, hvac cooling efficiency                      |                     |                  |                  |
-+---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+Report of how the 2 options were applied to the buildings.
++---------------------+--------------------------------------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options                                  | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+==================================================+=====================+==================+==================+
+|                   2 | hvac heating efficiency, hvac cooling efficiency | 408862 (74.3%)      | 408862 (74.3%)   | 408862 (74.3%)   |
++---------------------+--------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
-Detailed report of how the 3 options were applied to the buildings.
+Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   3 | 1, 2, 3           | 408862 (74.3%)      | 408862 (74.3%)   | 408862 (74.3%)   |
+|                   2 | 1, 2              | 408862 (74.3%)      | 408862 (74.3%)   | 408862 (74.3%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -532,10 +496,8 @@ or => 366283 (66.6%)
   Infiltration|30 ACH50 => 33629 (6.1%)
   Infiltration|25 ACH50 => 56894 (10.3%)
   Infiltration|20 ACH50 => 92430 (16.8%)
-  Infiltration|18.5 ACH50 => 0 (0.0%)
   Infiltration|15 ACH50 => 134604 (24.5%)
-  Infiltration|11.25 ACH50 => 0 (0.0%)
---------------------------------------
+-----------------------------------------
 Overall applied to => 366283 (66.6%).
 -------------------------------------
 
@@ -898,10 +860,8 @@ or => 366283 (66.6%)
   Infiltration|30 ACH50 => 33629 (6.1%)
   Infiltration|25 ACH50 => 56894 (10.3%)
   Infiltration|20 ACH50 => 92430 (16.8%)
-  Infiltration|18.5 ACH50 => 0 (0.0%)
   Infiltration|15 ACH50 => 134604 (24.5%)
-  Infiltration|11.25 ACH50 => 0 (0.0%)
---------------------------------------
+-----------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 388962 (70.7%)
