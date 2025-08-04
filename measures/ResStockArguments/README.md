@@ -645,7 +645,7 @@ The type and efficiency of the heat pump.
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Central HP, SEER 8, 6.0 HSPF`, `Central HP, SEER 10, 6.2 HSPF`, `Central HP, SEER 10, 6.8 HSPF`, `Central HP, SEER 10.3, 7.0 HSPF`, `Central HP, SEER 11.5, 7.5 HSPF`, `Central HP, SEER 13, 7.7 HSPF`, `Central HP, SEER 13, 8.0 HSPF`, `Central HP, SEER 13, 9.85 HSPF`, `Central HP, SEER 14, 8.2 HSPF`, `Central HP, SEER 14.3, 8.5 HSPF`, `Central HP, SEER 15, 8.5 HSPF`, `Central HP, SEER 15, 9.0 HSPF`, `Central HP, SEER 16, 9.0 HSPF`, `Central HP, SEER 17, 8.7 HSPF`, `Central HP, SEER 18, 9.3 HSPF`, `Central HP, SEER 20, 11 HSPF`, `Central HP, SEER 22, 10 HSPF`, `Central HP, SEER 24, 13 HSPF`, `Mini-Split HP, SEER 14.5, 8.2 HSPF`, `Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted`, `Mini-Split HP, SEER 16, 9.2 HSPF`, `Mini-Split HP, SEER 17, 9.5 HSPF`, `Mini-Split HP, SEER 17, 9.5 HSPF, Ducted`, `Mini-Split HP, SEER 18.0, 9.6 HSPF`, `Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted`, `Mini-Split HP, SEER 19, 10 HSPF, Ducted`, `Mini-Split HP, SEER 19, 10 HSPF`, `Mini-Split HP, SEER 20, 11 HSPF`, `Mini-Split HP, SEER 24, 13 HSPF`, `Mini-Split HP, SEER 25, 12.7 HSPF`, `Mini-Split HP, SEER 25, 12.7 HSPF, Ducted`, `Mini-Split HP, SEER 29.3, 14 HSPF`, `Mini-Split HP, SEER 29.3, 14 HSPF, Ducted`, `Mini-Split HP, SEER 33, 13.3 HSPF`, `Mini-Split HP, SEER 33, 13.3 HSPF, Ducted`, `Geothermal HP, EER 16.6, COP 3.6`, `Geothermal HP, EER 18.2, COP 3.7`, `Geothermal HP, EER 19.4, COP 3.8`, `Geothermal HP, EER 20.2, COP 4.2`, `Geothermal HP, EER 20.5, COP 4.0`, `Geothermal HP, EER 30.9, COP 4.4`, `Packaged Terminal HP, EER 11.4, COP 3.6`, `Room AC w/ Reverse Cycle, EER 11.4, COP 3.6`, `Detailed Example: Central HP, SEER2 12.4, HSPF2 6.5`, `Detailed Example: Central HP, SEER 13, 7.7 HSPF, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 18, 9.3 HSPF, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance`
+- **Choices:** `None`, `Central HP, SEER 8, 6.0 HSPF`, `Central HP, SEER 10, 6.2 HSPF`, `Central HP, SEER 10, 6.8 HSPF`, `Central HP, SEER 10.3, 7.0 HSPF`, `Central HP, SEER 11.5, 7.5 HSPF`, `Central HP, SEER 13, 7.7 HSPF`, `Central HP, SEER 13, 8.0 HSPF`, `Central HP, SEER 13, 9.85 HSPF`, `Central HP, SEER 14, 8.2 HSPF`, `Central HP, SEER 14.3, 8.5 HSPF`, `Central HP, SEER 15, 8.5 HSPF`, `Central HP, SEER 15, 9.0 HSPF`, `Central HP, SEER 16, 9.0 HSPF`, `Central HP, SEER 17, 8.7 HSPF`, `Central HP, SEER 18, 9.3 HSPF`, `Central HP, SEER 20, 11 HSPF`, `Central HP, SEER 22, 10 HSPF`, `Central HP, SEER 24, 13 HSPF`, `Mini-Split HP, SEER 14.5, 8.2 HSPF`, `Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted`, `Mini-Split HP, SEER 16, 9.2 HSPF`, `Mini-Split HP, SEER 17, 9.5 HSPF`, `Mini-Split HP, SEER 17, 9.5 HSPF, Ducted`, `Mini-Split HP, SEER 18.0, 9.6 HSPF`, `Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted`, `Mini-Split HP, SEER 19, 10 HSPF, Ducted`, `Mini-Split HP, SEER 19, 10 HSPF`, `Mini-Split HP, SEER 20, 11 HSPF`, `Mini-Split HP, SEER 24, 13 HSPF`, `Mini-Split HP, SEER 25, 12.7 HSPF`, `Mini-Split HP, SEER 25, 12.7 HSPF, Ducted`, `Mini-Split HP, SEER 29.3, 14 HSPF`, `Mini-Split HP, SEER 29.3, 14 HSPF, Ducted`, `Mini-Split HP, SEER 33, 13.3 HSPF`, `Mini-Split HP, SEER 33, 13.3 HSPF, Ducted`, `Geothermal HP, EER 16.6, COP 3.6`, `Geothermal HP, EER 18.2, COP 3.7`, `Geothermal HP, EER 18.6, COP 3.8`, `Geothermal HP, EER 19.4, COP 3.8`, `Geothermal HP, EER 20.2, COP 4.2`, `Geothermal HP, EER 20.5, COP 4.0`, `Geothermal HP, EER 30.9, COP 4.4`, `Packaged Terminal HP, EER 11.4, COP 3.6`, `Room AC w/ Reverse Cycle, EER 11.4, COP 3.6`, `Detailed Example: Central HP, SEER2 12.4, HSPF2 6.5`, `Detailed Example: Central HP, SEER 13, 7.7 HSPF, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 18, 9.3 HSPF, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance`
 
 <br/>
 
@@ -736,7 +736,7 @@ The geothermal loop configuration if there's a ground-to-air heat pump.
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `Default`, `Vertical Loop, Enhanced Grout`, `Vertical Loop, Enhanced Pipe`, `Detailed Example: Lopsided U Configuration, 10 Boreholes`
+- **Choices:** `auto`, `Default`, `Vertical Loop, Enhanced Grout`, `Vertical Loop, Enhanced Pipe`, `Vertical Loop, Enhanced Grout & Pipe`, `Detailed Example: Lopsided U Configuration, 10 Boreholes`
 
 <br/>
 
@@ -1344,6 +1344,19 @@ The type of permanent spa (pump & heater).
 - **Required:** ``false``
 
 - **Choices:** `auto`, `None`, `Unheated, 25% Usage`, `Unheated, 50% Usage`, `Unheated, 75% Usage`, `Unheated, 100% Usage`, `Unheated, 150% Usage`, `Unheated, 200% Usage`, `Unheated, 400% Usage`, `Electric Resistance Heater, 25% Usage`, `Electric Resistance Heater, 50% Usage`, `Electric Resistance Heater, 75% Usage`, `Electric Resistance Heater, 100% Usage`, `Electric Resistance Heater, 150% Usage`, `Electric Resistance Heater, 200% Usage`, `Electric Resistance Heater, 400% Usage`, `Heat Pump Heater, 25% Usage`, `Heat Pump Heater, 50% Usage`, `Heat Pump Heater, 75% Usage`, `Heat Pump Heater, 100% Usage`, `Heat Pump Heater, 150% Usage`, `Heat Pump Heater, 200% Usage`, `Heat Pump Heater, 400% Usage`, `Natural Gas Heater, 25% Usage`, `Natural Gas Heater, 50% Usage`, `Natural Gas Heater, 75% Usage`, `Natural Gas Heater, 100% Usage`, `Natural Gas Heater, 150% Usage`, `Natural Gas Heater, 200% Usage`, `Natural Gas Heater, 400% Usage`, `Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater`, `Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater`
+
+<br/>
+
+**Advanced Feature**
+
+Select an advanced research feature to use in the model, if desired.
+
+- **Name:** ``advanced_feature``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `auto`, `None`, `Temperature Capacitance Multiplier, 1`, `Temperature Capacitance Multiplier, 4`, `Temperature Capacitance Multiplier, 10`, `Temperature Capacitance Multiplier, 15`, `On/Off Thermostat Deadband, 1F`, `On/Off Thermostat Deadband, 2F`, `On/Off Thermostat Deadband, 3F`, `Heat Pump Backup Staging, 5 kW`, `Heat Pump Backup Staging, 10 kW`, `Experimental Ground-to-Air Heat Pump Model`, `HVAC Allow Increased Fixed Capacities`
 
 <br/>
 

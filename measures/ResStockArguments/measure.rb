@@ -354,7 +354,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # HVAC Setpoints
-    # FIXME Move to PostHPXML
+    # FIXME Move to ResStockArgumentsPostHPXML?
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
       [Constants::Weekday, Constants::Weekend].each do |wkdy_or_wked|
         schedule = [args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_temp".to_sym]] * 24
@@ -368,7 +368,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # HVAC Seasons
-    # FIXME Move to PostHPXML
+    # FIXME Move to ResStockArgumentsPostHPXML?
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
       use_auto_season = "use_auto_#{htg_or_clg}_season".to_sym
       hvac_control_season_period = "hvac_control_#{htg_or_clg}_season_period".to_sym
@@ -378,6 +378,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # HVAC Secondary
+    # FIXME Move to ResStockArgumentsPostHPXML?
     if args[:hvac_heating_system_2] != 'None'
       if args[:hvac_heating_system] != 'None'
         if ((args[:hvac_heating_system_heating_load_served].to_f + args[:hvac_heating_system_2_heating_load_served].to_f) > 1.0)
@@ -514,13 +515,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     # else
     # args[:geometry_unit_height_above_grade] = Constants::Auto
     # end
-
-    # Electric Vehicle
-    # Prevent OS-HPXML warning about EV w/o an EV charger
-    # FIXME Move to PostHPXML?
-    if args[:electric_vehicle_charger] == 'None'
-      args[:electric_vehicle] = 'None'
-    end
 
     # Register values to runner
     args.each do |arg_name, arg_value|

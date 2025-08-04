@@ -25,7 +25,6 @@ module Constants
                                    'utility_bill_scenario',
                                    'utility_bill_scenario_2',
                                    'utility_bill_scenario_3',
-                                   'advanced_feature',
                                    'advanced_feature_2',
                                    'additional_properties',
                                    'combine_like_surfaces',

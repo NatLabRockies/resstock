@@ -36,6 +36,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Absolute/relative path of the HPXML file.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('building_id', false)
+    arg.setDisplayName('Building Unit ID')
+    arg.setDescription('The building unit number (between 1 and the number of samples).')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeBoolArgument('whole_sfa_or_mf_building_sim', false)
     arg.setDisplayName('Whole SFA/MF Building Simulation?')
     arg.setDescription('If the HPXML file represents a single family-attached/multifamily building with multiple dwelling units defined, specifies whether to run the HPXML file as a single whole building model.')
@@ -45,6 +50,174 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('Simulation Control: Run Period Calendar Year')
     arg.setUnits('year')
     arg.setDescription('This numeric field should contain the calendar year that determines the start day of week. If you are running simulations using AMY weather files, the value entered for calendar year will not be used; it will be overridden by the actual year found in the AMY weather file.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_heating_capacity', false)
+    arg.setDisplayName('Heating System: Heating Capacity')
+    arg.setDescription('The output heating capacity of the heating system.')
+    arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_heating_autosizing_factor', false)
+    arg.setDisplayName('Heating System: Heating Autosizing Factor')
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_heating_autosizing_limit', false)
+    arg.setDisplayName('Heating System: Heating Autosizing Limit')
+    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
+    arg.setUnits('Btu/hr')
+    args << arg
+
+    heating_system_2_type_choices = OpenStudio::StringVector.new
+    heating_system_2_type_choices << HPXML::HVACTypeFurnace
+    heating_system_2_type_choices << HPXML::HVACTypeWallFurnace
+    heating_system_2_type_choices << HPXML::HVACTypeFloorFurnace
+    heating_system_2_type_choices << HPXML::HVACTypeBoiler
+    heating_system_2_type_choices << HPXML::HVACTypeElectricResistance
+    heating_system_2_type_choices << HPXML::HVACTypeStove
+    heating_system_2_type_choices << HPXML::HVACTypeSpaceHeater
+    heating_system_2_type_choices << HPXML::HVACTypeFireplace
+
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heating_system_2_type', heating_system_2_type_choices, false)
+    arg.setDisplayName('Heating System 2: Type')
+    arg.setDescription('The type of the second heating system.')
+    args << arg
+
+    heating_system_fuel_choices = OpenStudio::StringVector.new
+    heating_system_fuel_choices << HPXML::FuelTypeElectricity
+    heating_system_fuel_choices << HPXML::FuelTypeNaturalGas
+    heating_system_fuel_choices << HPXML::FuelTypeOil
+    heating_system_fuel_choices << HPXML::FuelTypePropane
+    heating_system_fuel_choices << HPXML::FuelTypeWoodCord
+    heating_system_fuel_choices << HPXML::FuelTypeWoodPellets
+    heating_system_fuel_choices << HPXML::FuelTypeCoal
+
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heating_system_2_fuel', heating_system_fuel_choices, false)
+    arg.setDisplayName('Heating System 2: Fuel Type')
+    arg.setDescription('The fuel type of the second heating system.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_efficiency', false)
+    arg.setDisplayName('Heating System 2: Rated AFUE or Percent')
+    arg.setUnits('Frac')
+    arg.setDescription('The rated heating efficiency value of the second heating system.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_capacity', false)
+    arg.setDisplayName('Heating System 2: Heating Capacity')
+    arg.setDescription('The output heating capacity of the second heating system.')
+    arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_autosizing_factor', false)
+    arg.setDisplayName('Heating System 2: Heating Autosizing Factor')
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_2_heating_autosizing_limit', false)
+    arg.setDisplayName('Heating System 2: Heating Autosizing Limit')
+    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
+    arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_capacity', false)
+    arg.setDisplayName('Cooling System: Cooling Capacity')
+    arg.setDescription('The output cooling capacity of the cooling system.')
+    arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_autosizing_factor', false)
+    arg.setDisplayName('Cooling System: Cooling Autosizing Factor')
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_cooling_autosizing_limit', false)
+    arg.setDisplayName('Cooling System: Cooling Autosizing Limit')
+    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
+    arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_heating_capacity', false)
+    arg.setDisplayName('Heat Pump: Heating Capacity')
+    arg.setDescription('The output heating capacity of the heat pump.')
+    arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_heating_autosizing_factor', false)
+    arg.setDisplayName('Heat Pump: Heating Autosizing Factor')
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_heating_autosizing_limit', false)
+    arg.setDisplayName('Heat Pump: Heating Autosizing Limit')
+    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
+    arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_cooling_capacity', false)
+    arg.setDisplayName('Heat Pump: Cooling Capacity')
+    arg.setDescription('The output cooling capacity of the heat pump.')
+    arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_cooling_autosizing_factor', false)
+    arg.setDisplayName('Heat Pump: Cooling Autosizing Factor')
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_cooling_autosizing_limit', false)
+    arg.setDisplayName('Heat Pump: Cooling Autosizing Limit')
+    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
+    arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_fraction_heat_load_served', false)
+    arg.setDisplayName('Heat Pump: Fraction Heat Load Served')
+    arg.setDescription('The heating load served by the heat pump.')
+    arg.setUnits('Frac')
+    args << arg
+
+    heat_pump_backup_type_choices = OpenStudio::StringVector.new
+    heat_pump_backup_type_choices << HPXML::HeatPumpBackupTypeIntegrated
+    heat_pump_backup_type_choices << HPXML::HeatPumpBackupTypeSeparate
+
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_type', heat_pump_backup_type_choices, false)
+    arg.setDisplayName('Heat Pump: Backup Type')
+    arg.setDescription('The backup type of the heat pump.')
+    args << arg
+
+    heat_pump_backup_fuel_choices = OpenStudio::StringVector.new
+    heat_pump_backup_fuel_choices << HPXML::FuelTypeElectricity
+    heat_pump_backup_fuel_choices << HPXML::FuelTypeNaturalGas
+    heat_pump_backup_fuel_choices << HPXML::FuelTypeOil
+    heat_pump_backup_fuel_choices << HPXML::FuelTypePropane
+
+    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('heat_pump_backup_fuel', heat_pump_backup_fuel_choices, false)
+    arg.setDisplayName('Heat Pump: Backup Fuel Type')
+    arg.setDescription('The backup fuel type of the heat pump.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_efficiency', false)
+    arg.setDisplayName('Heat Pump: Backup Rated Efficiency')
+    arg.setDescription('The backup rated efficiency value of the heat pump.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_capacity', false)
+    arg.setDisplayName('Heat Pump: Backup Heating Capacity')
+    arg.setDescription('The backup output heating capacity of the heat pump.')
+    arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_autosizing_factor', false)
+    arg.setDisplayName('Heat Pump: Backup Heating Autosizing Factor')
+    arg.setDescription("The capacity scaling factor applied to the auto-sizing methodology if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. If not provided, 1.0 is used. If Backup Type is '#{HPXML::HeatPumpBackupTypeSeparate}', use Heating System 2: Heating Autosizing Factor.")
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_autosizing_limit', false)
+    arg.setDisplayName('Heat Pump: Backup Heating Autosizing Limit')
+    arg.setDescription("The maximum capacity limit applied to the auto-sizing methodology if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. If not provided, no limit is used. If Backup Type is '#{HPXML::HeatPumpBackupTypeSeparate}', use Heating System 2: Heating Autosizing Limit.")
+    arg.setUnits('Btu/hr')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('hvac_flex_peak_offset', false)
@@ -95,55 +268,46 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('refrigerator_usage_multiplier', false)
     arg.setDisplayName('Appliances: Refrigerator Usage Multiplier')
     arg.setDescription('Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(1.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('clothes_dryer_usage_multiplier', false)
     arg.setDisplayName('Appliances: Clothes Dryer Usage Multiplier')
     arg.setDescription('Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(1.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('clothes_washer_usage_multiplier', false)
     arg.setDisplayName('Appliances: Clothes Washer Usage Multiplier')
     arg.setDescription('Multiplier on the clothes washer energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(1.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooking_range_oven_usage_multiplier', false)
     arg.setDisplayName('Appliances: Cooking Range/Oven Usage Multiplier')
     arg.setDescription('Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(1.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('dishwasher_usage_multiplier', false)
     arg.setDisplayName('Appliances: Dishwasher Usage Multiplier')
     arg.setDescription('Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(1.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('extra_refrigerator_usage_multiplier', false)
     arg.setDisplayName('Appliances: Extra Refrigerator Usage Multiplier')
     arg.setDescription('Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(1.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('freezer_usage_multiplier', false)
     arg.setDisplayName('Appliances: Freezer Usage Multiplier')
     arg.setDescription('Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(1.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_television_usage_multiplier', false)
     arg.setDisplayName('Plug Loads: Television Usage Multiplier')
     arg.setDescription('Multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(1.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('misc_plug_loads_other_usage_multiplier', false)
     arg.setDisplayName('Plug Loads: Other Usage Multiplier')
     arg.setDescription('Multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.')
-    arg.setDefaultValue(1.0)
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('bathroom_fans_start_hour', false)
@@ -161,11 +325,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Specifies the vacancy periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('building_id', false)
-    arg.setDisplayName('Building Unit ID')
-    arg.setDescription('The building unit number (between 1 and the number of samples).')
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_miles_driven_per_year', false)
     arg.setDisplayName('Electric Vehicle: Miles Driven Per Year')
     arg.setDescription('The annual miles the electric vehicle is driven.')
@@ -181,6 +340,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('Electric Vehicle: Efficiency Improvement')
     arg.setDescription('The increase (fraction) in efficiency of the electric vehicle.')
     arg.setUnits('Frac')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('electric_panel_service_max_current_rating', false)
+    arg.setDisplayName('Electric Panel: Service Max Current Rating')
+    arg.setDescription('The service max current rating of the electric panel.')
+    arg.setUnits('A')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('electric_panel_breaker_spaces_headroom', false)
@@ -419,20 +584,20 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     # Emissions
     @hpxml.header.emissions_scenarios.clear
     if not args[:emissions_scenario_names].nil?
-      for i in 0..(args[:emissions_scenario_names].split(',').size - 1)
+      args[:emissions_scenario_names].split(',').each_with_index do |emissions_scenario_name, i|
         @hpxml.header.emissions_scenarios.add(
-          name: (args[:emissions_scenario_names].split(',').map(&:strip)[i] rescue nil),
+          name: emissions_scenario_name,
           emissions_type: (args[:emissions_types].split(',').map(&:strip)[i] rescue nil),
           elec_units: (args[:emissions_electricity_units].split(',').map(&:strip)[i] rescue nil),
           elec_schedule_filepath: (args[:emissions_electricity_filepaths].split(',').map(&:strip)[i] rescue nil),
           natural_gas_units: (args[:emissions_fossil_fuel_units].split(',').map(&:strip)[i] rescue nil),
           natural_gas_value: (Float(args[:emissions_natural_gas_values].split(',').map(&:strip)[i]) rescue nil),
           propane_units: (args[:emissions_fossil_fuel_units].split(',').map(&:strip)[i] rescue nil),
-          propane_value: (Float(args[:emissions_natural_gas_values].split(',').map(&:strip)[i]) rescue nil),
+          propane_value: (Float(args[:emissions_propane_values].split(',').map(&:strip)[i]) rescue nil),
           fuel_oil_units: (args[:emissions_fossil_fuel_units].split(',').map(&:strip)[i] rescue nil),
-          fuel_oil_value: (Float(args[:emissions_natural_gas_values].split(',').map(&:strip)[i]) rescue nil),
+          fuel_oil_value: (Float(args[:emissions_fuel_oil_values].split(',').map(&:strip)[i]) rescue nil),
           wood_units: (args[:emissions_fossil_fuel_units].split(',').map(&:strip)[i] rescue nil),
-          wood_value: (Float(args[:emissions_natural_gas_values].split(',').map(&:strip)[i]) rescue nil)
+          wood_value: (Float(args[:emissions_wood_values].split(',').map(&:strip)[i]) rescue nil)
         )
       end
     end
@@ -440,7 +605,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     # Utility Bills
     @hpxml.header.utility_bill_scenarios.clear
     if not args[:utility_bill_scenario_names].nil?
-      for i in 0..(args[:utility_bill_scenario_names].split(',').size - 1)
+      args[:utility_bill_scenario_names].split(',').each_with_index do |utility_bill_scenario_name, i|
         pv_compensation_type = (args[:utility_bill_pv_compensation_types].split(',').map(&:strip)[i] rescue nil)
         pv_net_metering_annual_excess_sellback_rate_type = (args[:utility_bill_pv_net_metering_annual_excess_sellback_rate_types].split(',').map(&:strip)[i] rescue nil)
         pv_net_metering_annual_excess_sellback_rate = (Float(args[:utility_bill_pv_net_metering_annual_excess_sellback_rates].split(',').map(&:strip)[i]) rescue nil)
@@ -467,7 +632,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         end
 
         @hpxml.header.utility_bill_scenarios.add(
-          name: args[:utility_bill_scenario_names].split(',').map(&:strip)[i],
+          name: utility_bill_scenario_name,
           elec_tariff_filepath: (args[:utility_bill_electricity_filepaths].split(',').map(&:strip)[i] rescue nil),
           elec_fixed_charge: (Float(args[:utility_bill_electricity_fixed_charges].split(',').map(&:strip)[i]) rescue nil),
           natural_gas_fixed_charge: (Float(args[:utility_bill_natural_gas_fixed_charges].split(',').map(&:strip)[i]) rescue nil),
@@ -558,12 +723,13 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           plug_load.usage_multiplier *= args[:misc_plug_loads_other_usage_multiplier]
         end
       end
-      if (not hpxml_bldg.refrigerators.empty?) && (not args[:refrigerator_usage_multiplier].nil?)
-        hpxml_bldg.refrigerators[0].usage_multiplier = 1.0 if hpxml_bldg.refrigerators[0].usage_multiplier.nil?
-        hpxml_bldg.refrigerators[0].usage_multiplier *= args[:refrigerator_usage_multiplier]
-        if (hpxml_bldg.refrigerators.size > 1) && (not args[:extra_refrigerator_usage_multiplier].nil?)
-          hpxml_bldg.refrigerators[1].usage_multiplier = 1.0 if hpxml_bldg.refrigerators[1].usage_multiplier.nil?
-          hpxml_bldg.refrigerators[1].usage_multiplier *= args[:extra_refrigerator_usage_multiplier]
+      hpxml_bldg.refrigerators.each do |refrigerator|
+        if (refrigerator.primary_indicator || refrigerator.primary_indicator.nil?) && (not args[:refrigerator_usage_multiplier].nil?)
+          refrigerator.usage_multiplier = 1.0 if refrigerator.usage_multiplier.nil?
+          refrigerator.usage_multiplier *= args[:refrigerator_usage_multiplier]
+        elsif (not refrigerator.primary_indicator) && (not args[:extra_refrigerator_usage_multiplier].nil?)
+          refrigerator.usage_multiplier = 1.0 if refrigerator.usage_multiplier.nil?
+          refrigerator.usage_multiplier *= args[:extra_refrigerator_usage_multiplier]
         end
       end
       if (not hpxml_bldg.clothes_dryers.empty?) && (not args[:clothes_dryer_usage_multiplier].nil?)
@@ -624,10 +790,61 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       if not args[:air_leakage_percent_reduction].nil?
         hpxml_bldg.air_infiltration_measurements[0].air_leakage *= (1.0 - args[:air_leakage_percent_reduction] / 100.0)
       end
-      runner.registerInfo("Wrote file: #{@hpxml_path} with modified <AirLeakage>.")
+
+      # HVAC systems
+      hpxml_bldg.heating_systems.each do |heating_system|
+        if heating_system.primary_system
+          heating_system.heating_capacity = args[:heating_system_heating_capacity] unless args[:heating_system_heating_capacity].nil?
+          heating_system.heating_autosizing_factor = args[:heating_system_heating_autosizing_factor] unless args[:heating_system_heating_autosizing_factor].nil?
+          heating_system.heating_autosizing_limit = args[:heating_system_heating_autosizing_limit] unless args[:heating_system_heating_autosizing_limit].nil?
+        else
+          heating_system.heating_system_type = args[:heating_system_2_type] unless args[:heating_system_2_type].nil?
+          heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil?
+          heating_system.heating_system_efficiency_percent = args[:heating_system_2_heating_efficiency] unless args[:heating_system_2_heating_efficiency].nil?
+          heating_system.heating_capacity = args[:heating_system_2_heating_capacity] unless args[:heating_system_2_heating_capacity].nil?
+          heating_system.heating_autosizing_factor = args[:heating_system_2_heating_autosizing_factor] unless args[:heating_system_2_heating_autosizing_factor].nil?
+          heating_system.heating_autosizing_limit = args[:heating_system_2_heating_autosizing_limit] unless args[:heating_system_2_heating_autosizing_limit].nil?
+        end
+      end
+      hpxml_bldg.cooling_systems.each do |cooling_system|
+        cooling_system.cooling_capacity = args[:cooling_system_cooling_capacity] unless args[:cooling_system_cooling_capacity].nil?
+        cooling_system.cooling_autosizing_factor = args[:cooling_system_cooling_autosizing_factor] unless args[:cooling_system_cooling_autosizing_factor].nil?
+        cooling_system.cooling_autosizing_limit = args[:cooling_system_cooling_autosizing_limit] unless args[:cooling_system_cooling_autosizing_limit].nil?
+      end
+      hpxml_bldg.heat_pumps.each do |heat_pump|
+        heat_pump.heating_capacity = args[:heat_pump_heating_capacity] unless args[:heat_pump_heating_capacity].nil?
+        heat_pump.heating_autosizing_factor = args[:heat_pump_heating_autosizing_factor] unless args[:heat_pump_heating_autosizing_factor].nil?
+        heat_pump.heating_autosizing_limit = args[:heat_pump_heating_autosizing_limit] unless args[:heat_pump_heating_autosizing_limit].nil?
+        heat_pump.fraction_heat_load_served = args[:heat_pump_fraction_heat_load_served] unless args[:heat_pump_fraction_heat_load_served].nil?
+        heat_pump.cooling_capacity = args[:heat_pump_cooling_capacity] unless args[:heat_pump_cooling_capacity].nil?
+        heat_pump.cooling_autosizing_factor = args[:heat_pump_cooling_autosizing_factor] unless args[:heat_pump_cooling_autosizing_factor].nil?
+        heat_pump.cooling_autosizing_limit = args[:heat_pump_cooling_autosizing_limit] unless args[:heat_pump_cooling_autosizing_limit].nil?
+        heat_pump.backup_type = args[:heat_pump_backup_type] unless args[:heat_pump_backup_type].nil?
+        heat_pump.backup_heating_fuel = args[:heat_pump_backup_fuel] unless args[:heat_pump_backup_fuel].nil?
+        heat_pump.backup_heating_efficiency_percent = args[:heat_pump_backup_heating_efficiency] unless args[:heat_pump_backup_heating_efficiency].nil?
+        heat_pump.backup_heating_capacity = args[:heat_pump_backup_heating_capacity] unless args[:heat_pump_backup_heating_capacity].nil?
+        heat_pump.backup_heating_autosizing_factor = args[:heat_pump_backup_heating_autosizing_factor] unless args[:heat_pump_backup_heating_autosizing_factor].nil?
+        heat_pump.backup_heating_autosizing_limit = args[:heat_pump_backup_heating_autosizing_limit] unless args[:heat_pump_backup_heating_autosizing_limit].nil?
+      end
 
       # Electric Panel
       set_electric_panel(runner, hpxml_bldg, args)
+    end
+
+    # Apply defaults
+    @hpxml.buildings.each do |hpxml_bldg|
+      # Get a schedules_file object so that we don't end up with simple weekday/weekend/month schedules
+      # when we apply defaults.
+      schedules_filepaths = hpxml_bldg.header.schedules_filepaths
+      schedules_filepaths.each_with_index do |schedules_filepath, i|
+        next if Pathname.new(schedules_filepath).absolute?
+
+        schedules_filepaths[i] = File.join(File.dirname(@hpxml_path), schedules_filepath)
+      end
+      schedules_file = SchedulesFile.new(schedules_paths: schedules_filepaths,
+                                         year: @hpxml.header.sim_calendar_year,
+                                         output_path: nil)
+      Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
     end
 
     # HVAC Flexibility
@@ -649,22 +866,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
       modified_ev_schedule = modify_ev_schedule(hpxml_bldg, ev_schedule)
       write_schedule(modified_ev_schedule, hpxml_bldg, index, output_csv_path)
-    end
-
-    # Apply defaults
-    @hpxml.buildings.each do |hpxml_bldg|
-      # Get a schedules_file object so that we don't end up with simple weekday/weekend/month schedules
-      # when we apply defaults.
-      schedules_filepaths = hpxml_bldg.header.schedules_filepaths
-      schedules_filepaths.each_with_index do |schedules_filepath, i|
-        next if Pathname.new(schedules_filepath).absolute?
-
-        schedules_filepaths[i] = File.join(File.dirname(@hpxml_path), schedules_filepath)
-      end
-      schedules_file = SchedulesFile.new(schedules_paths: schedules_filepaths,
-                                         year: @hpxml.header.sim_calendar_year,
-                                         output_path: nil)
-      Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
     end
 
     # Write out the modified hpxml
@@ -818,9 +1019,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   def set_electric_panel(runner, hpxml_bldg, args)
     # Assign miscellaneous permanently connected appliance loads
     panel_sampler = ElectricalPanelSampler.new(runner, args[:building_id], hpxml_bldg)
-    cap_bin, cap_val = panel_sampler.assign_rated_capacity()
-
-    if args[:electric_panel_breaker_spaces_headroom].nil?
+    if args[:electric_panel_service_max_current_rating].nil? || args[:electric_panel_breaker_spaces_headroom].nil?
+      cap_bin, args[:electric_panel_service_max_current_rating] = panel_sampler.assign_rated_capacity()
       breaker_spaces_headroom = panel_sampler.assign_breaker_space_headroom(cap_bin)
       args[:electric_panel_breaker_spaces_headroom] = breaker_spaces_headroom
     end
@@ -866,7 +1066,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Assign ElectricPanels objects
     hpxml_bldg.electric_panels.add(id: "ElectricPanel#{hpxml_bldg.electric_panels.size + 1}",
-                                   max_current_rating: cap_val,
+                                   max_current_rating: args[:electric_panel_service_max_current_rating],
                                    headroom_spaces: args[:electric_panel_breaker_spaces_headroom],
                                    rated_total_spaces: args[:electric_panel_breaker_spaces_rated_total])
 

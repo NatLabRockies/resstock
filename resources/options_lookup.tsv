@@ -9667,9 +9667,9 @@ HVAC Cooling Type	Evaporative or Swamp Cooler
 HVAC Cooling Type	Non-Ducted Heat Pump
 HVAC Cooling Type	None
 HVAC Cooling Type	Room AC
-HVAC Has Ducts	No	ResStockArguments
+HVAC Has Ducts	No
 HVAC Has Ducts	Void
-HVAC Has Ducts	Yes	ResStockArguments
+HVAC Has Ducts	Yes
 HVAC Has Shared System	Cooling Only
 HVAC Has Shared System	Heating Only
 HVAC Has Shared System	Heating and Cooling
@@ -9678,25 +9678,30 @@ HVAC Has Shared System	Void
 HVAC Has Zonal Electric Heating	No
 HVAC Has Zonal Electric Heating	Yes
 HVAC Heating Autosizing Factor	None
-HVAC Heating Efficiency	ASHP, SEER 10, 6.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 10, 6.2 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	ASHP, SEER 13, 7.7 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 13, 7.7 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	ASHP, SEER 15, 8.5 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 15, 8.5 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Electric Baseboard, 100% Efficiency	ResStockArguments	hvac_heating_system=Electric Resistance	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Electric Boiler, 100% AFUE	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Electric Furnace, 100% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Electric Wall Furnace, 100% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Boiler, 76% AFUE	ResStockArguments	hvac_heating_system=Boiler, 76% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Boiler, 80% AFUE	ResStockArguments	hvac_heating_system=Boiler, 80% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Boiler, 90% AFUE	ResStockArguments	hvac_heating_system=Boiler, 90% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Furnace, 60% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 60% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Furnace, 76% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 76% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Furnace, 80% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 80% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Furnace, 92.5% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 92.5% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 60% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 60% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 68% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 68% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	MSHP, SEER 14.5, 8.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 14.5, 8.2 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	MSHP, SEER 29.3, 14 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 29.3, 14 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Heating Efficiency	None	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Heating Efficiency	ASHP, SEER 10, 6.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 10, 6.2 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	ASHP, SEER 13, 7.7 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 13, 7.7 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	ASHP, SEER 15, 8.5 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 15, 8.5 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 20, 11 HSPF	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=-15F Min Compressor Temp	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	ASHP, SEER 20, 11 HSPF, CCHP, Max Load	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 20, 11 HSPF	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Electric Baseboard, 100% Efficiency	ResStockArguments	hvac_heating_system=Electric Resistance	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Electric Boiler, 100% AFUE	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Electric Furnace, 100% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Electric Wall Furnace, 100% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Fuel Boiler, 76% AFUE	ResStockArguments	hvac_heating_system=Boiler, 76% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Fuel Boiler, 80% AFUE	ResStockArguments	hvac_heating_system=Boiler, 80% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Fuel Boiler, 90% AFUE	ResStockArguments	hvac_heating_system=Boiler, 90% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Fuel Furnace, 60% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 60% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Fuel Furnace, 76% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 76% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Fuel Furnace, 80% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 80% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Fuel Furnace, 92.5% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 92.5% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 60% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 60% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 68% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 68% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	MSHP, SEER 14.5, 8.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 14.5, 8.2 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	MSHP, SEER 29.3, 14 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 29.3, 14 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	GSHP, EER 20.5, COP 4.0	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Geothermal HP, EER 20.5, COP 4.0	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Vertical Loop, Enhanced Grout & Pipe	advanced_feature=Experimental Ground-to-Air Heat Pump Model
+HVAC Heating Efficiency	GSHP, EER 18.6, COP 3.8	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Geothermal HP, EER 18.6, COP 3.8	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Vertical Loop, Enhanced Grout & Pipe	advanced_feature=Experimental Ground-to-Air Heat Pump Model
+HVAC Heating Efficiency	GSHP, EER 30.9, COP 4.4	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Geothermal HP, EER 30.9, COP 4.4	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Vertical Loop, Enhanced Grout & Pipe	advanced_feature=Experimental Ground-to-Air Heat Pump Model
+HVAC Heating Efficiency	None	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	Shared Heating
 HVAC Heating Efficiency	Void
 HVAC Heating Type	Ducted Heat Pump
@@ -9765,11 +9770,11 @@ HVAC Secondary Heating Partial Space Conditioning	Void
 HVAC Secondary Heating Type	Ducted Heating
 HVAC Secondary Heating Type	Non-Ducted Heating
 HVAC Secondary Heating Type	None
-HVAC Shared Efficiencies	Boiler Baseboards Heating Only, Electricity	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Shared Efficiencies	Boiler Baseboards Heating Only, Fuel	ResStockArguments	hvac_heating_system=Boiler, 78% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Shared Efficiencies	Boiler Baseboards Heating Only, Electricity	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Shared Efficiencies	Boiler Baseboards Heating Only, Fuel	ResStockArguments	hvac_heating_system=Boiler, 78% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Shared Efficiencies	Fan Coil Cooling Only	ResStockArguments	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize
-HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Electricity	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
-HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Fuel	ResStockArguments	hvac_heating_system=Boiler, 78% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default
+HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Electricity	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Fuel	ResStockArguments	hvac_heating_system=Boiler, 78% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Shared Efficiencies	None
 HVAC Shared Efficiencies	Void
 HVAC System Is Scaled	No
@@ -10998,2357 +11003,2357 @@ Orientation	WNW	ResStockArguments	geometry_unit_direction=West-Northwest
 Orientation	WSW	ResStockArguments	geometry_unit_direction=West-Southwest
 Orientation	West	ResStockArguments	geometry_unit_direction=West
 Overhangs	None	ResStockArguments	enclosure_overhangs=None
-PUMA	AK, 00101	ResStockArguments
-PUMA	AK, 00102	ResStockArguments
-PUMA	AK, 00200	ResStockArguments
-PUMA	AK, 00300	ResStockArguments
-PUMA	AK, 00400	ResStockArguments
-PUMA	AL, 00100	ResStockArguments
-PUMA	AL, 00200	ResStockArguments
-PUMA	AL, 00301	ResStockArguments
-PUMA	AL, 00302	ResStockArguments
-PUMA	AL, 00400	ResStockArguments
-PUMA	AL, 00500	ResStockArguments
-PUMA	AL, 00600	ResStockArguments
-PUMA	AL, 00700	ResStockArguments
-PUMA	AL, 00800	ResStockArguments
-PUMA	AL, 00900	ResStockArguments
-PUMA	AL, 01000	ResStockArguments
-PUMA	AL, 01100	ResStockArguments
-PUMA	AL, 01200	ResStockArguments
-PUMA	AL, 01301	ResStockArguments
-PUMA	AL, 01302	ResStockArguments
-PUMA	AL, 01303	ResStockArguments
-PUMA	AL, 01304	ResStockArguments
-PUMA	AL, 01305	ResStockArguments
-PUMA	AL, 01400	ResStockArguments
-PUMA	AL, 01500	ResStockArguments
-PUMA	AL, 01600	ResStockArguments
-PUMA	AL, 01700	ResStockArguments
-PUMA	AL, 01800	ResStockArguments
-PUMA	AL, 01900	ResStockArguments
-PUMA	AL, 02000	ResStockArguments
-PUMA	AL, 02100	ResStockArguments
-PUMA	AL, 02200	ResStockArguments
-PUMA	AL, 02300	ResStockArguments
-PUMA	AL, 02400	ResStockArguments
-PUMA	AL, 02500	ResStockArguments
-PUMA	AL, 02600	ResStockArguments
-PUMA	AL, 02701	ResStockArguments
-PUMA	AL, 02702	ResStockArguments
-PUMA	AL, 02703	ResStockArguments
-PUMA	AR, 00100	ResStockArguments
-PUMA	AR, 00200	ResStockArguments
-PUMA	AR, 00300	ResStockArguments
-PUMA	AR, 00400	ResStockArguments
-PUMA	AR, 00500	ResStockArguments
-PUMA	AR, 00600	ResStockArguments
-PUMA	AR, 00700	ResStockArguments
-PUMA	AR, 00800	ResStockArguments
-PUMA	AR, 00900	ResStockArguments
-PUMA	AR, 01000	ResStockArguments
-PUMA	AR, 01100	ResStockArguments
-PUMA	AR, 01200	ResStockArguments
-PUMA	AR, 01300	ResStockArguments
-PUMA	AR, 01400	ResStockArguments
-PUMA	AR, 01500	ResStockArguments
-PUMA	AR, 01600	ResStockArguments
-PUMA	AR, 01700	ResStockArguments
-PUMA	AR, 01800	ResStockArguments
-PUMA	AR, 01900	ResStockArguments
-PUMA	AR, 02000	ResStockArguments
-PUMA	AZ, 00100	ResStockArguments
-PUMA	AZ, 00101	ResStockArguments
-PUMA	AZ, 00102	ResStockArguments
-PUMA	AZ, 00103	ResStockArguments
-PUMA	AZ, 00104	ResStockArguments
-PUMA	AZ, 00105	ResStockArguments
-PUMA	AZ, 00106	ResStockArguments
-PUMA	AZ, 00107	ResStockArguments
-PUMA	AZ, 00108	ResStockArguments
-PUMA	AZ, 00109	ResStockArguments
-PUMA	AZ, 00110	ResStockArguments
-PUMA	AZ, 00111	ResStockArguments
-PUMA	AZ, 00112	ResStockArguments
-PUMA	AZ, 00113	ResStockArguments
-PUMA	AZ, 00114	ResStockArguments
-PUMA	AZ, 00115	ResStockArguments
-PUMA	AZ, 00116	ResStockArguments
-PUMA	AZ, 00117	ResStockArguments
-PUMA	AZ, 00118	ResStockArguments
-PUMA	AZ, 00119	ResStockArguments
-PUMA	AZ, 00120	ResStockArguments
-PUMA	AZ, 00121	ResStockArguments
-PUMA	AZ, 00122	ResStockArguments
-PUMA	AZ, 00123	ResStockArguments
-PUMA	AZ, 00124	ResStockArguments
-PUMA	AZ, 00125	ResStockArguments
-PUMA	AZ, 00126	ResStockArguments
-PUMA	AZ, 00127	ResStockArguments
-PUMA	AZ, 00128	ResStockArguments
-PUMA	AZ, 00129	ResStockArguments
-PUMA	AZ, 00130	ResStockArguments
-PUMA	AZ, 00131	ResStockArguments
-PUMA	AZ, 00132	ResStockArguments
-PUMA	AZ, 00133	ResStockArguments
-PUMA	AZ, 00134	ResStockArguments
-PUMA	AZ, 00201	ResStockArguments
-PUMA	AZ, 00202	ResStockArguments
-PUMA	AZ, 00203	ResStockArguments
-PUMA	AZ, 00204	ResStockArguments
-PUMA	AZ, 00205	ResStockArguments
-PUMA	AZ, 00206	ResStockArguments
-PUMA	AZ, 00207	ResStockArguments
-PUMA	AZ, 00208	ResStockArguments
-PUMA	AZ, 00209	ResStockArguments
-PUMA	AZ, 00300	ResStockArguments
-PUMA	AZ, 00400	ResStockArguments
-PUMA	AZ, 00500	ResStockArguments
-PUMA	AZ, 00600	ResStockArguments
-PUMA	AZ, 00700	ResStockArguments
-PUMA	AZ, 00800	ResStockArguments
-PUMA	AZ, 00803	ResStockArguments
-PUMA	AZ, 00805	ResStockArguments
-PUMA	AZ, 00807	ResStockArguments
-PUMA	AZ, 00900	ResStockArguments
-PUMA	CA, 00101	ResStockArguments
-PUMA	CA, 00102	ResStockArguments
-PUMA	CA, 00103	ResStockArguments
-PUMA	CA, 00104	ResStockArguments
-PUMA	CA, 00105	ResStockArguments
-PUMA	CA, 00106	ResStockArguments
-PUMA	CA, 00107	ResStockArguments
-PUMA	CA, 00108	ResStockArguments
-PUMA	CA, 00109	ResStockArguments
-PUMA	CA, 00110	ResStockArguments
-PUMA	CA, 00300	ResStockArguments
-PUMA	CA, 00701	ResStockArguments
-PUMA	CA, 00702	ResStockArguments
-PUMA	CA, 01100	ResStockArguments
-PUMA	CA, 01301	ResStockArguments
-PUMA	CA, 01302	ResStockArguments
-PUMA	CA, 01303	ResStockArguments
-PUMA	CA, 01304	ResStockArguments
-PUMA	CA, 01305	ResStockArguments
-PUMA	CA, 01306	ResStockArguments
-PUMA	CA, 01307	ResStockArguments
-PUMA	CA, 01308	ResStockArguments
-PUMA	CA, 01309	ResStockArguments
-PUMA	CA, 01500	ResStockArguments
-PUMA	CA, 01700	ResStockArguments
-PUMA	CA, 01901	ResStockArguments
-PUMA	CA, 01902	ResStockArguments
-PUMA	CA, 01903	ResStockArguments
-PUMA	CA, 01904	ResStockArguments
-PUMA	CA, 01905	ResStockArguments
-PUMA	CA, 01906	ResStockArguments
-PUMA	CA, 01907	ResStockArguments
-PUMA	CA, 02300	ResStockArguments
-PUMA	CA, 02500	ResStockArguments
-PUMA	CA, 02901	ResStockArguments
-PUMA	CA, 02902	ResStockArguments
-PUMA	CA, 02903	ResStockArguments
-PUMA	CA, 02904	ResStockArguments
-PUMA	CA, 02905	ResStockArguments
-PUMA	CA, 03100	ResStockArguments
-PUMA	CA, 03300	ResStockArguments
-PUMA	CA, 03701	ResStockArguments
-PUMA	CA, 03702	ResStockArguments
-PUMA	CA, 03703	ResStockArguments
-PUMA	CA, 03704	ResStockArguments
-PUMA	CA, 03705	ResStockArguments
-PUMA	CA, 03706	ResStockArguments
-PUMA	CA, 03707	ResStockArguments
-PUMA	CA, 03708	ResStockArguments
-PUMA	CA, 03709	ResStockArguments
-PUMA	CA, 03710	ResStockArguments
-PUMA	CA, 03711	ResStockArguments
-PUMA	CA, 03712	ResStockArguments
-PUMA	CA, 03713	ResStockArguments
-PUMA	CA, 03714	ResStockArguments
-PUMA	CA, 03715	ResStockArguments
-PUMA	CA, 03716	ResStockArguments
-PUMA	CA, 03717	ResStockArguments
-PUMA	CA, 03718	ResStockArguments
-PUMA	CA, 03719	ResStockArguments
-PUMA	CA, 03720	ResStockArguments
-PUMA	CA, 03721	ResStockArguments
-PUMA	CA, 03722	ResStockArguments
-PUMA	CA, 03723	ResStockArguments
-PUMA	CA, 03724	ResStockArguments
-PUMA	CA, 03725	ResStockArguments
-PUMA	CA, 03726	ResStockArguments
-PUMA	CA, 03727	ResStockArguments
-PUMA	CA, 03728	ResStockArguments
-PUMA	CA, 03729	ResStockArguments
-PUMA	CA, 03730	ResStockArguments
-PUMA	CA, 03731	ResStockArguments
-PUMA	CA, 03732	ResStockArguments
-PUMA	CA, 03733	ResStockArguments
-PUMA	CA, 03734	ResStockArguments
-PUMA	CA, 03735	ResStockArguments
-PUMA	CA, 03736	ResStockArguments
-PUMA	CA, 03737	ResStockArguments
-PUMA	CA, 03738	ResStockArguments
-PUMA	CA, 03739	ResStockArguments
-PUMA	CA, 03740	ResStockArguments
-PUMA	CA, 03741	ResStockArguments
-PUMA	CA, 03742	ResStockArguments
-PUMA	CA, 03743	ResStockArguments
-PUMA	CA, 03744	ResStockArguments
-PUMA	CA, 03745	ResStockArguments
-PUMA	CA, 03746	ResStockArguments
-PUMA	CA, 03747	ResStockArguments
-PUMA	CA, 03748	ResStockArguments
-PUMA	CA, 03749	ResStockArguments
-PUMA	CA, 03750	ResStockArguments
-PUMA	CA, 03751	ResStockArguments
-PUMA	CA, 03752	ResStockArguments
-PUMA	CA, 03753	ResStockArguments
-PUMA	CA, 03754	ResStockArguments
-PUMA	CA, 03755	ResStockArguments
-PUMA	CA, 03756	ResStockArguments
-PUMA	CA, 03757	ResStockArguments
-PUMA	CA, 03758	ResStockArguments
-PUMA	CA, 03759	ResStockArguments
-PUMA	CA, 03760	ResStockArguments
-PUMA	CA, 03761	ResStockArguments
-PUMA	CA, 03762	ResStockArguments
-PUMA	CA, 03763	ResStockArguments
-PUMA	CA, 03764	ResStockArguments
-PUMA	CA, 03765	ResStockArguments
-PUMA	CA, 03766	ResStockArguments
-PUMA	CA, 03767	ResStockArguments
-PUMA	CA, 03768	ResStockArguments
-PUMA	CA, 03769	ResStockArguments
-PUMA	CA, 03900	ResStockArguments
-PUMA	CA, 04101	ResStockArguments
-PUMA	CA, 04102	ResStockArguments
-PUMA	CA, 04701	ResStockArguments
-PUMA	CA, 04702	ResStockArguments
-PUMA	CA, 05301	ResStockArguments
-PUMA	CA, 05302	ResStockArguments
-PUMA	CA, 05303	ResStockArguments
-PUMA	CA, 05500	ResStockArguments
-PUMA	CA, 05700	ResStockArguments
-PUMA	CA, 05901	ResStockArguments
-PUMA	CA, 05902	ResStockArguments
-PUMA	CA, 05903	ResStockArguments
-PUMA	CA, 05904	ResStockArguments
-PUMA	CA, 05905	ResStockArguments
-PUMA	CA, 05906	ResStockArguments
-PUMA	CA, 05907	ResStockArguments
-PUMA	CA, 05908	ResStockArguments
-PUMA	CA, 05909	ResStockArguments
-PUMA	CA, 05910	ResStockArguments
-PUMA	CA, 05911	ResStockArguments
-PUMA	CA, 05912	ResStockArguments
-PUMA	CA, 05913	ResStockArguments
-PUMA	CA, 05914	ResStockArguments
-PUMA	CA, 05915	ResStockArguments
-PUMA	CA, 05916	ResStockArguments
-PUMA	CA, 05917	ResStockArguments
-PUMA	CA, 05918	ResStockArguments
-PUMA	CA, 06101	ResStockArguments
-PUMA	CA, 06102	ResStockArguments
-PUMA	CA, 06103	ResStockArguments
-PUMA	CA, 06501	ResStockArguments
-PUMA	CA, 06502	ResStockArguments
-PUMA	CA, 06503	ResStockArguments
-PUMA	CA, 06504	ResStockArguments
-PUMA	CA, 06505	ResStockArguments
-PUMA	CA, 06506	ResStockArguments
-PUMA	CA, 06507	ResStockArguments
-PUMA	CA, 06508	ResStockArguments
-PUMA	CA, 06509	ResStockArguments
-PUMA	CA, 06510	ResStockArguments
-PUMA	CA, 06511	ResStockArguments
-PUMA	CA, 06512	ResStockArguments
-PUMA	CA, 06513	ResStockArguments
-PUMA	CA, 06514	ResStockArguments
-PUMA	CA, 06515	ResStockArguments
-PUMA	CA, 06701	ResStockArguments
-PUMA	CA, 06702	ResStockArguments
-PUMA	CA, 06703	ResStockArguments
-PUMA	CA, 06704	ResStockArguments
-PUMA	CA, 06705	ResStockArguments
-PUMA	CA, 06706	ResStockArguments
-PUMA	CA, 06707	ResStockArguments
-PUMA	CA, 06708	ResStockArguments
-PUMA	CA, 06709	ResStockArguments
-PUMA	CA, 06710	ResStockArguments
-PUMA	CA, 06711	ResStockArguments
-PUMA	CA, 06712	ResStockArguments
-PUMA	CA, 07101	ResStockArguments
-PUMA	CA, 07102	ResStockArguments
-PUMA	CA, 07103	ResStockArguments
-PUMA	CA, 07104	ResStockArguments
-PUMA	CA, 07105	ResStockArguments
-PUMA	CA, 07106	ResStockArguments
-PUMA	CA, 07107	ResStockArguments
-PUMA	CA, 07108	ResStockArguments
-PUMA	CA, 07109	ResStockArguments
-PUMA	CA, 07110	ResStockArguments
-PUMA	CA, 07111	ResStockArguments
-PUMA	CA, 07112	ResStockArguments
-PUMA	CA, 07113	ResStockArguments
-PUMA	CA, 07114	ResStockArguments
-PUMA	CA, 07115	ResStockArguments
-PUMA	CA, 07301	ResStockArguments
-PUMA	CA, 07302	ResStockArguments
-PUMA	CA, 07303	ResStockArguments
-PUMA	CA, 07304	ResStockArguments
-PUMA	CA, 07305	ResStockArguments
-PUMA	CA, 07306	ResStockArguments
-PUMA	CA, 07307	ResStockArguments
-PUMA	CA, 07308	ResStockArguments
-PUMA	CA, 07309	ResStockArguments
-PUMA	CA, 07310	ResStockArguments
-PUMA	CA, 07311	ResStockArguments
-PUMA	CA, 07312	ResStockArguments
-PUMA	CA, 07313	ResStockArguments
-PUMA	CA, 07314	ResStockArguments
-PUMA	CA, 07315	ResStockArguments
-PUMA	CA, 07316	ResStockArguments
-PUMA	CA, 07317	ResStockArguments
-PUMA	CA, 07318	ResStockArguments
-PUMA	CA, 07319	ResStockArguments
-PUMA	CA, 07320	ResStockArguments
-PUMA	CA, 07321	ResStockArguments
-PUMA	CA, 07322	ResStockArguments
-PUMA	CA, 07501	ResStockArguments
-PUMA	CA, 07502	ResStockArguments
-PUMA	CA, 07503	ResStockArguments
-PUMA	CA, 07504	ResStockArguments
-PUMA	CA, 07505	ResStockArguments
-PUMA	CA, 07506	ResStockArguments
-PUMA	CA, 07507	ResStockArguments
-PUMA	CA, 07701	ResStockArguments
-PUMA	CA, 07702	ResStockArguments
-PUMA	CA, 07703	ResStockArguments
-PUMA	CA, 07704	ResStockArguments
-PUMA	CA, 07901	ResStockArguments
-PUMA	CA, 07902	ResStockArguments
-PUMA	CA, 08101	ResStockArguments
-PUMA	CA, 08102	ResStockArguments
-PUMA	CA, 08103	ResStockArguments
-PUMA	CA, 08104	ResStockArguments
-PUMA	CA, 08105	ResStockArguments
-PUMA	CA, 08106	ResStockArguments
-PUMA	CA, 08301	ResStockArguments
-PUMA	CA, 08302	ResStockArguments
-PUMA	CA, 08303	ResStockArguments
-PUMA	CA, 08501	ResStockArguments
-PUMA	CA, 08502	ResStockArguments
-PUMA	CA, 08503	ResStockArguments
-PUMA	CA, 08504	ResStockArguments
-PUMA	CA, 08505	ResStockArguments
-PUMA	CA, 08506	ResStockArguments
-PUMA	CA, 08507	ResStockArguments
-PUMA	CA, 08508	ResStockArguments
-PUMA	CA, 08509	ResStockArguments
-PUMA	CA, 08510	ResStockArguments
-PUMA	CA, 08511	ResStockArguments
-PUMA	CA, 08512	ResStockArguments
-PUMA	CA, 08513	ResStockArguments
-PUMA	CA, 08514	ResStockArguments
-PUMA	CA, 08701	ResStockArguments
-PUMA	CA, 08702	ResStockArguments
-PUMA	CA, 08900	ResStockArguments
-PUMA	CA, 09501	ResStockArguments
-PUMA	CA, 09502	ResStockArguments
-PUMA	CA, 09503	ResStockArguments
-PUMA	CA, 09701	ResStockArguments
-PUMA	CA, 09702	ResStockArguments
-PUMA	CA, 09703	ResStockArguments
-PUMA	CA, 09901	ResStockArguments
-PUMA	CA, 09902	ResStockArguments
-PUMA	CA, 09903	ResStockArguments
-PUMA	CA, 09904	ResStockArguments
-PUMA	CA, 10100	ResStockArguments
-PUMA	CA, 10701	ResStockArguments
-PUMA	CA, 10702	ResStockArguments
-PUMA	CA, 10703	ResStockArguments
-PUMA	CA, 11101	ResStockArguments
-PUMA	CA, 11102	ResStockArguments
-PUMA	CA, 11103	ResStockArguments
-PUMA	CA, 11104	ResStockArguments
-PUMA	CA, 11105	ResStockArguments
-PUMA	CA, 11106	ResStockArguments
-PUMA	CA, 11300	ResStockArguments
-PUMA	CO, 00100	ResStockArguments
-PUMA	CO, 00102	ResStockArguments
-PUMA	CO, 00103	ResStockArguments
-PUMA	CO, 00200	ResStockArguments
-PUMA	CO, 00300	ResStockArguments
-PUMA	CO, 00400	ResStockArguments
-PUMA	CO, 00600	ResStockArguments
-PUMA	CO, 00700	ResStockArguments
-PUMA	CO, 00800	ResStockArguments
-PUMA	CO, 00801	ResStockArguments
-PUMA	CO, 00802	ResStockArguments
-PUMA	CO, 00803	ResStockArguments
-PUMA	CO, 00804	ResStockArguments
-PUMA	CO, 00805	ResStockArguments
-PUMA	CO, 00806	ResStockArguments
-PUMA	CO, 00807	ResStockArguments
-PUMA	CO, 00808	ResStockArguments
-PUMA	CO, 00809	ResStockArguments
-PUMA	CO, 00810	ResStockArguments
-PUMA	CO, 00811	ResStockArguments
-PUMA	CO, 00812	ResStockArguments
-PUMA	CO, 00813	ResStockArguments
-PUMA	CO, 00814	ResStockArguments
-PUMA	CO, 00815	ResStockArguments
-PUMA	CO, 00816	ResStockArguments
-PUMA	CO, 00817	ResStockArguments
-PUMA	CO, 00818	ResStockArguments
-PUMA	CO, 00819	ResStockArguments
-PUMA	CO, 00820	ResStockArguments
-PUMA	CO, 00821	ResStockArguments
-PUMA	CO, 00822	ResStockArguments
-PUMA	CO, 00823	ResStockArguments
-PUMA	CO, 00824	ResStockArguments
-PUMA	CO, 00900	ResStockArguments
-PUMA	CO, 01001	ResStockArguments
-PUMA	CO, 01002	ResStockArguments
-PUMA	CO, 04101	ResStockArguments
-PUMA	CO, 04102	ResStockArguments
-PUMA	CO, 04103	ResStockArguments
-PUMA	CO, 04104	ResStockArguments
-PUMA	CO, 04105	ResStockArguments
-PUMA	CO, 04106	ResStockArguments
-PUMA	CT, 00100	ResStockArguments
-PUMA	CT, 00101	ResStockArguments
-PUMA	CT, 00102	ResStockArguments
-PUMA	CT, 00103	ResStockArguments
-PUMA	CT, 00104	ResStockArguments
-PUMA	CT, 00105	ResStockArguments
-PUMA	CT, 00300	ResStockArguments
-PUMA	CT, 00301	ResStockArguments
-PUMA	CT, 00302	ResStockArguments
-PUMA	CT, 00303	ResStockArguments
-PUMA	CT, 00304	ResStockArguments
-PUMA	CT, 00305	ResStockArguments
-PUMA	CT, 00306	ResStockArguments
-PUMA	CT, 00500	ResStockArguments
-PUMA	CT, 00700	ResStockArguments
-PUMA	CT, 00900	ResStockArguments
-PUMA	CT, 00901	ResStockArguments
-PUMA	CT, 00902	ResStockArguments
-PUMA	CT, 00903	ResStockArguments
-PUMA	CT, 00904	ResStockArguments
-PUMA	CT, 00905	ResStockArguments
-PUMA	CT, 00906	ResStockArguments
-PUMA	CT, 01100	ResStockArguments
-PUMA	CT, 01101	ResStockArguments
-PUMA	CT, 01300	ResStockArguments
-PUMA	CT, 01500	ResStockArguments
-PUMA	DC, 00101	ResStockArguments
-PUMA	DC, 00102	ResStockArguments
-PUMA	DC, 00103	ResStockArguments
-PUMA	DC, 00104	ResStockArguments
-PUMA	DC, 00105	ResStockArguments
-PUMA	DE, 00101	ResStockArguments
-PUMA	DE, 00102	ResStockArguments
-PUMA	DE, 00103	ResStockArguments
-PUMA	DE, 00104	ResStockArguments
-PUMA	DE, 00200	ResStockArguments
-PUMA	DE, 00300	ResStockArguments
-PUMA	FL, 00101	ResStockArguments
-PUMA	FL, 00102	ResStockArguments
-PUMA	FL, 00500	ResStockArguments
-PUMA	FL, 00901	ResStockArguments
-PUMA	FL, 00902	ResStockArguments
-PUMA	FL, 00903	ResStockArguments
-PUMA	FL, 00904	ResStockArguments
-PUMA	FL, 01101	ResStockArguments
-PUMA	FL, 01102	ResStockArguments
-PUMA	FL, 01103	ResStockArguments
-PUMA	FL, 01104	ResStockArguments
-PUMA	FL, 01105	ResStockArguments
-PUMA	FL, 01106	ResStockArguments
-PUMA	FL, 01107	ResStockArguments
-PUMA	FL, 01108	ResStockArguments
-PUMA	FL, 01109	ResStockArguments
-PUMA	FL, 01110	ResStockArguments
-PUMA	FL, 01111	ResStockArguments
-PUMA	FL, 01112	ResStockArguments
-PUMA	FL, 01113	ResStockArguments
-PUMA	FL, 01114	ResStockArguments
-PUMA	FL, 01500	ResStockArguments
-PUMA	FL, 01701	ResStockArguments
-PUMA	FL, 01900	ResStockArguments
-PUMA	FL, 02101	ResStockArguments
-PUMA	FL, 02102	ResStockArguments
-PUMA	FL, 02103	ResStockArguments
-PUMA	FL, 02300	ResStockArguments
-PUMA	FL, 02700	ResStockArguments
-PUMA	FL, 03101	ResStockArguments
-PUMA	FL, 03102	ResStockArguments
-PUMA	FL, 03103	ResStockArguments
-PUMA	FL, 03104	ResStockArguments
-PUMA	FL, 03105	ResStockArguments
-PUMA	FL, 03106	ResStockArguments
-PUMA	FL, 03107	ResStockArguments
-PUMA	FL, 03301	ResStockArguments
-PUMA	FL, 03302	ResStockArguments
-PUMA	FL, 03500	ResStockArguments
-PUMA	FL, 05301	ResStockArguments
-PUMA	FL, 05701	ResStockArguments
-PUMA	FL, 05702	ResStockArguments
-PUMA	FL, 05703	ResStockArguments
-PUMA	FL, 05704	ResStockArguments
-PUMA	FL, 05705	ResStockArguments
-PUMA	FL, 05706	ResStockArguments
-PUMA	FL, 05707	ResStockArguments
-PUMA	FL, 05708	ResStockArguments
-PUMA	FL, 06100	ResStockArguments
-PUMA	FL, 06300	ResStockArguments
-PUMA	FL, 06901	ResStockArguments
-PUMA	FL, 06902	ResStockArguments
-PUMA	FL, 06903	ResStockArguments
-PUMA	FL, 07101	ResStockArguments
-PUMA	FL, 07102	ResStockArguments
-PUMA	FL, 07103	ResStockArguments
-PUMA	FL, 07104	ResStockArguments
-PUMA	FL, 07105	ResStockArguments
-PUMA	FL, 07300	ResStockArguments
-PUMA	FL, 07301	ResStockArguments
-PUMA	FL, 08101	ResStockArguments
-PUMA	FL, 08102	ResStockArguments
-PUMA	FL, 08103	ResStockArguments
-PUMA	FL, 08301	ResStockArguments
-PUMA	FL, 08302	ResStockArguments
-PUMA	FL, 08303	ResStockArguments
-PUMA	FL, 08500	ResStockArguments
-PUMA	FL, 08601	ResStockArguments
-PUMA	FL, 08602	ResStockArguments
-PUMA	FL, 08603	ResStockArguments
-PUMA	FL, 08604	ResStockArguments
-PUMA	FL, 08605	ResStockArguments
-PUMA	FL, 08606	ResStockArguments
-PUMA	FL, 08607	ResStockArguments
-PUMA	FL, 08608	ResStockArguments
-PUMA	FL, 08609	ResStockArguments
-PUMA	FL, 08610	ResStockArguments
-PUMA	FL, 08611	ResStockArguments
-PUMA	FL, 08612	ResStockArguments
-PUMA	FL, 08613	ResStockArguments
-PUMA	FL, 08614	ResStockArguments
-PUMA	FL, 08615	ResStockArguments
-PUMA	FL, 08616	ResStockArguments
-PUMA	FL, 08617	ResStockArguments
-PUMA	FL, 08618	ResStockArguments
-PUMA	FL, 08619	ResStockArguments
-PUMA	FL, 08620	ResStockArguments
-PUMA	FL, 08621	ResStockArguments
-PUMA	FL, 08622	ResStockArguments
-PUMA	FL, 08623	ResStockArguments
-PUMA	FL, 08624	ResStockArguments
-PUMA	FL, 08700	ResStockArguments
-PUMA	FL, 08900	ResStockArguments
-PUMA	FL, 09100	ResStockArguments
-PUMA	FL, 09300	ResStockArguments
-PUMA	FL, 09501	ResStockArguments
-PUMA	FL, 09502	ResStockArguments
-PUMA	FL, 09503	ResStockArguments
-PUMA	FL, 09504	ResStockArguments
-PUMA	FL, 09505	ResStockArguments
-PUMA	FL, 09506	ResStockArguments
-PUMA	FL, 09507	ResStockArguments
-PUMA	FL, 09508	ResStockArguments
-PUMA	FL, 09509	ResStockArguments
-PUMA	FL, 09510	ResStockArguments
-PUMA	FL, 09701	ResStockArguments
-PUMA	FL, 09702	ResStockArguments
-PUMA	FL, 09901	ResStockArguments
-PUMA	FL, 09902	ResStockArguments
-PUMA	FL, 09903	ResStockArguments
-PUMA	FL, 09904	ResStockArguments
-PUMA	FL, 09905	ResStockArguments
-PUMA	FL, 09906	ResStockArguments
-PUMA	FL, 09907	ResStockArguments
-PUMA	FL, 09908	ResStockArguments
-PUMA	FL, 09909	ResStockArguments
-PUMA	FL, 09910	ResStockArguments
-PUMA	FL, 09911	ResStockArguments
-PUMA	FL, 10101	ResStockArguments
-PUMA	FL, 10102	ResStockArguments
-PUMA	FL, 10103	ResStockArguments
-PUMA	FL, 10104	ResStockArguments
-PUMA	FL, 10301	ResStockArguments
-PUMA	FL, 10302	ResStockArguments
-PUMA	FL, 10303	ResStockArguments
-PUMA	FL, 10304	ResStockArguments
-PUMA	FL, 10305	ResStockArguments
-PUMA	FL, 10306	ResStockArguments
-PUMA	FL, 10307	ResStockArguments
-PUMA	FL, 10308	ResStockArguments
-PUMA	FL, 10501	ResStockArguments
-PUMA	FL, 10502	ResStockArguments
-PUMA	FL, 10503	ResStockArguments
-PUMA	FL, 10504	ResStockArguments
-PUMA	FL, 10700	ResStockArguments
-PUMA	FL, 10900	ResStockArguments
-PUMA	FL, 11101	ResStockArguments
-PUMA	FL, 11102	ResStockArguments
-PUMA	FL, 11300	ResStockArguments
-PUMA	FL, 11501	ResStockArguments
-PUMA	FL, 11502	ResStockArguments
-PUMA	FL, 11503	ResStockArguments
-PUMA	FL, 11701	ResStockArguments
-PUMA	FL, 11702	ResStockArguments
-PUMA	FL, 11703	ResStockArguments
-PUMA	FL, 11704	ResStockArguments
-PUMA	FL, 12100	ResStockArguments
-PUMA	FL, 12701	ResStockArguments
-PUMA	FL, 12702	ResStockArguments
-PUMA	FL, 12703	ResStockArguments
-PUMA	FL, 12704	ResStockArguments
-PUMA	GA, 00100	ResStockArguments
-PUMA	GA, 00200	ResStockArguments
-PUMA	GA, 00300	ResStockArguments
-PUMA	GA, 00401	ResStockArguments
-PUMA	GA, 00402	ResStockArguments
-PUMA	GA, 00500	ResStockArguments
-PUMA	GA, 00600	ResStockArguments
-PUMA	GA, 00700	ResStockArguments
-PUMA	GA, 00800	ResStockArguments
-PUMA	GA, 00900	ResStockArguments
-PUMA	GA, 01001	ResStockArguments
-PUMA	GA, 01002	ResStockArguments
-PUMA	GA, 01003	ResStockArguments
-PUMA	GA, 01004	ResStockArguments
-PUMA	GA, 01005	ResStockArguments
-PUMA	GA, 01006	ResStockArguments
-PUMA	GA, 01007	ResStockArguments
-PUMA	GA, 01008	ResStockArguments
-PUMA	GA, 01100	ResStockArguments
-PUMA	GA, 01200	ResStockArguments
-PUMA	GA, 01300	ResStockArguments
-PUMA	GA, 01400	ResStockArguments
-PUMA	GA, 01500	ResStockArguments
-PUMA	GA, 01600	ResStockArguments
-PUMA	GA, 01700	ResStockArguments
-PUMA	GA, 01800	ResStockArguments
-PUMA	GA, 01900	ResStockArguments
-PUMA	GA, 02001	ResStockArguments
-PUMA	GA, 02002	ResStockArguments
-PUMA	GA, 02003	ResStockArguments
-PUMA	GA, 02004	ResStockArguments
-PUMA	GA, 02100	ResStockArguments
-PUMA	GA, 02200	ResStockArguments
-PUMA	GA, 02300	ResStockArguments
-PUMA	GA, 02400	ResStockArguments
-PUMA	GA, 02500	ResStockArguments
-PUMA	GA, 02600	ResStockArguments
-PUMA	GA, 02700	ResStockArguments
-PUMA	GA, 02800	ResStockArguments
-PUMA	GA, 02900	ResStockArguments
-PUMA	GA, 03001	ResStockArguments
-PUMA	GA, 03002	ResStockArguments
-PUMA	GA, 03003	ResStockArguments
-PUMA	GA, 03004	ResStockArguments
-PUMA	GA, 03005	ResStockArguments
-PUMA	GA, 03101	ResStockArguments
-PUMA	GA, 03102	ResStockArguments
-PUMA	GA, 03200	ResStockArguments
-PUMA	GA, 03300	ResStockArguments
-PUMA	GA, 03400	ResStockArguments
-PUMA	GA, 03500	ResStockArguments
-PUMA	GA, 03600	ResStockArguments
-PUMA	GA, 03700	ResStockArguments
-PUMA	GA, 03800	ResStockArguments
-PUMA	GA, 03900	ResStockArguments
-PUMA	GA, 04000	ResStockArguments
-PUMA	GA, 04001	ResStockArguments
-PUMA	GA, 04002	ResStockArguments
-PUMA	GA, 04003	ResStockArguments
-PUMA	GA, 04004	ResStockArguments
-PUMA	GA, 04005	ResStockArguments
-PUMA	GA, 04006	ResStockArguments
-PUMA	GA, 04100	ResStockArguments
-PUMA	GA, 04200	ResStockArguments
-PUMA	GA, 04300	ResStockArguments
-PUMA	GA, 04400	ResStockArguments
-PUMA	GA, 04500	ResStockArguments
-PUMA	GA, 04600	ResStockArguments
-PUMA	GA, 05001	ResStockArguments
-PUMA	GA, 05002	ResStockArguments
-PUMA	GA, 06001	ResStockArguments
-PUMA	GA, 06002	ResStockArguments
-PUMA	HI, 00100	ResStockArguments
-PUMA	HI, 00200	ResStockArguments
-PUMA	HI, 00301	ResStockArguments
-PUMA	HI, 00302	ResStockArguments
-PUMA	HI, 00303	ResStockArguments
-PUMA	HI, 00304	ResStockArguments
-PUMA	HI, 00305	ResStockArguments
-PUMA	HI, 00306	ResStockArguments
-PUMA	HI, 00307	ResStockArguments
-PUMA	HI, 00308	ResStockArguments
-PUMA	IA, 00100	ResStockArguments
-PUMA	IA, 00200	ResStockArguments
-PUMA	IA, 00400	ResStockArguments
-PUMA	IA, 00500	ResStockArguments
-PUMA	IA, 00600	ResStockArguments
-PUMA	IA, 00700	ResStockArguments
-PUMA	IA, 00800	ResStockArguments
-PUMA	IA, 00900	ResStockArguments
-PUMA	IA, 01000	ResStockArguments
-PUMA	IA, 01100	ResStockArguments
-PUMA	IA, 01200	ResStockArguments
-PUMA	IA, 01300	ResStockArguments
-PUMA	IA, 01400	ResStockArguments
-PUMA	IA, 01500	ResStockArguments
-PUMA	IA, 01600	ResStockArguments
-PUMA	IA, 01700	ResStockArguments
-PUMA	IA, 01800	ResStockArguments
-PUMA	IA, 01900	ResStockArguments
-PUMA	IA, 02000	ResStockArguments
-PUMA	IA, 02100	ResStockArguments
-PUMA	IA, 02200	ResStockArguments
-PUMA	IA, 02300	ResStockArguments
-PUMA	ID, 00100	ResStockArguments
-PUMA	ID, 00200	ResStockArguments
-PUMA	ID, 00300	ResStockArguments
-PUMA	ID, 00400	ResStockArguments
-PUMA	ID, 00500	ResStockArguments
-PUMA	ID, 00600	ResStockArguments
-PUMA	ID, 00701	ResStockArguments
-PUMA	ID, 00702	ResStockArguments
-PUMA	ID, 00800	ResStockArguments
-PUMA	ID, 00900	ResStockArguments
-PUMA	ID, 01000	ResStockArguments
-PUMA	ID, 01100	ResStockArguments
-PUMA	ID, 01200	ResStockArguments
-PUMA	ID, 01300	ResStockArguments
-PUMA	IL, 00104	ResStockArguments
-PUMA	IL, 00105	ResStockArguments
-PUMA	IL, 00202	ResStockArguments
-PUMA	IL, 00300	ResStockArguments
-PUMA	IL, 00401	ResStockArguments
-PUMA	IL, 00501	ResStockArguments
-PUMA	IL, 00600	ResStockArguments
-PUMA	IL, 00700	ResStockArguments
-PUMA	IL, 00800	ResStockArguments
-PUMA	IL, 00900	ResStockArguments
-PUMA	IL, 01001	ResStockArguments
-PUMA	IL, 01104	ResStockArguments
-PUMA	IL, 01105	ResStockArguments
-PUMA	IL, 01204	ResStockArguments
-PUMA	IL, 01205	ResStockArguments
-PUMA	IL, 01300	ResStockArguments
-PUMA	IL, 01500	ResStockArguments
-PUMA	IL, 01602	ResStockArguments
-PUMA	IL, 01701	ResStockArguments
-PUMA	IL, 01900	ResStockArguments
-PUMA	IL, 02000	ResStockArguments
-PUMA	IL, 02100	ResStockArguments
-PUMA	IL, 02200	ResStockArguments
-PUMA	IL, 02300	ResStockArguments
-PUMA	IL, 02400	ResStockArguments
-PUMA	IL, 02501	ResStockArguments
-PUMA	IL, 02601	ResStockArguments
-PUMA	IL, 02700	ResStockArguments
-PUMA	IL, 02801	ResStockArguments
-PUMA	IL, 02901	ResStockArguments
-PUMA	IL, 03005	ResStockArguments
-PUMA	IL, 03007	ResStockArguments
-PUMA	IL, 03008	ResStockArguments
-PUMA	IL, 03009	ResStockArguments
-PUMA	IL, 03102	ResStockArguments
-PUMA	IL, 03105	ResStockArguments
-PUMA	IL, 03106	ResStockArguments
-PUMA	IL, 03107	ResStockArguments
-PUMA	IL, 03108	ResStockArguments
-PUMA	IL, 03202	ResStockArguments
-PUMA	IL, 03203	ResStockArguments
-PUMA	IL, 03204	ResStockArguments
-PUMA	IL, 03205	ResStockArguments
-PUMA	IL, 03207	ResStockArguments
-PUMA	IL, 03208	ResStockArguments
-PUMA	IL, 03209	ResStockArguments
-PUMA	IL, 03306	ResStockArguments
-PUMA	IL, 03307	ResStockArguments
-PUMA	IL, 03308	ResStockArguments
-PUMA	IL, 03309	ResStockArguments
-PUMA	IL, 03310	ResStockArguments
-PUMA	IL, 03401	ResStockArguments
-PUMA	IL, 03407	ResStockArguments
-PUMA	IL, 03408	ResStockArguments
-PUMA	IL, 03409	ResStockArguments
-PUMA	IL, 03410	ResStockArguments
-PUMA	IL, 03411	ResStockArguments
-PUMA	IL, 03412	ResStockArguments
-PUMA	IL, 03413	ResStockArguments
-PUMA	IL, 03414	ResStockArguments
-PUMA	IL, 03415	ResStockArguments
-PUMA	IL, 03416	ResStockArguments
-PUMA	IL, 03417	ResStockArguments
-PUMA	IL, 03418	ResStockArguments
-PUMA	IL, 03419	ResStockArguments
-PUMA	IL, 03420	ResStockArguments
-PUMA	IL, 03421	ResStockArguments
-PUMA	IL, 03422	ResStockArguments
-PUMA	IL, 03501	ResStockArguments
-PUMA	IL, 03502	ResStockArguments
-PUMA	IL, 03503	ResStockArguments
-PUMA	IL, 03504	ResStockArguments
-PUMA	IL, 03520	ResStockArguments
-PUMA	IL, 03521	ResStockArguments
-PUMA	IL, 03522	ResStockArguments
-PUMA	IL, 03523	ResStockArguments
-PUMA	IL, 03524	ResStockArguments
-PUMA	IL, 03525	ResStockArguments
-PUMA	IL, 03526	ResStockArguments
-PUMA	IL, 03527	ResStockArguments
-PUMA	IL, 03528	ResStockArguments
-PUMA	IL, 03529	ResStockArguments
-PUMA	IL, 03530	ResStockArguments
-PUMA	IL, 03531	ResStockArguments
-PUMA	IL, 03532	ResStockArguments
-PUMA	IL, 03601	ResStockArguments
-PUMA	IL, 03602	ResStockArguments
-PUMA	IL, 03700	ResStockArguments
-PUMA	IN, 00101	ResStockArguments
-PUMA	IN, 00102	ResStockArguments
-PUMA	IN, 00103	ResStockArguments
-PUMA	IN, 00104	ResStockArguments
-PUMA	IN, 00200	ResStockArguments
-PUMA	IN, 00300	ResStockArguments
-PUMA	IN, 00401	ResStockArguments
-PUMA	IN, 00402	ResStockArguments
-PUMA	IN, 00500	ResStockArguments
-PUMA	IN, 00600	ResStockArguments
-PUMA	IN, 00700	ResStockArguments
-PUMA	IN, 00800	ResStockArguments
-PUMA	IN, 00900	ResStockArguments
-PUMA	IN, 01001	ResStockArguments
-PUMA	IN, 01002	ResStockArguments
-PUMA	IN, 01003	ResStockArguments
-PUMA	IN, 01100	ResStockArguments
-PUMA	IN, 01200	ResStockArguments
-PUMA	IN, 01300	ResStockArguments
-PUMA	IN, 01400	ResStockArguments
-PUMA	IN, 01500	ResStockArguments
-PUMA	IN, 01600	ResStockArguments
-PUMA	IN, 01700	ResStockArguments
-PUMA	IN, 01801	ResStockArguments
-PUMA	IN, 01802	ResStockArguments
-PUMA	IN, 01803	ResStockArguments
-PUMA	IN, 01900	ResStockArguments
-PUMA	IN, 02000	ResStockArguments
-PUMA	IN, 02100	ResStockArguments
-PUMA	IN, 02200	ResStockArguments
-PUMA	IN, 02301	ResStockArguments
-PUMA	IN, 02302	ResStockArguments
-PUMA	IN, 02303	ResStockArguments
-PUMA	IN, 02304	ResStockArguments
-PUMA	IN, 02305	ResStockArguments
-PUMA	IN, 02306	ResStockArguments
-PUMA	IN, 02307	ResStockArguments
-PUMA	IN, 02400	ResStockArguments
-PUMA	IN, 02500	ResStockArguments
-PUMA	IN, 02600	ResStockArguments
-PUMA	IN, 02700	ResStockArguments
-PUMA	IN, 02800	ResStockArguments
-PUMA	IN, 02900	ResStockArguments
-PUMA	IN, 03000	ResStockArguments
-PUMA	IN, 03100	ResStockArguments
-PUMA	IN, 03200	ResStockArguments
-PUMA	IN, 03300	ResStockArguments
-PUMA	IN, 03400	ResStockArguments
-PUMA	IN, 03500	ResStockArguments
-PUMA	IN, 03600	ResStockArguments
-PUMA	KS, 00100	ResStockArguments
-PUMA	KS, 00200	ResStockArguments
-PUMA	KS, 00300	ResStockArguments
-PUMA	KS, 00400	ResStockArguments
-PUMA	KS, 00500	ResStockArguments
-PUMA	KS, 00601	ResStockArguments
-PUMA	KS, 00602	ResStockArguments
-PUMA	KS, 00603	ResStockArguments
-PUMA	KS, 00604	ResStockArguments
-PUMA	KS, 00700	ResStockArguments
-PUMA	KS, 00801	ResStockArguments
-PUMA	KS, 00802	ResStockArguments
-PUMA	KS, 00900	ResStockArguments
-PUMA	KS, 01000	ResStockArguments
-PUMA	KS, 01100	ResStockArguments
-PUMA	KS, 01200	ResStockArguments
-PUMA	KS, 01301	ResStockArguments
-PUMA	KS, 01302	ResStockArguments
-PUMA	KS, 01303	ResStockArguments
-PUMA	KS, 01304	ResStockArguments
-PUMA	KS, 01400	ResStockArguments
-PUMA	KS, 01500	ResStockArguments
-PUMA	KY, 00100	ResStockArguments
-PUMA	KY, 00200	ResStockArguments
-PUMA	KY, 00300	ResStockArguments
-PUMA	KY, 00400	ResStockArguments
-PUMA	KY, 00500	ResStockArguments
-PUMA	KY, 00600	ResStockArguments
-PUMA	KY, 00700	ResStockArguments
-PUMA	KY, 00800	ResStockArguments
-PUMA	KY, 00900	ResStockArguments
-PUMA	KY, 01000	ResStockArguments
-PUMA	KY, 01100	ResStockArguments
-PUMA	KY, 01200	ResStockArguments
-PUMA	KY, 01300	ResStockArguments
-PUMA	KY, 01400	ResStockArguments
-PUMA	KY, 01500	ResStockArguments
-PUMA	KY, 01600	ResStockArguments
-PUMA	KY, 01701	ResStockArguments
-PUMA	KY, 01702	ResStockArguments
-PUMA	KY, 01703	ResStockArguments
-PUMA	KY, 01704	ResStockArguments
-PUMA	KY, 01705	ResStockArguments
-PUMA	KY, 01706	ResStockArguments
-PUMA	KY, 01800	ResStockArguments
-PUMA	KY, 01901	ResStockArguments
-PUMA	KY, 01902	ResStockArguments
-PUMA	KY, 02000	ResStockArguments
-PUMA	KY, 02100	ResStockArguments
-PUMA	KY, 02200	ResStockArguments
-PUMA	KY, 02300	ResStockArguments
-PUMA	KY, 02400	ResStockArguments
-PUMA	KY, 02500	ResStockArguments
-PUMA	KY, 02600	ResStockArguments
-PUMA	KY, 02700	ResStockArguments
-PUMA	KY, 02800	ResStockArguments
-PUMA	LA, 00100	ResStockArguments
-PUMA	LA, 00101	ResStockArguments
-PUMA	LA, 00200	ResStockArguments
-PUMA	LA, 00300	ResStockArguments
-PUMA	LA, 00400	ResStockArguments
-PUMA	LA, 00500	ResStockArguments
-PUMA	LA, 00600	ResStockArguments
-PUMA	LA, 00700	ResStockArguments
-PUMA	LA, 00800	ResStockArguments
-PUMA	LA, 00900	ResStockArguments
-PUMA	LA, 01000	ResStockArguments
-PUMA	LA, 01100	ResStockArguments
-PUMA	LA, 01200	ResStockArguments
-PUMA	LA, 01201	ResStockArguments
-PUMA	LA, 01300	ResStockArguments
-PUMA	LA, 01400	ResStockArguments
-PUMA	LA, 01500	ResStockArguments
-PUMA	LA, 01501	ResStockArguments
-PUMA	LA, 01502	ResStockArguments
-PUMA	LA, 01600	ResStockArguments
-PUMA	LA, 01700	ResStockArguments
-PUMA	LA, 01800	ResStockArguments
-PUMA	LA, 01900	ResStockArguments
-PUMA	LA, 02000	ResStockArguments
-PUMA	LA, 02100	ResStockArguments
-PUMA	LA, 02200	ResStockArguments
-PUMA	LA, 02201	ResStockArguments
-PUMA	LA, 02300	ResStockArguments
-PUMA	LA, 02301	ResStockArguments
-PUMA	LA, 02302	ResStockArguments
-PUMA	LA, 02400	ResStockArguments
-PUMA	LA, 02401	ResStockArguments
-PUMA	LA, 02402	ResStockArguments
-PUMA	LA, 02500	ResStockArguments
-PUMA	MA, 00100	ResStockArguments
-PUMA	MA, 00200	ResStockArguments
-PUMA	MA, 00300	ResStockArguments
-PUMA	MA, 00301	ResStockArguments
-PUMA	MA, 00302	ResStockArguments
-PUMA	MA, 00303	ResStockArguments
-PUMA	MA, 00304	ResStockArguments
-PUMA	MA, 00400	ResStockArguments
-PUMA	MA, 00501	ResStockArguments
-PUMA	MA, 00502	ResStockArguments
-PUMA	MA, 00503	ResStockArguments
-PUMA	MA, 00504	ResStockArguments
-PUMA	MA, 00505	ResStockArguments
-PUMA	MA, 00506	ResStockArguments
-PUMA	MA, 00507	ResStockArguments
-PUMA	MA, 00508	ResStockArguments
-PUMA	MA, 00701	ResStockArguments
-PUMA	MA, 00702	ResStockArguments
-PUMA	MA, 00703	ResStockArguments
-PUMA	MA, 00704	ResStockArguments
-PUMA	MA, 01000	ResStockArguments
-PUMA	MA, 01300	ResStockArguments
-PUMA	MA, 01400	ResStockArguments
-PUMA	MA, 01600	ResStockArguments
-PUMA	MA, 01900	ResStockArguments
-PUMA	MA, 01901	ResStockArguments
-PUMA	MA, 01902	ResStockArguments
-PUMA	MA, 02400	ResStockArguments
-PUMA	MA, 02800	ResStockArguments
-PUMA	MA, 03301	ResStockArguments
-PUMA	MA, 03302	ResStockArguments
-PUMA	MA, 03303	ResStockArguments
-PUMA	MA, 03304	ResStockArguments
-PUMA	MA, 03305	ResStockArguments
-PUMA	MA, 03306	ResStockArguments
-PUMA	MA, 03400	ResStockArguments
-PUMA	MA, 03500	ResStockArguments
-PUMA	MA, 03601	ResStockArguments
-PUMA	MA, 03602	ResStockArguments
-PUMA	MA, 03603	ResStockArguments
-PUMA	MA, 03900	ResStockArguments
-PUMA	MA, 04000	ResStockArguments
-PUMA	MA, 04200	ResStockArguments
-PUMA	MA, 04301	ResStockArguments
-PUMA	MA, 04302	ResStockArguments
-PUMA	MA, 04303	ResStockArguments
-PUMA	MA, 04500	ResStockArguments
-PUMA	MA, 04700	ResStockArguments
-PUMA	MA, 04800	ResStockArguments
-PUMA	MA, 04901	ResStockArguments
-PUMA	MA, 04902	ResStockArguments
-PUMA	MA, 04903	ResStockArguments
-PUMA	MD, 00100	ResStockArguments
-PUMA	MD, 00200	ResStockArguments
-PUMA	MD, 00301	ResStockArguments
-PUMA	MD, 00302	ResStockArguments
-PUMA	MD, 00400	ResStockArguments
-PUMA	MD, 00501	ResStockArguments
-PUMA	MD, 00502	ResStockArguments
-PUMA	MD, 00503	ResStockArguments
-PUMA	MD, 00504	ResStockArguments
-PUMA	MD, 00505	ResStockArguments
-PUMA	MD, 00506	ResStockArguments
-PUMA	MD, 00507	ResStockArguments
-PUMA	MD, 00601	ResStockArguments
-PUMA	MD, 00602	ResStockArguments
-PUMA	MD, 00700	ResStockArguments
-PUMA	MD, 00801	ResStockArguments
-PUMA	MD, 00802	ResStockArguments
-PUMA	MD, 00803	ResStockArguments
-PUMA	MD, 00804	ResStockArguments
-PUMA	MD, 00805	ResStockArguments
-PUMA	MD, 00901	ResStockArguments
-PUMA	MD, 00902	ResStockArguments
-PUMA	MD, 01001	ResStockArguments
-PUMA	MD, 01002	ResStockArguments
-PUMA	MD, 01003	ResStockArguments
-PUMA	MD, 01004	ResStockArguments
-PUMA	MD, 01005	ResStockArguments
-PUMA	MD, 01006	ResStockArguments
-PUMA	MD, 01007	ResStockArguments
-PUMA	MD, 01101	ResStockArguments
-PUMA	MD, 01102	ResStockArguments
-PUMA	MD, 01103	ResStockArguments
-PUMA	MD, 01104	ResStockArguments
-PUMA	MD, 01105	ResStockArguments
-PUMA	MD, 01106	ResStockArguments
-PUMA	MD, 01107	ResStockArguments
-PUMA	MD, 01201	ResStockArguments
-PUMA	MD, 01202	ResStockArguments
-PUMA	MD, 01203	ResStockArguments
-PUMA	MD, 01204	ResStockArguments
-PUMA	MD, 01300	ResStockArguments
-PUMA	MD, 01400	ResStockArguments
-PUMA	MD, 01500	ResStockArguments
-PUMA	MD, 01600	ResStockArguments
-PUMA	ME, 00100	ResStockArguments
-PUMA	ME, 00200	ResStockArguments
-PUMA	ME, 00300	ResStockArguments
-PUMA	ME, 00400	ResStockArguments
-PUMA	ME, 00500	ResStockArguments
-PUMA	ME, 00600	ResStockArguments
-PUMA	ME, 00700	ResStockArguments
-PUMA	ME, 00800	ResStockArguments
-PUMA	ME, 00900	ResStockArguments
-PUMA	ME, 01000	ResStockArguments
-PUMA	MI, 00100	ResStockArguments
-PUMA	MI, 00200	ResStockArguments
-PUMA	MI, 00300	ResStockArguments
-PUMA	MI, 00400	ResStockArguments
-PUMA	MI, 00500	ResStockArguments
-PUMA	MI, 00600	ResStockArguments
-PUMA	MI, 00700	ResStockArguments
-PUMA	MI, 00801	ResStockArguments
-PUMA	MI, 00802	ResStockArguments
-PUMA	MI, 00900	ResStockArguments
-PUMA	MI, 01001	ResStockArguments
-PUMA	MI, 01002	ResStockArguments
-PUMA	MI, 01003	ResStockArguments
-PUMA	MI, 01004	ResStockArguments
-PUMA	MI, 01100	ResStockArguments
-PUMA	MI, 01200	ResStockArguments
-PUMA	MI, 01300	ResStockArguments
-PUMA	MI, 01400	ResStockArguments
-PUMA	MI, 01500	ResStockArguments
-PUMA	MI, 01600	ResStockArguments
-PUMA	MI, 01701	ResStockArguments
-PUMA	MI, 01702	ResStockArguments
-PUMA	MI, 01703	ResStockArguments
-PUMA	MI, 01704	ResStockArguments
-PUMA	MI, 01801	ResStockArguments
-PUMA	MI, 01802	ResStockArguments
-PUMA	MI, 01900	ResStockArguments
-PUMA	MI, 02000	ResStockArguments
-PUMA	MI, 02101	ResStockArguments
-PUMA	MI, 02102	ResStockArguments
-PUMA	MI, 02200	ResStockArguments
-PUMA	MI, 02300	ResStockArguments
-PUMA	MI, 02400	ResStockArguments
-PUMA	MI, 02500	ResStockArguments
-PUMA	MI, 02600	ResStockArguments
-PUMA	MI, 02701	ResStockArguments
-PUMA	MI, 02702	ResStockArguments
-PUMA	MI, 02703	ResStockArguments
-PUMA	MI, 02800	ResStockArguments
-PUMA	MI, 02901	ResStockArguments
-PUMA	MI, 02902	ResStockArguments
-PUMA	MI, 02903	ResStockArguments
-PUMA	MI, 02904	ResStockArguments
-PUMA	MI, 02905	ResStockArguments
-PUMA	MI, 02906	ResStockArguments
-PUMA	MI, 02907	ResStockArguments
-PUMA	MI, 02908	ResStockArguments
-PUMA	MI, 03001	ResStockArguments
-PUMA	MI, 03002	ResStockArguments
-PUMA	MI, 03003	ResStockArguments
-PUMA	MI, 03004	ResStockArguments
-PUMA	MI, 03005	ResStockArguments
-PUMA	MI, 03006	ResStockArguments
-PUMA	MI, 03100	ResStockArguments
-PUMA	MI, 03201	ResStockArguments
-PUMA	MI, 03202	ResStockArguments
-PUMA	MI, 03203	ResStockArguments
-PUMA	MI, 03204	ResStockArguments
-PUMA	MI, 03205	ResStockArguments
-PUMA	MI, 03206	ResStockArguments
-PUMA	MI, 03207	ResStockArguments
-PUMA	MI, 03208	ResStockArguments
-PUMA	MI, 03209	ResStockArguments
-PUMA	MI, 03210	ResStockArguments
-PUMA	MI, 03211	ResStockArguments
-PUMA	MI, 03212	ResStockArguments
-PUMA	MI, 03213	ResStockArguments
-PUMA	MI, 03300	ResStockArguments
-PUMA	MN, 00100	ResStockArguments
-PUMA	MN, 00200	ResStockArguments
-PUMA	MN, 00300	ResStockArguments
-PUMA	MN, 00400	ResStockArguments
-PUMA	MN, 00500	ResStockArguments
-PUMA	MN, 00600	ResStockArguments
-PUMA	MN, 00700	ResStockArguments
-PUMA	MN, 00800	ResStockArguments
-PUMA	MN, 00900	ResStockArguments
-PUMA	MN, 01000	ResStockArguments
-PUMA	MN, 01101	ResStockArguments
-PUMA	MN, 01102	ResStockArguments
-PUMA	MN, 01103	ResStockArguments
-PUMA	MN, 01201	ResStockArguments
-PUMA	MN, 01202	ResStockArguments
-PUMA	MN, 01301	ResStockArguments
-PUMA	MN, 01302	ResStockArguments
-PUMA	MN, 01303	ResStockArguments
-PUMA	MN, 01304	ResStockArguments
-PUMA	MN, 01401	ResStockArguments
-PUMA	MN, 01402	ResStockArguments
-PUMA	MN, 01403	ResStockArguments
-PUMA	MN, 01404	ResStockArguments
-PUMA	MN, 01405	ResStockArguments
-PUMA	MN, 01406	ResStockArguments
-PUMA	MN, 01407	ResStockArguments
-PUMA	MN, 01408	ResStockArguments
-PUMA	MN, 01409	ResStockArguments
-PUMA	MN, 01410	ResStockArguments
-PUMA	MN, 01501	ResStockArguments
-PUMA	MN, 01502	ResStockArguments
-PUMA	MN, 01503	ResStockArguments
-PUMA	MN, 01600	ResStockArguments
-PUMA	MN, 01700	ResStockArguments
-PUMA	MN, 01800	ResStockArguments
-PUMA	MN, 01900	ResStockArguments
-PUMA	MN, 02000	ResStockArguments
-PUMA	MN, 02100	ResStockArguments
-PUMA	MN, 02200	ResStockArguments
-PUMA	MN, 02300	ResStockArguments
-PUMA	MN, 02400	ResStockArguments
-PUMA	MN, 02500	ResStockArguments
-PUMA	MN, 02600	ResStockArguments
-PUMA	MO, 00100	ResStockArguments
-PUMA	MO, 00200	ResStockArguments
-PUMA	MO, 00300	ResStockArguments
-PUMA	MO, 00400	ResStockArguments
-PUMA	MO, 00500	ResStockArguments
-PUMA	MO, 00600	ResStockArguments
-PUMA	MO, 00700	ResStockArguments
-PUMA	MO, 00800	ResStockArguments
-PUMA	MO, 00901	ResStockArguments
-PUMA	MO, 00902	ResStockArguments
-PUMA	MO, 00903	ResStockArguments
-PUMA	MO, 01001	ResStockArguments
-PUMA	MO, 01002	ResStockArguments
-PUMA	MO, 01003	ResStockArguments
-PUMA	MO, 01004	ResStockArguments
-PUMA	MO, 01005	ResStockArguments
-PUMA	MO, 01100	ResStockArguments
-PUMA	MO, 01200	ResStockArguments
-PUMA	MO, 01300	ResStockArguments
-PUMA	MO, 01400	ResStockArguments
-PUMA	MO, 01500	ResStockArguments
-PUMA	MO, 01600	ResStockArguments
-PUMA	MO, 01701	ResStockArguments
-PUMA	MO, 01702	ResStockArguments
-PUMA	MO, 01703	ResStockArguments
-PUMA	MO, 01801	ResStockArguments
-PUMA	MO, 01802	ResStockArguments
-PUMA	MO, 01803	ResStockArguments
-PUMA	MO, 01804	ResStockArguments
-PUMA	MO, 01805	ResStockArguments
-PUMA	MO, 01806	ResStockArguments
-PUMA	MO, 01807	ResStockArguments
-PUMA	MO, 01808	ResStockArguments
-PUMA	MO, 01901	ResStockArguments
-PUMA	MO, 01902	ResStockArguments
-PUMA	MO, 02001	ResStockArguments
-PUMA	MO, 02002	ResStockArguments
-PUMA	MO, 02100	ResStockArguments
-PUMA	MO, 02200	ResStockArguments
-PUMA	MO, 02300	ResStockArguments
-PUMA	MO, 02400	ResStockArguments
-PUMA	MO, 02500	ResStockArguments
-PUMA	MO, 02601	ResStockArguments
-PUMA	MO, 02602	ResStockArguments
-PUMA	MO, 02603	ResStockArguments
-PUMA	MO, 02700	ResStockArguments
-PUMA	MO, 02800	ResStockArguments
-PUMA	MS, 00100	ResStockArguments
-PUMA	MS, 00200	ResStockArguments
-PUMA	MS, 00300	ResStockArguments
-PUMA	MS, 00400	ResStockArguments
-PUMA	MS, 00500	ResStockArguments
-PUMA	MS, 00600	ResStockArguments
-PUMA	MS, 00700	ResStockArguments
-PUMA	MS, 00800	ResStockArguments
-PUMA	MS, 00900	ResStockArguments
-PUMA	MS, 01000	ResStockArguments
-PUMA	MS, 01100	ResStockArguments
-PUMA	MS, 01200	ResStockArguments
-PUMA	MS, 01300	ResStockArguments
-PUMA	MS, 01400	ResStockArguments
-PUMA	MS, 01500	ResStockArguments
-PUMA	MS, 01600	ResStockArguments
-PUMA	MS, 01700	ResStockArguments
-PUMA	MS, 01800	ResStockArguments
-PUMA	MS, 01900	ResStockArguments
-PUMA	MS, 02000	ResStockArguments
-PUMA	MS, 02100	ResStockArguments
-PUMA	MT, 00100	ResStockArguments
-PUMA	MT, 00200	ResStockArguments
-PUMA	MT, 00300	ResStockArguments
-PUMA	MT, 00400	ResStockArguments
-PUMA	MT, 00500	ResStockArguments
-PUMA	MT, 00600	ResStockArguments
-PUMA	MT, 00700	ResStockArguments
-PUMA	NC, 00100	ResStockArguments
-PUMA	NC, 00200	ResStockArguments
-PUMA	NC, 00300	ResStockArguments
-PUMA	NC, 00400	ResStockArguments
-PUMA	NC, 00500	ResStockArguments
-PUMA	NC, 00600	ResStockArguments
-PUMA	NC, 00700	ResStockArguments
-PUMA	NC, 00800	ResStockArguments
-PUMA	NC, 00900	ResStockArguments
-PUMA	NC, 01000	ResStockArguments
-PUMA	NC, 01100	ResStockArguments
-PUMA	NC, 01201	ResStockArguments
-PUMA	NC, 01202	ResStockArguments
-PUMA	NC, 01203	ResStockArguments
-PUMA	NC, 01204	ResStockArguments
-PUMA	NC, 01205	ResStockArguments
-PUMA	NC, 01206	ResStockArguments
-PUMA	NC, 01207	ResStockArguments
-PUMA	NC, 01208	ResStockArguments
-PUMA	NC, 01301	ResStockArguments
-PUMA	NC, 01302	ResStockArguments
-PUMA	NC, 01400	ResStockArguments
-PUMA	NC, 01500	ResStockArguments
-PUMA	NC, 01600	ResStockArguments
-PUMA	NC, 01701	ResStockArguments
-PUMA	NC, 01702	ResStockArguments
-PUMA	NC, 01703	ResStockArguments
-PUMA	NC, 01704	ResStockArguments
-PUMA	NC, 01801	ResStockArguments
-PUMA	NC, 01802	ResStockArguments
-PUMA	NC, 01803	ResStockArguments
-PUMA	NC, 01900	ResStockArguments
-PUMA	NC, 02000	ResStockArguments
-PUMA	NC, 02100	ResStockArguments
-PUMA	NC, 02201	ResStockArguments
-PUMA	NC, 02202	ResStockArguments
-PUMA	NC, 02300	ResStockArguments
-PUMA	NC, 02400	ResStockArguments
-PUMA	NC, 02500	ResStockArguments
-PUMA	NC, 02600	ResStockArguments
-PUMA	NC, 02700	ResStockArguments
-PUMA	NC, 02800	ResStockArguments
-PUMA	NC, 02900	ResStockArguments
-PUMA	NC, 03001	ResStockArguments
-PUMA	NC, 03002	ResStockArguments
-PUMA	NC, 03101	ResStockArguments
-PUMA	NC, 03102	ResStockArguments
-PUMA	NC, 03103	ResStockArguments
-PUMA	NC, 03104	ResStockArguments
-PUMA	NC, 03105	ResStockArguments
-PUMA	NC, 03106	ResStockArguments
-PUMA	NC, 03107	ResStockArguments
-PUMA	NC, 03108	ResStockArguments
-PUMA	NC, 03200	ResStockArguments
-PUMA	NC, 03300	ResStockArguments
-PUMA	NC, 03400	ResStockArguments
-PUMA	NC, 03500	ResStockArguments
-PUMA	NC, 03600	ResStockArguments
-PUMA	NC, 03700	ResStockArguments
-PUMA	NC, 03800	ResStockArguments
-PUMA	NC, 03900	ResStockArguments
-PUMA	NC, 04000	ResStockArguments
-PUMA	NC, 04100	ResStockArguments
-PUMA	NC, 04200	ResStockArguments
-PUMA	NC, 04300	ResStockArguments
-PUMA	NC, 04400	ResStockArguments
-PUMA	NC, 04500	ResStockArguments
-PUMA	NC, 04600	ResStockArguments
-PUMA	NC, 04700	ResStockArguments
-PUMA	NC, 04800	ResStockArguments
-PUMA	NC, 04900	ResStockArguments
-PUMA	NC, 05001	ResStockArguments
-PUMA	NC, 05002	ResStockArguments
-PUMA	NC, 05003	ResStockArguments
-PUMA	NC, 05100	ResStockArguments
-PUMA	NC, 05200	ResStockArguments
-PUMA	NC, 05300	ResStockArguments
-PUMA	NC, 05400	ResStockArguments
-PUMA	ND, 00100	ResStockArguments
-PUMA	ND, 00200	ResStockArguments
-PUMA	ND, 00300	ResStockArguments
-PUMA	ND, 00400	ResStockArguments
-PUMA	ND, 00500	ResStockArguments
-PUMA	NE, 00100	ResStockArguments
-PUMA	NE, 00200	ResStockArguments
-PUMA	NE, 00300	ResStockArguments
-PUMA	NE, 00400	ResStockArguments
-PUMA	NE, 00500	ResStockArguments
-PUMA	NE, 00600	ResStockArguments
-PUMA	NE, 00701	ResStockArguments
-PUMA	NE, 00702	ResStockArguments
-PUMA	NE, 00801	ResStockArguments
-PUMA	NE, 00802	ResStockArguments
-PUMA	NE, 00901	ResStockArguments
-PUMA	NE, 00902	ResStockArguments
-PUMA	NE, 00903	ResStockArguments
-PUMA	NE, 00904	ResStockArguments
-PUMA	NH, 00100	ResStockArguments
-PUMA	NH, 00200	ResStockArguments
-PUMA	NH, 00300	ResStockArguments
-PUMA	NH, 00400	ResStockArguments
-PUMA	NH, 00500	ResStockArguments
-PUMA	NH, 00600	ResStockArguments
-PUMA	NH, 00700	ResStockArguments
-PUMA	NH, 00800	ResStockArguments
-PUMA	NH, 00900	ResStockArguments
-PUMA	NH, 01000	ResStockArguments
-PUMA	NJ, 00101	ResStockArguments
-PUMA	NJ, 00102	ResStockArguments
-PUMA	NJ, 00301	ResStockArguments
-PUMA	NJ, 00302	ResStockArguments
-PUMA	NJ, 00303	ResStockArguments
-PUMA	NJ, 00304	ResStockArguments
-PUMA	NJ, 00305	ResStockArguments
-PUMA	NJ, 00306	ResStockArguments
-PUMA	NJ, 00307	ResStockArguments
-PUMA	NJ, 00308	ResStockArguments
-PUMA	NJ, 00400	ResStockArguments
-PUMA	NJ, 00501	ResStockArguments
-PUMA	NJ, 00502	ResStockArguments
-PUMA	NJ, 00503	ResStockArguments
-PUMA	NJ, 00601	ResStockArguments
-PUMA	NJ, 00602	ResStockArguments
-PUMA	NJ, 00701	ResStockArguments
-PUMA	NJ, 00702	ResStockArguments
-PUMA	NJ, 00703	ResStockArguments
-PUMA	NJ, 00800	ResStockArguments
-PUMA	NJ, 00901	ResStockArguments
-PUMA	NJ, 00902	ResStockArguments
-PUMA	NJ, 00903	ResStockArguments
-PUMA	NJ, 00904	ResStockArguments
-PUMA	NJ, 00905	ResStockArguments
-PUMA	NJ, 00906	ResStockArguments
-PUMA	NJ, 00907	ResStockArguments
-PUMA	NJ, 01001	ResStockArguments
-PUMA	NJ, 01002	ResStockArguments
-PUMA	NJ, 01003	ResStockArguments
-PUMA	NJ, 01101	ResStockArguments
-PUMA	NJ, 01102	ResStockArguments
-PUMA	NJ, 01103	ResStockArguments
-PUMA	NJ, 01104	ResStockArguments
-PUMA	NJ, 01105	ResStockArguments
-PUMA	NJ, 01106	ResStockArguments
-PUMA	NJ, 01201	ResStockArguments
-PUMA	NJ, 01202	ResStockArguments
-PUMA	NJ, 01203	ResStockArguments
-PUMA	NJ, 01204	ResStockArguments
-PUMA	NJ, 01205	ResStockArguments
-PUMA	NJ, 01301	ResStockArguments
-PUMA	NJ, 01302	ResStockArguments
-PUMA	NJ, 01401	ResStockArguments
-PUMA	NJ, 01402	ResStockArguments
-PUMA	NJ, 01403	ResStockArguments
-PUMA	NJ, 01404	ResStockArguments
-PUMA	NJ, 01501	ResStockArguments
-PUMA	NJ, 01502	ResStockArguments
-PUMA	NJ, 01503	ResStockArguments
-PUMA	NJ, 01504	ResStockArguments
-PUMA	NJ, 01600	ResStockArguments
-PUMA	NJ, 01700	ResStockArguments
-PUMA	NJ, 01800	ResStockArguments
-PUMA	NJ, 01901	ResStockArguments
-PUMA	NJ, 01902	ResStockArguments
-PUMA	NJ, 01903	ResStockArguments
-PUMA	NJ, 01904	ResStockArguments
-PUMA	NJ, 02001	ResStockArguments
-PUMA	NJ, 02002	ResStockArguments
-PUMA	NJ, 02003	ResStockArguments
-PUMA	NJ, 02101	ResStockArguments
-PUMA	NJ, 02102	ResStockArguments
-PUMA	NJ, 02103	ResStockArguments
-PUMA	NJ, 02104	ResStockArguments
-PUMA	NJ, 02201	ResStockArguments
-PUMA	NJ, 02202	ResStockArguments
-PUMA	NJ, 02301	ResStockArguments
-PUMA	NJ, 02302	ResStockArguments
-PUMA	NJ, 02303	ResStockArguments
-PUMA	NJ, 02400	ResStockArguments
-PUMA	NJ, 02500	ResStockArguments
-PUMA	NJ, 02600	ResStockArguments
-PUMA	NM, 00100	ResStockArguments
-PUMA	NM, 00200	ResStockArguments
-PUMA	NM, 00300	ResStockArguments
-PUMA	NM, 00400	ResStockArguments
-PUMA	NM, 00500	ResStockArguments
-PUMA	NM, 00600	ResStockArguments
-PUMA	NM, 00700	ResStockArguments
-PUMA	NM, 00801	ResStockArguments
-PUMA	NM, 00802	ResStockArguments
-PUMA	NM, 00803	ResStockArguments
-PUMA	NM, 00804	ResStockArguments
-PUMA	NM, 00805	ResStockArguments
-PUMA	NM, 00806	ResStockArguments
-PUMA	NM, 00900	ResStockArguments
-PUMA	NM, 01001	ResStockArguments
-PUMA	NM, 01002	ResStockArguments
-PUMA	NM, 01100	ResStockArguments
-PUMA	NM, 01200	ResStockArguments
-PUMA	NV, 00101	ResStockArguments
-PUMA	NV, 00102	ResStockArguments
-PUMA	NV, 00103	ResStockArguments
-PUMA	NV, 00200	ResStockArguments
-PUMA	NV, 00300	ResStockArguments
-PUMA	NV, 00401	ResStockArguments
-PUMA	NV, 00402	ResStockArguments
-PUMA	NV, 00403	ResStockArguments
-PUMA	NV, 00404	ResStockArguments
-PUMA	NV, 00405	ResStockArguments
-PUMA	NV, 00406	ResStockArguments
-PUMA	NV, 00407	ResStockArguments
-PUMA	NV, 00408	ResStockArguments
-PUMA	NV, 00409	ResStockArguments
-PUMA	NV, 00410	ResStockArguments
-PUMA	NV, 00411	ResStockArguments
-PUMA	NV, 00412	ResStockArguments
-PUMA	NV, 00413	ResStockArguments
-PUMA	NY, 00100	ResStockArguments
-PUMA	NY, 00200	ResStockArguments
-PUMA	NY, 00300	ResStockArguments
-PUMA	NY, 00401	ResStockArguments
-PUMA	NY, 00402	ResStockArguments
-PUMA	NY, 00403	ResStockArguments
-PUMA	NY, 00500	ResStockArguments
-PUMA	NY, 00600	ResStockArguments
-PUMA	NY, 00701	ResStockArguments
-PUMA	NY, 00702	ResStockArguments
-PUMA	NY, 00703	ResStockArguments
-PUMA	NY, 00704	ResStockArguments
-PUMA	NY, 00800	ResStockArguments
-PUMA	NY, 00901	ResStockArguments
-PUMA	NY, 00902	ResStockArguments
-PUMA	NY, 00903	ResStockArguments
-PUMA	NY, 00904	ResStockArguments
-PUMA	NY, 00905	ResStockArguments
-PUMA	NY, 00906	ResStockArguments
-PUMA	NY, 01000	ResStockArguments
-PUMA	NY, 01101	ResStockArguments
-PUMA	NY, 01102	ResStockArguments
-PUMA	NY, 01201	ResStockArguments
-PUMA	NY, 01202	ResStockArguments
-PUMA	NY, 01203	ResStockArguments
-PUMA	NY, 01204	ResStockArguments
-PUMA	NY, 01205	ResStockArguments
-PUMA	NY, 01206	ResStockArguments
-PUMA	NY, 01207	ResStockArguments
-PUMA	NY, 01300	ResStockArguments
-PUMA	NY, 01400	ResStockArguments
-PUMA	NY, 01500	ResStockArguments
-PUMA	NY, 01600	ResStockArguments
-PUMA	NY, 01700	ResStockArguments
-PUMA	NY, 01801	ResStockArguments
-PUMA	NY, 01802	ResStockArguments
-PUMA	NY, 01900	ResStockArguments
-PUMA	NY, 02001	ResStockArguments
-PUMA	NY, 02002	ResStockArguments
-PUMA	NY, 02100	ResStockArguments
-PUMA	NY, 02201	ResStockArguments
-PUMA	NY, 02202	ResStockArguments
-PUMA	NY, 02203	ResStockArguments
-PUMA	NY, 02300	ResStockArguments
-PUMA	NY, 02401	ResStockArguments
-PUMA	NY, 02402	ResStockArguments
-PUMA	NY, 02500	ResStockArguments
-PUMA	NY, 02600	ResStockArguments
-PUMA	NY, 02701	ResStockArguments
-PUMA	NY, 02702	ResStockArguments
-PUMA	NY, 02801	ResStockArguments
-PUMA	NY, 02802	ResStockArguments
-PUMA	NY, 02901	ResStockArguments
-PUMA	NY, 02902	ResStockArguments
-PUMA	NY, 02903	ResStockArguments
-PUMA	NY, 03001	ResStockArguments
-PUMA	NY, 03002	ResStockArguments
-PUMA	NY, 03003	ResStockArguments
-PUMA	NY, 03101	ResStockArguments
-PUMA	NY, 03102	ResStockArguments
-PUMA	NY, 03103	ResStockArguments
-PUMA	NY, 03104	ResStockArguments
-PUMA	NY, 03105	ResStockArguments
-PUMA	NY, 03106	ResStockArguments
-PUMA	NY, 03107	ResStockArguments
-PUMA	NY, 03201	ResStockArguments
-PUMA	NY, 03202	ResStockArguments
-PUMA	NY, 03203	ResStockArguments
-PUMA	NY, 03204	ResStockArguments
-PUMA	NY, 03205	ResStockArguments
-PUMA	NY, 03206	ResStockArguments
-PUMA	NY, 03207	ResStockArguments
-PUMA	NY, 03208	ResStockArguments
-PUMA	NY, 03209	ResStockArguments
-PUMA	NY, 03210	ResStockArguments
-PUMA	NY, 03211	ResStockArguments
-PUMA	NY, 03212	ResStockArguments
-PUMA	NY, 03301	ResStockArguments
-PUMA	NY, 03302	ResStockArguments
-PUMA	NY, 03303	ResStockArguments
-PUMA	NY, 03304	ResStockArguments
-PUMA	NY, 03305	ResStockArguments
-PUMA	NY, 03306	ResStockArguments
-PUMA	NY, 03307	ResStockArguments
-PUMA	NY, 03308	ResStockArguments
-PUMA	NY, 03309	ResStockArguments
-PUMA	NY, 03310	ResStockArguments
-PUMA	NY, 03311	ResStockArguments
-PUMA	NY, 03312	ResStockArguments
-PUMA	NY, 03313	ResStockArguments
-PUMA	NY, 03701	ResStockArguments
-PUMA	NY, 03702	ResStockArguments
-PUMA	NY, 03703	ResStockArguments
-PUMA	NY, 03704	ResStockArguments
-PUMA	NY, 03705	ResStockArguments
-PUMA	NY, 03706	ResStockArguments
-PUMA	NY, 03707	ResStockArguments
-PUMA	NY, 03708	ResStockArguments
-PUMA	NY, 03709	ResStockArguments
-PUMA	NY, 03710	ResStockArguments
-PUMA	NY, 03801	ResStockArguments
-PUMA	NY, 03802	ResStockArguments
-PUMA	NY, 03803	ResStockArguments
-PUMA	NY, 03804	ResStockArguments
-PUMA	NY, 03805	ResStockArguments
-PUMA	NY, 03806	ResStockArguments
-PUMA	NY, 03807	ResStockArguments
-PUMA	NY, 03808	ResStockArguments
-PUMA	NY, 03809	ResStockArguments
-PUMA	NY, 03810	ResStockArguments
-PUMA	NY, 03901	ResStockArguments
-PUMA	NY, 03902	ResStockArguments
-PUMA	NY, 03903	ResStockArguments
-PUMA	NY, 04001	ResStockArguments
-PUMA	NY, 04002	ResStockArguments
-PUMA	NY, 04003	ResStockArguments
-PUMA	NY, 04004	ResStockArguments
-PUMA	NY, 04005	ResStockArguments
-PUMA	NY, 04006	ResStockArguments
-PUMA	NY, 04007	ResStockArguments
-PUMA	NY, 04008	ResStockArguments
-PUMA	NY, 04009	ResStockArguments
-PUMA	NY, 04010	ResStockArguments
-PUMA	NY, 04011	ResStockArguments
-PUMA	NY, 04012	ResStockArguments
-PUMA	NY, 04013	ResStockArguments
-PUMA	NY, 04014	ResStockArguments
-PUMA	NY, 04015	ResStockArguments
-PUMA	NY, 04016	ResStockArguments
-PUMA	NY, 04017	ResStockArguments
-PUMA	NY, 04018	ResStockArguments
-PUMA	NY, 04101	ResStockArguments
-PUMA	NY, 04102	ResStockArguments
-PUMA	NY, 04103	ResStockArguments
-PUMA	NY, 04104	ResStockArguments
-PUMA	NY, 04105	ResStockArguments
-PUMA	NY, 04106	ResStockArguments
-PUMA	NY, 04107	ResStockArguments
-PUMA	NY, 04108	ResStockArguments
-PUMA	NY, 04109	ResStockArguments
-PUMA	NY, 04110	ResStockArguments
-PUMA	NY, 04111	ResStockArguments
-PUMA	NY, 04112	ResStockArguments
-PUMA	NY, 04113	ResStockArguments
-PUMA	NY, 04114	ResStockArguments
-PUMA	OH, 00100	ResStockArguments
-PUMA	OH, 00200	ResStockArguments
-PUMA	OH, 00300	ResStockArguments
-PUMA	OH, 00400	ResStockArguments
-PUMA	OH, 00500	ResStockArguments
-PUMA	OH, 00600	ResStockArguments
-PUMA	OH, 00700	ResStockArguments
-PUMA	OH, 00801	ResStockArguments
-PUMA	OH, 00802	ResStockArguments
-PUMA	OH, 00901	ResStockArguments
-PUMA	OH, 00902	ResStockArguments
-PUMA	OH, 00903	ResStockArguments
-PUMA	OH, 00904	ResStockArguments
-PUMA	OH, 00905	ResStockArguments
-PUMA	OH, 00906	ResStockArguments
-PUMA	OH, 00907	ResStockArguments
-PUMA	OH, 00908	ResStockArguments
-PUMA	OH, 00909	ResStockArguments
-PUMA	OH, 00910	ResStockArguments
-PUMA	OH, 01000	ResStockArguments
-PUMA	OH, 01100	ResStockArguments
-PUMA	OH, 01200	ResStockArguments
-PUMA	OH, 01300	ResStockArguments
-PUMA	OH, 01400	ResStockArguments
-PUMA	OH, 01500	ResStockArguments
-PUMA	OH, 01600	ResStockArguments
-PUMA	OH, 01700	ResStockArguments
-PUMA	OH, 01801	ResStockArguments
-PUMA	OH, 01802	ResStockArguments
-PUMA	OH, 01803	ResStockArguments
-PUMA	OH, 01804	ResStockArguments
-PUMA	OH, 01805	ResStockArguments
-PUMA	OH, 01900	ResStockArguments
-PUMA	OH, 02000	ResStockArguments
-PUMA	OH, 02100	ResStockArguments
-PUMA	OH, 02200	ResStockArguments
-PUMA	OH, 02300	ResStockArguments
-PUMA	OH, 02400	ResStockArguments
-PUMA	OH, 02500	ResStockArguments
-PUMA	OH, 02600	ResStockArguments
-PUMA	OH, 02700	ResStockArguments
-PUMA	OH, 02800	ResStockArguments
-PUMA	OH, 02900	ResStockArguments
-PUMA	OH, 03000	ResStockArguments
-PUMA	OH, 03100	ResStockArguments
-PUMA	OH, 03200	ResStockArguments
-PUMA	OH, 03300	ResStockArguments
-PUMA	OH, 03400	ResStockArguments
-PUMA	OH, 03500	ResStockArguments
-PUMA	OH, 03600	ResStockArguments
-PUMA	OH, 03700	ResStockArguments
-PUMA	OH, 03800	ResStockArguments
-PUMA	OH, 03900	ResStockArguments
-PUMA	OH, 04000	ResStockArguments
-PUMA	OH, 04101	ResStockArguments
-PUMA	OH, 04102	ResStockArguments
-PUMA	OH, 04103	ResStockArguments
-PUMA	OH, 04104	ResStockArguments
-PUMA	OH, 04105	ResStockArguments
-PUMA	OH, 04106	ResStockArguments
-PUMA	OH, 04107	ResStockArguments
-PUMA	OH, 04108	ResStockArguments
-PUMA	OH, 04109	ResStockArguments
-PUMA	OH, 04110	ResStockArguments
-PUMA	OH, 04111	ResStockArguments
-PUMA	OH, 04200	ResStockArguments
-PUMA	OH, 04300	ResStockArguments
-PUMA	OH, 04400	ResStockArguments
-PUMA	OH, 04500	ResStockArguments
-PUMA	OH, 04601	ResStockArguments
-PUMA	OH, 04602	ResStockArguments
-PUMA	OH, 04603	ResStockArguments
-PUMA	OH, 04604	ResStockArguments
-PUMA	OH, 04700	ResStockArguments
-PUMA	OH, 04800	ResStockArguments
-PUMA	OH, 04900	ResStockArguments
-PUMA	OH, 05000	ResStockArguments
-PUMA	OH, 05100	ResStockArguments
-PUMA	OH, 05200	ResStockArguments
-PUMA	OH, 05301	ResStockArguments
-PUMA	OH, 05302	ResStockArguments
-PUMA	OH, 05401	ResStockArguments
-PUMA	OH, 05402	ResStockArguments
-PUMA	OH, 05403	ResStockArguments
-PUMA	OH, 05501	ResStockArguments
-PUMA	OH, 05502	ResStockArguments
-PUMA	OH, 05503	ResStockArguments
-PUMA	OH, 05504	ResStockArguments
-PUMA	OH, 05505	ResStockArguments
-PUMA	OH, 05506	ResStockArguments
-PUMA	OH, 05507	ResStockArguments
-PUMA	OH, 05600	ResStockArguments
-PUMA	OH, 05700	ResStockArguments
-PUMA	OK, 00100	ResStockArguments
-PUMA	OK, 00200	ResStockArguments
-PUMA	OK, 00300	ResStockArguments
-PUMA	OK, 00400	ResStockArguments
-PUMA	OK, 00500	ResStockArguments
-PUMA	OK, 00601	ResStockArguments
-PUMA	OK, 00602	ResStockArguments
-PUMA	OK, 00701	ResStockArguments
-PUMA	OK, 00702	ResStockArguments
-PUMA	OK, 00800	ResStockArguments
-PUMA	OK, 00900	ResStockArguments
-PUMA	OK, 01001	ResStockArguments
-PUMA	OK, 01002	ResStockArguments
-PUMA	OK, 01003	ResStockArguments
-PUMA	OK, 01004	ResStockArguments
-PUMA	OK, 01005	ResStockArguments
-PUMA	OK, 01006	ResStockArguments
-PUMA	OK, 01101	ResStockArguments
-PUMA	OK, 01102	ResStockArguments
-PUMA	OK, 01201	ResStockArguments
-PUMA	OK, 01202	ResStockArguments
-PUMA	OK, 01203	ResStockArguments
-PUMA	OK, 01204	ResStockArguments
-PUMA	OK, 01301	ResStockArguments
-PUMA	OK, 01302	ResStockArguments
-PUMA	OK, 01400	ResStockArguments
-PUMA	OK, 01501	ResStockArguments
-PUMA	OK, 01601	ResStockArguments
-PUMA	OR, 00100	ResStockArguments
-PUMA	OR, 00200	ResStockArguments
-PUMA	OR, 00300	ResStockArguments
-PUMA	OR, 00400	ResStockArguments
-PUMA	OR, 00500	ResStockArguments
-PUMA	OR, 00600	ResStockArguments
-PUMA	OR, 00703	ResStockArguments
-PUMA	OR, 00704	ResStockArguments
-PUMA	OR, 00705	ResStockArguments
-PUMA	OR, 00800	ResStockArguments
-PUMA	OR, 00901	ResStockArguments
-PUMA	OR, 00902	ResStockArguments
-PUMA	OR, 01000	ResStockArguments
-PUMA	OR, 01103	ResStockArguments
-PUMA	OR, 01104	ResStockArguments
-PUMA	OR, 01105	ResStockArguments
-PUMA	OR, 01200	ResStockArguments
-PUMA	OR, 01301	ResStockArguments
-PUMA	OR, 01302	ResStockArguments
-PUMA	OR, 01303	ResStockArguments
-PUMA	OR, 01305	ResStockArguments
-PUMA	OR, 01314	ResStockArguments
-PUMA	OR, 01316	ResStockArguments
-PUMA	OR, 01317	ResStockArguments
-PUMA	OR, 01318	ResStockArguments
-PUMA	OR, 01319	ResStockArguments
-PUMA	OR, 01320	ResStockArguments
-PUMA	OR, 01321	ResStockArguments
-PUMA	OR, 01322	ResStockArguments
-PUMA	OR, 01323	ResStockArguments
-PUMA	OR, 01324	ResStockArguments
-PUMA	PA, 00101	ResStockArguments
-PUMA	PA, 00102	ResStockArguments
-PUMA	PA, 00200	ResStockArguments
-PUMA	PA, 00300	ResStockArguments
-PUMA	PA, 00400	ResStockArguments
-PUMA	PA, 00500	ResStockArguments
-PUMA	PA, 00600	ResStockArguments
-PUMA	PA, 00701	ResStockArguments
-PUMA	PA, 00702	ResStockArguments
-PUMA	PA, 00801	ResStockArguments
-PUMA	PA, 00802	ResStockArguments
-PUMA	PA, 00803	ResStockArguments
-PUMA	PA, 00900	ResStockArguments
-PUMA	PA, 01000	ResStockArguments
-PUMA	PA, 01100	ResStockArguments
-PUMA	PA, 01200	ResStockArguments
-PUMA	PA, 01300	ResStockArguments
-PUMA	PA, 01400	ResStockArguments
-PUMA	PA, 01501	ResStockArguments
-PUMA	PA, 01502	ResStockArguments
-PUMA	PA, 01600	ResStockArguments
-PUMA	PA, 01701	ResStockArguments
-PUMA	PA, 01702	ResStockArguments
-PUMA	PA, 01801	ResStockArguments
-PUMA	PA, 01802	ResStockArguments
-PUMA	PA, 01803	ResStockArguments
-PUMA	PA, 01804	ResStockArguments
-PUMA	PA, 01805	ResStockArguments
-PUMA	PA, 01806	ResStockArguments
-PUMA	PA, 01807	ResStockArguments
-PUMA	PA, 01900	ResStockArguments
-PUMA	PA, 02001	ResStockArguments
-PUMA	PA, 02002	ResStockArguments
-PUMA	PA, 02003	ResStockArguments
-PUMA	PA, 02100	ResStockArguments
-PUMA	PA, 02200	ResStockArguments
-PUMA	PA, 02301	ResStockArguments
-PUMA	PA, 02302	ResStockArguments
-PUMA	PA, 02401	ResStockArguments
-PUMA	PA, 02402	ResStockArguments
-PUMA	PA, 02500	ResStockArguments
-PUMA	PA, 02600	ResStockArguments
-PUMA	PA, 02701	ResStockArguments
-PUMA	PA, 02702	ResStockArguments
-PUMA	PA, 02703	ResStockArguments
-PUMA	PA, 02801	ResStockArguments
-PUMA	PA, 02802	ResStockArguments
-PUMA	PA, 02803	ResStockArguments
-PUMA	PA, 02901	ResStockArguments
-PUMA	PA, 02902	ResStockArguments
-PUMA	PA, 03001	ResStockArguments
-PUMA	PA, 03002	ResStockArguments
-PUMA	PA, 03003	ResStockArguments
-PUMA	PA, 03004	ResStockArguments
-PUMA	PA, 03101	ResStockArguments
-PUMA	PA, 03102	ResStockArguments
-PUMA	PA, 03103	ResStockArguments
-PUMA	PA, 03104	ResStockArguments
-PUMA	PA, 03105	ResStockArguments
-PUMA	PA, 03106	ResStockArguments
-PUMA	PA, 03201	ResStockArguments
-PUMA	PA, 03202	ResStockArguments
-PUMA	PA, 03203	ResStockArguments
-PUMA	PA, 03204	ResStockArguments
-PUMA	PA, 03205	ResStockArguments
-PUMA	PA, 03206	ResStockArguments
-PUMA	PA, 03207	ResStockArguments
-PUMA	PA, 03208	ResStockArguments
-PUMA	PA, 03209	ResStockArguments
-PUMA	PA, 03210	ResStockArguments
-PUMA	PA, 03211	ResStockArguments
-PUMA	PA, 03301	ResStockArguments
-PUMA	PA, 03302	ResStockArguments
-PUMA	PA, 03303	ResStockArguments
-PUMA	PA, 03304	ResStockArguments
-PUMA	PA, 03401	ResStockArguments
-PUMA	PA, 03402	ResStockArguments
-PUMA	PA, 03403	ResStockArguments
-PUMA	PA, 03404	ResStockArguments
-PUMA	PA, 03501	ResStockArguments
-PUMA	PA, 03502	ResStockArguments
-PUMA	PA, 03503	ResStockArguments
-PUMA	PA, 03504	ResStockArguments
-PUMA	PA, 03601	ResStockArguments
-PUMA	PA, 03602	ResStockArguments
-PUMA	PA, 03603	ResStockArguments
-PUMA	PA, 03701	ResStockArguments
-PUMA	PA, 03702	ResStockArguments
-PUMA	PA, 03800	ResStockArguments
-PUMA	PA, 03900	ResStockArguments
-PUMA	PA, 04001	ResStockArguments
-PUMA	PA, 04002	ResStockArguments
-PUMA	RI, 00101	ResStockArguments
-PUMA	RI, 00102	ResStockArguments
-PUMA	RI, 00103	ResStockArguments
-PUMA	RI, 00104	ResStockArguments
-PUMA	RI, 00201	ResStockArguments
-PUMA	RI, 00300	ResStockArguments
-PUMA	RI, 00400	ResStockArguments
-PUMA	SC, 00101	ResStockArguments
-PUMA	SC, 00102	ResStockArguments
-PUMA	SC, 00103	ResStockArguments
-PUMA	SC, 00104	ResStockArguments
-PUMA	SC, 00105	ResStockArguments
-PUMA	SC, 00200	ResStockArguments
-PUMA	SC, 00301	ResStockArguments
-PUMA	SC, 00302	ResStockArguments
-PUMA	SC, 00400	ResStockArguments
-PUMA	SC, 00501	ResStockArguments
-PUMA	SC, 00502	ResStockArguments
-PUMA	SC, 00601	ResStockArguments
-PUMA	SC, 00602	ResStockArguments
-PUMA	SC, 00603	ResStockArguments
-PUMA	SC, 00604	ResStockArguments
-PUMA	SC, 00605	ResStockArguments
-PUMA	SC, 00700	ResStockArguments
-PUMA	SC, 00800	ResStockArguments
-PUMA	SC, 00900	ResStockArguments
-PUMA	SC, 01000	ResStockArguments
-PUMA	SC, 01101	ResStockArguments
-PUMA	SC, 01102	ResStockArguments
-PUMA	SC, 01201	ResStockArguments
-PUMA	SC, 01202	ResStockArguments
-PUMA	SC, 01203	ResStockArguments
-PUMA	SC, 01204	ResStockArguments
-PUMA	SC, 01300	ResStockArguments
-PUMA	SC, 01400	ResStockArguments
-PUMA	SC, 01500	ResStockArguments
-PUMA	SC, 01600	ResStockArguments
-PUMA	SD, 00100	ResStockArguments
-PUMA	SD, 00200	ResStockArguments
-PUMA	SD, 00300	ResStockArguments
-PUMA	SD, 00400	ResStockArguments
-PUMA	SD, 00500	ResStockArguments
-PUMA	SD, 00600	ResStockArguments
-PUMA	TN, 00100	ResStockArguments
-PUMA	TN, 00200	ResStockArguments
-PUMA	TN, 00300	ResStockArguments
-PUMA	TN, 00400	ResStockArguments
-PUMA	TN, 00500	ResStockArguments
-PUMA	TN, 00600	ResStockArguments
-PUMA	TN, 00700	ResStockArguments
-PUMA	TN, 00800	ResStockArguments
-PUMA	TN, 00900	ResStockArguments
-PUMA	TN, 01000	ResStockArguments
-PUMA	TN, 01100	ResStockArguments
-PUMA	TN, 01200	ResStockArguments
-PUMA	TN, 01300	ResStockArguments
-PUMA	TN, 01400	ResStockArguments
-PUMA	TN, 01500	ResStockArguments
-PUMA	TN, 01601	ResStockArguments
-PUMA	TN, 01602	ResStockArguments
-PUMA	TN, 01603	ResStockArguments
-PUMA	TN, 01604	ResStockArguments
-PUMA	TN, 01700	ResStockArguments
-PUMA	TN, 01800	ResStockArguments
-PUMA	TN, 01900	ResStockArguments
-PUMA	TN, 02001	ResStockArguments
-PUMA	TN, 02002	ResStockArguments
-PUMA	TN, 02003	ResStockArguments
-PUMA	TN, 02100	ResStockArguments
-PUMA	TN, 02200	ResStockArguments
-PUMA	TN, 02300	ResStockArguments
-PUMA	TN, 02401	ResStockArguments
-PUMA	TN, 02402	ResStockArguments
-PUMA	TN, 02501	ResStockArguments
-PUMA	TN, 02502	ResStockArguments
-PUMA	TN, 02503	ResStockArguments
-PUMA	TN, 02504	ResStockArguments
-PUMA	TN, 02505	ResStockArguments
-PUMA	TN, 02600	ResStockArguments
-PUMA	TN, 02700	ResStockArguments
-PUMA	TN, 02800	ResStockArguments
-PUMA	TN, 02900	ResStockArguments
-PUMA	TN, 03000	ResStockArguments
-PUMA	TN, 03100	ResStockArguments
-PUMA	TN, 03201	ResStockArguments
-PUMA	TN, 03202	ResStockArguments
-PUMA	TN, 03203	ResStockArguments
-PUMA	TN, 03204	ResStockArguments
-PUMA	TN, 03205	ResStockArguments
-PUMA	TN, 03206	ResStockArguments
-PUMA	TN, 03207	ResStockArguments
-PUMA	TN, 03208	ResStockArguments
-PUMA	TX, 00100	ResStockArguments
-PUMA	TX, 00200	ResStockArguments
-PUMA	TX, 00300	ResStockArguments
-PUMA	TX, 00400	ResStockArguments
-PUMA	TX, 00501	ResStockArguments
-PUMA	TX, 00502	ResStockArguments
-PUMA	TX, 00600	ResStockArguments
-PUMA	TX, 00700	ResStockArguments
-PUMA	TX, 00800	ResStockArguments
-PUMA	TX, 00900	ResStockArguments
-PUMA	TX, 01000	ResStockArguments
-PUMA	TX, 01100	ResStockArguments
-PUMA	TX, 01200	ResStockArguments
-PUMA	TX, 01300	ResStockArguments
-PUMA	TX, 01400	ResStockArguments
-PUMA	TX, 01501	ResStockArguments
-PUMA	TX, 01502	ResStockArguments
-PUMA	TX, 01600	ResStockArguments
-PUMA	TX, 01700	ResStockArguments
-PUMA	TX, 01800	ResStockArguments
-PUMA	TX, 01901	ResStockArguments
-PUMA	TX, 01902	ResStockArguments
-PUMA	TX, 01903	ResStockArguments
-PUMA	TX, 01904	ResStockArguments
-PUMA	TX, 01905	ResStockArguments
-PUMA	TX, 01906	ResStockArguments
-PUMA	TX, 01907	ResStockArguments
-PUMA	TX, 02001	ResStockArguments
-PUMA	TX, 02002	ResStockArguments
-PUMA	TX, 02003	ResStockArguments
-PUMA	TX, 02004	ResStockArguments
-PUMA	TX, 02005	ResStockArguments
-PUMA	TX, 02006	ResStockArguments
-PUMA	TX, 02101	ResStockArguments
-PUMA	TX, 02102	ResStockArguments
-PUMA	TX, 02200	ResStockArguments
-PUMA	TX, 02301	ResStockArguments
-PUMA	TX, 02302	ResStockArguments
-PUMA	TX, 02303	ResStockArguments
-PUMA	TX, 02304	ResStockArguments
-PUMA	TX, 02305	ResStockArguments
-PUMA	TX, 02306	ResStockArguments
-PUMA	TX, 02307	ResStockArguments
-PUMA	TX, 02308	ResStockArguments
-PUMA	TX, 02309	ResStockArguments
-PUMA	TX, 02310	ResStockArguments
-PUMA	TX, 02311	ResStockArguments
-PUMA	TX, 02312	ResStockArguments
-PUMA	TX, 02313	ResStockArguments
-PUMA	TX, 02314	ResStockArguments
-PUMA	TX, 02315	ResStockArguments
-PUMA	TX, 02316	ResStockArguments
-PUMA	TX, 02317	ResStockArguments
-PUMA	TX, 02318	ResStockArguments
-PUMA	TX, 02319	ResStockArguments
-PUMA	TX, 02320	ResStockArguments
-PUMA	TX, 02321	ResStockArguments
-PUMA	TX, 02322	ResStockArguments
-PUMA	TX, 02400	ResStockArguments
-PUMA	TX, 02501	ResStockArguments
-PUMA	TX, 02502	ResStockArguments
-PUMA	TX, 02503	ResStockArguments
-PUMA	TX, 02504	ResStockArguments
-PUMA	TX, 02505	ResStockArguments
-PUMA	TX, 02506	ResStockArguments
-PUMA	TX, 02507	ResStockArguments
-PUMA	TX, 02508	ResStockArguments
-PUMA	TX, 02509	ResStockArguments
-PUMA	TX, 02510	ResStockArguments
-PUMA	TX, 02511	ResStockArguments
-PUMA	TX, 02512	ResStockArguments
-PUMA	TX, 02513	ResStockArguments
-PUMA	TX, 02514	ResStockArguments
-PUMA	TX, 02515	ResStockArguments
-PUMA	TX, 02516	ResStockArguments
-PUMA	TX, 02600	ResStockArguments
-PUMA	TX, 02700	ResStockArguments
-PUMA	TX, 02800	ResStockArguments
-PUMA	TX, 02900	ResStockArguments
-PUMA	TX, 03000	ResStockArguments
-PUMA	TX, 03100	ResStockArguments
-PUMA	TX, 03200	ResStockArguments
-PUMA	TX, 03301	ResStockArguments
-PUMA	TX, 03302	ResStockArguments
-PUMA	TX, 03303	ResStockArguments
-PUMA	TX, 03304	ResStockArguments
-PUMA	TX, 03305	ResStockArguments
-PUMA	TX, 03306	ResStockArguments
-PUMA	TX, 03400	ResStockArguments
-PUMA	TX, 03501	ResStockArguments
-PUMA	TX, 03502	ResStockArguments
-PUMA	TX, 03601	ResStockArguments
-PUMA	TX, 03602	ResStockArguments
-PUMA	TX, 03700	ResStockArguments
-PUMA	TX, 03801	ResStockArguments
-PUMA	TX, 03802	ResStockArguments
-PUMA	TX, 03900	ResStockArguments
-PUMA	TX, 04000	ResStockArguments
-PUMA	TX, 04100	ResStockArguments
-PUMA	TX, 04200	ResStockArguments
-PUMA	TX, 04301	ResStockArguments
-PUMA	TX, 04302	ResStockArguments
-PUMA	TX, 04400	ResStockArguments
-PUMA	TX, 04501	ResStockArguments
-PUMA	TX, 04502	ResStockArguments
-PUMA	TX, 04503	ResStockArguments
-PUMA	TX, 04504	ResStockArguments
-PUMA	TX, 04601	ResStockArguments
-PUMA	TX, 04602	ResStockArguments
-PUMA	TX, 04603	ResStockArguments
-PUMA	TX, 04604	ResStockArguments
-PUMA	TX, 04605	ResStockArguments
-PUMA	TX, 04606	ResStockArguments
-PUMA	TX, 04607	ResStockArguments
-PUMA	TX, 04608	ResStockArguments
-PUMA	TX, 04609	ResStockArguments
-PUMA	TX, 04610	ResStockArguments
-PUMA	TX, 04611	ResStockArguments
-PUMA	TX, 04612	ResStockArguments
-PUMA	TX, 04613	ResStockArguments
-PUMA	TX, 04614	ResStockArguments
-PUMA	TX, 04615	ResStockArguments
-PUMA	TX, 04616	ResStockArguments
-PUMA	TX, 04617	ResStockArguments
-PUMA	TX, 04618	ResStockArguments
-PUMA	TX, 04619	ResStockArguments
-PUMA	TX, 04620	ResStockArguments
-PUMA	TX, 04621	ResStockArguments
-PUMA	TX, 04622	ResStockArguments
-PUMA	TX, 04623	ResStockArguments
-PUMA	TX, 04624	ResStockArguments
-PUMA	TX, 04625	ResStockArguments
-PUMA	TX, 04626	ResStockArguments
-PUMA	TX, 04627	ResStockArguments
-PUMA	TX, 04628	ResStockArguments
-PUMA	TX, 04629	ResStockArguments
-PUMA	TX, 04630	ResStockArguments
-PUMA	TX, 04631	ResStockArguments
-PUMA	TX, 04632	ResStockArguments
-PUMA	TX, 04633	ResStockArguments
-PUMA	TX, 04634	ResStockArguments
-PUMA	TX, 04635	ResStockArguments
-PUMA	TX, 04636	ResStockArguments
-PUMA	TX, 04637	ResStockArguments
-PUMA	TX, 04638	ResStockArguments
-PUMA	TX, 04701	ResStockArguments
-PUMA	TX, 04702	ResStockArguments
-PUMA	TX, 04801	ResStockArguments
-PUMA	TX, 04802	ResStockArguments
-PUMA	TX, 04803	ResStockArguments
-PUMA	TX, 04901	ResStockArguments
-PUMA	TX, 04902	ResStockArguments
-PUMA	TX, 04903	ResStockArguments
-PUMA	TX, 04904	ResStockArguments
-PUMA	TX, 04905	ResStockArguments
-PUMA	TX, 05000	ResStockArguments
-PUMA	TX, 05100	ResStockArguments
-PUMA	TX, 05201	ResStockArguments
-PUMA	TX, 05202	ResStockArguments
-PUMA	TX, 05203	ResStockArguments
-PUMA	TX, 05204	ResStockArguments
-PUMA	TX, 05301	ResStockArguments
-PUMA	TX, 05302	ResStockArguments
-PUMA	TX, 05303	ResStockArguments
-PUMA	TX, 05304	ResStockArguments
-PUMA	TX, 05305	ResStockArguments
-PUMA	TX, 05306	ResStockArguments
-PUMA	TX, 05307	ResStockArguments
-PUMA	TX, 05308	ResStockArguments
-PUMA	TX, 05309	ResStockArguments
-PUMA	TX, 05400	ResStockArguments
-PUMA	TX, 05500	ResStockArguments
-PUMA	TX, 05600	ResStockArguments
-PUMA	TX, 05700	ResStockArguments
-PUMA	TX, 05800	ResStockArguments
-PUMA	TX, 05901	ResStockArguments
-PUMA	TX, 05902	ResStockArguments
-PUMA	TX, 05903	ResStockArguments
-PUMA	TX, 05904	ResStockArguments
-PUMA	TX, 05905	ResStockArguments
-PUMA	TX, 05906	ResStockArguments
-PUMA	TX, 05907	ResStockArguments
-PUMA	TX, 05908	ResStockArguments
-PUMA	TX, 05909	ResStockArguments
-PUMA	TX, 05910	ResStockArguments
-PUMA	TX, 05911	ResStockArguments
-PUMA	TX, 05912	ResStockArguments
-PUMA	TX, 05913	ResStockArguments
-PUMA	TX, 05914	ResStockArguments
-PUMA	TX, 05915	ResStockArguments
-PUMA	TX, 05916	ResStockArguments
-PUMA	TX, 06000	ResStockArguments
-PUMA	TX, 06100	ResStockArguments
-PUMA	TX, 06200	ResStockArguments
-PUMA	TX, 06301	ResStockArguments
-PUMA	TX, 06302	ResStockArguments
-PUMA	TX, 06400	ResStockArguments
-PUMA	TX, 06500	ResStockArguments
-PUMA	TX, 06601	ResStockArguments
-PUMA	TX, 06602	ResStockArguments
-PUMA	TX, 06603	ResStockArguments
-PUMA	TX, 06701	ResStockArguments
-PUMA	TX, 06702	ResStockArguments
-PUMA	TX, 06703	ResStockArguments
-PUMA	TX, 06801	ResStockArguments
-PUMA	TX, 06802	ResStockArguments
-PUMA	TX, 06803	ResStockArguments
-PUMA	TX, 06804	ResStockArguments
-PUMA	TX, 06805	ResStockArguments
-PUMA	TX, 06806	ResStockArguments
-PUMA	TX, 06807	ResStockArguments
-PUMA	TX, 06900	ResStockArguments
-PUMA	UT, 03001	ResStockArguments
-PUMA	UT, 05001	ResStockArguments
-PUMA	UT, 11001	ResStockArguments
-PUMA	UT, 11002	ResStockArguments
-PUMA	UT, 13001	ResStockArguments
-PUMA	UT, 21001	ResStockArguments
-PUMA	UT, 35001	ResStockArguments
-PUMA	UT, 35002	ResStockArguments
-PUMA	UT, 35003	ResStockArguments
-PUMA	UT, 35004	ResStockArguments
-PUMA	UT, 35005	ResStockArguments
-PUMA	UT, 35006	ResStockArguments
-PUMA	UT, 35007	ResStockArguments
-PUMA	UT, 35008	ResStockArguments
-PUMA	UT, 35009	ResStockArguments
-PUMA	UT, 49001	ResStockArguments
-PUMA	UT, 49002	ResStockArguments
-PUMA	UT, 49003	ResStockArguments
-PUMA	UT, 49004	ResStockArguments
-PUMA	UT, 53001	ResStockArguments
-PUMA	UT, 57001	ResStockArguments
-PUMA	UT, 57002	ResStockArguments
-PUMA	VA, 01301	ResStockArguments
-PUMA	VA, 01302	ResStockArguments
-PUMA	VA, 04101	ResStockArguments
-PUMA	VA, 04102	ResStockArguments
-PUMA	VA, 04103	ResStockArguments
-PUMA	VA, 10701	ResStockArguments
-PUMA	VA, 10702	ResStockArguments
-PUMA	VA, 10703	ResStockArguments
-PUMA	VA, 51010	ResStockArguments
-PUMA	VA, 51020	ResStockArguments
-PUMA	VA, 51040	ResStockArguments
-PUMA	VA, 51044	ResStockArguments
-PUMA	VA, 51045	ResStockArguments
-PUMA	VA, 51080	ResStockArguments
-PUMA	VA, 51084	ResStockArguments
-PUMA	VA, 51085	ResStockArguments
-PUMA	VA, 51087	ResStockArguments
-PUMA	VA, 51089	ResStockArguments
-PUMA	VA, 51090	ResStockArguments
-PUMA	VA, 51095	ResStockArguments
-PUMA	VA, 51096	ResStockArguments
-PUMA	VA, 51097	ResStockArguments
-PUMA	VA, 51105	ResStockArguments
-PUMA	VA, 51110	ResStockArguments
-PUMA	VA, 51115	ResStockArguments
-PUMA	VA, 51120	ResStockArguments
-PUMA	VA, 51125	ResStockArguments
-PUMA	VA, 51135	ResStockArguments
-PUMA	VA, 51145	ResStockArguments
-PUMA	VA, 51154	ResStockArguments
-PUMA	VA, 51155	ResStockArguments
-PUMA	VA, 51164	ResStockArguments
-PUMA	VA, 51165	ResStockArguments
-PUMA	VA, 51167	ResStockArguments
-PUMA	VA, 51175	ResStockArguments
-PUMA	VA, 51186	ResStockArguments
-PUMA	VA, 51206	ResStockArguments
-PUMA	VA, 51215	ResStockArguments
-PUMA	VA, 51224	ResStockArguments
-PUMA	VA, 51225	ResStockArguments
-PUMA	VA, 51235	ResStockArguments
-PUMA	VA, 51244	ResStockArguments
-PUMA	VA, 51245	ResStockArguments
-PUMA	VA, 51246	ResStockArguments
-PUMA	VA, 51255	ResStockArguments
-PUMA	VA, 55001	ResStockArguments
-PUMA	VA, 55002	ResStockArguments
-PUMA	VA, 59301	ResStockArguments
-PUMA	VA, 59302	ResStockArguments
-PUMA	VA, 59303	ResStockArguments
-PUMA	VA, 59304	ResStockArguments
-PUMA	VA, 59305	ResStockArguments
-PUMA	VA, 59306	ResStockArguments
-PUMA	VA, 59307	ResStockArguments
-PUMA	VA, 59308	ResStockArguments
-PUMA	VA, 59309	ResStockArguments
-PUMA	VT, 00100	ResStockArguments
-PUMA	VT, 00200	ResStockArguments
-PUMA	VT, 00300	ResStockArguments
-PUMA	VT, 00400	ResStockArguments
-PUMA	WA, 10100	ResStockArguments
-PUMA	WA, 10200	ResStockArguments
-PUMA	WA, 10300	ResStockArguments
-PUMA	WA, 10400	ResStockArguments
-PUMA	WA, 10501	ResStockArguments
-PUMA	WA, 10502	ResStockArguments
-PUMA	WA, 10503	ResStockArguments
-PUMA	WA, 10504	ResStockArguments
-PUMA	WA, 10600	ResStockArguments
-PUMA	WA, 10701	ResStockArguments
-PUMA	WA, 10702	ResStockArguments
-PUMA	WA, 10703	ResStockArguments
-PUMA	WA, 10800	ResStockArguments
-PUMA	WA, 10901	ResStockArguments
-PUMA	WA, 10902	ResStockArguments
-PUMA	WA, 11000	ResStockArguments
-PUMA	WA, 11101	ResStockArguments
-PUMA	WA, 11102	ResStockArguments
-PUMA	WA, 11103	ResStockArguments
-PUMA	WA, 11104	ResStockArguments
-PUMA	WA, 11200	ResStockArguments
-PUMA	WA, 11300	ResStockArguments
-PUMA	WA, 11401	ResStockArguments
-PUMA	WA, 11402	ResStockArguments
-PUMA	WA, 11501	ResStockArguments
-PUMA	WA, 11502	ResStockArguments
-PUMA	WA, 11503	ResStockArguments
-PUMA	WA, 11504	ResStockArguments
-PUMA	WA, 11505	ResStockArguments
-PUMA	WA, 11506	ResStockArguments
-PUMA	WA, 11507	ResStockArguments
-PUMA	WA, 11601	ResStockArguments
-PUMA	WA, 11602	ResStockArguments
-PUMA	WA, 11603	ResStockArguments
-PUMA	WA, 11604	ResStockArguments
-PUMA	WA, 11605	ResStockArguments
-PUMA	WA, 11606	ResStockArguments
-PUMA	WA, 11607	ResStockArguments
-PUMA	WA, 11608	ResStockArguments
-PUMA	WA, 11609	ResStockArguments
-PUMA	WA, 11610	ResStockArguments
-PUMA	WA, 11611	ResStockArguments
-PUMA	WA, 11612	ResStockArguments
-PUMA	WA, 11613	ResStockArguments
-PUMA	WA, 11614	ResStockArguments
-PUMA	WA, 11615	ResStockArguments
-PUMA	WA, 11616	ResStockArguments
-PUMA	WA, 11701	ResStockArguments
-PUMA	WA, 11702	ResStockArguments
-PUMA	WA, 11703	ResStockArguments
-PUMA	WA, 11704	ResStockArguments
-PUMA	WA, 11705	ResStockArguments
-PUMA	WA, 11706	ResStockArguments
-PUMA	WA, 11801	ResStockArguments
-PUMA	WA, 11802	ResStockArguments
-PUMA	WA, 11900	ResStockArguments
-PUMA	WI, 00100	ResStockArguments
-PUMA	WI, 00101	ResStockArguments
-PUMA	WI, 00102	ResStockArguments
-PUMA	WI, 00103	ResStockArguments
-PUMA	WI, 00200	ResStockArguments
-PUMA	WI, 00300	ResStockArguments
-PUMA	WI, 00600	ResStockArguments
-PUMA	WI, 00700	ResStockArguments
-PUMA	WI, 00800	ResStockArguments
-PUMA	WI, 00900	ResStockArguments
-PUMA	WI, 01000	ResStockArguments
-PUMA	WI, 01001	ResStockArguments
-PUMA	WI, 01300	ResStockArguments
-PUMA	WI, 01301	ResStockArguments
-PUMA	WI, 01400	ResStockArguments
-PUMA	WI, 01401	ResStockArguments
-PUMA	WI, 01500	ResStockArguments
-PUMA	WI, 01501	ResStockArguments
-PUMA	WI, 01600	ResStockArguments
-PUMA	WI, 01601	ResStockArguments
-PUMA	WI, 02400	ResStockArguments
-PUMA	WI, 02500	ResStockArguments
-PUMA	WI, 10000	ResStockArguments
-PUMA	WI, 20000	ResStockArguments
-PUMA	WI, 30000	ResStockArguments
-PUMA	WI, 40101	ResStockArguments
-PUMA	WI, 40301	ResStockArguments
-PUMA	WI, 40701	ResStockArguments
-PUMA	WI, 41001	ResStockArguments
-PUMA	WI, 41002	ResStockArguments
-PUMA	WI, 41003	ResStockArguments
-PUMA	WI, 41004	ResStockArguments
-PUMA	WI, 41005	ResStockArguments
-PUMA	WI, 50000	ResStockArguments
-PUMA	WI, 55101	ResStockArguments
-PUMA	WI, 55102	ResStockArguments
-PUMA	WI, 55103	ResStockArguments
-PUMA	WI, 70101	ResStockArguments
-PUMA	WI, 70201	ResStockArguments
-PUMA	WI, 70301	ResStockArguments
-PUMA	WV, 00100	ResStockArguments
-PUMA	WV, 00200	ResStockArguments
-PUMA	WV, 00300	ResStockArguments
-PUMA	WV, 00400	ResStockArguments
-PUMA	WV, 00500	ResStockArguments
-PUMA	WV, 00600	ResStockArguments
-PUMA	WV, 00700	ResStockArguments
-PUMA	WV, 00800	ResStockArguments
-PUMA	WV, 00900	ResStockArguments
-PUMA	WV, 01000	ResStockArguments
-PUMA	WV, 01100	ResStockArguments
-PUMA	WV, 01200	ResStockArguments
-PUMA	WV, 01300	ResStockArguments
-PUMA	WY, 00100	ResStockArguments
-PUMA	WY, 00200	ResStockArguments
-PUMA	WY, 00300	ResStockArguments
-PUMA	WY, 00400	ResStockArguments
-PUMA	WY, 00500	ResStockArguments
+PUMA	AK, 00101
+PUMA	AK, 00102
+PUMA	AK, 00200
+PUMA	AK, 00300
+PUMA	AK, 00400
+PUMA	AL, 00100
+PUMA	AL, 00200
+PUMA	AL, 00301
+PUMA	AL, 00302
+PUMA	AL, 00400
+PUMA	AL, 00500
+PUMA	AL, 00600
+PUMA	AL, 00700
+PUMA	AL, 00800
+PUMA	AL, 00900
+PUMA	AL, 01000
+PUMA	AL, 01100
+PUMA	AL, 01200
+PUMA	AL, 01301
+PUMA	AL, 01302
+PUMA	AL, 01303
+PUMA	AL, 01304
+PUMA	AL, 01305
+PUMA	AL, 01400
+PUMA	AL, 01500
+PUMA	AL, 01600
+PUMA	AL, 01700
+PUMA	AL, 01800
+PUMA	AL, 01900
+PUMA	AL, 02000
+PUMA	AL, 02100
+PUMA	AL, 02200
+PUMA	AL, 02300
+PUMA	AL, 02400
+PUMA	AL, 02500
+PUMA	AL, 02600
+PUMA	AL, 02701
+PUMA	AL, 02702
+PUMA	AL, 02703
+PUMA	AR, 00100
+PUMA	AR, 00200
+PUMA	AR, 00300
+PUMA	AR, 00400
+PUMA	AR, 00500
+PUMA	AR, 00600
+PUMA	AR, 00700
+PUMA	AR, 00800
+PUMA	AR, 00900
+PUMA	AR, 01000
+PUMA	AR, 01100
+PUMA	AR, 01200
+PUMA	AR, 01300
+PUMA	AR, 01400
+PUMA	AR, 01500
+PUMA	AR, 01600
+PUMA	AR, 01700
+PUMA	AR, 01800
+PUMA	AR, 01900
+PUMA	AR, 02000
+PUMA	AZ, 00100
+PUMA	AZ, 00101
+PUMA	AZ, 00102
+PUMA	AZ, 00103
+PUMA	AZ, 00104
+PUMA	AZ, 00105
+PUMA	AZ, 00106
+PUMA	AZ, 00107
+PUMA	AZ, 00108
+PUMA	AZ, 00109
+PUMA	AZ, 00110
+PUMA	AZ, 00111
+PUMA	AZ, 00112
+PUMA	AZ, 00113
+PUMA	AZ, 00114
+PUMA	AZ, 00115
+PUMA	AZ, 00116
+PUMA	AZ, 00117
+PUMA	AZ, 00118
+PUMA	AZ, 00119
+PUMA	AZ, 00120
+PUMA	AZ, 00121
+PUMA	AZ, 00122
+PUMA	AZ, 00123
+PUMA	AZ, 00124
+PUMA	AZ, 00125
+PUMA	AZ, 00126
+PUMA	AZ, 00127
+PUMA	AZ, 00128
+PUMA	AZ, 00129
+PUMA	AZ, 00130
+PUMA	AZ, 00131
+PUMA	AZ, 00132
+PUMA	AZ, 00133
+PUMA	AZ, 00134
+PUMA	AZ, 00201
+PUMA	AZ, 00202
+PUMA	AZ, 00203
+PUMA	AZ, 00204
+PUMA	AZ, 00205
+PUMA	AZ, 00206
+PUMA	AZ, 00207
+PUMA	AZ, 00208
+PUMA	AZ, 00209
+PUMA	AZ, 00300
+PUMA	AZ, 00400
+PUMA	AZ, 00500
+PUMA	AZ, 00600
+PUMA	AZ, 00700
+PUMA	AZ, 00800
+PUMA	AZ, 00803
+PUMA	AZ, 00805
+PUMA	AZ, 00807
+PUMA	AZ, 00900
+PUMA	CA, 00101
+PUMA	CA, 00102
+PUMA	CA, 00103
+PUMA	CA, 00104
+PUMA	CA, 00105
+PUMA	CA, 00106
+PUMA	CA, 00107
+PUMA	CA, 00108
+PUMA	CA, 00109
+PUMA	CA, 00110
+PUMA	CA, 00300
+PUMA	CA, 00701
+PUMA	CA, 00702
+PUMA	CA, 01100
+PUMA	CA, 01301
+PUMA	CA, 01302
+PUMA	CA, 01303
+PUMA	CA, 01304
+PUMA	CA, 01305
+PUMA	CA, 01306
+PUMA	CA, 01307
+PUMA	CA, 01308
+PUMA	CA, 01309
+PUMA	CA, 01500
+PUMA	CA, 01700
+PUMA	CA, 01901
+PUMA	CA, 01902
+PUMA	CA, 01903
+PUMA	CA, 01904
+PUMA	CA, 01905
+PUMA	CA, 01906
+PUMA	CA, 01907
+PUMA	CA, 02300
+PUMA	CA, 02500
+PUMA	CA, 02901
+PUMA	CA, 02902
+PUMA	CA, 02903
+PUMA	CA, 02904
+PUMA	CA, 02905
+PUMA	CA, 03100
+PUMA	CA, 03300
+PUMA	CA, 03701
+PUMA	CA, 03702
+PUMA	CA, 03703
+PUMA	CA, 03704
+PUMA	CA, 03705
+PUMA	CA, 03706
+PUMA	CA, 03707
+PUMA	CA, 03708
+PUMA	CA, 03709
+PUMA	CA, 03710
+PUMA	CA, 03711
+PUMA	CA, 03712
+PUMA	CA, 03713
+PUMA	CA, 03714
+PUMA	CA, 03715
+PUMA	CA, 03716
+PUMA	CA, 03717
+PUMA	CA, 03718
+PUMA	CA, 03719
+PUMA	CA, 03720
+PUMA	CA, 03721
+PUMA	CA, 03722
+PUMA	CA, 03723
+PUMA	CA, 03724
+PUMA	CA, 03725
+PUMA	CA, 03726
+PUMA	CA, 03727
+PUMA	CA, 03728
+PUMA	CA, 03729
+PUMA	CA, 03730
+PUMA	CA, 03731
+PUMA	CA, 03732
+PUMA	CA, 03733
+PUMA	CA, 03734
+PUMA	CA, 03735
+PUMA	CA, 03736
+PUMA	CA, 03737
+PUMA	CA, 03738
+PUMA	CA, 03739
+PUMA	CA, 03740
+PUMA	CA, 03741
+PUMA	CA, 03742
+PUMA	CA, 03743
+PUMA	CA, 03744
+PUMA	CA, 03745
+PUMA	CA, 03746
+PUMA	CA, 03747
+PUMA	CA, 03748
+PUMA	CA, 03749
+PUMA	CA, 03750
+PUMA	CA, 03751
+PUMA	CA, 03752
+PUMA	CA, 03753
+PUMA	CA, 03754
+PUMA	CA, 03755
+PUMA	CA, 03756
+PUMA	CA, 03757
+PUMA	CA, 03758
+PUMA	CA, 03759
+PUMA	CA, 03760
+PUMA	CA, 03761
+PUMA	CA, 03762
+PUMA	CA, 03763
+PUMA	CA, 03764
+PUMA	CA, 03765
+PUMA	CA, 03766
+PUMA	CA, 03767
+PUMA	CA, 03768
+PUMA	CA, 03769
+PUMA	CA, 03900
+PUMA	CA, 04101
+PUMA	CA, 04102
+PUMA	CA, 04701
+PUMA	CA, 04702
+PUMA	CA, 05301
+PUMA	CA, 05302
+PUMA	CA, 05303
+PUMA	CA, 05500
+PUMA	CA, 05700
+PUMA	CA, 05901
+PUMA	CA, 05902
+PUMA	CA, 05903
+PUMA	CA, 05904
+PUMA	CA, 05905
+PUMA	CA, 05906
+PUMA	CA, 05907
+PUMA	CA, 05908
+PUMA	CA, 05909
+PUMA	CA, 05910
+PUMA	CA, 05911
+PUMA	CA, 05912
+PUMA	CA, 05913
+PUMA	CA, 05914
+PUMA	CA, 05915
+PUMA	CA, 05916
+PUMA	CA, 05917
+PUMA	CA, 05918
+PUMA	CA, 06101
+PUMA	CA, 06102
+PUMA	CA, 06103
+PUMA	CA, 06501
+PUMA	CA, 06502
+PUMA	CA, 06503
+PUMA	CA, 06504
+PUMA	CA, 06505
+PUMA	CA, 06506
+PUMA	CA, 06507
+PUMA	CA, 06508
+PUMA	CA, 06509
+PUMA	CA, 06510
+PUMA	CA, 06511
+PUMA	CA, 06512
+PUMA	CA, 06513
+PUMA	CA, 06514
+PUMA	CA, 06515
+PUMA	CA, 06701
+PUMA	CA, 06702
+PUMA	CA, 06703
+PUMA	CA, 06704
+PUMA	CA, 06705
+PUMA	CA, 06706
+PUMA	CA, 06707
+PUMA	CA, 06708
+PUMA	CA, 06709
+PUMA	CA, 06710
+PUMA	CA, 06711
+PUMA	CA, 06712
+PUMA	CA, 07101
+PUMA	CA, 07102
+PUMA	CA, 07103
+PUMA	CA, 07104
+PUMA	CA, 07105
+PUMA	CA, 07106
+PUMA	CA, 07107
+PUMA	CA, 07108
+PUMA	CA, 07109
+PUMA	CA, 07110
+PUMA	CA, 07111
+PUMA	CA, 07112
+PUMA	CA, 07113
+PUMA	CA, 07114
+PUMA	CA, 07115
+PUMA	CA, 07301
+PUMA	CA, 07302
+PUMA	CA, 07303
+PUMA	CA, 07304
+PUMA	CA, 07305
+PUMA	CA, 07306
+PUMA	CA, 07307
+PUMA	CA, 07308
+PUMA	CA, 07309
+PUMA	CA, 07310
+PUMA	CA, 07311
+PUMA	CA, 07312
+PUMA	CA, 07313
+PUMA	CA, 07314
+PUMA	CA, 07315
+PUMA	CA, 07316
+PUMA	CA, 07317
+PUMA	CA, 07318
+PUMA	CA, 07319
+PUMA	CA, 07320
+PUMA	CA, 07321
+PUMA	CA, 07322
+PUMA	CA, 07501
+PUMA	CA, 07502
+PUMA	CA, 07503
+PUMA	CA, 07504
+PUMA	CA, 07505
+PUMA	CA, 07506
+PUMA	CA, 07507
+PUMA	CA, 07701
+PUMA	CA, 07702
+PUMA	CA, 07703
+PUMA	CA, 07704
+PUMA	CA, 07901
+PUMA	CA, 07902
+PUMA	CA, 08101
+PUMA	CA, 08102
+PUMA	CA, 08103
+PUMA	CA, 08104
+PUMA	CA, 08105
+PUMA	CA, 08106
+PUMA	CA, 08301
+PUMA	CA, 08302
+PUMA	CA, 08303
+PUMA	CA, 08501
+PUMA	CA, 08502
+PUMA	CA, 08503
+PUMA	CA, 08504
+PUMA	CA, 08505
+PUMA	CA, 08506
+PUMA	CA, 08507
+PUMA	CA, 08508
+PUMA	CA, 08509
+PUMA	CA, 08510
+PUMA	CA, 08511
+PUMA	CA, 08512
+PUMA	CA, 08513
+PUMA	CA, 08514
+PUMA	CA, 08701
+PUMA	CA, 08702
+PUMA	CA, 08900
+PUMA	CA, 09501
+PUMA	CA, 09502
+PUMA	CA, 09503
+PUMA	CA, 09701
+PUMA	CA, 09702
+PUMA	CA, 09703
+PUMA	CA, 09901
+PUMA	CA, 09902
+PUMA	CA, 09903
+PUMA	CA, 09904
+PUMA	CA, 10100
+PUMA	CA, 10701
+PUMA	CA, 10702
+PUMA	CA, 10703
+PUMA	CA, 11101
+PUMA	CA, 11102
+PUMA	CA, 11103
+PUMA	CA, 11104
+PUMA	CA, 11105
+PUMA	CA, 11106
+PUMA	CA, 11300
+PUMA	CO, 00100
+PUMA	CO, 00102
+PUMA	CO, 00103
+PUMA	CO, 00200
+PUMA	CO, 00300
+PUMA	CO, 00400
+PUMA	CO, 00600
+PUMA	CO, 00700
+PUMA	CO, 00800
+PUMA	CO, 00801
+PUMA	CO, 00802
+PUMA	CO, 00803
+PUMA	CO, 00804
+PUMA	CO, 00805
+PUMA	CO, 00806
+PUMA	CO, 00807
+PUMA	CO, 00808
+PUMA	CO, 00809
+PUMA	CO, 00810
+PUMA	CO, 00811
+PUMA	CO, 00812
+PUMA	CO, 00813
+PUMA	CO, 00814
+PUMA	CO, 00815
+PUMA	CO, 00816
+PUMA	CO, 00817
+PUMA	CO, 00818
+PUMA	CO, 00819
+PUMA	CO, 00820
+PUMA	CO, 00821
+PUMA	CO, 00822
+PUMA	CO, 00823
+PUMA	CO, 00824
+PUMA	CO, 00900
+PUMA	CO, 01001
+PUMA	CO, 01002
+PUMA	CO, 04101
+PUMA	CO, 04102
+PUMA	CO, 04103
+PUMA	CO, 04104
+PUMA	CO, 04105
+PUMA	CO, 04106
+PUMA	CT, 00100
+PUMA	CT, 00101
+PUMA	CT, 00102
+PUMA	CT, 00103
+PUMA	CT, 00104
+PUMA	CT, 00105
+PUMA	CT, 00300
+PUMA	CT, 00301
+PUMA	CT, 00302
+PUMA	CT, 00303
+PUMA	CT, 00304
+PUMA	CT, 00305
+PUMA	CT, 00306
+PUMA	CT, 00500
+PUMA	CT, 00700
+PUMA	CT, 00900
+PUMA	CT, 00901
+PUMA	CT, 00902
+PUMA	CT, 00903
+PUMA	CT, 00904
+PUMA	CT, 00905
+PUMA	CT, 00906
+PUMA	CT, 01100
+PUMA	CT, 01101
+PUMA	CT, 01300
+PUMA	CT, 01500
+PUMA	DC, 00101
+PUMA	DC, 00102
+PUMA	DC, 00103
+PUMA	DC, 00104
+PUMA	DC, 00105
+PUMA	DE, 00101
+PUMA	DE, 00102
+PUMA	DE, 00103
+PUMA	DE, 00104
+PUMA	DE, 00200
+PUMA	DE, 00300
+PUMA	FL, 00101
+PUMA	FL, 00102
+PUMA	FL, 00500
+PUMA	FL, 00901
+PUMA	FL, 00902
+PUMA	FL, 00903
+PUMA	FL, 00904
+PUMA	FL, 01101
+PUMA	FL, 01102
+PUMA	FL, 01103
+PUMA	FL, 01104
+PUMA	FL, 01105
+PUMA	FL, 01106
+PUMA	FL, 01107
+PUMA	FL, 01108
+PUMA	FL, 01109
+PUMA	FL, 01110
+PUMA	FL, 01111
+PUMA	FL, 01112
+PUMA	FL, 01113
+PUMA	FL, 01114
+PUMA	FL, 01500
+PUMA	FL, 01701
+PUMA	FL, 01900
+PUMA	FL, 02101
+PUMA	FL, 02102
+PUMA	FL, 02103
+PUMA	FL, 02300
+PUMA	FL, 02700
+PUMA	FL, 03101
+PUMA	FL, 03102
+PUMA	FL, 03103
+PUMA	FL, 03104
+PUMA	FL, 03105
+PUMA	FL, 03106
+PUMA	FL, 03107
+PUMA	FL, 03301
+PUMA	FL, 03302
+PUMA	FL, 03500
+PUMA	FL, 05301
+PUMA	FL, 05701
+PUMA	FL, 05702
+PUMA	FL, 05703
+PUMA	FL, 05704
+PUMA	FL, 05705
+PUMA	FL, 05706
+PUMA	FL, 05707
+PUMA	FL, 05708
+PUMA	FL, 06100
+PUMA	FL, 06300
+PUMA	FL, 06901
+PUMA	FL, 06902
+PUMA	FL, 06903
+PUMA	FL, 07101
+PUMA	FL, 07102
+PUMA	FL, 07103
+PUMA	FL, 07104
+PUMA	FL, 07105
+PUMA	FL, 07300
+PUMA	FL, 07301
+PUMA	FL, 08101
+PUMA	FL, 08102
+PUMA	FL, 08103
+PUMA	FL, 08301
+PUMA	FL, 08302
+PUMA	FL, 08303
+PUMA	FL, 08500
+PUMA	FL, 08601
+PUMA	FL, 08602
+PUMA	FL, 08603
+PUMA	FL, 08604
+PUMA	FL, 08605
+PUMA	FL, 08606
+PUMA	FL, 08607
+PUMA	FL, 08608
+PUMA	FL, 08609
+PUMA	FL, 08610
+PUMA	FL, 08611
+PUMA	FL, 08612
+PUMA	FL, 08613
+PUMA	FL, 08614
+PUMA	FL, 08615
+PUMA	FL, 08616
+PUMA	FL, 08617
+PUMA	FL, 08618
+PUMA	FL, 08619
+PUMA	FL, 08620
+PUMA	FL, 08621
+PUMA	FL, 08622
+PUMA	FL, 08623
+PUMA	FL, 08624
+PUMA	FL, 08700
+PUMA	FL, 08900
+PUMA	FL, 09100
+PUMA	FL, 09300
+PUMA	FL, 09501
+PUMA	FL, 09502
+PUMA	FL, 09503
+PUMA	FL, 09504
+PUMA	FL, 09505
+PUMA	FL, 09506
+PUMA	FL, 09507
+PUMA	FL, 09508
+PUMA	FL, 09509
+PUMA	FL, 09510
+PUMA	FL, 09701
+PUMA	FL, 09702
+PUMA	FL, 09901
+PUMA	FL, 09902
+PUMA	FL, 09903
+PUMA	FL, 09904
+PUMA	FL, 09905
+PUMA	FL, 09906
+PUMA	FL, 09907
+PUMA	FL, 09908
+PUMA	FL, 09909
+PUMA	FL, 09910
+PUMA	FL, 09911
+PUMA	FL, 10101
+PUMA	FL, 10102
+PUMA	FL, 10103
+PUMA	FL, 10104
+PUMA	FL, 10301
+PUMA	FL, 10302
+PUMA	FL, 10303
+PUMA	FL, 10304
+PUMA	FL, 10305
+PUMA	FL, 10306
+PUMA	FL, 10307
+PUMA	FL, 10308
+PUMA	FL, 10501
+PUMA	FL, 10502
+PUMA	FL, 10503
+PUMA	FL, 10504
+PUMA	FL, 10700
+PUMA	FL, 10900
+PUMA	FL, 11101
+PUMA	FL, 11102
+PUMA	FL, 11300
+PUMA	FL, 11501
+PUMA	FL, 11502
+PUMA	FL, 11503
+PUMA	FL, 11701
+PUMA	FL, 11702
+PUMA	FL, 11703
+PUMA	FL, 11704
+PUMA	FL, 12100
+PUMA	FL, 12701
+PUMA	FL, 12702
+PUMA	FL, 12703
+PUMA	FL, 12704
+PUMA	GA, 00100
+PUMA	GA, 00200
+PUMA	GA, 00300
+PUMA	GA, 00401
+PUMA	GA, 00402
+PUMA	GA, 00500
+PUMA	GA, 00600
+PUMA	GA, 00700
+PUMA	GA, 00800
+PUMA	GA, 00900
+PUMA	GA, 01001
+PUMA	GA, 01002
+PUMA	GA, 01003
+PUMA	GA, 01004
+PUMA	GA, 01005
+PUMA	GA, 01006
+PUMA	GA, 01007
+PUMA	GA, 01008
+PUMA	GA, 01100
+PUMA	GA, 01200
+PUMA	GA, 01300
+PUMA	GA, 01400
+PUMA	GA, 01500
+PUMA	GA, 01600
+PUMA	GA, 01700
+PUMA	GA, 01800
+PUMA	GA, 01900
+PUMA	GA, 02001
+PUMA	GA, 02002
+PUMA	GA, 02003
+PUMA	GA, 02004
+PUMA	GA, 02100
+PUMA	GA, 02200
+PUMA	GA, 02300
+PUMA	GA, 02400
+PUMA	GA, 02500
+PUMA	GA, 02600
+PUMA	GA, 02700
+PUMA	GA, 02800
+PUMA	GA, 02900
+PUMA	GA, 03001
+PUMA	GA, 03002
+PUMA	GA, 03003
+PUMA	GA, 03004
+PUMA	GA, 03005
+PUMA	GA, 03101
+PUMA	GA, 03102
+PUMA	GA, 03200
+PUMA	GA, 03300
+PUMA	GA, 03400
+PUMA	GA, 03500
+PUMA	GA, 03600
+PUMA	GA, 03700
+PUMA	GA, 03800
+PUMA	GA, 03900
+PUMA	GA, 04000
+PUMA	GA, 04001
+PUMA	GA, 04002
+PUMA	GA, 04003
+PUMA	GA, 04004
+PUMA	GA, 04005
+PUMA	GA, 04006
+PUMA	GA, 04100
+PUMA	GA, 04200
+PUMA	GA, 04300
+PUMA	GA, 04400
+PUMA	GA, 04500
+PUMA	GA, 04600
+PUMA	GA, 05001
+PUMA	GA, 05002
+PUMA	GA, 06001
+PUMA	GA, 06002
+PUMA	HI, 00100
+PUMA	HI, 00200
+PUMA	HI, 00301
+PUMA	HI, 00302
+PUMA	HI, 00303
+PUMA	HI, 00304
+PUMA	HI, 00305
+PUMA	HI, 00306
+PUMA	HI, 00307
+PUMA	HI, 00308
+PUMA	IA, 00100
+PUMA	IA, 00200
+PUMA	IA, 00400
+PUMA	IA, 00500
+PUMA	IA, 00600
+PUMA	IA, 00700
+PUMA	IA, 00800
+PUMA	IA, 00900
+PUMA	IA, 01000
+PUMA	IA, 01100
+PUMA	IA, 01200
+PUMA	IA, 01300
+PUMA	IA, 01400
+PUMA	IA, 01500
+PUMA	IA, 01600
+PUMA	IA, 01700
+PUMA	IA, 01800
+PUMA	IA, 01900
+PUMA	IA, 02000
+PUMA	IA, 02100
+PUMA	IA, 02200
+PUMA	IA, 02300
+PUMA	ID, 00100
+PUMA	ID, 00200
+PUMA	ID, 00300
+PUMA	ID, 00400
+PUMA	ID, 00500
+PUMA	ID, 00600
+PUMA	ID, 00701
+PUMA	ID, 00702
+PUMA	ID, 00800
+PUMA	ID, 00900
+PUMA	ID, 01000
+PUMA	ID, 01100
+PUMA	ID, 01200
+PUMA	ID, 01300
+PUMA	IL, 00104
+PUMA	IL, 00105
+PUMA	IL, 00202
+PUMA	IL, 00300
+PUMA	IL, 00401
+PUMA	IL, 00501
+PUMA	IL, 00600
+PUMA	IL, 00700
+PUMA	IL, 00800
+PUMA	IL, 00900
+PUMA	IL, 01001
+PUMA	IL, 01104
+PUMA	IL, 01105
+PUMA	IL, 01204
+PUMA	IL, 01205
+PUMA	IL, 01300
+PUMA	IL, 01500
+PUMA	IL, 01602
+PUMA	IL, 01701
+PUMA	IL, 01900
+PUMA	IL, 02000
+PUMA	IL, 02100
+PUMA	IL, 02200
+PUMA	IL, 02300
+PUMA	IL, 02400
+PUMA	IL, 02501
+PUMA	IL, 02601
+PUMA	IL, 02700
+PUMA	IL, 02801
+PUMA	IL, 02901
+PUMA	IL, 03005
+PUMA	IL, 03007
+PUMA	IL, 03008
+PUMA	IL, 03009
+PUMA	IL, 03102
+PUMA	IL, 03105
+PUMA	IL, 03106
+PUMA	IL, 03107
+PUMA	IL, 03108
+PUMA	IL, 03202
+PUMA	IL, 03203
+PUMA	IL, 03204
+PUMA	IL, 03205
+PUMA	IL, 03207
+PUMA	IL, 03208
+PUMA	IL, 03209
+PUMA	IL, 03306
+PUMA	IL, 03307
+PUMA	IL, 03308
+PUMA	IL, 03309
+PUMA	IL, 03310
+PUMA	IL, 03401
+PUMA	IL, 03407
+PUMA	IL, 03408
+PUMA	IL, 03409
+PUMA	IL, 03410
+PUMA	IL, 03411
+PUMA	IL, 03412
+PUMA	IL, 03413
+PUMA	IL, 03414
+PUMA	IL, 03415
+PUMA	IL, 03416
+PUMA	IL, 03417
+PUMA	IL, 03418
+PUMA	IL, 03419
+PUMA	IL, 03420
+PUMA	IL, 03421
+PUMA	IL, 03422
+PUMA	IL, 03501
+PUMA	IL, 03502
+PUMA	IL, 03503
+PUMA	IL, 03504
+PUMA	IL, 03520
+PUMA	IL, 03521
+PUMA	IL, 03522
+PUMA	IL, 03523
+PUMA	IL, 03524
+PUMA	IL, 03525
+PUMA	IL, 03526
+PUMA	IL, 03527
+PUMA	IL, 03528
+PUMA	IL, 03529
+PUMA	IL, 03530
+PUMA	IL, 03531
+PUMA	IL, 03532
+PUMA	IL, 03601
+PUMA	IL, 03602
+PUMA	IL, 03700
+PUMA	IN, 00101
+PUMA	IN, 00102
+PUMA	IN, 00103
+PUMA	IN, 00104
+PUMA	IN, 00200
+PUMA	IN, 00300
+PUMA	IN, 00401
+PUMA	IN, 00402
+PUMA	IN, 00500
+PUMA	IN, 00600
+PUMA	IN, 00700
+PUMA	IN, 00800
+PUMA	IN, 00900
+PUMA	IN, 01001
+PUMA	IN, 01002
+PUMA	IN, 01003
+PUMA	IN, 01100
+PUMA	IN, 01200
+PUMA	IN, 01300
+PUMA	IN, 01400
+PUMA	IN, 01500
+PUMA	IN, 01600
+PUMA	IN, 01700
+PUMA	IN, 01801
+PUMA	IN, 01802
+PUMA	IN, 01803
+PUMA	IN, 01900
+PUMA	IN, 02000
+PUMA	IN, 02100
+PUMA	IN, 02200
+PUMA	IN, 02301
+PUMA	IN, 02302
+PUMA	IN, 02303
+PUMA	IN, 02304
+PUMA	IN, 02305
+PUMA	IN, 02306
+PUMA	IN, 02307
+PUMA	IN, 02400
+PUMA	IN, 02500
+PUMA	IN, 02600
+PUMA	IN, 02700
+PUMA	IN, 02800
+PUMA	IN, 02900
+PUMA	IN, 03000
+PUMA	IN, 03100
+PUMA	IN, 03200
+PUMA	IN, 03300
+PUMA	IN, 03400
+PUMA	IN, 03500
+PUMA	IN, 03600
+PUMA	KS, 00100
+PUMA	KS, 00200
+PUMA	KS, 00300
+PUMA	KS, 00400
+PUMA	KS, 00500
+PUMA	KS, 00601
+PUMA	KS, 00602
+PUMA	KS, 00603
+PUMA	KS, 00604
+PUMA	KS, 00700
+PUMA	KS, 00801
+PUMA	KS, 00802
+PUMA	KS, 00900
+PUMA	KS, 01000
+PUMA	KS, 01100
+PUMA	KS, 01200
+PUMA	KS, 01301
+PUMA	KS, 01302
+PUMA	KS, 01303
+PUMA	KS, 01304
+PUMA	KS, 01400
+PUMA	KS, 01500
+PUMA	KY, 00100
+PUMA	KY, 00200
+PUMA	KY, 00300
+PUMA	KY, 00400
+PUMA	KY, 00500
+PUMA	KY, 00600
+PUMA	KY, 00700
+PUMA	KY, 00800
+PUMA	KY, 00900
+PUMA	KY, 01000
+PUMA	KY, 01100
+PUMA	KY, 01200
+PUMA	KY, 01300
+PUMA	KY, 01400
+PUMA	KY, 01500
+PUMA	KY, 01600
+PUMA	KY, 01701
+PUMA	KY, 01702
+PUMA	KY, 01703
+PUMA	KY, 01704
+PUMA	KY, 01705
+PUMA	KY, 01706
+PUMA	KY, 01800
+PUMA	KY, 01901
+PUMA	KY, 01902
+PUMA	KY, 02000
+PUMA	KY, 02100
+PUMA	KY, 02200
+PUMA	KY, 02300
+PUMA	KY, 02400
+PUMA	KY, 02500
+PUMA	KY, 02600
+PUMA	KY, 02700
+PUMA	KY, 02800
+PUMA	LA, 00100
+PUMA	LA, 00101
+PUMA	LA, 00200
+PUMA	LA, 00300
+PUMA	LA, 00400
+PUMA	LA, 00500
+PUMA	LA, 00600
+PUMA	LA, 00700
+PUMA	LA, 00800
+PUMA	LA, 00900
+PUMA	LA, 01000
+PUMA	LA, 01100
+PUMA	LA, 01200
+PUMA	LA, 01201
+PUMA	LA, 01300
+PUMA	LA, 01400
+PUMA	LA, 01500
+PUMA	LA, 01501
+PUMA	LA, 01502
+PUMA	LA, 01600
+PUMA	LA, 01700
+PUMA	LA, 01800
+PUMA	LA, 01900
+PUMA	LA, 02000
+PUMA	LA, 02100
+PUMA	LA, 02200
+PUMA	LA, 02201
+PUMA	LA, 02300
+PUMA	LA, 02301
+PUMA	LA, 02302
+PUMA	LA, 02400
+PUMA	LA, 02401
+PUMA	LA, 02402
+PUMA	LA, 02500
+PUMA	MA, 00100
+PUMA	MA, 00200
+PUMA	MA, 00300
+PUMA	MA, 00301
+PUMA	MA, 00302
+PUMA	MA, 00303
+PUMA	MA, 00304
+PUMA	MA, 00400
+PUMA	MA, 00501
+PUMA	MA, 00502
+PUMA	MA, 00503
+PUMA	MA, 00504
+PUMA	MA, 00505
+PUMA	MA, 00506
+PUMA	MA, 00507
+PUMA	MA, 00508
+PUMA	MA, 00701
+PUMA	MA, 00702
+PUMA	MA, 00703
+PUMA	MA, 00704
+PUMA	MA, 01000
+PUMA	MA, 01300
+PUMA	MA, 01400
+PUMA	MA, 01600
+PUMA	MA, 01900
+PUMA	MA, 01901
+PUMA	MA, 01902
+PUMA	MA, 02400
+PUMA	MA, 02800
+PUMA	MA, 03301
+PUMA	MA, 03302
+PUMA	MA, 03303
+PUMA	MA, 03304
+PUMA	MA, 03305
+PUMA	MA, 03306
+PUMA	MA, 03400
+PUMA	MA, 03500
+PUMA	MA, 03601
+PUMA	MA, 03602
+PUMA	MA, 03603
+PUMA	MA, 03900
+PUMA	MA, 04000
+PUMA	MA, 04200
+PUMA	MA, 04301
+PUMA	MA, 04302
+PUMA	MA, 04303
+PUMA	MA, 04500
+PUMA	MA, 04700
+PUMA	MA, 04800
+PUMA	MA, 04901
+PUMA	MA, 04902
+PUMA	MA, 04903
+PUMA	MD, 00100
+PUMA	MD, 00200
+PUMA	MD, 00301
+PUMA	MD, 00302
+PUMA	MD, 00400
+PUMA	MD, 00501
+PUMA	MD, 00502
+PUMA	MD, 00503
+PUMA	MD, 00504
+PUMA	MD, 00505
+PUMA	MD, 00506
+PUMA	MD, 00507
+PUMA	MD, 00601
+PUMA	MD, 00602
+PUMA	MD, 00700
+PUMA	MD, 00801
+PUMA	MD, 00802
+PUMA	MD, 00803
+PUMA	MD, 00804
+PUMA	MD, 00805
+PUMA	MD, 00901
+PUMA	MD, 00902
+PUMA	MD, 01001
+PUMA	MD, 01002
+PUMA	MD, 01003
+PUMA	MD, 01004
+PUMA	MD, 01005
+PUMA	MD, 01006
+PUMA	MD, 01007
+PUMA	MD, 01101
+PUMA	MD, 01102
+PUMA	MD, 01103
+PUMA	MD, 01104
+PUMA	MD, 01105
+PUMA	MD, 01106
+PUMA	MD, 01107
+PUMA	MD, 01201
+PUMA	MD, 01202
+PUMA	MD, 01203
+PUMA	MD, 01204
+PUMA	MD, 01300
+PUMA	MD, 01400
+PUMA	MD, 01500
+PUMA	MD, 01600
+PUMA	ME, 00100
+PUMA	ME, 00200
+PUMA	ME, 00300
+PUMA	ME, 00400
+PUMA	ME, 00500
+PUMA	ME, 00600
+PUMA	ME, 00700
+PUMA	ME, 00800
+PUMA	ME, 00900
+PUMA	ME, 01000
+PUMA	MI, 00100
+PUMA	MI, 00200
+PUMA	MI, 00300
+PUMA	MI, 00400
+PUMA	MI, 00500
+PUMA	MI, 00600
+PUMA	MI, 00700
+PUMA	MI, 00801
+PUMA	MI, 00802
+PUMA	MI, 00900
+PUMA	MI, 01001
+PUMA	MI, 01002
+PUMA	MI, 01003
+PUMA	MI, 01004
+PUMA	MI, 01100
+PUMA	MI, 01200
+PUMA	MI, 01300
+PUMA	MI, 01400
+PUMA	MI, 01500
+PUMA	MI, 01600
+PUMA	MI, 01701
+PUMA	MI, 01702
+PUMA	MI, 01703
+PUMA	MI, 01704
+PUMA	MI, 01801
+PUMA	MI, 01802
+PUMA	MI, 01900
+PUMA	MI, 02000
+PUMA	MI, 02101
+PUMA	MI, 02102
+PUMA	MI, 02200
+PUMA	MI, 02300
+PUMA	MI, 02400
+PUMA	MI, 02500
+PUMA	MI, 02600
+PUMA	MI, 02701
+PUMA	MI, 02702
+PUMA	MI, 02703
+PUMA	MI, 02800
+PUMA	MI, 02901
+PUMA	MI, 02902
+PUMA	MI, 02903
+PUMA	MI, 02904
+PUMA	MI, 02905
+PUMA	MI, 02906
+PUMA	MI, 02907
+PUMA	MI, 02908
+PUMA	MI, 03001
+PUMA	MI, 03002
+PUMA	MI, 03003
+PUMA	MI, 03004
+PUMA	MI, 03005
+PUMA	MI, 03006
+PUMA	MI, 03100
+PUMA	MI, 03201
+PUMA	MI, 03202
+PUMA	MI, 03203
+PUMA	MI, 03204
+PUMA	MI, 03205
+PUMA	MI, 03206
+PUMA	MI, 03207
+PUMA	MI, 03208
+PUMA	MI, 03209
+PUMA	MI, 03210
+PUMA	MI, 03211
+PUMA	MI, 03212
+PUMA	MI, 03213
+PUMA	MI, 03300
+PUMA	MN, 00100
+PUMA	MN, 00200
+PUMA	MN, 00300
+PUMA	MN, 00400
+PUMA	MN, 00500
+PUMA	MN, 00600
+PUMA	MN, 00700
+PUMA	MN, 00800
+PUMA	MN, 00900
+PUMA	MN, 01000
+PUMA	MN, 01101
+PUMA	MN, 01102
+PUMA	MN, 01103
+PUMA	MN, 01201
+PUMA	MN, 01202
+PUMA	MN, 01301
+PUMA	MN, 01302
+PUMA	MN, 01303
+PUMA	MN, 01304
+PUMA	MN, 01401
+PUMA	MN, 01402
+PUMA	MN, 01403
+PUMA	MN, 01404
+PUMA	MN, 01405
+PUMA	MN, 01406
+PUMA	MN, 01407
+PUMA	MN, 01408
+PUMA	MN, 01409
+PUMA	MN, 01410
+PUMA	MN, 01501
+PUMA	MN, 01502
+PUMA	MN, 01503
+PUMA	MN, 01600
+PUMA	MN, 01700
+PUMA	MN, 01800
+PUMA	MN, 01900
+PUMA	MN, 02000
+PUMA	MN, 02100
+PUMA	MN, 02200
+PUMA	MN, 02300
+PUMA	MN, 02400
+PUMA	MN, 02500
+PUMA	MN, 02600
+PUMA	MO, 00100
+PUMA	MO, 00200
+PUMA	MO, 00300
+PUMA	MO, 00400
+PUMA	MO, 00500
+PUMA	MO, 00600
+PUMA	MO, 00700
+PUMA	MO, 00800
+PUMA	MO, 00901
+PUMA	MO, 00902
+PUMA	MO, 00903
+PUMA	MO, 01001
+PUMA	MO, 01002
+PUMA	MO, 01003
+PUMA	MO, 01004
+PUMA	MO, 01005
+PUMA	MO, 01100
+PUMA	MO, 01200
+PUMA	MO, 01300
+PUMA	MO, 01400
+PUMA	MO, 01500
+PUMA	MO, 01600
+PUMA	MO, 01701
+PUMA	MO, 01702
+PUMA	MO, 01703
+PUMA	MO, 01801
+PUMA	MO, 01802
+PUMA	MO, 01803
+PUMA	MO, 01804
+PUMA	MO, 01805
+PUMA	MO, 01806
+PUMA	MO, 01807
+PUMA	MO, 01808
+PUMA	MO, 01901
+PUMA	MO, 01902
+PUMA	MO, 02001
+PUMA	MO, 02002
+PUMA	MO, 02100
+PUMA	MO, 02200
+PUMA	MO, 02300
+PUMA	MO, 02400
+PUMA	MO, 02500
+PUMA	MO, 02601
+PUMA	MO, 02602
+PUMA	MO, 02603
+PUMA	MO, 02700
+PUMA	MO, 02800
+PUMA	MS, 00100
+PUMA	MS, 00200
+PUMA	MS, 00300
+PUMA	MS, 00400
+PUMA	MS, 00500
+PUMA	MS, 00600
+PUMA	MS, 00700
+PUMA	MS, 00800
+PUMA	MS, 00900
+PUMA	MS, 01000
+PUMA	MS, 01100
+PUMA	MS, 01200
+PUMA	MS, 01300
+PUMA	MS, 01400
+PUMA	MS, 01500
+PUMA	MS, 01600
+PUMA	MS, 01700
+PUMA	MS, 01800
+PUMA	MS, 01900
+PUMA	MS, 02000
+PUMA	MS, 02100
+PUMA	MT, 00100
+PUMA	MT, 00200
+PUMA	MT, 00300
+PUMA	MT, 00400
+PUMA	MT, 00500
+PUMA	MT, 00600
+PUMA	MT, 00700
+PUMA	NC, 00100
+PUMA	NC, 00200
+PUMA	NC, 00300
+PUMA	NC, 00400
+PUMA	NC, 00500
+PUMA	NC, 00600
+PUMA	NC, 00700
+PUMA	NC, 00800
+PUMA	NC, 00900
+PUMA	NC, 01000
+PUMA	NC, 01100
+PUMA	NC, 01201
+PUMA	NC, 01202
+PUMA	NC, 01203
+PUMA	NC, 01204
+PUMA	NC, 01205
+PUMA	NC, 01206
+PUMA	NC, 01207
+PUMA	NC, 01208
+PUMA	NC, 01301
+PUMA	NC, 01302
+PUMA	NC, 01400
+PUMA	NC, 01500
+PUMA	NC, 01600
+PUMA	NC, 01701
+PUMA	NC, 01702
+PUMA	NC, 01703
+PUMA	NC, 01704
+PUMA	NC, 01801
+PUMA	NC, 01802
+PUMA	NC, 01803
+PUMA	NC, 01900
+PUMA	NC, 02000
+PUMA	NC, 02100
+PUMA	NC, 02201
+PUMA	NC, 02202
+PUMA	NC, 02300
+PUMA	NC, 02400
+PUMA	NC, 02500
+PUMA	NC, 02600
+PUMA	NC, 02700
+PUMA	NC, 02800
+PUMA	NC, 02900
+PUMA	NC, 03001
+PUMA	NC, 03002
+PUMA	NC, 03101
+PUMA	NC, 03102
+PUMA	NC, 03103
+PUMA	NC, 03104
+PUMA	NC, 03105
+PUMA	NC, 03106
+PUMA	NC, 03107
+PUMA	NC, 03108
+PUMA	NC, 03200
+PUMA	NC, 03300
+PUMA	NC, 03400
+PUMA	NC, 03500
+PUMA	NC, 03600
+PUMA	NC, 03700
+PUMA	NC, 03800
+PUMA	NC, 03900
+PUMA	NC, 04000
+PUMA	NC, 04100
+PUMA	NC, 04200
+PUMA	NC, 04300
+PUMA	NC, 04400
+PUMA	NC, 04500
+PUMA	NC, 04600
+PUMA	NC, 04700
+PUMA	NC, 04800
+PUMA	NC, 04900
+PUMA	NC, 05001
+PUMA	NC, 05002
+PUMA	NC, 05003
+PUMA	NC, 05100
+PUMA	NC, 05200
+PUMA	NC, 05300
+PUMA	NC, 05400
+PUMA	ND, 00100
+PUMA	ND, 00200
+PUMA	ND, 00300
+PUMA	ND, 00400
+PUMA	ND, 00500
+PUMA	NE, 00100
+PUMA	NE, 00200
+PUMA	NE, 00300
+PUMA	NE, 00400
+PUMA	NE, 00500
+PUMA	NE, 00600
+PUMA	NE, 00701
+PUMA	NE, 00702
+PUMA	NE, 00801
+PUMA	NE, 00802
+PUMA	NE, 00901
+PUMA	NE, 00902
+PUMA	NE, 00903
+PUMA	NE, 00904
+PUMA	NH, 00100
+PUMA	NH, 00200
+PUMA	NH, 00300
+PUMA	NH, 00400
+PUMA	NH, 00500
+PUMA	NH, 00600
+PUMA	NH, 00700
+PUMA	NH, 00800
+PUMA	NH, 00900
+PUMA	NH, 01000
+PUMA	NJ, 00101
+PUMA	NJ, 00102
+PUMA	NJ, 00301
+PUMA	NJ, 00302
+PUMA	NJ, 00303
+PUMA	NJ, 00304
+PUMA	NJ, 00305
+PUMA	NJ, 00306
+PUMA	NJ, 00307
+PUMA	NJ, 00308
+PUMA	NJ, 00400
+PUMA	NJ, 00501
+PUMA	NJ, 00502
+PUMA	NJ, 00503
+PUMA	NJ, 00601
+PUMA	NJ, 00602
+PUMA	NJ, 00701
+PUMA	NJ, 00702
+PUMA	NJ, 00703
+PUMA	NJ, 00800
+PUMA	NJ, 00901
+PUMA	NJ, 00902
+PUMA	NJ, 00903
+PUMA	NJ, 00904
+PUMA	NJ, 00905
+PUMA	NJ, 00906
+PUMA	NJ, 00907
+PUMA	NJ, 01001
+PUMA	NJ, 01002
+PUMA	NJ, 01003
+PUMA	NJ, 01101
+PUMA	NJ, 01102
+PUMA	NJ, 01103
+PUMA	NJ, 01104
+PUMA	NJ, 01105
+PUMA	NJ, 01106
+PUMA	NJ, 01201
+PUMA	NJ, 01202
+PUMA	NJ, 01203
+PUMA	NJ, 01204
+PUMA	NJ, 01205
+PUMA	NJ, 01301
+PUMA	NJ, 01302
+PUMA	NJ, 01401
+PUMA	NJ, 01402
+PUMA	NJ, 01403
+PUMA	NJ, 01404
+PUMA	NJ, 01501
+PUMA	NJ, 01502
+PUMA	NJ, 01503
+PUMA	NJ, 01504
+PUMA	NJ, 01600
+PUMA	NJ, 01700
+PUMA	NJ, 01800
+PUMA	NJ, 01901
+PUMA	NJ, 01902
+PUMA	NJ, 01903
+PUMA	NJ, 01904
+PUMA	NJ, 02001
+PUMA	NJ, 02002
+PUMA	NJ, 02003
+PUMA	NJ, 02101
+PUMA	NJ, 02102
+PUMA	NJ, 02103
+PUMA	NJ, 02104
+PUMA	NJ, 02201
+PUMA	NJ, 02202
+PUMA	NJ, 02301
+PUMA	NJ, 02302
+PUMA	NJ, 02303
+PUMA	NJ, 02400
+PUMA	NJ, 02500
+PUMA	NJ, 02600
+PUMA	NM, 00100
+PUMA	NM, 00200
+PUMA	NM, 00300
+PUMA	NM, 00400
+PUMA	NM, 00500
+PUMA	NM, 00600
+PUMA	NM, 00700
+PUMA	NM, 00801
+PUMA	NM, 00802
+PUMA	NM, 00803
+PUMA	NM, 00804
+PUMA	NM, 00805
+PUMA	NM, 00806
+PUMA	NM, 00900
+PUMA	NM, 01001
+PUMA	NM, 01002
+PUMA	NM, 01100
+PUMA	NM, 01200
+PUMA	NV, 00101
+PUMA	NV, 00102
+PUMA	NV, 00103
+PUMA	NV, 00200
+PUMA	NV, 00300
+PUMA	NV, 00401
+PUMA	NV, 00402
+PUMA	NV, 00403
+PUMA	NV, 00404
+PUMA	NV, 00405
+PUMA	NV, 00406
+PUMA	NV, 00407
+PUMA	NV, 00408
+PUMA	NV, 00409
+PUMA	NV, 00410
+PUMA	NV, 00411
+PUMA	NV, 00412
+PUMA	NV, 00413
+PUMA	NY, 00100
+PUMA	NY, 00200
+PUMA	NY, 00300
+PUMA	NY, 00401
+PUMA	NY, 00402
+PUMA	NY, 00403
+PUMA	NY, 00500
+PUMA	NY, 00600
+PUMA	NY, 00701
+PUMA	NY, 00702
+PUMA	NY, 00703
+PUMA	NY, 00704
+PUMA	NY, 00800
+PUMA	NY, 00901
+PUMA	NY, 00902
+PUMA	NY, 00903
+PUMA	NY, 00904
+PUMA	NY, 00905
+PUMA	NY, 00906
+PUMA	NY, 01000
+PUMA	NY, 01101
+PUMA	NY, 01102
+PUMA	NY, 01201
+PUMA	NY, 01202
+PUMA	NY, 01203
+PUMA	NY, 01204
+PUMA	NY, 01205
+PUMA	NY, 01206
+PUMA	NY, 01207
+PUMA	NY, 01300
+PUMA	NY, 01400
+PUMA	NY, 01500
+PUMA	NY, 01600
+PUMA	NY, 01700
+PUMA	NY, 01801
+PUMA	NY, 01802
+PUMA	NY, 01900
+PUMA	NY, 02001
+PUMA	NY, 02002
+PUMA	NY, 02100
+PUMA	NY, 02201
+PUMA	NY, 02202
+PUMA	NY, 02203
+PUMA	NY, 02300
+PUMA	NY, 02401
+PUMA	NY, 02402
+PUMA	NY, 02500
+PUMA	NY, 02600
+PUMA	NY, 02701
+PUMA	NY, 02702
+PUMA	NY, 02801
+PUMA	NY, 02802
+PUMA	NY, 02901
+PUMA	NY, 02902
+PUMA	NY, 02903
+PUMA	NY, 03001
+PUMA	NY, 03002
+PUMA	NY, 03003
+PUMA	NY, 03101
+PUMA	NY, 03102
+PUMA	NY, 03103
+PUMA	NY, 03104
+PUMA	NY, 03105
+PUMA	NY, 03106
+PUMA	NY, 03107
+PUMA	NY, 03201
+PUMA	NY, 03202
+PUMA	NY, 03203
+PUMA	NY, 03204
+PUMA	NY, 03205
+PUMA	NY, 03206
+PUMA	NY, 03207
+PUMA	NY, 03208
+PUMA	NY, 03209
+PUMA	NY, 03210
+PUMA	NY, 03211
+PUMA	NY, 03212
+PUMA	NY, 03301
+PUMA	NY, 03302
+PUMA	NY, 03303
+PUMA	NY, 03304
+PUMA	NY, 03305
+PUMA	NY, 03306
+PUMA	NY, 03307
+PUMA	NY, 03308
+PUMA	NY, 03309
+PUMA	NY, 03310
+PUMA	NY, 03311
+PUMA	NY, 03312
+PUMA	NY, 03313
+PUMA	NY, 03701
+PUMA	NY, 03702
+PUMA	NY, 03703
+PUMA	NY, 03704
+PUMA	NY, 03705
+PUMA	NY, 03706
+PUMA	NY, 03707
+PUMA	NY, 03708
+PUMA	NY, 03709
+PUMA	NY, 03710
+PUMA	NY, 03801
+PUMA	NY, 03802
+PUMA	NY, 03803
+PUMA	NY, 03804
+PUMA	NY, 03805
+PUMA	NY, 03806
+PUMA	NY, 03807
+PUMA	NY, 03808
+PUMA	NY, 03809
+PUMA	NY, 03810
+PUMA	NY, 03901
+PUMA	NY, 03902
+PUMA	NY, 03903
+PUMA	NY, 04001
+PUMA	NY, 04002
+PUMA	NY, 04003
+PUMA	NY, 04004
+PUMA	NY, 04005
+PUMA	NY, 04006
+PUMA	NY, 04007
+PUMA	NY, 04008
+PUMA	NY, 04009
+PUMA	NY, 04010
+PUMA	NY, 04011
+PUMA	NY, 04012
+PUMA	NY, 04013
+PUMA	NY, 04014
+PUMA	NY, 04015
+PUMA	NY, 04016
+PUMA	NY, 04017
+PUMA	NY, 04018
+PUMA	NY, 04101
+PUMA	NY, 04102
+PUMA	NY, 04103
+PUMA	NY, 04104
+PUMA	NY, 04105
+PUMA	NY, 04106
+PUMA	NY, 04107
+PUMA	NY, 04108
+PUMA	NY, 04109
+PUMA	NY, 04110
+PUMA	NY, 04111
+PUMA	NY, 04112
+PUMA	NY, 04113
+PUMA	NY, 04114
+PUMA	OH, 00100
+PUMA	OH, 00200
+PUMA	OH, 00300
+PUMA	OH, 00400
+PUMA	OH, 00500
+PUMA	OH, 00600
+PUMA	OH, 00700
+PUMA	OH, 00801
+PUMA	OH, 00802
+PUMA	OH, 00901
+PUMA	OH, 00902
+PUMA	OH, 00903
+PUMA	OH, 00904
+PUMA	OH, 00905
+PUMA	OH, 00906
+PUMA	OH, 00907
+PUMA	OH, 00908
+PUMA	OH, 00909
+PUMA	OH, 00910
+PUMA	OH, 01000
+PUMA	OH, 01100
+PUMA	OH, 01200
+PUMA	OH, 01300
+PUMA	OH, 01400
+PUMA	OH, 01500
+PUMA	OH, 01600
+PUMA	OH, 01700
+PUMA	OH, 01801
+PUMA	OH, 01802
+PUMA	OH, 01803
+PUMA	OH, 01804
+PUMA	OH, 01805
+PUMA	OH, 01900
+PUMA	OH, 02000
+PUMA	OH, 02100
+PUMA	OH, 02200
+PUMA	OH, 02300
+PUMA	OH, 02400
+PUMA	OH, 02500
+PUMA	OH, 02600
+PUMA	OH, 02700
+PUMA	OH, 02800
+PUMA	OH, 02900
+PUMA	OH, 03000
+PUMA	OH, 03100
+PUMA	OH, 03200
+PUMA	OH, 03300
+PUMA	OH, 03400
+PUMA	OH, 03500
+PUMA	OH, 03600
+PUMA	OH, 03700
+PUMA	OH, 03800
+PUMA	OH, 03900
+PUMA	OH, 04000
+PUMA	OH, 04101
+PUMA	OH, 04102
+PUMA	OH, 04103
+PUMA	OH, 04104
+PUMA	OH, 04105
+PUMA	OH, 04106
+PUMA	OH, 04107
+PUMA	OH, 04108
+PUMA	OH, 04109
+PUMA	OH, 04110
+PUMA	OH, 04111
+PUMA	OH, 04200
+PUMA	OH, 04300
+PUMA	OH, 04400
+PUMA	OH, 04500
+PUMA	OH, 04601
+PUMA	OH, 04602
+PUMA	OH, 04603
+PUMA	OH, 04604
+PUMA	OH, 04700
+PUMA	OH, 04800
+PUMA	OH, 04900
+PUMA	OH, 05000
+PUMA	OH, 05100
+PUMA	OH, 05200
+PUMA	OH, 05301
+PUMA	OH, 05302
+PUMA	OH, 05401
+PUMA	OH, 05402
+PUMA	OH, 05403
+PUMA	OH, 05501
+PUMA	OH, 05502
+PUMA	OH, 05503
+PUMA	OH, 05504
+PUMA	OH, 05505
+PUMA	OH, 05506
+PUMA	OH, 05507
+PUMA	OH, 05600
+PUMA	OH, 05700
+PUMA	OK, 00100
+PUMA	OK, 00200
+PUMA	OK, 00300
+PUMA	OK, 00400
+PUMA	OK, 00500
+PUMA	OK, 00601
+PUMA	OK, 00602
+PUMA	OK, 00701
+PUMA	OK, 00702
+PUMA	OK, 00800
+PUMA	OK, 00900
+PUMA	OK, 01001
+PUMA	OK, 01002
+PUMA	OK, 01003
+PUMA	OK, 01004
+PUMA	OK, 01005
+PUMA	OK, 01006
+PUMA	OK, 01101
+PUMA	OK, 01102
+PUMA	OK, 01201
+PUMA	OK, 01202
+PUMA	OK, 01203
+PUMA	OK, 01204
+PUMA	OK, 01301
+PUMA	OK, 01302
+PUMA	OK, 01400
+PUMA	OK, 01501
+PUMA	OK, 01601
+PUMA	OR, 00100
+PUMA	OR, 00200
+PUMA	OR, 00300
+PUMA	OR, 00400
+PUMA	OR, 00500
+PUMA	OR, 00600
+PUMA	OR, 00703
+PUMA	OR, 00704
+PUMA	OR, 00705
+PUMA	OR, 00800
+PUMA	OR, 00901
+PUMA	OR, 00902
+PUMA	OR, 01000
+PUMA	OR, 01103
+PUMA	OR, 01104
+PUMA	OR, 01105
+PUMA	OR, 01200
+PUMA	OR, 01301
+PUMA	OR, 01302
+PUMA	OR, 01303
+PUMA	OR, 01305
+PUMA	OR, 01314
+PUMA	OR, 01316
+PUMA	OR, 01317
+PUMA	OR, 01318
+PUMA	OR, 01319
+PUMA	OR, 01320
+PUMA	OR, 01321
+PUMA	OR, 01322
+PUMA	OR, 01323
+PUMA	OR, 01324
+PUMA	PA, 00101
+PUMA	PA, 00102
+PUMA	PA, 00200
+PUMA	PA, 00300
+PUMA	PA, 00400
+PUMA	PA, 00500
+PUMA	PA, 00600
+PUMA	PA, 00701
+PUMA	PA, 00702
+PUMA	PA, 00801
+PUMA	PA, 00802
+PUMA	PA, 00803
+PUMA	PA, 00900
+PUMA	PA, 01000
+PUMA	PA, 01100
+PUMA	PA, 01200
+PUMA	PA, 01300
+PUMA	PA, 01400
+PUMA	PA, 01501
+PUMA	PA, 01502
+PUMA	PA, 01600
+PUMA	PA, 01701
+PUMA	PA, 01702
+PUMA	PA, 01801
+PUMA	PA, 01802
+PUMA	PA, 01803
+PUMA	PA, 01804
+PUMA	PA, 01805
+PUMA	PA, 01806
+PUMA	PA, 01807
+PUMA	PA, 01900
+PUMA	PA, 02001
+PUMA	PA, 02002
+PUMA	PA, 02003
+PUMA	PA, 02100
+PUMA	PA, 02200
+PUMA	PA, 02301
+PUMA	PA, 02302
+PUMA	PA, 02401
+PUMA	PA, 02402
+PUMA	PA, 02500
+PUMA	PA, 02600
+PUMA	PA, 02701
+PUMA	PA, 02702
+PUMA	PA, 02703
+PUMA	PA, 02801
+PUMA	PA, 02802
+PUMA	PA, 02803
+PUMA	PA, 02901
+PUMA	PA, 02902
+PUMA	PA, 03001
+PUMA	PA, 03002
+PUMA	PA, 03003
+PUMA	PA, 03004
+PUMA	PA, 03101
+PUMA	PA, 03102
+PUMA	PA, 03103
+PUMA	PA, 03104
+PUMA	PA, 03105
+PUMA	PA, 03106
+PUMA	PA, 03201
+PUMA	PA, 03202
+PUMA	PA, 03203
+PUMA	PA, 03204
+PUMA	PA, 03205
+PUMA	PA, 03206
+PUMA	PA, 03207
+PUMA	PA, 03208
+PUMA	PA, 03209
+PUMA	PA, 03210
+PUMA	PA, 03211
+PUMA	PA, 03301
+PUMA	PA, 03302
+PUMA	PA, 03303
+PUMA	PA, 03304
+PUMA	PA, 03401
+PUMA	PA, 03402
+PUMA	PA, 03403
+PUMA	PA, 03404
+PUMA	PA, 03501
+PUMA	PA, 03502
+PUMA	PA, 03503
+PUMA	PA, 03504
+PUMA	PA, 03601
+PUMA	PA, 03602
+PUMA	PA, 03603
+PUMA	PA, 03701
+PUMA	PA, 03702
+PUMA	PA, 03800
+PUMA	PA, 03900
+PUMA	PA, 04001
+PUMA	PA, 04002
+PUMA	RI, 00101
+PUMA	RI, 00102
+PUMA	RI, 00103
+PUMA	RI, 00104
+PUMA	RI, 00201
+PUMA	RI, 00300
+PUMA	RI, 00400
+PUMA	SC, 00101
+PUMA	SC, 00102
+PUMA	SC, 00103
+PUMA	SC, 00104
+PUMA	SC, 00105
+PUMA	SC, 00200
+PUMA	SC, 00301
+PUMA	SC, 00302
+PUMA	SC, 00400
+PUMA	SC, 00501
+PUMA	SC, 00502
+PUMA	SC, 00601
+PUMA	SC, 00602
+PUMA	SC, 00603
+PUMA	SC, 00604
+PUMA	SC, 00605
+PUMA	SC, 00700
+PUMA	SC, 00800
+PUMA	SC, 00900
+PUMA	SC, 01000
+PUMA	SC, 01101
+PUMA	SC, 01102
+PUMA	SC, 01201
+PUMA	SC, 01202
+PUMA	SC, 01203
+PUMA	SC, 01204
+PUMA	SC, 01300
+PUMA	SC, 01400
+PUMA	SC, 01500
+PUMA	SC, 01600
+PUMA	SD, 00100
+PUMA	SD, 00200
+PUMA	SD, 00300
+PUMA	SD, 00400
+PUMA	SD, 00500
+PUMA	SD, 00600
+PUMA	TN, 00100
+PUMA	TN, 00200
+PUMA	TN, 00300
+PUMA	TN, 00400
+PUMA	TN, 00500
+PUMA	TN, 00600
+PUMA	TN, 00700
+PUMA	TN, 00800
+PUMA	TN, 00900
+PUMA	TN, 01000
+PUMA	TN, 01100
+PUMA	TN, 01200
+PUMA	TN, 01300
+PUMA	TN, 01400
+PUMA	TN, 01500
+PUMA	TN, 01601
+PUMA	TN, 01602
+PUMA	TN, 01603
+PUMA	TN, 01604
+PUMA	TN, 01700
+PUMA	TN, 01800
+PUMA	TN, 01900
+PUMA	TN, 02001
+PUMA	TN, 02002
+PUMA	TN, 02003
+PUMA	TN, 02100
+PUMA	TN, 02200
+PUMA	TN, 02300
+PUMA	TN, 02401
+PUMA	TN, 02402
+PUMA	TN, 02501
+PUMA	TN, 02502
+PUMA	TN, 02503
+PUMA	TN, 02504
+PUMA	TN, 02505
+PUMA	TN, 02600
+PUMA	TN, 02700
+PUMA	TN, 02800
+PUMA	TN, 02900
+PUMA	TN, 03000
+PUMA	TN, 03100
+PUMA	TN, 03201
+PUMA	TN, 03202
+PUMA	TN, 03203
+PUMA	TN, 03204
+PUMA	TN, 03205
+PUMA	TN, 03206
+PUMA	TN, 03207
+PUMA	TN, 03208
+PUMA	TX, 00100
+PUMA	TX, 00200
+PUMA	TX, 00300
+PUMA	TX, 00400
+PUMA	TX, 00501
+PUMA	TX, 00502
+PUMA	TX, 00600
+PUMA	TX, 00700
+PUMA	TX, 00800
+PUMA	TX, 00900
+PUMA	TX, 01000
+PUMA	TX, 01100
+PUMA	TX, 01200
+PUMA	TX, 01300
+PUMA	TX, 01400
+PUMA	TX, 01501
+PUMA	TX, 01502
+PUMA	TX, 01600
+PUMA	TX, 01700
+PUMA	TX, 01800
+PUMA	TX, 01901
+PUMA	TX, 01902
+PUMA	TX, 01903
+PUMA	TX, 01904
+PUMA	TX, 01905
+PUMA	TX, 01906
+PUMA	TX, 01907
+PUMA	TX, 02001
+PUMA	TX, 02002
+PUMA	TX, 02003
+PUMA	TX, 02004
+PUMA	TX, 02005
+PUMA	TX, 02006
+PUMA	TX, 02101
+PUMA	TX, 02102
+PUMA	TX, 02200
+PUMA	TX, 02301
+PUMA	TX, 02302
+PUMA	TX, 02303
+PUMA	TX, 02304
+PUMA	TX, 02305
+PUMA	TX, 02306
+PUMA	TX, 02307
+PUMA	TX, 02308
+PUMA	TX, 02309
+PUMA	TX, 02310
+PUMA	TX, 02311
+PUMA	TX, 02312
+PUMA	TX, 02313
+PUMA	TX, 02314
+PUMA	TX, 02315
+PUMA	TX, 02316
+PUMA	TX, 02317
+PUMA	TX, 02318
+PUMA	TX, 02319
+PUMA	TX, 02320
+PUMA	TX, 02321
+PUMA	TX, 02322
+PUMA	TX, 02400
+PUMA	TX, 02501
+PUMA	TX, 02502
+PUMA	TX, 02503
+PUMA	TX, 02504
+PUMA	TX, 02505
+PUMA	TX, 02506
+PUMA	TX, 02507
+PUMA	TX, 02508
+PUMA	TX, 02509
+PUMA	TX, 02510
+PUMA	TX, 02511
+PUMA	TX, 02512
+PUMA	TX, 02513
+PUMA	TX, 02514
+PUMA	TX, 02515
+PUMA	TX, 02516
+PUMA	TX, 02600
+PUMA	TX, 02700
+PUMA	TX, 02800
+PUMA	TX, 02900
+PUMA	TX, 03000
+PUMA	TX, 03100
+PUMA	TX, 03200
+PUMA	TX, 03301
+PUMA	TX, 03302
+PUMA	TX, 03303
+PUMA	TX, 03304
+PUMA	TX, 03305
+PUMA	TX, 03306
+PUMA	TX, 03400
+PUMA	TX, 03501
+PUMA	TX, 03502
+PUMA	TX, 03601
+PUMA	TX, 03602
+PUMA	TX, 03700
+PUMA	TX, 03801
+PUMA	TX, 03802
+PUMA	TX, 03900
+PUMA	TX, 04000
+PUMA	TX, 04100
+PUMA	TX, 04200
+PUMA	TX, 04301
+PUMA	TX, 04302
+PUMA	TX, 04400
+PUMA	TX, 04501
+PUMA	TX, 04502
+PUMA	TX, 04503
+PUMA	TX, 04504
+PUMA	TX, 04601
+PUMA	TX, 04602
+PUMA	TX, 04603
+PUMA	TX, 04604
+PUMA	TX, 04605
+PUMA	TX, 04606
+PUMA	TX, 04607
+PUMA	TX, 04608
+PUMA	TX, 04609
+PUMA	TX, 04610
+PUMA	TX, 04611
+PUMA	TX, 04612
+PUMA	TX, 04613
+PUMA	TX, 04614
+PUMA	TX, 04615
+PUMA	TX, 04616
+PUMA	TX, 04617
+PUMA	TX, 04618
+PUMA	TX, 04619
+PUMA	TX, 04620
+PUMA	TX, 04621
+PUMA	TX, 04622
+PUMA	TX, 04623
+PUMA	TX, 04624
+PUMA	TX, 04625
+PUMA	TX, 04626
+PUMA	TX, 04627
+PUMA	TX, 04628
+PUMA	TX, 04629
+PUMA	TX, 04630
+PUMA	TX, 04631
+PUMA	TX, 04632
+PUMA	TX, 04633
+PUMA	TX, 04634
+PUMA	TX, 04635
+PUMA	TX, 04636
+PUMA	TX, 04637
+PUMA	TX, 04638
+PUMA	TX, 04701
+PUMA	TX, 04702
+PUMA	TX, 04801
+PUMA	TX, 04802
+PUMA	TX, 04803
+PUMA	TX, 04901
+PUMA	TX, 04902
+PUMA	TX, 04903
+PUMA	TX, 04904
+PUMA	TX, 04905
+PUMA	TX, 05000
+PUMA	TX, 05100
+PUMA	TX, 05201
+PUMA	TX, 05202
+PUMA	TX, 05203
+PUMA	TX, 05204
+PUMA	TX, 05301
+PUMA	TX, 05302
+PUMA	TX, 05303
+PUMA	TX, 05304
+PUMA	TX, 05305
+PUMA	TX, 05306
+PUMA	TX, 05307
+PUMA	TX, 05308
+PUMA	TX, 05309
+PUMA	TX, 05400
+PUMA	TX, 05500
+PUMA	TX, 05600
+PUMA	TX, 05700
+PUMA	TX, 05800
+PUMA	TX, 05901
+PUMA	TX, 05902
+PUMA	TX, 05903
+PUMA	TX, 05904
+PUMA	TX, 05905
+PUMA	TX, 05906
+PUMA	TX, 05907
+PUMA	TX, 05908
+PUMA	TX, 05909
+PUMA	TX, 05910
+PUMA	TX, 05911
+PUMA	TX, 05912
+PUMA	TX, 05913
+PUMA	TX, 05914
+PUMA	TX, 05915
+PUMA	TX, 05916
+PUMA	TX, 06000
+PUMA	TX, 06100
+PUMA	TX, 06200
+PUMA	TX, 06301
+PUMA	TX, 06302
+PUMA	TX, 06400
+PUMA	TX, 06500
+PUMA	TX, 06601
+PUMA	TX, 06602
+PUMA	TX, 06603
+PUMA	TX, 06701
+PUMA	TX, 06702
+PUMA	TX, 06703
+PUMA	TX, 06801
+PUMA	TX, 06802
+PUMA	TX, 06803
+PUMA	TX, 06804
+PUMA	TX, 06805
+PUMA	TX, 06806
+PUMA	TX, 06807
+PUMA	TX, 06900
+PUMA	UT, 03001
+PUMA	UT, 05001
+PUMA	UT, 11001
+PUMA	UT, 11002
+PUMA	UT, 13001
+PUMA	UT, 21001
+PUMA	UT, 35001
+PUMA	UT, 35002
+PUMA	UT, 35003
+PUMA	UT, 35004
+PUMA	UT, 35005
+PUMA	UT, 35006
+PUMA	UT, 35007
+PUMA	UT, 35008
+PUMA	UT, 35009
+PUMA	UT, 49001
+PUMA	UT, 49002
+PUMA	UT, 49003
+PUMA	UT, 49004
+PUMA	UT, 53001
+PUMA	UT, 57001
+PUMA	UT, 57002
+PUMA	VA, 01301
+PUMA	VA, 01302
+PUMA	VA, 04101
+PUMA	VA, 04102
+PUMA	VA, 04103
+PUMA	VA, 10701
+PUMA	VA, 10702
+PUMA	VA, 10703
+PUMA	VA, 51010
+PUMA	VA, 51020
+PUMA	VA, 51040
+PUMA	VA, 51044
+PUMA	VA, 51045
+PUMA	VA, 51080
+PUMA	VA, 51084
+PUMA	VA, 51085
+PUMA	VA, 51087
+PUMA	VA, 51089
+PUMA	VA, 51090
+PUMA	VA, 51095
+PUMA	VA, 51096
+PUMA	VA, 51097
+PUMA	VA, 51105
+PUMA	VA, 51110
+PUMA	VA, 51115
+PUMA	VA, 51120
+PUMA	VA, 51125
+PUMA	VA, 51135
+PUMA	VA, 51145
+PUMA	VA, 51154
+PUMA	VA, 51155
+PUMA	VA, 51164
+PUMA	VA, 51165
+PUMA	VA, 51167
+PUMA	VA, 51175
+PUMA	VA, 51186
+PUMA	VA, 51206
+PUMA	VA, 51215
+PUMA	VA, 51224
+PUMA	VA, 51225
+PUMA	VA, 51235
+PUMA	VA, 51244
+PUMA	VA, 51245
+PUMA	VA, 51246
+PUMA	VA, 51255
+PUMA	VA, 55001
+PUMA	VA, 55002
+PUMA	VA, 59301
+PUMA	VA, 59302
+PUMA	VA, 59303
+PUMA	VA, 59304
+PUMA	VA, 59305
+PUMA	VA, 59306
+PUMA	VA, 59307
+PUMA	VA, 59308
+PUMA	VA, 59309
+PUMA	VT, 00100
+PUMA	VT, 00200
+PUMA	VT, 00300
+PUMA	VT, 00400
+PUMA	WA, 10100
+PUMA	WA, 10200
+PUMA	WA, 10300
+PUMA	WA, 10400
+PUMA	WA, 10501
+PUMA	WA, 10502
+PUMA	WA, 10503
+PUMA	WA, 10504
+PUMA	WA, 10600
+PUMA	WA, 10701
+PUMA	WA, 10702
+PUMA	WA, 10703
+PUMA	WA, 10800
+PUMA	WA, 10901
+PUMA	WA, 10902
+PUMA	WA, 11000
+PUMA	WA, 11101
+PUMA	WA, 11102
+PUMA	WA, 11103
+PUMA	WA, 11104
+PUMA	WA, 11200
+PUMA	WA, 11300
+PUMA	WA, 11401
+PUMA	WA, 11402
+PUMA	WA, 11501
+PUMA	WA, 11502
+PUMA	WA, 11503
+PUMA	WA, 11504
+PUMA	WA, 11505
+PUMA	WA, 11506
+PUMA	WA, 11507
+PUMA	WA, 11601
+PUMA	WA, 11602
+PUMA	WA, 11603
+PUMA	WA, 11604
+PUMA	WA, 11605
+PUMA	WA, 11606
+PUMA	WA, 11607
+PUMA	WA, 11608
+PUMA	WA, 11609
+PUMA	WA, 11610
+PUMA	WA, 11611
+PUMA	WA, 11612
+PUMA	WA, 11613
+PUMA	WA, 11614
+PUMA	WA, 11615
+PUMA	WA, 11616
+PUMA	WA, 11701
+PUMA	WA, 11702
+PUMA	WA, 11703
+PUMA	WA, 11704
+PUMA	WA, 11705
+PUMA	WA, 11706
+PUMA	WA, 11801
+PUMA	WA, 11802
+PUMA	WA, 11900
+PUMA	WI, 00100
+PUMA	WI, 00101
+PUMA	WI, 00102
+PUMA	WI, 00103
+PUMA	WI, 00200
+PUMA	WI, 00300
+PUMA	WI, 00600
+PUMA	WI, 00700
+PUMA	WI, 00800
+PUMA	WI, 00900
+PUMA	WI, 01000
+PUMA	WI, 01001
+PUMA	WI, 01300
+PUMA	WI, 01301
+PUMA	WI, 01400
+PUMA	WI, 01401
+PUMA	WI, 01500
+PUMA	WI, 01501
+PUMA	WI, 01600
+PUMA	WI, 01601
+PUMA	WI, 02400
+PUMA	WI, 02500
+PUMA	WI, 10000
+PUMA	WI, 20000
+PUMA	WI, 30000
+PUMA	WI, 40101
+PUMA	WI, 40301
+PUMA	WI, 40701
+PUMA	WI, 41001
+PUMA	WI, 41002
+PUMA	WI, 41003
+PUMA	WI, 41004
+PUMA	WI, 41005
+PUMA	WI, 50000
+PUMA	WI, 55101
+PUMA	WI, 55102
+PUMA	WI, 55103
+PUMA	WI, 70101
+PUMA	WI, 70201
+PUMA	WI, 70301
+PUMA	WV, 00100
+PUMA	WV, 00200
+PUMA	WV, 00300
+PUMA	WV, 00400
+PUMA	WV, 00500
+PUMA	WV, 00600
+PUMA	WV, 00700
+PUMA	WV, 00800
+PUMA	WV, 00900
+PUMA	WV, 01000
+PUMA	WV, 01100
+PUMA	WV, 01200
+PUMA	WV, 01300
+PUMA	WY, 00100
+PUMA	WY, 00200
+PUMA	WY, 00300
+PUMA	WY, 00400
+PUMA	WY, 00500
 PUMA Metro Status	In metro area, not/partially in principal city
 PUMA Metro Status	In metro area, principal city
 PUMA Metro Status	Not/partially in metro area

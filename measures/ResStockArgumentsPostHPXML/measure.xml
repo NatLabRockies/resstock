@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>bbe4c381-c4ce-4e00-bc3c-2e980217271f</version_id>
-  <version_modified>2025-08-02T21:03:27Z</version_modified>
+  <version_id>cb8782e8-52fb-4472-9d62-32bba88e54a5</version_id>
+  <version_modified>2025-08-03T20:30:24Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -16,6 +16,14 @@
       <display_name>HPXML File Path</display_name>
       <description>Absolute/relative path of the HPXML file.</description>
       <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>building_id</name>
+      <display_name>Building Unit ID</display_name>
+      <description>The building unit number (between 1 and the number of samples).</description>
+      <type>Integer</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -43,6 +51,312 @@
       <description>This numeric field should contain the calendar year that determines the start day of week. If you are running simulations using AMY weather files, the value entered for calendar year will not be used; it will be overridden by the actual year found in the AMY weather file.</description>
       <type>Integer</type>
       <units>year</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heating_system_heating_capacity</name>
+      <display_name>Heating System: Heating Capacity</display_name>
+      <description>The output heating capacity of the heating system.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heating_system_heating_autosizing_factor</name>
+      <display_name>Heating System: Heating Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heating_system_heating_autosizing_limit</name>
+      <display_name>Heating System: Heating Autosizing Limit</display_name>
+      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heating_system_2_type</name>
+      <display_name>Heating System 2: Type</display_name>
+      <description>The type of the second heating system.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>Furnace</value>
+          <display_name>Furnace</display_name>
+        </choice>
+        <choice>
+          <value>WallFurnace</value>
+          <display_name>WallFurnace</display_name>
+        </choice>
+        <choice>
+          <value>FloorFurnace</value>
+          <display_name>FloorFurnace</display_name>
+        </choice>
+        <choice>
+          <value>Boiler</value>
+          <display_name>Boiler</display_name>
+        </choice>
+        <choice>
+          <value>ElectricResistance</value>
+          <display_name>ElectricResistance</display_name>
+        </choice>
+        <choice>
+          <value>Stove</value>
+          <display_name>Stove</display_name>
+        </choice>
+        <choice>
+          <value>SpaceHeater</value>
+          <display_name>SpaceHeater</display_name>
+        </choice>
+        <choice>
+          <value>Fireplace</value>
+          <display_name>Fireplace</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>heating_system_2_fuel</name>
+      <display_name>Heating System 2: Fuel Type</display_name>
+      <description>The fuel type of the second heating system.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>electricity</value>
+          <display_name>electricity</display_name>
+        </choice>
+        <choice>
+          <value>natural gas</value>
+          <display_name>natural gas</display_name>
+        </choice>
+        <choice>
+          <value>fuel oil</value>
+          <display_name>fuel oil</display_name>
+        </choice>
+        <choice>
+          <value>propane</value>
+          <display_name>propane</display_name>
+        </choice>
+        <choice>
+          <value>wood</value>
+          <display_name>wood</display_name>
+        </choice>
+        <choice>
+          <value>wood pellets</value>
+          <display_name>wood pellets</display_name>
+        </choice>
+        <choice>
+          <value>coal</value>
+          <display_name>coal</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>heating_system_2_heating_efficiency</name>
+      <display_name>Heating System 2: Rated AFUE or Percent</display_name>
+      <description>The rated heating efficiency value of the second heating system.</description>
+      <type>Double</type>
+      <units>Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heating_system_2_heating_capacity</name>
+      <display_name>Heating System 2: Heating Capacity</display_name>
+      <description>The output heating capacity of the second heating system.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heating_system_2_heating_autosizing_factor</name>
+      <display_name>Heating System 2: Heating Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heating_system_2_heating_autosizing_limit</name>
+      <display_name>Heating System 2: Heating Autosizing Limit</display_name>
+      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>cooling_system_cooling_capacity</name>
+      <display_name>Cooling System: Cooling Capacity</display_name>
+      <description>The output cooling capacity of the cooling system.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>cooling_system_cooling_autosizing_factor</name>
+      <display_name>Cooling System: Cooling Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>cooling_system_cooling_autosizing_limit</name>
+      <display_name>Cooling System: Cooling Autosizing Limit</display_name>
+      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_heating_capacity</name>
+      <display_name>Heat Pump: Heating Capacity</display_name>
+      <description>The output heating capacity of the heat pump.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_heating_autosizing_factor</name>
+      <display_name>Heat Pump: Heating Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_heating_autosizing_limit</name>
+      <display_name>Heat Pump: Heating Autosizing Limit</display_name>
+      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_cooling_capacity</name>
+      <display_name>Heat Pump: Cooling Capacity</display_name>
+      <description>The output cooling capacity of the heat pump.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_cooling_autosizing_factor</name>
+      <display_name>Heat Pump: Cooling Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.</description>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_cooling_autosizing_limit</name>
+      <display_name>Heat Pump: Cooling Autosizing Limit</display_name>
+      <description>The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_fraction_heat_load_served</name>
+      <display_name>Heat Pump: Fraction Heat Load Served</display_name>
+      <description>The heating load served by the heat pump.</description>
+      <type>Double</type>
+      <units>Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_backup_type</name>
+      <display_name>Heat Pump: Backup Type</display_name>
+      <description>The backup type of the heat pump.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>integrated</value>
+          <display_name>integrated</display_name>
+        </choice>
+        <choice>
+          <value>separate</value>
+          <display_name>separate</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>heat_pump_backup_fuel</name>
+      <display_name>Heat Pump: Backup Fuel Type</display_name>
+      <description>The backup fuel type of the heat pump.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>electricity</value>
+          <display_name>electricity</display_name>
+        </choice>
+        <choice>
+          <value>natural gas</value>
+          <display_name>natural gas</display_name>
+        </choice>
+        <choice>
+          <value>fuel oil</value>
+          <display_name>fuel oil</display_name>
+        </choice>
+        <choice>
+          <value>propane</value>
+          <display_name>propane</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>heat_pump_backup_heating_efficiency</name>
+      <display_name>Heat Pump: Backup Rated Efficiency</display_name>
+      <description>The backup rated efficiency value of the heat pump.</description>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_backup_heating_capacity</name>
+      <display_name>Heat Pump: Backup Heating Capacity</display_name>
+      <description>The backup output heating capacity of the heat pump.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_backup_heating_autosizing_factor</name>
+      <display_name>Heat Pump: Backup Heating Autosizing Factor</display_name>
+      <description>The capacity scaling factor applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, 1.0 is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Factor.</description>
+      <type>Double</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>heat_pump_backup_heating_autosizing_limit</name>
+      <display_name>Heat Pump: Backup Heating Autosizing Limit</display_name>
+      <description>The maximum capacity limit applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, no limit is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Limit.</description>
+      <type>Double</type>
+      <units>Btu/hr</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -132,7 +446,6 @@
       <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
     </argument>
     <argument>
       <name>clothes_dryer_usage_multiplier</name>
@@ -141,7 +454,6 @@
       <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
     </argument>
     <argument>
       <name>clothes_washer_usage_multiplier</name>
@@ -150,7 +462,6 @@
       <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
     </argument>
     <argument>
       <name>cooking_range_oven_usage_multiplier</name>
@@ -159,7 +470,6 @@
       <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
     </argument>
     <argument>
       <name>dishwasher_usage_multiplier</name>
@@ -168,7 +478,6 @@
       <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
     </argument>
     <argument>
       <name>extra_refrigerator_usage_multiplier</name>
@@ -177,7 +486,6 @@
       <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
     </argument>
     <argument>
       <name>freezer_usage_multiplier</name>
@@ -186,7 +494,6 @@
       <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
     </argument>
     <argument>
       <name>misc_plug_loads_television_usage_multiplier</name>
@@ -195,7 +502,6 @@
       <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
     </argument>
     <argument>
       <name>misc_plug_loads_other_usage_multiplier</name>
@@ -204,7 +510,6 @@
       <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
     </argument>
     <argument>
       <name>bathroom_fans_start_hour</name>
@@ -231,14 +536,6 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
-      <name>building_id</name>
-      <display_name>Building Unit ID</display_name>
-      <description>The building unit number (between 1 and the number of samples).</description>
-      <type>Integer</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>ev_miles_driven_per_year</name>
       <display_name>Electric Vehicle: Miles Driven Per Year</display_name>
       <description>The annual miles the electric vehicle is driven.</description>
@@ -261,6 +558,15 @@
       <description>The increase (fraction) in efficiency of the electric vehicle.</description>
       <type>Double</type>
       <units>Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>electric_panel_service_max_current_rating</name>
+      <display_name>Electric Panel: Service Max Current Rating</display_name>
+      <description>The service max current rating of the electric panel.</description>
+      <type>Double</type>
+      <units>A</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -861,7 +1167,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>66DE300E</checksum>
+      <checksum>63A43552</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
