@@ -5035,8 +5035,8 @@ If not entered, the simulation will not include a detailed electric vehicle mode
   .. [#] If a connected charger is not provided, home electric vehicle charging will not be modeled.
   .. [#] If WeekdayScheduleFractions or WeekendScheduleFractions are not provided (and :ref:`schedules_detailed` not used), then :ref:`schedules_default` are used.
   .. [#] If MonthlyScheduleMultipliers are not provided (and :ref:`schedules_detailed` not used), then :ref:`schedules_default` are used.
-  .. [#] If MilesDrivenPerYear not provided, defaults to HoursDrivenPerWeek * 1227.5, else 10900 miles per `2017 National Household Travel Survey data <https://nhts.ornl.gov/>`_.
-  .. [#] If HoursDrivenPerWeek not provided, defaults to MilesDrivenPerYear / 1227.5, else 8.88 hours/week per `2017 National Household Travel Survey data <https://nhts.ornl.gov/>`_.
+  .. [#] If MilesDrivenPerYear not provided, defaults to HoursDrivenPerWeek * 10900 / 9.5, else 10900 miles per `2017 National Household Travel Survey data <https://nhts.ornl.gov/>`_.
+  .. [#] If HoursDrivenPerWeek not provided, defaults to MilesDrivenPerYear * 9.5 / 10900, else 9.5 hours/week per `2017 National Household Travel Survey data <https://nhts.ornl.gov/>`_.
   .. [#] If FuelEconomyCombined not provided, defaults to 0.22 kWh/mile per `2022 Autonomie release <https://vms.taps.anl.gov/tools/autonomie/>`_.
 
  .. note::

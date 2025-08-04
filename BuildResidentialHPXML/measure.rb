@@ -2673,7 +2673,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   # @return [nil]
   def set_geothermal_loop(hpxml_bldg, args)
     return if hpxml_bldg.heat_pumps.count { |hp| hp.heat_pump_type == HPXML::HVACTypeHeatPumpGroundToAir } == 0
-    return if args[:hvac_geothermal_loop_configuration].nil? || args[:hvac_geothermal_loop] == 'None'
+    return if args[:hvac_geothermal_loop] == 'Default'
 
     if not args[:hvac_geothermal_loop_pipe_diameter].nil?
       case args[:hvac_geothermal_loop_pipe_diameter]
@@ -3577,12 +3577,15 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   def set_extra_refrigerator(hpxml_bldg, args)
     return if args[:appliance_extra_refrigerator] == 'None'
 
+    if not hpxml_bldg.refrigerators.empty?
+      hpxml_bldg.refrigerators[0].primary_indicator = true
+    end
+
     hpxml_bldg.refrigerators.add(id: "Refrigerator#{hpxml_bldg.refrigerators.size + 1}",
                                  location: args[:appliance_extra_refrigerator_location],
                                  rated_annual_kwh: args[:appliance_extra_refrigerator_rated_annual_consumption],
                                  usage_multiplier: args[:appliance_extra_refrigerator_usage_multiplier],
                                  primary_indicator: false)
-    hpxml_bldg.refrigerators[0].primary_indicator = true
   end
 
   # Sets the HPXML freezer properties.
