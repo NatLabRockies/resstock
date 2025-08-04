@@ -794,24 +794,24 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0%
      - true
      - outside
-     - 20
      - auto
+     - 20
      - auto
      - auto
    * - 20 kWh, Garage
      - 0%
      - true
      - garage
-     - 20
      - auto
+     - 20
      - auto
      - auto
    * - 20 kWh, 80% Round Trip Efficiency
      - 0%
      - true
      - auto
-     - 20
      - auto
+     - 20
      - auto
      - 0.8
 
