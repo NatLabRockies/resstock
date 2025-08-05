@@ -2427,12 +2427,6 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
       hpxml_bldg.water_heating_systems[0].standby_loss_units = HPXML::UnitsDegFPerHour
       hpxml_bldg.water_heating_systems[0].standby_loss_value = 1.0
     end
-    if ['base-dhw-tank-coal.xml'].include? hpxml_file
-      hpxml_bldg.water_heating_systems[0].fuel_type = HPXML::FuelTypeCoal
-    end
-    if ['base-dhw-tank-wood.xml'].include? hpxml_file
-      hpxml_bldg.water_heating_systems[0].fuel_type = HPXML::FuelTypeWoodCord
-    end
     if ['base-dhw-tank-heat-pump-capacities.xml'].include? hpxml_file
       hpxml_bldg.water_heating_systems[0].heating_capacity = 3000
       hpxml_bldg.water_heating_systems[0].backup_heating_capacity = 0
