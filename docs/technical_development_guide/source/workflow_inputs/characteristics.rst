@@ -1346,7 +1346,7 @@ Source
 Assumption
 **********
 
-- \2020 Deccenial Redistricting data was used to map tract level unit counts to census blocks.
+- \2020 Decennial Redistricting data was used to map tract level unit counts to census blocks.
 
 - \1,099 cities are tagged in ResStock, but there are over 29,000 Places in the Census data.
 
@@ -4772,7 +4772,7 @@ Assumption
 
   - \[8] State coarsened to National
 
-- \In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Heating Fuel','Clothers Washer Presence'], ['Tenure', 'Federal Poverty Level']).
+- \In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Heating Fuel','Clothes Washer Presence'], ['Tenure', 'Federal Poverty Level']).
 
 
 Arguments
@@ -35936,7 +35936,7 @@ Assumption
 
 - \PUMA level battery electric vehicle saturation is calculated using a weighted average of the County level Experian data and ResStock unit counts for each County and PUMA.
 
-- \The RECS 2020 satuations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery electric vehicle saturation using the segment unit counts from PUMS 2019-5yrs survey.
+- \The RECS 2020 saturations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery electric vehicle saturation using the segment unit counts from PUMS 2019-5yrs survey.
 
 
 Arguments
@@ -36099,7 +36099,7 @@ Generation And Emissions Assessment Region
 Description
 ***********
 
-The generation and carbon emissions assessment region that the sample is located in.
+The generation and carbon emissions assessment region that the sample is located.
 
 Created by
 **********
@@ -36109,7 +36109,7 @@ Created by
 Source
 ******
 
-- \Gagnon, Pieter, Sanchez Perez, Pedro Andres, Obika, Kodi, et al., Cambium 2023 Scenario Descriptions and Documentation, (2024), https://doi.org/10.2172/2316014f
+- \Pieter Gagnon, Will Frazier, Wesley Cole, and Elaine Hale. 2021. Cambium Documentation: Version 2021. Golden, CO.: National Renewable Energy Laboratory. NREL/TP-6A40-81611. https://www.nrel.gov/docs/fy22osti/81611.pdf
 
 
 Options
@@ -36125,44 +36125,48 @@ From ``project_national`` the list of options, option stock sturation, and optio
    * - Option name
      - Stock saturation
 
-   * - CAISO
+   * - AZNMc
+     - 3.6%
+   * - CAMXc
      - 10%
-   * - ERCOT
+   * - ERCTc
      - 6.8%
-   * - FRCC
+   * - FRCCc
      - 6.5%
-   * - ISONE
+   * - MROEc
+     - 0.97%
+   * - MROWc
+     - 4.3%
+   * - NEWEc
      - 4.8%
-   * - MISO Central
-     - 7.6%
-   * - MISO North
-     - 5%
-   * - MISO South
-     - 3.3%
    * - None
      - 0.63%
-   * - Northern Grid East
-     - 0.95%
-   * - Northern Grid South
-     - 1.7%
-   * - Northern Grid West
-     - 3.5%
-   * - NYISO
+   * - NWPPc
+     - 5.5%
+   * - NYSTc
      - 6.1%
-   * - PJM East
-     - 17%
-   * - PJM West
-     - 3%
-   * - SERTP
-     - 13%
-   * - SPP North
-     - 0.94%
-   * - SPP South
-     - 3.8%
-   * - West Connect North
+   * - RFCEc
+     - 8.2%
+   * - RFCMc
+     - 3.3%
+   * - RFCWc
+     - 12%
+   * - RMPAc
      - 1.9%
-   * - West Connect South
-     - 3%
+   * - SPNOc
+     - 1.8%
+   * - SPSOc
+     - 2.1%
+   * - SRMVc
+     - 3.3%
+   * - SRMWc
+     - 2.3%
+   * - SRSOc
+     - 5.1%
+   * - SRTVc
+     - 3.7%
+   * - SRVCc
+     - 7.1%
 
 .. _geometry_attic_type:
 
@@ -36758,7 +36762,7 @@ Geometry Building Type ACS
 Description
 ***********
 
-The building type classification according to the U.S. Census American Communicy Survey.
+The building type classification according to the U.S. Census American Community Survey.
 
 Created by
 **********
@@ -37901,7 +37905,7 @@ Assumption
 
 - \Rows where sample size < 10 are replaced with aggregated values down-scaled from dep='State' to dep='Census Division RECS'
 
-- \Brick wall types are assumed to not have an aditional brick exterior finish
+- \Brick wall types are assumed to not have an additional brick exterior finish
 
 - \Steel and wood frame walls must have an exterior finish
 
@@ -38702,7 +38706,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -38710,7 +38714,7 @@ Assumption
 
 - \Due to low sample sizes, fallback rules applied with lumping of
 
-- \1) HVAC Heating type: Non-ducted heating and None2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs binsHomes having ducted heat pump for heating and electricity fuel is assumed to haveducted heat pump for cooling (seperating from central AC category)
+- \1) HVAC Heating type: Non-ducted heating and None2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs binsHomes having ducted heat pump for heating and electricity fuel is assumed to haveducted heat pump for cooling (separating from central AC category)
 
 - \Homes having non-ducted heat pump for heating is assumed to have non-ducted heat pumpfor cooling
 
@@ -38718,9 +38722,9 @@ Assumption
 
 - \For Hawaii, Non-Ducted Heat Pump saturation is underestimated because ResStock does not currently allow cooling-only Non-Ducted Heat Pumps. These samples are modeled as Room ACs
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
-- \For Alaska, we are not modelling any central and room AC.
+- \For Alaska, we are not modeling any central and room AC.
 
 - \For Alaska, cooling systems are never shared.
 
@@ -39047,7 +39051,7 @@ Source
 
 - \Efficiency data based on expanded_HESC_HVAC_efficiencies.tsv combined with age of equipment data from RECS
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -39067,9 +39071,9 @@ Assumption
 
 - \For Other Fuel and Wood, the lowest efficiency systems are assumed.
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
-- \For Alaska, electric space heaters are modelled as electric baseboards.
+- \For Alaska, electric space heaters are modeled as electric baseboards.
 
 - \For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
 
@@ -40456,7 +40460,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -40466,7 +40470,7 @@ Assumption
 
 - \1) Heating fuel lump: Fuel oil, Propane, Wood and Other Fuel2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs bins
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 
 Options
@@ -40596,13 +40600,13 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating efficiency.
 
@@ -40762,15 +40766,15 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
-- \For Alaska, all wood is modelled as cord wood.
+- \For Alaska, all wood is modeled as cord wood.
 
 - \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary (i.e., secondary heating fuel cannot be electricity). Rest of the fuels are ignored.
 
@@ -40851,13 +40855,13 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, the fraction of the load served by the secondary heating system is calculated as the ratio of annual energy used by secondary fuel and annual energy used by secondary and primary fuel.
 
@@ -40936,13 +40940,13 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \Ducted heating or heat pump cannot have ducted secondary heating.
 
@@ -42153,19 +42157,19 @@ Source
 
 - \2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \In ACS, Heating Fuel is reported for occupied units only. By excluding Vacancy Status as adependency, we assume vacant units share the same Heating Fuel distribution as occupied units. Where sample counts are less than 10, the State average distribution has been inserted. Prior to insertion, the following adjustments have been made to the state distribution so all rows have sample count > 10: 1. Where sample counts < 10 (which consists of Mobile Home and Single-Family Attached only), the Vintage ACS distribution is used instead of Vintage: [CT, DE, ID, MD, ME, MT, ND, NE, NH, NV, RI, SD, UT, VT, WY]
+- \In ACS, Heating Fuel is reported for occupied units only. By excluding Vacancy Status as a dependency, we assume vacant units share the same Heating Fuel distribution as occupied units. Where sample counts are less than 10, the State average distribution has been inserted. Prior to insertion, the following adjustments have been made to the state distribution so all rows have sample count > 10: 1. Where sample counts < 10 (which consists of Mobile Home and Single-Family Attached only), the Vintage ACS distribution is used instead of Vintage: [CT, DE, ID, MD, ME, MT, ND, NE, NH, NV, RI, SD, UT, VT, WY]
 
 - \2. Remaining Mobile Homes < 10 are replaced by Single-Family Detached + Mobile Homes combined: [DE, RI, SD, VT, WY, and all DC].
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
-- \For Alaska, all wood is modelled as cord wood.
+- \For Alaska, all wood is modeled as cord wood.
 
 - \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary. Rest of the fuels are ignored.
 
@@ -42754,7 +42758,7 @@ Assumption
 
 - \4. The Cooling Unavailable Days dependency is aggregated into Days, Weeks, Month, and All Year bins.
 
-- \5. The Cooling Unavailable Days dependancy is removed.
+- \5. The Cooling Unavailable Days dependency is removed.
 
 
 Arguments
@@ -43186,7 +43190,7 @@ Household Has Tribal Persons
 Description
 ***********
 
-The houshold occupying the dwelling unit has at least one tribal person in the household.
+The household occupying the dwelling unit has at least one tribal person in the household.
 
 Created by
 **********
@@ -43495,7 +43499,7 @@ Source
 
 - \Distributions are based on the cumulative distribution functions from the Residential Diagnostics Database (ResDB), http://resdb.lbl.gov/.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -43513,7 +43517,7 @@ Assumption
 
 - \ResStock models multi-family and SFA units with the unit total air leakage type. The unit total air leakage assume that some of the sampled ACH50 value goes to neighboring units. The model infiltration value to the exterior is a smaller infiltration value that what is sampled and is adjusted by the ratio of exterior envelope surface area to total envelope surface area. The modeled infiltration to the exterior is reported in the results.
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, Infiltration ACH50 values are calculated based on CFM50 from blower door test and estimated volume of the home.
 
@@ -44703,7 +44707,7 @@ Source
 Assumption
 **********
 
-- \Qualitative portion of inside light bulbs is mapped to quantative percentage as: None: 0%
+- \Qualitative portion of inside light bulbs is mapped to quantitative percentage as: None: 0%
 
 - \Some: 20%
 
@@ -48028,7 +48032,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \the California Energy Commision 2019 Residential Appliance Saturation Study (RASS) microdata.
+- \the California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata.
 
 
 Assumption
@@ -64220,7 +64224,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -64240,7 +64244,7 @@ Assumption
 
   - \[5] State: National
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, wood and coal heating is modeled as other fuel.
 
@@ -64358,7 +64362,7 @@ Assumption
 
 - \H2OMAIN = other is equally distributed amongst attic and crawlspace.
 
-- \H2OMAIN does not apply to multi-family, therefore Water heater location for multi-family with in-unit water heater is taken after the combined distribution of other builing types.
+- \H2OMAIN does not apply to multi-family, therefore Water heater location for multi-family with in-unit water heater is taken after the combined distribution of other building types.
 
 - \out-of-unit water heater is assumed to be in Conditioned Mechanical Room. Per expert judgement, water heaters can not be outside or in vented spaces for IECC Climate Zones 4-8 due to pipe-freezing risk.
 
