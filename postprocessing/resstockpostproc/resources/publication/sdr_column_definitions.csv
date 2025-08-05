@@ -717,28 +717,32 @@ Calculated,,,,out.electricity.total.energy_consumption_intensity.savings,kwh/sqf
 Calculated,,,,out.fuel_oil.total.energy_consumption_intensity.savings,kwh/sqft,,,,out.fuel_oil.total.energy_consumption_intensity.savings,out.fuel_oil.total.energy_consumption_intensity.savings,kwh/sqft,,
 Calculated,,,,out.natural_gas.total.energy_consumption_intensity.savings,kwh/sqft,,,,out.natural_gas.total.energy_consumption_intensity.savings,out.natural_gas.total.energy_consumption_intensity.savings,kwh/sqft,,
 Calculated,,,,out.propane.total.energy_consumption_intensity.savings,kwh/sqft,,,,out.propane.total.energy_consumption_intensity.savings,out.propane.total.energy_consumption_intensity.savings,kwh/sqft,,
-Calculated,,,upgrade.clothes_dryer,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.cooking_range,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.cooling_setpoint_has_offset,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.cooling_setpoint_offset_magnitude,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.cooling_setpoint_offset_period,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.electric_vehicle_charger,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.electric_vehicle_efficiency_increase,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.electric_vehicle_ownership,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.heating_setpoint_has_offset,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.heating_setpoint_offset_magnitude,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.heating_setpoint_offset_period,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.hvac_cooling_efficiency,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.hvac_cooling_partial_space_conditioning,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.hvac_heating_efficiency,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.hvac_secondary_heating_efficiency,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.hvac_secondary_heating_fuel,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.infiltration_reduction,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.insulation_ceiling,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.misc_hot_tub_spa,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.misc_pool_heater,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.water_heater_efficiency,,,,,,,,,,Only appears when at least one building has this upgrade.
-Calculated,,,upgrade.water_heater_fuel,,,,,,,,,,Only appears when at least one building has this upgrade.
+Calculated,,,upgrade.clothes_dryer,,,,,,,,,,Indicates the type of clothes dryer the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.cooking_range,,,,,,,,,,Indicates the type of cooking range the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.cooling_setpoint_has_offset,,,,,,,,,,Indicates the cooling setpoint the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.cooling_setpoint_offset_magnitude,,,,,,,,,,Indicates the magnitude of the cooling setpoint the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.cooling_setpoint_offset_period,,,,,,,,,,Indicates the period of the cooling setpoint the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.electric_vehicle_charger,,,,,,,,,,Indicates the electric vehicle charger the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.electric_vehicle_efficiency_increase,,,,,,,,,,Indicates the efficiency increase of the electric vehicle the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.electric_vehicle_ownership,,,,,,,,,,Indicates the electric vehicle ownership of the building the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.heating_setpoint_has_offset,,,,,,,,,,Indicates if the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.heating_setpoint_offset_magnitude,,,,,,,,,,Indicates the magnitude of the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.heating_setpoint_offset_period,,,,,,,,,,Indicates the period of the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.hvac_cooling_efficiency,,,,,,,,,,Indicates the efficiency of the HVAC cooling the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.hvac_cooling_partial_space_conditioning,,,,,,,,,,Indicates the partial space conditioning of the HVAC cooling the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.hvac_heating_efficiency,,,,,,,,,,Indicates the efficiency of the HVAC heating the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.hvac_secondary_heating_efficiency,,,,,,,,,,Indicates the efficiency of the HVAC secondary heating the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.hvac_secondary_heating_fuel,,,,,,,,,,Indicates the fuel of the HVAC secondary heating the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.infiltration_reduction,,,,,,,,,,Indicates the infiltration reduction of the building the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.insulation_ceiling,,,,,,,,,,Indicates the insulation ceiling of the building the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.misc_hot_tub_spa,,,,,,,,,,Indicates the hot tub or spa the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.misc_pool_heater,,,,,,,,,,Indicates the pool heater the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.water_heater_efficiency,,,,,,,,,,Indicates the efficiency of the water heater the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.water_heater_fuel,,,,,,,,,,Indicates which fuel is used for the water heater the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.hvac_detailed_performance_data,,,,,,,,,,Indicates the HVAC detailed performance data the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.demand_flexibility_electric_vehicle,,,,,,,,,,Indicates if demand flexibility is applied to electric vehicle in the model. Blank value indicates the upgrade didn't apply.
+Calculated,,,upgrade.demand_flexibility_hvac,,,,,,,,,,Indicates if demand flexibility is applied to HVAC in the model. Blank value indicates the upgrade didn't apply.
+Calculated,,,upgrade.demand_flexibility_random_shift,,,,,,,,,,Indicates the number of minutes of random shift applied for demand flexibility in the model. Blank value indicates the upgrade didn't apply.
 Output,,,,,,,Site Outdoor Air Drybulb Temperature: Environment,C,out.outdoor_air_dryblub_temp.c,out.outdoor_air_dryblub_temp.c,C,1,
 Output,,,,,,,Zone Mean Air Temperature: Air Source Heat Pump Airloop Ret Air Zone,C,out.zone_mean_air_temp.air_source_heat_pump_airloop_ret_air_zone.c,out.zone_mean_air_temp.air_source_heat_pump_airloop_ret_air_zone.c,C,1,
 Output,,,,,,,Zone Mean Air Temperature: Attic - Vented,C,out.zone_mean_air_temp.attic_vented.c,out.zone_mean_air_temp.attic_vented.c,C,1,
