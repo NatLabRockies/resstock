@@ -29,6 +29,8 @@ None	none
 "Propane, Tankless, UEF 0.82"	instantaneous water heater	propane	UniformEnergyFactor	0.82				
 "Propane, Tankless, UEF 0.93"	instantaneous water heater	propane	UniformEnergyFactor	0.93				
 "Propane, Tankless, UEF 0.96"	instantaneous water heater	propane	UniformEnergyFactor	0.96				
+"Wood, Tank, UEF 0.60"	storage water heater	wood	UniformEnergyFactor	0.6				
+"Coal, Tank, UEF 0.60"	storage water heater	coal	UniformEnergyFactor	0.6				
 Space-Heating Boiler w/ Storage Tank	space-heating boiler with storage tank							
 Space-Heating Boiler w/ Tankless Coil	space-heating boiler with tankless coil							
 "Detailed Example: Electricity, Tank, 40 gal, EF 0.93"	storage water heater	electricity	EnergyFactor	0.93	40			

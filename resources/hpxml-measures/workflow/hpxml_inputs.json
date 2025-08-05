@@ -917,7 +917,8 @@
     "dhw_solar_thermal": "Thermosyphon, Flat Plate, 40 sqft"
   },
   "sample_files/base-dhw-tank-coal.xml": {
-    "parent_hpxml": "sample_files/base-dhw-tank-gas.xml"
+    "parent_hpxml": "sample_files/base-dhw-tank-gas.xml",
+    "dhw_water_heater": "Coal, Tank, UEF 0.60"
   },
   "sample_files/base-dhw-tank-detailed-setpoints.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -985,7 +986,8 @@
     "dhw_water_heater": "Fuel Oil, Tank, UEF 0.61"
   },
   "sample_files/base-dhw-tank-wood.xml": {
-    "parent_hpxml": "sample_files/base-dhw-tank-gas.xml"
+    "parent_hpxml": "sample_files/base-dhw-tank-gas.xml",
+    "dhw_water_heater": "Wood, Tank, UEF 0.60"
   },
   "sample_files/base-dhw-tankless-electric.xml": {
     "parent_hpxml": "sample_files/base.xml",
