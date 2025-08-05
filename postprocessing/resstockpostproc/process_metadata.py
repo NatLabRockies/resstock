@@ -154,13 +154,14 @@ def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
     space_col = "out.panel.breaker_space.headroom.count"
 
     out_space_col = "out.panel.constraint.breaker_space"
-    space_constraint = pl.when(pl.col(space_col)<=0).then(True).otherwise(False).alias(out_space_col)
-    all_constraints = [space_constraint]
+    space_constraint = pl.when(pl.col(space_col) <= 0).then(True).otherwise(False).alias(out_space_col)
+    ind_constraints = [space_constraint]
 
     for amp_col in amp_cols:
-        nec_method = col.removeprefix(amp_prefix).removesuffix(".a")
+        nec_method = amp_col.removeprefix(amp_prefix).removesuffix(".a")
         out_amp_col = "out.panel.constraint.capacity." + nec_method
-        amp_constraint = pl.when(pl.col(amp_col)<=0).then(True).otherwise(False).alias(out_amp_col)
+        amp_constraint = pl.when(pl.col(amp_col) <= 0).then(True).otherwise(False).alias(out_amp_col)
+        ind_constraints.append(amp_constraint)
 
         out_overall_col = "out.panel.constraint.overall." + nec_method
         overall_constraint = pl.coalesce(
@@ -168,10 +169,12 @@ def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
             pl.when(pl.col(out_amp_col) & ~pl.col(out_space_col)).then(pl.lit("Capacity Constrained Only")),
             pl.when(~pl.col(out_amp_col) & pl.col(out_space_col)).then(pl.lit("Space Constrained Only")),
             pl.lit("No Constraint"),
-        ).alias(out_overall_col) # sequential to space_constraint and amp_constraint
+        ).alias(out_overall_col)
 
-        all_constraints += [amp_constraint, overall_constraint]
-    return df.with_columns(all_constraints)
+        new_df = df.with_columns(ind_constraints).with_columns(overall_constraint) # needs to be sequential
+
+        
+    return new_df
 
 
 def add_county_column(df: pl.LazyFrame):
