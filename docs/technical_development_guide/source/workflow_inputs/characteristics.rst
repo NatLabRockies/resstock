@@ -43338,7 +43338,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Roof Pitch, South
    * - Other Fuel
      - 0.044%
-     - None
+     - Coal, Tank, UEF 0.60
      - None
      - Roof Pitch, South
    * - Propane Premium
@@ -43393,7 +43393,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Roof Pitch, West
    * - Wood
      - 0.076%
-     - None
+     - Wood, Tank, UEF 0.60
      - None
      - Roof Pitch, South
 
