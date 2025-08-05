@@ -13688,7 +13688,7 @@ Water Heater Efficiency	Fuel Oil Standard	ResStockArguments	dhw_water_heater=Fue
 Water Heater Efficiency	Natural Gas Premium	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF 0.70	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Natural Gas Standard	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF 0.60	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Natural Gas Tankless	ResStockArguments	dhw_water_heater=Natural Gas, Tankless, UEF 0.82	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Other Fuel	ResStockArguments	dhw_water_heater=None	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Other Fuel	ResStockArguments	dhw_water_heater=Coal, Tank, UEF 0.60	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Propane Premium	ResStockArguments	dhw_water_heater=Propane, Tank, UEF 0.67	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Propane Standard	ResStockArguments	dhw_water_heater=Propane, Tank, UEF 0.60	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Propane Tankless	ResStockArguments	dhw_water_heater=Propane, Tankless, UEF 0.82	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
@@ -13699,7 +13699,7 @@ Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Stan
 Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup	ResStockArguments	dhw_water_heater=Natural Gas, Tank, UEF 0.60	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup	ResStockArguments	dhw_water_heater=Propane, Tank, UEF 0.60	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=Indirect, Flat Plate, 40 sqft	dhw_solar_thermal_direction=Roof Pitch, West
-Water Heater Efficiency	Wood	ResStockArguments	dhw_water_heater=None	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Wood	ResStockArguments	dhw_water_heater=Wood, Tank, UEF 0.60	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Fuel	Electricity
 Water Heater Fuel	Fuel Oil
 Water Heater Fuel	Natural Gas
