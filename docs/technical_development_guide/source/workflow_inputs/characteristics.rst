@@ -188,26 +188,6 @@ Source
 - \Climate zone data are from ASHRAE 169 2006, IECC 2012, and M.C. Baechler 2015.
 
 
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``location_site_type``
-     - false
-     - 
-     - Choice
-     - auto, Default, Suburban, Normal, Suburban, Well-Shielded, Suburban, Exposed, Urban, Normal, Urban, Well-Shielded, Urban, Exposed, Rural, Normal, Rural, Well-Shielded, Rural, Exposed
-     - The terrain/shielding of the home, for the infiltration model. Defaults to 'Suburban, Normal' for single-family detached and manufactured home and 'Suburban, Well-Shielded' for single-family attached and apartment units.
-
 Options
 *******
 
@@ -220,59 +200,41 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``location_site_type``
 
    * - 1A
      - 1.8%
-     - Default
    * - 2A
      - 12%
-     - Default
    * - 2B
      - 2%
-     - Default
    * - 3A
      - 13%
-     - Default
    * - 3B
      - 9.3%
-     - Default
    * - 3C
      - 2.3%
-     - Default
    * - 4A
      - 22%
-     - Default
    * - 4B
      - 0.77%
-     - Default
    * - 4C
      - 2.9%
-     - Default
    * - 5A
      - 23%
-     - Default
    * - 5B
      - 3.8%
-     - Default
    * - 6A
      - 6.1%
-     - Default
    * - 6B
      - 0.92%
-     - Default
    * - 7A
      - 0.79%
-     - Default
    * - 7AK
      - 0.18%
-     - Default
    * - 7B
      - 0.11%
-     - Default
    * - 8AK
      - 0.052%
-     - Default
 
 .. _ashrae_iecc_climate_zone_2004___sub_cz_split:
 
@@ -26534,10 +26496,10 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Stock saturation
      - ``appliance_dishwasher``
 
-   * - 290 Rated kWh
+   * - EnergyStar
      - 30%
      - EnergyStar, Standard, 100% Usage
-   * - 318 Rated kWh
+   * - Standard
      - 42%
      - Federal Minimum, Standard, 100% Usage
    * - None
@@ -36586,7 +36548,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Left/Right at 2ft, Left/Right at 5ft, Left/Right at 10ft, Left/Right at 15ft, Left/Right at 20ft, Left/Right at 25ft, Left at 2ft, Left at 5ft, Left at 10ft, Left at 15ft, Left at 20ft, Left at 25ft, Right at 2ft, Right at 5ft, Right at 10ft, Right at 15ft, Right at 20ft, Right at 25ft, Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height
+     - auto, None, Left/Right at 2ft, Left/Right at 4ft, Left/Right at 5ft, Left/Right at 7ft, Left/Right at 10ft, Left/Right at 12ft, Left/Right at 15ft, Left/Right at 20ft, Left/Right at 25ft, Left/Right at 27ft, Left at 2ft, Left at 4ft, Left at 5ft, Left at 7ft, Left at 10ft, Left at 12ft, Left at 15ft, Left at 20ft, Left at 25ft, Left at 27ft, Right at 2ft, Right at 4ft, Right at 5ft, Right at 7ft, Right at 10ft, Right at 12ft, Right at 15ft, Right at 20ft, Right at 25ft, Right at 27ft, Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height
      - The presence and geometry of neighboring buildings, for shading purposes.
 
 Options
