@@ -78,8 +78,8 @@ Level,Parameter,Option,Saturation
 0,Dishwasher Usage Level,80% Usage,0.333333
 0,Dishwasher Usage Level,100% Usage,0.333333
 0,Dishwasher Usage Level,120% Usage,0.333333
-0,Dishwasher,290 Rated kWh,0.333333
-0,Dishwasher,318 Rated kWh,0.333333
+0,Dishwasher,EnergyStar,0.333333
+0,Dishwasher,Standard,0.333333
 0,Dishwasher,None,0.333333
 0,Doors,Wood,0.333333
 0,Doors,Steel,0.333333

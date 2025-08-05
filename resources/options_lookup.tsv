@@ -25,23 +25,23 @@ AHS Region	Non-CBSA West North Central
 AHS Region	Non-CBSA West South Central
 AIANNH Area	No
 AIANNH Area	Yes
-ASHRAE IECC Climate Zone 2004	1A	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	2A	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	2B	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	3A	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	3B	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	3C	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	4A	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	4B	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	4C	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	5A	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	5B	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	6A	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	6B	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	7A	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	7AK	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	7B	ResStockArguments	location_site_type=Default
-ASHRAE IECC Climate Zone 2004	8AK	ResStockArguments	location_site_type=Default
+ASHRAE IECC Climate Zone 2004	1A	ResStockArgumentsPostHPXML	site_iecc_zone=1A
+ASHRAE IECC Climate Zone 2004	2A	ResStockArgumentsPostHPXML	site_iecc_zone=2A
+ASHRAE IECC Climate Zone 2004	2B	ResStockArgumentsPostHPXML	site_iecc_zone=2B
+ASHRAE IECC Climate Zone 2004	3A	ResStockArgumentsPostHPXML	site_iecc_zone=3A
+ASHRAE IECC Climate Zone 2004	3B	ResStockArgumentsPostHPXML	site_iecc_zone=3B
+ASHRAE IECC Climate Zone 2004	3C	ResStockArgumentsPostHPXML	site_iecc_zone=3C
+ASHRAE IECC Climate Zone 2004	4A	ResStockArgumentsPostHPXML	site_iecc_zone=4A
+ASHRAE IECC Climate Zone 2004	4B	ResStockArgumentsPostHPXML	site_iecc_zone=4B
+ASHRAE IECC Climate Zone 2004	4C	ResStockArgumentsPostHPXML	site_iecc_zone=4C
+ASHRAE IECC Climate Zone 2004	5A	ResStockArgumentsPostHPXML	site_iecc_zone=5A
+ASHRAE IECC Climate Zone 2004	5B	ResStockArgumentsPostHPXML	site_iecc_zone=5B
+ASHRAE IECC Climate Zone 2004	6A	ResStockArgumentsPostHPXML	site_iecc_zone=6A
+ASHRAE IECC Climate Zone 2004	6B	ResStockArgumentsPostHPXML	site_iecc_zone=6B
+ASHRAE IECC Climate Zone 2004	7A	ResStockArgumentsPostHPXML	site_iecc_zone=7
+ASHRAE IECC Climate Zone 2004	7AK	ResStockArgumentsPostHPXML	site_iecc_zone=7
+ASHRAE IECC Climate Zone 2004	7B	ResStockArgumentsPostHPXML	site_iecc_zone=7
+ASHRAE IECC Climate Zone 2004	8AK	ResStockArgumentsPostHPXML	site_iecc_zone=8
 ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	1A - FL
 ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	1A - HI
 ASHRAE IECC Climate Zone 2004 - Sub-CZ Split	2A - FL, GA, AL, MS
@@ -9161,8 +9161,8 @@ Demand Flexibility HVAC	Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
 Demand Flexibility HVAC	Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=2
 Demand Flexibility HVAC	Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=4
 Demand Flexibility Random Shift	30 minutes	ResStockArgumentsPostHPXML	flex_random_shift_minutes=30
-Dishwasher	290 Rated kWh	ResStockArguments	appliance_dishwasher=EnergyStar, Standard, 100% Usage
-Dishwasher	318 Rated kWh	ResStockArguments	appliance_dishwasher=Federal Minimum, Standard, 100% Usage
+Dishwasher	EnergyStar	ResStockArguments	appliance_dishwasher=EnergyStar, Standard, 100% Usage
+Dishwasher	Standard	ResStockArguments	appliance_dishwasher=Federal Minimum, Standard, 100% Usage
 Dishwasher	None	ResStockArguments	appliance_dishwasher=None
 Dishwasher	Void
 Dishwasher Usage Level	100% Usage	ResStockArgumentsPostHPXML	dishwasher_usage_multiplier=1.0

@@ -46,6 +46,16 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('If the HPXML file represents a single family-attached/multifamily building with multiple dwelling units defined, specifies whether to run the HPXML file as a single whole building model.')
     args << arg
 
+    site_iecc_zone_choices = OpenStudio::StringVector.new
+    Constants::IECCZones.each do |iz|
+      site_iecc_zone_choices << iz
+    end
+
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('site_iecc_zone', site_iecc_zone_choices, false)
+    arg.setDisplayName('Site: IECC Zone')
+    arg.setDescription('IECC zone of the home address.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeIntegerArgument('simulation_control_run_period_calendar_year', false)
     arg.setDisplayName('Simulation Control: Run Period Calendar Year')
     arg.setUnits('year')
@@ -211,13 +221,19 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_autosizing_factor', false)
     arg.setDisplayName('Heat Pump: Backup Heating Autosizing Factor')
-    arg.setDescription("The capacity scaling factor applied to the auto-sizing methodology if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. If not provided, 1.0 is used. If Backup Type is '#{HPXML::HeatPumpBackupTypeSeparate}', use Heating System 2: Heating Autosizing Factor.")
+    arg.setDescription('The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_backup_heating_autosizing_limit', false)
     arg.setDisplayName('Heat Pump: Backup Heating Autosizing Limit')
-    arg.setDescription("The maximum capacity limit applied to the auto-sizing methodology if Backup Type is '#{HPXML::HeatPumpBackupTypeIntegrated}'. If not provided, no limit is used. If Backup Type is '#{HPXML::HeatPumpBackupTypeSeparate}', use Heating System 2: Heating Autosizing Limit.")
+    arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology if Backup Type is integrated.')
     arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_blower_fan_watts_per_cfm', false)
+    arg.setDisplayName('HVAC Blower: Fan Efficiency')
+    arg.setDescription('The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..')
+    arg.setUnits('W/CFM')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument.makeIntegerArgument('hvac_flex_peak_offset', false)
@@ -631,9 +647,14 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           pv_monthly_grid_connection_fee_dollars_per_kw = nil
         end
 
+        elec_tariff_filepath = args[:utility_bill_electricity_filepaths].split(',').map(&:strip)[i]
+        if (not elec_tariff_filepath.nil?) && elec_tariff_filepath.empty?
+          elec_tariff_filepath = nil
+        end
+
         @hpxml.header.utility_bill_scenarios.add(
           name: utility_bill_scenario_name,
-          elec_tariff_filepath: (args[:utility_bill_electricity_filepaths].split(',').map(&:strip)[i] rescue nil),
+          elec_tariff_filepath: elec_tariff_filepath,
           elec_fixed_charge: (Float(args[:utility_bill_electricity_fixed_charges].split(',').map(&:strip)[i]) rescue nil),
           natural_gas_fixed_charge: (Float(args[:utility_bill_natural_gas_fixed_charges].split(',').map(&:strip)[i]) rescue nil),
           propane_fixed_charge: (Float(args[:utility_bill_propane_fixed_charges].split(',').map(&:strip)[i]) rescue nil),
@@ -713,6 +734,17 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     end
 
     @hpxml.buildings.each do |hpxml_bldg|
+      # Site
+      if not args[:site_iecc_zone].nil?
+        hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.add(zone: args[:site_iecc_zone],
+                                                                 year: 2006)
+      end
+      if ['AZ', 'HI'].include? hpxml_bldg.state_code # FIXME: Move this logic into OS-HPXML defaulting
+        hpxml_bldg.dst_enabled = false
+      else
+        hpxml_bldg.dst_enabled = true
+      end
+
       # Usage Multipliers
       hpxml_bldg.plug_loads.each do |plug_load|
         if (plug_load.plug_load_type == HPXML::PlugLoadTypeTelevision) && (not args[:misc_plug_loads_television_usage_multiplier].nil?)
@@ -855,8 +887,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     @random_shift_steps = @prng.rand(-max_random_shift_steps..max_random_shift_steps)
     @hpxml.buildings.each_with_index do |hpxml_bldg, index|
       if hpxml_bldg.hvac_controls.to_a.length != 0 && !skip_hvac_flexibility?(args)
-        hvac_schedule = create_hvac_schedule(index)
-        modified_schedule = modify_hvac_schedule(hpxml_bldg, hvac_schedule)
+        hvac_schedule = create_hvac_schedule(hpxml_bldg, weather)
+        modified_schedule = modify_hvac_schedule(hpxml_bldg, hvac_schedule, weather)
         write_schedule(modified_schedule, hpxml_bldg, index, output_csv_path)
       end
       next unless !skip_ev_flexibility?(args)
@@ -864,7 +896,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       ev_schedule = get_ev_schedule(hpxml_bldg)
       next if ev_schedule.nil?
 
-      modified_ev_schedule = modify_ev_schedule(hpxml_bldg, ev_schedule)
+      modified_ev_schedule = modify_ev_schedule(hpxml_bldg, ev_schedule, weather)
       write_schedule(modified_ev_schedule, hpxml_bldg, index, output_csv_path)
     end
 
@@ -897,20 +929,19 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   end
 
   # Generates the HVAC schedule for a given building index
-  def create_hvac_schedule(building_index)
-    generator = HVACScheduleGenerator.new(@hpxml, @hpxml_path, @runner, building_index)
+  def create_hvac_schedule(hpxml_bldg, weather)
+    generator = HVACScheduleGenerator.new(@hpxml, hpxml_bldg, @hpxml_path, @runner, weather)
     return generator.get_heating_cooling_setpoint_schedule
   end
 
   # Retrieves an appropriate schedule modifier for a given building
-  def get_schedule_modifier(hpxml_bldg, modifier_class)
+  def get_schedule_modifier(hpxml_bldg, modifier_class, weather)
     # Ensure the provided class is a subclass of ScheduleModifier
     raise ArgumentError, "#{modifier_class} must be a subclass of ScheduleModifier" unless modifier_class < ScheduleModifier
 
     state = hpxml_bldg.state_code
     sim_year = @hpxml.header.sim_calendar_year
     epw_path = Location.get_epw_path(hpxml_bldg, @hpxml_path)
-    weather = WeatherFile.new(epw_path: epw_path, runner: @runner)
 
     # Get daylight saving time information
     dst_info = DSTInfo.new(dst_begin_month: hpxml_bldg.dst_begin_month,
@@ -929,8 +960,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   end
 
   # Modifies the HVAC schedule based on flexibility inputs
-  def modify_hvac_schedule(hpxml_bldg, schedule)
-    hvac_schedule_modifier = get_schedule_modifier(hpxml_bldg, HVACScheduleModifier)
+  def modify_hvac_schedule(hpxml_bldg, schedule, weather)
+    hvac_schedule_modifier = get_schedule_modifier(hpxml_bldg, HVACScheduleModifier, weather)
 
     # Define flexibility inputs
     hvac_flexibility_inputs = FlexibilityInputs.new(
@@ -944,8 +975,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     return hvac_schedule_modifier.modify_shedule(schedule, hvac_flexibility_inputs)
   end
 
-  def modify_ev_schedule(hpxml_bldg, schedule)
-    ev_schedule_modifier = get_schedule_modifier(hpxml_bldg, EVScheduleModifier)
+  def modify_ev_schedule(hpxml_bldg, schedule, weather)
+    ev_schedule_modifier = get_schedule_modifier(hpxml_bldg, EVScheduleModifier, weather)
     ev_flexibility_inputs = FlexibilityInputs.new(
       peak_offset: 0,
       # Use hvac_flex_pre_peak_duration_hours so that shift/shed is the same as HVAC

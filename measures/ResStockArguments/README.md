@@ -33,19 +33,6 @@ Path to the EPW file. Either this or the Zip Code input above must be provided.
 
 <br/>
 
-**Location: Site Type**
-
-The terrain/shielding of the home, for the infiltration model. Defaults to 'Suburban, Normal' for single-family detached and manufactured home and 'Suburban, Well-Shielded' for single-family attached and apartment units.
-
-- **Name:** ``location_site_type``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** `auto`, `Default`, `Suburban, Normal`, `Suburban, Well-Shielded`, `Suburban, Exposed`, `Urban, Normal`, `Urban, Well-Shielded`, `Urban, Exposed`, `Rural, Normal`, `Rural, Well-Shielded`, `Rural, Exposed`
-
-<br/>
-
 **Location: Soil Type**
 
 The soil and moisture type.
@@ -222,7 +209,7 @@ The presence and geometry of neighboring buildings, for shading purposes.
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `None`, `Left/Right at 2ft`, `Left/Right at 5ft`, `Left/Right at 10ft`, `Left/Right at 15ft`, `Left/Right at 20ft`, `Left/Right at 25ft`, `Left at 2ft`, `Left at 5ft`, `Left at 10ft`, `Left at 15ft`, `Left at 20ft`, `Left at 25ft`, `Right at 2ft`, `Right at 5ft`, `Right at 10ft`, `Right at 15ft`, `Right at 20ft`, `Right at 25ft`, `Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height`
+- **Choices:** `auto`, `None`, `Left/Right at 2ft`, `Left/Right at 4ft`, `Left/Right at 5ft`, `Left/Right at 7ft`, `Left/Right at 10ft`, `Left/Right at 12ft`, `Left/Right at 15ft`, `Left/Right at 20ft`, `Left/Right at 25ft`, `Left/Right at 27ft`, `Left at 2ft`, `Left at 4ft`, `Left at 5ft`, `Left at 7ft`, `Left at 10ft`, `Left at 12ft`, `Left at 15ft`, `Left at 20ft`, `Left at 25ft`, `Left at 27ft`, `Right at 2ft`, `Right at 4ft`, `Right at 5ft`, `Right at 7ft`, `Right at 10ft`, `Right at 12ft`, `Right at 15ft`, `Right at 20ft`, `Right at 25ft`, `Right at 27ft`, `Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height`
 
 <br/>
 

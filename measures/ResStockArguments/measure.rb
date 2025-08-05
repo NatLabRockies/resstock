@@ -354,7 +354,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # HVAC Setpoints
-    # FIXME Move to ResStockArgumentsPostHPXML?
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
       [Constants::Weekday, Constants::Weekend].each do |wkdy_or_wked|
         schedule = [args["hvac_control_#{htg_or_clg}_#{wkdy_or_wked}_setpoint_temp".to_sym]] * 24
@@ -368,7 +367,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # HVAC Seasons
-    # FIXME Move to ResStockArgumentsPostHPXML?
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
       use_auto_season = "use_auto_#{htg_or_clg}_season".to_sym
       hvac_control_season_period = "hvac_control_#{htg_or_clg}_season_period".to_sym
@@ -378,19 +376,18 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # HVAC Secondary
-    # FIXME Move to ResStockArgumentsPostHPXML?
     if args[:hvac_heating_system_2] != 'None'
       if args[:hvac_heating_system] != 'None'
-        if ((args[:hvac_heating_system_heating_load_served].to_f + args[:hvac_heating_system_2_heating_load_served].to_f) > 1.0)
+        if ((args[:hvac_heating_system_heating_load_served].to_f + args[:hvac_heating_system_2_heating_load_served].to_f) > 100)
           info_msg = "Adjusted fraction of heat load served by the primary heating system (#{args[:hvac_heating_system_heating_load_served]}"
-          args[:hvac_heating_system_heating_load_served] = "#{1.0 - args[:hvac_heating_system_2_heating_load_served].to_f}%"
+          args[:hvac_heating_system_heating_load_served] = "#{Integer(100 - args[:hvac_heating_system_2_heating_load_served].to_f)}%"
           info_msg += " to #{args[:hvac_heating_system_heating_load_served]}) to allow for a secondary heating system (#{args[:hvac_heating_system_2_heating_load_served]})."
           runner.registerInfo(info_msg)
         end
-      elsif args[:hvac_heat_pump] != 'none'
-        if ((args[:hvac_heat_pump_heating_load_served].to_f + args[:hvac_heating_system_2_heating_load_served].to_f) > 1.0)
+      elsif args[:hvac_heat_pump] != 'None'
+        if ((args[:hvac_heat_pump_heating_load_served].to_f + args[:hvac_heating_system_2_heating_load_served].to_f) > 100)
           info_msg = "Adjusted fraction of heat load served by the primary heating system (#{args[:hvac_heat_pump_heating_load_served]}"
-          args[:hvac_heat_pump_heating_load_served] = "#{1.0 - args[:hvac_heating_system_2_heating_load_served].to_f}%"
+          args[:hvac_heat_pump_heating_load_served] = "#{Integer(100 - args[:hvac_heating_system_2_heating_load_served].to_f)}%"
           info_msg += " to #{args[:hvac_heat_pump_heating_load_served]}) to allow for a secondary heating system (#{args[:hvac_heating_system_2_heating_load_served]})."
           runner.registerInfo(info_msg)
         end
@@ -503,7 +500,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # Height Above Grade
-    # FIXME
+    # FIXME: Move to ResStockArgumentsPostHPXML measure
     # if unit_type == HPXML::ResidentialTypeApartment
     # if unit_level == 'Top'
     # args[:geometry_unit_height_above_grade] = (n_floors - 1) * avg_ceiling_height

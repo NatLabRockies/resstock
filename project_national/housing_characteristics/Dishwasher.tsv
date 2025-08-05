@@ -1,4 +1,4 @@
-Dependency=Federal Poverty Level	Dependency=Geometry Building Type RECS	Dependency=State	Dependency=Tenure	Dependency=Vintage	Option=290 Rated kWh	Option=318 Rated kWh	Option=None	Option=Void	source_count	source_weight	sampling_probability
+Dependency=Federal Poverty Level	Dependency=Geometry Building Type RECS	Dependency=State	Dependency=Tenure	Dependency=Vintage	Option=EnergyStar	Option=Standard	Option=None	Option=Void	source_count	source_weight	sampling_probability
 0-100%	Mobile Home	AK	Not Available	1940s	0	0	0	1	152	0	0
 0-100%	Mobile Home	AK	Owner	1940s	0.167133	0.262365	0.570502	0	108	0	1.33201e-07
 0-100%	Mobile Home	AK	Renter	1940s	0.093043	0.0606883	0.846269	0	44	0	6.98183e-08

@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>cb8782e8-52fb-4472-9d62-32bba88e54a5</version_id>
-  <version_modified>2025-08-03T20:30:24Z</version_modified>
+  <version_id>ddde117b-d0ac-474e-840d-1885193a180f</version_id>
+  <version_modified>2025-08-05T04:28:59Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -42,6 +42,96 @@
         <choice>
           <value>false</value>
           <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>site_iecc_zone</name>
+      <display_name>Site: IECC Zone</display_name>
+      <description>IECC zone of the home address.</description>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>1A</value>
+          <display_name>1A</display_name>
+        </choice>
+        <choice>
+          <value>1B</value>
+          <display_name>1B</display_name>
+        </choice>
+        <choice>
+          <value>1C</value>
+          <display_name>1C</display_name>
+        </choice>
+        <choice>
+          <value>2A</value>
+          <display_name>2A</display_name>
+        </choice>
+        <choice>
+          <value>2B</value>
+          <display_name>2B</display_name>
+        </choice>
+        <choice>
+          <value>2C</value>
+          <display_name>2C</display_name>
+        </choice>
+        <choice>
+          <value>3A</value>
+          <display_name>3A</display_name>
+        </choice>
+        <choice>
+          <value>3B</value>
+          <display_name>3B</display_name>
+        </choice>
+        <choice>
+          <value>3C</value>
+          <display_name>3C</display_name>
+        </choice>
+        <choice>
+          <value>4A</value>
+          <display_name>4A</display_name>
+        </choice>
+        <choice>
+          <value>4B</value>
+          <display_name>4B</display_name>
+        </choice>
+        <choice>
+          <value>4C</value>
+          <display_name>4C</display_name>
+        </choice>
+        <choice>
+          <value>5A</value>
+          <display_name>5A</display_name>
+        </choice>
+        <choice>
+          <value>5B</value>
+          <display_name>5B</display_name>
+        </choice>
+        <choice>
+          <value>5C</value>
+          <display_name>5C</display_name>
+        </choice>
+        <choice>
+          <value>6A</value>
+          <display_name>6A</display_name>
+        </choice>
+        <choice>
+          <value>6B</value>
+          <display_name>6B</display_name>
+        </choice>
+        <choice>
+          <value>6C</value>
+          <display_name>6C</display_name>
+        </choice>
+        <choice>
+          <value>7</value>
+          <display_name>7</display_name>
+        </choice>
+        <choice>
+          <value>8</value>
+          <display_name>8</display_name>
         </choice>
       </choices>
     </argument>
@@ -346,7 +436,7 @@
     <argument>
       <name>heat_pump_backup_heating_autosizing_factor</name>
       <display_name>Heat Pump: Backup Heating Autosizing Factor</display_name>
-      <description>The capacity scaling factor applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, 1.0 is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Factor.</description>
+      <description>The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.</description>
       <type>Double</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -354,9 +444,18 @@
     <argument>
       <name>heat_pump_backup_heating_autosizing_limit</name>
       <display_name>Heat Pump: Backup Heating Autosizing Limit</display_name>
-      <description>The maximum capacity limit applied to the auto-sizing methodology if Backup Type is 'integrated'. If not provided, no limit is used. If Backup Type is 'separate', use Heating System 2: Heating Autosizing Limit.</description>
+      <description>The maximum capacity limit applied to the auto-sizing methodology if Backup Type is integrated.</description>
       <type>Double</type>
       <units>Btu/hr</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_blower_fan_watts_per_cfm</name>
+      <display_name>HVAC Blower: Fan Efficiency</display_name>
+      <description>The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..</description>
+      <type>Double</type>
+      <units>W/CFM</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -1167,7 +1266,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>63A43552</checksum>
+      <checksum>D907741B</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -1233,7 +1332,7 @@
       <filename>hvac_flexibility/detailed_schedule_generator.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>18F5ABAD</checksum>
+      <checksum>CFD37B9F</checksum>
     </file>
     <file>
       <filename>hvac_flexibility/hvac.rb</filename>

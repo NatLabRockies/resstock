@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>fcc608bf-0db5-4be0-ad1a-e0c0e030e548</version_id>
-  <version_modified>2025-08-03T20:30:21Z</version_modified>
+  <version_id>37e29635-ecd7-4eb6-a167-f24e350eeb76</version_id>
+  <version_modified>2025-08-05T04:31:33Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -28,61 +28,6 @@
       <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>location_site_type</name>
-      <display_name>Location: Site Type</display_name>
-      <description>The terrain/shielding of the home, for the infiltration model. Defaults to 'Suburban, Normal' for single-family detached and manufactured home and 'Suburban, Well-Shielded' for single-family attached and apartment units.</description>
-      <type>Choice</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <choices>
-        <choice>
-          <value>auto</value>
-          <display_name>auto</display_name>
-        </choice>
-        <choice>
-          <value>Default</value>
-          <display_name>Default</display_name>
-        </choice>
-        <choice>
-          <value>Suburban, Normal</value>
-          <display_name>Suburban, Normal</display_name>
-        </choice>
-        <choice>
-          <value>Suburban, Well-Shielded</value>
-          <display_name>Suburban, Well-Shielded</display_name>
-        </choice>
-        <choice>
-          <value>Suburban, Exposed</value>
-          <display_name>Suburban, Exposed</display_name>
-        </choice>
-        <choice>
-          <value>Urban, Normal</value>
-          <display_name>Urban, Normal</display_name>
-        </choice>
-        <choice>
-          <value>Urban, Well-Shielded</value>
-          <display_name>Urban, Well-Shielded</display_name>
-        </choice>
-        <choice>
-          <value>Urban, Exposed</value>
-          <display_name>Urban, Exposed</display_name>
-        </choice>
-        <choice>
-          <value>Rural, Normal</value>
-          <display_name>Rural, Normal</display_name>
-        </choice>
-        <choice>
-          <value>Rural, Well-Shielded</value>
-          <display_name>Rural, Well-Shielded</display_name>
-        </choice>
-        <choice>
-          <value>Rural, Exposed</value>
-          <display_name>Rural, Exposed</display_name>
-        </choice>
-      </choices>
     </argument>
     <argument>
       <name>location_soil_type</name>
@@ -938,12 +883,24 @@
           <display_name>Left/Right at 2ft</display_name>
         </choice>
         <choice>
+          <value>Left/Right at 4ft</value>
+          <display_name>Left/Right at 4ft</display_name>
+        </choice>
+        <choice>
           <value>Left/Right at 5ft</value>
           <display_name>Left/Right at 5ft</display_name>
         </choice>
         <choice>
+          <value>Left/Right at 7ft</value>
+          <display_name>Left/Right at 7ft</display_name>
+        </choice>
+        <choice>
           <value>Left/Right at 10ft</value>
           <display_name>Left/Right at 10ft</display_name>
+        </choice>
+        <choice>
+          <value>Left/Right at 12ft</value>
+          <display_name>Left/Right at 12ft</display_name>
         </choice>
         <choice>
           <value>Left/Right at 15ft</value>
@@ -958,16 +915,32 @@
           <display_name>Left/Right at 25ft</display_name>
         </choice>
         <choice>
+          <value>Left/Right at 27ft</value>
+          <display_name>Left/Right at 27ft</display_name>
+        </choice>
+        <choice>
           <value>Left at 2ft</value>
           <display_name>Left at 2ft</display_name>
+        </choice>
+        <choice>
+          <value>Left at 4ft</value>
+          <display_name>Left at 4ft</display_name>
         </choice>
         <choice>
           <value>Left at 5ft</value>
           <display_name>Left at 5ft</display_name>
         </choice>
         <choice>
+          <value>Left at 7ft</value>
+          <display_name>Left at 7ft</display_name>
+        </choice>
+        <choice>
           <value>Left at 10ft</value>
           <display_name>Left at 10ft</display_name>
+        </choice>
+        <choice>
+          <value>Left at 12ft</value>
+          <display_name>Left at 12ft</display_name>
         </choice>
         <choice>
           <value>Left at 15ft</value>
@@ -982,16 +955,32 @@
           <display_name>Left at 25ft</display_name>
         </choice>
         <choice>
+          <value>Left at 27ft</value>
+          <display_name>Left at 27ft</display_name>
+        </choice>
+        <choice>
           <value>Right at 2ft</value>
           <display_name>Right at 2ft</display_name>
+        </choice>
+        <choice>
+          <value>Right at 4ft</value>
+          <display_name>Right at 4ft</display_name>
         </choice>
         <choice>
           <value>Right at 5ft</value>
           <display_name>Right at 5ft</display_name>
         </choice>
         <choice>
+          <value>Right at 7ft</value>
+          <display_name>Right at 7ft</display_name>
+        </choice>
+        <choice>
           <value>Right at 10ft</value>
           <display_name>Right at 10ft</display_name>
+        </choice>
+        <choice>
+          <value>Right at 12ft</value>
+          <display_name>Right at 12ft</display_name>
         </choice>
         <choice>
           <value>Right at 15ft</value>
@@ -1004,6 +993,10 @@
         <choice>
           <value>Right at 25ft</value>
           <display_name>Right at 25ft</display_name>
+        </choice>
+        <choice>
+          <value>Right at 27ft</value>
+          <display_name>Right at 27ft</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height</value>
@@ -10941,7 +10934,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>C1A27587</checksum>
+      <checksum>BFB4AED0</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -10958,13 +10951,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>3917428E</checksum>
+      <checksum>696EF830</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>733EFE14</checksum>
+      <checksum>832DE6A8</checksum>
     </file>
     <file>
       <filename>measure.txt</filename>

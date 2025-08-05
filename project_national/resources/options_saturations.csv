@@ -13238,8 +13238,8 @@ Level,Parameter,Option,Saturation
 13,Cooling Unavailable Days,Never,0.948744
 13,Cooling Unavailable Days,Year round,0.00232387
 13,Cooling Unavailable Days,Void,0
-13,Dishwasher,290 Rated kWh,0.303722
-13,Dishwasher,318 Rated kWh,0.419347
+13,Dishwasher,EnergyStar,0.303722
+13,Dishwasher,Standard,0.419347
 13,Dishwasher,None,0.276931
 13,Dishwasher,Void,0
 13,Electric Vehicle Charge At Home,0-19%,0.130877

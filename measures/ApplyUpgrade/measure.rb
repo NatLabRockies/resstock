@@ -360,7 +360,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         return false
       end
 
-      set_adjusted_fan_efficiency(runner, measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
+      set_adjusted_fan_efficiency(runner, measures, hpxml_bldg, baseline_max_airflow_cfm)
     end
 
     # Set arguments for the BuildResidentialScheduleFile measure
@@ -640,33 +640,19 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     return
   end
 
-  def set_adjusted_fan_efficiency(runner, measures, hpxml_path, unit_number, baseline_max_airflow_cfm)
+  def set_adjusted_fan_efficiency(runner, measures, hpxml_bldg, baseline_max_airflow_cfm)
     # Use Autosizing Limits and Maintain Duct System Curve (Part 2)
     # - Get the upgrade airflow cfm.
     # - Use it along with the baseline airflow cfm and upgrade blower fan W/cfm.
-    # - Make an adjustment to the upgrade blower fan W/cfm.
-    # - Update the HPXML Building (using a method borrowed from BuildResidentialHPXML).
-    # - Write the updated HPXML file back out.
+    # - Set the adjustment to the upgrade blower fan W/cfm.
     if measures['ResStockArguments'][0]['hvac_heat_pump_sizing_is_duct_limited'] == 'true' # FIXME: Needs testing
-      if File.exist?(hpxml_path)
-        hpxml = HPXML.new(hpxml_path: hpxml_path)
-      else
-        runner.registerWarning("ApplyUpgrade measure could not find '#{hpxml_path}'.")
-        return true
-      end
-      hpxml_bldg = hpxml.buildings[unit_number]
-
       duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
       upgrade_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
 
       if (not baseline_max_airflow_cfm.nil?) && (not upgrade_max_airflow_cfm.nil?) # ducted -> ducted
         fan_watts_per_cfm = get_fan_watts_per_cfm(hpxml_bldg)
         adjusted_fan_watts_per_cfm = get_adjusted_fan_watts_per_cfm(baseline_max_airflow_cfm, upgrade_max_airflow_cfm, fan_watts_per_cfm)
-
-        # FIXME: Pass to PostHPXML measure
-        HPXMLFile.set_hvac_blower(hpxml_bldg, { :hvac_blower_fan_watts_per_cfm => adjusted_fan_watts_per_cfm })
-        XMLHelper.write_file(hpxml.to_doc(), hpxml_path)
-
+        measures['ResStockArgumentsPostHPXML'][0]['hvac_blower_fan_watts_per_cfm'] = adjusted_fan_watts_per_cfm
         runner.registerInfo("The blower fan efficiency of #{fan_watts_per_cfm} was adjusted to 'hvac_blower_fan_watts_per_cfm=#{adjusted_fan_watts_per_cfm}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an upgrade maximum airflow rate of #{upgrade_max_airflow_cfm} cfm.")
       end
     end
