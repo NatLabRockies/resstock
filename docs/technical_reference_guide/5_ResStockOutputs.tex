@@ -386,7 +386,12 @@ Customer count, sales, and revenues for each state were taken from Form EIA-861 
 
 This resulted in state average variable electricity rates that ranged from \$0.0957 \/kWh in Washington to \$0.3965 \/kWh in Hawaii.
 
-The full year electricity bill was then calculated for each modeled dwelling unit using the dwelling unit's modeled electricity consumption, the state average variable electricity rate, and the nationwide static charge.\[Full year electricity bill =  (Fixed cost per month * 12 months)+ (Electricity consumption * Variable electricity rate)\].
+The full year electricity bill was then calculated for each modeled dwelling unit using the dwelling unit's modeled electricity consumption, the state average variable electricity rate, and the nationwide static charge.
+
+\begin{equation}
+\label{eq:electricity_bill_calc}
+\text{Annual electricity bill} = (\text{Fixed cost per month} \times 12 \text{ months}) + (\text{Electricity consumption} \times \text{Variable electricity rate})
+\end{equation}
 
 \subsection{Residential Natural Gas Bills}
 Natural gas bills are only calculated for dwelling units that have natural gas consumption. For natural gas bills, we used the census-dependent customer charges from a 2015 American Gas Association report(\cite{AGA2015}). The customer charges are reproduced below, along with the census regions assumed for the report.
@@ -424,11 +429,19 @@ The natural gas consumption values came from the EIA 2023 "Volumes Delivered to 
 
 The number of consumers per state used in this ResStock dataset were released in April 2025(\cite{EIA_natural_gas_consumers}). The data series used was the "No. of Residential Consumers". None of the states had 2024 data available at the time of writing, therefore all states and Washington D.C. used 2023 data.
 
-The volumetric rate for each state and Washington D.C. was calculated as: \(\frac{(Consumption * Price) - (Fixed cost per month * 12 months * Number of consumers)}{(Consumption * Price)}\).
+The volumetric rate for each state and Washington D.C. is seen in the following equation.
+\begin{equation}
+\label{eq:volumetric_natural_gas_rate}
+\text{Volumetric natural gas rate} = \frac{(\text{Consumption} \times \text{price}) - (\text{Fixed cost per month} \times 12 \text{ months} \times \text{Number of consumers})}{(\text{Consumption} \times \text{Price})}
+\end{equation}
 
 The rates ranged from \$0.76\/therm in North Dakota to \$4.63\/therm in Hawaii.
 
-The full year natural gas bill was then calculated for each modeled dwelling unit using its natural gas consumption and state volumetric rate. The equation for each state is: \[Annual natural gas bill = (Fixed cost per month * 12 months) + (Natural gas consumption * Volumetric natural gas rate)\].
+The full year natural gas bill was then calculated for each modeled dwelling unit using its natural gas consumption and state volumetric rate.
+\begin{equation}
+\label{eq:natural_gas_bill_calc}
+\text{Annual natural gas bill} = (\text{Fixed cost per month} \times 12 \text{ months}) + (\text{Natural gas consumption} \times \text{Volumetric natural gas rate})
+\end{equation}
 
 If the dwelling unit had no natural gas consumption in the baseline, but then received a gas furnace, then the dwelling unit had natural gas charges only in the upgrade scenario. In all other cases, a dwelling unit that originally had no natural gas consumption will not have any natural gas consumption in any other upgrade scenarios. If the dwelling unit had natural gas in the baseline, but then a measure upgrade caused there to be no gas, there is no natural gas bill for that measure upgrade. Fixed charges are applied monthly if there is a gas connection or gas consuming appliance, even if the month had zero natural gas consumption.
 
