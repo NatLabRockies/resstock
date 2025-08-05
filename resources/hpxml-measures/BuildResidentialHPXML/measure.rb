@@ -4454,7 +4454,9 @@ module HPXMLFile
       args[:geometry_foundation_height] = 0.0
       args[:geometry_foundation_height_above_grade] = 0.0
       args[:geometry_rim_joist_height] = 0.0
-    elsif (args[:geometry_foundation_type] == HPXML::FoundationTypeAmbient) || args[:geometry_foundation_type].start_with?(HPXML::FoundationTypeBellyAndWing)
+    elsif [HPXML::FoundationTypeAmbient, HPXML::FoundationTypeAboveApartment].include? args[:geometry_foundation_type]
+      args[:geometry_rim_joist_height] = 0.0
+    elsif args[:geometry_foundation_type].start_with? HPXML::FoundationTypeBellyAndWing
       args[:geometry_rim_joist_height] = 0.0
     end
 
@@ -5252,9 +5254,14 @@ module HPXMLFile
                            area: UnitConversions.convert(surface.grossArea, 'm^2', 'ft^2'),
                            roof_type: args[:roof_material_type],
                            roof_color: args[:roof_color],
-                           pitch: args[:geometry_roof_pitch],
-                           insulation_assembly_r_value: args[:roof_assembly_r])
+                           pitch: args[:geometry_roof_pitch])
       @surface_ids[surface.name.to_s] = hpxml_bldg.roofs[-1].id
+
+      if hpxml_bldg.roofs[-1].interior_adjacent_to != HPXML::LocationGarage
+        hpxml_bldg.roofs[-1].insulation_assembly_r_value = args[:roof_assembly_r]
+      else
+        hpxml_bldg.roofs[-1].insulation_assembly_r_value = 2.3 # Uninsulated
+      end
 
       next unless [HPXML::RadiantBarrierLocationAtticRoofOnly, HPXML::RadiantBarrierLocationAtticRoofAndGableWalls].include?(args[:radiant_barrier_attic_location].to_s)
       next unless [HPXML::LocationAtticUnvented, HPXML::LocationAtticVented].include?(hpxml_bldg.roofs[-1].interior_adjacent_to)
@@ -6492,10 +6499,20 @@ module HPXMLFile
   # @param args [Hash] Map of :argument_name => value
   # @return [nil]
   def self.set_hvac_distribution(hpxml_bldg, args)
+    # FanCoil?
+    fan_coil_distribution_systems = []
+    hpxml_bldg.heating_systems.each do |heating_system|
+      next unless heating_system.primary_system
+
+      if args[:heating_system_type].include?('Fan Coil')
+        fan_coil_distribution_systems << heating_system
+      end
+    end
+
     # HydronicDistribution?
     hpxml_bldg.heating_systems.each do |heating_system|
       next unless [heating_system.heating_system_type].include?(HPXML::HVACTypeBoiler)
-      next if args[:heating_system_type].include?('Fan Coil')
+      next if fan_coil_distribution_systems.include? heating_system
 
       hpxml_bldg.hvac_distributions.add(id: "HVACDistribution#{hpxml_bldg.hvac_distributions.size + 1}",
                                         distribution_system_type: HPXML::HVACDistributionTypeHydronic,
@@ -6525,16 +6542,6 @@ module HPXMLFile
         air_distribution_systems << heat_pump
       when HPXML::HVACTypeHeatPumpMiniSplit
         air_distribution_systems << heat_pump if args[:heat_pump_is_ducted]
-      end
-    end
-
-    # FanCoil?
-    fan_coil_distribution_systems = []
-    hpxml_bldg.heating_systems.each do |heating_system|
-      next unless heating_system.primary_system
-
-      if args[:heating_system_type].include?('Fan Coil')
-        fan_coil_distribution_systems << heating_system
       end
     end
 
@@ -7648,7 +7655,7 @@ module HPXMLFile
     if args[:ev_charger_present]
       charger_id = "EVCharger#{hpxml_bldg.ev_chargers.size + 1}"
       hpxml_bldg.ev_chargers.add(id: charger_id,
-                                 charging_level: args[:ev_charger_level],
+                                 charging_level: (Integer(args[:ev_charger_level]) rescue nil),
                                  charging_power: args[:ev_charger_power])
     end
 
