@@ -613,6 +613,8 @@ jobs:
       - name: Run buildstockbatch
         shell: bash
         run: |
+          set -o pipefail  # required to fail errors when using pipe
+
           EXTRA_ARGS=""
           if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
             echo "Running on develop branch, using --replace_existing"
@@ -621,7 +623,16 @@ jobs:
             echo "Not on develop branch, removing AWS config from YAML"
             python .github/scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_tmy3.yml
           fi
-          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml
+
+          # Run buildstockbatch and tee output to a log file
+          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml 2>&1 | tee buildstock_local.log
+
+          # Check the log for schema mismatch warnings and fail if any are present
+          if grep -q -E '^Missing columns in output data|^Extra columns in output data' buildstock_local.log; then
+            echo "::error::Detected column mismatch in buildstockbatch output. Failing job."
+            grep -E '^Missing columns in output data|^Extra columns in output data' buildstock_local.log
+            exit 1
+          fi
 
       - name: Unzip results
         run: |
