@@ -236,7 +236,7 @@ class ElectricalPanelSampler
   end
 
   def convert_fuel_and_presence(equipment_present, fuel_type)
-    if not equipment_present
+    if not cast_to_bool(equipment_present)
       return 'none'
     else
       return simplify_fuel_type(fuel_type)
@@ -252,7 +252,7 @@ class ElectricalPanelSampler
   end
 
   def electric_fuel_and_presence(equipment_present, fuel_type)
-    if not equipment_present
+    if not cast_to_bool(equipment_present)
       return 0
     else
       return is_electric_fuel(fuel_type)
@@ -267,10 +267,12 @@ class ElectricalPanelSampler
     end
   end
 
+  def cast_to_bool(val)
+    return val.to_s.downcase == "true"
+  end
+
   def to_numeric(is_present)
-    if is_present.is_a? String
-      return is_present.downcase == 'true' ? 1 : 0
-    elsif is_present
+    if cast_to_bool(is_present)
       return 1
     else
       return 0
