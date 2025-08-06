@@ -1227,5 +1227,5 @@ Wood Frame	WY	<1940	0.000959126	0	0.0411318	0.013354	0	0	0	0.127121	0	0.723882	0
 # Description: Wall siding material and color.
 # Source: Constructed using HIFLD Parcel data.
 # Assumption: Rows where sample size < 10 are replaced with aggregated values down-scaled from dep='State' to dep='Census Division RECS'
-# Assumption: Brick wall types are assumed to not have an aditional brick exterior finish
+# Assumption: Brick wall types are assumed to not have an additional brick exterior finish
 # Assumption: Steel and wood frame walls must have an exterior finish
