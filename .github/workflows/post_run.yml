@@ -14,8 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  sdr-diff:
-    # The built-in diffs typically do not provide meaninful diffs for csv files, so we use a custom script to generate diffs
+  csv-diff:
+    # The built-in diff typically do not provide meaninful diffs for csv files, so we use a custom script to generate diffs
     # and attach them as annotations to the files so that they can be seen in the PR diff view. They can also be read in the
     # check-run summary in the "Checks" tab of the PR.
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request') }}
@@ -49,7 +49,7 @@ jobs:
           run: uv run .github/scripts/diff_annotator.py
 
   pass-checks:
-    needs: sdr-diff
+    needs: csv-diff
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request') }}
     runs-on: ubuntu-latest
     permissions:
@@ -72,7 +72,7 @@ jobs:
             "format-files" "unit-tests" "build-documentation" \
             "analysis-tests" "integration-tests" \
             "compare-tools" "compare-results" \
-            "update-results" "sdr-options-analysis" "sdr-integration-tests" "sdr-diff")
+            "update-results" "sdr-options-analysis" "sdr-integration-tests" "csv-diff")
           for ctx in "${required_checks[@]}"; do
             echo "Setting $ctx status to success"
             gh api -X POST repos/$REPO/statuses/$SHA \
