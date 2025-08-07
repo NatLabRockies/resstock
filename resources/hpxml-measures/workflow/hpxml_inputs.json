@@ -2319,7 +2319,7 @@
     "battery": "20.0 kWh",
     "electric_vehicle": "Midsize, 200 Mile Range, 100% Usage",
     "electric_vehicle_charger": "Level 1, 50% Charging at Home",
-    "ceiling_fans": "#Bedrooms+1 Fans, 45 W"
+    "ceiling_fans": "#Bedrooms+1 Fans, 45.0 W"
   },
   "sample_files/base-misc-emissions.xml": {
     "parent_hpxml": "sample_files/base-pv-battery-and-vehicle-ev.xml"
