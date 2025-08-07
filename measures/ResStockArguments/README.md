@@ -3957,7 +3957,7 @@ Whether there is an electric vehicle charger present.
 
 **Electric Vehicle Charger: Charging Level**
 
-The charging level of the EV charger. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'>HPXML Electric Vehicle Chargers</a>) is used.
+The charging level of the EV charger. If not provided, the OS-HPXML default (see <a href='https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'>HPXML Electric Vehicle Chargers</a>) is used.
 
 - **Name:** ``ev_charger_level``
 - **Type:** ``Choice``

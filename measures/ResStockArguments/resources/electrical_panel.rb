@@ -268,7 +268,7 @@ class ElectricalPanelSampler
   end
 
   def cast_to_bool(val)
-    return val.to_s.downcase == "true"
+    return val.to_s.downcase == 'true'
   end
 
   def to_numeric(is_present)

@@ -23,12 +23,13 @@ Level,Parameter,Option,Saturation
 0,Bathroom Spot Vent Hour,Hour21,0.061
 0,Bathroom Spot Vent Hour,Hour22,0.061
 0,Bathroom Spot Vent Hour,Hour23,0.061
-0,Ceiling Fan,None,0.166667
-0,Ceiling Fan,Standard Efficiency,0.166667
-0,Ceiling Fan,"Standard Efficiency, No usage",0.166667
-0,Ceiling Fan,Premium Efficiency,0.166667
-0,Ceiling Fan,"Standard Efficiency, 0.5F Offset",0.166667
-0,Ceiling Fan,"Premium Efficiency, 0.5F Offset",0.166667
+0,Battery,None,0.333333
+0,Battery,10 kWh,0.333333
+0,Battery,20 kWh,0.333333
+0,Ceiling Fan,None,0.25
+0,Ceiling Fan,Standard Efficiency,0.25
+0,Ceiling Fan,"Standard Efficiency, No usage",0.25
+0,Ceiling Fan,Premium Efficiency,0.25
 0,Clothes Dryer Usage Level,80% Usage,0.333333
 0,Clothes Dryer Usage Level,100% Usage,0.333333
 0,Clothes Dryer Usage Level,120% Usage,0.333333
@@ -72,15 +73,15 @@ Level,Parameter,Option,Saturation
 0,County,"NY, New York County",0.2
 0,County,"TX, Harris County",0.2
 0,Dehumidifier,None,0.25
-0,Dehumidifier,"65 pints/day, 50% RH",0.25
-0,Dehumidifier,"65 pints/day, 60% RH",0.25
-0,Dehumidifier,"65 pints/day, 50% RH, 2.0 EF",0.25
+0,Dehumidifier,"Portable, 30 pints/day, 50% RH",0.25
+0,Dehumidifier,"Whole-Home, 75 pints/day, 50% RH",0.25
+0,Dehumidifier,"Whole-Home, 75 pints/day, 60% RH",0.25
 0,Dishwasher Usage Level,80% Usage,0.333333
 0,Dishwasher Usage Level,100% Usage,0.333333
 0,Dishwasher Usage Level,120% Usage,0.333333
-0,Dishwasher,290 Rated kWh,0.333333
-0,Dishwasher,318 Rated kWh,0.333333
+0,Dishwasher,EnergyStar,0.333333
 0,Dishwasher,None,0.333333
+0,Dishwasher,Standard,0.333333
 0,Doors,Wood,0.333333
 0,Doors,Steel,0.333333
 0,Doors,Fiberglass,0.333333
@@ -186,11 +187,10 @@ Level,Parameter,Option,Saturation
 0,Heating Unavailable Days,3 months,0.125
 0,Heating Unavailable Days,Never,0.125
 0,Heating Unavailable Days,Year round,0.125
-0,Hot Water Distribution,Uninsulated,0.2
-0,Hot Water Distribution,R-2,0.2
-0,Hot Water Distribution,"R-2, Timer",0.2
-0,Hot Water Distribution,"R-2, Demand",0.2
-0,Hot Water Distribution,"R-5, Timer",0.2
+0,Hot Water Distribution,Uninsulated,0.25
+0,Hot Water Distribution,Insulated,0.25
+0,Hot Water Distribution,"Insulated, Timer",0.25
+0,Hot Water Distribution,"Insulated, Demand",0.25
 0,Hot Water Fixtures,50% Usage,0.0625
 0,Hot Water Fixtures,60% Usage,0.0625
 0,Hot Water Fixtures,70% Usage,0.0625
@@ -234,13 +234,12 @@ Level,Parameter,Option,Saturation
 0,Infiltration,30 ACH50,0.037037
 0,Infiltration,40 ACH50,0.037037
 0,Infiltration,50 ACH50,0.037037
-0,Interior Shading,"Summer = 0.7, Winter = 0.7",0.2
-0,Interior Shading,"Summer = 0.6, Winter = 0.7",0.2
-0,Interior Shading,"Summer = 0.5, Winter = 0.7",0.2
-0,Interior Shading,"Summer = 0.7, Winter = 0.95",0.2
-0,Interior Shading,"Summer = 0.5, Winter = 0.95",0.2
-0,Lighting,20% LED,0.166667
-0,Lighting,60% CFL,0.166667
+0,Interior Shading,Light Curtains,0.25
+0,Interior Shading,Medium Curtains,0.25
+0,Interior Shading,Dark Curtains,0.25
+0,Interior Shading,None,0.25
+0,Lighting,25% LED,0.166667
+0,Lighting,50% CFL,0.166667
 0,Lighting,100% CFL,0.166667
 0,Lighting,100% Incandescent,0.166667
 0,Lighting,100% LED,0.166667
@@ -249,22 +248,19 @@ Level,Parameter,Option,Saturation
 0,Mechanical Ventilation,Exhaust,0.2
 0,Mechanical Ventilation,Supply,0.2
 0,Mechanical Ventilation,"HRV, 60%",0.2
-0,Mechanical Ventilation,"ERV, 72%",0.2
+0,Mechanical Ventilation,"ERV, 70%",0.2
 0,Misc Freezer,"EF 12, Average Installed",0.166667
 0,Misc Freezer,"EF 12, National Average",0.166667
 0,Misc Freezer,"EF 16, 2001 Fed Standard-reference freezer",0.166667
 0,Misc Freezer,"EF 18, 2008 Energy Star",0.166667
 0,Misc Freezer,"EF 20, 2008 Energy Star Most Efficient",0.166667
 0,Misc Freezer,None,0.166667
-0,Misc Gas Fireplace,None,0.333333
-0,Misc Gas Fireplace,National Average,0.333333
-0,Misc Gas Fireplace,Gas Fireplace,0.333333
-0,Misc Gas Grill,None,0.333333
-0,Misc Gas Grill,National Average,0.333333
-0,Misc Gas Grill,Gas Grill,0.333333
-0,Misc Gas Lighting,None,0.333333
-0,Misc Gas Lighting,National Average,0.333333
-0,Misc Gas Lighting,Gas Lighting,0.333333
+0,Misc Gas Fireplace,None,0.5
+0,Misc Gas Fireplace,Gas Fireplace,0.5
+0,Misc Gas Grill,None,0.5
+0,Misc Gas Grill,Gas Grill,0.5
+0,Misc Gas Lighting,None,0.5
+0,Misc Gas Lighting,Gas Lighting,0.5
 0,Misc Hot Tub Spa,Electricity,0.25
 0,Misc Hot Tub Spa,Natural Gas,0.25
 0,Misc Hot Tub Spa,None,0.25
@@ -368,27 +364,25 @@ Level,Parameter,Option,Saturation
 0,Refrigerator Usage Level,105% Usage,0.333333
 0,Vacancy Status,Occupied,0.5
 0,Vacancy Status,Vacant,0.5
-0,Water Heater Efficiency,Electric Premium,0.047619
-0,Water Heater Efficiency,Electric Standard,0.047619
-0,Water Heater Efficiency,Electric Tankless,0.047619
-0,Water Heater Efficiency,FIXME Fuel Oil Indirect,0.047619
-0,Water Heater Efficiency,Fuel Oil Premium,0.047619
-0,Water Heater Efficiency,Fuel Oil Standard,0.047619
-0,Water Heater Efficiency,Natural Gas Premium,0.047619
-0,Water Heater Efficiency,Natural Gas Standard,0.047619
-0,Water Heater Efficiency,Natural Gas Tankless,0.047619
-0,Water Heater Efficiency,Propane Premium,0.047619
-0,Water Heater Efficiency,Propane Standard,0.047619
-0,Water Heater Efficiency,Propane Tankless,0.047619
-0,Water Heater Efficiency,"Solar Thermal, 40 sqft, East, Latitude + 15 degrees, Electric Standard Backup",0.047619
-0,Water Heater Efficiency,"Solar Thermal, 40 sqft, North, Latitude - 15 degrees, Electric Standard Backup",0.047619
-0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, 10 degrees, Electric Standard Backup",0.047619
-0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup",0.047619
-0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup",0.047619
-0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup",0.047619
-0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup",0.047619
-0,Water Heater Efficiency,"Solar Thermal, 40 sqft, West, 70 degrees, Electric Standard Backup",0.047619
-0,Water Heater Efficiency,Wood,0.047619
+0,Vintage,1960s,1
+0,Water Heater Efficiency,"Electric Heat Pump, 3.5 UEF",0.0555556
+0,Water Heater Efficiency,Electric Premium,0.0555556
+0,Water Heater Efficiency,Electric Standard,0.0555556
+0,Water Heater Efficiency,Electric Tankless,0.0555556
+0,Water Heater Efficiency,FIXME Fuel Oil Indirect,0.0555556
+0,Water Heater Efficiency,Fuel Oil Premium,0.0555556
+0,Water Heater Efficiency,Fuel Oil Standard,0.0555556
+0,Water Heater Efficiency,Natural Gas Premium,0.0555556
+0,Water Heater Efficiency,Natural Gas Standard,0.0555556
+0,Water Heater Efficiency,Natural Gas Tankless,0.0555556
+0,Water Heater Efficiency,Propane Premium,0.0555556
+0,Water Heater Efficiency,Propane Standard,0.0555556
+0,Water Heater Efficiency,Propane Tankless,0.0555556
+0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup",0.0555556
+0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup",0.0555556
+0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup",0.0555556
+0,Water Heater Efficiency,"Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup",0.0555556
+0,Water Heater Efficiency,Wood,0.0555556
 1,Cooling Setpoint Offset Magnitude,0F,0.5
 1,Cooling Setpoint Offset Magnitude,2F,0.166666
 1,Cooling Setpoint Offset Magnitude,5F,0.166666
@@ -929,11 +923,6 @@ Level,Parameter,Option,Saturation
 4,Radiant Barrier,None,0.876543
 4,Radiant Barrier,Yes,0.0617283
 4,Radiant Barrier,No,0.0617283
-4,Battery,None,0.247488
-4,Battery,10 kWh,0.247488
-4,Battery,"20 kWh, Outside",0.247488
-4,Battery,"20 kWh, Garage",0.010048
-4,Battery,"20 kWh, 80% Round Trip Efficiency",0.247488
 4,Geometry Space Combination,"Mobile Home, Ambient, No Attic, No Garage",0.111111
 4,Geometry Space Combination,"Multi-Family with 2 - 4 Units Bottom Unit, Slab, No Attic, No Garage",0.0353009
 4,Geometry Space Combination,"Multi-Family with 2 - 4 Units Bottom Unit, Unheated Basement, No Attic, No Garage",0.0353009
@@ -1122,7 +1111,7 @@ Level,Parameter,Option,Saturation
 5,HVAC Secondary Heating Partial Space Conditioning,20%,0.00952382
 5,HVAC Secondary Heating Partial Space Conditioning,30%,0.00952382
 5,HVAC Secondary Heating Partial Space Conditioning,40%,0.00952382
-5,HVAC Secondary Heating Partial Space Conditioning,49%,0.00952382
+5,HVAC Secondary Heating Partial Space Conditioning,50%,0.00952382
 5,HVAC Secondary Heating Partial Space Conditioning,Void,0
 5,Water Heater Location,Attic,0.037634
 5,Water Heater Location,Conditioned Mechanical Room,0.337912

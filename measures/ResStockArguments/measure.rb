@@ -863,6 +863,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     if not args[:wall_continuous_exterior_r].nil?
       args[:wall_assembly_r] += args[:wall_continuous_exterior_r]
     end
+    args[:wall_assembly_r] = args[:wall_assembly_r].round(2)
 
     # Rim Joist Assembly R-Value
     rim_joist_assembly_r = 0
@@ -888,12 +889,12 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
       rim_joist_assembly_r = assembly_exterior_r + assembly_interior_r
     end
-    args[:rim_joist_assembly_r] = rim_joist_assembly_r
+    args[:rim_joist_assembly_r] = rim_joist_assembly_r.round(2)
 
     # Vehicle arguments
     if (not args[:vehicle_miles_driven_per_year].nil?) && (not args[:ev_average_mph].nil?)
       hours_per_year = args[:vehicle_miles_driven_per_year] / args[:ev_average_mph]
-      args[:vehicle_hours_driven_per_week] = (hours_per_year / UnitConversions.convert(1, 'yr', 'day')) * 7
+      args[:vehicle_hours_driven_per_week] = ((hours_per_year / UnitConversions.convert(1, 'yr', 'day')) * 7).round(2)
     end
 
     if not args[:ev_efficiency_percent_increase].nil?
