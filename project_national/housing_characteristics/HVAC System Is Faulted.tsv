@@ -1,0 +1,5 @@
+Option=No	Option=Yes	sampling_probability
+1	0	1
+# Created by: manually created
+# Description: The presence of the HVAC system having a fault (not used in project_national).
+# Source: Assuming no faults until we have data necessary to characterize all types of ACs and heat pumps (https://github.com/NREL/resstock/issues/733).

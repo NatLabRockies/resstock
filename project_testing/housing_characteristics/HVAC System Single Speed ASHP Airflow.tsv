@@ -1,0 +1,5 @@
+Dependency=HVAC System Is Faulted	Option=154.8 cfm/ton	Option=204.4 cfm/ton	Option=254.0 cfm/ton	Option=303.5 cfm/ton	Option=353.1 cfm/ton	Option=402.7 cfm/ton	Option=452.3 cfm/ton	Option=501.9 cfm/ton	Option=551.5 cfm/ton	Option=601.0 cfm/ton	Option=650.6 cfm/ton	Option=700.2 cfm/ton	Option=None	sampling_probability
+Yes	0.083333	0.083333	0.083333	0.083333	0.083333	0.083333	0.083333	0.083333	0.083333	0.083333	0.083333	0.083333	0	0.5
+No	0	0	0	0	0	0	0	0	0	0	0	0	1	0.5
+# Created by: manually created
+# Description: Single speed air source heat pump actual air flow rates.

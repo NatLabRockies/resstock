@@ -1,0 +1,4 @@
+Option=No	Option=Yes	sampling_probability
+0.5	0.5	1
+# Created by: manually created
+# Description: The presence of the HVAC system having a fault (not used in project_national).

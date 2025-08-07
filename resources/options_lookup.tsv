@@ -126,9 +126,10 @@ CEC Climate Zone	7
 CEC Climate Zone	8
 CEC Climate Zone	9
 CEC Climate Zone	None
-Ceiling Fan	None	ResStockArguments	ceiling_fans=None
-Ceiling Fan	Standard Efficiency	ResStockArguments	ceiling_fans=#Bedrooms+1 Fans, 45 W
 Ceiling Fan	Standard Efficiency, No usage	ResStockArguments	ceiling_fans=None
+Ceiling Fan	None	ResStockArguments	ceiling_fans=None
+Ceiling Fan	Premium Efficiency	ResStockArguments	ceiling_fans=#Bedrooms+1 Fans, 22.5 W
+Ceiling Fan	Standard Efficiency	ResStockArguments	ceiling_fans=#Bedrooms+1 Fans, 45.0 W
 Census Division	East North Central
 Census Division	East South Central
 Census Division	Middle Atlantic
@@ -1285,24 +1286,24 @@ Cooking Range	Void
 Cooking Range Usage Level	100% Usage	ResStockArgumentsPostHPXML	cooking_range_oven_usage_multiplier=1.0
 Cooking Range Usage Level	120% Usage	ResStockArgumentsPostHPXML	cooking_range_oven_usage_multiplier=1.2
 Cooking Range Usage Level	80% Usage	ResStockArgumentsPostHPXML	cooking_range_oven_usage_multiplier=0.8
-Cooling Setpoint	60F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=60	hvac_control_cooling_weekend_setpoint_temp=60	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	62F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=62	hvac_control_cooling_weekend_setpoint_temp=62	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	64F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=64	hvac_control_cooling_weekend_setpoint_temp=64	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	65F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=65	hvac_control_cooling_weekend_setpoint_temp=65	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	66F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=66	hvac_control_cooling_weekend_setpoint_temp=66	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	67F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=67	hvac_control_cooling_weekend_setpoint_temp=67	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	68F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=68	hvac_control_cooling_weekend_setpoint_temp=68	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	69F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=69	hvac_control_cooling_weekend_setpoint_temp=69	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	70F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=70	hvac_control_cooling_weekend_setpoint_temp=70	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	72F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=72	hvac_control_cooling_weekend_setpoint_temp=72	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	73F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=73	hvac_control_cooling_weekend_setpoint_temp=73	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	74F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=74	hvac_control_cooling_weekend_setpoint_temp=74	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	75F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=75	hvac_control_cooling_weekend_setpoint_temp=75	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	76F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=76	hvac_control_cooling_weekend_setpoint_temp=76	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	76F w/ Building America season	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=76	hvac_control_cooling_weekend_setpoint_temp=76	use_auto_cooling_season=true	hvac_control_cooling_season_period=auto
-Cooling Setpoint	77F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=77	hvac_control_cooling_weekend_setpoint_temp=77	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	78F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=78	hvac_control_cooling_weekend_setpoint_temp=78	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
-Cooling Setpoint	80F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=80	hvac_control_cooling_weekend_setpoint_temp=80	use_auto_cooling_season=false	hvac_control_cooling_season_period=auto
+Cooling Setpoint	60F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=60	hvac_control_cooling_weekend_setpoint_temp=60	use_auto_cooling_season=false
+Cooling Setpoint	62F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=62	hvac_control_cooling_weekend_setpoint_temp=62	use_auto_cooling_season=false
+Cooling Setpoint	64F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=64	hvac_control_cooling_weekend_setpoint_temp=64	use_auto_cooling_season=false
+Cooling Setpoint	65F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=65	hvac_control_cooling_weekend_setpoint_temp=65	use_auto_cooling_season=false
+Cooling Setpoint	66F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=66	hvac_control_cooling_weekend_setpoint_temp=66	use_auto_cooling_season=false
+Cooling Setpoint	67F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=67	hvac_control_cooling_weekend_setpoint_temp=67	use_auto_cooling_season=false
+Cooling Setpoint	68F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=68	hvac_control_cooling_weekend_setpoint_temp=68	use_auto_cooling_season=false
+Cooling Setpoint	69F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=69	hvac_control_cooling_weekend_setpoint_temp=69	use_auto_cooling_season=false
+Cooling Setpoint	70F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=70	hvac_control_cooling_weekend_setpoint_temp=70	use_auto_cooling_season=false
+Cooling Setpoint	72F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=72	hvac_control_cooling_weekend_setpoint_temp=72	use_auto_cooling_season=false
+Cooling Setpoint	73F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=73	hvac_control_cooling_weekend_setpoint_temp=73	use_auto_cooling_season=false
+Cooling Setpoint	74F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=74	hvac_control_cooling_weekend_setpoint_temp=74	use_auto_cooling_season=false
+Cooling Setpoint	75F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=75	hvac_control_cooling_weekend_setpoint_temp=75	use_auto_cooling_season=false
+Cooling Setpoint	76F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=76	hvac_control_cooling_weekend_setpoint_temp=76	use_auto_cooling_season=false
+Cooling Setpoint	76F w/ Building America season	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=76	hvac_control_cooling_weekend_setpoint_temp=76	use_auto_cooling_season=true
+Cooling Setpoint	77F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=77	hvac_control_cooling_weekend_setpoint_temp=77	use_auto_cooling_season=false
+Cooling Setpoint	78F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=78	hvac_control_cooling_weekend_setpoint_temp=78	use_auto_cooling_season=false
+Cooling Setpoint	80F	ResStockArguments	hvac_control_cooling_weekday_setpoint_temp=80	hvac_control_cooling_weekend_setpoint_temp=80	use_auto_cooling_season=false
 Cooling Setpoint	Void
 Cooling Setpoint Has Offset	No
 Cooling Setpoint Has Offset	Yes
@@ -9153,6 +9154,9 @@ County and PUMA	G7201510, G72001102
 County and PUMA	G7201530, G72000401
 Custom State	AK
 Custom State	Others
+Dehumidifier	Portable, 30 pints/day, 50% RH	ResStockArguments	appliance_dehumidifier=Portable, 30 pints/day	appliance_dehumidifier_setpoint=50% RH
+Dehumidifier	Whole-Home, 75 pints/day, 50% RH	ResStockArguments	appliance_dehumidifier=Whole-Home, 75 pints/day	appliance_dehumidifier_setpoint=50% RH
+Dehumidifier	Whole-Home, 75 pints/day, 60% RH	ResStockArguments	appliance_dehumidifier=Whole-Home, 75 pints/day	appliance_dehumidifier_setpoint=60% RH
 Dehumidifier	None	ResStockArguments	appliance_dehumidifier=None	appliance_dehumidifier_setpoint=50% RH
 Demand Flexibility Electric Vehicle	Enabled	ResStockArgumentsPostHPXML	ev_flex_enabled=true
 Demand Flexibility HVAC	On-peak Load Shedding, 2F Offset	ResStockArgumentsPostHPXML	hvac_flex_peak_offset=2	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0
@@ -9247,27 +9251,25 @@ Federal Poverty Level	200-300%
 Federal Poverty Level	300-400%
 Federal Poverty Level	400%+
 Federal Poverty Level	Not Available
-Generation And Emissions Assessment Region	AZNMc
-Generation And Emissions Assessment Region	CAMXc
-Generation And Emissions Assessment Region	ERCTc
-Generation And Emissions Assessment Region	FRCCc
-Generation And Emissions Assessment Region	MROEc
-Generation And Emissions Assessment Region	MROWc
-Generation And Emissions Assessment Region	NEWEc
-Generation And Emissions Assessment Region	NWPPc
-Generation And Emissions Assessment Region	NYSTc
+Generation And Emissions Assessment Region	CAISO
+Generation And Emissions Assessment Region	ERCOT
+Generation And Emissions Assessment Region	FRCC
+Generation And Emissions Assessment Region	ISONE
+Generation And Emissions Assessment Region	MISO Central
+Generation And Emissions Assessment Region	MISO North
+Generation And Emissions Assessment Region	MISO South
+Generation And Emissions Assessment Region	NYISO
 Generation And Emissions Assessment Region	None
-Generation And Emissions Assessment Region	RFCEc
-Generation And Emissions Assessment Region	RFCMc
-Generation And Emissions Assessment Region	RFCWc
-Generation And Emissions Assessment Region	RMPAc
-Generation And Emissions Assessment Region	SPNOc
-Generation And Emissions Assessment Region	SPSOc
-Generation And Emissions Assessment Region	SRMVc
-Generation And Emissions Assessment Region	SRMWc
-Generation And Emissions Assessment Region	SRSOc
-Generation And Emissions Assessment Region	SRTVc
-Generation And Emissions Assessment Region	SRVCc
+Generation And Emissions Assessment Region	Northern Grid East
+Generation And Emissions Assessment Region	Northern Grid South
+Generation And Emissions Assessment Region	Northern Grid West
+Generation And Emissions Assessment Region	PJM East
+Generation And Emissions Assessment Region	PJM West
+Generation And Emissions Assessment Region	SERTP
+Generation And Emissions Assessment Region	SPP North
+Generation And Emissions Assessment Region	SPP South
+Generation And Emissions Assessment Region	West Connect North
+Generation And Emissions Assessment Region	West Connect South
 Geometry Attic Type	Finished Attic or Cathedral Ceilings	ResStockArguments	geometry_attic_type=Attic, Conditioned, Gable	geometry_roof_pitch=6:12
 Geometry Attic Type	None	ResStockArguments	geometry_attic_type=Flat Roof	geometry_roof_pitch=6:12
 Geometry Attic Type	Unvented Attic	ResStockArguments	geometry_attic_type=Attic, Unvented, Gable	geometry_roof_pitch=6:12
@@ -9358,15 +9360,15 @@ Geometry Building Type RECS	Multi-Family with 2 - 4 Units	ResStockArguments	geom
 Geometry Building Type RECS	Multi-Family with 5+ Units	ResStockArguments	geometry_facility_type=apartment unit	geometry_ceiling_height=8.0 ft	geometry_unit_aspect_ratio=0.5556
 Geometry Building Type RECS	Single-Family Attached	ResStockArguments	geometry_facility_type=single-family attached	geometry_ceiling_height=8.0 ft	geometry_unit_aspect_ratio=0.5556
 Geometry Building Type RECS	Single-Family Detached	ResStockArguments	geometry_facility_type=single-family detached	geometry_ceiling_height=8.0 ft	geometry_unit_aspect_ratio=1.8
-Geometry Floor Area	0-499	ResStockArguments	geometry_unit_cfa_bin=0-499	geometry_unit_cfa=auto
-Geometry Floor Area	1000-1499	ResStockArguments	geometry_unit_cfa_bin=1000-1499	geometry_unit_cfa=auto
-Geometry Floor Area	1500-1999	ResStockArguments	geometry_unit_cfa_bin=1500-1999	geometry_unit_cfa=auto
-Geometry Floor Area	2000-2499	ResStockArguments	geometry_unit_cfa_bin=2000-2499	geometry_unit_cfa=auto
-Geometry Floor Area	2500-2999	ResStockArguments	geometry_unit_cfa_bin=2500-2999	geometry_unit_cfa=auto
-Geometry Floor Area	3000-3999	ResStockArguments	geometry_unit_cfa_bin=3000-3999	geometry_unit_cfa=auto
-Geometry Floor Area	4000+	ResStockArguments	geometry_unit_cfa_bin=4000+	geometry_unit_cfa=auto
-Geometry Floor Area	500-749	ResStockArguments	geometry_unit_cfa_bin=500-749	geometry_unit_cfa=auto
-Geometry Floor Area	750-999	ResStockArguments	geometry_unit_cfa_bin=750-999	geometry_unit_cfa=auto
+Geometry Floor Area	0-499	ResStockArguments	geometry_unit_cfa_bin=0-499
+Geometry Floor Area	1000-1499	ResStockArguments	geometry_unit_cfa_bin=1000-1499
+Geometry Floor Area	1500-1999	ResStockArguments	geometry_unit_cfa_bin=1500-1999
+Geometry Floor Area	2000-2499	ResStockArguments	geometry_unit_cfa_bin=2000-2499
+Geometry Floor Area	2500-2999	ResStockArguments	geometry_unit_cfa_bin=2500-2999
+Geometry Floor Area	3000-3999	ResStockArguments	geometry_unit_cfa_bin=3000-3999
+Geometry Floor Area	4000+	ResStockArguments	geometry_unit_cfa_bin=4000+
+Geometry Floor Area	500-749	ResStockArguments	geometry_unit_cfa_bin=500-749
+Geometry Floor Area	750-999	ResStockArguments	geometry_unit_cfa_bin=750-999
 Geometry Floor Area Bin	0-1499
 Geometry Floor Area Bin	1500-2499
 Geometry Floor Area Bin	2500-3999
@@ -9639,6 +9641,7 @@ Ground Thermal Conductivity	1.7	ResStockArguments	location_soil_type=1.7 Btu/hr-
 Ground Thermal Conductivity	2.0	ResStockArguments	location_soil_type=2.0 Btu/hr-ft-F
 Ground Thermal Conductivity	2.3	ResStockArguments	location_soil_type=2.3 Btu/hr-ft-F
 Ground Thermal Conductivity	2.6	ResStockArguments	location_soil_type=2.6 Btu/hr-ft-F
+HVAC Cooling Autosizing Factor	40% Oversized	ResStockArgumentsPostHPXML	cooling_system_cooling_autosizing_factor=1.4	heat_pump_cooling_autosizing_factor=1.0
 HVAC Cooling Autosizing Factor	None
 HVAC Cooling Efficiency	AC, SEER 10	ResStockArguments	hvac_cooling_system=Central AC, SEER 10	hvac_cooling_system_capacity=Autosize
 HVAC Cooling Efficiency	AC, SEER 13	ResStockArguments	hvac_cooling_system=Central AC, SEER 13	hvac_cooling_system_capacity=Autosize
@@ -9677,6 +9680,7 @@ HVAC Has Shared System	None
 HVAC Has Shared System	Void
 HVAC Has Zonal Electric Heating	No
 HVAC Has Zonal Electric Heating	Yes
+HVAC Heating Autosizing Factor	40% Oversized	ResStockArgumentsPostHPXML	heating_system_heating_autosizing_factor=1.4	heating_system_2_heating_autosizing_factor=1.0	heat_pump_heating_autosizing_factor=1.0	heat_pump_backup_heating_autosizing_factor=1.0
 HVAC Heating Autosizing Factor	None
 HVAC Heating Efficiency	ASHP, SEER 10, 6.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 10, 6.2 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	ASHP, SEER 13, 7.7 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 13, 7.7 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
@@ -9777,8 +9781,52 @@ HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Electricity	ResStockArgum
 HVAC Shared Efficiencies	Fan Coil Heating and Cooling, Fuel	ResStockArguments	hvac_heating_system=Boiler, 78% AFUE	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_cooling_system=Mini-Split AC, SEER 13	hvac_cooling_system_capacity=Autosize	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Shared Efficiencies	None
 HVAC Shared Efficiencies	Void
+HVAC System Is Faulted	No
+HVAC System Is Faulted	Yes
 HVAC System Is Scaled	No
 HVAC System Is Scaled	Yes
+HVAC System Single Speed AC Airflow	154.8 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=154.8
+HVAC System Single Speed AC Airflow	204.4 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=204.4
+HVAC System Single Speed AC Airflow	254.0 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=254.0
+HVAC System Single Speed AC Airflow	303.5 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=303.5
+HVAC System Single Speed AC Airflow	353.1 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=353.1
+HVAC System Single Speed AC Airflow	402.7 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=402.7
+HVAC System Single Speed AC Airflow	452.3 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=452.3
+HVAC System Single Speed AC Airflow	501.9 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=501.9
+HVAC System Single Speed AC Airflow	551.5 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=551.5
+HVAC System Single Speed AC Airflow	601.0 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=601.0
+HVAC System Single Speed AC Airflow	650.6 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=650.6
+HVAC System Single Speed AC Airflow	700.2 cfm/ton	ResStockArgumentsPostHPXML	cooling_system_rated_cfm_per_ton=400.0	cooling_system_actual_cfm_per_ton=700.2
+HVAC System Single Speed AC Airflow	None
+HVAC System Single Speed AC Charge	0.570 Charge Frac	ResStockArgumentsPostHPXML	cooling_system_frac_manufacturer_charge=0.570
+HVAC System Single Speed AC Charge	0.709 Charge Frac	ResStockArgumentsPostHPXML	cooling_system_frac_manufacturer_charge=0.709
+HVAC System Single Speed AC Charge	0.848 Charge Frac	ResStockArgumentsPostHPXML	cooling_system_frac_manufacturer_charge=0.848
+HVAC System Single Speed AC Charge	0.988 Charge Frac	ResStockArgumentsPostHPXML	cooling_system_frac_manufacturer_charge=0.988
+HVAC System Single Speed AC Charge	1.127 Charge Frac	ResStockArgumentsPostHPXML	cooling_system_frac_manufacturer_charge=1.127
+HVAC System Single Speed AC Charge	1.266 Charge Frac	ResStockArgumentsPostHPXML	cooling_system_frac_manufacturer_charge=1.266
+HVAC System Single Speed AC Charge	1.405 Charge Frac	ResStockArgumentsPostHPXML	cooling_system_frac_manufacturer_charge=1.405
+HVAC System Single Speed AC Charge	None
+HVAC System Single Speed ASHP Airflow	154.8 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=154.8
+HVAC System Single Speed ASHP Airflow	204.4 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=204.4
+HVAC System Single Speed ASHP Airflow	254.0 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=254.0
+HVAC System Single Speed ASHP Airflow	303.5 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=303.5
+HVAC System Single Speed ASHP Airflow	353.1 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=353.1
+HVAC System Single Speed ASHP Airflow	402.7 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=402.7
+HVAC System Single Speed ASHP Airflow	452.3 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=452.3
+HVAC System Single Speed ASHP Airflow	501.9 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=501.9
+HVAC System Single Speed ASHP Airflow	551.5 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=551.5
+HVAC System Single Speed ASHP Airflow	601.0 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=601.0
+HVAC System Single Speed ASHP Airflow	650.6 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=650.6
+HVAC System Single Speed ASHP Airflow	700.2 cfm/ton	ResStockArgumentsPostHPXML	heat_pump_rated_cfm_per_ton=400.0	heat_pump_actual_cfm_per_ton=700.2
+HVAC System Single Speed ASHP Airflow	None
+HVAC System Single Speed ASHP Charge	0.570 Charge Frac	ResStockArgumentsPostHPXML	heat_pump_frac_manufacturer_charge=0.570
+HVAC System Single Speed ASHP Charge	0.709 Charge Frac	ResStockArgumentsPostHPXML	heat_pump_frac_manufacturer_charge=0.709
+HVAC System Single Speed ASHP Charge	0.848 Charge Frac	ResStockArgumentsPostHPXML	heat_pump_frac_manufacturer_charge=0.848
+HVAC System Single Speed ASHP Charge	0.988 Charge Frac	ResStockArgumentsPostHPXML	heat_pump_frac_manufacturer_charge=0.988
+HVAC System Single Speed ASHP Charge	1.127 Charge Frac	ResStockArgumentsPostHPXML	heat_pump_frac_manufacturer_charge=1.127
+HVAC System Single Speed ASHP Charge	1.266 Charge Frac	ResStockArgumentsPostHPXML	heat_pump_frac_manufacturer_charge=1.266
+HVAC System Single Speed ASHP Charge	1.405 Charge Frac	ResStockArgumentsPostHPXML	heat_pump_frac_manufacturer_charge=1.405
+HVAC System Single Speed ASHP Charge	None
 Has PV	No
 Has PV	Yes
 Heating Fuel	Electricity	ResStockArguments	hvac_heating_system_fuel=Electricity
@@ -9788,26 +9836,26 @@ Heating Fuel	None	ResStockArguments	hvac_heating_system_fuel=Natural Gas
 Heating Fuel	Other Fuel	ResStockArguments	hvac_heating_system_fuel=Wood Cord
 Heating Fuel	Propane	ResStockArguments	hvac_heating_system_fuel=Propane
 Heating Fuel	Wood	ResStockArguments	hvac_heating_system_fuel=Wood Cord
-Heating Setpoint	55F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=55	hvac_control_heating_weekend_setpoint_temp=55	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	60F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=60	hvac_control_heating_weekend_setpoint_temp=60	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	62F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=62	hvac_control_heating_weekend_setpoint_temp=62	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	63F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=63	hvac_control_heating_weekend_setpoint_temp=63	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	64F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=64	hvac_control_heating_weekend_setpoint_temp=64	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	65F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=65	hvac_control_heating_weekend_setpoint_temp=65	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	66F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=66	hvac_control_heating_weekend_setpoint_temp=66	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	67F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=67	hvac_control_heating_weekend_setpoint_temp=67	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	68F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=68	hvac_control_heating_weekend_setpoint_temp=68	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	69F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=69	hvac_control_heating_weekend_setpoint_temp=69	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	70F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=70	hvac_control_heating_weekend_setpoint_temp=70	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	71F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=71	hvac_control_heating_weekend_setpoint_temp=71	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	71F w/ Building America season	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=71	hvac_control_heating_weekend_setpoint_temp=71	use_auto_heating_season=true	hvac_control_heating_season_period=auto
-Heating Setpoint	72F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=72	hvac_control_heating_weekend_setpoint_temp=72	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	73F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=73	hvac_control_heating_weekend_setpoint_temp=73	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	74F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=74	hvac_control_heating_weekend_setpoint_temp=74	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	75F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=75	hvac_control_heating_weekend_setpoint_temp=75	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	76F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=76	hvac_control_heating_weekend_setpoint_temp=76	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	78F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=78	hvac_control_heating_weekend_setpoint_temp=78	use_auto_heating_season=false	hvac_control_heating_season_period=auto
-Heating Setpoint	80F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=80	hvac_control_heating_weekend_setpoint_temp=80	use_auto_heating_season=false	hvac_control_heating_season_period=auto
+Heating Setpoint	55F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=55	hvac_control_heating_weekend_setpoint_temp=55	use_auto_heating_season=false
+Heating Setpoint	60F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=60	hvac_control_heating_weekend_setpoint_temp=60	use_auto_heating_season=false
+Heating Setpoint	62F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=62	hvac_control_heating_weekend_setpoint_temp=62	use_auto_heating_season=false
+Heating Setpoint	63F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=63	hvac_control_heating_weekend_setpoint_temp=63	use_auto_heating_season=false
+Heating Setpoint	64F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=64	hvac_control_heating_weekend_setpoint_temp=64	use_auto_heating_season=false
+Heating Setpoint	65F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=65	hvac_control_heating_weekend_setpoint_temp=65	use_auto_heating_season=false
+Heating Setpoint	66F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=66	hvac_control_heating_weekend_setpoint_temp=66	use_auto_heating_season=false
+Heating Setpoint	67F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=67	hvac_control_heating_weekend_setpoint_temp=67	use_auto_heating_season=false
+Heating Setpoint	68F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=68	hvac_control_heating_weekend_setpoint_temp=68	use_auto_heating_season=false
+Heating Setpoint	69F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=69	hvac_control_heating_weekend_setpoint_temp=69	use_auto_heating_season=false
+Heating Setpoint	70F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=70	hvac_control_heating_weekend_setpoint_temp=70	use_auto_heating_season=false
+Heating Setpoint	71F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=71	hvac_control_heating_weekend_setpoint_temp=71	use_auto_heating_season=false
+Heating Setpoint	71F w/ Building America season	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=71	hvac_control_heating_weekend_setpoint_temp=71	use_auto_heating_season=true
+Heating Setpoint	72F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=72	hvac_control_heating_weekend_setpoint_temp=72	use_auto_heating_season=false
+Heating Setpoint	73F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=73	hvac_control_heating_weekend_setpoint_temp=73	use_auto_heating_season=false
+Heating Setpoint	74F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=74	hvac_control_heating_weekend_setpoint_temp=74	use_auto_heating_season=false
+Heating Setpoint	75F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=75	hvac_control_heating_weekend_setpoint_temp=75	use_auto_heating_season=false
+Heating Setpoint	76F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=76	hvac_control_heating_weekend_setpoint_temp=76	use_auto_heating_season=false
+Heating Setpoint	78F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=78	hvac_control_heating_weekend_setpoint_temp=78	use_auto_heating_season=false
+Heating Setpoint	80F	ResStockArguments	hvac_control_heating_weekday_setpoint_temp=80	hvac_control_heating_weekend_setpoint_temp=80	use_auto_heating_season=false
 Heating Setpoint Has Offset	No
 Heating Setpoint Has Offset	Yes
 Heating Setpoint Offset Magnitude	0F	ResStockArguments	hvac_control_heating_weekday_setpoint_offset_magnitude=0	hvac_control_heating_weekend_setpoint_offset_magnitude=0
@@ -9857,24 +9905,27 @@ Heating Unavailable Days	3 months	ResStockArgumentsPostHPXML	schedules_space_hea
 Heating Unavailable Days	Never	ResStockArgumentsPostHPXML	schedules_space_heating_unavailable_days=0
 Heating Unavailable Days	Year round	ResStockArgumentsPostHPXML	schedules_space_heating_unavailable_days=365
 Holiday Lighting	No Exterior Use
-Hot Water Distribution	Uninsulated	ResStockArguments	dhw_distribution=Uninsulated, Standard	dhw_drain_water_heat_recovery=None
-Hot Water Distribution	Insulated	ResStockArguments	dhw_distribution=Insulated, Standard	dhw_drain_water_heat_recovery=None
-Hot Water Fixtures	100% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
-Hot Water Fixtures	110% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
-Hot Water Fixtures	120% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
-Hot Water Fixtures	130% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
-Hot Water Fixtures	140% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
-Hot Water Fixtures	150% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
-Hot Water Fixtures	160% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
-Hot Water Fixtures	170% Usage	ResStockArguments	dhw_fixtures=Standard, 150% Usage
-Hot Water Fixtures	180% Usage	ResStockArguments	dhw_fixtures=Standard, 200% Usage
-Hot Water Fixtures	190% Usage	ResStockArguments	dhw_fixtures=Standard, 200% Usage
-Hot Water Fixtures	200% Usage	ResStockArguments	dhw_fixtures=Standard, 200% Usage
-Hot Water Fixtures	50% Usage	ResStockArguments	dhw_fixtures=Standard, 50% Usage
-Hot Water Fixtures	60% Usage	ResStockArguments	dhw_fixtures=Standard, 50% Usage
-Hot Water Fixtures	70% Usage	ResStockArguments	dhw_fixtures=Standard, 75% Usage
-Hot Water Fixtures	80% Usage	ResStockArguments	dhw_fixtures=Standard, 75% Usage
-Hot Water Fixtures	90% Usage	ResStockArguments	dhw_fixtures=Standard, 100% Usage
+Holiday Lighting	None
+Hot Water Distribution	Uninsulated	ResStockArguments	dhw_distribution=Uninsulated, Standard	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
+Hot Water Distribution	Insulated, Demand	ResStockArguments	dhw_distribution=Insulated, Recirc, Presence Sensor Demand Control	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
+Hot Water Distribution	Insulated, Timer	ResStockArguments	dhw_distribution=Insulated, Recirc, Timer Control	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
+Hot Water Distribution	Insulated	ResStockArguments	dhw_distribution=Insulated, Standard	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
+Hot Water Fixtures	100% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=1.0
+Hot Water Fixtures	110% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=1.1
+Hot Water Fixtures	120% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=1.2
+Hot Water Fixtures	130% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=1.3
+Hot Water Fixtures	140% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=1.4
+Hot Water Fixtures	150% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=1.5
+Hot Water Fixtures	160% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=1.6
+Hot Water Fixtures	170% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=1.7
+Hot Water Fixtures	180% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=1.8
+Hot Water Fixtures	190% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=1.9
+Hot Water Fixtures	200% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=2.0
+Hot Water Fixtures	50% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=0.5
+Hot Water Fixtures	60% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=0.6
+Hot Water Fixtures	70% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=0.7
+Hot Water Fixtures	80% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=0.8
+Hot Water Fixtures	90% Usage	ResStockArgumentsPostHPXML	water_fixtures_usage_multiplier=0.9
 Household Has Tribal Persons	No
 Household Has Tribal Persons	Not Available
 Household Has Tribal Persons	Yes
@@ -9998,10 +10049,22 @@ Insulation Wall	Wood Stud, R-15	ResStockArguments	enclosure_wall=Wood Stud, R-15
 Insulation Wall	Wood Stud, R-19	ResStockArguments	enclosure_wall=Wood Stud, R-19	enclosure_wall_continuous_insulation=Uninsulated
 Insulation Wall	Wood Stud, R-7	ResStockArguments	enclosure_wall=Wood Stud, R-7	enclosure_wall_continuous_insulation=Uninsulated
 Insulation Wall	Wood Stud, Uninsulated	ResStockArguments	enclosure_wall=Wood Stud, Uninsulated	enclosure_wall_continuous_insulation=Uninsulated
-Interior Shading	Summer = 0.7, Winter = 0.85	ResStockArguments	enclosure_window_interior_shading=Curtains, Light
+Interior Shading	Light Curtains	ResStockArguments	enclosure_window_interior_shading=Curtains, Light
+Interior Shading	Medium Curtains	ResStockArguments	enclosure_window_interior_shading=Curtains, Medium
+Interior Shading	Dark Curtains	ResStockArguments	enclosure_window_interior_shading=Curtains, Dark
+Interior Shading	None	ResStockArguments	enclosure_window_interior_shading=None
 Lighting	100% CFL	ResStockArguments	lighting=100% CFL, 100% Usage
 Lighting	100% Incandescent	ResStockArguments	lighting=100% Incandescent, 100% Usage
 Lighting	100% LED	ResStockArguments	lighting=100% LED, 100% Usage
+Lighting	25% LED	ResStockArguments	lighting=25% LED, 100% Usage
+Lighting	50% CFL	ResStockArguments	lighting=50% LED, 100% Usage
+Lighting	None	ResStockArguments	lighting=None
+Lighting Interior Use	100% Usage	ResStockArgumentsPostHPXML	lighting_interior_usage_multiplier=1.0
+Lighting Interior Use	95% Usage	ResStockArgumentsPostHPXML	lighting_interior_usage_multiplier=0.95
+Lighting Interior Use	None	ResStockArgumentsPostHPXML	lighting_interior_usage_multiplier=0.0
+Lighting Other Use	100% Usage	ResStockArgumentsPostHPXML	lighting_exterior_usage_multiplier=1.0	lighting_garage_usage_multiplier=1.0
+Lighting Other Use	95% Usage	ResStockArgumentsPostHPXML	lighting_exterior_usage_multiplier=0.95	lighting_garage_usage_multiplier=0.95
+Lighting Other Use	None	ResStockArgumentsPostHPXML	lighting_exterior_usage_multiplier=0.0	lighting_garage_usage_multiplier=0.0
 Location Region	CR02
 Location Region	CR03
 Location Region	CR04
@@ -10014,7 +10077,11 @@ Location Region	CR10
 Location Region	CR11
 Location Region	CRAK
 Location Region	CRHI
+Mechanical Ventilation	ERV, 70%	ResStockArguments	ventilation_mechanical=ERV, 70%	ventilation_bathroom=Default	ventilation_kitchen=Default	ventilation_whole_house_fan=None
+Mechanical Ventilation	HRV, 60%	ResStockArguments	ventilation_mechanical=HRV, 60%	ventilation_bathroom=Default	ventilation_kitchen=Default	ventilation_whole_house_fan=None
+Mechanical Ventilation	Exhaust	ResStockArguments	ventilation_mechanical=Exhaust Only	ventilation_bathroom=Default	ventilation_kitchen=Default	ventilation_whole_house_fan=None
 Mechanical Ventilation	None	ResStockArguments	ventilation_mechanical=None	ventilation_bathroom=Default	ventilation_kitchen=Default	ventilation_whole_house_fan=None
+Mechanical Ventilation	Supply	ResStockArguments	ventilation_mechanical=Supply Only	ventilation_bathroom=Default	ventilation_kitchen=Default	ventilation_whole_house_fan=None
 Metropolitan and Micropolitan Statistical Area	Aberdeen, SD MicroSA
 Metropolitan and Micropolitan Statistical Area	Aberdeen, WA MicroSA
 Metropolitan and Micropolitan Statistical Area	Abilene, TX MSA
@@ -10942,7 +11009,10 @@ Misc Extra Refrigerator	EF 21.9	ResStockArguments	appliance_extra_refrigerator=3
 Misc Extra Refrigerator	EF 6.7	ResStockArguments	appliance_extra_refrigerator=1139 kWh/yr, 100% Usage
 Misc Extra Refrigerator	None	ResStockArguments	appliance_extra_refrigerator=None
 Misc Extra Refrigerator	Void
-Misc Freezer	EF 12, National Average	ResStockArguments	appliance_freezer=935 kWh/yr, 100% Usage
+Misc Freezer	EF 12, National Average	ReshStockArguments	appliance_freezer=935 kWh/yr, 100% Usage
+Misc Freezer	EF 16, 2001 Fed Standard-reference freezer	ResStockArguments	appliance_freezer=712 kWh/yr, 100% Usage
+Misc Freezer	EF 18, 2008 Energy Star	ResStockArguments	appliance_freezer=641 kWh/yr, 100% Usage
+Misc Freezer	EF 20, 2008 Energy Star Most Efficient	ResStockArguments	appliance_freezer=568 kWh/yr, 100% Usage
 Misc Freezer	None	ResStockArguments	appliance_freezer=None
 Misc Freezer	Void
 Misc Gas Fireplace	Gas Fireplace	ResStockArguments	misc_fireplace=Natural Gas, 100% Usage
@@ -10964,6 +11034,10 @@ Misc Pool Heater	Electricity	ResStockArguments	misc_pool=Electric Resistance Hea
 Misc Pool Heater	Natural Gas	ResStockArguments	misc_pool=Natural Gas Heater, 100% Usage
 Misc Pool Heater	None	ResStockArguments	misc_pool=None
 Misc Pool Heater	Other Fuel	ResStockArguments	misc_pool=Unheated, 100% Usage
+Misc Pool Pump	0.75 HP Pump
+Misc Pool Pump	1.0 HP Pump
+Misc Pool Pump	National Average
+Misc Pool Pump	None
 Misc Well Pump	None	ResStockArguments	misc_well_pump=None
 Misc Well Pump	Typical Efficiency	ResStockArguments	misc_well_pump=Typical Efficiency
 Natural Ventilation	Cooling Season, 7 days/wk	ResStockArguments	enclosure_window_natural_ventilation=67% Operable Windows
@@ -11002,6 +11076,11 @@ Orientation	Southwest	ResStockArguments	geometry_unit_direction=Southwest
 Orientation	WNW	ResStockArguments	geometry_unit_direction=West-Northwest
 Orientation	WSW	ResStockArguments	geometry_unit_direction=West-Southwest
 Orientation	West	ResStockArguments	geometry_unit_direction=West
+Overhangs	2ft, All Windows	ResStockArguments	enclosure_overhangs=2ft, All Windows
+Overhangs	2ft, Back Windows	ResStockArguments	enclosure_overhangs=2ft, Back Windows
+Overhangs	2ft, Front Windows	ResStockArguments	enclosure_overhangs=2ft, Front Windows
+Overhangs	2ft, Left Windows	ResStockArguments	enclosure_overhangs=2ft, Left Windows
+Overhangs	2ft, Right Windows	ResStockArguments	enclosure_overhangs=2ft, Right Windows
 Overhangs	None	ResStockArguments	enclosure_overhangs=None
 PUMA	AK, 00101
 PUMA	AK, 00102
@@ -13375,10 +13454,12 @@ PV System Size	7.0 kWDC	ResStockArguments	pv_system=7.0 kW	pv_system_2=None	pv_s
 PV System Size	9.0 kWDC	ResStockArguments	pv_system=9.0 kW	pv_system_2=None	pv_system_2_direction=Roof Pitch, South
 PV System Size	None	ResStockArguments	pv_system=None
 Plug Load Diversity	100%	ResStockArguments	misc_plug_loads=100% Usage	misc_television=100% Usage
+Plug Load Diversity	150%	ResStockArguments	misc_plug_loads=150% Usage	misc_television=150% Usage
 Plug Load Diversity	200%	ResStockArguments	misc_plug_loads=200% Usage	misc_television=200% Usage
 Plug Load Diversity	25%	ResStockArguments	misc_plug_loads=25% Usage	misc_television=25% Usage
 Plug Load Diversity	400%	ResStockArguments	misc_plug_loads=400% Usage	misc_television=400% Usage
 Plug Load Diversity	50%	ResStockArguments	misc_plug_loads=50% Usage	misc_television=50% Usage
+Plug Load Diversity	75%	ResStockArguments	misc_plug_loads=75% Usage	misc_television=75% Usage
 Plug Loads	100%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=1.0	misc_plug_loads_television_usage_multiplier=1.0
 Plug Loads	101%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=1.01	misc_plug_loads_television_usage_multiplier=1.01
 Plug Loads	102%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=1.02	misc_plug_loads_television_usage_multiplier=1.02
@@ -13411,6 +13492,7 @@ Plug Loads	95%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier
 Plug Loads	96%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.96	misc_plug_loads_television_usage_multiplier=0.96
 Plug Loads	97%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.97	misc_plug_loads_television_usage_multiplier=0.97
 Plug Loads	99%	ResStockArgumentsPostHPXML	misc_plug_loads_other_usage_multiplier=0.99	misc_plug_loads_television_usage_multiplier=0.99
+Power Outage	Summer	ResStockArgumentsPostHPXML	schedules_power_outage_periods=Jul 1 5 - Jul 31 14	schedules_power_outage_periods_window_natvent_availability=always available
 REEDS Balancing Area	1
 REEDS Balancing Area	10
 REEDS Balancing Area	100
@@ -13660,25 +13742,23 @@ Usage Level	Low
 Usage Level	Medium
 Vacancy Status	Occupied
 Vacancy Status	Vacant	ResStockArgumentsPostHPXML	schedules_vacancy_periods=Jan 1 - Dec 31
-Vintage	1940s	ResStockArguments	vintage=1940s	building_year_built=auto
-Vintage	1950s	ResStockArguments	vintage=1950s	building_year_built=auto
-Vintage	1960s	ResStockArguments	vintage=1960s	building_year_built=auto
-Vintage	1970s	ResStockArguments	vintage=1970s	building_year_built=auto
-Vintage	1980s	ResStockArguments	vintage=1980s	building_year_built=auto
-Vintage	1990s	ResStockArguments	vintage=1990s	building_year_built=auto
-Vintage	2000s	ResStockArguments	vintage=2000s	building_year_built=auto
-Vintage	2010s	ResStockArguments	vintage=2010s	building_year_built=auto
-Vintage	<1940	ResStockArguments	vintage=<1940	building_year_built=auto
-Vintage	<1950	ResStockArguments	vintage=<1950	building_year_built=auto
+Vintage	1940s	ResStockArguments	vintage=1940s
+Vintage	1950s	ResStockArguments	vintage=1950s
+Vintage	1960s	ResStockArguments	vintage=1960s
+Vintage	1970s	ResStockArguments	vintage=1970s
+Vintage	1980s	ResStockArguments	vintage=1980s
+Vintage	1990s	ResStockArguments	vintage=1990s
+Vintage	2000s	ResStockArguments	vintage=2000s
+Vintage	2010s	ResStockArguments	vintage=2010s
+Vintage	<1940	ResStockArguments	vintage=<1940
+Vintage	<1950	ResStockArguments	vintage=<1950
 Vintage ACS	1940-59
 Vintage ACS	1960-79
 Vintage ACS	1980-99
 Vintage ACS	2000-09
 Vintage ACS	2010s
 Vintage ACS	<1940
-Water Heater Efficiency	Electric Heat Pump, 50 gal, 3.45 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF 3.50	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Electric Heat Pump, 66 gal, 3.35 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF 3.50	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
-Water Heater Efficiency	Electric Heat Pump, 80 gal, 3.45 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF 3.50	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
+Water Heater Efficiency	Electric Heat Pump, 3.5 UEF	ResStockArguments	dhw_water_heater=Electricity, Heat Pump, UEF 3.50	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Electric Premium	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.94	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Electric Standard	ResStockArguments	dhw_water_heater=Electricity, Tank, UEF 0.92	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
 Water Heater Efficiency	Electric Tankless	ResStockArguments	dhw_water_heater=Electricity, Tankless, UEF 0.94	dhw_solar_thermal=None	dhw_solar_thermal_direction=Roof Pitch, South
@@ -13725,6 +13805,7 @@ Window Areas	F18 B18 L18 R18	ResStockArguments	geometry_window_areas_or_wwrs=0.1
 Window Areas	F30 B30 L30 R30	ResStockArguments	geometry_window_areas_or_wwrs=0.30, 0.30, 0.30, 0.30	geometry_skylight_areas=0, 0, 0, 0
 Window Areas	F6 B6 L6 R6	ResStockArguments	geometry_window_areas_or_wwrs=0.06, 0.06, 0.06, 0.06	geometry_skylight_areas=0, 0, 0, 0
 Window Areas	F9 B9 L9 R9	ResStockArguments	geometry_window_areas_or_wwrs=0.09, 0.09, 0.09, 0.09	geometry_skylight_areas=0, 0, 0, 0
+Window Areas	None	ResStockArguments	geometry_window_areas_or_wwrs=0, 0, 0, 0	geometry_skylight_areas=0, 0, 0, 0
 Windows	Double, Clear, Metal, Air	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=None	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
 Windows	Double, Clear, Metal, Air, Exterior Clear Storm	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=Clear	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal
 Windows	Double, Clear, Metal, Exterior Low-E Storm	ResStockArguments	enclosure_window=Double, Clear, Metal, Air	enclosure_window_storm=Low-E	enclosure_window_insect_screens=None	enclosure_window_exterior_shading=None	enclosure_skylight=Single, Clear, Metal

@@ -779,28 +779,6 @@ The fraction of the heating load served by the second heating system.
 
 <br/>
 
-**HVAC Control: Heating Season Period**
-
-Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availability.
-
-- **Name:** ``hvac_control_heating_season_period``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
-**HVAC Control: Cooling Season Period**
-
-Enter a date range like 'Jun 1 - Oct 31'. Defaults to year-round cooling availability.
-
-- **Name:** ``hvac_control_cooling_season_period``
-- **Type:** ``String``
-
-- **Required:** ``false``
-
-<br/>
-
 **HVAC Ducts**
 
 The leakage to outside and insulation level of the ducts.
@@ -901,7 +879,7 @@ The type and efficiency of the water heater.
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Electricity, Tank, UEF 0.90`, `Electricity, Tank, UEF 0.92`, `Electricity, Tank, UEF 0.94`, `Electricity, Tankless, UEF 0.94`, `Electricity, Tankless, UEF 0.98`, `Electricity, Heat Pump, UEF 3.50`, `Electricity, Heat Pump, UEF 3.75`, `Electricity, Heat Pump, UEF 4.00`, `Natural Gas, Tank, UEF 0.57`, `Natural Gas, Tank, UEF 0.60`, `Natural Gas, Tank, UEF 0.64`, `Natural Gas, Tank, UEF 0.67`, `Natural Gas, Tank, UEF 0.70`, `Natural Gas, Tank, UEF 0.80`, `Natural Gas, Tankless, UEF 0.82`, `Natural Gas, Tankless, UEF 0.93`, `Natural Gas, Tankless, UEF 0.96`, `Fuel Oil, Tank, UEF 0.61`, `Fuel Oil, Tank, UEF 0.64`, `Fuel Oil, Tank, UEF 0.67`, `Propane, Tank, UEF 0.57`, `Propane, Tank, UEF 0.60`, `Propane, Tank, UEF 0.64`, `Propane, Tank, UEF 0.67`, `Propane, Tank, UEF 0.70`, `Propane, Tank, UEF 0.80`, `Propane, Tankless, UEF 0.82`, `Propane, Tankless, UEF 0.93`, `Propane, Tankless, UEF 0.96`, `Space-Heating Boiler w/ Storage Tank`, `Space-Heating Boiler w/ Tankless Coil`, `Detailed Example: Electricity, Tank, 40 gal, EF 0.93`, `Detailed Example: Electricity, Tank, UEF 0.94, 135F`, `Detailed Example: Electricity, Tankless, EF 0.96`, `Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78`, `Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76`, `Detailed Example: Natural Gas, Tankless, EF 0.95`
+- **Choices:** `None`, `Electricity, Tank, UEF 0.90`, `Electricity, Tank, UEF 0.92`, `Electricity, Tank, UEF 0.94`, `Electricity, Tankless, UEF 0.94`, `Electricity, Tankless, UEF 0.98`, `Electricity, Heat Pump, UEF 3.50`, `Electricity, Heat Pump, UEF 3.75`, `Electricity, Heat Pump, UEF 4.00`, `Natural Gas, Tank, UEF 0.57`, `Natural Gas, Tank, UEF 0.60`, `Natural Gas, Tank, UEF 0.64`, `Natural Gas, Tank, UEF 0.67`, `Natural Gas, Tank, UEF 0.70`, `Natural Gas, Tank, UEF 0.80`, `Natural Gas, Tankless, UEF 0.82`, `Natural Gas, Tankless, UEF 0.93`, `Natural Gas, Tankless, UEF 0.96`, `Fuel Oil, Tank, UEF 0.61`, `Fuel Oil, Tank, UEF 0.64`, `Fuel Oil, Tank, UEF 0.67`, `Propane, Tank, UEF 0.57`, `Propane, Tank, UEF 0.60`, `Propane, Tank, UEF 0.64`, `Propane, Tank, UEF 0.67`, `Propane, Tank, UEF 0.70`, `Propane, Tank, UEF 0.80`, `Propane, Tankless, UEF 0.82`, `Propane, Tankless, UEF 0.93`, `Propane, Tankless, UEF 0.96`, `Wood, Tank, UEF 0.60`, `Coal, Tank, UEF 0.60`, `Space-Heating Boiler w/ Storage Tank`, `Space-Heating Boiler w/ Tankless Coil`, `Detailed Example: Electricity, Tank, 40 gal, EF 0.93`, `Detailed Example: Electricity, Tank, UEF 0.94, 135F`, `Detailed Example: Electricity, Tankless, EF 0.96`, `Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78`, `Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76`, `Detailed Example: Natural Gas, Tankless, EF 0.95`
 
 <br/>
 
@@ -1213,7 +1191,7 @@ The type of ceiling fans.
 
 - **Required:** ``false``
 
-- **Choices:** `auto`, `None`, `#Bedrooms+1 Fans, 45 W`, `#Bedrooms+1 Fans, 30 W`, `#Bedrooms+1 Fans, 15 W`, `1 Fan, 45 W`, `1 Fan, 30 W`, `1 Fan, 15 W`, `2 Fans, 45 W`, `2 Fans, 30 W`, `2 Fans, 15 W`, `3 Fans, 45 W`, `3 Fans, 30 W`, `3 Fans, 15 W`, `4 Fans, 45 W`, `4 Fans, 30 W`, `4 Fans, 15 W`, `5 Fans, 45 W`, `5 Fans, 30 W`, `5 Fans, 15 W`, `Detailed Example: 4 Fans, 39 W, 0.5 deg-F Setpoint Offset`, `Detailed Example: 4 Fans, 100 cfm/W, 0.5 deg-F Setpoint Offset`
+- **Choices:** `auto`, `None`, `#Bedrooms+1 Fans, 45.0 W`, `#Bedrooms+1 Fans, 37.5 W`, `#Bedrooms+1 Fans, 30.0 W`, `#Bedrooms+1 Fans, 22.5 W`, `#Bedrooms+1 Fans, 15.0 W`, `1 Fan, 45.0 W`, `1 Fan, 37.5 W`, `1 Fan, 30.0 W`, `1 Fan, 22.5 W`, `1 Fan, 15.0 W`, `2 Fans, 45.0 W`, `2 Fans, 37.5 W`, `2 Fans, 30.0 W`, `2 Fans, 22.5 W`, `2 Fans, 15.0 W`, `3 Fans, 45.0 W`, `3 Fans, 37.5 W`, `3 Fans, 30.0 W`, `3 Fans, 22.5 W`, `3 Fans, 15.0 W`, `4 Fans, 45.0 W`, `4 Fans, 37.5 W`, `4 Fans, 30.0 W`, `4 Fans, 22.5 W`, `4 Fans, 15.0 W`, `5 Fans, 45.0 W`, `5 Fans, 37.5 W`, `5 Fans, 30.0 W`, `5 Fans, 22.5 W`, `5 Fans, 15.0 W`, `Detailed Example: 4 Fans, 39 W, 0.5 deg-F Setpoint Offset`, `Detailed Example: 4 Fans, 100 cfm/W, 0.5 deg-F Setpoint Offset`
 
 <br/>
 
@@ -1413,17 +1391,6 @@ Nominal R-value for the ceiling (attic floor).
 E.g., '2000-2499'.
 
 - **Name:** ``geometry_unit_cfa_bin``
-- **Type:** ``String``
-
-- **Required:** ``true``
-
-<br/>
-
-**Geometry: Unit Conditioned Floor Area**
-
-The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or 'auto'.
-
-- **Name:** ``geometry_unit_cfa``
 - **Type:** ``String``
 
 - **Required:** ``true``

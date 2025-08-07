@@ -1,0 +1,5 @@
+Dependency=HVAC System Is Faulted	Option=0.570 Charge Frac	Option=0.709 Charge Frac	Option=0.848 Charge Frac	Option=0.988 Charge Frac	Option=1.127 Charge Frac	Option=1.266 Charge Frac	Option=1.405 Charge Frac	Option=None	sampling_probability
+Yes	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0	0.5
+No	0	0	0	0	0	0	0	1	0.5
+# Created by: manually created
+# Description: Central and room air conditioner deviation between design/installed charge.

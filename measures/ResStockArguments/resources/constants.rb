@@ -21,6 +21,8 @@ module Constants
                                    'hvac_control_heating_weekend_setpoint',
                                    'hvac_control_cooling_weekday_setpoint',
                                    'hvac_control_cooling_weekend_setpoint',
+                                   'hvac_control_heating_season_period',
+                                   'hvac_control_cooling_season_period',
                                    'hvac_cooling_system_integrated_heating_capacity',
                                    'hvac_cooling_system_integrated_heating_load_served',
                                    'utility_bill_scenario',

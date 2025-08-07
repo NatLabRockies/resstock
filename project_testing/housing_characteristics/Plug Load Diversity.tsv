@@ -1,4 +1,4 @@
-Option=400%	Option=200%	Option=100%	Option=50%	Option=25%	sampling_probability
-0.2	0.2	0.2	0.2	0.2	1
+Option=400%	Option=200%	Option=150%	Option=100%	Option=75%	Option=50%	Option=25%	sampling_probability
+0.142857	0.142857	0.142857	0.142857	0.142857	0.142857	0.142858	1
 # Created by: manually created
 # Description: Plug load diversity multiplier intended to add variation in plug load profiles across all simulations.

@@ -1,4 +1,9 @@
-Option=None	Option=Uninsulated	Option=R-5, Exterior	Option=R-10, Exterior	Option=R-15, Exterior	sampling_probability
-0.2	0.2	0.2	0.2	0.2	1
+Dependency=Insulation Foundation Wall	Option=None	Option=Uninsulated	Option=R-5, Exterior	Option=R-10, Exterior	Option=R-15, Exterior	Option=R-13, Interior	sampling_probability
+None	1	0	0	0	0	0	0.337037
+Uninsulated	0	1	0	0	0	0	0.132593
+Wall R-5, Exterior	0	0	1	0	0	0	0.132593
+Wall R-10, Exterior	0	0	0	1	0	0	0.132593
+Wall R-15, Exterior	0	0	0	0	1	0	0.132593
+Wall R-13, Interior	0	0	0	0	0	1	0.132593
 # Created by: manually created
 # Description: Foundation walls insulation level.

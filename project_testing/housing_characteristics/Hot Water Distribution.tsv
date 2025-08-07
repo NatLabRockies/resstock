@@ -1,4 +1,4 @@
-Option=Uninsulated	Option=Insulated	sampling_probability
-0.5	0.5	1
+Option=Uninsulated	Option=Insulated	Option=Insulated, Timer	Option=Insulated, Demand	sampling_probability
+0.25	0.25	0.25	0.25	1
 # Created by: manually created
-# Description: Hot water piping material and insulation level.
+# Description: Type of distribution system and presence of hot water piping insulation.

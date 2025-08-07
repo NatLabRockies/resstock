@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>37e29635-ecd7-4eb6-a167-f24e350eeb76</version_id>
-  <version_modified>2025-08-05T04:31:33Z</version_modified>
+  <version_id>0af72618-8397-4d20-a0bc-11e7c91177bb</version_id>
+  <version_modified>2025-08-07T19:47:39Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -5631,24 +5631,6 @@
       </choices>
     </argument>
     <argument>
-      <name>hvac_control_heating_season_period</name>
-      <display_name>HVAC Control: Heating Season Period</display_name>
-      <description>Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availability.</description>
-      <type>String</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
-      <name>hvac_control_cooling_season_period</name>
-      <display_name>HVAC Control: Cooling Season Period</display_name>
-      <description>Enter a date range like 'Jun 1 - Oct 31'. Defaults to year-round cooling availability.</description>
-      <type>String</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-    </argument>
-    <argument>
       <name>hvac_ducts</name>
       <display_name>HVAC Ducts</display_name>
       <description>The leakage to outside and insulation level of the ducts.</description>
@@ -6433,6 +6415,14 @@
         <choice>
           <value>Propane, Tankless, UEF 0.96</value>
           <display_name>Propane, Tankless, UEF 0.96</display_name>
+        </choice>
+        <choice>
+          <value>Wood, Tank, UEF 0.60</value>
+          <display_name>Wood, Tank, UEF 0.60</display_name>
+        </choice>
+        <choice>
+          <value>Coal, Tank, UEF 0.60</value>
+          <display_name>Coal, Tank, UEF 0.60</display_name>
         </choice>
         <choice>
           <value>Space-Heating Boiler w/ Storage Tank</value>
@@ -9647,76 +9637,124 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 45 W</value>
-          <display_name>#Bedrooms+1 Fans, 45 W</display_name>
+          <value>#Bedrooms+1 Fans, 45.0 W</value>
+          <display_name>#Bedrooms+1 Fans, 45.0 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 30 W</value>
-          <display_name>#Bedrooms+1 Fans, 30 W</display_name>
+          <value>#Bedrooms+1 Fans, 37.5 W</value>
+          <display_name>#Bedrooms+1 Fans, 37.5 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 15 W</value>
-          <display_name>#Bedrooms+1 Fans, 15 W</display_name>
+          <value>#Bedrooms+1 Fans, 30.0 W</value>
+          <display_name>#Bedrooms+1 Fans, 30.0 W</display_name>
         </choice>
         <choice>
-          <value>1 Fan, 45 W</value>
-          <display_name>1 Fan, 45 W</display_name>
+          <value>#Bedrooms+1 Fans, 22.5 W</value>
+          <display_name>#Bedrooms+1 Fans, 22.5 W</display_name>
         </choice>
         <choice>
-          <value>1 Fan, 30 W</value>
-          <display_name>1 Fan, 30 W</display_name>
+          <value>#Bedrooms+1 Fans, 15.0 W</value>
+          <display_name>#Bedrooms+1 Fans, 15.0 W</display_name>
         </choice>
         <choice>
-          <value>1 Fan, 15 W</value>
-          <display_name>1 Fan, 15 W</display_name>
+          <value>1 Fan, 45.0 W</value>
+          <display_name>1 Fan, 45.0 W</display_name>
         </choice>
         <choice>
-          <value>2 Fans, 45 W</value>
-          <display_name>2 Fans, 45 W</display_name>
+          <value>1 Fan, 37.5 W</value>
+          <display_name>1 Fan, 37.5 W</display_name>
         </choice>
         <choice>
-          <value>2 Fans, 30 W</value>
-          <display_name>2 Fans, 30 W</display_name>
+          <value>1 Fan, 30.0 W</value>
+          <display_name>1 Fan, 30.0 W</display_name>
         </choice>
         <choice>
-          <value>2 Fans, 15 W</value>
-          <display_name>2 Fans, 15 W</display_name>
+          <value>1 Fan, 22.5 W</value>
+          <display_name>1 Fan, 22.5 W</display_name>
         </choice>
         <choice>
-          <value>3 Fans, 45 W</value>
-          <display_name>3 Fans, 45 W</display_name>
+          <value>1 Fan, 15.0 W</value>
+          <display_name>1 Fan, 15.0 W</display_name>
         </choice>
         <choice>
-          <value>3 Fans, 30 W</value>
-          <display_name>3 Fans, 30 W</display_name>
+          <value>2 Fans, 45.0 W</value>
+          <display_name>2 Fans, 45.0 W</display_name>
         </choice>
         <choice>
-          <value>3 Fans, 15 W</value>
-          <display_name>3 Fans, 15 W</display_name>
+          <value>2 Fans, 37.5 W</value>
+          <display_name>2 Fans, 37.5 W</display_name>
         </choice>
         <choice>
-          <value>4 Fans, 45 W</value>
-          <display_name>4 Fans, 45 W</display_name>
+          <value>2 Fans, 30.0 W</value>
+          <display_name>2 Fans, 30.0 W</display_name>
         </choice>
         <choice>
-          <value>4 Fans, 30 W</value>
-          <display_name>4 Fans, 30 W</display_name>
+          <value>2 Fans, 22.5 W</value>
+          <display_name>2 Fans, 22.5 W</display_name>
         </choice>
         <choice>
-          <value>4 Fans, 15 W</value>
-          <display_name>4 Fans, 15 W</display_name>
+          <value>2 Fans, 15.0 W</value>
+          <display_name>2 Fans, 15.0 W</display_name>
         </choice>
         <choice>
-          <value>5 Fans, 45 W</value>
-          <display_name>5 Fans, 45 W</display_name>
+          <value>3 Fans, 45.0 W</value>
+          <display_name>3 Fans, 45.0 W</display_name>
         </choice>
         <choice>
-          <value>5 Fans, 30 W</value>
-          <display_name>5 Fans, 30 W</display_name>
+          <value>3 Fans, 37.5 W</value>
+          <display_name>3 Fans, 37.5 W</display_name>
         </choice>
         <choice>
-          <value>5 Fans, 15 W</value>
-          <display_name>5 Fans, 15 W</display_name>
+          <value>3 Fans, 30.0 W</value>
+          <display_name>3 Fans, 30.0 W</display_name>
+        </choice>
+        <choice>
+          <value>3 Fans, 22.5 W</value>
+          <display_name>3 Fans, 22.5 W</display_name>
+        </choice>
+        <choice>
+          <value>3 Fans, 15.0 W</value>
+          <display_name>3 Fans, 15.0 W</display_name>
+        </choice>
+        <choice>
+          <value>4 Fans, 45.0 W</value>
+          <display_name>4 Fans, 45.0 W</display_name>
+        </choice>
+        <choice>
+          <value>4 Fans, 37.5 W</value>
+          <display_name>4 Fans, 37.5 W</display_name>
+        </choice>
+        <choice>
+          <value>4 Fans, 30.0 W</value>
+          <display_name>4 Fans, 30.0 W</display_name>
+        </choice>
+        <choice>
+          <value>4 Fans, 22.5 W</value>
+          <display_name>4 Fans, 22.5 W</display_name>
+        </choice>
+        <choice>
+          <value>4 Fans, 15.0 W</value>
+          <display_name>4 Fans, 15.0 W</display_name>
+        </choice>
+        <choice>
+          <value>5 Fans, 45.0 W</value>
+          <display_name>5 Fans, 45.0 W</display_name>
+        </choice>
+        <choice>
+          <value>5 Fans, 37.5 W</value>
+          <display_name>5 Fans, 37.5 W</display_name>
+        </choice>
+        <choice>
+          <value>5 Fans, 30.0 W</value>
+          <display_name>5 Fans, 30.0 W</display_name>
+        </choice>
+        <choice>
+          <value>5 Fans, 22.5 W</value>
+          <display_name>5 Fans, 22.5 W</display_name>
+        </choice>
+        <choice>
+          <value>5 Fans, 15.0 W</value>
+          <display_name>5 Fans, 15.0 W</display_name>
         </choice>
         <choice>
           <value>Detailed Example: 4 Fans, 39 W, 0.5 deg-F Setpoint Offset</value>
@@ -10669,16 +10707,6 @@
       <default_value>2000-2499</default_value>
     </argument>
     <argument>
-      <name>geometry_unit_cfa</name>
-      <display_name>Geometry: Unit Conditioned Floor Area</display_name>
-      <description>The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or 'auto'.</description>
-      <type>String</type>
-      <units>ft^2</units>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>2000</default_value>
-    </argument>
-    <argument>
       <name>geometry_unit_level</name>
       <display_name>Geometry: Unit Level</display_name>
       <description>The level of the unit. This is required for apartment units.</description>
@@ -10934,7 +10962,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>BFB4AED0</checksum>
+      <checksum>273A0B3E</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -10951,19 +10979,19 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>696EF830</checksum>
+      <checksum>1983AE94</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>832DE6A8</checksum>
+      <checksum>DAC5D8D8</checksum>
     </file>
     <file>
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>03423ECC</checksum>
+      <checksum>8C60A95F</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>

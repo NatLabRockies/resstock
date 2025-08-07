@@ -113,13 +113,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue('2000-2499')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('geometry_unit_cfa', true)
-    arg.setDisplayName('Geometry: Unit Conditioned Floor Area')
-    arg.setDescription("The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or '#{Constants::Auto}'.")
-    arg.setUnits('ft^2')
-    arg.setDefaultValue('2000')
-    args << arg
-
     level_choices = OpenStudio::StringVector.new
     level_choices << 'Bottom'
     level_choices << 'Middle'
@@ -285,11 +278,9 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     new_arg_keys = update_args_hash_with_detailed_properties(args: args)
 
     # Get inputs
-    cfa = args[:geometry_unit_cfa]
     cfa_bin = args[:geometry_unit_cfa_bin]
     unit_type = args[:geometry_facility_type]
     vintage = args[:vintage]
-    year_built = args[:building_year_built]
     n_floors = Float(args[:geometry_num_floors_above_grade])
     # avg_ceiling_height = Float(args[:geometry_ceiling_height_height])
     if [HPXML::ResidentialTypeApartment, HPXML::ResidentialTypeSFA].include? args[:geometry_facility_type]
@@ -299,59 +290,52 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # Conditioned floor area
-    if cfa == Constants::Auto
-      # TODO: Disaggregate detached and mobile home
-      cfas = { ['0-499', HPXML::ResidentialTypeSFD] => 298, # AHS 2021, 1 detached and mobile home weighted average
-               ['0-499', HPXML::ResidentialTypeSFA] => 273, # AHS 2021, 1 attached
-               ['0-499', HPXML::ResidentialTypeApartment] => 322, # AHS 2021, multi-family weighted average
-               ['0-499', HPXML::ResidentialTypeManufactured] => 298, # AHS 2021, 1 detached and mobile home weighted average
-               ['500-749', HPXML::ResidentialTypeSFD] => 634, # AHS 2021, 1 detached and mobile home weighted average
-               ['500-749', HPXML::ResidentialTypeSFA] => 625, # AHS 2021, 1 attached
-               ['500-749', HPXML::ResidentialTypeApartment] => 623, # AHS 2021, multi-family weighted average
-               ['500-749', HPXML::ResidentialTypeManufactured] => 634, # AHS 2021, 1 detached and mobile home weighted average
-               ['750-999', HPXML::ResidentialTypeSFD] => 881, # AHS 2021, 1 detached and mobile home weighted average
-               ['750-999', HPXML::ResidentialTypeSFA] => 872, # AHS 2021, 1 attached
-               ['750-999', HPXML::ResidentialTypeApartment] => 854, # AHS 2021, multi-family weighted average
-               ['750-999', HPXML::ResidentialTypeManufactured] => 881, # AHS 2021, 1 detached and mobile home weighted average
-               ['1000-1499', HPXML::ResidentialTypeSFD] => 1228, # AHS 2021, 1 detached and mobile home weighted average
-               ['1000-1499', HPXML::ResidentialTypeSFA] => 1207, # AHS 2021, 1 attached
-               ['1000-1499', HPXML::ResidentialTypeApartment] => 1138, # AHS 2021, multi-family weighted average
-               ['1000-1499', HPXML::ResidentialTypeManufactured] => 1228, # AHS 2021, 1 detached and mobile home weighted average
-               ['1500-1999', HPXML::ResidentialTypeSFD] => 1698, # AHS 2021, 1 detached and mobile home weighted average
-               ['1500-1999', HPXML::ResidentialTypeSFA] => 1678, # AHS 2021, 1 attached
-               ['1500-1999', HPXML::ResidentialTypeApartment] => 1682, # AHS 2021, multi-family weighted average
-               ['1500-1999', HPXML::ResidentialTypeManufactured] => 1698, # AHS 2021, 1 detached and mobile home weighted average
-               ['2000-2499', HPXML::ResidentialTypeSFD] => 2179, # AHS 2021, 1 detached and mobile home weighted average
-               ['2000-2499', HPXML::ResidentialTypeSFA] => 2152, # AHS 2021, 1 attached
-               ['2000-2499', HPXML::ResidentialTypeApartment] => 2115, # AHS 2021, multi-family weighted average
-               ['2000-2499', HPXML::ResidentialTypeManufactured] => 2179, # AHS 2021, 1 detached and mobile home weighted average
-               ['2500-2999', HPXML::ResidentialTypeSFD] => 2678, # AHS 2021, 1 detached and mobile home weighted average
-               ['2500-2999', HPXML::ResidentialTypeSFA] => 2663, # AHS 2021, 1 attached
-               ['2500-2999', HPXML::ResidentialTypeApartment] => 2648, # AHS 2021, multi-family weighted average
-               ['2500-2999', HPXML::ResidentialTypeManufactured] => 2678, # AHS 2021, 1 detached and mobile home weighted average
-               ['3000-3999', HPXML::ResidentialTypeSFD] => 3310, # AHS 2021, 1 detached and mobile home weighted average
-               ['3000-3999', HPXML::ResidentialTypeSFA] => 3228, # AHS 2021, 1 attached
-               ['3000-3999', HPXML::ResidentialTypeApartment] => 3171, # AHS 2021, multi-family weighted average
-               ['3000-3999', HPXML::ResidentialTypeManufactured] => 3310, # AHS 2021, 1 detached and mobile home weighted average
-               ['4000+', HPXML::ResidentialTypeSFD] => 5587, # AHS 2021, 1 detached and mobile home weighted average
-               ['4000+', HPXML::ResidentialTypeSFA] => 7414, # AHS 2019, 1 attached
-               ['4000+', HPXML::ResidentialTypeApartment] => 6348, # AHS 2021, 4,000 or more all unit average
-               ['4000+', HPXML::ResidentialTypeManufactured] => 5587 } # AHS 2021, 1 detached and mobile home weighted average
-      cfa = cfas[[cfa_bin, unit_type]]
-      if cfa.nil?
-        runner.registerError("ResStockArguments: Could not look up conditioned floor area for '#{cfa_bin}' and '#{unit_type}'.")
-        return false
-      end
-      args[:geometry_unit_conditioned_floor_area] = Float(cfa)
-    else
-      args[:geometry_unit_conditioned_floor_area] = cfa
+    # TODO: Disaggregate detached and mobile home
+    cfas = { ['0-499', HPXML::ResidentialTypeSFD] => 298, # AHS 2021, 1 detached and mobile home weighted average
+             ['0-499', HPXML::ResidentialTypeSFA] => 273, # AHS 2021, 1 attached
+             ['0-499', HPXML::ResidentialTypeApartment] => 322, # AHS 2021, multi-family weighted average
+             ['0-499', HPXML::ResidentialTypeManufactured] => 298, # AHS 2021, 1 detached and mobile home weighted average
+             ['500-749', HPXML::ResidentialTypeSFD] => 634, # AHS 2021, 1 detached and mobile home weighted average
+             ['500-749', HPXML::ResidentialTypeSFA] => 625, # AHS 2021, 1 attached
+             ['500-749', HPXML::ResidentialTypeApartment] => 623, # AHS 2021, multi-family weighted average
+             ['500-749', HPXML::ResidentialTypeManufactured] => 634, # AHS 2021, 1 detached and mobile home weighted average
+             ['750-999', HPXML::ResidentialTypeSFD] => 881, # AHS 2021, 1 detached and mobile home weighted average
+             ['750-999', HPXML::ResidentialTypeSFA] => 872, # AHS 2021, 1 attached
+             ['750-999', HPXML::ResidentialTypeApartment] => 854, # AHS 2021, multi-family weighted average
+             ['750-999', HPXML::ResidentialTypeManufactured] => 881, # AHS 2021, 1 detached and mobile home weighted average
+             ['1000-1499', HPXML::ResidentialTypeSFD] => 1228, # AHS 2021, 1 detached and mobile home weighted average
+             ['1000-1499', HPXML::ResidentialTypeSFA] => 1207, # AHS 2021, 1 attached
+             ['1000-1499', HPXML::ResidentialTypeApartment] => 1138, # AHS 2021, multi-family weighted average
+             ['1000-1499', HPXML::ResidentialTypeManufactured] => 1228, # AHS 2021, 1 detached and mobile home weighted average
+             ['1500-1999', HPXML::ResidentialTypeSFD] => 1698, # AHS 2021, 1 detached and mobile home weighted average
+             ['1500-1999', HPXML::ResidentialTypeSFA] => 1678, # AHS 2021, 1 attached
+             ['1500-1999', HPXML::ResidentialTypeApartment] => 1682, # AHS 2021, multi-family weighted average
+             ['1500-1999', HPXML::ResidentialTypeManufactured] => 1698, # AHS 2021, 1 detached and mobile home weighted average
+             ['2000-2499', HPXML::ResidentialTypeSFD] => 2179, # AHS 2021, 1 detached and mobile home weighted average
+             ['2000-2499', HPXML::ResidentialTypeSFA] => 2152, # AHS 2021, 1 attached
+             ['2000-2499', HPXML::ResidentialTypeApartment] => 2115, # AHS 2021, multi-family weighted average
+             ['2000-2499', HPXML::ResidentialTypeManufactured] => 2179, # AHS 2021, 1 detached and mobile home weighted average
+             ['2500-2999', HPXML::ResidentialTypeSFD] => 2678, # AHS 2021, 1 detached and mobile home weighted average
+             ['2500-2999', HPXML::ResidentialTypeSFA] => 2663, # AHS 2021, 1 attached
+             ['2500-2999', HPXML::ResidentialTypeApartment] => 2648, # AHS 2021, multi-family weighted average
+             ['2500-2999', HPXML::ResidentialTypeManufactured] => 2678, # AHS 2021, 1 detached and mobile home weighted average
+             ['3000-3999', HPXML::ResidentialTypeSFD] => 3310, # AHS 2021, 1 detached and mobile home weighted average
+             ['3000-3999', HPXML::ResidentialTypeSFA] => 3228, # AHS 2021, 1 attached
+             ['3000-3999', HPXML::ResidentialTypeApartment] => 3171, # AHS 2021, multi-family weighted average
+             ['3000-3999', HPXML::ResidentialTypeManufactured] => 3310, # AHS 2021, 1 detached and mobile home weighted average
+             ['4000+', HPXML::ResidentialTypeSFD] => 5587, # AHS 2021, 1 detached and mobile home weighted average
+             ['4000+', HPXML::ResidentialTypeSFA] => 7414, # AHS 2019, 1 attached
+             ['4000+', HPXML::ResidentialTypeApartment] => 6348, # AHS 2021, 4,000 or more all unit average
+             ['4000+', HPXML::ResidentialTypeManufactured] => 5587 } # AHS 2021, 1 detached and mobile home weighted average
+    cfa = cfas[[cfa_bin, unit_type]]
+    if cfa.nil?
+      runner.registerError("ResStockArguments: Could not look up conditioned floor area for '#{cfa_bin}' and '#{unit_type}'.")
+      return false
     end
+    args[:geometry_unit_conditioned_floor_area] = Float(cfa)
 
     # Vintage
-    if !vintage.nil? && year_built == Constants::Auto
-      year_built = Integer(Float(vintage.gsub(/[^0-9]/, ''))) # strip non-numeric
-      args[:building_year_built] = year_built
-    end
+    args[:building_year_built] = Integer(Float(vintage.gsub(/[^0-9]/, '')))
 
     # HVAC Setpoints
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
@@ -487,7 +471,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
                  HPXML::ResidentialTypeManufactured => 'Manufactured Home' }[unit_type]
     args[:geometry_unit_type] = "#{unit_str}, #{stories_str}"
 
-    # Adiabatic Floor/Ceiling
+    # Adiabatic Floor/Ceiling (for MF buildings w/ more than 1 story)
     if not unit_level.nil? && n_floors > 1
       if unit_level == 'Bottom'
         args[:geometry_attic_type] = 'Below Apartment'
@@ -500,18 +484,18 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # Height Above Grade
-    # FIXME: Move to ResStockArgumentsPostHPXML measure
-    # if unit_type == HPXML::ResidentialTypeApartment
-    # if unit_level == 'Top'
-    # args[:geometry_unit_height_above_grade] = (n_floors - 1) * avg_ceiling_height
-    # elsif unit_level == 'Middle'
-    # args[:geometry_unit_height_above_grade] = (n_floors - 1) / 2.0 * avg_ceiling_height
-    # elsif unit_level == 'Bottom'
-    # args[:geometry_unit_height_above_grade] = Constants::Auto
-    # end
-    # else
-    # args[:geometry_unit_height_above_grade] = Constants::Auto
-    # end
+    # FIXME: Need to handle
+    if unit_type == HPXML::ResidentialTypeApartment
+      if unit_level == 'Top'
+        # args[:geometry_unit_height_above_grade] = (n_floors - 1) * avg_ceiling_height
+      elsif unit_level == 'Middle'
+        # args[:geometry_unit_height_above_grade] = (n_floors - 1) / 2.0 * avg_ceiling_height
+      elsif unit_level == 'Bottom'
+        # args[:geometry_unit_height_above_grade] = Constants::Auto
+      end
+    else
+      # args[:geometry_unit_height_above_grade] = Constants::Auto
+    end
 
     # Register values to runner
     args.each do |arg_name, arg_value|

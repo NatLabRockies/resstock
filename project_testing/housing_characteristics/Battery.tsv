@@ -1,4 +1,4 @@
 Option=None	Option=10 kWh	Option=20 kWh	sampling_probability
-0.333333333	0.333333333	0.333333333	1
+0.333333	0.333333	0.333333	1
 # Created by: manually created
-# Description: The presence, size, location, and efficiency of an onsite battery (not modeled in project_national).
+# Description: The size of an onsite battery (not modeled in project_national).

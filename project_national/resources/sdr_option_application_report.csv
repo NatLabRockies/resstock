@@ -1,36 +1,37 @@
 upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
-1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,1,"HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate",408862,74.3
-1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,2,HVAC Cooling Efficiency|Ducted Heat Pump,408862,74.3
-1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,-1,All,408862,74.3
-2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8",380003,69.1
-2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,380003,69.1
-2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,388962,70.7
-2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,388962,70.7
-3,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",380003,69.1
-3,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,380003,69.1
-3,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,388962,70.7
-3,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,388962,70.7
-4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4",380003,69.1
-4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,380003,69.1
-4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,388962,70.7
-4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,388962,70.7
-5,Air Sealing,1,Infiltration Reduction|30%,366283,66.6
-5,Air Sealing,-1,All,366283,66.6
-6,Attic Floor Insulation for Unfinished Attics,1,Insulation Ceiling|R-30,1528,0.3
-6,Attic Floor Insulation for Unfinished Attics,2,Insulation Ceiling|R-49,84481,15.4
-6,Attic Floor Insulation for Unfinished Attics,3,Insulation Ceiling|R-60,129282,23.5
-6,Attic Floor Insulation for Unfinished Attics,-1,All,215291,39.1
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",380003,69.1
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,2,HVAC Cooling Efficiency|Ducted Heat Pump,380003,69.1
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,388962,70.7
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,4,Insulation Ceiling|R-30,1092,0.2
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,5,Insulation Ceiling|R-49,74314,13.5
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,6,Insulation Ceiling|R-60,100993,18.4
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,7,Infiltration Reduction|30%,250952,45.6
-7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,-1,All,388962,70.7
-8,Electric Vehicle Adoption with Level 1 Charging,1,Electric Vehicle Ownership|Yes,477561,86.8
-8,Electric Vehicle Adoption with Level 1 Charging,2,Electric Vehicle Charger|Level 1 charger,477561,86.8
-8,Electric Vehicle Adoption with Level 1 Charging,-1,All,477561,86.8
+1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,1,"HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate",408811,74.3
+1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,408811,74.3
+1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,3,HVAC Cooling Efficiency|Ducted Heat Pump,408811,74.3
+1,Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data,-1,All,408811,74.3
+2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8",379889,69.1
+2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,379889,69.1
+2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,388840,70.7
+2,Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,388840,70.7
+3,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",379889,69.1
+3,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,379889,69.1
+3,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,388840,70.7
+3,Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,388840,70.7
+4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,1,"HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4",379889,69.1
+4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,2,HVAC Cooling Efficiency|Ducted Heat Pump,379889,69.1
+4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,388840,70.7
+4,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,388840,70.7
+5,Air Sealing,1,Infiltration Reduction|30%,366233,66.6
+5,Air Sealing,-1,All,366233,66.6
+6,Attic Floor Insulation for Unfinished Attics,1,Insulation Ceiling|R-30,1519,0.3
+6,Attic Floor Insulation for Unfinished Attics,2,Insulation Ceiling|R-49,84240,15.3
+6,Attic Floor Insulation for Unfinished Attics,3,Insulation Ceiling|R-60,129576,23.6
+6,Attic Floor Insulation for Unfinished Attics,-1,All,215335,39.2
+7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,1,"HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0",379889,69.1
+7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,2,HVAC Cooling Efficiency|Ducted Heat Pump,379889,69.1
+7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,388840,70.7
+7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,4,Insulation Ceiling|R-30,1088,0.2
+7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,5,Insulation Ceiling|R-49,74048,13.5
+7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,6,Insulation Ceiling|R-60,100968,18.4
+7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,7,Infiltration Reduction|30%,250978,45.6
+7,Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation,-1,All,388840,70.7
+8,Electric Vehicle Adoption with Level 1 Charging,1,Electric Vehicle Ownership|Yes,477582,86.8
+8,Electric Vehicle Adoption with Level 1 Charging,2,Electric Vehicle Charger|Level 1 charger,477582,86.8
+8,Electric Vehicle Adoption with Level 1 Charging,-1,All,477582,86.8
 9,Electric Vehicle Adoption with Level 2 Charging,1,Electric Vehicle Ownership|Yes,483360,87.9
 9,Electric Vehicle Adoption with Level 2 Charging,2,Electric Vehicle Charger|Level 2 charger,483360,87.9
 9,Electric Vehicle Adoption with Level 2 Charging,-1,All,483360,87.9
@@ -49,18 +50,18 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 12,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,4,Demand Flexibility Electric Vehicle|Enabled,483360,87.9
 12,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,5,Demand Flexibility Random Shift|30 minutes,483360,87.9
 12,Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility,-1,All,483360,87.9
-13,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset",548288,99.7
-13,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",2,Demand Flexibility Random Shift|30 minutes,548288,99.7
-13,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",-1,All,548288,99.7
-14,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",548288,99.7
-14,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548288,99.7
-14,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",-1,All,548288,99.7
-15,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset",548288,99.7
-15,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",2,Demand Flexibility Random Shift|30 minutes,548288,99.7
-15,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",-1,All,548288,99.7
-16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",548288,99.7
-16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548288,99.7
-16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",-1,All,548288,99.7
-17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",548288,99.7
-17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548288,99.7
-17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",-1,All,548288,99.7
+13,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset",548289,99.7
+13,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",2,Demand Flexibility Random Shift|30 minutes,548289,99.7
+13,"HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset",-1,All,548289,99.7
+14,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",548289,99.7
+14,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548289,99.7
+14,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration",-1,All,548289,99.7
+15,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",1,"Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset",548289,99.7
+15,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",2,Demand Flexibility Random Shift|30 minutes,548289,99.7
+15,"HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset",-1,All,548289,99.7
+16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",548289,99.7
+16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548289,99.7
+16,"HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration",-1,All,548289,99.7
+17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",548289,99.7
+17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548289,99.7
+17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",-1,All,548289,99.7

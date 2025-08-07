@@ -79,6 +79,18 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setUnits('Btu/hr')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_rated_cfm_per_ton', false)
+    arg.setDisplayName('Heating System: Rated CFM Per Ton')
+    arg.setDescription('The rated cfm per ton of the heating system.')
+    arg.setUnits('cfm/ton')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heating_system_actual_cfm_per_ton', false)
+    arg.setDisplayName('Heating System: Actual CFM Per Ton')
+    arg.setDescription('The actual cfm per ton of the heating system.')
+    arg.setUnits('cfm/ton')
+    args << arg
+
     heating_system_2_type_choices = OpenStudio::StringVector.new
     heating_system_2_type_choices << HPXML::HVACTypeFurnace
     heating_system_2_type_choices << HPXML::HVACTypeWallFurnace
@@ -146,6 +158,24 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('Cooling System: Cooling Autosizing Limit')
     arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology. If not provided, no limit is used.')
     arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_rated_cfm_per_ton', false)
+    arg.setDisplayName('Cooling System: Rated CFM Per Ton')
+    arg.setDescription('The rated cfm per ton of the cooling system.')
+    arg.setUnits('cfm/ton')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_actual_cfm_per_ton', false)
+    arg.setDisplayName('Cooling System: Actual CFM Per Ton')
+    arg.setDescription('The actual cfm per ton of the cooling system.')
+    arg.setUnits('cfm/ton')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('cooling_system_frac_manufacturer_charge', false)
+    arg.setDisplayName('Cooling System: Fraction of Manufacturer Recommended Charge')
+    arg.setDescription('The fraction of manufacturer recommended charge of the cooling system.')
+    arg.setUnits('Frac')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_heating_capacity', false)
@@ -228,6 +258,24 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('Heat Pump: Backup Heating Autosizing Limit')
     arg.setDescription('The maximum capacity limit applied to the auto-sizing methodology if Backup Type is integrated.')
     arg.setUnits('Btu/hr')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_rated_cfm_per_ton', false)
+    arg.setDisplayName('Heat Pump: Rated CFM Per Ton')
+    arg.setDescription('The rated cfm per ton of the heat pump.')
+    arg.setUnits('cfm/ton')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_actual_cfm_per_ton', false)
+    arg.setDisplayName('Heat Pump: Actual CFM Per Ton')
+    arg.setDescription('The actual cfm per ton of the heat pump.')
+    arg.setUnits('cfm/ton')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('heat_pump_frac_manufacturer_charge', false)
+    arg.setDisplayName('Heat Pump: Fraction of Manufacturer Recommended Charge')
+    arg.setDescription('The fraction of manufacturer recommended charge of the heat pump.')
+    arg.setUnits('Frac')
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_blower_fan_watts_per_cfm', false)
@@ -336,9 +384,39 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The hour of the day when the kitchen fans run.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('lighting_interior_usage_multiplier', false)
+    arg.setDisplayName('Lighting: Interior Usage Multiplier')
+    arg.setDescription('Multiplier on the lighting energy usage (interior) that can reflect, e.g., high/low usage occupants.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('lighting_exterior_usage_multiplier', false)
+    arg.setDisplayName('Lighting: Exterior Usage Multiplier')
+    arg.setDescription('Multiplier on the lighting energy usage (exterior) that can reflect, e.g., high/low usage occupants.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('lighting_garage_usage_multiplier', false)
+    arg.setDisplayName('Lighting: Garage Usage Multiplier')
+    arg.setDescription('Multiplier on the lighting energy usage (garage) that can reflect, e.g., high/low usage occupants.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('water_fixtures_usage_multiplier', false)
+    arg.setDisplayName('Hot Water Fixtures: Usage Multiplier')
+    arg.setDescription('Multiplier on the hot water usage that can reflect, e.g., high/low usage occupants.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument.makeStringArgument('schedules_vacancy_periods', false)
     arg.setDisplayName('Schedules: Vacancy Periods')
     arg.setDescription('Specifies the vacancy periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('schedules_power_outage_periods', false)
+    arg.setDisplayName('Schedules: Power Outage Periods')
+    arg.setDescription('Specifies the power outage periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.')
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('schedules_power_outage_periods_window_natvent_availability', false)
+    arg.setDisplayName('Schedules: Power Outage Periods Window Natural Ventilation Availability')
+    arg.setDescription("The availability of the natural ventilation schedule during the power outage periods. Valid choices are '#{[HPXML::ScheduleRegular, HPXML::ScheduleAvailable, HPXML::ScheduleUnavailable].join("', '")}'. If multiple periods, use a comma-separated list.")
     args << arg
 
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_miles_driven_per_year', false)
@@ -679,9 +757,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     @hpxml.header.service_feeders_load_calculation_types = [HPXML::ElectricPanelLoadCalculationType2023ExistingDwellingLoadBased]
 
     # Vacancy
-    schedules_vacancy_periods = args[:schedules_vacancy_periods].to_s.split(',').map(&:strip)
-    schedules_vacancy_periods.each do |schedule_vacancy_period|
-      begin_month, begin_day, begin_hour, end_month, end_day, end_hour = Calendar.parse_date_time_range(schedule_vacancy_period)
+    vacancy_periods = args[:schedules_vacancy_periods].to_s.split(',').map(&:strip)
+    vacancy_periods.each do |vacancy_period|
+      begin_month, begin_day, begin_hour, end_month, end_day, end_hour = Calendar.parse_date_time_range(vacancy_period)
       @hpxml.header.unavailable_periods.add(
         column_name: 'Vacancy',
         begin_month: begin_month,
@@ -690,6 +768,23 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         end_month: end_month,
         end_day: end_day,
         end_hour: end_hour
+      )
+    end
+
+    # Power Outage
+    power_outage_periods = args[:schedules_power_outage_periods].to_s.split(',').map(&:strip)
+    power_outage_natvent_availabilities = args[:schedules_power_outage_periods_window_natvent_availability].to_s.split(',').map(&:strip)
+    power_outage_periods.each_with_index do |power_outage_period, i|
+      begin_month, begin_day, begin_hour, end_month, end_day, end_hour = Calendar.parse_date_time_range(power_outage_period)
+      @hpxml.header.unavailable_periods.add(
+        column_name: 'Power Outage',
+        begin_month: begin_month,
+        begin_day: begin_day,
+        begin_hour: begin_hour,
+        end_month: end_month,
+        end_day: end_day,
+        end_hour: end_hour,
+        natvent_availability: (power_outage_natvent_availabilities[i] rescue nil)
       )
     end
 
@@ -784,6 +879,22 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         hpxml_bldg.freezers[0].usage_multiplier = 1.0 if hpxml_bldg.freezers[0].usage_multiplier.nil?
         hpxml_bldg.freezers[0].usage_multiplier *= args[:freezer_usage_multiplier]
       end
+      if not args[:lighting_interior_usage_multiplier].nil?
+        hpxml_bldg.lighting.interior_usage_multiplier = 1.0 if hpxml_bldg.lighting.interior_usage_multiplier.nil?
+        hpxml_bldg.lighting.interior_usage_multiplier *= args[:lighting_interior_usage_multiplier]
+      end
+      if not args[:lighting_exterior_usage_multiplier].nil?
+        hpxml_bldg.lighting.exterior_usage_multiplier = 1.0 if hpxml_bldg.lighting.exterior_usage_multiplier.nil?
+        hpxml_bldg.lighting.exterior_usage_multiplier *= args[:lighting_exterior_usage_multiplier]
+      end
+      if not args[:lighting_garage_usage_multiplier].nil?
+        hpxml_bldg.lighting.garage_usage_multiplier = 1.0 if hpxml_bldg.lighting.garage_usage_multiplier.nil?
+        hpxml_bldg.lighting.garage_usage_multiplier *= args[:lighting_garage_usage_multiplier]
+      end
+      if not args[:water_fixtures_usage_multiplier].nil?
+        hpxml_bldg.water_heating.water_fixtures_usage_multiplier = 1.0 if hpxml_bldg.water_heating.water_fixtures_usage_multiplier.nil?
+        hpxml_bldg.water_heating.water_fixtures_usage_multiplier *= args[:water_fixtures_usage_multiplier]
+      end
 
       # Ventilation Start Hours
       hpxml_bldg.ventilation_fans.each do |ventilation_fan|
@@ -829,6 +940,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           heating_system.heating_capacity = args[:heating_system_heating_capacity] unless args[:heating_system_heating_capacity].nil?
           heating_system.heating_autosizing_factor = args[:heating_system_heating_autosizing_factor] unless args[:heating_system_heating_autosizing_factor].nil?
           heating_system.heating_autosizing_limit = args[:heating_system_heating_autosizing_limit] unless args[:heating_system_heating_autosizing_limit].nil?
+          if (not args[:heating_system_rated_cfm_per_ton].nil?) && (not args[:heating_system_actual_cfm_per_ton].nil?)
+            heating_system.airflow_defect_ratio = (args[:heating_system_actual_cfm_per_ton] - args[:heating_system_rated_cfm_per_ton]) / args[:heating_system_rated_cfm_per_ton]
+          end
         else
           heating_system.heating_system_type = args[:heating_system_2_type] unless args[:heating_system_2_type].nil?
           heating_system.heating_system_fuel = args[:heating_system_2_fuel] unless args[:heating_system_2_fuel].nil?
@@ -842,6 +956,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         cooling_system.cooling_capacity = args[:cooling_system_cooling_capacity] unless args[:cooling_system_cooling_capacity].nil?
         cooling_system.cooling_autosizing_factor = args[:cooling_system_cooling_autosizing_factor] unless args[:cooling_system_cooling_autosizing_factor].nil?
         cooling_system.cooling_autosizing_limit = args[:cooling_system_cooling_autosizing_limit] unless args[:cooling_system_cooling_autosizing_limit].nil?
+        if (not args[:cooling_system_rated_cfm_per_ton].nil?) && (not args[:cooling_system_actual_cfm_per_ton].nil?)
+          cooling_system.airflow_defect_ratio = (args[:cooling_system_actual_cfm_per_ton] - args[:cooling_system_rated_cfm_per_ton]) / args[:cooling_system_rated_cfm_per_ton]
+        end
+        if (not args[:cooling_system_frac_manufacturer_charge].nil?)
+          cooling_system.charge_defect_ratio = args[:cooling_system_frac_manufacturer_charge] - 1.0
+        end
       end
       hpxml_bldg.heat_pumps.each do |heat_pump|
         heat_pump.heating_capacity = args[:heat_pump_heating_capacity] unless args[:heat_pump_heating_capacity].nil?
@@ -857,6 +977,12 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         heat_pump.backup_heating_capacity = args[:heat_pump_backup_heating_capacity] unless args[:heat_pump_backup_heating_capacity].nil?
         heat_pump.backup_heating_autosizing_factor = args[:heat_pump_backup_heating_autosizing_factor] unless args[:heat_pump_backup_heating_autosizing_factor].nil?
         heat_pump.backup_heating_autosizing_limit = args[:heat_pump_backup_heating_autosizing_limit] unless args[:heat_pump_backup_heating_autosizing_limit].nil?
+        if (not args[:heat_pump_rated_cfm_per_ton].nil?) && (not args[:heat_pump_actual_cfm_per_ton].nil?)
+          heat_pump.airflow_defect_ratio = (args[:heat_pump_actual_cfm_per_ton] - args[:heat_pump_rated_cfm_per_ton]) / args[:heat_pump_rated_cfm_per_ton]
+        end
+        if (not args[:heat_pump_frac_manufacturer_charge].nil?)
+          heat_pump.charge_defect_ratio = args[:heat_pump_frac_manufacturer_charge] - 1.0
+        end
       end
 
       # Electric Panel
@@ -1188,7 +1314,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",
                             type: HPXML::ElectricPanelLoadTypeMechVent,
                             is_new_load: args[:electric_panel_load_mech_vent_fan_new_load],
-                            component_idrefs: [ventilation_fans[0].id])
+                            component_idrefs: [ventilation_fan.id])
       elsif ventilation_fan.used_for_local_ventilation # Kitchen / Bathroom Fans
         if ventilation_fan.fan_location == HPXML::LocationKitchen
           service_feeders.add(id: "ServiceFeeder#{service_feeders.size + 1}",

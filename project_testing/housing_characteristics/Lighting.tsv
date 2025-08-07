@@ -1,4 +1,4 @@
-Option=100% CFL	Option=100% Incandescent	Option=100% LED	sampling_probability
-0.333333333	0.333333333	0.333333333	1
-# Created by: sources\recs\recs2020\tsv_maker.py			
-# Description: Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.			
+Option=25% LED	Option=50% CFL	Option=100% CFL	Option=100% Incandescent	Option=100% LED	Option=None	sampling_probability
+0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	1
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.

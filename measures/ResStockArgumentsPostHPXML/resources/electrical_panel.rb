@@ -170,8 +170,8 @@ class ElectricalPanelSampler
     has_cooling = has_central_non_heat_pump_cooling()
     has_elec_drying = is_electric_fuel(@dryer_fuel)
     has_elec_cooking = is_electric_fuel(@cooking_range_oven_fuel)
-    has_pv = bool_to_numeric(@has_pv)
-    has_ev_charging = bool_to_numeric(@has_ev_charging)
+    has_pv = to_numeric(@has_pv)
+    has_ev_charging = to_numeric(@has_ev_charging)
 
     load_vars = [
       has_elec_heating_primary,
@@ -298,7 +298,7 @@ class ElectricalPanelSampler
     end
   end
 
-  def bool_to_numeric(is_present)
+  def to_numeric(is_present)
     if is_present
       return 1
     else

@@ -3151,8 +3151,8 @@ Others	Single-Family Detached	None	Wood	2010s	0	0	1	0	0	0
 Others	Single-Family Detached	None	Wood	<1940	0	0	1	0	0	0
 # Created by: sources\aris\tsv_maker.py
 # Description: The efficiency and type of the heating system.
-# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
-# Assumption: For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
+# Assumption: For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 # Assumption: Ducted heating or heat pump cannot have ducted secondary heating.
 # Assumption: For Alaska, all heat pumps are assumed to be non-ducted mini-splits.
 # Assumption: For Alaska, all heat pumps are assumed to be non-ducted mini-splits. For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating type.
