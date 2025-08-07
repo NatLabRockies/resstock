@@ -408,8 +408,8 @@ upgrades:
       - option: HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
         apply_logic: *ducted_ashp_apply_logic
 
-#      - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
-#        apply_logic: *ducted_ashp_apply_logic
+      - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
+        apply_logic: *ducted_ashp_apply_logic
 
       - *heat_pump_cooling_efficiency_ducted
 

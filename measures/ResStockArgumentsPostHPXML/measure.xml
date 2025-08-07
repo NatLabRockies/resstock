@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>10ff38c1-f7f2-472a-8bcd-ff96892988ca</version_id>
-  <version_modified>2025-08-07T21:05:29Z</version_modified>
+  <version_id>41370d1f-dc9d-4908-b65b-2520ead65cea</version_id>
+  <version_modified>2025-08-07T22:21:43Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -528,6 +528,132 @@
       <description>The blower fan efficiency at maximum fan speed. Applies only to split (not packaged) systems (i.e., applies to ducted systems as well as ductless mini-split systems)..</description>
       <type>Double</type>
       <units>W/CFM</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_heating_outdoor_temperatures</name>
+      <display_name>HVAC Detailed Performance Data: Heating Outdoor Temperatures</display_name>
+      <description>Outdoor temperatures of heating detailed performance data if available. Applies only to air-source HVAC systems (air-to-air and mini-split heat pumps). Only certain outdoor temperatures are allowed, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>F</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_heating_min_speed_capacities</name>
+      <display_name>HVAC Detailed Performance Data: Heating Minimum Speed Capacities</display_name>
+      <description>Minimum speed capacities of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to two stage and variable speed air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>Btu/hr or Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_heating_nom_speed_capacities</name>
+      <display_name>HVAC Detailed Performance Data: Heating Nominal Speed Capacities</display_name>
+      <description>Nominal speed capacities of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>Btu/hr or Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_heating_max_speed_capacities</name>
+      <display_name>HVAC Detailed Performance Data: Heating Maximum Speed Capacities</display_name>
+      <description>Maximum speed capacities of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>Btu/hr or Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_heating_min_speed_cops</name>
+      <display_name>HVAC Detailed Performance Data: Heating Minimum Speed COPs</display_name>
+      <description>Minimum speed efficiency COP values of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to two stage and variable speed air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>W/W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_heating_nom_speed_cops</name>
+      <display_name>HVAC Detailed Performance Data: Heating Nominal Speed COPs</display_name>
+      <description>Nominal speed efficiency COP values of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>W/W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_heating_max_speed_cops</name>
+      <display_name>HVAC Detailed Performance Data: Heating Maximum Speed COPs</display_name>
+      <description>Maximum speed efficiency COP values of heating detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>W/W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_cooling_outdoor_temperatures</name>
+      <display_name>HVAC Detailed Performance Data: Cooling Outdoor Temperatures</display_name>
+      <description>Outdoor temperatures of cooling detailed performance data if available. Applies only to variable-speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Only certain outdoor temperatures are allowed, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>F</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_cooling_min_speed_capacities</name>
+      <display_name>HVAC Detailed Performance Data: Cooling Minimum Speed Capacities</display_name>
+      <description>Minimum speed capacities of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to two stage and variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>Btu/hr or Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_cooling_nom_speed_capacities</name>
+      <display_name>HVAC Detailed Performance Data: Cooling Nominal Speed Capacities</display_name>
+      <description>Nominal speed capacities of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>Btu/hr or Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_cooling_max_speed_capacities</name>
+      <display_name>HVAC Detailed Performance Data: Cooling Maximum Speed Capacities</display_name>
+      <description>Maximum speed capacities of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>Btu/hr or Frac</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_cooling_min_speed_cops</name>
+      <display_name>HVAC Detailed Performance Data: Cooling Minimum Speed COPs</display_name>
+      <description>Minimum speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to two stage and variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>W/W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_cooling_nom_speed_cops</name>
+      <display_name>HVAC Detailed Performance Data: Cooling Nominal Speed COPs</display_name>
+      <description>Nominal speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>W/W</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>hvac_perf_data_cooling_max_speed_cops</name>
+      <display_name>HVAC Detailed Performance Data: Cooling Maximum Speed COPs</display_name>
+      <description>Maximum speed efficiency COP values of cooling detailed performance data if available, corresponding to the above outdoor temperatures. Applies only to variable speed air-source HVAC systems (central and mini-split air conditioners, air-to-air and mini-split heat pumps). Not all values are required, see the OS-HPXML documentation.</description>
+      <type>String</type>
+      <units>W/W</units>
       <required>false</required>
       <model_dependent>false</model_dependent>
     </argument>
@@ -1386,7 +1512,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>67214A54</checksum>
+      <checksum>FA2F87D0</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
