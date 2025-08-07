@@ -829,12 +829,10 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       args[:geometry_unit_num_floors_above_grade] = args[:geometry_num_floors_above_grade]
     end
 
-    # Adiabatic Floor/Ceiling
-    if not args[:geometry_unit_level].nil?
+    # Adiabatic Floor/Ceiling (for MF buildings w/ more than 1 story)
+    if (not args[:geometry_unit_level].nil?) && (args[:geometry_num_floors_above_grade] > 1)
       if args[:geometry_unit_level] == 'Bottom'
-        if args[:geometry_num_floors_above_grade] > 1 # this could be "bottom" of a 1-story building
-          args[:geometry_attic_type] = HPXML::AtticTypeBelowApartment
-        end
+        args[:geometry_attic_type] = HPXML::AtticTypeBelowApartment
       elsif args[:geometry_unit_level] == 'Middle'
         args[:geometry_foundation_type] = HPXML::FoundationTypeAboveApartment
         args[:geometry_attic_type] = HPXML::AtticTypeBelowApartment
@@ -948,7 +946,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    if args[:geometry_garage_width] == 0 && args[:geometry_garage_depth] == 0
+    if args[:geometry_garage_width] == 0 || args[:geometry_garage_depth] == 0
       garage_door_power = 0
     else
       # Assume one automatic door opener if has garage, regardless of no. garages

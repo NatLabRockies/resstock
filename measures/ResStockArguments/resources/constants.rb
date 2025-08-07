@@ -46,7 +46,6 @@ module Constants
                                    'battery_num_bedrooms_served',
                                    'vehicle_battery_capacity',
                                    'vehicle_hours_driven_per_week',
-                                   'ev_charger_level',
                                    'misc_plug_loads_vehicle_usage_multiplier',
                                    'misc_plug_loads_vehicle_2_usage_multiplier',
                                    'misc_plug_loads_vehicle_annual_kwh',

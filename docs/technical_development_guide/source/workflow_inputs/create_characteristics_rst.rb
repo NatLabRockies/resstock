@@ -220,7 +220,7 @@ source_report.each do |row|
   f.puts(name)
   f.puts('*' * name.size)
   f.puts
-  f.puts("From ``project_national`` the list of options, option stock sturation, and option arguments for the **#{parameter}** characteristic.")
+  f.puts("From ``project_national`` the list of options, option stock saturation, and option arguments for the **#{parameter}** characteristic.")
   f.puts
   f.puts('.. list-table::')
   f.puts('   :header-rows: 1')
