@@ -41,7 +41,7 @@ Geometry Building Horizontal Location SFA,4.0,1.0,manually created,"Location of 
 Geometry Building Level MF,4.0,2.0,sources\recs\recs2009\tsv_maker.py,"Location of the multi-family unit vertically within the building (bottom, middle, top)."
 Geometry Building Number Units MF,28.0,2.0,sources\recs\recs2009\tsv_maker.py,The number of dwelling units in the multi-family building.
 Geometry Building Number Units SFA,21.0,1.0,manually created,Number of units in the single-family attached building.
-Geometry Building Type ACS,9.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The building type classification according to the U.S. Census American Communicy Survey.
+Geometry Building Type ACS,9.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The building type classification according to the U.S. Census American Community Survey.
 Geometry Building Type Height,7.0,2.0,sources\recs\recs2009\tsv_maker.py,"The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey  building type with multi-family buildings split out by low-rise, mid-rise, and high-rise."
 Geometry Building Type RECS,5.0,1.0,sources\pums\pums2019_5yrs\tsv_maker.py,The building type classification according to the U.S. Energy Information Administration Residential Energy Consumption Survey.
 Geometry Floor Area,9.0,0.0,sources\ahs\ahs2017_2019\tsv_maker.py,The finished floor area of the dwelling unit using bins from 2017-2019 AHS.
