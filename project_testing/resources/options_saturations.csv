@@ -237,12 +237,11 @@ Level,Parameter,Option,Saturation
 0,Mechanical Ventilation,Supply,0.2
 0,Mechanical Ventilation,"HRV, 60%",0.2
 0,Mechanical Ventilation,"ERV, 70%",0.2
-0,Misc Freezer,"EF 12, Average Installed",0.166667
-0,Misc Freezer,"EF 12, National Average",0.166667
-0,Misc Freezer,"EF 16, 2001 Fed Standard-reference freezer",0.166667
-0,Misc Freezer,"EF 18, 2008 Energy Star",0.166667
-0,Misc Freezer,"EF 20, 2008 Energy Star Most Efficient",0.166667
-0,Misc Freezer,None,0.166667
+0,Misc Freezer,"EF 12, National Average",0.2
+0,Misc Freezer,"EF 16, 2001 Fed Standard-reference freezer",0.2
+0,Misc Freezer,"EF 18, 2008 Energy Star",0.2
+0,Misc Freezer,"EF 20, 2008 Energy Star Most Efficient",0.2
+0,Misc Freezer,None,0.2
 0,Misc Gas Fireplace,None,0.5
 0,Misc Gas Fireplace,Gas Fireplace,0.5
 0,Misc Gas Grill,None,0.5
@@ -807,11 +806,10 @@ Level,Parameter,Option,Saturation
 3,Insulation Floor,Ceiling R-30,0.15037
 3,Insulation Floor,Ceiling R-38,0.15037
 3,Insulation Foundation Wall,None,0.337037
-3,Insulation Foundation Wall,Uninsulated,0.132593
-3,Insulation Foundation Wall,"Wall R-5, Exterior",0.132593
-3,Insulation Foundation Wall,"Wall R-10, Exterior",0.132593
-3,Insulation Foundation Wall,"Wall R-15, Exterior",0.132593
-3,Insulation Foundation Wall,"Wall R-13, Interior",0.132593
+3,Insulation Foundation Wall,Uninsulated,0.165741
+3,Insulation Foundation Wall,"Wall R-5, Exterior",0.165741
+3,Insulation Foundation Wall,"Wall R-10, Exterior",0.165741
+3,Insulation Foundation Wall,"Wall R-15, Exterior",0.165741
 3,Insulation Slab,None,0.792593
 3,Insulation Slab,Uninsulated,0.0296296
 3,Insulation Slab,"2ft R5 Under, Horizontal",0.0296296
@@ -885,11 +883,11 @@ Level,Parameter,Option,Saturation
 4,HVAC Secondary Heating Type,Non-Ducted Heating,0.0653061
 4,HVAC Secondary Heating Type,None,0.918367
 4,Insulation Rim Joist,None,0.337037
-4,Insulation Rim Joist,Uninsulated,0.132593
-4,Insulation Rim Joist,"R-5, Exterior",0.132593
-4,Insulation Rim Joist,"R-10, Exterior",0.132593
-4,Insulation Rim Joist,"R-15, Exterior",0.132593
-4,Insulation Rim Joist,"R-13, Interior",0.132593
+4,Insulation Rim Joist,Uninsulated,0.165741
+4,Insulation Rim Joist,"R-5, Exterior",0.165741
+4,Insulation Rim Joist,"R-10, Exterior",0.165741
+4,Insulation Rim Joist,"R-15, Exterior",0.165741
+4,Insulation Rim Joist,"R-13, Interior",0
 4,Insulation Ceiling,None,0.876543
 4,Insulation Ceiling,Uninsulated,0.0694444
 4,Insulation Ceiling,R-7,0.00771604

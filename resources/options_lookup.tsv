@@ -11112,7 +11112,6 @@ Misc Extra Refrigerator	EF 21.9	ResStockArguments	extra_refrigerator_present=tru
 Misc Extra Refrigerator	EF 6.7	ResStockArguments	extra_refrigerator_present=true	extra_refrigerator_location=auto	extra_refrigerator_rated_annual_kwh=1139
 Misc Extra Refrigerator	None	ResStockArguments	extra_refrigerator_present=false	extra_refrigerator_location=auto	extra_refrigerator_rated_annual_kwh=0
 Misc Extra Refrigerator	Void
-Misc Freezer	"EF 12, Average Installed"	ResStockArguments	freezer_present=true	freezer_location=auto	freezer_rated_annual_kwh=935
 Misc Freezer	"EF 12, National Average"	ResStockArguments	freezer_present=true	freezer_location=auto	freezer_rated_annual_kwh=935
 Misc Freezer	"EF 16, 2001 Fed Standard-reference freezer"	ResStockArguments	freezer_present=true	freezer_location=auto	freezer_rated_annual_kwh=712
 Misc Freezer	"EF 18, 2008 Energy Star"	ResStockArguments	freezer_present=true	freezer_location=auto	freezer_rated_annual_kwh=641

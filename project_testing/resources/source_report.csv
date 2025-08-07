@@ -89,7 +89,7 @@ Hot Water Fixtures,16.0,0.0,sources\other\tsv_maker.py,Hot water fixture usage a
 Infiltration,15.0,0.0,sources\resdb\tsv_maker.py,Total infiltration to the dwelling unit.
 Insulation Ceiling,9.0,1.0,manually created,Ceiling insulation level.
 Insulation Floor,6.0,1.0,manually created,Floor insulation level.
-Insulation Foundation Wall,6.0,1.0,manually created,Foundation walls insulation level.
+Insulation Foundation Wall,5.0,1.0,manually created,Foundation walls insulation level.
 Insulation Rim Joist,6.0,1.0,manually created,Foundation walls insulation level.
 Insulation Roof,8.0,1.0,manually created,Finished roof insulation level.
 Insulation Slab,8.0,1.0,manually created,Slab insulation level.
@@ -100,7 +100,7 @@ Lighting Interior Use,3.0,1.0,sources\other\tsv_maker.py,Interior lighting usage
 Lighting Other Use,3.0,1.0,sources\other\tsv_maker.py,Exterior and garage lighting usage relative to the national average.
 Mechanical Ventilation,5.0,0.0,manually created,Mechanical ventilation type and efficiency.
 Misc Extra Refrigerator,9.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of the secondary refrigerator.
-Misc Freezer,6.0,0.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of a standalone freezer.
+Misc Freezer,5.0,0.0,sources\recs\recs2020\tsv_maker.py,The presence and rated efficiency of a standalone freezer.
 Misc Gas Fireplace,2.0,0.0,manually created,Presence of a gas fireplace.
 Misc Gas Grill,2.0,0.0,manually created,Presence of a gas grill.
 Misc Gas Lighting,2.0,0.0,manually created,Presence of exterior gas lighting.
