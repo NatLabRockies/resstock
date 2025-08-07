@@ -132,8 +132,15 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
 def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
     savings_cols = []
     all_cols = df.collect_schema().names()
-    out_cols = [col for col in all_cols if 'out.' in col and not 'out.params' in col]
-    
+    out_cols = [col for col in all_cols if 'out.' in col and not ('out.params' in col or 'out.panel' in col)]
+    # Selectively include the following for panels
+    out_panel_cols = [col for col in all_cols if 
+        "out.panel.load.total_load." in col
+        or "out.panel.load.occupied_capacity." in col
+        or "out.panel.breaker_space.occupied." in col
+        ]
+    out_cols += out_panel_cols
+
     baseline_df_with_renamed = baseline_df.select([
         pl.col(col).alias(f"baseline_{col}") for col in out_cols
     ] + ['bldg_id'])
