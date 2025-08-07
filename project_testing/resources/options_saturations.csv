@@ -207,33 +207,21 @@ Level,Parameter,Option,Saturation
 0,Hot Water Fixtures,180% Usage,0.0625
 0,Hot Water Fixtures,190% Usage,0.0625
 0,Hot Water Fixtures,200% Usage,0.0625
-0,Infiltration,0.5 ACH50,0.037037
-0,Infiltration,0.25 ACH50,0.037037
-0,Infiltration,0.75 ACH50,0.037037
-0,Infiltration,1 ACH50,0.037037
-0,Infiltration,1.5 ACH50,0.037037
-0,Infiltration,2 ACH50,0.037037
-0,Infiltration,2.25 ACH50,0.037037
-0,Infiltration,3 ACH50,0.037037
-0,Infiltration,3.75 ACH50,0.037037
-0,Infiltration,4 ACH50,0.037037
-0,Infiltration,4.5 ACH50,0.037037
-0,Infiltration,5 ACH50,0.037037
-0,Infiltration,5.25 ACH50,0.037037
-0,Infiltration,6 ACH50,0.037037
-0,Infiltration,7 ACH50,0.037037
-0,Infiltration,"7 ACH50, 0.5 Shelter Coefficient",0.037037
-0,Infiltration,7.5 ACH50,0.037037
-0,Infiltration,8 ACH50,0.037037
-0,Infiltration,10 ACH50,0.037037
-0,Infiltration,11.25 ACH50,0.037037
-0,Infiltration,15 ACH50,0.037037
-0,Infiltration,18.5 ACH50,0.037037
-0,Infiltration,20 ACH50,0.037037
-0,Infiltration,25 ACH50,0.037037
-0,Infiltration,30 ACH50,0.037037
-0,Infiltration,40 ACH50,0.037037
-0,Infiltration,50 ACH50,0.037037
+0,Infiltration,1 ACH50,0.0666667
+0,Infiltration,2 ACH50,0.0666667
+0,Infiltration,3 ACH50,0.0666667
+0,Infiltration,4 ACH50,0.0666667
+0,Infiltration,5 ACH50,0.0666667
+0,Infiltration,6 ACH50,0.0666667
+0,Infiltration,7 ACH50,0.0666667
+0,Infiltration,8 ACH50,0.0666667
+0,Infiltration,10 ACH50,0.0666667
+0,Infiltration,15 ACH50,0.0666667
+0,Infiltration,20 ACH50,0.0666667
+0,Infiltration,25 ACH50,0.0666667
+0,Infiltration,30 ACH50,0.0666667
+0,Infiltration,40 ACH50,0.0666667
+0,Infiltration,50 ACH50,0.0666667
 0,Interior Shading,Light Curtains,0.25
 0,Interior Shading,Medium Curtains,0.25
 0,Interior Shading,Dark Curtains,0.25
@@ -865,9 +853,8 @@ Level,Parameter,Option,Saturation
 3,Misc Pool Heater,None,0.6
 3,Misc Pool Heater,Other Fuel,0.1
 3,Misc Pool Pump,None,0.5
-3,Misc Pool Pump,National Average,0.166666
-3,Misc Pool Pump,1.0 HP Pump,0.166666
-3,Misc Pool Pump,0.75 HP Pump,0.166666
+3,Misc Pool Pump,1.0 HP Pump,0.25
+3,Misc Pool Pump,0.75 HP Pump,0.25
 3,Geometry Building Horizontal Location MF,Left,0.17623
 3,Geometry Building Horizontal Location MF,Middle,0.128404
 3,Geometry Building Horizontal Location MF,None,0.333333

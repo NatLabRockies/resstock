@@ -86,7 +86,7 @@ Heating Unavailable Days,8.0,0.0,sources\recs\recs2020\tsv_maker.py,Number of da
 Holiday Lighting,2.0,1.0,sources\other\tsv_maker.py,Use of holiday lighting (not currently modeled separately from other exterior lighting).
 Hot Water Distribution,4.0,0.0,manually created,Type of distribution system and presence of hot water piping insulation.
 Hot Water Fixtures,16.0,0.0,sources\other\tsv_maker.py,Hot water fixture usage and flow levels.
-Infiltration,27.0,0.0,sources\resdb\tsv_maker.py,Total infiltration to the dwelling unit.
+Infiltration,15.0,0.0,sources\resdb\tsv_maker.py,Total infiltration to the dwelling unit.
 Insulation Ceiling,9.0,1.0,manually created,Ceiling insulation level.
 Insulation Floor,6.0,1.0,manually created,Floor insulation level.
 Insulation Foundation Wall,6.0,1.0,manually created,Foundation walls insulation level.
@@ -107,7 +107,7 @@ Misc Gas Lighting,2.0,0.0,manually created,Presence of exterior gas lighting.
 Misc Hot Tub Spa,4.0,0.0,sources\recs\recs2020\tsv_maker.py,The presence and heating fuel of a hot tub/spa at the dwelling unit.
 Misc Pool,3.0,1.0,sources\recs\recs2020\tsv_maker.py,The presence of a pool at the dwelling unit.
 Misc Pool Heater,5.0,1.0,sources\recs\recs2020\tsv_maker.py,The heating fuel of the pool heater if there is a pool.
-Misc Pool Pump,4.0,1.0,manually created,Presence and size of pool pump.
+Misc Pool Pump,3.0,1.0,manually created,Presence and size of pool pump.
 Misc Well Pump,2.0,0.0,sources\ahs\ahs2017_2019\tsv_maker.py,Presence of well pump according to the use of well for domestic water source.
 Natural Ventilation,2.0,0.0,manually created,Schedule of natural ventilation from windows.
 Neighbors,6.0,0.0,manually created,Presence and distance between the dwelling unit and the nearest neighbors to the left and right.
