@@ -1,61 +1,77 @@
 Option Name	Type	Nominal Battery Capacity [kWh]	Usable Battery Capacity [kWh]	Fuel Economy Units	Fuel Economy Combined	Usage Multiplier
 None	None					
+"Compact, 200 Mile Range, 10% Usage"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	0.1
 "Compact, 200 Mile Range, 25% Usage"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	0.25
 "Compact, 200 Mile Range, 50% Usage"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	0.5
 "Compact, 200 Mile Range, 75% Usage"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	0.75
 "Compact, 200 Mile Range, 100% Usage"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	
+"Compact, 200 Mile Range, 125% Usage"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	1.25
 "Compact, 200 Mile Range, 150% Usage"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	1.5
+"Compact, 200 Mile Range, 175% Usage"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	1.75
 "Compact, 200 Mile Range, 200% Usage"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	2
-"Compact, 200 Mile Range, 400% Usage"	BatteryElectricVehicle		40.168	kWh/mile	0.209901	4
+"Compact, 300 Mile Range, 10% Usage"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	0.1
 "Compact, 300 Mile Range, 25% Usage"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	0.25
 "Compact, 300 Mile Range, 50% Usage"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	0.5
 "Compact, 300 Mile Range, 75% Usage"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	0.75
 "Compact, 300 Mile Range, 100% Usage"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	
+"Compact, 300 Mile Range, 125% Usage"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	1.25
 "Compact, 300 Mile Range, 150% Usage"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	1.5
+"Compact, 300 Mile Range, 175% Usage"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	1.75
 "Compact, 300 Mile Range, 200% Usage"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	2
-"Compact, 300 Mile Range, 400% Usage"	BatteryElectricVehicle		63.433	kWh/mile	0.22002	4
+"Midsize, 200 Mile Range, 10% Usage"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	0.1
 "Midsize, 200 Mile Range, 25% Usage"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	0.25
 "Midsize, 200 Mile Range, 50% Usage"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	0.5
 "Midsize, 200 Mile Range, 75% Usage"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	0.75
 "Midsize, 200 Mile Range, 100% Usage"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	
+"Midsize, 200 Mile Range, 125% Usage"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	1.25
 "Midsize, 200 Mile Range, 150% Usage"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	1.5
+"Midsize, 200 Mile Range, 175% Usage"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	1.75
 "Midsize, 200 Mile Range, 200% Usage"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	2
-"Midsize, 200 Mile Range, 400% Usage"	BatteryElectricVehicle		41.978	kWh/mile	0.219174	4
+"Midsize, 300 Mile Range, 10% Usage"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	0.1
 "Midsize, 300 Mile Range, 25% Usage"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	0.25
 "Midsize, 300 Mile Range, 50% Usage"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	0.5
 "Midsize, 300 Mile Range, 75% Usage"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	0.75
 "Midsize, 300 Mile Range, 100% Usage"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	
+"Midsize, 300 Mile Range, 125% Usage"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	1.25
 "Midsize, 300 Mile Range, 150% Usage"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	1.5
+"Midsize, 300 Mile Range, 175% Usage"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	1.75
 "Midsize, 300 Mile Range, 200% Usage"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	2
-"Midsize, 300 Mile Range, 400% Usage"	BatteryElectricVehicle		65.441	kWh/mile	0.229449	4
+"Pickup, 200 Mile Range, 10% Usage"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	0.1
 "Pickup, 200 Mile Range, 25% Usage"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	0.25
 "Pickup, 200 Mile Range, 50% Usage"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	0.5
 "Pickup, 200 Mile Range, 75% Usage"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	0.75
 "Pickup, 200 Mile Range, 100% Usage"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	
+"Pickup, 200 Mile Range, 125% Usage"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	1.25
 "Pickup, 200 Mile Range, 150% Usage"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	1.5
+"Pickup, 200 Mile Range, 175% Usage"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	1.75
 "Pickup, 200 Mile Range, 200% Usage"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	2
-"Pickup, 200 Mile Range, 400% Usage"	BatteryElectricVehicle		67.738	kWh/mile	0.357648	4
+"Pickup, 300 Mile Range, 10% Usage"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	0.1
 "Pickup, 300 Mile Range, 25% Usage"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	0.25
 "Pickup, 300 Mile Range, 50% Usage"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	0.5
 "Pickup, 300 Mile Range, 75% Usage"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	0.75
 "Pickup, 300 Mile Range, 100% Usage"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	
+"Pickup, 300 Mile Range, 125% Usage"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	1.25
 "Pickup, 300 Mile Range, 150% Usage"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	1.5
+"Pickup, 300 Mile Range, 175% Usage"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	1.75
 "Pickup, 300 Mile Range, 200% Usage"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	2
-"Pickup, 300 Mile Range, 400% Usage"	BatteryElectricVehicle		105.946	kWh/mile	0.373794	4
+"SUV, 200 Mile Range, 10% Usage"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	0.1
 "SUV, 200 Mile Range, 25% Usage"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	0.25
 "SUV, 200 Mile Range, 50% Usage"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	0.5
 "SUV, 200 Mile Range, 75% Usage"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	0.75
 "SUV, 200 Mile Range, 100% Usage"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	
+"SUV, 200 Mile Range, 125% Usage"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	1.25
 "SUV, 200 Mile Range, 150% Usage"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	1.5
+"SUV, 200 Mile Range, 175% Usage"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	1.75
 "SUV, 200 Mile Range, 200% Usage"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	2
-"SUV, 200 Mile Range, 400% Usage"	BatteryElectricVehicle		53.503	kWh/mile	0.267513	4
+"SUV, 300 Mile Range, 10% Usage"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	0.1
 "SUV, 300 Mile Range, 25% Usage"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	0.25
 "SUV, 300 Mile Range, 50% Usage"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	0.5
 "SUV, 300 Mile Range, 75% Usage"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	0.75
 "SUV, 300 Mile Range, 100% Usage"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	
+"SUV, 300 Mile Range, 125% Usage"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	1.25
 "SUV, 300 Mile Range, 150% Usage"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	1.5
+"SUV, 300 Mile Range, 175% Usage"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	1.75
 "SUV, 300 Mile Range, 200% Usage"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	2
-"SUV, 300 Mile Range, 400% Usage"	BatteryElectricVehicle		83.68	kWh/mile	0.278934	4
 "Detailed Example: 100 kWh battery, 0.25 kWh/mile"	BatteryElectricVehicle	100	80	kWh/mile	0.25	
 "Detailed Example: 100 kWh battery, 4.0 miles/kWh"	BatteryElectricVehicle	100	80	mile/kWh	4	
 "Detailed Example: 100 kWh battery, 135.0 mpge"	BatteryElectricVehicle	100	80	mpge	135	

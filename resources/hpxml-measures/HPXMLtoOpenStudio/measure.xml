@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>9ea04013-bd95-4d65-9124-17f9437422c0</version_id>
-  <version_modified>2025-08-05T14:26:48Z</version_modified>
+  <version_id>638a0769-a1ce-4e6b-8499-a7e0fd338052</version_id>
+  <version_modified>2025-08-08T23:28:38Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -348,7 +348,7 @@
       <filename>defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E232668E</checksum>
+      <checksum>0419C917</checksum>
     </file>
     <file>
       <filename>electric_panel.rb</filename>
@@ -474,7 +474,7 @@
       <filename>model.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>625DB094</checksum>
+      <checksum>E01BEB72</checksum>
     </file>
     <file>
       <filename>output.rb</filename>
@@ -732,7 +732,7 @@
       <filename>test_defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>B5F25BBB</checksum>
+      <checksum>392767F4</checksum>
     </file>
     <file>
       <filename>test_electric_panel.rb</filename>
@@ -786,7 +786,7 @@
       <filename>test_miscloads.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>D3A2271C</checksum>
+      <checksum>B7D8243D</checksum>
     </file>
     <file>
       <filename>test_pv.rb</filename>
