@@ -4176,7 +4176,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
 
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 63.0, nil, 50.4, nil, 10900, 9.5, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690)
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 63.0, nil, 50.4, nil, 11000, 9.6, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690)
 
     # Test defaults w/ nominal kWh
     hpxml_bldg.vehicles[0].nominal_capacity_kwh = 45.0
@@ -4185,7 +4185,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.vehicles[0].usable_capacity_ah = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 45.0, nil, 36.0, nil, 10900, 9.5, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690)
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 45.0, nil, 36.0, nil, 11000, 9.6, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690)
 
     # Test defaults w/ usable kWh
     hpxml_bldg.vehicles[0].nominal_capacity_kwh = nil
@@ -4194,7 +4194,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.vehicles[0].usable_capacity_ah = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 45.0, nil, 36.0, nil, 10900, 9.5, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690)
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 45.0, nil, 36.0, nil, 11000, 9.6, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690)
 
     # Test defaults w/ nominal Ah
     hpxml_bldg.vehicles[0].nominal_capacity_kwh = nil
@@ -4203,7 +4203,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.vehicles[0].usable_capacity_ah = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, nil, 280.0, nil, 224.0, 10900, 9.5, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690)
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, nil, 280.0, nil, 224.0, 11000, 9.6, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690)
 
     # Test defaults w/ usable Ah
     hpxml_bldg.vehicles[0].nominal_capacity_kwh = nil
@@ -4212,7 +4212,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.vehicles[0].usable_capacity_ah = 224.0
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, nil, 280.0, nil, 224.0, 10900, 9.5, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690)
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, nil, 280.0, nil, 224.0, 11000, 9.6, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, default_ev_sch['WeekdayScheduleFractions'], default_ev_sch['WeekendScheduleFractions'], default_ev_sch['MonthlyScheduleMultipliers'], 2, 5690)
 
     # Test defaults w/ miles/year
     hpxml_bldg.vehicles[0].miles_per_year = 5000
@@ -4259,7 +4259,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.ev_chargers[0].charging_power = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 63.0, nil, 50.4, nil, 10900, 9.5, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, nil, nil, nil, 2, 5690)
+    _test_default_vehicle_values(default_hpxml_bldg.vehicles[0], default_hpxml_bldg.ev_chargers[0], HPXML::BatteryTypeLithiumIon, 63.0, nil, 50.4, nil, 11000, 9.6, 0.22, HPXML::UnitsKwhPerMile, 0.8, 1.0, nil, nil, nil, 2, 5690)
   end
 
   def test_generators
