@@ -278,12 +278,6 @@ Level,Parameter,Option,Saturation
 0,Orientation,WNW,0.0625
 0,Orientation,Northwest,0.0625
 0,Orientation,NNW,0.0625
-0,Overhangs,None,0.166667
-0,Overhangs,"2ft, All Windows",0.166667
-0,Overhangs,"2ft, Front Windows",0.166667
-0,Overhangs,"2ft, Back Windows",0.166667
-0,Overhangs,"2ft, Left Windows",0.166667
-0,Overhangs,"2ft, Right Windows",0.166667
 0,Plug Load Diversity,400%,0.142857
 0,Plug Load Diversity,200%,0.142857
 0,Plug Load Diversity,150%,0.142857
@@ -656,11 +650,6 @@ Level,Parameter,Option,Saturation
 2,Geometry Building Horizontal Location SFA,Middle,0.0351852
 2,Geometry Building Horizontal Location SFA,Right,0.0379629
 2,Geometry Building Horizontal Location SFA,None,0.888889
-2,Clothes Dryer,Electric,0.25
-2,Clothes Dryer,Gas,0.25
-2,Clothes Dryer,None,0.25
-2,Clothes Dryer,Propane,0.25
-2,Clothes Dryer,Void,0
 2,Clothes Washer Presence,None,0.5
 2,Clothes Washer Presence,Yes,0.5
 2,Clothes Washer Presence,Void,0
@@ -795,6 +784,11 @@ Level,Parameter,Option,Saturation
 3,HVAC Secondary Heating Fuel,Other Fuel,0.0244898
 3,HVAC Secondary Heating Fuel,Propane,0.0244898
 3,HVAC Secondary Heating Fuel,Wood,0.0244898
+3,Clothes Dryer,Electric,0.25
+3,Clothes Dryer,Gas,0.25
+3,Clothes Dryer,None,0.25
+3,Clothes Dryer,Propane,0.25
+3,Clothes Dryer,Void,0
 3,Clothes Washer,EnergyStar,0.25
 3,Clothes Washer,None,0.5
 3,Clothes Washer,Standard,0.25

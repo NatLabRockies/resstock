@@ -113,7 +113,6 @@ Natural Ventilation,2.0,0.0,manually created,Schedule of natural ventilation fro
 Neighbors,6.0,0.0,manually created,Presence and distance between the dwelling unit and the nearest neighbors to the left and right.
 Occupants,11.0,1.0,sources\pums\pums2019_5yrs\tsv_maker.py,The number of occupants living in the dwelling unit.
 Orientation,16.0,0.0,manually created,Orientation of the front of the dwelling unit as it faces the street.
-Overhangs,6.0,0.0,manually created,"Presence, depth, and location of window overhangs (not used in project_national)."
 PV Orientation,9.0,1.0,sources\dpv\tsv_maker.py,The orientation of the photovoltaic system.
 PV System Size,8.0,1.0,sources\dpv\tsv_maker.py,The size of the photovoltaic system.
 Plug Load Diversity,7.0,0.0,manually created,Plug load diversity multiplier intended to add variation in plug load profiles across all simulations.

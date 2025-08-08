@@ -88,7 +88,6 @@ Level,Parameter,Option,Saturation
 0,Orientation,South,0.18484
 0,Orientation,Northwest,0.077049
 0,Orientation,Southeast,0.077049
-0,Overhangs,None,1
 0,Range Spot Vent Hour,Hour0,0.007
 0,Range Spot Vent Hour,Hour1,0.007
 0,Range Spot Vent Hour,Hour2,0.004
