@@ -44,16 +44,16 @@
       "measure_dir_name": "BuildResidentialScheduleFile"
   },
 	{
-            "measure_dir_name": "ResStockArgumentsPostHPXML",
-            "arguments": {
-                "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
-                "hvac_flex_peak_offset": 2,
-                "hvac_flex_pre_peak_duration_hours": 2,
-                "hvac_flex_pre_peak_offset": 3,
-                "flex_random_shift_minutes": 0,
-                "ev_flex_enabled": true,
-                "building_id": "1"
-            }
+      "measure_dir_name": "ResStockArgumentsPostHPXML",
+      "arguments": {
+          "hpxml_path": "measures/ResStockArgumentsPostHPXML/tests/run/test.xml",
+          "hvac_flex_peak_offset": 2,
+          "hvac_flex_pre_peak_duration_hours": 2,
+          "hvac_flex_pre_peak_offset": 3,
+          "flex_random_shift_minutes": 0,
+          "ev_flex_enabled": true,
+          "building_id": "1"
+      }
     },
     {
       "arguments": {

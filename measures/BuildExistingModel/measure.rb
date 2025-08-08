@@ -328,6 +328,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       options_measure_args, _errors = get_measure_args_from_option_names(lookup_csv_data, [option_name], parameter_name, lookup_file, runner)
       options_measure_args[option_name].each do |measure_subdir, args_hash|
         update_args_hash(measures, measure_subdir, args_hash)
+        update_args_hash(measures, 'ResStockArgumentsPostHPXML', args_hash) if measure_subdir == 'ResStockArguments'
       end
     end
 
@@ -457,6 +458,10 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     a_ext = air_infiltration_measurement.a_ext if !air_infiltration_measurement.a_ext.nil?
     register_value(runner, 'air_leakage_to_outside_ach_50', air_infiltration_measurement.air_leakage * a_ext)
 
+    # unavailable periods
+    register_unavailability_period(runner, hpxml, 'No Space Heating', 'heating_unavailable_period')
+    register_unavailability_period(runner, hpxml, 'No Space Cooling', 'cooling_unavailable_period')
+
     # weather file
     epw_path = Location.get_epw_path(hpxml_bldg, hpxml_path)
     epw_file = OpenStudio::EpwFile.new(epw_path)
@@ -466,8 +471,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
     # sample weight
     if bldg_data.keys.include?('sample_weight')
-      sample_weight = bldg_data['sample_weight']
-      register_value(runner, 'sample_weight', sample_weight.to_s)
+      register_value(runner, 'sample_weight', bldg_data['sample_weight'].to_s)
     end
 
     register_logs(runner, resstock_arguments_runner)
@@ -540,7 +544,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
       num_scenarios = args[:utility_bill_scenario_names].count(',') + 1
       utility_bill = {
-        'electricity_filepaths' => [','] * num_scenarios,
+        'electricity_filepaths' => [nil] * num_scenarios,
         'electricity_fixed_charges' => args[:utility_bill_electricity_fixed_charges].split(',').map(&:strip),
         'electricity_marginal_rates' => args[:utility_bill_electricity_marginal_rates].split(',').map(&:strip),
         'natural_gas_fixed_charges' => args[:utility_bill_natural_gas_fixed_charges].split(',').map(&:strip),
@@ -671,6 +675,21 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       utility_rate = utility_rates[0]
     end
     return utility_rate
+  end
+
+  def register_unavailability_period(runner, hpxml, unavailable_period_name, output_name)
+    year = hpxml.header.sim_calendar_year
+    month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+    unavail_period = hpxml.header.unavailable_periods.find { |p| p.column_name == unavailable_period_name }
+    if not unavail_period.nil?
+      begin_date = OpenStudio::Date::fromDayOfYear(Calendar.get_day_num_from_month_day(year, unavail_period.begin_month, unavail_period.begin_day), year)
+      end_date = OpenStudio::Date::fromDayOfYear(Calendar.get_day_num_from_month_day(year, unavail_period.end_month, unavail_period.end_day), year)
+      date_range = "#{month_names[begin_date.monthOfYear.value - 1]} #{begin_date.dayOfMonth} - #{month_names[end_date.monthOfYear.value - 1]} #{end_date.dayOfMonth}"
+      register_value(runner, output_name, date_range)
+    else
+      register_value(runner, output_name, 'Never')
+    end
   end
 end
 

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module Constants
-  Auto = 'auto'
   Heating = 'heating'
   Cooling = 'cooling'
   Weekday = 'weekday'
   Weekend = 'weekend'
 
   # Exclude these BuildResidentialHPXML arguments as ResStockArguments arguments
+  # TODO: Check if these are still needed
   BuildResidentialHPXMLExcludes = ['hpxml_path',
                                    'whole_sfa_or_mf_building_sim',
                                    'location_site_type',

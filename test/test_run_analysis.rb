@@ -376,7 +376,6 @@ class TestRunAnalysis < Minitest::Test
       next if message.include?('Building ID:')
 
       # Expected warnings
-      next if _expected_warning_message(message, 'The model contains existing objects and is being reset.')
       next if _expected_warning_message(message, 'HVAC setpoints have been automatically adjusted to prevent periods where the heating setpoint is greater than the cooling setpoint.')
       next if _expected_warning_message(message, 'It is not possible to eliminate all HVAC energy use (e.g. crankcase/defrost energy) in EnergyPlus during an unavailable period.')
       next if _expected_warning_message(message, 'It is not possible to eliminate all DHW energy use (e.g. water heater parasitics) in EnergyPlus during an unavailable period.')

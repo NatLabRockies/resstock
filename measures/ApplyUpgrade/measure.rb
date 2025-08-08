@@ -271,6 +271,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         options_measure_args, _errors = get_measure_args_from_option_names(lookup_csv_data, [option_name], parameter_name, lookup_file, runner)
         options_measure_args[option_name].each do |measure_subdir, args_hash|
           update_args_hash(measures, measure_subdir, args_hash)
+          update_args_hash(measures, 'ResStockArgumentsPostHPXML', args_hash) if measure_subdir == 'ResStockArguments'
         end
       end
 
@@ -309,6 +310,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
               new_args_hash[k] = v
             end
             update_args_hash(measures, measure_subdir, new_args_hash)
+            update_args_hash(measures, 'ResStockArgumentsPostHPXML', new_args_hash) if measure_subdir == 'ResStockArguments'
           end
         end
       end
