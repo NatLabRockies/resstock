@@ -3989,7 +3989,7 @@ module Defaults
         vehicle.miles_per_year = (vehicle.hours_per_week * miles_to_hrs_per_week).round
         vehicle.miles_per_year_isdefaulted = true
       elsif (not vehicle.miles_per_year.nil?) && vehicle.hours_per_week.nil?
-        vehicle.hours_per_week = (vehicle.miles_per_year / miles_to_hrs_per_week).round(2)
+        vehicle.hours_per_week = (vehicle.miles_per_year / miles_to_hrs_per_week).round(1)
         vehicle.hours_per_week_isdefaulted = true
       end
       if vehicle.fraction_charged_home.nil?
@@ -6158,7 +6158,7 @@ module Defaults
       else
         re = 0.252 * ef + 0.608
       end
-      return re
+      return re.round(3)
     end
   end
 
@@ -7288,8 +7288,8 @@ module Defaults
   def self.get_electric_vehicle_values()
     return { battery_type: HPXML::BatteryTypeLithiumIon,
              lifetime_model: HPXML::BatteryLifetimeModelNone,
-             miles_per_year: 10900,
-             hours_per_week: 9.5,
+             miles_per_year: 11000,
+             hours_per_week: 9.6,
              nominal_capacity_kwh: 63,
              nominal_voltage: 50.0,
              fuel_economy_combined: 0.22,

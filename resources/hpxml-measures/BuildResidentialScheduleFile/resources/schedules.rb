@@ -612,7 +612,7 @@ class ScheduleGenerator
     end
 
     vehicle = @hpxml_bldg.vehicles[0]
-    hours_per_year = (vehicle.hours_per_week / 7) * UnitConversions.convert(1, 'yr', 'day')
+    hours_per_year = ((vehicle.hours_per_week * vehicle.ev_usage_multiplier).round(1) / 7) * UnitConversions.convert(1, 'yr', 'day')
 
     occupant_away_hours_per_year = []
     mkc_activity_schedules.size.times do |i|
@@ -866,7 +866,7 @@ class ScheduleGenerator
     end
 
     vehicle = @hpxml_bldg.vehicles[0]
-    hours_per_year = (vehicle.hours_per_week / 7) * UnitConversions.convert(1, 'yr', 'day')
+    hours_per_year = ((vehicle.hours_per_week * vehicle.ev_usage_multiplier).round(1) / 7) * UnitConversions.convert(1, 'yr', 'day')
     away_index = 5 # Index of away activity in the markov-chain simulator
     away_schedule = markov_chain_simulation_result[@ev_occupant_number].column(away_index)
     charging_schedule, discharging_schedule = get_ev_battery_schedule(away_schedule, hours_per_year)

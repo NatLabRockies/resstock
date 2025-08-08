@@ -5035,8 +5035,8 @@ If not entered, the simulation will not include a detailed electric vehicle mode
   .. [#] If a connected charger is not provided, home electric vehicle charging will not be modeled.
   .. [#] If WeekdayScheduleFractions or WeekendScheduleFractions are not provided (and :ref:`schedules_detailed` not used), then :ref:`schedules_default` are used.
   .. [#] If MonthlyScheduleMultipliers are not provided (and :ref:`schedules_detailed` not used), then :ref:`schedules_default` are used.
-  .. [#] If MilesDrivenPerYear not provided, defaults to HoursDrivenPerWeek * 10900 / 9.5, else 10900 miles per `2017 National Household Travel Survey data <https://nhts.ornl.gov/>`_.
-  .. [#] If HoursDrivenPerWeek not provided, defaults to MilesDrivenPerYear * 9.5 / 10900, else 9.5 hours/week per `2017 National Household Travel Survey data <https://nhts.ornl.gov/>`_.
+  .. [#] If MilesDrivenPerYear not provided, defaults to HoursDrivenPerWeek * 11000 / 9.6, else 11000 miles per `2017 National Household Travel Survey data <https://nhts.ornl.gov/>`_.
+  .. [#] If HoursDrivenPerWeek not provided, defaults to MilesDrivenPerYear * 9.6 / 11000, else 9.6 hours/week per `2017 National Household Travel Survey data <https://nhts.ornl.gov/>`_.
   .. [#] If FuelEconomyCombined not provided, defaults to 0.22 kWh/mile per `2022 Autonomie release <https://vms.taps.anl.gov/tools/autonomie/>`_.
 
  .. note::
@@ -5719,7 +5719,7 @@ If not entered, the simulation will not include that type of plug load.
 
          \- **well pump**: 50.8 / 0.127 * (0.5 + 0.25 * NumberofBedrooms / 3 + 0.25 * ConditionedFloorArea / 1920) (based on the `2010 BAHSP <https://www1.eere.energy.gov/buildings/publications/pdfs/building_america/house_simulation.pdf>`_)
 
-         \- **electric vehicle charging**: 2368.4 (calculated using AnnualMiles * kWhPerMile * FractionChargedAtHome / (ChargerEfficiency * BatteryEfficiency) where AnnualMiles=10900, kWhPerMile=0.22, FractionChargedAtHome=0.8, ChargerEfficiency=0.9, and BatteryEfficiency=0.9). If this plug load type is specified, it will take precedence over an EV specified in :ref:`hpxml_vehicles`.
+         \- **electric vehicle charging**: 2368.4 (calculated using AnnualMiles * kWhPerMile * FractionChargedAtHome / (ChargerEfficiency * BatteryEfficiency) where AnnualMiles=11000, kWhPerMile=0.22, FractionChargedAtHome=0.8, ChargerEfficiency=0.9, and BatteryEfficiency=0.9). If this plug load type is specified, it will take precedence over an EV specified in :ref:`hpxml_vehicles`.
 
          If NumberofResidents is provided, the following defaults are used instead:
 

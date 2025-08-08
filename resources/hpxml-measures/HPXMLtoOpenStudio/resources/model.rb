@@ -1054,7 +1054,7 @@ module Model
       handles << obj.handle
     end
     if !handles.empty?
-      runner.registerWarning('The model contains existing objects and is being reset.')
+      runner.registerInfo('The model contains existing objects and is being reset.')
       model.removeObjects(handles)
     end
   end
