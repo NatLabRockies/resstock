@@ -5697,19 +5697,19 @@ module HPXMLFile
       sub_surface_height = Geometry.get_surface_height(sub_surface)
       sub_surface_facade = Geometry.get_surface_facade(sub_surface)
 
-      if (sub_surface_facade == Constants::FacadeFront) && ((args[:overhangs_front_depth] > 0) || args[:overhangs_front_distance_to_top_of_window] > 0)
+      if (sub_surface_facade == Constants::FacadeFront) && (args[:overhangs_front_depth] > 0)
         overhangs_depth = args[:overhangs_front_depth]
         overhangs_distance_to_top_of_window = args[:overhangs_front_distance_to_top_of_window]
         overhangs_distance_to_bottom_of_window = args[:overhangs_front_distance_to_bottom_of_window]
-      elsif (sub_surface_facade == Constants::FacadeBack) && ((args[:overhangs_back_depth] > 0) || args[:overhangs_back_distance_to_top_of_window] > 0)
+      elsif (sub_surface_facade == Constants::FacadeBack) && (args[:overhangs_back_depth] > 0)
         overhangs_depth = args[:overhangs_back_depth]
         overhangs_distance_to_top_of_window = args[:overhangs_back_distance_to_top_of_window]
         overhangs_distance_to_bottom_of_window = args[:overhangs_back_distance_to_bottom_of_window]
-      elsif (sub_surface_facade == Constants::FacadeLeft) && ((args[:overhangs_left_depth] > 0) || args[:overhangs_left_distance_to_top_of_window] > 0)
+      elsif (sub_surface_facade == Constants::FacadeLeft) && (args[:overhangs_left_depth] > 0)
         overhangs_depth = args[:overhangs_left_depth]
         overhangs_distance_to_top_of_window = args[:overhangs_left_distance_to_top_of_window]
         overhangs_distance_to_bottom_of_window = args[:overhangs_left_distance_to_bottom_of_window]
-      elsif (sub_surface_facade == Constants::FacadeRight) && ((args[:overhangs_right_depth] > 0) || args[:overhangs_right_distance_to_top_of_window] > 0)
+      elsif (sub_surface_facade == Constants::FacadeRight) && (args[:overhangs_right_depth] > 0)
         overhangs_depth = args[:overhangs_right_depth]
         overhangs_distance_to_top_of_window = args[:overhangs_right_distance_to_top_of_window]
         overhangs_distance_to_bottom_of_window = args[:overhangs_right_distance_to_bottom_of_window]

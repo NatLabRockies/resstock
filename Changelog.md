@@ -8,6 +8,7 @@ __New Features__
 __Bugfixes__
 - Fixes ground-source heat pump plant loop fluid type (workaround for OpenStudio bug).
 - Fixes default hours driven per week for electric vehicles (8.88 -> 9.5).
+- Fixes empty TimeDST/TimeUTC columns in JSON timeseries data.
 
 ## OpenStudio-HPXML v1.10.0
 
