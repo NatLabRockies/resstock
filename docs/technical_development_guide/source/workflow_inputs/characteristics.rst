@@ -35386,6 +35386,78 @@ Arguments
      - Double
      -
      - The eaves depth of the roof.
+   * - ``overhangs_front_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the front facade.
+   * - ``overhangs_front_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the front facade.
+   * - ``overhangs_front_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the front facade.
+   * - ``overhangs_back_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the back facade.
+   * - ``overhangs_back_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the back facade.
+   * - ``overhangs_back_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the back facade.
+   * - ``overhangs_left_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the left facade.
+   * - ``overhangs_left_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the left facade.
+   * - ``overhangs_left_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the left facade.
+   * - ``overhangs_right_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the right facade.
+   * - ``overhangs_right_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the right facade.
+   * - ``overhangs_right_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the right facade.
 
 Options
 *******
@@ -35400,10 +35472,34 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
      - ``geometry_eaves_depth``
+     - ``overhangs_front_depth``
+     - ``overhangs_front_distance_to_top_of_window``
+     - ``overhangs_front_distance_to_bottom_of_window``
+     - ``overhangs_back_depth``
+     - ``overhangs_back_distance_to_top_of_window``
+     - ``overhangs_back_distance_to_bottom_of_window``
+     - ``overhangs_left_depth``
+     - ``overhangs_left_distance_to_top_of_window``
+     - ``overhangs_left_distance_to_bottom_of_window``
+     - ``overhangs_right_depth``
+     - ``overhangs_right_distance_to_top_of_window``
+     - ``overhangs_right_distance_to_bottom_of_window``
 
    * - 2 ft
      - 100%
      - 2
+     - 0
+     - 1
+     - 4
+     - 0
+     - 1
+     - 4
+     - 0
+     - 1
+     - 4
+     - 0
+     - 1
+     - 4
 
 .. _electric_vehicle_battery:
 
@@ -35798,37 +35894,37 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - 1000
      - 11%
-     - 1000
+     - 1100
    * - 3000
      - 11%
-     - 3000
+     - 2750
    * - 5000
      - 13%
-     - 5000
+     - 5500
    * - 7000
      - 13%
-     - 7000
+     - 8250
    * - 9000
      - 12%
-     - 9000
+     - 8250
    * - 11000
      - 11%
      - 11000
    * - 13000
      - 9.3%
-     - 13000
+     - 13750
    * - 15000
      - 7.5%
-     - 15000
+     - 13750
    * - 17000
      - 5.9%
-     - 17000
+     - 16500
    * - 19000
      - 4.6%
-     - 19000
+     - 19250
    * - 22500
      - 1.6%
-     - 22500
+     - 22000
 
 .. _electric_vehicle_outlet_access:
 
@@ -44120,19 +44216,19 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - R-5, Exterior
      - 1.2%
      - auto
-     - 5
+     - 0
      - 0
      - 0
    * - R-10, Exterior
      - 2.8%
      - auto
-     - 10
+     - 0
      - 0
      - 0
    * - R-15, Exterior
      - 0.52%
      - auto
-     - 15
+     - 0
      - 0
      - 0
 
@@ -44542,19 +44638,19 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - CMU, 6-in Hollow, R-7
      - 0.4%
      - ConcreteMasonryUnit
-     - 9.4
+     - 9.7
    * - CMU, 6-in Hollow, R-11
      - 0.9%
      - ConcreteMasonryUnit
-     - 12.4
+     - 13.0
    * - CMU, 6-in Hollow, R-15
      - 0.17%
      - ConcreteMasonryUnit
-     - 15
+     - 15.9
    * - CMU, 6-in Hollow, R-19
      - 0.43%
      - ConcreteMasonryUnit
-     - 17.4
+     - 19.7
    * - Brick, 12-in, 3-wythe, Uninsulated
      - 9.9%
      - StructuralBrick
@@ -48699,155 +48795,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Southeast
      - 7.7%
      - 135
-
-.. _overhangs:
-
-Overhangs
----------
-
-Description
-***********
-
-Presence, depth, and location of window overhangs (not used in project_national).
-
-Created by
-**********
-
-manually created
-
-Source
-******
-
-- \Not applicable
-
-- \all homes are assumed to not have window overhangs other than eaves.
-
-
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``overhangs_front_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the front facade.
-   * - ``overhangs_front_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the front facade.
-   * - ``overhangs_front_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the front facade.
-   * - ``overhangs_back_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the back facade.
-   * - ``overhangs_back_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the back facade.
-   * - ``overhangs_back_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the back facade.
-   * - ``overhangs_left_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the left facade.
-   * - ``overhangs_left_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the left facade.
-   * - ``overhangs_left_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the left facade.
-   * - ``overhangs_right_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the right facade.
-   * - ``overhangs_right_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the right facade.
-   * - ``overhangs_right_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the right facade.
-
-Options
-*******
-
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Overhangs** characteristic.
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-   :widths: auto
-
-   * - Option name
-     - Stock saturation
-     - ``overhangs_front_depth``
-     - ``overhangs_front_distance_to_top_of_window``
-     - ``overhangs_front_distance_to_bottom_of_window``
-     - ``overhangs_back_depth``
-     - ``overhangs_back_distance_to_top_of_window``
-     - ``overhangs_back_distance_to_bottom_of_window``
-     - ``overhangs_left_depth``
-     - ``overhangs_left_distance_to_top_of_window``
-     - ``overhangs_left_distance_to_bottom_of_window``
-     - ``overhangs_right_depth``
-     - ``overhangs_right_distance_to_top_of_window``
-     - ``overhangs_right_distance_to_bottom_of_window``
-
-   * - None
-     - 100%
-     - 0
-     - 0
-     - 4
-     - 0
-     - 0
-     - 4
-     - 0
-     - 0
-     - 4
-     - 0
-     - 0
-     - 4
 
 .. _puma:
 
@@ -63895,7 +63842,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - 0
-     - 6.2
+     - auto
      - auto
      - auto
      - auto
@@ -63924,7 +63871,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - 0
-     - 6.2
+     - auto
      - auto
      - auto
      - auto
@@ -63953,7 +63900,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - 0
-     - 6.2
+     - auto
      - auto
      - auto
      - auto
@@ -64069,7 +64016,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - 0
-     - 6.2
+     - auto
      - auto
      - auto
      - auto
