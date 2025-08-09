@@ -188,6 +188,26 @@ Source
 - \Climate zone data are from ASHRAE 169 2006, IECC 2012, and M.C. Baechler 2015.
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``site_iecc_zone``
+     - false
+     - 
+     - Choice
+     - 1A, 1B, 1C, 2A, 2B, 2C, 3A, 3B, 3C, 4A, 4B, 4C, 5A, 5B, 5C, 6A, 6B, 6C, 7, 8
+     - IECC zone of the home address.
+
 Options
 *******
 
@@ -200,41 +220,59 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``site_iecc_zone``
 
    * - 1A
      - 1.8%
+     - 1A
    * - 2A
      - 12%
+     - 2A
    * - 2B
      - 2%
+     - 2B
    * - 3A
      - 13%
+     - 3A
    * - 3B
      - 9.3%
+     - 3B
    * - 3C
      - 2.3%
+     - 3C
    * - 4A
      - 22%
+     - 4A
    * - 4B
      - 0.77%
+     - 4B
    * - 4C
      - 2.9%
+     - 4C
    * - 5A
      - 23%
+     - 5A
    * - 5B
      - 3.8%
+     - 5B
    * - 6A
      - 6.1%
+     - 6A
    * - 6B
      - 0.92%
+     - 6B
    * - 7A
      - 0.79%
+     - 7
    * - 7AK
      - 0.18%
+     - 7
    * - 7B
      - 0.11%
+     - 7
    * - 8AK
      - 0.052%
+     - 8
 
 .. _ashrae_iecc_climate_zone_2004___sub_cz_split:
 
@@ -391,6 +429,26 @@ Source
 - \Same as occupancy schedule from Wilson et al. 'Building America House Simulation Protocols' 2014
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``bathroom_fans_start_hour``
+     - false
+     - 
+     - Integer
+     -
+     - The hour of the day when the bathroom fans run.
+
 Options
 *******
 
@@ -403,55 +461,80 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``bathroom_fans_start_hour``
 
    * - Hour0
      - 6.1%
+     - 0
    * - Hour1
      - 6.1%
+     - 1
    * - Hour2
      - 6.1%
+     - 2
    * - Hour3
      - 6.1%
+     - 3
    * - Hour4
      - 6.1%
+     - 4
    * - Hour5
      - 6.1%
+     - 5
    * - Hour6
      - 6.1%
+     - 6
    * - Hour7
      - 5.3%
+     - 7
    * - Hour8
      - 2.5%
+     - 8
    * - Hour9
      - 1.5%
+     - 9
    * - Hour10
      - 1.5%
+     - 10
    * - Hour11
      - 1.5%
+     - 11
    * - Hour12
      - 1.5%
+     - 12
    * - Hour13
      - 1.5%
+     - 13
    * - Hour14
      - 1.5%
+     - 14
    * - Hour15
      - 1.5%
+     - 15
    * - Hour16
      - 1.8%
+     - 16
    * - Hour17
      - 3.3%
+     - 17
    * - Hour18
      - 5.4%
+     - 18
    * - Hour19
      - 5.4%
+     - 19
    * - Hour20
      - 5.4%
+     - 20
    * - Hour21
      - 6.1%
+     - 21
    * - Hour22
      - 6.1%
+     - 22
    * - Hour23
      - 6.1%
+     - 23
 
 .. _battery:
 
@@ -461,7 +544,7 @@ Battery
 Description
 ***********
 
-The presence, size, location, and efficiency of an onsite battery (not modeled in project_national).
+The size of an onsite battery (not modeled in project_national).
 
 Created by
 **********
@@ -491,7 +574,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, 5.0 kWh, 7.5 kWh, 10.0 kWh, 12.5 kWh, 15.0 kWh, 17.5 kWh, 20.0 kWh, Detailed Example: 20.0 kWh, 6 kW, Garage, Detailed Example: 20.0 kWh, 6 kW, Outside, Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency
+     - None, 5.0 kWh, 7.5 kWh, 10.0 kWh, 12.5 kWh, 15.0 kWh, 17.5 kWh, 20.0 kWh, Detailed Example: 20.0 kWh, 6 kW, Garage, Detailed Example: 20.0 kWh, 6 kW, Outside, Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency
      - The size and type of battery storage.
 
 Options
@@ -514,6 +597,9 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - 10 kWh
      - 0%
      - 10.0 kWh
+   * - 20 kWh
+     - 0%
+     - 20.0 kWh
 
 .. _bedrooms:
 
@@ -569,7 +655,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Default, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+     - Default, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
      - The number of bathrooms in the unit. Defaults to NumberofBedrooms/2 + 0.5.
 
 Options
@@ -792,7 +878,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, #Bedrooms+1 Fans, 45 W, #Bedrooms+1 Fans, 30 W, #Bedrooms+1 Fans, 15 W, 1 Fan, 45 W, 1 Fan, 30 W, 1 Fan, 15 W, 2 Fans, 45 W, 2 Fans, 30 W, 2 Fans, 15 W, 3 Fans, 45 W, 3 Fans, 30 W, 3 Fans, 15 W, 4 Fans, 45 W, 4 Fans, 30 W, 4 Fans, 15 W, 5 Fans, 45 W, 5 Fans, 30 W, 5 Fans, 15 W, Detailed Example: 4 Fans, 39 W, 0.5 deg-F Setpoint Offset, Detailed Example: 4 Fans, 100 cfm/W, 0.5 deg-F Setpoint Offset
+     - None, #Bedrooms+1 Fans, 45.0 W, #Bedrooms+1 Fans, 37.5 W, #Bedrooms+1 Fans, 30.0 W, #Bedrooms+1 Fans, 22.5 W, #Bedrooms+1 Fans, 15.0 W, 1 Fan, 45.0 W, 1 Fan, 37.5 W, 1 Fan, 30.0 W, 1 Fan, 22.5 W, 1 Fan, 15.0 W, 2 Fans, 45.0 W, 2 Fans, 37.5 W, 2 Fans, 30.0 W, 2 Fans, 22.5 W, 2 Fans, 15.0 W, 3 Fans, 45.0 W, 3 Fans, 37.5 W, 3 Fans, 30.0 W, 3 Fans, 22.5 W, 3 Fans, 15.0 W, 4 Fans, 45.0 W, 4 Fans, 37.5 W, 4 Fans, 30.0 W, 4 Fans, 22.5 W, 4 Fans, 15.0 W, 5 Fans, 45.0 W, 5 Fans, 37.5 W, 5 Fans, 30.0 W, 5 Fans, 22.5 W, 5 Fans, 15.0 W, Detailed Example: 4 Fans, 39 W, 0.5 deg-F Setpoint Offset, Detailed Example: 4 Fans, 100 cfm/W, 0.5 deg-F Setpoint Offset
      - The type of ceiling fans.
 
 Options
@@ -814,7 +900,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
    * - Standard Efficiency
      - 63%
-     - #Bedrooms+1 Fans, 45 W
+     - #Bedrooms+1 Fans, 45.0 W
    * - Standard Efficiency, No usage
      - 8.7%
      - None
@@ -1006,7 +1092,7 @@ Source
 Assumption
 **********
 
-- \2020 Deccenial Redistricting data was used to map tract level unit counts to census blocks.
+- \2020 Decennial Redistricting data was used to map tract level unit counts to census blocks.
 
 - \1,099 cities are tagged in ResStock, but there are over 29,000 Places in the Census data.
 
@@ -3305,7 +3391,7 @@ Assumption
 
   - \[8] State coarsened to National
 
-- \In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Heating Fuel','Clothers Washer Presence'], ['Tenure', 'Federal Poverty Level']).
+- \In combining the dwelling unit sub-tsv and household sub-tsv, the conditional relationships are ignored across (['Heating Fuel','Clothes Washer Presence'], ['Tenure', 'Federal Poverty Level']).
 
 
 Arguments
@@ -3325,7 +3411,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Electricity, Standard, 50% Usage, Electricity, Standard, 75% Usage, Electricity, Standard, 100% Usage, Electricity, Standard, 150% Usage, Electricity, Standard, 200% Usage, Electricity, Premium, 50% Usage, Electricity, Premium, 75% Usage, Electricity, Premium, 100% Usage, Electricity, Premium, 150% Usage, Electricity, Premium, 200% Usage, Electricity, Heat Pump, 50% Usage, Electricity, Heat Pump, 75% Usage, Electricity, Heat Pump, 100% Usage, Electricity, Heat Pump, 150% Usage, Electricity, Heat Pump, 200% Usage, Natural Gas, Standard, 50% Usage, Natural Gas, Standard, 75% Usage, Natural Gas, Standard, 100% Usage, Natural Gas, Standard, 150% Usage, Natural Gas, Standard, 200% Usage, Natural Gas, Premium, 50% Usage, Natural Gas, Premium, 75% Usage, Natural Gas, Premium, 100% Usage, Natural Gas, Premium, 150% Usage, Natural Gas, Premium, 200% Usage, Propane, Standard, 50% Usage, Propane, Standard, 75% Usage, Propane, Standard, 100% Usage, Propane, Standard, 150% Usage, Propane, Standard, 200% Usage, Detailed Example: Electricity, ERI Reference 2006, Detailed Example: Natural Gas, ERI Reference 2006, Detailed Example: Electricity, EF 4.29, Detailed Example: Electricity, Standard, Conditioned Basement, Detailed Example: Electricity, Standard, Unconditioned Basement, Detailed Example: Electricity, Standard, Garage
+     - None, Electricity, Standard, 50% Usage, Electricity, Standard, 75% Usage, Electricity, Standard, 100% Usage, Electricity, Standard, 150% Usage, Electricity, Standard, 200% Usage, Electricity, Premium, 50% Usage, Electricity, Premium, 75% Usage, Electricity, Premium, 100% Usage, Electricity, Premium, 150% Usage, Electricity, Premium, 200% Usage, Electricity, Heat Pump, 50% Usage, Electricity, Heat Pump, 75% Usage, Electricity, Heat Pump, 100% Usage, Electricity, Heat Pump, 150% Usage, Electricity, Heat Pump, 200% Usage, Natural Gas, Standard, 50% Usage, Natural Gas, Standard, 75% Usage, Natural Gas, Standard, 100% Usage, Natural Gas, Standard, 150% Usage, Natural Gas, Standard, 200% Usage, Natural Gas, Premium, 50% Usage, Natural Gas, Premium, 75% Usage, Natural Gas, Premium, 100% Usage, Natural Gas, Premium, 150% Usage, Natural Gas, Premium, 200% Usage, Propane, Standard, 50% Usage, Propane, Standard, 75% Usage, Propane, Standard, 100% Usage, Propane, Standard, 150% Usage, Propane, Standard, 200% Usage, Detailed Example: Electricity, ERI Reference 2006, Detailed Example: Natural Gas, ERI Reference 2006, Detailed Example: Electricity, EF 4.29, Detailed Example: Electricity, Standard, Conditioned Basement, Detailed Example: Electricity, Standard, Unconditioned Basement, Detailed Example: Electricity, Standard, Garage
      - The type and usage of clothes dryer.
 
 Options
@@ -3385,6 +3471,26 @@ Assumption
 - \Engineering judgement
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``clothes_dryer_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low usage occupants.
+
 Options
 *******
 
@@ -3397,13 +3503,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``clothes_dryer_usage_multiplier``
 
    * - 80% Usage
      - 25%
+     - 0.8
    * - 100% Usage
      - 50%
+     - 1.0
    * - 120% Usage
      - 25%
+     - 1.2
 
 .. _clothes_washer:
 
@@ -3473,7 +3583,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Standard, 2008-2017, 50% Usage, Standard, 2008-2017, 75% Usage, Standard, 2008-2017, 100% Usage, Standard, 2008-2017, 150% Usage, Standard, 2008-2017, 200% Usage, Standard, 2018-present, 50% Usage, Standard, 2018-present, 75% Usage, Standard, 2018-present, 100% Usage, Standard, 2018-present, 150% Usage, Standard, 2018-present, 200% Usage, EnergyStar, 2006-2017, 50% Usage, EnergyStar, 2006-2017, 75% Usage, EnergyStar, 2006-2017, 100% Usage, EnergyStar, 2006-2017, 150% Usage, EnergyStar, 2006-2017, 200% Usage, EnergyStar, 2018-present, 50% Usage, EnergyStar, 2018-present, 75% Usage, EnergyStar, 2018-present, 100% Usage, EnergyStar, 2018-present, 150% Usage, EnergyStar, 2018-present, 200% Usage, CEE Tier II, 2018, 50% Usage, CEE Tier II, 2018, 75% Usage, CEE Tier II, 2018, 100% Usage, CEE Tier II, 2018, 150% Usage, CEE Tier II, 2018, 200% Usage, Detailed Example: ERI Reference 2006, Detailed Example: MEF 1.65, Detailed Example: Standard, 2008-2017, Conditioned Basement, Detailed Example: Standard, 2008-2017, Unconditioned Basement, Detailed Example: Standard, 2008-2017, Garage
+     - None, Standard, 2008-2017, 50% Usage, Standard, 2008-2017, 75% Usage, Standard, 2008-2017, 100% Usage, Standard, 2008-2017, 150% Usage, Standard, 2008-2017, 200% Usage, Standard, 2018-present, 50% Usage, Standard, 2018-present, 75% Usage, Standard, 2018-present, 100% Usage, Standard, 2018-present, 150% Usage, Standard, 2018-present, 200% Usage, EnergyStar, 2006-2017, 50% Usage, EnergyStar, 2006-2017, 75% Usage, EnergyStar, 2006-2017, 100% Usage, EnergyStar, 2006-2017, 150% Usage, EnergyStar, 2006-2017, 200% Usage, EnergyStar, 2018-present, 50% Usage, EnergyStar, 2018-present, 75% Usage, EnergyStar, 2018-present, 100% Usage, EnergyStar, 2018-present, 150% Usage, EnergyStar, 2018-present, 200% Usage, CEE Tier II, 2018, 50% Usage, CEE Tier II, 2018, 75% Usage, CEE Tier II, 2018, 100% Usage, CEE Tier II, 2018, 150% Usage, CEE Tier II, 2018, 200% Usage, Detailed Example: ERI Reference 2006, Detailed Example: MEF 1.65, Detailed Example: Standard, 2008-2017, Conditioned Basement, Detailed Example: Standard, 2008-2017, Unconditioned Basement, Detailed Example: Standard, 2008-2017, Garage
      - The type and usage of clothes washer.
 
 Options
@@ -3617,6 +3727,26 @@ Assumption
 - \Engineering judgement
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``clothes_washer_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the clothes washer energy usage that can reflect, e.g., high/low usage occupants.
+
 Options
 *******
 
@@ -3629,13 +3759,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``clothes_washer_usage_multiplier``
 
    * - 80% Usage
      - 25%
+     - 0.8
    * - 100% Usage
      - 50%
+     - 1.0
    * - 120% Usage
      - 25%
+     - 1.2
 
 .. _cooking_range:
 
@@ -3725,7 +3859,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Electricity, Standard, Non-Convection, 50% Usage, Electricity, Standard, Non-Convection, 75% Usage, Electricity, Standard, Non-Convection, 100% Usage, Electricity, Standard, Non-Convection, 150% Usage, Electricity, Standard, Non-Convection, 200% Usage, Electricity, Standard, Convection, 50% Usage, Electricity, Standard, Convection, 75% Usage, Electricity, Standard, Convection, 100% Usage, Electricity, Standard, Convection, 150% Usage, Electricity, Standard, Convection, 200% Usage, Electricity, Induction, Non-Convection, 50% Usage, Electricity, Induction, Non-Convection, 75% Usage, Electricity, Induction, Non-Convection, 100% Usage, Electricity, Induction, Non-Convection, 150% Usage, Electricity, Induction, Non-Convection, 200% Usage, Electricity, Induction, Convection, 50% Usage, Electricity, Induction, Convection, 75% Usage, Electricity, Induction, Convection, 100% Usage, Electricity, Induction, Convection, 150% Usage, Electricity, Induction, Convection, 200% Usage, Natural Gas, Non-Convection, 50% Usage, Natural Gas, Non-Convection, 75% Usage, Natural Gas, Non-Convection, 100% Usage, Natural Gas, Non-Convection, 150% Usage, Natural Gas, Non-Convection, 200% Usage, Natural Gas, Convection, 50% Usage, Natural Gas, Convection, 75% Usage, Natural Gas, Convection, 100% Usage, Natural Gas, Convection, 150% Usage, Natural Gas, Convection, 200% Usage, Propane, Non-Convection, 50% Usage, Propane, Non-Convection, 75% Usage, Propane, Non-Convection, 100% Usage, Propane, Non-Convection, 150% Usage, Propane, Non-Convection, 200% Usage, Propane, Convection, 50% Usage, Propane, Convection, 75% Usage, Propane, Convection, 100% Usage, Propane, Convection, 150% Usage, Propane, Convection, 200% Usage, Detailed Example: Electricity, Standard, Non-Convection, Conditioned Basement, Detailed Example: Electricity, Standard, Non-Convection, Unconditioned Basement, Detailed Example: Electricity, Standard, Non-Convection, Garage
+     - None, Electricity, Standard, Non-Convection, 50% Usage, Electricity, Standard, Non-Convection, 75% Usage, Electricity, Standard, Non-Convection, 100% Usage, Electricity, Standard, Non-Convection, 150% Usage, Electricity, Standard, Non-Convection, 200% Usage, Electricity, Standard, Convection, 50% Usage, Electricity, Standard, Convection, 75% Usage, Electricity, Standard, Convection, 100% Usage, Electricity, Standard, Convection, 150% Usage, Electricity, Standard, Convection, 200% Usage, Electricity, Induction, Non-Convection, 50% Usage, Electricity, Induction, Non-Convection, 75% Usage, Electricity, Induction, Non-Convection, 100% Usage, Electricity, Induction, Non-Convection, 150% Usage, Electricity, Induction, Non-Convection, 200% Usage, Electricity, Induction, Convection, 50% Usage, Electricity, Induction, Convection, 75% Usage, Electricity, Induction, Convection, 100% Usage, Electricity, Induction, Convection, 150% Usage, Electricity, Induction, Convection, 200% Usage, Natural Gas, Non-Convection, 50% Usage, Natural Gas, Non-Convection, 75% Usage, Natural Gas, Non-Convection, 100% Usage, Natural Gas, Non-Convection, 150% Usage, Natural Gas, Non-Convection, 200% Usage, Natural Gas, Convection, 50% Usage, Natural Gas, Convection, 75% Usage, Natural Gas, Convection, 100% Usage, Natural Gas, Convection, 150% Usage, Natural Gas, Convection, 200% Usage, Propane, Non-Convection, 50% Usage, Propane, Non-Convection, 75% Usage, Propane, Non-Convection, 100% Usage, Propane, Non-Convection, 150% Usage, Propane, Non-Convection, 200% Usage, Propane, Convection, 50% Usage, Propane, Convection, 75% Usage, Propane, Convection, 100% Usage, Propane, Convection, 150% Usage, Propane, Convection, 200% Usage, Detailed Example: Electricity, Standard, Non-Convection, Conditioned Basement, Detailed Example: Electricity, Standard, Non-Convection, Unconditioned Basement, Detailed Example: Electricity, Standard, Non-Convection, Garage
      - The type and usage of cooking range/oven.
 
 Options
@@ -3788,6 +3922,26 @@ Assumption
 - \Engineering judgement
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``cooking_range_oven_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants.
+
 Options
 *******
 
@@ -3800,13 +3954,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``cooking_range_oven_usage_multiplier``
 
    * - 80% Usage
      - 25%
+     - 0.8
    * - 100% Usage
      - 50%
+     - 1.0
    * - 120% Usage
      - 25%
+     - 1.2
 
 .. _cooling_setpoint:
 
@@ -3850,12 +4008,6 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``hvac_control_cooling_season_period``
-     - false
-     - 
-     - String
-     -
-     - Enter a date range like 'Jun 1 - Oct 31'. Defaults to year-round cooling availability.
    * - ``hvac_control_cooling_weekday_setpoint_temp``
      - true
      - deg-F
@@ -3868,7 +4020,7 @@ Arguments
      - Double
      -
      - Specify the weekend cooling setpoint temperature.
-   * - ``use_auto_cooling_season``
+   * - ``hvac_control_use_auto_cooling_season``
      - true
      - 
      - Boolean
@@ -3887,80 +4039,67 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``hvac_control_cooling_season_period``
      - ``hvac_control_cooling_weekday_setpoint_temp``
      - ``hvac_control_cooling_weekend_setpoint_temp``
-     - ``use_auto_cooling_season``
+     - ``hvac_control_use_auto_cooling_season``
 
    * - 60F
      - 3.2%
-     - auto
      - 60
      - 60
      - false
    * - 62F
      - 0.98%
-     - auto
      - 62
      - 62
      - false
    * - 65F
      - 4.1%
-     - auto
      - 65
      - 65
      - false
    * - 67F
      - 2%
-     - auto
      - 67
      - 67
      - false
    * - 68F
      - 12%
-     - auto
      - 68
      - 68
      - false
    * - 70F
      - 19%
-     - auto
      - 70
      - 70
      - false
    * - 72F
      - 20%
-     - auto
      - 72
      - 72
      - false
    * - 75F
      - 19%
-     - auto
      - 75
      - 75
      - false
    * - 76F
      - 8%
-     - auto
      - 76
      - 76
      - false
    * - 78F
      - 7.9%
-     - auto
      - 78
      - 78
      - false
    * - 80F
      - 4.8%
-     - auto
      - 80
      - 80
      - false
    * - Void
      - 0%
-     - 
      - 
      - 
      - 
@@ -4409,6 +4548,26 @@ Source
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``schedules_space_cooling_unavailable_days``
+     - false
+     - 
+     - Integer
+     -
+     - Number of days space cooling equipment is unavailable.
+
 Options
 *******
 
@@ -4421,25 +4580,35 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``schedules_space_cooling_unavailable_days``
 
    * - 1 day
      - 0.64%
+     - 1
    * - 1 month
      - 0.95%
+     - 30
    * - 1 week
      - 0.87%
+     - 7
    * - 2 weeks
      - 0.74%
+     - 14
    * - 3 days
      - 1.1%
+     - 3
    * - 3 months
      - 0.61%
+     - 90
    * - Never
      - 95%
+     - 0
    * - Year round
      - 0.23%
+     - 365
    * - Void
      - 0%
+     - 
 
 .. _corridor:
 
@@ -26386,13 +26555,13 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Portable, 15 pints/day, Portable, 20 pints/day, Portable, 30 pints/day, Portable, 40 pints/day, Whole-Home, 60 pints/day, Whole-Home, 75 pints/day, Whole-Home, 95 pints/day, Whole-Home, 125 pints/day, Detailed Example: Portable, 40 pints/day, EF 1.8
+     - None, Portable, 15 pints/day, Portable, 20 pints/day, Portable, 30 pints/day, Portable, 40 pints/day, Whole-Home, 60 pints/day, Whole-Home, 75 pints/day, Whole-Home, 95 pints/day, Whole-Home, 125 pints/day, Detailed Example: Portable, 40 pints/day, EF 1.8
      - The type of dehumidifier.
    * - ``appliance_dehumidifier_setpoint``
      - false
      - 
      - Choice
-     - auto, 40% RH, 45% RH, 50% RH, 55% RH, 60% RH, 65% RH
+     - 40% RH, 45% RH, 50% RH, 55% RH, 60% RH, 65% RH
      - The dehumidifier's relative humidity (RH) setpoint.
 
 Options
@@ -26479,7 +26648,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Federal Minimum, Standard, 50% Usage, Federal Minimum, Standard, 75% Usage, Federal Minimum, Standard, 100% Usage, Federal Minimum, Standard, 150% Usage, Federal Minimum, Standard, 200% Usage, EnergyStar, Standard, 50% Usage, EnergyStar, Standard, 75% Usage, EnergyStar, Standard, 100% Usage, EnergyStar, Standard, 150% Usage, EnergyStar, Standard, 200% Usage, EnergyStar, Compact, 50% Usage, EnergyStar, Compact, 75% Usage, EnergyStar, Compact, 100% Usage, EnergyStar, Compact, 150% Usage, EnergyStar, Compact, 200% Usage, Detailed Example: ERI Reference 2006, Detailed Example: EF 0.7, Compact, Detailed Example: Federal Minimum, Standard, Conditioned Basement, Detailed Example: Federal Minimum, Standard, Unconditioned Basement, Detailed Example: Federal Minimum, Standard, Garage
+     - None, Federal Minimum, Standard, 50% Usage, Federal Minimum, Standard, 75% Usage, Federal Minimum, Standard, 100% Usage, Federal Minimum, Standard, 150% Usage, Federal Minimum, Standard, 200% Usage, EnergyStar, Standard, 50% Usage, EnergyStar, Standard, 75% Usage, EnergyStar, Standard, 100% Usage, EnergyStar, Standard, 150% Usage, EnergyStar, Standard, 200% Usage, EnergyStar, Compact, 50% Usage, EnergyStar, Compact, 75% Usage, EnergyStar, Compact, 100% Usage, EnergyStar, Compact, 150% Usage, EnergyStar, Compact, 200% Usage, Detailed Example: ERI Reference 2006, Detailed Example: EF 0.7, Compact, Detailed Example: Federal Minimum, Standard, Conditioned Basement, Detailed Example: Federal Minimum, Standard, Unconditioned Basement, Detailed Example: Federal Minimum, Standard, Garage
      - The type and usage of dishwasher.
 
 Options
@@ -26499,12 +26668,12 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - EnergyStar
      - 30%
      - EnergyStar, Standard, 100% Usage
-   * - Standard
-     - 42%
-     - Federal Minimum, Standard, 100% Usage
    * - None
      - 28%
      - None
+   * - Standard
+     - 42%
+     - Federal Minimum, Standard, 100% Usage
    * - Void
      - 0%
      - 
@@ -26536,6 +26705,26 @@ Assumption
 - \Engineering judgement
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``dishwasher_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage occupants.
+
 Options
 *******
 
@@ -26548,13 +26737,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``dishwasher_usage_multiplier``
 
    * - 80% Usage
      - 25%
+     - 0.8
    * - 100% Usage
      - 50%
+     - 1.0
    * - 120% Usage
      - 25%
+     - 1.2
 
 .. _door_area:
 
@@ -26653,7 +26846,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Solid Wood, R-2, Solid Wood, R-3, Insulated Fiberglass/Steel, R-4, Insulated Fiberglass/Steel, R-5, Insulated Fiberglass/Steel, R-6, Insulated Fiberglass/Steel, R-7, IECC U-1.20, IECC U-0.75, IECC U-0.65, IECC U-0.50, IECC U-0.40, IECC U-0.35, IECC U-0.32, IECC U-0.30, Detailed Example: Solid Wood, R-3.04, Detailed Example: Insulated Fiberglass/Steel, R-4.4
+     - Solid Wood, R-2, Solid Wood, R-3, Insulated Fiberglass/Steel, R-4, Insulated Fiberglass/Steel, R-5, Insulated Fiberglass/Steel, R-6, Insulated Fiberglass/Steel, R-7, IECC U-1.20, IECC U-0.75, IECC U-0.65, IECC U-0.50, IECC U-0.40, IECC U-0.35, IECC U-0.32, IECC U-0.30, Detailed Example: Solid Wood, R-3.04, Detailed Example: Insulated Fiberglass/Steel, R-4.4
      - The type of doors.
 
 Options
@@ -26824,13 +27017,13 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Default, Conditioned Space, Basement, Crawlspace, Attic, Garage, Outside, Exterior Wall, Under Slab, Roof Deck, Manufactured Home Belly, Detailed Example: Attic, 75%
+     - Default, Conditioned Space, Basement, Crawlspace, Attic, Garage, Outside, Exterior Wall, Under Slab, Roof Deck, Manufactured Home Belly, Detailed Example: Attic, 75%
      - The primary location of the supply ducts. The remainder of the supply ducts are assumed to be in conditioned space. Defaults based on the foundation/attic/garage type.
    * - ``hvac_ducts_return_location``
      - false
      - 
      - Choice
-     - auto, Default, Conditioned Space, Basement, Crawlspace, Attic, Garage, Outside, Exterior Wall, Under Slab, Roof Deck, Manufactured Home Belly, Detailed Example: Attic, 75%
+     - Default, Conditioned Space, Basement, Crawlspace, Attic, Garage, Outside, Exterior Wall, Under Slab, Roof Deck, Manufactured Home Belly, Detailed Example: Attic, 75%
      - The primary location of the return ducts. The remainder of the return ducts are assumed to be in conditioned space. Defaults based on the foundation/attic/garage type.
 
 Options
@@ -26915,8 +27108,14 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, 1 ft, 2 ft, 3 ft, 4 ft, 5 ft
+     - None, 1 ft, 2 ft, 3 ft, 4 ft, 5 ft
      - The type of eaves extending from the roof.
+   * - ``enclosure_overhangs``
+     - false
+     - 
+     - Choice
+     - None, 1ft, All Windows, 2ft, All Windows, 3ft, All Windows, 4ft, All Windows, 5ft, All Windows, 10ft, All Windows, 1ft, Front Windows, 2ft, Front Windows, 3ft, Front Windows, 4ft, Front Windows, 5ft, Front Windows, 10ft, Front Windows, 1ft, Back Windows, 2ft, Back Windows, 3ft, Back Windows, 4ft, Back Windows, 5ft, Back Windows, 10ft, Back Windows, 1ft, Left Windows, 2ft, Left Windows, 3ft, Left Windows, 4ft, Left Windows, 5ft, Left Windows, 10ft, Left Windows, 1ft, Right Windows, 2ft, Right Windows, 3ft, Right Windows, 4ft, Right Windows, 5ft, Right Windows, 10ft, Right Windows, Detailed Example: 1.5ft, Back/Left/Right Windows, 2ft Offset, 4ft Window Height, Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height
+     - The type of window overhangs.
 
 Options
 *******
@@ -26931,10 +27130,12 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
      - ``geometry_eaves``
+     - ``enclosure_overhangs``
 
    * - 2 ft
      - 100%
      - 2 ft
+     - None
 
 .. _electric_vehicle_battery:
 
@@ -26984,13 +27185,13 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Compact, 200 Mile Range, 25% Usage, Compact, 200 Mile Range, 50% Usage, Compact, 200 Mile Range, 75% Usage, Compact, 200 Mile Range, 100% Usage, Compact, 200 Mile Range, 150% Usage, Compact, 200 Mile Range, 200% Usage, Compact, 200 Mile Range, 400% Usage, Compact, 300 Mile Range, 25% Usage, Compact, 300 Mile Range, 50% Usage, Compact, 300 Mile Range, 75% Usage, Compact, 300 Mile Range, 100% Usage, Compact, 300 Mile Range, 150% Usage, Compact, 300 Mile Range, 200% Usage, Compact, 300 Mile Range, 400% Usage, Midsize, 200 Mile Range, 25% Usage, Midsize, 200 Mile Range, 50% Usage, Midsize, 200 Mile Range, 75% Usage, Midsize, 200 Mile Range, 100% Usage, Midsize, 200 Mile Range, 150% Usage, Midsize, 200 Mile Range, 200% Usage, Midsize, 200 Mile Range, 400% Usage, Midsize, 300 Mile Range, 25% Usage, Midsize, 300 Mile Range, 50% Usage, Midsize, 300 Mile Range, 75% Usage, Midsize, 300 Mile Range, 100% Usage, Midsize, 300 Mile Range, 150% Usage, Midsize, 300 Mile Range, 200% Usage, Midsize, 300 Mile Range, 400% Usage, Pickup, 200 Mile Range, 25% Usage, Pickup, 200 Mile Range, 50% Usage, Pickup, 200 Mile Range, 75% Usage, Pickup, 200 Mile Range, 100% Usage, Pickup, 200 Mile Range, 150% Usage, Pickup, 200 Mile Range, 200% Usage, Pickup, 200 Mile Range, 400% Usage, Pickup, 300 Mile Range, 25% Usage, Pickup, 300 Mile Range, 50% Usage, Pickup, 300 Mile Range, 75% Usage, Pickup, 300 Mile Range, 100% Usage, Pickup, 300 Mile Range, 150% Usage, Pickup, 300 Mile Range, 200% Usage, Pickup, 300 Mile Range, 400% Usage, SUV, 200 Mile Range, 25% Usage, SUV, 200 Mile Range, 50% Usage, SUV, 200 Mile Range, 75% Usage, SUV, 200 Mile Range, 100% Usage, SUV, 200 Mile Range, 150% Usage, SUV, 200 Mile Range, 200% Usage, SUV, 200 Mile Range, 400% Usage, SUV, 300 Mile Range, 25% Usage, SUV, 300 Mile Range, 50% Usage, SUV, 300 Mile Range, 75% Usage, SUV, 300 Mile Range, 100% Usage, SUV, 300 Mile Range, 150% Usage, SUV, 300 Mile Range, 200% Usage, SUV, 300 Mile Range, 400% Usage, Detailed Example: 100 kWh battery, 0.25 kWh/mile, Detailed Example: 100 kWh battery, 4.0 miles/kWh, Detailed Example: 100 kWh battery, 135.0 mpge
+     - None, Compact, 200 Mile Range, 10% Usage, Compact, 200 Mile Range, 25% Usage, Compact, 200 Mile Range, 50% Usage, Compact, 200 Mile Range, 75% Usage, Compact, 200 Mile Range, 100% Usage, Compact, 200 Mile Range, 125% Usage, Compact, 200 Mile Range, 150% Usage, Compact, 200 Mile Range, 175% Usage, Compact, 200 Mile Range, 200% Usage, Compact, 300 Mile Range, 10% Usage, Compact, 300 Mile Range, 25% Usage, Compact, 300 Mile Range, 50% Usage, Compact, 300 Mile Range, 75% Usage, Compact, 300 Mile Range, 100% Usage, Compact, 300 Mile Range, 125% Usage, Compact, 300 Mile Range, 150% Usage, Compact, 300 Mile Range, 175% Usage, Compact, 300 Mile Range, 200% Usage, Midsize, 200 Mile Range, 10% Usage, Midsize, 200 Mile Range, 25% Usage, Midsize, 200 Mile Range, 50% Usage, Midsize, 200 Mile Range, 75% Usage, Midsize, 200 Mile Range, 100% Usage, Midsize, 200 Mile Range, 125% Usage, Midsize, 200 Mile Range, 150% Usage, Midsize, 200 Mile Range, 175% Usage, Midsize, 200 Mile Range, 200% Usage, Midsize, 300 Mile Range, 10% Usage, Midsize, 300 Mile Range, 25% Usage, Midsize, 300 Mile Range, 50% Usage, Midsize, 300 Mile Range, 75% Usage, Midsize, 300 Mile Range, 100% Usage, Midsize, 300 Mile Range, 125% Usage, Midsize, 300 Mile Range, 150% Usage, Midsize, 300 Mile Range, 175% Usage, Midsize, 300 Mile Range, 200% Usage, Pickup, 200 Mile Range, 10% Usage, Pickup, 200 Mile Range, 25% Usage, Pickup, 200 Mile Range, 50% Usage, Pickup, 200 Mile Range, 75% Usage, Pickup, 200 Mile Range, 100% Usage, Pickup, 200 Mile Range, 125% Usage, Pickup, 200 Mile Range, 150% Usage, Pickup, 200 Mile Range, 175% Usage, Pickup, 200 Mile Range, 200% Usage, Pickup, 300 Mile Range, 10% Usage, Pickup, 300 Mile Range, 25% Usage, Pickup, 300 Mile Range, 50% Usage, Pickup, 300 Mile Range, 75% Usage, Pickup, 300 Mile Range, 100% Usage, Pickup, 300 Mile Range, 125% Usage, Pickup, 300 Mile Range, 150% Usage, Pickup, 300 Mile Range, 175% Usage, Pickup, 300 Mile Range, 200% Usage, SUV, 200 Mile Range, 10% Usage, SUV, 200 Mile Range, 25% Usage, SUV, 200 Mile Range, 50% Usage, SUV, 200 Mile Range, 75% Usage, SUV, 200 Mile Range, 100% Usage, SUV, 200 Mile Range, 125% Usage, SUV, 200 Mile Range, 150% Usage, SUV, 200 Mile Range, 175% Usage, SUV, 200 Mile Range, 200% Usage, SUV, 300 Mile Range, 10% Usage, SUV, 300 Mile Range, 25% Usage, SUV, 300 Mile Range, 50% Usage, SUV, 300 Mile Range, 75% Usage, SUV, 300 Mile Range, 100% Usage, SUV, 300 Mile Range, 125% Usage, SUV, 300 Mile Range, 150% Usage, SUV, 300 Mile Range, 175% Usage, SUV, 300 Mile Range, 200% Usage, Detailed Example: 100 kWh battery, 0.25 kWh/mile, Detailed Example: 100 kWh battery, 4.0 miles/kWh, Detailed Example: 100 kWh battery, 135.0 mpge
      - The type of battery electric vehicle.
    * - ``misc_electric_vehicle_charging``
      - false
      - 
      - Choice
-     - auto, None, 25% Usage, 33% Usage, 50% Usage, 75% Usage, 80% Usage, 90% Usage, 100% Usage, 110% Usage, 125% Usage, 150% Usage, 200% Usage, 300% Usage, 400% Usage, Detailed Example: 1500 kWh/yr, Detailed Example: 3000 kWh/yr
+     - None, 25% Usage, 33% Usage, 50% Usage, 75% Usage, 80% Usage, 90% Usage, 100% Usage, 110% Usage, 125% Usage, 150% Usage, 200% Usage, 300% Usage, 400% Usage, Detailed Example: 1500 kWh/yr, Detailed Example: 3000 kWh/yr
      - The amount of EV charging usage, relative to the national average. Only use this if a detailed EV & EV charger were not otherwise specified.
 
 Options
@@ -27068,6 +27269,26 @@ Assumption
 - \Due to low sample count, the tsv is constructed by downscaling a dwelling unit sub-tsv with a household sub-tsv. The two sub-tsvs have the following dependencies: tsv1 dependency=['Geometry Building Type RECS'], tsv2 dependency=['Federal Poverty Level'], In combining tsv1 and tsv2, the conditional relationships are ignored across ('Geometry Building Type RECS' and 'Federal Poverty Level').
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``ev_fraction_charged_home``
+     - false
+     - 
+     - Double
+     -
+     - The fraction of charging energy provided by the at-home charger to the electric vehicle.
+
 Options
 *******
 
@@ -27080,19 +27301,26 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``ev_fraction_charged_home``
 
    * - 0-19%
      - 13%
+     - 0.10
    * - 20-39%
      - 1.4%
+     - 0.30
    * - 40-59%
      - 1.9%
+     - 0.50
    * - 60-79%
      - 7.3%
+     - 0.70
    * - 80-99%
      - 34%
+     - 0.90
    * - 100%
      - 42%
+     - 1.00
 
 .. _electric_vehicle_charger:
 
@@ -27148,7 +27376,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Level 1, 10% Charging at Home, Level 1, 30% Charging at Home, Level 1, 50% Charging at Home, Level 1, 70% Charging at Home, Level 1, 90% Charging at Home, Level 1, 100% Charging at Home, Level 2, 10% Charging at Home, Level 2, 30% Charging at Home, Level 2, 50% Charging at Home, Level 2, 70% Charging at Home, Level 2, 90% Charging at Home, Level 2, 100% Charging at Home, Detailed Example: Level 2, 7000 W, 75% Charging at Home
+     - None, Level 1, 10% Charging at Home, Level 1, 30% Charging at Home, Level 1, 50% Charging at Home, Level 1, 70% Charging at Home, Level 1, 90% Charging at Home, Level 1, 100% Charging at Home, Level 2, 10% Charging at Home, Level 2, 30% Charging at Home, Level 2, 50% Charging at Home, Level 2, 70% Charging at Home, Level 2, 90% Charging at Home, Level 2, 100% Charging at Home, Detailed Example: Level 2, 7000 W, 75% Charging at Home
      - The type and usage of electric vehicle charger.
 
 Options
@@ -27199,6 +27427,26 @@ Source
 - \the 2022 U.S. Federal Highway Administration National Household Travel Survey (NHTS) microdata.
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``ev_usage_multiplier``
+     - false
+     - miles
+     - Double
+     -
+     - Multiplier on the electric vehicle miles driven that can reflect, e.g., high/low usage occupants.
+
 Options
 *******
 
@@ -27211,29 +27459,41 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``ev_usage_multiplier``
 
    * - 1000
      - 11%
+     - 0.1
    * - 3000
      - 11%
+     - 0.25
    * - 5000
      - 13%
+     - 0.5
    * - 7000
      - 13%
+     - 0.75
    * - 9000
      - 12%
+     - 0.75
    * - 11000
      - 11%
+     - 1.0
    * - 13000
      - 9.3%
+     - 1.25
    * - 15000
      - 7.5%
+     - 1.25
    * - 17000
      - 5.9%
+     - 1.5
    * - 19000
      - 4.6%
+     - 1.75
    * - 22500
      - 1.6%
+     - 2.0
 
 .. _electric_vehicle_outlet_access:
 
@@ -27336,7 +27596,7 @@ Assumption
 
 - \PUMA level battery electric vehicle saturation is calculated using a weighted average of the County level Experian data and ResStock unit counts for each County and PUMA.
 
-- \The RECS 2020 satuations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery electric vehicle saturation using the segment unit counts from PUMS 2019-5yrs survey.
+- \The RECS 2020 saturations for each segment in a given PUMA are scaled to match the Experian PUMA weighted averaged battery electric vehicle saturation using the segment unit counts from PUMS 2019-5yrs survey.
 
 
 Options
@@ -27475,7 +27735,7 @@ Generation And Emissions Assessment Region
 Description
 ***********
 
-The generation and carbon emissions assessment region that the sample is located.
+The generation and carbon emissions assessment region that the sample is located in.
 
 Created by
 **********
@@ -27485,7 +27745,7 @@ Created by
 Source
 ******
 
-- \Pieter Gagnon, Will Frazier, Wesley Cole, and Elaine Hale. 2021. Cambium Documentation: Version 2021. Golden, CO.: National Renewable Energy Laboratory. NREL/TP-6A40-81611. https://www.nrel.gov/docs/fy22osti/81611.pdf
+- \Gagnon, Pieter, Sanchez Perez, Pedro Andres, Obika, Kodi, et al., Cambium 2023 Scenario Descriptions and Documentation, (2024), https://doi.org/10.2172/2316014f
 
 
 Options
@@ -27501,48 +27761,44 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
 
-   * - AZNMc
-     - 3.6%
-   * - CAMXc
+   * - CAISO
      - 10%
-   * - ERCTc
+   * - ERCOT
      - 6.8%
-   * - FRCCc
+   * - FRCC
      - 6.5%
-   * - MROEc
-     - 0.97%
-   * - MROWc
-     - 4.3%
-   * - NEWEc
+   * - ISONE
      - 4.8%
+   * - MISO Central
+     - 7.6%
+   * - MISO North
+     - 5%
+   * - MISO South
+     - 3.3%
    * - None
      - 0.63%
-   * - NWPPc
-     - 5.5%
-   * - NYSTc
+   * - Northern Grid East
+     - 0.95%
+   * - Northern Grid South
+     - 1.7%
+   * - Northern Grid West
+     - 3.5%
+   * - NYISO
      - 6.1%
-   * - RFCEc
-     - 8.2%
-   * - RFCMc
-     - 3.3%
-   * - RFCWc
-     - 12%
-   * - RMPAc
+   * - PJM East
+     - 17%
+   * - PJM West
+     - 3%
+   * - SERTP
+     - 13%
+   * - SPP North
+     - 0.94%
+   * - SPP South
+     - 3.8%
+   * - West Connect North
      - 1.9%
-   * - SPNOc
-     - 1.8%
-   * - SPSOc
-     - 2.1%
-   * - SRMVc
-     - 3.3%
-   * - SRMWc
-     - 2.3%
-   * - SRSOc
-     - 5.1%
-   * - SRTVc
-     - 3.7%
-   * - SRVCc
-     - 7.1%
+   * - West Connect South
+     - 3%
 
 .. _geometry_attic_type:
 
@@ -27596,7 +27852,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, 1:12, 2:12, 3:12, 4:12, 5:12, 6:12, 7:12, 8:12, 9:12, 10:12, 11:12, 12:12, 13:12, 14:12, 15:12, 16:12
+     - 1:12, 2:12, 3:12, 4:12, 5:12, 6:12, 7:12, 8:12, 9:12, 10:12, 11:12, 12:12, 13:12, 14:12, 15:12, 16:12
      - The roof pitch of the attic. Ignored if the building has a flat roof.
 
 Options
@@ -28127,7 +28383,7 @@ Geometry Building Type ACS
 Description
 ***********
 
-The building type classification according to the U.S. Census American Communicy Survey.
+The building type classification according to the U.S. Census American Community Survey.
 
 Created by
 **********
@@ -28265,7 +28521,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, 6.0 ft, 6.5 ft, 7.0 ft, 7.5 ft, 8.0 ft, 8.5 ft, 9.0 ft, 9.5 ft, 10.0 ft, 10.5 ft, 11.0 ft, 11.5 ft, 12.0 ft, 12.5 ft, 13.0 ft, 13.5 ft, 14.0 ft, 14.5 ft, 15.0 ft
+     - 6.0 ft, 6.5 ft, 7.0 ft, 7.5 ft, 8.0 ft, 8.5 ft, 9.0 ft, 9.5 ft, 10.0 ft, 10.5 ft, 11.0 ft, 11.5 ft, 12.0 ft, 12.5 ft, 13.0 ft, 13.5 ft, 14.0 ft, 14.5 ft, 15.0 ft
      - Average distance from the floor to the ceiling.
    * - ``geometry_facility_type``
      - true
@@ -28368,12 +28624,6 @@ Arguments
      - String
      -
      - E.g., '2000-2499'.
-   * - ``geometry_unit_cfa``
-     - true
-     - ft^2
-     - String
-     - auto
-     - The total floor area of the unit's conditioned space (including any conditioned basement floor area). E.g., '2000' or 'auto'.
 
 Options
 *******
@@ -28388,44 +28638,34 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
      - ``geometry_unit_cfa_bin``
-     - ``geometry_unit_cfa``
 
    * - 0-499
      - 3.2%
      - 0-499
-     - auto
    * - 500-749
      - 8.5%
      - 500-749
-     - auto
    * - 750-999
      - 15%
      - 750-999
-     - auto
    * - 1000-1499
      - 26%
      - 1000-1499
-     - auto
    * - 1500-1999
      - 19%
      - 1500-1999
-     - auto
    * - 2000-2499
      - 12%
      - 2000-2499
-     - auto
    * - 2500-2999
      - 6.5%
      - 2500-2999
-     - auto
    * - 3000-3999
      - 6.1%
      - 3000-3999
-     - auto
    * - 4000+
      - 3%
      - 4000+
-     - auto
 
 .. _geometry_floor_area_bin:
 
@@ -28624,7 +28864,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, 1 Car, Left, Fully Inset, 1 Car, Left, Half Protruding, 1 Car, Left, Fully Protruding, 1 Car, Right, Fully Inset, 1 Car, Right, Half Protruding, 1 Car, Right, Fully Protruding, 2 Car, Left, Fully Inset, 2 Car, Left, Half Protruding, 2 Car, Left, Fully Protruding, 2 Car, Right, Fully Inset, 2 Car, Right, Half Protruding, 2 Car, Right, Fully Protruding, 3 Car, Left, Fully Inset, 3 Car, Left, Half Protruding, 3 Car, Left, Fully Protruding, 3 Car, Right, Fully Inset, 3 Car, Right, Half Protruding, 3 Car, Right, Fully Protruding
+     - None, 1 Car, Left, Fully Inset, 1 Car, Left, Half Protruding, 1 Car, Left, Fully Protruding, 1 Car, Right, Fully Inset, 1 Car, Right, Half Protruding, 1 Car, Right, Fully Protruding, 2 Car, Left, Fully Inset, 2 Car, Left, Half Protruding, 2 Car, Left, Fully Protruding, 2 Car, Right, Fully Inset, 2 Car, Right, Half Protruding, 2 Car, Right, Fully Protruding, 3 Car, Left, Fully Inset, 3 Car, Left, Half Protruding, 3 Car, Left, Fully Protruding, 3 Car, Right, Fully Inset, 3 Car, Right, Half Protruding, 3 Car, Right, Fully Protruding
      - The type of attached garage. Only applies to single-family detached units.
 
 Options
@@ -29193,7 +29433,7 @@ Assumption
 
 - \Rows where sample size < 10 are replaced with aggregated values down-scaled from dep='State' to dep='Census Division RECS'
 
-- \Brick wall types are assumed to not have an aditional brick exterior finish
+- \Brick wall types are assumed to not have an additional brick exterior finish
 
 - \Steel and wood frame walls must have an exterior finish
 
@@ -29215,7 +29455,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Aluminum, Dark, Aluminum, Medium, Aluminum, Medium Dark, Aluminum, Light, Aluminum, Reflective, Brick, Dark, Brick, Medium, Brick, Medium Dark, Brick, Light, Brick, Reflective, Fiber-Cement, Dark, Fiber-Cement, Medium, Fiber-Cement, Medium Dark, Fiber-Cement, Light, Fiber-Cement, Reflective, Asbestos, Dark, Asbestos, Medium, Asbestos, Medium Dark, Asbestos, Light, Asbestos, Reflective, Composition Shingle, Dark, Composition Shingle, Medium, Composition Shingle, Medium Dark, Composition Shingle, Light, Composition Shingle, Reflective, Stucco, Dark, Stucco, Medium, Stucco, Medium Dark, Stucco, Light, Stucco, Reflective, Vinyl, Dark, Vinyl, Medium, Vinyl, Medium Dark, Vinyl, Light, Vinyl, Reflective, Wood, Dark, Wood, Medium, Wood, Medium Dark, Wood, Light, Wood, Reflective, Synthetic Stucco, Dark, Synthetic Stucco, Medium, Synthetic Stucco, Medium Dark, Synthetic Stucco, Light, Synthetic Stucco, Reflective, Masonite, Dark, Masonite, Medium, Masonite, Medium Dark, Masonite, Light, Masonite, Reflective, Detailed Example: 0.2 Solar Absorptance, Detailed Example: 0.4 Solar Absorptance, Detailed Example: 0.6 Solar Absorptance, Detailed Example: 0.75 Solar Absorptance
+     - None, Aluminum, Dark, Aluminum, Medium, Aluminum, Medium Dark, Aluminum, Light, Aluminum, Reflective, Brick, Dark, Brick, Medium, Brick, Medium Dark, Brick, Light, Brick, Reflective, Fiber-Cement, Dark, Fiber-Cement, Medium, Fiber-Cement, Medium Dark, Fiber-Cement, Light, Fiber-Cement, Reflective, Asbestos, Dark, Asbestos, Medium, Asbestos, Medium Dark, Asbestos, Light, Asbestos, Reflective, Composition Shingle, Dark, Composition Shingle, Medium, Composition Shingle, Medium Dark, Composition Shingle, Light, Composition Shingle, Reflective, Stucco, Dark, Stucco, Medium, Stucco, Medium Dark, Stucco, Light, Stucco, Reflective, Vinyl, Dark, Vinyl, Medium, Vinyl, Medium Dark, Vinyl, Light, Vinyl, Reflective, Wood, Dark, Wood, Medium, Wood, Medium Dark, Wood, Light, Wood, Reflective, Synthetic Stucco, Dark, Synthetic Stucco, Medium, Synthetic Stucco, Medium Dark, Synthetic Stucco, Light, Synthetic Stucco, Reflective, Masonite, Dark, Masonite, Medium, Masonite, Medium Dark, Masonite, Light, Masonite, Reflective, Detailed Example: 0.2 Solar Absorptance, Detailed Example: 0.4 Solar Absorptance, Detailed Example: 0.6 Solar Absorptance, Detailed Example: 0.75 Solar Absorptance
      - The type, color, and insulation level of the wall siding. The R-value of the siding will be ignored if a wall option with an IECC U-factor is selected.
 
 Options
@@ -29367,7 +29607,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Unknown, Clay, Dry, Clay, Mixed, Clay, Wet, Gravel, Dry, Gravel, Mixed, Gravel, Wet, Loam, Dry, Loam, Mixed, Loam, Wet, Sand, Dry, Sand, Mixed, Sand, Wet, Silt, Dry, Silt, Mixed, Silt, Wet, 0.5 Btu/hr-ft-F, 0.8 Btu/hr-ft-F, 1.1 Btu/hr-ft-F, 1.4 Btu/hr-ft-F, 1.7 Btu/hr-ft-F, 2.0 Btu/hr-ft-F, 2.3 Btu/hr-ft-F, 2.6 Btu/hr-ft-F, Detailed Example: Sand, Dry, 0.03 Diffusivity
+     - Unknown, Clay, Dry, Clay, Mixed, Clay, Wet, Gravel, Dry, Gravel, Mixed, Gravel, Wet, Loam, Dry, Loam, Mixed, Loam, Wet, Sand, Dry, Sand, Mixed, Sand, Wet, Silt, Dry, Silt, Mixed, Silt, Wet, 0.5 Btu/hr-ft-F, 0.8 Btu/hr-ft-F, 1.1 Btu/hr-ft-F, 1.4 Btu/hr-ft-F, 1.7 Btu/hr-ft-F, 2.0 Btu/hr-ft-F, 2.3 Btu/hr-ft-F, 2.6 Btu/hr-ft-F, Detailed Example: Sand, Dry, 0.03 Diffusivity
      - The soil and moisture type.
 
 Options
@@ -29436,6 +29676,32 @@ Assumption
 - \HVAC sizing follows ACCA Manual J and Manual S. There is no additional oversizing or undersizing the airflow and capacity of the HVAC system.
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``cooling_system_cooling_autosizing_factor``
+     - false
+     - 
+     - Double
+     -
+     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+   * - ``heat_pump_cooling_autosizing_factor``
+     - false
+     - 
+     - Double
+     -
+     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+
 Options
 *******
 
@@ -29448,11 +29714,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``cooling_system_cooling_autosizing_factor``
+     - ``heat_pump_cooling_autosizing_factor``
 
    * - None
      - 100%
+     - 
+     - 
    * - 40% Oversized
      - 0%
+     - 1.4
+     - 1.0
 
 .. _hvac_cooling_efficiency:
 
@@ -29506,7 +29778,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Autosize, 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
+     - Autosize, 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
      - The output capacity of the cooling system.
 
 Options
@@ -29625,7 +29897,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
      - The fraction of the cooling load served by the cooling system.
 
 Options
@@ -29687,7 +29959,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -29695,7 +29967,7 @@ Assumption
 
 - \Due to low sample sizes, fallback rules applied with lumping of
 
-- \1) HVAC Heating type: Non-ducted heating and None2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs binsHomes having ducted heat pump for heating and electricity fuel is assumed to haveducted heat pump for cooling (seperating from central AC category)
+- \1) HVAC Heating type: Non-ducted heating and None2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs binsHomes having ducted heat pump for heating and electricity fuel is assumed to haveducted heat pump for cooling (separating from central AC category)
 
 - \Homes having non-ducted heat pump for heating is assumed to have non-ducted heat pumpfor cooling
 
@@ -29703,9 +29975,9 @@ Assumption
 
 - \For Hawaii, Non-Ducted Heat Pump saturation is underestimated because ResStock does not currently allow cooling-only Non-Ducted Heat Pumps. These samples are modeled as Room ACs
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
-- \For Alaska, we are not modelling any central and room AC.
+- \For Alaska, we are not modeling any central and room AC.
 
 - \For Alaska, cooling systems are never shared.
 
@@ -29916,6 +30188,44 @@ Assumption
 - \HVAC sizing follows ACCA Manual J and Manual S. There is no additional oversizing or undersizing the airflow and capacity of the HVAC system.
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``heating_system_heating_autosizing_factor``
+     - false
+     - 
+     - Double
+     -
+     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+   * - ``heating_system_2_heating_autosizing_factor``
+     - false
+     - 
+     - Double
+     -
+     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+   * - ``heat_pump_heating_autosizing_factor``
+     - false
+     - 
+     - Double
+     -
+     - The capacity scaling factor applied to the auto-sizing methodology. If not provided, 1.0 is used.
+   * - ``heat_pump_backup_heating_autosizing_factor``
+     - false
+     - 
+     - Double
+     -
+     - The capacity scaling factor applied to the auto-sizing methodology if Backup Type is integrated.
+
 Options
 *******
 
@@ -29928,11 +30238,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``heating_system_heating_autosizing_factor``
+     - ``heating_system_2_heating_autosizing_factor``
+     - ``heat_pump_heating_autosizing_factor``
+     - ``heat_pump_backup_heating_autosizing_factor``
 
    * - None
      - 100%
+     - 
+     - 
+     - 
+     - 
    * - 40% Oversized
      - 0%
+     - 1.4
+     - 1.0
+     - 1.0
+     - 1.0
 
 .. _hvac_heating_efficiency:
 
@@ -29958,7 +30280,7 @@ Source
 
 - \Efficiency data based on expanded_HESC_HVAC_efficiencies.tsv combined with age of equipment data from RECS
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -29978,9 +30300,9 @@ Assumption
 
 - \For Other Fuel and Wood, the lowest efficiency systems are assumed.
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
-- \For Alaska, electric space heaters are modelled as electric baseboards.
+- \For Alaska, electric space heaters are modeled as electric baseboards.
 
 - \For Alaska, Toyo/monitor direct-vent devices and other fuel space heaters are not modeled.
 
@@ -30012,13 +30334,13 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Autosize, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit, Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit
+     - Autosize, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit, Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit
      - The output capacity of the heating system.
    * - ``hvac_heating_system_heating_load_served``
      - false
      - 
      - Choice
-     - auto, 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
      - The fraction of the heating load served by the heating system.
    * - ``hvac_heat_pump``
      - true
@@ -30030,50 +30352,56 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Autosize, Autosize (ACCA), Autosize (MaxLoad), 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
+     - Autosize, Autosize (ACCA), Autosize (MaxLoad), 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
      - The output capacity of the heat pump.
    * - ``hvac_heat_pump_heating_load_served``
      - false
      - 
      - Choice
-     - auto, 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
      - The fraction of the heating load served by the heat pump.
    * - ``hvac_heat_pump_cooling_load_served``
      - false
      - 
      - Choice
-     - auto, 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
      - The fraction of the cooling load served by the heat pump.
    * - ``hvac_heat_pump_temperatures``
      - false
      - 
      - Choice
-     - auto, Default, -20F Min Compressor Temp, -15F Min Compressor Temp, -10F Min Compressor Temp, -5F Min Compressor Temp, 0F Min Compressor Temp, 5F Min Compressor Temp, 10F Min Compressor Temp, 15F Min Compressor Temp, 20F Min Compressor Temp, 25F Min Compressor Temp, 30F Min Compressor Temp, 35F Min Compressor Temp, 40F Min Compressor Temp, 30F Min Compressor Temp, 30F Max HP Backup Temp, 35F Min Compressor Temp, 35F Max HP Backup Temp, 40F Min Compressor Temp, 40F Max HP Backup Temp, Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp, Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp
+     - Default, -20F Min Compressor Temp, -15F Min Compressor Temp, -10F Min Compressor Temp, -5F Min Compressor Temp, 0F Min Compressor Temp, 5F Min Compressor Temp, 10F Min Compressor Temp, 15F Min Compressor Temp, 20F Min Compressor Temp, 25F Min Compressor Temp, 30F Min Compressor Temp, 35F Min Compressor Temp, 40F Min Compressor Temp, 30F Min Compressor Temp, 30F Max HP Backup Temp, 35F Min Compressor Temp, 35F Max HP Backup Temp, 40F Min Compressor Temp, 40F Max HP Backup Temp, Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp, Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp
      - Specifies the minimum compressor temperature and/or maximum HP backup temperature. If both are the same, a binary switchover temperature is used.
    * - ``hvac_heat_pump_backup``
      - false
      - 
      - Choice
-     - auto, None, Integrated, Electricity, 100% Efficiency, Integrated, Natural Gas, 60% AFUE, Integrated, Natural Gas, 76% AFUE, Integrated, Natural Gas, 80% AFUE, Integrated, Natural Gas, 92.5% AFUE, Integrated, Natural Gas, 95% AFUE, Integrated, Fuel Oil, 60% AFUE, Integrated, Fuel Oil, 76% AFUE, Integrated, Fuel Oil, 80% AFUE, Integrated, Fuel Oil, 92.5% AFUE, Integrated, Fuel Oil, 95% AFUE, Integrated, Propane, 60% AFUE, Integrated, Propane, 76% AFUE, Integrated, Propane, 80% AFUE, Integrated, Propane, 92.5% AFUE, Integrated, Propane, 95% AFUE, Separate Heating System
+     - None, Integrated, Electricity, 100% Efficiency, Integrated, Natural Gas, 60% AFUE, Integrated, Natural Gas, 76% AFUE, Integrated, Natural Gas, 80% AFUE, Integrated, Natural Gas, 92.5% AFUE, Integrated, Natural Gas, 95% AFUE, Integrated, Fuel Oil, 60% AFUE, Integrated, Fuel Oil, 76% AFUE, Integrated, Fuel Oil, 80% AFUE, Integrated, Fuel Oil, 92.5% AFUE, Integrated, Fuel Oil, 95% AFUE, Integrated, Propane, 60% AFUE, Integrated, Propane, 76% AFUE, Integrated, Propane, 80% AFUE, Integrated, Propane, 92.5% AFUE, Integrated, Propane, 95% AFUE, Separate Heating System
      - The type and efficiency of the heat pump backup. Use 'None' if there is no backup heating. If Backup Type is Separate Heating System, Heating System 2 is used to specify the backup.
    * - ``hvac_heat_pump_backup_capacity``
      - false
      - 
      - Choice
-     - auto, Autosize, Autosize (Supplemental), 5 kW, 10 kW, 15 kW, 20 kW, 25 kW, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit
+     - Autosize, Autosize (Supplemental), 5 kW, 10 kW, 15 kW, 20 kW, 25 kW, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit
      - The output capacity of the heat pump backup if there is integrated backup heating.
    * - ``hvac_geothermal_loop``
      - false
      - 
      - Choice
-     - auto, Default, Vertical Loop, Enhanced Grout, Vertical Loop, Enhanced Pipe, Vertical Loop, Enhanced Grout & Pipe, Detailed Example: Lopsided U Configuration, 10 Boreholes
+     - Default, Vertical Loop, Enhanced Grout, Vertical Loop, Enhanced Pipe, Vertical Loop, Enhanced Grout & Pipe, Detailed Example: Lopsided U Configuration, 10 Boreholes
      - The geothermal loop configuration if there's a ground-to-air heat pump.
    * - ``advanced_feature``
      - false
      - 
      - Choice
-     - auto, None, Temperature Capacitance Multiplier, 1, Temperature Capacitance Multiplier, 4, Temperature Capacitance Multiplier, 10, Temperature Capacitance Multiplier, 15, On/Off Thermostat Deadband, 1F, On/Off Thermostat Deadband, 2F, On/Off Thermostat Deadband, 3F, Heat Pump Backup Staging, 5 kW, Heat Pump Backup Staging, 10 kW, Experimental Ground-to-Air Heat Pump Model, HVAC Allow Increased Fixed Capacities
+     - None, Temperature Capacitance Multiplier, 1, Temperature Capacitance Multiplier, 4, Temperature Capacitance Multiplier, 10, Temperature Capacitance Multiplier, 15, On/Off Thermostat Deadband, 1F, On/Off Thermostat Deadband, 2F, On/Off Thermostat Deadband, 3F, Heat Pump Backup Staging, 5 kW, Heat Pump Backup Staging, 10 kW, Experimental Ground-to-Air Heat Pump Model, HVAC Allow Increased Fixed Capacities
      - Select an advanced research feature to use in the model, if desired.
+   * - ``hvac_heating_shared_system``
+     - false
+     - 
+     - Choice
+     - None, Baseboard, FanCoil
+     - The type of shared system.
 
 Options
 *******
@@ -30099,6 +30427,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``hvac_heat_pump_backup_capacity``
      - ``hvac_geothermal_loop``
      - ``advanced_feature``
+     - ``hvac_heating_shared_system``
 
    * - ASHP, SEER 10, 6.2 HSPF
      - 0.72%
@@ -30114,6 +30443,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - None
    * - ASHP, SEER 13, 7.7 HSPF
      - 7.4%
      - None
@@ -30127,6 +30457,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Integrated, Electricity, 100% Efficiency
      - Autosize
      - Default
+     - None
      - None
    * - ASHP, SEER 15, 8.5 HSPF
      - 7.2%
@@ -30142,6 +30473,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - None
    * - Electric Baseboard, 100% Efficiency
      - 6.3%
      - Electric Resistance
@@ -30155,6 +30487,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
      - None
    * - Electric Boiler, 100% AFUE
      - 0.21%
@@ -30170,6 +30503,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - None
    * - Electric Furnace, 100% AFUE
      - 11%
      - Central Furnace, 100% AFUE
@@ -30183,6 +30517,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
      - None
    * - Electric Wall Furnace, 100% AFUE
      - 1.1%
@@ -30198,6 +30533,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - None
    * - Fuel Boiler, 76% AFUE
      - 0.89%
      - Boiler, 76% AFUE
@@ -30211,6 +30547,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
      - None
    * - Fuel Boiler, 80% AFUE
      - 3.3%
@@ -30226,6 +30563,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - None
    * - Fuel Boiler, 90% AFUE
      - 0.49%
      - Boiler, 90% AFUE
@@ -30239,6 +30577,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
      - None
    * - Fuel Furnace, 60% AFUE
      - 0.49%
@@ -30254,6 +30593,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - None
    * - Fuel Furnace, 76% AFUE
      - 2.8%
      - Central Furnace, 76% AFUE
@@ -30267,6 +30607,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
      - None
    * - Fuel Furnace, 80% AFUE
      - 25%
@@ -30282,6 +30623,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - None
    * - Fuel Furnace, 92.5% AFUE
      - 15%
      - Central Furnace, 92.5% AFUE
@@ -30295,6 +30637,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
      - None
    * - Fuel Wall/Floor Furnace, 60% AFUE
      - 3.2%
@@ -30310,6 +30653,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - None
    * - Fuel Wall/Floor Furnace, 68% AFUE
      - 2.8%
      - Wall Furnace, 68% AFUE
@@ -30323,6 +30667,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
      - Autosize
      - Default
+     - None
      - None
    * - MSHP, SEER 14.5, 8.2 HSPF
      - 0.96%
@@ -30338,6 +30683,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - None
    * - MSHP, SEER 29.3, 14 HSPF
      - 0.015%
      - None
@@ -30351,6 +30697,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Integrated, Electricity, 100% Efficiency
      - Autosize
      - Default
+     - None
      - None
    * - None
      - 1.1%
@@ -30366,6 +30713,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - None
    * - Shared Heating
      - 9.6%
      - 
@@ -30380,8 +30728,10 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
+     - 
    * - Void
      - 0%
+     - 
      - 
      - 
      - 
@@ -30415,7 +30765,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -30425,7 +30775,7 @@ Assumption
 
 - \1) Heating fuel lump: Fuel oil, Propane, Wood and Other Fuel2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs bins
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 
 Options
@@ -30555,13 +30905,13 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, electricity cannot be a secondary heating fuel, therefore no secondary heating efficiency.
 
@@ -30587,13 +30937,13 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Electric Resistance, Central Furnace, 60% AFUE, Central Furnace, 64% AFUE, Central Furnace, 68% AFUE, Central Furnace, 72% AFUE, Central Furnace, 76% AFUE, Central Furnace, 78% AFUE, Central Furnace, 80% AFUE, Central Furnace, 85% AFUE, Central Furnace, 90% AFUE, Central Furnace, 92% AFUE, Central Furnace, 92.5% AFUE, Central Furnace, 96% AFUE, Central Furnace, 98% AFUE, Central Furnace, 100% AFUE, Wall Furnace, 60% AFUE, Wall Furnace, 68% AFUE, Wall Furnace, 82% AFUE, Wall Furnace, 98% AFUE, Wall Furnace, 100% AFUE, Floor Furnace, 60% AFUE, Floor Furnace, 70% AFUE, Floor Furnace, 80% AFUE, Boiler, 60% AFUE, Boiler, 72% AFUE, Boiler, 76% AFUE, Boiler, 78% AFUE, Boiler, 80% AFUE, Boiler, 82% AFUE, Boiler, 85% AFUE, Boiler, 90% AFUE, Boiler, 92% AFUE, Boiler, 92.5% AFUE, Boiler, 95% AFUE, Boiler, 96% AFUE, Boiler, 98% AFUE, Boiler, 100% AFUE, Stove, 60% Efficiency, Stove, 70% Efficiency, Stove, 80% Efficiency, Space Heater, 60% Efficiency, Space Heater, 70% Efficiency, Space Heater, 80% Efficiency, Space Heater, 92% Efficiency, Space Heater, 100% Efficiency, Fireplace, 60% Efficiency, Fireplace, 70% Efficiency, Fireplace, 80% Efficiency, Fireplace, 100% Efficiency, Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light
+     - None, Electric Resistance, Central Furnace, 60% AFUE, Central Furnace, 64% AFUE, Central Furnace, 68% AFUE, Central Furnace, 72% AFUE, Central Furnace, 76% AFUE, Central Furnace, 78% AFUE, Central Furnace, 80% AFUE, Central Furnace, 85% AFUE, Central Furnace, 90% AFUE, Central Furnace, 92% AFUE, Central Furnace, 92.5% AFUE, Central Furnace, 96% AFUE, Central Furnace, 98% AFUE, Central Furnace, 100% AFUE, Wall Furnace, 60% AFUE, Wall Furnace, 68% AFUE, Wall Furnace, 82% AFUE, Wall Furnace, 98% AFUE, Wall Furnace, 100% AFUE, Floor Furnace, 60% AFUE, Floor Furnace, 70% AFUE, Floor Furnace, 80% AFUE, Boiler, 60% AFUE, Boiler, 72% AFUE, Boiler, 76% AFUE, Boiler, 78% AFUE, Boiler, 80% AFUE, Boiler, 82% AFUE, Boiler, 85% AFUE, Boiler, 90% AFUE, Boiler, 92% AFUE, Boiler, 92.5% AFUE, Boiler, 95% AFUE, Boiler, 96% AFUE, Boiler, 98% AFUE, Boiler, 100% AFUE, Stove, 60% Efficiency, Stove, 70% Efficiency, Stove, 80% Efficiency, Space Heater, 60% Efficiency, Space Heater, 70% Efficiency, Space Heater, 80% Efficiency, Space Heater, 92% Efficiency, Space Heater, 100% Efficiency, Fireplace, 60% Efficiency, Fireplace, 70% Efficiency, Fireplace, 80% Efficiency, Fireplace, 100% Efficiency, Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light
      - The type and efficiency of the second heating system. If a heat pump is specified and the backup type is 'separate', this heating system represents the 'separate' backup heating.
    * - ``hvac_heating_system_2_capacity``
      - false
      - 
      - Choice
-     - auto, Autosize, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit, Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit
+     - Autosize, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit, Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit
      - The output capacity of the second heating system.
 
 Options
@@ -30670,15 +31020,15 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
-- \For Alaska, all wood is modelled as cord wood.
+- \For Alaska, all wood is modeled as cord wood.
 
 - \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary (i.e., secondary heating fuel cannot be electricity). Rest of the fuels are ignored.
 
@@ -30702,7 +31052,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Electricity, Natural Gas, Fuel Oil, Propane, Wood Cord, Wood Pellets, Coal
+     - Electricity, Natural Gas, Fuel Oil, Propane, Wood Cord, Wood Pellets, Coal
      - The fuel type of the second heating system. Ignored for ElectricResistance.
 
 Options
@@ -30759,13 +31109,13 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, the fraction of the load served by the secondary heating system is calculated as the ratio of annual energy used by secondary fuel and annual energy used by secondary and primary fuel.
 
@@ -30787,7 +31137,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
      - The fraction of the heating load served by the second heating system.
 
 Options
@@ -30817,10 +31167,10 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.014%
      - 30%
    * - 40%
-     - 0.0061%
+     - 0.0067%
      - 40%
    * - 50%
-     - 0.006%
+     - 0.0055%
      - 50%
    * - Void
      - 0%
@@ -30844,13 +31194,13 @@ Created by
 Source
 ******
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \Ducted heating or heat pump cannot have ducted secondary heating.
 
@@ -30933,13 +31283,13 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Autosize, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit, Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit
+     - Autosize, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit, Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit
      - The output capacity of the heating system.
    * - ``hvac_heating_system_heating_load_served``
      - false
      - 
      - Choice
-     - auto, 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
      - The fraction of the heating load served by the heating system.
    * - ``hvac_cooling_system``
      - true
@@ -30951,7 +31301,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Autosize, 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
+     - Autosize, 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
      - The output capacity of the cooling system.
    * - ``hvac_heat_pump``
      - true
@@ -30963,50 +31313,56 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Autosize, Autosize (ACCA), Autosize (MaxLoad), 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
+     - Autosize, Autosize (ACCA), Autosize (MaxLoad), 0.5 tons, 0.75 tons, 1.0 tons, 1.5 tons, 2.0 tons, 2.5 tons, 3.0 tons, 3.5 tons, 4.0 tons, 4.5 tons, 5.0 tons, 5.5 tons, 6.0 tons, 6.5 tons, 7.0 tons, 7.5 tons, 8.0 tons, 8.5 tons, 9.0 tons, 9.5 tons, 10.0 tons, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit
      - The output capacity of the heat pump.
    * - ``hvac_heat_pump_heating_load_served``
      - false
      - 
      - Choice
-     - auto, 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
      - The fraction of the heating load served by the heat pump.
    * - ``hvac_heat_pump_cooling_load_served``
      - false
      - 
      - Choice
-     - auto, 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
+     - 100%, 95%, 90%, 85%, 80%, 75%, 70%, 65%, 60%, 55%, 50%, 45%, 40%, 35%, 30%, 25%, 20%, 15%, 10%, 5%, 0%
      - The fraction of the cooling load served by the heat pump.
    * - ``hvac_heat_pump_temperatures``
      - false
      - 
      - Choice
-     - auto, Default, -20F Min Compressor Temp, -15F Min Compressor Temp, -10F Min Compressor Temp, -5F Min Compressor Temp, 0F Min Compressor Temp, 5F Min Compressor Temp, 10F Min Compressor Temp, 15F Min Compressor Temp, 20F Min Compressor Temp, 25F Min Compressor Temp, 30F Min Compressor Temp, 35F Min Compressor Temp, 40F Min Compressor Temp, 30F Min Compressor Temp, 30F Max HP Backup Temp, 35F Min Compressor Temp, 35F Max HP Backup Temp, 40F Min Compressor Temp, 40F Max HP Backup Temp, Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp, Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp
+     - Default, -20F Min Compressor Temp, -15F Min Compressor Temp, -10F Min Compressor Temp, -5F Min Compressor Temp, 0F Min Compressor Temp, 5F Min Compressor Temp, 10F Min Compressor Temp, 15F Min Compressor Temp, 20F Min Compressor Temp, 25F Min Compressor Temp, 30F Min Compressor Temp, 35F Min Compressor Temp, 40F Min Compressor Temp, 30F Min Compressor Temp, 30F Max HP Backup Temp, 35F Min Compressor Temp, 35F Max HP Backup Temp, 40F Min Compressor Temp, 40F Max HP Backup Temp, Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp, Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp
      - Specifies the minimum compressor temperature and/or maximum HP backup temperature. If both are the same, a binary switchover temperature is used.
    * - ``hvac_heat_pump_backup``
      - false
      - 
      - Choice
-     - auto, None, Integrated, Electricity, 100% Efficiency, Integrated, Natural Gas, 60% AFUE, Integrated, Natural Gas, 76% AFUE, Integrated, Natural Gas, 80% AFUE, Integrated, Natural Gas, 92.5% AFUE, Integrated, Natural Gas, 95% AFUE, Integrated, Fuel Oil, 60% AFUE, Integrated, Fuel Oil, 76% AFUE, Integrated, Fuel Oil, 80% AFUE, Integrated, Fuel Oil, 92.5% AFUE, Integrated, Fuel Oil, 95% AFUE, Integrated, Propane, 60% AFUE, Integrated, Propane, 76% AFUE, Integrated, Propane, 80% AFUE, Integrated, Propane, 92.5% AFUE, Integrated, Propane, 95% AFUE, Separate Heating System
+     - None, Integrated, Electricity, 100% Efficiency, Integrated, Natural Gas, 60% AFUE, Integrated, Natural Gas, 76% AFUE, Integrated, Natural Gas, 80% AFUE, Integrated, Natural Gas, 92.5% AFUE, Integrated, Natural Gas, 95% AFUE, Integrated, Fuel Oil, 60% AFUE, Integrated, Fuel Oil, 76% AFUE, Integrated, Fuel Oil, 80% AFUE, Integrated, Fuel Oil, 92.5% AFUE, Integrated, Fuel Oil, 95% AFUE, Integrated, Propane, 60% AFUE, Integrated, Propane, 76% AFUE, Integrated, Propane, 80% AFUE, Integrated, Propane, 92.5% AFUE, Integrated, Propane, 95% AFUE, Separate Heating System
      - The type and efficiency of the heat pump backup. Use 'None' if there is no backup heating. If Backup Type is Separate Heating System, Heating System 2 is used to specify the backup.
    * - ``hvac_heat_pump_backup_capacity``
      - false
      - 
      - Choice
-     - auto, Autosize, Autosize (Supplemental), 5 kW, 10 kW, 15 kW, 20 kW, 25 kW, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit
+     - Autosize, Autosize (Supplemental), 5 kW, 10 kW, 15 kW, 20 kW, 25 kW, 5 kBtu/hr, 10 kBtu/hr, 15 kBtu/hr, 20 kBtu/hr, 25 kBtu/hr, 30 kBtu/hr, 35 kBtu/hr, 40 kBtu/hr, 45 kBtu/hr, 50 kBtu/hr, 55 kBtu/hr, 60 kBtu/hr, 65 kBtu/hr, 70 kBtu/hr, 75 kBtu/hr, 80 kBtu/hr, 85 kBtu/hr, 90 kBtu/hr, 95 kBtu/hr, 100 kBtu/hr, 105 kBtu/hr, 110 kBtu/hr, 115 kBtu/hr, 120 kBtu/hr, 125 kBtu/hr, 130 kBtu/hr, 135 kBtu/hr, 140 kBtu/hr, 145 kBtu/hr, 150 kBtu/hr, Detailed Example: Autosize, 140% Multiplier, Detailed Example: Autosize, 170% Multiplier, Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit
      - The output capacity of the heat pump backup if there is integrated backup heating.
    * - ``hvac_geothermal_loop``
      - false
      - 
      - Choice
-     - auto, Default, Vertical Loop, Enhanced Grout, Vertical Loop, Enhanced Pipe, Vertical Loop, Enhanced Grout & Pipe, Detailed Example: Lopsided U Configuration, 10 Boreholes
+     - Default, Vertical Loop, Enhanced Grout, Vertical Loop, Enhanced Pipe, Vertical Loop, Enhanced Grout & Pipe, Detailed Example: Lopsided U Configuration, 10 Boreholes
      - The geothermal loop configuration if there's a ground-to-air heat pump.
    * - ``advanced_feature``
      - false
      - 
      - Choice
-     - auto, None, Temperature Capacitance Multiplier, 1, Temperature Capacitance Multiplier, 4, Temperature Capacitance Multiplier, 10, Temperature Capacitance Multiplier, 15, On/Off Thermostat Deadband, 1F, On/Off Thermostat Deadband, 2F, On/Off Thermostat Deadband, 3F, Heat Pump Backup Staging, 5 kW, Heat Pump Backup Staging, 10 kW, Experimental Ground-to-Air Heat Pump Model, HVAC Allow Increased Fixed Capacities
+     - None, Temperature Capacitance Multiplier, 1, Temperature Capacitance Multiplier, 4, Temperature Capacitance Multiplier, 10, Temperature Capacitance Multiplier, 15, On/Off Thermostat Deadband, 1F, On/Off Thermostat Deadband, 2F, On/Off Thermostat Deadband, 3F, Heat Pump Backup Staging, 5 kW, Heat Pump Backup Staging, 10 kW, Experimental Ground-to-Air Heat Pump Model, HVAC Allow Increased Fixed Capacities
      - Select an advanced research feature to use in the model, if desired.
+   * - ``hvac_heating_shared_system``
+     - false
+     - 
+     - Choice
+     - None, Baseboard, FanCoil
+     - The type of shared system.
 
 Options
 *******
@@ -31034,6 +31390,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``hvac_heat_pump_backup_capacity``
      - ``hvac_geothermal_loop``
      - ``advanced_feature``
+     - ``hvac_heating_shared_system``
 
    * - Boiler Baseboards Heating Only, Electricity
      - 2.8%
@@ -31051,6 +31408,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - Baseboard
    * - Boiler Baseboards Heating Only, Fuel
      - 4.4%
      - Boiler, 78% AFUE
@@ -31067,6 +31425,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - Baseboard
    * - Fan Coil Cooling Only
      - 1.4%
      - 
@@ -31074,6 +31433,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - Mini-Split AC, SEER 13
      - Autosize
+     - 
      - 
      - 
      - 
@@ -31099,6 +31459,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - FanCoil
    * - Fan Coil Heating and Cooling, Fuel
      - 1.1%
      - Boiler, 78% AFUE
@@ -31115,6 +31476,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Autosize
      - Default
      - None
+     - FanCoil
    * - None
      - 89%
      - 
@@ -31131,8 +31493,10 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 
      - 
      - 
+     - 
    * - Void
      - 0%
+     - 
      - 
      - 
      - 
@@ -31247,6 +31611,32 @@ Source
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``cooling_system_rated_cfm_per_ton``
+     - false
+     - cfm/ton
+     - Double
+     -
+     - The rated cfm per ton of the cooling system.
+   * - ``cooling_system_actual_cfm_per_ton``
+     - false
+     - cfm/ton
+     - Double
+     -
+     - The actual cfm per ton of the cooling system.
+
 Options
 *******
 
@@ -31259,33 +31649,61 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``cooling_system_rated_cfm_per_ton``
+     - ``cooling_system_actual_cfm_per_ton``
 
    * - 154.8 cfm/ton
      - 0%
+     - 400.0
+     - 154.8
    * - 204.4 cfm/ton
      - 0%
+     - 400.0
+     - 204.4
    * - 254.0 cfm/ton
      - 0%
+     - 400.0
+     - 254.0
    * - 303.5 cfm/ton
      - 0%
+     - 400.0
+     - 303.5
    * - 353.1 cfm/ton
      - 0%
+     - 400.0
+     - 353.1
    * - 402.7 cfm/ton
      - 0%
+     - 400.0
+     - 402.7
    * - 452.3 cfm/ton
      - 0%
+     - 400.0
+     - 452.3
    * - 501.9 cfm/ton
      - 0%
+     - 400.0
+     - 501.9
    * - 551.5 cfm/ton
      - 0%
+     - 400.0
+     - 551.5
    * - 601.0 cfm/ton
      - 0%
+     - 400.0
+     - 601.0
    * - 650.6 cfm/ton
      - 0%
+     - 400.0
+     - 650.6
    * - 700.2 cfm/ton
      - 0%
+     - 400.0
+     - 700.2
    * - None
      - 100%
+     - 
+     - 
 
 .. _hvac_system_single_speed_ac_charge:
 
@@ -31308,6 +31726,26 @@ Source
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``cooling_system_frac_manufacturer_charge``
+     - false
+     - Frac
+     - Double
+     -
+     - The fraction of manufacturer recommended charge of the cooling system.
+
 Options
 *******
 
@@ -31320,23 +31758,32 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``cooling_system_frac_manufacturer_charge``
 
    * - 0.570 Charge Frac
      - 0%
+     - 0.570
    * - 0.709 Charge Frac
      - 0%
+     - 0.709
    * - 0.848 Charge Frac
      - 0%
+     - 0.848
    * - 0.988 Charge Frac
      - 0%
+     - 0.988
    * - 1.127 Charge Frac
      - 0%
+     - 1.127
    * - 1.266 Charge Frac
      - 0%
+     - 1.266
    * - 1.405 Charge Frac
      - 0%
+     - 1.405
    * - None
      - 100%
+     - 
 
 .. _hvac_system_single_speed_ashp_airflow:
 
@@ -31359,6 +31806,32 @@ Source
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``heat_pump_rated_cfm_per_ton``
+     - false
+     - cfm/ton
+     - Double
+     -
+     - The rated cfm per ton of the heat pump.
+   * - ``heat_pump_actual_cfm_per_ton``
+     - false
+     - cfm/ton
+     - Double
+     -
+     - The actual cfm per ton of the heat pump.
+
 Options
 *******
 
@@ -31371,33 +31844,61 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``heat_pump_rated_cfm_per_ton``
+     - ``heat_pump_actual_cfm_per_ton``
 
    * - 154.8 cfm/ton
      - 0%
+     - 400.0
+     - 154.8
    * - 204.4 cfm/ton
      - 0%
+     - 400.0
+     - 204.4
    * - 254.0 cfm/ton
      - 0%
+     - 400.0
+     - 254.0
    * - 303.5 cfm/ton
      - 0%
+     - 400.0
+     - 303.5
    * - 353.1 cfm/ton
      - 0%
+     - 400.0
+     - 353.1
    * - 402.7 cfm/ton
      - 0%
+     - 400.0
+     - 402.7
    * - 452.3 cfm/ton
      - 0%
+     - 400.0
+     - 452.3
    * - 501.9 cfm/ton
      - 0%
+     - 400.0
+     - 501.9
    * - 551.5 cfm/ton
      - 0%
+     - 400.0
+     - 551.5
    * - 601.0 cfm/ton
      - 0%
+     - 400.0
+     - 601.0
    * - 650.6 cfm/ton
      - 0%
+     - 400.0
+     - 650.6
    * - 700.2 cfm/ton
      - 0%
+     - 400.0
+     - 700.2
    * - None
      - 100%
+     - 
+     - 
 
 .. _hvac_system_single_speed_ashp_charge:
 
@@ -31420,6 +31921,26 @@ Source
 - \Winkler et al. 'Impact of installation faults in air conditioners and heat pumps in single-family homes on US energy usage' 2020
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``heat_pump_frac_manufacturer_charge``
+     - false
+     - Frac
+     - Double
+     -
+     - The fraction of manufacturer recommended charge of the heat pump.
+
 Options
 *******
 
@@ -31432,23 +31953,32 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``heat_pump_frac_manufacturer_charge``
 
    * - 0.570 Charge Frac
      - 0%
+     - 0.570
    * - 0.709 Charge Frac
      - 0%
+     - 0.709
    * - 0.848 Charge Frac
      - 0%
+     - 0.848
    * - 0.988 Charge Frac
      - 0%
+     - 0.988
    * - 1.127 Charge Frac
      - 0%
+     - 1.127
    * - 1.266 Charge Frac
      - 0%
+     - 1.266
    * - 1.405 Charge Frac
      - 0%
+     - 1.405
    * - None
      - 100%
+     - 
 
 .. _has_pv:
 
@@ -31517,19 +32047,19 @@ Source
 
 - \2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
 **********
 
-- \In ACS, Heating Fuel is reported for occupied units only. By excluding Vacancy Status as adependency, we assume vacant units share the same Heating Fuel distribution as occupied units. Where sample counts are less than 10, the State average distribution has been inserted. Prior to insertion, the following adjustments have been made to the state distribution so all rows have sample count > 10: 1. Where sample counts < 10 (which consists of Mobile Home and Single-Family Attached only), the Vintage ACS distribution is used instead of Vintage: [CT, DE, ID, MD, ME, MT, ND, NE, NH, NV, RI, SD, UT, VT, WY]
+- \In ACS, Heating Fuel is reported for occupied units only. By excluding Vacancy Status as a dependency, we assume vacant units share the same Heating Fuel distribution as occupied units. Where sample counts are less than 10, the State average distribution has been inserted. Prior to insertion, the following adjustments have been made to the state distribution so all rows have sample count > 10: 1. Where sample counts < 10 (which consists of Mobile Home and Single-Family Attached only), the Vintage ACS distribution is used instead of Vintage: [CT, DE, ID, MD, ME, MT, ND, NE, NH, NV, RI, SD, UT, VT, WY]
 
 - \2. Remaining Mobile Homes < 10 are replaced by Single-Family Detached + Mobile Homes combined: [DE, RI, SD, VT, WY, and all DC].
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
-- \For Alaska, all wood is modelled as cord wood.
+- \For Alaska, all wood is modeled as cord wood.
 
 - \For Alaska, when heating uses more than one fuels, the fuel with highest consumption is considered the primary (heating) fuel, and fuel with second highest usage (provided it is at least 10% of total energy use across all fuels) is considered secondary (heating) fuel - except in case of electric heating, which is always assumed as primary. Rest of the fuels are ignored.
 
@@ -31551,7 +32081,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Electricity, Natural Gas, Fuel Oil, Propane, Wood Cord, Wood Pellets, Coal
+     - Electricity, Natural Gas, Fuel Oil, Propane, Wood Cord, Wood Pellets, Coal
      - The fuel type of the heating system. Ignored for ElectricResistance.
 
 Options
@@ -31634,12 +32164,6 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``hvac_control_heating_season_period``
-     - false
-     - 
-     - String
-     -
-     - Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availability.
    * - ``hvac_control_heating_weekday_setpoint_temp``
      - true
      - deg-F
@@ -31652,7 +32176,7 @@ Arguments
      - Double
      -
      - Specify the weekend heating setpoint temperature.
-   * - ``use_auto_heating_season``
+   * - ``hvac_control_use_auto_heating_season``
      - true
      - 
      - Boolean
@@ -31671,80 +32195,67 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``hvac_control_heating_season_period``
      - ``hvac_control_heating_weekday_setpoint_temp``
      - ``hvac_control_heating_weekend_setpoint_temp``
-     - ``use_auto_heating_season``
+     - ``hvac_control_use_auto_heating_season``
 
    * - 55F
      - 12%
-     - auto
      - 55
      - 55
      - false
    * - 60F
      - 2.3%
-     - auto
      - 60
      - 60
      - false
    * - 62F
      - 1.1%
-     - auto
      - 62
      - 62
      - false
    * - 65F
      - 5.8%
-     - auto
      - 65
      - 65
      - false
    * - 67F
      - 4.9%
-     - auto
      - 67
      - 67
      - false
    * - 68F
      - 20%
-     - auto
      - 68
      - 68
      - false
    * - 70F
      - 23%
-     - auto
      - 70
      - 70
      - false
    * - 72F
      - 15%
-     - auto
      - 72
      - 72
      - false
    * - 75F
      - 9.4%
-     - auto
      - 75
      - 75
      - false
    * - 76F
      - 2.3%
-     - auto
      - 76
      - 76
      - false
    * - 78F
      - 1.8%
-     - auto
      - 78
      - 78
      - false
    * - 80F
      - 1%
-     - auto
      - 80
      - 80
      - false
@@ -32118,8 +32629,28 @@ Assumption
 
 - \4. The Cooling Unavailable Days dependency is aggregated into Days, Weeks, Month, and All Year bins.
 
-- \5. The Cooling Unavailable Days dependancy is removed.
+- \5. The Cooling Unavailable Days dependency is removed.
 
+
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``schedules_space_heating_unavailable_days``
+     - false
+     - 
+     - Integer
+     -
+     - Number of days space heating equipment is unavailable.
 
 Options
 *******
@@ -32133,23 +32664,32 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``schedules_space_heating_unavailable_days``
 
    * - 1 day
      - 0.82%
+     - 1
    * - 1 month
      - 0.35%
+     - 30
    * - 1 week
      - 0.62%
+     - 7
    * - 2 weeks
      - 0.43%
+     - 14
    * - 3 days
      - 1.1%
+     - 3
    * - 3 months
      - 0.36%
+     - 90
    * - Never
      - 96%
+     - 0
    * - Year round
      - 0.24%
+     - 365
 
 .. _holiday_lighting:
 
@@ -32196,7 +32736,7 @@ Hot Water Distribution
 Description
 ***********
 
-Hot water piping material and insulation level.
+Type of distribution system and presence of hot water piping insulation.
 
 Created by
 **********
@@ -32226,13 +32766,19 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Uninsulated, Standard, Uninsulated, Recirc, Uncontrolled, Uninsulated, Recirc, Timer Control, Uninsulated, Recirc, Temperature Control, Uninsulated, Recirc, Presence Sensor Demand Control, Uninsulated, Recirc, Manual Demand Control, Insulated, Standard, Insulated, Recirc, Uncontrolled, Insulated, Recirc, Timer Control, Insulated, Recirc, Temperature Control, Insulated, Recirc, Presence Sensor Demand Control, Insulated, Recirc, Manual Demand Control, Detailed Example: Insulated, Recirc, Uncontrolled, 156.9ft Loop, 10ft Branch, 50 W, Detailed Example: Insulated, Recirc, Manual Demand Control, 156.9ft Loop, 10ft Branch, 50 W
+     - Uninsulated, Standard, Uninsulated, Recirc, Uncontrolled, Uninsulated, Recirc, Timer Control, Uninsulated, Recirc, Temperature Control, Uninsulated, Recirc, Presence Sensor Demand Control, Uninsulated, Recirc, Manual Demand Control, Insulated, Standard, Insulated, Recirc, Uncontrolled, Insulated, Recirc, Timer Control, Insulated, Recirc, Temperature Control, Insulated, Recirc, Presence Sensor Demand Control, Insulated, Recirc, Manual Demand Control, Detailed Example: Insulated, Recirc, Uncontrolled, 156.9ft Loop, 10ft Branch, 50 W, Detailed Example: Insulated, Recirc, Manual Demand Control, 156.9ft Loop, 10ft Branch, 50 W
      - The type of domestic hot water distrubtion.
+   * - ``dhw_fixtures``
+     - false
+     - 
+     - Choice
+     - Standard, 25% Usage, Standard, 50% Usage, Standard, 75% Usage, Standard, 100% Usage, Standard, 125% Usage, Standard, 150% Usage, Standard, 175% Usage, Standard, 200% Usage, Standard, 400% Usage, Low Flow, 25% Usage, Low Flow, 50% Usage, Low Flow, 75% Usage, Low Flow, 100% Usage, Low Flow, 125% Usage, Low Flow, 150% Usage, Low Flow, 175% Usage, Low Flow, 200% Usage, Low Flow, 400% Usage
+     - The type and usage of domestic hot water fixtures.
    * - ``dhw_drain_water_heat_recovery``
      - false
      - 
      - Choice
-     - auto, None, 25% Efficient, Preheats Hot Only, All Showers, 25% Efficient, Preheats Hot Only, 1 Shower, 25% Efficient, Preheats Hot and Cold, All Showers, 25% Efficient, Preheats Hot and Cold, 1 Shower, 35% Efficient, Preheats Hot Only, All Showers, 35% Efficient, Preheats Hot Only, 1 Shower, 35% Efficient, Preheats Hot and Cold, All Showers, 35% Efficient, Preheats Hot and Cold, 1 Shower, 45% Efficient, Preheats Hot Only, All Showers, 45% Efficient, Preheats Hot Only, 1 Shower, 45% Efficient, Preheats Hot and Cold, All Showers, 45% Efficient, Preheats Hot and Cold, 1 Shower, 55% Efficient, Preheats Hot Only, All Showers, 55% Efficient, Preheats Hot Only, 1 Shower, 55% Efficient, Preheats Hot and Cold, All Showers, 55% Efficient, Preheats Hot and Cold, 1 Shower, Detailed Example: 54% Efficient, Preheats Hot and Cold, All Showers
+     - None, 25% Efficient, Preheats Hot Only, All Showers, 25% Efficient, Preheats Hot Only, 1 Shower, 25% Efficient, Preheats Hot and Cold, All Showers, 25% Efficient, Preheats Hot and Cold, 1 Shower, 35% Efficient, Preheats Hot Only, All Showers, 35% Efficient, Preheats Hot Only, 1 Shower, 35% Efficient, Preheats Hot and Cold, All Showers, 35% Efficient, Preheats Hot and Cold, 1 Shower, 45% Efficient, Preheats Hot Only, All Showers, 45% Efficient, Preheats Hot Only, 1 Shower, 45% Efficient, Preheats Hot and Cold, All Showers, 45% Efficient, Preheats Hot and Cold, 1 Shower, 55% Efficient, Preheats Hot Only, All Showers, 55% Efficient, Preheats Hot Only, 1 Shower, 55% Efficient, Preheats Hot and Cold, All Showers, 55% Efficient, Preheats Hot and Cold, 1 Shower, Detailed Example: 54% Efficient, Preheats Hot and Cold, All Showers
      - The type of drain water heater recovery.
 
 Options
@@ -32248,11 +32794,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
      - ``dhw_distribution``
+     - ``dhw_fixtures``
      - ``dhw_drain_water_heat_recovery``
 
    * - Uninsulated
      - 100%
      - Uninsulated, Standard
+     - Standard, 100% Usage
      - None
 
 .. _hot_water_fixtures:
@@ -32295,12 +32843,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``dhw_fixtures``
+   * - ``water_fixtures_usage_multiplier``
      - false
      - 
-     - Choice
-     - auto, Standard, 25% Usage, Standard, 50% Usage, Standard, 75% Usage, Standard, 100% Usage, Standard, 150% Usage, Standard, 200% Usage, Standard, 400% Usage, Low Flow, 25% Usage, Low Flow, 50% Usage, Low Flow, 75% Usage, Low Flow, 100% Usage, Low Flow, 150% Usage, Low Flow, 200% Usage, Low Flow, 400% Usage
-     - The type and usage of domestic hot water fixtures.
+     - Double
+     -
+     - Multiplier on the hot water usage that can reflect, e.g., high/low usage occupants.
 
 Options
 *******
@@ -32314,56 +32862,56 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``dhw_fixtures``
+     - ``water_fixtures_usage_multiplier``
 
    * - 50% Usage
      - 0.47%
-     - Standard, 50% Usage
+     - 0.5
    * - 60% Usage
      - 3.6%
-     - Standard, 50% Usage
+     - 0.6
    * - 70% Usage
      - 9.9%
-     - Standard, 75% Usage
+     - 0.7
    * - 80% Usage
      - 14%
-     - Standard, 75% Usage
+     - 0.8
    * - 90% Usage
      - 17%
-     - Standard, 100% Usage
+     - 0.9
    * - 100% Usage
      - 18%
-     - Standard, 100% Usage
+     - 1.0
    * - 110% Usage
      - 13%
-     - Standard, 100% Usage
+     - 1.1
    * - 120% Usage
      - 8.9%
-     - Standard, 100% Usage
+     - 1.2
    * - 130% Usage
      - 6.8%
-     - Standard, 150% Usage
+     - 1.3
    * - 140% Usage
      - 3.8%
-     - Standard, 150% Usage
+     - 1.4
    * - 150% Usage
      - 2.1%
-     - Standard, 150% Usage
+     - 1.5
    * - 160% Usage
      - 0.99%
-     - Standard, 150% Usage
+     - 1.6
    * - 170% Usage
      - 0.73%
-     - Standard, 150% Usage
+     - 1.7
    * - 180% Usage
      - 0.31%
-     - Standard, 200% Usage
+     - 1.8
    * - 190% Usage
      - 0%
-     - Standard, 200% Usage
+     - 1.9
    * - 200% Usage
      - 0.1%
-     - Standard, 200% Usage
+     - 2.0
 
 .. _household_has_tribal_persons:
 
@@ -32373,7 +32921,7 @@ Household Has Tribal Persons
 Description
 ***********
 
-The houshold occupying the dwelling unit has at least one tribal person in the household.
+The household occupying the dwelling unit has at least one tribal person in the household.
 
 Created by
 **********
@@ -32682,7 +33230,7 @@ Source
 
 - \Distributions are based on the cumulative distribution functions from the Residential Diagnostics Database (ResDB), http://resdb.lbl.gov/.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -32700,7 +33248,7 @@ Assumption
 
 - \ResStock models multi-family and SFA units with the unit total air leakage type. The unit total air leakage assume that some of the sampled ACH50 value goes to neighboring units. The model infiltration value to the exterior is a smaller infiltration value that what is sampled and is adjusted by the ratio of exterior envelope surface area to total envelope surface area. The modeled infiltration to the exterior is reported in the results.
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, Infiltration ACH50 values are calculated based on CFM50 from blower door test and estimated volume of the home.
 
@@ -32722,7 +33270,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Very Tight, Tight, Average, Leaky, Very Leaky, 1 ACH50, 2 ACH50, 3 ACH50, 4 ACH50, 5 ACH50, 6 ACH50, 7 ACH50, 8 ACH50, 10 ACH50, 15 ACH50, 20 ACH50, 25 ACH50, 30 ACH50, 40 ACH50, 50 ACH50, 0.2 nACH, 0.3 nACH, 0.335 nACH, 0.5 nACH, 0.67 nACH, 1.0 nACH, 1.5 nACH, Detailed Example: 3.57 ACH50, Detailed Example: 12.16 ACH50, Detailed Example: 2.8 ACH45, Detailed Example: 0.375 nACH, Detailed Example: 72 nCFM, Detailed Example: 79.8 sq. in. ELA, Detailed Example: 123 sq. in. ELA, Detailed Example: 1080 CFM50, Detailed Example: 1010 CFM45
+     - Very Tight, Tight, Average, Leaky, Very Leaky, 1 ACH50, 2 ACH50, 3 ACH50, 4 ACH50, 5 ACH50, 6 ACH50, 7 ACH50, 8 ACH50, 10 ACH50, 15 ACH50, 20 ACH50, 25 ACH50, 30 ACH50, 40 ACH50, 50 ACH50, 0.2 nACH, 0.3 nACH, 0.335 nACH, 0.5 nACH, 0.67 nACH, 1.0 nACH, 1.5 nACH, Detailed Example: 3.57 ACH50, Detailed Example: 12.16 ACH50, Detailed Example: 2.8 ACH45, Detailed Example: 0.375 nACH, Detailed Example: 72 nCFM, Detailed Example: 79.8 sq. in. ELA, Detailed Example: 123 sq. in. ELA, Detailed Example: 1080 CFM50, Detailed Example: 1010 CFM45
      - The amount of air leakage coming from outside. If a qualitative leakiness description (e.g., 'Average') is selected, the Year Built of the home is also required.
 
 Options
@@ -32924,13 +33472,13 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Wood Frame, Uninsulated, Wood Frame, R-11, Wood Frame, R-13, Wood Frame, R-15, Wood Frame, R-19, Wood Frame, R-21, Wood Frame, R-25, Wood Frame, R-30, Wood Frame, R-35, Wood Frame, R-38, Wood Frame, IECC U-0.064, Wood Frame, IECC U-0.047, Wood Frame, IECC U-0.033, Wood Frame, IECC U-0.028, Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor
+     - Wood Frame, Uninsulated, Wood Frame, R-11, Wood Frame, R-13, Wood Frame, R-15, Wood Frame, R-19, Wood Frame, R-21, Wood Frame, R-25, Wood Frame, R-30, Wood Frame, R-35, Wood Frame, R-38, Wood Frame, IECC U-0.064, Wood Frame, IECC U-0.047, Wood Frame, IECC U-0.033, Wood Frame, IECC U-0.028, Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor
      - The type and insulation level of the floor over the foundation (e.g., crawlspace or basement).
    * - ``enclosure_floor_over_garage``
      - false
      - 
      - Choice
-     - auto, Wood Frame, Uninsulated, Wood Frame, R-11, Wood Frame, R-13, Wood Frame, R-15, Wood Frame, R-19, Wood Frame, R-21, Wood Frame, R-25, Wood Frame, R-30, Wood Frame, R-35, Wood Frame, R-38, Wood Frame, IECC U-0.064, Wood Frame, IECC U-0.047, Wood Frame, IECC U-0.033, Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor
+     - Wood Frame, Uninsulated, Wood Frame, R-11, Wood Frame, R-13, Wood Frame, R-15, Wood Frame, R-19, Wood Frame, R-21, Wood Frame, R-25, Wood Frame, R-30, Wood Frame, R-35, Wood Frame, R-38, Wood Frame, IECC U-0.064, Wood Frame, IECC U-0.047, Wood Frame, IECC U-0.033, Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor, Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor
      - The type and insulation level of the floor over the garage.
 
 Options
@@ -33007,7 +33555,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Solid Concrete, Uninsulated, Solid Concrete, Half Wall, R-5, Solid Concrete, Half Wall, R-10, Solid Concrete, Half Wall, R-15, Solid Concrete, Half Wall, R-20, Solid Concrete, Whole Wall, R-5, Solid Concrete, Whole Wall, R-10, Solid Concrete, Whole Wall, R-10.2, Interior, Solid Concrete, Whole Wall, R-15, Solid Concrete, Whole Wall, R-20, Solid Concrete, Assembly R-10.69, Concrete Block Foam Core, Whole Wall, R-18.9
+     - Solid Concrete, Uninsulated, Solid Concrete, Half Wall, R-5, Solid Concrete, Half Wall, R-10, Solid Concrete, Half Wall, R-15, Solid Concrete, Half Wall, R-20, Solid Concrete, Whole Wall, R-5, Solid Concrete, Whole Wall, R-10, Solid Concrete, Whole Wall, R-10.2, Interior, Solid Concrete, Whole Wall, R-15, Solid Concrete, Whole Wall, R-20, Solid Concrete, Assembly R-10.69, Concrete Block Foam Core, Whole Wall, R-18.9
      - The type and insulation level of the foundation walls.
 
 Options
@@ -33084,7 +33632,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Uninsulated, R-7, R-11, R-13, R-15, R-19, R-21, Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding, Detailed Example: R-11, Fiberboard Sheathing, Hardboard Siding
+     - Uninsulated, R-7, R-11, R-13, R-15, R-19, R-21, Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding, Detailed Example: R-11, Fiberboard Sheathing, Hardboard Siding
      - The type and insulation level of the rim joists.
 
 Options
@@ -33247,7 +33795,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Uninsulated, Under Slab, 2ft, R-5, Under Slab, 2ft, R-10, Under Slab, 2ft, R-15, Under Slab, 2ft, R-20, Under Slab, 4ft, R-5, Under Slab, 4ft, R-10, Under Slab, 4ft, R-15, Under Slab, 4ft, R-20, Perimeter, 2ft, R-5, Perimeter, 2ft, R-10, Perimeter, 2ft, R-15, Perimeter, 2ft, R-20, Perimeter, 4ft, R-5, Perimeter, 4ft, R-10, Perimeter, 4ft, R-15, Perimeter, 4ft, R-20, Whole Slab, R-5, Whole Slab, R-10, Whole Slab, R-15, Whole Slab, R-20, Whole Slab, R-30, Whole Slab, R-40, Detailed Example: Uninsulated, No Carpet, Detailed Example: Uninsulated, 100% R-2.08 Carpet, Detailed Example: Uninsulated, 100% R-2.50 Carpet, Detailed Example: Perimeter, 2ft, R-5, 100% R-2.08 Carpet, Detailed Example: Whole Slab, R-5, 100% R-2.5 Carpet
+     - Uninsulated, Under Slab, 2ft, R-5, Under Slab, 2ft, R-10, Under Slab, 2ft, R-15, Under Slab, 2ft, R-20, Under Slab, 4ft, R-5, Under Slab, 4ft, R-10, Under Slab, 4ft, R-15, Under Slab, 4ft, R-20, Perimeter, 2ft, R-5, Perimeter, 2ft, R-10, Perimeter, 2ft, R-15, Perimeter, 2ft, R-20, Perimeter, 4ft, R-5, Perimeter, 4ft, R-10, Perimeter, 4ft, R-15, Perimeter, 4ft, R-20, Whole Slab, R-5, Whole Slab, R-10, Whole Slab, R-15, Whole Slab, R-20, Whole Slab, R-30, Whole Slab, R-40, Detailed Example: Uninsulated, No Carpet, Detailed Example: Uninsulated, 100% R-2.08 Carpet, Detailed Example: Uninsulated, 100% R-2.50 Carpet, Detailed Example: Perimeter, 2ft, R-5, 100% R-2.08 Carpet, Detailed Example: Whole Slab, R-5, 100% R-2.5 Carpet
      - The type and insulation level of the slab. Applies to slab-on-grade as well as basement/crawlspace foundations. Under Slab insulation is placed horizontally from the edge of the slab inward. Perimeter insulation is placed vertically from the top of the slab downward. Whole Slab insulation is placed horizontally below the entire slab area.
 
 Options
@@ -33343,7 +33891,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Uninsulated, R-5, R-6, R-7, R-10, R-12, R-14, R-15, R-18, R-20, R-21, Detailed Example: R-7.2
+     - Uninsulated, R-5, R-6, R-7, R-10, R-12, R-14, R-15, R-18, R-20, R-21, Detailed Example: R-7.2
      - The insulation level of the wall continuous insulation. The R-value of the continuous insulation will be ignored if a wall option with an IECC U-factor is selected.
 
 Options
@@ -33434,7 +33982,7 @@ Interior Shading
 Description
 ***********
 
-Fraction of window shading in the summer and winter.
+Type of window interior shading.
 
 Created by
 **********
@@ -33464,7 +34012,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Curtains, Light, Curtains, Medium, Curtains, Dark, Shades, Light, Shades, Medium, Shades, Dark, Blinds, Light, Blinds, Medium, Blinds, Dark, Summer 0.5, Winter 0.5, Summer 0.5, Winter 0.6, Summer 0.5, Winter 0.7, Summer 0.5, Winter 0.8, Summer 0.5, Winter 0.9, Summer 0.6, Winter 0.6, Summer 0.6, Winter 0.7, Summer 0.6, Winter 0.8, Summer 0.6, Winter 0.9, Summer 0.7, Winter 0.7, Summer 0.7, Winter 0.8, Summer 0.7, Winter 0.9, Summer 0.8, Winter 0.8, Summer 0.8, Winter 0.9, Summer 0.9, Winter 0.9
+     - None, Curtains, Light, Curtains, Medium, Curtains, Dark, Shades, Light, Shades, Medium, Shades, Dark, Blinds, Light, Blinds, Medium, Blinds, Dark, Summer 0.5, Winter 0.5, Summer 0.5, Winter 0.6, Summer 0.5, Winter 0.7, Summer 0.5, Winter 0.8, Summer 0.5, Winter 0.9, Summer 0.6, Winter 0.6, Summer 0.6, Winter 0.7, Summer 0.6, Winter 0.8, Summer 0.6, Winter 0.9, Summer 0.7, Winter 0.7, Summer 0.7, Winter 0.8, Summer 0.7, Winter 0.9, Summer 0.8, Winter 0.8, Summer 0.8, Winter 0.9, Summer 0.9, Winter 0.9
      - The type of window interior shading. If shading coefficients are selected, note they indicate the reduction in solar gain (e.g., 0.7 indicates 30% reduction).
 
 Options
@@ -33481,7 +34029,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Stock saturation
      - ``enclosure_window_interior_shading``
 
-   * - Summer = 0.7, Winter = 0.85
+   * - Light Curtains
      - 100%
      - Curtains, Light
 
@@ -33509,7 +34057,7 @@ Source
 Assumption
 **********
 
-- \Qualitative portion of inside light bulbs is mapped to quantative percentage as: None: 0%
+- \Qualitative portion of inside light bulbs is mapped to quantitative percentage as: None: 0%
 
 - \Some: 20%
 
@@ -33537,7 +34085,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, 100% Incandescent, 50% Usage, 100% Incandescent, 75% Usage, 100% Incandescent, 100% Usage, 100% Incandescent, 150% Usage, 100% Incandescent, 200% Usage, 25% LED, 50% Usage, 25% LED, 75% Usage, 25% LED, 100% Usage, 25% LED, 150% Usage, 25% LED, 200% Usage, 50% LED, 50% Usage, 50% LED, 75% Usage, 50% LED, 100% Usage, 50% LED, 150% Usage, 50% LED, 200% Usage, 75% LED, 50% Usage, 75% LED, 75% Usage, 75% LED, 100% Usage, 75% LED, 150% Usage, 75% LED, 200% Usage, 100% LED, 50% Usage, 100% LED, 75% Usage, 100% LED, 100% Usage, 100% LED, 150% Usage, 100% LED, 200% Usage, 25% CFL, 50% Usage, 25% CFL, 75% Usage, 25% CFL, 100% Usage, 25% CFL, 150% Usage, 25% CFL, 200% Usage, 50% CFL, 50% Usage, 50% CFL, 75% Usage, 50% CFL, 100% Usage, 50% CFL, 150% Usage, 50% CFL, 200% Usage, 75% CFL, 50% Usage, 75% CFL, 75% Usage, 75% CFL, 100% Usage, 75% CFL, 150% Usage, 75% CFL, 200% Usage, 100% CFL, 50% Usage, 100% CFL, 75% Usage, 100% CFL, 100% Usage, 100% CFL, 150% Usage, 100% CFL, 200% Usage, Detailed Example: 10% CFL, Detailed Example: 40% CFL, 10% LFL, 25% LED
+     - None, 100% Incandescent, 50% Usage, 100% Incandescent, 75% Usage, 100% Incandescent, 100% Usage, 100% Incandescent, 150% Usage, 100% Incandescent, 200% Usage, 25% LED, 50% Usage, 25% LED, 75% Usage, 25% LED, 100% Usage, 25% LED, 150% Usage, 25% LED, 200% Usage, 50% LED, 50% Usage, 50% LED, 75% Usage, 50% LED, 100% Usage, 50% LED, 150% Usage, 50% LED, 200% Usage, 75% LED, 50% Usage, 75% LED, 75% Usage, 75% LED, 100% Usage, 75% LED, 150% Usage, 75% LED, 200% Usage, 100% LED, 50% Usage, 100% LED, 75% Usage, 100% LED, 100% Usage, 100% LED, 150% Usage, 100% LED, 200% Usage, 25% CFL, 50% Usage, 25% CFL, 75% Usage, 25% CFL, 100% Usage, 25% CFL, 150% Usage, 25% CFL, 200% Usage, 50% CFL, 50% Usage, 50% CFL, 75% Usage, 50% CFL, 100% Usage, 50% CFL, 150% Usage, 50% CFL, 200% Usage, 75% CFL, 50% Usage, 75% CFL, 75% Usage, 75% CFL, 100% Usage, 75% CFL, 150% Usage, 75% CFL, 200% Usage, 100% CFL, 50% Usage, 100% CFL, 75% Usage, 100% CFL, 100% Usage, 100% CFL, 150% Usage, 100% CFL, 200% Usage, Detailed Example: 10% CFL, Detailed Example: 40% CFL, 10% LFL, 25% LED
      - The type and usage of interior, exterior, and garage lighting.
 
 Options
@@ -33585,6 +34133,26 @@ Source
 - \n/a
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``interior_lighting_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the lighting energy usage (interior) that can reflect, e.g., high/low usage occupants.
+
 Options
 *******
 
@@ -33597,9 +34165,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``interior_lighting_usage_multiplier``
 
    * - 100% Usage
      - 100%
+     - 1.0
 
 .. _lighting_other_use:
 
@@ -33622,6 +34192,32 @@ Source
 - \n/a
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``exterior_lighting_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the lighting energy usage (exterior) that can reflect, e.g., high/low usage occupants.
+   * - ``garage_lighting_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the lighting energy usage (garage) that can reflect, e.g., high/low usage occupants.
+
 Options
 *******
 
@@ -33634,9 +34230,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``exterior_lighting_usage_multiplier``
+     - ``garage_lighting_usage_multiplier``
 
    * - 100% Usage
      - 100%
+     - 1.0
+     - 1.0
 
 .. _location_region:
 
@@ -33739,25 +34339,25 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Exhaust Only, Supply Only, Balanced, CFIS, HRV, 55%, HRV, 60%, HRV, 65%, HRV, 70%, HRV, 75%, HRV, 80%, HRV, 85%, ERV, 55%, ERV, 60%, ERV, 65%, ERV, 70%, ERV, 75%, ERV, 80%, ERV, 85%
+     - None, Exhaust Only, Supply Only, Balanced, CFIS, HRV, 55%, HRV, 60%, HRV, 65%, HRV, 70%, HRV, 75%, HRV, 80%, HRV, 85%, ERV, 55%, ERV, 60%, ERV, 65%, ERV, 70%, ERV, 75%, ERV, 80%, ERV, 85%
      - The type of mechanical ventilation system used for whole building ventilation.
    * - ``ventilation_kitchen``
      - false
      - 
      - Choice
-     - auto, None, Default, 100 cfm, 1 hr/day, 100 cfm, 2 hrs/day, 200 cfm, 1 hr/day, 200 cfm, 2 hrs/day, 300 cfm, 1 hr/day, 300 cfm, 2 hrs/day, Detailed Example: 100 cfm, 1.5 hrs/day @ 6pm, 30 W
+     - None, Default, 100 cfm, 1 hr/day, 100 cfm, 2 hrs/day, 200 cfm, 1 hr/day, 200 cfm, 2 hrs/day, 300 cfm, 1 hr/day, 300 cfm, 2 hrs/day, Detailed Example: 100 cfm, 1.5 hrs/day @ 6pm, 30 W
      - The type of kitchen exhaust fan used for local ventilation.
    * - ``ventilation_bathroom``
      - false
      - 
      - Choice
-     - auto, None, Default, 50 cfm/bathroom, 1 hr/day, 50 cfm/bathroom, 2 hrs/day, 80 cfm/bathroom, 1 hr/day, 80 cfm/bathroom, 2 hrs/day, 100 cfm/bathroom, 1 hr/day, 100 cfm/bathroom, 2 hrs/day, Detailed Example: 50 cfm/bathroom, 1.5 hrs/day @ 7am, 15 W
+     - None, Default, 50 cfm/bathroom, 1 hr/day, 50 cfm/bathroom, 2 hrs/day, 80 cfm/bathroom, 1 hr/day, 80 cfm/bathroom, 2 hrs/day, 100 cfm/bathroom, 1 hr/day, 100 cfm/bathroom, 2 hrs/day, Detailed Example: 50 cfm/bathroom, 1.5 hrs/day @ 7am, 15 W
      - The type of bathroom exhaust fans used for local ventilation.
    * - ``ventilation_whole_house_fan``
      - false
      - 
      - Choice
-     - auto, None, 1000 cfm, 1500 cfm, 2000 cfm, 2500 cfm, 3000 cfm, 3500 cfm, 4000 cfm, 4500 cfm, 5000 cfm, 5500 cfm, 6000 cfm, Detailed Example: 4500 cfm, 300 W
+     - None, 1000 cfm, 1500 cfm, 2000 cfm, 2500 cfm, 3000 cfm, 3500 cfm, 4000 cfm, 4500 cfm, 5000 cfm, 5500 cfm, 6000 cfm, Detailed Example: 4500 cfm, 300 W
      - The type of whole house fans used for seasonal cooling load reduction.
 
 Options
@@ -35753,7 +36353,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, 1139 kWh/yr, 90% Usage, 1139 kWh/yr, 100% Usage, 1139 kWh/yr, 110% Usage, 748 kWh/yr, 90% Usage, 748 kWh/yr, 100% Usage, 748 kWh/yr, 110% Usage, 727 kWh/yr, 90% Usage, 727 kWh/yr, 100% Usage, 727 kWh/yr, 110% Usage, 650 kWh/yr, 90% Usage, 650 kWh/yr, 100% Usage, 650 kWh/yr, 110% Usage, 574 kWh/yr, 90% Usage, 574 kWh/yr, 100% Usage, 574 kWh/yr, 110% Usage, 547 kWh/yr, 90% Usage, 547 kWh/yr, 100% Usage, 547 kWh/yr, 110% Usage, 480 kWh/yr, 90% Usage, 480 kWh/yr, 100% Usage, 480 kWh/yr, 110% Usage, 458 kWh/yr, 90% Usage, 458 kWh/yr, 100% Usage, 458 kWh/yr, 110% Usage, 434 kWh/yr, 90% Usage, 434 kWh/yr, 100% Usage, 434 kWh/yr, 110% Usage, 384 kWh/yr, 90% Usage, 384 kWh/yr, 100% Usage, 384 kWh/yr, 110% Usage, 348 kWh/yr, 90% Usage, 348 kWh/yr, 100% Usage, 348 kWh/yr, 110% Usage, Detailed Example: 748 kWh/yr, Conditioned Basement, Detailed Example: 748 kWh/yr, Unconditioned Basement, Detailed Example: 748 kWh/yr, Garage
+     - None, 1139 kWh/yr, 90% Usage, 1139 kWh/yr, 100% Usage, 1139 kWh/yr, 110% Usage, 748 kWh/yr, 90% Usage, 748 kWh/yr, 100% Usage, 748 kWh/yr, 110% Usage, 727 kWh/yr, 90% Usage, 727 kWh/yr, 100% Usage, 727 kWh/yr, 110% Usage, 650 kWh/yr, 90% Usage, 650 kWh/yr, 100% Usage, 650 kWh/yr, 110% Usage, 574 kWh/yr, 90% Usage, 574 kWh/yr, 100% Usage, 574 kWh/yr, 110% Usage, 547 kWh/yr, 90% Usage, 547 kWh/yr, 100% Usage, 547 kWh/yr, 110% Usage, 480 kWh/yr, 90% Usage, 480 kWh/yr, 100% Usage, 480 kWh/yr, 110% Usage, 458 kWh/yr, 90% Usage, 458 kWh/yr, 100% Usage, 458 kWh/yr, 110% Usage, 434 kWh/yr, 90% Usage, 434 kWh/yr, 100% Usage, 434 kWh/yr, 110% Usage, 384 kWh/yr, 90% Usage, 384 kWh/yr, 100% Usage, 384 kWh/yr, 110% Usage, 348 kWh/yr, 90% Usage, 348 kWh/yr, 100% Usage, 348 kWh/yr, 110% Usage, Detailed Example: 748 kWh/yr, Conditioned Basement, Detailed Example: 748 kWh/yr, Unconditioned Basement, Detailed Example: 748 kWh/yr, Garage
      - The type and usage of extra refrigerator.
 
 Options
@@ -35860,7 +36460,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, 935 kWh/yr, 90% Usage, 935 kWh/yr, 100% Usage, 935 kWh/yr, 110% Usage, 712 kWh/yr, 90% Usage, 712 kWh/yr, 100% Usage, 712 kWh/yr, 110% Usage, 641 kWh/yr, 90% Usage, 641 kWh/yr, 100% Usage, 641 kWh/yr, 110% Usage, 568 kWh/yr, 90% Usage, 568 kWh/yr, 100% Usage, 568 kWh/yr, 110% Usage, 417 kWh/yr, 90% Usage, 417 kWh/yr, 100% Usage, 417 kWh/yr, 110% Usage, 375 kWh/yr, 90% Usage, 375 kWh/yr, 100% Usage, 375 kWh/yr, 110% Usage, 354 kWh/yr, 90% Usage, 354 kWh/yr, 100% Usage, 354 kWh/yr, 110% Usage, Detailed Example: 712 kWh/yr, Conditioned Basement, Detailed Example: 712 kWh/yr, Unconditioned Basement, Detailed Example: 712 kWh/yr, Garage
+     - None, 935 kWh/yr, 90% Usage, 935 kWh/yr, 100% Usage, 935 kWh/yr, 110% Usage, 712 kWh/yr, 90% Usage, 712 kWh/yr, 100% Usage, 712 kWh/yr, 110% Usage, 641 kWh/yr, 90% Usage, 641 kWh/yr, 100% Usage, 641 kWh/yr, 110% Usage, 568 kWh/yr, 90% Usage, 568 kWh/yr, 100% Usage, 568 kWh/yr, 110% Usage, 417 kWh/yr, 90% Usage, 417 kWh/yr, 100% Usage, 417 kWh/yr, 110% Usage, 375 kWh/yr, 90% Usage, 375 kWh/yr, 100% Usage, 375 kWh/yr, 110% Usage, 354 kWh/yr, 90% Usage, 354 kWh/yr, 100% Usage, 354 kWh/yr, 110% Usage, Detailed Example: 712 kWh/yr, Conditioned Basement, Detailed Example: 712 kWh/yr, Unconditioned Basement, Detailed Example: 712 kWh/yr, Garage
      - The type and usage of freezer.
 
 Options
@@ -35925,7 +36525,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Natural Gas, 25% Usage, Natural Gas, 50% Usage, Natural Gas, 75% Usage, Natural Gas, 100% Usage, Natural Gas, 150% Usage, Natural Gas, 200% Usage, Natural Gas, 400% Usage, Propane, 25% Usage, Propane, 50% Usage, Propane, 75% Usage, Propane, 100% Usage, Propane, 150% Usage, Propane, 200% Usage, Propane, 400% Usage, Wood, 25% Usage, Wood, 50% Usage, Wood, 75% Usage, Wood, 100% Usage, Wood, 150% Usage, Wood, 200% Usage, Wood, 400% Usage, Electric, 25% Usage, Electric, 50% Usage, Electric, 75% Usage, Electric, 100% Usage, Electric, 150% Usage, Electric, 200% Usage, Electric, 400% Usage, Detailed Example: Wood, 55 therm/yr
+     - None, Natural Gas, 25% Usage, Natural Gas, 50% Usage, Natural Gas, 75% Usage, Natural Gas, 100% Usage, Natural Gas, 150% Usage, Natural Gas, 200% Usage, Natural Gas, 400% Usage, Propane, 25% Usage, Propane, 50% Usage, Propane, 75% Usage, Propane, 100% Usage, Propane, 150% Usage, Propane, 200% Usage, Propane, 400% Usage, Wood, 25% Usage, Wood, 50% Usage, Wood, 75% Usage, Wood, 100% Usage, Wood, 150% Usage, Wood, 200% Usage, Wood, 400% Usage, Electric, 25% Usage, Electric, 50% Usage, Electric, 75% Usage, Electric, 100% Usage, Electric, 150% Usage, Electric, 200% Usage, Electric, 400% Usage, Detailed Example: Wood, 55 therm/yr
      - The amount of fireplace usage, relative to the national average. Fireplaces can also be specified as heating systems that meet a portion of the heating load.
 
 Options
@@ -35987,7 +36587,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Natural Gas, 25% Usage, Natural Gas, 50% Usage, Natural Gas, 75% Usage, Natural Gas, 100% Usage, Natural Gas, 150% Usage, Natural Gas, 200% Usage, Natural Gas, 400% Usage, Propane, 25% Usage, Propane, 50% Usage, Propane, 75% Usage, Propane, 100% Usage, Propane, 150% Usage, Propane, 200% Usage, Propane, 400% Usage, Detailed Example: Propane, 25 therm/yr
+     - None, Natural Gas, 25% Usage, Natural Gas, 50% Usage, Natural Gas, 75% Usage, Natural Gas, 100% Usage, Natural Gas, 150% Usage, Natural Gas, 200% Usage, Natural Gas, 400% Usage, Propane, 25% Usage, Propane, 50% Usage, Propane, 75% Usage, Propane, 100% Usage, Propane, 150% Usage, Propane, 200% Usage, Propane, 400% Usage, Detailed Example: Propane, 25 therm/yr
      - The amount of outdoor gas grill usage, relative to the national average.
 
 Options
@@ -36049,7 +36649,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Natural Gas, 25% Usage, Natural Gas, 50% Usage, Natural Gas, 75% Usage, Natural Gas, 100% Usage, Natural Gas, 150% Usage, Natural Gas, 200% Usage, Natural Gas, 400% Usage, Detailed Example: Natural Gas, 28 therm/yr
+     - None, Natural Gas, 25% Usage, Natural Gas, 50% Usage, Natural Gas, 75% Usage, Natural Gas, 100% Usage, Natural Gas, 150% Usage, Natural Gas, 200% Usage, Natural Gas, 400% Usage, Detailed Example: Natural Gas, 28 therm/yr
      - The amount of gas lighting usage, relative to the national average.
 
 Options
@@ -36155,7 +36755,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Unheated, 25% Usage, Unheated, 50% Usage, Unheated, 75% Usage, Unheated, 100% Usage, Unheated, 150% Usage, Unheated, 200% Usage, Unheated, 400% Usage, Electric Resistance Heater, 25% Usage, Electric Resistance Heater, 50% Usage, Electric Resistance Heater, 75% Usage, Electric Resistance Heater, 100% Usage, Electric Resistance Heater, 150% Usage, Electric Resistance Heater, 200% Usage, Electric Resistance Heater, 400% Usage, Heat Pump Heater, 25% Usage, Heat Pump Heater, 50% Usage, Heat Pump Heater, 75% Usage, Heat Pump Heater, 100% Usage, Heat Pump Heater, 150% Usage, Heat Pump Heater, 200% Usage, Heat Pump Heater, 400% Usage, Natural Gas Heater, 25% Usage, Natural Gas Heater, 50% Usage, Natural Gas Heater, 75% Usage, Natural Gas Heater, 100% Usage, Natural Gas Heater, 150% Usage, Natural Gas Heater, 200% Usage, Natural Gas Heater, 400% Usage, Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater, Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater
+     - None, Unheated, 25% Usage, Unheated, 50% Usage, Unheated, 75% Usage, Unheated, 100% Usage, Unheated, 150% Usage, Unheated, 200% Usage, Unheated, 400% Usage, Electric Resistance Heater, 25% Usage, Electric Resistance Heater, 50% Usage, Electric Resistance Heater, 75% Usage, Electric Resistance Heater, 100% Usage, Electric Resistance Heater, 150% Usage, Electric Resistance Heater, 200% Usage, Electric Resistance Heater, 400% Usage, Heat Pump Heater, 25% Usage, Heat Pump Heater, 50% Usage, Heat Pump Heater, 75% Usage, Heat Pump Heater, 100% Usage, Heat Pump Heater, 150% Usage, Heat Pump Heater, 200% Usage, Heat Pump Heater, 400% Usage, Natural Gas Heater, 25% Usage, Natural Gas Heater, 50% Usage, Natural Gas Heater, 75% Usage, Natural Gas Heater, 100% Usage, Natural Gas Heater, 150% Usage, Natural Gas Heater, 200% Usage, Natural Gas Heater, 400% Usage, Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater, Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater
      - The type of permanent spa (pump & heater).
 
 Options
@@ -36183,7 +36783,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
    * - Other Fuel
      - 0.33%
-     - Unheated, 100% Usage
+     - None
    * - Void
      - 0%
      - 
@@ -36277,7 +36877,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \the California Energy Commision 2019 Residential Appliance Saturation Study (RASS) microdata.
+- \the California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata.
 
 
 Assumption
@@ -36303,7 +36903,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Unheated, 25% Usage, Unheated, 50% Usage, Unheated, 75% Usage, Unheated, 100% Usage, Unheated, 150% Usage, Unheated, 200% Usage, Unheated, 400% Usage, Electric Resistance Heater, 25% Usage, Electric Resistance Heater, 50% Usage, Electric Resistance Heater, 75% Usage, Electric Resistance Heater, 100% Usage, Electric Resistance Heater, 150% Usage, Electric Resistance Heater, 200% Usage, Electric Resistance Heater, 400% Usage, Heat Pump Heater, 25% Usage, Heat Pump Heater, 50% Usage, Heat Pump Heater, 75% Usage, Heat Pump Heater, 100% Usage, Heat Pump Heater, 150% Usage, Heat Pump Heater, 200% Usage, Heat Pump Heater, 400% Usage, Natural Gas Heater, 25% Usage, Natural Gas Heater, 50% Usage, Natural Gas Heater, 75% Usage, Natural Gas Heater, 100% Usage, Natural Gas Heater, 150% Usage, Natural Gas Heater, 200% Usage, Natural Gas Heater, 400% Usage, Detailed Example: 2700 kWh/yr Pump, Unheated, Detailed Example: 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater
+     - None, Unheated, 25% Usage, Unheated, 50% Usage, Unheated, 75% Usage, Unheated, 100% Usage, Unheated, 150% Usage, Unheated, 200% Usage, Unheated, 400% Usage, Electric Resistance Heater, 25% Usage, Electric Resistance Heater, 50% Usage, Electric Resistance Heater, 75% Usage, Electric Resistance Heater, 100% Usage, Electric Resistance Heater, 150% Usage, Electric Resistance Heater, 200% Usage, Electric Resistance Heater, 400% Usage, Heat Pump Heater, 25% Usage, Heat Pump Heater, 50% Usage, Heat Pump Heater, 75% Usage, Heat Pump Heater, 100% Usage, Heat Pump Heater, 150% Usage, Heat Pump Heater, 200% Usage, Heat Pump Heater, 400% Usage, Natural Gas Heater, 25% Usage, Natural Gas Heater, 50% Usage, Natural Gas Heater, 75% Usage, Natural Gas Heater, 100% Usage, Natural Gas Heater, 150% Usage, Natural Gas Heater, 200% Usage, Natural Gas Heater, 400% Usage, Detailed Example: 2700 kWh/yr Pump, Unheated, Detailed Example: 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater
      - The type of pool (pump & heater).
 
 Options
@@ -36357,6 +36957,26 @@ Source
 - \Wilson et al. 'Building America House Simulation Protocols' 2014, national average fraction used for saturation
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``pool_pump_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the pool pump energy usage that can reflect, e.g., high/low usage occupants.
+
 Options
 *******
 
@@ -36369,11 +36989,14 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``pool_pump_usage_multiplier``
 
    * - None
      - 93%
+     - 
    * - 1.0 HP Pump
      - 7.1%
+     - 1.0
 
 .. _misc_well_pump:
 
@@ -36425,7 +37048,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Typical Efficiency, High Efficiency, Detailed Example: 475 kWh/yr
+     - None, Typical Efficiency, High Efficiency, Detailed Example: 475 kWh/yr
      - The amount of well pump usage, relative to the national average.
 
 Options
@@ -36487,7 +37110,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, 33% Operable Windows, 50% Operable Windows, 67% Operable Windows, 100% Operable Windows, Detailed Example: 67% Operable Windows, 7 Days/Week
+     - None, 33% Operable Windows, 50% Operable Windows, 67% Operable Windows, 100% Operable Windows, Detailed Example: 67% Operable Windows, 7 Days/Week
      - The amount of natural ventilation from occupants opening operable windows when outdoor conditions are favorable.
 
 Options
@@ -36548,7 +37171,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Left/Right at 2ft, Left/Right at 4ft, Left/Right at 5ft, Left/Right at 7ft, Left/Right at 10ft, Left/Right at 12ft, Left/Right at 15ft, Left/Right at 20ft, Left/Right at 25ft, Left/Right at 27ft, Left at 2ft, Left at 4ft, Left at 5ft, Left at 7ft, Left at 10ft, Left at 12ft, Left at 15ft, Left at 20ft, Left at 25ft, Left at 27ft, Right at 2ft, Right at 4ft, Right at 5ft, Right at 7ft, Right at 10ft, Right at 12ft, Right at 15ft, Right at 20ft, Right at 25ft, Right at 27ft, Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height
+     - None, Left/Right at 2ft, Left/Right at 4ft, Left/Right at 5ft, Left/Right at 7ft, Left/Right at 10ft, Left/Right at 12ft, Left/Right at 15ft, Left/Right at 20ft, Left/Right at 25ft, Left/Right at 27ft, Left at 2ft, Left at 4ft, Left at 5ft, Left at 7ft, Left at 10ft, Left at 12ft, Left at 15ft, Left at 20ft, Left at 25ft, Left at 27ft, Right at 2ft, Right at 4ft, Right at 5ft, Right at 7ft, Right at 10ft, Right at 12ft, Right at 15ft, Right at 20ft, Right at 25ft, Right at 27ft, Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height
      - The presence and geometry of neighboring buildings, for shading purposes.
 
 Options
@@ -36631,7 +37254,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, auto, Default, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+     - auto, Default, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
      - The number of occupants in the unit. Defaults to an *asset* calculation assuming standard occupancy, in which various end use defaults (e.g., plug loads, appliances, and hot water usage) are calculated based on Number of Bedrooms and Conditioned Floor Area. If provided, an *operational* calculation is instead performed in which the end use defaults reflect real-world data (where possible).
 
 Options
@@ -36761,67 +37384,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Southeast
      - 7.7%
      - Southeast
-
-.. _overhangs:
-
-Overhangs
----------
-
-Description
-***********
-
-Presence, depth, and location of window overhangs (not used in project_national).
-
-Created by
-**********
-
-manually created
-
-Source
-******
-
-- \Not applicable
-
-- \all homes are assumed to not have window overhangs other than eaves.
-
-
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``enclosure_overhangs``
-     - false
-     - 
-     - Choice
-     - auto, None, 1ft, All Windows, 2ft, All Windows, 3ft, All Windows, 4ft, All Windows, 5ft, All Windows, 10ft, All Windows, 1ft, Front Windows, 2ft, Front Windows, 3ft, Front Windows, 4ft, Front Windows, 5ft, Front Windows, 10ft, Front Windows, 1ft, Back Windows, 2ft, Back Windows, 3ft, Back Windows, 4ft, Back Windows, 5ft, Back Windows, 10ft, Back Windows, 1ft, Left Windows, 2ft, Left Windows, 3ft, Left Windows, 4ft, Left Windows, 5ft, Left Windows, 10ft, Left Windows, 1ft, Right Windows, 2ft, Right Windows, 3ft, Right Windows, 4ft, Right Windows, 5ft, Right Windows, 10ft, Right Windows, Detailed Example: 1.5ft, Back/Left/Right Windows, 2ft Offset, 4ft Window Height, Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height
-     - The type of window overhangs.
-
-Options
-*******
-
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Overhangs** characteristic.
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-   :widths: auto
-
-   * - Option name
-     - Stock saturation
-     - ``enclosure_overhangs``
-
-   * - None
-     - 100%
-     - None
 
 .. _puma:
 
@@ -41653,7 +42215,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Roof Pitch, West, Roof Pitch, Southwest, Roof Pitch, South, Roof Pitch, Southeast, Roof Pitch, East, Roof Pitch, Northeast, Roof Pitch, North, Roof Pitch, Northwest, 0 Degrees, 5 Degrees, West, 5 Degrees, Southwest, 5 Degrees, South, 5 Degrees, Southeast, 5 Degrees, East, 10 Degrees, West, 10 Degrees, Southwest, 10 Degrees, South, 10 Degrees, Southeast, 10 Degrees, East, 15 Degrees, West, 15 Degrees, Southwest, 15 Degrees, South, 15 Degrees, Southeast, 15 Degrees, East, 20 Degrees, West, 20 Degrees, Southwest, 20 Degrees, South, 20 Degrees, Southeast, 20 Degrees, East, 25 Degrees, West, 25 Degrees, Southwest, 25 Degrees, South, 25 Degrees, Southeast, 25 Degrees, East, 30 Degrees, West, 30 Degrees, Southwest, 30 Degrees, South, 30 Degrees, Southeast, 30 Degrees, East, 35 Degrees, West, 35 Degrees, Southwest, 35 Degrees, South, 35 Degrees, Southeast, 35 Degrees, East, 40 Degrees, West, 40 Degrees, Southwest, 40 Degrees, South, 40 Degrees, Southeast, 40 Degrees, East, 45 Degrees, West, 45 Degrees, Southwest, 45 Degrees, South, 45 Degrees, Southeast, 45 Degrees, East, 50 Degrees, West, 50 Degrees, Southwest, 50 Degrees, South, 50 Degrees, Southeast, 50 Degrees, East
+     - Roof Pitch, West, Roof Pitch, Southwest, Roof Pitch, South, Roof Pitch, Southeast, Roof Pitch, East, Roof Pitch, Northeast, Roof Pitch, North, Roof Pitch, Northwest, 0 Degrees, 5 Degrees, West, 5 Degrees, Southwest, 5 Degrees, South, 5 Degrees, Southeast, 5 Degrees, East, 10 Degrees, West, 10 Degrees, Southwest, 10 Degrees, South, 10 Degrees, Southeast, 10 Degrees, East, 15 Degrees, West, 15 Degrees, Southwest, 15 Degrees, South, 15 Degrees, Southeast, 15 Degrees, East, 20 Degrees, West, 20 Degrees, Southwest, 20 Degrees, South, 20 Degrees, Southeast, 20 Degrees, East, 25 Degrees, West, 25 Degrees, Southwest, 25 Degrees, South, 25 Degrees, Southeast, 25 Degrees, East, 30 Degrees, West, 30 Degrees, Southwest, 30 Degrees, South, 30 Degrees, Southeast, 30 Degrees, East, 35 Degrees, West, 35 Degrees, Southwest, 35 Degrees, South, 35 Degrees, Southeast, 35 Degrees, East, 40 Degrees, West, 40 Degrees, Southwest, 40 Degrees, South, 40 Degrees, Southeast, 40 Degrees, East, 45 Degrees, West, 45 Degrees, Southwest, 45 Degrees, South, 45 Degrees, Southeast, 45 Degrees, East, 50 Degrees, West, 50 Degrees, Southwest, 50 Degrees, South, 50 Degrees, Southeast, 50 Degrees, East
      - The azimuth and tilt of the PV system array.
 
 Options
@@ -41744,19 +42306,19 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, 0.5 kW, 1.0 kW, 1.5 kW, 2.0 kW, 2.5 kW, 3.0 kW, 3.5 kW, 4.0 kW, 4.5 kW, 5.0 kW, 5.5 kW, 6.0 kW, 6.5 kW, 7.0 kW, 7.5 kW, 8.0 kW, 8.5 kW, 9.0 kW, 9.5 kW, 10.0 kW, 10.5 kW, 11.0 kW, 11.5 kW, 12.0 kW, 12.5 kW, 13.0 kW, 13.5 kW, 14.0 kW, 14.5 kW, 15.0 kW, Detailed Example: 10.0 kW, Standard, 14% System Losses, 96% Inverter Efficiency, Detailed Example: 1.5 kW, Premium, Detailed Example: 1.5 kW, Thin Film
+     - None, 0.5 kW, 1.0 kW, 1.5 kW, 2.0 kW, 2.5 kW, 3.0 kW, 3.5 kW, 4.0 kW, 4.5 kW, 5.0 kW, 5.5 kW, 6.0 kW, 6.5 kW, 7.0 kW, 7.5 kW, 8.0 kW, 8.5 kW, 9.0 kW, 9.5 kW, 10.0 kW, 10.5 kW, 11.0 kW, 11.5 kW, 12.0 kW, 12.5 kW, 13.0 kW, 13.5 kW, 14.0 kW, 14.5 kW, 15.0 kW, Detailed Example: 10.0 kW, Standard, 14% System Losses, 96% Inverter Efficiency, Detailed Example: 1.5 kW, Premium, Detailed Example: 1.5 kW, Thin Film
      - The size and type of the PV system.
    * - ``pv_system_2``
      - false
      - 
      - Choice
-     - auto, None, 0.5 kW, 1.0 kW, 1.5 kW, 2.0 kW, 2.5 kW, 3.0 kW, 3.5 kW, 4.0 kW, 4.5 kW, 5.0 kW, 5.5 kW, 6.0 kW, 6.5 kW, 7.0 kW, 7.5 kW, 8.0 kW, 8.5 kW, 9.0 kW, 9.5 kW, 10.0 kW, 10.5 kW, 11.0 kW, 11.5 kW, 12.0 kW, 12.5 kW, 13.0 kW, 13.5 kW, 14.0 kW, 14.5 kW, 15.0 kW, Detailed Example: 10.0 kW, Standard, 14% System Losses, Detailed Example: 1.5 kW, Premium, Detailed Example: 1.5 kW, Thin Film
+     - None, 0.5 kW, 1.0 kW, 1.5 kW, 2.0 kW, 2.5 kW, 3.0 kW, 3.5 kW, 4.0 kW, 4.5 kW, 5.0 kW, 5.5 kW, 6.0 kW, 6.5 kW, 7.0 kW, 7.5 kW, 8.0 kW, 8.5 kW, 9.0 kW, 9.5 kW, 10.0 kW, 10.5 kW, 11.0 kW, 11.5 kW, 12.0 kW, 12.5 kW, 13.0 kW, 13.5 kW, 14.0 kW, 14.5 kW, 15.0 kW, Detailed Example: 10.0 kW, Standard, 14% System Losses, Detailed Example: 1.5 kW, Premium, Detailed Example: 1.5 kW, Thin Film
      - The size and type of the second PV system.
    * - ``pv_system_2_direction``
      - false
      - 
      - Choice
-     - auto, Roof Pitch, West, Roof Pitch, Southwest, Roof Pitch, South, Roof Pitch, Southeast, Roof Pitch, East, Roof Pitch, Northeast, Roof Pitch, North, Roof Pitch, Northwest, 0 Degrees, 5 Degrees, West, 5 Degrees, Southwest, 5 Degrees, South, 5 Degrees, Southeast, 5 Degrees, East, 10 Degrees, West, 10 Degrees, Southwest, 10 Degrees, South, 10 Degrees, Southeast, 10 Degrees, East, 15 Degrees, West, 15 Degrees, Southwest, 15 Degrees, South, 15 Degrees, Southeast, 15 Degrees, East, 20 Degrees, West, 20 Degrees, Southwest, 20 Degrees, South, 20 Degrees, Southeast, 20 Degrees, East, 25 Degrees, West, 25 Degrees, Southwest, 25 Degrees, South, 25 Degrees, Southeast, 25 Degrees, East, 30 Degrees, West, 30 Degrees, Southwest, 30 Degrees, South, 30 Degrees, Southeast, 30 Degrees, East, 35 Degrees, West, 35 Degrees, Southwest, 35 Degrees, South, 35 Degrees, Southeast, 35 Degrees, East, 40 Degrees, West, 40 Degrees, Southwest, 40 Degrees, South, 40 Degrees, Southeast, 40 Degrees, East, 45 Degrees, West, 45 Degrees, Southwest, 45 Degrees, South, 45 Degrees, Southeast, 45 Degrees, East, 50 Degrees, West, 50 Degrees, Southwest, 50 Degrees, South, 50 Degrees, Southeast, 50 Degrees, East
+     - Roof Pitch, West, Roof Pitch, Southwest, Roof Pitch, South, Roof Pitch, Southeast, Roof Pitch, East, Roof Pitch, Northeast, Roof Pitch, North, Roof Pitch, Northwest, 0 Degrees, 5 Degrees, West, 5 Degrees, Southwest, 5 Degrees, South, 5 Degrees, Southeast, 5 Degrees, East, 10 Degrees, West, 10 Degrees, Southwest, 10 Degrees, South, 10 Degrees, Southeast, 10 Degrees, East, 15 Degrees, West, 15 Degrees, Southwest, 15 Degrees, South, 15 Degrees, Southeast, 15 Degrees, East, 20 Degrees, West, 20 Degrees, Southwest, 20 Degrees, South, 20 Degrees, Southeast, 20 Degrees, East, 25 Degrees, West, 25 Degrees, Southwest, 25 Degrees, South, 25 Degrees, Southeast, 25 Degrees, East, 30 Degrees, West, 30 Degrees, Southwest, 30 Degrees, South, 30 Degrees, Southeast, 30 Degrees, East, 35 Degrees, West, 35 Degrees, Southwest, 35 Degrees, South, 35 Degrees, Southeast, 35 Degrees, East, 40 Degrees, West, 40 Degrees, Southwest, 40 Degrees, South, 40 Degrees, Southeast, 40 Degrees, East, 45 Degrees, West, 45 Degrees, Southwest, 45 Degrees, South, 45 Degrees, Southeast, 45 Degrees, East, 50 Degrees, West, 50 Degrees, Southwest, 50 Degrees, South, 50 Degrees, Southeast, 50 Degrees, East
      - The azimuth and tilt of the second PV system array.
 
 Options
@@ -41854,13 +42416,13 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, 25% Usage, 33% Usage, 50% Usage, 75% Usage, 80% Usage, 90% Usage, 100% Usage, 110% Usage, 125% Usage, 150% Usage, 200% Usage, 300% Usage, 400% Usage, Detailed Example: 620 kWh/yr
+     - None, 25% Usage, 33% Usage, 50% Usage, 75% Usage, 80% Usage, 90% Usage, 100% Usage, 110% Usage, 125% Usage, 150% Usage, 200% Usage, 300% Usage, 400% Usage, Detailed Example: 620 kWh/yr
      - The amount of television usage, relative to the national average.
    * - ``misc_plug_loads``
      - false
      - 
      - Choice
-     - auto, None, 25% Usage, 33% Usage, 50% Usage, 75% Usage, 80% Usage, 90% Usage, 100% Usage, 110% Usage, 125% Usage, 150% Usage, 200% Usage, 300% Usage, 400% Usage, Detailed Example: 2457 kWh/yr, 85.5% Sensible, 4.5% Latent, Detailed Example: 7302 kWh/yr, 82.2% Sensible, 17.8% Latent
+     - None, 25% Usage, 33% Usage, 50% Usage, 75% Usage, 80% Usage, 90% Usage, 100% Usage, 110% Usage, 125% Usage, 150% Usage, 200% Usage, 300% Usage, 400% Usage, Detailed Example: 2457 kWh/yr, 85.5% Sensible, 4.5% Latent, Detailed Example: 7302 kWh/yr, 82.2% Sensible, 17.8% Latent
      - The amount of additional plug load usage, relative to the national average.
 
 Options
@@ -41918,6 +42480,32 @@ Assumption
 - \Multipliers are based on ratio of the ResStock MELS regression equations and the MELS modeled in RECS.
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``misc_plug_loads_television_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the television energy usage that can reflect, e.g., high/low usage occupants.
+   * - ``misc_plug_loads_other_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.
+
 Options
 *******
 
@@ -41930,69 +42518,133 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``misc_plug_loads_television_usage_multiplier``
+     - ``misc_plug_loads_other_usage_multiplier``
 
    * - 78%
      - 0.21%
+     - 0.78
+     - 0.78
    * - 79%
      - 0.21%
+     - 0.79
+     - 0.79
    * - 82%
      - 1.1%
+     - 0.82
+     - 0.82
    * - 84%
      - 2.9%
+     - 0.84
+     - 0.84
    * - 85%
      - 10%
+     - 0.85
+     - 0.85
    * - 86%
      - 1%
+     - 0.86
+     - 0.86
    * - 89%
      - 5.5%
+     - 0.89
+     - 0.89
    * - 91%
      - 5.6%
+     - 0.91
+     - 0.91
    * - 94%
      - 10%
+     - 0.94
+     - 0.94
    * - 95%
      - 5%
+     - 0.95
+     - 0.95
    * - 96%
      - 4%
+     - 0.96
+     - 0.96
    * - 97%
      - 0.74%
+     - 0.97
+     - 0.97
    * - 99%
      - 2.8%
+     - 0.99
+     - 0.99
    * - 100%
      - 0.28%
+     - 1.0
+     - 1.0
    * - 101%
      - 7.6%
+     - 1.01
+     - 1.01
    * - 102%
      - 0.66%
+     - 1.02
+     - 1.02
    * - 103%
      - 0.17%
+     - 1.03
+     - 1.03
    * - 104%
      - 2.7%
+     - 1.04
+     - 1.04
    * - 105%
      - 0.57%
+     - 1.05
+     - 1.05
    * - 106%
      - 17%
+     - 1.06
+     - 1.06
    * - 108%
      - 1.3%
+     - 1.08
+     - 1.08
    * - 110%
      - 6.1%
+     - 1.1
+     - 1.1
    * - 113%
      - 8%
+     - 1.13
+     - 1.13
    * - 119%
      - 1.8%
+     - 1.19
+     - 1.19
    * - 121%
      - 0.84%
+     - 1.21
+     - 1.21
    * - 123%
      - 1.4%
+     - 1.23
+     - 1.23
    * - 134%
      - 0.74%
+     - 1.34
+     - 1.34
    * - 137%
      - 0.12%
+     - 1.37
+     - 1.37
    * - 140%
      - 0.37%
+     - 1.4
+     - 1.4
    * - 144%
      - 1%
+     - 1.44
+     - 1.44
    * - 166%
      - 0.4%
+     - 1.66
+     - 1.66
 
 .. _reeds_balancing_area:
 
@@ -42343,7 +42995,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Attic Roof Only, Attic Roof and Gable Walls, Attic Floor
+     - None, Attic Roof Only, Attic Roof and Gable Walls, Attic Floor
      - The type of radiant barrier in the attic.
 
 Options
@@ -42391,6 +43043,26 @@ Source
 - \derived from national average cooking range schedule in Wilson et al. 'Building America House Simulation Protocols' 2014
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``kitchen_fans_start_hour``
+     - false
+     - 
+     - Integer
+     -
+     - The hour of the day when the kitchen fans run.
+
 Options
 *******
 
@@ -42403,55 +43075,80 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``kitchen_fans_start_hour``
 
    * - Hour0
      - 0.7%
+     - 0
    * - Hour1
      - 0.7%
+     - 1
    * - Hour2
      - 0.4%
+     - 2
    * - Hour3
      - 0.4%
+     - 3
    * - Hour4
      - 0.7%
+     - 4
    * - Hour5
      - 1.1%
+     - 5
    * - Hour6
      - 2.5%
+     - 6
    * - Hour7
      - 4.2%
+     - 7
    * - Hour8
      - 4.6%
+     - 8
    * - Hour9
      - 4.8%
+     - 9
    * - Hour10
      - 4.2%
+     - 10
    * - Hour11
      - 5%
+     - 11
    * - Hour12
      - 5.7%
+     - 12
    * - Hour13
      - 4.6%
+     - 13
    * - Hour14
      - 5.7%
+     - 14
    * - Hour15
      - 4.4%
+     - 15
    * - Hour16
      - 9.2%
+     - 16
    * - Hour17
      - 15%
+     - 17
    * - Hour18
      - 12%
+     - 18
    * - Hour19
      - 6%
+     - 19
    * - Hour20
      - 3.5%
+     - 20
    * - Hour21
      - 2.5%
+     - 21
    * - Hour22
      - 1.6%
+     - 22
    * - Hour23
      - 1.1%
+     - 23
 
 .. _refrigerator:
 
@@ -42523,7 +43220,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, 1139 kWh/yr, 90% Usage, 1139 kWh/yr, 100% Usage, 1139 kWh/yr, 110% Usage, 748 kWh/yr, 90% Usage, 748 kWh/yr, 100% Usage, 748 kWh/yr, 110% Usage, 727 kWh/yr, 90% Usage, 727 kWh/yr, 100% Usage, 727 kWh/yr, 110% Usage, 650 kWh/yr, 90% Usage, 650 kWh/yr, 100% Usage, 650 kWh/yr, 110% Usage, 574 kWh/yr, 90% Usage, 574 kWh/yr, 100% Usage, 574 kWh/yr, 110% Usage, 547 kWh/yr, 90% Usage, 547 kWh/yr, 100% Usage, 547 kWh/yr, 110% Usage, 480 kWh/yr, 90% Usage, 480 kWh/yr, 100% Usage, 480 kWh/yr, 110% Usage, 458 kWh/yr, 90% Usage, 458 kWh/yr, 100% Usage, 458 kWh/yr, 110% Usage, 434 kWh/yr, 90% Usage, 434 kWh/yr, 100% Usage, 434 kWh/yr, 110% Usage, 384 kWh/yr, 90% Usage, 384 kWh/yr, 100% Usage, 384 kWh/yr, 110% Usage, 348 kWh/yr, 90% Usage, 348 kWh/yr, 100% Usage, 348 kWh/yr, 110% Usage, Detailed Example: ERI Reference 2006, 2-Bedroom Home, Detailed Example: ERI Reference 2006, 3-Bedroom Home, Detailed Example: ERI Reference 2006, 4-Bedroom Home, Detailed Example: 650 kWh/yr, Conditioned Basement, Detailed Example: 650 kWh/yr, Unconditioned Basement, Detailed Example: 650 kWh/yr, Garage
+     - None, 1139 kWh/yr, 90% Usage, 1139 kWh/yr, 100% Usage, 1139 kWh/yr, 110% Usage, 748 kWh/yr, 90% Usage, 748 kWh/yr, 100% Usage, 748 kWh/yr, 110% Usage, 727 kWh/yr, 90% Usage, 727 kWh/yr, 100% Usage, 727 kWh/yr, 110% Usage, 650 kWh/yr, 90% Usage, 650 kWh/yr, 100% Usage, 650 kWh/yr, 110% Usage, 574 kWh/yr, 90% Usage, 574 kWh/yr, 100% Usage, 574 kWh/yr, 110% Usage, 547 kWh/yr, 90% Usage, 547 kWh/yr, 100% Usage, 547 kWh/yr, 110% Usage, 480 kWh/yr, 90% Usage, 480 kWh/yr, 100% Usage, 480 kWh/yr, 110% Usage, 458 kWh/yr, 90% Usage, 458 kWh/yr, 100% Usage, 458 kWh/yr, 110% Usage, 434 kWh/yr, 90% Usage, 434 kWh/yr, 100% Usage, 434 kWh/yr, 110% Usage, 384 kWh/yr, 90% Usage, 384 kWh/yr, 100% Usage, 384 kWh/yr, 110% Usage, 348 kWh/yr, 90% Usage, 348 kWh/yr, 100% Usage, 348 kWh/yr, 110% Usage, Detailed Example: ERI Reference 2006, 2-Bedroom Home, Detailed Example: ERI Reference 2006, 3-Bedroom Home, Detailed Example: ERI Reference 2006, 4-Bedroom Home, Detailed Example: 650 kWh/yr, Conditioned Basement, Detailed Example: 650 kWh/yr, Unconditioned Basement, Detailed Example: 650 kWh/yr, Garage
      - The type and usage of refrigerator.
 
 Options
@@ -42595,6 +43292,26 @@ Assumption
 - \Engineering judgement
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``refrigerator_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usage occupants.
+
 Options
 *******
 
@@ -42607,13 +43324,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``refrigerator_usage_multiplier``
 
    * - 95% Usage
      - 25%
+     - 0.95
    * - 100% Usage
      - 50%
+     - 1.0
    * - 105% Usage
      - 25%
+     - 1.05
 
 .. _roof_material:
 
@@ -42665,7 +43386,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Asphalt/Fiberglass Shingles, Dark, Asphalt/Fiberglass Shingles, Medium Dark, Asphalt/Fiberglass Shingles, Medium, Asphalt/Fiberglass Shingles, Light, Asphalt/Fiberglass Shingles, Reflective, Tile/Slate, Dark, Tile/Slate, Medium Dark, Tile/Slate, Medium, Tile/Slate, Light, Tile/Slate, Reflective, Metal, Dark, Metal, Medium Dark, Metal, Medium, Metal, Light, Metal, Reflective, Wood Shingles/Shakes, Dark, Wood Shingles/Shakes, Medium Dark, Wood Shingles/Shakes, Medium, Wood Shingles/Shakes, Light, Wood Shingles/Shakes, Reflective, Shingles, Dark, Shingles, Medium Dark, Shingles, Medium, Shingles, Light, Shingles, Reflective, Synthetic Sheeting, Dark, Synthetic Sheeting, Medium Dark, Synthetic Sheeting, Medium, Synthetic Sheeting, Light, Synthetic Sheeting, Reflective, EPS Sheathing, Dark, EPS Sheathing, Medium Dark, EPS Sheathing, Medium, EPS Sheathing, Light, EPS Sheathing, Reflective, Concrete, Dark, Concrete, Medium Dark, Concrete, Medium, Concrete, Light, Concrete, Reflective, Cool Roof, Detailed Example: 0.2 Solar Absorptance, Detailed Example: 0.4 Solar Absorptance, Detailed Example: 0.6 Solar Absorptance, Detailed Example: 0.75 Solar Absorptance
+     - Asphalt/Fiberglass Shingles, Dark, Asphalt/Fiberglass Shingles, Medium Dark, Asphalt/Fiberglass Shingles, Medium, Asphalt/Fiberglass Shingles, Light, Asphalt/Fiberglass Shingles, Reflective, Tile/Slate, Dark, Tile/Slate, Medium Dark, Tile/Slate, Medium, Tile/Slate, Light, Tile/Slate, Reflective, Metal, Dark, Metal, Medium Dark, Metal, Medium, Metal, Light, Metal, Reflective, Wood Shingles/Shakes, Dark, Wood Shingles/Shakes, Medium Dark, Wood Shingles/Shakes, Medium, Wood Shingles/Shakes, Light, Wood Shingles/Shakes, Reflective, Shingles, Dark, Shingles, Medium Dark, Shingles, Medium, Shingles, Light, Shingles, Reflective, Synthetic Sheeting, Dark, Synthetic Sheeting, Medium Dark, Synthetic Sheeting, Medium, Synthetic Sheeting, Light, Synthetic Sheeting, Reflective, EPS Sheathing, Dark, EPS Sheathing, Medium Dark, EPS Sheathing, Medium, EPS Sheathing, Light, EPS Sheathing, Reflective, Concrete, Dark, Concrete, Medium Dark, Concrete, Medium, Concrete, Light, Concrete, Reflective, Cool Roof, Detailed Example: 0.2 Solar Absorptance, Detailed Example: 0.4 Solar Absorptance, Detailed Example: 0.6 Solar Absorptance, Detailed Example: 0.75 Solar Absorptance
      - The material type and color of the roof.
 
 Options
@@ -42727,6 +43448,32 @@ Source
 - \Unit counts are from the American Community Survey 5-yr 2016.
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``extra_refrigerator_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants.
+   * - ``freezer_usage_multiplier``
+     - false
+     - 
+     - Double
+     -
+     - Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants.
+
 Options
 *******
 
@@ -42739,109 +43486,213 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``extra_refrigerator_usage_multiplier``
+     - ``freezer_usage_multiplier``
 
    * - AK
      - 0.23%
+     - 1.80
+     - 1.27
    * - AL
      - 1.6%
+     - 1.76
+     - 1.34
    * - AR
      - 1%
+     - 1.90
+     - 1.25
    * - AZ
      - 2.2%
+     - 1.74
+     - 1.09
    * - CA
      - 10%
+     - 1.86
+     - 1.06
    * - CO
      - 1.7%
+     - 1.85
+     - 1.06
    * - CT
      - 1.1%
+     - 1.96
+     - 1.08
    * - DC
      - 0.23%
+     - 2.15
+     - 1.21
    * - DE
      - 0.31%
+     - 1.68
+     - 1.12
    * - FL
      - 6.8%
+     - 1.87
+     - 1.04
    * - GA
      - 3.1%
+     - 1.74
+     - 1.26
    * - HI
      - 0.4%
+     - 1.94
+     - 1.21
    * - IA
      - 1%
+     - 1.77
+     - 1.13
    * - ID
      - 0.51%
+     - 1.62
+     - 1.38
    * - IL
      - 4%
+     - 1.82
+     - 1.07
    * - IN
      - 2.1%
+     - 1.78
+     - 1.25
    * - KS
      - 0.93%
+     - 1.77
+     - 1.04
    * - KY
      - 1.5%
+     - 1.80
+     - 1.19
    * - LA
      - 1.5%
+     - 1.88
+     - 1.32
    * - MA
      - 2.1%
+     - 2.00
+     - 1.06
    * - MD
      - 1.8%
+     - 1.94
+     - 1.20
    * - ME
      - 0.54%
+     - 1.88
+     - 1.09
    * - MI
      - 3.4%
+     - 1.73
+     - 1.22
    * - MN
      - 1.8%
+     - 1.72
+     - 1.27
    * - MO
      - 2%
+     - 1.76
+     - 1.07
    * - MS
      - 0.97%
+     - 1.85
+     - 1.34
    * - MT
      - 0.37%
+     - 1.69
+     - 1.33
    * - NC
      - 3.3%
+     - 1.80
+     - 1.10
    * - ND
      - 0.26%
+     - 1.73
+     - 1.29
    * - NE
      - 0.61%
+     - 1.85
+     - 1.19
    * - NH
      - 0.46%
+     - 1.90
+     - 1.23
    * - NJ
      - 2.7%
+     - 1.81
+     - 1.05
    * - NM
      - 0.68%
+     - 1.90
+     - 1.17
    * - NV
      - 0.9%
+     - 1.87
+     - 1.02
    * - NY
      - 6.1%
+     - 1.91
+     - 1.06
    * - OH
      - 3.8%
+     - 1.81
+     - 1.12
    * - OK
      - 1.3%
+     - 1.86
+     - 1.26
    * - OR
      - 1.3%
+     - 1.84
+     - 1.39
    * - PA
      - 4.2%
+     - 1.73
+     - 1.18
    * - RI
      - 0.35%
+     - 1.91
+     - 0.97
    * - SC
      - 1.6%
+     - 1.83
+     - 1.13
    * - SD
      - 0.28%
+     - 1.83
+     - 1.37
    * - TN
      - 2.1%
+     - 1.86
+     - 1.25
    * - TX
      - 7.8%
+     - 1.84
+     - 1.18
    * - UT
      - 0.76%
+     - 1.78
+     - 1.20
    * - VA
      - 2.6%
+     - 1.80
+     - 1.14
    * - VT
      - 0.24%
+     - 1.82
+     - 1.25
    * - WA
      - 2.2%
+     - 1.76
+     - 1.14
    * - WI
      - 2%
+     - 1.74
+     - 1.20
    * - WV
      - 0.66%
+     - 1.68
+     - 1.15
    * - WY
      - 0.2%
+     - 1.80
+     - 1.32
 
 .. _state_metro_median_income:
 
@@ -43011,6 +43862,26 @@ Assumption
 - \Where sample counts are less than 10 (434 / 11680 rows), the State average distribution has been inserted. 'Mobile Home' does not exist in DC and is replaced by 'Single-Family Detached'.
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``schedules_vacancy_periods``
+     - false
+     - 
+     - String
+     -
+     - Specifies the vacancy periods. Enter a date like "Dec 15 - Jan 15". Optionally, can enter hour of the day like "Dec 15 2 - Jan 15 20" (start hour can be 0 through 23 and end hour can be 1 through 24). If multiple periods, use a comma-separated list.
+
 Options
 *******
 
@@ -43023,11 +43894,14 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``schedules_vacancy_periods``
 
    * - Occupied
      - 88%
+     - 
    * - Vacant
      - 12%
+     - Jan 1 - Dec 31
 
 .. _vintage:
 
@@ -43069,12 +43943,6 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``building_year_built``
-     - false
-     - 
-     - Integer
-     -
-     - The year the building was built.
    * - ``vintage``
      - false
      - 
@@ -43094,44 +43962,34 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``building_year_built``
      - ``vintage``
 
    * - <1940
      - 13%
-     - auto
      - <1940
    * - 1940s
      - 4.9%
-     - auto
      - 1940s
    * - 1950s
      - 10%
-     - auto
      - 1950s
    * - 1960s
      - 11%
-     - auto
      - 1960s
    * - 1970s
      - 15%
-     - auto
      - 1970s
    * - 1980s
      - 13%
-     - auto
      - 1980s
    * - 1990s
      - 14%
-     - auto
      - 1990s
    * - 2000s
      - 14%
-     - auto
      - 2000s
    * - 2010s
      - 5.1%
-     - auto
      - 2010s
 
 .. _vintage_acs:
@@ -43213,8 +44071,6 @@ Assumption
 
 - \Heat Pump Water Heaters are added in manually as they are not in the survey.
 
-- \Default efficiency of HPWH: Electric Heat Pump, 50 gal, 3.45 UEF.
-
 - \Default solar thermal collector assumed: 40 sqft, Roof Pitch,
 
 - \Solar thermal backup is informed by secondary water heater fuel type. Solar collector orientation is based on rooftop solar orientation for electric backup and assumed south-facing for fuel backup. If a solar thermal system has no secondary water heater or has a second solar thermal system, they are assumed to have electric backup.
@@ -43245,19 +44101,19 @@ Arguments
      - true
      - 
      - Choice
-     - None, Electricity, Tank, UEF 0.90, Electricity, Tank, UEF 0.92, Electricity, Tank, UEF 0.94, Electricity, Tankless, UEF 0.94, Electricity, Tankless, UEF 0.98, Electricity, Heat Pump, UEF 3.50, Electricity, Heat Pump, UEF 3.75, Electricity, Heat Pump, UEF 4.00, Natural Gas, Tank, UEF 0.57, Natural Gas, Tank, UEF 0.60, Natural Gas, Tank, UEF 0.64, Natural Gas, Tank, UEF 0.67, Natural Gas, Tank, UEF 0.70, Natural Gas, Tank, UEF 0.80, Natural Gas, Tankless, UEF 0.82, Natural Gas, Tankless, UEF 0.93, Natural Gas, Tankless, UEF 0.96, Fuel Oil, Tank, UEF 0.61, Fuel Oil, Tank, UEF 0.64, Fuel Oil, Tank, UEF 0.67, Propane, Tank, UEF 0.57, Propane, Tank, UEF 0.60, Propane, Tank, UEF 0.64, Propane, Tank, UEF 0.67, Propane, Tank, UEF 0.70, Propane, Tank, UEF 0.80, Propane, Tankless, UEF 0.82, Propane, Tankless, UEF 0.93, Propane, Tankless, UEF 0.96, Space-Heating Boiler w/ Storage Tank, Space-Heating Boiler w/ Tankless Coil, Detailed Example: Electricity, Tank, 40 gal, EF 0.93, Detailed Example: Electricity, Tank, UEF 0.94, 135F, Detailed Example: Electricity, Tankless, EF 0.96, Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1, Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78, Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78, Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76, Detailed Example: Natural Gas, Tankless, EF 0.95
+     - None, Electricity, Tank, UEF 0.90, Electricity, Tank, UEF 0.92, Electricity, Tank, UEF 0.94, Electricity, Tankless, UEF 0.94, Electricity, Tankless, UEF 0.98, Electricity, Heat Pump, UEF 3.50, Electricity, Heat Pump, UEF 3.75, Electricity, Heat Pump, UEF 4.00, Natural Gas, Tank, UEF 0.57, Natural Gas, Tank, UEF 0.60, Natural Gas, Tank, UEF 0.64, Natural Gas, Tank, UEF 0.67, Natural Gas, Tank, UEF 0.70, Natural Gas, Tank, UEF 0.80, Natural Gas, Tankless, UEF 0.82, Natural Gas, Tankless, UEF 0.93, Natural Gas, Tankless, UEF 0.96, Fuel Oil, Tank, UEF 0.61, Fuel Oil, Tank, UEF 0.64, Fuel Oil, Tank, UEF 0.67, Propane, Tank, UEF 0.57, Propane, Tank, UEF 0.60, Propane, Tank, UEF 0.64, Propane, Tank, UEF 0.67, Propane, Tank, UEF 0.70, Propane, Tank, UEF 0.80, Propane, Tankless, UEF 0.82, Propane, Tankless, UEF 0.93, Propane, Tankless, UEF 0.96, Wood, Tank, UEF 0.60, Coal, Tank, UEF 0.60, Space-Heating Boiler w/ Storage Tank, Space-Heating Boiler w/ Tankless Coil, Detailed Example: Electricity, Tank, 40 gal, EF 0.93, Detailed Example: Electricity, Tank, UEF 0.94, 135F, Detailed Example: Electricity, Tankless, EF 0.96, Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1, Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78, Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78, Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76, Detailed Example: Natural Gas, Tankless, EF 0.95
      - The type and efficiency of the water heater.
    * - ``dhw_solar_thermal``
      - false
      - 
      - Choice
-     - auto, None, Indirect, Flat Plate, 40 sqft, Indirect, Flat Plate, 64 sqft, Direct, Flat Plate, 40 sqft, Direct. Flat Plate, 64 sqft, Direct, Integrated Collector Storage, 40 sqft, Direct, Integrated Collector Storage, 64 sqft, Direct, Evacuated Tube, 40 sqft, Direct, Evacuated Tube, 64 sqft, Thermosyphon, Flat Plate, 40 sqft, Thermosyphon, Flat Plate, 64 sqft, 60% Solar Fraction, 65% Solar Fraction, 70% Solar Fraction, 75% Solar Fraction, 80% Solar Fraction, 85% Solar Fraction, 90% Solar Fraction, 95% Solar Fraction
+     - None, Indirect, Flat Plate, 40 sqft, Indirect, Flat Plate, 64 sqft, Direct, Flat Plate, 40 sqft, Direct. Flat Plate, 64 sqft, Direct, Integrated Collector Storage, 40 sqft, Direct, Integrated Collector Storage, 64 sqft, Direct, Evacuated Tube, 40 sqft, Direct, Evacuated Tube, 64 sqft, Thermosyphon, Flat Plate, 40 sqft, Thermosyphon, Flat Plate, 64 sqft, 60% Solar Fraction, 65% Solar Fraction, 70% Solar Fraction, 75% Solar Fraction, 80% Solar Fraction, 85% Solar Fraction, 90% Solar Fraction, 95% Solar Fraction
      - The size and type of the solar thermal system for domestic hot water.
    * - ``dhw_solar_thermal_direction``
      - false
      - 
      - Choice
-     - auto, Roof Pitch, West, Roof Pitch, Southwest, Roof Pitch, South, Roof Pitch, Southeast, Roof Pitch, East, Roof Pitch, Northeast, Roof Pitch, North, Roof Pitch, Northwest, 0 Degrees, 5 Degrees, West, 5 Degrees, Southwest, 5 Degrees, South, 5 Degrees, Southeast, 5 Degrees, East, 10 Degrees, West, 10 Degrees, Southwest, 10 Degrees, South, 10 Degrees, Southeast, 10 Degrees, East, 15 Degrees, West, 15 Degrees, Southwest, 15 Degrees, South, 15 Degrees, Southeast, 15 Degrees, East, 20 Degrees, West, 20 Degrees, Southwest, 20 Degrees, South, 20 Degrees, Southeast, 20 Degrees, East, 25 Degrees, West, 25 Degrees, Southwest, 25 Degrees, South, 25 Degrees, Southeast, 25 Degrees, East, 30 Degrees, West, 30 Degrees, Southwest, 30 Degrees, South, 30 Degrees, Southeast, 30 Degrees, East, 35 Degrees, West, 35 Degrees, Southwest, 35 Degrees, South, 35 Degrees, Southeast, 35 Degrees, East, 40 Degrees, West, 40 Degrees, Southwest, 40 Degrees, South, 40 Degrees, Southeast, 40 Degrees, East, 45 Degrees, West, 45 Degrees, Southwest, 45 Degrees, South, 45 Degrees, Southeast, 45 Degrees, East, 50 Degrees, West, 50 Degrees, Southwest, 50 Degrees, South, 50 Degrees, Southeast, 50 Degrees, East
+     - Roof Pitch, West, Roof Pitch, Southwest, Roof Pitch, South, Roof Pitch, Southeast, Roof Pitch, East, Roof Pitch, Northeast, Roof Pitch, North, Roof Pitch, Northwest, 0 Degrees, 5 Degrees, West, 5 Degrees, Southwest, 5 Degrees, South, 5 Degrees, Southeast, 5 Degrees, East, 10 Degrees, West, 10 Degrees, Southwest, 10 Degrees, South, 10 Degrees, Southeast, 10 Degrees, East, 15 Degrees, West, 15 Degrees, Southwest, 15 Degrees, South, 15 Degrees, Southeast, 15 Degrees, East, 20 Degrees, West, 20 Degrees, Southwest, 20 Degrees, South, 20 Degrees, Southeast, 20 Degrees, East, 25 Degrees, West, 25 Degrees, Southwest, 25 Degrees, South, 25 Degrees, Southeast, 25 Degrees, East, 30 Degrees, West, 30 Degrees, Southwest, 30 Degrees, South, 30 Degrees, Southeast, 30 Degrees, East, 35 Degrees, West, 35 Degrees, Southwest, 35 Degrees, South, 35 Degrees, Southeast, 35 Degrees, East, 40 Degrees, West, 40 Degrees, Southwest, 40 Degrees, South, 40 Degrees, Southeast, 40 Degrees, East, 45 Degrees, West, 45 Degrees, Southwest, 45 Degrees, South, 45 Degrees, Southeast, 45 Degrees, East, 50 Degrees, West, 50 Degrees, Southwest, 50 Degrees, South, 50 Degrees, Southeast, 50 Degrees, East
      - The azimuth and tilt of the solar thermal system collectors.
 
 Options
@@ -43276,18 +44132,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``dhw_solar_thermal``
      - ``dhw_solar_thermal_direction``
 
-   * - Electric Heat Pump, 50 gal, 3.45 UEF
+   * - Electric Heat Pump, 3.5 UEF
      - 0.31%
-     - Electricity, Heat Pump, UEF 3.50
-     - None
-     - Roof Pitch, South
-   * - Electric Heat Pump, 66 gal, 3.35 UEF
-     - 0%
-     - Electricity, Heat Pump, UEF 3.50
-     - None
-     - Roof Pitch, South
-   * - Electric Heat Pump, 80 gal, 3.45 UEF
-     - 0%
      - Electricity, Heat Pump, UEF 3.50
      - None
      - Roof Pitch, South
@@ -43308,7 +44154,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Roof Pitch, South
    * - FIXME Fuel Oil Indirect
      - 0.72%
-     - Fuel Oil, Tank, UEF 0.61
+     - Fuel Oil, Tank, UEF 0.64
      - None
      - Roof Pitch, South
    * - Fuel Oil Premium
@@ -43417,7 +44263,7 @@ Source
 
 - \U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
 
-- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+- \Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 
 
 Assumption
@@ -43437,7 +44283,7 @@ Assumption
 
   - \[5] State: National
 
-- \For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+- \For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 
 - \For Alaska, wood and coal heating is modeled as other fuel.
 
@@ -43555,7 +44401,7 @@ Assumption
 
 - \H2OMAIN = other is equally distributed amongst attic and crawlspace.
 
-- \H2OMAIN does not apply to multi-family, therefore Water heater location for multi-family with in-unit water heater is taken after the combined distribution of other builing types.
+- \H2OMAIN does not apply to multi-family, therefore Water heater location for multi-family with in-unit water heater is taken after the combined distribution of other building types.
 
 - \out-of-unit water heater is assumed to be in Conditioned Mechanical Room. Per expert judgement, water heaters can not be outside or in vented spaces for IECC Climate Zones 4-8 due to pipe-freezing risk.
 
@@ -43595,7 +44441,7 @@ Arguments
      - false
      - 
      - Choice
-     - auto, Default, Conditioned Space, Basement, Garage, Crawlspace, Attic, Other Heated Space, Outside
+     - Default, Conditioned Space, Basement, Garage, Crawlspace, Attic, Other Heated Space, Outside
      - The location of the water heater. Defaults based on the foundation/garage type.
 
 Options
@@ -43822,25 +44668,25 @@ Arguments
      - false
      - 
      - Choice
-     - auto, None, Solar Film, Solar Screen, Summer 0.25, Winter 0.25, Summer 0.25, Winter 0.50, Summer 0.25, Winter 0.75, Summer 0.25, Winter 1.00, Summer 0.50, Winter 0.25, Summer 0.50, Winter 0.50, Summer 0.50, Winter 0.75, Summer 0.50, Winter 1.00, Summer 0.75, Winter 0.25, Summer 0.75, Winter 0.50, Summer 0.75, Winter 0.75, Summer 0.75, Winter 1.00, Summer 1.00, Winter 0.25, Summer 1.00, Winter 0.50, Summer 1.00, Winter 0.75, Summer 1.00, Winter 1.00
+     - None, Solar Film, Solar Screen, Summer 0.25, Winter 0.25, Summer 0.25, Winter 0.50, Summer 0.25, Winter 0.75, Summer 0.25, Winter 1.00, Summer 0.50, Winter 0.25, Summer 0.50, Winter 0.50, Summer 0.50, Winter 0.75, Summer 0.50, Winter 1.00, Summer 0.75, Winter 0.25, Summer 0.75, Winter 0.50, Summer 0.75, Winter 0.75, Summer 0.75, Winter 1.00, Summer 1.00, Winter 0.25, Summer 1.00, Winter 0.50, Summer 1.00, Winter 0.75, Summer 1.00, Winter 1.00
      - The type of window exterior shading. If shading coefficients are selected, note they indicate the reduction in solar gain (e.g., 0.7 indicates 30% reduction).
    * - ``enclosure_window_insect_screens``
      - false
      - 
      - Choice
-     - auto, None, Exterior, Interior
+     - None, Exterior, Interior
      - The type of window insect screens.
    * - ``enclosure_window_storm``
      - false
      - 
      - Choice
-     - auto, None, Clear, Low-E
+     - None, Clear, Low-E
      - The type of storm window.
    * - ``enclosure_skylight``
      - false
      - 
      - Choice
-     - auto, Single, Clear, Metal, Single, Clear, Non-Metal, Double, Clear, Metal, Double, Clear, Non-Metal, Double, Low-E, Metal, High Gain, Double, Low-E, Non-Metal, High Gain, Double, Low-E, Metal, Med Gain, Double, Low-E, Non-Metal, Med Gain, Double, Low-E, Metal, Low Gain, Double, Low-E, Non-Metal, Low Gain, Triple, Clear, Metal, Triple, Clear, Non-Metal, IECC U-0.75, SHGC 0.40, IECC U-0.75, SHGC 0.30, IECC U-0.75, SHGC 0.25, IECC U-0.65, SHGC 0.40, IECC U-0.65, SHGC 0.30, IECC U-0.65, SHGC 0.25, IECC U-0.60, SHGC 0.40, IECC U-0.60, SHGC 0.30, IECC U-0.55, SHGC 0.40, IECC U-0.55, SHGC 0.25
+     - Single, Clear, Metal, Single, Clear, Non-Metal, Double, Clear, Metal, Double, Clear, Non-Metal, Double, Low-E, Metal, High Gain, Double, Low-E, Non-Metal, High Gain, Double, Low-E, Metal, Med Gain, Double, Low-E, Non-Metal, Med Gain, Double, Low-E, Metal, Low Gain, Double, Low-E, Non-Metal, Low Gain, Triple, Clear, Metal, Triple, Clear, Non-Metal, IECC U-0.75, SHGC 0.40, IECC U-0.75, SHGC 0.30, IECC U-0.75, SHGC 0.25, IECC U-0.65, SHGC 0.40, IECC U-0.65, SHGC 0.30, IECC U-0.65, SHGC 0.25, IECC U-0.60, SHGC 0.40, IECC U-0.60, SHGC 0.30, IECC U-0.55, SHGC 0.40, IECC U-0.55, SHGC 0.25
      - The type of skylights.
 
 Options
@@ -43887,7 +44733,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Double, Clear, Non-Metal, Air
      - None
      - None
-     - 
+     - Clear
      - Single, Clear, Metal
    * - Double, Low-E, Non-metal, Air, M-Gain
      - 22%
