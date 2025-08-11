@@ -8,7 +8,7 @@ import argparse
 import sys
 from pathlib import Path
 from typing import Any
-
+import json
 import polars as pl
 
 
@@ -102,7 +102,7 @@ def print_failures(failures: list[dict[str, Any]], csv_path: str) -> None:
             # If step_failures is a string representation of a Python list
             if isinstance(step_failures, str) and step_failures.strip().startswith("["):
                 # Parse the Python literal string into a Python object
-                failures_data = ast.literal_eval(step_failures)
+                failures_data = json.loads(step_failures)
                 print("     Step Failures:")
 
                 # Format each failure entry

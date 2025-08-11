@@ -99,7 +99,7 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     )
     
     # Handle plus case like "200000+"
-    income_expr = income_expr.when(pl.col("in.income").str.contains("\+"))
+    income_expr = income_expr.when(pl.col("in.income").str.contains("+"))
     income_expr = income_expr.then(
         pl.col("in.income").str.extract(r"(\d+)\+", 1).cast(pl.Float64, strict=False)
     )
