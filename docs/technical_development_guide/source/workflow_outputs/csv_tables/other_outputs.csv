@@ -1,5 +1,6 @@
 Input Name,Input Description
 building_id,The building unit number (between 1 and the number of samples).
+upgrade,The upgrade run number (will be present for upgrade run).
 job_id,The unique identifier of the job/processor.
 started_at,Simulation start time.
 completed_at,Simulation end time.
