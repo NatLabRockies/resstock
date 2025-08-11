@@ -230,7 +230,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       unavailable_output_name = "#{htg_or_clg}_unavailable_period"
       if unavailable_days <= 0
         register_value(runner, unavailable_output_name, 'Never')
-        break
+        next
       end
 
       if unavailable_days < 365 # partial-year unavailability
