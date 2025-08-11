@@ -88,8 +88,14 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Load HPXML
     @hpxml = HPXML.new(hpxml_path: @hpxml_path)
+
+    # Weather
     epw_path = Location.get_epw_path(@hpxml.buildings[0], @hpxml_path)
     weather = WeatherFile.new(epw_path: epw_path, runner: nil)
+    epw_file = OpenStudio::EpwFile.new(epw_path)
+    register_value(runner, 'weather_file_city', epw_file.city)
+    register_value(runner, 'weather_file_latitude', epw_file.latitude)
+    register_value(runner, 'weather_file_longitude', epw_file.longitude)
 
     # Software info
     @hpxml.header.software_program_used = 'ResStock'
@@ -215,13 +221,17 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     end
 
     # HVAC Unavailability
+    month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     if (args[:schedules_space_heating_unavailable_days].to_i > 0) || (args[:schedules_space_cooling_unavailable_days].to_i > 0)
       heating_months, cooling_months, sim_calendar_year = get_heating_and_cooling_seasons(@hpxml.buildings[0].latitude, weather)
     end
-
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
       unavailable_days = args["schedules_space_#{htg_or_clg}_unavailable_days".to_sym].to_i
-      next unless unavailable_days > 0
+      unavailable_output_name = "#{htg_or_clg}_unavailable_period"
+      if unavailable_days <= 0
+        register_value(runner, unavailable_output_name, 'Never')
+        break
+      end
 
       if unavailable_days < 365 # partial-year unavailability
         months = (htg_or_clg == Constants::Heating ? heating_months : cooling_months)
@@ -252,6 +262,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         end_month: end_month,
         end_day: end_day
       )
+
+      begin_date = OpenStudio::Date::fromDayOfYear(Calendar.get_day_num_from_month_day(sim_calendar_year, begin_month, begin_day), sim_calendar_year)
+      end_date = OpenStudio::Date::fromDayOfYear(Calendar.get_day_num_from_month_day(sim_calendar_year, end_month, end_day), sim_calendar_year)
+      date_range = "#{month_names[begin_date.monthOfYear.value - 1]} #{begin_date.dayOfMonth} - #{month_names[end_date.monthOfYear.value - 1]} #{end_date.dayOfMonth}"
+      register_value(runner, unavailable_output_name, date_range)
     end
 
     @hpxml.buildings.each do |hpxml_bldg|
@@ -500,6 +515,10 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         vehicle.hours_per_week = (vehicle.hours_per_week * vehicle.ev_usage_multiplier).round(1)
         vehicle.ev_usage_multiplier = 1.0
       end
+
+      # Register values
+      register_value(runner, 'unit_height_above_grade', hpxml_bldg.building_construction.unit_height_above_grade)
+      register_value(runner, 'air_leakage_to_outside_ach_50', hpxml_bldg.air_infiltration_measurements[0].air_leakage * hpxml_bldg.air_infiltration_measurements[0].a_ext)
     end
 
     # HVAC Flexibility
@@ -525,6 +544,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Write out the modified hpxml
     XMLHelper.write_file(@hpxml.to_doc(), @hpxml_path)
+
     return true
   end
 
@@ -673,11 +693,17 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
   def set_electric_panel(runner, hpxml_bldg, args)
     # Assign miscellaneous permanently connected appliance loads
     panel_sampler = ElectricalPanelSampler.new(runner, args[:building_id], hpxml_bldg)
-    if args[:electric_panel_service_max_current_rating].nil? || args[:electric_panel_breaker_spaces_headroom].nil?
-      cap_bin, args[:electric_panel_service_max_current_rating] = panel_sampler.assign_rated_capacity()
-      breaker_spaces_headroom = panel_sampler.assign_breaker_space_headroom(cap_bin)
-      args[:electric_panel_breaker_spaces_headroom] = breaker_spaces_headroom
+
+    cap_value = args[:electric_panel_service_max_current_rating]
+    headroom_spaces = args[:electric_panel_breaker_spaces_headroom]
+    total_spaces = args[:electric_panel_breaker_spaces_rated_total]
+    if cap_value.nil? || headroom_spaces.nil?
+      cap_bin, cap_value = panel_sampler.assign_rated_capacity()
+      register_value(runner, 'electric_panel_service_max_current_rating_bin', cap_bin)
+
+      headroom_spaces = panel_sampler.assign_breaker_space_headroom(cap_bin)
     end
+    register_value(runner, 'electric_panel_service_max_current_rating', cap_value)
 
     n_beds = hpxml_bldg.building_construction.number_of_bedrooms
 
@@ -720,9 +746,9 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Assign ElectricPanels objects
     hpxml_bldg.electric_panels.add(id: "ElectricPanel#{hpxml_bldg.electric_panels.size + 1}",
-                                   max_current_rating: args[:electric_panel_service_max_current_rating],
-                                   headroom_spaces: args[:electric_panel_breaker_spaces_headroom],
-                                   rated_total_spaces: args[:electric_panel_breaker_spaces_rated_total])
+                                   max_current_rating: cap_value,
+                                   headroom_spaces: headroom_spaces,
+                                   rated_total_spaces: total_spaces)
 
     electric_panel = hpxml_bldg.electric_panels[0]
     branch_circuits = electric_panel.branch_circuits

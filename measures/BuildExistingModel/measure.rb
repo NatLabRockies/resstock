@@ -435,39 +435,27 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    # Report additional characteristics
-    if File.exist?(hpxml_path)
-      hpxml = HPXML.new(hpxml_path: hpxml_path)
-    else
+    if not File.exist?(hpxml_path)
       runner.registerWarning("BuildExistingModel measure could not find '#{hpxml_path}'.")
       return true
     end
 
-    hpxml_bldg = hpxml.buildings[0]
+    # Report values from ResStockArgumentsPostHPXML
+    ['weather_file_city',
+     'weather_file_latitude',
+     'weather_file_longitude',
+     'unit_height_above_grade',
+     'air_leakage_to_outside_ach_50',
+     'cooling_unavailable_period',
+     'heating_unavailable_period',
+     'electric_panel_service_max_current_rating',
+     'electric_panel_service_max_current_rating_bin'].each do |key_lookup|
+      new_runner.result.stepValues.each do |step_value|
+        next if step_value.name != key_lookup
 
-    # electric panel
-    register_value(runner, 'electric_panel_service_max_current_rating', hpxml_bldg.electric_panels[0].max_current_rating)
-
-    # height above grade
-    unit_height_above_grade = hpxml_bldg.building_construction.unit_height_above_grade
-    register_value(runner, 'unit_height_above_grade', unit_height_above_grade)
-
-    # infiltration
-    air_infiltration_measurement = hpxml_bldg.air_infiltration_measurements[0]
-    a_ext = 1.0
-    a_ext = air_infiltration_measurement.a_ext if !air_infiltration_measurement.a_ext.nil?
-    register_value(runner, 'air_leakage_to_outside_ach_50', air_infiltration_measurement.air_leakage * a_ext)
-
-    # unavailable periods
-    register_unavailability_period(runner, hpxml, 'No Space Heating', 'heating_unavailable_period')
-    register_unavailability_period(runner, hpxml, 'No Space Cooling', 'cooling_unavailable_period')
-
-    # weather file
-    epw_path = Location.get_epw_path(hpxml_bldg, hpxml_path)
-    epw_file = OpenStudio::EpwFile.new(epw_path)
-    register_value(runner, 'weather_file_city', epw_file.city)
-    register_value(runner, 'weather_file_latitude', epw_file.latitude)
-    register_value(runner, 'weather_file_longitude', epw_file.longitude)
+        register_value(runner, key_lookup, get_value_from_workflow_step_value(step_value))
+      end
+    end
 
     # sample weight
     if bldg_data.keys.include?('sample_weight')
@@ -675,21 +663,6 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
       utility_rate = utility_rates[0]
     end
     return utility_rate
-  end
-
-  def register_unavailability_period(runner, hpxml, unavailable_period_name, output_name)
-    year = hpxml.header.sim_calendar_year
-    month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-    unavail_period = hpxml.header.unavailable_periods.find { |p| p.column_name == unavailable_period_name }
-    if not unavail_period.nil?
-      begin_date = OpenStudio::Date::fromDayOfYear(Calendar.get_day_num_from_month_day(year, unavail_period.begin_month, unavail_period.begin_day), year)
-      end_date = OpenStudio::Date::fromDayOfYear(Calendar.get_day_num_from_month_day(year, unavail_period.end_month, unavail_period.end_day), year)
-      date_range = "#{month_names[begin_date.monthOfYear.value - 1]} #{begin_date.dayOfMonth} - #{month_names[end_date.monthOfYear.value - 1]} #{end_date.dayOfMonth}"
-      register_value(runner, output_name, date_range)
-    else
-      register_value(runner, output_name, 'Never')
-    end
   end
 end
 
