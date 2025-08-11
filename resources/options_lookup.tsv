@@ -126,10 +126,10 @@ CEC Climate Zone	7
 CEC Climate Zone	8
 CEC Climate Zone	9
 CEC Climate Zone	None
-Ceiling Fan	Standard Efficiency, No usage	ResStockArguments	ceiling_fans=None
 Ceiling Fan	None	ResStockArguments	ceiling_fans=None
 Ceiling Fan	Premium Efficiency	ResStockArguments	ceiling_fans=#Bedrooms+1 Fans, 22.5 W
 Ceiling Fan	Standard Efficiency	ResStockArguments	ceiling_fans=#Bedrooms+1 Fans, 45.0 W
+Ceiling Fan	Standard Efficiency, No usage	ResStockArguments	ceiling_fans=None
 Census Division	East North Central
 Census Division	East South Central
 Census Division	Middle Atlantic
@@ -9154,10 +9154,10 @@ County and PUMA	G7201510, G72001102
 County and PUMA	G7201530, G72000401
 Custom State	AK
 Custom State	Others
+Dehumidifier	None	ResStockArguments	appliance_dehumidifier=None	appliance_dehumidifier_setpoint=50% RH
 Dehumidifier	Portable, 30 pints/day, 50% RH	ResStockArguments	appliance_dehumidifier=Portable, 30 pints/day	appliance_dehumidifier_setpoint=50% RH
 Dehumidifier	Whole-Home, 75 pints/day, 50% RH	ResStockArguments	appliance_dehumidifier=Whole-Home, 75 pints/day	appliance_dehumidifier_setpoint=50% RH
 Dehumidifier	Whole-Home, 75 pints/day, 60% RH	ResStockArguments	appliance_dehumidifier=Whole-Home, 75 pints/day	appliance_dehumidifier_setpoint=60% RH
-Dehumidifier	None	ResStockArguments	appliance_dehumidifier=None	appliance_dehumidifier_setpoint=50% RH
 Demand Flexibility Electric Vehicle	Enabled	ResStockArguments	ev_flex_enabled=true
 Demand Flexibility HVAC	On-peak Load Shedding, 2F Offset	ResStockArguments	hvac_flex_peak_offset=2	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0
 Demand Flexibility HVAC	On-peak Load Shedding, 4F Offset	ResStockArguments	hvac_flex_peak_offset=4	hvac_flex_pre_peak_duration_hours=0	hvac_flex_pre_peak_offset=0
@@ -9166,8 +9166,8 @@ Demand Flexibility HVAC	Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
 Demand Flexibility HVAC	Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration	ResStockArguments	hvac_flex_peak_offset=0	hvac_flex_pre_peak_duration_hours=4	hvac_flex_pre_peak_offset=4
 Demand Flexibility Random Shift	30 minutes	ResStockArguments	flex_random_shift_minutes=30
 Dishwasher	EnergyStar	ResStockArguments	appliance_dishwasher=EnergyStar, Standard, 100% Usage
-Dishwasher	Standard	ResStockArguments	appliance_dishwasher=Federal Minimum, Standard, 100% Usage
 Dishwasher	None	ResStockArguments	appliance_dishwasher=None
+Dishwasher	Standard	ResStockArguments	appliance_dishwasher=Federal Minimum, Standard, 100% Usage
 Dishwasher	Void
 Dishwasher Usage Level	100% Usage	ResStockArguments	dishwasher_usage_multiplier=1.0
 Dishwasher Usage Level	120% Usage	ResStockArguments	dishwasher_usage_multiplier=1.2
@@ -9175,9 +9175,9 @@ Dishwasher Usage Level	80% Usage	ResStockArguments	dishwasher_usage_multiplier=0
 Door Area	20 ft^2	ResStockArguments	geometry_door_area=20
 Door Area	30 ft^2	ResStockArguments	geometry_door_area=30
 Door Area	40 ft^2	ResStockArguments	geometry_door_area=40
-Doors	Wood	ResStockArguments	enclosure_door=Solid Wood, R-2
 Doors	Fiberglass	ResStockArguments	enclosure_door=Insulated Fiberglass/Steel, R-5
 Doors	Steel	ResStockArguments	enclosure_door=Insulated Fiberglass/Steel, R-5
+Doors	Wood	ResStockArguments	enclosure_door=Solid Wood, R-2
 Duct Leakage and Insulation	0% Leakage to Outside, Uninsulated	ResStockArguments	hvac_ducts=0% Leakage, Uninsulated
 Duct Leakage and Insulation	10% Leakage to Outside, R-4	ResStockArguments	hvac_ducts=10% Leakage, R-4
 Duct Leakage and Insulation	10% Leakage to Outside, R-6	ResStockArguments	hvac_ducts=10% Leakage, R-6
@@ -9688,8 +9688,8 @@ HVAC Heating Autosizing Factor	None
 HVAC Heating Efficiency	ASHP, SEER 10, 6.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 10, 6.2 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	ASHP, SEER 13, 7.7 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 13, 7.7 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	ASHP, SEER 15, 8.5 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 15, 8.5 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
-HVAC Heating Efficiency	ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 20, 11 HSPF	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=-15F Min Compressor Temp	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	ASHP, SEER 20, 11 HSPF, CCHP, Max Load	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 20, 11 HSPF	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Central HP, SEER 20, 11 HSPF	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=-15F Min Compressor Temp	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	Electric Baseboard, 100% Efficiency	ResStockArguments	hvac_heating_system=Electric Resistance	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	Electric Boiler, 100% AFUE	ResStockArguments	hvac_heating_system=Boiler, 100% AFUE	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	Electric Furnace, 100% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 100% AFUE	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
@@ -9703,11 +9703,11 @@ HVAC Heating Efficiency	Fuel Furnace, 80% AFUE	ResStockArguments	hvac_heating_sy
 HVAC Heating Efficiency	Fuel Furnace, 92.5% AFUE	ResStockArguments	hvac_heating_system=Central Furnace, 92.5% AFUE	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 60% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 60% AFUE	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	Fuel Wall/Floor Furnace, 68% AFUE	ResStockArguments	hvac_heating_system=Wall Furnace, 68% AFUE	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
+HVAC Heating Efficiency	GSHP, EER 18.6, COP 3.8	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Geothermal HP, EER 18.6, COP 3.8	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Vertical Loop, Enhanced Grout & Pipe	advanced_feature=Experimental Ground-to-Air Heat Pump Model
+HVAC Heating Efficiency	GSHP, EER 20.5, COP 4.0	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Geothermal HP, EER 20.5, COP 4.0	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Vertical Loop, Enhanced Grout & Pipe	advanced_feature=Experimental Ground-to-Air Heat Pump Model
+HVAC Heating Efficiency	GSHP, EER 30.9, COP 4.4	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Geothermal HP, EER 30.9, COP 4.4	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Vertical Loop, Enhanced Grout & Pipe	advanced_feature=Experimental Ground-to-Air Heat Pump Model
 HVAC Heating Efficiency	MSHP, SEER 14.5, 8.2 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 14.5, 8.2 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	MSHP, SEER 29.3, 14 HSPF	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Mini-Split HP, SEER 29.3, 14 HSPF	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=Integrated, Electricity, 100% Efficiency	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
-HVAC Heating Efficiency	GSHP, EER 20.5, COP 4.0	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Geothermal HP, EER 20.5, COP 4.0	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Vertical Loop, Enhanced Grout & Pipe	advanced_feature=Experimental Ground-to-Air Heat Pump Model
-HVAC Heating Efficiency	GSHP, EER 18.6, COP 3.8	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Geothermal HP, EER 18.6, COP 3.8	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Vertical Loop, Enhanced Grout & Pipe	advanced_feature=Experimental Ground-to-Air Heat Pump Model
-HVAC Heating Efficiency	GSHP, EER 30.9, COP 4.4	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=Geothermal HP, EER 30.9, COP 4.4	hvac_heat_pump_capacity=Autosize (MaxLoad)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Vertical Loop, Enhanced Grout & Pipe	advanced_feature=Experimental Ground-to-Air Heat Pump Model
 HVAC Heating Efficiency	None	ResStockArguments	hvac_heating_system=None	hvac_heating_shared_system=None	hvac_heating_system_capacity=Autosize	hvac_heating_system_heating_load_served=100%	hvac_heat_pump=None	hvac_heat_pump_capacity=Autosize (ACCA)	hvac_heat_pump_heating_load_served=100%	hvac_heat_pump_cooling_load_served=100%	hvac_heat_pump_temperatures=Default	hvac_heat_pump_backup=None	hvac_heat_pump_backup_capacity=Autosize	hvac_geothermal_loop=Default	advanced_feature=None
 HVAC Heating Efficiency	Shared Heating
 HVAC Heating Efficiency	Void
@@ -9909,10 +9909,10 @@ Heating Unavailable Days	Never	ResStockArguments	schedules_space_heating_unavail
 Heating Unavailable Days	Year round	ResStockArguments	schedules_space_heating_unavailable_days=365
 Holiday Lighting	No Exterior Use
 Holiday Lighting	None
-Hot Water Distribution	Uninsulated	ResStockArguments	dhw_distribution=Uninsulated, Standard	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
+Hot Water Distribution	Insulated	ResStockArguments	dhw_distribution=Insulated, Standard	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
 Hot Water Distribution	Insulated, Demand	ResStockArguments	dhw_distribution=Insulated, Recirc, Presence Sensor Demand Control	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
 Hot Water Distribution	Insulated, Timer	ResStockArguments	dhw_distribution=Insulated, Recirc, Timer Control	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
-Hot Water Distribution	Insulated	ResStockArguments	dhw_distribution=Insulated, Standard	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
+Hot Water Distribution	Uninsulated	ResStockArguments	dhw_distribution=Uninsulated, Standard	dhw_drain_water_heat_recovery=None	dhw_fixtures=Standard, 100% Usage
 Hot Water Fixtures	100% Usage	ResStockArguments	water_fixtures_usage_multiplier=1.0
 Hot Water Fixtures	110% Usage	ResStockArguments	water_fixtures_usage_multiplier=1.1
 Hot Water Fixtures	120% Usage	ResStockArguments	water_fixtures_usage_multiplier=1.2
@@ -10052,9 +10052,9 @@ Insulation Wall	Wood Stud, R-15	ResStockArguments	enclosure_wall=Wood Stud, R-15
 Insulation Wall	Wood Stud, R-19	ResStockArguments	enclosure_wall=Wood Stud, R-19	enclosure_wall_continuous_insulation=Uninsulated
 Insulation Wall	Wood Stud, R-7	ResStockArguments	enclosure_wall=Wood Stud, R-7	enclosure_wall_continuous_insulation=Uninsulated
 Insulation Wall	Wood Stud, Uninsulated	ResStockArguments	enclosure_wall=Wood Stud, Uninsulated	enclosure_wall_continuous_insulation=Uninsulated
+Interior Shading	Dark Curtains	ResStockArguments	enclosure_window_interior_shading=Curtains, Dark
 Interior Shading	Light Curtains	ResStockArguments	enclosure_window_interior_shading=Curtains, Light
 Interior Shading	Medium Curtains	ResStockArguments	enclosure_window_interior_shading=Curtains, Medium
-Interior Shading	Dark Curtains	ResStockArguments	enclosure_window_interior_shading=Curtains, Dark
 Interior Shading	None	ResStockArguments	enclosure_window_interior_shading=None
 Lighting	100% CFL	ResStockArguments	lighting=100% CFL, 100% Usage
 Lighting	100% Incandescent	ResStockArguments	lighting=100% Incandescent, 100% Usage
@@ -10081,8 +10081,8 @@ Location Region	CR11
 Location Region	CRAK
 Location Region	CRHI
 Mechanical Ventilation	ERV, 70%	ResStockArguments	ventilation_mechanical=ERV, 70%	ventilation_bathroom=Default	ventilation_kitchen=Default	ventilation_whole_house_fan=None
-Mechanical Ventilation	HRV, 60%	ResStockArguments	ventilation_mechanical=HRV, 60%	ventilation_bathroom=Default	ventilation_kitchen=Default	ventilation_whole_house_fan=None
 Mechanical Ventilation	Exhaust	ResStockArguments	ventilation_mechanical=Exhaust Only	ventilation_bathroom=Default	ventilation_kitchen=Default	ventilation_whole_house_fan=None
+Mechanical Ventilation	HRV, 60%	ResStockArguments	ventilation_mechanical=HRV, 60%	ventilation_bathroom=Default	ventilation_kitchen=Default	ventilation_whole_house_fan=None
 Mechanical Ventilation	None	ResStockArguments	ventilation_mechanical=None	ventilation_bathroom=Default	ventilation_kitchen=Default	ventilation_whole_house_fan=None
 Mechanical Ventilation	Supply	ResStockArguments	ventilation_mechanical=Supply Only	ventilation_bathroom=Default	ventilation_kitchen=Default	ventilation_whole_house_fan=None
 Metropolitan and Micropolitan Statistical Area	Aberdeen, SD MicroSA
