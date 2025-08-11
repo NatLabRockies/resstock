@@ -516,9 +516,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
         vehicle.ev_usage_multiplier = 1.0
       end
 
-      # Register values
+      # Register additional values
       register_value(runner, 'unit_height_above_grade', hpxml_bldg.building_construction.unit_height_above_grade)
-      register_value(runner, 'air_leakage_to_outside_ach_50', hpxml_bldg.air_infiltration_measurements[0].air_leakage * hpxml_bldg.air_infiltration_measurements[0].a_ext)
+      air_leakage_measurement = hpxml_bldg.air_infiltration_measurements[0]
+      a_ext = (air_leakage_measurement.a_ext.nil? ? 1.0 : air_leakage_measurement.a_ext)
+      register_value(runner, 'air_leakage_to_outside_ach_50', air_leakage_measurement.air_leakage * a_ext)
     end
 
     # HVAC Flexibility
