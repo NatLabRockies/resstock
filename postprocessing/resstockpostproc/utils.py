@@ -80,6 +80,7 @@ def get_polars_schema_from_data_dictionary(all_cols: List[str]) -> dict[str, pl.
     """
      Returns a dictionary of column name: dtype for all provided columns, making use of the data dictionary.
      Currently, only the columns defined in input dictionary is assigned dtypes based on the data dictionary.
+     Columns absent in the input dictionary and that starts with "build_existing_model." is assigned string dtype.
      All other columns, including those defined in the output dictionary, are assigned float64 dtype.
     """
     resources_path = pathlib.Path(__file__).parent / "resources"
@@ -94,6 +95,8 @@ def get_polars_schema_from_data_dictionary(all_cols: List[str]) -> dict[str, pl.
     input_schema_dict = dict(zip(input_dict_df["Input Name"].to_list(), [polar_dtypes[x] for x in input_dict_df["Data Type"].to_list()]))
     # since there are multiple of upgrade_costs.option_ columns, this definition is currently not in the dictionary
     input_schema_dict |= {col: pl.String for col in all_cols if col.startswith("upgrade_costs.option_") and col.endswith("_name")}
+    # for build_existing_model columns that are not in the input dictionary, assign string dtype
+    input_schema_dict |= {col: pl.String for col in all_cols if col.startswith("build_existing_model.") and col not in input_schema_dict}
     # This is also not in the dictionary
     input_schema_dict |= {"step_failures":pl.String}
     
