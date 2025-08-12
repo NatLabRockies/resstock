@@ -113,7 +113,7 @@ def main() -> int:  # pragma: no cover
         df1_name=REF_BRANCH,
         df2_name="current",
         join_columns=key_columns,
-        cast_column_names_lower=True,
+        cast_column_names_lower=False,
     )
 
     if cmp.matches(ignore_extra_columns=False):
