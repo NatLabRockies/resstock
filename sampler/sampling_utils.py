@@ -9,7 +9,7 @@ import multiprocessing
 import random
 from collections import Counter, defaultdict
 from typing import Union, TypedDict
-from buildstockbatch.utils import get_error_details
+from .utils import get_error_details
 
 TSVTuple = tuple[dict[tuple[str, ...], list[float]], list[str], list[str]]
 

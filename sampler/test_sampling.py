@@ -1,9 +1,9 @@
 import pathlib
-from buildstockbatch.sampler.residential_sampler.sampling_utils import read_char_tsv, get_param2tsv, get_issues, \
+from .sampling_utils import read_char_tsv, get_param2tsv, get_issues, \
     get_samples, get_marginal_prob, get_tsv_issues, get_all_tsv_issues, get_tsv_max_sampling_errors, \
     get_all_tsv_max_errors
 
-from buildstockbatch.sampler.residential_sampler.sampler import sample_param, sample_all
+from .sampler import sample_param, sample_all
 from collections import Counter
 import pandas as pd
 import tempfile
