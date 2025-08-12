@@ -446,11 +446,13 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     measures['ResStockArgumentsPostHPXML'][0]['simulation_control_run_period_calendar_year'] = values['simulation_control_run_period_calendar_year']
 
     # Emissions
-    values.each do |arg, value|
-      next unless arg.start_with? 'emissions'
-      next if arg == 'emissions_electricity_folders'
+    if values.keys.include?('emissions_electricity_filepaths')
+      values.each do |arg, value|
+        next unless arg.start_with? 'emissions'
+        next if arg == 'emissions_electricity_folders'
 
-      measures['ResStockArgumentsPostHPXML'][0][arg] = value
+        measures['ResStockArgumentsPostHPXML'][0][arg] = value
+      end
     end
 
     # Utility Bills
