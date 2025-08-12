@@ -7,7 +7,7 @@ import click
 import pathlib
 from .sampling_utils import get_param2tsv, get_samples, TSVTuple, get_all_tsv_issues, get_all_tsv_max_errors
 from .sampling_utils import get_error_details
-from buildstockbatch.utils import log_error_details, read_csv
+from .utils import log_error_details, read_csv
 import random
 random.seed(42)
 
@@ -128,7 +128,8 @@ def sample(project: str, num_datapoints: int, output: str) -> None:
     """Performs sampling for project and writes output parquet file.
     """
     segment_vars = ["Federal Poverty Level", "Geometry Floor Area Bin", "Geometry Building Type RECS", "Vintage", "Heating Fuel", "Sampling Region"]
-    initial_samples_df = read_csv('/Users/radhikar/Documents/buildstock2025/geographic sampling/starter_samples.csv')
+    # initial_samples_df = read_csv('/Users/radhikar/Documents/buildstock2025/geographic sampling/starter_samples.csv')
+    initial_samples_df = None
     start_time = time.time()
     print(project, num_datapoints, output)
     sample_df = sample_all(pathlib.Path(project), num_datapoints, initial_samples_df=initial_samples_df)
