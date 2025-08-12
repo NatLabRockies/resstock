@@ -53,7 +53,7 @@ class ElectricalPanelSampler
     elsif args[:heating_system_fuel] == HPXML::FuelTypeElectricity
       hvac_cooling_type = convert_cooling_type(args[:cooling_system_type], args[:heat_pump_type])
       clothes_dryer = convert_fuel_and_presence(args[:clothes_dryer_present], args[:clothes_dryer_fuel_type])
-      cooking_range = convert_fuel_and_presence(args[:cooking_range_oven_present], args[:cooking_range_fuel_type])
+      cooking_range = convert_fuel_and_presence(args[:cooking_range_oven_present], args[:cooking_range_oven_fuel_type])
       water_heater_fuel_type = simplify_fuel_type(args[:water_heater_fuel_type])
 
       lookup_array = [
@@ -130,7 +130,7 @@ class ElectricalPanelSampler
     has_cooling = has_central_non_heat_pump_cooling(args)
     # appliance presence and electric fuel
     has_elec_drying = electric_fuel_and_presence(args[:clothes_dryer_present], args[:clothes_dryer_fuel_type])
-    has_elec_cooking = electric_fuel_and_presence(args[:cooking_range_oven_present], args[:cooking_range_fuel_type])
+    has_elec_cooking = electric_fuel_and_presence(args[:cooking_range_oven_present], args[:cooking_range_oven_fuel_type])
     # has pv
     has_pv = to_numeric(args[:pv_system_present])
     # has ev charging
