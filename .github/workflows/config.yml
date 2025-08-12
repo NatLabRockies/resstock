@@ -20,7 +20,7 @@ env:
   OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.9.0
-  BUILDSTOCK_BRANCH: develop
+  BUILDSTOCK_BRANCH: pp_fix
   BUILDSTOCK_QUERY_BRANCH: main
 
 jobs:
