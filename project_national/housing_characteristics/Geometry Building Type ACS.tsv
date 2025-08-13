@@ -2351,5 +2351,5 @@ WY, 00300	0.0367279	0.0659537	0.0546369	0.0363288	0.0244054	0.0153392	0.0844852	
 WY, 00400	0.0164125	0.0444339	0.0329775	0.0263629	0.0390393	0.0105414	0.133587	0.0238658	0.672779	2673	52460	0.000378389
 WY, 00500	0.0196535	0.0289212	0.0236563	0.0215827	0.0150376	0.00528299	0.193145	0.0368547	0.655866	3324	55461	0.00040311
 # Created by: sources\pums\pums2019_5yrs\tsv_maker.py
-# Description: The building type classification according to the U.S. Census American Communicy Survey.
+# Description: The building type classification according to the U.S. Census American Community Survey.
 # Source: 2019-5yrs Public Use Microdata Samples (PUMS). IPUMS USA, University of Minnesota, www.ipums.org.
