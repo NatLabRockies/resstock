@@ -146,7 +146,7 @@ module Location
   # @param weather [WeatherFile] Weather object containing EPW information
   # @return [Integer] the simulation calendar year
   def self.get_sim_calendar_year(sim_calendar_year, weather)
-    if (not weather.nil?) && (not weather.header.ActualYear.nil?) # AMY
+    if not weather.header.ActualYear.nil? # AMY
       sim_calendar_year = weather.header.ActualYear
     end
     if sim_calendar_year.nil?
