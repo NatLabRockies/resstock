@@ -37,6 +37,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     measure_arguments = get_measure_instance(full_measure_path).arguments(model)
     measure_arguments.each do |arg|
       # Convert to optional argument for the unit test
+      # Replace all of this if https://github.com/NREL/OpenStudio/issues/5469 is addressed
       case arg.type.valueName.downcase
       when 'choice'
         new_arg = OpenStudio::Measure::OSArgument.makeChoiceArgument(arg.name, arg.choiceValues, false)
