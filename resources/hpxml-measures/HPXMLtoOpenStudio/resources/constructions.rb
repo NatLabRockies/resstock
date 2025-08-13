@@ -1585,7 +1585,7 @@ module Constructions
     # then the user should input twice the area when defining the Internal Mass object.
     imdef = OpenStudio::Model::InternalMassDefinition.new(model)
     imdef.setName(object_name)
-    imdef.setSurfaceArea(UnitConversions.convert(area, 'ft^2', 'm^2'))
+    imdef.setSurfaceArea(UnitConversions.convert(area, 'ft^2', 'm^2').round(5))
 
     im = OpenStudio::Model::InternalMass.new(imdef)
     im.setName(object_name)

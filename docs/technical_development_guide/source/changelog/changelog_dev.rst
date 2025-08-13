@@ -8,6 +8,54 @@ Development Changelog
 
 
     .. change::
+        :tags: characteristics, standard data release, outputs, electrical panel
+        :pullreq: 1453
+
+        **Date**: 2025-08-06
+
+        Title:
+        Panel metrics in SDR
+
+        Description:
+        Add metrics for electrical panel breaker space and capacity constraint into SDR's postprocessing workflow.
+
+        Assignees: Lixi Liu
+
+
+    .. change::
+        :tags: characteristics, standard data release, outputs, emissions
+        :pullreq: 1452
+        :tickets: 1281
+
+        **Date**: 2025-07-31
+
+        Title:
+        Cambium 2024 emissions factors
+
+        Description:
+        Update the Cambium Emissions factors and geographies from Cambium 2022 to Cambium 2024
+
+        Assignees: Andrew Parker, Anthony Fontanini
+
+
+    .. change::
+        :tags: postprocessing, bugfix
+        :pullreq: 1439
+
+        **Date**: 2025-07-08
+
+        Title:
+        Postprocessing output data type fix
+
+        Description:
+        A bug in resstockpostprocessing was making the datatype of applicability to be boolean in baseline
+        but string in upgrades for the parquet files. This was causing the Athena query to fail. This PR fixes
+        the bug.
+
+        Assignees: Rajendra Adhikari
+
+
+    .. change::
         :tags: bugfix, hvac
         :pullreq: 1441, 1254
 
@@ -66,8 +114,8 @@ Development Changelog
         Use Autosizing Limits and Maintain Duct System Curve
 
         Description:
-        For ducted heat pump upgrades, adds the ability to limit the autosized heating/cooling capacity based on the existing duct system, and adjust the blower fan efficiency to maintain the duct system curve.
-        This feature is enabled by using setting a new ResStockArguments measure argument `heat_pump_sizing_is_duct_limited=true` for HVAC Heating Efficiency options.
+        For ducted heat pump upgrades, it adds the ability to limit the autosized heating/cooling capacity based on the existing duct system, and adjust the blower fan efficiency to maintain the duct system curve.
+        This feature is enabled by setting a new ResStockArguments measure argument `heat_pump_sizing_is_duct_limited=true` for HVAC Heating Efficiency options.
 
         OpenStudio-HPXML: `pull request 1584 <https://github.com/NREL/OpenStudio-HPXML/pull/1584>`_
 
@@ -84,7 +132,7 @@ Development Changelog
         SDR Integration Tests
 
         Description:
-        Add ResStock post processing code to create publication version of the annual results and commit them for the minimal buildstock test result.
+        Add ResStock post-processing code to create a publication version of the annual results and commit them for the minimal buildstock test result.
 
         Assignees: Rajendra Adhikari, Anthony Fontanini, Joe Robertson
 
@@ -99,7 +147,7 @@ Development Changelog
         Update electrical panel open breaker prediction
 
         Description:
-        Update electrical panel open breaker prediction to account for EV charger presence.
+        Update the electrical panel open breaker prediction to account for EV charger presence.
 
         Assignees: Lixi Liu
 
@@ -133,7 +181,7 @@ Development Changelog
 
         Description:
         Make EV charging/discharging unavailable during vacancy periods.
-        Introduce new argument for including detailed zone conditions timeseries outputs (i.e., temperatures, humidities).
+        Introduce a new argument for including detailed zone conditions timeseries outputs (i.e., temperatures, humidities).
 
         OpenStudio-HPXML: `pull request 1967 <https://github.com/NREL/OpenStudio-HPXML/pull/1967>`_, `pull request 1982 <https://github.com/NREL/OpenStudio-HPXML/pull/1982>`_
 
@@ -165,7 +213,7 @@ Development Changelog
         Update Hawaii PV 2023
 
         Description:
-        Update PV data from EIA Form 861 2018 to 2023 to have latest information.
+        Update PV data from EIA Form 861 2018 to 2023 to have the latest information.
 
         Assignees: Janet Reyna
 
@@ -180,7 +228,7 @@ Development Changelog
         Hawaii cooling saturation
 
         Description:
-        Remove fallback rules from Hawaii and to match technology saturation from RECS2020.
+        Remove fallback rules from Hawaii and match technology saturation from RECS2020.
 
         Assignees: Janet Reyna
 
@@ -195,7 +243,7 @@ Development Changelog
         Prevent ducted secondary heating when primary heating is ducted
 
         Description:
-        OS-HPXML disallows multiple heating systems on a single distribution system and ResStock is not set up to have multiple distribution systems.
+        OS-HPXML disallows multiple heating systems on a single distribution system, and ResStock is not set up to have multiple distribution systems.
         Disallowing ducted secondary heating when primary heating is ducted will prevent this error.
 
         Assignees: Yingli Lou, Lixi Liu, Anthony Fontanini
@@ -226,7 +274,7 @@ Development Changelog
         EE + Adoption meaure upgrades for EV SDR
 
         Description:
-        Add electric vehicle addoption and electric vehicle efficiency upgrade measures to the SDR project file.
+        Add electric vehicle adoption and electric vehicle efficiency upgrade measures to the SDR project file.
 
         Assignees: Philip White, Andrew Speake
 
@@ -241,7 +289,7 @@ Development Changelog
         Refrigeration correction factors
 
         Description:
-        Assign state level correction factors for freezer and secondary refrigeration to account for the fact that homes can have more than 1 freezer and 2 refrigerators.
+        Assign state-level correction factors for freezer and secondary refrigeration to account for the fact that homes can have more than 1 freezer and 2 refrigerators.
         This also corrects the freezer usage, which was previously assigned to match the national saturation of freezers.
 
         resstock-estimation: `pull request 447 <https://github.com/NREL/resstock-estimation/pull/447>`_
@@ -322,9 +370,9 @@ Development Changelog
         Remove end-use emissions from SDR YAML outputs
 
         Description:
-        ResStock SDR currently do not publish end-use emissions. ResStock SDR only publish totals and totals by fuel.
+        ResStock SDR currently do not publish end-use emissions. ResStock SDR only publishes totals and totals by fuel.
         In an effort to reduce the number of outputs, end-use emissions outputs have been removed from the SDR raw outputs.
-        The end-use emissions can still be called out for testing purposes using.
+        The end-use emissions can still be called out for testing purposes.
 
         Assignees: Anthony Fontanini
 
@@ -339,7 +387,7 @@ Development Changelog
         Update Technical Reference Guide from 3.3.0 to develop
 
         Description:
-        Update the Technical Reference Guide based on the PRs from the split-off point of ResStock Release 3.3.0 to current develop.
+        Update the Technical Reference Guide based on the PRs from the split-off point of ResStock Release 3.3.0 to the current develop.
 
         Assignees: Anthony Fontanini
 
@@ -355,7 +403,7 @@ Development Changelog
 
         Description:
         All OpenStudio-HPXML changes, no required ResStock changes.
-        Updates to NEEP ASHP sample files, fix possible HVAC sizing error, HPXML class update for attic/foundation types, speed up weather processing, combi boiler error fix, smooth shcedule EV plugload, shift all schedules in sync and fix occupancy aggregation.
+        Updates to NEEP ASHP sample files, fix possible HVAC sizing error, HPXML class update for attic/foundation types, speed up weather processing, combi boiler error fix, smooth schedule EV plugload, shift all schedules in sync, and fix occupancy aggregation.
 
         Assignees: Joe Robertson
 
@@ -472,7 +520,7 @@ Development Changelog
         Add ResStock Technical Reference Guide
 
         Description:
-        Add the ResStock Technical Reference Guide to the repository and compile it on github actions to keep the pdf up to date.
+        Add the ResStock Technical Reference Guide to the repository and compile it on GitHub actions to keep the PDF up to date.
 
         Assignees: Anthony Fontanini
 
@@ -506,7 +554,7 @@ Development Changelog
         Add heat pump pool heaters
 
         Description:
-        Add heat pump pool heaters to baseline.
+        Add heat pump pool heaters to the baseline.
 
         resstock-estimation: `pull request 436 <https://github.com/NREL/resstock-estimation/pull/436>`_
 

@@ -43,15 +43,15 @@ postprocessing:
     - County
   publish_annual_results: true
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
-  # aws:
-  #  region_name: us-west-2
-  #  s3:
-  #    bucket: sdr_resstock
-  #    prefix: production_runs
-  #  athena:
-  #    glue_service_role: service-role/AWSGlueServiceRole-default
-  #    database_name: sdr_resstock
-  #    max_crawling_time: 1200
+  aws:
+   region_name: us-west-2
+   s3:
+     bucket: resstock-core
+     prefix: resstock_ci
+   athena:
+     glue_service_role: service-role/AWSGlueServiceRole-default
+     database_name: resstock_core
+     max_crawling_time: 1200
 
 # Workflow generator
 workflow_generator:
@@ -71,18 +71,51 @@ workflow_generator:
 
     # Emissions scenarios
     emissions:
-      - scenario_name: LRMER_LowRECost_15
+      - scenario_name: AER_HighRECost_Avg
         type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_LowRECost_15
-      - scenario_name: LRMER_MidCase_15
+        elec_folder: data/emissions/cambium/2024/AER_HighRECost_Avg
+      - scenario_name: AER_HighRECostLowNGPrice_Avg
         type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_15
+        elec_folder: data/emissions/cambium/2024/AER_HighRECostLowNGPrice_Avg
+      - scenario_name: AER_LowRECost_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_LowRECost_Avg
+      - scenario_name: AER_LowRECostHighNGPrice_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_LowRECostHighNGPrice_Avg
+      - scenario_name: AER_MidCase_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_MidCase_Avg
       - scenario_name: LRMER_HighRECost_15
         type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_HighRECost_15
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_15
+      - scenario_name: LRMER_HighRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_25
+      - scenario_name: LRMER_HighRECostLowNGPrice_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_15
+      - scenario_name: LRMER_HighRECostLowNGPrice_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_25
+      - scenario_name: LRMER_LowRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_15
+      - scenario_name: LRMER_LowRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_25
+      - scenario_name: LRMER_LowRECostHighNGPrice_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_15
+      - scenario_name: LRMER_LowRECostHighNGPrice_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_25
+      - scenario_name: LRMER_MidCase_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
       - scenario_name: LRMER_MidCase_25
         type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_25
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
 
     # Utility bill rates
     utility_bills:
@@ -512,7 +545,7 @@ upgrades:
       - *infiltration_30_percent_reduction
 
   - upgrade_name: Attic Floor Insulation for Unfinished Attics
-    options: 
+    options:
     - *attic_insulation_iecc_cz1a
     - *attic_insulation_iecc_cz2a_2b_3a_3b_3c
     - *attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b

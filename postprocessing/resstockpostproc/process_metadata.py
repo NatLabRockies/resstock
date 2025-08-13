@@ -24,6 +24,7 @@ def publish_baseline_annual_results(failed_bldgs: set[int], base: pl.LazyFrame) 
     base = fix_site_energy_total(base, all_cols)
     base = fix_all_fuels_emissions(base, all_cols)
     base = add_upgrade_columns(base)
+    base = add_panel_contraint_cols(base)
     base = reorder_columns(base, col_maps, is_baseline=True)
     return base
 
@@ -44,7 +45,7 @@ def publish_upgrade_annual_results(failed_bldgs: set[int], base: pl.LazyFrame, u
     upgrade = fix_site_energy_total(upgrade, all_cols)
     upgrade = fix_all_fuels_emissions(upgrade, all_cols)
     upgrade = add_upgrade_columns(upgrade)
-    upgrade = upgrade.with_columns(pl.lit("True").alias("applicability"))
+    upgrade = upgrade.with_columns(pl.lit(True).alias("applicability"))
     # get upgrade_name
     upgrade_name_df = upgrade.select(pl.col("upgrade_name").first())
     missing_bldgs_df = base.join(
@@ -53,7 +54,7 @@ def publish_upgrade_annual_results(failed_bldgs: set[int], base: pl.LazyFrame, u
         how="anti"  # Keep rows from 'base' with no match in 'upgrade'
     )
     missing_bldgs_df = missing_bldgs_df.with_columns([
-        pl.lit("False").alias("applicability"),
+        pl.lit(False).alias("applicability"),
         pl.lit(upgrade_num).alias("upgrade"),
     ]).drop("upgrade_name")
     upgrade_cols = upgrade.collect_schema().names()
@@ -61,6 +62,7 @@ def publish_upgrade_annual_results(failed_bldgs: set[int], base: pl.LazyFrame, u
     upgrade = pl.concat([upgrade, missing_bldgs_df], how="diagonal_relaxed")
     upgrade = upgrade.sort("bldg_id")
     upgrade = add_saving_cols(upgrade, base)
+    upgrade = add_panel_contraint_cols(upgrade)
     upgrade = reorder_columns(upgrade, col_maps, is_baseline=False)
     return upgrade
 
@@ -130,8 +132,15 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
 def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
     savings_cols = []
     all_cols = df.collect_schema().names()
-    out_cols = [col for col in all_cols if 'out.' in col and not 'out.params' in col]
-    
+    out_cols = [col for col in all_cols if 'out.' in col and not ('out.params' in col or 'out.panel' in col)]
+    # Selectively include the following for panels
+    out_panel_cols = [col for col in all_cols if 
+        "out.panel.load.total_load." in col
+        or "out.panel.load.occupied_capacity." in col
+        or "out.panel.breaker_space.occupied." in col
+        ]
+    out_cols += out_panel_cols
+
     baseline_df_with_renamed = baseline_df.select([
         pl.col(col).alias(f"baseline_{col}") for col in out_cols
     ] + ['bldg_id'])
@@ -143,6 +152,36 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
             saving_col = (pl.col(f"baseline_{col}") - pl.col(col)).alias(f"{col}.savings")
         savings_cols.append(saving_col)
     return df_with_baseline.with_columns(savings_cols).drop([f"baseline_{col}" for col in out_cols])
+
+
+def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
+    all_cols = df.collect_schema().names()
+    amp_prefix = "out.panel.load.headroom_capacity."
+    amp_cols = [col for col in all_cols if amp_prefix in col]
+    space_col = "out.panel.breaker_space.headroom.count"
+
+    out_space_col = "out.panel.constraint.breaker_space"
+    space_constraint = pl.when(pl.col(space_col) <= 0).then(True).otherwise(False).alias(out_space_col)
+    ind_constraints = [space_constraint]
+
+    for amp_col in amp_cols:
+        nec_method = amp_col.removeprefix(amp_prefix).removesuffix(".a")
+        out_amp_col = "out.panel.constraint.capacity." + nec_method
+        amp_constraint = pl.when(pl.col(amp_col) <= 0).then(True).otherwise(False).alias(out_amp_col)
+        ind_constraints.append(amp_constraint)
+
+        out_overall_col = "out.panel.constraint.overall." + nec_method
+        overall_constraint = pl.coalesce(
+            pl.when(pl.col(out_amp_col) & pl.col(out_space_col)).then(pl.lit("Capacity and Space Constrained")),
+            pl.when(pl.col(out_amp_col) & ~pl.col(out_space_col)).then(pl.lit("Capacity Constrained Only")),
+            pl.when(~pl.col(out_amp_col) & pl.col(out_space_col)).then(pl.lit("Space Constrained Only")),
+            pl.lit("No Constraint"),
+        ).alias(out_overall_col)
+
+        new_df = df.with_columns(ind_constraints).with_columns(overall_constraint) # needs to be sequential
+
+        
+    return new_df
 
 
 def add_county_column(df: pl.LazyFrame):
