@@ -157,11 +157,14 @@ def sample(project: str, num_datapoints: int, output: str) -> None:
         .group_by(segment_vars, maintain_order=True)   # keep incoming row-order inside groups
         .head(12)                                     # take the first 12 rows per group
     )
+    new_total = limited_df.shape[0]
+    if new_total < num_datapoints:
+        print(f"Will be sampling {new_total} samples instead of {num_datapoints} due to rounding")
     limited_df = limited_df.with_row_index("Building", offset=1)
     initial_samples_df = limited_df.to_pandas()
     start_time = time.time()
     print(f"Performing final sampling with {num_segments} segments")
-    sample_df = sample_all(pathlib.Path(project), num_datapoints, initial_samples_df=initial_samples_df)
+    sample_df = sample_all(pathlib.Path(project), new_total, initial_samples_df=initial_samples_df)
     print(f"Final sampling completed in {time.time() - start_time:.2f} seconds")
     click.echo("Writing Parquet")
     sample_df.to_parquet(output)
