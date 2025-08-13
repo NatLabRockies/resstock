@@ -10,6 +10,7 @@ dependencies = [
     "joblib",
     "numpy",
     "pyarrow",
+    "polars>=1.8.2",
 ]
 
 [project.scripts]

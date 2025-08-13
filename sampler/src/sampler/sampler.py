@@ -5,6 +5,8 @@ import itertools as it
 import multiprocessing
 import click
 import pathlib
+import yaml
+import polars as pl
 from .sampling_utils import get_param2tsv, get_samples, TSVTuple, get_all_tsv_issues, get_all_tsv_max_errors
 from .sampling_utils import get_error_details
 from .utils import log_error_details, read_csv
@@ -35,6 +37,7 @@ def get_topological_generations(param2dep: dict[str, list[str]], segment_vars: s
             ancestors.update(nx.ancestors(param2dep_graph, tsv_name))
         ancestors.update(segment_vars)
         param2dep_graph = param2dep_graph.subgraph(ancestors)  # type: ignore
+        print(f"Trimmed the network to {len(param2dep_graph.nodes)} nodes")
     return list(sorted(enumerate(nx.topological_generations(param2dep_graph))))  # type: ignore
 
 
@@ -68,7 +71,7 @@ def sample_param(param_tuple: TSVTuple, sample_df: pd.DataFrame, param: str, num
     return samples
 
 
-def sample_all(project_path, num_samples, segment_vars: set[str] | None = None, initial_samples_df: pd.DataFrame | None = None) -> pd.DataFrame:
+def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = None, initial_samples_df: pd.DataFrame | None = None) -> pd.DataFrame:
     param2tsv = get_param2tsv(project_path)
     param2dep = {param: tsv_tuple[1] for (param, tsv_tuple) in param2tsv.items()}
 
@@ -127,12 +130,39 @@ def cli():
 def sample(project: str, num_datapoints: int, output: str) -> None:
     """Performs sampling for project and writes output parquet file.
     """
-    segment_vars = ["Federal Poverty Level", "Geometry Floor Area Bin", "Geometry Building Type RECS", "Vintage", "Heating Fuel", "Sampling Region"]
+    # Load config file from same directory as this script
+    config_path = pathlib.Path(__file__).parent / "sampler_config.yaml"
+    segment_vars = None
+    config = {}
+    if config_path.exists():
+        with open(config_path, 'r') as f:
+            config = yaml.safe_load(f)
+    segment_vars = set(config.get('segment_vars', []))
+    initial_sample_size = config.get('segment_selection_sample_size', 10000000)
     # initial_samples_df = read_csv('/Users/radhikar/Documents/buildstock2025/geographic sampling/starter_samples.csv')
     initial_samples_df = None
     start_time = time.time()
-    print(project, num_datapoints, output)
+    print(project, num_datapoints, output, segment_vars)
+    print(f"Performing initial sampling with {initial_sample_size} samples to pick the segments")
+    initial_samples_df = pl.from_pandas(sample_all(pathlib.Path(project), initial_sample_size, segment_vars=segment_vars))
+    print(f"Initial sampling completed in {time.time() - start_time:.2f} seconds. Sample size: {initial_samples_df.shape}")
+    initial_samples_df = initial_samples_df.drop("Building")
+    num_segments = num_datapoints // config.get('num_samples_per_segment', 12)
+    top_segments = initial_samples_df.group_by(segment_vars).agg(pl.len().alias("count")).sort("count", descending=True).limit(num_segments)
+    new_df = initial_samples_df.join(top_segments, on=segment_vars, validate="m:1", how="left")
+    valid_df = new_df.filter(~pl.col('count').is_null())
+    valid_df = valid_df.drop("count")
+    limited_df = (
+        valid_df
+        .group_by(segment_vars, maintain_order=True)   # keep incoming row-order inside groups
+        .head(12)                                     # take the first 12 rows per group
+    )
+    limited_df = limited_df.with_row_index("Building", offset=1)
+    initial_samples_df = limited_df.to_pandas()
+    start_time = time.time()
+    print(f"Performing final sampling with {num_segments} segments")
     sample_df = sample_all(pathlib.Path(project), num_datapoints, initial_samples_df=initial_samples_df)
+    print(f"Final sampling completed in {time.time() - start_time:.2f} seconds")
     click.echo("Writing Parquet")
     sample_df.to_parquet(output)
     click.echo(f"Completed sampling in {time.time() - start_time:.2f} seconds")
