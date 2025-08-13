@@ -1872,6 +1872,7 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml_bldg.climate_and_risk_zones.weather_station_epw_filepath = 'USA_AZ_Phoenix-Sky.Harbor.Intl.AP.722780_TMY3.epw'
       when 'unique-objects-vary-across-units-dst'
         hpxml, hpxml_bldg = _create_hpxml('base-bldgtype-mf-whole-building.xml', building_id: building_id)
+        hpxml_bldg.dst_observed = true
         hpxml_bldg.dst_begin_month = 3
         hpxml_bldg.dst_begin_day = 15
         hpxml_bldg.dst_end_month = 10

@@ -719,9 +719,13 @@ module Defaults
       hpxml_bldg.site.ground_diffusivity_isdefaulted = true
     end
 
-    if hpxml_bldg.dst_enabled.nil?
-      hpxml_bldg.dst_enabled = true # Assume DST since it occurs in most US locations
-      hpxml_bldg.dst_enabled_isdefaulted = true
+    if hpxml_bldg.dst_observed.nil?
+      if ['AZ', 'HI'].include? hpxml_bldg.state_code
+        hpxml_bldg.dst_observed = false
+      else
+        hpxml_bldg.dst_observed = true
+      end
+      hpxml_bldg.dst_observed_isdefaulted = true
     end
 
     if not weather.nil?
@@ -741,7 +745,7 @@ module Defaults
         hpxml_bldg.time_zone_utc_offset_isdefaulted = true
       end
 
-      if hpxml_bldg.dst_enabled
+      if hpxml_bldg.dst_observed
         if hpxml_bldg.dst_begin_month.nil? || hpxml_bldg.dst_begin_day.nil? || hpxml_bldg.dst_end_month.nil? || hpxml_bldg.dst_end_day.nil?
           if (not weather.header.DSTStartDate.nil?) && (not weather.header.DSTEndDate.nil?)
             # Use weather file DST dates if available
