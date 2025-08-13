@@ -35,5 +35,6 @@ buildstockbatch_crash_details.log
 **/.ipynb_checkpoints/*
 **/.bsq_cache/
 
-# Data directories
-**/data/*
+# Postprocessing build outputs
+/postprocessing/build/
+/postprocessing/resstockpostproc.egg-info/

@@ -16067,7 +16067,7 @@ Single-Family Detached	Wood	WY	<1940	0	0.0292887	0	0.970711	0	14	945.182	1.10728
 # Created by: sources\recs\recs2020\tsv_maker.py and sources\aris\tsv_maker.py
 # Description: The presence and type of the primary heating system in the dwelling unit.
 # Source: U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 # Assumption: Due to low sample sizes, fallback rules applied with lumping of
 # Assumption: 1) Heating fuel lump: Fuel oil, Propane, Wood and Other Fuel2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs bins
-# Assumption: For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+# Assumption: For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.

@@ -178,6 +178,7 @@ module ElectricPanel
       end
 
       peak_elec = hpxml_bldg.header.electric_panel_baseline_peak_power.to_f
+      fail 'Expected ElectricPanelBaselinePeakPower to be greater than 0.' if peak_elec == 0 # EPvalidator.sch should prevent this
 
       service_feeders.Load_CapacityW = new_loads + 1.25 * peak_elec
       service_feeders.Load_CapacityA = service_feeders.Load_CapacityW / Float(electric_panel.voltage)

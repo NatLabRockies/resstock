@@ -15,11 +15,11 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  OPENSTUDIO_VER: 3.9.0
-  OPENSTUDIO_SHA: c77fbb9569
+  OPENSTUDIO_VER: 3.10.0
+  OPENSTUDIO_SHA: 86d7e215a1
   OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
   OPENSTUDIO_EXT: deb
-  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.9.0
+  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0
   BUILDSTOCK_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [format-files]
     container:
-      image: docker://nrel/openstudio:develop
+      image: docker://nrel/openstudio:3.10.0
     steps:
       - uses: actions/checkout@v4
         with:
@@ -154,7 +154,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     container:
-      image: docker://nrel/openstudio:develop
+      image: docker://nrel/openstudio:3.10.0
     steps:
       - uses: actions/checkout@v4
         with:
@@ -207,7 +207,6 @@ jobs:
           if-no-files-found: error
 
   integration-tests:
-    if: false
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     steps:
@@ -275,6 +274,15 @@ jobs:
           path: |
             project_national/national_baseline/results_csvs/results_up00.csv
             project_testing/testing_baseline/results_csvs/results_up00.csv
+          if-no-files-found: error
+      - name: Upload raw simulation output
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw_simulation_output
+          path: |
+            project_national/national_baseline/simulation_output
+            project_testing/testing_baseline/simulation_output
+          retention-days: 1  # This is typically about 2.5 GB. Delete quickly to save space.
           if-no-files-found: error
 
       - name: Run tests
@@ -436,7 +444,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     container:
-      image: docker://nrel/openstudio:develop
+      image: docker://nrel/openstudio:3.10.0
     steps:
       - uses: actions/checkout@v4
         with:
@@ -452,6 +460,7 @@ jobs:
           export DEBIAN_FRONTEND=noninteractive
           sudo apt update
           sudo -E apt-get install -y python3-pip
+          which gzip || sudo apt-get install -y gzip
 
       - name: Install python dependencies
         run: |
@@ -462,15 +471,51 @@ jobs:
         run: |
           python3 -m pip install git+https://github.com/NREL/buildstock-query.git@$BUILDSTOCK_QUERY_BRANCH
 
-      - name: Generate 550K Sampler
+      - name: Generate 550K Sample
         run: |
           openstudio resources/run_sampling.rb -p project_national -n 550000 -o ../project_national/resources/national_550ksamples.csv
+          cd project_national/resources
+          gzip -c national_550ksamples.csv > national_550ksamples.csv.gz
+
+      - name: Upload 550K samples if on develop branch
+        if: github.ref == 'refs/heads/develop'
+        uses: actions/upload-artifact@v4
+        with:
+          name: national_550ksamples
+          path: project_national/resources/national_550ksamples.csv.gz
+          retention-days: 30
+
+      - name: Delete older national_550ksamples artifacts, keep newest
+        if: github.ref == 'refs/heads/develop'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const NAME = 'national_550ksamples';
+
+            const all = await github.paginate(
+              github.rest.actions.listArtifactsForRepo,
+              { owner: context.repo.owner, repo: context.repo.repo, per_page: 100 }
+            );
+
+            const toDelete = all
+              .filter(a => a.name === NAME)
+              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+              .slice(1);            // keep newest
+            console.log(`will delete ${toDelete.length} artifacts`);
+            for (const a of toDelete) {
+              await github.rest.actions.deleteArtifact({
+                owner: context.repo.owner,
+                repo:  context.repo.repo,
+                artifact_id: a.id
+              });
+            }
 
       - name: Generate minimal buildstock and other files
         run: |
           cd project_national/resources
           python3 -m buildstock_query.tools.upgrades_analyzer --yaml_file ../sdr_upgrades_tmy3.yml --buildstock_file national_550ksamples.csv --opt_sat_file options_saturations.csv --output_prefix sdr_
           rm national_550ksamples.csv
+          rm national_550ksamples.csv.gz
 
       - name: Upload SDR options analysis artifacts
         uses: actions/upload-artifact@v4
@@ -528,7 +573,6 @@ jobs:
           fi
 
   sdr-integration-tests:
-    if: false
     runs-on: ubuntu-22.04
     needs: [sdr-options-analysis]
     steps:
@@ -539,7 +583,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.1.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+          role-duration-seconds: 1200
+          role-session-name: MySession
+      - name: Who am I?
+        run: aws sts get-caller-identity
       - name: Download and Install OpenStudio
         run: |
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
@@ -561,10 +614,35 @@ jobs:
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
-
+  
+      # Only replace existing files and tables in s3 and Athena for develop branch to prevent
+      # every branch/PR from fighting over the same s3 files and Athena tables.
+      # Each branch/PR will still be able to create local output files and commit them to the
+      # repo without conflict.
       - name: Run buildstockbatch
+        shell: bash
         run: |
-          buildstock_local --low-disk project_national/sdr_upgrades_tmy3.yml
+          set -o pipefail  # ensures the pipeline fails if buildstock_local fails, not just the tee command
+
+          EXTRA_ARGS=""
+          if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            echo "Running on develop branch, using --replace_existing"
+            EXTRA_ARGS="--replace_existing"
+          else
+            echo "Not on develop branch, removing AWS config from YAML"
+            python .github/scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_tmy3.yml
+          fi
+
+          # Run buildstockbatch and tee output to a log file
+          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml 2>&1 | tee buildstock_local.log
+
+          # Check the log for schema mismatch warnings and fail if any are present
+          SCHEMA_MISMATCH_PATTERN='^Missing columns in output data|^Extra columns in output data'
+          if grep -q -E "$SCHEMA_MISMATCH_PATTERN" buildstock_local.log; then
+            echo "::error::Detected column mismatch in buildstockbatch output. Failing job."
+            grep -E "$SCHEMA_MISMATCH_PATTERN" buildstock_local.log
+            exit 1
+          fi
 
       - name: Unzip results
         run: |
@@ -584,6 +662,18 @@ jobs:
           name: buildstockbatch_results_sdr_raw_csvs
           path: project_national/sdr_upgrades_tmy3/results_csvs
           if-no-files-found: error
+
+      - name: Check for failed simulations
+        run: |
+          echo "Checking for failed simulations in results files..."
+          FAILED=false
+          for csv_file in project_national/sdr_upgrades_tmy3/results_csvs/*.csv; do
+            python -m resstockpostproc.get_failures "$csv_file" --verbose --exit-code || FAILED=true
+          done
+          if [ "$FAILED" = true ]; then
+            echo "ERROR: Some simulations failed. See details above."
+            exit 1
+          fi
 
       - name: Commit the integration tests results
         run: |

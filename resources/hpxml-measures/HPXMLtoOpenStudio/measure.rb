@@ -62,6 +62,12 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue('results_annual')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeStringArgument('electric_panel_output_file_name', false)
+    arg.setDisplayName('Electric Panel Output File Name')
+    arg.setDescription("The name of the file w/ electric panel outputs. If not provided, defaults to 'results_panel.csv' (or '.json' or '.msgpack').")
+    arg.setDefaultValue('results_panel')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeStringArgument('design_load_details_output_file_name', false)
     arg.setDisplayName('Design Load Details Output File Name')
     arg.setDescription("The name of the file w/ additional HVAC design load details. If not provided, defaults to 'results_design_load_details.csv' (or '.json' or '.msgpack').")
@@ -163,6 +169,12 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
       Outputs.append_sizing_results(hpxml.buildings, annual_results_out)
       Outputs.write_results_out_to_file(annual_results_out, args[:output_format], args[:annual_output_file_path])
 
+      # Write electric panel output file as needed
+      electric_panel_results_out = Outputs.get_panel_results(hpxml.header, hpxml.buildings)
+      if not electric_panel_results_out.empty?
+        Outputs.write_results_out_to_file(electric_panel_results_out, args[:output_format], args[:electric_panel_output_file_path])
+      end
+
       # Write design load details output file
       HVACSizing.write_detailed_output(design_loads_results_out, args[:output_format], args[:design_load_details_output_file_path])
     rescue Exception => e
@@ -193,6 +205,11 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
       args[:annual_output_file_name] = "#{args[:annual_output_file_name]}.#{args[:output_format]}"
     end
     args[:annual_output_file_path] = File.join(args[:output_dir], args[:annual_output_file_name])
+
+    if File.extname(args[:electric_panel_output_file_name]).length == 0
+      args[:electric_panel_output_file_name] = "#{args[:electric_panel_output_file_name]}.#{args[:output_format]}"
+    end
+    args[:electric_panel_output_file_path] = File.join(args[:output_dir], args[:electric_panel_output_file_name])
 
     if File.extname(args[:design_load_details_output_file_name]).length == 0
       args[:design_load_details_output_file_name] = "#{args[:design_load_details_output_file_name]}.#{args[:output_format]}"
@@ -404,9 +421,6 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
 
     if hpxml_header.eri_calculation_versions.empty?
       hpxml_header.eri_calculation_versions = ['latest']
-    end
-    if hpxml_header.eri_calculation_versions == ['latest']
-      hpxml_header.eri_calculation_versions = [Constants::ERIVersions[-1]]
     end
 
     # Hidden feature: Whether to override certain assumptions to better match the ASHRAE 140 specification

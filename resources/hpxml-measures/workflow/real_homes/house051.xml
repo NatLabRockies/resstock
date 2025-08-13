@@ -1,16 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<HPXML xmlns='http://hpxmlonline.com/2023/09' schemaVersion='4.0'>
+<HPXML xmlns='http://hpxmlonline.com/2023/09' schemaVersion='4.2'>
   <XMLTransactionHeaderInformation>
     <XMLType>HPXML</XMLType>
-    <XMLGeneratedBy>tasks.rb</XMLGeneratedBy>
+    <XMLGeneratedBy>redacted</XMLGeneratedBy>
     <CreatedDateAndTime>2000-01-01T00:00:00-07:00</CreatedDateAndTime>
     <Transaction>create</Transaction>
   </XMLTransactionHeaderInformation>
   <SoftwareInfo>
     <extension>
-      <SimulationControl>
-        <Timestep>60</Timestep>
-      </SimulationControl>
       <ElectricPanelLoadCalculations>
         <ServiceFeeders>
           <Type>2023 Existing Dwelling Load-Based</Type>
@@ -26,12 +23,6 @@
   </SoftwareInfo>
   <Building>
     <BuildingID id='MyBuilding'/>
-    <Site>
-      <SiteID id='SiteID'/>
-      <Address>
-        <StateCode>CO</StateCode>
-      </Address>
-    </Site>
     <ProjectStatus>
       <EventType>proposed workscope</EventType>
     </ProjectStatus>
@@ -69,6 +60,9 @@
           <ConditionedFloorArea>989.0</ConditionedFloorArea>
           <ConditionedBuildingVolume>7912.0</ConditionedBuildingVolume>
         </BuildingConstruction>
+        <extension>
+          <ElectricPanelBaselinePeakPower>7200.0</ElectricPanelBaselinePeakPower>
+        </extension>
       </BuildingSummary>
       <ClimateandRiskZones>
         <ClimateZoneIECC>
@@ -520,6 +514,12 @@
               <BranchCircuit>
                 <SystemIdentifier id='BranchCircuit2'/>
                 <OccupiedSpaces>1.0</OccupiedSpaces>
+              </BranchCircuit>
+              <BranchCircuit>
+                <SystemIdentifier id='BranchCircuit3'/>
+                <OccupiedSpaces>1.0</OccupiedSpaces>
+                <AttachedToComponent idref='Refrigerator1'/>
+                <AttachedToComponent idref='PlugLoad2'/>
               </BranchCircuit>
             </BranchCircuits>
             <ServiceFeeders>

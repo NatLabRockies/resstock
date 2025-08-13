@@ -1,6 +1,6 @@
 schema_version: '0.6'
-os_version: 3.9.0
-os_sha: c77fbb9569
+os_version: 3.10.0
+os_sha: 86d7e215a1
 buildstock_directory: ../ # Relative to this file or absolute
 project_directory: project_national # Relative to buildstock_directory
 output_directory: sdr_upgrades_tmy3
@@ -43,15 +43,15 @@ postprocessing:
     - County
   publish_annual_results: true
   # AWS upload bucket and athena setup (uncomment during production and testing runs)
-  # aws:
-  #  region_name: us-west-2
-  #  s3:
-  #    bucket: sdr_resstock
-  #    prefix: production_runs
-  #  athena:
-  #    glue_service_role: service-role/AWSGlueServiceRole-default
-  #    database_name: sdr_resstock
-  #    max_crawling_time: 1200
+  aws:
+   region_name: us-west-2
+   s3:
+     bucket: resstock-core
+     prefix: resstock_ci
+   athena:
+     glue_service_role: service-role/AWSGlueServiceRole-default
+     database_name: resstock_core
+     max_crawling_time: 1200
 
 # Workflow generator
 workflow_generator:
@@ -71,18 +71,51 @@ workflow_generator:
 
     # Emissions scenarios
     emissions:
-      - scenario_name: LRMER_LowRECost_15
+      - scenario_name: AER_HighRECost_Avg
         type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_LowRECost_15
-      - scenario_name: LRMER_MidCase_15
+        elec_folder: data/emissions/cambium/2024/AER_HighRECost_Avg
+      - scenario_name: AER_HighRECostLowNGPrice_Avg
         type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_15
+        elec_folder: data/emissions/cambium/2024/AER_HighRECostLowNGPrice_Avg
+      - scenario_name: AER_LowRECost_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_LowRECost_Avg
+      - scenario_name: AER_LowRECostHighNGPrice_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_LowRECostHighNGPrice_Avg
+      - scenario_name: AER_MidCase_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_MidCase_Avg
       - scenario_name: LRMER_HighRECost_15
         type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_HighRECost_15
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_15
+      - scenario_name: LRMER_HighRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_25
+      - scenario_name: LRMER_HighRECostLowNGPrice_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_15
+      - scenario_name: LRMER_HighRECostLowNGPrice_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_25
+      - scenario_name: LRMER_LowRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_15
+      - scenario_name: LRMER_LowRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_25
+      - scenario_name: LRMER_LowRECostHighNGPrice_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_15
+      - scenario_name: LRMER_LowRECostHighNGPrice_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_25
+      - scenario_name: LRMER_MidCase_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
       - scenario_name: LRMER_MidCase_25
         type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_25
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
 
     # Utility bill rates
     utility_bills:
@@ -125,898 +158,388 @@ workflow_generator:
 
     debug: true
 
-### -- Upgrades --
-# Standard Data Release - Residential
+references:
+  ### -- Anchors not dependent on other anchors -- ###
+  attic_insulation_iecc_cz1a: &attic_insulation_iecc_cz1a
+    option: Insulation Ceiling|R-30
+    apply_logic:
+      - ASHRAE IECC Climate Zone 2004|1A
+      - Geometry Attic Type|Vented Attic
+      - or:
+        - Insulation Ceiling|Uninsulated
+        - Insulation Ceiling|R-7
+        - Insulation Ceiling|R-13
+        - Insulation Ceiling|R-19
+    costs:
+      - value: 0.0482
+        multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
+      - value: 0.2163
+        multiplier: Floor Area, Attic (ft^2)
+    lifetime: 60
 
+  attic_insulation_iecc_cz2a_2b_3a_3b_3c: &attic_insulation_iecc_cz2a_2b_3a_3b_3c
+    option: Insulation Ceiling|R-49
+    apply_logic:
+      - or:
+        - ASHRAE IECC Climate Zone 2004|2A
+        - ASHRAE IECC Climate Zone 2004|2B
+        - ASHRAE IECC Climate Zone 2004|3A
+        - ASHRAE IECC Climate Zone 2004|3B
+        - ASHRAE IECC Climate Zone 2004|3C
+      - Geometry Attic Type|Vented Attic
+      - or:
+        - Insulation Ceiling|Uninsulated
+        - Insulation Ceiling|R-7
+        - Insulation Ceiling|R-13
+        - Insulation Ceiling|R-19
+        - Insulation Ceiling|R-30
+        - Insulation Ceiling|R-38
+    costs:
+      - value: 0.0482
+        multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
+      - value: 0.2163
+        multiplier: Floor Area, Attic (ft^2)
+    lifetime: 60
+
+  attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b: &attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b
+    option: Insulation Ceiling|R-60
+    apply_logic:
+      - or:
+        - ASHRAE IECC Climate Zone 2004|4A
+        - ASHRAE IECC Climate Zone 2004|4B
+        - ASHRAE IECC Climate Zone 2004|4C
+        - ASHRAE IECC Climate Zone 2004|5A
+        - ASHRAE IECC Climate Zone 2004|5B
+        - ASHRAE IECC Climate Zone 2004|6A
+        - ASHRAE IECC Climate Zone 2004|6B
+        - ASHRAE IECC Climate Zone 2004|7A
+        - ASHRAE IECC Climate Zone 2004|7B
+      - Geometry Attic Type|Vented Attic
+      - or:
+        - Insulation Ceiling|Uninsulated
+        - Insulation Ceiling|R-7
+        - Insulation Ceiling|R-13
+        - Insulation Ceiling|R-19
+        - Insulation Ceiling|R-30
+        - Insulation Ceiling|R-38
+        - Insulation Ceiling|R-49
+    costs:
+      - value: 0.0482
+        multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
+      - value: 0.2163
+        multiplier: Floor Area, Attic (ft^2)
+    lifetime: 60
+
+  costs_ashp_ducted_seer_20_11_hspf: &costs_ashp_ducted_seer_20_11_hspf
+    - value: 10229.58
+      multiplier: Fixed (1)
+    - value: 167.64
+      multiplier: Size, Heating System Primary (kBtu/h)
+
+  costs_ghp: &costs_ghp
+    - value: 999
+      multiplier: Fixed (1)
+    - value: 999
+      multiplier: Size, Heating System Primary (kBtu/h)
+
+  demand_flexibility_30_minute_random_shift: &demand_flexibility_30_minute_random_shift
+    option: Demand Flexibility Random Shift|30 minutes
+
+  demand_flexibility_electric_vehicle: &demand_flexibility_electric_vehicle
+    option: Demand Flexibility Electric Vehicle|Enabled
+
+  ducted_ashp_apply_logic: &ducted_ashp_apply_logic
+    - HVAC Has Ducts|Yes
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+
+  ev_15_percent_efficiency: &ev_15_percent_efficiency
+    option: Electric Vehicle Efficiency Increase|15%
+
+  ev_l2_charger: &ev_l2_charger
+    option: Electric Vehicle Charger|Level 2 charger
+
+  ev_ownership_yes: &ev_ownership_yes
+    option: Electric Vehicle Ownership|Yes
+
+  has_cooling_or_heating: &has_cooling_or_heating
+    - or:
+      - not: HVAC Cooling Type|None
+      - not: HVAC Heating Type|None
+
+  infiltration_30_percent_reduction: &infiltration_30_percent_reduction
+    option: Infiltration Reduction|30%
+    apply_logic:
+      - or:
+        - Infiltration|50 ACH50
+        - Infiltration|40 ACH50
+        - Infiltration|30 ACH50
+        - Infiltration|25 ACH50
+        - Infiltration|20 ACH50
+        - Infiltration|18.5 ACH50
+        - Infiltration|15 ACH50
+        - Infiltration|11.25 ACH50
+    costs:
+      - value: 0.53
+        multiplier: Floor Area, Conditioned (ft^2)
+    lifetime: 60
+
+  lifetime_ducted_ashp: &lifetime_ducted_ashp 15
+
+  lifetime_ducted_ghp: &lifetime_ducted_ghp 15
+
+  occupied_only: &occupied_only
+    Vacancy Status|Occupied
+
+  partial_conditioning_100_percent_ducts_only: &partial_conditioning_100_percent_ducts_only
+    option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+    apply_logic:
+      - HVAC Has Ducts|Yes
+
+  remove_high_rise_shared: &remove_high_rise_shared
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+      - and:
+        - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
+
+  remove_nonducted_high_rise_shared: &remove_nonducted_high_rise_shared
+    - HVAC Has Ducts|Yes
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+      - and:
+        - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
+
+  # FIXME: We'd prefer to apply GHP to 0.5 and 0.8, but we are actively working on fixing a bug here.
+  # When fixed, remove the following block and replace with use of remove_nonducted_high_rise_shared.
+  remove_nonducted_high_rise_shared_low_ground_conductivity: &remove_nonducted_high_rise_shared_low_ground_conductivity
+    - HVAC Has Ducts|Yes
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+      - and:
+        - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
+    - not:
+      - or:
+        - Ground Thermal Conductivity|0.5
+        - Ground Thermal Conductivity|0.8
+
+  yes_and_no_has_ducts_apply_logic: &yes_and_no_has_ducts_apply_logic
+    - or:
+      - HVAC Has Ducts|Yes
+      - HVAC Has Ducts|No
+
+  ### -- Anchors dependent on other anchors -- ###
+  cooling_setpoint_no_offset: &cooling_setpoint_no_offset
+      option: Cooling Setpoint Has Offset|No
+      apply_logic: *yes_and_no_has_ducts_apply_logic
+
+  cooling_setpoint_offset_magnitude_0: &cooling_setpoint_offset_magnitude_0
+      option: Cooling Setpoint Offset Magnitude|0F
+      apply_logic: *yes_and_no_has_ducts_apply_logic
+
+  cooling_setpoint_offset_period_none: &cooling_setpoint_offset_period_none
+      option: Cooling Setpoint Offset Period|None
+      apply_logic: *yes_and_no_has_ducts_apply_logic
+
+  ducted_ashp_seer_20_11_hspf_cchp_electric_backup: &ducted_ashp_seer_20_11_hspf_cchp_electric_backup
+      option: HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load
+      apply_logic: *ducted_ashp_apply_logic
+      costs: *costs_ashp_ducted_seer_20_11_hspf
+      lifetime: *lifetime_ducted_ashp
+
+  dual_speed_ducted_ghp: &dual_speed_ducted_ghp
+      option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
+      apply_logic: *ducted_ashp_apply_logic
+      costs: *costs_ghp
+      lifetime: *lifetime_ducted_ghp
+
+  heat_pump_cooling_efficiency_ducted: &heat_pump_cooling_efficiency_ducted
+      option: HVAC Cooling Efficiency|Ducted Heat Pump
+      apply_logic: *ducted_ashp_apply_logic
+
+  heating_setpoint_no_offset: &heating_setpoint_no_offset
+      option: Heating Setpoint Has Offset|No
+      apply_logic: *yes_and_no_has_ducts_apply_logic
+
+  heating_setpoint_offset_magnitude_0: &heating_setpoint_offset_magnitude_0
+      option: Heating Setpoint Offset Magnitude|0F
+      apply_logic: *yes_and_no_has_ducts_apply_logic
+
+  heating_setpoint_offset_period_none: &heating_setpoint_offset_period_none
+      option: Heating Setpoint Offset Period|None
+      apply_logic: *yes_and_no_has_ducts_apply_logic
+
+  partial_conditioning_100_percent: &partial_conditioning_100_percent
+      option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+      apply_logic: *yes_and_no_has_ducts_apply_logic
+
+### Standard Data Release - Residential -- ###
 upgrades:
-
-### -- Heat Pumps -- ###
-  - upgrade_name: ENERGY STAR heat pump with elec backup 
-    
-    package_apply_logic: &remove_high_rise_shared
-      - not: Heating Fuel|Wood
-      - not: Heating Fuel|Other Fuel
-      - not: Heating Fuel|None
-      - not:
-        - or:
-          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-          - HVAC Shared Efficiencies|Fan Coil Cooling Only
-        - and:
-          - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
-
-    options:
-        ### -- ENERGY STAR ASHP applies to all dwellings with ducts
-      - &ducted_ASHP_ENERGYSTAR_elec_backup
-        option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF
-        apply_logic: &ducted_ASHP_apply_logic
-          - HVAC Has Ducts|Yes
-          - not:
-            - or:
-              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-              - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-              - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-              - HVAC Shared Efficiencies|Fan Coil Cooling Only
-        costs: &costs_ashp_ducted_SEER_16_9-2_HSPF
-        #### costs not accurate or final, need to adjust inflation and re-calculate regressions - PRW 1/2/2024 ####
-        # Source: Custom regression by Brennan Less. Ducted heat pump project costs were regressed on nameplate tons and HSPF,
-        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
-        # Ducted ASHP regression n=317. Implicitly includes electrical upgrades and electric backup.
-          - value: 4821.83 # for HSPF 9.2
-            multiplier: Fixed (1)
-          - value: 167.64
-            multiplier: Size, Heating System Primary (kBtu/h)
-        lifetime: &lifetime_ducted_ASHP 15
-
-        ### -- ENERGY STAR MSHP applies to all dwellings without ducts
-      - &nonducted_MSHP_ENERGYSTAR_elec_backup
-        option: HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Max Load
-        apply_logic: &nonducted_MSHP_apply_logic
-          - or: 
-            - HVAC Has Ducts|No
-            - or:
-              - or:
-                - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-                - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-                - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-                - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-                - HVAC Shared Efficiencies|Fan Coil Cooling Only
-        costs: &costs_mshp_nonducted_SEER_16_9-2_HSPF
-        #### costs not accurate or final, need to adjust inflation and re-calculate regressions - PRW 1/2/2024 ####
-        # Source: Custom regression by Brennan Less. Ductless heat pump project costs were regressed on nameplate tons,
-        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
-        # Ductless MSHP n=173, HSPF median 11, range 9.3–14.2. Implicitly includes multiple zones and electrical upgrades.
-        # Regression results in costs that are 15–30% higher than costs from The Heat Pump Store as documented in https://redwoodenergy.net/wp-content/uploads/2021/02/Pocket-Guide-to-All-Electric-Retrofits-of-Single-Family-Homes.pdf 
-        # LBNL data were not sufficient to include a relationship between SEER or HSPF and cost, so cost deltas for higher 
-        # and lower HSPF were added using the relationship between HSPF and cost for ductless MSHPs in REMDB: 2.2% addition or subtraction per point
-        # according to how many points above or below the HSPF rating is from 10.5 (https://remdb.nrel.gov/).
-          - value: 2733.38
-            multiplier: Fixed (1)
-          - value: 354.96
-            multiplier: Size, Heating System Primary (kBtu/h)
-        lifetime: &lifetime_nonducted_MSHP 15
-
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - &cooling_setpoint_no_offset_nonducted
-        option: Cooling Setpoint Has Offset|No
-        apply_logic: *nonducted_MSHP_apply_logic
-
-      - &cooling_setpoint_offset_magnitude_0_nonducted
-        option: Cooling Setpoint Offset Magnitude|0F
-        apply_logic: *nonducted_MSHP_apply_logic
-              
-      - &cooling_setpoint_offset_period_none_nonducted
-        option: Cooling Setpoint Offset Period|None
-        apply_logic: *nonducted_MSHP_apply_logic
-
-      - &heating_setpoint_no_offset_nonducted
-        option: Heating Setpoint Has Offset|No
-        apply_logic: *nonducted_MSHP_apply_logic
-
-      - &heating_setpoint_offset_magnitude_0_nonducted
-        option: Heating Setpoint Offset Magnitude|0F
-        apply_logic: *nonducted_MSHP_apply_logic
-
-      - &heating_setpoint_offset_period_none_nonducted
-        option: Heating Setpoint Offset Period|None
-        apply_logic: *nonducted_MSHP_apply_logic
-
-      - &HP_cooling_efficiency_nonducted
-        option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
-        apply_logic: *nonducted_MSHP_apply_logic
-
-      - &HP_cooling_efficiency_ducted
-        option: HVAC Cooling Efficiency|Ducted Heat Pump
-        apply_logic: *ducted_ASHP_apply_logic
-
-        ### -- Apply 100% conditioned to all dwellings -- ###
-      - &100_percent_conditioned
-        option: HVAC Cooling Partial Space Conditioning|100% Conditioned
-        apply_logic: &yes_and_no_has_ducts_apply_logic
-          - or:
-            - HVAC Has Ducts|Yes
-            - HVAC Has Ducts|No 
-
-  - upgrade_name: High efficiency cold-climate heat pump with elec backup
-    
+  ### -- HVAC: Air Source Heat Pumps -- ###
+  - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data
     package_apply_logic: *remove_high_rise_shared
     options:
-        ### -- High efficiency CC ASHP applies to all dwellings with ducts
-      - &ducted_ASHP_HighEfficiencyCC_elec_backup
-        option: HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load
-        apply_logic: *ducted_ASHP_apply_logic
-        costs: &costs_ashp_ducted_SEER_20_11_HSPF
-        #### costs not accurate or final, need to adjust inflation and re-calculate regressions - PRW 1/2/2024 ####
-        # Source: Custom regression by Brennan Less. Ducted heat pump project costs were regressed on nameplate tons and HSPF,
-        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
-        # Ducted ASHP regression n=317. Implicitly includes electrical upgrades and electric backup.
-          - value: 10229.58 # for HSPF 11
-            multiplier: Fixed (1)
-          - value: 167.64
-            multiplier: Size, Heating System Primary (kBtu/h)
-        lifetime: *lifetime_ducted_ASHP
+      - option: HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
+        apply_logic: *ducted_ashp_apply_logic
 
-      - &nonducted_MSHP_HighEfficiencyCC_elec_backup
-        option: HVAC Heating Efficiency|MSHP, SEER 20, 11 HSPF, CCHP, Max Load
-        apply_logic: *nonducted_MSHP_apply_logic 
-        costs: &costs_mshp_ductless_SEER_20_11_HSPF
-        #### costs not accurate or final, need to adjust inflation and re-calculate regressions - PRW 1/2/2024 ####
-        # Source: Custom regression by Brennan Less. Ductless heat pump project costs were regressed on nameplate tons,
-        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
-        # Ductless MSHP n=173, HSPF median 11, range 9.3–14.2. Implicitly includes multiple zones and electrical upgrades.
-        # Regression results in costs that are 15–30% higher than costs from The Heat Pump Store as documented in https://redwoodenergy.net/wp-content/uploads/2021/02/Pocket-Guide-to-All-Electric-Retrofits-of-Single-Family-Homes.pdf 
-        # LBNL data were not sufficient to include a relationship between SEER or HSPF and cost, so cost deltas for higher 
-        # and lower HSPF were added using the relationship between HSPF and cost for ductless MSHPs in REMDB: 2.2% addition or subtraction per point
-        # according to how many points above or below the HSPF rating is from 10.5 (https://remdb.nrel.gov/).
-          - value: 2844.81
-            multiplier: Fixed (1)
-          - value: 369.43
-            multiplier: Size, Heating System Primary (kBtu/h)
-        lifetime: *lifetime_nonducted_MSHP
+      - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
+        apply_logic: *ducted_ashp_apply_logic
 
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - &cooling_setpoint_no_offset
-        option: Cooling Setpoint Has Offset|No
-        apply_logic: *yes_and_no_has_ducts_apply_logic
+      - *heat_pump_cooling_efficiency_ducted
 
-      - &cooling_setpoint_offset_magnitude_0
-        option: Cooling Setpoint Offset Magnitude|0F
-        apply_logic: *yes_and_no_has_ducts_apply_logic
-              
-      - &cooling_setpoint_offset_period_none
-        option: Cooling Setpoint Offset Period|None
-        apply_logic: *yes_and_no_has_ducts_apply_logic
-
-      - &heating_setpoint_no_offset
-        option: Heating Setpoint Has Offset|No
-        apply_logic: *yes_and_no_has_ducts_apply_logic
-
-      - &heating_setpoint_offset_magnitude_0
-        option: Heating Setpoint Offset Magnitude|0F
-        apply_logic: *yes_and_no_has_ducts_apply_logic
-
-      - &heating_setpoint_offset_period_none
-        option: Heating Setpoint Offset Period|None
-        apply_logic: *yes_and_no_has_ducts_apply_logic
-
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
-  - upgrade_name: Ultra high efficiency heat pump with elec backup
-    
-    package_apply_logic: *remove_high_rise_shared
-
-    options:
-        ### -- Ultra high efficiency ASHP applies to all dwellings with ducts
-      - &ducted_ASHP_UltraHighEfficiency_elec_backup
-        option: HVAC Heating Efficiency|ASHP, SEER 24, 13 HSPF, Max Load
-        apply_logic: *ducted_ASHP_apply_logic
-        costs: &costs_ashp_ducted_SEER_24_13_HSPF
-        #### costs not accurate or final, need to adjust inflation and re-calculate regressions - PRW 1/2/2024 ####
-        # Source: Custom regression by Brennan Less. Ducted heat pump project costs were regressed on nameplate tons and HSPF,
-        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
-        # Ducted ASHP regression n=317. Implicitly includes electrical upgrades and electric backup.
-          - value: 10229.58 # for HSPF 11
-            multiplier: Fixed (1)
-          - value: 167.64
-            multiplier: Size, Heating System Primary (kBtu/h)
-        lifetime: *lifetime_ducted_ASHP
-
-      - &nonducted_MSHP_UltraHighEfficiency_elec_backup
-        option: HVAC Heating Efficiency|MSHP, SEER 24, 13 HSPF, Max Load
-        apply_logic: *nonducted_MSHP_apply_logic 
-        costs: &costs_mshp_ductless_SEER_24_13_HSPF
-        #### costs not accurate or final, need to adjust inflation and re-calculate regressions - PRW 1/2/2024 ####
-        # Source: Custom regression by Brennan Less. Ductless heat pump project costs were regressed on nameplate tons,
-        # from data described in in Less et al. https://doi.org/10.20357/B7FP4D. January 2019 $ inflated to April 2023 $ using 1.21 factor.
-        # Ductless MSHP n=173, HSPF median 11, range 9.3–14.2. Implicitly includes multiple zones and electrical upgrades.
-        # Regression results in costs that are 15–30% higher than costs from The Heat Pump Store as documented in https://redwoodenergy.net/wp-content/uploads/2021/02/Pocket-Guide-to-All-Electric-Retrofits-of-Single-Family-Homes.pdf 
-        # LBNL data were not sufficient to include a relationship between SEER or HSPF and cost, so cost deltas for higher 
-        # and lower HSPF were added using the relationship between HSPF and cost for ductless MSHPs in REMDB: 2.2% addition or subtraction per point
-        # according to how many points above or below the HSPF rating is from 10.5 (https://remdb.nrel.gov/).
-          - value: 2844.81
-            multiplier: Fixed (1)
-          - value: 369.43
-            multiplier: Size, Heating System Primary (kBtu/h)
-        lifetime: *lifetime_nonducted_MSHP
-
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - *cooling_setpoint_no_offset
-      - *cooling_setpoint_offset_magnitude_0
-      - *cooling_setpoint_offset_period_none
-      - *heating_setpoint_no_offset
-      - *heating_setpoint_offset_magnitude_0
-      - *heating_setpoint_offset_period_none
-
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
-  - upgrade_name: ENERGY STAR heat pump with existing system as backup
-
-    ### no shared heating/cooling dwellings will be included in existing-system-as-backup upgrade    
-    package_apply_logic: &remove_shared_heating_cooling_no_electric_fuel
-      - not: Heating Fuel|Electricity
-      - not: Heating Fuel|Wood
-      - not: Heating Fuel|Other Fuel
-      - not: Heating Fuel|None
-      - not:
-        - or:
-          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-          - HVAC Shared Efficiencies|Fan Coil Cooling Only
-
-    options:
-        ### -- ENERGY STAR ASHP applies to all dwellings with ducts, retaining existing system as backup
-        ### -- ENERGY STAR ASHP for dwellings with ducts, but non-ducted heating systems
-      - &ducted_ASHP_ENERGYSTAR_exist_backup_nonducted
-        option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Separate Backup
-        apply_logic: &nonducted_heating_with_ducts_apply_logic
-          - HVAC Has Ducts|Yes
-          - not:
-            - or:
-              - HVAC Heating Type|Ducted Heating
-              - HVAC Heating Type|Ducted Heat Pump
-        costs: *costs_ashp_ducted_SEER_16_9-2_HSPF
-        #### costs not accurate or final, need to adjust inflation and re-calculate regressions - PRW 1/2/2024 ####
-        lifetime: *lifetime_ducted_ASHP
-
-        ### -- ENERGY STAR ASHP for dwellings with ducted heating systems
-      - &ducted_ASHP_ENERGYSTAR_exist_backup_ducted
-        option: HVAC Heating Efficiency|ASHP, SEER 16, 9.2 HSPF, Integrated Backup, 5F-40F switchover band
-        apply_logic: &ducted_heating_apply_logic
-          - HVAC Has Ducts|Yes
-          - or:
-            - HVAC Heating Type|Ducted Heating
-            - HVAC Heating Type|Ducted Heat Pump
-        costs: *costs_ashp_ducted_SEER_16_9-2_HSPF
-        #### costs not accurate or final, need to adjust inflation and re-calculate regressions - PRW 1/2/2024 ####
-        lifetime: *lifetime_ducted_ASHP
-
-        ### -- ENERGY STAR MSHP applies to all dwellings without ducts
-      - &nonducted_MSHP_ENERGYSTAR_exist_backup
-        option: HVAC Heating Efficiency|MSHP, SEER 16, 9.2 HSPF, Separate Backup, Max Load
-        apply_logic: *nonducted_MSHP_apply_logic
-        costs: *costs_mshp_nonducted_SEER_16_9-2_HSPF
-        lifetime: *lifetime_nonducted_MSHP
-
-        ### Retain the existing heating system, including its size, as backup to the new heat pump
-      - &heat_pump_backup_use_existing_system
-        option: Heat Pump Backup|Use Existing System
-
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - *cooling_setpoint_no_offset_nonducted
-      - *cooling_setpoint_offset_magnitude_0_nonducted
-      - *cooling_setpoint_offset_period_none_nonducted
-      - *heating_setpoint_no_offset_nonducted
-      - *heating_setpoint_offset_magnitude_0_nonducted
-      - *heating_setpoint_offset_period_none_nonducted
-
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
+  ### -- HVAC: Geothermal Heat Pumps -- ###
   - upgrade_name: Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
-    
-    package_apply_logic: &remove_shared_heating_cooling_ghp
-      - not: Heating Fuel|Wood
-      - not: Heating Fuel|Other Fuel
-      - not: Heating Fuel|None
-      - HVAC Has Ducts|Yes      
-      - not:
-        - or:
-          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-          - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-          - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-          - HVAC Shared Efficiencies|Fan Coil Cooling Only
-
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8
-        apply_logic: *ducted_ASHP_apply_logic
-        costs: &costs_ghp
-        #### costs not accurate or final, need to find ghp costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 999
-            multiplier: Fixed (1)
-          - value: 999
-            multiplier: Size, Heating System Primary (kBtu/h)
-        lifetime: &lifetime_ducted_ghp 15
+        apply_logic: *ducted_ashp_apply_logic
+        costs: *costs_ghp
+        lifetime: *lifetime_ducted_ghp
 
-      - *HP_cooling_efficiency_ducted
-      - &100_percent_conditioned_ducts_only
-        option: HVAC Cooling Partial Space Conditioning|100% Conditioned
-        apply_logic: &yes_has_ducts_apply_logic
-          - HVAC Has Ducts|Yes
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent_ducts_only
 
   - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
-    
-    package_apply_logic: *remove_shared_heating_cooling_ghp
-
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
     options:
-      - &dual_speed_ducted_ghp
-        option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
-        apply_logic: *ducted_ASHP_apply_logic
-        costs: *costs_ghp
-        lifetime: *lifetime_ducted_ghp
-
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned_ducts_only
+      - *dual_speed_ducted_ghp
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent_ducts_only
 
   - upgrade_name: Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
-    
-    package_apply_logic: *remove_shared_heating_cooling_ghp
-
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4
-        apply_logic: *ducted_ASHP_apply_logic
+        apply_logic: *ducted_ashp_apply_logic
         costs: *costs_ghp
         lifetime: *lifetime_ducted_ghp
 
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned_ducts_only
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent_ducts_only
 
-### -- Heat Pumps + Light Touch -- ###
-  - upgrade_name: ENERGY STAR heat pump with elec backup + Light Touch Envelope
-    package_apply_logic: *remove_high_rise_shared
-
-    options: 
-        ### -- ENERGY STAR heat pumps ###
-      - *ducted_ASHP_ENERGYSTAR_elec_backup
-      - *nonducted_MSHP_ENERGYSTAR_elec_backup
-
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - *cooling_setpoint_no_offset_nonducted
-      - *cooling_setpoint_offset_magnitude_0_nonducted
-      - *cooling_setpoint_offset_period_none_nonducted
-      - *heating_setpoint_no_offset_nonducted
-      - *heating_setpoint_offset_magnitude_0_nonducted
-      - *heating_setpoint_offset_period_none_nonducted
-
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
-      ### -- Light Touch Envelope -- ###  
-      # Attic floor insulation up to IECC 2021 levels for homes with vented attics with R-13 or less insulation
-      - &attic_insulation_IECC_CZ1A
-        option: Insulation Ceiling|R-30
-        apply_logic:
-          - ASHRAE IECC Climate Zone 2004|1A
-          - Geometry Attic Type|Vented Attic
-          - or:
-            - Insulation Ceiling|Uninsulated
-            - Insulation Ceiling|R-7
-            - Insulation Ceiling|R-13
-            - Insulation Ceiling|R-19
-        costs:
-        #### costs not accurate or final, need to check REMdb costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 0.0482 # $/(ft^2 * Delta R-value), from original REMDB xlsx for blown cellulose (0.0154+0.019)
-                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.0344 https://www.bls.gov/data/inflation_calculator.htm
-            multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
-          - value: 0.2163 # $/(ft^2), from original REMDB xlsx for blown cellulose (0.1505+0.004)
-                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.1545
-            multiplier: Floor Area, Attic (ft^2)
-        lifetime: 60 # years effective useful life for opaque envelope components, from https://www.nyserda.ny.gov/-/media/Files/Programs/energy-code-training/Residential-Cost-Analysis-Report.pdf 
-      - &attic_insulation_IECC_CZ2A-2B-3A-3B-3C
-        option: Insulation Ceiling|R-49
-        apply_logic:
-          - or:
-            - ASHRAE IECC Climate Zone 2004|2A
-            - ASHRAE IECC Climate Zone 2004|2B
-            - ASHRAE IECC Climate Zone 2004|3A
-            - ASHRAE IECC Climate Zone 2004|3B
-            - ASHRAE IECC Climate Zone 2004|3C
-          - Geometry Attic Type|Vented Attic
-          - or:
-            - Insulation Ceiling|Uninsulated
-            - Insulation Ceiling|R-7
-            - Insulation Ceiling|R-13
-            - Insulation Ceiling|R-19
-            - Insulation Ceiling|R-30
-            - Insulation Ceiling|R-38
-        costs:
-        #### costs not accurate or final, need to check REMdb costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 0.0482 # $/(ft^2 * Delta R-value), from original REMDB xlsx for blown cellulose (0.0154+0.019)
-                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.0344 https://www.bls.gov/data/inflation_calculator.htm
-            multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
-          - value: 0.2163 # $/(ft^2), from original REMDB xlsx for blown cellulose (0.1505+0.004)
-                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.1545
-            multiplier: Floor Area, Attic (ft^2)
-        lifetime: 60 # years effective useful life for opaque envelope components, from https://www.nyserda.ny.gov/-/media/Files/Programs/energy-code-training/Residential-Cost-Analysis-Report.pdf
-      - &attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
-        option: Insulation Ceiling|R-60
-        apply_logic:
-          - or:
-            - ASHRAE IECC Climate Zone 2004|4A
-            - ASHRAE IECC Climate Zone 2004|4B
-            - ASHRAE IECC Climate Zone 2004|4C
-            - ASHRAE IECC Climate Zone 2004|5A
-            - ASHRAE IECC Climate Zone 2004|5B
-            - ASHRAE IECC Climate Zone 2004|6A
-            - ASHRAE IECC Climate Zone 2004|6B
-            - ASHRAE IECC Climate Zone 2004|7A
-            - ASHRAE IECC Climate Zone 2004|7B
-          - Geometry Attic Type|Vented Attic
-          - or:
-            - Insulation Ceiling|Uninsulated
-            - Insulation Ceiling|R-7
-            - Insulation Ceiling|R-13
-            - Insulation Ceiling|R-19
-            - Insulation Ceiling|R-30
-            - Insulation Ceiling|R-38
-            - Insulation Ceiling|R-49
-        costs:
-        #### costs not accurate or final, need to check REMdb costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 0.0482 # $/(ft^2 * Delta R-value), from original REMDB xlsx for blown cellulose (0.0154+0.019)
-                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.0344 https://www.bls.gov/data/inflation_calculator.htm
-            multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
-          - value: 0.2163 # $/(ft^2), from original REMDB xlsx for blown cellulose (0.1505+0.004)
-                          # apply inflation factor 1.4 (Jan 2010 to Apr 2023) to 0.1545
-            multiplier: Floor Area, Attic (ft^2)
-        lifetime: 60 # years effective useful life for opaque envelope components, from https://www.nyserda.ny.gov/-/media/Files/Programs/energy-code-training/Residential-Cost-Analysis-Report.pdf
-      #General air sealing - 30% total reduction in ACH50 for homes with greater than 10 ACH50
-      #30% is consistent with median reduction documented in https://doi.org/10.20357/B7FP4D 
-      - &infiltration_30pct_reduction
-        option: Infiltration Reduction|30%
-        apply_logic:
-          - or:
-            - Infiltration|50 ACH50
-            - Infiltration|40 ACH50
-            - Infiltration|30 ACH50
-            - Infiltration|25 ACH50
-            - Infiltration|20 ACH50
-            - Infiltration|18.5 ACH50
-            - Infiltration|15 ACH50
-            - Infiltration|11.25 ACH50
-        costs:
-        #### costs not accurate or final, need to check LBNL data costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 0.53 # from LBNL data for general air sealing (https://doi.org/10.20357/B7FP4D).
-                        # Interpolated between 20% and 40% reductions to get $0.44/ft2,
-                        # then used 1.2052 multiplier to inflate from Jan 2019 to April 2023 https://www.bls.gov/data/inflation_calculator.htm
-            multiplier: Floor Area, Conditioned (ft^2)
-        lifetime: 60 # years effective useful life for opaque envelope components, from https://www.nyserda.ny.gov/-/media/Files/Programs/energy-code-training/Residential-Cost-Analysis-Report.pdf
-
-  - upgrade_name: High efficiency cold-climate heat pump with elec backup + Light Touch Envelope
-    package_apply_logic: *remove_high_rise_shared
-
+  ### -- Envelope and Ducts -- ###
+  - upgrade_name: Air Sealing
     options:
-      - *ducted_ASHP_HighEfficiencyCC_elec_backup
-      - *nonducted_MSHP_HighEfficiencyCC_elec_backup
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - *cooling_setpoint_no_offset
-      - *cooling_setpoint_offset_magnitude_0
-      - *cooling_setpoint_offset_period_none
-      - *heating_setpoint_no_offset
-      - *heating_setpoint_offset_magnitude_0
-      - *heating_setpoint_offset_period_none
+      - *infiltration_30_percent_reduction
 
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
-        ### -- Light Touch Envelope -- ###
-      - *attic_insulation_IECC_CZ1A
-      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
-      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
-      - *infiltration_30pct_reduction
-
-  - upgrade_name: Ultra high efficiency heat pump with elec backup + Light Touch Envelope
-    package_apply_logic: *remove_high_rise_shared
-
+  - upgrade_name: Attic Floor Insulation for Unfinished Attics
     options:
-      - *ducted_ASHP_UltraHighEfficiency_elec_backup
-      - *nonducted_MSHP_UltraHighEfficiency_elec_backup
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - *cooling_setpoint_no_offset
-      - *cooling_setpoint_offset_magnitude_0
-      - *cooling_setpoint_offset_period_none
-      - *heating_setpoint_no_offset
-      - *heating_setpoint_offset_magnitude_0
-      - *heating_setpoint_offset_period_none
+    - *attic_insulation_iecc_cz1a
+    - *attic_insulation_iecc_cz2a_2b_3a_3b_3c
+    - *attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b
 
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
-        ### -- Light Touch Envelope -- ###
-      - *attic_insulation_IECC_CZ1A
-      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
-      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
-      - *infiltration_30pct_reduction
-
-  - upgrade_name: ENERGY STAR heat pump with existing system as backup + Light Touch Envelope
-
-    package_apply_logic: *remove_shared_heating_cooling_no_electric_fuel
-
-    options: 
-
-      - *ducted_ASHP_ENERGYSTAR_exist_backup_nonducted
-      - *ducted_ASHP_ENERGYSTAR_exist_backup_ducted
-      - *nonducted_MSHP_ENERGYSTAR_exist_backup
-
-      - *heat_pump_backup_use_existing_system
-  
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - *cooling_setpoint_no_offset_nonducted
-      - *cooling_setpoint_offset_magnitude_0_nonducted
-      - *cooling_setpoint_offset_period_none_nonducted
-      - *heating_setpoint_no_offset_nonducted
-      - *heating_setpoint_offset_magnitude_0_nonducted
-      - *heating_setpoint_offset_period_none_nonducted
-
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
-        ### -- Light Touch Envelope -- ###
-      - *attic_insulation_IECC_CZ1A
-      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
-      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
-      - *infiltration_30pct_reduction
-
-  - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Light Touch Envelope
-
-    package_apply_logic: *remove_shared_heating_cooling_ghp
-
+  ### -- Packages -- ###
+  - upgrade_name: Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
     options:
-      ### -- Dual-Speed Ducted ghp -- ###
+      ### -- Dual-Speed Ducted GHP -- ###
       - *dual_speed_ducted_ghp
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned_ducts_only
+      - *heat_pump_cooling_efficiency_ducted
+      - *partial_conditioning_100_percent_ducts_only
 
-        ### -- Light Touch Envelope -- ###
-      - *attic_insulation_IECC_CZ1A
-      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
-      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
-      - *infiltration_30pct_reduction
+      ### -- Attic Floor Insulation -- ###
+      - *attic_insulation_iecc_cz1a
+      - *attic_insulation_iecc_cz2a_2b_3a_3b_3c
+      - *attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b
 
-### -- Heat Pumps + Light Touch + Full Electrification -- ###
-  - upgrade_name: ENERGY STAR heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency
-    package_apply_logic: *remove_high_rise_shared
-    options: 
-        ### -- ENERGY STAR heat pumps ###
-      - *ducted_ASHP_ENERGYSTAR_elec_backup
-      - *nonducted_MSHP_ENERGYSTAR_elec_backup
+      ### -- Air Sealing -- ###
+      - *infiltration_30_percent_reduction
 
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - *cooling_setpoint_no_offset_nonducted
-      - *cooling_setpoint_offset_magnitude_0_nonducted
-      - *cooling_setpoint_offset_period_none_nonducted
-      - *heating_setpoint_no_offset_nonducted
-      - *heating_setpoint_offset_magnitude_0_nonducted
-      - *heating_setpoint_offset_period_none_nonducted
-
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
-        ### -- Light Touch Envelope -- ###
-      - *attic_insulation_IECC_CZ1A
-      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
-      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
-      - *infiltration_30pct_reduction
-
-        ### -- HPWHs for all dwellings -- ###
-      - &water_heater_fuel_type
-        option: Water Heater Fuel|Electricity
-        apply_logic:
-          - not: Water Heater Fuel|Electricity
-
-      - &water_heater_efficiency_electric_heat_pump_50_gal_3_pt_45_uef
-        option: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
-        apply_logic:
-          - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
-          - or:
-            - Bedrooms|1
-            - Bedrooms|2
-            - Bedrooms|3
-        costs:
-        #### costs not accurate or final, need to check LBNL data costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 2712.82 # Median installed cost for 50 gal heat pump water heaters in Less et al. https://doi.org/10.20357/B7FP4D, inflation adjusted with 1.21 factor
-            multiplier: Fixed (1)
-
-      - &water_heater_efficiency_electric_heat_pump_66_gal_3_pt_35_uef
-        option: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF
-        apply_logic:
-          - not: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF
-          - Bedrooms|4
-        costs:
-        #### costs not accurate or final, need to check LBNL data costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 3736.48  # Interpolated between 50 gal and 80 gal HPWH costs in Less et al. https://doi.org/10.20357/B7FP4D, inflation adjusted with 1.21 factor
-            multiplier: Fixed (1)
-
-      - &water_heater_efficiency_electric_heat_pump_80_gal_3_pt_45_uef
-        option: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF
-        apply_logic:
-          - not: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF
-          - Bedrooms|5
-        costs:
-        #### costs not accurate or final, need to check LBNL data costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 4631.88 # Median installed cost for 80 gal heat pump water heaters in Less et al. https://doi.org/10.20357/B7FP4D, inflation adjusted with 1.21 factor
-            multiplier: Fixed (1)
-
-        ### -- Applicance Electrification - Dryers, Ranges, Pool and Spa Heaters -- ##
-
-        # Comment: should we change this to heat pump dryer? -PRW 1/2/2023
-      - &energystar_electric_dryer_for_non-electric_dryer
-        option: Clothes Dryer|Electric, Premium, EnergyStar
-        apply_logic:
-          - or:
-            - Clothes Dryer|Gas
-            - Clothes Dryer|Propane
-        costs:
-        #### costs not accurate or final, need to check reports and store costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 796 # Cheaper of top-ranked electric dryer on Consumer Reports, is full-size and Energy Star rated
-                       # https://www.homedepot.com/p/LG-7-4-cu-ft-Large-Capacity-Vented-Stackable-Electric-Dryer-with-Sensor-Dry-in-White-DLE3400W/312429301
-                       # It is $650 at big box stores as of July 2023, $796 = $650 * 1.07 sales tax + $100 delivery/install
-            multiplier: Fixed (1)
-        lifetime: 13 # 13 is from REMDB https://remdb.nrel.gov/measures?group_id=4&component_type_id=374&actionId=1925&bcId=5849
-                     # 18 from IEA https://www.eia.gov/analysis/studies/buildings/equipcosts/pdf/appendix-a.pdf
-
-      - &induction_range_oven_for_non-electric_cooking 
-        option: Cooking Range|Electric Induction
-        apply_logic:
-          - or:
-            - Cooking Range|Gas
-            - Cooking Range|Propane
-        costs:
-        #### costs not accurate or final, need to check ikea costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 1598 # Ikea Tvarsaker, which is one of the more affordable options towards the top of the Consumer Review recommended list for electric oven with induction cooktop (7/10/23), 
-                        # and same manufacturer as Wirecutter's most affordable induction cooktop (they don't seem to have combos) (7/7/23) - 
-                        # https://www.ikea.com/us/en/p/tvaersaeker-range-with-induction-cooktop-stainless-steel-40466006/
-                        # It is $1400 as of July 2023, $1596 = $1400 * 1.07 sales tax + $100 delivery/install
-            multiplier: Fixed (1)
-        lifetime: 13 # from REMDB https://remdb.nrel.gov/measures?group_id=4&component_type_id=279&actionId=2204&bcId=6961
-                     # 17 from IEA https://www.eia.gov/analysis/studies/buildings/equipcosts/pdf/appendix-a.pdf
-
-      - &electric_pool_heaters 
-        option: Misc Pool Heater|Electricity
-        apply_logic:
-          - Misc Pool Heater|Natural Gas
-        costs:
-        #### costs not accurate or final, need to check Leslie's costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 4590 # https://lesliespool.com/jacuzzi-127000-btu-pro-grade-electric-pool-heat-pump/85451.html
-                        # installation $310 - varies on state and zip code between 228 and 400 USD
-                        # tax 7%
-            multiplier: Fixed (1)
-        lifetime: 15
-
-      - &electric_spa_heaters 
-        option: Misc Hot Tub Spa|Electricity
-        apply_logic:
-          - Misc Hot Tub Spa|Natural Gas
-        costs:
-        #### costs not accurate or final, need to check Leslie's costs + adjust to inflation - PRW 1/2/2024 ####
-          - value: 2760 # https://lesliespool.com/raypak-model-0018-e3t-electric-3-series-titanium-pool-spa-heater---18kw---61419-btu-hr/382735.html
-                        # installation $310 - varies on state and zip code between 228 and 400 USD
-                        # tax 7%
-            multiplier: Fixed (1)
-        lifetime: 15
-
-  - upgrade_name: High efficiency cold-climate heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency
-    package_apply_logic: *remove_high_rise_shared
-
+  ### -- Electric Vehicles -- ###
+  - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
+    package_apply_logic:
+      - Electric Vehicle Ownership|No
+      - *occupied_only
     options:
-      - *ducted_ASHP_HighEfficiencyCC_elec_backup
-      - *nonducted_MSHP_HighEfficiencyCC_elec_backup
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - *cooling_setpoint_no_offset
-      - *cooling_setpoint_offset_magnitude_0
-      - *cooling_setpoint_offset_period_none
-      - *heating_setpoint_no_offset
-      - *heating_setpoint_offset_magnitude_0
-      - *heating_setpoint_offset_period_none
+      - *ev_ownership_yes
+      - option: Electric Vehicle Charger|Level 1 charger
 
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
-        ### -- Light Touch Envelope -- ###
-      - *attic_insulation_IECC_CZ1A
-      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
-      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
-      - *infiltration_30pct_reduction
-
-        ### -- HPWHs -- ###
-      - *water_heater_fuel_type
-      - *water_heater_efficiency_electric_heat_pump_50_gal_3_pt_45_uef
-      - *water_heater_efficiency_electric_heat_pump_66_gal_3_pt_35_uef
-      - *water_heater_efficiency_electric_heat_pump_80_gal_3_pt_45_uef
-
-        ### -- Full Electrification -- ###
-      - *energystar_electric_dryer_for_non-electric_dryer
-      - *induction_range_oven_for_non-electric_cooking
-      - *electric_pool_heaters
-      - *electric_spa_heaters
-
-  - upgrade_name: Ultra high efficiency heat pump with elec backup + Light Touch Envelope + Full Appliance Electrification with Efficiency
-    package_apply_logic: *remove_high_rise_shared    
-
+  - upgrade_name: Electric Vehicle Adoption with Level 2 Charging
+    package_apply_logic: *occupied_only
     options:
-      - *ducted_ASHP_UltraHighEfficiency_elec_backup
-      - *nonducted_MSHP_UltraHighEfficiency_elec_backup
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###
-      - *cooling_setpoint_no_offset
-      - *cooling_setpoint_offset_magnitude_0
-      - *cooling_setpoint_offset_period_none
-      - *heating_setpoint_no_offset
-      - *heating_setpoint_offset_magnitude_0
-      - *heating_setpoint_offset_period_none
+      - *ev_ownership_yes
+      - *ev_l2_charger
 
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
-        ### -- Light Touch Envelope -- ###
-      - *attic_insulation_IECC_CZ1A
-      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
-      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
-      - *infiltration_30pct_reduction
-
-        ### -- HPWHs -- ###
-      - *water_heater_fuel_type
-      - *water_heater_efficiency_electric_heat_pump_50_gal_3_pt_45_uef
-      - *water_heater_efficiency_electric_heat_pump_66_gal_3_pt_35_uef
-      - *water_heater_efficiency_electric_heat_pump_80_gal_3_pt_45_uef
-
-        ### -- Full Electrification -- ###
-      - *energystar_electric_dryer_for_non-electric_dryer
-      - *induction_range_oven_for_non-electric_cooking
-      - *electric_pool_heaters
-      - *electric_spa_heaters
-
-  - upgrade_name: ENERGY STAR heat pump with existing system as backup + Light Touch Envelope + Full Appliance Electrification with Efficiency
-    
-    package_apply_logic: *remove_shared_heating_cooling_no_electric_fuel
-
-    options: 
-
-      - *ducted_ASHP_ENERGYSTAR_exist_backup_nonducted
-      - *ducted_ASHP_ENERGYSTAR_exist_backup_ducted
-      - *nonducted_MSHP_ENERGYSTAR_exist_backup
-
-      - *heat_pump_backup_use_existing_system
-
-        ### -- Apply no setpoint offsets to heat pumps that are variable speed -- ###      
-      - *cooling_setpoint_no_offset_nonducted
-      - *cooling_setpoint_offset_magnitude_0_nonducted
-      - *cooling_setpoint_offset_period_none_nonducted
-      - *heating_setpoint_no_offset_nonducted
-      - *heating_setpoint_offset_magnitude_0_nonducted
-      - *heating_setpoint_offset_period_none_nonducted
-
-      - *HP_cooling_efficiency_nonducted
-      - *HP_cooling_efficiency_ducted
-      - *100_percent_conditioned
-
-        ### -- Light Touch Envelope -- ###
-      - *attic_insulation_IECC_CZ1A
-      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
-      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
-      - *infiltration_30pct_reduction
-
-        ### -- HPWHs -- ###
-      - *water_heater_fuel_type
-      - *water_heater_efficiency_electric_heat_pump_50_gal_3_pt_45_uef
-      - *water_heater_efficiency_electric_heat_pump_66_gal_3_pt_35_uef
-      - *water_heater_efficiency_electric_heat_pump_80_gal_3_pt_45_uef
-
-        ### -- Full Electrification -- ###
-      - *energystar_electric_dryer_for_non-electric_dryer
-      - *induction_range_oven_for_non-electric_cooking
-      - *electric_pool_heaters
-      - *electric_spa_heaters
-
-  - upgrade_name: Envelope Only - Light Touch Envelope
+  - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging
+    package_apply_logic: *occupied_only
     options:
-        ### -- Light Touch Envelope -- ###
-      - *attic_insulation_IECC_CZ1A
-      - *attic_insulation_IECC_CZ2A-2B-3A-3B-3C
-      - *attic_insulation_IECC_CZ4A-4B-4C-5A-5B-6A-6B-7A-7B
-      - *infiltration_30pct_reduction
+      - *ev_ownership_yes
+      - *ev_l2_charger
+      - *ev_15_percent_efficiency
 
-### -- Thermostat Demand Flexibility -- ###
+  ### -- Electric Vehicles Demand Flexibility -- ###
+  - upgrade_name: Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
+    package_apply_logic: *occupied_only
+    options:
+      - *ev_ownership_yes
+      - *ev_l2_charger
+      - *demand_flexibility_electric_vehicle
+      - *demand_flexibility_30_minute_random_shift
+
+  - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
+    package_apply_logic: *occupied_only
+    options:
+      - *ev_ownership_yes
+      - *ev_l2_charger
+      - *ev_15_percent_efficiency
+      - *demand_flexibility_electric_vehicle
+      - *demand_flexibility_30_minute_random_shift
+
+  ### -- Thermostat Demand Flexibility -- ###
   - upgrade_name: HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset
-    package_apply_logic: &has_cooling_or_heating
-      - or:  # apply if there is either a cooling or a heating system
-        - not: HVAC Cooling Type|None
-        - not: HVAC Heating Type|None
+    package_apply_logic: *has_cooling_or_heating
     options:
       - option: Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset
-      - &Demand_Flexibility_30min_Random_Shift
-        option: Demand Flexibility Random Shift|30 minutes
+      - *demand_flexibility_30_minute_random_shift
 
   - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
-      - *Demand_Flexibility_30min_Random_Shift
+      - *demand_flexibility_30_minute_random_shift
 
   - upgrade_name: HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset
-      - *Demand_Flexibility_30min_Random_Shift
+      - *demand_flexibility_30_minute_random_shift
 
   - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
-      - *Demand_Flexibility_30min_Random_Shift
+      - *demand_flexibility_30_minute_random_shift
 
   - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
     package_apply_logic: *has_cooling_or_heating
     options:
       - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
-      - *Demand_Flexibility_30min_Random_Shift
-
-### -- Electric Vehicles -- ###
-  - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
-    package_apply_logic:
-      - Electric Vehicle Ownership|No
-      - &Occupied_Only
-          Vacancy Status|Occupied
-    options:
-      - &EV_Ownership_Yes
-        option: Electric Vehicle Ownership|Yes
-      - option: Electric Vehicle Charger|Level 1 charger
-
-  - upgrade_name: Electric Vehicle Adoption with Level 2 Charging
-    package_apply_logic: *Occupied_Only
-    options:
-      - *EV_Ownership_Yes
-      - &EV_L2_Charger
-        option: Electric Vehicle Charger|Level 2 charger
-
-  - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging
-    package_apply_logic: *Occupied_Only
-    options:
-      - *EV_Ownership_Yes
-      - *EV_L2_Charger
-      - &EV_15Percent_Efficiency
-        option: Electric Vehicle Efficiency Increase|15%
-
-### -- Electric Vehicles Demand Flexibility -- ###
-  - upgrade_name: Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
-    package_apply_logic: *Occupied_Only
-    options:
-      - *EV_Ownership_Yes
-      - *EV_L2_Charger
-      - &Demand_Flexibility_Electric_Vehicle
-        option: Demand Flexibility Electric Vehicle|Enabled
-      - *Demand_Flexibility_30min_Random_Shift
-
-  - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
-    package_apply_logic: *Occupied_Only
-    options:
-      - *EV_Ownership_Yes
-      - *EV_L2_Charger
-      - *EV_15Percent_Efficiency
-      - *Demand_Flexibility_Electric_Vehicle
-      - *Demand_Flexibility_30min_Random_Shift
+      - *demand_flexibility_30_minute_random_shift

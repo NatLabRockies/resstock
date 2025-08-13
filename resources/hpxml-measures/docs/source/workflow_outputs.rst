@@ -68,12 +68,11 @@ The ``in.xml`` output file will include autosized HVAC capacities as well as som
         <Units>SEER</Units>
         <Value>13.0</Value>
       </AnnualCoolingEfficiency>
-      <SensibleHeatFraction dataSource='software'>0.73</SensibleHeatFraction>
       <extension>
         <AirflowDefectRatio dataSource='software'>0.0</AirflowDefectRatio>
         <ChargeDefectRatio dataSource='software'>0.0</ChargeDefectRatio>
         <FanPowerWattsPerCFM dataSource='software'>0.375</FanPowerWattsPerCFM>
-        <CoolingAirflowCFM dataSource='software'>781.0</CoolingAirflowCFM>
+        <CoolingDesignAirflowCFM dataSource='software'>781.0</CoolingDesignAirflowCFM>
       </extension>
     </CoolingSystem>
   </HVACPlant>
@@ -730,7 +729,7 @@ Monthly results for each utility bill scenario defined in the HPXML file are lis
 Electric Panel Outputs
 ----------------------
 
-OpenStudio-HPXML can optionally generate an electric panels output file.
+OpenStudio-HPXML can optionally generate an electric panel output file.
 
 **Note**: This output file is only available when electric panel load calculation outputs are requested.
 When no load calculation types are specified, the electric panels output file is not generated.

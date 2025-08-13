@@ -28,24 +28,21 @@
     "floor_over_foundation_assembly_r": 14.15,
     "floor_over_garage_assembly_r": 0,
     "floor_type": "WoodFrame",
+    "foundation_wall_type": "solid concrete",
     "foundation_wall_thickness": 6,
     "foundation_wall_insulation_r": 0,
-    "foundation_wall_insulation_distance_to_top": 0,
-    "foundation_wall_insulation_distance_to_bottom": 0,
     "rim_joist_assembly_r": 5.01,
     "slab_perimeter_insulation_r": 0,
     "slab_perimeter_insulation_depth": 0,
     "slab_perimeter_insulation_depth": 0,
     "slab_under_insulation_r": 0,
     "slab_under_insulation_width": 0,
-    "slab_thickness": 4,
     "slab_carpet_fraction": 0,
     "slab_carpet_r": 0,
     "ceiling_assembly_r": 18.45,
     "roof_material_type": "asphalt or fiberglass shingles",
     "roof_color": "medium",
     "roof_assembly_r": 1.99,
-    "radiant_barrier_grade": 2,
     "radiant_barrier_attic_location": "none",
     "wall_type": "WoodStud",
     "wall_siding_type": "wood siding",
@@ -63,8 +60,7 @@
     "window_fraction_operable": 0,
     "window_ufactor": 1.039,
     "window_shgc": 0.67,
-    "window_interior_shading_winter": 1,
-    "window_interior_shading_summer": 1,
+    "window_interior_shading_type": "none",
     "overhangs_front_depth": 0,
     "overhangs_front_distance_to_top_of_window": 0,
     "overhangs_front_distance_to_bottom_of_window": 0,
@@ -96,13 +92,13 @@
     "cooling_system_cooling_efficiency_type": "SEER",
     "cooling_system_cooling_efficiency": 0,
     "cooling_system_fraction_cool_load_served": 0,
-    "cooling_system_cooling_compressor_type": "single stage",
+    "cooling_system_compressor_type": "single stage",
     "heat_pump_type": "none",
     "heat_pump_heating_efficiency_type": "HSPF",
     "heat_pump_heating_efficiency": 0,
     "heat_pump_cooling_efficiency_type": "SEER",
     "heat_pump_cooling_efficiency": 0,
-    "heat_pump_cooling_compressor_type": "single stage",
+    "heat_pump_compressor_type": "single stage",
     "heat_pump_fraction_heat_load_served": 0,
     "heat_pump_fraction_cool_load_served": 0,
     "heat_pump_backup_type": "none",
@@ -294,7 +290,6 @@
     "parent_hpxml": "tests/ASHRAE_Standard_140/L322XC.xml",
     "foundation_wall_insulation_r": 10.2,
     "foundation_wall_insulation_location": "interior",
-    "foundation_wall_insulation_distance_to_bottom": 7.25,
     "rim_joist_assembly_r": 13.14
   },
   "tests/ASHRAE_Standard_140/L100AL.xml": {
@@ -509,8 +504,7 @@
     "door_rvalue": 2.86,
     "window_shgc": 0.4,
     "window_ufactor": 0.35,
-    "window_interior_shading_winter": null,
-    "window_interior_shading_summer": null,
+    "window_interior_shading_type": "light curtains",
     "heating_system_type": "Furnace",
     "heating_system_fuel": "natural gas",
     "heating_system_heating_efficiency": 0.78,
@@ -526,12 +520,33 @@
     "water_heater_efficiency": 0.56,
     "water_heater_recovery_efficiency": 0.78,
     "water_heater_location": "conditioned space",
+    "hot_water_distribution_pipe_r": 0,
     "clothes_washer_present": true,
     "clothes_dryer_present": true,
+    "clothes_washer_efficiency": 1.0,
+    "clothes_washer_rated_annual_kwh": 400.0,
+    "clothes_washer_label_electric_rate": 0.12,
+    "clothes_washer_label_gas_rate": 1.09,
+    "clothes_washer_label_annual_gas_cost": 27.0,
+    "clothes_washer_label_usage": 6.0,
+    "clothes_washer_capacity": 3.0,
+    "clothes_dryer_efficiency": 3.01,
+    "clothes_dryer_drying_method": "conventional",
     "dishwasher_present": true,
+    "dishwasher_efficiency_type": "RatedAnnualkWh",
+    "dishwasher_efficiency": 467,
+    "dishwasher_label_electric_rate": 0.12,
+    "dishwasher_label_gas_rate": 1.09,
+    "dishwasher_label_annual_gas_cost": 33.12,
+    "dishwasher_label_usage": 4,
+    "dishwasher_place_setting_capacity": 12,
     "refrigerator_present": true,
+    "refrigerator_rated_annual_kwh": 673,
     "cooking_range_oven_present": true,
+    "cooking_range_oven_is_induction": false,
+    "cooking_range_oven_is_convection": false,
     "lighting_present": true,
+    "lighting_exterior_fraction_cfl": 0.1,
     "misc_plug_loads_other_annual_kwh": null,
     "misc_plug_loads_other_frac_sensible": null,
     "misc_plug_loads_other_frac_latent": null,
@@ -540,6 +555,7 @@
   },
   "tests/HERS_Hot_Water/L100AD-HW-02.xml": {
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-01.xml",
+    "refrigerator_rated_annual_kwh": 709,
     "geometry_unit_num_bedrooms": 4
   },
   "tests/HERS_Hot_Water/L100AD-HW-03.xml": {
@@ -603,282 +619,7 @@
     "parent_hpxml": "tests/HERS_Hot_Water/L100AD-HW-07.xml",
     "weather_station_epw_filepath": "USA_FL_Miami.Intl.AP.722020_TMY3.epw"
   },
-  "real_homes/house051.xml": {
-    "simulation_control_timestep": 60,
-    "site_type": "suburban",
-    "site_iecc_zone": "5B",
-    "site_state_code": "CO",
-    "weather_station_epw_filepath": "USA_CO_Denver.Intl.AP.725650_TMY3.epw",
-    "geometry_unit_type": "single-family detached",
-    "geometry_unit_num_floors_above_grade": 1,
-    "geometry_unit_cfa": 989,
-    "geometry_unit_aspect_ratio": 1.5,
-    "geometry_unit_orientation": 180,
-    "geometry_unit_num_bedrooms": 4,
-    "geometry_unit_num_bathrooms": 4,
-    "geometry_average_ceiling_height": 8,
-    "geometry_garage_width": 16,
-    "geometry_garage_depth": 20,
-    "geometry_garage_protrusion": 0,
-    "geometry_garage_position": "Right",
-    "geometry_foundation_type": "SlabOnGrade",
-    "geometry_foundation_height": 0,
-    "geometry_foundation_height_above_grade": 0,
-    "geometry_rim_joist_height": 0,
-    "geometry_attic_type": "VentedAttic",
-    "geometry_roof_type": "gable",
-    "geometry_roof_pitch": "5:12",
-    "geometry_eaves_depth": 3,
-    "neighbor_front_distance": 0,
-    "neighbor_back_distance": 0,
-    "neighbor_left_distance": 15,
-    "neighbor_right_distance": 15,
-    "floor_over_foundation_assembly_r": 0,
-    "floor_over_garage_assembly_r": 0,
-    "floor_type": "SolidConcrete",
-    "foundation_wall_thickness": 0,
-    "foundation_wall_insulation_r": 0,
-    "foundation_wall_insulation_distance_to_top": 0,
-    "foundation_wall_insulation_distance_to_bottom": 0,
-    "rim_joist_assembly_r": 0,
-    "slab_perimeter_insulation_r": 0,
-    "slab_perimeter_insulation_depth": 0,
-    "slab_perimeter_insulation_depth": 0,
-    "slab_under_insulation_r": 0,
-    "slab_under_insulation_width": 0,
-    "slab_thickness": 4,
-    "slab_carpet_fraction": 0,
-    "slab_carpet_r": 0,
-    "ceiling_assembly_r": 39.3,
-    "roof_material_type": "asphalt or fiberglass shingles",
-    "roof_color": "medium dark",
-    "roof_assembly_r": 2.3,
-    "radiant_barrier_grade": 2,
-    "radiant_barrier_attic_location": "none",
-    "wall_type": "ConcreteMasonryUnit",
-    "wall_siding_type": "stucco",
-    "wall_color": "light",
-    "wall_assembly_r": 23,
-    "window_front_wwr": 0,
-    "window_back_wwr": 0,
-    "window_left_wwr": 0,
-    "window_right_wwr": 0,
-    "window_area_front": 108,
-    "window_area_back": 108,
-    "window_area_left": 72,
-    "window_area_right": 72,
-    "window_aspect_ratio": 1.333,
-    "window_fraction_operable": 0.67,
-    "window_ufactor": 0.33,
-    "window_shgc": 0.45,
-    "window_interior_shading_winter": 0.85,
-    "window_interior_shading_summer": 0.7,
-    "overhangs_front_depth": 0,
-    "overhangs_front_distance_to_top_of_window": 0,
-    "overhangs_front_distance_to_bottom_of_window": 0,
-    "overhangs_back_depth": 0,
-    "overhangs_back_distance_to_top_of_window": 0,
-    "overhangs_back_distance_to_bottom_of_window": 0,
-    "overhangs_left_depth": 0,
-    "overhangs_left_distance_to_top_of_window": 0,
-    "overhangs_left_distance_to_bottom_of_window": 0,
-    "overhangs_right_depth": 0,
-    "overhangs_right_distance_to_top_of_window": 0,
-    "overhangs_right_distance_to_bottom_of_window": 0,
-    "skylight_area_front": 0,
-    "skylight_area_back": 0,
-    "skylight_area_left": 0,
-    "skylight_area_right": 0,
-    "skylight_ufactor": 0.33,
-    "skylight_shgc": 0.45,
-    "door_area": 40,
-    "door_rvalue": 4.4,
-    "air_leakage_units": "ACH",
-    "air_leakage_house_pressure": 50,
-    "air_leakage_value": 3,
-    "heating_system_type": "none",
-    "heating_system_fuel": "natural gas",
-    "heating_system_heating_efficiency": 0.92,
-    "heating_system_heating_capacity": 36000,
-    "heating_system_fraction_heat_load_served": 1,
-    "cooling_system_type": "none",
-    "cooling_system_cooling_efficiency_type": "SEER",
-    "cooling_system_cooling_efficiency": 13,
-    "cooling_system_cooling_compressor_type": "single stage",
-    "cooling_system_cooling_sensible_heat_fraction": 0.73,
-    "cooling_system_cooling_capacity": 24000,
-    "cooling_system_fraction_cool_load_served": 1,
-    "heat_pump_type": "air-to-air",
-    "heat_pump_heating_efficiency_type": "HSPF",
-    "heat_pump_heating_efficiency": 7.7,
-    "heat_pump_cooling_efficiency_type": "SEER",
-    "heat_pump_cooling_efficiency": 13,
-    "heat_pump_cooling_compressor_type": "single stage",
-    "heat_pump_fraction_heat_load_served": 0.75,
-    "heat_pump_fraction_cool_load_served": 1,
-    "heat_pump_heating_capacity": 30000,
-    "heat_pump_cooling_capacity": 30000,
-    "heat_pump_backup_type": "none",
-    "heat_pump_backup_fuel": "electricity",
-    "heat_pump_backup_heating_efficiency": 0,
-    "heating_system_2_type": "ElectricResistance",
-    "heating_system_2_fuel": "electricity",
-    "heating_system_2_heating_efficiency": 1,
-    "heating_system_2_fraction_heat_load_served": 0.25,
-    "hvac_control_heating_weekday_setpoint": 68,
-    "hvac_control_heating_weekend_setpoint": 68,
-    "hvac_control_cooling_weekday_setpoint": 78,
-    "hvac_control_cooling_weekend_setpoint": 78,
-    "ducts_leakage_units": "CFM25",
-    "ducts_supply_leakage_to_outside_value": 75,
-    "ducts_return_leakage_to_outside_value": 25,
-    "ducts_supply_location": "attic - vented",
-    "ducts_supply_insulation_r": 4,
-    "ducts_supply_surface_area": 150,
-    "ducts_return_location": "attic - vented",
-    "ducts_return_insulation_r": 0,
-    "ducts_return_surface_area": 50,
-    "mech_vent_fan_type": "none",
-    "mech_vent_recovery_efficiency_type": "Unadjusted",
-    "mech_vent_total_recovery_efficiency": 0,
-    "mech_vent_sensible_recovery_efficiency": 0,
-    "mech_vent_num_units_served": 0,
-    "mech_vent_2_fan_type": "none",
-    "mech_vent_2_flow_rate": 0,
-    "mech_vent_2_hours_in_operation": 0,
-    "mech_vent_2_recovery_efficiency_type": "Unadjusted",
-    "mech_vent_2_total_recovery_efficiency": 0,
-    "mech_vent_2_sensible_recovery_efficiency": 0,
-    "mech_vent_2_fan_power": 0,
-    "kitchen_fans_quantity": 0,
-    "bathroom_fans_quantity": 0,
-    "whole_house_fan_present": false,
-    "water_heater_type": "storage water heater",
-    "water_heater_fuel_type": "electricity",
-    "water_heater_location": "conditioned space",
-    "water_heater_tank_volume": 40,
-    "water_heater_efficiency_type": "EnergyFactor",
-    "water_heater_efficiency": 0.95,
-    "water_heater_heating_capacity": 18767,
-    "water_heater_jacket_rvalue": 0,
-    "water_heater_setpoint_temperature": 125,
-    "water_heater_num_bedrooms_served": 3,
-    "hot_water_distribution_system_type": "Standard",
-    "hot_water_distribution_standard_piping_length": 50,
-    "hot_water_distribution_pipe_r": 0,
-    "dwhr_facilities_connected": "none",
-    "water_fixtures_shower_low_flow": true,
-    "water_fixtures_sink_low_flow": false,
-    "solar_thermal_system_type": "none",
-    "solar_thermal_collector_area": 0,
-    "solar_thermal_collector_loop_type": "liquid indirect",
-    "solar_thermal_collector_type": "single glazing black",
-    "solar_thermal_collector_azimuth": 0,
-    "solar_thermal_collector_tilt": 0,
-    "solar_thermal_collector_rated_optical_efficiency": 0,
-    "solar_thermal_collector_rated_thermal_losses": 0,
-    "solar_thermal_solar_fraction": 0,
-    "pv_system_present": false,
-    "pv_system_array_azimuth": 0,
-    "pv_system_array_tilt": 0,
-    "pv_system_max_power_output": 0,
-    "pv_system_2_present": false,
-    "pv_system_2_array_azimuth": 0,
-    "pv_system_2_array_tilt": 0,
-    "pv_system_2_max_power_output": 0,
-    "battery_present": true,
-    "lighting_present": true,
-    "lighting_interior_fraction_cfl": 0,
-    "lighting_interior_fraction_lfl": 0,
-    "lighting_interior_fraction_led": 1,
-    "lighting_exterior_fraction_cfl": 0,
-    "lighting_exterior_fraction_lfl": 0,
-    "lighting_exterior_fraction_led": 1,
-    "lighting_garage_fraction_cfl": 0,
-    "lighting_garage_fraction_lfl": 0,
-    "lighting_garage_fraction_led": 1,
-    "holiday_lighting_present": false,
-    "dehumidifier_type": "none",
-    "dehumidifier_efficiency_type": "EnergyFactor",
-    "dehumidifier_efficiency": 0,
-    "dehumidifier_capacity": 0,
-    "dehumidifier_rh_setpoint": 0,
-    "dehumidifier_fraction_dehumidification_load_served": 0,
-    "clothes_washer_present": true,
-    "clothes_washer_location": "conditioned space",
-    "clothes_washer_efficiency_type": "IntegratedModifiedEnergyFactor",
-    "clothes_washer_efficiency": 1.21,
-    "clothes_washer_rated_annual_kwh": 380,
-    "clothes_washer_label_electric_rate": 0.12,
-    "clothes_washer_label_gas_rate": 1.09,
-    "clothes_washer_label_annual_gas_cost": 27,
-    "clothes_washer_label_usage": 6,
-    "clothes_washer_capacity": 3.2,
-    "clothes_dryer_present": true,
-    "clothes_dryer_location": "conditioned space",
-    "clothes_dryer_fuel_type": "electricity",
-    "clothes_dryer_efficiency_type": "CombinedEnergyFactor",
-    "clothes_dryer_efficiency": 3.73,
-    "clothes_dryer_vented_flow_rate": 150,
-    "dishwasher_present": true,
-    "dishwasher_location": "conditioned space",
-    "dishwasher_efficiency_type": "RatedAnnualkWh",
-    "dishwasher_efficiency": 307,
-    "dishwasher_label_electric_rate": 0.12,
-    "dishwasher_label_gas_rate": 1.09,
-    "dishwasher_label_annual_gas_cost": 22.32,
-    "dishwasher_label_usage": 4,
-    "dishwasher_place_setting_capacity": 12,
-    "refrigerator_present": true,
-    "refrigerator_location": "conditioned space",
-    "refrigerator_rated_annual_kwh": 650,
-    "extra_refrigerator_present": false,
-    "freezer_present": false,
-    "cooking_range_oven_present": true,
-    "cooking_range_oven_location": "conditioned space",
-    "cooking_range_oven_fuel_type": "electricity",
-    "cooking_range_oven_is_induction": false,
-    "cooking_range_oven_is_convection": false,
-    "ceiling_fan_present": true,
-    "misc_plug_loads_television_present": true,
-    "misc_plug_loads_television_annual_kwh": 620,
-    "misc_plug_loads_other_annual_kwh": 2457,
-    "misc_plug_loads_other_frac_sensible": 0.855,
-    "misc_plug_loads_other_frac_latent": 0.045,
-    "misc_plug_loads_well_pump_present": false,
-    "misc_plug_loads_vehicle_present": false,
-    "misc_fuel_loads_grill_present": true,
-    "misc_fuel_loads_grill_fuel_type": "natural gas",
-    "misc_fuel_loads_lighting_present": false,
-    "misc_fuel_loads_lighting_fuel_type": "natural gas",
-    "misc_fuel_loads_fireplace_present": true,
-    "misc_fuel_loads_fireplace_fuel_type": "natural gas",
-    "pool_present": false,
-    "pool_heater_type": "none",
-    "permanent_spa_present": false,
-    "permanent_spa_heater_type": "none",
-    "vehicle_type": "BatteryElectricVehicle",
-    "ev_charger_present": true,
-    "electric_panel_service_feeders_load_calculation_types": "2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based",
-    "electric_panel_service_voltage": "240",
-    "electric_panel_service_max_current_rating": 200,
-    "electric_panel_load_heat_pump_power_rating": 2500,
-    "electric_panel_load_heat_pump_new_load": true,
-    "electric_panel_load_heating_system_2_power_rating": 1950,
-    "electric_panel_load_heating_system_2_new_load": true,
-    "electric_panel_load_electric_water_heater_power_rating": 4500,
-    "electric_panel_load_electric_clothes_dryer_power_rating": 4500,
-    "electric_panel_load_dishwasher_power_rating": 1150,
-    "electric_panel_load_electric_cooking_range_power_rating": 12500,
-    "electric_panel_load_misc_plug_loads_vehicle_power_rating": 3300,
-    "electric_panel_load_misc_plug_loads_vehicle_voltage": "240",
-    "electric_panel_load_other_power_rating": 2500,
-    "utility_bill_scenario_names": "Bills",
-    "combine_like_surfaces": true
-  },
   "sample_files/base.xml": {
-    "simulation_control_timestep": 60,
-    "site_type": "suburban",
     "site_iecc_zone": "5B",
     "site_state_code": "CO",
     "weather_station_epw_filepath": "USA_CO_Denver.Intl.AP.725650_TMY3.epw",
@@ -909,29 +650,25 @@
     "floor_over_foundation_assembly_r": 0,
     "floor_over_garage_assembly_r": 0,
     "floor_type": "WoodFrame",
-    "foundation_wall_thickness": 8,
-    "foundation_wall_insulation_r": 8.9,
-    "foundation_wall_insulation_distance_to_top": 0,
-    "foundation_wall_insulation_distance_to_bottom": 8,
-    "rim_joist_assembly_r": 23,
+    "foundation_wall_type": "solid concrete",
+    "foundation_wall_insulation_r": 10.0,
+    "rim_joist_assembly_r": 21.8,
     "slab_perimeter_insulation_r": 0,
     "slab_perimeter_insulation_depth": 0,
     "slab_perimeter_insulation_depth": 0,
     "slab_under_insulation_r": 0,
     "slab_under_insulation_width": 0,
-    "slab_thickness": 4,
     "slab_carpet_fraction": 0,
     "slab_carpet_r": 0,
-    "ceiling_assembly_r": 39.3,
+    "ceiling_assembly_r": 39.6,
     "roof_material_type": "asphalt or fiberglass shingles",
     "roof_color": "medium",
     "roof_assembly_r": 2.3,
-    "radiant_barrier_grade": 2,
     "radiant_barrier_attic_location": "none",
     "wall_type": "WoodStud",
     "wall_siding_type": "wood siding",
     "wall_color": "medium",
-    "wall_assembly_r": 23,
+    "wall_assembly_r": 22.7,
     "window_front_wwr": 0,
     "window_back_wwr": 0,
     "window_left_wwr": 0,
@@ -942,10 +679,9 @@
     "window_area_right": 72,
     "window_aspect_ratio": 1.333,
     "window_fraction_operable": 0.67,
-    "window_ufactor": 0.33,
-    "window_shgc": 0.45,
-    "window_interior_shading_winter": 0.85,
-    "window_interior_shading_summer": 0.7,
+    "window_ufactor": 0.35,
+    "window_shgc": 0.44,
+    "window_interior_shading_type": "light curtains",
     "overhangs_front_depth": 0,
     "overhangs_front_distance_to_top_of_window": 0,
     "overhangs_front_distance_to_bottom_of_window": 0,
@@ -962,8 +698,8 @@
     "skylight_area_back": 0,
     "skylight_area_left": 0,
     "skylight_area_right": 0,
-    "skylight_ufactor": 0.33,
-    "skylight_shgc": 0.45,
+    "skylight_ufactor": 0.59,
+    "skylight_shgc": 0.55,
     "door_area": 40,
     "door_rvalue": 4.4,
     "air_leakage_units": "ACH",
@@ -972,12 +708,12 @@
     "heating_system_type": "Furnace",
     "heating_system_fuel": "natural gas",
     "heating_system_heating_efficiency": 0.92,
-    "heating_system_heating_capacity": 36000,
+    "heating_system_heating_capacity": 35000,
     "heating_system_fraction_heat_load_served": 1,
     "cooling_system_type": "central air conditioner",
     "cooling_system_cooling_efficiency_type": "SEER",
     "cooling_system_cooling_efficiency": 13,
-    "cooling_system_cooling_compressor_type": "single stage",
+    "cooling_system_compressor_type": "single stage",
     "cooling_system_cooling_capacity": 24000,
     "cooling_system_fraction_cool_load_served": 1,
     "heat_pump_type": "none",
@@ -1023,18 +759,14 @@
     "water_heater_type": "storage water heater",
     "water_heater_fuel_type": "electricity",
     "water_heater_location": "conditioned space",
-    "water_heater_tank_volume": 40,
-    "water_heater_efficiency_type": "EnergyFactor",
-    "water_heater_efficiency": 0.95,
-    "water_heater_heating_capacity": 18767,
+    "water_heater_efficiency_type": "UniformEnergyFactor",
+    "water_heater_efficiency": 0.94,
     "water_heater_jacket_rvalue": 0,
-    "water_heater_setpoint_temperature": 125,
     "water_heater_num_bedrooms_served": 3,
     "hot_water_distribution_system_type": "Standard",
-    "hot_water_distribution_standard_piping_length": 50,
     "hot_water_distribution_pipe_r": 0,
     "dwhr_facilities_connected": "none",
-    "water_fixtures_shower_low_flow": true,
+    "water_fixtures_shower_low_flow": false,
     "water_fixtures_sink_low_flow": false,
     "solar_thermal_system_type": "none",
     "solar_thermal_collector_area": 0,
@@ -1072,7 +804,6 @@
     "dehumidifier_rh_setpoint": 0,
     "dehumidifier_fraction_dehumidification_load_served": 0,
     "clothes_washer_present": true,
-    "clothes_washer_location": "conditioned space",
     "clothes_washer_efficiency_type": "IntegratedModifiedEnergyFactor",
     "clothes_washer_efficiency": 1.21,
     "clothes_washer_rated_annual_kwh": 380,
@@ -1082,13 +813,11 @@
     "clothes_washer_label_usage": 6,
     "clothes_washer_capacity": 3.2,
     "clothes_dryer_present": true,
-    "clothes_dryer_location": "conditioned space",
     "clothes_dryer_fuel_type": "electricity",
     "clothes_dryer_efficiency_type": "CombinedEnergyFactor",
     "clothes_dryer_efficiency": 3.73,
-    "clothes_dryer_vented_flow_rate": 150,
+    "clothes_dryer_drying_method": "conventional",
     "dishwasher_present": true,
-    "dishwasher_location": "conditioned space",
     "dishwasher_efficiency_type": "RatedAnnualkWh",
     "dishwasher_efficiency": 307,
     "dishwasher_label_electric_rate": 0.12,
@@ -1097,21 +826,15 @@
     "dishwasher_label_usage": 4,
     "dishwasher_place_setting_capacity": 12,
     "refrigerator_present": true,
-    "refrigerator_location": "conditioned space",
     "refrigerator_rated_annual_kwh": 650,
     "extra_refrigerator_present": false,
     "freezer_present": false,
     "cooking_range_oven_present": true,
-    "cooking_range_oven_location": "conditioned space",
     "cooking_range_oven_fuel_type": "electricity",
     "cooking_range_oven_is_induction": false,
     "cooking_range_oven_is_convection": false,
     "ceiling_fan_present": false,
     "misc_plug_loads_television_present": true,
-    "misc_plug_loads_television_annual_kwh": 620,
-    "misc_plug_loads_other_annual_kwh": 2457,
-    "misc_plug_loads_other_frac_sensible": 0.855,
-    "misc_plug_loads_other_frac_latent": 0.045,
     "misc_plug_loads_well_pump_present": false,
     "misc_plug_loads_vehicle_present": false,
     "misc_fuel_loads_grill_present": false,
@@ -1124,13 +847,14 @@
     "pool_heater_type": "none",
     "permanent_spa_present": false,
     "permanent_spa_heater_type": "none",
-    "utility_bill_scenario_names": "Bills",
+    "utility_bill_scenario_names": "Default",
     "combine_like_surfaces": true
   },
   "sample_files/base-appliances-coal.xml": {
     "parent_hpxml": "sample_files/base-appliances-gas.xml",
     "clothes_dryer_fuel_type": "coal",
-    "cooking_range_oven_fuel_type": "coal"
+    "cooking_range_oven_fuel_type": "coal",
+    "cooking_range_oven_is_induction": null
   },
   "sample_files/base-appliances-dehumidifier.xml": {
     "parent_hpxml": "sample_files/base-location-dallas-tx.xml",
@@ -1143,11 +867,13 @@
   "sample_files/base-appliances-dehumidifier-ief-portable.xml": {
     "parent_hpxml": "sample_files/base-appliances-dehumidifier.xml",
     "dehumidifier_efficiency_type": "IntegratedEnergyFactor",
-    "dehumidifier_efficiency": 1.5
+    "dehumidifier_efficiency": 1.9
   },
   "sample_files/base-appliances-dehumidifier-ief-whole-home.xml": {
     "parent_hpxml": "sample_files/base-appliances-dehumidifier-ief-portable.xml",
-    "dehumidifier_type": "whole-home"
+    "dehumidifier_type": "whole-home",
+    "dehumidifier_capacity": 60,
+    "dehumidifier_efficiency": 2.1
   },
   "sample_files/base-appliances-dehumidifier-multiple.xml": {
     "parent_hpxml": "sample_files/base-appliances-dehumidifier.xml"
@@ -1156,23 +882,26 @@
     "parent_hpxml": "sample_files/base.xml",
     "clothes_dryer_fuel_type": "natural gas",
     "clothes_dryer_efficiency": 3.3,
-    "clothes_dryer_vented_flow_rate": null,
-    "cooking_range_oven_fuel_type": "natural gas"
+    "cooking_range_oven_fuel_type": "natural gas",
+    "cooking_range_oven_is_induction": null
   },
   "sample_files/base-appliances-oil.xml": {
     "parent_hpxml": "sample_files/base-appliances-gas.xml",
     "clothes_dryer_fuel_type": "fuel oil",
-    "cooking_range_oven_fuel_type": "fuel oil"
+    "cooking_range_oven_fuel_type": "fuel oil",
+    "cooking_range_oven_is_induction": null
   },
   "sample_files/base-appliances-propane.xml": {
     "parent_hpxml": "sample_files/base-appliances-gas.xml",
     "clothes_dryer_fuel_type": "propane",
-    "cooking_range_oven_fuel_type": "propane"
+    "cooking_range_oven_fuel_type": "propane",
+    "cooking_range_oven_is_induction": null
   },
   "sample_files/base-appliances-wood.xml": {
     "parent_hpxml": "sample_files/base-appliances-gas.xml",
     "clothes_dryer_fuel_type": "wood",
-    "cooking_range_oven_fuel_type": "wood"
+    "cooking_range_oven_fuel_type": "wood",
+    "cooking_range_oven_is_induction": null
   },
   "sample_files/base-appliances-modified.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1180,7 +909,7 @@
     "clothes_washer_efficiency": 1.65,
     "clothes_dryer_efficiency_type": "EnergyFactor",
     "clothes_dryer_efficiency": 4.29,
-    "clothes_dryer_vented_flow_rate": 0,
+    "clothes_dryer_drying_method": "condensing",
     "dishwasher_efficiency_type": "EnergyFactor",
     "dishwasher_efficiency": 0.7,
     "dishwasher_place_setting_capacity": 6
@@ -1204,7 +933,7 @@
     "geometry_unit_num_floors_above_grade": 2,
     "geometry_unit_cfa": 4050,
     "geometry_attic_type": "ConditionedAttic",
-    "roof_assembly_r": 25.8,
+    "roof_assembly_r": 29.7,
     "window_area_left": 120,
     "window_area_right": 120,
     "window_aspect_ratio": 2,
@@ -1218,8 +947,8 @@
     "geometry_unit_num_floors_above_grade": 2,
     "geometry_unit_cfa": 3600,
     "geometry_attic_type": "ConditionedAttic",
-    "ducts_supply_leakage_to_outside_value": 27,
-    "ducts_return_leakage_to_outside_value": 9,
+    "ducts_supply_leakage_to_outside_value": 18,
+    "ducts_return_leakage_to_outside_value": 18,
     "ducts_supply_insulation_r": 0,
     "ducts_return_insulation_r": 0,
     "ducts_supply_location": "conditioned space",
@@ -1229,13 +958,12 @@
     "clothes_dryer_location": "basement - conditioned",
     "dishwasher_location": "basement - conditioned",
     "refrigerator_location": "basement - conditioned",
-    "cooking_range_oven_location": "basement - conditioned",
-    "misc_plug_loads_other_annual_kwh": 3276
+    "cooking_range_oven_location": "basement - conditioned"
   },
   "sample_files/base-atticroof-flat.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_attic_type": "FlatRoof",
-    "roof_assembly_r": 25.8,
+    "roof_assembly_r": 29.7,
     "ducts_supply_leakage_to_outside_value": 0,
     "ducts_return_leakage_to_outside_value": 0,
     "ducts_supply_location": "basement - conditioned",
@@ -1244,7 +972,6 @@
   "sample_files/base-atticroof-radiant-barrier.xml": {
     "parent_hpxml": "sample_files/base-location-dallas-tx.xml",
     "ceiling_assembly_r": 8.7,
-    "radiant_barrier_grade": 2,
     "radiant_barrier_attic_location": "Attic roof and gable walls"
   },
   "sample_files/base-atticroof-radiant-barrier-ceiling.xml": {
@@ -1254,7 +981,7 @@
   "sample_files/base-atticroof-unvented-insulated-roof.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "ceiling_assembly_r": 2.1,
-    "roof_assembly_r": 25.8
+    "roof_assembly_r": 29.4
   },
   "sample_files/base-atticroof-vented.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1282,28 +1009,30 @@
   },
   "sample_files/base-vehicle-ev-no-charger.xml": {
     "parent_hpxml": "sample_files/base-enclosure-garage.xml",
-    "vehicle_type": "BatteryElectricVehicle"
+    "vehicle_type": "BatteryElectricVehicle",
+    "vehicle_battery_capacity": 100,
+    "vehicle_battery_usable_capacity": 80,
+    "vehicle_fuel_economy_combined": 0.25,
+    "vehicle_fuel_economy_units": "kWh/mile"
   },
   "sample_files/base-ev-charger.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "ev_charger_present": true
+    "ev_charger_present": true,
+    "ev_charger_level": 2,
+    "ev_charger_power": 7000
   },
   "sample_files/base-vehicle-ev-charger.xml": {
     "parent_hpxml": "sample_files/base-vehicle-ev-no-charger.xml",
-    "vehicle_battery_capacity": 100,
-    "vehicle_battery_usable_capacity": 80,
-    "vehicle_miles_driven_per_year": 10000,
-    "vehicle_hours_driven_per_week": 14,
-    "vehicle_fuel_economy_combined": 0.25,
-    "vehicle_fuel_economy_units": "kWh/mile",
-    "vehicle_fraction_charged_home": 0.75,
     "ev_charger_present": true,
-    "ev_charger_power": 7000
+    "ev_charger_level": 2,
+    "ev_charger_power": 7000,
+    "vehicle_fraction_charged_home": 0.75
   },
   "sample_files/base-vehicle-ev-charger-level1.xml": {
     "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml",
     "ev_charger_level": 1,
-    "ev_charger_power": null
+    "ev_charger_power": 1600,
+    "vehicle_fraction_charged_home": 0.7
   },
   "sample_files/base-vehicle-ev-charger-miles-per-kwh.xml": {
     "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml",
@@ -1321,6 +1050,9 @@
   },
   "sample_files/base-vehicle-ev-charger-undercharged.xml": {
     "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml",
+    "vehicle_battery_capacity": null,
+    "vehicle_battery_usable_capacity": 53.503,
+    "vehicle_fuel_economy_combined": 0.267513,
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/vehicle-ev-undercharged.csv"
   },
   "sample_files/base-vehicle-ev-charger-plug-load-ev.xml": {
@@ -1333,12 +1065,20 @@
   },
   "sample_files/base-vehicle-ev-charger-occupancy-stochastic.xml": {
     "parent_hpxml": "sample_files/base-vehicle-ev-charger.xml",
+    "vehicle_hours_driven_per_week": 14,
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-ev-charger.csv"
   },
   "sample_files/base-pv-battery-and-vehicle-ev.xml": {
     "parent_hpxml": "sample_files/base-pv-battery.xml",
     "vehicle_type": "BatteryElectricVehicle",
+    "vehicle_battery_capacity": 100,
+    "vehicle_battery_usable_capacity": 80,
+    "vehicle_fuel_economy_combined": 0.25,
+    "vehicle_fuel_economy_units": "kWh/mile",
+    "vehicle_fraction_charged_home": 0.75,
     "ev_charger_present": true,
+    "ev_charger_level": 2,
+    "ev_charger_power": 7000,
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/vehicle-ev.csv"
   },
   "sample_files/base-bldgtype-sfa-unit.xml": {
@@ -1357,8 +1097,7 @@
     "window_area_left": 0,
     "window_area_right": 0,
     "air_leakage_type": "unit exterior only",
-    "heating_system_heating_capacity": 24000,
-    "misc_plug_loads_other_annual_kwh": 1638,
+    "heating_system_heating_capacity": 25000,
     "ducts_supply_leakage_to_outside_value": 54.0,
     "ducts_return_leakage_to_outside_value": 18.0
   },
@@ -1366,9 +1105,8 @@
     "parent_hpxml": "sample_files/base-bldgtype-sfa-unit.xml",
     "geometry_unit_num_floors_above_grade": 2,
     "geometry_unit_cfa": 2700,
-    "heating_system_heating_capacity": 48000,
+    "heating_system_heating_capacity": 50000,
     "cooling_system_cooling_capacity": 36000,
-    "misc_plug_loads_other_annual_kwh": 2457,
     "ducts_supply_leakage_to_outside_value": 81.0,
     "ducts_return_leakage_to_outside_value": 27.0
   },
@@ -1378,7 +1116,8 @@
     "ducts_supply_leakage_to_outside_value": 0,
     "ducts_return_leakage_to_outside_value": 0,
     "ducts_supply_location": "conditioned space",
-    "ducts_return_location": "conditioned space"
+    "ducts_return_location": "conditioned space",
+    "roof_assembly_r": 3.7
   },
   "sample_files/base-bldgtype-sfa-unit-infil-compartmentalization-test.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-sfa-unit.xml",
@@ -1405,15 +1144,14 @@
     "window_area_right": 0,
     "door_area": 20,
     "air_leakage_type": "unit exterior only",
-    "heating_system_heating_capacity": 12000,
+    "heating_system_heating_capacity": 10000,
     "cooling_system_cooling_capacity": 12000,
     "ducts_supply_leakage_to_outside_value": 0,
     "ducts_return_leakage_to_outside_value": 0,
     "ducts_supply_location": "conditioned space",
     "ducts_supply_insulation_r": 0,
     "ducts_return_location": "conditioned space",
-    "ducts_return_insulation_r": 0,
-    "misc_plug_loads_other_annual_kwh": 819
+    "ducts_return_insulation_r": 0
   },
   "sample_files/base-bldgtype-mf-unit-adjacent-to-multifamily-buffer-space.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml"
@@ -1423,7 +1161,7 @@
   },
   "sample_files/base-bldgtype-mf-unit-adjacent-to-non-freezing-space.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
-    "heating_system_heating_capacity": 18000,
+    "heating_system_heating_capacity": 20000,
     "cooling_system_cooling_capacity": 18000
   },
   "sample_files/base-bldgtype-mf-unit-adjacent-to-other-heated-space.xml": {
@@ -1440,7 +1178,7 @@
   "sample_files/base-bldgtype-mf-unit-adjacent-to-other-housing-unit-basement.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
     "geometry_foundation_type": "UnconditionedBasement",
-    "floor_over_foundation_assembly_r": 18.7
+    "floor_over_foundation_assembly_r": 19.4
   },
   "sample_files/base-bldgtype-mf-unit-infil-compartmentalization-test.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
@@ -1550,7 +1288,7 @@
     "cooling_system_cooling_efficiency": 0,
     "cooling_system_fraction_cool_load_served": 0,
     "heat_pump_type": "ground-to-air",
-    "heat_pump_cooling_compressor_type": "single stage",
+    "heat_pump_compressor_type": "single stage",
     "heat_pump_heating_efficiency_type": "COP",
     "heat_pump_heating_efficiency": 3.6,
     "heat_pump_cooling_efficiency_type": "EER",
@@ -1572,8 +1310,6 @@
     "mech_vent_fan_type": "supply only",
     "mech_vent_flow_rate": 800,
     "mech_vent_hours_in_operation": 24,
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
     "mech_vent_fan_power": 240,
     "mech_vent_num_units_served": 10,
     "mech_vent_shared_frac_recirculation": 0.5,
@@ -1621,18 +1357,15 @@
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
     "water_heater_fuel_type": "natural gas",
     "water_heater_tank_volume": 120,
-    "water_heater_efficiency": 0.59,
-    "water_heater_recovery_efficiency": 0.76,
-    "water_heater_heating_capacity": 40000,
+    "water_heater_efficiency": 0.60,
     "water_heater_num_bedrooms_served": 18
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater-heat-pump.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit.xml",
     "water_heater_type": "heat pump water heater",
     "water_heater_tank_volume": 120,
-    "water_heater_efficiency": 2.3,
-    "water_heater_num_bedrooms_served": 18,
-    "water_heater_heating_capacity": null
+    "water_heater_efficiency": 3.5,
+    "water_heater_num_bedrooms_served": 18
   },
   "sample_files/base-bldgtype-mf-unit-shared-water-heater-recirc.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-unit-shared-water-heater.xml"
@@ -1672,7 +1405,7 @@
   "sample_files/base-dhw-desuperheater-tankless.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
     "water_heater_type": "instantaneous water heater",
-    "water_heater_efficiency": 0.99,
+    "water_heater_efficiency": 0.98,
     "water_heater_uses_desuperheater": true
   },
   "sample_files/base-dhw-desuperheater-var-speed.xml": {
@@ -1687,12 +1420,10 @@
   },
   "sample_files/base-dhw-indirect.xml": {
     "parent_hpxml": "sample_files/base-hvac-boiler-gas-only.xml",
-    "water_heater_type": "space-heating boiler with storage tank",
-    "water_heater_tank_volume": 50
+    "water_heater_type": "space-heating boiler with storage tank"
   },
   "sample_files/base-dhw-indirect-detailed-setpoints.xml": {
     "parent_hpxml": "sample_files/base-dhw-indirect.xml",
-    "water_heater_setpoint_temperature": null,
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/water-heater-setpoints.csv"
   },
   "sample_files/base-dhw-indirect-dse.xml": {
@@ -1729,6 +1460,7 @@
   },
   "sample_files/base-dhw-low-flow-fixtures.xml": {
     "parent_hpxml": "sample_files/base.xml",
+    "water_fixtures_shower_low_flow": true,
     "water_fixtures_sink_low_flow": true
   },
   "sample_files/base-dhw-multiple.xml": {
@@ -1756,17 +1488,17 @@
     "parent_hpxml": "sample_files/base.xml",
     "hot_water_distribution_system_type": "Recirculation",
     "hot_water_distribution_recirc_control_type": "no control",
-    "hot_water_distribution_recirc_piping_length": 50,
-    "hot_water_distribution_recirc_branch_piping_length": 50,
-    "hot_water_distribution_recirc_pump_power": 50
+    "hot_water_distribution_pipe_r": 3
   },
   "sample_files/base-dhw-recirc-temperature.xml": {
     "parent_hpxml": "sample_files/base-dhw-recirc-nocontrol.xml",
-    "hot_water_distribution_recirc_control_type": "temperature"
+    "hot_water_distribution_recirc_control_type": "temperature",
+    "hot_water_distribution_pipe_r": 3
   },
   "sample_files/base-dhw-recirc-timer.xml": {
     "parent_hpxml": "sample_files/base-dhw-recirc-nocontrol.xml",
-    "hot_water_distribution_recirc_control_type": "timer"
+    "hot_water_distribution_recirc_control_type": "timer",
+    "hot_water_distribution_pipe_r": 3
   },
   "sample_files/base-dhw-solar-direct-evacuated-tube.xml": {
     "parent_hpxml": "sample_files/base-dhw-solar-indirect-flat-plate.xml",
@@ -1809,35 +1541,28 @@
   },
   "sample_files/base-dhw-tank-detailed-setpoints.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "water_heater_setpoint_temperature": null,
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/water-heater-setpoints.csv"
   },
-  "sample_files/base-dhw-tank-elec-uef.xml": {
+  "sample_files/base-dhw-tank-elec-ef.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "water_heater_tank_volume": 30,
-    "water_heater_efficiency_type": "UniformEnergyFactor",
-    "water_heater_efficiency": 0.93,
-    "water_heater_usage_bin": "low",
-    "water_heater_heating_capacity": 15354
+    "water_heater_tank_volume": 40,
+    "water_heater_efficiency_type": "EnergyFactor",
+    "water_heater_efficiency": 0.93
   },
   "sample_files/base-dhw-tank-gas.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "water_heater_fuel_type": "natural gas",
-    "water_heater_tank_volume": 50,
-    "water_heater_efficiency": 0.59,
-    "water_heater_recovery_efficiency": 0.76,
-    "water_heater_heating_capacity": 40000
+    "water_heater_efficiency": 0.60
   },
-  "sample_files/base-dhw-tank-gas-uef.xml": {
+  "sample_files/base-dhw-tank-gas-ef.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-gas.xml",
-    "water_heater_tank_volume": 30,
-    "water_heater_efficiency_type": "UniformEnergyFactor",
-    "water_heater_usage_bin": "medium",
-    "water_heater_recovery_efficiency": 0.75,
-    "water_heater_heating_capacity": 30000
+    "water_heater_tank_volume": 50,
+    "water_heater_efficiency_type": "EnergyFactor",
+    "water_heater_efficiency": 0.59,
+    "water_heater_recovery_efficiency": 0.76
   },
-  "sample_files/base-dhw-tank-gas-uef-fhr.xml": {
-    "parent_hpxml": "sample_files/base-dhw-tank-gas-uef.xml"
+  "sample_files/base-dhw-tank-gas-fhr.xml": {
+    "parent_hpxml": "sample_files/base-dhw-tank-gas.xml"
   },
   "sample_files/base-dhw-tank-gas-outside.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-gas.xml",
@@ -1846,9 +1571,7 @@
   "sample_files/base-dhw-tank-heat-pump.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "water_heater_type": "heat pump water heater",
-    "water_heater_tank_volume": 80,
-    "water_heater_efficiency": 2.3,
-    "water_heater_heating_capacity": null
+    "water_heater_efficiency": 3.5
   },
   "sample_files/base-dhw-tank-heat-pump-capacities.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml",
@@ -1860,12 +1583,11 @@
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml",
     "water_heater_location": "other exterior"
   },
-  "sample_files/base-dhw-tank-heat-pump-uef.xml": {
+  "sample_files/base-dhw-tank-heat-pump-ef.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml",
-    "water_heater_tank_volume": 50,
-    "water_heater_efficiency_type": "UniformEnergyFactor",
-    "water_heater_efficiency": 3.75,
-    "water_heater_usage_bin": "medium"
+    "water_heater_efficiency_type": "EnergyFactor",
+    "water_heater_efficiency": 3.1,
+    "water_heater_tank_volume": 80
   },
   "sample_files/base-dhw-tank-heat-pump-with-solar.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-heat-pump.xml",
@@ -1883,12 +1605,11 @@
     "solar_thermal_solar_fraction": 0.65
   },
   "sample_files/base-dhw-tank-heat-pump-operating-mode-heat-pump-only.xml": {
-    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump-uef.xml",
+    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump-ef.xml",
     "water_heater_operating_mode": "heat pump only"
   },
   "sample_files/base-dhw-tank-heat-pump-detailed-schedules.xml": {
-    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump-uef.xml",
-    "water_heater_setpoint_temperature": null,
+    "parent_hpxml": "sample_files/base-dhw-tank-heat-pump-ef.xml",
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/water-heater-setpoints.csv, ../../HPXMLtoOpenStudio/resources/schedule_files/water-heater-operating-modes.csv"
   },
   "sample_files/base-dhw-tank-model-type-stratified.xml": {
@@ -1901,7 +1622,8 @@
   },
   "sample_files/base-dhw-tank-oil.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-gas.xml",
-    "water_heater_fuel_type": "fuel oil"
+    "water_heater_fuel_type": "fuel oil",
+    "water_heater_efficiency": 0.61
   },
   "sample_files/base-dhw-tank-wood.xml": {
     "parent_hpxml": "sample_files/base-dhw-tank-gas.xml",
@@ -1910,16 +1632,16 @@
   "sample_files/base-dhw-tankless-electric.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "water_heater_type": "instantaneous water heater",
-    "water_heater_efficiency": 0.99
+    "water_heater_efficiency": 0.98
   },
   "sample_files/base-dhw-tankless-electric-outside.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-electric.xml",
     "water_heater_location": "other exterior"
   },
-  "sample_files/base-dhw-tankless-electric-uef.xml": {
+  "sample_files/base-dhw-tankless-electric-ef.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-electric.xml",
-    "water_heater_efficiency_type": "UniformEnergyFactor",
-    "water_heater_efficiency": 0.98
+    "water_heater_efficiency_type": "EnergyFactor",
+    "water_heater_efficiency": 0.96
   },
   "sample_files/base-dhw-tankless-gas.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -1927,10 +1649,10 @@
     "water_heater_fuel_type": "natural gas",
     "water_heater_efficiency": 0.82
   },
-  "sample_files/base-dhw-tankless-gas-uef.xml": {
+  "sample_files/base-dhw-tankless-gas-ef.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-gas.xml",
-    "water_heater_efficiency_type": "UniformEnergyFactor",
-    "water_heater_efficiency": 0.93
+    "water_heater_efficiency_type": "EnergyFactor",
+    "water_heater_efficiency": 0.95
   },
   "sample_files/base-dhw-tankless-gas-with-solar.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-gas.xml",
@@ -1953,20 +1675,28 @@
   },
   "sample_files/base-dhw-tankless-detailed-setpoints.xml": {
     "parent_hpxml": "sample_files/base-dhw-tankless-gas.xml",
-    "water_heater_setpoint_temperature": null,
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/water-heater-setpoints.csv"
+  },
+  "sample_files/base-dhw-setpoint-temperature.xml": {
+    "parent_hpxml": "sample_files/base.xml",
+    "water_heater_setpoint_temperature": 135.0
   },
   "sample_files/base-detailed-electric-panel.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_cfa": 1228,
-    "heating_system_heating_capacity": 52280,
-    "cooling_system_cooling_capacity": 14760,
+    "heating_system_heating_capacity": 50000,
+    "cooling_system_cooling_capacity": 18000,
     "water_heater_fuel_type": "natural gas",
+    "water_heater_efficiency": 0.64,
     "cooking_range_oven_fuel_type": "natural gas",
+    "cooking_range_oven_is_induction": null,
     "clothes_dryer_fuel_type": "natural gas",
+    "clothes_dryer_efficiency": 3.3,
     "dishwasher_present": false,
-    "kitchen_fans_quantity": 1,
-    "bathroom_fans_quantity": 2,
+    "ducts_supply_leakage_to_outside_value": 36.84,
+    "ducts_return_leakage_to_outside_value": 12.28,
+    "kitchen_fans_quantity": null,
+    "bathroom_fans_quantity": null,
     "electric_panel_service_feeders_load_calculation_types": "2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based",
     "electric_panel_baseline_peak_power": 4500,
     "electric_panel_service_voltage": "240",
@@ -1986,43 +1716,37 @@
     "window_area_back": 216,
     "window_area_left": 144,
     "window_area_right": 144,
-    "heating_system_heating_capacity": 48000,
+    "heating_system_heating_capacity": 50000,
     "cooling_system_cooling_capacity": 36000,
     "ducts_supply_leakage_to_outside_value": 121.5,
-    "ducts_return_leakage_to_outside_value": 40.5,
-    "misc_plug_loads_other_annual_kwh": 3685.5
+    "ducts_return_leakage_to_outside_value": 40.5
   },
   "sample_files/base-enclosure-2stories-garage.xml": {
     "parent_hpxml": "sample_files/base-enclosure-2stories.xml",
     "geometry_unit_cfa": 3250,
-    "geometry_garage_width": 20,
-    "floor_over_garage_assembly_r": 39.3,
-    "misc_plug_loads_other_annual_kwh": 2957.5,
+    "geometry_garage_width": 21,
+    "floor_over_garage_assembly_r": 35.1,
     "ducts_supply_leakage_to_outside_value": 97.5,
     "ducts_return_leakage_to_outside_value": 32.5
   },
   "sample_files/base-enclosure-beds-1.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_num_bedrooms": 1,
-    "geometry_unit_num_bathrooms": 1,
-    "misc_plug_loads_television_annual_kwh": 482
+    "geometry_unit_num_bathrooms": 1
   },
   "sample_files/base-enclosure-beds-2.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_num_bedrooms": 2,
-    "geometry_unit_num_bathrooms": 1,
-    "misc_plug_loads_television_annual_kwh": 551
+    "geometry_unit_num_bathrooms": 1
   },
   "sample_files/base-enclosure-beds-4.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "geometry_unit_num_bedrooms": 4,
-    "misc_plug_loads_television_annual_kwh": 689
+    "geometry_unit_num_bedrooms": 4
   },
   "sample_files/base-enclosure-beds-5.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_num_bedrooms": 5,
-    "geometry_unit_num_bathrooms": 3,
-    "misc_plug_loads_television_annual_kwh": 758
+    "geometry_unit_num_bathrooms": 3
   },
   "sample_files/base-enclosure-ceilingtypes.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -2053,7 +1777,7 @@
   "sample_files/base-enclosure-infil-cfm-house-pressure.xml": {
     "parent_hpxml": "sample_files/base-enclosure-infil-cfm50.xml",
     "air_leakage_house_pressure": 45,
-    "air_leakage_value": 1008.5
+    "air_leakage_value": 1010
   },
   "sample_files/base-enclosure-infil-cfm50.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2092,11 +1816,12 @@
   },
   "sample_files/base-enclosure-overhangs.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "overhangs_back_depth": 2.5,
-    "overhangs_back_distance_to_bottom_of_window": 4,
+    "overhangs_back_depth": 1.5,
+    "overhangs_back_distance_to_top_of_window": 2,
+    "overhangs_back_distance_to_bottom_of_window": 6,
     "overhangs_left_depth": 1.5,
     "overhangs_left_distance_to_top_of_window": 2,
-    "overhangs_left_distance_to_bottom_of_window": 7,
+    "overhangs_left_distance_to_bottom_of_window": 6,
     "overhangs_right_depth": 1.5,
     "overhangs_right_distance_to_top_of_window": 2,
     "overhangs_right_distance_to_bottom_of_window": 6
@@ -2122,7 +1847,8 @@
   },
   "sample_files/base-enclosure-skylights-storms.xml": {
     "parent_hpxml": "sample_files/base-enclosure-skylights.xml",
-    "skylight_ufactor": 0.6,
+    "skylight_ufactor": 0.69,
+    "skylight_shgc": 0.69,
     "skylight_storm_type": "clear"
   },
   "sample_files/base-enclosure-split-level.xml": {
@@ -2157,11 +1883,11 @@
     "window_interior_shading_winter": null,
     "window_interior_shading_summer": null
   },
-  "sample_files/base-enclosure-windows-interior-shading-curtains.xml": {
+  "sample_files/base-enclosure-windows-interior-shading-coefficients.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "window_interior_shading_type": "medium curtains",
-    "window_interior_shading_winter": null,
-    "window_interior_shading_summer": null
+    "window_interior_shading_type": null,
+    "window_interior_shading_winter": 0.8,
+    "window_interior_shading_summer": 0.7
   },
   "sample_files/base-enclosure-windows-natural-ventilation-availability.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2178,7 +1904,10 @@
     "parent_hpxml": "sample_files/base.xml"
   },
   "sample_files/base-enclosure-windows-shading-factors.xml": {
-    "parent_hpxml": "sample_files/base.xml"
+    "parent_hpxml": "sample_files/base.xml",
+    "window_interior_shading_type": null,
+    "window_interior_shading_winter": 0.85,
+    "window_interior_shading_summer": 0.7
   },
   "sample_files/base-enclosure-windows-shading-seasons.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2189,7 +1918,8 @@
   },
   "sample_files/base-enclosure-windows-storms.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "window_ufactor": 0.6,
+    "window_ufactor": 0.63,
+    "window_shgc": 0.62,
     "window_storm_type": "low-e"
   },
   "sample_files/base-enclosure-thermal-mass.xml": {
@@ -2199,14 +1929,12 @@
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_cfa": 1350,
     "geometry_foundation_type": "Ambient",
-    "floor_over_foundation_assembly_r": 18.7,
-    "misc_plug_loads_other_annual_kwh": 1228.5,
+    "floor_over_foundation_assembly_r": 19.4,
     "ducts_supply_leakage_to_outside_value": 40.5,
     "ducts_return_leakage_to_outside_value": 13.5
   },
   "sample_files/base-foundation-basement-garage.xml": {
-    "parent_hpxml": "sample_files/base.xml",
-    "misc_plug_loads_other_annual_kwh": 1729
+    "parent_hpxml": "sample_files/base.xml"
   },
   "sample_files/base-foundation-belly-wing-skirt.xml": {
     "parent_hpxml": "sample_files/base-foundation-ambient.xml",
@@ -2221,10 +1949,10 @@
     "window_area_left": 20,
     "window_area_right": 20,
     "ducts_leakage_units": "Percent",
-    "ducts_supply_leakage_to_outside_value": 0.15,
+    "ducts_supply_leakage_to_outside_value": 0.1,
     "ducts_supply_location": "manufactured home belly",
     "ducts_supply_insulation_r": 0,
-    "ducts_return_leakage_to_outside_value": 0.05,
+    "ducts_return_leakage_to_outside_value": 0.1,
     "ducts_return_location": "manufactured home belly",
     "ducts_return_insulation_r": 0
   },
@@ -2238,12 +1966,16 @@
   "sample_files/base-foundation-conditioned-basement-slab-insulation.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "slab_under_insulation_r": 10,
-    "slab_under_insulation_width": 4
+    "slab_under_insulation_width": 4,
+    "slab_carpet_fraction": null,
+    "slab_carpet_r": null
   },
   "sample_files/base-foundation-conditioned-basement-slab-insulation-full.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "slab_under_insulation_r": 10,
-    "slab_under_insulation_width": 999
+    "slab_under_insulation_width": 999,
+    "slab_carpet_fraction": null,
+    "slab_carpet_r": null
   },
   "sample_files/base-foundation-conditioned-basement-wall-insulation.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2256,14 +1988,12 @@
     "geometry_unit_cfa": 1350,
     "geometry_foundation_type": "ConditionedCrawlspace",
     "geometry_foundation_height": 4,
-    "floor_over_foundation_assembly_r": 18.7,
-    "foundation_wall_insulation_distance_to_bottom": 4,
+    "floor_over_foundation_assembly_r": 19.4,
     "ducts_supply_leakage_to_outside_value": 0,
     "ducts_return_leakage_to_outside_value": 0,
     "ducts_supply_location": "crawlspace - conditioned",
     "ducts_return_location": "crawlspace - conditioned",
-    "water_heater_location": "crawlspace - conditioned",
-    "misc_plug_loads_other_annual_kwh": 1228.5
+    "water_heater_location": "crawlspace - conditioned"
   },
   "sample_files/base-foundation-slab.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2277,16 +2007,20 @@
     "slab_carpet_r": 2.5,
     "ducts_supply_location": "under slab",
     "ducts_return_location": "under slab",
-    "misc_plug_loads_other_annual_kwh": 1228.5,
     "ducts_supply_leakage_to_outside_value": 40.5,
     "ducts_return_leakage_to_outside_value": 13.5
   },
   "sample_files/base-foundation-slab-exterior-horizontal-insulation.xml": {
     "parent_hpxml": "sample_files/base-foundation-slab.xml",
-    "slab_perimeter_insulation_r": 5.4,
-    "slab_exterior_horizontal_insulation_r": 5.4,
+    "slab_perimeter_insulation_r": 5.0,
+    "slab_perimeter_insulation_depth": 2.0,
+    "slab_under_insulation_r": 0,
+    "slab_under_insulation_width": 0,
+    "slab_exterior_horizontal_insulation_r": 5.0,
     "slab_exterior_horizontal_insulation_width": 2.5,
-    "slab_exterior_horizontal_insulation_depth_below_grade": 1
+    "slab_exterior_horizontal_insulation_depth_below_grade": 2,
+    "slab_carpet_fraction": null,
+    "slab_carpet_r": null
   },
   "sample_files/base-foundation-multiple.xml": {
     "parent_hpxml": "sample_files/base-foundation-unconditioned-basement.xml"
@@ -2295,10 +2029,10 @@
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_cfa": 1350,
     "geometry_foundation_type": "UnconditionedBasement",
-    "floor_over_foundation_assembly_r": 18.7,
+    "floor_over_foundation_assembly_r": 19.4,
     "foundation_wall_insulation_r": 0,
     "foundation_wall_insulation_distance_to_bottom": 0,
-    "rim_joist_assembly_r": 4,
+    "rim_joist_assembly_r": 13.9,
     "ducts_supply_location": "basement - unconditioned",
     "ducts_return_location": "basement - unconditioned",
     "water_heater_location": "basement - unconditioned",
@@ -2307,7 +2041,6 @@
     "dishwasher_location": "basement - unconditioned",
     "refrigerator_location": "basement - unconditioned",
     "cooking_range_oven_location": "basement - unconditioned",
-    "misc_plug_loads_other_annual_kwh": 1228.5,
     "ducts_supply_leakage_to_outside_value": 40.5,
     "ducts_return_leakage_to_outside_value": 13.5
   },
@@ -2321,23 +2054,19 @@
   },
   "sample_files/base-foundation-unconditioned-basement-wall-insulation.xml": {
     "parent_hpxml": "sample_files/base-foundation-unconditioned-basement.xml",
-    "floor_over_foundation_assembly_r": 2.1,
-    "foundation_wall_insulation_r": 8.9,
-    "foundation_wall_insulation_distance_to_bottom": 4,
-    "rim_joist_assembly_r": 23
+    "floor_over_foundation_assembly_r": 5.3,
+    "foundation_wall_insulation_r": 10.0,
+    "foundation_wall_insulation_distance_to_bottom": 4
   },
   "sample_files/base-foundation-unvented-crawlspace.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_cfa": 1350,
     "geometry_foundation_type": "UnventedCrawlspace",
     "geometry_foundation_height": 4,
-    "floor_over_foundation_assembly_r": 18.7,
-    "foundation_wall_insulation_distance_to_bottom": 4,
-    "slab_thickness": 0,
+    "floor_over_foundation_assembly_r": 19.4,
     "ducts_supply_location": "crawlspace - unvented",
     "ducts_return_location": "crawlspace - unvented",
     "water_heater_location": "crawlspace - unvented",
-    "misc_plug_loads_other_annual_kwh": 1228.5,
     "ducts_supply_leakage_to_outside_value": 40.5,
     "ducts_return_leakage_to_outside_value": 13.5
   },
@@ -2346,13 +2075,10 @@
     "geometry_unit_cfa": 1350,
     "geometry_foundation_type": "VentedCrawlspace",
     "geometry_foundation_height": 4,
-    "floor_over_foundation_assembly_r": 18.7,
-    "foundation_wall_insulation_distance_to_bottom": 4,
-    "slab_thickness": 0,
+    "floor_over_foundation_assembly_r": 19.4,
     "ducts_supply_location": "crawlspace - vented",
     "ducts_return_location": "crawlspace - vented",
     "water_heater_location": "crawlspace - vented",
-    "misc_plug_loads_other_annual_kwh": 1228.5,
     "ducts_supply_leakage_to_outside_value": 40.5,
     "ducts_return_leakage_to_outside_value": 13.5
   },
@@ -2380,16 +2106,14 @@
     "heat_pump_type": "air-to-air",
     "heat_pump_heating_efficiency": 7.7,
     "heat_pump_cooling_efficiency": 13,
-    "heat_pump_cooling_compressor_type": "single stage",
+    "heat_pump_compressor_type": "single stage",
     "heat_pump_heating_capacity": 36000,
-    "heat_pump_heating_capacity_retention_fraction": 0.6,
-    "heat_pump_heating_capacity_retention_temp": 17.0,
     "heat_pump_cooling_capacity": 36000,
     "heat_pump_fraction_heat_load_served": 1,
     "heat_pump_fraction_cool_load_served": 1,
     "heat_pump_backup_type": "integrated",
     "heat_pump_backup_heating_efficiency": 1,
-    "heat_pump_backup_heating_capacity": 36000
+    "heat_pump_backup_heating_capacity": 34121
   },
   "sample_files/base-hvac-air-to-air-heat-pump-1-speed-detailed-electric-panel.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
@@ -2398,8 +2122,20 @@
     "electric_panel_service_voltage": "240",
     "electric_panel_service_max_current_rating": 100,
     "electric_panel_breaker_spaces_headroom": 5,
-    "electric_panel_load_cooling_system_power_rating": 3542,
+    "electric_panel_load_heat_pump_power_rating": 3542,
     "electric_panel_load_other_power_rating": 559
+  },
+  "sample_files/base-hvac-air-to-air-heat-pump-1-speed-detailed-performance.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
+    "heat_pump_heating_capacity": null,
+    "heat_pump_cooling_capacity": null,
+    "hvac_perf_data_capacity_type": "Absolute capacities",
+    "hvac_perf_data_heating_outdoor_temperatures": "47.0, 17.0",
+    "hvac_perf_data_heating_nom_speed_capacities": "36000, 23000",
+    "hvac_perf_data_heating_nom_speed_cops": "2.9, 1.8",
+    "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
+    "hvac_perf_data_cooling_nom_speed_capacities": "36000, 39000",
+    "hvac_perf_data_cooling_nom_speed_cops": "3.8, 3.9"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-1-speed-autosize-factor.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
@@ -2407,11 +2143,11 @@
     "heat_pump_heating_capacity": null,
     "heat_pump_backup_heating_capacity": null,
     "heat_pump_cooling_autosizing_factor": 1.7,
-    "heat_pump_heating_autosizing_factor": 1.4,
+    "heat_pump_heating_autosizing_factor": 1.7,
     "heat_pump_backup_heating_autosizing_factor": 0.9,
-    "heat_pump_cooling_autosizing_limit": 53000,
-    "heat_pump_heating_autosizing_limit": 44000,
-    "heat_pump_backup_heating_autosizing_limit": 28000
+    "heat_pump_cooling_autosizing_limit": 36000,
+    "heat_pump_heating_autosizing_limit": 36000,
+    "heat_pump_backup_heating_autosizing_limit": 45000
   },
   "sample_files/base-hvac-air-to-air-heat-pump-1-speed-heating-capacity-17f.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml"
@@ -2441,23 +2177,41 @@
     "site_state_code": "MN",
     "weather_station_epw_filepath": "USA_MN_Duluth.Intl.AP.727450_TMY3.epw",
     "simulation_control_timestep": 1,
-    "heat_pump_backup_heating_capacity": 34121.4,
+    "heat_pump_backup_heating_capacity": 34121,
     "simulation_control_onoff_thermostat_deadband": 2,
-    "simulation_control_heat_pump_backup_heating_capacity_increment": 17060.71,
-    "simulation_control_defrost_model_type": "advanced"
+    "simulation_control_heat_pump_backup_heating_capacity_increment": 17060.71
   },
   "sample_files/base-hvac-air-to-air-heat-pump-1-speed-seer2-hspf2.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
     "heat_pump_heating_efficiency_type": "HSPF2",
-    "heat_pump_heating_efficiency": 6.5,
+    "heat_pump_heating_efficiency": 6.545,
     "heat_pump_cooling_efficiency_type": "SEER2",
-    "heat_pump_cooling_efficiency": 12.4
+    "heat_pump_cooling_efficiency": 12.35
+  },
+  "sample_files/base-hvac-air-to-air-heat-pump-1-speed-space-constrained.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
     "heat_pump_heating_efficiency": 9.3,
     "heat_pump_cooling_efficiency": 18,
-    "heat_pump_cooling_compressor_type": "two stage"
+    "heat_pump_compressor_type": "two stage"
+  },
+  "sample_files/base-hvac-air-to-air-heat-pump-2-speed-detailed-performance.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml",
+    "heat_pump_heating_capacity": null,
+    "heat_pump_cooling_capacity": null,
+    "hvac_perf_data_capacity_type": "Absolute capacities",
+    "hvac_perf_data_heating_outdoor_temperatures": "47.0, 17.0, 5.0",
+    "hvac_perf_data_heating_min_speed_capacities": "24500, 14200, 9900",
+    "hvac_perf_data_heating_nom_speed_capacities": "36000, 21600",
+    "hvac_perf_data_heating_min_speed_cops": "3.9, 3.0, 2.2",
+    "hvac_perf_data_heating_nom_speed_cops": "3.1, 2.3",
+    "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
+    "hvac_perf_data_cooling_min_speed_capacities": "24000, 29000",
+    "hvac_perf_data_cooling_nom_speed_capacities": "36000, 39000",
+    "hvac_perf_data_cooling_min_speed_cops": "4.1, 5.4",
+    "hvac_perf_data_cooling_nom_speed_cops": "3.6, 4.8"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-2-speed-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml",
@@ -2466,15 +2220,14 @@
     "weather_station_epw_filepath": "USA_MN_Duluth.Intl.AP.727450_TMY3.epw",
     "simulation_control_timestep": 1,
     "simulation_control_onoff_thermostat_deadband": 2,
-    "heat_pump_backup_heating_capacity": 34121.4,
-    "simulation_control_heat_pump_backup_heating_capacity_increment": 17060.71,
-    "simulation_control_defrost_model_type": "advanced"
+    "heat_pump_backup_heating_capacity": 34121,
+    "simulation_control_heat_pump_backup_heating_capacity_increment": 17060.71
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
     "heat_pump_heating_efficiency": 10,
     "heat_pump_cooling_efficiency": 22,
-    "heat_pump_cooling_compressor_type": "variable speed"
+    "heat_pump_compressor_type": "variable speed"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-autosize-maxload.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
@@ -2487,18 +2240,12 @@
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
     "heat_pump_heating_capacity": 18000,
-    "heat_pump_heating_capacity_retention_fraction": 0.6,
-    "heat_pump_heating_capacity_retention_temp": 17.0,
     "heat_pump_cooling_capacity": 18000,
     "heat_pump_backup_type": "separate",
     "heating_system_2_type": "Boiler",
     "heating_system_2_fuel": "natural gas",
     "heating_system_2_heating_efficiency": 0.8,
     "heating_system_2_heating_capacity": 60000
-  },
-  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler-advanced-defrost.xml": {
-    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml",
-    "simulation_control_defrost_model_type": "advanced"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler-hvac-seasons.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml",
@@ -2514,8 +2261,8 @@
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-furnace.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-boiler.xml",
-    "ducts_supply_leakage_to_outside_value": 40.5,
-    "ducts_return_leakage_to_outside_value": 13.5
+    "ducts_supply_leakage_to_outside_value": 27.0,
+    "ducts_return_leakage_to_outside_value": 27.0
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-furnace-autosize-factor.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-backup-furnace.xml",
@@ -2523,22 +2270,34 @@
     "heat_pump_heating_capacity": null,
     "heating_system_2_heating_capacity": null,
     "heat_pump_cooling_autosizing_factor": 1.7,
-    "heat_pump_heating_autosizing_factor": 1.4,
+    "heat_pump_heating_autosizing_factor": 1.7,
     "heating_system_2_heating_autosizing_factor": 0.9,
-    "heat_pump_cooling_autosizing_limit": 53000,
-    "heat_pump_heating_autosizing_limit": 44000,
-    "heating_system_2_heating_autosizing_limit": 29000
+    "heat_pump_cooling_autosizing_limit": 36000,
+    "heat_pump_heating_autosizing_limit": 36000,
+    "heating_system_2_heating_autosizing_limit": 45000
+  },
+  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-pan-heater-continuous-mode.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
+    "heat_pump_pan_heater_watts": 100.0,
+    "heat_pump_pan_heater_control_type": "continuous"
+  },
+  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-pan-heater-defrost-mode.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
+    "heat_pump_pan_heater_watts": 100.0,
+    "heat_pump_pan_heater_control_type": "defrost mode"
+  },
+  "sample_files/base-hvac-air-to-air-heat-pump-var-speed-pan-heater-none.xml": {
+    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
+    "heat_pump_pan_heater_watts": 0.0
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-research-features.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
-    "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv",
-    "simulation_control_timestep": 60,
-    "simulation_control_defrost_model_type": "advanced"
+    "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-two-systems.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
-    "ducts_supply_leakage_to_outside_value": 40.5,
-    "ducts_return_leakage_to_outside_value": 13.5,
+    "ducts_supply_leakage_to_outside_value": 27.0,
+    "ducts_return_leakage_to_outside_value": 27.0,
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/hvac-variable-system-maximum-power-ratios-varied.csv"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-max-power-ratio-schedule-10-mins.xml": {
@@ -2548,31 +2307,39 @@
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
-    "heat_pump_cooling_compressor_type": "variable speed",
-    "heat_pump_heating_capacity_retention_fraction": null,
-    "heat_pump_heating_capacity_retention_temp": null,
+    "heat_pump_heating_capacity": null,
+    "heat_pump_cooling_capacity": null,
+    "heat_pump_heating_capacity_fraction_17_f": null,
     "heat_pump_cooling_efficiency": 17.5,
     "heat_pump_heating_efficiency": 9.5,
     "hvac_perf_data_capacity_type": "Absolute capacities",
     "hvac_perf_data_heating_outdoor_temperatures": "47.0, 17.0, 5.0",
     "hvac_perf_data_heating_min_speed_capacities": "9900, 3600, 1100",
+    "hvac_perf_data_heating_nom_speed_capacities": "35800, 24600",
     "hvac_perf_data_heating_max_speed_capacities": "35800, 24600, 19700",
     "hvac_perf_data_heating_min_speed_cops": "4.68, 1.57, 0.47",
+    "hvac_perf_data_heating_nom_speed_cops": "3.4, 2.58",
     "hvac_perf_data_heating_max_speed_cops": "3.4, 2.58, 2.63",
     "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
     "hvac_perf_data_cooling_min_speed_capacities": "11900, 13400",
+    "hvac_perf_data_cooling_nom_speed_capacities": "36000",
     "hvac_perf_data_cooling_max_speed_capacities": "36000, 40500",
     "hvac_perf_data_cooling_min_speed_cops": "4.47, 6.33",
+    "hvac_perf_data_cooling_nom_speed_cops": "2.64",
     "hvac_perf_data_cooling_max_speed_cops": "2.64, 3.46",
     "additional_properties": "HeatPump=YORK HMH7|HeatPumpAHRICert#=206921308"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance-normalized-capacities.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance.xml",
+    "heat_pump_heating_capacity": 36000,
+    "heat_pump_cooling_capacity": 36000,
     "hvac_perf_data_capacity_type": "Normalized capacity fractions",
     "hvac_perf_data_heating_min_speed_capacities": "0.28, 0.10, 0.03",
-    "hvac_perf_data_heating_max_speed_capacities": "0.99, 0.68, 0.55",
+    "hvac_perf_data_heating_nom_speed_capacities": "1.00, 0.69",
+    "hvac_perf_data_heating_max_speed_capacities": "1.00, 0.69, 0.55",
     "hvac_perf_data_cooling_min_speed_capacities": "0.33, 0.37",
-    "hvac_perf_data_cooling_max_speed_capacities": "1.0, 1.13"
+    "hvac_perf_data_cooling_nom_speed_capacities": "1.00",
+    "hvac_perf_data_cooling_max_speed_capacities": "1.00, 1.13"
   },
   "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance-autosize.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed-detailed-performance-normalized-capacities.xml",
@@ -2638,26 +2405,47 @@
     "heating_system_heating_efficiency": 0,
     "heating_system_fraction_heat_load_served": 0
   },
+  "sample_files/base-hvac-central-ac-only-1-speed-detailed-performance.xml": {
+    "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
+    "cooling_system_cooling_capacity": null,
+    "hvac_perf_data_capacity_type": "Absolute capacities",
+    "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
+    "hvac_perf_data_cooling_nom_speed_capacities": "24000, 26000",
+    "hvac_perf_data_cooling_nom_speed_cops": "3.1, 3.8"
+  },
   "sample_files/base-hvac-central-ac-only-1-speed-autosize-factor.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
     "cooling_system_cooling_capacity": null,
     "cooling_system_cooling_autosizing_factor": 1.7,
-    "cooling_system_cooling_autosizing_limit": 37000
+    "cooling_system_cooling_autosizing_limit": 36000
   },
   "sample_files/base-hvac-central-ac-only-1-speed-seer2.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
     "cooling_system_cooling_efficiency_type": "SEER2",
     "cooling_system_cooling_efficiency": 12.4
   },
+  "sample_files/base-hvac-central-ac-only-1-speed-space-constrained.xml": {
+    "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml"
+  },
   "sample_files/base-hvac-central-ac-only-2-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
     "cooling_system_cooling_efficiency": 18,
-    "cooling_system_cooling_compressor_type": "two stage"
+    "cooling_system_compressor_type": "two stage"
+  },
+  "sample_files/base-hvac-central-ac-only-2-speed-detailed-performance.xml": {
+    "parent_hpxml": "sample_files/base-hvac-central-ac-only-2-speed.xml",
+    "cooling_system_cooling_capacity": null,
+    "hvac_perf_data_capacity_type": "Absolute capacities",
+    "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
+    "hvac_perf_data_cooling_min_speed_capacities": "16600, 18600",
+    "hvac_perf_data_cooling_nom_speed_capacities": "24000, 26000",
+    "hvac_perf_data_cooling_min_speed_cops": "4.1, 5.4",
+    "hvac_perf_data_cooling_nom_speed_cops": "3.6, 4.8"
   },
   "sample_files/base-hvac-central-ac-only-var-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
     "cooling_system_cooling_efficiency": 24,
-    "cooling_system_cooling_compressor_type": "variable speed"
+    "cooling_system_compressor_type": "variable speed"
   },
   "sample_files/base-hvac-central-ac-only-var-speed-max-power-ratio-schedule.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-var-speed.xml",
@@ -2665,38 +2453,38 @@
   },
   "sample_files/base-hvac-central-ac-only-var-speed-detailed-performance.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-var-speed.xml",
-    "cooling_system_cooling_compressor_type": "variable speed",
+    "cooling_system_compressor_type": "variable speed",
     "cooling_system_cooling_efficiency": 17.5,
-    "cooling_system_cooling_capacity": 36000,
+    "cooling_system_cooling_capacity": null,
     "hvac_perf_data_capacity_type": "Absolute capacities",
     "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
     "hvac_perf_data_cooling_min_speed_capacities": "11900, 13400",
+    "hvac_perf_data_cooling_nom_speed_capacities": "36000",
     "hvac_perf_data_cooling_max_speed_capacities": "36000, 40500",
     "hvac_perf_data_cooling_min_speed_cops": "4.47, 6.33",
+    "hvac_perf_data_cooling_nom_speed_cops": "2.64",
     "hvac_perf_data_cooling_max_speed_cops": "2.64, 3.46",
     "additional_properties": "HeatPump=YORK HMH7|HeatPumpAHRICert#=206921308"
   },
   "sample_files/base-hvac-central-ac-only-var-speed-detailed-performance-autosize.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-var-speed-detailed-performance.xml",
-    "cooling_system_cooling_capacity": null,
     "hvac_perf_data_capacity_type": "Normalized capacity fractions",
-    "hvac_perf_data_cooling_min_speed_capacities": "0.325, 0.37",
-    "hvac_perf_data_cooling_max_speed_capacities": "1.0, 1.11"
+    "hvac_perf_data_cooling_min_speed_capacities": "0.33, 0.37",
+    "hvac_perf_data_cooling_nom_speed_capacities": "1.00",
+    "hvac_perf_data_cooling_max_speed_capacities": "1.00, 1.13"
   },
   "sample_files/base-hvac-central-ac-plus-air-to-air-heat-pump-heating.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
     "heat_pump_type": "air-to-air",
     "heat_pump_heating_efficiency": 7.7,
     "heat_pump_cooling_efficiency": 13,
-    "heat_pump_cooling_compressor_type": "single stage",
+    "heat_pump_compressor_type": "single stage",
     "heat_pump_heating_capacity": 36000,
-    "heat_pump_heating_capacity_retention_fraction": 0.6,
-    "heat_pump_heating_capacity_retention_temp": 17.0,
     "heat_pump_cooling_capacity": 36000,
     "heat_pump_fraction_heat_load_served": 1,
     "heat_pump_backup_type": "integrated",
     "heat_pump_backup_heating_efficiency": 1,
-    "heat_pump_backup_heating_capacity": 36000
+    "heat_pump_backup_heating_capacity": 34121
   },
   "sample_files/base-hvac-dse.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -2719,10 +2507,6 @@
     "heat_pump_backup_fuel": "natural gas",
     "heat_pump_backup_heating_efficiency": 0.95,
     "heat_pump_backup_heating_lockout_temp": 30
-  },
-  "sample_files/base-hvac-dual-fuel-air-to-air-heat-pump-2-speed-advanced-defrost.xml": {
-    "parent_hpxml": "sample_files/base-hvac-dual-fuel-air-to-air-heat-pump-2-speed.xml",
-    "simulation_control_defrost_model_type": "advanced"
   },
   "sample_files/base-hvac-dual-fuel-air-to-air-heat-pump-var-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-var-speed.xml",
@@ -2747,8 +2531,8 @@
   "sample_files/base-hvac-ducts-leakage-percent.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "ducts_leakage_units": "Percent",
-    "ducts_supply_leakage_to_outside_value": 0.112,
-    "ducts_return_leakage_to_outside_value": 0.038
+    "ducts_supply_leakage_to_outside_value": 0.075,
+    "ducts_return_leakage_to_outside_value": 0.075
   },
   "sample_files/base-hvac-ducts-areas.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -2813,6 +2597,9 @@
     "cooling_system_is_ducted": true,
     "ducts_return_leakage_to_outside_value": 0
   },
+  "sample_files/base-hvac-fan-motor-type.xml": {
+    "parent_hpxml": "sample_files/base.xml"
+  },
   "sample_files/base-hvac-fireplace-wood-only.xml": {
     "parent_hpxml": "sample_files/base-hvac-stove-oil-only.xml",
     "heating_system_type": "Fireplace",
@@ -2844,12 +2631,12 @@
   "sample_files/base-hvac-furnace-gas-central-ac-2-speed.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "cooling_system_cooling_efficiency": 18,
-    "cooling_system_cooling_compressor_type": "two stage"
+    "cooling_system_compressor_type": "two stage"
   },
   "sample_files/base-hvac-furnace-gas-central-ac-var-speed.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "cooling_system_cooling_efficiency": 24,
-    "cooling_system_cooling_compressor_type": "variable speed"
+    "cooling_system_compressor_type": "variable speed"
   },
   "sample_files/base-hvac-furnace-gas-central-ac-var-speed-max-power-ratio-schedule.xml": {
     "parent_hpxml": "sample_files/base-hvac-furnace-gas-central-ac-var-speed.xml",
@@ -2882,10 +2669,8 @@
     "heat_pump_type": "air-to-air",
     "heat_pump_heating_efficiency": 7.7,
     "heat_pump_cooling_efficiency": 13,
-    "heat_pump_cooling_compressor_type": "single stage",
+    "heat_pump_compressor_type": "single stage",
     "heat_pump_heating_capacity": 36000,
-    "heat_pump_heating_capacity_retention_fraction": 0.6,
-    "heat_pump_heating_capacity_retention_temp": 17.0,
     "heat_pump_cooling_capacity": 36000,
     "heat_pump_fraction_cool_load_served": 1
   },
@@ -2919,7 +2704,7 @@
     "cooling_system_cooling_efficiency": 0,
     "cooling_system_fraction_cool_load_served": 0,
     "heat_pump_type": "ground-to-air",
-    "heat_pump_cooling_compressor_type": "single stage",
+    "heat_pump_compressor_type": "single stage",
     "heat_pump_heating_efficiency_type": "COP",
     "heat_pump_heating_efficiency": 3.6,
     "heat_pump_cooling_efficiency_type": "EER",
@@ -2938,7 +2723,7 @@
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml",
     "heat_pump_heating_efficiency": 4.0,
     "heat_pump_cooling_efficiency": 20.5,
-    "heat_pump_cooling_compressor_type": "two stage"
+    "heat_pump_compressor_type": "two stage"
   },
   "sample_files/base-hvac-ground-to-air-heat-pump-2-speed-experimental.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-2-speed.xml",
@@ -2948,7 +2733,7 @@
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml",
     "heat_pump_heating_efficiency": 4.4,
     "heat_pump_cooling_efficiency": 30.9,
-    "heat_pump_cooling_compressor_type": "variable speed"
+    "heat_pump_compressor_type": "variable speed"
   },
   "sample_files/base-hvac-ground-to-air-heat-pump-var-speed-experimental.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-var-speed.xml",
@@ -2958,7 +2743,7 @@
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml",
     "heat_pump_backup_type": "integrated",
     "heat_pump_backup_heating_efficiency": 1,
-    "heat_pump_backup_heating_capacity": 36000
+    "heat_pump_backup_heating_capacity": 34121
   },
   "sample_files/base-hvac-ground-to-air-heat-pump-backup-stove.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml",
@@ -3081,7 +2866,7 @@
     "heating_system_heating_efficiency": 0,
     "heating_system_fraction_heat_load_served": 0,
     "cooling_system_type": "mini-split",
-    "cooling_system_cooling_compressor_type": "variable speed",
+    "cooling_system_compressor_type": "variable speed",
     "cooling_system_cooling_efficiency": 19,
     "cooling_system_is_ducted": true,
     "ducts_supply_leakage_to_outside_value": 15,
@@ -3097,22 +2882,24 @@
   },
   "sample_files/base-hvac-mini-split-air-conditioner-only-ductless-detailed-performance.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-air-conditioner-only-ductless.xml",
-    "cooling_system_cooling_compressor_type": "variable speed",
+    "cooling_system_cooling_capacity": null,
+    "cooling_system_compressor_type": "variable speed",
     "cooling_system_cooling_efficiency": 17.0,
-    "cooling_system_cooling_capacity": 36000,
     "hvac_perf_data_capacity_type": "Absolute capacities",
     "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
     "hvac_perf_data_cooling_min_speed_capacities": "9100, 9900",
+    "hvac_perf_data_cooling_nom_speed_capacities": "36000",
     "hvac_perf_data_cooling_max_speed_capacities": "36400, 43300",
     "hvac_perf_data_cooling_min_speed_cops": "3.76, 4.61",
+    "hvac_perf_data_cooling_nom_speed_cops": "2.49",
     "hvac_perf_data_cooling_max_speed_cops": "2.45, 3.51",
     "additional_properties": "HeatPump=Midea|HeatPumpAHRICert#=207683365"
   },
   "sample_files/base-hvac-mini-split-air-conditioner-only-ductless-detailed-performance-autosize.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-air-conditioner-only-ductless-detailed-performance.xml",
-    "cooling_system_cooling_capacity": null,
     "hvac_perf_data_capacity_type": "Normalized capacity fractions",
     "hvac_perf_data_cooling_min_speed_capacities": "0.25, 0.28",
+    "hvac_perf_data_cooling_nom_speed_capacities": "1.00",
     "hvac_perf_data_cooling_max_speed_capacities": "1.01, 1.20"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ducted.xml": {
@@ -3126,16 +2913,14 @@
     "heat_pump_type": "mini-split",
     "heat_pump_heating_efficiency": 10,
     "heat_pump_cooling_efficiency": 19,
-    "heat_pump_cooling_compressor_type": "variable speed",
+    "heat_pump_compressor_type": "variable speed",
     "heat_pump_heating_capacity": 36000,
-    "heat_pump_heating_capacity_retention_fraction": 0.6,
-    "heat_pump_heating_capacity_retention_temp": 17.0,
     "heat_pump_cooling_capacity": 36000,
     "heat_pump_fraction_heat_load_served": 1,
     "heat_pump_fraction_cool_load_served": 1,
     "heat_pump_backup_type": "integrated",
     "heat_pump_backup_heating_efficiency": 1,
-    "heat_pump_backup_heating_capacity": 36000,
+    "heat_pump_backup_heating_capacity": 34121,
     "heat_pump_is_ducted": true,
     "ducts_supply_leakage_to_outside_value": 15,
     "ducts_return_leakage_to_outside_value": 5,
@@ -3146,32 +2931,35 @@
   },
   "sample_files/base-hvac-mini-split-heat-pump-ducted-detailed-performance.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ducted.xml",
-    "heat_pump_cooling_compressor_type": "variable speed",
-    "heat_pump_heating_capacity_retention_fraction": null,
-    "heat_pump_heating_capacity_retention_temp": null,
+    "heat_pump_heating_capacity": null,
+    "heat_pump_cooling_capacity": null,
     "heat_pump_cooling_efficiency": 16.7,
     "heat_pump_heating_efficiency": 11.3,
     "hvac_perf_data_capacity_type": "Absolute capacities",
     "hvac_perf_data_heating_outdoor_temperatures": "47.0, 17.0, 5.0, -5.0",
     "hvac_perf_data_heating_min_speed_capacities": "9200, 7063, 6310, 5683",
+    "hvac_perf_data_heating_nom_speed_capacities": "36000, 23000",
     "hvac_perf_data_heating_max_speed_capacities": "48000, 36800, 32920, 29640",
     "hvac_perf_data_heating_min_speed_cops": "4.35, 2.92, 2.60, 2.49",
+    "hvac_perf_data_heating_nom_speed_cops": "3.66, 2.05",
     "hvac_perf_data_heating_max_speed_cops": "3.21, 2.15, 1.93, 1.82",
     "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
     "hvac_perf_data_cooling_min_speed_capacities": "9600, 10224",
+    "hvac_perf_data_cooling_nom_speed_capacities": "36000",
     "hvac_perf_data_cooling_max_speed_capacities": "39000, 41587",
     "hvac_perf_data_cooling_min_speed_cops": "4.02, 4.61",
+    "hvac_perf_data_cooling_nom_speed_cops": "2.93",
     "hvac_perf_data_cooling_max_speed_cops": "2.86, 3.29",
     "additional_properties": "HeatPump=FUJITSU H-Series|HeatPumpAHRICert#=202537549"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ducted-detailed-performance-autosize.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ducted-detailed-performance.xml",
-    "heat_pump_heating_capacity": null,
-    "heat_pump_cooling_capacity": null,
     "hvac_perf_data_capacity_type": "Normalized capacity fractions",
     "hvac_perf_data_heating_min_speed_capacities": "0.26, 0.20, 0.18, 0.16",
+    "hvac_perf_data_heating_nom_speed_capacities": "1.00, 0.80",
     "hvac_perf_data_heating_max_speed_capacities": "1.33, 1.02, 0.91, 0.82",
     "hvac_perf_data_cooling_min_speed_capacities": "0.27, 0.28",
+    "hvac_perf_data_cooling_nom_speed_capacities": "1.00",
     "hvac_perf_data_cooling_max_speed_capacities": "1.08, 1.16"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ducted-cooling-only.xml": {
@@ -3200,47 +2988,46 @@
     "heat_pump_backup_heating_efficiency": 0,
     "heat_pump_is_ducted": false
   },
-  "sample_files/base-hvac-mini-split-heat-pump-ductless-advanced-defrost.xml": {
-    "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless.xml",
-    "simulation_control_defrost_model_type": "advanced"
-  },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-autosize-factor.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless.xml",
     "heat_pump_cooling_capacity": null,
     "heat_pump_heating_capacity": null,
     "heat_pump_cooling_autosizing_factor": 1.7,
-    "heat_pump_heating_autosizing_factor": 1.4,
-    "heat_pump_cooling_autosizing_limit": 41000,
-    "heat_pump_heating_autosizing_limit": 33000
+    "heat_pump_heating_autosizing_factor": 1.7,
+    "heat_pump_cooling_autosizing_limit": 36000,
+    "heat_pump_heating_autosizing_limit": 36000
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-detailed-performance.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless.xml",
-    "heat_pump_cooling_compressor_type": "variable speed",
-    "heat_pump_heating_capacity_retention_fraction": null,
-    "heat_pump_heating_capacity_retention_temp": null,
+    "heat_pump_cooling_capacity": null,
+    "heat_pump_heating_capacity": null,
     "heat_pump_cooling_efficiency": 17.0,
     "heat_pump_heating_efficiency": 10.0,
     "hvac_perf_data_capacity_type": "Absolute capacities",
     "hvac_perf_data_heating_outdoor_temperatures": "47.0, 17.0, 5.0, -13.0",
     "hvac_perf_data_heating_min_speed_capacities": "11400, 5600, 3600, 2600",
+    "hvac_perf_data_heating_nom_speed_capacities": "38000, 23000, 22000",
     "hvac_perf_data_heating_max_speed_capacities": "46500, 25000, 22000, 16000",
     "hvac_perf_data_heating_min_speed_cops": "3.48, 2.78, 1.88, 1.52",
+    "hvac_perf_data_heating_nom_speed_cops": "2.68, 2.2, 1.8",
     "hvac_perf_data_heating_max_speed_cops": "2.75, 2.11, 1.8, 1.31",
     "hvac_perf_data_cooling_outdoor_temperatures": "95.0, 82.0",
     "hvac_perf_data_cooling_min_speed_capacities": "9100, 9900",
+    "hvac_perf_data_cooling_nom_speed_capacities": "36000",
     "hvac_perf_data_cooling_max_speed_capacities": "36400, 43300",
     "hvac_perf_data_cooling_min_speed_cops": "3.76, 4.61",
+    "hvac_perf_data_cooling_nom_speed_cops": "2.49",
     "hvac_perf_data_cooling_max_speed_cops": "2.45, 3.51",
     "additional_properties": "HeatPump=Midea|HeatPumpAHRICert#=207683365"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-detailed-performance-autosize.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-detailed-performance.xml",
-    "heat_pump_heating_capacity": null,
-    "heat_pump_cooling_capacity": null,
     "hvac_perf_data_capacity_type": "Normalized capacity fractions",
     "hvac_perf_data_heating_min_speed_capacities": "0.30, 0.15, 0.09, 0.07",
+    "hvac_perf_data_heating_nom_speed_capacities": "1.00, 0.61, 0.58",
     "hvac_perf_data_heating_max_speed_capacities": "1.22, 0.66, 0.58, 0.42",
     "hvac_perf_data_cooling_min_speed_capacities": "0.25, 0.28",
+    "hvac_perf_data_cooling_nom_speed_capacities": "1.00",
     "hvac_perf_data_cooling_max_speed_capacities": "1.01, 1.20"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-heating-capacity-17f.xml": {
@@ -3249,8 +3036,6 @@
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-stove.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless.xml",
     "heat_pump_heating_capacity": 18000,
-    "heat_pump_heating_capacity_retention_fraction": 0.6,
-    "heat_pump_heating_capacity_retention_temp": 17.0,
     "heat_pump_cooling_capacity": 18000,
     "heat_pump_backup_type": "separate",
     "heating_system_2_type": "Stove",
@@ -3264,11 +3049,13 @@
     "heating_system_2_fuel": "electricity",
     "heating_system_2_heating_efficiency": 1
   },
-  "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-advanced-defrost.xml": {
-    "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-advanced-defrost.xml",
+  "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-integrated.xml": {
+    "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless.xml",
     "heat_pump_backup_type": "integrated",
-    "heat_pump_backup_heating_efficiency": 1,
-    "simulation_control_defrost_model_type": "advanced"
+    "heat_pump_backup_heating_efficiency": 1
+  },
+  "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-integrated-defrost-with-backup-heat-active.xml": {
+    "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-integrated.xml"
   },
   "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-furnace.xml": {
     "parent_hpxml": "sample_files/base-hvac-mini-split-heat-pump-ductless-backup-stove.xml",
@@ -3315,8 +3102,6 @@
     "mech_vent_fan_type": "central fan integrated supply",
     "mech_vent_flow_rate": 100,
     "mech_vent_hours_in_operation": 8,
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
     "mech_vent_fan_power": 100,
     "mech_vent_num_units_served": 1
   },
@@ -3324,33 +3109,29 @@
     "parent_hpxml": "sample_files/base-hvac-ptac.xml",
     "cooling_system_integrated_heating_system_fuel": "electricity",
     "cooling_system_integrated_heating_system_efficiency_percent": 1,
-    "cooling_system_integrated_heating_system_capacity": 36000,
+    "cooling_system_integrated_heating_system_capacity": 40000,
     "cooling_system_integrated_heating_system_fraction_heat_load_served": 1
   },
   "sample_files/base-hvac-ptac-with-heating-natural-gas.xml": {
     "parent_hpxml": "sample_files/base-hvac-ptac.xml",
     "cooling_system_integrated_heating_system_fuel": "natural gas",
     "cooling_system_integrated_heating_system_efficiency_percent": 0.8,
-    "cooling_system_integrated_heating_system_capacity": 36000,
+    "cooling_system_integrated_heating_system_capacity": 40000,
     "cooling_system_integrated_heating_system_fraction_heat_load_served": 1
   },
   "sample_files/base-hvac-pthp.xml": {
     "parent_hpxml": "sample_files/base-hvac-ground-to-air-heat-pump-1-speed.xml",
     "heat_pump_type": "packaged terminal heat pump",
     "heat_pump_cooling_efficiency": 11.4,
-    "heat_pump_heating_capacity_retention_fraction": 0.6,
-    "heat_pump_heating_capacity_retention_temp": 17.0,
     "heat_pump_backup_type": "integrated",
     "heat_pump_backup_heating_efficiency": 1,
-    "heat_pump_backup_heating_capacity": 36000
+    "heat_pump_backup_heating_capacity": 34121
   },
   "sample_files/base-hvac-pthp-cfis.xml": {
     "parent_hpxml": "sample_files/base-hvac-pthp.xml",
     "mech_vent_fan_type": "central fan integrated supply",
     "mech_vent_flow_rate": 100,
     "mech_vent_hours_in_operation": 8,
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
     "mech_vent_fan_power": 100,
     "mech_vent_num_units_served": 1
   },
@@ -3366,10 +3147,10 @@
     "cooling_system_cooling_efficiency_type": "EER",
     "cooling_system_cooling_efficiency": 8.5
   },
-  "sample_files/base-hvac-room-ac-only-33percent.xml": {
+  "sample_files/base-hvac-room-ac-only-partial-conditioning.xml": {
     "parent_hpxml": "sample_files/base-hvac-room-ac-only.xml",
-    "cooling_system_cooling_capacity": 8000,
-    "cooling_system_fraction_cool_load_served": 0.33
+    "cooling_system_cooling_capacity": 9000,
+    "cooling_system_fraction_cool_load_served": 0.35
   },
   "sample_files/base-hvac-room-ac-only-ceer.xml": {
     "parent_hpxml": "sample_files/base-hvac-room-ac-only.xml",
@@ -3380,14 +3161,12 @@
     "parent_hpxml": "sample_files/base-hvac-room-ac-only.xml",
     "cooling_system_integrated_heating_system_fuel": "electricity",
     "cooling_system_integrated_heating_system_efficiency_percent": 1,
-    "cooling_system_integrated_heating_system_capacity": 36000,
+    "cooling_system_integrated_heating_system_capacity": 40000,
     "cooling_system_integrated_heating_system_fraction_heat_load_served": 1
   },
   "sample_files/base-hvac-room-ac-with-reverse-cycle.xml": {
     "parent_hpxml": "sample_files/base-hvac-pthp.xml",
-    "heat_pump_type": "room air conditioner with reverse cycle",
-    "heat_pump_heating_capacity_retention_fraction": 0.6,
-    "heat_pump_heating_capacity_retention_temp": 17.0
+    "heat_pump_type": "room air conditioner with reverse cycle"
   },
   "sample_files/base-hvac-room-ac-only-detailed-setpoints.xml": {
     "parent_hpxml": "sample_files/base-hvac-room-ac-only.xml",
@@ -3445,10 +3224,13 @@
   },
   "sample_files/base-hvac-undersized.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "heating_system_heating_capacity": 3600,
-    "cooling_system_cooling_capacity": 2400,
-    "ducts_supply_leakage_to_outside_value": 40.5,
-    "ducts_return_leakage_to_outside_value": 13.5
+    "heating_system_heating_capacity": 5000,
+    "cooling_system_cooling_capacity": 6000,
+    "ducts_supply_leakage_to_outside_value": 27.0,
+    "ducts_return_leakage_to_outside_value": 27.0
+  },
+  "sample_files/base-hvac-undersized-allow-increased-fixed-capacities.xml": {
+    "parent_hpxml": "sample_files/base-hvac-undersized.xml"
   },
   "sample_files/base-hvac-wall-furnace-elec-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -3468,7 +3250,8 @@
   },
   "sample_files/base-lighting-ceiling-fans-label-energy-use.xml": {
     "parent_hpxml": "sample_files/base-lighting-ceiling-fans.xml",
-    "ceiling_fan_label_energy_use": 39
+    "ceiling_fan_label_energy_use": 39,
+    "ceiling_fan_efficiency": null
   },
   "sample_files/base-lighting-holiday.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -3477,8 +3260,7 @@
     "holiday_lighting_period": "Nov 24 - Jan 6"
   },
   "sample_files/base-lighting-kwh-per-year.xml": {
-    "parent_hpxml": "sample_files/base.xml",
-    "lighting_interior_usage_multiplier": 1.5
+    "parent_hpxml": "sample_files/base.xml"
   },
   "sample_files/base-lighting-mixed.xml": {
     "parent_hpxml": "sample_files/base.xml"
@@ -3500,21 +3282,21 @@
     "site_iecc_zone": "4A",
     "site_state_code": "MD",
     "weather_station_epw_filepath": "USA_MD_Baltimore-Washington.Intl.AP.724060_TMY3.epw",
-    "heating_system_heating_capacity": 24000
+    "heating_system_heating_capacity": 25000
   },
   "sample_files/base-location-capetown-zaf.xml": {
     "parent_hpxml": "sample_files/base-foundation-vented-crawlspace.xml",
     "site_iecc_zone": null,
     "site_state_code": null,
     "weather_station_epw_filepath": "ZAF_Cape.Town.688160_IWEC.epw",
-    "heating_system_heating_capacity": 24000
+    "heating_system_heating_capacity": 25000
   },
   "sample_files/base-location-dallas-tx.xml": {
     "parent_hpxml": "sample_files/base-foundation-slab.xml",
     "site_iecc_zone": "3A",
     "site_state_code": "TX",
     "weather_station_epw_filepath": "USA_TX_Dallas-Fort.Worth.Intl.AP.722590_TMY3.epw",
-    "heating_system_heating_capacity": 24000
+    "heating_system_heating_capacity": 25000
   },
   "sample_files/base-location-detailed.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -3538,54 +3320,52 @@
     "site_iecc_zone": "6B",
     "site_state_code": "MT",
     "weather_station_epw_filepath": "USA_MT_Helena.Rgnl.AP.727720_TMY3.epw",
-    "heating_system_heating_capacity": 48000
+    "heating_system_heating_capacity": 50000
   },
   "sample_files/base-location-honolulu-hi.xml": {
     "parent_hpxml": "sample_files/base-foundation-slab.xml",
     "site_iecc_zone": "1A",
     "site_state_code": "HI",
     "weather_station_epw_filepath": "USA_HI_Honolulu.Intl.AP.911820_TMY3.epw",
-    "heating_system_heating_capacity": 12000
+    "heating_system_heating_capacity": 10000
   },
   "sample_files/base-location-miami-fl.xml": {
     "parent_hpxml": "sample_files/base-foundation-slab.xml",
     "site_iecc_zone": "1A",
     "site_state_code": "FL",
     "weather_station_epw_filepath": "USA_FL_Miami.Intl.AP.722020_TMY3.epw",
-    "heating_system_heating_capacity": 12000
+    "heating_system_heating_capacity": 10000
   },
   "sample_files/base-location-phoenix-az.xml": {
     "parent_hpxml": "sample_files/base-foundation-slab.xml",
     "site_iecc_zone": "2B",
     "site_state_code": "AZ",
     "weather_station_epw_filepath": "USA_AZ_Phoenix-Sky.Harbor.Intl.AP.722780_TMY3.epw",
-    "heating_system_heating_capacity": 24000
+    "heating_system_heating_capacity": 25000
   },
   "sample_files/base-location-portland-or.xml": {
     "parent_hpxml": "sample_files/base-foundation-vented-crawlspace.xml",
     "site_iecc_zone": "4C",
     "site_state_code": "OR",
     "weather_station_epw_filepath": "USA_OR_Portland.Intl.AP.726980_TMY3.epw",
-    "heating_system_heating_capacity": 24000
+    "heating_system_heating_capacity": 25000
   },
   "sample_files/base-mechvent-balanced.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "mech_vent_fan_type": "balanced",
     "mech_vent_flow_rate": 110,
     "mech_vent_hours_in_operation": 24,
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
     "mech_vent_fan_power": 60,
     "mech_vent_num_units_served": 1
   },
   "sample_files/base-mechvent-bath-kitchen-fans.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "kitchen_fans_quantity": 1,
+    "kitchen_fans_quantity": null,
     "kitchen_fans_flow_rate": 100,
     "kitchen_fans_hours_in_operation": 1.5,
     "kitchen_fans_power": 30,
     "kitchen_fans_start_hour": 18,
-    "bathroom_fans_quantity": 2,
+    "bathroom_fans_quantity": null,
     "bathroom_fans_flow_rate": 50,
     "bathroom_fans_hours_in_operation": 1.5,
     "bathroom_fans_power": 15,
@@ -3596,8 +3376,6 @@
     "mech_vent_fan_type": "central fan integrated supply",
     "mech_vent_flow_rate": 330,
     "mech_vent_hours_in_operation": 8,
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
     "mech_vent_fan_power": 300,
     "mech_vent_num_units_served": 1
   },
@@ -3616,8 +3394,6 @@
     "mech_vent_fan_type": "central fan integrated supply",
     "mech_vent_flow_rate": 330,
     "mech_vent_hours_in_operation": 8,
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
     "mech_vent_fan_power": 300,
     "mech_vent_num_units_served": 1
   },
@@ -3626,8 +3402,6 @@
     "mech_vent_fan_type": "central fan integrated supply",
     "mech_vent_flow_rate": 330,
     "mech_vent_hours_in_operation": 8,
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
     "mech_vent_fan_power": 300,
     "mech_vent_num_units_served": 1
   },
@@ -3658,57 +3432,49 @@
     "mech_vent_fan_type": "energy recovery ventilator",
     "mech_vent_flow_rate": 110,
     "mech_vent_hours_in_operation": 24,
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
+    "mech_vent_total_recovery_efficiency": 0.6,
+    "mech_vent_sensible_recovery_efficiency": 0.7,
     "mech_vent_fan_power": 60,
     "mech_vent_num_units_served": 1
   },
   "sample_files/base-mechvent-erv-atre-asre.xml": {
     "parent_hpxml": "sample_files/base-mechvent-erv.xml",
     "mech_vent_recovery_efficiency_type": "Adjusted",
-    "mech_vent_total_recovery_efficiency": 0.526,
-    "mech_vent_sensible_recovery_efficiency": 0.79
+    "mech_vent_total_recovery_efficiency": 0.66,
+    "mech_vent_sensible_recovery_efficiency": 0.77
   },
   "sample_files/base-mechvent-exhaust.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "mech_vent_fan_type": "exhaust only",
     "mech_vent_flow_rate": 110,
     "mech_vent_hours_in_operation": 24,
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
     "mech_vent_fan_power": 30,
     "mech_vent_num_units_served": 1
-  },
-  "sample_files/base-mechvent-exhaust-rated-flow-rate.xml": {
-    "parent_hpxml": "sample_files/base-mechvent-exhaust.xml"
   },
   "sample_files/base-mechvent-hrv.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "mech_vent_fan_type": "heat recovery ventilator",
     "mech_vent_flow_rate": 110,
     "mech_vent_hours_in_operation": 24,
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
+    "mech_vent_sensible_recovery_efficiency": 0.7,
     "mech_vent_fan_power": 60,
     "mech_vent_num_units_served": 1
   },
   "sample_files/base-mechvent-hrv-asre.xml": {
     "parent_hpxml": "sample_files/base-mechvent-hrv.xml",
     "mech_vent_recovery_efficiency_type": "Adjusted",
-    "mech_vent_sensible_recovery_efficiency": 0.79
+    "mech_vent_sensible_recovery_efficiency": 0.77
   },
   "sample_files/base-mechvent-multiple.xml": {
     "parent_hpxml": "sample_files/base-mechvent-bath-kitchen-fans.xml",
-    "ducts_supply_leakage_to_outside_value": 40.5,
-    "ducts_return_leakage_to_outside_value": 13.5
+    "ducts_supply_leakage_to_outside_value": 27.0,
+    "ducts_return_leakage_to_outside_value": 27.0
   },
   "sample_files/base-mechvent-supply.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "mech_vent_fan_type": "supply only",
     "mech_vent_flow_rate": 110,
     "mech_vent_hours_in_operation": 24,
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
     "mech_vent_fan_power": 30,
     "mech_vent_num_units_served": 1
   },
@@ -3724,6 +3490,7 @@
   },
   "sample_files/base-misc-bills.xml": {
     "parent_hpxml": "sample_files/base.xml",
+    "utility_bill_scenario_names": "Custom",
     "utility_bill_electricity_fixed_charges": 12,
     "utility_bill_natural_gas_fixed_charges": 12,
     "utility_bill_electricity_marginal_rates": 0.12,
@@ -3731,13 +3498,13 @@
   },
   "sample_files/base-misc-bills-detailed-only.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "utility_bill_scenario_names": "Tiered, TOU, Tiered and TOU, Real-Time Pricing",
-    "utility_bill_electricity_filepaths": "../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Time-of-Use Rate High Peak.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Time-of-Use Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Real-Time Pricing Rate.json"
+    "utility_bill_scenario_names": "Tiered, Tiered and TOU, Real-Time Pricing",
+    "utility_bill_electricity_filepaths": "../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Time-of-Use Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Real-Time Pricing Rate.json"
   },
   "sample_files/base-misc-bills-battery-scheduled-detailed-only.xml": {
     "parent_hpxml": "sample_files/base-battery-scheduled.xml",
-    "utility_bill_scenario_names": "Tiered, TOU, Tiered and TOU, Real-Time Pricing",
-    "utility_bill_electricity_filepaths": "../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Time-of-Use Rate High Peak.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Time-of-Use Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Real-Time Pricing Rate.json"
+    "utility_bill_scenario_names": "Tiered, Tiered and TOU, Real-Time Pricing",
+    "utility_bill_electricity_filepaths": "../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Time-of-Use Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Real-Time Pricing Rate.json"
   },
   "sample_files/base-misc-bills-pv.xml": {
     "parent_hpxml": "sample_files/base-pv.xml",
@@ -3756,49 +3523,44 @@
   },
   "sample_files/base-misc-bills-pv-detailed-only.xml": {
     "parent_hpxml": "sample_files/base-pv.xml",
-    "utility_bill_scenario_names": "Tiered, TOU, Tiered and TOU, Real-Time Pricing",
-    "utility_bill_electricity_filepaths": "../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Time-of-Use Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Time-of-Use Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Real-Time Pricing Rate.json"
+    "utility_bill_scenario_names": "Tiered,  Tiered and TOU, Real-Time Pricing",
+    "utility_bill_electricity_filepaths": "../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Time-of-Use Rate.json, ../../ReportUtilityBills/resources/detailed_rates/Sample Real-Time Pricing Rate.json"
   },
   "sample_files/base-misc-bills-pv-mixed.xml": {
     "parent_hpxml": "sample_files/base-pv.xml",
-    "utility_bill_scenario_names": "Simple, Detailed",
+    "utility_bill_scenario_names": "Default, Tiered",
     "utility_bill_electricity_filepaths": "NA, ../../ReportUtilityBills/resources/detailed_rates/Sample Tiered Rate.json"
   },
   "sample_files/base-misc-defaults.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "simulation_control_timestep": null,
-    "site_type": null,
     "site_iecc_zone": null,
     "site_state_code": null,
     "geometry_unit_num_bathrooms": null,
     "foundation_wall_thickness": null,
     "foundation_wall_insulation_distance_to_top": null,
     "foundation_wall_insulation_distance_to_bottom": null,
-    "slab_thickness": null,
     "slab_carpet_fraction": null,
     "roof_material_type": null,
     "roof_color": "light",
     "wall_siding_type": null,
     "window_fraction_operable": null,
-    "window_interior_shading_winter": null,
-    "window_interior_shading_summer": null,
+    "window_interior_shading_type": null,
     "hvac_control_heating_weekday_setpoint": null,
     "hvac_control_heating_weekend_setpoint": null,
     "hvac_control_cooling_weekday_setpoint": null,
     "hvac_control_cooling_weekend_setpoint": null,
     "ducts_supply_location": null,
     "ducts_return_location": null,
-    "ducts_number_of_return_registers": 2,
     "mech_vent_fan_type": "exhaust only",
-    "mech_vent_total_recovery_efficiency": 0.48,
-    "mech_vent_sensible_recovery_efficiency": 0.72,
+    "mech_vent_total_recovery_efficiency": 0,
+    "mech_vent_sensible_recovery_efficiency": 0,
     "mech_vent_num_units_served": 1,
     "kitchen_fans_quantity": null,
     "bathroom_fans_quantity": null,
     "whole_house_fan_present": true,
     "water_heater_location": null,
     "water_heater_tank_volume": null,
-    "water_heater_setpoint_temperature": null,
     "hot_water_distribution_standard_piping_length": null,
     "hot_water_distribution_pipe_r": null,
     "solar_thermal_system_type": "hot water",
@@ -3815,7 +3577,6 @@
     "battery_present": true,
     "vehicle_type": "BatteryElectricVehicle",
     "ev_charger_present": true,
-    "clothes_washer_location": null,
     "clothes_washer_efficiency": null,
     "clothes_washer_rated_annual_kwh": null,
     "clothes_washer_label_electric_rate": null,
@@ -3823,19 +3584,15 @@
     "clothes_washer_label_annual_gas_cost": null,
     "clothes_washer_label_usage": null,
     "clothes_washer_capacity": null,
-    "clothes_dryer_location": null,
     "clothes_dryer_efficiency": null,
-    "clothes_dryer_vented_flow_rate": null,
-    "dishwasher_location": null,
+    "clothes_dryer_drying_method": null,
     "dishwasher_efficiency": null,
     "dishwasher_label_electric_rate": null,
     "dishwasher_label_gas_rate": null,
     "dishwasher_label_annual_gas_cost": null,
     "dishwasher_label_usage": null,
     "dishwasher_place_setting_capacity": null,
-    "refrigerator_location": null,
     "refrigerator_rated_annual_kwh": null,
-    "cooking_range_oven_location": null,
     "cooking_range_oven_is_induction": null,
     "cooking_range_oven_is_convection": null,
     "ceiling_fan_present": true,
@@ -3878,10 +3635,13 @@
     "vehicle_type": "none",
     "ev_charger_present": false,
     "extra_refrigerator_present": true,
-    "extra_refrigerator_rated_annual_kwh": 700,
+    "extra_refrigerator_rated_annual_kwh": 748,
     "freezer_present": true,
-    "freezer_location": "conditioned space",
-    "freezer_rated_annual_kwh": 300,
+    "freezer_rated_annual_kwh": 354,
+    "misc_plug_loads_other_annual_kwh": 2457,
+    "misc_plug_loads_other_frac_sensible": 0.855,
+    "misc_plug_loads_other_frac_latent": 0.045,
+    "misc_plug_loads_television_annual_kwh": 620,
     "misc_plug_loads_well_pump_present": true,
     "misc_plug_loads_well_pump_annual_kwh": 475,
     "misc_plug_loads_vehicle_present": true,
@@ -3894,8 +3654,6 @@
     "misc_fuel_loads_fireplace_present": true,
     "misc_fuel_loads_fireplace_fuel_type": "wood",
     "misc_fuel_loads_fireplace_annual_therm": 55,
-    "misc_fuel_loads_fireplace_frac_sensible": 0.5,
-    "misc_fuel_loads_fireplace_frac_latent": 0.1,
     "pool_present": true,
     "pool_pump_annual_kwh": 2700,
     "pool_heater_type": "gas fired",
@@ -3907,8 +3665,8 @@
   },
   "sample_files/base-misc-loads-large-uncommon2.xml": {
     "parent_hpxml": "sample_files/base-misc-loads-large-uncommon.xml",
-    "misc_fuel_loads_grill_fuel_type": "fuel oil",
-    "misc_fuel_loads_fireplace_fuel_type": "wood pellets",
+    "misc_fuel_loads_grill_fuel_type": "propane",
+    "misc_fuel_loads_fireplace_fuel_type": "wood",
     "pool_heater_type": "none",
     "permanent_spa_heater_type": "heat pump",
     "permanent_spa_heater_annual_kwh": 260
@@ -3922,13 +3680,19 @@
   },
   "sample_files/base-misc-neighbor-shading.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "neighbor_front_distance": 15,
-    "neighbor_back_distance": 10,
-    "neighbor_front_height": 12
+    "neighbor_front_distance": 80,
+    "neighbor_front_height": 12,
+    "neighbor_back_distance": 80,
+    "neighbor_back_height": 12,
+    "neighbor_left_distance": 25,
+    "neighbor_left_height": 12,
+    "neighbor_right_distance": 25,
+    "neighbor_right_height": 12
   },
-  "sample_files/base-misc-shielding-of-home.xml": {
+  "sample_files/base-misc-terrain-shielding.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "site_shielding_of_home": "well-shielded"
+    "site_type": "rural",
+    "site_shielding_of_home": "exposed"
   },
   "sample_files/base-misc-unit-multiplier.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -3936,51 +3700,64 @@
   },
   "sample_files/base-misc-unit-multiplier-detailed-electric-panel.xml": {
     "parent_hpxml": "sample_files/base-misc-unit-multiplier.xml",
-    "electric_panel_service_feeders_load_calculation_types": "2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based"
+    "electric_panel_service_feeders_load_calculation_types": "2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based",
+    "electric_panel_baseline_peak_power": 4500
   },
   "sample_files/base-misc-usage-multiplier.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "general_water_use_usage_multiplier": 0.9,
-    "water_fixtures_usage_multiplier": 0.9,
-    "lighting_interior_usage_multiplier": 0.9,
-    "lighting_exterior_usage_multiplier": 0.9,
-    "lighting_garage_usage_multiplier": 0.9,
-    "clothes_washer_usage_multiplier": 0.9,
-    "clothes_dryer_usage_multiplier": 0.9,
-    "dishwasher_usage_multiplier": 0.9,
+    "water_fixtures_usage_multiplier": 0.75,
+    "lighting_interior_fraction_cfl": 0.0,
+    "lighting_interior_fraction_lfl": 0.0,
+    "lighting_interior_fraction_led": 0.25,
+    "lighting_exterior_fraction_cfl": 0.0,
+    "lighting_exterior_fraction_lfl": 0.0,
+    "lighting_exterior_fraction_led": 0.25,
+    "lighting_garage_fraction_cfl": 0.0,
+    "lighting_garage_fraction_lfl": 0.0,
+    "lighting_garage_fraction_led": 0.25,
+    "lighting_interior_usage_multiplier": 0.75,
+    "lighting_exterior_usage_multiplier": 0.75,
+    "lighting_garage_usage_multiplier": 0.75,
+    "clothes_washer_usage_multiplier": 0.75,
+    "clothes_dryer_usage_multiplier": 0.75,
+    "dishwasher_usage_multiplier": 0.75,
     "refrigerator_usage_multiplier": 0.9,
     "freezer_present": true,
-    "freezer_location": "conditioned space",
-    "freezer_rated_annual_kwh": 300,
+    "freezer_rated_annual_kwh": 354,
     "freezer_usage_multiplier": 0.9,
-    "cooking_range_oven_usage_multiplier": 0.9,
-    "misc_plug_loads_television_usage_multiplier": 0.9,
-    "misc_plug_loads_other_usage_multiplier": 0.9,
+    "cooking_range_oven_usage_multiplier": 0.75,
+    "misc_plug_loads_television_usage_multiplier": 0.75,
+    "misc_plug_loads_other_usage_multiplier": 0.75,
     "misc_fuel_loads_grill_present": true,
     "misc_fuel_loads_grill_fuel_type": "propane",
-    "misc_fuel_loads_grill_annual_therm": 25,
-    "misc_fuel_loads_grill_usage_multiplier": 0.9,
+    "misc_fuel_loads_grill_usage_multiplier": 0.75,
     "misc_fuel_loads_lighting_present": true,
-    "misc_fuel_loads_lighting_annual_therm": 28,
-    "misc_fuel_loads_lighting_usage_multiplier": 0.9,
+    "misc_fuel_loads_lighting_usage_multiplier": 0.75,
     "misc_fuel_loads_fireplace_present": true,
     "misc_fuel_loads_fireplace_fuel_type": "wood",
-    "misc_fuel_loads_fireplace_annual_therm": 55,
-    "misc_fuel_loads_fireplace_frac_sensible": 0.5,
-    "misc_fuel_loads_fireplace_frac_latent": 0.1,
-    "misc_fuel_loads_fireplace_usage_multiplier": 0.9,
+    "misc_fuel_loads_fireplace_usage_multiplier": 0.75,
     "pool_present": true,
-    "pool_pump_annual_kwh": 2700,
-    "pool_pump_usage_multiplier": 0.9,
+    "pool_pump_annual_kwh": null,
+    "pool_pump_usage_multiplier": 0.75,
     "pool_heater_type": "gas fired",
-    "pool_heater_annual_therm": 500,
-    "pool_heater_usage_multiplier": 0.9,
+    "pool_heater_annual_therm": null,
+    "pool_heater_usage_multiplier": 0.75,
     "permanent_spa_present": true,
-    "permanent_spa_pump_annual_kwh": 1000,
-    "permanent_spa_pump_usage_multiplier": 0.9,
+    "permanent_spa_pump_annual_kwh": null,
+    "permanent_spa_pump_usage_multiplier": 0.75,
     "permanent_spa_heater_type": "electric resistance",
-    "permanent_spa_heater_annual_kwh": 1300,
-    "permanent_spa_heater_usage_multiplier": 0.9
+    "permanent_spa_heater_annual_kwh": null,
+    "permanent_spa_heater_usage_multiplier": 0.75,
+    "vehicle_type": "BatteryElectricVehicle",
+    "vehicle_battery_usable_capacity": 41.978,
+    "vehicle_fuel_economy_combined": 0.219174,
+    "vehicle_fuel_economy_units": "kWh/mile",
+    "vehicle_fraction_charged_home": 0.75,
+    "vehicle_fraction_charged_home": 0.5,
+    "ev_charger_present": true,
+    "ev_charger_level": 1,
+    "ev_charger_power": 1600
   },
   "sample_files/base-bldgtype-mf-whole-building.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -3990,7 +3767,7 @@
     "geometry_unit_cfa": 1200,
     "geometry_unit_aspect_ratio": 0.75,
     "geometry_building_num_units": 6,
-    "floor_over_foundation_assembly_r": 22.84,
+    "floor_over_foundation_assembly_r": 22.6,
     "air_leakage_type": "unit exterior only",
     "air_leakage_units": "ACHnatural",
     "air_leakage_value": 0.375,
@@ -4010,28 +3787,22 @@
     "heating_system_type": "ElectricResistance",
     "heating_system_fuel": "electricity",
     "heating_system_heating_efficiency": 1,
-    "heating_system_heating_capacity": 12000,
+    "heating_system_heating_capacity": 10000,
     "clothes_dryer_present": false
   },
   "sample_files/base-bldgtype-mf-whole-building-detailed-electric-panel.xml": {
     "parent_hpxml": "sample_files/base-bldgtype-mf-whole-building.xml",
-    "electric_panel_service_feeders_load_calculation_types": "2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based"
+    "electric_panel_service_feeders_load_calculation_types": "2023 Existing Dwelling Load-Based, 2023 Existing Dwelling Meter-Based",
+    "electric_panel_baseline_peak_power": 4500
   },
   "sample_files/base-pv.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "pv_system_present": true,
-    "pv_system_module_type": "standard",
-    "pv_system_location": "roof",
-    "pv_system_tracking": "fixed",
     "pv_system_array_azimuth": 180,
     "pv_system_array_tilt": 20,
     "pv_system_max_power_output": 4000,
-    "pv_system_inverter_efficiency": 0.96,
-    "pv_system_system_losses_fraction": 0.14,
     "pv_system_2_present": true,
     "pv_system_2_module_type": "premium",
-    "pv_system_2_location": "roof",
-    "pv_system_2_tracking": "fixed",
     "pv_system_2_array_azimuth": 90,
     "pv_system_2_array_tilt": 20,
     "pv_system_2_max_power_output": 1500
@@ -4039,18 +3810,11 @@
   "sample_files/base-pv-battery.xml": {
     "parent_hpxml": "sample_files/base-battery.xml",
     "pv_system_present": true,
-    "pv_system_module_type": "standard",
-    "pv_system_location": "roof",
-    "pv_system_tracking": "fixed",
     "pv_system_array_azimuth": 180,
     "pv_system_array_tilt": 20,
     "pv_system_max_power_output": 4000,
-    "pv_system_inverter_efficiency": 0.96,
-    "pv_system_system_losses_fraction": 0.14,
     "pv_system_2_present": true,
     "pv_system_2_module_type": "premium",
-    "pv_system_2_location": "roof",
-    "pv_system_2_tracking": "fixed",
     "pv_system_2_array_azimuth": 90,
     "pv_system_2_array_tilt": 20,
     "pv_system_2_max_power_output": 1500
@@ -4061,18 +3825,11 @@
   "sample_files/base-pv-battery-garage.xml": {
     "parent_hpxml": "sample_files/base-enclosure-garage.xml",
     "pv_system_present": true,
-    "pv_system_module_type": "standard",
-    "pv_system_location": "roof",
-    "pv_system_tracking": "fixed",
     "pv_system_array_azimuth": 180,
     "pv_system_array_tilt": 20,
     "pv_system_max_power_output": 4000,
-    "pv_system_inverter_efficiency": 0.96,
-    "pv_system_system_losses_fraction": 0.14,
     "pv_system_2_present": true,
     "pv_system_2_module_type": "premium",
-    "pv_system_2_location": "roof",
-    "pv_system_2_tracking": "fixed",
     "pv_system_2_array_azimuth": 90,
     "pv_system_2_array_tilt": 20,
     "pv_system_2_max_power_output": 1500,
@@ -4120,6 +3877,8 @@
     "geometry_unit_num_occupants": 1,
     "misc_plug_loads_television_annual_kwh": null,
     "misc_plug_loads_other_annual_kwh": null,
+    "misc_plug_loads_other_frac_sensible": null,
+    "misc_plug_loads_other_frac_latent": null,
     "misc_plug_loads_well_pump_annual_kwh": null,
     "misc_plug_loads_vehicle_annual_kwh": null,
     "misc_fuel_loads_grill_annual_therm": null,
@@ -4135,6 +3894,8 @@
     "geometry_unit_num_occupants": 1,
     "misc_plug_loads_television_annual_kwh": null,
     "misc_plug_loads_other_annual_kwh": null,
+    "misc_plug_loads_other_frac_sensible": null,
+    "misc_plug_loads_other_frac_latent": null,
     "misc_plug_loads_well_pump_annual_kwh": null,
     "misc_plug_loads_vehicle_annual_kwh": null,
     "misc_fuel_loads_grill_annual_therm": null,
@@ -4147,17 +3908,27 @@
   },
   "sample_files/base-residents-5-5.xml": {
     "parent_hpxml": "sample_files/base-misc-defaults.xml",
-    "geometry_unit_num_occupants": 5.5
+    "roof_material_type": "asphalt or fiberglass shingles",
+    "window_fraction_operable": 0.67,
+    "window_interior_shading_type": "light curtains",
+    "wall_siding_type": "wood siding",
+    "geometry_unit_num_occupants": 5.5,
+    "hot_water_distribution_pipe_r": 0,
+    "solar_thermal_storage_volume": 60
   },
   "sample_files/base-schedules-simple.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "hot_water_distribution_system_type": "Recirculation",
     "hot_water_distribution_recirc_control_type": "no control",
-    "hot_water_distribution_recirc_piping_length": 50,
-    "hot_water_distribution_recirc_branch_piping_length": 50,
-    "hot_water_distribution_recirc_pump_power": 50,
     "vehicle_type": "BatteryElectricVehicle",
+    "vehicle_battery_capacity": 100,
+    "vehicle_battery_usable_capacity": 80,
+    "vehicle_fuel_economy_combined": 0.25,
+    "vehicle_fuel_economy_units": "kWh/mile",
+    "vehicle_fraction_charged_home": 0.75,
     "ev_charger_present": true,
+    "ev_charger_level": 2,
+    "ev_charger_power": 7000,
     "misc_plug_loads_vehicle_present": false
   },
   "sample_files/base-schedules-simple-vacancy.xml": {
@@ -4166,20 +3937,14 @@
     "schedules_unavailable_period_dates": "Dec 1 - Jan 31",
     "schedules_unavailable_period_window_natvent_availabilities": "always unavailable",
     "hot_water_distribution_system_type": "Recirculation",
-    "hot_water_distribution_recirc_control_type": "no control",
-    "hot_water_distribution_recirc_piping_length": 50,
-    "hot_water_distribution_recirc_branch_piping_length": 50,
-    "hot_water_distribution_recirc_pump_power": 50
+    "hot_water_distribution_recirc_control_type": "no control"
   },
   "sample_files/base-schedules-simple-power-outage.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "schedules_unavailable_period_types": "Power Outage",
     "schedules_unavailable_period_dates": "Jul 1 5 - Jul 31 14",
     "hot_water_distribution_system_type": "Recirculation",
-    "hot_water_distribution_recirc_control_type": "no control",
-    "hot_water_distribution_recirc_piping_length": 50,
-    "hot_water_distribution_recirc_branch_piping_length": 50,
-    "hot_water_distribution_recirc_pump_power": 50
+    "hot_water_distribution_recirc_control_type": "no control"
   },
   "sample_files/base-schedules-simple-no-space-heating.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -4197,7 +3962,6 @@
     "hvac_control_heating_weekend_setpoint": null,
     "hvac_control_cooling_weekday_setpoint": null,
     "hvac_control_cooling_weekend_setpoint": null,
-    "water_heater_setpoint_temperature": null,
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/setpoints-10-mins.csv, ../../HPXMLtoOpenStudio/resources/schedule_files/water-heater-setpoints-10-mins.csv, ../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-10-mins.csv"
   },
   "sample_files/base-schedules-detailed-mixed-timesteps.xml": {
@@ -4206,7 +3970,6 @@
     "hvac_control_heating_weekend_setpoint": null,
     "hvac_control_cooling_weekday_setpoint": null,
     "hvac_control_cooling_weekend_setpoint": null,
-    "water_heater_setpoint_temperature": null,
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/setpoints.csv, ../../HPXMLtoOpenStudio/resources/schedule_files/water-heater-setpoints-10-mins.csv, ../../HPXMLtoOpenStudio/resources/schedule_files/occupancy-stochastic-30-mins.csv"
   },
   "sample_files/base-schedules-detailed-mixed-timesteps-power-outage.xml": {
@@ -4285,7 +4048,7 @@
   },
   "sample_files/base-simcontrol-temperature-capacitance-multiplier.xml": {
     "parent_hpxml": "sample_files/base.xml",
-    "simulation_control_temperature_capacitance_multiplier": 7
+    "simulation_control_temperature_capacitance_multiplier": 10
   },
   "sample_files/base-simcontrol-timestep-10-mins.xml": {
     "parent_hpxml": "sample_files/base.xml",
@@ -4308,7 +4071,7 @@
   },
   "sample_files/base-zones-spaces-multiple.xml": {
     "parent_hpxml": "sample_files/base-enclosure-garage.xml",
-    "heating_system_heating_capacity": 18000,
+    "heating_system_heating_capacity": 20000,
     "heating_system_fraction_heat_load_served": 0.5,
     "cooling_system_cooling_capacity": 12000,
     "cooling_system_fraction_cool_load_served": 0.5,

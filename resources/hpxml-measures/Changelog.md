@@ -1,18 +1,50 @@
+## OpenStudio-HPXML v1.11.0
+
+__New Features__
+- Updates to HPXML v4.2-rc3.
+- Allows optional `UsageMultiplier` for electric vehicles described using `Vehicles`.
+- Improves water heater tank losses when using `EnergyFactor` as the metric; now consistent with how `UniformEnergyFactor` is handled.
+
+__Bugfixes__
+- Fixes ground-source heat pump plant loop fluid type (workaround for OpenStudio bug).
+- Fixes default hours driven per week for electric vehicles (8.88 -> 9.5).
+- Fixes empty TimeDST/TimeUTC columns in JSON timeseries data.
+
 ## OpenStudio-HPXML v1.10.0
 
 __New Features__
-- Updates to OpenStudio 3.10/EnergyPlus 25.1.
-- HVAC modeling updates:
-  - **Breaking Change**: `CompressorType` required for central and mini-split air conditioners and heat pumps as well as ground-to-air heat pumps.
-  - Optional input `SimulationControl/AdvancedResearchFeatures/GroundToAirHeatPumpModelType` to choose "standard" (default) or "experimental"; "experimental" ground-to-air heat pump model better accounts for coil staging.
-- Updates asset calculations for dishwashers, clothes washers, fixtures, and hot water waste per RESNET MINHERS Addenda 81 and 90f.
+- Updates to OpenStudio 3.10/EnergyPlus 25.1/HPXML v4.2-rc2.
+- HVAC modeling updates per RESNET HERS Addendum 82:
+  - **Breaking change**: `CompressorType` required for central and mini-split air conditioners and heat pumps as well as ground-to-air heat pumps.
+  - **Breaking change**: Replaces `HeatingCapacityRetention[Fraction | Temperature]` with `HeatingCapacityFraction17F`.
+  - Allows optional pan heater inputs (`extension/PanHeaterPowerWatts` and `extension/PanHeaterControlType`) for central and mini-split heat pumps; defaults to assuming a pan heater is present.
+  - Allows optional EER2/EER inputs (`AnnualCoolingEfficiency[Units="EER2" or Units="EER"]/Value`) for central and mini-split air conditioners and heat pumps.
+  - Deprecates SHR inputs (e.g., `CoolingSensibleHeatFraction`); they are no longer used.
+  - Allows optional `extension/FanMotorType` input for central equipment; updates `FanPowerWattsPerCFM` defaults to be based on fan motor type.
+  - Allows optional `extension/EquipmentType` inputs for central air conditioners and heat pumps; only used for SEER/SEER2, EER/EER2, and HSPF/HSPF2 conversions.
+  - Allows optional design airflow rate inputs (`extension/HeatingDesignAirflowCFM` and `extension/CoolingDesignAirflowCFM`).
+  - Updates default compressor lockout temperature for dual-fuel heat pumps from 25F to 40F.
+  - Updates default design airflow rates to use cfm/ton assumptions rather than Manual S-based approach.
+  - Updates defrost model to better account for load and energy use during defrost:
+    - Allows optional defrost supplemental heat input (`extension/BackupHeatingActiveDuringDefrost`) for air-source heat pumps with integrated backup.
+    - Deprecates `SimulationControl/AdvancedResearchFeatures/DefrostModelType` input.
+  - Updates to detailed performance datapoints:
+    - **Breaking change**: Updated requirements for allowed combinations of `CapacityDescription` and `OutdoorTemperature`; see the [documentation](https://openstudio-hpxml.readthedocs.io/en/latest/workflow_inputs.html#hpxml-hvac-detailed-perf-data) for more details.
+    - Detailed performance datapoints can now be specified for single stage and two stage equipment too.
+    - Adds more error-checking to ensure appropriate data inputs.
+- Optional GSHP input `SimulationControl/AdvancedResearchFeatures/GroundToAirHeatPumpModelType` to choose "standard" (default) or "experimental"; "experimental" model better accounts for coil staging.
+- Updates asset calculations for dishwashers, clothes washers, fixtures, and hot water waste per RESNET HERS Addenda 81 and 90f.
+- Allows optional `ClothesDryer/DryingMethod` input to inform whether the appliance is vented or ventless.
+- Infiltration improvements:
+  - Improves defaults for `InfiltrationVolume`, `InfiltrationHeight`, and `AverageCeilingHeight`.
+  - Allows optional `WithinInfiltrationVolume` input for conditioned basements; defaults to true.
 - Electric vehicle enhancements:
   - Allows detailed modeling of electric vehicles (batteries and charging/discharging) using `Vehicles` as an alternative to the simple EV charging `PlugLoad`.
   - Adds EV driving unmet hours output.
   - Updates the default schedule for the EV charging `PlugLoad` to better reflect real-world hourly/monthly variation.
-- Electric panel calculations (experimental research feature):
+- Electric panel NEC load calculations (experimental research feature):
   - Allows optional `ElectricPanel` inputs for describing branch circuits and service feeders
-  - Optionally reports breaker spaces and calculated loads for specified NEC calculation types
+  - Optionally reports breaker spaces and calculated loads for specified NEC calculation types (`SoftwareInfo/extension/ElectricPanelCalculations/ServiceFeeders/Type`)
 - Allows requesting timeseries EnergyPlus output meters (e.g., `--hourly "MainsWater:Facility"`), similar to requesting EnergyPlus output variables.
 - BuildResidentialScheduleFile measure:
   - Adds stochastic schedule generation for electric vehicle charging (using `Vehicles`).
@@ -46,6 +78,7 @@ __Bugfixes__
 - BuildResidentialHPXML measure: Fixes error when specifying a combi boiler as the water heater type and a *shared* boiler as the heating system type.
 - BuildResidentialScheduleFile measure: Fixes out-of-sync shifting of occupancy and end use schedule resulting in activities even when there is no occupancy.
 - BuildResidentialScheduleFile measure: Fixes a small bug in sink schedule generation resulting in more concentrated schedule.
+- ReportUtilityBills measure: Apply fixed charges for fuels that are referenced by the HPXML file but consume no energy (e.g., gas heating system in Florida).
 
 ## OpenStudio-HPXML v1.9.1
 

@@ -571,6 +571,53 @@ module Model
     return curve
   end
 
+  # Adds a TableIndependentVariable object to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the OpenStudio object
+  # @param min [Double] Minimum allowable value
+  # @param max [Double] Maximum allowable value
+  # @param values [Array<Double>] List of values
+  # @param extrap_method [String] Extrapolation method for values beyond the bounds of the independent variables
+  # @return [OpenStudio::Model::TableIndependentVariable] The model object
+  def self.add_table_independent_variable(model, name:, min:, max:, values:, extrap_method: 'Constant')
+    ind_var = OpenStudio::Model::TableIndependentVariable.new(model)
+    ind_var.setName(name)
+    ind_var.setMinimumValue(min)
+    ind_var.setMaximumValue(max)
+    ind_var.setValues(values)
+    ind_var.setExtrapolationMethod(extrap_method)
+    return ind_var
+  end
+
+  # Adds a TableLookup object to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the OpenStudio object
+  # @param ind_vars [Array<OpenStudio::Model::TableIndependentVariable>] List of independent variables
+  # @param output_values [Array<Double>] List of output values
+  # @param output_min [Double] The minimum allowable value of the evaluated table after interpolation and extrapolation
+  # @param output_max [Double] The maximum allowable value of the evaluated table after interpolation and extrapolation
+  # @return [OpenStudio::Model::TableLookup] The model object
+  def self.add_table_lookup(model, name:, ind_vars:, output_values:, output_min: nil, output_max: nil)
+    if (not output_min.nil?) && (output_values.min < output_min)
+      fail "Minimum table lookup output value (#{output_values.min}) is less than #{output_min} for #{name}."
+    end
+    if (not output_max.nil?) && (output_values.max > output_max)
+      fail "Maximum table lookup output value (#{output_values.max}) is greater than #{output_max} for #{name}."
+    end
+
+    table = OpenStudio::Model::TableLookup.new(model)
+    table.setName(name)
+    ind_vars.each do |ind_var|
+      table.addIndependentVariable(ind_var)
+    end
+    table.setMinimumOutput(output_min) unless output_min.nil?
+    table.setMaximumOutput(output_max) unless output_max.nil?
+    table.setOutputValues(output_values)
+    return table
+  end
+
   # Adds a ScheduleConstant object to the OpenStudio model.
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
@@ -949,6 +996,41 @@ module Model
     return otm
   end
 
+  # Adds a MeterCustom to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the meter object
+  # @param fuel_type [String] Fuel type (HPXML::FuelTypeXXX)
+  # @param key_var_pairs [Array<Array<String>>] List of (key value, variable name) pairs to be included
+  # @return [OpenStudio::Model::MeterCustom] The model object
+  def self.add_meter_custom(model, name:, fuel_type:, key_var_pairs:)
+    meter = OpenStudio::Model::MeterCustom.new(model)
+    meter.setName(name)
+    meter.setFuelType(fuel_type)
+    key_var_pairs.uniq.each do |key_var|
+      meter.addKeyVarGroup(key_var[0], key_var[1])
+    end
+    return meter
+  end
+
+  # Adds a MeterCustomDecrement to the OpenStudio model.
+  #
+  # @param model [OpenStudio::Model::Model] OpenStudio Model object
+  # @param name [String] Name for the meter object
+  # @param fuel_type [String] Fuel type (HPXML::FuelTypeXXX)
+  # @param key_var_pairs [Array<Array<String>>] List of (key value, variable name) pairs to be included
+  # @param source_meter_name [String] Name of source meter to subtract from
+  # @return [OpenStudio::Model::MeterCustomDecrement] The model object
+  def self.add_meter_custom_decrement(model, name:, fuel_type:, key_var_pairs:, source_meter_name:)
+    meter = OpenStudio::Model::MeterCustomDecrement.new(model, source_meter_name)
+    meter.setName(name)
+    meter.setFuelType(fuel_type)
+    key_var_pairs.uniq.each do |key_var|
+      meter.addKeyVarGroup(key_var[0], key_var[1])
+    end
+    return meter
+  end
+
   # Converts existing string to EMS friendly string.
   #
   # Source: openstudio-standards
@@ -972,7 +1054,7 @@ module Model
       handles << obj.handle
     end
     if !handles.empty?
-      runner.registerWarning('The model contains existing objects and is being reset.')
+      runner.registerInfo('The model contains existing objects and is being reset.')
       model.removeObjects(handles)
     end
   end

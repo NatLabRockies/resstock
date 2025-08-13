@@ -1585,7 +1585,10 @@ module Constructions
     # then the user should input twice the area when defining the Internal Mass object.
     imdef = OpenStudio::Model::InternalMassDefinition.new(model)
     imdef.setName(object_name)
-    imdef.setSurfaceArea(UnitConversions.convert(area, 'ft^2', 'm^2'))
+    # FIXME: Workaround for https://github.com/NREL/OpenStudio/issues/5465
+    # Round the surface area because space.floorArea can loop through surfaces in non-deterministic order.
+    # Remove the round if the above issue is addressed
+    imdef.setSurfaceArea(UnitConversions.convert(area, 'ft^2', 'm^2').round(5))
 
     im = OpenStudio::Model::InternalMass.new(imdef)
     im.setName(object_name)
@@ -2755,8 +2758,9 @@ module Constructions
 
     # Ref: https://labhomes.pnnl.gov/documents/PNNL_24444_Thermal_and_Optical_Properties_Low-E_Storm_Windows_Panels.pdf
     # U-factor and SHGC adjustment based on the data obtained from the above reference
-    if base_ufactor < 0.45
-      fail "Unexpected base window U-Factor (#{base_ufactor}) for a storm window."
+    min_base_ufactor_for_storm = 0.45
+    if base_ufactor < min_base_ufactor_for_storm
+      fail "Storm windows are currently restricted to windows with U-factor >= #{min_base_ufactor_for_storm}, while base window U-Factor was #{base_ufactor}."
     end
 
     if storm_type == HPXML::WindowGlassTypeClear

@@ -158,15 +158,13 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
   def modelOutputRequests(model, runner, user_arguments)
     return false if runner.halted
 
-    @model = model
-
     # use the built-in error checking
     if !runner.validateUserArguments(arguments(model), user_arguments)
       return false
     end
 
-    hpxml_defaults_path = @model.getBuilding.additionalProperties.getFeatureAsString('hpxml_defaults_path').get
-    building_id = @model.getBuilding.additionalProperties.getFeatureAsString('building_id').get
+    hpxml_defaults_path = model.getBuilding.additionalProperties.getFeatureAsString('hpxml_defaults_path').get
+    building_id = model.getBuilding.additionalProperties.getFeatureAsString('building_id').get
     hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, building_id: building_id)
 
     @hpxml_header = hpxml.header
@@ -183,14 +181,6 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
 
     fuels = setup_fuel_outputs()
 
-    hpxml_fuel_map = { FT::Elec => HPXML::FuelTypeElectricity,
-                       FT::Gas => HPXML::FuelTypeNaturalGas,
-                       FT::Oil => HPXML::FuelTypeOil,
-                       FT::Propane => HPXML::FuelTypePropane,
-                       FT::WoodCord => HPXML::FuelTypeWoodCord,
-                       FT::WoodPellets => HPXML::FuelTypeWoodPellets,
-                       FT::Coal => HPXML::FuelTypeCoal }
-
     # Check for presence of fuels once
     has_fuel = hpxml.has_fuels()
 
@@ -199,7 +189,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
 
     # Fuel outputs
     fuels.each do |(fuel_type, is_production), fuel|
-      next unless has_fuel[hpxml_fuel_map[fuel_type]]
+      next unless has_fuel[get_hpxml_fuel(fuel_type)]
       next if is_production && !has_pv # we don't need to request this meter if there isn't pv
 
       Model.add_output_meter(model, meter_name: fuel.meter, reporting_frequency: 'monthly')
@@ -238,7 +228,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
       runner.registerError('Cannot find OpenStudio model.')
       return false
     end
-    @model = model.get
+    model = model.get
 
     # use the built-in error checking (need model)
     if !runner.validateUserArguments(arguments(model), user_arguments)
@@ -247,10 +237,10 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
 
     args = runner.getArgumentValues(arguments(model), user_arguments)
 
-    hpxml_path = @model.getBuilding.additionalProperties.getFeatureAsString('hpxml_path').get
-    hpxml_defaults_path = @model.getBuilding.additionalProperties.getFeatureAsString('hpxml_defaults_path').get
+    hpxml_path = model.getBuilding.additionalProperties.getFeatureAsString('hpxml_path').get
+    hpxml_defaults_path = model.getBuilding.additionalProperties.getFeatureAsString('hpxml_defaults_path').get
     output_dir = File.dirname(hpxml_defaults_path)
-    building_id = @model.getBuilding.additionalProperties.getFeatureAsString('building_id').get
+    building_id = model.getBuilding.additionalProperties.getFeatureAsString('building_id').get
     hpxml = HPXML.new(hpxml_path: hpxml_defaults_path, building_id: building_id)
 
     @hpxml_header = hpxml.header
@@ -297,15 +287,18 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
 
     num_units = @hpxml_buildings.collect { |hpxml_bldg| hpxml_bldg.building_construction.number_of_units }.sum
 
+    # Setup fuel outputs once
+    fuels = setup_fuel_outputs()
+
+    # Check for presence of fuels once
+    has_fuel = hpxml.has_fuels()
+
     monthly_data = []
     @hpxml_header.utility_bill_scenarios.each do |utility_bill_scenario|
       warnings = check_for_next_type_warnings(utility_bill_scenario)
       if register_warnings(runner, warnings)
         next
       end
-
-      # Setup fuel outputs
-      fuels = setup_fuel_outputs()
 
       # Get outputs
       get_outputs(fuels, utility_bill_scenario)
@@ -317,7 +310,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
       pv_monthly_fee = get_pv_monthly_fee(utility_bill_scenario, @hpxml_buildings)
 
       # Get utility rates
-      warnings = get_utility_rates(hpxml_path, fuels, utility_rates, utility_bill_scenario, pv_monthly_fee, num_units)
+      warnings = get_utility_rates(hpxml_path, has_fuel, utility_rates, utility_bill_scenario, pv_monthly_fee, num_units)
       if register_warnings(runner, warnings)
         next
       end
@@ -419,14 +412,7 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
 
     return unless args[:register_annual_bills]
 
-    results_out.each do |name, value|
-      next if name.nil? || value.nil?
-
-      name = OpenStudio::toUnderscoreCase(name).chomp('_')
-
-      runner.registerValue(name, value)
-      runner.registerInfo("Registering #{value} for #{name}.")
-    end
+    Outputs.register_results_out_to_runner(runner, results_out)
   end
 
   # Get monthly utility bill data from the utility_bills Hash.
@@ -519,16 +505,16 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
   # Fill each UtilityRate object based on simple or detailed utility rate information.
   #
   # @param hpxml_path [String] Path to the HPXML file
-  # @param fuels [Hash] Fuel type, is_production => Fuel object
+  # @param has_fuel [Hash] Map of HPXML fuel type => boolean of whether fuel type is used
   # @param utility_rates [Hash] Fuel Type => UtilityRate object
   # @param bill_scenario [HPXML::UtilityBillScenario] HPXML Utility Bill Scenario object
   # @param pv_monthly_fee [Double] the sum of the monthly grid connection fees ($) across HPXML Buildings
   # @param num_units [Integer] total number of units represented by the HPXML file
   # @return [Array<String>] array of warnings
-  def get_utility_rates(hpxml_path, fuels, utility_rates, bill_scenario, pv_monthly_fee, num_units = 1)
+  def get_utility_rates(hpxml_path, has_fuel, utility_rates, bill_scenario, pv_monthly_fee, num_units = 1)
     warnings = []
     utility_rates.each do |fuel_type, rate|
-      next if fuels[[fuel_type, false]].timeseries.sum == 0
+      next unless has_fuel[get_hpxml_fuel(fuel_type)]
 
       case fuel_type
       when FT::Elec
@@ -764,6 +750,20 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
       vals << row[row.keys[0]][index] * unit_conv
     end
     return vals
+  end
+
+  # Get HPXML fuel type according to output reporting fuel type constant.
+  #
+  # @param fuel_type [String] Constant fuel type for output reporting
+  # @return [String] HPXML fuel type
+  def get_hpxml_fuel(fuel_type)
+    return { FT::Elec => HPXML::FuelTypeElectricity,
+             FT::Gas => HPXML::FuelTypeNaturalGas,
+             FT::Oil => HPXML::FuelTypeOil,
+             FT::Propane => HPXML::FuelTypePropane,
+             FT::WoodCord => HPXML::FuelTypeWoodCord,
+             FT::WoodPellets => HPXML::FuelTypeWoodPellets,
+             FT::Coal => HPXML::FuelTypeCoal }[fuel_type]
   end
 end
 
