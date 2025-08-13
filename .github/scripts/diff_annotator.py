@@ -71,6 +71,10 @@ CSV_TO_SCAN: list[CsvScanItem] = [
     {
         "path": "test/base_results/baseline/annual/results_output.csv",
         "key_columns": ["OSW"],
+    },
+    {
+        "path": "postprocessing/resstockpostproc/resources/publication/sdr_column_definitions.csv",
+        "key_columns": ["Annual Name", "Published Annual Name", "Timeseries Name", "Published Timeseries Name"],
     }
 ]
 # ---------------------------------------------------------------------------

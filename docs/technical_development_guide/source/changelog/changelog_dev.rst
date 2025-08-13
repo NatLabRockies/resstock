@@ -8,6 +8,21 @@ Development Changelog
 
 
     .. change::
+        :tags: characteristics, standard data release, outputs, electrical panel
+        :pullreq: 1453
+
+        **Date**: 2025-08-06
+
+        Title:
+        Panel metrics in SDR
+
+        Description:
+        Add metrics for electrical panel breaker space and capacity constraint into SDR's postprocessing workflow.
+
+        Assignees: Lixi Liu
+
+
+    .. change::
         :tags: characteristics, standard data release, outputs, emissions
         :pullreq: 1452
         :tickets: 1281
