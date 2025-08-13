@@ -9271,27 +9271,25 @@ Federal Poverty Level	200-300%
 Federal Poverty Level	300-400%
 Federal Poverty Level	400%+
 Federal Poverty Level	Not Available
-Generation And Emissions Assessment Region	AZNMc
-Generation And Emissions Assessment Region	CAMXc
-Generation And Emissions Assessment Region	ERCTc
-Generation And Emissions Assessment Region	FRCCc
-Generation And Emissions Assessment Region	MROEc
-Generation And Emissions Assessment Region	MROWc
-Generation And Emissions Assessment Region	NEWEc
-Generation And Emissions Assessment Region	NWPPc
-Generation And Emissions Assessment Region	NYSTc
+Generation And Emissions Assessment Region	CAISO
+Generation And Emissions Assessment Region	ERCOT
+Generation And Emissions Assessment Region	FRCC
+Generation And Emissions Assessment Region	ISONE
+Generation And Emissions Assessment Region	MISO Central
+Generation And Emissions Assessment Region	MISO North
+Generation And Emissions Assessment Region	MISO South
+Generation And Emissions Assessment Region	NYISO
 Generation And Emissions Assessment Region	None
-Generation And Emissions Assessment Region	RFCEc
-Generation And Emissions Assessment Region	RFCMc
-Generation And Emissions Assessment Region	RFCWc
-Generation And Emissions Assessment Region	RMPAc
-Generation And Emissions Assessment Region	SPNOc
-Generation And Emissions Assessment Region	SPSOc
-Generation And Emissions Assessment Region	SRMVc
-Generation And Emissions Assessment Region	SRMWc
-Generation And Emissions Assessment Region	SRSOc
-Generation And Emissions Assessment Region	SRTVc
-Generation And Emissions Assessment Region	SRVCc
+Generation And Emissions Assessment Region	Northern Grid East
+Generation And Emissions Assessment Region	Northern Grid South
+Generation And Emissions Assessment Region	Northern Grid West
+Generation And Emissions Assessment Region	PJM East
+Generation And Emissions Assessment Region	PJM West
+Generation And Emissions Assessment Region	SERTP
+Generation And Emissions Assessment Region	SPP North
+Generation And Emissions Assessment Region	SPP South
+Generation And Emissions Assessment Region	West Connect North
+Generation And Emissions Assessment Region	West Connect South
 Geometry Attic Type	Finished Attic or Cathedral Ceilings	ResStockArguments	geometry_attic_type=ConditionedAttic	geometry_roof_type=gable	geometry_roof_pitch=6:12
 Geometry Attic Type	None	ResStockArguments	geometry_attic_type=FlatRoof	geometry_roof_type=gable	geometry_roof_pitch=6:12
 Geometry Attic Type	Unvented Attic	ResStockArguments	geometry_attic_type=UnventedAttic	geometry_roof_type=gable	geometry_roof_pitch=6:12
