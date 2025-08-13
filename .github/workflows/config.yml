@@ -634,7 +634,7 @@ jobs:
           fi
 
           # Run buildstockbatch and tee output to a log file
-          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml 2>&1 | tee buildstock_local.log
+          buildstock_local --ultra-low-disk-no-timeseries $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml 2>&1 | tee buildstock_local.log
 
           # Check the log for schema mismatch warnings and fail if any are present
           SCHEMA_MISMATCH_PATTERN='^Missing columns in output data|^Extra columns in output data'
