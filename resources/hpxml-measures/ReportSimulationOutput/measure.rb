@@ -1940,7 +1940,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
 
         # Apply daylight savings
         if args[:timeseries_frequency] == EPlus::TimeseriesFrequencyTimestep || args[:timeseries_frequency] == EPlus::TimeseriesFrequencyHourly
-          if @hpxml_bldgs[0].dst_enabled
+          if @hpxml_bldgs[0].dst_observed
             dst_start_ix, dst_end_ix = get_dst_start_end_indexes()
             if !dst_start_ix.nil? && !dst_end_ix.nil?
               dst_end_ix.downto(dst_start_ix + 1) do |i|

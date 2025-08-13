@@ -488,7 +488,7 @@ Building site information can be entered in ``/HPXML/Building/Site``.
   ``GeoLocation/Longitude``                double    deg    >= -180, <= 180  No        See [#]_  Site longitude (negative for western hemisphere)
   ``Elevation``                            double    ft                      No        See [#]_  Site elevation
   ``TimeZone/UTCOffset``                   double           >= -12, <= 14    No        See [#]_  Difference in decimal hours between the home's time zone and UTC
-  ``TimeZone/DSTObserved``                 boolean                           No        true      Daylight saving time observed?
+  ``TimeZone/DSTObserved``                 boolean                           No        See [#]_  Daylight saving time observed?
   =======================================  ========  =====  ===============  ========  ========  ===============
 
   .. [#] If CityMunicipality not provided, defaults according to the EPW weather file header.
@@ -499,6 +499,7 @@ Building site information can be entered in ``/HPXML/Building/Site``.
   .. [#] If Longitude not provided, defaults according to the EPW weather file header.
   .. [#] If Elevation not provided, defaults according to the EPW weather file header.
   .. [#] If UTCOffset not provided, defaults according to the EPW weather file header.
+  .. [#] If DSTObserved not provided, defaults to false if StateCode is 'AZ' or 'HI', otherwise true.
 
 If daylight saving time is observed, additional information can be specified in ``/HPXML/Building/Site/TimeZone/extension``.
 

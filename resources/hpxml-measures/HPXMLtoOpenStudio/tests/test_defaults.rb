@@ -247,7 +247,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
   def test_building
     # Test inputs not overridden by defaults
     hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
-    hpxml_bldg.dst_enabled = false
+    hpxml_bldg.dst_observed = false
     hpxml_bldg.dst_begin_month = 3
     hpxml_bldg.dst_begin_day = 3
     hpxml_bldg.dst_end_month = 10
@@ -280,11 +280,11 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.header.manualj_infiltration_shielding_class = 1
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_building_values(default_hpxml_bldg, false, 3, 3, 10, 10, 'CA', 'CityName', -8, -1234, 12, -34, 7, HPXML::HeatPumpSizingMaxLoad, true,
+    _test_default_building_values(default_hpxml_bldg, false, nil, nil, nil, nil, 'CA', 'CityName', -8, -1234, 12, -34, 7, HPXML::HeatPumpSizingMaxLoad, true,
                                   2, 3, 4, 5, 0.0, 100.0, HPXML::ManualJDailyTempRangeLow, 68.0, 78.0, 0.33, 50.0, 1600.0, 60.0, 8, HPXML::HeatPumpBackupSizingSupplemental, HPXML::ManualJInfiltrationMethodBlowerDoor, 1)
 
     # Test defaults - DST not in weather file
-    hpxml_bldg.dst_enabled = nil
+    hpxml_bldg.dst_observed = nil
     hpxml_bldg.dst_begin_month = nil
     hpxml_bldg.dst_begin_day = nil
     hpxml_bldg.dst_end_month = nil
@@ -320,6 +320,12 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _test_default_building_values(default_hpxml_bldg, true, 3, 12, 11, 5, 'CO', 'Denver Intl Ap', -7, 5413.4, 39.83, -104.65, 3, HPXML::HeatPumpSizingHERS, false,
                                   5, 1, 10, 31, 6.8, 91.76, HPXML::ManualJDailyTempRangeHigh, 70.0, 75.0, 0.45, -28.8, 2400.0, 0.0, 4, HPXML::HeatPumpBackupSizingEmergency, HPXML::ManualJInfiltrationMethodBlowerDoor, 4)
 
+    # Test defaults w/ StateCode=AZ
+    hpxml_bldg.state_code = 'AZ'
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    assert_equal(false, default_hpxml_bldg.dst_observed)
+
     # Test defaults w/ NumberOfResidents provided and less than Nbr+1
     hpxml_bldg.building_occupancy.number_of_residents = 1
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
@@ -334,7 +340,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
 
     # Test defaults - DST in weather file
     hpxml, hpxml_bldg = _create_hpxml('base-location-AMY-2012.xml')
-    hpxml_bldg.dst_enabled = nil
+    hpxml_bldg.dst_observed = nil
     hpxml_bldg.dst_begin_month = nil
     hpxml_bldg.dst_begin_day = nil
     hpxml_bldg.dst_end_month = nil
@@ -352,7 +358,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
 
     # Test defaults - southern hemisphere, invalid state code
     hpxml, hpxml_bldg = _create_hpxml('base-location-capetown-zaf.xml')
-    hpxml_bldg.dst_enabled = nil
+    hpxml_bldg.dst_observed = nil
     hpxml_bldg.dst_begin_month = nil
     hpxml_bldg.dst_begin_day = nil
     hpxml_bldg.dst_end_month = nil
@@ -5290,17 +5296,33 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     end
   end
 
-  def _test_default_building_values(hpxml_bldg, dst_enabled, dst_begin_month, dst_begin_day, dst_end_month, dst_end_day, state_code, city, time_zone_utc_offset,
+  def _test_default_building_values(hpxml_bldg, dst_observed, dst_begin_month, dst_begin_day, dst_end_month, dst_end_day, state_code, city, time_zone_utc_offset,
                                     elevation, latitude, longitude, natvent_days_per_week, heat_pump_sizing_methodology, allow_increased_fixed_capacities,
                                     shading_summer_begin_month, shading_summer_begin_day, shading_summer_end_month, shading_summer_end_day,
                                     manualj_heating_design_temp, manualj_cooling_design_temp, manualj_daily_temp_range, manualj_heating_setpoint, manualj_cooling_setpoint,
                                     manualj_humidity_setpoint, manualj_humidity_difference, manualj_internal_loads_sensible, manualj_internal_loads_latent, manualj_num_occupants,
                                     heat_pump_backup_sizing_methodology, manualj_infiltration_method, manualj_infiltration_shielding_class)
-    assert_equal(dst_enabled, hpxml_bldg.dst_enabled)
-    assert_equal(dst_begin_month, hpxml_bldg.dst_begin_month)
-    assert_equal(dst_begin_day, hpxml_bldg.dst_begin_day)
-    assert_equal(dst_end_month, hpxml_bldg.dst_end_month)
-    assert_equal(dst_end_day, hpxml_bldg.dst_end_day)
+    assert_equal(dst_observed, hpxml_bldg.dst_observed)
+    if dst_begin_month.nil?
+      assert_nil(hpxml_bldg.dst_begin_month)
+    else
+      assert_equal(dst_begin_month, hpxml_bldg.dst_begin_month)
+    end
+    if dst_begin_day.nil?
+      assert_nil(hpxml_bldg.dst_begin_day)
+    else
+      assert_equal(dst_begin_day, hpxml_bldg.dst_begin_day)
+    end
+    if dst_end_month.nil?
+      assert_nil(hpxml_bldg.dst_end_month)
+    else
+      assert_equal(dst_end_month, hpxml_bldg.dst_end_month)
+    end
+    if dst_end_day.nil?
+      assert_nil(hpxml_bldg.dst_end_day)
+    else
+      assert_equal(dst_end_day, hpxml_bldg.dst_end_day)
+    end
     if state_code.nil?
       assert_nil(hpxml_bldg.state_code)
     else
