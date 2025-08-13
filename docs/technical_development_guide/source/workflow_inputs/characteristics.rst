@@ -44216,19 +44216,19 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - R-5, Exterior
      - 1.2%
      - auto
-     - 0
+     - 5
      - 0
      - 0
    * - R-10, Exterior
      - 2.8%
      - auto
-     - 0
+     - 10
      - 0
      - 0
    * - R-15, Exterior
      - 0.52%
      - auto
-     - 0
+     - 15
      - 0
      - 0
 
