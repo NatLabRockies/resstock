@@ -287,4 +287,4 @@ Year round	Not Available	Single-Family Detached	0.000289047	0.0130889	0.00349215
 # Assumption: 2. The Federal Poverty Level dependency is aggregated every 200%
 # Assumption: 3. The Geometry Building Type RECS dependency is aggregated into SF, MF, and MH bins.
 # Assumption: 4. The Cooling Unavailable Days dependency is aggregated into Days, Weeks, Month, and All Year bins.
-# Assumption: 5. The Cooling Unavailable Days dependancy is removed.
+# Assumption: 5. The Cooling Unavailable Days dependency is removed.
