@@ -368,145 +368,153 @@ references:
       option: HVAC Cooling Partial Space Conditioning|100% Conditioned
       apply_logic: *yes_and_no_has_ducts_apply_logic
 
+  package_apply_logic: &fossil_fuel_or_electricity
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+
+  cchp_apply_logic: &typical_cold_climate_logic
+    - HVAC Has Ducts|Yes # apply to homes with ducts who have non-shared HVAC or shared HVAC with room for a condenser
+    - or:
+        - not:
+          - or:
+            - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+            - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+            - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+            - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+            - HVAC Shared Efficiencies|Fan Coil Cooling Only
+        # - or:
+        - and: 
+          - HVAC Cooling Type|Ducted Heat Pump
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+        - and: 
+          - HVAC Cooling Type|Non-Ducted Heat Pump
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit                  
+        - and:
+          - HVAC Cooling Type|Central AC
+          - not: HVAC Shared Efficiencies|Fan Coil Cooling Only
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+
+  dual_fuel_cold_apply_logic: &dual_fuel_system_cold_climate
+    - HVAC Has Ducts|Yes # apply to homes with ducts who have non-shared HVAC or shared HVAC with room for a condenser
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+    - or:
+      - ASHRAE IECC Climate Zone 2004|5A
+      - ASHRAE IECC Climate Zone 2004|5B
+      - ASHRAE IECC Climate Zone 2004|6A
+      - ASHRAE IECC Climate Zone 2004|6B
+      - ASHRAE IECC Climate Zone 2004|7A
+      - ASHRAE IECC Climate Zone 2004|7B
+      - ASHRAE IECC Climate Zone 2004|7AK
+      - ASHRAE IECC Climate Zone 2004|8AK
+    - or:
+      - Heating Fuel|Natural Gas
+      - Water Heater Fuel|Natural Gas
+      - Clothes Dryer|Gas, Premium
+      - Clothes Dryer|Gas
+      - Cooking Range|Gas
+      - HVAC Secondary Heating Fuel|Natural Gas
+      - Misc Pool Heater|Natural Gas
+      - Misc Hot Tub Spa|Natural Gas
+      - not: Misc Gas Lighting|None
+      - not: Misc Gas Grill|None
+      - not: Misc Gas Fireplace|None
+
+  dual_fuel_warm_apply_logic: &dual_fuel_system_warm_climate
+    - HVAC Has Ducts|Yes # apply to homes with ducts who have non-shared HVAC or shared HVAC with room for a condenser
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+    - or:
+        - ASHRAE IECC Climate Zone 2004|1A
+        - ASHRAE IECC Climate Zone 2004|2A
+        - ASHRAE IECC Climate Zone 2004|2B
+        - ASHRAE IECC Climate Zone 2004|3A
+        - ASHRAE IECC Climate Zone 2004|3B
+        - ASHRAE IECC Climate Zone 2004|3C
+        - ASHRAE IECC Climate Zone 2004|4A
+        - ASHRAE IECC Climate Zone 2004|4B
+        - ASHRAE IECC Climate Zone 2004|4C
+    - or:
+      - Heating Fuel|Natural Gas
+      - Water Heater Fuel|Natural Gas
+      - Clothes Dryer|Gas, Premium
+      - Clothes Dryer|Gas
+      - Cooking Range|Gas
+      - HVAC Secondary Heating Fuel|Natural Gas
+      - Misc Pool Heater|Natural Gas
+      - Misc Hot Tub Spa|Natural Gas
+      - not: Misc Gas Lighting|None
+      - not: Misc Gas Grill|None
+      - not: Misc Gas Fireplace|None
+      
+  
+
 ### Standard Data Release - Residential -- ###
 upgrades:
-  ### -- HVAC: Air Source Heat Pumps -- ###
   - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data
-    package_apply_logic: *remove_high_rise_shared
+    package_apply_logic: *fossil_fuel_or_electricity
     options:
       - option: HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
-        apply_logic: *ducted_ashp_apply_logic
-
+        apply_logic: *typical_cold_climate_logic
+                  
       - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
-        apply_logic: *ducted_ashp_apply_logic
+        apply_logic: *typical_cold_climate_logic
 
-      - *heat_pump_cooling_efficiency_ducted
 
-  ### -- HVAC: Geothermal Heat Pumps -- ###
-  - upgrade_name: Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
-    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *typical_cold_climate_logic
+
+
+  - upgrade_name: Dual Fuel Heating System
+    package_apply_logic: *fossil_fuel_or_electricity
     options:
-      - option: HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8
-        apply_logic: *ducted_ashp_apply_logic
-        costs: *costs_ghp
-        lifetime: *lifetime_ducted_ghp
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 95.0% AFUE NG, 35F switchover
+        apply_logic: *dual_fuel_system_cold_climate
 
-      - *heat_pump_cooling_efficiency_ducted
-      - *partial_conditioning_100_percent_ducts_only
 
-  - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
-    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
-    options:
-      - *dual_speed_ducted_ghp
-      - *heat_pump_cooling_efficiency_ducted
-      - *partial_conditioning_100_percent_ducts_only
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *dual_fuel_system_cold_climate
 
-  - upgrade_name: Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
-    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
-    options:
-      - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4
-        apply_logic: *ducted_ashp_apply_logic
-        costs: *costs_ghp
-        lifetime: *lifetime_ducted_ghp
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *dual_fuel_system_cold_climate
 
-      - *heat_pump_cooling_efficiency_ducted
-      - *partial_conditioning_100_percent_ducts_only
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 92.5% AFUE NG, 35F switchover
+        apply_logic: *dual_fuel_system_warm_climate
 
-  ### -- Envelope and Ducts -- ###
-  - upgrade_name: Air Sealing
-    options:
-      - *infiltration_30_percent_reduction
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *dual_fuel_system_warm_climate
 
-  - upgrade_name: Attic Floor Insulation for Unfinished Attics
-    options: 
-    - *attic_insulation_iecc_cz1a
-    - *attic_insulation_iecc_cz2a_2b_3a_3b_3c
-    - *attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b
-
-  ### -- Packages -- ###
-  - upgrade_name: Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation
-    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
-    options:
-      ### -- Dual-Speed Ducted GHP -- ###
-      - *dual_speed_ducted_ghp
-      - *heat_pump_cooling_efficiency_ducted
-      - *partial_conditioning_100_percent_ducts_only
-
-      ### -- Attic Floor Insulation -- ###
-      - *attic_insulation_iecc_cz1a
-      - *attic_insulation_iecc_cz2a_2b_3a_3b_3c
-      - *attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b
-
-      ### -- Air Sealing -- ###
-      - *infiltration_30_percent_reduction
-
-  ### -- Electric Vehicles -- ###
-  - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
-    package_apply_logic:
-      - Electric Vehicle Ownership|No
-      - *occupied_only
-    options:
-      - *ev_ownership_yes
-      - option: Electric Vehicle Charger|Level 1 charger
-
-  - upgrade_name: Electric Vehicle Adoption with Level 2 Charging
-    package_apply_logic: *occupied_only
-    options:
-      - *ev_ownership_yes
-      - *ev_l2_charger
-
-  - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging
-    package_apply_logic: *occupied_only
-    options:
-      - *ev_ownership_yes
-      - *ev_l2_charger
-      - *ev_15_percent_efficiency
-
-  ### -- Electric Vehicles Demand Flexibility -- ###
-  - upgrade_name: Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
-    package_apply_logic: *occupied_only
-    options:
-      - *ev_ownership_yes
-      - *ev_l2_charger
-      - *demand_flexibility_electric_vehicle
-      - *demand_flexibility_30_minute_random_shift
-
-  - upgrade_name: Efficient Electric Vehicle Adoption with Level 2 Charging and Demand Flexibility
-    package_apply_logic: *occupied_only
-    options:
-      - *ev_ownership_yes
-      - *ev_l2_charger
-      - *ev_15_percent_efficiency
-      - *demand_flexibility_electric_vehicle
-      - *demand_flexibility_30_minute_random_shift
-
-  ### -- Thermostat Demand Flexibility -- ###
-  - upgrade_name: HVAC Demand Flexibility - On-peak Load Shedding, 2F Offset
-    package_apply_logic: *has_cooling_or_heating
-    options:
-      - option: Demand Flexibility HVAC|On-peak Load Shedding, 2F Offset
-      - *demand_flexibility_30_minute_random_shift
-
-  - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
-    package_apply_logic: *has_cooling_or_heating
-    options:
-      - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 4hr Pre-peak Duration
-      - *demand_flexibility_30_minute_random_shift
-
-  - upgrade_name: HVAC Demand Flexibility - On-peak Load Shedding, 4F Offset
-    package_apply_logic: *has_cooling_or_heating
-    options:
-      - option: Demand Flexibility HVAC|On-peak Load Shedding, 4F Offset
-      - *demand_flexibility_30_minute_random_shift
-
-  - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
-    package_apply_logic: *has_cooling_or_heating
-    options:
-      - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 4F Offset, 4hr Pre-peak Duration
-      - *demand_flexibility_30_minute_random_shift
-
-  - upgrade_name: HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
-    package_apply_logic: *has_cooling_or_heating
-    options:
-      - option: Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration
-      - *demand_flexibility_30_minute_random_shift
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *dual_fuel_system_warm_climate
