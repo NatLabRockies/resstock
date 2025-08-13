@@ -526,111 +526,111 @@ Detailed report of how the 3 options were applied to the buildings.
 -----------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade5:'Heat Pumps Water Heater', Option1:'Water Heater Fuel|Electricity'
 -----------------------------------------------------------------------------------------------------
-not => 284613 (51.7%)
-  Water Heater Fuel|Electricity => 265387 (48.3%)
+not => 284633 (51.8%)
+  Water Heater Fuel|Electricity => 265367 (48.2%)
 -------------------------------------------------
 Package Apply Logic Report
 --------------------------
 and => 547420 (99.5%)
-  not => 548297 (99.7%)
-    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+  not => 548298 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1702 (0.3%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
-  not => 549123 (99.8%)
-    Water Heater Fuel|Solar Thermal => 877 (0.2%)
+  not => 549122 (99.8%)
+    Water Heater Fuel|Solar Thermal => 878 (0.2%)
 -------------------------------------------------
-Overall applied to => 283736 (51.6%).
+Overall applied to => 283755 (51.6%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade5:'Heat Pumps Water Heater', Option2:'Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.78 UEF'
 ------------------------------------------------------------------------------------------------------------------------------------
-and => 200333 (36.4%)
-  or => 217678 (39.6%)
-    Bedrooms|1 => 72015 (13.1%)
-    Bedrooms|2 => 145663 (26.5%)
-  or => 441843 (80.3%)
+and => 200260 (36.4%)
+  or => 217700 (39.6%)
+    Bedrooms|1 => 72019 (13.1%)
+    Bedrooms|2 => 145681 (26.5%)
+  or => 441851 (80.3%)
     Occupants|0 => 66640 (12.1%)
-    Occupants|1 => 132597 (24.1%)
-    Occupants|2 => 166939 (30.4%)
-    Occupants|3 => 75667 (13.8%)
+    Occupants|1 => 132581 (24.1%)
+    Occupants|2 => 167015 (30.4%)
+    Occupants|3 => 75615 (13.7%)
 --------------------------------
 Package Apply Logic Report
 --------------------------
 and => 547420 (99.5%)
-  not => 548297 (99.7%)
-    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+  not => 548298 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1702 (0.3%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
-  not => 549123 (99.8%)
-    Water Heater Fuel|Solar Thermal => 877 (0.2%)
+  not => 549122 (99.8%)
+    Water Heater Fuel|Solar Thermal => 878 (0.2%)
 -------------------------------------------------
-Overall applied to => 199342 (36.2%).
+Overall applied to => 199270 (36.2%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade5:'Heat Pumps Water Heater', Option3:'Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.95 UEF'
 ------------------------------------------------------------------------------------------------------------------------------------
-or => 204903 (37.3%)
-  and => 11375 (2.1%)
-    or => 217678 (39.6%)
-      Bedrooms|1 => 72015 (13.1%)
-      Bedrooms|2 => 145663 (26.5%)
-    Occupants|4 => 61551 (11.2%)
-  and => 193528 (35.2%)
-    Bedrooms|3 => 211923 (38.5%)
-    or => 503394 (91.5%)
+or => 205029 (37.3%)
+  and => 11442 (2.1%)
+    or => 217700 (39.6%)
+      Bedrooms|1 => 72019 (13.1%)
+      Bedrooms|2 => 145681 (26.5%)
+    Occupants|4 => 61640 (11.2%)
+  and => 193587 (35.2%)
+    Bedrooms|3 => 211911 (38.5%)
+    or => 503491 (91.5%)
       Occupants|0 => 66640 (12.1%)
-      Occupants|1 => 132597 (24.1%)
-      Occupants|2 => 166939 (30.4%)
-      Occupants|3 => 75667 (13.8%)
-      Occupants|4 => 61551 (11.2%)
+      Occupants|1 => 132581 (24.1%)
+      Occupants|2 => 167015 (30.4%)
+      Occupants|3 => 75615 (13.7%)
+      Occupants|4 => 61640 (11.2%)
 ----------------------------------
 Package Apply Logic Report
 --------------------------
 and => 547420 (99.5%)
-  not => 548297 (99.7%)
-    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+  not => 548298 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1702 (0.3%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
-  not => 549123 (99.8%)
-    Water Heater Fuel|Solar Thermal => 877 (0.2%)
+  not => 549122 (99.8%)
+    Water Heater Fuel|Solar Thermal => 878 (0.2%)
 -------------------------------------------------
-Overall applied to => 203979 (37.1%).
+Overall applied to => 204106 (37.1%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade5:'Heat Pumps Water Heater', Option4:'Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.98 UEF'
 ------------------------------------------------------------------------------------------------------------------------------------
-or => 144764 (26.3%)
-  Bedrooms|4 => 94252 (17.1%)
-  Bedrooms|5 => 26147 (4.8%)
-  Occupants|5 => 28847 (5.2%)
-  Occupants|6 => 11257 (2.0%)
-  Occupants|7 => 3975 (0.7%)
-  Occupants|8 => 1492 (0.3%)
-  Occupants|9 => 509 (0.1%)
-  Occupants|10+ => 526 (0.1%)
+or => 144711 (26.3%)
+  Bedrooms|4 => 94241 (17.1%)
+  Bedrooms|5 => 26148 (4.8%)
+  Occupants|5 => 28867 (5.2%)
+  Occupants|6 => 11193 (2.0%)
+  Occupants|7 => 3943 (0.7%)
+  Occupants|8 => 1482 (0.3%)
+  Occupants|9 => 512 (0.1%)
+  Occupants|10+ => 512 (0.1%)
 -----------------------------
 Package Apply Logic Report
 --------------------------
 and => 547420 (99.5%)
-  not => 548297 (99.7%)
-    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+  not => 548298 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1702 (0.3%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
-  not => 549123 (99.8%)
-    Water Heater Fuel|Solar Thermal => 877 (0.2%)
+  not => 549122 (99.8%)
+    Water Heater Fuel|Solar Thermal => 878 (0.2%)
 -------------------------------------------------
-Overall applied to => 144099 (26.2%).
+Overall applied to => 144044 (26.2%).
 -------------------------------------
 
 All of the options (and-ing) were applied to: 0 (0.0%)
@@ -640,54 +640,56 @@ Report of how the 2 options were applied to the buildings.
 +---------------------+--------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                            | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+============================================+=====================+==================+==================+
-|                   1 | water heater efficiency                    | 263684 (47.9%)      | 263684 (47.9%)   | 263684 (47.9%)   |
+|                   1 | water heater efficiency                    | 263665 (47.9%)      | 263665 (47.9%)   | 263665 (47.9%)   |
 +---------------------+--------------------------------------------+---------------------+------------------+------------------+
-|                   2 | water heater fuel, water heater efficiency | 283736 (51.6%)      | 283736 (51.6%)   | 547420 (99.5%)   |
+|                   2 | water heater fuel, water heater efficiency | 283755 (51.6%)      | 283755 (51.6%)   | 547420 (99.5%)   |
 +---------------------+--------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
 Detailed report of how the 4 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 | 2                 | 104599 (19.0%)      | 104599 (19.0%)   | 104599 (19.0%)   |
+|                   1 | 2                 | 104755 (19.0%)      | 104755 (19.0%)   | 104755 (19.0%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 3                 | 94944 (17.3%)       | 199543 (36.3%)   | 199543 (36.3%)   |
+|                   1 | 3                 | 95168 (17.3%)       | 199923 (36.3%)   | 199923 (36.3%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   1 | 4                 | 64141 (11.7%)       | 263684 (47.9%)   | 263684 (47.9%)   |
+|                   1 | 4                 | 63742 (11.6%)       | 263665 (47.9%)   | 263665 (47.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 2              | 94743 (17.2%)       | 94743 (17.2%)    | 358427 (65.2%)   |
+|                   2 | 1, 2              | 94515 (17.2%)       | 94515 (17.2%)    | 358180 (65.1%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 3              | 109035 (19.8%)      | 203778 (37.1%)   | 467462 (85.0%)   |
+|                   2 | 1, 3              | 108938 (19.8%)      | 203453 (37.0%)   | 467118 (84.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 4              | 79958 (14.5%)       | 283736 (51.6%)   | 547420 (99.5%)   |
+|                   2 | 1, 4              | 80302 (14.6%)       | 283755 (51.6%)   | 547420 (99.5%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade6:'High Efficiency Natural Gas Tankless Water Heater', Option1:'Water Heater Fuel|Natural Gas'
 -------------------------------------------------------------------------------------------------------------------------------
-not => 300910 (54.7%)
-  Water Heater Fuel|Natural Gas => 249090 (45.3%)
+not => 300894 (54.7%)
+  Water Heater Fuel|Natural Gas => 249106 (45.3%)
 -------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 304731 (55.4%)
-  not => 548297 (99.7%)
-    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+and => 306349 (55.7%)
+  not => 548298 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1702 (0.3%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
-  not => 549123 (99.8%)
-    Water Heater Fuel|Solar Thermal => 877 (0.2%)
-  not => 533857 (97.1%)
-    Water Heater Efficiency|Natural Gas Tankless => 16143 (2.9%)
-  or => 321616 (58.5%)
-    Water Heater Fuel|Natural Gas => 249090 (45.3%)
-    Heating Fuel|Natural Gas => 262254 (47.7%)
-    Clothes Dryer|Gas => 77979 (14.2%)
-    Cooking Range|Gas => 180243 (32.8%)
----------------------------------------
-Overall applied to => 71784 (13.1%).
+  not => 549122 (99.8%)
+    Water Heater Fuel|Solar Thermal => 878 (0.2%)
+  not => 533860 (97.1%)
+    Water Heater Efficiency|Natural Gas Tankless => 16140 (2.9%)
+  or => 323226 (58.8%)
+    Water Heater Fuel|Natural Gas => 249106 (45.3%)
+    Heating Fuel|Natural Gas => 262274 (47.7%)
+    Clothes Dryer|Gas => 77964 (14.2%)
+    Cooking Range|Gas => 180323 (32.8%)
+    Misc Pool Heater|Natural Gas => 5795 (1.1%)
+    Misc Hot Tub Spa|Natural Gas => 6113 (1.1%)
+-----------------------------------------------
+Overall applied to => 73383 (13.3%).
 ------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -695,45 +697,47 @@ Option Apply Report for - Upgrade6:'High Efficiency Natural Gas Tankless Water H
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Package Apply Logic Report
 --------------------------
-and => 304731 (55.4%)
-  not => 548297 (99.7%)
-    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1703 (0.3%)
+and => 306349 (55.7%)
+  not => 548298 (99.7%)
+    Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF => 1702 (0.3%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF => 0 (0.0%)
   not => 550000 (100.0%)
     Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF => 0 (0.0%)
-  not => 549123 (99.8%)
-    Water Heater Fuel|Solar Thermal => 877 (0.2%)
-  not => 533857 (97.1%)
-    Water Heater Efficiency|Natural Gas Tankless => 16143 (2.9%)
-  or => 321616 (58.5%)
-    Water Heater Fuel|Natural Gas => 249090 (45.3%)
-    Heating Fuel|Natural Gas => 262254 (47.7%)
-    Clothes Dryer|Gas => 77979 (14.2%)
-    Cooking Range|Gas => 180243 (32.8%)
----------------------------------------
-Overall applied to => 304731 (55.4%).
+  not => 549122 (99.8%)
+    Water Heater Fuel|Solar Thermal => 878 (0.2%)
+  not => 533860 (97.1%)
+    Water Heater Efficiency|Natural Gas Tankless => 16140 (2.9%)
+  or => 323226 (58.8%)
+    Water Heater Fuel|Natural Gas => 249106 (45.3%)
+    Heating Fuel|Natural Gas => 262274 (47.7%)
+    Clothes Dryer|Gas => 77964 (14.2%)
+    Cooking Range|Gas => 180323 (32.8%)
+    Misc Pool Heater|Natural Gas => 5795 (1.1%)
+    Misc Hot Tub Spa|Natural Gas => 6113 (1.1%)
+-----------------------------------------------
+Overall applied to => 306349 (55.7%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 71784 (13.1%)
-Any of the options (or-ing) were applied to: 304731 (55.4%)
+All of the options (and-ing) were applied to: 73383 (13.3%)
+Any of the options (or-ing) were applied to: 306349 (55.7%)
 --------------------------------------------------------------------------------
 Report of how the 2 options were applied to the buildings.
 +---------------------+--------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                            | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+============================================+=====================+==================+==================+
-|                   1 | water heater efficiency                    | 232947 (42.4%)      | 232947 (42.4%)   | 232947 (42.4%)   |
+|                   1 | water heater efficiency                    | 232966 (42.4%)      | 232966 (42.4%)   | 232966 (42.4%)   |
 +---------------------+--------------------------------------------+---------------------+------------------+------------------+
-|                   2 | water heater fuel, water heater efficiency | 71784 (13.1%)       | 71784 (13.1%)    | 304731 (55.4%)   |
+|                   2 | water heater fuel, water heater efficiency | 73383 (13.3%)       | 73383 (13.3%)    | 306349 (55.7%)   |
 +---------------------+--------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
 Detailed report of how the 2 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   1 | 2                 | 232947 (42.4%)      | 232947 (42.4%)   | 232947 (42.4%)   |
+|                   1 | 2                 | 232966 (42.4%)      | 232966 (42.4%)   | 232966 (42.4%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   2 | 1, 2              | 71784 (13.1%)       | 71784 (13.1%)    | 304731 (55.4%)   |
+|                   2 | 1, 2              | 73383 (13.3%)       | 73383 (13.3%)    | 306349 (55.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 --------------------------------------------------------------------------------------
