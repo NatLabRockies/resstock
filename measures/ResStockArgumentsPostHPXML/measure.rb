@@ -501,18 +501,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                                          output_path: nil)
       Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
 
-      # Apply DST
-      if ['AZ', 'HI'].include? hpxml_bldg.state_code # FIXME: Move this logic into OS-HPXML defaulting
-        hpxml_bldg.dst_enabled = false
-        # FIXME: Move this logic to hpxml.rb
-        hpxml_bldg.dst_begin_month = nil
-        hpxml_bldg.dst_begin_day = nil
-        hpxml_bldg.dst_end_month = nil
-        hpxml_bldg.dst_end_day = nil
-      else
-        hpxml_bldg.dst_enabled = true
-      end
-
       # Incorporate EV UsageMultiplier into miles & hours properties
       hpxml_bldg.vehicles.each do |vehicle|
         next unless vehicle.vehicle_type == HPXML::VehicleTypeBEV
