@@ -85,6 +85,7 @@ def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = Non
         already_available_columns = set()
 
     s_time = time.time()
+    tsv_count = 0
     with multiprocessing.Pool(processes=max(multiprocessing.cpu_count() - 2, 1)) as pool:
         for level, params in get_topological_generations(param2dep, segment_vars):
             print(f"Sampling {len(params)} params in a batch at level {level}")
@@ -101,6 +102,7 @@ def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = Non
                 res = pool.apply_async(sample_param,
                                        (param2tsv[param], sample_df[dep_cols], param, num_samples, seed))
                 results.append(res)
+                tsv_count += 1
             st = time.time()
             samples_dict = {param: res_val.get() for param, res_val in zip(remaining_params, results)}
             print(f"Got results for {len(samples_dict)} params in {time.time()-st:.2f}s")
@@ -108,7 +110,7 @@ def sample_all(project_path, num_samples, *, segment_vars: set[str] | None = Non
             new_df = pd.DataFrame(samples_dict)
             sample_df = pd.concat([sample_df, new_df], axis=1)
     print(f"Sampled in {time.time()-s_time:.2f} seconds")
-    print(f"Done sampling {len(param2tsv)} TSVs with {num_samples} samples.")
+    print(f"Done sampling {tsv_count} TSVs with {num_samples} samples.")
     return sample_df
 
 
