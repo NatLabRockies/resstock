@@ -4008,6 +4008,12 @@ Arguments
      - Type
      - Choices
      - Description
+   * - ``hvac_control_cooling_season_period``
+     - false
+     - 
+     - String
+     -
+     - Enter a date range like 'Jun 1 - Oct 31'. Defaults to year-round cooling availability.
    * - ``hvac_control_cooling_weekday_setpoint_temp``
      - true
      - deg-F
@@ -4020,12 +4026,6 @@ Arguments
      - Double
      -
      - Specify the weekend cooling setpoint temperature.
-   * - ``hvac_control_use_auto_cooling_season``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Specifies whether to automatically define the cooling season based on the weather file.
 
 Options
 *******
@@ -4039,65 +4039,65 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``hvac_control_cooling_season_period``
      - ``hvac_control_cooling_weekday_setpoint_temp``
      - ``hvac_control_cooling_weekend_setpoint_temp``
-     - ``hvac_control_use_auto_cooling_season``
 
    * - 60F
      - 3.2%
+     - Jan 1 - Dec 31
      - 60
      - 60
-     - false
    * - 62F
      - 0.98%
+     - Jan 1 - Dec 31
      - 62
      - 62
-     - false
    * - 65F
      - 4.1%
+     - Jan 1 - Dec 31
      - 65
      - 65
-     - false
    * - 67F
      - 2%
+     - Jan 1 - Dec 31
      - 67
      - 67
-     - false
    * - 68F
      - 12%
+     - Jan 1 - Dec 31
      - 68
      - 68
-     - false
    * - 70F
      - 19%
+     - Jan 1 - Dec 31
      - 70
      - 70
-     - false
    * - 72F
      - 20%
+     - Jan 1 - Dec 31
      - 72
      - 72
-     - false
    * - 75F
      - 19%
+     - Jan 1 - Dec 31
      - 75
      - 75
-     - false
    * - 76F
      - 8%
+     - Jan 1 - Dec 31
      - 76
      - 76
-     - false
    * - 78F
      - 7.9%
+     - Jan 1 - Dec 31
      - 78
      - 78
-     - false
    * - 80F
      - 4.8%
+     - Jan 1 - Dec 31
      - 80
      - 80
-     - false
    * - Void
      - 0%
      - 
@@ -32164,6 +32164,12 @@ Arguments
      - Type
      - Choices
      - Description
+   * - ``hvac_control_heating_season_period``
+     - false
+     - 
+     - String
+     -
+     - Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availability.
    * - ``hvac_control_heating_weekday_setpoint_temp``
      - true
      - deg-F
@@ -32176,12 +32182,6 @@ Arguments
      - Double
      -
      - Specify the weekend heating setpoint temperature.
-   * - ``hvac_control_use_auto_heating_season``
-     - true
-     - 
-     - Boolean
-     - true, false
-     - Specifies whether to automatically define the heating season based on the weather file.
 
 Options
 *******
@@ -32195,70 +32195,70 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``hvac_control_heating_season_period``
      - ``hvac_control_heating_weekday_setpoint_temp``
      - ``hvac_control_heating_weekend_setpoint_temp``
-     - ``hvac_control_use_auto_heating_season``
 
    * - 55F
      - 12%
+     - Jan 1 - Dec 31
      - 55
      - 55
-     - false
    * - 60F
      - 2.3%
+     - Jan 1 - Dec 31
      - 60
      - 60
-     - false
    * - 62F
      - 1.1%
+     - Jan 1 - Dec 31
      - 62
      - 62
-     - false
    * - 65F
      - 5.8%
+     - Jan 1 - Dec 31
      - 65
      - 65
-     - false
    * - 67F
      - 4.9%
+     - Jan 1 - Dec 31
      - 67
      - 67
-     - false
    * - 68F
      - 20%
+     - Jan 1 - Dec 31
      - 68
      - 68
-     - false
    * - 70F
      - 23%
+     - Jan 1 - Dec 31
      - 70
      - 70
-     - false
    * - 72F
      - 15%
+     - Jan 1 - Dec 31
      - 72
      - 72
-     - false
    * - 75F
      - 9.4%
+     - Jan 1 - Dec 31
      - 75
      - 75
-     - false
    * - 76F
      - 2.3%
+     - Jan 1 - Dec 31
      - 76
      - 76
-     - false
    * - 78F
      - 1.8%
+     - Jan 1 - Dec 31
      - 78
      - 78
-     - false
    * - 80F
      - 1%
+     - Jan 1 - Dec 31
      - 80
      - 80
-     - false
 
 .. _heating_setpoint_has_offset:
 
@@ -36837,6 +36837,26 @@ Assumption
   - \[11] Census Region to National
 
 
+Arguments
+*********
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+
+   * - Name
+     - Required
+     - Units
+     - Type
+     - Choices
+     - Description
+   * - ``misc_has_pool``
+     - false
+     - 
+     - Boolean
+     - true, false
+     - Whether a pool is present.
+
 Options
 *******
 
@@ -36849,13 +36869,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
+     - ``misc_has_pool``
 
    * - Has Pool
      - 7.1%
+     - true
    * - None
      - 93%
+     - false
    * - Void
      - 0%
+     - false
 
 .. _misc_pool_heater:
 
@@ -36931,7 +36955,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Natural Gas Heater, 100% Usage
    * - None
      - 98%
-     - None
+     - Unheated, 100% Usage
    * - Other Fuel
      - 0.65%
      - Unheated, 100% Usage
@@ -37303,7 +37327,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 9
    * - 10+
      - 0.12%
-     - 10
+     - 11
 
 .. _orientation:
 
