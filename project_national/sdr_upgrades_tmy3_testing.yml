@@ -42,7 +42,7 @@ postprocessing:
     - State
     - County
   publish_annual_results: true
-  AWS upload bucket and athena setup (uncomment during production and testing runs)
+  # AWS upload bucket and athena setup (uncomment during production and testing runs)
   aws:
    region_name: us-west-2
    s3:
