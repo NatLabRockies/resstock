@@ -245,6 +245,11 @@ jobs:
           buildstock_local project_national/national_baseline.yml
           buildstock_local project_testing/testing_baseline.yml
 
+      - name: Unzip results
+        run: |
+          gunzip -v project_national/national_baseline/results_csvs/*.csv.gz
+          gunzip -v project_testing/testing_baseline/results_csvs/*.csv.gz
+
       - name: Process results
         run: |
           pip install plotly
