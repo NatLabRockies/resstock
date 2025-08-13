@@ -781,6 +781,28 @@ The fraction of the heating load served by the second heating system.
 
 <br/>
 
+**HVAC Control: Heating Season Period**
+
+Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availability.
+
+- **Name:** ``hvac_control_heating_season_period``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC Control: Cooling Season Period**
+
+Enter a date range like 'Jun 1 - Oct 31'. Defaults to year-round cooling availability.
+
+- **Name:** ``hvac_control_cooling_season_period``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **HVAC Ducts**
 
 The leakage to outside and insulation level of the ducts.
@@ -1628,17 +1650,6 @@ Specify the 24-hour comma-separated weekend heating schedule of 0s and 1s.
 
 <br/>
 
-**HVAC Control: Use Auto Heating Season**
-
-Specifies whether to automatically define the heating season based on the weather file.
-
-- **Name:** ``hvac_control_use_auto_heating_season``
-- **Type:** ``Boolean``
-
-- **Required:** ``true``
-
-<br/>
-
 **HVAC Control: Cooling Setpoint Weekday Temperature**
 
 Specify the weekday cooling setpoint temperature.
@@ -1708,17 +1719,6 @@ Specify the 24-hour comma-separated weekend cooling schedule of 0s and 1s.
 
 - **Name:** ``hvac_control_cooling_weekend_setpoint_schedule``
 - **Type:** ``String``
-
-- **Required:** ``true``
-
-<br/>
-
-**HVAC Control: Use Auto Cooling Season**
-
-Specifies whether to automatically define the cooling season based on the weather file.
-
-- **Name:** ``hvac_control_use_auto_cooling_season``
-- **Type:** ``Boolean``
 
 - **Required:** ``true``
 
@@ -2582,6 +2582,17 @@ Multiplier on the other energy usage that can reflect, e.g., high/low usage occu
 
 - **Name:** ``misc_plug_loads_other_usage_multiplier``
 - **Type:** ``Double``
+
+- **Required:** ``false``
+
+<br/>
+
+**Misc: Has Pool**
+
+Whether a pool is present.
+
+- **Name:** ``misc_has_pool``
+- **Type:** ``Boolean``
 
 - **Required:** ``false``
 

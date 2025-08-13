@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>643eea20-06c8-4ed2-afbc-0d6e06cd4999</version_id>
-  <version_modified>2025-08-11T21:52:57Z</version_modified>
+  <version_id>9c944811-fb98-4c38-8429-87e2172a62e7</version_id>
+  <version_modified>2025-08-13T00:30:54Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -5520,6 +5520,26 @@
       </choices>
     </argument>
     <argument>
+      <name>hvac_control_heating_season_period</name>
+      <display_name>HVAC Control: Heating Season Period</display_name>
+      <description>Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availability.</description>
+      <type>String</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Jan 1 - Dec 31</default_value>
+    </argument>
+    <argument>
+      <name>hvac_control_cooling_season_period</name>
+      <display_name>HVAC Control: Cooling Season Period</display_name>
+      <description>Enter a date range like 'Jun 1 - Oct 31'. Defaults to year-round cooling availability.</description>
+      <type>String</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Jan 1 - Dec 31</default_value>
+    </argument>
+    <argument>
       <name>hvac_ducts</name>
       <display_name>HVAC Ducts</display_name>
       <description>The leakage to outside and insulation level of the ducts.</description>
@@ -10882,26 +10902,6 @@
       <default_value>0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0</default_value>
     </argument>
     <argument>
-      <name>hvac_control_use_auto_heating_season</name>
-      <display_name>HVAC Control: Use Auto Heating Season</display_name>
-      <description>Specifies whether to automatically define the heating season based on the weather file.</description>
-      <type>Boolean</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <default_value>false</default_value>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
       <name>hvac_control_cooling_weekday_setpoint_temp</name>
       <display_name>HVAC Control: Cooling Setpoint Weekday Temperature</display_name>
       <description>Specify the weekday cooling setpoint temperature.</description>
@@ -10960,26 +10960,6 @@
       <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0</default_value>
-    </argument>
-    <argument>
-      <name>hvac_control_use_auto_cooling_season</name>
-      <display_name>HVAC Control: Use Auto Cooling Season</display_name>
-      <description>Specifies whether to automatically define the cooling season based on the weather file.</description>
-      <type>Boolean</type>
-      <units></units>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <default_value>false</default_value>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
     </argument>
     <argument>
       <name>hvac_heating_shared_system</name>
@@ -11760,6 +11740,25 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>misc_has_pool</name>
+      <display_name>Misc: Has Pool</display_name>
+      <description>Whether a pool is present.</description>
+      <type>Boolean</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>electric_panel_service_max_current_rating</name>
       <display_name>Electric Panel: Service Max Current Rating</display_name>
       <description>The service max current rating of the electric panel.</description>
@@ -12430,7 +12429,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>1736F33A</checksum>
+      <checksum>B700EFB4</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -12484,7 +12483,7 @@
       <filename>electrical_panel.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>443EB8E1</checksum>
+      <checksum>4E3C0363</checksum>
     </file>
     <file>
       <filename>ev_flexibility/ev_schedule_modifier.rb</filename>

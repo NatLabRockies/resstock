@@ -223,12 +223,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue('0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('hvac_control_use_auto_heating_season', true)
-    arg.setDisplayName('HVAC Control: Use Auto Heating Season')
-    arg.setDescription('Specifies whether to automatically define the heating season based on the weather file.')
-    arg.setDefaultValue(false)
-    args << arg
-
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_control_cooling_weekday_setpoint_temp', true)
     arg.setDisplayName('HVAC Control: Cooling Setpoint Weekday Temperature')
     arg.setDescription('Specify the weekday cooling setpoint temperature.')
@@ -267,12 +261,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDisplayName('HVAC Control: Cooling Setpoint Weekend Schedule')
     arg.setDescription('Specify the 24-hour comma-separated weekend cooling schedule of 0s and 1s.')
     arg.setDefaultValue('0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0')
-    args << arg
-
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('hvac_control_use_auto_cooling_season', true)
-    arg.setDisplayName('HVAC Control: Use Auto Cooling Season')
-    arg.setDescription('Specifies whether to automatically define the cooling season based on the weather file.')
-    arg.setDefaultValue(false)
     args << arg
 
     hvac_heating_shared_system_choices = OpenStudio::StringVector.new
@@ -718,6 +706,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Multiplier on the other energy usage that can reflect, e.g., high/low usage occupants.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('misc_has_pool', false)
+    arg.setDisplayName('Misc: Has Pool')
+    arg.setDescription('Whether a pool is present.')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('electric_panel_service_max_current_rating', false)
     arg.setDisplayName('Electric Panel: Service Max Current Rating')
     arg.setDescription('The service max current rating of the electric panel.')
@@ -1028,15 +1021,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    # HVAC Seasons
-    [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
-      use_auto_season = "use_auto_#{htg_or_clg}_season".to_sym
-      hvac_control_season_period = "hvac_control_#{htg_or_clg}_season_period".to_sym
-      if args[use_auto_season] && (args[hvac_control_season_period] == 'auto')
-        args[hvac_control_season_period] = Constants::BuildingAmerica
-      end
-    end
-
     # HVAC Secondary
     if args[:hvac_heating_system_2] != 'None'
       if args[:hvac_heating_system] != 'None'
@@ -1170,6 +1154,11 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
     args[:ev_usage_multiplier] = nil
     args[:ev_fraction_charged_home] = nil
+
+    # Pool
+    if not args[:misc_has_pool]
+      args[:misc_pool] = 'None'
+    end
 
     # Register values to runner
     args.each do |arg_name, arg_value|

@@ -9,8 +9,12 @@ class ElectricalPanelSampler
     @prng = Random.new(Integer(building_id)) # initialize a random number generator
 
     @unit_type = hpxml_bldg.building_construction.residential_facility_type
-    @num_units = 1 # FIXME
-    @heating_fuel = (hpxml_bldg.heating_systems.find { |h| h.primary_system }.heating_system_fuel rescue nil)
+    @num_units = hpxml_bldg.building_construction.number_of_units_in_building
+    if hpxml_bldg.heat_pumps.any? { |hp| hp.primary_system }
+      @heating_fuel = HPXML::FuelTypeElectricity
+    else
+      @heating_fuel = (hpxml_bldg.heating_systems.find { |h| h.primary_system }.heating_system_fuel rescue nil)
+    end
     @hp_type = (hpxml_bldg.heat_pumps.find { |hp| hp.primary_system }.heat_pump_type rescue nil)
     @cooling_type = (hpxml_bldg.cooling_systems.find { |c| c.primary_system }.cooling_system_type rescue nil)
     @dryer_fuel = (hpxml_bldg.clothes_dryers[0].fuel_type rescue nil)
@@ -87,6 +91,7 @@ class ElectricalPanelSampler
     if @unit_type == HPXML::ResidentialTypeApartment
       geometry_unit_cfa_bin_simp = simplify_geometry_unit_cfa_bin()
       vintage_simp = simplify_vintage()
+
       heating_fuel_simp = simplify_fuel(@heating_fuel)
 
       lookup_array = [
