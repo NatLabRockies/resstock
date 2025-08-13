@@ -197,7 +197,7 @@ def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
     out_space_col = "out.panel.constraint.breaker_space"
     space_constraint = pl.when(pl.col(space_col) <= 0).then(True).otherwise(False).alias(out_space_col)
     ind_constraints = [space_constraint]
-
+    overall_constraint = None
     for amp_col in amp_cols:
         nec_method = amp_col.removeprefix(amp_prefix).removesuffix(".a")
         out_amp_col = "out.panel.constraint.capacity." + nec_method
@@ -212,9 +212,10 @@ def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
             pl.lit("No Constraint"),
         ).alias(out_overall_col)
 
-        new_df = df.with_columns(ind_constraints).with_columns(overall_constraint) # needs to be sequential
+    new_df = df.with_columns(ind_constraints)
+    if overall_constraint is not None:
+        new_df = new_df.with_columns(overall_constraint) # needs to be sequential
 
-        
     return new_df
 
 
