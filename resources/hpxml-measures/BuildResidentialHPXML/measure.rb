@@ -4969,7 +4969,7 @@ module HPXMLFile
                         elevation: args[:site_elevation],
                         latitude: args[:site_latitude],
                         longitude: args[:site_longitude],
-                        dst_enabled: args[:simulation_control_daylight_saving_enabled],
+                        dst_observed: args[:simulation_control_daylight_saving_enabled],
                         dst_begin_month: dst_begin_month,
                         dst_begin_day: dst_begin_day,
                         dst_end_month: dst_end_month,
@@ -6794,7 +6794,7 @@ module HPXMLFile
   def self.set_hvac_control(hpxml, hpxml_bldg, args, weather)
     return if (args[:heating_system_type] == Constants::None) && (args[:cooling_system_type] == Constants::None) && (args[:heat_pump_type] == Constants::None)
 
-    latitude = Defaults.get_latitude(args[:site_latitude], weather) unless weather.nil?
+    latitude = Defaults.get_latitude(args[:site_latitude], weather, args[:site_zip_code]) unless weather.nil?
 
     # Heating
     if hpxml_bldg.total_fraction_heat_load_served > 0
@@ -7248,7 +7248,7 @@ module HPXMLFile
       collector_loop_type = args[:solar_thermal_collector_loop_type]
       collector_type = args[:solar_thermal_collector_type]
       collector_azimuth = args[:solar_thermal_collector_azimuth]
-      latitude = Defaults.get_latitude(args[:site_latitude], weather) unless weather.nil?
+      latitude = Defaults.get_latitude(args[:site_latitude], weather, args[:site_zip_code]) unless weather.nil?
       collector_tilt = Geometry.get_absolute_tilt(tilt_str: args[:solar_thermal_collector_tilt], roof_pitch: args[:geometry_roof_pitch], latitude: latitude)
       collector_rated_optical_efficiency = args[:solar_thermal_collector_rated_optical_efficiency]
       collector_rated_thermal_losses = args[:solar_thermal_collector_rated_thermal_losses]
@@ -7298,7 +7298,7 @@ module HPXMLFile
       end
     end
 
-    latitude = Defaults.get_latitude(args[:site_latitude], weather) unless weather.nil?
+    latitude = Defaults.get_latitude(args[:site_latitude], weather, args[:site_zip_code]) unless weather.nil?
 
     hpxml_bldg.pv_systems.add(id: "PVSystem#{hpxml_bldg.pv_systems.size + 1}",
                               location: args[:pv_system_location],

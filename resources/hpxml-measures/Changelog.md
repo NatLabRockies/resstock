@@ -4,6 +4,8 @@ __New Features__
 - Updates to HPXML v4.2-rc3.
 - Allows optional `UsageMultiplier` for electric vehicles described using `Vehicles`.
 - Improves water heater tank losses when using `EnergyFactor` as the metric; now consistent with how `UniformEnergyFactor` is handled.
+- `TimeZone/DSTObserved` now defaults to false if `Address/StateCode` is 'AZ' or 'HI'.
+- `Address/StateCode`, `GeoLocation/Latitude`, and `GeoLocation/Longitude` now default based on zip code if available, otherwise falls back to EPW weather file header as before.
 
 __Bugfixes__
 - Fixes ground-source heat pump plant loop fluid type (workaround for OpenStudio bug).

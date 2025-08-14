@@ -20,6 +20,7 @@ Absolute/relative path of the HPXML file.
 
 - **Required:** ``true``
 
+
 <br/>
 
 **Existing HPXML File Path**
@@ -30,6 +31,7 @@ Absolute/relative path of the existing HPXML file. If not provided, a new HPXML 
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -42,6 +44,7 @@ If the HPXML file represents a single family-attached/multifamily building with 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Software Info: Program Used**
@@ -52,6 +55,7 @@ The name of the software program used.
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -64,6 +68,7 @@ The version of the software program used.
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Schedules: CSV File Paths**
@@ -74,6 +79,7 @@ Absolute/relative paths of csv files containing user-specified detailed schedule
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -86,6 +92,7 @@ Specifies the unavailable period types. Possible types are column names defined 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Schedules: Unavailable Period Dates**
@@ -97,6 +104,7 @@ Specifies the unavailable period date ranges. Enter a date range like "Dec 15 - 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Schedules: Unavailable Period Window Natural Ventilation Availabilities**
@@ -107,6 +115,7 @@ The availability of the natural ventilation schedule during unavailable periods.
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -121,6 +130,7 @@ Value must be a divisor of 60. If not provided, the OS-HPXML default (see <a hre
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Simulation Control: Run Period**
@@ -131,6 +141,7 @@ Enter a date range like 'Jan 1 - Dec 31'. If not provided, the OS-HPXML default 
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -145,6 +156,7 @@ This numeric field should contain the calendar year that determines the start da
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Simulation Control: Daylight Saving Enabled**
@@ -155,6 +167,7 @@ Whether to use daylight saving. If not provided, the OS-HPXML default (see <a hr
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -167,6 +180,7 @@ Enter a date range like 'Mar 15 - Dec 15'. If not provided, the OS-HPXML default
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Simulation Control: Temperature Capacitance Multiplier**
@@ -177,6 +191,7 @@ Affects the transient calculation of indoor air temperatures. If not provided, t
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -191,6 +206,7 @@ Research feature to select the type of ground-to-air heat pump model. Use standa
 
 - **Choices:** `standard`, `experimental`
 
+
 <br/>
 
 **Simulation Control: HVAC On-Off Thermostat Deadband**
@@ -203,6 +219,7 @@ Research feature to model on-off thermostat deadband and start-up degradation fo
 - **Units:** ``deg-F``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -217,6 +234,7 @@ Research feature to model capacity increment of multi-stage heat pump backup sys
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Site: Type**
@@ -229,6 +247,7 @@ The type of site. If not provided, the OS-HPXML default (see <a href='https://op
 - **Required:** ``false``
 
 - **Choices:** `suburban`, `urban`, `rural`
+
 
 <br/>
 
@@ -243,6 +262,7 @@ Presence of nearby buildings, trees, obstructions for infiltration model. If not
 
 - **Choices:** `exposed`, `normal`, `well-shielded`
 
+
 <br/>
 
 **Site: Soil and Moisture Type**
@@ -255,6 +275,7 @@ Type of soil and moisture. This is used to inform ground conductivity and diffus
 - **Required:** ``false``
 
 - **Choices:** `clay, dry`, `clay, mixed`, `clay, wet`, `gravel, dry`, `gravel, mixed`, `gravel, wet`, `loam, dry`, `loam, mixed`, `loam, wet`, `sand, dry`, `sand, mixed`, `sand, wet`, `silt, dry`, `silt, mixed`, `silt, wet`, `unknown, dry`, `unknown, mixed`, `unknown, wet`
+
 
 <br/>
 
@@ -269,6 +290,7 @@ Conductivity of the ground soil. If provided, overrides the previous site and mo
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Site: Ground Diffusivity**
@@ -281,6 +303,7 @@ Diffusivity of the ground soil. If provided, overrides the previous site and moi
 - **Units:** ``ft^2/hr``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -295,6 +318,7 @@ IECC zone of the home address.
 
 - **Choices:** `1A`, `1B`, `1C`, `2A`, `2B`, `2C`, `3A`, `3B`, `3C`, `4A`, `4B`, `4C`, `5A`, `5B`, `5C`, `6A`, `6B`, `6C`, `7`, `8`
 
+
 <br/>
 
 **Site: City**
@@ -305,6 +329,7 @@ City/municipality of the home address.
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -319,6 +344,7 @@ State code of the home address. If not provided, the OS-HPXML default (see <a hr
 
 - **Choices:** `AK`, `AL`, `AR`, `AZ`, `CA`, `CO`, `CT`, `DC`, `DE`, `FL`, `GA`, `HI`, `IA`, `ID`, `IL`, `IN`, `KS`, `KY`, `LA`, `MA`, `MD`, `ME`, `MI`, `MN`, `MO`, `MS`, `MT`, `NC`, `ND`, `NE`, `NH`, `NJ`, `NM`, `NV`, `NY`, `OH`, `OK`, `OR`, `PA`, `RI`, `SC`, `SD`, `TN`, `TX`, `UT`, `VA`, `VT`, `WA`, `WI`, `WV`, `WY`
 
+
 <br/>
 
 **Site: Zip Code**
@@ -329,6 +355,7 @@ Zip code of the home address. Either this or the Weather Station: EnergyPlus Wea
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -343,6 +370,7 @@ Time zone UTC offset of the home address. Must be between -12 and 14. If not pro
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Site: Elevation**
@@ -355,6 +383,7 @@ Elevation of the home address. If not provided, the OS-HPXML default (see <a hre
 - **Units:** ``ft``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -369,6 +398,7 @@ Latitude of the home address. Must be between -90 and 90. Use negative values fo
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Site: Longitude**
@@ -382,6 +412,7 @@ Longitude of the home address. Must be between -180 and 180. Use negative values
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Weather Station: EnergyPlus Weather (EPW) Filepath**
@@ -392,6 +423,7 @@ Path of the EPW file. Either this or the Site: Zip Code input above must be prov
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -404,6 +436,7 @@ The year the building was built.
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Building Construction: Unit Multiplier**
@@ -414,6 +447,7 @@ The number of similar dwelling units. EnergyPlus simulation results will be mult
 - **Type:** ``Integer``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -428,6 +462,9 @@ The type of dwelling unit. Use single-family attached for a dwelling unit with 1
 
 - **Choices:** `single-family detached`, `single-family attached`, `apartment unit`, `manufactured home`
 
+
+- **Default:** `single-family detached`
+
 <br/>
 
 **Geometry: Unit Left Wall Is Adiabatic**
@@ -438,6 +475,7 @@ Presence of an adiabatic left wall.
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -450,6 +488,7 @@ Presence of an adiabatic right wall.
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Geometry: Unit Front Wall Is Adiabatic**
@@ -461,6 +500,7 @@ Presence of an adiabatic front wall, for example, the unit is adjacent to a cond
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Geometry: Unit Back Wall Is Adiabatic**
@@ -471,6 +511,7 @@ Presence of an adiabatic back wall.
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -485,6 +526,9 @@ The number of floors above grade in the unit. Attic type ConditionedAttic is inc
 
 - **Required:** ``true``
 
+
+- **Default:** `2`
+
 <br/>
 
 **Geometry: Unit Conditioned Floor Area**
@@ -497,6 +541,9 @@ The total floor area of the unit's conditioned space (including any conditioned 
 - **Units:** ``ft^2``
 
 - **Required:** ``true``
+
+
+- **Default:** `2000.0`
 
 <br/>
 
@@ -511,6 +558,9 @@ The ratio of front/back wall length to left/right wall length for the unit, excl
 
 - **Required:** ``true``
 
+
+- **Default:** `2.0`
+
 <br/>
 
 **Geometry: Unit Orientation**
@@ -523,6 +573,9 @@ The unit's orientation is measured clockwise from north (e.g., North=0, East=90,
 - **Units:** ``degrees``
 
 - **Required:** ``true``
+
+
+- **Default:** `180.0`
 
 <br/>
 
@@ -537,6 +590,9 @@ The number of bedrooms in the unit.
 
 - **Required:** ``true``
 
+
+- **Default:** `3`
+
 <br/>
 
 **Geometry: Unit Number of Bathrooms**
@@ -549,6 +605,7 @@ The number of bathrooms in the unit. If not provided, the OS-HPXML default (see 
 - **Units:** ``#``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -563,6 +620,7 @@ The number of occupants in the unit. If not provided, an *asset* calculation is 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Geometry: Building Number of Units**
@@ -575,6 +633,7 @@ The number of units in the building. Required for single-family attached and apa
 - **Units:** ``#``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -589,6 +648,9 @@ Average distance from the floor to the ceiling.
 
 - **Required:** ``true``
 
+
+- **Default:** `8.0`
+
 <br/>
 
 **Geometry: Unit Height Above Grade**
@@ -601,6 +663,7 @@ Describes the above-grade height of apartment units on upper floors or homes abo
 - **Units:** ``ft``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -615,6 +678,9 @@ The width of the garage. Enter zero for no garage. Only applies to single-family
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Geometry: Garage Depth**
@@ -627,6 +693,9 @@ The depth of the garage. Only applies to single-family detached units.
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `20.0`
 
 <br/>
 
@@ -641,6 +710,9 @@ The fraction of the garage that is protruding from the conditioned space. Only a
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Geometry: Garage Position**
@@ -653,6 +725,9 @@ The position of the garage. Only applies to single-family detached units.
 - **Required:** ``true``
 
 - **Choices:** `Right`, `Left`
+
+
+- **Default:** `Right`
 
 <br/>
 
@@ -667,6 +742,9 @@ The foundation type of the building. Foundation types ConditionedBasement and Co
 
 - **Choices:** `SlabOnGrade`, `VentedCrawlspace`, `UnventedCrawlspace`, `ConditionedCrawlspace`, `UnconditionedBasement`, `ConditionedBasement`, `Ambient`, `AboveApartment`, `BellyAndWingWithSkirt`, `BellyAndWingNoSkirt`
 
+
+- **Default:** `SlabOnGrade`
+
 <br/>
 
 **Geometry: Foundation Height**
@@ -679,6 +757,9 @@ The height of the foundation (e.g., 3ft for crawlspace, 8ft for basement). Only 
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -693,6 +774,9 @@ The depth above grade of the foundation wall. Only applies to basements/crawlspa
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Geometry: Rim Joist Height**
@@ -705,6 +789,7 @@ The height of the rim joists. Only applies to basements/crawlspaces.
 - **Units:** ``in``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -719,6 +804,9 @@ The attic type of the building. Attic type ConditionedAttic is not allowed for a
 
 - **Choices:** `FlatRoof`, `VentedAttic`, `UnventedAttic`, `ConditionedAttic`, `BelowApartment`
 
+
+- **Default:** `VentedAttic`
+
 <br/>
 
 **Geometry: Roof Type**
@@ -731,6 +819,9 @@ The roof type of the building. Ignored if the building has a flat roof.
 - **Required:** ``true``
 
 - **Choices:** `gable`, `hip`
+
+
+- **Default:** `gable`
 
 <br/>
 
@@ -745,6 +836,9 @@ The roof pitch of the attic. Ignored if the building has a flat roof.
 
 - **Choices:** `1:12`, `2:12`, `3:12`, `4:12`, `5:12`, `6:12`, `7:12`, `8:12`, `9:12`, `10:12`, `11:12`, `12:12`
 
+
+- **Default:** `6:12`
+
 <br/>
 
 **Geometry: Eaves Depth**
@@ -757,6 +851,9 @@ The eaves depth of the roof.
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `2.0`
 
 <br/>
 
@@ -771,6 +868,9 @@ The distance between the unit and the neighboring building to the front (not inc
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Neighbor: Back Distance**
@@ -783,6 +883,9 @@ The distance between the unit and the neighboring building to the back (not incl
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -797,6 +900,9 @@ The distance between the unit and the neighboring building to the left (not incl
 
 - **Required:** ``true``
 
+
+- **Default:** `10.0`
+
 <br/>
 
 **Neighbor: Right Distance**
@@ -809,6 +915,9 @@ The distance between the unit and the neighboring building to the right (not inc
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `10.0`
 
 <br/>
 
@@ -823,6 +932,7 @@ The height of the neighboring building to the front. If not provided, the OS-HPX
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Neighbor: Back Height**
@@ -835,6 +945,7 @@ The height of the neighboring building to the back. If not provided, the OS-HPXM
 - **Units:** ``ft``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -849,6 +960,7 @@ The height of the neighboring building to the left. If not provided, the OS-HPXM
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Neighbor: Right Height**
@@ -861,6 +973,7 @@ The height of the neighboring building to the right. If not provided, the OS-HPX
 - **Units:** ``ft``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -875,6 +988,9 @@ Assembly R-value for the floor over the foundation. Ignored if the building has 
 
 - **Required:** ``true``
 
+
+- **Default:** `28.1`
+
 <br/>
 
 **Floor: Over Garage Assembly R-value**
@@ -887,6 +1003,9 @@ Assembly R-value for the floor over the garage. Ignored unless the building has 
 - **Units:** ``h-ft^2-R/Btu``
 
 - **Required:** ``true``
+
+
+- **Default:** `28.1`
 
 <br/>
 
@@ -901,6 +1020,9 @@ The type of floors.
 
 - **Choices:** `WoodFrame`, `StructuralInsulatedPanel`, `SolidConcrete`, `SteelFrame`
 
+
+- **Default:** `WoodFrame`
+
 <br/>
 
 **Foundation Wall: Type**
@@ -913,6 +1035,7 @@ The material type of the foundation wall. If not provided, the OS-HPXML default 
 - **Required:** ``false``
 
 - **Choices:** `solid concrete`, `concrete block`, `concrete block foam core`, `concrete block perlite core`, `concrete block vermiculite core`, `concrete block solid core`, `double brick`, `wood`
+
 
 <br/>
 
@@ -927,6 +1050,7 @@ The thickness of the foundation wall. If not provided, the OS-HPXML default (see
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Foundation Wall: Insulation Nominal R-value**
@@ -939,6 +1063,9 @@ Nominal R-value for the foundation wall insulation. Only applies to basements/cr
 - **Units:** ``h-ft^2-R/Btu``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -953,6 +1080,9 @@ Whether the insulation is on the interior or exterior of the foundation wall. On
 
 - **Choices:** `interior`, `exterior`
 
+
+- **Default:** `exterior`
+
 <br/>
 
 **Foundation Wall: Insulation Distance To Top**
@@ -965,6 +1095,7 @@ The distance from the top of the foundation wall to the top of the foundation wa
 - **Units:** ``ft``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -979,6 +1110,7 @@ The distance from the top of the foundation wall to the bottom of the foundation
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Foundation Wall: Assembly R-value**
@@ -991,6 +1123,7 @@ Assembly R-value for the foundation walls. Only applies to basements/crawlspaces
 - **Units:** ``h-ft^2-R/Btu``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -1005,6 +1138,7 @@ Assembly R-value for the rim joists. Only applies to basements/crawlspaces. Requ
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Slab: Perimeter Insulation Nominal R-value**
@@ -1017,6 +1151,9 @@ Nominal R-value of the vertical slab perimeter insulation. Applies to slab-on-gr
 - **Units:** ``h-ft^2-R/Btu``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -1031,6 +1168,9 @@ Depth from grade to bottom of vertical slab perimeter insulation. Applies to sla
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Slab: Exterior Horizontal Insulation Nominal R-value**
@@ -1043,6 +1183,7 @@ Nominal R-value of the slab exterior horizontal insulation. Applies to slab-on-g
 - **Units:** ``h-ft^2-R/Btu``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -1057,6 +1198,7 @@ Width of the slab exterior horizontal insulation measured from the exterior surf
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Slab: Exterior Horizontal Insulation Depth Below Grade**
@@ -1069,6 +1211,7 @@ Depth of the slab exterior horizontal insulation measured from the top surface o
 - **Units:** ``ft``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -1083,6 +1226,9 @@ Nominal R-value of the horizontal under slab insulation. Applies to slab-on-grad
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Slab: Under Slab Insulation Width**
@@ -1095,6 +1241,9 @@ Width from slab edge inward of horizontal under-slab insulation. Enter 999 to sp
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -1109,6 +1258,7 @@ The thickness of the slab. Zero can be entered if there is a dirt floor instead 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Slab: Carpet Fraction**
@@ -1121,6 +1271,7 @@ Fraction of the slab floor area that is carpeted. If not provided, the OS-HPXML 
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -1135,6 +1286,7 @@ R-value of the slab carpet. If not provided, the OS-HPXML default (see <a href='
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Ceiling: Assembly R-value**
@@ -1147,6 +1299,9 @@ Assembly R-value for the ceiling (attic floor).
 - **Units:** ``h-ft^2-R/Btu``
 
 - **Required:** ``true``
+
+
+- **Default:** `31.6`
 
 <br/>
 
@@ -1161,6 +1316,7 @@ The material type of the roof. If not provided, the OS-HPXML default (see <a hre
 
 - **Choices:** `asphalt or fiberglass shingles`, `concrete`, `cool roof`, `slate or tile shingles`, `expanded polystyrene sheathing`, `metal surfacing`, `plastic/rubber/synthetic sheeting`, `shingles`, `wood shingles or shakes`
 
+
 <br/>
 
 **Roof: Color**
@@ -1173,6 +1329,7 @@ The color of the roof. If not provided, the OS-HPXML default (see <a href='https
 - **Required:** ``false``
 
 - **Choices:** `dark`, `light`, `medium`, `medium dark`, `reflective`
+
 
 <br/>
 
@@ -1187,6 +1344,9 @@ Assembly R-value of the roof.
 
 - **Required:** ``true``
 
+
+- **Default:** `2.3`
+
 <br/>
 
 **Attic: Radiant Barrier Location**
@@ -1199,6 +1359,7 @@ The location of the radiant barrier in the attic.
 - **Required:** ``false``
 
 - **Choices:** `none`, `Attic roof only`, `Attic roof and gable walls`, `Attic floor`
+
 
 <br/>
 
@@ -1213,6 +1374,7 @@ The grade of the radiant barrier in the attic. If not provided, the OS-HPXML def
 
 - **Choices:** `1`, `2`, `3`
 
+
 <br/>
 
 **Wall: Type**
@@ -1225,6 +1387,9 @@ The type of walls.
 - **Required:** ``true``
 
 - **Choices:** `WoodStud`, `ConcreteMasonryUnit`, `DoubleWoodStud`, `InsulatedConcreteForms`, `LogWall`, `StructuralInsulatedPanel`, `SolidConcrete`, `SteelFrame`, `Stone`, `StrawBale`, `StructuralBrick`
+
+
+- **Default:** `WoodStud`
 
 <br/>
 
@@ -1239,6 +1404,7 @@ The siding type of the walls. Also applies to rim joists. If not provided, the O
 
 - **Choices:** `aluminum siding`, `asbestos siding`, `brick veneer`, `composite shingle siding`, `fiber cement siding`, `masonite siding`, `none`, `stucco`, `synthetic stucco`, `vinyl siding`, `wood siding`
 
+
 <br/>
 
 **Wall: Color**
@@ -1251,6 +1417,7 @@ The color of the walls. Also applies to rim joists. If not provided, the OS-HPXM
 - **Required:** ``false``
 
 - **Choices:** `dark`, `light`, `medium`, `medium dark`, `reflective`
+
 
 <br/>
 
@@ -1265,6 +1432,9 @@ Assembly R-value of the walls.
 
 - **Required:** ``true``
 
+
+- **Default:** `11.9`
+
 <br/>
 
 **Windows: Front Window-to-Wall Ratio**
@@ -1277,6 +1447,9 @@ The ratio of window area to wall area for the unit's front facade. Enter 0 if sp
 - **Units:** ``Frac``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.18`
 
 <br/>
 
@@ -1291,6 +1464,9 @@ The ratio of window area to wall area for the unit's back facade. Enter 0 if spe
 
 - **Required:** ``true``
 
+
+- **Default:** `0.18`
+
 <br/>
 
 **Windows: Left Window-to-Wall Ratio**
@@ -1303,6 +1479,9 @@ The ratio of window area to wall area for the unit's left facade (when viewed fr
 - **Units:** ``Frac``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.18`
 
 <br/>
 
@@ -1317,6 +1496,9 @@ The ratio of window area to wall area for the unit's right facade (when viewed f
 
 - **Required:** ``true``
 
+
+- **Default:** `0.18`
+
 <br/>
 
 **Windows: Front Window Area**
@@ -1329,6 +1511,9 @@ The amount of window area on the unit's front facade. Enter 0 if specifying Fron
 - **Units:** ``ft^2``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -1343,6 +1528,9 @@ The amount of window area on the unit's back facade. Enter 0 if specifying Back 
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Windows: Left Window Area**
@@ -1355,6 +1543,9 @@ The amount of window area on the unit's left facade (when viewed from the front)
 - **Units:** ``ft^2``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -1369,6 +1560,9 @@ The amount of window area on the unit's right facade (when viewed from the front
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Windows: Aspect Ratio**
@@ -1381,6 +1575,9 @@ Ratio of window height to width.
 - **Units:** ``Frac``
 
 - **Required:** ``true``
+
+
+- **Default:** `1.333`
 
 <br/>
 
@@ -1395,6 +1592,7 @@ Fraction of windows that are operable. If not provided, the OS-HPXML default (se
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Windows: Natural Ventilation Availability**
@@ -1407,6 +1605,7 @@ For operable windows, the number of days/week that windows can be opened by occu
 - **Units:** ``Days/week``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -1421,6 +1620,9 @@ Full-assembly NFRC U-factor.
 
 - **Required:** ``true``
 
+
+- **Default:** `0.37`
+
 <br/>
 
 **Windows: SHGC**
@@ -1431,6 +1633,9 @@ Full-assembly NFRC solar heat gain coefficient.
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.3`
 
 <br/>
 
@@ -1445,6 +1650,7 @@ Type of window interior shading. Summer/winter shading coefficients can be provi
 
 - **Choices:** `light curtains`, `light shades`, `light blinds`, `medium curtains`, `medium shades`, `medium blinds`, `dark curtains`, `dark shades`, `dark blinds`, `none`
 
+
 <br/>
 
 **Windows: Winter Interior Shading Coefficient**
@@ -1457,6 +1663,7 @@ Interior shading coefficient for the winter season, which if provided overrides 
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -1471,6 +1678,7 @@ Interior shading coefficient for the summer season, which if provided overrides 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Windows: Exterior Shading Type**
@@ -1483,6 +1691,7 @@ Type of window exterior shading. Summer/winter shading coefficients can be provi
 - **Required:** ``false``
 
 - **Choices:** `solar film`, `solar screens`, `none`
+
 
 <br/>
 
@@ -1497,6 +1706,7 @@ Exterior shading coefficient for the winter season, which if provided overrides 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Windows: Summer Exterior Shading Coefficient**
@@ -1510,6 +1720,7 @@ Exterior shading coefficient for the summer season, which if provided overrides 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Windows: Shading Summer Season**
@@ -1520,6 +1731,7 @@ Enter a date range like 'May 1 - Sep 30'. Defines the summer season for purposes
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -1534,6 +1746,7 @@ The type of insect screens, if present. If not provided, assumes there are no in
 
 - **Choices:** `none`, `exterior`, `interior`
 
+
 <br/>
 
 **Windows: Storm Type**
@@ -1546,6 +1759,7 @@ The type of storm, if present. If not provided, assumes there is no storm.
 - **Required:** ``false``
 
 - **Choices:** `clear`, `low-e`
+
 
 <br/>
 
@@ -1560,6 +1774,9 @@ The depth of overhangs for windows for the front facade.
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Overhangs: Front Distance to Top of Window**
@@ -1572,6 +1789,9 @@ The overhangs distance to the top of window for the front facade.
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -1586,6 +1806,9 @@ The overhangs distance to the bottom of window for the front facade.
 
 - **Required:** ``true``
 
+
+- **Default:** `4.0`
+
 <br/>
 
 **Overhangs: Back Depth**
@@ -1598,6 +1821,9 @@ The depth of overhangs for windows for the back facade.
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -1612,6 +1838,9 @@ The overhangs distance to the top of window for the back facade.
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Overhangs: Back Distance to Bottom of Window**
@@ -1624,6 +1853,9 @@ The overhangs distance to the bottom of window for the back facade.
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `4.0`
 
 <br/>
 
@@ -1638,6 +1870,9 @@ The depth of overhangs for windows for the left facade.
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Overhangs: Left Distance to Top of Window**
@@ -1650,6 +1885,9 @@ The overhangs distance to the top of window for the left facade.
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -1664,6 +1902,9 @@ The overhangs distance to the bottom of window for the left facade.
 
 - **Required:** ``true``
 
+
+- **Default:** `4.0`
+
 <br/>
 
 **Overhangs: Right Depth**
@@ -1676,6 +1917,9 @@ The depth of overhangs for windows for the right facade.
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -1690,6 +1934,9 @@ The overhangs distance to the top of window for the right facade.
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Overhangs: Right Distance to Bottom of Window**
@@ -1702,6 +1949,9 @@ The overhangs distance to the bottom of window for the right facade.
 - **Units:** ``ft``
 
 - **Required:** ``true``
+
+
+- **Default:** `4.0`
 
 <br/>
 
@@ -1716,6 +1966,9 @@ The amount of skylight area on the unit's front conditioned roof facade.
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Skylights: Back Roof Area**
@@ -1728,6 +1981,9 @@ The amount of skylight area on the unit's back conditioned roof facade.
 - **Units:** ``ft^2``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -1742,6 +1998,9 @@ The amount of skylight area on the unit's left conditioned roof facade (when vie
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Skylights: Right Roof Area**
@@ -1754,6 +2013,9 @@ The amount of skylight area on the unit's right conditioned roof facade (when vi
 - **Units:** ``ft^2``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -1768,6 +2030,9 @@ Full-assembly NFRC U-factor.
 
 - **Required:** ``true``
 
+
+- **Default:** `0.33`
+
 <br/>
 
 **Skylights: SHGC**
@@ -1778,6 +2043,9 @@ Full-assembly NFRC solar heat gain coefficient.
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.45`
 
 <br/>
 
@@ -1792,6 +2060,7 @@ The type of storm, if present. If not provided, assumes there is no storm.
 
 - **Choices:** `clear`, `low-e`
 
+
 <br/>
 
 **Doors: Area**
@@ -1804,6 +2073,9 @@ The area of the opaque door(s).
 - **Units:** ``ft^2``
 
 - **Required:** ``true``
+
+
+- **Default:** `20.0`
 
 <br/>
 
@@ -1818,6 +2090,9 @@ R-value of the opaque door(s).
 
 - **Required:** ``true``
 
+
+- **Default:** `4.4`
+
 <br/>
 
 **Air Leakage: Leakiness Description**
@@ -1830,6 +2105,9 @@ Qualitative description of infiltration. If provided, the Year Built of the home
 - **Required:** ``false``
 
 - **Choices:** `very tight`, `tight`, `average`, `leaky`, `very leaky`
+
+
+- **Default:** `average`
 
 <br/>
 
@@ -1844,6 +2122,7 @@ The unit of measure for the air leakage if providing a numeric air leakage value
 
 - **Choices:** `ACH`, `CFM`, `ACHnatural`, `CFMnatural`, `EffectiveLeakageArea`
 
+
 <br/>
 
 **Air Leakage: House Pressure**
@@ -1857,6 +2136,7 @@ The house pressure relative to outside if providing a numeric air leakage value.
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Air Leakage: Value**
@@ -1867,6 +2147,7 @@ Numeric air leakage value. For 'EffectiveLeakageArea', provide value in sq. in. 
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -1881,6 +2162,7 @@ Type of air leakage if providing a numeric air leakage value. If 'unit total', r
 
 - **Choices:** `unit total`, `unit exterior only`
 
+
 <br/>
 
 **Air Leakage: Has Flue or Chimney in Conditioned Space**
@@ -1891,6 +2173,7 @@ Presence of flue or chimney with combustion air from conditioned space; used for
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -1905,6 +2188,9 @@ The type of heating system. Use 'none' if there is no heating system or if there
 
 - **Choices:** `none`, `Furnace`, `WallFurnace`, `FloorFurnace`, `Boiler`, `ElectricResistance`, `Stove`, `SpaceHeater`, `Fireplace`, `Shared Boiler w/ Baseboard`, `Shared Boiler w/ Ductless Fan Coil`
 
+
+- **Default:** `Furnace`
+
 <br/>
 
 **Heating System: Fuel Type**
@@ -1917,6 +2203,9 @@ The fuel type of the heating system. Ignored for ElectricResistance.
 - **Required:** ``true``
 
 - **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
+
+
+- **Default:** `natural gas`
 
 <br/>
 
@@ -1931,6 +2220,9 @@ The rated heating efficiency value of the heating system.
 
 - **Required:** ``true``
 
+
+- **Default:** `0.78`
+
 <br/>
 
 **Heating System: Heating Capacity**
@@ -1944,6 +2236,7 @@ The output heating capacity of the heating system. If not provided, the OS-HPXML
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heating System: Heating Autosizing Factor**
@@ -1954,6 +2247,7 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -1968,6 +2262,7 @@ The maximum capacity limit applied to the auto-sizing methodology. If not provid
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heating System: Fraction Heat Load Served**
@@ -1980,6 +2275,9 @@ The heating load served by the heating system.
 - **Units:** ``Frac``
 
 - **Required:** ``true``
+
+
+- **Default:** `1.0`
 
 <br/>
 
@@ -1994,6 +2292,7 @@ The fuel usage of the pilot light. Applies only to Furnace, WallFurnace, FloorFu
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heating System: Airflow Defect Ratio**
@@ -2006,6 +2305,7 @@ The airflow defect ratio, defined as (InstalledAirflow - DesignAirflow) / Design
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2020,6 +2320,9 @@ The type of cooling system. Use 'none' if there is no cooling system or if there
 
 - **Choices:** `none`, `central air conditioner`, `room air conditioner`, `evaporative cooler`, `mini-split`, `packaged terminal air conditioner`
 
+
+- **Default:** `central air conditioner`
+
 <br/>
 
 **Cooling System: Cooling Compressor Type**
@@ -2032,6 +2335,7 @@ The compressor type of the cooling system. Required for central air conditioner 
 - **Required:** ``false``
 
 - **Choices:** `single stage`, `two stage`, `variable speed`
+
 
 <br/>
 
@@ -2046,6 +2350,9 @@ The efficiency type of the cooling system. System types central air conditioner 
 
 - **Choices:** `SEER`, `SEER2`, `EER`, `CEER`
 
+
+- **Default:** `SEER`
+
 <br/>
 
 **Cooling System: Efficiency**
@@ -2056,6 +2363,9 @@ The rated efficiency value of the cooling system. Ignored for evaporative cooler
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `13.0`
 
 <br/>
 
@@ -2070,6 +2380,7 @@ The output cooling capacity of the cooling system. If not provided, the OS-HPXML
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Cooling System: Cooling Autosizing Factor**
@@ -2080,6 +2391,7 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2094,6 +2406,7 @@ The maximum capacity limit applied to the auto-sizing methodology. If not provid
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Cooling System: Fraction Cool Load Served**
@@ -2107,6 +2420,9 @@ The cooling load served by the cooling system.
 
 - **Required:** ``true``
 
+
+- **Default:** `1.0`
+
 <br/>
 
 **Cooling System: Is Ducted**
@@ -2117,6 +2433,7 @@ Whether the cooling system is ducted or not. Only used for mini-split and evapor
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2131,6 +2448,7 @@ The airflow defect ratio, defined as (InstalledAirflow - DesignAirflow) / Design
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Cooling System: Charge Defect Ratio**
@@ -2143,6 +2461,7 @@ The refrigerant charge defect ratio, defined as (InstalledCharge - DesignCharge)
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2157,6 +2476,7 @@ Cooling system crankcase heater power consumption in Watts. Applies only to cent
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Cooling System: Integrated Heating System Fuel Type**
@@ -2169,6 +2489,7 @@ The fuel type of the heating system integrated into cooling system. Only used fo
 - **Required:** ``false``
 
 - **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
+
 
 <br/>
 
@@ -2183,6 +2504,7 @@ The rated heating efficiency value of the heating system integrated into cooling
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Cooling System: Integrated Heating System Heating Capacity**
@@ -2195,6 +2517,7 @@ The output heating capacity of the heating system integrated into cooling system
 - **Units:** ``Btu/hr``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2209,6 +2532,7 @@ The heating load served by the heating system integrated into cooling system. On
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heat Pump: Type**
@@ -2221,6 +2545,9 @@ The type of heat pump. Use 'none' if there is no heat pump.
 - **Required:** ``true``
 
 - **Choices:** `none`, `air-to-air`, `mini-split`, `ground-to-air`, `packaged terminal heat pump`, `room air conditioner with reverse cycle`
+
+
+- **Default:** `none`
 
 <br/>
 
@@ -2235,6 +2562,7 @@ The compressor type of the heat pump. Required for air-to-air, mini-split and gr
 
 - **Choices:** `single stage`, `two stage`, `variable speed`
 
+
 <br/>
 
 **Heat Pump: Heating Efficiency Type**
@@ -2248,6 +2576,9 @@ The heating efficiency type of heat pump. System types air-to-air and mini-split
 
 - **Choices:** `HSPF`, `HSPF2`, `COP`
 
+
+- **Default:** `HSPF`
+
 <br/>
 
 **Heat Pump: Heating Efficiency**
@@ -2258,6 +2589,9 @@ The rated heating efficiency value of the heat pump.
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `7.7`
 
 <br/>
 
@@ -2272,6 +2606,9 @@ The cooling efficiency type of heat pump. System types air-to-air and mini-split
 
 - **Choices:** `SEER`, `SEER2`, `EER`, `CEER`
 
+
+- **Default:** `SEER`
+
 <br/>
 
 **Heat Pump: Cooling Efficiency**
@@ -2282,6 +2619,9 @@ The rated cooling efficiency value of the heat pump.
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `13.0`
 
 <br/>
 
@@ -2296,6 +2636,7 @@ The output heating capacity of the heat pump. If not provided, the OS-HPXML auto
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heat Pump: Heating Autosizing Factor**
@@ -2306,6 +2647,7 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2320,6 +2662,7 @@ The maximum capacity limit applied to the auto-sizing methodology. If not provid
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heat Pump: Heating Capacity Fraction at 17F**
@@ -2332,6 +2675,7 @@ The output heating capacity of the heat pump at 17F divided by the above nominal
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2346,6 +2690,7 @@ The output cooling capacity of the heat pump. If not provided, the OS-HPXML auto
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heat Pump: Cooling Autosizing Factor**
@@ -2356,6 +2701,7 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2370,6 +2716,7 @@ The maximum capacity limit applied to the auto-sizing methodology. If not provid
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heat Pump: Fraction Heat Load Served**
@@ -2382,6 +2729,9 @@ The heating load served by the heat pump.
 - **Units:** ``Frac``
 
 - **Required:** ``true``
+
+
+- **Default:** `1.0`
 
 <br/>
 
@@ -2396,6 +2746,9 @@ The cooling load served by the heat pump.
 
 - **Required:** ``true``
 
+
+- **Default:** `1.0`
+
 <br/>
 
 **Heat Pump: Compressor Lockout Temperature**
@@ -2408,6 +2761,7 @@ The temperature below which the heat pump compressor is disabled. If both this a
 - **Units:** ``F``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2422,6 +2776,9 @@ The backup type of the heat pump. If 'integrated', represents e.g. built-in elec
 
 - **Choices:** `none`, `integrated`, `separate`
 
+
+- **Default:** `integrated`
+
 <br/>
 
 **Heat Pump: Backup Heating Autosizing Factor**
@@ -2432,6 +2789,7 @@ The capacity scaling factor applied to the auto-sizing methodology if Backup Typ
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2446,6 +2804,7 @@ The maximum capacity limit applied to the auto-sizing methodology if Backup Type
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heat Pump: Backup Fuel Type**
@@ -2459,6 +2818,9 @@ The backup fuel type of the heat pump. Only applies if Backup Type is 'integrate
 
 - **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`
 
+
+- **Default:** `electricity`
+
 <br/>
 
 **Heat Pump: Backup Rated Efficiency**
@@ -2469,6 +2831,9 @@ The backup rated efficiency value of the heat pump. Percent for electricity fuel
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `1.0`
 
 <br/>
 
@@ -2483,6 +2848,7 @@ The backup output heating capacity of the heat pump. If not provided, the OS-HPX
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heat Pump: Backup Heating Lockout Temperature**
@@ -2495,6 +2861,7 @@ The temperature above which the heat pump backup system is disabled. If both thi
 - **Units:** ``F``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2509,6 +2876,7 @@ The auto-sizing methodology to use when the heat pump capacity is not provided. 
 
 - **Choices:** `ACCA`, `HERS`, `MaxLoad`
 
+
 <br/>
 
 **Heat Pump: Backup Sizing Methodology**
@@ -2522,6 +2890,7 @@ The auto-sizing methodology to use when the heat pump backup capacity is not pro
 
 - **Choices:** `emergency`, `supplemental`
 
+
 <br/>
 
 **Heat Pump: Is Ducted**
@@ -2532,6 +2901,7 @@ Whether the heat pump is ducted or not. Only used for mini-split. It's assumed t
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2546,6 +2916,7 @@ The airflow defect ratio, defined as (InstalledAirflow - DesignAirflow) / Design
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heat Pump: Charge Defect Ratio**
@@ -2558,6 +2929,7 @@ The refrigerant charge defect ratio, defined as (InstalledCharge - DesignCharge)
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2572,6 +2944,7 @@ Heat Pump crankcase heater power consumption in Watts. Applies only to air-to-ai
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heat Pump: Pan Heater Power Watts**
@@ -2584,6 +2957,7 @@ Heat Pump pan heater power consumption in Watts. Applies only to air-to-air and 
 - **Units:** ``W``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2598,6 +2972,7 @@ Heat pump pan heater control type. If 'continuous', operates continuously when o
 
 - **Choices:** `continuous`, `defrost mode`
 
+
 <br/>
 
 **HVAC Detailed Performance Data: Capacity Type**
@@ -2611,6 +2986,7 @@ Type of capacity values for detailed performance data if available. Applies only
 
 - **Choices:** `Absolute capacities`, `Normalized capacity fractions`
 
+
 <br/>
 
 **HVAC Detailed Performance Data: Heating Outdoor Temperatures**
@@ -2621,6 +2997,7 @@ Outdoor temperatures of heating detailed performance data if available. Applies 
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2633,6 +3010,7 @@ Minimum speed capacities of heating detailed performance data if available, corr
 
 - **Required:** ``false``
 
+
 <br/>
 
 **HVAC Detailed Performance Data: Heating Nominal Speed Capacities**
@@ -2643,6 +3021,7 @@ Nominal speed capacities of heating detailed performance data if available, corr
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2655,6 +3034,7 @@ Maximum speed capacities of heating detailed performance data if available, corr
 
 - **Required:** ``false``
 
+
 <br/>
 
 **HVAC Detailed Performance Data: Heating Minimum Speed COPs**
@@ -2665,6 +3045,7 @@ Minimum speed efficiency COP values of heating detailed performance data if avai
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2677,6 +3058,7 @@ Nominal speed efficiency COP values of heating detailed performance data if avai
 
 - **Required:** ``false``
 
+
 <br/>
 
 **HVAC Detailed Performance Data: Heating Maximum Speed COPs**
@@ -2687,6 +3069,7 @@ Maximum speed efficiency COP values of heating detailed performance data if avai
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2699,6 +3082,7 @@ Outdoor temperatures of cooling detailed performance data if available. Applies 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **HVAC Detailed Performance Data: Cooling Minimum Speed Capacities**
@@ -2709,6 +3093,7 @@ Minimum speed capacities of cooling detailed performance data if available, corr
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2721,6 +3106,7 @@ Nominal speed capacities of cooling detailed performance data if available, corr
 
 - **Required:** ``false``
 
+
 <br/>
 
 **HVAC Detailed Performance Data: Cooling Maximum Speed Capacities**
@@ -2731,6 +3117,7 @@ Maximum speed capacities of cooling detailed performance data if available, corr
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2743,6 +3130,7 @@ Minimum speed efficiency COP values of cooling detailed performance data if avai
 
 - **Required:** ``false``
 
+
 <br/>
 
 **HVAC Detailed Performance Data: Cooling Nominal Speed COPs**
@@ -2754,6 +3142,7 @@ Nominal speed efficiency COP values of cooling detailed performance data if avai
 
 - **Required:** ``false``
 
+
 <br/>
 
 **HVAC Detailed Performance Data: Cooling Maximum Speed COPs**
@@ -2764,6 +3153,7 @@ Maximum speed efficiency COP values of cooling detailed performance data if avai
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2778,6 +3168,7 @@ Configuration of the geothermal loop. Only applies to ground-to-air heat pump ty
 
 - **Choices:** `none`, `vertical`
 
+
 <br/>
 
 **Geothermal Loop: Borefield Configuration**
@@ -2790,6 +3181,7 @@ Borefield configuration of the geothermal loop. Only applies to ground-to-air he
 - **Required:** ``false``
 
 - **Choices:** `Rectangle`, `Open Rectangle`, `C`, `L`, `U`, `Lopsided U`
+
 
 <br/>
 
@@ -2804,6 +3196,7 @@ Water flow rate through the geothermal loop. Only applies to ground-to-air heat 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Geothermal Loop: Boreholes Count**
@@ -2816,6 +3209,7 @@ Number of boreholes. Only applies to ground-to-air heat pump type. If not provid
 - **Units:** ``#``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2830,6 +3224,7 @@ Average length of each borehole (vertical). Only applies to ground-to-air heat p
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Geothermal Loop: Boreholes Spacing**
@@ -2842,6 +3237,7 @@ Distance between bores. Only applies to ground-to-air heat pump type. If not pro
 - **Units:** ``ft``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2856,6 +3252,7 @@ Diameter of bores. Only applies to ground-to-air heat pump type. If not provided
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Geothermal Loop: Grout Type**
@@ -2868,6 +3265,7 @@ Grout type of the geothermal loop. Only applies to ground-to-air heat pump type.
 - **Required:** ``false``
 
 - **Choices:** `standard`, `thermally enhanced`
+
 
 <br/>
 
@@ -2882,6 +3280,7 @@ Pipe type of the geothermal loop. Only applies to ground-to-air heat pump type. 
 
 - **Choices:** `standard`, `thermally enhanced`
 
+
 <br/>
 
 **Geothermal Loop: Pipe Diameter**
@@ -2894,6 +3293,7 @@ Pipe diameter of the geothermal loop. Only applies to ground-to-air heat pump ty
 - **Required:** ``false``
 
 - **Choices:** `3/4" pipe`, `1" pipe`, `1-1/4" pipe`
+
 
 <br/>
 
@@ -2908,6 +3308,9 @@ The type of the second heating system. If a heat pump is specified and the backu
 
 - **Choices:** `none`, `Furnace`, `WallFurnace`, `FloorFurnace`, `Boiler`, `ElectricResistance`, `Stove`, `SpaceHeater`, `Fireplace`
 
+
+- **Default:** `none`
+
 <br/>
 
 **Heating System 2: Fuel Type**
@@ -2920,6 +3323,9 @@ The fuel type of the second heating system. Ignored for ElectricResistance.
 - **Required:** ``true``
 
 - **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
+
+
+- **Default:** `electricity`
 
 <br/>
 
@@ -2934,6 +3340,9 @@ The rated heating efficiency value of the second heating system.
 
 - **Required:** ``true``
 
+
+- **Default:** `1.0`
+
 <br/>
 
 **Heating System 2: Heating Capacity**
@@ -2947,6 +3356,7 @@ The output heating capacity of the second heating system. If not provided, the O
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heating System 2: Heating Autosizing Factor**
@@ -2957,6 +3367,7 @@ The capacity scaling factor applied to the auto-sizing methodology. If not provi
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -2971,6 +3382,7 @@ The maximum capacity limit applied to the auto-sizing methodology. If not provid
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Heating System 2: Fraction Heat Load Served**
@@ -2984,6 +3396,9 @@ The heat load served fraction of the second heating system. Ignored if this heat
 
 - **Required:** ``true``
 
+
+- **Default:** `0.25`
+
 <br/>
 
 **HVAC Control: Heating Weekday Setpoint Schedule**
@@ -2994,6 +3409,7 @@ Specify the constant or 24-hour comma-separated weekday heating setpoint schedul
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3006,6 +3422,7 @@ Specify the constant or 24-hour comma-separated weekend heating setpoint schedul
 
 - **Required:** ``false``
 
+
 <br/>
 
 **HVAC Control: Cooling Weekday Setpoint Schedule**
@@ -3016,6 +3433,7 @@ Specify the constant or 24-hour comma-separated weekday cooling setpoint schedul
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3028,6 +3446,7 @@ Specify the constant or 24-hour comma-separated weekend cooling setpoint schedul
 
 - **Required:** ``false``
 
+
 <br/>
 
 **HVAC Control: Heating Season Period**
@@ -3039,6 +3458,7 @@ Enter a date range like 'Nov 1 - Jun 30'. If not provided, the OS-HPXML default 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **HVAC Control: Cooling Season Period**
@@ -3049,6 +3469,7 @@ Enter a date range like 'Jun 1 - Oct 31'. If not provided, the OS-HPXML default 
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3063,6 +3484,7 @@ The blower fan efficiency at maximum fan speed. Applies only to split (not packa
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Ducts: Leakage Units**
@@ -3076,6 +3498,9 @@ The leakage units of the ducts.
 
 - **Choices:** `CFM25`, `CFM50`, `Percent`
 
+
+- **Default:** `Percent`
+
 <br/>
 
 **Ducts: Supply Leakage to Outside Value**
@@ -3086,6 +3511,9 @@ The leakage value to outside for the supply ducts.
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.1`
 
 <br/>
 
@@ -3100,6 +3528,7 @@ The location of the supply ducts. If not provided, the OS-HPXML default (see <a 
 
 - **Choices:** `conditioned space`, `basement - conditioned`, `basement - unconditioned`, `crawlspace`, `crawlspace - vented`, `crawlspace - unvented`, `crawlspace - conditioned`, `attic`, `attic - vented`, `attic - unvented`, `garage`, `exterior wall`, `under slab`, `roof deck`, `outside`, `other housing unit`, `other heated space`, `other multifamily buffer space`, `other non-freezing space`, `manufactured home belly`
 
+
 <br/>
 
 **Ducts: Supply Insulation R-Value**
@@ -3112,6 +3541,9 @@ The nominal insulation r-value of the supply ducts excluding air films. Use 0 fo
 - **Units:** ``h-ft^2-R/Btu``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -3126,6 +3558,7 @@ Whether the supply ducts are buried in, e.g., attic loose-fill insulation. Parti
 
 - **Choices:** `not buried`, `partially buried`, `fully buried`, `deeply buried`
 
+
 <br/>
 
 **Ducts: Supply Surface Area**
@@ -3138,6 +3571,7 @@ The supply ducts surface area in the given location. If neither Surface Area nor
 - **Units:** ``ft^2``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3152,6 +3586,7 @@ The fraction of supply ducts surface area in the given location. Only used if Su
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Ducts: Supply Fraction Rectangular**
@@ -3165,6 +3600,7 @@ The fraction of supply ducts that are rectangular (as opposed to round); this af
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Ducts: Return Leakage to Outside Value**
@@ -3175,6 +3611,9 @@ The leakage value to outside for the return ducts.
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.1`
 
 <br/>
 
@@ -3189,6 +3628,7 @@ The location of the return ducts. If not provided, the OS-HPXML default (see <a 
 
 - **Choices:** `conditioned space`, `basement - conditioned`, `basement - unconditioned`, `crawlspace`, `crawlspace - vented`, `crawlspace - unvented`, `crawlspace - conditioned`, `attic`, `attic - vented`, `attic - unvented`, `garage`, `exterior wall`, `under slab`, `roof deck`, `outside`, `other housing unit`, `other heated space`, `other multifamily buffer space`, `other non-freezing space`, `manufactured home belly`
 
+
 <br/>
 
 **Ducts: Return Insulation R-Value**
@@ -3201,6 +3641,9 @@ The nominal insulation r-value of the return ducts excluding air films. Use 0 fo
 - **Units:** ``h-ft^2-R/Btu``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -3215,6 +3658,7 @@ Whether the return ducts are buried in, e.g., attic loose-fill insulation. Parti
 
 - **Choices:** `not buried`, `partially buried`, `fully buried`, `deeply buried`
 
+
 <br/>
 
 **Ducts: Return Surface Area**
@@ -3227,6 +3671,7 @@ The return ducts surface area in the given location. If neither Surface Area nor
 - **Units:** ``ft^2``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3241,6 +3686,7 @@ The fraction of return ducts surface area in the given location. Only used if Su
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Ducts: Number of Return Registers**
@@ -3253,6 +3699,7 @@ The number of return registers of the ducts. Only used to calculate default retu
 - **Units:** ``#``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3267,6 +3714,7 @@ The fraction of return ducts that are rectangular (as opposed to round); this af
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Mechanical Ventilation: Fan Type**
@@ -3279,6 +3727,9 @@ The type of the mechanical ventilation. Use 'none' if there is no mechanical ven
 - **Required:** ``true``
 
 - **Choices:** `none`, `exhaust only`, `supply only`, `energy recovery ventilator`, `heat recovery ventilator`, `balanced`, `central fan integrated supply`
+
+
+- **Default:** `none`
 
 <br/>
 
@@ -3293,6 +3744,7 @@ The flow rate of the mechanical ventilation. If not provided, the OS-HPXML defau
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Mechanical Ventilation: Hours In Operation**
@@ -3305,6 +3757,7 @@ The hours in operation of the mechanical ventilation. If not provided, the OS-HP
 - **Units:** ``hrs/day``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3319,6 +3772,9 @@ The total recovery efficiency type of the mechanical ventilation.
 
 - **Choices:** `Unadjusted`, `Adjusted`
 
+
+- **Default:** `Unadjusted`
+
 <br/>
 
 **Mechanical Ventilation: Total Recovery Efficiency**
@@ -3331,6 +3787,9 @@ The Unadjusted or Adjusted total recovery efficiency of the mechanical ventilati
 - **Units:** ``Frac``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.48`
 
 <br/>
 
@@ -3345,6 +3804,9 @@ The Unadjusted or Adjusted sensible recovery efficiency of the mechanical ventil
 
 - **Required:** ``true``
 
+
+- **Default:** `0.72`
+
 <br/>
 
 **Mechanical Ventilation: Fan Power**
@@ -3357,6 +3819,7 @@ The fan power of the mechanical ventilation. If not provided, the OS-HPXML defau
 - **Units:** ``W``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3371,6 +3834,9 @@ Number of dwelling units served by the mechanical ventilation system. Must be 1 
 
 - **Required:** ``true``
 
+
+- **Default:** `1`
+
 <br/>
 
 **Shared Mechanical Ventilation: Fraction Recirculation**
@@ -3383,6 +3849,7 @@ Fraction of the total supply air that is recirculated, with the remainder assume
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3397,6 +3864,7 @@ Fuel type of the preconditioning heating equipment. Only used for a shared mecha
 
 - **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`, `coal`
 
+
 <br/>
 
 **Shared Mechanical Ventilation: Preheating Efficiency**
@@ -3409,6 +3877,7 @@ Efficiency of the preconditioning heating equipment. Only used for a shared mech
 - **Units:** ``COP``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3423,6 +3892,7 @@ Fraction of heating load introduced by the shared ventilation system that is met
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Shared Mechanical Ventilation: Precooling Fuel**
@@ -3435,6 +3905,7 @@ Fuel type of the preconditioning cooling equipment. Only used for a shared mecha
 - **Required:** ``false``
 
 - **Choices:** `electricity`
+
 
 <br/>
 
@@ -3449,6 +3920,7 @@ Efficiency of the preconditioning cooling equipment. Only used for a shared mech
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Shared Mechanical Ventilation: Precooling Fraction Ventilation Cool Load Served**
@@ -3461,6 +3933,7 @@ Fraction of cooling load introduced by the shared ventilation system that is met
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3475,6 +3948,9 @@ The type of the second mechanical ventilation. Use 'none' if there is no second 
 
 - **Choices:** `none`, `exhaust only`, `supply only`, `energy recovery ventilator`, `heat recovery ventilator`, `balanced`
 
+
+- **Default:** `none`
+
 <br/>
 
 **Mechanical Ventilation 2: Flow Rate**
@@ -3487,6 +3963,9 @@ The flow rate of the second mechanical ventilation.
 - **Units:** ``CFM``
 
 - **Required:** ``true``
+
+
+- **Default:** `110.0`
 
 <br/>
 
@@ -3501,6 +3980,9 @@ The hours in operation of the second mechanical ventilation.
 
 - **Required:** ``true``
 
+
+- **Default:** `24.0`
+
 <br/>
 
 **Mechanical Ventilation 2: Total Recovery Efficiency Type**
@@ -3513,6 +3995,9 @@ The total recovery efficiency type of the second mechanical ventilation.
 - **Required:** ``true``
 
 - **Choices:** `Unadjusted`, `Adjusted`
+
+
+- **Default:** `Unadjusted`
 
 <br/>
 
@@ -3527,6 +4012,9 @@ The Unadjusted or Adjusted total recovery efficiency of the second mechanical ve
 
 - **Required:** ``true``
 
+
+- **Default:** `0.48`
+
 <br/>
 
 **Mechanical Ventilation 2: Sensible Recovery Efficiency**
@@ -3539,6 +4027,9 @@ The Unadjusted or Adjusted sensible recovery efficiency of the second mechanical
 - **Units:** ``Frac``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.72`
 
 <br/>
 
@@ -3553,6 +4044,9 @@ The fan power of the second mechanical ventilation.
 
 - **Required:** ``true``
 
+
+- **Default:** `30.0`
+
 <br/>
 
 **Kitchen Fans: Quantity**
@@ -3565,6 +4059,7 @@ The quantity of the kitchen fans. If not provided, the OS-HPXML default (see <a 
 - **Units:** ``#``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3579,6 +4074,7 @@ The flow rate of the kitchen fan. If not provided, the OS-HPXML default (see <a 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Kitchen Fans: Hours In Operation**
@@ -3591,6 +4087,7 @@ The hours in operation of the kitchen fan. If not provided, the OS-HPXML default
 - **Units:** ``hrs/day``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3605,6 +4102,7 @@ The fan power of the kitchen fan. If not provided, the OS-HPXML default (see <a 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Kitchen Fans: Start Hour**
@@ -3617,6 +4115,7 @@ The start hour of the kitchen fan. If not provided, the OS-HPXML default (see <a
 - **Units:** ``hr``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3631,6 +4130,7 @@ The quantity of the bathroom fans. If not provided, the OS-HPXML default (see <a
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Bathroom Fans: Flow Rate**
@@ -3643,6 +4143,7 @@ The flow rate of the bathroom fans. If not provided, the OS-HPXML default (see <
 - **Units:** ``CFM``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3657,6 +4158,7 @@ The hours in operation of the bathroom fans. If not provided, the OS-HPXML defau
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Bathroom Fans: Fan Power**
@@ -3669,6 +4171,7 @@ The fan power of the bathroom fans. If not provided, the OS-HPXML default (see <
 - **Units:** ``W``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3683,6 +4186,7 @@ The start hour of the bathroom fans. If not provided, the OS-HPXML default (see 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Whole House Fan: Present**
@@ -3693,6 +4197,7 @@ Whether there is a whole house fan.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -3707,6 +4212,7 @@ The flow rate of the whole house fan. If not provided, the OS-HPXML default (see
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Whole House Fan: Fan Power**
@@ -3719,6 +4225,7 @@ The fan power of the whole house fan. If not provided, the OS-HPXML default (see
 - **Units:** ``W``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3733,6 +4240,9 @@ The type of water heater. Use 'none' if there is no water heater.
 
 - **Choices:** `none`, `storage water heater`, `instantaneous water heater`, `heat pump water heater`, `space-heating boiler with storage tank`, `space-heating boiler with tankless coil`
 
+
+- **Default:** `storage water heater`
+
 <br/>
 
 **Water Heater: Fuel Type**
@@ -3745,6 +4255,9 @@ The fuel type of water heater. Ignored for heat pump water heater.
 - **Required:** ``true``
 
 - **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `coal`
+
+
+- **Default:** `natural gas`
 
 <br/>
 
@@ -3759,6 +4272,7 @@ The location of water heater. If not provided, the OS-HPXML default (see <a href
 
 - **Choices:** `conditioned space`, `basement - conditioned`, `basement - unconditioned`, `garage`, `attic`, `attic - vented`, `attic - unvented`, `crawlspace`, `crawlspace - vented`, `crawlspace - unvented`, `crawlspace - conditioned`, `other exterior`, `other housing unit`, `other heated space`, `other multifamily buffer space`, `other non-freezing space`
 
+
 <br/>
 
 **Water Heater: Tank Volume**
@@ -3771,6 +4285,7 @@ Nominal volume of water heater tank. If not provided, the OS-HPXML default (see 
 - **Units:** ``gal``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3785,6 +4300,9 @@ The efficiency type of water heater. Does not apply to space-heating boilers.
 
 - **Choices:** `EnergyFactor`, `UniformEnergyFactor`
 
+
+- **Default:** `EnergyFactor`
+
 <br/>
 
 **Water Heater: Efficiency**
@@ -3795,6 +4313,9 @@ Rated Energy Factor or Uniform Energy Factor. Does not apply to space-heating bo
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.67`
 
 <br/>
 
@@ -3809,6 +4330,7 @@ The usage of the water heater. Only applies if Efficiency Type is UniformEnergyF
 
 - **Choices:** `very small`, `low`, `medium`, `high`
 
+
 <br/>
 
 **Water Heater: Recovery Efficiency**
@@ -3821,6 +4343,7 @@ Ratio of energy delivered to water heater to the energy content of the fuel cons
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3835,6 +4358,7 @@ Heating capacity. Only applies to storage water heater and heat pump water heate
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Water Heater: Backup Heating Capacity**
@@ -3847,6 +4371,7 @@ Backup heating capacity for a heat pump water heater. If not provided, the OS-HP
 - **Units:** ``Btu/hr``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3861,6 +4386,7 @@ The standby loss of water heater. Only applies to space-heating boilers. If not 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Water Heater: Jacket R-value**
@@ -3873,6 +4399,7 @@ The jacket R-value of water heater. Doesn't apply to instantaneous water heater 
 - **Units:** ``h-ft^2-R/Btu``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3887,6 +4414,7 @@ The setpoint temperature of water heater. If not provided, the OS-HPXML default 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Water Heater: Number of Bedrooms Served**
@@ -3900,6 +4428,7 @@ Number of bedrooms served (directly or indirectly) by the water heater. Only nee
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Water Heater: Uses Desuperheater**
@@ -3910,6 +4439,7 @@ Requires that the dwelling unit has a air-to-air, mini-split, or ground-to-air h
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3924,6 +4454,7 @@ Type of tank model to use. The 'stratified' tank generally provide more accurate
 
 - **Choices:** `mixed`, `stratified`
 
+
 <br/>
 
 **Water Heater: Operating Mode**
@@ -3936,6 +4467,7 @@ The water heater operating mode. The 'heat pump only' option only uses the heat 
 - **Required:** ``false``
 
 - **Choices:** `hybrid/auto`, `heat pump only`
+
 
 <br/>
 
@@ -3950,6 +4482,9 @@ The type of the hot water distribution system.
 
 - **Choices:** `Standard`, `Recirculation`
 
+
+- **Default:** `Standard`
+
 <br/>
 
 **Hot Water Distribution: Standard Piping Length**
@@ -3962,6 +4497,7 @@ If the distribution system is Standard, the length of the piping. If not provide
 - **Units:** ``ft``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -3976,6 +4512,9 @@ If the distribution system is Recirculation, the type of hot water recirculation
 
 - **Choices:** `no control`, `timer`, `temperature`, `presence sensor demand control`, `manual demand control`
 
+
+- **Default:** `no control`
+
 <br/>
 
 **Hot Water Distribution: Recirculation Piping Length**
@@ -3988,6 +4527,7 @@ If the distribution system is Recirculation, the length of the recirculation pip
 - **Units:** ``ft``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4002,6 +4542,7 @@ If the distribution system is Recirculation, the length of the recirculation bra
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Hot Water Distribution: Recirculation Pump Power**
@@ -4014,6 +4555,7 @@ If the distribution system is Recirculation, the recirculation pump power. If no
 - **Units:** ``W``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4028,6 +4570,7 @@ Nominal R-value of the pipe insulation. If not provided, the OS-HPXML default (s
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Drain Water Heat Recovery: Facilities Connected**
@@ -4041,6 +4584,9 @@ Which facilities are connected for the drain water heat recovery. Use 'none' if 
 
 - **Choices:** `none`, `one`, `all`
 
+
+- **Default:** `none`
+
 <br/>
 
 **Drain Water Heat Recovery: Equal Flow**
@@ -4051,6 +4597,9 @@ Whether the drain water heat recovery has equal flow.
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
+
+- **Default:** `true`
 
 <br/>
 
@@ -4065,6 +4614,9 @@ The efficiency of the drain water heat recovery.
 
 - **Required:** ``false``
 
+
+- **Default:** `0.55`
+
 <br/>
 
 **Hot Water Fixtures: Is Shower Low Flow**
@@ -4075,6 +4627,7 @@ Whether the shower fixture is low flow.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -4087,6 +4640,7 @@ Whether the sink fixture is low flow.
 
 - **Required:** ``true``
 
+
 <br/>
 
 **Hot Water Fixtures: Usage Multiplier**
@@ -4098,6 +4652,7 @@ Multiplier on the hot water usage that can reflect, e.g., high/low usage occupan
 
 - **Required:** ``false``
 
+
 <br/>
 
 **General Water Use: Usage Multiplier**
@@ -4108,6 +4663,7 @@ Multiplier on internal gains from general water use (floor mopping, shower evapo
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4122,6 +4678,9 @@ The type of solar thermal system. Use 'none' if there is no solar thermal system
 
 - **Choices:** `none`, `hot water`
 
+
+- **Default:** `none`
+
 <br/>
 
 **Solar Thermal: Collector Area**
@@ -4134,6 +4693,9 @@ The collector area of the solar thermal system.
 - **Units:** ``ft^2``
 
 - **Required:** ``true``
+
+
+- **Default:** `40.0`
 
 <br/>
 
@@ -4148,6 +4710,9 @@ The collector loop type of the solar thermal system.
 
 - **Choices:** `liquid direct`, `liquid indirect`, `passive thermosyphon`
 
+
+- **Default:** `liquid direct`
+
 <br/>
 
 **Solar Thermal: Collector Type**
@@ -4160,6 +4725,9 @@ The collector type of the solar thermal system.
 - **Required:** ``true``
 
 - **Choices:** `evacuated tube`, `single glazing black`, `double glazing black`, `integrated collector storage`
+
+
+- **Default:** `evacuated tube`
 
 <br/>
 
@@ -4174,6 +4742,9 @@ The collector azimuth of the solar thermal system. Azimuth is measured clockwise
 
 - **Required:** ``true``
 
+
+- **Default:** `180.0`
+
 <br/>
 
 **Solar Thermal: Collector Tilt**
@@ -4184,6 +4755,9 @@ The collector tilt of the solar thermal system. Can also enter, e.g., RoofPitch,
 - **Type:** ``String``
 
 - **Required:** ``true``
+
+
+- **Default:** `RoofPitch`
 
 <br/>
 
@@ -4198,6 +4772,9 @@ The collector rated optical efficiency of the solar thermal system.
 
 - **Required:** ``true``
 
+
+- **Default:** `0.5`
+
 <br/>
 
 **Solar Thermal: Collector Rated Thermal Losses**
@@ -4210,6 +4787,9 @@ The collector rated thermal losses of the solar thermal system.
 - **Units:** ``Btu/hr-ft^2-R``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.2799`
 
 <br/>
 
@@ -4224,6 +4804,7 @@ The storage volume of the solar thermal system. If not provided, the OS-HPXML de
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Solar Thermal: Solar Fraction**
@@ -4237,6 +4818,9 @@ The solar fraction of the solar thermal system. If provided, overrides all other
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **PV System: Present**
@@ -4247,6 +4831,7 @@ Whether there is a PV system present.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -4261,6 +4846,7 @@ Module type of the PV system. If not provided, the OS-HPXML default (see <a href
 
 - **Choices:** `standard`, `premium`, `thin film`
 
+
 <br/>
 
 **PV System: Location**
@@ -4273,6 +4859,7 @@ Location of the PV system. If not provided, the OS-HPXML default (see <a href='h
 - **Required:** ``false``
 
 - **Choices:** `roof`, `ground`
+
 
 <br/>
 
@@ -4287,6 +4874,7 @@ Type of tracking for the PV system. If not provided, the OS-HPXML default (see <
 
 - **Choices:** `fixed`, `1-axis`, `1-axis backtracked`, `2-axis`
 
+
 <br/>
 
 **PV System: Array Azimuth**
@@ -4300,6 +4888,9 @@ Array azimuth of the PV system. Azimuth is measured clockwise from north (e.g., 
 
 - **Required:** ``true``
 
+
+- **Default:** `180.0`
+
 <br/>
 
 **PV System: Array Tilt**
@@ -4310,6 +4901,9 @@ Array tilt of the PV system. Can also enter, e.g., RoofPitch, RoofPitch+20, Lati
 - **Type:** ``String``
 
 - **Required:** ``true``
+
+
+- **Default:** `RoofPitch`
 
 <br/>
 
@@ -4324,6 +4918,9 @@ Maximum power output of the PV system. For a shared system, this is the total bu
 
 - **Required:** ``true``
 
+
+- **Default:** `4000.0`
+
 <br/>
 
 **PV System: Inverter Efficiency**
@@ -4336,6 +4933,7 @@ Inverter efficiency of the PV system. If there are two PV systems, this will app
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4350,6 +4948,7 @@ System losses fraction of the PV system. If there are two PV systems, this will 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **PV System: Number of Bedrooms Served**
@@ -4363,6 +4962,7 @@ Number of bedrooms served by PV system. Only needed if single-family attached or
 
 - **Required:** ``false``
 
+
 <br/>
 
 **PV System 2: Present**
@@ -4373,6 +4973,7 @@ Whether there is a second PV system present.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -4387,6 +4988,7 @@ Module type of the second PV system. If not provided, the OS-HPXML default (see 
 
 - **Choices:** `standard`, `premium`, `thin film`
 
+
 <br/>
 
 **PV System 2: Location**
@@ -4399,6 +5001,7 @@ Location of the second PV system. If not provided, the OS-HPXML default (see <a 
 - **Required:** ``false``
 
 - **Choices:** `roof`, `ground`
+
 
 <br/>
 
@@ -4413,6 +5016,7 @@ Type of tracking for the second PV system. If not provided, the OS-HPXML default
 
 - **Choices:** `fixed`, `1-axis`, `1-axis backtracked`, `2-axis`
 
+
 <br/>
 
 **PV System 2: Array Azimuth**
@@ -4426,6 +5030,9 @@ Array azimuth of the second PV system. Azimuth is measured clockwise from north 
 
 - **Required:** ``true``
 
+
+- **Default:** `180.0`
+
 <br/>
 
 **PV System 2: Array Tilt**
@@ -4436,6 +5043,9 @@ Array tilt of the second PV system. Can also enter, e.g., RoofPitch, RoofPitch+2
 - **Type:** ``String``
 
 - **Required:** ``true``
+
+
+- **Default:** `RoofPitch`
 
 <br/>
 
@@ -4450,6 +5060,9 @@ Maximum power output of the second PV system. For a shared system, this is the t
 
 - **Required:** ``true``
 
+
+- **Default:** `4000.0`
+
 <br/>
 
 **Electric Panel: Service/Feeders Load Calculation Types**
@@ -4460,6 +5073,7 @@ Types of electric panel service/feeder load calculations. These calculations are
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4474,6 +5088,7 @@ Specifies the baseline peak power. Used for 2023 Existing Dwelling Meter-Based. 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Service Voltage**
@@ -4486,6 +5101,7 @@ The service voltage of the electric panel. If not provided, the OS-HPXML default
 - **Required:** ``false``
 
 - **Choices:** `120`, `240`
+
 
 <br/>
 
@@ -4500,6 +5116,7 @@ The service max current rating of the electric panel. If not provided, the OS-HP
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Breaker Spaces Headroom**
@@ -4512,6 +5129,7 @@ The unoccupied number of breaker spaces on the electric panel. If not provided, 
 - **Units:** ``#``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4526,6 +5144,7 @@ The rated total number of breaker spaces on the electric panel. If not provided,
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Heating System Power Rating**
@@ -4539,6 +5158,7 @@ Specifies the panel load heating system power rating. If not provided, the OS-HP
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Heating System New Load**
@@ -4549,6 +5169,7 @@ Whether the heating system is a new panel load addition to an existing service p
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4563,6 +5184,7 @@ Specifies the panel load cooling system power rating. If not provided, the OS-HP
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Cooling System New Load**
@@ -4573,6 +5195,7 @@ Whether the cooling system is a new panel load addition to an existing service p
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4587,6 +5210,7 @@ Specifies the panel load heat pump power rating. If not provided, the OS-HPXML d
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Heat Pump New Load**
@@ -4597,6 +5221,7 @@ Whether the heat pump is a new panel load addition to an existing service panel.
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4611,6 +5236,7 @@ Specifies the panel load second heating system power rating. If not provided, th
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Heating System 2 New Load**
@@ -4621,6 +5247,7 @@ Whether the second heating system is a new panel load addition to an existing se
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4635,6 +5262,7 @@ Specifies the panel load mechanical ventilation power rating. If not provided, t
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Mechanical Ventilation New Load**
@@ -4645,6 +5273,7 @@ Whether the mechanical ventilation is a new panel load addition to an existing s
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4659,6 +5288,7 @@ Specifies the panel load second mechanical ventilation power rating. If not prov
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Mechanical Ventilation 2 New Load**
@@ -4669,6 +5299,7 @@ Whether the second mechanical ventilation is a new panel load addition to an exi
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4683,6 +5314,7 @@ Specifies the panel load whole house fan power rating. If not provided, the OS-H
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Whole House Fan New Load**
@@ -4693,6 +5325,7 @@ Whether the whole house fan is a new panel load addition to an existing service 
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4707,6 +5340,7 @@ Specifies the panel load kitchen fans power rating. If not provided, the OS-HPXM
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Kitchen Fans New Load**
@@ -4717,6 +5351,7 @@ Whether the kitchen fans is a new panel load addition to an existing service pan
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4731,6 +5366,7 @@ Specifies the panel load bathroom fans power rating. If not provided, the OS-HPX
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Bathroom Fans New Load**
@@ -4741,6 +5377,7 @@ Whether the bathroom fans is a new panel load addition to an existing service pa
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4755,6 +5392,7 @@ Specifies the panel load water heater power rating. Only applies to electric wat
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Electric Water Heater Voltage**
@@ -4768,6 +5406,7 @@ Specifies the panel load water heater voltage. Only applies to electric water he
 
 - **Choices:** `120`, `240`
 
+
 <br/>
 
 **Electric Panel: Electric Water Heater New Load**
@@ -4778,6 +5417,7 @@ Whether the water heater is a new panel load addition to an existing service pan
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4792,6 +5432,7 @@ Specifies the panel load clothes dryer power rating. Only applies to electric cl
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Electric Clothes Dryer Voltage**
@@ -4805,6 +5446,7 @@ Specifies the panel load clothes dryer voltage. Only applies to electric clothes
 
 - **Choices:** `120`, `240`
 
+
 <br/>
 
 **Electric Panel: Electric Clothes Dryer New Load**
@@ -4815,6 +5457,7 @@ Whether the clothes dryer is a new panel load addition to an existing service pa
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4829,6 +5472,7 @@ Specifies the panel load dishwasher power rating. If not provided, the OS-HPXML 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Dishwasher New Load**
@@ -4839,6 +5483,7 @@ Whether the dishwasher is a new panel load addition to an existing service panel
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4853,6 +5498,7 @@ Specifies the panel load cooking range/oven power rating. Only applies to electr
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Electric Cooking Range/Oven Voltage**
@@ -4866,6 +5512,7 @@ Specifies the panel load cooking range/oven voltage. Only applies to electric co
 
 - **Choices:** `120`, `240`
 
+
 <br/>
 
 **Electric Panel: Electric Cooking Range/Oven New Load**
@@ -4876,6 +5523,7 @@ Whether the cooking range is a new panel load addition to an existing service pa
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4890,6 +5538,7 @@ Specifies the panel load well pump power rating. If not provided, the OS-HPXML d
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Misc Plug Loads Well Pump New Load**
@@ -4900,6 +5549,7 @@ Whether the well pump is a new panel load addition to an existing service panel.
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4914,6 +5564,7 @@ Specifies the panel load electric vehicle power rating. If not provided, the OS-
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Misc Plug Loads Vehicle Voltage**
@@ -4927,6 +5578,7 @@ Specifies the panel load electric vehicle voltage. If not provided, the OS-HPXML
 
 - **Choices:** `120`, `240`
 
+
 <br/>
 
 **Electric Panel: Misc Plug Loads Vehicle New Load**
@@ -4937,6 +5589,7 @@ Whether the electric vehicle is a new panel load addition to an existing service
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4951,6 +5604,7 @@ Specifies the panel load pool pump power rating. If not provided, the OS-HPXML d
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Pool Pump New Load**
@@ -4961,6 +5615,7 @@ Whether the pool pump is a new panel load addition to an existing service panel.
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4975,6 +5630,7 @@ Specifies the panel load pool heater power rating. Only applies to electric pool
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Electric Pool Heater New Load**
@@ -4985,6 +5641,7 @@ Whether the pool heater is a new panel load addition to an existing service pane
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -4999,6 +5656,7 @@ Specifies the panel load permanent spa pump power rating. If not provided, the O
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Permanent Spa Pump New Load**
@@ -5009,6 +5667,7 @@ Whether the spa pump is a new panel load addition to an existing service panel. 
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5023,6 +5682,7 @@ Specifies the panel load permanent spa heater power rating. Only applies to elec
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Electric Permanent Spa Heater New Load**
@@ -5033,6 +5693,7 @@ Whether the spa heater is a new panel load addition to an existing service panel
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5047,6 +5708,7 @@ Specifies the panel load other power rating. This represents the total of all ot
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Panel: Other New Load**
@@ -5058,6 +5720,7 @@ Whether the other load is a new panel load addition to an existing service panel
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Battery: Present**
@@ -5068,6 +5731,7 @@ Whether there is a lithium ion battery present.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -5082,6 +5746,7 @@ The space type for the lithium ion battery location. If not provided, the OS-HPX
 
 - **Choices:** `conditioned space`, `basement - conditioned`, `basement - unconditioned`, `crawlspace`, `crawlspace - vented`, `crawlspace - unvented`, `crawlspace - conditioned`, `attic`, `attic - vented`, `attic - unvented`, `garage`, `outside`
 
+
 <br/>
 
 **Battery: Rated Power Output**
@@ -5094,6 +5759,7 @@ The rated power output of the lithium ion battery. If not provided, the OS-HPXML
 - **Units:** ``W``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5108,6 +5774,7 @@ The nominal capacity of the lithium ion battery. If not provided, the OS-HPXML d
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Battery: Usable Capacity**
@@ -5120,6 +5787,7 @@ The usable capacity of the lithium ion battery. If not provided, the OS-HPXML de
 - **Units:** ``kWh``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5134,6 +5802,7 @@ The round trip efficiency of the lithium ion battery. If not provided, the OS-HP
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Battery: Number of Bedrooms Served**
@@ -5147,6 +5816,7 @@ Number of bedrooms served by the lithium ion battery. Only needed if single-fami
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Vehicle: Type**
@@ -5157,6 +5827,9 @@ The type of vehicle present at the home.
 - **Type:** ``String``
 
 - **Required:** ``false``
+
+
+- **Default:** `none`
 
 <br/>
 
@@ -5171,6 +5844,7 @@ The nominal capacity of the vehicle battery, only applies to electric vehicles. 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Vehicle: EV Battery Usable Capacity**
@@ -5183,6 +5857,7 @@ The usable capacity of the vehicle battery, only applies to electric vehicles. I
 - **Units:** ``kWh``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5197,6 +5872,7 @@ The combined fuel economy units of the vehicle. Only 'kWh/mile', 'mile/kWh', or 
 
 - **Choices:** `kWh/mile`, `mile/kWh`, `mpge`, `mpg`
 
+
 <br/>
 
 **Vehicle: Combined Fuel Economy**
@@ -5207,6 +5883,7 @@ The combined fuel economy of the vehicle. If not provided, the OS-HPXML default 
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5221,6 +5898,7 @@ The annual miles the vehicle is driven. If not provided, the OS-HPXML default (s
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Vehicle: Hours Driven Per Week**
@@ -5234,6 +5912,7 @@ The weekly hours the vehicle is driven. If not provided, the OS-HPXML default (s
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Vehicle: Fraction Charged at Home**
@@ -5245,6 +5924,7 @@ The fraction of charging energy provided by the at-home charger to the vehicle, 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Electric Vehicle Charger: Present**
@@ -5255,6 +5935,7 @@ Whether there is an electric vehicle charger present.
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5269,6 +5950,7 @@ The charging level of the EV charger. If not provided, the OS-HPXML default (see
 
 - **Choices:** `1`, `2`, `3`
 
+
 <br/>
 
 **Electric Vehicle Charger: Rated Charging Power**
@@ -5282,6 +5964,7 @@ The rated power output of the EV charger. If not provided, the OS-HPXML default 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Lighting: Present**
@@ -5292,6 +5975,9 @@ Whether there is lighting energy use.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
+
+- **Default:** `true`
 
 <br/>
 
@@ -5304,6 +5990,9 @@ Fraction of all lamps (interior) that are compact fluorescent. Lighting not spec
 
 - **Required:** ``true``
 
+
+- **Default:** `0.1`
+
 <br/>
 
 **Lighting: Interior Fraction LFL**
@@ -5314,6 +6003,9 @@ Fraction of all lamps (interior) that are linear fluorescent. Lighting not speci
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -5326,6 +6018,9 @@ Fraction of all lamps (interior) that are light emitting diodes. Lighting not sp
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Lighting: Interior Usage Multiplier**
@@ -5336,6 +6031,7 @@ Multiplier on the lighting energy usage (interior) that can reflect, e.g., high/
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5348,6 +6044,9 @@ Fraction of all lamps (exterior) that are compact fluorescent. Lighting not spec
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Lighting: Exterior Fraction LFL**
@@ -5358,6 +6057,9 @@ Fraction of all lamps (exterior) that are linear fluorescent. Lighting not speci
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -5370,6 +6072,9 @@ Fraction of all lamps (exterior) that are light emitting diodes. Lighting not sp
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Lighting: Exterior Usage Multiplier**
@@ -5380,6 +6085,7 @@ Multiplier on the lighting energy usage (exterior) that can reflect, e.g., high/
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5392,6 +6098,9 @@ Fraction of all lamps (garage) that are compact fluorescent. Lighting not specif
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Lighting: Garage Fraction LFL**
@@ -5402,6 +6111,9 @@ Fraction of all lamps (garage) that are linear fluorescent. Lighting not specifi
 - **Type:** ``Double``
 
 - **Required:** ``true``
+
+
+- **Default:** `0.0`
 
 <br/>
 
@@ -5414,6 +6126,9 @@ Fraction of all lamps (garage) that are light emitting diodes. Lighting not spec
 
 - **Required:** ``true``
 
+
+- **Default:** `0.0`
+
 <br/>
 
 **Lighting: Garage Usage Multiplier**
@@ -5425,6 +6140,7 @@ Multiplier on the lighting energy usage (garage) that can reflect, e.g., high/lo
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Holiday Lighting: Present**
@@ -5435,6 +6151,7 @@ Whether there is holiday lighting.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -5449,6 +6166,7 @@ The daily energy consumption for holiday lighting (exterior). If not provided, t
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Holiday Lighting: Period**
@@ -5459,6 +6177,7 @@ Enter a date range like 'Nov 25 - Jan 5'. If not provided, the OS-HPXML default 
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5473,6 +6192,9 @@ The type of dehumidifier.
 
 - **Choices:** `none`, `portable`, `whole-home`
 
+
+- **Default:** `none`
+
 <br/>
 
 **Dehumidifier: Efficiency Type**
@@ -5485,6 +6207,9 @@ The efficiency type of dehumidifier.
 - **Required:** ``true``
 
 - **Choices:** `EnergyFactor`, `IntegratedEnergyFactor`
+
+
+- **Default:** `IntegratedEnergyFactor`
 
 <br/>
 
@@ -5499,6 +6224,9 @@ The efficiency of the dehumidifier.
 
 - **Required:** ``true``
 
+
+- **Default:** `1.5`
+
 <br/>
 
 **Dehumidifier: Capacity**
@@ -5511,6 +6239,9 @@ The capacity (water removal rate) of the dehumidifier.
 - **Units:** ``pint/day``
 
 - **Required:** ``true``
+
+
+- **Default:** `40.0`
 
 <br/>
 
@@ -5525,6 +6256,9 @@ The relative humidity setpoint of the dehumidifier.
 
 - **Required:** ``true``
 
+
+- **Default:** `0.5`
+
 <br/>
 
 **Dehumidifier: Fraction Dehumidification Load Served**
@@ -5538,6 +6272,9 @@ The dehumidification load served fraction of the dehumidifier.
 
 - **Required:** ``true``
 
+
+- **Default:** `1.0`
+
 <br/>
 
 **Clothes Washer: Present**
@@ -5548,6 +6285,9 @@ Whether there is a clothes washer present.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
+
+- **Default:** `true`
 
 <br/>
 
@@ -5562,6 +6302,7 @@ The space type for the clothes washer location. If not provided, the OS-HPXML de
 
 - **Choices:** `conditioned space`, `basement - conditioned`, `basement - unconditioned`, `garage`, `other housing unit`, `other heated space`, `other multifamily buffer space`, `other non-freezing space`
 
+
 <br/>
 
 **Clothes Washer: Efficiency Type**
@@ -5574,6 +6315,9 @@ The efficiency type of the clothes washer.
 - **Required:** ``true``
 
 - **Choices:** `ModifiedEnergyFactor`, `IntegratedModifiedEnergyFactor`
+
+
+- **Default:** `IntegratedModifiedEnergyFactor`
 
 <br/>
 
@@ -5588,6 +6332,7 @@ The efficiency of the clothes washer. If not provided, the OS-HPXML default (see
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Clothes Washer: Rated Annual Consumption**
@@ -5600,6 +6345,7 @@ The annual energy consumed by the clothes washer, as rated, obtained from the En
 - **Units:** ``kWh/yr``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5614,6 +6360,7 @@ The annual energy consumed by the clothes washer, as rated, obtained from the En
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Clothes Washer: Label Gas Rate**
@@ -5626,6 +6373,7 @@ The annual energy consumed by the clothes washer, as rated, obtained from the En
 - **Units:** ``$/therm``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5640,6 +6388,7 @@ The annual cost of using the system under test conditions. Input is obtained fro
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Clothes Washer: Label Usage**
@@ -5652,6 +6401,7 @@ The clothes washer loads per week. If not provided, the OS-HPXML default (see <a
 - **Units:** ``cyc/wk``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5666,6 +6416,7 @@ Volume of the washer drum. Obtained from the EnergyStar website or the manufactu
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Clothes Washer: Usage Multiplier**
@@ -5677,6 +6428,7 @@ Multiplier on the clothes washer energy and hot water usage that can reflect, e.
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Clothes Dryer: Present**
@@ -5687,6 +6439,9 @@ Whether there is a clothes dryer present.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
+
+- **Default:** `true`
 
 <br/>
 
@@ -5701,6 +6456,7 @@ The space type for the clothes dryer location. If not provided, the OS-HPXML def
 
 - **Choices:** `conditioned space`, `basement - conditioned`, `basement - unconditioned`, `garage`, `other housing unit`, `other heated space`, `other multifamily buffer space`, `other non-freezing space`
 
+
 <br/>
 
 **Clothes Dryer: Fuel Type**
@@ -5713,6 +6469,9 @@ Type of fuel used by the clothes dryer.
 - **Required:** ``true``
 
 - **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `coal`
+
+
+- **Default:** `natural gas`
 
 <br/>
 
@@ -5727,6 +6486,7 @@ The method of drying used by the clothes dryer. If not provided, the OS-HPXML de
 
 - **Choices:** `conventional`, `condensing`, `heat pump`, `other`
 
+
 <br/>
 
 **Clothes Dryer: Efficiency Type**
@@ -5739,6 +6499,9 @@ The efficiency type of the clothes dryer.
 - **Required:** ``true``
 
 - **Choices:** `EnergyFactor`, `CombinedEnergyFactor`
+
+
+- **Default:** `CombinedEnergyFactor`
 
 <br/>
 
@@ -5753,6 +6516,7 @@ The efficiency of the clothes dryer. If not provided, the OS-HPXML default (see 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Clothes Dryer: Usage Multiplier**
@@ -5764,6 +6528,7 @@ Multiplier on the clothes dryer energy usage that can reflect, e.g., high/low us
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Dishwasher: Present**
@@ -5774,6 +6539,9 @@ Whether there is a dishwasher present.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
+
+- **Default:** `true`
 
 <br/>
 
@@ -5788,6 +6556,7 @@ The space type for the dishwasher location. If not provided, the OS-HPXML defaul
 
 - **Choices:** `conditioned space`, `basement - conditioned`, `basement - unconditioned`, `garage`, `other housing unit`, `other heated space`, `other multifamily buffer space`, `other non-freezing space`
 
+
 <br/>
 
 **Dishwasher: Efficiency Type**
@@ -5800,6 +6569,9 @@ The efficiency type of dishwasher.
 - **Required:** ``true``
 
 - **Choices:** `RatedAnnualkWh`, `EnergyFactor`
+
+
+- **Default:** `RatedAnnualkWh`
 
 <br/>
 
@@ -5814,6 +6586,7 @@ The efficiency of the dishwasher. If not provided, the OS-HPXML default (see <a 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Dishwasher: Label Electric Rate**
@@ -5826,6 +6599,7 @@ The label electric rate of the dishwasher. If not provided, the OS-HPXML default
 - **Units:** ``$/kWh``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5840,6 +6614,7 @@ The label gas rate of the dishwasher. If not provided, the OS-HPXML default (see
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Dishwasher: Label Annual Gas Cost**
@@ -5852,6 +6627,7 @@ The label annual gas cost of the dishwasher. If not provided, the OS-HPXML defau
 - **Units:** ``$``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -5866,6 +6642,7 @@ The dishwasher loads per week. If not provided, the OS-HPXML default (see <a hre
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Dishwasher: Number of Place Settings**
@@ -5879,6 +6656,7 @@ The number of place settings for the unit. Data obtained from manufacturer's lit
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Dishwasher: Usage Multiplier**
@@ -5890,6 +6668,7 @@ Multiplier on the dishwasher energy usage that can reflect, e.g., high/low usage
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Refrigerator: Present**
@@ -5900,6 +6679,9 @@ Whether there is a refrigerator present.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
+
+- **Default:** `true`
 
 <br/>
 
@@ -5914,6 +6696,7 @@ The space type for the refrigerator location. If not provided, the OS-HPXML defa
 
 - **Choices:** `conditioned space`, `basement - conditioned`, `basement - unconditioned`, `garage`, `other housing unit`, `other heated space`, `other multifamily buffer space`, `other non-freezing space`
 
+
 <br/>
 
 **Refrigerator: Rated Annual Consumption**
@@ -5927,6 +6710,7 @@ The EnergyGuide rated annual energy consumption for a refrigerator. If not provi
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Refrigerator: Usage Multiplier**
@@ -5938,6 +6722,7 @@ Multiplier on the refrigerator energy usage that can reflect, e.g., high/low usa
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Extra Refrigerator: Present**
@@ -5948,6 +6733,7 @@ Whether there is an extra refrigerator present.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -5962,6 +6748,7 @@ The space type for the extra refrigerator location. If not provided, the OS-HPXM
 
 - **Choices:** `conditioned space`, `basement - conditioned`, `basement - unconditioned`, `garage`, `other housing unit`, `other heated space`, `other multifamily buffer space`, `other non-freezing space`
 
+
 <br/>
 
 **Extra Refrigerator: Rated Annual Consumption**
@@ -5975,6 +6762,7 @@ The EnergyGuide rated annual energy consumption for an extra refrigerator. If no
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Extra Refrigerator: Usage Multiplier**
@@ -5986,6 +6774,7 @@ Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/l
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Freezer: Present**
@@ -5996,6 +6785,7 @@ Whether there is a freezer present.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -6010,6 +6800,7 @@ The space type for the freezer location. If not provided, the OS-HPXML default (
 
 - **Choices:** `conditioned space`, `basement - conditioned`, `basement - unconditioned`, `garage`, `other housing unit`, `other heated space`, `other multifamily buffer space`, `other non-freezing space`
 
+
 <br/>
 
 **Freezer: Rated Annual Consumption**
@@ -6023,6 +6814,7 @@ The EnergyGuide rated annual energy consumption for a freezer. If not provided, 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Freezer: Usage Multiplier**
@@ -6034,6 +6826,7 @@ Multiplier on the freezer energy usage that can reflect, e.g., high/low usage oc
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Cooking Range/Oven: Present**
@@ -6044,6 +6837,9 @@ Whether there is a cooking range/oven present.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
+
+- **Default:** `true`
 
 <br/>
 
@@ -6058,6 +6854,7 @@ The space type for the cooking range/oven location. If not provided, the OS-HPXM
 
 - **Choices:** `conditioned space`, `basement - conditioned`, `basement - unconditioned`, `garage`, `other housing unit`, `other heated space`, `other multifamily buffer space`, `other non-freezing space`
 
+
 <br/>
 
 **Cooking Range/Oven: Fuel Type**
@@ -6071,6 +6868,9 @@ Type of fuel used by the cooking range/oven.
 
 - **Choices:** `electricity`, `natural gas`, `fuel oil`, `propane`, `wood`, `coal`
 
+
+- **Default:** `natural gas`
+
 <br/>
 
 **Cooking Range/Oven: Is Induction**
@@ -6081,6 +6881,7 @@ Whether the cooking range is induction. If not provided, the OS-HPXML default (s
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6093,6 +6894,7 @@ Whether the oven is convection. If not provided, the OS-HPXML default (see <a hr
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Cooking Range/Oven: Usage Multiplier**
@@ -6104,6 +6906,7 @@ Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/l
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Ceiling Fan: Present**
@@ -6114,6 +6917,9 @@ Whether there are any ceiling fans.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
+
+- **Default:** `true`
 
 <br/>
 
@@ -6128,6 +6934,7 @@ The label average energy use of the ceiling fan(s). If neither Efficiency nor La
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Ceiling Fan: Efficiency**
@@ -6140,6 +6947,7 @@ The efficiency rating of the ceiling fan(s) at medium speed. Only used if Label 
 - **Units:** ``CFM/W``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6154,6 +6962,7 @@ Total number of ceiling fans. If not provided, the OS-HPXML default (see <a href
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Ceiling Fan: Cooling Setpoint Temperature Offset**
@@ -6167,6 +6976,7 @@ The cooling setpoint temperature offset during months when the ceiling fans are 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Plug Loads: Television Present**
@@ -6177,6 +6987,9 @@ Whether there are televisions.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
+
+- **Default:** `true`
 
 <br/>
 
@@ -6191,6 +7004,7 @@ The annual energy consumption of the television plug loads. If not provided, the
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Plug Loads: Television Usage Multiplier**
@@ -6201,6 +7015,7 @@ Multiplier on the television energy usage that can reflect, e.g., high/low usage
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6215,6 +7030,7 @@ The annual energy consumption of the other residual plug loads. If not provided,
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Plug Loads: Other Sensible Fraction**
@@ -6227,6 +7043,7 @@ Fraction of other residual plug loads' internal gains that are sensible. If not 
 - **Units:** ``Frac``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6241,6 +7058,7 @@ Fraction of other residual plug loads' internal gains that are latent. If not pr
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Plug Loads: Other Usage Multiplier**
@@ -6252,6 +7070,7 @@ Multiplier on the other energy usage that can reflect, e.g., high/low usage occu
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Plug Loads: Well Pump Present**
@@ -6262,6 +7081,7 @@ Whether there is a well pump.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -6276,6 +7096,7 @@ The annual energy consumption of the well pump plug loads. If not provided, the 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Plug Loads: Well Pump Usage Multiplier**
@@ -6287,6 +7108,7 @@ Multiplier on the well pump energy usage that can reflect, e.g., high/low usage 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Plug Loads: Vehicle Present**
@@ -6297,6 +7119,7 @@ Whether there is an electric vehicle.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -6311,6 +7134,7 @@ The annual energy consumption of the electric vehicle plug loads. If not provide
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Plug Loads: Vehicle Usage Multiplier**
@@ -6322,6 +7146,7 @@ Multiplier on the electric vehicle energy usage that can reflect, e.g., high/low
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Fuel Loads: Grill Present**
@@ -6332,6 +7157,7 @@ Whether there is a fuel loads grill.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -6346,6 +7172,9 @@ The fuel type of the fuel loads grill.
 
 - **Choices:** `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`
 
+
+- **Default:** `natural gas`
+
 <br/>
 
 **Misc Fuel Loads: Grill Annual therm**
@@ -6359,6 +7188,7 @@ The annual energy consumption of the fuel loads grill. If not provided, the OS-H
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Fuel Loads: Grill Usage Multiplier**
@@ -6370,6 +7200,7 @@ Multiplier on the fuel loads grill energy usage that can reflect, e.g., high/low
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Fuel Loads: Lighting Present**
@@ -6380,6 +7211,7 @@ Whether there is fuel loads lighting.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -6394,6 +7226,9 @@ The fuel type of the fuel loads lighting.
 
 - **Choices:** `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`
 
+
+- **Default:** `natural gas`
+
 <br/>
 
 **Misc Fuel Loads: Lighting Annual therm**
@@ -6407,6 +7242,7 @@ The annual energy consumption of the fuel loads lighting. If not provided, the O
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Fuel Loads: Lighting Usage Multiplier**
@@ -6418,6 +7254,7 @@ Multiplier on the fuel loads lighting energy usage that can reflect, e.g., high/
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Fuel Loads: Fireplace Present**
@@ -6428,6 +7265,7 @@ Whether there is fuel loads fireplace.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -6442,6 +7280,9 @@ The fuel type of the fuel loads fireplace.
 
 - **Choices:** `natural gas`, `fuel oil`, `propane`, `wood`, `wood pellets`
 
+
+- **Default:** `natural gas`
+
 <br/>
 
 **Misc Fuel Loads: Fireplace Annual therm**
@@ -6454,6 +7295,7 @@ The annual energy consumption of the fuel loads fireplace. If not provided, the 
 - **Units:** ``therm/yr``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6468,6 +7310,7 @@ Fraction of fireplace residual fuel loads' internal gains that are sensible. If 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Fuel Loads: Fireplace Latent Fraction**
@@ -6481,6 +7324,7 @@ Fraction of fireplace residual fuel loads' internal gains that are latent. If no
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Misc Fuel Loads: Fireplace Usage Multiplier**
@@ -6492,6 +7336,7 @@ Multiplier on the fuel loads fireplace energy usage that can reflect, e.g., high
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Pool: Present**
@@ -6502,6 +7347,7 @@ Whether there is a pool.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -6516,6 +7362,7 @@ The annual energy consumption of the pool pump. If not provided, the OS-HPXML de
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Pool: Pump Usage Multiplier**
@@ -6526,6 +7373,7 @@ Multiplier on the pool pump energy usage that can reflect, e.g., high/low usage 
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6540,6 +7388,9 @@ The type of pool heater. Use 'none' if there is no pool heater.
 
 - **Choices:** `none`, `electric resistance`, `gas fired`, `heat pump`
 
+
+- **Default:** `none`
+
 <br/>
 
 **Pool: Heater Annual kWh**
@@ -6552,6 +7403,7 @@ The annual energy consumption of the electric resistance pool heater. If not pro
 - **Units:** ``kWh/yr``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6566,6 +7418,7 @@ The annual energy consumption of the gas fired pool heater. If not provided, the
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Pool: Heater Usage Multiplier**
@@ -6577,6 +7430,7 @@ Multiplier on the pool heater energy usage that can reflect, e.g., high/low usag
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Permanent Spa: Present**
@@ -6587,6 +7441,7 @@ Whether there is a permanent spa.
 - **Type:** ``Boolean``
 
 - **Required:** ``true``
+
 
 <br/>
 
@@ -6601,6 +7456,7 @@ The annual energy consumption of the permanent spa pump. If not provided, the OS
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Permanent Spa: Pump Usage Multiplier**
@@ -6611,6 +7467,7 @@ Multiplier on the permanent spa pump energy usage that can reflect, e.g., high/l
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6625,6 +7482,9 @@ The type of permanent spa heater. Use 'none' if there is no permanent spa heater
 
 - **Choices:** `none`, `electric resistance`, `gas fired`, `heat pump`
 
+
+- **Default:** `none`
+
 <br/>
 
 **Permanent Spa: Heater Annual kWh**
@@ -6637,6 +7497,7 @@ The annual energy consumption of the electric resistance permanent spa heater. I
 - **Units:** ``kWh/yr``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6651,6 +7512,7 @@ The annual energy consumption of the gas fired permanent spa heater. If not prov
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Permanent Spa: Heater Usage Multiplier**
@@ -6661,6 +7523,7 @@ Multiplier on the permanent spa heater energy usage that can reflect, e.g., high
 - **Type:** ``Double``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6673,6 +7536,7 @@ Names of emissions scenarios. If multiple scenarios, use a comma-separated list.
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Emissions: Types**
@@ -6683,6 +7547,7 @@ Types of emissions (e.g., CO2e, NOx, etc.). If multiple scenarios, use a comma-s
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6695,6 +7560,7 @@ Electricity emissions factors units. If multiple scenarios, use a comma-separate
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Emissions: Electricity Values or File Paths**
@@ -6705,6 +7571,7 @@ Electricity emissions factors values, specified as either an annual factor or an
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6717,6 +7584,7 @@ The number of header rows in the electricity emissions factor file. Only applies
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Emissions: Electricity Files Column Numbers**
@@ -6727,6 +7595,7 @@ The column number in the electricity emissions factor file. Only applies when an
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6739,6 +7608,7 @@ Fossil fuel emissions factors units. If multiple scenarios, use a comma-separate
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Emissions: Natural Gas Values**
@@ -6749,6 +7619,7 @@ Natural gas emissions factors values, specified as an annual factor. If multiple
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6761,6 +7632,7 @@ Propane emissions factors values, specified as an annual factor. If multiple sce
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Emissions: Fuel Oil Values**
@@ -6771,6 +7643,7 @@ Fuel oil emissions factors values, specified as an annual factor. If multiple sc
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6783,6 +7656,7 @@ Coal emissions factors values, specified as an annual factor. If multiple scenar
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Emissions: Wood Values**
@@ -6793,6 +7667,7 @@ Wood emissions factors values, specified as an annual factor. If multiple scenar
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6805,6 +7680,7 @@ Wood pellets emissions factors values, specified as an annual factor. If multipl
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Utility Bills: Scenario Names**
@@ -6815,6 +7691,7 @@ Names of utility bill scenarios. If multiple scenarios, use a comma-separated li
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6827,6 +7704,7 @@ Electricity tariff file specified as an absolute/relative path to a file with ut
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Utility Bills: Electricity Fixed Charges**
@@ -6837,6 +7715,7 @@ Electricity utility bill monthly fixed charges. If multiple scenarios, use a com
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6849,6 +7728,7 @@ Natural gas utility bill monthly fixed charges. If multiple scenarios, use a com
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Utility Bills: Propane Fixed Charges**
@@ -6859,6 +7739,7 @@ Propane utility bill monthly fixed charges. If multiple scenarios, use a comma-s
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6871,6 +7752,7 @@ Fuel oil utility bill monthly fixed charges. If multiple scenarios, use a comma-
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Utility Bills: Coal Fixed Charges**
@@ -6881,6 +7763,7 @@ Coal utility bill monthly fixed charges. If multiple scenarios, use a comma-sepa
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6893,6 +7776,7 @@ Wood utility bill monthly fixed charges. If multiple scenarios, use a comma-sepa
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Utility Bills: Wood Pellets Fixed Charges**
@@ -6903,6 +7787,7 @@ Wood pellets utility bill monthly fixed charges. If multiple scenarios, use a co
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6915,6 +7800,7 @@ Electricity utility bill marginal rates. If multiple scenarios, use a comma-sepa
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Utility Bills: Natural Gas Marginal Rates**
@@ -6925,6 +7811,7 @@ Natural gas utility bill marginal rates. If multiple scenarios, use a comma-sepa
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6937,6 +7824,7 @@ Propane utility bill marginal rates. If multiple scenarios, use a comma-separate
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Utility Bills: Fuel Oil Marginal Rates**
@@ -6947,6 +7835,7 @@ Fuel oil utility bill marginal rates. If multiple scenarios, use a comma-separat
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6959,6 +7848,7 @@ Coal utility bill marginal rates. If multiple scenarios, use a comma-separated l
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Utility Bills: Wood Marginal Rates**
@@ -6969,6 +7859,7 @@ Wood utility bill marginal rates. If multiple scenarios, use a comma-separated l
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -6981,6 +7872,7 @@ Wood pellets utility bill marginal rates. If multiple scenarios, use a comma-sep
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Utility Bills: PV Compensation Types**
@@ -6991,6 +7883,7 @@ Utility bill PV compensation types. If multiple scenarios, use a comma-separated
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -7003,6 +7896,7 @@ Utility bill PV net metering annual excess sellback rate types. Only applies if 
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Utility Bills: PV Net Metering Annual Excess Sellback Rates**
@@ -7013,6 +7907,7 @@ Utility bill PV net metering annual excess sellback rates. Only applies if the P
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -7025,6 +7920,7 @@ Utility bill PV annual full/gross feed-in tariff rates. Only applies if the PV c
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Utility Bills: PV Monthly Grid Connection Fee Units**
@@ -7035,6 +7931,7 @@ Utility bill PV monthly grid connection fee units. If multiple scenarios, use a 
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -7047,6 +7944,7 @@ Utility bill PV monthly grid connection fees. If multiple scenarios, use a comma
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Additional Properties**
@@ -7057,6 +7955,7 @@ Additional properties specified as key-value pairs (i.e., key=value). If multipl
 - **Type:** ``String``
 
 - **Required:** ``false``
+
 
 <br/>
 
@@ -7069,6 +7968,7 @@ If true, combines like surfaces to simplify the HPXML file generated.
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Apply Default Values?**
@@ -7080,6 +7980,7 @@ If true, applies OS-HPXML default values to the HPXML output file. Setting to tr
 
 - **Required:** ``false``
 
+
 <br/>
 
 **Apply Validation?**
@@ -7090,6 +7991,7 @@ If true, validates the HPXML output file. Set to false for faster performance. N
 - **Type:** ``Boolean``
 
 - **Required:** ``false``
+
 
 <br/>
 

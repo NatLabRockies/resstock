@@ -420,20 +420,18 @@ module Defaults
     end
 
     if hpxml_bldg.header.shading_summer_begin_month.nil? || hpxml_bldg.header.shading_summer_begin_day.nil? || hpxml_bldg.header.shading_summer_end_month.nil? || hpxml_bldg.header.shading_summer_end_day.nil?
-      if not weather.nil?
-        # Default based on Building America seasons
-        _, default_cooling_months = HVAC.get_building_america_hvac_seasons(weather, hpxml_bldg.latitude)
-        begin_month, begin_day, end_month, end_day = Calendar.get_begin_and_end_dates_from_monthly_array(default_cooling_months, hpxml_header.sim_calendar_year)
-        if not begin_month.nil? # Check if no summer
-          hpxml_bldg.header.shading_summer_begin_month = begin_month
-          hpxml_bldg.header.shading_summer_begin_day = begin_day
-          hpxml_bldg.header.shading_summer_end_month = end_month
-          hpxml_bldg.header.shading_summer_end_day = end_day
-          hpxml_bldg.header.shading_summer_begin_month_isdefaulted = true
-          hpxml_bldg.header.shading_summer_begin_day_isdefaulted = true
-          hpxml_bldg.header.shading_summer_end_month_isdefaulted = true
-          hpxml_bldg.header.shading_summer_end_day_isdefaulted = true
-        end
+      # Default based on Building America seasons
+      _, default_cooling_months = HVAC.get_building_america_hvac_seasons(weather, hpxml_bldg.latitude)
+      begin_month, begin_day, end_month, end_day = Calendar.get_begin_and_end_dates_from_monthly_array(default_cooling_months, hpxml_header.sim_calendar_year)
+      if not begin_month.nil? # Check if no summer
+        hpxml_bldg.header.shading_summer_begin_month = begin_month
+        hpxml_bldg.header.shading_summer_begin_day = begin_day
+        hpxml_bldg.header.shading_summer_end_month = end_month
+        hpxml_bldg.header.shading_summer_end_day = end_day
+        hpxml_bldg.header.shading_summer_begin_month_isdefaulted = true
+        hpxml_bldg.header.shading_summer_begin_day_isdefaulted = true
+        hpxml_bldg.header.shading_summer_end_month_isdefaulted = true
+        hpxml_bldg.header.shading_summer_end_day_isdefaulted = true
       end
     end
   end
@@ -719,66 +717,67 @@ module Defaults
       hpxml_bldg.site.ground_diffusivity_isdefaulted = true
     end
 
-    if hpxml_bldg.dst_enabled.nil?
-      hpxml_bldg.dst_enabled = true # Assume DST since it occurs in most US locations
-      hpxml_bldg.dst_enabled_isdefaulted = true
+    if hpxml_bldg.state_code.nil?
+      hpxml_bldg.state_code = get_state_code(hpxml_bldg.state_code, weather, hpxml_bldg.zip_code)
+      hpxml_bldg.state_code_isdefaulted = true
     end
 
-    if not weather.nil?
-
-      if hpxml_bldg.state_code.nil?
-        hpxml_bldg.state_code = get_state_code(hpxml_bldg.state_code, weather)
-        hpxml_bldg.state_code_isdefaulted = true
+    if hpxml_bldg.dst_observed.nil?
+      if ['AZ', 'HI'].include? hpxml_bldg.state_code
+        hpxml_bldg.dst_observed = false
+      else
+        hpxml_bldg.dst_observed = true
       end
+      hpxml_bldg.dst_observed_isdefaulted = true
+    end
 
-      if hpxml_bldg.city.nil?
-        hpxml_bldg.city = weather.header.City
-        hpxml_bldg.city_isdefaulted = true
-      end
+    if hpxml_bldg.city.nil?
+      hpxml_bldg.city = weather.header.City
+      hpxml_bldg.city_isdefaulted = true
+    end
 
-      if hpxml_bldg.time_zone_utc_offset.nil?
-        hpxml_bldg.time_zone_utc_offset = get_time_zone(hpxml_bldg.time_zone_utc_offset, weather)
-        hpxml_bldg.time_zone_utc_offset_isdefaulted = true
-      end
+    if hpxml_bldg.time_zone_utc_offset.nil?
+      hpxml_bldg.time_zone_utc_offset = get_time_zone(hpxml_bldg.time_zone_utc_offset, weather)
+      hpxml_bldg.time_zone_utc_offset_isdefaulted = true
+    end
 
-      if hpxml_bldg.dst_enabled
-        if hpxml_bldg.dst_begin_month.nil? || hpxml_bldg.dst_begin_day.nil? || hpxml_bldg.dst_end_month.nil? || hpxml_bldg.dst_end_day.nil?
-          if (not weather.header.DSTStartDate.nil?) && (not weather.header.DSTEndDate.nil?)
-            # Use weather file DST dates if available
-            dst_start_date = weather.header.DSTStartDate
-            dst_end_date = weather.header.DSTEndDate
-            hpxml_bldg.dst_begin_month = dst_start_date.monthOfYear.value
-            hpxml_bldg.dst_begin_day = dst_start_date.dayOfMonth
-            hpxml_bldg.dst_end_month = dst_end_date.monthOfYear.value
-            hpxml_bldg.dst_end_day = dst_end_date.dayOfMonth
-          else
-            # Roughly average US dates according to https://en.wikipedia.org/wiki/Daylight_saving_time_in_the_United_States
-            hpxml_bldg.dst_begin_month = 3
-            hpxml_bldg.dst_begin_day = 12
-            hpxml_bldg.dst_end_month = 11
-            hpxml_bldg.dst_end_day = 5
-          end
-          hpxml_bldg.dst_begin_month_isdefaulted = true
-          hpxml_bldg.dst_begin_day_isdefaulted = true
-          hpxml_bldg.dst_end_month_isdefaulted = true
-          hpxml_bldg.dst_end_day_isdefaulted = true
+    if hpxml_bldg.dst_observed
+      if hpxml_bldg.dst_begin_month.nil? || hpxml_bldg.dst_begin_day.nil? || hpxml_bldg.dst_end_month.nil? || hpxml_bldg.dst_end_day.nil?
+        if (not weather.header.DSTStartDate.nil?) && (not weather.header.DSTEndDate.nil?)
+          # Use weather file DST dates if available
+          dst_start_date = weather.header.DSTStartDate
+          dst_end_date = weather.header.DSTEndDate
+          hpxml_bldg.dst_begin_month = dst_start_date.monthOfYear.value
+          hpxml_bldg.dst_begin_day = dst_start_date.dayOfMonth
+          hpxml_bldg.dst_end_month = dst_end_date.monthOfYear.value
+          hpxml_bldg.dst_end_day = dst_end_date.dayOfMonth
+        else
+          # Roughly average US dates according to https://en.wikipedia.org/wiki/Daylight_saving_time_in_the_United_States
+          hpxml_bldg.dst_begin_month = 3
+          hpxml_bldg.dst_begin_day = 12
+          hpxml_bldg.dst_end_month = 11
+          hpxml_bldg.dst_end_day = 5
         end
+        hpxml_bldg.dst_begin_month_isdefaulted = true
+        hpxml_bldg.dst_begin_day_isdefaulted = true
+        hpxml_bldg.dst_end_month_isdefaulted = true
+        hpxml_bldg.dst_end_day_isdefaulted = true
       end
+    end
 
-      if hpxml_bldg.elevation.nil?
-        hpxml_bldg.elevation = weather.header.Elevation.round(1)
-        hpxml_bldg.elevation_isdefaulted = true
-      end
+    if hpxml_bldg.elevation.nil?
+      hpxml_bldg.elevation = get_elevation(weather)
+      hpxml_bldg.elevation_isdefaulted = true
+    end
 
-      if hpxml_bldg.latitude.nil?
-        hpxml_bldg.latitude = get_latitude(hpxml_bldg.latitude, weather)
-        hpxml_bldg.latitude_isdefaulted = true
-      end
+    if hpxml_bldg.latitude.nil?
+      hpxml_bldg.latitude = get_latitude(hpxml_bldg.latitude, weather, hpxml_bldg.zip_code)
+      hpxml_bldg.latitude_isdefaulted = true
+    end
 
-      if hpxml_bldg.longitude.nil?
-        hpxml_bldg.longitude = get_longitude(hpxml_bldg.longitude, weather)
-        hpxml_bldg.longitude_isdefaulted = true
-      end
+    if hpxml_bldg.longitude.nil?
+      hpxml_bldg.longitude = get_longitude(hpxml_bldg.longitude, weather, hpxml_bldg.zip_code)
+      hpxml_bldg.longitude_isdefaulted = true
     end
   end
 
@@ -945,7 +944,7 @@ module Defaults
   # @param unit_num [Integer] Dwelling unit number
   # @return [nil]
   def self.apply_climate_and_risk_zones(hpxml_bldg, weather, unit_num)
-    if (not weather.nil?) && hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.empty?
+    if hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.empty?
       weather_data = lookup_weather_data_from_wmo(weather.header.WMONumber)
       if not weather_data.empty?
         hpxml_bldg.climate_and_risk_zones.climate_zone_ieccs.add(zone: weather_data[:zipcode_iecc_zone],
@@ -5200,26 +5199,50 @@ module Defaults
     return shading_coverage * shading_factor + (1 - shading_coverage) * non_shading_factor
   end
 
-  # Gets the default latitude from the HPXML file or, as backup, weather file.
+  # Gets the default latitude from the HPXML file, or as backup from the
+  # zip code, or as backup from the weather file.
   #
   # @param latitude [Double] Latitude from the HPXML file (degrees)
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
   # @return [Double] Default value for latitude (degrees)
-  def self.get_latitude(latitude, weather)
+  def self.get_latitude(latitude, weather, zipcode)
     return latitude unless latitude.nil?
+
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode)
+      return Float(weather_data[:zipcode_latitude]) unless weather_data[:zipcode_latitude].nil?
+    end
 
     return weather.header.Latitude
   end
 
-  # Gets the default longitude from the HPXML file or, as backup, weather file.
+  # Gets the default longitude from the HPXML file, or as backup from the
+  # zip code, or as backup from the weather file.
   #
   # @param longitude [Double] Longitude from the HPXML file (degrees)
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
   # @return [Double] Default value for longitude (degrees)
-  def self.get_longitude(longitude, weather)
+  def self.get_longitude(longitude, weather, zipcode)
     return longitude unless longitude.nil?
 
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode)
+      return Float(weather_data[:zipcode_longitude]) unless weather_data[:zipcode_longitude].nil?
+    end
+
     return weather.header.Longitude
+  end
+
+  # Gets the default elevation from the HPXML file, or as backup from the
+  # weather file.
+  #
+  # @param weather [WeatherFile] Weather object containing EPW information
+  # @return [Double] Default value for elevation (ft)
+  def self.get_elevation(weather)
+    # FUTURE: Add elevation to zipcode_weather_stations.csv and use here first.
+    return weather.header.Elevation.round(1)
   end
 
   # Gets the default time zone from the HPXML file or, as backup, weather file.
@@ -5230,16 +5253,24 @@ module Defaults
   def self.get_time_zone(time_zone, weather)
     return time_zone unless time_zone.nil?
 
+    # FUTURE: Add time zone to zipcode_weather_stations.csv and use here first.
     return weather.header.TimeZone
   end
 
-  # Gets the default state code from the HPXML file or, as backup, weather file.
+  # Gets the default state code from the HPXML file, or as backup from the
+  # zip code, or as backup from the weather file.
   #
   # @param state_code [String] State code from the HPXML file
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
   # @return [String] Uppercase state code
-  def self.get_state_code(state_code, weather)
+  def self.get_state_code(state_code, weather, zipcode)
     return state_code unless state_code.nil?
+
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode)
+      return weather_data[:zipcode_state] unless weather_data[:zipcode_state].nil?
+    end
 
     return weather.header.StateProvinceRegion.upcase
   end
