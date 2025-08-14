@@ -7652,12 +7652,12 @@ Single-Family Detached	None	WY	<1940	0.0802227	0	0	0	0.683634	0.236143	53	0	7.98
 # Created by: sources\recs\recs2020\tsv_maker.py and sources\aris\tsv_maker.py
 # Description: The presence and type of primary cooling system in the dwelling unit.
 # Source: U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 # Assumption: Due to low sample sizes, fallback rules applied with lumping of
-# Assumption: 1) HVAC Heating type: Non-ducted heating and None2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs binsHomes having ducted heat pump for heating and electricity fuel is assumed to haveducted heat pump for cooling (seperating from central AC category)
+# Assumption: 1) HVAC Heating type: Non-ducted heating and None2) Geometry building SF: Mobile, Single family attached, Single family detached3) Geometry building MF: Multi-Family with 2 - 4 Units, Multi-Family with 5+ Units4) Vintage Lump: 20yrs binsHomes having ducted heat pump for heating and electricity fuel is assumed to haveducted heat pump for cooling (separating from central AC category)
 # Assumption: Homes having non-ducted heat pump for heating is assumed to have non-ducted heat pumpfor cooling
 # Assumption: For Hawaii, central air conditioning saturation is from RECS 2020 by heating type, ignoring allother dependencies
 # Assumption: For Hawaii, Non-Ducted Heat Pump saturation is underestimated because ResStock does not currently allow cooling-only Non-Ducted Heat Pumps. These samples are modeled as Room ACs
-# Assumption: For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
-# Assumption: For Alaska, we are not modelling any central and room AC.
+# Assumption: For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+# Assumption: For Alaska, we are not modeling any central and room AC.
 # Assumption: For Alaska, cooling systems are never shared.

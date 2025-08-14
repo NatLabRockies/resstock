@@ -257,4 +257,4 @@ Single-Family Detached	WY	0.213603	0.216664	0.569733	138	155633	0.00131152
 # Created by: sources\recs\recs2020\tsv_maker.py
 # Description: Qualitative lamp type fractions in each household surveyed are distributed to three options representing 100% incandescent, 100% CFl, and 100% LED lamp type options.
 # Source: Constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-# Assumption: Qualitative portion of inside light bulbs is mapped to quantative percentage as: None: 0%; Some: 20%; About half: 50%; Most: 80%; All: 100%. Then the sum of three types of lighting options is normalized to 100%
+# Assumption: Qualitative portion of inside light bulbs is mapped to quantitative percentage as: None: 0%; Some: 20%; About half: 50%; Most: 80%; All: 100%. Then the sum of three types of lighting options is normalized to 100%
