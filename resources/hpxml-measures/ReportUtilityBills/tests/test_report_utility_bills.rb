@@ -6,12 +6,15 @@ require_relative '../../HPXMLtoOpenStudio/resources/constants'
 require_relative '../../HPXMLtoOpenStudio/resources/energyplus'
 require_relative '../../HPXMLtoOpenStudio/resources/hpxml'
 require_relative '../../HPXMLtoOpenStudio/resources/defaults'
+require_relative '../../HPXMLtoOpenStudio/resources/materials'
 require_relative '../../HPXMLtoOpenStudio/resources/minitest_helper'
+require_relative '../../HPXMLtoOpenStudio/resources/psychrometrics'
 require_relative '../../HPXMLtoOpenStudio/resources/schedules'
 require_relative '../../HPXMLtoOpenStudio/resources/unit_conversions'
 require_relative '../../HPXMLtoOpenStudio/resources/utility_bills'
-require_relative '../../HPXMLtoOpenStudio/resources/xmlhelper'
 require_relative '../../HPXMLtoOpenStudio/resources/version'
+require_relative '../../HPXMLtoOpenStudio/resources/weather'
+require_relative '../../HPXMLtoOpenStudio/resources/xmlhelper'
 require_relative '../resources/util.rb'
 require 'openstudio'
 require 'openstudio/measure/ShowRunnerOutput'
@@ -83,8 +86,12 @@ class ReportUtilityBillsTest < Minitest::Test
     HPXML::fossil_fuels.each do |fuel|
       @has_fuel[fuel] = true
     end
-    Defaults.apply_header(@hpxml_header, @hpxml_bldg, nil)
-    Defaults.apply_utility_bill_scenarios(nil, @hpxml_header, @hpxml_bldg, @has_fuel)
+
+    runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+    weather_dir = File.join(File.dirname(__FILE__), '..', '..', 'weather')
+    weather = WeatherFile.new(epw_path: File.join(weather_dir, 'USA_CO_Denver.Intl.AP.725650_TMY3.epw'), runner: runner)
+    Defaults.apply_header(@hpxml_header, @hpxml_bldg, weather)
+    Defaults.apply_utility_bill_scenarios(runner, @hpxml_header, @hpxml_bldg, @has_fuel)
 
     @root_path = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..'))
     @sample_files_path = File.join(@root_path, 'workflow', 'sample_files')
