@@ -1556,7 +1556,7 @@ class HPXML < Object
              :egrid_subregion,      # [String] Site/eGridSubregion
              :cambium_region_gea,   # [String] Site/CambiumRegionGEA
              :time_zone_utc_offset, # [Double] TimeZone/UTCOffset
-             :dst_enabled,          # [Boolean] TimeZone/DSTObserved
+             :dst_observed,         # [Boolean] TimeZone/DSTObserved
              :dst_begin_month,      # [Integer] TimeZone/extension/DSTBeginMonth
              :dst_begin_day,        # [Integer] TimeZone/extension/DSTBeginDayOfMonth
              :dst_end_month,        # [Integer] TimeZone/extension/DSTEndMonth
@@ -1581,7 +1581,7 @@ class HPXML < Object
       building = XMLHelper.add_element(hpxml, 'Building')
       building_building_id = XMLHelper.add_element(building, 'BuildingID')
       XMLHelper.add_attribute(building_building_id, 'id', @building_id)
-      if (not @address_type.nil?) || (not @address1.nil?) || (not @address2.nil?) || (not @state_code.nil?) || (not @zip_code.nil?) || (not @city.nil?) || (not @latitude.nil?) || (not @longitude.nil?) || (not @elevation.nil?) || (not @time_zone_utc_offset.nil?) || (not @egrid_region.nil?) || (not @egrid_subregion.nil?) || (not @cambium_region_gea.nil?) || (not @dst_enabled.nil?) || (not @dst_begin_month.nil?) || (not @dst_begin_day.nil?) || (not @dst_end_month.nil?) || (not @dst_end_day.nil?)
+      if (not @address_type.nil?) || (not @address1.nil?) || (not @address2.nil?) || (not @state_code.nil?) || (not @zip_code.nil?) || (not @city.nil?) || (not @latitude.nil?) || (not @longitude.nil?) || (not @elevation.nil?) || (not @time_zone_utc_offset.nil?) || (not @egrid_region.nil?) || (not @egrid_subregion.nil?) || (not @cambium_region_gea.nil?) || (not @dst_observed.nil?) || (not @dst_begin_month.nil?) || (not @dst_begin_day.nil?) || (not @dst_end_month.nil?) || (not @dst_end_day.nil?)
         building_site = XMLHelper.add_element(building, 'Site')
         building_site_id = XMLHelper.add_element(building_site, 'SiteID')
         if @site_id.nil?
@@ -1612,10 +1612,10 @@ class HPXML < Object
         XMLHelper.add_element(building_site, 'eGridRegion', @egrid_region, :string, @egrid_region_isdefaulted) unless @egrid_region.nil?
         XMLHelper.add_element(building_site, 'eGridSubregion', @egrid_subregion, :string, @egrid_subregion_isdefaulted) unless @egrid_subregion.nil?
         XMLHelper.add_element(building_site, 'CambiumRegionGEA', @cambium_region_gea, :string, @cambium_region_gea_isdefaulted) unless @cambium_region_gea.nil?
-        if (not @time_zone_utc_offset.nil?) || (not @dst_enabled.nil?) || (not @dst_begin_month.nil?) || (not @dst_begin_day.nil?) || (not @dst_end_month.nil?) || (not @dst_end_day.nil?)
+        if (not @time_zone_utc_offset.nil?) || (not @dst_observed.nil?) || (not @dst_begin_month.nil?) || (not @dst_begin_day.nil?) || (not @dst_end_month.nil?) || (not @dst_end_day.nil?)
           time_zone = XMLHelper.add_element(building_site, 'TimeZone')
           XMLHelper.add_element(time_zone, 'UTCOffset', @time_zone_utc_offset, :float, @time_zone_utc_offset_isdefaulted) unless @time_zone_utc_offset.nil?
-          XMLHelper.add_element(time_zone, 'DSTObserved', @dst_enabled, :boolean, @dst_enabled_isdefaulted) unless @dst_enabled.nil?
+          XMLHelper.add_element(time_zone, 'DSTObserved', @dst_observed, :boolean, @dst_observed_isdefaulted) unless @dst_observed.nil?
           XMLHelper.add_extension(time_zone, 'DSTBeginMonth', @dst_begin_month, :integer, @dst_begin_month_isdefaulted) unless @dst_begin_month.nil?
           XMLHelper.add_extension(time_zone, 'DSTBeginDayOfMonth', @dst_begin_day, :integer, @dst_begin_day_isdefaulted) unless @dst_begin_day.nil?
           XMLHelper.add_extension(time_zone, 'DSTEndMonth', @dst_end_month, :integer, @dst_end_month_isdefaulted) unless @dst_end_month.nil?
@@ -1707,11 +1707,13 @@ class HPXML < Object
         @egrid_subregion = XMLHelper.get_value(building, 'Site/eGridSubregion', :string)
         @cambium_region_gea = XMLHelper.get_value(building, 'Site/CambiumRegionGEA', :string)
         @time_zone_utc_offset = XMLHelper.get_value(building, 'Site/TimeZone/UTCOffset', :float)
-        @dst_enabled = XMLHelper.get_value(building, 'Site/TimeZone/DSTObserved', :boolean)
-        @dst_begin_month = XMLHelper.get_value(building, 'Site/TimeZone/extension/DSTBeginMonth', :integer)
-        @dst_begin_day = XMLHelper.get_value(building, 'Site/TimeZone/extension/DSTBeginDayOfMonth', :integer)
-        @dst_end_month = XMLHelper.get_value(building, 'Site/TimeZone/extension/DSTEndMonth', :integer)
-        @dst_end_day = XMLHelper.get_value(building, 'Site/TimeZone/extension/DSTEndDayOfMonth', :integer)
+        @dst_observed = XMLHelper.get_value(building, 'Site/TimeZone/DSTObserved', :boolean)
+        if @dst_observed
+          @dst_begin_month = XMLHelper.get_value(building, 'Site/TimeZone/extension/DSTBeginMonth', :integer)
+          @dst_begin_day = XMLHelper.get_value(building, 'Site/TimeZone/extension/DSTBeginDayOfMonth', :integer)
+          @dst_end_month = XMLHelper.get_value(building, 'Site/TimeZone/extension/DSTEndMonth', :integer)
+          @dst_end_day = XMLHelper.get_value(building, 'Site/TimeZone/extension/DSTEndDayOfMonth', :integer)
+        end
       end
 
       @site = Site.new(self, building)
