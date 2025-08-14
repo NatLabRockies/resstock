@@ -10016,9 +10016,9 @@ Insulation Foundation Wall	Wall R-10, Exterior	ResStockArguments	enclosure_found
 Insulation Foundation Wall	Wall R-15, Exterior	ResStockArguments	enclosure_foundation_wall=Solid Concrete, Whole Wall, R-15
 Insulation Foundation Wall	Wall R-5, Exterior	ResStockArguments	enclosure_foundation_wall=Solid Concrete, Whole Wall, R-5
 Insulation Rim Joist	None	ResStockArguments	enclosure_rim_joist=Uninsulated
-Insulation Rim Joist	R-10, Exterior	ResStockArguments	enclosure_rim_joist=Uninsulated
-Insulation Rim Joist	R-15, Exterior	ResStockArguments	enclosure_rim_joist=Uninsulated
-Insulation Rim Joist	R-5, Exterior	ResStockArguments	enclosure_rim_joist=Uninsulated
+Insulation Rim Joist	R-10, Exterior	ResStockArguments	enclosure_rim_joist=Exterior, R-10
+Insulation Rim Joist	R-15, Exterior	ResStockArguments	enclosure_rim_joist=Exterior, R-15
+Insulation Rim Joist	R-5, Exterior	ResStockArguments	enclosure_rim_joist=Exterior, R-5
 Insulation Rim Joist	Uninsulated	ResStockArguments	enclosure_rim_joist=Uninsulated
 Insulation Roof	Finished, R-13	ResStockArguments	enclosure_roof=R-13
 Insulation Roof	Finished, R-19	ResStockArguments	enclosure_roof=R-19
