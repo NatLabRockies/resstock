@@ -320,7 +320,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     _test_default_building_values(default_hpxml_bldg, true, 3, 12, 11, 5, 'CO', 'Denver Intl Ap', -7, 5413.4, 39.83, -104.65, 3, HPXML::HeatPumpSizingHERS, false,
                                   5, 1, 10, 31, 6.8, 91.76, HPXML::ManualJDailyTempRangeHigh, 70.0, 75.0, 0.45, -28.8, 2400.0, 0.0, 4, HPXML::HeatPumpBackupSizingEmergency, HPXML::ManualJInfiltrationMethodBlowerDoor, 4)
 
-    # Test defaults w/ StateCode=AZ
+    # Test defaults w/ StateCode (defaulted based on EPW)
     hpxml_bldg.climate_and_risk_zones.weather_station_epw_filepath = 'USA_AZ_Phoenix-Sky.Harbor.Intl.AP.722780_TMY3.epw'
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
@@ -329,6 +329,15 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     assert_nil(default_hpxml_bldg.dst_begin_day)
     assert_nil(default_hpxml_bldg.dst_end_month)
     assert_nil(default_hpxml_bldg.dst_end_day)
+
+    # Test defaults w/ ZipCode (in a different state than the weather station)
+    hpxml_bldg.zip_code = '86441'
+    hpxml_bldg.climate_and_risk_zones.weather_station_epw_filepath = 'USA_NV_Las.Vegas-McCarran.Intl.AP.723860_TMY3.epw'
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    _default_hpxml, default_hpxml_bldg = _test_measure()
+    assert_equal('AZ', default_hpxml_bldg.state_code)
+    assert_equal(35.8897, default_hpxml_bldg.latitude)
+    assert_equal(-114.599, default_hpxml_bldg.longitude)
 
     # Test defaults w/ NumberOfResidents provided and less than Nbr+1
     hpxml_bldg.building_occupancy.number_of_residents = 1

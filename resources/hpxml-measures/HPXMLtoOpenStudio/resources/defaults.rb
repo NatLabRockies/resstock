@@ -718,7 +718,7 @@ module Defaults
     end
 
     if hpxml_bldg.state_code.nil?
-      hpxml_bldg.state_code = get_state_code(hpxml_bldg.state_code, weather)
+      hpxml_bldg.state_code = get_state_code(hpxml_bldg.state_code, weather, hpxml_bldg.zip_code)
       hpxml_bldg.state_code_isdefaulted = true
     end
 
@@ -766,17 +766,17 @@ module Defaults
     end
 
     if hpxml_bldg.elevation.nil?
-      hpxml_bldg.elevation = weather.header.Elevation.round(1)
+      hpxml_bldg.elevation = get_elevation(weather)
       hpxml_bldg.elevation_isdefaulted = true
     end
 
     if hpxml_bldg.latitude.nil?
-      hpxml_bldg.latitude = get_latitude(hpxml_bldg.latitude, weather)
+      hpxml_bldg.latitude = get_latitude(hpxml_bldg.latitude, weather, hpxml_bldg.zip_code)
       hpxml_bldg.latitude_isdefaulted = true
     end
 
     if hpxml_bldg.longitude.nil?
-      hpxml_bldg.longitude = get_longitude(hpxml_bldg.longitude, weather)
+      hpxml_bldg.longitude = get_longitude(hpxml_bldg.longitude, weather, hpxml_bldg.zip_code)
       hpxml_bldg.longitude_isdefaulted = true
     end
   end
@@ -5197,26 +5197,50 @@ module Defaults
     return shading_coverage * shading_factor + (1 - shading_coverage) * non_shading_factor
   end
 
-  # Gets the default latitude from the HPXML file or, as backup, weather file.
+  # Gets the default latitude from the HPXML file, or as backup from the
+  # zip code, or as backup from the weather file.
   #
   # @param latitude [Double] Latitude from the HPXML file (degrees)
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
   # @return [Double] Default value for latitude (degrees)
-  def self.get_latitude(latitude, weather)
+  def self.get_latitude(latitude, weather, zipcode)
     return latitude unless latitude.nil?
+
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode)
+      return Float(weather_data[:zipcode_latitude]) unless weather_data[:zipcode_latitude].nil?
+    end
 
     return weather.header.Latitude
   end
 
-  # Gets the default longitude from the HPXML file or, as backup, weather file.
+  # Gets the default longitude from the HPXML file, or as backup from the
+  # zip code, or as backup from the weather file.
   #
   # @param longitude [Double] Longitude from the HPXML file (degrees)
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
   # @return [Double] Default value for longitude (degrees)
-  def self.get_longitude(longitude, weather)
+  def self.get_longitude(longitude, weather, zipcode)
     return longitude unless longitude.nil?
 
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode)
+      return Float(weather_data[:zipcode_longitude]) unless weather_data[:zipcode_longitude].nil?
+    end
+
     return weather.header.Longitude
+  end
+
+  # Gets the default elevation from the HPXML file, or as backup from the
+  # weather file.
+  #
+  # @param weather [WeatherFile] Weather object containing EPW information
+  # @return [Double] Default value for elevation (ft)
+  def self.get_elevation(weather)
+    # FUTURE: Add elevation to zipcode_weather_stations.csv and use here first.
+    return weather.header.Elevation.round(1)
   end
 
   # Gets the default time zone from the HPXML file or, as backup, weather file.
@@ -5227,16 +5251,24 @@ module Defaults
   def self.get_time_zone(time_zone, weather)
     return time_zone unless time_zone.nil?
 
+    # FUTURE: Add time zone to zipcode_weather_stations.csv and use here first.
     return weather.header.TimeZone
   end
 
-  # Gets the default state code from the HPXML file or, as backup, weather file.
+  # Gets the default state code from the HPXML file, or as backup from the
+  # zip code, or as backup from the weather file.
   #
   # @param state_code [String] State code from the HPXML file
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
   # @return [String] Uppercase state code
-  def self.get_state_code(state_code, weather)
+  def self.get_state_code(state_code, weather, zipcode)
     return state_code unless state_code.nil?
+
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode)
+      return weather_data[:zipcode_state] unless weather_data[:zipcode_state].nil?
+    end
 
     return weather.header.StateProvinceRegion.upcase
   end

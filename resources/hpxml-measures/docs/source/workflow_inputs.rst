@@ -492,11 +492,11 @@ Building site information can be entered in ``/HPXML/Building/Site``.
   =======================================  ========  =====  ===============  ========  ========  ===============
 
   .. [#] If CityMunicipality not provided, defaults according to the EPW weather file header.
-  .. [#] If StateCode not provided, defaults according to the EPW weather file header.
+  .. [#] If StateCode not provided, defaults to using the ZipCode mapping found at ``HPXMLtoOpenStudio/resources/data/zipcode_weather_stations.csv``, or defaults to the EPW weather file header if ZipCode not provided or not in the CSV lookup file.
   .. [#] ZipCode can be defined as the standard 5 number postal code, or it can have the additional 4 number code separated by a hyphen.
   .. [#] Either ZipCode or WeatherStation/extension/EPWFilePath (see :ref:`weather_station`) must be provided.
-  .. [#] If Latitude not provided, defaults according to the EPW weather file header.
-  .. [#] If Longitude not provided, defaults according to the EPW weather file header.
+  .. [#] If Latitude not provided, defaults to using the ZipCode mapping found at ``HPXMLtoOpenStudio/resources/data/zipcode_weather_stations.csv``, or defaults to the EPW weather file header if ZipCode not provided or not in the CSV lookup file.
+  .. [#] If Longitude not provided, defaults to using the ZipCode mapping found at ``HPXMLtoOpenStudio/resources/data/zipcode_weather_stations.csv``, or defaults to the EPW weather file header if ZipCode not provided or not in the CSV lookup file.
   .. [#] If Elevation not provided, defaults according to the EPW weather file header.
   .. [#] If UTCOffset not provided, defaults according to the EPW weather file header.
   .. [#] If DSTObserved not provided, defaults to false if StateCode is 'AZ' or 'HI', otherwise true.
