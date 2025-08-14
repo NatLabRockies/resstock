@@ -596,6 +596,8 @@ Calculated,,,out.propane.total.energy_consumption.kwh.savings,out.propane.total.
 Calculated,,,out.load.cooling.energy_delivered.kbtu.savings,out.load.cooling.energy_delivered.kbtu.savings,kbtu,,,,out.load.cooling.energy_delivered.kbtu.savings,out.load.cooling.energy_delivered.kbtu.savings,kBtu,,
 Calculated,,,out.load.heating.energy_delivered.kbtu.savings,out.load.heating.energy_delivered.kbtu.savings,kbtu,,,,out.load.heating.energy_delivered.kbtu.savings,out.load.heating.energy_delivered.kbtu.savings,kBtu,,
 Calculated,,,out.load.hot_water.energy_delivered.kbtu.savings,out.load.hot_water.energy_delivered.kbtu.savings,kbtu,,,,out.load.hot_water.energy_delivered.kbtu.savings,out.load.hot_water.energy_delivered.kbtu.savings,kBtu,,
+Calculated,,,out.load.hot_water.energy_solar_thermal.kbtu.savings,out.load.hot_water.energy_solar_thermal.kbtu.savings,kbtu,,,,out.load.hot_water.energy_solar_thermal.kbtu.savings,out.load.hot_water.energy_solar_thermal.kbtu.savings,kBtu,,
+Calculated,,,out.load.hot_water.energy_tank_losses.kbtu.savings,out.load.hot_water.energy_tank_losses.kbtu.savings,kbtu,,,,out.load.hot_water.energy_tank_losses.kbtu.savings,out.load.hot_water.energy_tank_losses.kbtu.savings,kBtu,,
 Calculated,,,out.load.cooling.peak.kbtu_hr.savings,out.load.cooling.peak.kbtu_hr.savings,kbtu_hr,,,,,,,,
 Calculated,,,out.load.heating.peak.kbtu_hr.savings,out.load.heating.peak.kbtu_hr.savings,kbtu_hr,,,,,,,,
 Calculated,,,out.electricity.summer.peak.kw.savings,out.electricity.summer.peak.kw.savings,kw,,,,,,,,
