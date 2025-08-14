@@ -2989,7 +2989,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
   def set_hvac_control(hpxml, hpxml_bldg, args, weather)
     return if (args[:hvac_heating_system] == 'None') && (args[:hvac_cooling_system] == 'None') && (args[:hvac_heat_pump] == 'None')
 
-    latitude = Defaults.get_latitude(nil, weather) unless weather.nil?
+    latitude = Defaults.get_latitude(nil, weather, args[:location_zip_code]) unless weather.nil?
 
     # Heating
     if hpxml_bldg.total_fraction_heat_load_served > 0
