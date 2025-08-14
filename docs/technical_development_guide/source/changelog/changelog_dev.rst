@@ -6,6 +6,35 @@ Development Changelog
     :version: v3.5.0
     :released: pending
 
+    .. change::
+        :tags: postprocessing, bugfix
+        :pullreq: 1467
+
+        **Date**: 2025-08-12
+
+        Title:
+        Gracefully handle failures in upgrades
+
+        Description:
+        Failures in upgrades are treated as if the upgrade didn't apply, and we copy baseline results for that building.
+        Previously, if there were failures in any building in any upgrades, we removed those buildings from all upgrades.
+
+        Assignees: Rajendra Adhikari
+
+    .. change::
+        :tags: characteristics, standard data release, outputs, electrical panel
+        :pullreq: 1453
+
+        **Date**: 2025-08-06
+
+        Title:
+        Panel metrics in SDR
+
+        Description:
+        Add metrics for electrical panel breaker space and capacity constraint into SDR's postprocessing workflow.
+
+        Assignees: Lixi Liu
+
 
     .. change::
         :tags: characteristics, standard data release, outputs, emissions
