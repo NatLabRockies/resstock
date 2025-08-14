@@ -69,7 +69,7 @@ workflow_generator:
     emissions:
       - scenario_name: LRMER_MidCase_15
         type: CO2e
-        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_15
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
 
     # Utility bill rates
     utility_bills:

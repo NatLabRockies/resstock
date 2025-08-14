@@ -34,14 +34,14 @@ Electric Vehicle Charger,3.0,1.0,sources\recs\recs2020\tsv_maker.py,Type of elec
 Electric Vehicle Miles Traveled,11.0,0.0,manually created,The number of miles an electric vehicle is driven in a year if the unit owns an electric vehicle.
 Electric Vehicle Outlet Access,2.0,0.0,sources\recs\recs2020\tsv_maker.py,The unit has an outlet within 20 feet of vehicle parking.
 Electric Vehicle Ownership,2.0,0.0,sources\experian\tsv_maker.py,The dwelling unit owns an electric vehicle.
-Generation And Emissions Assessment Region,5.0,1.0,sources\spatial\tsv_maker.py,The generation and carbon emissions assessment region that the sample is located.
+Generation And Emissions Assessment Region,5.0,1.0,sources\spatial\tsv_maker.py,The generation and carbon emissions assessment region that the sample is located in.
 Geometry Attic Type,4.0,2.0,sources\recs\recs2020\tsv_maker.py,The dwelling unit attic type.
 Geometry Building Horizontal Location MF,5.0,2.0,sources\recs\recs2009\tsv_maker.py,"Location of the single-family attached unit horizontally within the building (left, middle, right)."
 Geometry Building Horizontal Location SFA,4.0,1.0,manually created,"Location of the single-family attached unit horizontally within the building (left, middle, right)."
 Geometry Building Level MF,4.0,2.0,sources\recs\recs2009\tsv_maker.py,"Location of the multi-family unit vertically within the building (bottom, middle, top)."
 Geometry Building Number Units MF,28.0,2.0,sources\recs\recs2009\tsv_maker.py,The number of dwelling units in the multi-family building.
 Geometry Building Number Units SFA,21.0,1.0,manually created,Number of units in the single-family attached building.
-Geometry Building Type ACS,9.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The building type classification according to the U.S. Census American Communicy Survey.
+Geometry Building Type ACS,9.0,0.0,sources\pums\pums2019_5yrs\tsv_maker.py,The building type classification according to the U.S. Census American Community Survey.
 Geometry Building Type Height,7.0,2.0,sources\recs\recs2009\tsv_maker.py,"The 2009 U.S. Energy Information Administration Residential Energy Consumption Survey  building type with multi-family buildings split out by low-rise, mid-rise, and high-rise."
 Geometry Building Type RECS,5.0,1.0,sources\pums\pums2019_5yrs\tsv_maker.py,The building type classification according to the U.S. Energy Information Administration Residential Energy Consumption Survey.
 Geometry Floor Area,9.0,0.0,sources\ahs\ahs2017_2019\tsv_maker.py,The finished floor area of the dwelling unit using bins from 2017-2019 AHS.

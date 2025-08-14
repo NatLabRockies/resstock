@@ -9,60 +9,96 @@ def get_failed_bldgs(metadata_df: pl.LazyFrame) -> set[int]:
     failed_bldgs = failed_bldgs.select(pl.col("building_id"))
     return set(failed_bldgs.collect()["building_id"].to_list())
 
-def publish_baseline_annual_results(failed_bldgs: set[int], base: pl.LazyFrame) -> pl.LazyFrame:
-    col_maps = get_col_maps()
-    base = base.filter(~pl.col("building_id").is_in(failed_bldgs))
-    base = get_transformed_cols(base, col_maps)
-    base = base.with_columns(pl.lit(True).alias("applicability"))
-    base = base.with_columns([pl.lit(0).alias("upgrade"), pl.lit("Baseline").alias("upgrade_name")])
-    base = add_income_and_burden(base)
-    base = add_county_column(base)
-    base = add_puma_column(base)
+def publish_baseline_annual_results(base_raw_df: pl.LazyFrame) -> pl.LazyFrame:
+    """
+    Publishes the annual results for the baseline.
 
-    all_cols = base.collect_schema().names()
+    Args:
+        base_raw_df: LazyFrame containing baseline results from raw BuildStockBatch results.
+    Returns:
+        LazyFrame containing published baseline results.
+    """
+    col_maps = get_col_maps()
+    base_df = base_raw_df.filter(pl.col("completed_status") == "Success")
+    base_df = get_transformed_cols(base_df, col_maps)
+    base_df = base_df.with_columns(pl.lit(True).alias("applicability"))
+    base_df = base_df.with_columns([pl.lit(0).alias("upgrade"), pl.lit("Baseline").alias("upgrade_name")])
+    base_df = add_income_and_burden(base_df)
+    base_df = add_county_column(base_df)
+    base_df = add_puma_column(base_df)
+
+    all_cols = base_df.collect_schema().names()
     print("Fixing site energy and site emission total for baseline ...")
-    base = fix_site_energy_total(base, all_cols)
-    base = fix_all_fuels_emissions(base, all_cols)
-    base = add_upgrade_columns(base)
-    base = reorder_columns(base, col_maps, is_baseline=True)
-    return base
+    base_df = fix_site_energy_total(base_df, all_cols)
+    base_df = fix_all_fuels_emissions(base_df, all_cols)
+    base_df = add_panel_contraint_cols(base_df)
+    base_df = add_upgrade_columns(base_df)
+    base_df = reorder_columns(base_df, col_maps, is_baseline=True)
+    return base_df
 
-def publish_upgrade_annual_results(failed_bldgs: set[int], base: pl.LazyFrame, upgrade: pl.LazyFrame,
+def publish_upgrade_annual_results(baseline_failed_bldgs: set[int], base_pub_df: pl.LazyFrame, upgrade_raw_df: pl.LazyFrame,
                                    upgrade_num: int) -> pl.LazyFrame:
+    """
+    Publishes the annual results for a specific upgrade.
+
+    Args:
+        baseline_failed_bldgs: Set of failed building IDs in baseline.
+        base_pub_df: LazyFrame containing baseline results already passed through publish_baseline_annual_results.
+        upgrade_raw_df: LazyFrame containing upgrade results from raw BuildStockBatch results.
+        upgrade_num: Integer representing the upgrade number.
+    Returns:
+        LazyFrame containing published upgrade results.
+    """
+
     col_maps = get_col_maps()
-    upgrade = upgrade.filter((~pl.col("building_id").is_in(failed_bldgs)) &
+    upgrade_df = upgrade_raw_df.filter((~pl.col("building_id").is_in(baseline_failed_bldgs)) &
                               (pl.col("completed_status") == "Success"))
+    failed_bldgs = (
+        upgrade_raw_df.filter(
+            (pl.col("completed_status") == "Fail")
+            & (~pl.col("building_id").is_in(baseline_failed_bldgs))
+        )
+        .select(pl.col("building_id"))
+        .collect()['building_id']
+        .to_list()
+    )
+    if failed_bldgs:
+        print(
+            f"Replacig these {len(failed_bldgs)} buildings that only failed in "
+            f"upgrade {upgrade_num} with baseline: {failed_bldgs}"
+        )
     
-    upgrade = get_transformed_cols(upgrade, col_maps)
-    upgrade = upgrade.with_columns([pl.lit(upgrade_num).alias("upgrade")])
-    base_cols = base.collect_schema().names()
-    upgrade_cols = upgrade.collect_schema().names()
+    upgrade_df = get_transformed_cols(upgrade_df, col_maps)
+    upgrade_df = upgrade_df.with_columns([pl.lit(upgrade_num).alias("upgrade")])
+    base_cols = base_pub_df.collect_schema().names()
+    upgrade_cols = upgrade_df.collect_schema().names()
     missing_cols = list(set(base_cols) - set(upgrade_cols)) + ["bldg_id"]
-    upgrade = upgrade.join(base.select(missing_cols), on="bldg_id", how="left")
-    all_cols = upgrade.collect_schema().names()
+    upgrade_df = upgrade_df.join(base_pub_df.select(missing_cols), on="bldg_id", how="left")
+    all_cols = upgrade_df.collect_schema().names()
     print("Fixing site energy and site emission total for upgrade ...")
-    upgrade = fix_site_energy_total(upgrade, all_cols)
-    upgrade = fix_all_fuels_emissions(upgrade, all_cols)
-    upgrade = add_upgrade_columns(upgrade)
-    upgrade = upgrade.with_columns(pl.lit("True").alias("applicability"))
+    upgrade_df = fix_site_energy_total(upgrade_df, all_cols)
+    upgrade_df = fix_all_fuels_emissions(upgrade_df, all_cols)
+    upgrade_df = add_upgrade_columns(upgrade_df)
+    upgrade_df = upgrade_df.with_columns(pl.lit(True).alias("applicability"))
     # get upgrade_name
-    upgrade_name_df = upgrade.select(pl.col("upgrade_name").first())
-    missing_bldgs_df = base.join(
-        upgrade,
+    upgrade_name_df = upgrade_df.select(pl.col("upgrade_name").first())
+    missing_bldgs_df = base_pub_df.join(
+        upgrade_df,
         on="bldg_id",
         how="anti"  # Keep rows from 'base' with no match in 'upgrade'
     )
     missing_bldgs_df = missing_bldgs_df.with_columns([
-        pl.lit("False").alias("applicability"),
+        pl.lit(False).alias("applicability"),
         pl.lit(upgrade_num).alias("upgrade"),
     ]).drop("upgrade_name")
-    upgrade_cols = upgrade.collect_schema().names()
+    upgrade_cols = upgrade_df.collect_schema().names()
     missing_bldgs_df = missing_bldgs_df.join(upgrade_name_df,  how="cross")
-    upgrade = pl.concat([upgrade, missing_bldgs_df], how="diagonal_relaxed")
-    upgrade = upgrade.sort("bldg_id")
-    upgrade = add_saving_cols(upgrade, base)
-    upgrade = reorder_columns(upgrade, col_maps, is_baseline=False)
-    return upgrade
+    upgrade_df = pl.concat([upgrade_df, missing_bldgs_df], how="diagonal_relaxed")
+    upgrade_df = upgrade_df.sort("bldg_id")
+    upgrade_df = add_saving_cols(upgrade_df, base_pub_df)
+    upgrade_df = add_panel_contraint_cols(upgrade_df)
+    upgrade_df = reorder_columns(upgrade_df, col_maps, is_baseline=False)
+    return upgrade_df
 
 
 def get_transformed_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl.LazyFrame:
@@ -130,8 +166,15 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
 def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
     savings_cols = []
     all_cols = df.collect_schema().names()
-    out_cols = [col for col in all_cols if 'out.' in col and not 'out.params' in col]
-    
+    out_cols = [col for col in all_cols if 'out.' in col and not ('out.params' in col or 'out.panel' in col)]
+    # Selectively include the following for panels
+    out_panel_cols = [col for col in all_cols if 
+        "out.panel.load.total_load." in col
+        or "out.panel.load.occupied_capacity." in col
+        or "out.panel.breaker_space.occupied." in col
+        ]
+    out_cols += out_panel_cols
+
     baseline_df_with_renamed = baseline_df.select([
         pl.col(col).alias(f"baseline_{col}") for col in out_cols
     ] + ['bldg_id'])
@@ -143,6 +186,37 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
             saving_col = (pl.col(f"baseline_{col}") - pl.col(col)).alias(f"{col}.savings")
         savings_cols.append(saving_col)
     return df_with_baseline.with_columns(savings_cols).drop([f"baseline_{col}" for col in out_cols])
+
+
+def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
+    all_cols = df.collect_schema().names()
+    amp_prefix = "out.panel.load.headroom_capacity."
+    amp_cols = [col for col in all_cols if amp_prefix in col]
+    space_col = "out.panel.breaker_space.headroom.count"
+
+    out_space_col = "out.panel.constraint.breaker_space"
+    space_constraint = pl.when(pl.col(space_col) <= 0).then(True).otherwise(False).alias(out_space_col)
+    ind_constraints = [space_constraint]
+    overall_constraint = None
+    for amp_col in amp_cols:
+        nec_method = amp_col.removeprefix(amp_prefix).removesuffix(".a")
+        out_amp_col = "out.panel.constraint.capacity." + nec_method
+        amp_constraint = pl.when(pl.col(amp_col) <= 0).then(True).otherwise(False).alias(out_amp_col)
+        ind_constraints.append(amp_constraint)
+
+        out_overall_col = "out.panel.constraint.overall." + nec_method
+        overall_constraint = pl.coalesce(
+            pl.when(pl.col(out_amp_col) & pl.col(out_space_col)).then(pl.lit("Capacity and Space Constrained")),
+            pl.when(pl.col(out_amp_col) & ~pl.col(out_space_col)).then(pl.lit("Capacity Constrained Only")),
+            pl.when(~pl.col(out_amp_col) & pl.col(out_space_col)).then(pl.lit("Space Constrained Only")),
+            pl.lit("No Constraint"),
+        ).alias(out_overall_col)
+
+    new_df = df.with_columns(ind_constraints)
+    if overall_constraint is not None:
+        new_df = new_df.with_columns(overall_constraint) # needs to be sequential
+
+    return new_df
 
 
 def add_county_column(df: pl.LazyFrame):
