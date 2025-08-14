@@ -224,7 +224,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     # HVAC Unavailability
     month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     if (args[:schedules_space_heating_unavailable_days].to_i > 0) || (args[:schedules_space_cooling_unavailable_days].to_i > 0)
-      heating_months, cooling_months, sim_calendar_year = get_heating_and_cooling_seasons(@hpxml.buildings[0].latitude, weather)
+      heating_months, cooling_months, sim_calendar_year = get_heating_and_cooling_seasons(weather)
     end
     [Constants::Heating, Constants::Cooling].each do |htg_or_clg|
       unavailable_days = args["schedules_space_#{htg_or_clg}_unavailable_days".to_sym].to_i
@@ -934,10 +934,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     end
   end
 
-  def get_heating_and_cooling_seasons(latitude, weather)
-    latitude = Defaults.get_latitude(latitude, weather)
-
-    heating_months, cooling_months = HVAC.get_building_america_hvac_seasons(weather, latitude)
+  def get_heating_and_cooling_seasons(weather)
+    heating_months, cooling_months = HVAC.get_building_america_hvac_seasons(weather, 1) # latitude=1 ensures northern hemisphere
     sim_calendar_year = @hpxml.header.sim_calendar_year
 
     return heating_months, cooling_months, sim_calendar_year

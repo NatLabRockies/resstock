@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>50430004-1525-4932-8123-fe5988359168</version_id>
-  <version_modified>2025-08-13T21:20:01Z</version_modified>
+  <version_id>bfe98e24-a360-48c8-8667-fc08cd6c2cdb</version_id>
+  <version_modified>2025-08-14T22:32:08Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -1246,28 +1246,44 @@
           <display_name>Uninsulated</display_name>
         </choice>
         <choice>
-          <value>R-7</value>
-          <display_name>R-7</display_name>
+          <value>Interior, R-7</value>
+          <display_name>Interior, R-7</display_name>
         </choice>
         <choice>
-          <value>R-11</value>
-          <display_name>R-11</display_name>
+          <value>Interior, R-11</value>
+          <display_name>Interior, R-11</display_name>
         </choice>
         <choice>
-          <value>R-13</value>
-          <display_name>R-13</display_name>
+          <value>Interior, R-13</value>
+          <display_name>Interior, R-13</display_name>
         </choice>
         <choice>
-          <value>R-15</value>
-          <display_name>R-15</display_name>
+          <value>Interior, R-15</value>
+          <display_name>Interior, R-15</display_name>
         </choice>
         <choice>
-          <value>R-19</value>
-          <display_name>R-19</display_name>
+          <value>Interior, R-19</value>
+          <display_name>Interior, R-19</display_name>
         </choice>
         <choice>
-          <value>R-21</value>
-          <display_name>R-21</display_name>
+          <value>Interior, R-21</value>
+          <display_name>Interior, R-21</display_name>
+        </choice>
+        <choice>
+          <value>Exterior, R-5</value>
+          <display_name>Exterior, R-5</display_name>
+        </choice>
+        <choice>
+          <value>Exterior, R-10</value>
+          <display_name>Exterior, R-10</display_name>
+        </choice>
+        <choice>
+          <value>Exterior, R-15</value>
+          <display_name>Exterior, R-15</display_name>
+        </choice>
+        <choice>
+          <value>Exterior, R-20</value>
+          <display_name>Exterior, R-20</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding</value>
@@ -12429,7 +12445,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>D6D879F6</checksum>
+      <checksum>10435DD6</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
