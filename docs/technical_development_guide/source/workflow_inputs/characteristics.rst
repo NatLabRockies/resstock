@@ -33657,13 +33657,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - Uninsulated
    * - R-5, Exterior
      - 1.2%
-     - Uninsulated
+     - Exterior, R-5
    * - R-10, Exterior
      - 2.8%
-     - Uninsulated
+     - Exterior, R-10
    * - R-15, Exterior
      - 0.52%
-     - Uninsulated
+     - Exterior, R-15
 
 .. _insulation_roof:
 
