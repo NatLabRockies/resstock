@@ -466,7 +466,7 @@ The type and insulation level of the rim joists.
 
 - **Required:** ``false``
 
-- **Choices:** `Uninsulated`, `R-7`, `R-11`, `R-13`, `R-15`, `R-19`, `R-21`, `Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding`, `Detailed Example: R-11, Fiberboard Sheathing, Hardboard Siding`
+- **Choices:** `Uninsulated`, `Interior, R-7`, `Interior, R-11`, `Interior, R-13`, `Interior, R-15`, `Interior, R-19`, `Interior, R-21`, `Exterior, R-5`, `Exterior, R-10`, `Exterior, R-15`, `Exterior, R-20`, `Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding`, `Detailed Example: R-11, Fiberboard Sheathing, Hardboard Siding`
 
 
 - **Default:** `Uninsulated`

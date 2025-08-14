@@ -23,7 +23,7 @@
         "enclosure_ceiling": "R-38",
         "enclosure_door": "Solid Wood, R-3",
         "enclosure_foundation_wall": "Solid Concrete, Whole Wall, R-10",
-        "enclosure_rim_joist": "R-13",
+        "enclosure_rim_joist": "Interior, R-13",
         "enclosure_roof": "Uninsulated",
         "enclosure_wall": "Wood Stud, R-21",
         "enclosure_window": "Double, Low-E, Insulated, Air, Med Gain",

@@ -1724,7 +1724,7 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
       if interior_adjacent_to == exterior_adjacent_to
         insulation_assembly_r_value = 4.0 # Uninsulated
       else
-        insulation_assembly_r_value = (args[:enclosure_rim_joist_assembly_r_value] + args[:enclosure_wall_continuous_insulation_r_value] + args[:enclosure_wall_siding_r_value]).round(2)
+        insulation_assembly_r_value = (args[:enclosure_rim_joist_assembly_r_value] + args[:enclosure_wall_siding_r_value]).round(2)
       end
 
       azimuth = Geometry.get_surface_azimuth(surface, args[:geometry_unit_direction_azimuth])
