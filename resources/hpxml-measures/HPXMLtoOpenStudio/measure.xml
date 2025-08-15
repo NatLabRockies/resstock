@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>hpxm_lto_openstudio</name>
   <uid>b1543b30-9465-45ff-ba04-1d1f85e763bc</uid>
-  <version_id>7c595853-9d55-4dd3-b13b-e5e0dde0bcf3</version_id>
-  <version_modified>2025-08-14T18:35:46Z</version_modified>
+  <version_id>d1c4ccbf-8687-4df9-a186-a1a5fb3d7836</version_id>
+  <version_modified>2025-08-15T05:06:44Z</version_modified>
   <xml_checksum>D8922A73</xml_checksum>
   <class_name>HPXMLtoOpenStudio</class_name>
   <display_name>HPXML to OpenStudio Translator</display_name>
@@ -342,13 +342,13 @@
       <filename>data/zipcode_weather_stations.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2B7E2F0F</checksum>
+      <checksum>2138BE14</checksum>
     </file>
     <file>
       <filename>defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>496C635D</checksum>
+      <checksum>E4DAF77C</checksum>
     </file>
     <file>
       <filename>electric_panel.rb</filename>
@@ -732,7 +732,7 @@
       <filename>test_defaults.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>CC87C5D6</checksum>
+      <checksum>F2EB9AE4</checksum>
     </file>
     <file>
       <filename>test_electric_panel.rb</filename>
