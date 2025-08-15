@@ -9222,17 +9222,17 @@ Electric Vehicle Charger	Level 2 charger	ResStockArguments	ev_charger_present=tr
 Electric Vehicle Charger	None	ResStockArguments	ev_charger_present=false
 Electric Vehicle Charger	Void	ResStockArguments	ev_charger_present=false
 Electric Vehicle Efficiency Increase	15%	ResStockArguments	ev_efficiency_percent_increase=0.15
-Electric Vehicle Miles Traveled	1000	ResStockArguments	vehicle_miles_driven_per_year=1100
+Electric Vehicle Miles Traveled	1000	ResStockArguments	vehicle_miles_driven_per_year=1000
 Electric Vehicle Miles Traveled	11000	ResStockArguments	vehicle_miles_driven_per_year=11000
-Electric Vehicle Miles Traveled	13000	ResStockArguments	vehicle_miles_driven_per_year=13750
-Electric Vehicle Miles Traveled	15000	ResStockArguments	vehicle_miles_driven_per_year=13750
-Electric Vehicle Miles Traveled	17000	ResStockArguments	vehicle_miles_driven_per_year=16500
-Electric Vehicle Miles Traveled	19000	ResStockArguments	vehicle_miles_driven_per_year=19250
-Electric Vehicle Miles Traveled	22500	ResStockArguments	vehicle_miles_driven_per_year=22000
-Electric Vehicle Miles Traveled	3000	ResStockArguments	vehicle_miles_driven_per_year=2750
-Electric Vehicle Miles Traveled	5000	ResStockArguments	vehicle_miles_driven_per_year=5500
-Electric Vehicle Miles Traveled	7000	ResStockArguments	vehicle_miles_driven_per_year=8250
-Electric Vehicle Miles Traveled	9000	ResStockArguments	vehicle_miles_driven_per_year=8250
+Electric Vehicle Miles Traveled	13000	ResStockArguments	vehicle_miles_driven_per_year=13000
+Electric Vehicle Miles Traveled	15000	ResStockArguments	vehicle_miles_driven_per_year=15000
+Electric Vehicle Miles Traveled	17000	ResStockArguments	vehicle_miles_driven_per_year=17000
+Electric Vehicle Miles Traveled	19000	ResStockArguments	vehicle_miles_driven_per_year=19000
+Electric Vehicle Miles Traveled	22500	ResStockArguments	vehicle_miles_driven_per_year=22500
+Electric Vehicle Miles Traveled	3000	ResStockArguments	vehicle_miles_driven_per_year=3000
+Electric Vehicle Miles Traveled	5000	ResStockArguments	vehicle_miles_driven_per_year=5000
+Electric Vehicle Miles Traveled	7000	ResStockArguments	vehicle_miles_driven_per_year=7000
+Electric Vehicle Miles Traveled	9000	ResStockArguments	vehicle_miles_driven_per_year=9000
 Electric Vehicle Outlet Access	No
 Electric Vehicle Outlet Access	Void
 Electric Vehicle Outlet Access	Yes
