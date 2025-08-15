@@ -385,11 +385,24 @@ references:
         - Ground Thermal Conductivity|0.5
         - Ground Thermal Conductivity|0.8
 
+  remove_shared_heating_cooling_ghp: &remove_shared_heating_cooling_ghp
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+    - HVAC Has Ducts|Yes
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+
   yes_and_no_has_ducts_apply_logic: &yes_and_no_has_ducts_apply_logic
     - or:
       - HVAC Has Ducts|Yes
       - HVAC Has Ducts|No
-  
+
   hpwh_apply_logic: &hpwh_apply_logic
     # remove dwelling units that have hpwh or solar thermal water heater
     - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
@@ -398,7 +411,7 @@ references:
     - not: Water Heater Fuel|Solar Thermal
     - not: Water Heater Fuel|Other Fuel
     - not: Water Heater Fuel|Wood
-  
+
   high_eff_ng_tankless_wh_apply_logic: &high_eff_ng_tankless_wh_apply_logic
     # remove dwelling units that have hpwh or solar thermal wh or tankless gas wh
     # have access to natural gas
@@ -422,12 +435,12 @@ references:
     option: Water Heater Fuel|Electricity
     apply_logic:
       - not: Water Heater Fuel|Electricity
-  
+
   change_water_heater_fuel_to_natural_gas: &change_water_heater_fuel_to_natural_gas
     option: Water Heater Fuel|Natural Gas
     apply_logic:
       - not: Water Heater Fuel|Natural Gas
-  
+
   hpwh_50_gal_3_pt_78_uef: &hpwh_50_gal_3_pt_78_uef
     option: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.78 UEF
     apply_logic:
@@ -679,7 +692,7 @@ upgrades:
       - *partial_conditioning_100_percent_ducts_only
 
   - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
-    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity  # TODO use remove_shared_heating_cooling_ghp?
     options:
       - *dual_speed_ducted_ghp
       - *heat_pump_cooling_efficiency_ducted
