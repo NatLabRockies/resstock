@@ -289,7 +289,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
       end
 
       # Save the hash of applicable upgrade measure arguments
-      # FIXME: Do we want to add arguments from ResStockArgumentsPostHPXML too?
       upgrade_args_hash = measures['ResStockArguments'][0].clone
 
       # Add measure arguments from existing building if needed
