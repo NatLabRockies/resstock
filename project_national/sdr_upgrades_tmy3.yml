@@ -435,7 +435,7 @@ references:
       option: HVAC Cooling Partial Space Conditioning|100% Conditioned
       apply_logic: *yes_and_no_has_ducts_apply_logic
 
-  package_apply_logic: &fossil_fuel_or_electricity
+  fossil_fuel_or_electricity: &fossil_fuel_or_electricity
     - not: Heating Fuel|Wood
     - not: Heating Fuel|Other Fuel
     - not: Heating Fuel|None
