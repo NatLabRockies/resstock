@@ -609,9 +609,9 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDefaultValue(false)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('ev_usage_multiplier', false)
-    arg.setDisplayName('Electric Vehicle: Usage Multiplier')
-    arg.setDescription('Multiplier on the electric vehicle miles driven that can reflect, e.g., high/low usage occupants.')
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('vehicle_miles_driven_per_year', false)
+    arg.setDisplayName('Electric Vehicle: Miles Driven Per Year')
+    arg.setDescription('The annual miles the vehicle is driven.')
     arg.setUnits('miles')
     args << arg
 
@@ -1147,12 +1147,12 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
 
     # Electric Vehicle
     if args[:electric_vehicle] != 'None'
-      args[:electric_vehicle] = args[:electric_vehicle].gsub('100% Usage', "#{Integer(100 * args[:ev_usage_multiplier])}% Usage")
+      args[:electric_vehicle] = args[:electric_vehicle].gsub('11000', args[:vehicle_miles_driven_per_year])
     end
     if args[:electric_vehicle_charger] != 'None'
       args[:electric_vehicle_charger] = args[:electric_vehicle_charger].gsub('100% Charging at Home', "#{Integer(100 * args[:ev_fraction_charged_home])}% Charging at Home")
     end
-    args[:ev_usage_multiplier] = nil
+    args[:vehicle_miles_driven_per_year] = nil
     args[:ev_fraction_charged_home] = nil
 
     # Pool

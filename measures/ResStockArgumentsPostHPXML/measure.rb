@@ -502,16 +502,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                                          output_path: nil)
       Defaults.apply(runner, @hpxml, hpxml_bldg, weather, schedules_file: schedules_file)
 
-      # Incorporate EV UsageMultiplier into miles & hours properties
-      hpxml_bldg.vehicles.each do |vehicle|
-        next unless vehicle.vehicle_type == HPXML::VehicleTypeBEV
-        next unless not vehicle.ev_usage_multiplier.nil?
-
-        vehicle.miles_per_year = (vehicle.miles_per_year * vehicle.ev_usage_multiplier).round
-        vehicle.hours_per_week = (vehicle.hours_per_week * vehicle.ev_usage_multiplier).round(1)
-        vehicle.ev_usage_multiplier = 1.0
-      end
-
       # Register additional values
       register_value(runner, 'unit_height_above_grade', hpxml_bldg.building_construction.unit_height_above_grade)
       air_leakage_measurement = hpxml_bldg.air_infiltration_measurements[0]

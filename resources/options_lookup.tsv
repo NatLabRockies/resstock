@@ -9203,14 +9203,14 @@ Eaves	1 ft	ResStockArguments	geometry_eaves=1 ft	enclosure_overhangs=None
 Eaves	2 ft	ResStockArguments	geometry_eaves=2 ft	enclosure_overhangs=None
 Eaves	3 ft	ResStockArguments	geometry_eaves=3 ft	enclosure_overhangs=None
 Eaves	None	ResStockArguments	geometry_eaves=None	enclosure_overhangs=None
-Electric Vehicle Battery	Compact, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Compact, 200 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	Compact, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Compact, 300 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	Midsize, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Midsize, 200 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	Midsize, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Midsize, 300 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	Pickup, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Pickup, 200 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	Pickup, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Pickup, 300 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	SUV, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=SUV, 200 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
-Electric Vehicle Battery	SUV, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=SUV, 300 Mile Range, 100% Usage	misc_electric_vehicle_charging=None
+Electric Vehicle Battery	Compact, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Compact, 200 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
+Electric Vehicle Battery	Compact, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Compact, 300 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
+Electric Vehicle Battery	Midsize, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Midsize, 200 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
+Electric Vehicle Battery	Midsize, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Midsize, 300 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
+Electric Vehicle Battery	Pickup, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=Pickup, 200 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
+Electric Vehicle Battery	Pickup, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=Pickup, 300 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
+Electric Vehicle Battery	SUV, Battery Electric Vehicle, 200 mile range	ResStockArguments	electric_vehicle=SUV, 200 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
+Electric Vehicle Battery	SUV, Battery Electric Vehicle, 300 mile range	ResStockArguments	electric_vehicle=SUV, 300 Mile Range, 11000 miles/yr	misc_electric_vehicle_charging=None
 Electric Vehicle Charge At Home	0-19%	ResStockArguments	ev_fraction_charged_home=0.10
 Electric Vehicle Charge At Home	100%	ResStockArguments	ev_fraction_charged_home=1.00
 Electric Vehicle Charge At Home	20-39%	ResStockArguments	ev_fraction_charged_home=0.30
@@ -9222,17 +9222,17 @@ Electric Vehicle Charger	Level 2 charger	ResStockArguments	electric_vehicle_char
 Electric Vehicle Charger	None	ResStockArguments	electric_vehicle_charger=None
 Electric Vehicle Charger	Void
 Electric Vehicle Efficiency Increase	15%	ResStockArguments	ev_efficiency_percent_increase=0.15
-Electric Vehicle Miles Traveled	1000	ResStockArguments	ev_usage_multiplier=0.1
-Electric Vehicle Miles Traveled	11000	ResStockArguments	ev_usage_multiplier=1.0
-Electric Vehicle Miles Traveled	13000	ResStockArguments	ev_usage_multiplier=1.25
-Electric Vehicle Miles Traveled	15000	ResStockArguments	ev_usage_multiplier=1.25
-Electric Vehicle Miles Traveled	17000	ResStockArguments	ev_usage_multiplier=1.5
-Electric Vehicle Miles Traveled	19000	ResStockArguments	ev_usage_multiplier=1.75
-Electric Vehicle Miles Traveled	22500	ResStockArguments	ev_usage_multiplier=2.0
-Electric Vehicle Miles Traveled	3000	ResStockArguments	ev_usage_multiplier=0.25
-Electric Vehicle Miles Traveled	5000	ResStockArguments	ev_usage_multiplier=0.5
-Electric Vehicle Miles Traveled	7000	ResStockArguments	ev_usage_multiplier=0.75
-Electric Vehicle Miles Traveled	9000	ResStockArguments	ev_usage_multiplier=0.75
+Electric Vehicle Miles Traveled	1000	ResStockArguments	vehicle_miles_driven_per_year=1000
+Electric Vehicle Miles Traveled	11000	ResStockArguments	vehicle_miles_driven_per_year=11000
+Electric Vehicle Miles Traveled	13000	ResStockArguments	vehicle_miles_driven_per_year=13000
+Electric Vehicle Miles Traveled	15000	ResStockArguments	vehicle_miles_driven_per_year=15000
+Electric Vehicle Miles Traveled	17000	ResStockArguments	vehicle_miles_driven_per_year=17000
+Electric Vehicle Miles Traveled	19000	ResStockArguments	vehicle_miles_driven_per_year=19000
+Electric Vehicle Miles Traveled	22500	ResStockArguments	vehicle_miles_driven_per_year=22500
+Electric Vehicle Miles Traveled	3000	ResStockArguments	vehicle_miles_driven_per_year=3000
+Electric Vehicle Miles Traveled	5000	ResStockArguments	vehicle_miles_driven_per_year=5000
+Electric Vehicle Miles Traveled	7000	ResStockArguments	vehicle_miles_driven_per_year=7000
+Electric Vehicle Miles Traveled	9000	ResStockArguments	vehicle_miles_driven_per_year=9000
 Electric Vehicle Outlet Access	No
 Electric Vehicle Outlet Access	Void
 Electric Vehicle Outlet Access	Yes

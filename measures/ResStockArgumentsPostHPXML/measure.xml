@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>1dfa40d7-1590-4940-92d3-f73e822df39f</version_id>
-  <version_modified>2025-08-15T01:38:20Z</version_modified>
+  <version_id>31f5a600-ca3b-4dab-a1ff-22c74a33c16b</version_id>
+  <version_modified>2025-08-15T19:58:27Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -11585,9 +11585,9 @@
       </choices>
     </argument>
     <argument>
-      <name>ev_usage_multiplier</name>
-      <display_name>Electric Vehicle: Usage Multiplier</display_name>
-      <description>Multiplier on the electric vehicle miles driven that can reflect, e.g., high/low usage occupants.</description>
+      <name>vehicle_miles_driven_per_year</name>
+      <display_name>Electric Vehicle: Miles Driven Per Year</display_name>
+      <description>The annual miles the vehicle is driven.</description>
       <type>Double</type>
       <units>miles</units>
       <required>false</required>
@@ -12445,7 +12445,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>A46A34D5</checksum>
+      <checksum>E09BF38F</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>

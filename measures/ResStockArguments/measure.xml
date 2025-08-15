@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>903446cc-97dc-44c0-8243-581c1a3c7f18</version_id>
-  <version_modified>2025-08-14T22:29:35Z</version_modified>
+  <version_id>11d34dcd-295b-4024-93ba-4def14cfa66f</version_id>
+  <version_modified>2025-08-15T19:58:23Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -11449,9 +11449,9 @@
       </choices>
     </argument>
     <argument>
-      <name>ev_usage_multiplier</name>
-      <display_name>Electric Vehicle: Usage Multiplier</display_name>
-      <description>Multiplier on the electric vehicle miles driven that can reflect, e.g., high/low usage occupants.</description>
+      <name>vehicle_miles_driven_per_year</name>
+      <display_name>Electric Vehicle: Miles Driven Per Year</display_name>
+      <description>The annual miles the vehicle is driven.</description>
       <type>Double</type>
       <units>miles</units>
       <required>false</required>
@@ -12232,7 +12232,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>0D206D28</checksum>
+      <checksum>097261EA</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12249,7 +12249,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9782F2DD</checksum>
+      <checksum>581D7F15</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

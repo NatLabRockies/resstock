@@ -2374,11 +2374,11 @@ Whether to enable EV flexibility.
 
 <br/>
 
-**Electric Vehicle: Usage Multiplier**
+**Electric Vehicle: Miles Driven Per Year**
 
-Multiplier on the electric vehicle miles driven that can reflect, e.g., high/low usage occupants.
+The annual miles the vehicle is driven.
 
-- **Name:** ``ev_usage_multiplier``
+- **Name:** ``vehicle_miles_driven_per_year``
 - **Type:** ``Double``
 
 - **Units:** ``miles``
