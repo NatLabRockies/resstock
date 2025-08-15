@@ -335,9 +335,11 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.climate_and_risk_zones.weather_station_epw_filepath = 'USA_NV_Las.Vegas-McCarran.Intl.AP.723860_TMY3.epw'
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
+    assert_equal('Dolan Springs', default_hpxml_bldg.city)
     assert_equal('AZ', default_hpxml_bldg.state_code)
     assert_equal(35.8897, default_hpxml_bldg.latitude)
     assert_equal(-114.599, default_hpxml_bldg.longitude)
+    assert_equal(-7.0, default_hpxml_bldg.time_zone_utc_offset)
 
     # Test defaults w/ NumberOfResidents provided and less than Nbr+1
     hpxml_bldg.building_occupancy.number_of_residents = 1
