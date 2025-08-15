@@ -789,6 +789,8 @@ Calculated,,,upgrade.demand_flexibility_electric_vehicle,,,,,,,,,,Indicates if d
 Calculated,,,upgrade.demand_flexibility_hvac,,,,,,,,,,Indicates if demand flexibility is applied to HVAC in the model. Blank value indicates the upgrade didn't apply.
 Calculated,,,upgrade.demand_flexibility_random_shift,,,,,,,,,,Indicates the number of minutes of random shift applied for demand flexibility in the model. Blank value indicates the upgrade didn't apply.
 Calculated,,,upgrade.duct_leakage_and_insulation,,,,,,,,,,Indicates the duct leakge to outside and duct insulation the model is upgraded to. Blank value indicates the upgrade didn't apply.
+Calculated,,,upgrade.infiltration,,,,,,,,,,Indicates the infiltration rate the model is upgraded to. Blank value indicates the upgrade didn't apply.
+Calculated,,,upgrade.insulation_wall,,,,,,,,,,Indicates the wall type and insulation the model is upgraded to. Blank value indicates the upgrade didn't apply.
 Calculated,,,upgrade.windows,,,,,,,,,,Only appears when at least one building has this upgrade.
 Output,,,,,,,Site Outdoor Air Drybulb Temperature: Environment,C,out.outdoor_air_dryblub_temp.c,out.outdoor_air_dryblub_temp.c,C,1,
 Output,,,,,,,Zone Mean Air Temperature: Air Source Heat Pump Airloop Ret Air Zone,C,out.zone_mean_air_temp.air_source_heat_pump_airloop_ret_air_zone.c,out.zone_mean_air_temp.air_source_heat_pump_airloop_ret_air_zone.c,C,1,
