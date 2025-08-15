@@ -133,6 +133,8 @@ references:
     - not: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF
     - not: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF
     - not: Water Heater Fuel|Solar Thermal
+    - not: Water Heater Fuel|Other Fuel
+    - not: Water Heater Fuel|Wood
   
   high_eff_ng_tankless_wh_apply_logic: &high_eff_ng_tankless_wh_apply_logic
     # remove dwelling units that have hpwh or solar thermal wh or tankless gas wh
@@ -141,6 +143,8 @@ references:
     - not: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF
     - not: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF
     - not: Water Heater Fuel|Solar Thermal
+    - not: Water Heater Fuel|Other Fuel
+    - not: Water Heater Fuel|Wood
     - not: Water Heater Efficiency|Natural Gas Tankless
     - or:
       - Water Heater Fuel|Natural Gas
