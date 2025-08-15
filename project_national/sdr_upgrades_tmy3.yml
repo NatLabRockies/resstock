@@ -412,6 +412,7 @@ references:
     - or:
       - Water Heater Fuel|Natural Gas
       - Heating Fuel|Natural Gas
+      - HVAC Secondary Heating Fuel|Natural Gas
       - Clothes Dryer|Gas
       - Cooking Range|Gas
       - Misc Pool Heater|Natural Gas
