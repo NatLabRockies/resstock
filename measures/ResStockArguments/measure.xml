@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>11d34dcd-295b-4024-93ba-4def14cfa66f</version_id>
-  <version_modified>2025-08-15T19:58:23Z</version_modified>
+  <version_id>f645256c-ecee-475c-bf35-4fa34634b9c2</version_id>
+  <version_modified>2025-08-15T21:39:21Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -983,7 +983,7 @@
     <argument>
       <name>geometry_skylight_areas</name>
       <display_name>Geometry: Skylight Areas</display_name>
-      <description>The amount of window area on the unit's front/back/left/right roofs. Use a comma-separated list like '50, 0, 0, 0'.</description>
+      <description>The amount of skylight area on the unit's front/back/left/right roofs. Use a comma-separated list like '50, 0, 0, 0'.</description>
       <type>String</type>
       <units>ft2</units>
       <required>false</required>
@@ -3089,12 +3089,48 @@
           <display_name>8 ACH50</display_name>
         </choice>
         <choice>
+          <value>9 ACH50</value>
+          <display_name>9 ACH50</display_name>
+        </choice>
+        <choice>
           <value>10 ACH50</value>
           <display_name>10 ACH50</display_name>
         </choice>
         <choice>
+          <value>11 ACH50</value>
+          <display_name>11 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>12 ACH50</value>
+          <display_name>12 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>13 ACH50</value>
+          <display_name>13 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>14 ACH50</value>
+          <display_name>14 ACH50</display_name>
+        </choice>
+        <choice>
           <value>15 ACH50</value>
           <display_name>15 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>16 ACH50</value>
+          <display_name>16 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>17 ACH50</value>
+          <display_name>17 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>18 ACH50</value>
+          <display_name>18 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>19 ACH50</value>
+          <display_name>19 ACH50</display_name>
         </choice>
         <choice>
           <value>20 ACH50</value>
@@ -3109,8 +3145,16 @@
           <display_name>30 ACH50</display_name>
         </choice>
         <choice>
+          <value>35 ACH50</value>
+          <display_name>35 ACH50</display_name>
+        </choice>
+        <choice>
           <value>40 ACH50</value>
           <display_name>40 ACH50</display_name>
+        </choice>
+        <choice>
+          <value>45 ACH50</value>
+          <display_name>45 ACH50</display_name>
         </choice>
         <choice>
           <value>50 ACH50</value>
@@ -7776,292 +7820,356 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Compact, 200 Mile Range, 10% Usage</value>
-          <display_name>Compact, 200 Mile Range, 10% Usage</display_name>
+          <value>Compact, 200 Mile Range, 1000 miles/yr</value>
+          <display_name>Compact, 200 Mile Range, 1000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 200 Mile Range, 25% Usage</value>
-          <display_name>Compact, 200 Mile Range, 25% Usage</display_name>
+          <value>Compact, 200 Mile Range, 3000 miles/yr</value>
+          <display_name>Compact, 200 Mile Range, 3000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 200 Mile Range, 50% Usage</value>
-          <display_name>Compact, 200 Mile Range, 50% Usage</display_name>
+          <value>Compact, 200 Mile Range, 5000 miles/yr</value>
+          <display_name>Compact, 200 Mile Range, 5000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 200 Mile Range, 75% Usage</value>
-          <display_name>Compact, 200 Mile Range, 75% Usage</display_name>
+          <value>Compact, 200 Mile Range, 7000 miles/yr</value>
+          <display_name>Compact, 200 Mile Range, 7000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 200 Mile Range, 100% Usage</value>
-          <display_name>Compact, 200 Mile Range, 100% Usage</display_name>
+          <value>Compact, 200 Mile Range, 9000 miles/yr</value>
+          <display_name>Compact, 200 Mile Range, 9000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 200 Mile Range, 125% Usage</value>
-          <display_name>Compact, 200 Mile Range, 125% Usage</display_name>
+          <value>Compact, 200 Mile Range, 11000 miles/yr</value>
+          <display_name>Compact, 200 Mile Range, 11000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 200 Mile Range, 150% Usage</value>
-          <display_name>Compact, 200 Mile Range, 150% Usage</display_name>
+          <value>Compact, 200 Mile Range, 13000 miles/yr</value>
+          <display_name>Compact, 200 Mile Range, 13000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 200 Mile Range, 175% Usage</value>
-          <display_name>Compact, 200 Mile Range, 175% Usage</display_name>
+          <value>Compact, 200 Mile Range, 15000 miles/yr</value>
+          <display_name>Compact, 200 Mile Range, 15000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 200 Mile Range, 200% Usage</value>
-          <display_name>Compact, 200 Mile Range, 200% Usage</display_name>
+          <value>Compact, 200 Mile Range, 17000 miles/yr</value>
+          <display_name>Compact, 200 Mile Range, 17000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 300 Mile Range, 10% Usage</value>
-          <display_name>Compact, 300 Mile Range, 10% Usage</display_name>
+          <value>Compact, 200 Mile Range, 19000 miles/yr</value>
+          <display_name>Compact, 200 Mile Range, 19000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 300 Mile Range, 25% Usage</value>
-          <display_name>Compact, 300 Mile Range, 25% Usage</display_name>
+          <value>Compact, 200 Mile Range, 22500 miles/yr</value>
+          <display_name>Compact, 200 Mile Range, 22500 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 300 Mile Range, 50% Usage</value>
-          <display_name>Compact, 300 Mile Range, 50% Usage</display_name>
+          <value>Compact, 300 Mile Range, 1000 miles/yr</value>
+          <display_name>Compact, 300 Mile Range, 1000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 300 Mile Range, 75% Usage</value>
-          <display_name>Compact, 300 Mile Range, 75% Usage</display_name>
+          <value>Compact, 300 Mile Range, 3000 miles/yr</value>
+          <display_name>Compact, 300 Mile Range, 3000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 300 Mile Range, 100% Usage</value>
-          <display_name>Compact, 300 Mile Range, 100% Usage</display_name>
+          <value>Compact, 300 Mile Range, 5000 miles/yr</value>
+          <display_name>Compact, 300 Mile Range, 5000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 300 Mile Range, 125% Usage</value>
-          <display_name>Compact, 300 Mile Range, 125% Usage</display_name>
+          <value>Compact, 300 Mile Range, 7000 miles/yr</value>
+          <display_name>Compact, 300 Mile Range, 7000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 300 Mile Range, 150% Usage</value>
-          <display_name>Compact, 300 Mile Range, 150% Usage</display_name>
+          <value>Compact, 300 Mile Range, 9000 miles/yr</value>
+          <display_name>Compact, 300 Mile Range, 9000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 300 Mile Range, 175% Usage</value>
-          <display_name>Compact, 300 Mile Range, 175% Usage</display_name>
+          <value>Compact, 300 Mile Range, 11000 miles/yr</value>
+          <display_name>Compact, 300 Mile Range, 11000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Compact, 300 Mile Range, 200% Usage</value>
-          <display_name>Compact, 300 Mile Range, 200% Usage</display_name>
+          <value>Compact, 300 Mile Range, 13000 miles/yr</value>
+          <display_name>Compact, 300 Mile Range, 13000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 200 Mile Range, 10% Usage</value>
-          <display_name>Midsize, 200 Mile Range, 10% Usage</display_name>
+          <value>Compact, 300 Mile Range, 15000 miles/yr</value>
+          <display_name>Compact, 300 Mile Range, 15000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 200 Mile Range, 25% Usage</value>
-          <display_name>Midsize, 200 Mile Range, 25% Usage</display_name>
+          <value>Compact, 300 Mile Range, 17000 miles/yr</value>
+          <display_name>Compact, 300 Mile Range, 17000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 200 Mile Range, 50% Usage</value>
-          <display_name>Midsize, 200 Mile Range, 50% Usage</display_name>
+          <value>Compact, 300 Mile Range, 19000 miles/yr</value>
+          <display_name>Compact, 300 Mile Range, 19000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 200 Mile Range, 75% Usage</value>
-          <display_name>Midsize, 200 Mile Range, 75% Usage</display_name>
+          <value>Compact, 300 Mile Range, 22500 miles/yr</value>
+          <display_name>Compact, 300 Mile Range, 22500 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 200 Mile Range, 100% Usage</value>
-          <display_name>Midsize, 200 Mile Range, 100% Usage</display_name>
+          <value>Midsize, 200 Mile Range, 1000 miles/yr</value>
+          <display_name>Midsize, 200 Mile Range, 1000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 200 Mile Range, 125% Usage</value>
-          <display_name>Midsize, 200 Mile Range, 125% Usage</display_name>
+          <value>Midsize, 200 Mile Range, 3000 miles/yr</value>
+          <display_name>Midsize, 200 Mile Range, 3000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 200 Mile Range, 150% Usage</value>
-          <display_name>Midsize, 200 Mile Range, 150% Usage</display_name>
+          <value>Midsize, 200 Mile Range, 5000 miles/yr</value>
+          <display_name>Midsize, 200 Mile Range, 5000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 200 Mile Range, 175% Usage</value>
-          <display_name>Midsize, 200 Mile Range, 175% Usage</display_name>
+          <value>Midsize, 200 Mile Range, 7000 miles/yr</value>
+          <display_name>Midsize, 200 Mile Range, 7000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 200 Mile Range, 200% Usage</value>
-          <display_name>Midsize, 200 Mile Range, 200% Usage</display_name>
+          <value>Midsize, 200 Mile Range, 9000 miles/yr</value>
+          <display_name>Midsize, 200 Mile Range, 9000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 300 Mile Range, 10% Usage</value>
-          <display_name>Midsize, 300 Mile Range, 10% Usage</display_name>
+          <value>Midsize, 200 Mile Range, 11000 miles/yr</value>
+          <display_name>Midsize, 200 Mile Range, 11000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 300 Mile Range, 25% Usage</value>
-          <display_name>Midsize, 300 Mile Range, 25% Usage</display_name>
+          <value>Midsize, 200 Mile Range, 13000 miles/yr</value>
+          <display_name>Midsize, 200 Mile Range, 13000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 300 Mile Range, 50% Usage</value>
-          <display_name>Midsize, 300 Mile Range, 50% Usage</display_name>
+          <value>Midsize, 200 Mile Range, 15000 miles/yr</value>
+          <display_name>Midsize, 200 Mile Range, 15000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 300 Mile Range, 75% Usage</value>
-          <display_name>Midsize, 300 Mile Range, 75% Usage</display_name>
+          <value>Midsize, 200 Mile Range, 17000 miles/yr</value>
+          <display_name>Midsize, 200 Mile Range, 17000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 300 Mile Range, 100% Usage</value>
-          <display_name>Midsize, 300 Mile Range, 100% Usage</display_name>
+          <value>Midsize, 200 Mile Range, 19000 miles/yr</value>
+          <display_name>Midsize, 200 Mile Range, 19000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 300 Mile Range, 125% Usage</value>
-          <display_name>Midsize, 300 Mile Range, 125% Usage</display_name>
+          <value>Midsize, 200 Mile Range, 22500 miles/yr</value>
+          <display_name>Midsize, 200 Mile Range, 22500 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 300 Mile Range, 150% Usage</value>
-          <display_name>Midsize, 300 Mile Range, 150% Usage</display_name>
+          <value>Midsize, 300 Mile Range, 1000 miles/yr</value>
+          <display_name>Midsize, 300 Mile Range, 1000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 300 Mile Range, 175% Usage</value>
-          <display_name>Midsize, 300 Mile Range, 175% Usage</display_name>
+          <value>Midsize, 300 Mile Range, 3000 miles/yr</value>
+          <display_name>Midsize, 300 Mile Range, 3000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Midsize, 300 Mile Range, 200% Usage</value>
-          <display_name>Midsize, 300 Mile Range, 200% Usage</display_name>
+          <value>Midsize, 300 Mile Range, 5000 miles/yr</value>
+          <display_name>Midsize, 300 Mile Range, 5000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 200 Mile Range, 10% Usage</value>
-          <display_name>Pickup, 200 Mile Range, 10% Usage</display_name>
+          <value>Midsize, 300 Mile Range, 7000 miles/yr</value>
+          <display_name>Midsize, 300 Mile Range, 7000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 200 Mile Range, 25% Usage</value>
-          <display_name>Pickup, 200 Mile Range, 25% Usage</display_name>
+          <value>Midsize, 300 Mile Range, 9000 miles/yr</value>
+          <display_name>Midsize, 300 Mile Range, 9000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 200 Mile Range, 50% Usage</value>
-          <display_name>Pickup, 200 Mile Range, 50% Usage</display_name>
+          <value>Midsize, 300 Mile Range, 11000 miles/yr</value>
+          <display_name>Midsize, 300 Mile Range, 11000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 200 Mile Range, 75% Usage</value>
-          <display_name>Pickup, 200 Mile Range, 75% Usage</display_name>
+          <value>Midsize, 300 Mile Range, 13000 miles/yr</value>
+          <display_name>Midsize, 300 Mile Range, 13000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 200 Mile Range, 100% Usage</value>
-          <display_name>Pickup, 200 Mile Range, 100% Usage</display_name>
+          <value>Midsize, 300 Mile Range, 15000 miles/yr</value>
+          <display_name>Midsize, 300 Mile Range, 15000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 200 Mile Range, 125% Usage</value>
-          <display_name>Pickup, 200 Mile Range, 125% Usage</display_name>
+          <value>Midsize, 300 Mile Range, 17000 miles/yr</value>
+          <display_name>Midsize, 300 Mile Range, 17000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 200 Mile Range, 150% Usage</value>
-          <display_name>Pickup, 200 Mile Range, 150% Usage</display_name>
+          <value>Midsize, 300 Mile Range, 19000 miles/yr</value>
+          <display_name>Midsize, 300 Mile Range, 19000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 200 Mile Range, 175% Usage</value>
-          <display_name>Pickup, 200 Mile Range, 175% Usage</display_name>
+          <value>Midsize, 300 Mile Range, 22500 miles/yr</value>
+          <display_name>Midsize, 300 Mile Range, 22500 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 200 Mile Range, 200% Usage</value>
-          <display_name>Pickup, 200 Mile Range, 200% Usage</display_name>
+          <value>Pickup, 200 Mile Range, 1000 miles/yr</value>
+          <display_name>Pickup, 200 Mile Range, 1000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 300 Mile Range, 10% Usage</value>
-          <display_name>Pickup, 300 Mile Range, 10% Usage</display_name>
+          <value>Pickup, 200 Mile Range, 3000 miles/yr</value>
+          <display_name>Pickup, 200 Mile Range, 3000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 300 Mile Range, 25% Usage</value>
-          <display_name>Pickup, 300 Mile Range, 25% Usage</display_name>
+          <value>Pickup, 200 Mile Range, 5000 miles/yr</value>
+          <display_name>Pickup, 200 Mile Range, 5000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 300 Mile Range, 50% Usage</value>
-          <display_name>Pickup, 300 Mile Range, 50% Usage</display_name>
+          <value>Pickup, 200 Mile Range, 7000 miles/yr</value>
+          <display_name>Pickup, 200 Mile Range, 7000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 300 Mile Range, 75% Usage</value>
-          <display_name>Pickup, 300 Mile Range, 75% Usage</display_name>
+          <value>Pickup, 200 Mile Range, 9000 miles/yr</value>
+          <display_name>Pickup, 200 Mile Range, 9000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 300 Mile Range, 100% Usage</value>
-          <display_name>Pickup, 300 Mile Range, 100% Usage</display_name>
+          <value>Pickup, 200 Mile Range, 11000 miles/yr</value>
+          <display_name>Pickup, 200 Mile Range, 11000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 300 Mile Range, 125% Usage</value>
-          <display_name>Pickup, 300 Mile Range, 125% Usage</display_name>
+          <value>Pickup, 200 Mile Range, 13000 miles/yr</value>
+          <display_name>Pickup, 200 Mile Range, 13000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 300 Mile Range, 150% Usage</value>
-          <display_name>Pickup, 300 Mile Range, 150% Usage</display_name>
+          <value>Pickup, 200 Mile Range, 15000 miles/yr</value>
+          <display_name>Pickup, 200 Mile Range, 15000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 300 Mile Range, 175% Usage</value>
-          <display_name>Pickup, 300 Mile Range, 175% Usage</display_name>
+          <value>Pickup, 200 Mile Range, 17000 miles/yr</value>
+          <display_name>Pickup, 200 Mile Range, 17000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>Pickup, 300 Mile Range, 200% Usage</value>
-          <display_name>Pickup, 300 Mile Range, 200% Usage</display_name>
+          <value>Pickup, 200 Mile Range, 19000 miles/yr</value>
+          <display_name>Pickup, 200 Mile Range, 19000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 200 Mile Range, 10% Usage</value>
-          <display_name>SUV, 200 Mile Range, 10% Usage</display_name>
+          <value>Pickup, 200 Mile Range, 22500 miles/yr</value>
+          <display_name>Pickup, 200 Mile Range, 22500 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 200 Mile Range, 25% Usage</value>
-          <display_name>SUV, 200 Mile Range, 25% Usage</display_name>
+          <value>Pickup, 300 Mile Range, 1000 miles/yr</value>
+          <display_name>Pickup, 300 Mile Range, 1000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 200 Mile Range, 50% Usage</value>
-          <display_name>SUV, 200 Mile Range, 50% Usage</display_name>
+          <value>Pickup, 300 Mile Range, 3000 miles/yr</value>
+          <display_name>Pickup, 300 Mile Range, 3000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 200 Mile Range, 75% Usage</value>
-          <display_name>SUV, 200 Mile Range, 75% Usage</display_name>
+          <value>Pickup, 300 Mile Range, 5000 miles/yr</value>
+          <display_name>Pickup, 300 Mile Range, 5000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 200 Mile Range, 100% Usage</value>
-          <display_name>SUV, 200 Mile Range, 100% Usage</display_name>
+          <value>Pickup, 300 Mile Range, 7000 miles/yr</value>
+          <display_name>Pickup, 300 Mile Range, 7000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 200 Mile Range, 125% Usage</value>
-          <display_name>SUV, 200 Mile Range, 125% Usage</display_name>
+          <value>Pickup, 300 Mile Range, 9000 miles/yr</value>
+          <display_name>Pickup, 300 Mile Range, 9000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 200 Mile Range, 150% Usage</value>
-          <display_name>SUV, 200 Mile Range, 150% Usage</display_name>
+          <value>Pickup, 300 Mile Range, 11000 miles/yr</value>
+          <display_name>Pickup, 300 Mile Range, 11000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 200 Mile Range, 175% Usage</value>
-          <display_name>SUV, 200 Mile Range, 175% Usage</display_name>
+          <value>Pickup, 300 Mile Range, 13000 miles/yr</value>
+          <display_name>Pickup, 300 Mile Range, 13000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 200 Mile Range, 200% Usage</value>
-          <display_name>SUV, 200 Mile Range, 200% Usage</display_name>
+          <value>Pickup, 300 Mile Range, 15000 miles/yr</value>
+          <display_name>Pickup, 300 Mile Range, 15000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 300 Mile Range, 10% Usage</value>
-          <display_name>SUV, 300 Mile Range, 10% Usage</display_name>
+          <value>Pickup, 300 Mile Range, 17000 miles/yr</value>
+          <display_name>Pickup, 300 Mile Range, 17000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 300 Mile Range, 25% Usage</value>
-          <display_name>SUV, 300 Mile Range, 25% Usage</display_name>
+          <value>Pickup, 300 Mile Range, 19000 miles/yr</value>
+          <display_name>Pickup, 300 Mile Range, 19000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 300 Mile Range, 50% Usage</value>
-          <display_name>SUV, 300 Mile Range, 50% Usage</display_name>
+          <value>Pickup, 300 Mile Range, 22500 miles/yr</value>
+          <display_name>Pickup, 300 Mile Range, 22500 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 300 Mile Range, 75% Usage</value>
-          <display_name>SUV, 300 Mile Range, 75% Usage</display_name>
+          <value>SUV, 200 Mile Range, 1000 miles/yr</value>
+          <display_name>SUV, 200 Mile Range, 1000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 300 Mile Range, 100% Usage</value>
-          <display_name>SUV, 300 Mile Range, 100% Usage</display_name>
+          <value>SUV, 200 Mile Range, 3000 miles/yr</value>
+          <display_name>SUV, 200 Mile Range, 3000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 300 Mile Range, 125% Usage</value>
-          <display_name>SUV, 300 Mile Range, 125% Usage</display_name>
+          <value>SUV, 200 Mile Range, 5000 miles/yr</value>
+          <display_name>SUV, 200 Mile Range, 5000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 300 Mile Range, 150% Usage</value>
-          <display_name>SUV, 300 Mile Range, 150% Usage</display_name>
+          <value>SUV, 200 Mile Range, 7000 miles/yr</value>
+          <display_name>SUV, 200 Mile Range, 7000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 300 Mile Range, 175% Usage</value>
-          <display_name>SUV, 300 Mile Range, 175% Usage</display_name>
+          <value>SUV, 200 Mile Range, 9000 miles/yr</value>
+          <display_name>SUV, 200 Mile Range, 9000 miles/yr</display_name>
         </choice>
         <choice>
-          <value>SUV, 300 Mile Range, 200% Usage</value>
-          <display_name>SUV, 300 Mile Range, 200% Usage</display_name>
+          <value>SUV, 200 Mile Range, 11000 miles/yr</value>
+          <display_name>SUV, 200 Mile Range, 11000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 200 Mile Range, 13000 miles/yr</value>
+          <display_name>SUV, 200 Mile Range, 13000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 200 Mile Range, 15000 miles/yr</value>
+          <display_name>SUV, 200 Mile Range, 15000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 200 Mile Range, 17000 miles/yr</value>
+          <display_name>SUV, 200 Mile Range, 17000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 200 Mile Range, 19000 miles/yr</value>
+          <display_name>SUV, 200 Mile Range, 19000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 200 Mile Range, 22500 miles/yr</value>
+          <display_name>SUV, 200 Mile Range, 22500 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 300 Mile Range, 1000 miles/yr</value>
+          <display_name>SUV, 300 Mile Range, 1000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 300 Mile Range, 3000 miles/yr</value>
+          <display_name>SUV, 300 Mile Range, 3000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 300 Mile Range, 5000 miles/yr</value>
+          <display_name>SUV, 300 Mile Range, 5000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 300 Mile Range, 7000 miles/yr</value>
+          <display_name>SUV, 300 Mile Range, 7000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 300 Mile Range, 9000 miles/yr</value>
+          <display_name>SUV, 300 Mile Range, 9000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 300 Mile Range, 11000 miles/yr</value>
+          <display_name>SUV, 300 Mile Range, 11000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 300 Mile Range, 13000 miles/yr</value>
+          <display_name>SUV, 300 Mile Range, 13000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 300 Mile Range, 15000 miles/yr</value>
+          <display_name>SUV, 300 Mile Range, 15000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 300 Mile Range, 17000 miles/yr</value>
+          <display_name>SUV, 300 Mile Range, 17000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 300 Mile Range, 19000 miles/yr</value>
+          <display_name>SUV, 300 Mile Range, 19000 miles/yr</display_name>
+        </choice>
+        <choice>
+          <value>SUV, 300 Mile Range, 22500 miles/yr</value>
+          <display_name>SUV, 300 Mile Range, 22500 miles/yr</display_name>
         </choice>
         <choice>
           <value>Detailed Example: 100 kWh battery, 0.25 kWh/mile</value>
@@ -12232,7 +12340,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>097261EA</checksum>
+      <checksum>BDC4201B</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12249,7 +12357,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>581D7F15</checksum>
+      <checksum>4C13C148</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
@@ -12261,7 +12369,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F28570A6</checksum>
+      <checksum>D3FE670C</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>

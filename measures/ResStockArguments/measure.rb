@@ -1146,8 +1146,10 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     end
 
     # Electric Vehicle
+    # This can't be done in the ResStockArgumentsPostHPXML measure because these changes are
+    # needed for the BuildResidentialScheduleFile measure
     if args[:electric_vehicle] != 'None'
-      args[:electric_vehicle] = args[:electric_vehicle].gsub('11000', args[:vehicle_miles_driven_per_year])
+      args[:electric_vehicle] = args[:electric_vehicle].gsub('11000 miles/yr', "#{Integer(args[:vehicle_miles_driven_per_year])} miles/yr")
     end
     if args[:electric_vehicle_charger] != 'None'
       args[:electric_vehicle_charger] = args[:electric_vehicle_charger].gsub('100% Charging at Home', "#{Integer(100 * args[:ev_fraction_charged_home])}% Charging at Home")
