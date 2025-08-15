@@ -192,7 +192,7 @@ references:
         - Insulation Ceiling|R-38
         - Insulation Ceiling|R-49
 
-  #Air sealing / infiltration reduction 
+  #Air sealing / infiltration reduction
   infiltration_all_cz_sf_mf_mb: &infiltration_all_cz_sf_mf_mb
     option: Infiltration|5 ACH50
     apply_logic:
@@ -207,7 +207,7 @@ references:
           - Infiltration|30 ACH50
           - Infiltration|40 ACH50
           - Infiltration|50 ACH50
-  
+
   duct_seal_only_r6: &duct_seal_only_r6
     option: Duct Leakage and Insulation|5% Leakage to Outside, R-6
     apply_logic:
@@ -215,7 +215,7 @@ references:
         - Duct Leakage and Insulation|10% Leakage to Outside, R-6
         - Duct Leakage and Insulation|20% Leakage to Outside, R-6
         - Duct Leakage and Insulation|30% Leakage to Outside, R-6
-  
+
   duct_seal_only_r8: &duct_seal_only_r8
     option: Duct Leakage and Insulation|5% Leakage to Outside, R-8
     apply_logic:
@@ -239,6 +239,47 @@ references:
     option: Insulation Wall|Wood Stud, R-13
     apply_logic:
       - Insulation Wall|Wood Stud, Uninsulated
+
+  infiltration_30pct_reduction_windows: &infiltration_30pct_reduction_windows
+    option: Infiltration Reduction|30%
+    apply_logic:
+      - or:
+        - Windows|Single, Clear, Metal
+        - Windows|Single, Clear, Metal, Exterior Clear Storm
+        - Windows|Single, Clear, Non-metal
+        - Windows|Single, Clear, Non-metal, Exterior Clear Storm
+
+  infiltration_13pct_reduction_windows: &infiltration_13pct_reduction_windows
+    option: Infiltration Reduction|13%
+    apply_logic:
+      - or:
+        - Windows|Double, Clear, Metal, Air
+        - Windows|Double, Clear, Metal, Air, Exterior Clear Storm
+        - Windows|Double, Clear, Non-metal, Air
+        - Windows|Double, Clear, Non-metal, Air, Exterior Clear Storm
+        - Windows|Double, Low-E, Non-metal, Air, M-Gain
+        - Windows|Triple, Low-E, Non-metal, Air, L-Gain
+
+  energystar_window_northern: &energystar_window_northern
+    option: Windows|EnergyStar, Northern
+    apply_logic:
+      - Energystar Climate Zone 2023|Northern
+
+  energystar_window_north_central: &energystar_window_north_central
+    option: Windows|EnergyStar, North-Central
+    apply_logic:
+      - Energystar Climate Zone 2023|North-Central
+
+  energystar_window_south_central: &energystar_window_south_central
+    option: Windows|EnergyStar, South-Central
+    apply_logic:
+      - Energystar Climate Zone 2023|South-Central
+
+  energystar_window_southern: &energystar_window_southern
+    option: Windows|EnergyStar, Southern
+    apply_logic:
+      - Energystar Climate Zone 2023|Southern
+      - not: Windows|Triple, Low-E, Non-metal, Air, L-Gain
 
   costs_ashp_ducted_seer_20_11_hspf: &costs_ashp_ducted_seer_20_11_hspf
     - value: 10229.58
@@ -447,18 +488,18 @@ upgrades:
     options:
       - *attic_insulation_cz1_sf
       - *attic_insulation_cz2_8_sf
-  
+
   - upgrade_name: Duct Sealing and Insulation
     options:
       - *duct_seal_only_r6
       - *duct_seal_only_r8
       - *duct_seal_and_insulate
-  
+
   - upgrade_name: Drill and Fill Wall Insulation with Air Sealing
     options:
       - *drill_and_fill_wall_insulation
       - *infiltration_all_cz_sf_mf_mb
-  
+
   - upgrade_name: Air Sealing + Attic Floor Insulation + Duct sealing
     options:
       - *infiltration_all_cz_sf_mf_mb
@@ -477,6 +518,15 @@ upgrades:
       - *duct_seal_only_r8
       - *duct_seal_and_insulate
       - *drill_and_fill_wall_insulation
+
+  - upgrade_name: EnergyStar Windows
+    options:
+      - *energystar_window_northern
+      - *energystar_window_north_central
+      - *energystar_window_south_central
+      - *energystar_window_southern
+      - *infiltration_30pct_reduction_windows
+      - *infiltration_13pct_reduction_windows
 
   ### -- Packages -- ###
   - upgrade_name: Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation with Duct Sealing
