@@ -34,7 +34,7 @@ The timestep for the simulation; defaults to hourly calculations for fastest run
 
 - **Required:** ``false``
 
-- **Choices:** `60`, `30`, `20`, `15`, `12`, `10`, `6`, `5`, `4`, `3`, `2`, `1`
+- **Choices:** <br/>  - `60`<br/>  - `30`<br/>  - `20`<br/>  - `15`<br/>  - `12`<br/>  - `10`<br/>  - `6`<br/>  - `5`<br/>  - `4`<br/>  - `3`<br/>  - `2`<br/>  - `1`
 
 
 - **Default:** `60`
@@ -88,7 +88,7 @@ The terrain/shielding of the home, for the infiltration model. Defaults to 'Subu
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `Suburban, Normal`, `Suburban, Well-Shielded`, `Suburban, Exposed`, `Urban, Normal`, `Urban, Well-Shielded`, `Urban, Exposed`, `Rural, Normal`, `Rural, Well-Shielded`, `Rural, Exposed`
+- **Choices:** <br/>  - `Default`<br/>  - `Suburban, Normal`<br/>  - `Suburban, Well-Shielded`<br/>  - `Suburban, Exposed`<br/>  - `Urban, Normal`<br/>  - `Urban, Well-Shielded`<br/>  - `Urban, Exposed`<br/>  - `Rural, Normal`<br/>  - `Rural, Well-Shielded`<br/>  - `Rural, Exposed`
 
 
 - **Default:** `Default`
@@ -104,7 +104,7 @@ The soil and moisture type.
 
 - **Required:** ``false``
 
-- **Choices:** `Unknown`, `Clay, Dry`, `Clay, Mixed`, `Clay, Wet`, `Gravel, Dry`, `Gravel, Mixed`, `Gravel, Wet`, `Loam, Dry`, `Loam, Mixed`, `Loam, Wet`, `Sand, Dry`, `Sand, Mixed`, `Sand, Wet`, `Silt, Dry`, `Silt, Mixed`, `Silt, Wet`, `0.5 Btu/hr-ft-F`, `0.8 Btu/hr-ft-F`, `1.1 Btu/hr-ft-F`, `1.4 Btu/hr-ft-F`, `1.7 Btu/hr-ft-F`, `2.0 Btu/hr-ft-F`, `2.3 Btu/hr-ft-F`, `2.6 Btu/hr-ft-F`, `Detailed Example: Sand, Dry, 0.03 Diffusivity`
+- **Choices:** <br/>  - `Unknown`<br/>  - `Clay, Dry`<br/>  - `Clay, Mixed`<br/>  - `Clay, Wet`<br/>  - `Gravel, Dry`<br/>  - `Gravel, Mixed`<br/>  - `Gravel, Wet`<br/>  - `Loam, Dry`<br/>  - `Loam, Mixed`<br/>  - `Loam, Wet`<br/>  - `Sand, Dry`<br/>  - `Sand, Mixed`<br/>  - `Sand, Wet`<br/>  - `Silt, Dry`<br/>  - `Silt, Mixed`<br/>  - `Silt, Wet`<br/>  - `0.5 Btu/hr-ft-F`<br/>  - `0.8 Btu/hr-ft-F`<br/>  - `1.1 Btu/hr-ft-F`<br/>  - `1.4 Btu/hr-ft-F`<br/>  - `1.7 Btu/hr-ft-F`<br/>  - `2.0 Btu/hr-ft-F`<br/>  - `2.3 Btu/hr-ft-F`<br/>  - `2.6 Btu/hr-ft-F`<br/>  - `Detailed Example: Sand, Dry, 0.03 Diffusivity`
 
 
 - **Default:** `Unknown`
@@ -134,7 +134,7 @@ The type of dwelling unit and number of stories. Includes conditioned attics and
 
 - **Required:** ``true``
 
-- **Choices:** `Single-Family Detached, 1 Story`, `Single-Family Detached, 2 Stories`, `Single-Family Detached, 3 Stories`, `Single-Family Detached, 4 Stories`, `Single-Family Attached, 1 Story`, `Single-Family Attached, 2 Stories`, `Single-Family Attached, 3 Stories`, `Single-Family Attached, 4 Stories`, `Apartment Unit, 1 Story`, `Manufactured Home, 1 Story`, `Manufactured Home, 2 Stories`, `Manufactured Home, 3 Stories`, `Manufactured Home, 4 Stories`
+- **Choices:** <br/>  - `Single-Family Detached, 1 Story`<br/>  - `Single-Family Detached, 2 Stories`<br/>  - `Single-Family Detached, 3 Stories`<br/>  - `Single-Family Detached, 4 Stories`<br/>  - `Single-Family Attached, 1 Story`<br/>  - `Single-Family Attached, 2 Stories`<br/>  - `Single-Family Attached, 3 Stories`<br/>  - `Single-Family Attached, 4 Stories`<br/>  - `Apartment Unit, 1 Story`<br/>  - `Manufactured Home, 1 Story`<br/>  - `Manufactured Home, 2 Stories`<br/>  - `Manufactured Home, 3 Stories`<br/>  - `Manufactured Home, 4 Stories`
 
 
 - **Default:** `Single-Family Detached, 2 Stories`
@@ -150,7 +150,7 @@ For single-family attached and apartment units, the location(s) of the attached 
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `1 Side: Front`, `1 Side: Back`, `1 Side: Left`, `1 Side: Right`, `2 Sides: Front, Left`, `2 Sides: Front, Right`, `2 Sides: Back, Left`, `2 Sides: Back, Right`, `2 Sides: Front, Back`, `2 Sides: Left, Right`, `3 Sides: Front, Back, Left`, `3 Sides: Front, Back, Right`, `3 Sides: Front, Left, Right`, `3 Sides: Back, Left, Right`
+- **Choices:** <br/>  - `None`<br/>  - `1 Side: Front`<br/>  - `1 Side: Back`<br/>  - `1 Side: Left`<br/>  - `1 Side: Right`<br/>  - `2 Sides: Front, Left`<br/>  - `2 Sides: Front, Right`<br/>  - `2 Sides: Back, Left`<br/>  - `2 Sides: Back, Right`<br/>  - `2 Sides: Front, Back`<br/>  - `2 Sides: Left, Right`<br/>  - `3 Sides: Front, Back, Left`<br/>  - `3 Sides: Front, Back, Right`<br/>  - `3 Sides: Front, Left, Right`<br/>  - `3 Sides: Back, Left, Right`
 
 
 - **Default:** `None`
@@ -198,7 +198,7 @@ Direction of the front of the unit.
 
 - **Required:** ``true``
 
-- **Choices:** `North`, `North-Northeast`, `Northeast`, `East-Northeast`, `East`, `East-Southeast`, `Southeast`, `South-Southeast`, `South`, `South-Southwest`, `Southwest`, `West-Southwest`, `West`, `West-Northwest`, `Northwest`, `North-Northwest`
+- **Choices:** <br/>  - `North`<br/>  - `North-Northeast`<br/>  - `Northeast`<br/>  - `East-Northeast`<br/>  - `East`<br/>  - `East-Southeast`<br/>  - `Southeast`<br/>  - `South-Southeast`<br/>  - `South`<br/>  - `South-Southwest`<br/>  - `Southwest`<br/>  - `West-Southwest`<br/>  - `West`<br/>  - `West-Northwest`<br/>  - `Northwest`<br/>  - `North-Northwest`
 
 
 - **Default:** `South`
@@ -214,7 +214,7 @@ The number of bedrooms in the unit.
 
 - **Required:** ``true``
 
-- **Choices:** `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`
+- **Choices:** <br/>  - `0`<br/>  - `1`<br/>  - `2`<br/>  - `3`<br/>  - `4`<br/>  - `5`<br/>  - `6`<br/>  - `7`<br/>  - `8`<br/>  - `9`<br/>  - `10`<br/>  - `11`<br/>  - `12`
 
 
 - **Default:** `3`
@@ -230,7 +230,7 @@ The number of bathrooms in the unit. Defaults to NumberofBedrooms/2 + 0.5.
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`
+- **Choices:** <br/>  - `Default`<br/>  - `0`<br/>  - `1`<br/>  - `2`<br/>  - `3`<br/>  - `4`<br/>  - `5`<br/>  - `6`<br/>  - `7`<br/>  - `8`<br/>  - `9`<br/>  - `10`<br/>  - `11`<br/>  - `12`
 
 
 - **Default:** `Default`
@@ -246,7 +246,7 @@ The number of occupants in the unit. Defaults to an *asset* calculation assuming
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`
+- **Choices:** <br/>  - `Default`<br/>  - `0`<br/>  - `1`<br/>  - `2`<br/>  - `3`<br/>  - `4`<br/>  - `5`<br/>  - `6`<br/>  - `7`<br/>  - `8`<br/>  - `9`<br/>  - `10`<br/>  - `11`<br/>  - `12`
 
 
 - **Default:** `Default`
@@ -262,7 +262,7 @@ Average distance from the floor to the ceiling.
 
 - **Required:** ``false``
 
-- **Choices:** `6.0 ft`, `6.5 ft`, `7.0 ft`, `7.5 ft`, `8.0 ft`, `8.5 ft`, `9.0 ft`, `9.5 ft`, `10.0 ft`, `10.5 ft`, `11.0 ft`, `11.5 ft`, `12.0 ft`, `12.5 ft`, `13.0 ft`, `13.5 ft`, `14.0 ft`, `14.5 ft`, `15.0 ft`
+- **Choices:** <br/>  - `6.0 ft`<br/>  - `6.5 ft`<br/>  - `7.0 ft`<br/>  - `7.5 ft`<br/>  - `8.0 ft`<br/>  - `8.5 ft`<br/>  - `9.0 ft`<br/>  - `9.5 ft`<br/>  - `10.0 ft`<br/>  - `10.5 ft`<br/>  - `11.0 ft`<br/>  - `11.5 ft`<br/>  - `12.0 ft`<br/>  - `12.5 ft`<br/>  - `13.0 ft`<br/>  - `13.5 ft`<br/>  - `14.0 ft`<br/>  - `14.5 ft`<br/>  - `15.0 ft`
 
 
 - **Default:** `8.0 ft`
@@ -278,7 +278,7 @@ The type of attached garage. Only applies to single-family detached units.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `1 Car, Left, Fully Inset`, `1 Car, Left, Half Protruding`, `1 Car, Left, Fully Protruding`, `1 Car, Right, Fully Inset`, `1 Car, Right, Half Protruding`, `1 Car, Right, Fully Protruding`, `2 Car, Left, Fully Inset`, `2 Car, Left, Half Protruding`, `2 Car, Left, Fully Protruding`, `2 Car, Right, Fully Inset`, `2 Car, Right, Half Protruding`, `2 Car, Right, Fully Protruding`, `3 Car, Left, Fully Inset`, `3 Car, Left, Half Protruding`, `3 Car, Left, Fully Protruding`, `3 Car, Right, Fully Inset`, `3 Car, Right, Half Protruding`, `3 Car, Right, Fully Protruding`
+- **Choices:** <br/>  - `None`<br/>  - `1 Car, Left, Fully Inset`<br/>  - `1 Car, Left, Half Protruding`<br/>  - `1 Car, Left, Fully Protruding`<br/>  - `1 Car, Right, Fully Inset`<br/>  - `1 Car, Right, Half Protruding`<br/>  - `1 Car, Right, Fully Protruding`<br/>  - `2 Car, Left, Fully Inset`<br/>  - `2 Car, Left, Half Protruding`<br/>  - `2 Car, Left, Fully Protruding`<br/>  - `2 Car, Right, Fully Inset`<br/>  - `2 Car, Right, Half Protruding`<br/>  - `2 Car, Right, Fully Protruding`<br/>  - `3 Car, Left, Fully Inset`<br/>  - `3 Car, Left, Half Protruding`<br/>  - `3 Car, Left, Fully Protruding`<br/>  - `3 Car, Right, Fully Inset`<br/>  - `3 Car, Right, Half Protruding`<br/>  - `3 Car, Right, Fully Protruding`
 
 
 - **Default:** `None`
@@ -294,7 +294,7 @@ The foundation type of the building. Garages are assumed to be over slab-on-grad
 
 - **Required:** ``true``
 
-- **Choices:** `Slab-on-Grade`, `Crawlspace, Vented`, `Crawlspace, Unvented`, `Crawlspace, Conditioned`, `Basement, Unconditioned`, `Basement, Unconditioned, Half Above-Grade`, `Basement, Conditioned`, `Basement, Conditioned, Half Above-Grade`, `Ambient`, `Above Apartment`, `Belly and Wing, With Skirt`, `Belly and Wing, No Skirt`, `Detailed Example: Basement, Unconditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists`, `Detailed Example: Basement, Conditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists`, `Detailed Example: Basement, Conditioned, 5 ft Height`, `Detailed Example: Crawlspace, Vented, Above-Grade`
+- **Choices:** <br/>  - `Slab-on-Grade`<br/>  - `Crawlspace, Vented`<br/>  - `Crawlspace, Unvented`<br/>  - `Crawlspace, Conditioned`<br/>  - `Basement, Unconditioned`<br/>  - `Basement, Unconditioned, Half Above-Grade`<br/>  - `Basement, Conditioned`<br/>  - `Basement, Conditioned, Half Above-Grade`<br/>  - `Ambient`<br/>  - `Above Apartment`<br/>  - `Belly and Wing, With Skirt`<br/>  - `Belly and Wing, No Skirt`<br/>  - `Detailed Example: Basement, Unconditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists`<br/>  - `Detailed Example: Basement, Conditioned, 7.25 ft Height, 8 in Above-Grade, 9 in Rim Joists`<br/>  - `Detailed Example: Basement, Conditioned, 5 ft Height`<br/>  - `Detailed Example: Crawlspace, Vented, Above-Grade`
 
 
 - **Default:** `Crawlspace, Vented`
@@ -310,7 +310,7 @@ The attic/roof type of the building.
 
 - **Required:** ``true``
 
-- **Choices:** `Flat Roof`, `Attic, Vented, Gable`, `Attic, Vented, Hip`, `Attic, Unvented, Gable`, `Attic, Unvented, Hip`, `Attic, Conditioned, Gable`, `Attic, Conditioned, Hip`, `Below Apartment`
+- **Choices:** <br/>  - `Flat Roof`<br/>  - `Attic, Vented, Gable`<br/>  - `Attic, Vented, Hip`<br/>  - `Attic, Unvented, Gable`<br/>  - `Attic, Unvented, Hip`<br/>  - `Attic, Conditioned, Gable`<br/>  - `Attic, Conditioned, Hip`<br/>  - `Below Apartment`
 
 
 - **Default:** `Attic, Vented, Gable`
@@ -326,7 +326,7 @@ The roof pitch of the attic. Ignored if the building has a flat roof.
 
 - **Required:** ``false``
 
-- **Choices:** `1:12`, `2:12`, `3:12`, `4:12`, `5:12`, `6:12`, `7:12`, `8:12`, `9:12`, `10:12`, `11:12`, `12:12`, `13:12`, `14:12`, `15:12`, `16:12`
+- **Choices:** <br/>  - `1:12`<br/>  - `2:12`<br/>  - `3:12`<br/>  - `4:12`<br/>  - `5:12`<br/>  - `6:12`<br/>  - `7:12`<br/>  - `8:12`<br/>  - `9:12`<br/>  - `10:12`<br/>  - `11:12`<br/>  - `12:12`<br/>  - `13:12`<br/>  - `14:12`<br/>  - `15:12`<br/>  - `16:12`
 
 
 - **Default:** `6:12`
@@ -342,7 +342,7 @@ The type of eaves extending from the roof.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `1 ft`, `2 ft`, `3 ft`, `4 ft`, `5 ft`
+- **Choices:** <br/>  - `None`<br/>  - `1 ft`<br/>  - `2 ft`<br/>  - `3 ft`<br/>  - `4 ft`<br/>  - `5 ft`
 
 
 - **Default:** `2 ft`
@@ -358,7 +358,7 @@ The presence and geometry of neighboring buildings, for shading purposes.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Left/Right at 2ft`, `Left/Right at 4ft`, `Left/Right at 5ft`, `Left/Right at 7ft`, `Left/Right at 10ft`, `Left/Right at 12ft`, `Left/Right at 15ft`, `Left/Right at 20ft`, `Left/Right at 25ft`, `Left/Right at 27ft`, `Left at 2ft`, `Left at 4ft`, `Left at 5ft`, `Left at 7ft`, `Left at 10ft`, `Left at 12ft`, `Left at 15ft`, `Left at 20ft`, `Left at 25ft`, `Left at 27ft`, `Right at 2ft`, `Right at 4ft`, `Right at 5ft`, `Right at 7ft`, `Right at 10ft`, `Right at 12ft`, `Right at 15ft`, `Right at 20ft`, `Right at 25ft`, `Right at 27ft`, `Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height`
+- **Choices:** <br/>  - `None`<br/>  - `Left/Right at 2ft`<br/>  - `Left/Right at 4ft`<br/>  - `Left/Right at 5ft`<br/>  - `Left/Right at 7ft`<br/>  - `Left/Right at 10ft`<br/>  - `Left/Right at 12ft`<br/>  - `Left/Right at 15ft`<br/>  - `Left/Right at 20ft`<br/>  - `Left/Right at 25ft`<br/>  - `Left/Right at 27ft`<br/>  - `Left at 2ft`<br/>  - `Left at 4ft`<br/>  - `Left at 5ft`<br/>  - `Left at 7ft`<br/>  - `Left at 10ft`<br/>  - `Left at 12ft`<br/>  - `Left at 15ft`<br/>  - `Left at 20ft`<br/>  - `Left at 25ft`<br/>  - `Left at 27ft`<br/>  - `Right at 2ft`<br/>  - `Right at 4ft`<br/>  - `Right at 5ft`<br/>  - `Right at 7ft`<br/>  - `Right at 10ft`<br/>  - `Right at 12ft`<br/>  - `Right at 15ft`<br/>  - `Right at 20ft`<br/>  - `Right at 25ft`<br/>  - `Right at 27ft`<br/>  - `Detailed Example: Left/Right at 25ft, Front/Back at 80ft, 12ft Height`
 
 
 - **Default:** `None`
@@ -381,7 +381,7 @@ The amount of window area on the unit's front/back/left/right facades. Use a com
 
 **Geometry: Skylight Areas**
 
-The amount of window area on the unit's front/back/left/right roofs. Use a comma-separated list like '50, 0, 0, 0'.
+The amount of skylight area on the unit's front/back/left/right roofs. Use a comma-separated list like '50, 0, 0, 0'.
 
 - **Name:** ``geometry_skylight_areas``
 - **Type:** ``String``
@@ -418,7 +418,7 @@ The type and insulation level of the floor over the foundation (e.g., crawlspace
 
 - **Required:** ``false``
 
-- **Choices:** `Wood Frame, Uninsulated`, `Wood Frame, R-11`, `Wood Frame, R-13`, `Wood Frame, R-15`, `Wood Frame, R-19`, `Wood Frame, R-21`, `Wood Frame, R-25`, `Wood Frame, R-30`, `Wood Frame, R-35`, `Wood Frame, R-38`, `Wood Frame, IECC U-0.064`, `Wood Frame, IECC U-0.047`, `Wood Frame, IECC U-0.033`, `Wood Frame, IECC U-0.028`, `Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor`, `Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor`, `Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor`
+- **Choices:** <br/>  - `Wood Frame, Uninsulated`<br/>  - `Wood Frame, R-11`<br/>  - `Wood Frame, R-13`<br/>  - `Wood Frame, R-15`<br/>  - `Wood Frame, R-19`<br/>  - `Wood Frame, R-21`<br/>  - `Wood Frame, R-25`<br/>  - `Wood Frame, R-30`<br/>  - `Wood Frame, R-35`<br/>  - `Wood Frame, R-38`<br/>  - `Wood Frame, IECC U-0.064`<br/>  - `Wood Frame, IECC U-0.047`<br/>  - `Wood Frame, IECC U-0.033`<br/>  - `Wood Frame, IECC U-0.028`<br/>  - `Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor`<br/>  - `Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor`<br/>  - `Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor`
 
 
 - **Default:** `Wood Frame, Uninsulated`
@@ -434,7 +434,7 @@ The type and insulation level of the floor over the garage.
 
 - **Required:** ``false``
 
-- **Choices:** `Wood Frame, Uninsulated`, `Wood Frame, R-11`, `Wood Frame, R-13`, `Wood Frame, R-15`, `Wood Frame, R-19`, `Wood Frame, R-21`, `Wood Frame, R-25`, `Wood Frame, R-30`, `Wood Frame, R-35`, `Wood Frame, R-38`, `Wood Frame, IECC U-0.064`, `Wood Frame, IECC U-0.047`, `Wood Frame, IECC U-0.033`, `Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor`, `Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor`, `Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor`
+- **Choices:** <br/>  - `Wood Frame, Uninsulated`<br/>  - `Wood Frame, R-11`<br/>  - `Wood Frame, R-13`<br/>  - `Wood Frame, R-15`<br/>  - `Wood Frame, R-19`<br/>  - `Wood Frame, R-21`<br/>  - `Wood Frame, R-25`<br/>  - `Wood Frame, R-30`<br/>  - `Wood Frame, R-35`<br/>  - `Wood Frame, R-38`<br/>  - `Wood Frame, IECC U-0.064`<br/>  - `Wood Frame, IECC U-0.047`<br/>  - `Wood Frame, IECC U-0.033`<br/>  - `Detailed Example: Wood Frame, Uninsulated, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor`<br/>  - `Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor`<br/>  - `Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor`
 
 
 - **Default:** `Wood Frame, Uninsulated`
@@ -450,7 +450,7 @@ The type and insulation level of the foundation walls.
 
 - **Required:** ``false``
 
-- **Choices:** `Solid Concrete, Uninsulated`, `Solid Concrete, Half Wall, R-5`, `Solid Concrete, Half Wall, R-10`, `Solid Concrete, Half Wall, R-15`, `Solid Concrete, Half Wall, R-20`, `Solid Concrete, Whole Wall, R-5`, `Solid Concrete, Whole Wall, R-10`, `Solid Concrete, Whole Wall, R-10.2, Interior`, `Solid Concrete, Whole Wall, R-15`, `Solid Concrete, Whole Wall, R-20`, `Solid Concrete, Assembly R-10.69`, `Concrete Block Foam Core, Whole Wall, R-18.9`
+- **Choices:** <br/>  - `Solid Concrete, Uninsulated`<br/>  - `Solid Concrete, Half Wall, R-5`<br/>  - `Solid Concrete, Half Wall, R-10`<br/>  - `Solid Concrete, Half Wall, R-15`<br/>  - `Solid Concrete, Half Wall, R-20`<br/>  - `Solid Concrete, Whole Wall, R-5`<br/>  - `Solid Concrete, Whole Wall, R-10`<br/>  - `Solid Concrete, Whole Wall, R-10.2, Interior`<br/>  - `Solid Concrete, Whole Wall, R-15`<br/>  - `Solid Concrete, Whole Wall, R-20`<br/>  - `Solid Concrete, Assembly R-10.69`<br/>  - `Concrete Block Foam Core, Whole Wall, R-18.9`
 
 
 - **Default:** `Solid Concrete, Uninsulated`
@@ -466,7 +466,7 @@ The type and insulation level of the rim joists.
 
 - **Required:** ``false``
 
-- **Choices:** `Uninsulated`, `Interior, R-7`, `Interior, R-11`, `Interior, R-13`, `Interior, R-15`, `Interior, R-19`, `Interior, R-21`, `Exterior, R-5`, `Exterior, R-10`, `Exterior, R-15`, `Exterior, R-20`, `Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding`, `Detailed Example: R-11, Fiberboard Sheathing, Hardboard Siding`
+- **Choices:** <br/>  - `Uninsulated`<br/>  - `Interior, R-7`<br/>  - `Interior, R-11`<br/>  - `Interior, R-13`<br/>  - `Interior, R-15`<br/>  - `Interior, R-19`<br/>  - `Interior, R-21`<br/>  - `Exterior, R-5`<br/>  - `Exterior, R-10`<br/>  - `Exterior, R-15`<br/>  - `Exterior, R-20`<br/>  - `Detailed Example: Uninsulated, Fiberboard Sheathing, Hardboard Siding`<br/>  - `Detailed Example: R-11, Fiberboard Sheathing, Hardboard Siding`
 
 
 - **Default:** `Uninsulated`
@@ -482,7 +482,7 @@ The type and insulation level of the slab. Applies to slab-on-grade as well as b
 
 - **Required:** ``false``
 
-- **Choices:** `Uninsulated`, `Under Slab, 2ft, R-5`, `Under Slab, 2ft, R-10`, `Under Slab, 2ft, R-15`, `Under Slab, 2ft, R-20`, `Under Slab, 4ft, R-5`, `Under Slab, 4ft, R-10`, `Under Slab, 4ft, R-15`, `Under Slab, 4ft, R-20`, `Perimeter, 2ft, R-5`, `Perimeter, 2ft, R-10`, `Perimeter, 2ft, R-15`, `Perimeter, 2ft, R-20`, `Perimeter, 4ft, R-5`, `Perimeter, 4ft, R-10`, `Perimeter, 4ft, R-15`, `Perimeter, 4ft, R-20`, `Whole Slab, R-5`, `Whole Slab, R-10`, `Whole Slab, R-15`, `Whole Slab, R-20`, `Whole Slab, R-30`, `Whole Slab, R-40`, `Detailed Example: Uninsulated, No Carpet`, `Detailed Example: Uninsulated, 100% R-2.08 Carpet`, `Detailed Example: Uninsulated, 100% R-2.50 Carpet`, `Detailed Example: Perimeter, 2ft, R-5, 100% R-2.08 Carpet`, `Detailed Example: Whole Slab, R-5, 100% R-2.5 Carpet`
+- **Choices:** <br/>  - `Uninsulated`<br/>  - `Under Slab, 2ft, R-5`<br/>  - `Under Slab, 2ft, R-10`<br/>  - `Under Slab, 2ft, R-15`<br/>  - `Under Slab, 2ft, R-20`<br/>  - `Under Slab, 4ft, R-5`<br/>  - `Under Slab, 4ft, R-10`<br/>  - `Under Slab, 4ft, R-15`<br/>  - `Under Slab, 4ft, R-20`<br/>  - `Perimeter, 2ft, R-5`<br/>  - `Perimeter, 2ft, R-10`<br/>  - `Perimeter, 2ft, R-15`<br/>  - `Perimeter, 2ft, R-20`<br/>  - `Perimeter, 4ft, R-5`<br/>  - `Perimeter, 4ft, R-10`<br/>  - `Perimeter, 4ft, R-15`<br/>  - `Perimeter, 4ft, R-20`<br/>  - `Whole Slab, R-5`<br/>  - `Whole Slab, R-10`<br/>  - `Whole Slab, R-15`<br/>  - `Whole Slab, R-20`<br/>  - `Whole Slab, R-30`<br/>  - `Whole Slab, R-40`<br/>  - `Detailed Example: Uninsulated, No Carpet`<br/>  - `Detailed Example: Uninsulated, 100% R-2.08 Carpet`<br/>  - `Detailed Example: Uninsulated, 100% R-2.50 Carpet`<br/>  - `Detailed Example: Perimeter, 2ft, R-5, 100% R-2.08 Carpet`<br/>  - `Detailed Example: Whole Slab, R-5, 100% R-2.5 Carpet`
 
 
 - **Default:** `Uninsulated`
@@ -498,7 +498,7 @@ The type and insulation level of the ceiling (attic floor).
 
 - **Required:** ``true``
 
-- **Choices:** `Uninsulated`, `R-7`, `R-13`, `R-19`, `R-30`, `R-38`, `R-49`, `R-60`, `IECC U-0.035`, `IECC U-0.030`, `IECC U-0.026`, `IECC U-0.024`, `Detailed Example: R-11, 2x6, 24 in o.c., 10% Framing`, `Detailed Example: R-19, 2x6, 24 in o.c., 10% Framing`, `Detailed Example: R-19 + R-38, 2x6, 24 in o.c., 10% Framing`
+- **Choices:** <br/>  - `Uninsulated`<br/>  - `R-7`<br/>  - `R-13`<br/>  - `R-19`<br/>  - `R-30`<br/>  - `R-38`<br/>  - `R-49`<br/>  - `R-60`<br/>  - `IECC U-0.035`<br/>  - `IECC U-0.030`<br/>  - `IECC U-0.026`<br/>  - `IECC U-0.024`<br/>  - `Detailed Example: R-11, 2x6, 24 in o.c., 10% Framing`<br/>  - `Detailed Example: R-19, 2x6, 24 in o.c., 10% Framing`<br/>  - `Detailed Example: R-19 + R-38, 2x6, 24 in o.c., 10% Framing`
 
 
 - **Default:** `R-30`
@@ -514,7 +514,7 @@ The type and insulation level of the roof.
 
 - **Required:** ``true``
 
-- **Choices:** `Uninsulated`, `R-7`, `R-13`, `R-19`, `R-30`, `R-38`, `R-49`, `IECC U-0.035`, `IECC U-0.030`, `IECC U-0.026`, `IECC U-0.024`, `Detailed Example: Uninsulated, 0.5 in plywood, 0.25 in asphalt shingle`
+- **Choices:** <br/>  - `Uninsulated`<br/>  - `R-7`<br/>  - `R-13`<br/>  - `R-19`<br/>  - `R-30`<br/>  - `R-38`<br/>  - `R-49`<br/>  - `IECC U-0.035`<br/>  - `IECC U-0.030`<br/>  - `IECC U-0.026`<br/>  - `IECC U-0.024`<br/>  - `Detailed Example: Uninsulated, 0.5 in plywood, 0.25 in asphalt shingle`
 
 
 - **Default:** `Uninsulated`
@@ -530,7 +530,7 @@ The material type and color of the roof.
 
 - **Required:** ``false``
 
-- **Choices:** `Asphalt/Fiberglass Shingles, Dark`, `Asphalt/Fiberglass Shingles, Medium Dark`, `Asphalt/Fiberglass Shingles, Medium`, `Asphalt/Fiberglass Shingles, Light`, `Asphalt/Fiberglass Shingles, Reflective`, `Tile/Slate, Dark`, `Tile/Slate, Medium Dark`, `Tile/Slate, Medium`, `Tile/Slate, Light`, `Tile/Slate, Reflective`, `Metal, Dark`, `Metal, Medium Dark`, `Metal, Medium`, `Metal, Light`, `Metal, Reflective`, `Wood Shingles/Shakes, Dark`, `Wood Shingles/Shakes, Medium Dark`, `Wood Shingles/Shakes, Medium`, `Wood Shingles/Shakes, Light`, `Wood Shingles/Shakes, Reflective`, `Shingles, Dark`, `Shingles, Medium Dark`, `Shingles, Medium`, `Shingles, Light`, `Shingles, Reflective`, `Synthetic Sheeting, Dark`, `Synthetic Sheeting, Medium Dark`, `Synthetic Sheeting, Medium`, `Synthetic Sheeting, Light`, `Synthetic Sheeting, Reflective`, `EPS Sheathing, Dark`, `EPS Sheathing, Medium Dark`, `EPS Sheathing, Medium`, `EPS Sheathing, Light`, `EPS Sheathing, Reflective`, `Concrete, Dark`, `Concrete, Medium Dark`, `Concrete, Medium`, `Concrete, Light`, `Concrete, Reflective`, `Cool Roof`, `Detailed Example: 0.2 Solar Absorptance`, `Detailed Example: 0.4 Solar Absorptance`, `Detailed Example: 0.6 Solar Absorptance`, `Detailed Example: 0.75 Solar Absorptance`
+- **Choices:** <br/>  - `Asphalt/Fiberglass Shingles, Dark`<br/>  - `Asphalt/Fiberglass Shingles, Medium Dark`<br/>  - `Asphalt/Fiberglass Shingles, Medium`<br/>  - `Asphalt/Fiberglass Shingles, Light`<br/>  - `Asphalt/Fiberglass Shingles, Reflective`<br/>  - `Tile/Slate, Dark`<br/>  - `Tile/Slate, Medium Dark`<br/>  - `Tile/Slate, Medium`<br/>  - `Tile/Slate, Light`<br/>  - `Tile/Slate, Reflective`<br/>  - `Metal, Dark`<br/>  - `Metal, Medium Dark`<br/>  - `Metal, Medium`<br/>  - `Metal, Light`<br/>  - `Metal, Reflective`<br/>  - `Wood Shingles/Shakes, Dark`<br/>  - `Wood Shingles/Shakes, Medium Dark`<br/>  - `Wood Shingles/Shakes, Medium`<br/>  - `Wood Shingles/Shakes, Light`<br/>  - `Wood Shingles/Shakes, Reflective`<br/>  - `Shingles, Dark`<br/>  - `Shingles, Medium Dark`<br/>  - `Shingles, Medium`<br/>  - `Shingles, Light`<br/>  - `Shingles, Reflective`<br/>  - `Synthetic Sheeting, Dark`<br/>  - `Synthetic Sheeting, Medium Dark`<br/>  - `Synthetic Sheeting, Medium`<br/>  - `Synthetic Sheeting, Light`<br/>  - `Synthetic Sheeting, Reflective`<br/>  - `EPS Sheathing, Dark`<br/>  - `EPS Sheathing, Medium Dark`<br/>  - `EPS Sheathing, Medium`<br/>  - `EPS Sheathing, Light`<br/>  - `EPS Sheathing, Reflective`<br/>  - `Concrete, Dark`<br/>  - `Concrete, Medium Dark`<br/>  - `Concrete, Medium`<br/>  - `Concrete, Light`<br/>  - `Concrete, Reflective`<br/>  - `Cool Roof`<br/>  - `Detailed Example: 0.2 Solar Absorptance`<br/>  - `Detailed Example: 0.4 Solar Absorptance`<br/>  - `Detailed Example: 0.6 Solar Absorptance`<br/>  - `Detailed Example: 0.75 Solar Absorptance`
 
 
 - **Default:** `Asphalt/Fiberglass Shingles, Medium`
@@ -546,7 +546,7 @@ The type of radiant barrier in the attic.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Attic Roof Only`, `Attic Roof and Gable Walls`, `Attic Floor`
+- **Choices:** <br/>  - `None`<br/>  - `Attic Roof Only`<br/>  - `Attic Roof and Gable Walls`<br/>  - `Attic Floor`
 
 
 - **Default:** `None`
@@ -562,7 +562,7 @@ The type and insulation level of the walls.
 
 - **Required:** ``true``
 
-- **Choices:** `Wood Stud, Uninsulated`, `Wood Stud, R-7`, `Wood Stud, R-11`, `Wood Stud, R-13`, `Wood Stud, R-15`, `Wood Stud, R-19`, `Wood Stud, R-21`, `Double Wood Stud, R-33`, `Double Wood Stud, R-39`, `Double Wood Stud, R-45`, `Steel Stud, Uninsulated`, `Steel Stud, R-11`, `Steel Stud, R-13`, `Steel Stud, R-15`, `Steel Stud, R-19`, `Steel Stud, R-21`, `Steel Stud, R-25`, `Concrete Masonry Unit, Hollow or Concrete Filled, Uninsulated`, `Concrete Masonry Unit, Hollow or Concrete Filled, R-7`, `Concrete Masonry Unit, Hollow or Concrete Filled, R-11`, `Concrete Masonry Unit, Hollow or Concrete Filled, R-13`, `Concrete Masonry Unit, Hollow or Concrete Filled, R-15`, `Concrete Masonry Unit, Hollow or Concrete Filled, R-19`, `Concrete Masonry Unit, Perlite Filled, Uninsulated`, `Concrete Masonry Unit, Perlite Filled, R-7`, `Concrete Masonry Unit, Perlite Filled, R-11`, `Concrete Masonry Unit, Perlite Filled, R-13`, `Concrete Masonry Unit, Perlite Filled, R-15`, `Concrete Masonry Unit, Perlite Filled, R-19`, `Structural Insulated Panel, R-17.5`, `Structural Insulated Panel, R-27.5`, `Structural Insulated Panel, R-37.5`, `Structural Insulated Panel, R-47.5`, `Insulated Concrete Forms, R-5 per side`, `Insulated Concrete Forms, R-10 per side`, `Insulated Concrete Forms, R-15 per side`, `Insulated Concrete Forms, R-20 per side`, `Structural Brick, Uninsulated`, `Structural Brick, R-7`, `Structural Brick, R-11`, `Structural Brick, R-15`, `Structural Brick, R-19`, `Wood Stud, IECC U-0.084`, `Wood Stud, IECC U-0.082`, `Wood Stud, IECC U-0.060`, `Wood Stud, IECC U-0.057`, `Wood Stud, IECC U-0.048`, `Wood Stud, IECC U-0.045`, `Detailed Example: Wood Stud, Uninsulated, 2x4, 16 in o.c., 25% Framing`, `Detailed Example: Wood Stud, R-11, 2x4, 16 in o.c., 25% Framing`, `Detailed Example: Wood Stud, R-18, 2x6, 24 in o.c., 25% Framing`
+- **Choices:** <br/>  - `Wood Stud, Uninsulated`<br/>  - `Wood Stud, R-7`<br/>  - `Wood Stud, R-11`<br/>  - `Wood Stud, R-13`<br/>  - `Wood Stud, R-15`<br/>  - `Wood Stud, R-19`<br/>  - `Wood Stud, R-21`<br/>  - `Double Wood Stud, R-33`<br/>  - `Double Wood Stud, R-39`<br/>  - `Double Wood Stud, R-45`<br/>  - `Steel Stud, Uninsulated`<br/>  - `Steel Stud, R-11`<br/>  - `Steel Stud, R-13`<br/>  - `Steel Stud, R-15`<br/>  - `Steel Stud, R-19`<br/>  - `Steel Stud, R-21`<br/>  - `Steel Stud, R-25`<br/>  - `Concrete Masonry Unit, Hollow or Concrete Filled, Uninsulated`<br/>  - `Concrete Masonry Unit, Hollow or Concrete Filled, R-7`<br/>  - `Concrete Masonry Unit, Hollow or Concrete Filled, R-11`<br/>  - `Concrete Masonry Unit, Hollow or Concrete Filled, R-13`<br/>  - `Concrete Masonry Unit, Hollow or Concrete Filled, R-15`<br/>  - `Concrete Masonry Unit, Hollow or Concrete Filled, R-19`<br/>  - `Concrete Masonry Unit, Perlite Filled, Uninsulated`<br/>  - `Concrete Masonry Unit, Perlite Filled, R-7`<br/>  - `Concrete Masonry Unit, Perlite Filled, R-11`<br/>  - `Concrete Masonry Unit, Perlite Filled, R-13`<br/>  - `Concrete Masonry Unit, Perlite Filled, R-15`<br/>  - `Concrete Masonry Unit, Perlite Filled, R-19`<br/>  - `Structural Insulated Panel, R-17.5`<br/>  - `Structural Insulated Panel, R-27.5`<br/>  - `Structural Insulated Panel, R-37.5`<br/>  - `Structural Insulated Panel, R-47.5`<br/>  - `Insulated Concrete Forms, R-5 per side`<br/>  - `Insulated Concrete Forms, R-10 per side`<br/>  - `Insulated Concrete Forms, R-15 per side`<br/>  - `Insulated Concrete Forms, R-20 per side`<br/>  - `Structural Brick, Uninsulated`<br/>  - `Structural Brick, R-7`<br/>  - `Structural Brick, R-11`<br/>  - `Structural Brick, R-15`<br/>  - `Structural Brick, R-19`<br/>  - `Wood Stud, IECC U-0.084`<br/>  - `Wood Stud, IECC U-0.082`<br/>  - `Wood Stud, IECC U-0.060`<br/>  - `Wood Stud, IECC U-0.057`<br/>  - `Wood Stud, IECC U-0.048`<br/>  - `Wood Stud, IECC U-0.045`<br/>  - `Detailed Example: Wood Stud, Uninsulated, 2x4, 16 in o.c., 25% Framing`<br/>  - `Detailed Example: Wood Stud, R-11, 2x4, 16 in o.c., 25% Framing`<br/>  - `Detailed Example: Wood Stud, R-18, 2x6, 24 in o.c., 25% Framing`
 
 
 - **Default:** `Wood Stud, R-13`
@@ -578,7 +578,7 @@ The insulation level of the wall continuous insulation. The R-value of the conti
 
 - **Required:** ``false``
 
-- **Choices:** `Uninsulated`, `R-5`, `R-6`, `R-7`, `R-10`, `R-12`, `R-14`, `R-15`, `R-18`, `R-20`, `R-21`, `Detailed Example: R-7.2`
+- **Choices:** <br/>  - `Uninsulated`<br/>  - `R-5`<br/>  - `R-6`<br/>  - `R-7`<br/>  - `R-10`<br/>  - `R-12`<br/>  - `R-14`<br/>  - `R-15`<br/>  - `R-18`<br/>  - `R-20`<br/>  - `R-21`<br/>  - `Detailed Example: R-7.2`
 
 
 - **Default:** `Uninsulated`
@@ -594,7 +594,7 @@ The type, color, and insulation level of the wall siding. The R-value of the sid
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Aluminum, Dark`, `Aluminum, Medium`, `Aluminum, Medium Dark`, `Aluminum, Light`, `Aluminum, Reflective`, `Brick, Dark`, `Brick, Medium`, `Brick, Medium Dark`, `Brick, Light`, `Brick, Reflective`, `Fiber-Cement, Dark`, `Fiber-Cement, Medium`, `Fiber-Cement, Medium Dark`, `Fiber-Cement, Light`, `Fiber-Cement, Reflective`, `Asbestos, Dark`, `Asbestos, Medium`, `Asbestos, Medium Dark`, `Asbestos, Light`, `Asbestos, Reflective`, `Composition Shingle, Dark`, `Composition Shingle, Medium`, `Composition Shingle, Medium Dark`, `Composition Shingle, Light`, `Composition Shingle, Reflective`, `Stucco, Dark`, `Stucco, Medium`, `Stucco, Medium Dark`, `Stucco, Light`, `Stucco, Reflective`, `Vinyl, Dark`, `Vinyl, Medium`, `Vinyl, Medium Dark`, `Vinyl, Light`, `Vinyl, Reflective`, `Wood, Dark`, `Wood, Medium`, `Wood, Medium Dark`, `Wood, Light`, `Wood, Reflective`, `Synthetic Stucco, Dark`, `Synthetic Stucco, Medium`, `Synthetic Stucco, Medium Dark`, `Synthetic Stucco, Light`, `Synthetic Stucco, Reflective`, `Masonite, Dark`, `Masonite, Medium`, `Masonite, Medium Dark`, `Masonite, Light`, `Masonite, Reflective`, `Detailed Example: 0.2 Solar Absorptance`, `Detailed Example: 0.4 Solar Absorptance`, `Detailed Example: 0.6 Solar Absorptance`, `Detailed Example: 0.75 Solar Absorptance`
+- **Choices:** <br/>  - `None`<br/>  - `Aluminum, Dark`<br/>  - `Aluminum, Medium`<br/>  - `Aluminum, Medium Dark`<br/>  - `Aluminum, Light`<br/>  - `Aluminum, Reflective`<br/>  - `Brick, Dark`<br/>  - `Brick, Medium`<br/>  - `Brick, Medium Dark`<br/>  - `Brick, Light`<br/>  - `Brick, Reflective`<br/>  - `Fiber-Cement, Dark`<br/>  - `Fiber-Cement, Medium`<br/>  - `Fiber-Cement, Medium Dark`<br/>  - `Fiber-Cement, Light`<br/>  - `Fiber-Cement, Reflective`<br/>  - `Asbestos, Dark`<br/>  - `Asbestos, Medium`<br/>  - `Asbestos, Medium Dark`<br/>  - `Asbestos, Light`<br/>  - `Asbestos, Reflective`<br/>  - `Composition Shingle, Dark`<br/>  - `Composition Shingle, Medium`<br/>  - `Composition Shingle, Medium Dark`<br/>  - `Composition Shingle, Light`<br/>  - `Composition Shingle, Reflective`<br/>  - `Stucco, Dark`<br/>  - `Stucco, Medium`<br/>  - `Stucco, Medium Dark`<br/>  - `Stucco, Light`<br/>  - `Stucco, Reflective`<br/>  - `Vinyl, Dark`<br/>  - `Vinyl, Medium`<br/>  - `Vinyl, Medium Dark`<br/>  - `Vinyl, Light`<br/>  - `Vinyl, Reflective`<br/>  - `Wood, Dark`<br/>  - `Wood, Medium`<br/>  - `Wood, Medium Dark`<br/>  - `Wood, Light`<br/>  - `Wood, Reflective`<br/>  - `Synthetic Stucco, Dark`<br/>  - `Synthetic Stucco, Medium`<br/>  - `Synthetic Stucco, Medium Dark`<br/>  - `Synthetic Stucco, Light`<br/>  - `Synthetic Stucco, Reflective`<br/>  - `Masonite, Dark`<br/>  - `Masonite, Medium`<br/>  - `Masonite, Medium Dark`<br/>  - `Masonite, Light`<br/>  - `Masonite, Reflective`<br/>  - `Detailed Example: 0.2 Solar Absorptance`<br/>  - `Detailed Example: 0.4 Solar Absorptance`<br/>  - `Detailed Example: 0.6 Solar Absorptance`<br/>  - `Detailed Example: 0.75 Solar Absorptance`
 
 
 - **Default:** `Wood, Medium`
@@ -610,7 +610,7 @@ The type of windows.
 
 - **Required:** ``true``
 
-- **Choices:** `Single, Clear, Metal`, `Single, Clear, Non-Metal`, `Double, Clear, Metal, Air`, `Double, Clear, Thermal-Break, Air`, `Double, Clear, Non-Metal, Air`, `Double, Low-E, Non-Metal, Air, High Gain`, `Double, Low-E, Non-Metal, Air, Med Gain`, `Double, Low-E, Non-Metal, Air, Low Gain`, `Double, Low-E, Non-Metal, Gas, High Gain`, `Double, Low-E, Non-Metal, Gas, Med Gain`, `Double, Low-E, Non-Metal, Gas, Low Gain`, `Double, Low-E, Insulated, Air, High Gain`, `Double, Low-E, Insulated, Air, Med Gain`, `Double, Low-E, Insulated, Air, Low Gain`, `Double, Low-E, Insulated, Gas, High Gain`, `Double, Low-E, Insulated, Gas, Med Gain`, `Double, Low-E, Insulated, Gas, Low Gain`, `Triple, Low-E, Non-Metal, Air, High Gain`, `Triple, Low-E, Non-Metal, Air, Low Gain`, `Triple, Low-E, Non-Metal, Gas, High Gain`, `Triple, Low-E, Non-Metal, Gas, Low Gain`, `Triple, Low-E, Insulated, Air, High Gain`, `Triple, Low-E, Insulated, Air, Low Gain`, `Triple, Low-E, Insulated, Gas, High Gain`, `Triple, Low-E, Insulated, Gas, Low Gain`, `IECC U-1.20, SHGC 0.40`, `IECC U-1.20, SHGC 0.30`, `IECC U-1.20, SHGC 0.25`, `IECC U-0.75, SHGC 0.40`, `IECC U-0.65, SHGC 0.40`, `IECC U-0.65, SHGC 0.30`, `IECC U-0.50, SHGC 0.30`, `IECC U-0.50, SHGC 0.25`, `IECC U-0.40, SHGC 0.40`, `IECC U-0.40, SHGC 0.25`, `IECC U-0.35, SHGC 0.40`, `IECC U-0.35, SHGC 0.30`, `IECC U-0.35, SHGC 0.25`, `IECC U-0.32, SHGC 0.25`, `IECC U-0.30, SHGC 0.25`, `Detailed Example: Single, Clear, Aluminum w/ Thermal Break`, `Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer`
+- **Choices:** <br/>  - `Single, Clear, Metal`<br/>  - `Single, Clear, Non-Metal`<br/>  - `Double, Clear, Metal, Air`<br/>  - `Double, Clear, Thermal-Break, Air`<br/>  - `Double, Clear, Non-Metal, Air`<br/>  - `Double, Low-E, Non-Metal, Air, High Gain`<br/>  - `Double, Low-E, Non-Metal, Air, Med Gain`<br/>  - `Double, Low-E, Non-Metal, Air, Low Gain`<br/>  - `Double, Low-E, Non-Metal, Gas, High Gain`<br/>  - `Double, Low-E, Non-Metal, Gas, Med Gain`<br/>  - `Double, Low-E, Non-Metal, Gas, Low Gain`<br/>  - `Double, Low-E, Insulated, Air, High Gain`<br/>  - `Double, Low-E, Insulated, Air, Med Gain`<br/>  - `Double, Low-E, Insulated, Air, Low Gain`<br/>  - `Double, Low-E, Insulated, Gas, High Gain`<br/>  - `Double, Low-E, Insulated, Gas, Med Gain`<br/>  - `Double, Low-E, Insulated, Gas, Low Gain`<br/>  - `Triple, Low-E, Non-Metal, Air, High Gain`<br/>  - `Triple, Low-E, Non-Metal, Air, Low Gain`<br/>  - `Triple, Low-E, Non-Metal, Gas, High Gain`<br/>  - `Triple, Low-E, Non-Metal, Gas, Low Gain`<br/>  - `Triple, Low-E, Insulated, Air, High Gain`<br/>  - `Triple, Low-E, Insulated, Air, Low Gain`<br/>  - `Triple, Low-E, Insulated, Gas, High Gain`<br/>  - `Triple, Low-E, Insulated, Gas, Low Gain`<br/>  - `IECC U-1.20, SHGC 0.40`<br/>  - `IECC U-1.20, SHGC 0.30`<br/>  - `IECC U-1.20, SHGC 0.25`<br/>  - `IECC U-0.75, SHGC 0.40`<br/>  - `IECC U-0.65, SHGC 0.40`<br/>  - `IECC U-0.65, SHGC 0.30`<br/>  - `IECC U-0.50, SHGC 0.30`<br/>  - `IECC U-0.50, SHGC 0.25`<br/>  - `IECC U-0.40, SHGC 0.40`<br/>  - `IECC U-0.40, SHGC 0.25`<br/>  - `IECC U-0.35, SHGC 0.40`<br/>  - `IECC U-0.35, SHGC 0.30`<br/>  - `IECC U-0.35, SHGC 0.25`<br/>  - `IECC U-0.32, SHGC 0.25`<br/>  - `IECC U-0.30, SHGC 0.25`<br/>  - `Detailed Example: Single, Clear, Aluminum w/ Thermal Break`<br/>  - `Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer`
 
 
 - **Default:** `Double, Clear, Metal, Air`
@@ -626,7 +626,7 @@ The amount of natural ventilation from occupants opening operable windows when o
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `33% Operable Windows`, `50% Operable Windows`, `67% Operable Windows`, `100% Operable Windows`, `Detailed Example: 67% Operable Windows, 7 Days/Week`
+- **Choices:** <br/>  - `None`<br/>  - `33% Operable Windows`<br/>  - `50% Operable Windows`<br/>  - `67% Operable Windows`<br/>  - `100% Operable Windows`<br/>  - `Detailed Example: 67% Operable Windows, 7 Days/Week`
 
 
 - **Default:** `67% Operable Windows`
@@ -642,7 +642,7 @@ The type of window interior shading. If shading coefficients are selected, note 
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Curtains, Light`, `Curtains, Medium`, `Curtains, Dark`, `Shades, Light`, `Shades, Medium`, `Shades, Dark`, `Blinds, Light`, `Blinds, Medium`, `Blinds, Dark`, `Summer 0.5, Winter 0.5`, `Summer 0.5, Winter 0.6`, `Summer 0.5, Winter 0.7`, `Summer 0.5, Winter 0.8`, `Summer 0.5, Winter 0.9`, `Summer 0.6, Winter 0.6`, `Summer 0.6, Winter 0.7`, `Summer 0.6, Winter 0.8`, `Summer 0.6, Winter 0.9`, `Summer 0.7, Winter 0.7`, `Summer 0.7, Winter 0.8`, `Summer 0.7, Winter 0.9`, `Summer 0.8, Winter 0.8`, `Summer 0.8, Winter 0.9`, `Summer 0.9, Winter 0.9`
+- **Choices:** <br/>  - `None`<br/>  - `Curtains, Light`<br/>  - `Curtains, Medium`<br/>  - `Curtains, Dark`<br/>  - `Shades, Light`<br/>  - `Shades, Medium`<br/>  - `Shades, Dark`<br/>  - `Blinds, Light`<br/>  - `Blinds, Medium`<br/>  - `Blinds, Dark`<br/>  - `Summer 0.5, Winter 0.5`<br/>  - `Summer 0.5, Winter 0.6`<br/>  - `Summer 0.5, Winter 0.7`<br/>  - `Summer 0.5, Winter 0.8`<br/>  - `Summer 0.5, Winter 0.9`<br/>  - `Summer 0.6, Winter 0.6`<br/>  - `Summer 0.6, Winter 0.7`<br/>  - `Summer 0.6, Winter 0.8`<br/>  - `Summer 0.6, Winter 0.9`<br/>  - `Summer 0.7, Winter 0.7`<br/>  - `Summer 0.7, Winter 0.8`<br/>  - `Summer 0.7, Winter 0.9`<br/>  - `Summer 0.8, Winter 0.8`<br/>  - `Summer 0.8, Winter 0.9`<br/>  - `Summer 0.9, Winter 0.9`
 
 
 - **Default:** `Curtains, Light`
@@ -658,7 +658,7 @@ The type of window exterior shading. If shading coefficients are selected, note 
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Solar Film`, `Solar Screen`, `Summer 0.25, Winter 0.25`, `Summer 0.25, Winter 0.50`, `Summer 0.25, Winter 0.75`, `Summer 0.25, Winter 1.00`, `Summer 0.50, Winter 0.25`, `Summer 0.50, Winter 0.50`, `Summer 0.50, Winter 0.75`, `Summer 0.50, Winter 1.00`, `Summer 0.75, Winter 0.25`, `Summer 0.75, Winter 0.50`, `Summer 0.75, Winter 0.75`, `Summer 0.75, Winter 1.00`, `Summer 1.00, Winter 0.25`, `Summer 1.00, Winter 0.50`, `Summer 1.00, Winter 0.75`, `Summer 1.00, Winter 1.00`
+- **Choices:** <br/>  - `None`<br/>  - `Solar Film`<br/>  - `Solar Screen`<br/>  - `Summer 0.25, Winter 0.25`<br/>  - `Summer 0.25, Winter 0.50`<br/>  - `Summer 0.25, Winter 0.75`<br/>  - `Summer 0.25, Winter 1.00`<br/>  - `Summer 0.50, Winter 0.25`<br/>  - `Summer 0.50, Winter 0.50`<br/>  - `Summer 0.50, Winter 0.75`<br/>  - `Summer 0.50, Winter 1.00`<br/>  - `Summer 0.75, Winter 0.25`<br/>  - `Summer 0.75, Winter 0.50`<br/>  - `Summer 0.75, Winter 0.75`<br/>  - `Summer 0.75, Winter 1.00`<br/>  - `Summer 1.00, Winter 0.25`<br/>  - `Summer 1.00, Winter 0.50`<br/>  - `Summer 1.00, Winter 0.75`<br/>  - `Summer 1.00, Winter 1.00`
 
 
 - **Default:** `None`
@@ -674,7 +674,7 @@ The type of window insect screens.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Exterior`, `Interior`
+- **Choices:** <br/>  - `None`<br/>  - `Exterior`<br/>  - `Interior`
 
 
 - **Default:** `None`
@@ -690,7 +690,7 @@ The type of storm window.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Clear`, `Low-E`
+- **Choices:** <br/>  - `None`<br/>  - `Clear`<br/>  - `Low-E`
 
 
 - **Default:** `None`
@@ -706,7 +706,7 @@ The type of window overhangs.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `1ft, All Windows`, `2ft, All Windows`, `3ft, All Windows`, `4ft, All Windows`, `5ft, All Windows`, `10ft, All Windows`, `1ft, Front Windows`, `2ft, Front Windows`, `3ft, Front Windows`, `4ft, Front Windows`, `5ft, Front Windows`, `10ft, Front Windows`, `1ft, Back Windows`, `2ft, Back Windows`, `3ft, Back Windows`, `4ft, Back Windows`, `5ft, Back Windows`, `10ft, Back Windows`, `1ft, Left Windows`, `2ft, Left Windows`, `3ft, Left Windows`, `4ft, Left Windows`, `5ft, Left Windows`, `10ft, Left Windows`, `1ft, Right Windows`, `2ft, Right Windows`, `3ft, Right Windows`, `4ft, Right Windows`, `5ft, Right Windows`, `10ft, Right Windows`, `Detailed Example: 1.5ft, Back/Left/Right Windows, 2ft Offset, 4ft Window Height`, `Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height`
+- **Choices:** <br/>  - `None`<br/>  - `1ft, All Windows`<br/>  - `2ft, All Windows`<br/>  - `3ft, All Windows`<br/>  - `4ft, All Windows`<br/>  - `5ft, All Windows`<br/>  - `10ft, All Windows`<br/>  - `1ft, Front Windows`<br/>  - `2ft, Front Windows`<br/>  - `3ft, Front Windows`<br/>  - `4ft, Front Windows`<br/>  - `5ft, Front Windows`<br/>  - `10ft, Front Windows`<br/>  - `1ft, Back Windows`<br/>  - `2ft, Back Windows`<br/>  - `3ft, Back Windows`<br/>  - `4ft, Back Windows`<br/>  - `5ft, Back Windows`<br/>  - `10ft, Back Windows`<br/>  - `1ft, Left Windows`<br/>  - `2ft, Left Windows`<br/>  - `3ft, Left Windows`<br/>  - `4ft, Left Windows`<br/>  - `5ft, Left Windows`<br/>  - `10ft, Left Windows`<br/>  - `1ft, Right Windows`<br/>  - `2ft, Right Windows`<br/>  - `3ft, Right Windows`<br/>  - `4ft, Right Windows`<br/>  - `5ft, Right Windows`<br/>  - `10ft, Right Windows`<br/>  - `Detailed Example: 1.5ft, Back/Left/Right Windows, 2ft Offset, 4ft Window Height`<br/>  - `Detailed Example: 2.5ft, Front Windows, 1ft Offset, 5ft Window Height`
 
 
 - **Default:** `None`
@@ -722,7 +722,7 @@ The type of skylights.
 
 - **Required:** ``false``
 
-- **Choices:** `Single, Clear, Metal`, `Single, Clear, Non-Metal`, `Double, Clear, Metal`, `Double, Clear, Non-Metal`, `Double, Low-E, Metal, High Gain`, `Double, Low-E, Non-Metal, High Gain`, `Double, Low-E, Metal, Med Gain`, `Double, Low-E, Non-Metal, Med Gain`, `Double, Low-E, Metal, Low Gain`, `Double, Low-E, Non-Metal, Low Gain`, `Triple, Clear, Metal`, `Triple, Clear, Non-Metal`, `IECC U-0.75, SHGC 0.40`, `IECC U-0.75, SHGC 0.30`, `IECC U-0.75, SHGC 0.25`, `IECC U-0.65, SHGC 0.40`, `IECC U-0.65, SHGC 0.30`, `IECC U-0.65, SHGC 0.25`, `IECC U-0.60, SHGC 0.40`, `IECC U-0.60, SHGC 0.30`, `IECC U-0.55, SHGC 0.40`, `IECC U-0.55, SHGC 0.25`
+- **Choices:** <br/>  - `Single, Clear, Metal`<br/>  - `Single, Clear, Non-Metal`<br/>  - `Double, Clear, Metal`<br/>  - `Double, Clear, Non-Metal`<br/>  - `Double, Low-E, Metal, High Gain`<br/>  - `Double, Low-E, Non-Metal, High Gain`<br/>  - `Double, Low-E, Metal, Med Gain`<br/>  - `Double, Low-E, Non-Metal, Med Gain`<br/>  - `Double, Low-E, Metal, Low Gain`<br/>  - `Double, Low-E, Non-Metal, Low Gain`<br/>  - `Triple, Clear, Metal`<br/>  - `Triple, Clear, Non-Metal`<br/>  - `IECC U-0.75, SHGC 0.40`<br/>  - `IECC U-0.75, SHGC 0.30`<br/>  - `IECC U-0.75, SHGC 0.25`<br/>  - `IECC U-0.65, SHGC 0.40`<br/>  - `IECC U-0.65, SHGC 0.30`<br/>  - `IECC U-0.65, SHGC 0.25`<br/>  - `IECC U-0.60, SHGC 0.40`<br/>  - `IECC U-0.60, SHGC 0.30`<br/>  - `IECC U-0.55, SHGC 0.40`<br/>  - `IECC U-0.55, SHGC 0.25`
 
 
 - **Default:** `Single, Clear, Metal`
@@ -738,7 +738,7 @@ The type of doors.
 
 - **Required:** ``false``
 
-- **Choices:** `Solid Wood, R-2`, `Solid Wood, R-3`, `Insulated Fiberglass/Steel, R-4`, `Insulated Fiberglass/Steel, R-5`, `Insulated Fiberglass/Steel, R-6`, `Insulated Fiberglass/Steel, R-7`, `IECC U-1.20`, `IECC U-0.75`, `IECC U-0.65`, `IECC U-0.50`, `IECC U-0.40`, `IECC U-0.35`, `IECC U-0.32`, `IECC U-0.30`, `Detailed Example: Solid Wood, R-3.04`, `Detailed Example: Insulated Fiberglass/Steel, R-4.4`
+- **Choices:** <br/>  - `Solid Wood, R-2`<br/>  - `Solid Wood, R-3`<br/>  - `Insulated Fiberglass/Steel, R-4`<br/>  - `Insulated Fiberglass/Steel, R-5`<br/>  - `Insulated Fiberglass/Steel, R-6`<br/>  - `Insulated Fiberglass/Steel, R-7`<br/>  - `IECC U-1.20`<br/>  - `IECC U-0.75`<br/>  - `IECC U-0.65`<br/>  - `IECC U-0.50`<br/>  - `IECC U-0.40`<br/>  - `IECC U-0.35`<br/>  - `IECC U-0.32`<br/>  - `IECC U-0.30`<br/>  - `Detailed Example: Solid Wood, R-3.04`<br/>  - `Detailed Example: Insulated Fiberglass/Steel, R-4.4`
 
 
 - **Default:** `Solid Wood, R-2`
@@ -754,7 +754,7 @@ The amount of air leakage coming from outside. If a qualitative leakiness descri
 
 - **Required:** ``false``
 
-- **Choices:** `Very Tight`, `Tight`, `Average`, `Leaky`, `Very Leaky`, `1 ACH50`, `2 ACH50`, `3 ACH50`, `4 ACH50`, `5 ACH50`, `6 ACH50`, `7 ACH50`, `8 ACH50`, `10 ACH50`, `15 ACH50`, `20 ACH50`, `25 ACH50`, `30 ACH50`, `40 ACH50`, `50 ACH50`, `0.2 nACH`, `0.3 nACH`, `0.335 nACH`, `0.5 nACH`, `0.67 nACH`, `1.0 nACH`, `1.5 nACH`, `Detailed Example: 3.57 ACH50`, `Detailed Example: 12.16 ACH50`, `Detailed Example: 2.8 ACH45`, `Detailed Example: 0.375 nACH`, `Detailed Example: 72 nCFM`, `Detailed Example: 79.8 sq. in. ELA`, `Detailed Example: 123 sq. in. ELA`, `Detailed Example: 1080 CFM50`, `Detailed Example: 1010 CFM45`
+- **Choices:** <br/>  - `Very Tight`<br/>  - `Tight`<br/>  - `Average`<br/>  - `Leaky`<br/>  - `Very Leaky`<br/>  - `1 ACH50`<br/>  - `2 ACH50`<br/>  - `3 ACH50`<br/>  - `4 ACH50`<br/>  - `5 ACH50`<br/>  - `6 ACH50`<br/>  - `7 ACH50`<br/>  - `8 ACH50`<br/>  - `9 ACH50`<br/>  - `10 ACH50`<br/>  - `11 ACH50`<br/>  - `12 ACH50`<br/>  - `13 ACH50`<br/>  - `14 ACH50`<br/>  - `15 ACH50`<br/>  - `16 ACH50`<br/>  - `17 ACH50`<br/>  - `18 ACH50`<br/>  - `19 ACH50`<br/>  - `20 ACH50`<br/>  - `25 ACH50`<br/>  - `30 ACH50`<br/>  - `35 ACH50`<br/>  - `40 ACH50`<br/>  - `45 ACH50`<br/>  - `50 ACH50`<br/>  - `0.2 nACH`<br/>  - `0.3 nACH`<br/>  - `0.335 nACH`<br/>  - `0.5 nACH`<br/>  - `0.67 nACH`<br/>  - `1.0 nACH`<br/>  - `1.5 nACH`<br/>  - `Detailed Example: 3.57 ACH50`<br/>  - `Detailed Example: 12.16 ACH50`<br/>  - `Detailed Example: 2.8 ACH45`<br/>  - `Detailed Example: 0.375 nACH`<br/>  - `Detailed Example: 72 nCFM`<br/>  - `Detailed Example: 79.8 sq. in. ELA`<br/>  - `Detailed Example: 123 sq. in. ELA`<br/>  - `Detailed Example: 1080 CFM50`<br/>  - `Detailed Example: 1010 CFM45`
 
 
 - **Default:** `Average`
@@ -770,7 +770,7 @@ The type and efficiency of the heating system. Use 'None' if there is no heating
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Electric Resistance`, `Central Furnace, 60% AFUE`, `Central Furnace, 64% AFUE`, `Central Furnace, 68% AFUE`, `Central Furnace, 72% AFUE`, `Central Furnace, 76% AFUE`, `Central Furnace, 78% AFUE`, `Central Furnace, 80% AFUE`, `Central Furnace, 85% AFUE`, `Central Furnace, 90% AFUE`, `Central Furnace, 92% AFUE`, `Central Furnace, 92.5% AFUE`, `Central Furnace, 96% AFUE`, `Central Furnace, 98% AFUE`, `Central Furnace, 100% AFUE`, `Wall Furnace, 60% AFUE`, `Wall Furnace, 68% AFUE`, `Wall Furnace, 82% AFUE`, `Wall Furnace, 98% AFUE`, `Wall Furnace, 100% AFUE`, `Floor Furnace, 60% AFUE`, `Floor Furnace, 70% AFUE`, `Floor Furnace, 80% AFUE`, `Boiler, 60% AFUE`, `Boiler, 72% AFUE`, `Boiler, 76% AFUE`, `Boiler, 78% AFUE`, `Boiler, 80% AFUE`, `Boiler, 82% AFUE`, `Boiler, 85% AFUE`, `Boiler, 90% AFUE`, `Boiler, 92% AFUE`, `Boiler, 92.5% AFUE`, `Boiler, 95% AFUE`, `Boiler, 96% AFUE`, `Boiler, 98% AFUE`, `Boiler, 100% AFUE`, `Stove, 60% Efficiency`, `Stove, 70% Efficiency`, `Stove, 80% Efficiency`, `Space Heater, 60% Efficiency`, `Space Heater, 70% Efficiency`, `Space Heater, 80% Efficiency`, `Space Heater, 92% Efficiency`, `Space Heater, 100% Efficiency`, `Fireplace, 60% Efficiency`, `Fireplace, 70% Efficiency`, `Fireplace, 80% Efficiency`, `Fireplace, 100% Efficiency`, `Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light`
+- **Choices:** <br/>  - `None`<br/>  - `Electric Resistance`<br/>  - `Central Furnace, 60% AFUE`<br/>  - `Central Furnace, 64% AFUE`<br/>  - `Central Furnace, 68% AFUE`<br/>  - `Central Furnace, 72% AFUE`<br/>  - `Central Furnace, 76% AFUE`<br/>  - `Central Furnace, 78% AFUE`<br/>  - `Central Furnace, 80% AFUE`<br/>  - `Central Furnace, 85% AFUE`<br/>  - `Central Furnace, 90% AFUE`<br/>  - `Central Furnace, 92% AFUE`<br/>  - `Central Furnace, 92.5% AFUE`<br/>  - `Central Furnace, 96% AFUE`<br/>  - `Central Furnace, 98% AFUE`<br/>  - `Central Furnace, 100% AFUE`<br/>  - `Wall Furnace, 60% AFUE`<br/>  - `Wall Furnace, 68% AFUE`<br/>  - `Wall Furnace, 82% AFUE`<br/>  - `Wall Furnace, 98% AFUE`<br/>  - `Wall Furnace, 100% AFUE`<br/>  - `Floor Furnace, 60% AFUE`<br/>  - `Floor Furnace, 70% AFUE`<br/>  - `Floor Furnace, 80% AFUE`<br/>  - `Boiler, 60% AFUE`<br/>  - `Boiler, 72% AFUE`<br/>  - `Boiler, 76% AFUE`<br/>  - `Boiler, 78% AFUE`<br/>  - `Boiler, 80% AFUE`<br/>  - `Boiler, 82% AFUE`<br/>  - `Boiler, 85% AFUE`<br/>  - `Boiler, 90% AFUE`<br/>  - `Boiler, 92% AFUE`<br/>  - `Boiler, 92.5% AFUE`<br/>  - `Boiler, 95% AFUE`<br/>  - `Boiler, 96% AFUE`<br/>  - `Boiler, 98% AFUE`<br/>  - `Boiler, 100% AFUE`<br/>  - `Stove, 60% Efficiency`<br/>  - `Stove, 70% Efficiency`<br/>  - `Stove, 80% Efficiency`<br/>  - `Space Heater, 60% Efficiency`<br/>  - `Space Heater, 70% Efficiency`<br/>  - `Space Heater, 80% Efficiency`<br/>  - `Space Heater, 92% Efficiency`<br/>  - `Space Heater, 100% Efficiency`<br/>  - `Fireplace, 60% Efficiency`<br/>  - `Fireplace, 70% Efficiency`<br/>  - `Fireplace, 80% Efficiency`<br/>  - `Fireplace, 100% Efficiency`<br/>  - `Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light`<br/>  - `Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light`<br/>  - `Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light`
 
 
 - **Default:** `Central Furnace, 78% AFUE`
@@ -786,7 +786,7 @@ The fuel type of the heating system. Ignored for ElectricResistance.
 
 - **Required:** ``false``
 
-- **Choices:** `Electricity`, `Natural Gas`, `Fuel Oil`, `Propane`, `Wood Cord`, `Wood Pellets`, `Coal`
+- **Choices:** <br/>  - `Electricity`<br/>  - `Natural Gas`<br/>  - `Fuel Oil`<br/>  - `Propane`<br/>  - `Wood Cord`<br/>  - `Wood Pellets`<br/>  - `Coal`
 
 
 - **Default:** `Natural Gas`
@@ -802,7 +802,7 @@ The output capacity of the heating system.
 
 - **Required:** ``false``
 
-- **Choices:** `Autosize`, `5 kBtu/hr`, `10 kBtu/hr`, `15 kBtu/hr`, `20 kBtu/hr`, `25 kBtu/hr`, `30 kBtu/hr`, `35 kBtu/hr`, `40 kBtu/hr`, `45 kBtu/hr`, `50 kBtu/hr`, `55 kBtu/hr`, `60 kBtu/hr`, `65 kBtu/hr`, `70 kBtu/hr`, `75 kBtu/hr`, `80 kBtu/hr`, `85 kBtu/hr`, `90 kBtu/hr`, `95 kBtu/hr`, `100 kBtu/hr`, `105 kBtu/hr`, `110 kBtu/hr`, `115 kBtu/hr`, `120 kBtu/hr`, `125 kBtu/hr`, `130 kBtu/hr`, `135 kBtu/hr`, `140 kBtu/hr`, `145 kBtu/hr`, `150 kBtu/hr`, `Detailed Example: Autosize, 140% Multiplier`, `Detailed Example: Autosize, 170% Multiplier`, `Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit`, `Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit`
+- **Choices:** <br/>  - `Autosize`<br/>  - `5 kBtu/hr`<br/>  - `10 kBtu/hr`<br/>  - `15 kBtu/hr`<br/>  - `20 kBtu/hr`<br/>  - `25 kBtu/hr`<br/>  - `30 kBtu/hr`<br/>  - `35 kBtu/hr`<br/>  - `40 kBtu/hr`<br/>  - `45 kBtu/hr`<br/>  - `50 kBtu/hr`<br/>  - `55 kBtu/hr`<br/>  - `60 kBtu/hr`<br/>  - `65 kBtu/hr`<br/>  - `70 kBtu/hr`<br/>  - `75 kBtu/hr`<br/>  - `80 kBtu/hr`<br/>  - `85 kBtu/hr`<br/>  - `90 kBtu/hr`<br/>  - `95 kBtu/hr`<br/>  - `100 kBtu/hr`<br/>  - `105 kBtu/hr`<br/>  - `110 kBtu/hr`<br/>  - `115 kBtu/hr`<br/>  - `120 kBtu/hr`<br/>  - `125 kBtu/hr`<br/>  - `130 kBtu/hr`<br/>  - `135 kBtu/hr`<br/>  - `140 kBtu/hr`<br/>  - `145 kBtu/hr`<br/>  - `150 kBtu/hr`<br/>  - `Detailed Example: Autosize, 140% Multiplier`<br/>  - `Detailed Example: Autosize, 170% Multiplier`<br/>  - `Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit`<br/>  - `Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit`
 
 
 - **Default:** `Autosize`
@@ -818,7 +818,7 @@ The fraction of the heating load served by the heating system.
 
 - **Required:** ``false``
 
-- **Choices:** `100%`, `95%`, `90%`, `85%`, `80%`, `75%`, `70%`, `65%`, `60%`, `55%`, `50%`, `45%`, `40%`, `35%`, `30%`, `25%`, `20%`, `15%`, `10%`, `5%`, `0%`
+- **Choices:** <br/>  - `100%`<br/>  - `95%`<br/>  - `90%`<br/>  - `85%`<br/>  - `80%`<br/>  - `75%`<br/>  - `70%`<br/>  - `65%`<br/>  - `60%`<br/>  - `55%`<br/>  - `50%`<br/>  - `45%`<br/>  - `40%`<br/>  - `35%`<br/>  - `30%`<br/>  - `25%`<br/>  - `20%`<br/>  - `15%`<br/>  - `10%`<br/>  - `5%`<br/>  - `0%`
 
 
 - **Default:** `100%`
@@ -834,7 +834,7 @@ The type and efficiency of the cooling system. Use 'None' if there is no cooling
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Central AC, SEER 8`, `Central AC, SEER 10`, `Central AC, SEER 13`, `Central AC, SEER 14`, `Central AC, SEER 15`, `Central AC, SEER 16`, `Central AC, SEER 17`, `Central AC, SEER 18`, `Central AC, SEER 21`, `Central AC, SEER 24`, `Central AC, SEER 24.5`, `Central AC, SEER 27`, `Central AC, SEER2 12.4`, `Mini-Split AC, SEER 13`, `Mini-Split AC, SEER 17`, `Mini-Split AC, SEER 19`, `Mini-Split AC, SEER 19, Ducted`, `Mini-Split AC, SEER 24`, `Mini-Split AC, SEER 25`, `Mini-Split AC, SEER 29.3`, `Mini-Split AC, SEER 33`, `Room AC, EER 8.5`, `Room AC, EER 8.5, Electric Resistance Heating`, `Room AC, EER 9.8`, `Room AC, EER 10.7`, `Room AC, EER 12.0`, `Room AC, CEER 8.4`, `Packaged Terminal AC, EER 10.7`, `Packaged Terminal AC, EER 10.7, Electric Resistance Heating`, `Packaged Terminal AC, EER 10.7, 80% AFUE Gas Heating`, `Evaporative Cooler`, `Evaporative Cooler, Ducted`, `Detailed Example: Central AC, SEER 13, Absolute Detailed Performance`, `Detailed Example: Central AC, SEER 18, Absolute Detailed Performance`, `Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance`, `Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance`, `Detailed Example: Mini-Split AC, SEER 17, Absolute Detailed Performance`, `Detailed Example: Mini-Split AC, SEER 17, Normalized Detailed Performance`
+- **Choices:** <br/>  - `None`<br/>  - `Central AC, SEER 8`<br/>  - `Central AC, SEER 10`<br/>  - `Central AC, SEER 13`<br/>  - `Central AC, SEER 14`<br/>  - `Central AC, SEER 15`<br/>  - `Central AC, SEER 16`<br/>  - `Central AC, SEER 17`<br/>  - `Central AC, SEER 18`<br/>  - `Central AC, SEER 21`<br/>  - `Central AC, SEER 24`<br/>  - `Central AC, SEER 24.5`<br/>  - `Central AC, SEER 27`<br/>  - `Central AC, SEER2 12.4`<br/>  - `Mini-Split AC, SEER 13`<br/>  - `Mini-Split AC, SEER 17`<br/>  - `Mini-Split AC, SEER 19`<br/>  - `Mini-Split AC, SEER 19, Ducted`<br/>  - `Mini-Split AC, SEER 24`<br/>  - `Mini-Split AC, SEER 25`<br/>  - `Mini-Split AC, SEER 29.3`<br/>  - `Mini-Split AC, SEER 33`<br/>  - `Room AC, EER 8.5`<br/>  - `Room AC, EER 8.5, Electric Resistance Heating`<br/>  - `Room AC, EER 9.8`<br/>  - `Room AC, EER 10.7`<br/>  - `Room AC, EER 12.0`<br/>  - `Room AC, CEER 8.4`<br/>  - `Packaged Terminal AC, EER 10.7`<br/>  - `Packaged Terminal AC, EER 10.7, Electric Resistance Heating`<br/>  - `Packaged Terminal AC, EER 10.7, 80% AFUE Gas Heating`<br/>  - `Evaporative Cooler`<br/>  - `Evaporative Cooler, Ducted`<br/>  - `Detailed Example: Central AC, SEER 13, Absolute Detailed Performance`<br/>  - `Detailed Example: Central AC, SEER 18, Absolute Detailed Performance`<br/>  - `Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance`<br/>  - `Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance`<br/>  - `Detailed Example: Mini-Split AC, SEER 17, Absolute Detailed Performance`<br/>  - `Detailed Example: Mini-Split AC, SEER 17, Normalized Detailed Performance`
 
 
 - **Default:** `Central AC, SEER 13`
@@ -850,7 +850,7 @@ The output capacity of the cooling system.
 
 - **Required:** ``false``
 
-- **Choices:** `Autosize`, `0.5 tons`, `0.75 tons`, `1.0 tons`, `1.5 tons`, `2.0 tons`, `2.5 tons`, `3.0 tons`, `3.5 tons`, `4.0 tons`, `4.5 tons`, `5.0 tons`, `5.5 tons`, `6.0 tons`, `6.5 tons`, `7.0 tons`, `7.5 tons`, `8.0 tons`, `8.5 tons`, `9.0 tons`, `9.5 tons`, `10.0 tons`, `Detailed Example: Autosize, 140% Multiplier`, `Detailed Example: Autosize, 170% Multiplier`, `Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit`
+- **Choices:** <br/>  - `Autosize`<br/>  - `0.5 tons`<br/>  - `0.75 tons`<br/>  - `1.0 tons`<br/>  - `1.5 tons`<br/>  - `2.0 tons`<br/>  - `2.5 tons`<br/>  - `3.0 tons`<br/>  - `3.5 tons`<br/>  - `4.0 tons`<br/>  - `4.5 tons`<br/>  - `5.0 tons`<br/>  - `5.5 tons`<br/>  - `6.0 tons`<br/>  - `6.5 tons`<br/>  - `7.0 tons`<br/>  - `7.5 tons`<br/>  - `8.0 tons`<br/>  - `8.5 tons`<br/>  - `9.0 tons`<br/>  - `9.5 tons`<br/>  - `10.0 tons`<br/>  - `Detailed Example: Autosize, 140% Multiplier`<br/>  - `Detailed Example: Autosize, 170% Multiplier`<br/>  - `Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit`
 
 
 - **Default:** `Autosize`
@@ -866,7 +866,7 @@ The fraction of the cooling load served by the cooling system.
 
 - **Required:** ``false``
 
-- **Choices:** `100%`, `95%`, `90%`, `85%`, `80%`, `75%`, `70%`, `65%`, `60%`, `55%`, `50%`, `45%`, `40%`, `35%`, `30%`, `25%`, `20%`, `15%`, `10%`, `5%`, `0%`
+- **Choices:** <br/>  - `100%`<br/>  - `95%`<br/>  - `90%`<br/>  - `85%`<br/>  - `80%`<br/>  - `75%`<br/>  - `70%`<br/>  - `65%`<br/>  - `60%`<br/>  - `55%`<br/>  - `50%`<br/>  - `45%`<br/>  - `40%`<br/>  - `35%`<br/>  - `30%`<br/>  - `25%`<br/>  - `20%`<br/>  - `15%`<br/>  - `10%`<br/>  - `5%`<br/>  - `0%`
 
 
 - **Default:** `100%`
@@ -882,7 +882,7 @@ The output capacity of the cooling system's integrated heating system. Only used
 
 - **Required:** ``false``
 
-- **Choices:** `Autosize`, `5 kBtu/hr`, `10 kBtu/hr`, `15 kBtu/hr`, `20 kBtu/hr`, `25 kBtu/hr`, `30 kBtu/hr`, `35 kBtu/hr`, `40 kBtu/hr`, `45 kBtu/hr`, `50 kBtu/hr`, `55 kBtu/hr`, `60 kBtu/hr`, `65 kBtu/hr`, `70 kBtu/hr`, `75 kBtu/hr`, `80 kBtu/hr`, `85 kBtu/hr`, `90 kBtu/hr`, `95 kBtu/hr`, `100 kBtu/hr`, `105 kBtu/hr`, `110 kBtu/hr`, `115 kBtu/hr`, `120 kBtu/hr`, `125 kBtu/hr`, `130 kBtu/hr`, `135 kBtu/hr`, `140 kBtu/hr`, `145 kBtu/hr`, `150 kBtu/hr`
+- **Choices:** <br/>  - `Autosize`<br/>  - `5 kBtu/hr`<br/>  - `10 kBtu/hr`<br/>  - `15 kBtu/hr`<br/>  - `20 kBtu/hr`<br/>  - `25 kBtu/hr`<br/>  - `30 kBtu/hr`<br/>  - `35 kBtu/hr`<br/>  - `40 kBtu/hr`<br/>  - `45 kBtu/hr`<br/>  - `50 kBtu/hr`<br/>  - `55 kBtu/hr`<br/>  - `60 kBtu/hr`<br/>  - `65 kBtu/hr`<br/>  - `70 kBtu/hr`<br/>  - `75 kBtu/hr`<br/>  - `80 kBtu/hr`<br/>  - `85 kBtu/hr`<br/>  - `90 kBtu/hr`<br/>  - `95 kBtu/hr`<br/>  - `100 kBtu/hr`<br/>  - `105 kBtu/hr`<br/>  - `110 kBtu/hr`<br/>  - `115 kBtu/hr`<br/>  - `120 kBtu/hr`<br/>  - `125 kBtu/hr`<br/>  - `130 kBtu/hr`<br/>  - `135 kBtu/hr`<br/>  - `140 kBtu/hr`<br/>  - `145 kBtu/hr`<br/>  - `150 kBtu/hr`
 
 
 - **Default:** `Autosize`
@@ -898,7 +898,7 @@ The fraction of the heating load served by the cooling system's integrated heati
 
 - **Required:** ``false``
 
-- **Choices:** `100%`, `95%`, `90%`, `85%`, `80%`, `75%`, `70%`, `65%`, `60%`, `55%`, `50%`, `45%`, `40%`, `35%`, `30%`, `25%`, `20%`, `15%`, `10%`, `5%`, `0%`
+- **Choices:** <br/>  - `100%`<br/>  - `95%`<br/>  - `90%`<br/>  - `85%`<br/>  - `80%`<br/>  - `75%`<br/>  - `70%`<br/>  - `65%`<br/>  - `60%`<br/>  - `55%`<br/>  - `50%`<br/>  - `45%`<br/>  - `40%`<br/>  - `35%`<br/>  - `30%`<br/>  - `25%`<br/>  - `20%`<br/>  - `15%`<br/>  - `10%`<br/>  - `5%`<br/>  - `0%`
 
 
 - **Default:** `100%`
@@ -914,7 +914,7 @@ The type and efficiency of the heat pump.
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Central HP, SEER 8, 6.0 HSPF`, `Central HP, SEER 10, 6.2 HSPF`, `Central HP, SEER 10, 6.8 HSPF`, `Central HP, SEER 10.3, 7.0 HSPF`, `Central HP, SEER 11.5, 7.5 HSPF`, `Central HP, SEER 13, 7.7 HSPF`, `Central HP, SEER 13, 8.0 HSPF`, `Central HP, SEER 13, 9.85 HSPF`, `Central HP, SEER 14, 8.2 HSPF`, `Central HP, SEER 14.3, 8.5 HSPF`, `Central HP, SEER 15, 8.5 HSPF`, `Central HP, SEER 15, 9.0 HSPF`, `Central HP, SEER 16, 9.0 HSPF`, `Central HP, SEER 17, 8.7 HSPF`, `Central HP, SEER 18, 9.3 HSPF`, `Central HP, SEER 20, 11 HSPF`, `Central HP, SEER 22, 10 HSPF`, `Central HP, SEER 24, 13 HSPF`, `Mini-Split HP, SEER 14.5, 8.2 HSPF`, `Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted`, `Mini-Split HP, SEER 16, 9.2 HSPF`, `Mini-Split HP, SEER 17, 9.5 HSPF`, `Mini-Split HP, SEER 17, 9.5 HSPF, Ducted`, `Mini-Split HP, SEER 18.0, 9.6 HSPF`, `Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted`, `Mini-Split HP, SEER 19, 10 HSPF, Ducted`, `Mini-Split HP, SEER 19, 10 HSPF`, `Mini-Split HP, SEER 20, 11 HSPF`, `Mini-Split HP, SEER 24, 13 HSPF`, `Mini-Split HP, SEER 25, 12.7 HSPF`, `Mini-Split HP, SEER 25, 12.7 HSPF, Ducted`, `Mini-Split HP, SEER 29.3, 14 HSPF`, `Mini-Split HP, SEER 29.3, 14 HSPF, Ducted`, `Mini-Split HP, SEER 33, 13.3 HSPF`, `Mini-Split HP, SEER 33, 13.3 HSPF, Ducted`, `Geothermal HP, EER 16.6, COP 3.6`, `Geothermal HP, EER 18.2, COP 3.7`, `Geothermal HP, EER 18.6, COP 3.8`, `Geothermal HP, EER 19.4, COP 3.8`, `Geothermal HP, EER 20.2, COP 4.2`, `Geothermal HP, EER 20.5, COP 4.0`, `Geothermal HP, EER 30.9, COP 4.4`, `Packaged Terminal HP, EER 11.4, COP 3.6`, `Room AC w/ Reverse Cycle, EER 11.4, COP 3.6`, `Detailed Example: Central HP, SEER2 12.4, HSPF2 6.5`, `Detailed Example: Central HP, SEER 13, 7.7 HSPF, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 18, 9.3 HSPF, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance`, `Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance`
+- **Choices:** <br/>  - `None`<br/>  - `Central HP, SEER 8, 6.0 HSPF`<br/>  - `Central HP, SEER 10, 6.2 HSPF`<br/>  - `Central HP, SEER 10, 6.8 HSPF`<br/>  - `Central HP, SEER 10.3, 7.0 HSPF`<br/>  - `Central HP, SEER 11.5, 7.5 HSPF`<br/>  - `Central HP, SEER 13, 7.7 HSPF`<br/>  - `Central HP, SEER 13, 8.0 HSPF`<br/>  - `Central HP, SEER 13, 9.85 HSPF`<br/>  - `Central HP, SEER 14, 8.2 HSPF`<br/>  - `Central HP, SEER 14.3, 8.5 HSPF`<br/>  - `Central HP, SEER 15, 8.5 HSPF`<br/>  - `Central HP, SEER 15, 9.0 HSPF`<br/>  - `Central HP, SEER 16, 9.0 HSPF`<br/>  - `Central HP, SEER 17, 8.7 HSPF`<br/>  - `Central HP, SEER 18, 9.3 HSPF`<br/>  - `Central HP, SEER 20, 11 HSPF`<br/>  - `Central HP, SEER 22, 10 HSPF`<br/>  - `Central HP, SEER 24, 13 HSPF`<br/>  - `Mini-Split HP, SEER 14.5, 8.2 HSPF`<br/>  - `Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 16, 9.2 HSPF`<br/>  - `Mini-Split HP, SEER 17, 9.5 HSPF`<br/>  - `Mini-Split HP, SEER 17, 9.5 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 18.0, 9.6 HSPF`<br/>  - `Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 19, 10 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 19, 10 HSPF`<br/>  - `Mini-Split HP, SEER 20, 11 HSPF`<br/>  - `Mini-Split HP, SEER 24, 13 HSPF`<br/>  - `Mini-Split HP, SEER 25, 12.7 HSPF`<br/>  - `Mini-Split HP, SEER 25, 12.7 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 29.3, 14 HSPF`<br/>  - `Mini-Split HP, SEER 29.3, 14 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 33, 13.3 HSPF`<br/>  - `Mini-Split HP, SEER 33, 13.3 HSPF, Ducted`<br/>  - `Geothermal HP, EER 16.6, COP 3.6`<br/>  - `Geothermal HP, EER 18.2, COP 3.7`<br/>  - `Geothermal HP, EER 18.6, COP 3.8`<br/>  - `Geothermal HP, EER 19.4, COP 3.8`<br/>  - `Geothermal HP, EER 20.2, COP 4.2`<br/>  - `Geothermal HP, EER 20.5, COP 4.0`<br/>  - `Geothermal HP, EER 30.9, COP 4.4`<br/>  - `Packaged Terminal HP, EER 11.4, COP 3.6`<br/>  - `Room AC w/ Reverse Cycle, EER 11.4, COP 3.6`<br/>  - `Detailed Example: Central HP, SEER2 12.4, HSPF2 6.5`<br/>  - `Detailed Example: Central HP, SEER 13, 7.7 HSPF, Absolute Detailed Performance`<br/>  - `Detailed Example: Central HP, SEER 18, 9.3 HSPF, Absolute Detailed Performance`<br/>  - `Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance`<br/>  - `Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance`<br/>  - `Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance`<br/>  - `Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance`<br/>  - `Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance`<br/>  - `Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance`
 
 
 - **Default:** `None`
@@ -930,7 +930,7 @@ The output capacity of the heat pump.
 
 - **Required:** ``false``
 
-- **Choices:** `Autosize`, `Autosize (ACCA)`, `Autosize (MaxLoad)`, `0.5 tons`, `0.75 tons`, `1.0 tons`, `1.5 tons`, `2.0 tons`, `2.5 tons`, `3.0 tons`, `3.5 tons`, `4.0 tons`, `4.5 tons`, `5.0 tons`, `5.5 tons`, `6.0 tons`, `6.5 tons`, `7.0 tons`, `7.5 tons`, `8.0 tons`, `8.5 tons`, `9.0 tons`, `9.5 tons`, `10.0 tons`, `Detailed Example: Autosize, 140% Multiplier`, `Detailed Example: Autosize, 170% Multiplier`, `Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit`
+- **Choices:** <br/>  - `Autosize`<br/>  - `Autosize (ACCA)`<br/>  - `Autosize (MaxLoad)`<br/>  - `0.5 tons`<br/>  - `0.75 tons`<br/>  - `1.0 tons`<br/>  - `1.5 tons`<br/>  - `2.0 tons`<br/>  - `2.5 tons`<br/>  - `3.0 tons`<br/>  - `3.5 tons`<br/>  - `4.0 tons`<br/>  - `4.5 tons`<br/>  - `5.0 tons`<br/>  - `5.5 tons`<br/>  - `6.0 tons`<br/>  - `6.5 tons`<br/>  - `7.0 tons`<br/>  - `7.5 tons`<br/>  - `8.0 tons`<br/>  - `8.5 tons`<br/>  - `9.0 tons`<br/>  - `9.5 tons`<br/>  - `10.0 tons`<br/>  - `Detailed Example: Autosize, 140% Multiplier`<br/>  - `Detailed Example: Autosize, 170% Multiplier`<br/>  - `Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit`
 
 
 - **Default:** `Autosize`
@@ -946,7 +946,7 @@ The fraction of the heating load served by the heat pump.
 
 - **Required:** ``false``
 
-- **Choices:** `100%`, `95%`, `90%`, `85%`, `80%`, `75%`, `70%`, `65%`, `60%`, `55%`, `50%`, `45%`, `40%`, `35%`, `30%`, `25%`, `20%`, `15%`, `10%`, `5%`, `0%`
+- **Choices:** <br/>  - `100%`<br/>  - `95%`<br/>  - `90%`<br/>  - `85%`<br/>  - `80%`<br/>  - `75%`<br/>  - `70%`<br/>  - `65%`<br/>  - `60%`<br/>  - `55%`<br/>  - `50%`<br/>  - `45%`<br/>  - `40%`<br/>  - `35%`<br/>  - `30%`<br/>  - `25%`<br/>  - `20%`<br/>  - `15%`<br/>  - `10%`<br/>  - `5%`<br/>  - `0%`
 
 
 - **Default:** `100%`
@@ -962,7 +962,7 @@ The fraction of the cooling load served by the heat pump.
 
 - **Required:** ``false``
 
-- **Choices:** `100%`, `95%`, `90%`, `85%`, `80%`, `75%`, `70%`, `65%`, `60%`, `55%`, `50%`, `45%`, `40%`, `35%`, `30%`, `25%`, `20%`, `15%`, `10%`, `5%`, `0%`
+- **Choices:** <br/>  - `100%`<br/>  - `95%`<br/>  - `90%`<br/>  - `85%`<br/>  - `80%`<br/>  - `75%`<br/>  - `70%`<br/>  - `65%`<br/>  - `60%`<br/>  - `55%`<br/>  - `50%`<br/>  - `45%`<br/>  - `40%`<br/>  - `35%`<br/>  - `30%`<br/>  - `25%`<br/>  - `20%`<br/>  - `15%`<br/>  - `10%`<br/>  - `5%`<br/>  - `0%`
 
 
 - **Default:** `100%`
@@ -978,7 +978,7 @@ Specifies the minimum compressor temperature and/or maximum HP backup temperatur
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `-20F Min Compressor Temp`, `-15F Min Compressor Temp`, `-10F Min Compressor Temp`, `-5F Min Compressor Temp`, `0F Min Compressor Temp`, `5F Min Compressor Temp`, `10F Min Compressor Temp`, `15F Min Compressor Temp`, `20F Min Compressor Temp`, `25F Min Compressor Temp`, `30F Min Compressor Temp`, `35F Min Compressor Temp`, `40F Min Compressor Temp`, `30F Min Compressor Temp, 30F Max HP Backup Temp`, `35F Min Compressor Temp, 35F Max HP Backup Temp`, `40F Min Compressor Temp, 40F Max HP Backup Temp`, `Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp`, `Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp`
+- **Choices:** <br/>  - `Default`<br/>  - `-20F Min Compressor Temp`<br/>  - `-15F Min Compressor Temp`<br/>  - `-10F Min Compressor Temp`<br/>  - `-5F Min Compressor Temp`<br/>  - `0F Min Compressor Temp`<br/>  - `5F Min Compressor Temp`<br/>  - `10F Min Compressor Temp`<br/>  - `15F Min Compressor Temp`<br/>  - `20F Min Compressor Temp`<br/>  - `25F Min Compressor Temp`<br/>  - `30F Min Compressor Temp`<br/>  - `35F Min Compressor Temp`<br/>  - `40F Min Compressor Temp`<br/>  - `30F Min Compressor Temp, 30F Max HP Backup Temp`<br/>  - `35F Min Compressor Temp, 35F Max HP Backup Temp`<br/>  - `40F Min Compressor Temp, 40F Max HP Backup Temp`<br/>  - `Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp`<br/>  - `Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp`
 
 
 - **Default:** `Default`
@@ -994,7 +994,7 @@ The type and efficiency of the heat pump backup. Use 'None' if there is no backu
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Integrated, Electricity, 100% Efficiency`, `Integrated, Natural Gas, 60% AFUE`, `Integrated, Natural Gas, 76% AFUE`, `Integrated, Natural Gas, 80% AFUE`, `Integrated, Natural Gas, 92.5% AFUE`, `Integrated, Natural Gas, 95% AFUE`, `Integrated, Fuel Oil, 60% AFUE`, `Integrated, Fuel Oil, 76% AFUE`, `Integrated, Fuel Oil, 80% AFUE`, `Integrated, Fuel Oil, 92.5% AFUE`, `Integrated, Fuel Oil, 95% AFUE`, `Integrated, Propane, 60% AFUE`, `Integrated, Propane, 76% AFUE`, `Integrated, Propane, 80% AFUE`, `Integrated, Propane, 92.5% AFUE`, `Integrated, Propane, 95% AFUE`, `Separate Heating System`
+- **Choices:** <br/>  - `None`<br/>  - `Integrated, Electricity, 100% Efficiency`<br/>  - `Integrated, Natural Gas, 60% AFUE`<br/>  - `Integrated, Natural Gas, 76% AFUE`<br/>  - `Integrated, Natural Gas, 80% AFUE`<br/>  - `Integrated, Natural Gas, 92.5% AFUE`<br/>  - `Integrated, Natural Gas, 95% AFUE`<br/>  - `Integrated, Fuel Oil, 60% AFUE`<br/>  - `Integrated, Fuel Oil, 76% AFUE`<br/>  - `Integrated, Fuel Oil, 80% AFUE`<br/>  - `Integrated, Fuel Oil, 92.5% AFUE`<br/>  - `Integrated, Fuel Oil, 95% AFUE`<br/>  - `Integrated, Propane, 60% AFUE`<br/>  - `Integrated, Propane, 76% AFUE`<br/>  - `Integrated, Propane, 80% AFUE`<br/>  - `Integrated, Propane, 92.5% AFUE`<br/>  - `Integrated, Propane, 95% AFUE`<br/>  - `Separate Heating System`
 
 
 - **Default:** `Integrated, Electricity, 100% Efficiency`
@@ -1010,7 +1010,7 @@ The output capacity of the heat pump backup if there is integrated backup heatin
 
 - **Required:** ``false``
 
-- **Choices:** `Autosize`, `Autosize (Supplemental)`, `5 kW`, `10 kW`, `15 kW`, `20 kW`, `25 kW`, `5 kBtu/hr`, `10 kBtu/hr`, `15 kBtu/hr`, `20 kBtu/hr`, `25 kBtu/hr`, `30 kBtu/hr`, `35 kBtu/hr`, `40 kBtu/hr`, `45 kBtu/hr`, `50 kBtu/hr`, `55 kBtu/hr`, `60 kBtu/hr`, `65 kBtu/hr`, `70 kBtu/hr`, `75 kBtu/hr`, `80 kBtu/hr`, `85 kBtu/hr`, `90 kBtu/hr`, `95 kBtu/hr`, `100 kBtu/hr`, `105 kBtu/hr`, `110 kBtu/hr`, `115 kBtu/hr`, `120 kBtu/hr`, `125 kBtu/hr`, `130 kBtu/hr`, `135 kBtu/hr`, `140 kBtu/hr`, `145 kBtu/hr`, `150 kBtu/hr`, `Detailed Example: Autosize, 140% Multiplier`, `Detailed Example: Autosize, 170% Multiplier`, `Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit`
+- **Choices:** <br/>  - `Autosize`<br/>  - `Autosize (Supplemental)`<br/>  - `5 kW`<br/>  - `10 kW`<br/>  - `15 kW`<br/>  - `20 kW`<br/>  - `25 kW`<br/>  - `5 kBtu/hr`<br/>  - `10 kBtu/hr`<br/>  - `15 kBtu/hr`<br/>  - `20 kBtu/hr`<br/>  - `25 kBtu/hr`<br/>  - `30 kBtu/hr`<br/>  - `35 kBtu/hr`<br/>  - `40 kBtu/hr`<br/>  - `45 kBtu/hr`<br/>  - `50 kBtu/hr`<br/>  - `55 kBtu/hr`<br/>  - `60 kBtu/hr`<br/>  - `65 kBtu/hr`<br/>  - `70 kBtu/hr`<br/>  - `75 kBtu/hr`<br/>  - `80 kBtu/hr`<br/>  - `85 kBtu/hr`<br/>  - `90 kBtu/hr`<br/>  - `95 kBtu/hr`<br/>  - `100 kBtu/hr`<br/>  - `105 kBtu/hr`<br/>  - `110 kBtu/hr`<br/>  - `115 kBtu/hr`<br/>  - `120 kBtu/hr`<br/>  - `125 kBtu/hr`<br/>  - `130 kBtu/hr`<br/>  - `135 kBtu/hr`<br/>  - `140 kBtu/hr`<br/>  - `145 kBtu/hr`<br/>  - `150 kBtu/hr`<br/>  - `Detailed Example: Autosize, 140% Multiplier`<br/>  - `Detailed Example: Autosize, 170% Multiplier`<br/>  - `Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit`
 
 
 - **Default:** `Autosize`
@@ -1026,7 +1026,7 @@ The geothermal loop configuration if there's a ground-to-air heat pump.
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `Vertical Loop, Enhanced Grout`, `Vertical Loop, Enhanced Pipe`, `Vertical Loop, Enhanced Grout & Pipe`, `Detailed Example: Lopsided U Configuration, 10 Boreholes`
+- **Choices:** <br/>  - `Default`<br/>  - `Vertical Loop, Enhanced Grout`<br/>  - `Vertical Loop, Enhanced Pipe`<br/>  - `Vertical Loop, Enhanced Grout & Pipe`<br/>  - `Detailed Example: Lopsided U Configuration, 10 Boreholes`
 
 
 - **Default:** `Default`
@@ -1042,7 +1042,7 @@ The type and efficiency of the second heating system. If a heat pump is specifie
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Electric Resistance`, `Central Furnace, 60% AFUE`, `Central Furnace, 64% AFUE`, `Central Furnace, 68% AFUE`, `Central Furnace, 72% AFUE`, `Central Furnace, 76% AFUE`, `Central Furnace, 78% AFUE`, `Central Furnace, 80% AFUE`, `Central Furnace, 85% AFUE`, `Central Furnace, 90% AFUE`, `Central Furnace, 92% AFUE`, `Central Furnace, 92.5% AFUE`, `Central Furnace, 96% AFUE`, `Central Furnace, 98% AFUE`, `Central Furnace, 100% AFUE`, `Wall Furnace, 60% AFUE`, `Wall Furnace, 68% AFUE`, `Wall Furnace, 82% AFUE`, `Wall Furnace, 98% AFUE`, `Wall Furnace, 100% AFUE`, `Floor Furnace, 60% AFUE`, `Floor Furnace, 70% AFUE`, `Floor Furnace, 80% AFUE`, `Boiler, 60% AFUE`, `Boiler, 72% AFUE`, `Boiler, 76% AFUE`, `Boiler, 78% AFUE`, `Boiler, 80% AFUE`, `Boiler, 82% AFUE`, `Boiler, 85% AFUE`, `Boiler, 90% AFUE`, `Boiler, 92% AFUE`, `Boiler, 92.5% AFUE`, `Boiler, 95% AFUE`, `Boiler, 96% AFUE`, `Boiler, 98% AFUE`, `Boiler, 100% AFUE`, `Stove, 60% Efficiency`, `Stove, 70% Efficiency`, `Stove, 80% Efficiency`, `Space Heater, 60% Efficiency`, `Space Heater, 70% Efficiency`, `Space Heater, 80% Efficiency`, `Space Heater, 92% Efficiency`, `Space Heater, 100% Efficiency`, `Fireplace, 60% Efficiency`, `Fireplace, 70% Efficiency`, `Fireplace, 80% Efficiency`, `Fireplace, 100% Efficiency`, `Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light`, `Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light`
+- **Choices:** <br/>  - `None`<br/>  - `Electric Resistance`<br/>  - `Central Furnace, 60% AFUE`<br/>  - `Central Furnace, 64% AFUE`<br/>  - `Central Furnace, 68% AFUE`<br/>  - `Central Furnace, 72% AFUE`<br/>  - `Central Furnace, 76% AFUE`<br/>  - `Central Furnace, 78% AFUE`<br/>  - `Central Furnace, 80% AFUE`<br/>  - `Central Furnace, 85% AFUE`<br/>  - `Central Furnace, 90% AFUE`<br/>  - `Central Furnace, 92% AFUE`<br/>  - `Central Furnace, 92.5% AFUE`<br/>  - `Central Furnace, 96% AFUE`<br/>  - `Central Furnace, 98% AFUE`<br/>  - `Central Furnace, 100% AFUE`<br/>  - `Wall Furnace, 60% AFUE`<br/>  - `Wall Furnace, 68% AFUE`<br/>  - `Wall Furnace, 82% AFUE`<br/>  - `Wall Furnace, 98% AFUE`<br/>  - `Wall Furnace, 100% AFUE`<br/>  - `Floor Furnace, 60% AFUE`<br/>  - `Floor Furnace, 70% AFUE`<br/>  - `Floor Furnace, 80% AFUE`<br/>  - `Boiler, 60% AFUE`<br/>  - `Boiler, 72% AFUE`<br/>  - `Boiler, 76% AFUE`<br/>  - `Boiler, 78% AFUE`<br/>  - `Boiler, 80% AFUE`<br/>  - `Boiler, 82% AFUE`<br/>  - `Boiler, 85% AFUE`<br/>  - `Boiler, 90% AFUE`<br/>  - `Boiler, 92% AFUE`<br/>  - `Boiler, 92.5% AFUE`<br/>  - `Boiler, 95% AFUE`<br/>  - `Boiler, 96% AFUE`<br/>  - `Boiler, 98% AFUE`<br/>  - `Boiler, 100% AFUE`<br/>  - `Stove, 60% Efficiency`<br/>  - `Stove, 70% Efficiency`<br/>  - `Stove, 80% Efficiency`<br/>  - `Space Heater, 60% Efficiency`<br/>  - `Space Heater, 70% Efficiency`<br/>  - `Space Heater, 80% Efficiency`<br/>  - `Space Heater, 92% Efficiency`<br/>  - `Space Heater, 100% Efficiency`<br/>  - `Fireplace, 60% Efficiency`<br/>  - `Fireplace, 70% Efficiency`<br/>  - `Fireplace, 80% Efficiency`<br/>  - `Fireplace, 100% Efficiency`<br/>  - `Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light`<br/>  - `Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light`<br/>  - `Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light`
 
 
 - **Default:** `None`
@@ -1058,7 +1058,7 @@ The fuel type of the second heating system. Ignored for ElectricResistance.
 
 - **Required:** ``false``
 
-- **Choices:** `Electricity`, `Natural Gas`, `Fuel Oil`, `Propane`, `Wood Cord`, `Wood Pellets`, `Coal`
+- **Choices:** <br/>  - `Electricity`<br/>  - `Natural Gas`<br/>  - `Fuel Oil`<br/>  - `Propane`<br/>  - `Wood Cord`<br/>  - `Wood Pellets`<br/>  - `Coal`
 
 
 - **Default:** `Electricity`
@@ -1074,7 +1074,7 @@ The output capacity of the second heating system.
 
 - **Required:** ``false``
 
-- **Choices:** `Autosize`, `5 kBtu/hr`, `10 kBtu/hr`, `15 kBtu/hr`, `20 kBtu/hr`, `25 kBtu/hr`, `30 kBtu/hr`, `35 kBtu/hr`, `40 kBtu/hr`, `45 kBtu/hr`, `50 kBtu/hr`, `55 kBtu/hr`, `60 kBtu/hr`, `65 kBtu/hr`, `70 kBtu/hr`, `75 kBtu/hr`, `80 kBtu/hr`, `85 kBtu/hr`, `90 kBtu/hr`, `95 kBtu/hr`, `100 kBtu/hr`, `105 kBtu/hr`, `110 kBtu/hr`, `115 kBtu/hr`, `120 kBtu/hr`, `125 kBtu/hr`, `130 kBtu/hr`, `135 kBtu/hr`, `140 kBtu/hr`, `145 kBtu/hr`, `150 kBtu/hr`, `Detailed Example: Autosize, 140% Multiplier`, `Detailed Example: Autosize, 170% Multiplier`, `Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit`, `Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit`
+- **Choices:** <br/>  - `Autosize`<br/>  - `5 kBtu/hr`<br/>  - `10 kBtu/hr`<br/>  - `15 kBtu/hr`<br/>  - `20 kBtu/hr`<br/>  - `25 kBtu/hr`<br/>  - `30 kBtu/hr`<br/>  - `35 kBtu/hr`<br/>  - `40 kBtu/hr`<br/>  - `45 kBtu/hr`<br/>  - `50 kBtu/hr`<br/>  - `55 kBtu/hr`<br/>  - `60 kBtu/hr`<br/>  - `65 kBtu/hr`<br/>  - `70 kBtu/hr`<br/>  - `75 kBtu/hr`<br/>  - `80 kBtu/hr`<br/>  - `85 kBtu/hr`<br/>  - `90 kBtu/hr`<br/>  - `95 kBtu/hr`<br/>  - `100 kBtu/hr`<br/>  - `105 kBtu/hr`<br/>  - `110 kBtu/hr`<br/>  - `115 kBtu/hr`<br/>  - `120 kBtu/hr`<br/>  - `125 kBtu/hr`<br/>  - `130 kBtu/hr`<br/>  - `135 kBtu/hr`<br/>  - `140 kBtu/hr`<br/>  - `145 kBtu/hr`<br/>  - `150 kBtu/hr`<br/>  - `Detailed Example: Autosize, 140% Multiplier`<br/>  - `Detailed Example: Autosize, 170% Multiplier`<br/>  - `Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit`<br/>  - `Detailed Example: Autosize, 140% Multiplier, 45 kBtu/hr Limit`
 
 
 - **Default:** `Autosize`
@@ -1090,7 +1090,7 @@ The fraction of the heating load served by the second heating system.
 
 - **Required:** ``false``
 
-- **Choices:** `100%`, `95%`, `90%`, `85%`, `80%`, `75%`, `70%`, `65%`, `60%`, `55%`, `50%`, `45%`, `40%`, `35%`, `30%`, `25%`, `20%`, `15%`, `10%`, `5%`, `0%`
+- **Choices:** <br/>  - `100%`<br/>  - `95%`<br/>  - `90%`<br/>  - `85%`<br/>  - `80%`<br/>  - `75%`<br/>  - `70%`<br/>  - `65%`<br/>  - `60%`<br/>  - `55%`<br/>  - `50%`<br/>  - `45%`<br/>  - `40%`<br/>  - `35%`<br/>  - `30%`<br/>  - `25%`<br/>  - `20%`<br/>  - `15%`<br/>  - `10%`<br/>  - `5%`<br/>  - `0%`
 
 
 - **Default:** `25%`
@@ -1099,7 +1099,7 @@ The fraction of the heating load served by the second heating system.
 
 **HVAC Control: Heating Weekday Setpoint Schedule**
 
-Specify the constant or 24-hour comma-separated weekday heating setpoint schedule. Required unless a detailed CSV schedule is provided.
+Specify the constant or 24-hour comma-separated weekday heating setpoint schedule.
 
 - **Name:** ``hvac_control_heating_weekday_setpoint``
 - **Type:** ``String``
@@ -1107,11 +1107,13 @@ Specify the constant or 24-hour comma-separated weekday heating setpoint schedul
 - **Required:** ``false``
 
 
+- **Default:** `68`
+
 <br/>
 
 **HVAC Control: Heating Weekend Setpoint Schedule**
 
-Specify the constant or 24-hour comma-separated weekend heating setpoint schedule. Required unless a detailed CSV schedule is provided.
+Specify the constant or 24-hour comma-separated weekend heating setpoint schedule.
 
 - **Name:** ``hvac_control_heating_weekend_setpoint``
 - **Type:** ``String``
@@ -1119,11 +1121,13 @@ Specify the constant or 24-hour comma-separated weekend heating setpoint schedul
 - **Required:** ``false``
 
 
+- **Default:** `68`
+
 <br/>
 
 **HVAC Control: Cooling Weekday Setpoint Schedule**
 
-Specify the constant or 24-hour comma-separated weekday cooling setpoint schedule. Required unless a detailed CSV schedule is provided.
+Specify the constant or 24-hour comma-separated weekday cooling setpoint schedule.
 
 - **Name:** ``hvac_control_cooling_weekday_setpoint``
 - **Type:** ``String``
@@ -1131,17 +1135,21 @@ Specify the constant or 24-hour comma-separated weekday cooling setpoint schedul
 - **Required:** ``false``
 
 
+- **Default:** `78`
+
 <br/>
 
 **HVAC Control: Cooling Weekend Setpoint Schedule**
 
-Specify the constant or 24-hour comma-separated weekend cooling setpoint schedule. Required unless a detailed CSV schedule is provided.
+Specify the constant or 24-hour comma-separated weekend cooling setpoint schedule.
 
 - **Name:** ``hvac_control_cooling_weekend_setpoint``
 - **Type:** ``String``
 
 - **Required:** ``false``
 
+
+- **Default:** `78`
 
 <br/>
 
@@ -1182,7 +1190,7 @@ The leakage to outside and insulation level of the ducts.
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `0% Leakage, Uninsulated`, `0% Leakage, R-4`, `0% Leakage, R-6`, `0% Leakage, R-8`, `5% Leakage, Uninsulated`, `5% Leakage, R-4`, `5% Leakage, R-6`, `5% Leakage, R-8`, `10% Leakage, Uninsulated`, `10% Leakage, R-4`, `10% Leakage, R-6`, `10% Leakage, R-8`, `15% Leakage, Uninsulated`, `15% Leakage, R-4`, `15% Leakage, R-6`, `15% Leakage, R-8`, `20% Leakage, Uninsulated`, `20% Leakage, R-4`, `20% Leakage, R-6`, `20% Leakage, R-8`, `25% Leakage, Uninsulated`, `25% Leakage, R-4`, `25% Leakage, R-6`, `25% Leakage, R-8`, `30% Leakage, Uninsulated`, `30% Leakage, R-4`, `30% Leakage, R-6`, `30% Leakage, R-8`, `35% Leakage, Uninsulated`, `35% Leakage, R-4`, `35% Leakage, R-6`, `35% Leakage, R-8`, `0 CFM25 per 100ft2, Uninsulated`, `0 CFM25 per 100ft2, R-4`, `0 CFM25 per 100ft2, R-6`, `0 CFM25 per 100ft2, R-8`, `1 CFM25 per 100ft2, Uninsulated`, `1 CFM25 per 100ft2, R-4`, `1 CFM25 per 100ft2, R-6`, `1 CFM25 per 100ft2, R-8`, `2 CFM25 per 100ft2, Uninsulated`, `2 CFM25 per 100ft2, R-4`, `2 CFM25 per 100ft2, R-6`, `2 CFM25 per 100ft2, R-8`, `4 CFM25 per 100ft2, Uninsulated`, `4 CFM25 per 100ft2, R-4`, `4 CFM25 per 100ft2, R-6`, `4 CFM25 per 100ft2, R-8`, `6 CFM25 per 100ft2, Uninsulated`, `6 CFM25 per 100ft2, R-4`, `6 CFM25 per 100ft2, R-6`, `6 CFM25 per 100ft2, R-8`, `8 CFM25 per 100ft2, Uninsulated`, `8 CFM25 per 100ft2, R-4`, `8 CFM25 per 100ft2, R-6`, `8 CFM25 per 100ft2, R-8`, `12 CFM25 per 100ft2, Uninsulated`, `12 CFM25 per 100ft2, R-4`, `12 CFM25 per 100ft2, R-6`, `12 CFM25 per 100ft2, R-8`, `Detailed Example: 4 CFM25 per 100ft2 (75% Supply), R-4`, `Detailed Example: 5 CFM50 per 100ft2 (75% Supply), R-4`, `Detailed Example: 250 CFM25, R-6`, `Detailed Example: 400 CFM50 (75% Supply), R-6`
+- **Choices:** <br/>  - `None`<br/>  - `0% Leakage, Uninsulated`<br/>  - `0% Leakage, R-4`<br/>  - `0% Leakage, R-6`<br/>  - `0% Leakage, R-8`<br/>  - `5% Leakage, Uninsulated`<br/>  - `5% Leakage, R-4`<br/>  - `5% Leakage, R-6`<br/>  - `5% Leakage, R-8`<br/>  - `10% Leakage, Uninsulated`<br/>  - `10% Leakage, R-4`<br/>  - `10% Leakage, R-6`<br/>  - `10% Leakage, R-8`<br/>  - `15% Leakage, Uninsulated`<br/>  - `15% Leakage, R-4`<br/>  - `15% Leakage, R-6`<br/>  - `15% Leakage, R-8`<br/>  - `20% Leakage, Uninsulated`<br/>  - `20% Leakage, R-4`<br/>  - `20% Leakage, R-6`<br/>  - `20% Leakage, R-8`<br/>  - `25% Leakage, Uninsulated`<br/>  - `25% Leakage, R-4`<br/>  - `25% Leakage, R-6`<br/>  - `25% Leakage, R-8`<br/>  - `30% Leakage, Uninsulated`<br/>  - `30% Leakage, R-4`<br/>  - `30% Leakage, R-6`<br/>  - `30% Leakage, R-8`<br/>  - `35% Leakage, Uninsulated`<br/>  - `35% Leakage, R-4`<br/>  - `35% Leakage, R-6`<br/>  - `35% Leakage, R-8`<br/>  - `0 CFM25 per 100ft2, Uninsulated`<br/>  - `0 CFM25 per 100ft2, R-4`<br/>  - `0 CFM25 per 100ft2, R-6`<br/>  - `0 CFM25 per 100ft2, R-8`<br/>  - `1 CFM25 per 100ft2, Uninsulated`<br/>  - `1 CFM25 per 100ft2, R-4`<br/>  - `1 CFM25 per 100ft2, R-6`<br/>  - `1 CFM25 per 100ft2, R-8`<br/>  - `2 CFM25 per 100ft2, Uninsulated`<br/>  - `2 CFM25 per 100ft2, R-4`<br/>  - `2 CFM25 per 100ft2, R-6`<br/>  - `2 CFM25 per 100ft2, R-8`<br/>  - `4 CFM25 per 100ft2, Uninsulated`<br/>  - `4 CFM25 per 100ft2, R-4`<br/>  - `4 CFM25 per 100ft2, R-6`<br/>  - `4 CFM25 per 100ft2, R-8`<br/>  - `6 CFM25 per 100ft2, Uninsulated`<br/>  - `6 CFM25 per 100ft2, R-4`<br/>  - `6 CFM25 per 100ft2, R-6`<br/>  - `6 CFM25 per 100ft2, R-8`<br/>  - `8 CFM25 per 100ft2, Uninsulated`<br/>  - `8 CFM25 per 100ft2, R-4`<br/>  - `8 CFM25 per 100ft2, R-6`<br/>  - `8 CFM25 per 100ft2, R-8`<br/>  - `12 CFM25 per 100ft2, Uninsulated`<br/>  - `12 CFM25 per 100ft2, R-4`<br/>  - `12 CFM25 per 100ft2, R-6`<br/>  - `12 CFM25 per 100ft2, R-8`<br/>  - `Detailed Example: 4 CFM25 per 100ft2 (75% Supply), R-4`<br/>  - `Detailed Example: 5 CFM50 per 100ft2 (75% Supply), R-4`<br/>  - `Detailed Example: 250 CFM25, R-6`<br/>  - `Detailed Example: 400 CFM50 (75% Supply), R-6`
 
 
 - **Default:** `15% Leakage, Uninsulated`
@@ -1198,7 +1206,7 @@ The primary location of the supply ducts. The remainder of the supply ducts are 
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `Conditioned Space`, `Basement`, `Crawlspace`, `Attic`, `Garage`, `Outside`, `Exterior Wall`, `Under Slab`, `Roof Deck`, `Manufactured Home Belly`, `Detailed Example: Attic, 75%`
+- **Choices:** <br/>  - `Default`<br/>  - `Conditioned Space`<br/>  - `Basement`<br/>  - `Crawlspace`<br/>  - `Attic`<br/>  - `Garage`<br/>  - `Outside`<br/>  - `Exterior Wall`<br/>  - `Under Slab`<br/>  - `Roof Deck`<br/>  - `Manufactured Home Belly`<br/>  - `Detailed Example: Attic, 75%`
 
 
 - **Default:** `Default`
@@ -1214,7 +1222,7 @@ The primary location of the return ducts. The remainder of the return ducts are 
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `Conditioned Space`, `Basement`, `Crawlspace`, `Attic`, `Garage`, `Outside`, `Exterior Wall`, `Under Slab`, `Roof Deck`, `Manufactured Home Belly`, `Detailed Example: Attic, 75%`
+- **Choices:** <br/>  - `Default`<br/>  - `Conditioned Space`<br/>  - `Basement`<br/>  - `Crawlspace`<br/>  - `Attic`<br/>  - `Garage`<br/>  - `Outside`<br/>  - `Exterior Wall`<br/>  - `Under Slab`<br/>  - `Roof Deck`<br/>  - `Manufactured Home Belly`<br/>  - `Detailed Example: Attic, 75%`
 
 
 - **Default:** `Default`
@@ -1230,7 +1238,7 @@ The type of mechanical ventilation system used for whole building ventilation.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Exhaust Only`, `Supply Only`, `Balanced`, `CFIS`, `HRV, 55%`, `HRV, 60%`, `HRV, 65%`, `HRV, 70%`, `HRV, 75%`, `HRV, 80%`, `HRV, 85%`, `ERV, 55%`, `ERV, 60%`, `ERV, 65%`, `ERV, 70%`, `ERV, 75%`, `ERV, 80%`, `ERV, 85%`
+- **Choices:** <br/>  - `None`<br/>  - `Exhaust Only`<br/>  - `Supply Only`<br/>  - `Balanced`<br/>  - `CFIS`<br/>  - `HRV, 55%`<br/>  - `HRV, 60%`<br/>  - `HRV, 65%`<br/>  - `HRV, 70%`<br/>  - `HRV, 75%`<br/>  - `HRV, 80%`<br/>  - `HRV, 85%`<br/>  - `ERV, 55%`<br/>  - `ERV, 60%`<br/>  - `ERV, 65%`<br/>  - `ERV, 70%`<br/>  - `ERV, 75%`<br/>  - `ERV, 80%`<br/>  - `ERV, 85%`
 
 
 - **Default:** `None`
@@ -1246,7 +1254,7 @@ The type of kitchen exhaust fan used for local ventilation.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Default`, `100 cfm, 1 hr/day`, `100 cfm, 2 hrs/day`, `200 cfm, 1 hr/day`, `200 cfm, 2 hrs/day`, `300 cfm, 1 hr/day`, `300 cfm, 2 hrs/day`, `Detailed Example: 100 cfm, 1.5 hrs/day @ 6pm, 30 W`
+- **Choices:** <br/>  - `None`<br/>  - `Default`<br/>  - `100 cfm, 1 hr/day`<br/>  - `100 cfm, 2 hrs/day`<br/>  - `200 cfm, 1 hr/day`<br/>  - `200 cfm, 2 hrs/day`<br/>  - `300 cfm, 1 hr/day`<br/>  - `300 cfm, 2 hrs/day`<br/>  - `Detailed Example: 100 cfm, 1.5 hrs/day @ 6pm, 30 W`
 
 
 - **Default:** `None`
@@ -1262,7 +1270,7 @@ The type of bathroom exhaust fans used for local ventilation.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Default`, `50 cfm/bathroom, 1 hr/day`, `50 cfm/bathroom, 2 hrs/day`, `80 cfm/bathroom, 1 hr/day`, `80 cfm/bathroom, 2 hrs/day`, `100 cfm/bathroom, 1 hr/day`, `100 cfm/bathroom, 2 hrs/day`, `Detailed Example: 50 cfm/bathroom, 1.5 hrs/day @ 7am, 15 W`
+- **Choices:** <br/>  - `None`<br/>  - `Default`<br/>  - `50 cfm/bathroom, 1 hr/day`<br/>  - `50 cfm/bathroom, 2 hrs/day`<br/>  - `80 cfm/bathroom, 1 hr/day`<br/>  - `80 cfm/bathroom, 2 hrs/day`<br/>  - `100 cfm/bathroom, 1 hr/day`<br/>  - `100 cfm/bathroom, 2 hrs/day`<br/>  - `Detailed Example: 50 cfm/bathroom, 1.5 hrs/day @ 7am, 15 W`
 
 
 - **Default:** `None`
@@ -1278,7 +1286,7 @@ The type of whole house fans used for seasonal cooling load reduction.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `1000 cfm`, `1500 cfm`, `2000 cfm`, `2500 cfm`, `3000 cfm`, `3500 cfm`, `4000 cfm`, `4500 cfm`, `5000 cfm`, `5500 cfm`, `6000 cfm`, `Detailed Example: 4500 cfm, 300 W`
+- **Choices:** <br/>  - `None`<br/>  - `1000 cfm`<br/>  - `1500 cfm`<br/>  - `2000 cfm`<br/>  - `2500 cfm`<br/>  - `3000 cfm`<br/>  - `3500 cfm`<br/>  - `4000 cfm`<br/>  - `4500 cfm`<br/>  - `5000 cfm`<br/>  - `5500 cfm`<br/>  - `6000 cfm`<br/>  - `Detailed Example: 4500 cfm, 300 W`
 
 
 - **Default:** `None`
@@ -1294,7 +1302,7 @@ The type and efficiency of the water heater.
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Electricity, Tank, UEF 0.90`, `Electricity, Tank, UEF 0.92`, `Electricity, Tank, UEF 0.94`, `Electricity, Tankless, UEF 0.94`, `Electricity, Tankless, UEF 0.98`, `Electricity, Heat Pump, UEF 3.50`, `Electricity, Heat Pump, UEF 3.75`, `Electricity, Heat Pump, UEF 4.00`, `Natural Gas, Tank, UEF 0.57`, `Natural Gas, Tank, UEF 0.60`, `Natural Gas, Tank, UEF 0.64`, `Natural Gas, Tank, UEF 0.67`, `Natural Gas, Tank, UEF 0.70`, `Natural Gas, Tank, UEF 0.80`, `Natural Gas, Tankless, UEF 0.82`, `Natural Gas, Tankless, UEF 0.93`, `Natural Gas, Tankless, UEF 0.96`, `Fuel Oil, Tank, UEF 0.61`, `Fuel Oil, Tank, UEF 0.64`, `Fuel Oil, Tank, UEF 0.67`, `Propane, Tank, UEF 0.57`, `Propane, Tank, UEF 0.60`, `Propane, Tank, UEF 0.64`, `Propane, Tank, UEF 0.67`, `Propane, Tank, UEF 0.70`, `Propane, Tank, UEF 0.80`, `Propane, Tankless, UEF 0.82`, `Propane, Tankless, UEF 0.93`, `Propane, Tankless, UEF 0.96`, `Wood, Tank, UEF 0.60`, `Coal, Tank, UEF 0.60`, `Space-Heating Boiler w/ Storage Tank`, `Space-Heating Boiler w/ Tankless Coil`, `Detailed Example: Electricity, Tank, 40 gal, EF 0.93`, `Detailed Example: Electricity, Tank, UEF 0.94, 135F`, `Detailed Example: Electricity, Tankless, EF 0.96`, `Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78`, `Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76`, `Detailed Example: Natural Gas, Tankless, EF 0.95`
+- **Choices:** <br/>  - `None`<br/>  - `Electricity, Tank, UEF 0.90`<br/>  - `Electricity, Tank, UEF 0.92`<br/>  - `Electricity, Tank, UEF 0.94`<br/>  - `Electricity, Tankless, UEF 0.94`<br/>  - `Electricity, Tankless, UEF 0.98`<br/>  - `Electricity, Heat Pump, UEF 3.50`<br/>  - `Electricity, Heat Pump, UEF 3.75`<br/>  - `Electricity, Heat Pump, UEF 4.00`<br/>  - `Natural Gas, Tank, UEF 0.57`<br/>  - `Natural Gas, Tank, UEF 0.60`<br/>  - `Natural Gas, Tank, UEF 0.64`<br/>  - `Natural Gas, Tank, UEF 0.67`<br/>  - `Natural Gas, Tank, UEF 0.70`<br/>  - `Natural Gas, Tank, UEF 0.80`<br/>  - `Natural Gas, Tankless, UEF 0.82`<br/>  - `Natural Gas, Tankless, UEF 0.93`<br/>  - `Natural Gas, Tankless, UEF 0.96`<br/>  - `Fuel Oil, Tank, UEF 0.61`<br/>  - `Fuel Oil, Tank, UEF 0.64`<br/>  - `Fuel Oil, Tank, UEF 0.67`<br/>  - `Propane, Tank, UEF 0.57`<br/>  - `Propane, Tank, UEF 0.60`<br/>  - `Propane, Tank, UEF 0.64`<br/>  - `Propane, Tank, UEF 0.67`<br/>  - `Propane, Tank, UEF 0.70`<br/>  - `Propane, Tank, UEF 0.80`<br/>  - `Propane, Tankless, UEF 0.82`<br/>  - `Propane, Tankless, UEF 0.93`<br/>  - `Propane, Tankless, UEF 0.96`<br/>  - `Wood, Tank, UEF 0.60`<br/>  - `Coal, Tank, UEF 0.60`<br/>  - `Space-Heating Boiler w/ Storage Tank`<br/>  - `Space-Heating Boiler w/ Tankless Coil`<br/>  - `Detailed Example: Electricity, Tank, 40 gal, EF 0.93`<br/>  - `Detailed Example: Electricity, Tank, UEF 0.94, 135F`<br/>  - `Detailed Example: Electricity, Tankless, EF 0.96`<br/>  - `Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1`<br/>  - `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78`<br/>  - `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78`<br/>  - `Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76`<br/>  - `Detailed Example: Natural Gas, Tankless, EF 0.95`
 
 
 - **Default:** `Electricity, Tank, UEF 0.92`
@@ -1310,7 +1318,7 @@ The location of the water heater. Defaults based on the foundation/garage type.
 
 - **Required:** ``false``
 
-- **Choices:** `Default`, `Conditioned Space`, `Basement`, `Garage`, `Crawlspace`, `Attic`, `Other Heated Space`, `Outside`
+- **Choices:** <br/>  - `Default`<br/>  - `Conditioned Space`<br/>  - `Basement`<br/>  - `Garage`<br/>  - `Crawlspace`<br/>  - `Attic`<br/>  - `Other Heated Space`<br/>  - `Outside`
 
 
 - **Default:** `Default`
@@ -1326,7 +1334,7 @@ The type of domestic hot water distrubtion.
 
 - **Required:** ``false``
 
-- **Choices:** `Uninsulated, Standard`, `Uninsulated, Recirc, Uncontrolled`, `Uninsulated, Recirc, Timer Control`, `Uninsulated, Recirc, Temperature Control`, `Uninsulated, Recirc, Presence Sensor Demand Control`, `Uninsulated, Recirc, Manual Demand Control`, `Insulated, Standard`, `Insulated, Recirc, Uncontrolled`, `Insulated, Recirc, Timer Control`, `Insulated, Recirc, Temperature Control`, `Insulated, Recirc, Presence Sensor Demand Control`, `Insulated, Recirc, Manual Demand Control`, `Detailed Example: Insulated, Recirc, Uncontrolled, 156.9ft Loop, 10ft Branch, 50 W`, `Detailed Example: Insulated, Recirc, Manual Demand Control, 156.9ft Loop, 10ft Branch, 50 W`
+- **Choices:** <br/>  - `Uninsulated, Standard`<br/>  - `Uninsulated, Recirc, Uncontrolled`<br/>  - `Uninsulated, Recirc, Timer Control`<br/>  - `Uninsulated, Recirc, Temperature Control`<br/>  - `Uninsulated, Recirc, Presence Sensor Demand Control`<br/>  - `Uninsulated, Recirc, Manual Demand Control`<br/>  - `Insulated, Standard`<br/>  - `Insulated, Recirc, Uncontrolled`<br/>  - `Insulated, Recirc, Timer Control`<br/>  - `Insulated, Recirc, Temperature Control`<br/>  - `Insulated, Recirc, Presence Sensor Demand Control`<br/>  - `Insulated, Recirc, Manual Demand Control`<br/>  - `Detailed Example: Insulated, Recirc, Uncontrolled, 156.9ft Loop, 10ft Branch, 50 W`<br/>  - `Detailed Example: Insulated, Recirc, Manual Demand Control, 156.9ft Loop, 10ft Branch, 50 W`
 
 
 - **Default:** `Uninsulated, Standard`
@@ -1342,7 +1350,7 @@ The type and usage of domestic hot water fixtures.
 
 - **Required:** ``false``
 
-- **Choices:** `Standard, 25% Usage`, `Standard, 50% Usage`, `Standard, 75% Usage`, `Standard, 100% Usage`, `Standard, 125% Usage`, `Standard, 150% Usage`, `Standard, 175% Usage`, `Standard, 200% Usage`, `Standard, 400% Usage`, `Low Flow, 25% Usage`, `Low Flow, 50% Usage`, `Low Flow, 75% Usage`, `Low Flow, 100% Usage`, `Low Flow, 125% Usage`, `Low Flow, 150% Usage`, `Low Flow, 175% Usage`, `Low Flow, 200% Usage`, `Low Flow, 400% Usage`
+- **Choices:** <br/>  - `Standard, 25% Usage`<br/>  - `Standard, 50% Usage`<br/>  - `Standard, 75% Usage`<br/>  - `Standard, 100% Usage`<br/>  - `Standard, 125% Usage`<br/>  - `Standard, 150% Usage`<br/>  - `Standard, 175% Usage`<br/>  - `Standard, 200% Usage`<br/>  - `Standard, 400% Usage`<br/>  - `Low Flow, 25% Usage`<br/>  - `Low Flow, 50% Usage`<br/>  - `Low Flow, 75% Usage`<br/>  - `Low Flow, 100% Usage`<br/>  - `Low Flow, 125% Usage`<br/>  - `Low Flow, 150% Usage`<br/>  - `Low Flow, 175% Usage`<br/>  - `Low Flow, 200% Usage`<br/>  - `Low Flow, 400% Usage`
 
 
 - **Default:** `Standard, 100% Usage`
@@ -1358,7 +1366,7 @@ The type of drain water heater recovery.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `25% Efficient, Preheats Hot Only, All Showers`, `25% Efficient, Preheats Hot Only, 1 Shower`, `25% Efficient, Preheats Hot and Cold, All Showers`, `25% Efficient, Preheats Hot and Cold, 1 Shower`, `35% Efficient, Preheats Hot Only, All Showers`, `35% Efficient, Preheats Hot Only, 1 Shower`, `35% Efficient, Preheats Hot and Cold, All Showers`, `35% Efficient, Preheats Hot and Cold, 1 Shower`, `45% Efficient, Preheats Hot Only, All Showers`, `45% Efficient, Preheats Hot Only, 1 Shower`, `45% Efficient, Preheats Hot and Cold, All Showers`, `45% Efficient, Preheats Hot and Cold, 1 Shower`, `55% Efficient, Preheats Hot Only, All Showers`, `55% Efficient, Preheats Hot Only, 1 Shower`, `55% Efficient, Preheats Hot and Cold, All Showers`, `55% Efficient, Preheats Hot and Cold, 1 Shower`, `Detailed Example: 54% Efficient, Preheats Hot and Cold, All Showers`
+- **Choices:** <br/>  - `None`<br/>  - `25% Efficient, Preheats Hot Only, All Showers`<br/>  - `25% Efficient, Preheats Hot Only, 1 Shower`<br/>  - `25% Efficient, Preheats Hot and Cold, All Showers`<br/>  - `25% Efficient, Preheats Hot and Cold, 1 Shower`<br/>  - `35% Efficient, Preheats Hot Only, All Showers`<br/>  - `35% Efficient, Preheats Hot Only, 1 Shower`<br/>  - `35% Efficient, Preheats Hot and Cold, All Showers`<br/>  - `35% Efficient, Preheats Hot and Cold, 1 Shower`<br/>  - `45% Efficient, Preheats Hot Only, All Showers`<br/>  - `45% Efficient, Preheats Hot Only, 1 Shower`<br/>  - `45% Efficient, Preheats Hot and Cold, All Showers`<br/>  - `45% Efficient, Preheats Hot and Cold, 1 Shower`<br/>  - `55% Efficient, Preheats Hot Only, All Showers`<br/>  - `55% Efficient, Preheats Hot Only, 1 Shower`<br/>  - `55% Efficient, Preheats Hot and Cold, All Showers`<br/>  - `55% Efficient, Preheats Hot and Cold, 1 Shower`<br/>  - `Detailed Example: 54% Efficient, Preheats Hot and Cold, All Showers`
 
 
 - **Default:** `None`
@@ -1374,7 +1382,7 @@ The size and type of the solar thermal system for domestic hot water.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Indirect, Flat Plate, 40 sqft`, `Indirect, Flat Plate, 64 sqft`, `Direct, Flat Plate, 40 sqft`, `Direct. Flat Plate, 64 sqft`, `Direct, Integrated Collector Storage, 40 sqft`, `Direct, Integrated Collector Storage, 64 sqft`, `Direct, Evacuated Tube, 40 sqft`, `Direct, Evacuated Tube, 64 sqft`, `Thermosyphon, Flat Plate, 40 sqft`, `Thermosyphon, Flat Plate, 64 sqft`, `60% Solar Fraction`, `65% Solar Fraction`, `70% Solar Fraction`, `75% Solar Fraction`, `80% Solar Fraction`, `85% Solar Fraction`, `90% Solar Fraction`, `95% Solar Fraction`
+- **Choices:** <br/>  - `None`<br/>  - `Indirect, Flat Plate, 40 sqft`<br/>  - `Indirect, Flat Plate, 64 sqft`<br/>  - `Direct, Flat Plate, 40 sqft`<br/>  - `Direct. Flat Plate, 64 sqft`<br/>  - `Direct, Integrated Collector Storage, 40 sqft`<br/>  - `Direct, Integrated Collector Storage, 64 sqft`<br/>  - `Direct, Evacuated Tube, 40 sqft`<br/>  - `Direct, Evacuated Tube, 64 sqft`<br/>  - `Thermosyphon, Flat Plate, 40 sqft`<br/>  - `Thermosyphon, Flat Plate, 64 sqft`<br/>  - `60% Solar Fraction`<br/>  - `65% Solar Fraction`<br/>  - `70% Solar Fraction`<br/>  - `75% Solar Fraction`<br/>  - `80% Solar Fraction`<br/>  - `85% Solar Fraction`<br/>  - `90% Solar Fraction`<br/>  - `95% Solar Fraction`
 
 
 - **Default:** `None`
@@ -1390,7 +1398,7 @@ The azimuth and tilt of the solar thermal system collectors.
 
 - **Required:** ``false``
 
-- **Choices:** `Roof Pitch, West`, `Roof Pitch, Southwest`, `Roof Pitch, South`, `Roof Pitch, Southeast`, `Roof Pitch, East`, `Roof Pitch, Northeast`, `Roof Pitch, North`, `Roof Pitch, Northwest`, `0 Degrees`, `5 Degrees, West`, `5 Degrees, Southwest`, `5 Degrees, South`, `5 Degrees, Southeast`, `5 Degrees, East`, `10 Degrees, West`, `10 Degrees, Southwest`, `10 Degrees, South`, `10 Degrees, Southeast`, `10 Degrees, East`, `15 Degrees, West`, `15 Degrees, Southwest`, `15 Degrees, South`, `15 Degrees, Southeast`, `15 Degrees, East`, `20 Degrees, West`, `20 Degrees, Southwest`, `20 Degrees, South`, `20 Degrees, Southeast`, `20 Degrees, East`, `25 Degrees, West`, `25 Degrees, Southwest`, `25 Degrees, South`, `25 Degrees, Southeast`, `25 Degrees, East`, `30 Degrees, West`, `30 Degrees, Southwest`, `30 Degrees, South`, `30 Degrees, Southeast`, `30 Degrees, East`, `35 Degrees, West`, `35 Degrees, Southwest`, `35 Degrees, South`, `35 Degrees, Southeast`, `35 Degrees, East`, `40 Degrees, West`, `40 Degrees, Southwest`, `40 Degrees, South`, `40 Degrees, Southeast`, `40 Degrees, East`, `45 Degrees, West`, `45 Degrees, Southwest`, `45 Degrees, South`, `45 Degrees, Southeast`, `45 Degrees, East`, `50 Degrees, West`, `50 Degrees, Southwest`, `50 Degrees, South`, `50 Degrees, Southeast`, `50 Degrees, East`
+- **Choices:** <br/>  - `Roof Pitch, West`<br/>  - `Roof Pitch, Southwest`<br/>  - `Roof Pitch, South`<br/>  - `Roof Pitch, Southeast`<br/>  - `Roof Pitch, East`<br/>  - `Roof Pitch, Northeast`<br/>  - `Roof Pitch, North`<br/>  - `Roof Pitch, Northwest`<br/>  - `0 Degrees`<br/>  - `5 Degrees, West`<br/>  - `5 Degrees, Southwest`<br/>  - `5 Degrees, South`<br/>  - `5 Degrees, Southeast`<br/>  - `5 Degrees, East`<br/>  - `10 Degrees, West`<br/>  - `10 Degrees, Southwest`<br/>  - `10 Degrees, South`<br/>  - `10 Degrees, Southeast`<br/>  - `10 Degrees, East`<br/>  - `15 Degrees, West`<br/>  - `15 Degrees, Southwest`<br/>  - `15 Degrees, South`<br/>  - `15 Degrees, Southeast`<br/>  - `15 Degrees, East`<br/>  - `20 Degrees, West`<br/>  - `20 Degrees, Southwest`<br/>  - `20 Degrees, South`<br/>  - `20 Degrees, Southeast`<br/>  - `20 Degrees, East`<br/>  - `25 Degrees, West`<br/>  - `25 Degrees, Southwest`<br/>  - `25 Degrees, South`<br/>  - `25 Degrees, Southeast`<br/>  - `25 Degrees, East`<br/>  - `30 Degrees, West`<br/>  - `30 Degrees, Southwest`<br/>  - `30 Degrees, South`<br/>  - `30 Degrees, Southeast`<br/>  - `30 Degrees, East`<br/>  - `35 Degrees, West`<br/>  - `35 Degrees, Southwest`<br/>  - `35 Degrees, South`<br/>  - `35 Degrees, Southeast`<br/>  - `35 Degrees, East`<br/>  - `40 Degrees, West`<br/>  - `40 Degrees, Southwest`<br/>  - `40 Degrees, South`<br/>  - `40 Degrees, Southeast`<br/>  - `40 Degrees, East`<br/>  - `45 Degrees, West`<br/>  - `45 Degrees, Southwest`<br/>  - `45 Degrees, South`<br/>  - `45 Degrees, Southeast`<br/>  - `45 Degrees, East`<br/>  - `50 Degrees, West`<br/>  - `50 Degrees, Southwest`<br/>  - `50 Degrees, South`<br/>  - `50 Degrees, Southeast`<br/>  - `50 Degrees, East`
 
 
 - **Default:** `Roof Pitch, South`
@@ -1406,7 +1414,7 @@ The size and type of the PV system.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `0.5 kW`, `1.0 kW`, `1.5 kW`, `2.0 kW`, `2.5 kW`, `3.0 kW`, `3.5 kW`, `4.0 kW`, `4.5 kW`, `5.0 kW`, `5.5 kW`, `6.0 kW`, `6.5 kW`, `7.0 kW`, `7.5 kW`, `8.0 kW`, `8.5 kW`, `9.0 kW`, `9.5 kW`, `10.0 kW`, `10.5 kW`, `11.0 kW`, `11.5 kW`, `12.0 kW`, `12.5 kW`, `13.0 kW`, `13.5 kW`, `14.0 kW`, `14.5 kW`, `15.0 kW`, `Detailed Example: 10.0 kW, Standard, 14% System Losses, 96% Inverter Efficiency`, `Detailed Example: 1.5 kW, Premium`, `Detailed Example: 1.5 kW, Thin Film`
+- **Choices:** <br/>  - `None`<br/>  - `0.5 kW`<br/>  - `1.0 kW`<br/>  - `1.5 kW`<br/>  - `2.0 kW`<br/>  - `2.5 kW`<br/>  - `3.0 kW`<br/>  - `3.5 kW`<br/>  - `4.0 kW`<br/>  - `4.5 kW`<br/>  - `5.0 kW`<br/>  - `5.5 kW`<br/>  - `6.0 kW`<br/>  - `6.5 kW`<br/>  - `7.0 kW`<br/>  - `7.5 kW`<br/>  - `8.0 kW`<br/>  - `8.5 kW`<br/>  - `9.0 kW`<br/>  - `9.5 kW`<br/>  - `10.0 kW`<br/>  - `10.5 kW`<br/>  - `11.0 kW`<br/>  - `11.5 kW`<br/>  - `12.0 kW`<br/>  - `12.5 kW`<br/>  - `13.0 kW`<br/>  - `13.5 kW`<br/>  - `14.0 kW`<br/>  - `14.5 kW`<br/>  - `15.0 kW`<br/>  - `Detailed Example: 10.0 kW, Standard, 14% System Losses, 96% Inverter Efficiency`<br/>  - `Detailed Example: 1.5 kW, Premium`<br/>  - `Detailed Example: 1.5 kW, Thin Film`
 
 
 - **Default:** `None`
@@ -1422,7 +1430,7 @@ The azimuth and tilt of the PV system array.
 
 - **Required:** ``false``
 
-- **Choices:** `Roof Pitch, West`, `Roof Pitch, Southwest`, `Roof Pitch, South`, `Roof Pitch, Southeast`, `Roof Pitch, East`, `Roof Pitch, Northeast`, `Roof Pitch, North`, `Roof Pitch, Northwest`, `0 Degrees`, `5 Degrees, West`, `5 Degrees, Southwest`, `5 Degrees, South`, `5 Degrees, Southeast`, `5 Degrees, East`, `10 Degrees, West`, `10 Degrees, Southwest`, `10 Degrees, South`, `10 Degrees, Southeast`, `10 Degrees, East`, `15 Degrees, West`, `15 Degrees, Southwest`, `15 Degrees, South`, `15 Degrees, Southeast`, `15 Degrees, East`, `20 Degrees, West`, `20 Degrees, Southwest`, `20 Degrees, South`, `20 Degrees, Southeast`, `20 Degrees, East`, `25 Degrees, West`, `25 Degrees, Southwest`, `25 Degrees, South`, `25 Degrees, Southeast`, `25 Degrees, East`, `30 Degrees, West`, `30 Degrees, Southwest`, `30 Degrees, South`, `30 Degrees, Southeast`, `30 Degrees, East`, `35 Degrees, West`, `35 Degrees, Southwest`, `35 Degrees, South`, `35 Degrees, Southeast`, `35 Degrees, East`, `40 Degrees, West`, `40 Degrees, Southwest`, `40 Degrees, South`, `40 Degrees, Southeast`, `40 Degrees, East`, `45 Degrees, West`, `45 Degrees, Southwest`, `45 Degrees, South`, `45 Degrees, Southeast`, `45 Degrees, East`, `50 Degrees, West`, `50 Degrees, Southwest`, `50 Degrees, South`, `50 Degrees, Southeast`, `50 Degrees, East`
+- **Choices:** <br/>  - `Roof Pitch, West`<br/>  - `Roof Pitch, Southwest`<br/>  - `Roof Pitch, South`<br/>  - `Roof Pitch, Southeast`<br/>  - `Roof Pitch, East`<br/>  - `Roof Pitch, Northeast`<br/>  - `Roof Pitch, North`<br/>  - `Roof Pitch, Northwest`<br/>  - `0 Degrees`<br/>  - `5 Degrees, West`<br/>  - `5 Degrees, Southwest`<br/>  - `5 Degrees, South`<br/>  - `5 Degrees, Southeast`<br/>  - `5 Degrees, East`<br/>  - `10 Degrees, West`<br/>  - `10 Degrees, Southwest`<br/>  - `10 Degrees, South`<br/>  - `10 Degrees, Southeast`<br/>  - `10 Degrees, East`<br/>  - `15 Degrees, West`<br/>  - `15 Degrees, Southwest`<br/>  - `15 Degrees, South`<br/>  - `15 Degrees, Southeast`<br/>  - `15 Degrees, East`<br/>  - `20 Degrees, West`<br/>  - `20 Degrees, Southwest`<br/>  - `20 Degrees, South`<br/>  - `20 Degrees, Southeast`<br/>  - `20 Degrees, East`<br/>  - `25 Degrees, West`<br/>  - `25 Degrees, Southwest`<br/>  - `25 Degrees, South`<br/>  - `25 Degrees, Southeast`<br/>  - `25 Degrees, East`<br/>  - `30 Degrees, West`<br/>  - `30 Degrees, Southwest`<br/>  - `30 Degrees, South`<br/>  - `30 Degrees, Southeast`<br/>  - `30 Degrees, East`<br/>  - `35 Degrees, West`<br/>  - `35 Degrees, Southwest`<br/>  - `35 Degrees, South`<br/>  - `35 Degrees, Southeast`<br/>  - `35 Degrees, East`<br/>  - `40 Degrees, West`<br/>  - `40 Degrees, Southwest`<br/>  - `40 Degrees, South`<br/>  - `40 Degrees, Southeast`<br/>  - `40 Degrees, East`<br/>  - `45 Degrees, West`<br/>  - `45 Degrees, Southwest`<br/>  - `45 Degrees, South`<br/>  - `45 Degrees, Southeast`<br/>  - `45 Degrees, East`<br/>  - `50 Degrees, West`<br/>  - `50 Degrees, Southwest`<br/>  - `50 Degrees, South`<br/>  - `50 Degrees, Southeast`<br/>  - `50 Degrees, East`
 
 
 - **Default:** `Roof Pitch, South`
@@ -1438,7 +1446,7 @@ The size and type of the second PV system.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `0.5 kW`, `1.0 kW`, `1.5 kW`, `2.0 kW`, `2.5 kW`, `3.0 kW`, `3.5 kW`, `4.0 kW`, `4.5 kW`, `5.0 kW`, `5.5 kW`, `6.0 kW`, `6.5 kW`, `7.0 kW`, `7.5 kW`, `8.0 kW`, `8.5 kW`, `9.0 kW`, `9.5 kW`, `10.0 kW`, `10.5 kW`, `11.0 kW`, `11.5 kW`, `12.0 kW`, `12.5 kW`, `13.0 kW`, `13.5 kW`, `14.0 kW`, `14.5 kW`, `15.0 kW`, `Detailed Example: 10.0 kW, Standard, 14% System Losses`, `Detailed Example: 1.5 kW, Premium`, `Detailed Example: 1.5 kW, Thin Film`
+- **Choices:** <br/>  - `None`<br/>  - `0.5 kW`<br/>  - `1.0 kW`<br/>  - `1.5 kW`<br/>  - `2.0 kW`<br/>  - `2.5 kW`<br/>  - `3.0 kW`<br/>  - `3.5 kW`<br/>  - `4.0 kW`<br/>  - `4.5 kW`<br/>  - `5.0 kW`<br/>  - `5.5 kW`<br/>  - `6.0 kW`<br/>  - `6.5 kW`<br/>  - `7.0 kW`<br/>  - `7.5 kW`<br/>  - `8.0 kW`<br/>  - `8.5 kW`<br/>  - `9.0 kW`<br/>  - `9.5 kW`<br/>  - `10.0 kW`<br/>  - `10.5 kW`<br/>  - `11.0 kW`<br/>  - `11.5 kW`<br/>  - `12.0 kW`<br/>  - `12.5 kW`<br/>  - `13.0 kW`<br/>  - `13.5 kW`<br/>  - `14.0 kW`<br/>  - `14.5 kW`<br/>  - `15.0 kW`<br/>  - `Detailed Example: 10.0 kW, Standard, 14% System Losses`<br/>  - `Detailed Example: 1.5 kW, Premium`<br/>  - `Detailed Example: 1.5 kW, Thin Film`
 
 
 - **Default:** `None`
@@ -1454,7 +1462,7 @@ The azimuth and tilt of the second PV system array.
 
 - **Required:** ``false``
 
-- **Choices:** `Roof Pitch, West`, `Roof Pitch, Southwest`, `Roof Pitch, South`, `Roof Pitch, Southeast`, `Roof Pitch, East`, `Roof Pitch, Northeast`, `Roof Pitch, North`, `Roof Pitch, Northwest`, `0 Degrees`, `5 Degrees, West`, `5 Degrees, Southwest`, `5 Degrees, South`, `5 Degrees, Southeast`, `5 Degrees, East`, `10 Degrees, West`, `10 Degrees, Southwest`, `10 Degrees, South`, `10 Degrees, Southeast`, `10 Degrees, East`, `15 Degrees, West`, `15 Degrees, Southwest`, `15 Degrees, South`, `15 Degrees, Southeast`, `15 Degrees, East`, `20 Degrees, West`, `20 Degrees, Southwest`, `20 Degrees, South`, `20 Degrees, Southeast`, `20 Degrees, East`, `25 Degrees, West`, `25 Degrees, Southwest`, `25 Degrees, South`, `25 Degrees, Southeast`, `25 Degrees, East`, `30 Degrees, West`, `30 Degrees, Southwest`, `30 Degrees, South`, `30 Degrees, Southeast`, `30 Degrees, East`, `35 Degrees, West`, `35 Degrees, Southwest`, `35 Degrees, South`, `35 Degrees, Southeast`, `35 Degrees, East`, `40 Degrees, West`, `40 Degrees, Southwest`, `40 Degrees, South`, `40 Degrees, Southeast`, `40 Degrees, East`, `45 Degrees, West`, `45 Degrees, Southwest`, `45 Degrees, South`, `45 Degrees, Southeast`, `45 Degrees, East`, `50 Degrees, West`, `50 Degrees, Southwest`, `50 Degrees, South`, `50 Degrees, Southeast`, `50 Degrees, East`
+- **Choices:** <br/>  - `Roof Pitch, West`<br/>  - `Roof Pitch, Southwest`<br/>  - `Roof Pitch, South`<br/>  - `Roof Pitch, Southeast`<br/>  - `Roof Pitch, East`<br/>  - `Roof Pitch, Northeast`<br/>  - `Roof Pitch, North`<br/>  - `Roof Pitch, Northwest`<br/>  - `0 Degrees`<br/>  - `5 Degrees, West`<br/>  - `5 Degrees, Southwest`<br/>  - `5 Degrees, South`<br/>  - `5 Degrees, Southeast`<br/>  - `5 Degrees, East`<br/>  - `10 Degrees, West`<br/>  - `10 Degrees, Southwest`<br/>  - `10 Degrees, South`<br/>  - `10 Degrees, Southeast`<br/>  - `10 Degrees, East`<br/>  - `15 Degrees, West`<br/>  - `15 Degrees, Southwest`<br/>  - `15 Degrees, South`<br/>  - `15 Degrees, Southeast`<br/>  - `15 Degrees, East`<br/>  - `20 Degrees, West`<br/>  - `20 Degrees, Southwest`<br/>  - `20 Degrees, South`<br/>  - `20 Degrees, Southeast`<br/>  - `20 Degrees, East`<br/>  - `25 Degrees, West`<br/>  - `25 Degrees, Southwest`<br/>  - `25 Degrees, South`<br/>  - `25 Degrees, Southeast`<br/>  - `25 Degrees, East`<br/>  - `30 Degrees, West`<br/>  - `30 Degrees, Southwest`<br/>  - `30 Degrees, South`<br/>  - `30 Degrees, Southeast`<br/>  - `30 Degrees, East`<br/>  - `35 Degrees, West`<br/>  - `35 Degrees, Southwest`<br/>  - `35 Degrees, South`<br/>  - `35 Degrees, Southeast`<br/>  - `35 Degrees, East`<br/>  - `40 Degrees, West`<br/>  - `40 Degrees, Southwest`<br/>  - `40 Degrees, South`<br/>  - `40 Degrees, Southeast`<br/>  - `40 Degrees, East`<br/>  - `45 Degrees, West`<br/>  - `45 Degrees, Southwest`<br/>  - `45 Degrees, South`<br/>  - `45 Degrees, Southeast`<br/>  - `45 Degrees, East`<br/>  - `50 Degrees, West`<br/>  - `50 Degrees, Southwest`<br/>  - `50 Degrees, South`<br/>  - `50 Degrees, Southeast`<br/>  - `50 Degrees, East`
 
 
 - **Default:** `Roof Pitch, South`
@@ -1470,7 +1478,7 @@ The size and type of battery storage.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `5.0 kWh`, `7.5 kWh`, `10.0 kWh`, `12.5 kWh`, `15.0 kWh`, `17.5 kWh`, `20.0 kWh`, `Detailed Example: 20.0 kWh, 6 kW, Garage`, `Detailed Example: 20.0 kWh, 6 kW, Outside`, `Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency`
+- **Choices:** <br/>  - `None`<br/>  - `5.0 kWh`<br/>  - `7.5 kWh`<br/>  - `10.0 kWh`<br/>  - `12.5 kWh`<br/>  - `15.0 kWh`<br/>  - `17.5 kWh`<br/>  - `20.0 kWh`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Garage`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Outside`<br/>  - `Detailed Example: 20.0 kWh, 6 kW, Outside, 80% Efficiency`
 
 
 - **Default:** `None`
@@ -1486,7 +1494,7 @@ The type of battery electric vehicle.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Compact, 200 Mile Range, 10% Usage`, `Compact, 200 Mile Range, 25% Usage`, `Compact, 200 Mile Range, 50% Usage`, `Compact, 200 Mile Range, 75% Usage`, `Compact, 200 Mile Range, 100% Usage`, `Compact, 200 Mile Range, 125% Usage`, `Compact, 200 Mile Range, 150% Usage`, `Compact, 200 Mile Range, 175% Usage`, `Compact, 200 Mile Range, 200% Usage`, `Compact, 300 Mile Range, 10% Usage`, `Compact, 300 Mile Range, 25% Usage`, `Compact, 300 Mile Range, 50% Usage`, `Compact, 300 Mile Range, 75% Usage`, `Compact, 300 Mile Range, 100% Usage`, `Compact, 300 Mile Range, 125% Usage`, `Compact, 300 Mile Range, 150% Usage`, `Compact, 300 Mile Range, 175% Usage`, `Compact, 300 Mile Range, 200% Usage`, `Midsize, 200 Mile Range, 10% Usage`, `Midsize, 200 Mile Range, 25% Usage`, `Midsize, 200 Mile Range, 50% Usage`, `Midsize, 200 Mile Range, 75% Usage`, `Midsize, 200 Mile Range, 100% Usage`, `Midsize, 200 Mile Range, 125% Usage`, `Midsize, 200 Mile Range, 150% Usage`, `Midsize, 200 Mile Range, 175% Usage`, `Midsize, 200 Mile Range, 200% Usage`, `Midsize, 300 Mile Range, 10% Usage`, `Midsize, 300 Mile Range, 25% Usage`, `Midsize, 300 Mile Range, 50% Usage`, `Midsize, 300 Mile Range, 75% Usage`, `Midsize, 300 Mile Range, 100% Usage`, `Midsize, 300 Mile Range, 125% Usage`, `Midsize, 300 Mile Range, 150% Usage`, `Midsize, 300 Mile Range, 175% Usage`, `Midsize, 300 Mile Range, 200% Usage`, `Pickup, 200 Mile Range, 10% Usage`, `Pickup, 200 Mile Range, 25% Usage`, `Pickup, 200 Mile Range, 50% Usage`, `Pickup, 200 Mile Range, 75% Usage`, `Pickup, 200 Mile Range, 100% Usage`, `Pickup, 200 Mile Range, 125% Usage`, `Pickup, 200 Mile Range, 150% Usage`, `Pickup, 200 Mile Range, 175% Usage`, `Pickup, 200 Mile Range, 200% Usage`, `Pickup, 300 Mile Range, 10% Usage`, `Pickup, 300 Mile Range, 25% Usage`, `Pickup, 300 Mile Range, 50% Usage`, `Pickup, 300 Mile Range, 75% Usage`, `Pickup, 300 Mile Range, 100% Usage`, `Pickup, 300 Mile Range, 125% Usage`, `Pickup, 300 Mile Range, 150% Usage`, `Pickup, 300 Mile Range, 175% Usage`, `Pickup, 300 Mile Range, 200% Usage`, `SUV, 200 Mile Range, 10% Usage`, `SUV, 200 Mile Range, 25% Usage`, `SUV, 200 Mile Range, 50% Usage`, `SUV, 200 Mile Range, 75% Usage`, `SUV, 200 Mile Range, 100% Usage`, `SUV, 200 Mile Range, 125% Usage`, `SUV, 200 Mile Range, 150% Usage`, `SUV, 200 Mile Range, 175% Usage`, `SUV, 200 Mile Range, 200% Usage`, `SUV, 300 Mile Range, 10% Usage`, `SUV, 300 Mile Range, 25% Usage`, `SUV, 300 Mile Range, 50% Usage`, `SUV, 300 Mile Range, 75% Usage`, `SUV, 300 Mile Range, 100% Usage`, `SUV, 300 Mile Range, 125% Usage`, `SUV, 300 Mile Range, 150% Usage`, `SUV, 300 Mile Range, 175% Usage`, `SUV, 300 Mile Range, 200% Usage`, `Detailed Example: 100 kWh battery, 0.25 kWh/mile`, `Detailed Example: 100 kWh battery, 4.0 miles/kWh`, `Detailed Example: 100 kWh battery, 135.0 mpge`
+- **Choices:** <br/>  - `None`<br/>  - `Compact, 200 Mile Range, 1000 miles/yr`<br/>  - `Compact, 200 Mile Range, 3000 miles/yr`<br/>  - `Compact, 200 Mile Range, 5000 miles/yr`<br/>  - `Compact, 200 Mile Range, 7000 miles/yr`<br/>  - `Compact, 200 Mile Range, 9000 miles/yr`<br/>  - `Compact, 200 Mile Range, 11000 miles/yr`<br/>  - `Compact, 200 Mile Range, 13000 miles/yr`<br/>  - `Compact, 200 Mile Range, 15000 miles/yr`<br/>  - `Compact, 200 Mile Range, 17000 miles/yr`<br/>  - `Compact, 200 Mile Range, 19000 miles/yr`<br/>  - `Compact, 200 Mile Range, 22500 miles/yr`<br/>  - `Compact, 300 Mile Range, 1000 miles/yr`<br/>  - `Compact, 300 Mile Range, 3000 miles/yr`<br/>  - `Compact, 300 Mile Range, 5000 miles/yr`<br/>  - `Compact, 300 Mile Range, 7000 miles/yr`<br/>  - `Compact, 300 Mile Range, 9000 miles/yr`<br/>  - `Compact, 300 Mile Range, 11000 miles/yr`<br/>  - `Compact, 300 Mile Range, 13000 miles/yr`<br/>  - `Compact, 300 Mile Range, 15000 miles/yr`<br/>  - `Compact, 300 Mile Range, 17000 miles/yr`<br/>  - `Compact, 300 Mile Range, 19000 miles/yr`<br/>  - `Compact, 300 Mile Range, 22500 miles/yr`<br/>  - `Midsize, 200 Mile Range, 1000 miles/yr`<br/>  - `Midsize, 200 Mile Range, 3000 miles/yr`<br/>  - `Midsize, 200 Mile Range, 5000 miles/yr`<br/>  - `Midsize, 200 Mile Range, 7000 miles/yr`<br/>  - `Midsize, 200 Mile Range, 9000 miles/yr`<br/>  - `Midsize, 200 Mile Range, 11000 miles/yr`<br/>  - `Midsize, 200 Mile Range, 13000 miles/yr`<br/>  - `Midsize, 200 Mile Range, 15000 miles/yr`<br/>  - `Midsize, 200 Mile Range, 17000 miles/yr`<br/>  - `Midsize, 200 Mile Range, 19000 miles/yr`<br/>  - `Midsize, 200 Mile Range, 22500 miles/yr`<br/>  - `Midsize, 300 Mile Range, 1000 miles/yr`<br/>  - `Midsize, 300 Mile Range, 3000 miles/yr`<br/>  - `Midsize, 300 Mile Range, 5000 miles/yr`<br/>  - `Midsize, 300 Mile Range, 7000 miles/yr`<br/>  - `Midsize, 300 Mile Range, 9000 miles/yr`<br/>  - `Midsize, 300 Mile Range, 11000 miles/yr`<br/>  - `Midsize, 300 Mile Range, 13000 miles/yr`<br/>  - `Midsize, 300 Mile Range, 15000 miles/yr`<br/>  - `Midsize, 300 Mile Range, 17000 miles/yr`<br/>  - `Midsize, 300 Mile Range, 19000 miles/yr`<br/>  - `Midsize, 300 Mile Range, 22500 miles/yr`<br/>  - `Pickup, 200 Mile Range, 1000 miles/yr`<br/>  - `Pickup, 200 Mile Range, 3000 miles/yr`<br/>  - `Pickup, 200 Mile Range, 5000 miles/yr`<br/>  - `Pickup, 200 Mile Range, 7000 miles/yr`<br/>  - `Pickup, 200 Mile Range, 9000 miles/yr`<br/>  - `Pickup, 200 Mile Range, 11000 miles/yr`<br/>  - `Pickup, 200 Mile Range, 13000 miles/yr`<br/>  - `Pickup, 200 Mile Range, 15000 miles/yr`<br/>  - `Pickup, 200 Mile Range, 17000 miles/yr`<br/>  - `Pickup, 200 Mile Range, 19000 miles/yr`<br/>  - `Pickup, 200 Mile Range, 22500 miles/yr`<br/>  - `Pickup, 300 Mile Range, 1000 miles/yr`<br/>  - `Pickup, 300 Mile Range, 3000 miles/yr`<br/>  - `Pickup, 300 Mile Range, 5000 miles/yr`<br/>  - `Pickup, 300 Mile Range, 7000 miles/yr`<br/>  - `Pickup, 300 Mile Range, 9000 miles/yr`<br/>  - `Pickup, 300 Mile Range, 11000 miles/yr`<br/>  - `Pickup, 300 Mile Range, 13000 miles/yr`<br/>  - `Pickup, 300 Mile Range, 15000 miles/yr`<br/>  - `Pickup, 300 Mile Range, 17000 miles/yr`<br/>  - `Pickup, 300 Mile Range, 19000 miles/yr`<br/>  - `Pickup, 300 Mile Range, 22500 miles/yr`<br/>  - `SUV, 200 Mile Range, 1000 miles/yr`<br/>  - `SUV, 200 Mile Range, 3000 miles/yr`<br/>  - `SUV, 200 Mile Range, 5000 miles/yr`<br/>  - `SUV, 200 Mile Range, 7000 miles/yr`<br/>  - `SUV, 200 Mile Range, 9000 miles/yr`<br/>  - `SUV, 200 Mile Range, 11000 miles/yr`<br/>  - `SUV, 200 Mile Range, 13000 miles/yr`<br/>  - `SUV, 200 Mile Range, 15000 miles/yr`<br/>  - `SUV, 200 Mile Range, 17000 miles/yr`<br/>  - `SUV, 200 Mile Range, 19000 miles/yr`<br/>  - `SUV, 200 Mile Range, 22500 miles/yr`<br/>  - `SUV, 300 Mile Range, 1000 miles/yr`<br/>  - `SUV, 300 Mile Range, 3000 miles/yr`<br/>  - `SUV, 300 Mile Range, 5000 miles/yr`<br/>  - `SUV, 300 Mile Range, 7000 miles/yr`<br/>  - `SUV, 300 Mile Range, 9000 miles/yr`<br/>  - `SUV, 300 Mile Range, 11000 miles/yr`<br/>  - `SUV, 300 Mile Range, 13000 miles/yr`<br/>  - `SUV, 300 Mile Range, 15000 miles/yr`<br/>  - `SUV, 300 Mile Range, 17000 miles/yr`<br/>  - `SUV, 300 Mile Range, 19000 miles/yr`<br/>  - `SUV, 300 Mile Range, 22500 miles/yr`<br/>  - `Detailed Example: 100 kWh battery, 0.25 kWh/mile`<br/>  - `Detailed Example: 100 kWh battery, 4.0 miles/kWh`<br/>  - `Detailed Example: 100 kWh battery, 135.0 mpge`
 
 
 - **Default:** `None`
@@ -1502,7 +1510,7 @@ The type and usage of electric vehicle charger.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Level 1, 10% Charging at Home`, `Level 1, 30% Charging at Home`, `Level 1, 50% Charging at Home`, `Level 1, 70% Charging at Home`, `Level 1, 90% Charging at Home`, `Level 1, 100% Charging at Home`, `Level 2, 10% Charging at Home`, `Level 2, 30% Charging at Home`, `Level 2, 50% Charging at Home`, `Level 2, 70% Charging at Home`, `Level 2, 90% Charging at Home`, `Level 2, 100% Charging at Home`, `Detailed Example: Level 2, 7000 W, 75% Charging at Home`
+- **Choices:** <br/>  - `None`<br/>  - `Level 1, 10% Charging at Home`<br/>  - `Level 1, 30% Charging at Home`<br/>  - `Level 1, 50% Charging at Home`<br/>  - `Level 1, 70% Charging at Home`<br/>  - `Level 1, 90% Charging at Home`<br/>  - `Level 1, 100% Charging at Home`<br/>  - `Level 2, 10% Charging at Home`<br/>  - `Level 2, 30% Charging at Home`<br/>  - `Level 2, 50% Charging at Home`<br/>  - `Level 2, 70% Charging at Home`<br/>  - `Level 2, 90% Charging at Home`<br/>  - `Level 2, 100% Charging at Home`<br/>  - `Detailed Example: Level 2, 7000 W, 75% Charging at Home`
 
 
 - **Default:** `None`
@@ -1518,7 +1526,7 @@ The type and usage of clothes washer.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Standard, 2008-2017, 50% Usage`, `Standard, 2008-2017, 75% Usage`, `Standard, 2008-2017, 100% Usage`, `Standard, 2008-2017, 150% Usage`, `Standard, 2008-2017, 200% Usage`, `Standard, 2018-present, 50% Usage`, `Standard, 2018-present, 75% Usage`, `Standard, 2018-present, 100% Usage`, `Standard, 2018-present, 150% Usage`, `Standard, 2018-present, 200% Usage`, `EnergyStar, 2006-2017, 50% Usage`, `EnergyStar, 2006-2017, 75% Usage`, `EnergyStar, 2006-2017, 100% Usage`, `EnergyStar, 2006-2017, 150% Usage`, `EnergyStar, 2006-2017, 200% Usage`, `EnergyStar, 2018-present, 50% Usage`, `EnergyStar, 2018-present, 75% Usage`, `EnergyStar, 2018-present, 100% Usage`, `EnergyStar, 2018-present, 150% Usage`, `EnergyStar, 2018-present, 200% Usage`, `CEE Tier II, 2018, 50% Usage`, `CEE Tier II, 2018, 75% Usage`, `CEE Tier II, 2018, 100% Usage`, `CEE Tier II, 2018, 150% Usage`, `CEE Tier II, 2018, 200% Usage`, `Detailed Example: ERI Reference 2006`, `Detailed Example: MEF 1.65`, `Detailed Example: Standard, 2008-2017, Conditioned Basement`, `Detailed Example: Standard, 2008-2017, Unconditioned Basement`, `Detailed Example: Standard, 2008-2017, Garage`
+- **Choices:** <br/>  - `None`<br/>  - `Standard, 2008-2017, 50% Usage`<br/>  - `Standard, 2008-2017, 75% Usage`<br/>  - `Standard, 2008-2017, 100% Usage`<br/>  - `Standard, 2008-2017, 150% Usage`<br/>  - `Standard, 2008-2017, 200% Usage`<br/>  - `Standard, 2018-present, 50% Usage`<br/>  - `Standard, 2018-present, 75% Usage`<br/>  - `Standard, 2018-present, 100% Usage`<br/>  - `Standard, 2018-present, 150% Usage`<br/>  - `Standard, 2018-present, 200% Usage`<br/>  - `EnergyStar, 2006-2017, 50% Usage`<br/>  - `EnergyStar, 2006-2017, 75% Usage`<br/>  - `EnergyStar, 2006-2017, 100% Usage`<br/>  - `EnergyStar, 2006-2017, 150% Usage`<br/>  - `EnergyStar, 2006-2017, 200% Usage`<br/>  - `EnergyStar, 2018-present, 50% Usage`<br/>  - `EnergyStar, 2018-present, 75% Usage`<br/>  - `EnergyStar, 2018-present, 100% Usage`<br/>  - `EnergyStar, 2018-present, 150% Usage`<br/>  - `EnergyStar, 2018-present, 200% Usage`<br/>  - `CEE Tier II, 2018, 50% Usage`<br/>  - `CEE Tier II, 2018, 75% Usage`<br/>  - `CEE Tier II, 2018, 100% Usage`<br/>  - `CEE Tier II, 2018, 150% Usage`<br/>  - `CEE Tier II, 2018, 200% Usage`<br/>  - `Detailed Example: ERI Reference 2006`<br/>  - `Detailed Example: MEF 1.65`<br/>  - `Detailed Example: Standard, 2008-2017, Conditioned Basement`<br/>  - `Detailed Example: Standard, 2008-2017, Unconditioned Basement`<br/>  - `Detailed Example: Standard, 2008-2017, Garage`
 
 
 - **Default:** `Standard, 2008-2017, 100% Usage`
@@ -1534,7 +1542,7 @@ The type and usage of clothes dryer.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Electricity, Standard, 50% Usage`, `Electricity, Standard, 75% Usage`, `Electricity, Standard, 100% Usage`, `Electricity, Standard, 150% Usage`, `Electricity, Standard, 200% Usage`, `Electricity, Premium, 50% Usage`, `Electricity, Premium, 75% Usage`, `Electricity, Premium, 100% Usage`, `Electricity, Premium, 150% Usage`, `Electricity, Premium, 200% Usage`, `Electricity, Heat Pump, 50% Usage`, `Electricity, Heat Pump, 75% Usage`, `Electricity, Heat Pump, 100% Usage`, `Electricity, Heat Pump, 150% Usage`, `Electricity, Heat Pump, 200% Usage`, `Natural Gas, Standard, 50% Usage`, `Natural Gas, Standard, 75% Usage`, `Natural Gas, Standard, 100% Usage`, `Natural Gas, Standard, 150% Usage`, `Natural Gas, Standard, 200% Usage`, `Natural Gas, Premium, 50% Usage`, `Natural Gas, Premium, 75% Usage`, `Natural Gas, Premium, 100% Usage`, `Natural Gas, Premium, 150% Usage`, `Natural Gas, Premium, 200% Usage`, `Propane, Standard, 50% Usage`, `Propane, Standard, 75% Usage`, `Propane, Standard, 100% Usage`, `Propane, Standard, 150% Usage`, `Propane, Standard, 200% Usage`, `Detailed Example: Electricity, ERI Reference 2006`, `Detailed Example: Natural Gas, ERI Reference 2006`, `Detailed Example: Electricity, EF 4.29`, `Detailed Example: Electricity, Standard, Conditioned Basement`, `Detailed Example: Electricity, Standard, Unconditioned Basement`, `Detailed Example: Electricity, Standard, Garage`
+- **Choices:** <br/>  - `None`<br/>  - `Electricity, Standard, 50% Usage`<br/>  - `Electricity, Standard, 75% Usage`<br/>  - `Electricity, Standard, 100% Usage`<br/>  - `Electricity, Standard, 150% Usage`<br/>  - `Electricity, Standard, 200% Usage`<br/>  - `Electricity, Premium, 50% Usage`<br/>  - `Electricity, Premium, 75% Usage`<br/>  - `Electricity, Premium, 100% Usage`<br/>  - `Electricity, Premium, 150% Usage`<br/>  - `Electricity, Premium, 200% Usage`<br/>  - `Electricity, Heat Pump, 50% Usage`<br/>  - `Electricity, Heat Pump, 75% Usage`<br/>  - `Electricity, Heat Pump, 100% Usage`<br/>  - `Electricity, Heat Pump, 150% Usage`<br/>  - `Electricity, Heat Pump, 200% Usage`<br/>  - `Natural Gas, Standard, 50% Usage`<br/>  - `Natural Gas, Standard, 75% Usage`<br/>  - `Natural Gas, Standard, 100% Usage`<br/>  - `Natural Gas, Standard, 150% Usage`<br/>  - `Natural Gas, Standard, 200% Usage`<br/>  - `Natural Gas, Premium, 50% Usage`<br/>  - `Natural Gas, Premium, 75% Usage`<br/>  - `Natural Gas, Premium, 100% Usage`<br/>  - `Natural Gas, Premium, 150% Usage`<br/>  - `Natural Gas, Premium, 200% Usage`<br/>  - `Propane, Standard, 50% Usage`<br/>  - `Propane, Standard, 75% Usage`<br/>  - `Propane, Standard, 100% Usage`<br/>  - `Propane, Standard, 150% Usage`<br/>  - `Propane, Standard, 200% Usage`<br/>  - `Detailed Example: Electricity, ERI Reference 2006`<br/>  - `Detailed Example: Natural Gas, ERI Reference 2006`<br/>  - `Detailed Example: Electricity, EF 4.29`<br/>  - `Detailed Example: Electricity, Standard, Conditioned Basement`<br/>  - `Detailed Example: Electricity, Standard, Unconditioned Basement`<br/>  - `Detailed Example: Electricity, Standard, Garage`
 
 
 - **Default:** `Electricity, Standard, 100% Usage`
@@ -1550,7 +1558,7 @@ The type and usage of dishwasher.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Federal Minimum, Standard, 50% Usage`, `Federal Minimum, Standard, 75% Usage`, `Federal Minimum, Standard, 100% Usage`, `Federal Minimum, Standard, 150% Usage`, `Federal Minimum, Standard, 200% Usage`, `EnergyStar, Standard, 50% Usage`, `EnergyStar, Standard, 75% Usage`, `EnergyStar, Standard, 100% Usage`, `EnergyStar, Standard, 150% Usage`, `EnergyStar, Standard, 200% Usage`, `EnergyStar, Compact, 50% Usage`, `EnergyStar, Compact, 75% Usage`, `EnergyStar, Compact, 100% Usage`, `EnergyStar, Compact, 150% Usage`, `EnergyStar, Compact, 200% Usage`, `Detailed Example: ERI Reference 2006`, `Detailed Example: EF 0.7, Compact`, `Detailed Example: Federal Minimum, Standard, Conditioned Basement`, `Detailed Example: Federal Minimum, Standard, Unconditioned Basement`, `Detailed Example: Federal Minimum, Standard, Garage`
+- **Choices:** <br/>  - `None`<br/>  - `Federal Minimum, Standard, 50% Usage`<br/>  - `Federal Minimum, Standard, 75% Usage`<br/>  - `Federal Minimum, Standard, 100% Usage`<br/>  - `Federal Minimum, Standard, 150% Usage`<br/>  - `Federal Minimum, Standard, 200% Usage`<br/>  - `EnergyStar, Standard, 50% Usage`<br/>  - `EnergyStar, Standard, 75% Usage`<br/>  - `EnergyStar, Standard, 100% Usage`<br/>  - `EnergyStar, Standard, 150% Usage`<br/>  - `EnergyStar, Standard, 200% Usage`<br/>  - `EnergyStar, Compact, 50% Usage`<br/>  - `EnergyStar, Compact, 75% Usage`<br/>  - `EnergyStar, Compact, 100% Usage`<br/>  - `EnergyStar, Compact, 150% Usage`<br/>  - `EnergyStar, Compact, 200% Usage`<br/>  - `Detailed Example: ERI Reference 2006`<br/>  - `Detailed Example: EF 0.7, Compact`<br/>  - `Detailed Example: Federal Minimum, Standard, Conditioned Basement`<br/>  - `Detailed Example: Federal Minimum, Standard, Unconditioned Basement`<br/>  - `Detailed Example: Federal Minimum, Standard, Garage`
 
 
 - **Default:** `Federal Minimum, Standard, 100% Usage`
@@ -1566,7 +1574,7 @@ The type and usage of refrigerator.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `1139 kWh/yr, 90% Usage`, `1139 kWh/yr, 100% Usage`, `1139 kWh/yr, 110% Usage`, `748 kWh/yr, 90% Usage`, `748 kWh/yr, 100% Usage`, `748 kWh/yr, 110% Usage`, `727 kWh/yr, 90% Usage`, `727 kWh/yr, 100% Usage`, `727 kWh/yr, 110% Usage`, `650 kWh/yr, 90% Usage`, `650 kWh/yr, 100% Usage`, `650 kWh/yr, 110% Usage`, `574 kWh/yr, 90% Usage`, `574 kWh/yr, 100% Usage`, `574 kWh/yr, 110% Usage`, `547 kWh/yr, 90% Usage`, `547 kWh/yr, 100% Usage`, `547 kWh/yr, 110% Usage`, `480 kWh/yr, 90% Usage`, `480 kWh/yr, 100% Usage`, `480 kWh/yr, 110% Usage`, `458 kWh/yr, 90% Usage`, `458 kWh/yr, 100% Usage`, `458 kWh/yr, 110% Usage`, `434 kWh/yr, 90% Usage`, `434 kWh/yr, 100% Usage`, `434 kWh/yr, 110% Usage`, `384 kWh/yr, 90% Usage`, `384 kWh/yr, 100% Usage`, `384 kWh/yr, 110% Usage`, `348 kWh/yr, 90% Usage`, `348 kWh/yr, 100% Usage`, `348 kWh/yr, 110% Usage`, `Detailed Example: ERI Reference 2006, 2-Bedroom Home`, `Detailed Example: ERI Reference 2006, 3-Bedroom Home`, `Detailed Example: ERI Reference 2006, 4-Bedroom Home`, `Detailed Example: 650 kWh/yr, Conditioned Basement`, `Detailed Example: 650 kWh/yr, Unconditioned Basement`, `Detailed Example: 650 kWh/yr, Garage`
+- **Choices:** <br/>  - `None`<br/>  - `1139 kWh/yr, 90% Usage`<br/>  - `1139 kWh/yr, 100% Usage`<br/>  - `1139 kWh/yr, 110% Usage`<br/>  - `748 kWh/yr, 90% Usage`<br/>  - `748 kWh/yr, 100% Usage`<br/>  - `748 kWh/yr, 110% Usage`<br/>  - `727 kWh/yr, 90% Usage`<br/>  - `727 kWh/yr, 100% Usage`<br/>  - `727 kWh/yr, 110% Usage`<br/>  - `650 kWh/yr, 90% Usage`<br/>  - `650 kWh/yr, 100% Usage`<br/>  - `650 kWh/yr, 110% Usage`<br/>  - `574 kWh/yr, 90% Usage`<br/>  - `574 kWh/yr, 100% Usage`<br/>  - `574 kWh/yr, 110% Usage`<br/>  - `547 kWh/yr, 90% Usage`<br/>  - `547 kWh/yr, 100% Usage`<br/>  - `547 kWh/yr, 110% Usage`<br/>  - `480 kWh/yr, 90% Usage`<br/>  - `480 kWh/yr, 100% Usage`<br/>  - `480 kWh/yr, 110% Usage`<br/>  - `458 kWh/yr, 90% Usage`<br/>  - `458 kWh/yr, 100% Usage`<br/>  - `458 kWh/yr, 110% Usage`<br/>  - `434 kWh/yr, 90% Usage`<br/>  - `434 kWh/yr, 100% Usage`<br/>  - `434 kWh/yr, 110% Usage`<br/>  - `384 kWh/yr, 90% Usage`<br/>  - `384 kWh/yr, 100% Usage`<br/>  - `384 kWh/yr, 110% Usage`<br/>  - `348 kWh/yr, 90% Usage`<br/>  - `348 kWh/yr, 100% Usage`<br/>  - `348 kWh/yr, 110% Usage`<br/>  - `Detailed Example: ERI Reference 2006, 2-Bedroom Home`<br/>  - `Detailed Example: ERI Reference 2006, 3-Bedroom Home`<br/>  - `Detailed Example: ERI Reference 2006, 4-Bedroom Home`<br/>  - `Detailed Example: 650 kWh/yr, Conditioned Basement`<br/>  - `Detailed Example: 650 kWh/yr, Unconditioned Basement`<br/>  - `Detailed Example: 650 kWh/yr, Garage`
 
 
 - **Default:** `434 kWh/yr, 100% Usage`
@@ -1582,7 +1590,7 @@ The type and usage of extra refrigerator.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `1139 kWh/yr, 90% Usage`, `1139 kWh/yr, 100% Usage`, `1139 kWh/yr, 110% Usage`, `748 kWh/yr, 90% Usage`, `748 kWh/yr, 100% Usage`, `748 kWh/yr, 110% Usage`, `727 kWh/yr, 90% Usage`, `727 kWh/yr, 100% Usage`, `727 kWh/yr, 110% Usage`, `650 kWh/yr, 90% Usage`, `650 kWh/yr, 100% Usage`, `650 kWh/yr, 110% Usage`, `574 kWh/yr, 90% Usage`, `574 kWh/yr, 100% Usage`, `574 kWh/yr, 110% Usage`, `547 kWh/yr, 90% Usage`, `547 kWh/yr, 100% Usage`, `547 kWh/yr, 110% Usage`, `480 kWh/yr, 90% Usage`, `480 kWh/yr, 100% Usage`, `480 kWh/yr, 110% Usage`, `458 kWh/yr, 90% Usage`, `458 kWh/yr, 100% Usage`, `458 kWh/yr, 110% Usage`, `434 kWh/yr, 90% Usage`, `434 kWh/yr, 100% Usage`, `434 kWh/yr, 110% Usage`, `384 kWh/yr, 90% Usage`, `384 kWh/yr, 100% Usage`, `384 kWh/yr, 110% Usage`, `348 kWh/yr, 90% Usage`, `348 kWh/yr, 100% Usage`, `348 kWh/yr, 110% Usage`, `Detailed Example: 748 kWh/yr, Conditioned Basement`, `Detailed Example: 748 kWh/yr, Unconditioned Basement`, `Detailed Example: 748 kWh/yr, Garage`
+- **Choices:** <br/>  - `None`<br/>  - `1139 kWh/yr, 90% Usage`<br/>  - `1139 kWh/yr, 100% Usage`<br/>  - `1139 kWh/yr, 110% Usage`<br/>  - `748 kWh/yr, 90% Usage`<br/>  - `748 kWh/yr, 100% Usage`<br/>  - `748 kWh/yr, 110% Usage`<br/>  - `727 kWh/yr, 90% Usage`<br/>  - `727 kWh/yr, 100% Usage`<br/>  - `727 kWh/yr, 110% Usage`<br/>  - `650 kWh/yr, 90% Usage`<br/>  - `650 kWh/yr, 100% Usage`<br/>  - `650 kWh/yr, 110% Usage`<br/>  - `574 kWh/yr, 90% Usage`<br/>  - `574 kWh/yr, 100% Usage`<br/>  - `574 kWh/yr, 110% Usage`<br/>  - `547 kWh/yr, 90% Usage`<br/>  - `547 kWh/yr, 100% Usage`<br/>  - `547 kWh/yr, 110% Usage`<br/>  - `480 kWh/yr, 90% Usage`<br/>  - `480 kWh/yr, 100% Usage`<br/>  - `480 kWh/yr, 110% Usage`<br/>  - `458 kWh/yr, 90% Usage`<br/>  - `458 kWh/yr, 100% Usage`<br/>  - `458 kWh/yr, 110% Usage`<br/>  - `434 kWh/yr, 90% Usage`<br/>  - `434 kWh/yr, 100% Usage`<br/>  - `434 kWh/yr, 110% Usage`<br/>  - `384 kWh/yr, 90% Usage`<br/>  - `384 kWh/yr, 100% Usage`<br/>  - `384 kWh/yr, 110% Usage`<br/>  - `348 kWh/yr, 90% Usage`<br/>  - `348 kWh/yr, 100% Usage`<br/>  - `348 kWh/yr, 110% Usage`<br/>  - `Detailed Example: 748 kWh/yr, Conditioned Basement`<br/>  - `Detailed Example: 748 kWh/yr, Unconditioned Basement`<br/>  - `Detailed Example: 748 kWh/yr, Garage`
 
 
 - **Default:** `None`
@@ -1598,7 +1606,7 @@ The type and usage of freezer.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `935 kWh/yr, 90% Usage`, `935 kWh/yr, 100% Usage`, `935 kWh/yr, 110% Usage`, `712 kWh/yr, 90% Usage`, `712 kWh/yr, 100% Usage`, `712 kWh/yr, 110% Usage`, `641 kWh/yr, 90% Usage`, `641 kWh/yr, 100% Usage`, `641 kWh/yr, 110% Usage`, `568 kWh/yr, 90% Usage`, `568 kWh/yr, 100% Usage`, `568 kWh/yr, 110% Usage`, `417 kWh/yr, 90% Usage`, `417 kWh/yr, 100% Usage`, `417 kWh/yr, 110% Usage`, `375 kWh/yr, 90% Usage`, `375 kWh/yr, 100% Usage`, `375 kWh/yr, 110% Usage`, `354 kWh/yr, 90% Usage`, `354 kWh/yr, 100% Usage`, `354 kWh/yr, 110% Usage`, `Detailed Example: 712 kWh/yr, Conditioned Basement`, `Detailed Example: 712 kWh/yr, Unconditioned Basement`, `Detailed Example: 712 kWh/yr, Garage`
+- **Choices:** <br/>  - `None`<br/>  - `935 kWh/yr, 90% Usage`<br/>  - `935 kWh/yr, 100% Usage`<br/>  - `935 kWh/yr, 110% Usage`<br/>  - `712 kWh/yr, 90% Usage`<br/>  - `712 kWh/yr, 100% Usage`<br/>  - `712 kWh/yr, 110% Usage`<br/>  - `641 kWh/yr, 90% Usage`<br/>  - `641 kWh/yr, 100% Usage`<br/>  - `641 kWh/yr, 110% Usage`<br/>  - `568 kWh/yr, 90% Usage`<br/>  - `568 kWh/yr, 100% Usage`<br/>  - `568 kWh/yr, 110% Usage`<br/>  - `417 kWh/yr, 90% Usage`<br/>  - `417 kWh/yr, 100% Usage`<br/>  - `417 kWh/yr, 110% Usage`<br/>  - `375 kWh/yr, 90% Usage`<br/>  - `375 kWh/yr, 100% Usage`<br/>  - `375 kWh/yr, 110% Usage`<br/>  - `354 kWh/yr, 90% Usage`<br/>  - `354 kWh/yr, 100% Usage`<br/>  - `354 kWh/yr, 110% Usage`<br/>  - `Detailed Example: 712 kWh/yr, Conditioned Basement`<br/>  - `Detailed Example: 712 kWh/yr, Unconditioned Basement`<br/>  - `Detailed Example: 712 kWh/yr, Garage`
 
 
 - **Default:** `None`
@@ -1614,7 +1622,7 @@ The type and usage of cooking range/oven.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Electricity, Standard, Non-Convection, 50% Usage`, `Electricity, Standard, Non-Convection, 75% Usage`, `Electricity, Standard, Non-Convection, 100% Usage`, `Electricity, Standard, Non-Convection, 150% Usage`, `Electricity, Standard, Non-Convection, 200% Usage`, `Electricity, Standard, Convection, 50% Usage`, `Electricity, Standard, Convection, 75% Usage`, `Electricity, Standard, Convection, 100% Usage`, `Electricity, Standard, Convection, 150% Usage`, `Electricity, Standard, Convection, 200% Usage`, `Electricity, Induction, Non-Convection, 50% Usage`, `Electricity, Induction, Non-Convection, 75% Usage`, `Electricity, Induction, Non-Convection, 100% Usage`, `Electricity, Induction, Non-Convection, 150% Usage`, `Electricity, Induction, Non-Convection, 200% Usage`, `Electricity, Induction, Convection, 50% Usage`, `Electricity, Induction, Convection, 75% Usage`, `Electricity, Induction, Convection, 100% Usage`, `Electricity, Induction, Convection, 150% Usage`, `Electricity, Induction, Convection, 200% Usage`, `Natural Gas, Non-Convection, 50% Usage`, `Natural Gas, Non-Convection, 75% Usage`, `Natural Gas, Non-Convection, 100% Usage`, `Natural Gas, Non-Convection, 150% Usage`, `Natural Gas, Non-Convection, 200% Usage`, `Natural Gas, Convection, 50% Usage`, `Natural Gas, Convection, 75% Usage`, `Natural Gas, Convection, 100% Usage`, `Natural Gas, Convection, 150% Usage`, `Natural Gas, Convection, 200% Usage`, `Propane, Non-Convection, 50% Usage`, `Propane, Non-Convection, 75% Usage`, `Propane, Non-Convection, 100% Usage`, `Propane, Non-Convection, 150% Usage`, `Propane, Non-Convection, 200% Usage`, `Propane, Convection, 50% Usage`, `Propane, Convection, 75% Usage`, `Propane, Convection, 100% Usage`, `Propane, Convection, 150% Usage`, `Propane, Convection, 200% Usage`, `Detailed Example: Electricity, Standard, Non-Convection, Conditioned Basement`, `Detailed Example: Electricity, Standard, Non-Convection, Unconditioned Basement`, `Detailed Example: Electricity, Standard, Non-Convection, Garage`
+- **Choices:** <br/>  - `None`<br/>  - `Electricity, Standard, Non-Convection, 50% Usage`<br/>  - `Electricity, Standard, Non-Convection, 75% Usage`<br/>  - `Electricity, Standard, Non-Convection, 100% Usage`<br/>  - `Electricity, Standard, Non-Convection, 150% Usage`<br/>  - `Electricity, Standard, Non-Convection, 200% Usage`<br/>  - `Electricity, Standard, Convection, 50% Usage`<br/>  - `Electricity, Standard, Convection, 75% Usage`<br/>  - `Electricity, Standard, Convection, 100% Usage`<br/>  - `Electricity, Standard, Convection, 150% Usage`<br/>  - `Electricity, Standard, Convection, 200% Usage`<br/>  - `Electricity, Induction, Non-Convection, 50% Usage`<br/>  - `Electricity, Induction, Non-Convection, 75% Usage`<br/>  - `Electricity, Induction, Non-Convection, 100% Usage`<br/>  - `Electricity, Induction, Non-Convection, 150% Usage`<br/>  - `Electricity, Induction, Non-Convection, 200% Usage`<br/>  - `Electricity, Induction, Convection, 50% Usage`<br/>  - `Electricity, Induction, Convection, 75% Usage`<br/>  - `Electricity, Induction, Convection, 100% Usage`<br/>  - `Electricity, Induction, Convection, 150% Usage`<br/>  - `Electricity, Induction, Convection, 200% Usage`<br/>  - `Natural Gas, Non-Convection, 50% Usage`<br/>  - `Natural Gas, Non-Convection, 75% Usage`<br/>  - `Natural Gas, Non-Convection, 100% Usage`<br/>  - `Natural Gas, Non-Convection, 150% Usage`<br/>  - `Natural Gas, Non-Convection, 200% Usage`<br/>  - `Natural Gas, Convection, 50% Usage`<br/>  - `Natural Gas, Convection, 75% Usage`<br/>  - `Natural Gas, Convection, 100% Usage`<br/>  - `Natural Gas, Convection, 150% Usage`<br/>  - `Natural Gas, Convection, 200% Usage`<br/>  - `Propane, Non-Convection, 50% Usage`<br/>  - `Propane, Non-Convection, 75% Usage`<br/>  - `Propane, Non-Convection, 100% Usage`<br/>  - `Propane, Non-Convection, 150% Usage`<br/>  - `Propane, Non-Convection, 200% Usage`<br/>  - `Propane, Convection, 50% Usage`<br/>  - `Propane, Convection, 75% Usage`<br/>  - `Propane, Convection, 100% Usage`<br/>  - `Propane, Convection, 150% Usage`<br/>  - `Propane, Convection, 200% Usage`<br/>  - `Detailed Example: Electricity, Standard, Non-Convection, Conditioned Basement`<br/>  - `Detailed Example: Electricity, Standard, Non-Convection, Unconditioned Basement`<br/>  - `Detailed Example: Electricity, Standard, Non-Convection, Garage`
 
 
 - **Default:** `Electricity, Standard, Non-Convection, 100% Usage`
@@ -1630,7 +1638,7 @@ The type of dehumidifier.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Portable, 15 pints/day`, `Portable, 20 pints/day`, `Portable, 30 pints/day`, `Portable, 40 pints/day`, `Whole-Home, 60 pints/day`, `Whole-Home, 75 pints/day`, `Whole-Home, 95 pints/day`, `Whole-Home, 125 pints/day`, `Detailed Example: Portable, 40 pints/day, EF 1.8`
+- **Choices:** <br/>  - `None`<br/>  - `Portable, 15 pints/day`<br/>  - `Portable, 20 pints/day`<br/>  - `Portable, 30 pints/day`<br/>  - `Portable, 40 pints/day`<br/>  - `Whole-Home, 60 pints/day`<br/>  - `Whole-Home, 75 pints/day`<br/>  - `Whole-Home, 95 pints/day`<br/>  - `Whole-Home, 125 pints/day`<br/>  - `Detailed Example: Portable, 40 pints/day, EF 1.8`
 
 
 - **Default:** `None`
@@ -1646,7 +1654,7 @@ The dehumidifier's relative humidity (RH) setpoint.
 
 - **Required:** ``false``
 
-- **Choices:** `40% RH`, `45% RH`, `50% RH`, `55% RH`, `60% RH`, `65% RH`
+- **Choices:** <br/>  - `40% RH`<br/>  - `45% RH`<br/>  - `50% RH`<br/>  - `55% RH`<br/>  - `60% RH`<br/>  - `65% RH`
 
 
 - **Default:** `50% RH`
@@ -1662,7 +1670,7 @@ The type and usage of interior, exterior, and garage lighting.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `100% Incandescent, 50% Usage`, `100% Incandescent, 75% Usage`, `100% Incandescent, 100% Usage`, `100% Incandescent, 150% Usage`, `100% Incandescent, 200% Usage`, `25% LED, 50% Usage`, `25% LED, 75% Usage`, `25% LED, 100% Usage`, `25% LED, 150% Usage`, `25% LED, 200% Usage`, `50% LED, 50% Usage`, `50% LED, 75% Usage`, `50% LED, 100% Usage`, `50% LED, 150% Usage`, `50% LED, 200% Usage`, `75% LED, 50% Usage`, `75% LED, 75% Usage`, `75% LED, 100% Usage`, `75% LED, 150% Usage`, `75% LED, 200% Usage`, `100% LED, 50% Usage`, `100% LED, 75% Usage`, `100% LED, 100% Usage`, `100% LED, 150% Usage`, `100% LED, 200% Usage`, `25% CFL, 50% Usage`, `25% CFL, 75% Usage`, `25% CFL, 100% Usage`, `25% CFL, 150% Usage`, `25% CFL, 200% Usage`, `50% CFL, 50% Usage`, `50% CFL, 75% Usage`, `50% CFL, 100% Usage`, `50% CFL, 150% Usage`, `50% CFL, 200% Usage`, `75% CFL, 50% Usage`, `75% CFL, 75% Usage`, `75% CFL, 100% Usage`, `75% CFL, 150% Usage`, `75% CFL, 200% Usage`, `100% CFL, 50% Usage`, `100% CFL, 75% Usage`, `100% CFL, 100% Usage`, `100% CFL, 150% Usage`, `100% CFL, 200% Usage`, `Detailed Example: 10% CFL`, `Detailed Example: 40% CFL, 10% LFL, 25% LED`
+- **Choices:** <br/>  - `None`<br/>  - `100% Incandescent, 50% Usage`<br/>  - `100% Incandescent, 75% Usage`<br/>  - `100% Incandescent, 100% Usage`<br/>  - `100% Incandescent, 150% Usage`<br/>  - `100% Incandescent, 200% Usage`<br/>  - `25% LED, 50% Usage`<br/>  - `25% LED, 75% Usage`<br/>  - `25% LED, 100% Usage`<br/>  - `25% LED, 150% Usage`<br/>  - `25% LED, 200% Usage`<br/>  - `50% LED, 50% Usage`<br/>  - `50% LED, 75% Usage`<br/>  - `50% LED, 100% Usage`<br/>  - `50% LED, 150% Usage`<br/>  - `50% LED, 200% Usage`<br/>  - `75% LED, 50% Usage`<br/>  - `75% LED, 75% Usage`<br/>  - `75% LED, 100% Usage`<br/>  - `75% LED, 150% Usage`<br/>  - `75% LED, 200% Usage`<br/>  - `100% LED, 50% Usage`<br/>  - `100% LED, 75% Usage`<br/>  - `100% LED, 100% Usage`<br/>  - `100% LED, 150% Usage`<br/>  - `100% LED, 200% Usage`<br/>  - `25% CFL, 50% Usage`<br/>  - `25% CFL, 75% Usage`<br/>  - `25% CFL, 100% Usage`<br/>  - `25% CFL, 150% Usage`<br/>  - `25% CFL, 200% Usage`<br/>  - `50% CFL, 50% Usage`<br/>  - `50% CFL, 75% Usage`<br/>  - `50% CFL, 100% Usage`<br/>  - `50% CFL, 150% Usage`<br/>  - `50% CFL, 200% Usage`<br/>  - `75% CFL, 50% Usage`<br/>  - `75% CFL, 75% Usage`<br/>  - `75% CFL, 100% Usage`<br/>  - `75% CFL, 150% Usage`<br/>  - `75% CFL, 200% Usage`<br/>  - `100% CFL, 50% Usage`<br/>  - `100% CFL, 75% Usage`<br/>  - `100% CFL, 100% Usage`<br/>  - `100% CFL, 150% Usage`<br/>  - `100% CFL, 200% Usage`<br/>  - `Detailed Example: 10% CFL`<br/>  - `Detailed Example: 40% CFL, 10% LFL, 25% LED`
 
 
 - **Default:** `50% LED, 100% Usage`
@@ -1678,7 +1686,7 @@ The type of ceiling fans.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `#Bedrooms+1 Fans, 45.0 W`, `#Bedrooms+1 Fans, 37.5 W`, `#Bedrooms+1 Fans, 30.0 W`, `#Bedrooms+1 Fans, 22.5 W`, `#Bedrooms+1 Fans, 15.0 W`, `1 Fan, 45.0 W`, `1 Fan, 37.5 W`, `1 Fan, 30.0 W`, `1 Fan, 22.5 W`, `1 Fan, 15.0 W`, `2 Fans, 45.0 W`, `2 Fans, 37.5 W`, `2 Fans, 30.0 W`, `2 Fans, 22.5 W`, `2 Fans, 15.0 W`, `3 Fans, 45.0 W`, `3 Fans, 37.5 W`, `3 Fans, 30.0 W`, `3 Fans, 22.5 W`, `3 Fans, 15.0 W`, `4 Fans, 45.0 W`, `4 Fans, 37.5 W`, `4 Fans, 30.0 W`, `4 Fans, 22.5 W`, `4 Fans, 15.0 W`, `5 Fans, 45.0 W`, `5 Fans, 37.5 W`, `5 Fans, 30.0 W`, `5 Fans, 22.5 W`, `5 Fans, 15.0 W`, `Detailed Example: 4 Fans, 39 W, 0.5 deg-F Setpoint Offset`, `Detailed Example: 4 Fans, 100 cfm/W, 0.5 deg-F Setpoint Offset`
+- **Choices:** <br/>  - `None`<br/>  - `#Bedrooms+1 Fans, 45.0 W`<br/>  - `#Bedrooms+1 Fans, 37.5 W`<br/>  - `#Bedrooms+1 Fans, 30.0 W`<br/>  - `#Bedrooms+1 Fans, 22.5 W`<br/>  - `#Bedrooms+1 Fans, 15.0 W`<br/>  - `1 Fan, 45.0 W`<br/>  - `1 Fan, 37.5 W`<br/>  - `1 Fan, 30.0 W`<br/>  - `1 Fan, 22.5 W`<br/>  - `1 Fan, 15.0 W`<br/>  - `2 Fans, 45.0 W`<br/>  - `2 Fans, 37.5 W`<br/>  - `2 Fans, 30.0 W`<br/>  - `2 Fans, 22.5 W`<br/>  - `2 Fans, 15.0 W`<br/>  - `3 Fans, 45.0 W`<br/>  - `3 Fans, 37.5 W`<br/>  - `3 Fans, 30.0 W`<br/>  - `3 Fans, 22.5 W`<br/>  - `3 Fans, 15.0 W`<br/>  - `4 Fans, 45.0 W`<br/>  - `4 Fans, 37.5 W`<br/>  - `4 Fans, 30.0 W`<br/>  - `4 Fans, 22.5 W`<br/>  - `4 Fans, 15.0 W`<br/>  - `5 Fans, 45.0 W`<br/>  - `5 Fans, 37.5 W`<br/>  - `5 Fans, 30.0 W`<br/>  - `5 Fans, 22.5 W`<br/>  - `5 Fans, 15.0 W`<br/>  - `Detailed Example: 4 Fans, 39 W, 0.5 deg-F Setpoint Offset`<br/>  - `Detailed Example: 4 Fans, 100 cfm/W, 0.5 deg-F Setpoint Offset`
 
 
 - **Default:** `None`
@@ -1694,7 +1702,7 @@ The amount of television usage, relative to the national average.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `25% Usage`, `33% Usage`, `50% Usage`, `75% Usage`, `80% Usage`, `90% Usage`, `100% Usage`, `110% Usage`, `125% Usage`, `150% Usage`, `200% Usage`, `300% Usage`, `400% Usage`, `Detailed Example: 620 kWh/yr`
+- **Choices:** <br/>  - `None`<br/>  - `25% Usage`<br/>  - `33% Usage`<br/>  - `50% Usage`<br/>  - `75% Usage`<br/>  - `80% Usage`<br/>  - `90% Usage`<br/>  - `100% Usage`<br/>  - `110% Usage`<br/>  - `125% Usage`<br/>  - `150% Usage`<br/>  - `200% Usage`<br/>  - `300% Usage`<br/>  - `400% Usage`<br/>  - `Detailed Example: 620 kWh/yr`
 
 
 - **Default:** `100% Usage`
@@ -1710,7 +1718,7 @@ The amount of additional plug load usage, relative to the national average.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `25% Usage`, `33% Usage`, `50% Usage`, `75% Usage`, `80% Usage`, `90% Usage`, `100% Usage`, `110% Usage`, `125% Usage`, `150% Usage`, `200% Usage`, `300% Usage`, `400% Usage`, `Detailed Example: 2457 kWh/yr, 85.5% Sensible, 4.5% Latent`, `Detailed Example: 7302 kWh/yr, 82.2% Sensible, 17.8% Latent`
+- **Choices:** <br/>  - `None`<br/>  - `25% Usage`<br/>  - `33% Usage`<br/>  - `50% Usage`<br/>  - `75% Usage`<br/>  - `80% Usage`<br/>  - `90% Usage`<br/>  - `100% Usage`<br/>  - `110% Usage`<br/>  - `125% Usage`<br/>  - `150% Usage`<br/>  - `200% Usage`<br/>  - `300% Usage`<br/>  - `400% Usage`<br/>  - `Detailed Example: 2457 kWh/yr, 85.5% Sensible, 4.5% Latent`<br/>  - `Detailed Example: 7302 kWh/yr, 82.2% Sensible, 17.8% Latent`
 
 
 - **Default:** `100% Usage`
@@ -1726,7 +1734,7 @@ The amount of well pump usage, relative to the national average.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Typical Efficiency`, `High Efficiency`, `Detailed Example: 475 kWh/yr`
+- **Choices:** <br/>  - `None`<br/>  - `Typical Efficiency`<br/>  - `High Efficiency`<br/>  - `Detailed Example: 475 kWh/yr`
 
 
 - **Default:** `None`
@@ -1742,7 +1750,7 @@ The amount of EV charging usage, relative to the national average. Only use this
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `25% Usage`, `33% Usage`, `50% Usage`, `75% Usage`, `80% Usage`, `90% Usage`, `100% Usage`, `110% Usage`, `125% Usage`, `150% Usage`, `200% Usage`, `300% Usage`, `400% Usage`, `Detailed Example: 1500 kWh/yr`, `Detailed Example: 3000 kWh/yr`
+- **Choices:** <br/>  - `None`<br/>  - `25% Usage`<br/>  - `33% Usage`<br/>  - `50% Usage`<br/>  - `75% Usage`<br/>  - `80% Usage`<br/>  - `90% Usage`<br/>  - `100% Usage`<br/>  - `110% Usage`<br/>  - `125% Usage`<br/>  - `150% Usage`<br/>  - `200% Usage`<br/>  - `300% Usage`<br/>  - `400% Usage`<br/>  - `Detailed Example: 1500 kWh/yr`<br/>  - `Detailed Example: 3000 kWh/yr`
 
 
 - **Default:** `None`
@@ -1758,7 +1766,7 @@ The amount of outdoor gas grill usage, relative to the national average.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Natural Gas, 25% Usage`, `Natural Gas, 50% Usage`, `Natural Gas, 75% Usage`, `Natural Gas, 100% Usage`, `Natural Gas, 150% Usage`, `Natural Gas, 200% Usage`, `Natural Gas, 400% Usage`, `Propane, 25% Usage`, `Propane, 50% Usage`, `Propane, 75% Usage`, `Propane, 100% Usage`, `Propane, 150% Usage`, `Propane, 200% Usage`, `Propane, 400% Usage`, `Detailed Example: Propane, 25 therm/yr`
+- **Choices:** <br/>  - `None`<br/>  - `Natural Gas, 25% Usage`<br/>  - `Natural Gas, 50% Usage`<br/>  - `Natural Gas, 75% Usage`<br/>  - `Natural Gas, 100% Usage`<br/>  - `Natural Gas, 150% Usage`<br/>  - `Natural Gas, 200% Usage`<br/>  - `Natural Gas, 400% Usage`<br/>  - `Propane, 25% Usage`<br/>  - `Propane, 50% Usage`<br/>  - `Propane, 75% Usage`<br/>  - `Propane, 100% Usage`<br/>  - `Propane, 150% Usage`<br/>  - `Propane, 200% Usage`<br/>  - `Propane, 400% Usage`<br/>  - `Detailed Example: Propane, 25 therm/yr`
 
 
 - **Default:** `None`
@@ -1774,7 +1782,7 @@ The amount of gas lighting usage, relative to the national average.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Natural Gas, 25% Usage`, `Natural Gas, 50% Usage`, `Natural Gas, 75% Usage`, `Natural Gas, 100% Usage`, `Natural Gas, 150% Usage`, `Natural Gas, 200% Usage`, `Natural Gas, 400% Usage`, `Detailed Example: Natural Gas, 28 therm/yr`
+- **Choices:** <br/>  - `None`<br/>  - `Natural Gas, 25% Usage`<br/>  - `Natural Gas, 50% Usage`<br/>  - `Natural Gas, 75% Usage`<br/>  - `Natural Gas, 100% Usage`<br/>  - `Natural Gas, 150% Usage`<br/>  - `Natural Gas, 200% Usage`<br/>  - `Natural Gas, 400% Usage`<br/>  - `Detailed Example: Natural Gas, 28 therm/yr`
 
 
 - **Default:** `None`
@@ -1790,7 +1798,7 @@ The amount of fireplace usage, relative to the national average. Fireplaces can 
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Natural Gas, 25% Usage`, `Natural Gas, 50% Usage`, `Natural Gas, 75% Usage`, `Natural Gas, 100% Usage`, `Natural Gas, 150% Usage`, `Natural Gas, 200% Usage`, `Natural Gas, 400% Usage`, `Propane, 25% Usage`, `Propane, 50% Usage`, `Propane, 75% Usage`, `Propane, 100% Usage`, `Propane, 150% Usage`, `Propane, 200% Usage`, `Propane, 400% Usage`, `Wood, 25% Usage`, `Wood, 50% Usage`, `Wood, 75% Usage`, `Wood, 100% Usage`, `Wood, 150% Usage`, `Wood, 200% Usage`, `Wood, 400% Usage`, `Electric, 25% Usage`, `Electric, 50% Usage`, `Electric, 75% Usage`, `Electric, 100% Usage`, `Electric, 150% Usage`, `Electric, 200% Usage`, `Electric, 400% Usage`, `Detailed Example: Wood, 55 therm/yr`
+- **Choices:** <br/>  - `None`<br/>  - `Natural Gas, 25% Usage`<br/>  - `Natural Gas, 50% Usage`<br/>  - `Natural Gas, 75% Usage`<br/>  - `Natural Gas, 100% Usage`<br/>  - `Natural Gas, 150% Usage`<br/>  - `Natural Gas, 200% Usage`<br/>  - `Natural Gas, 400% Usage`<br/>  - `Propane, 25% Usage`<br/>  - `Propane, 50% Usage`<br/>  - `Propane, 75% Usage`<br/>  - `Propane, 100% Usage`<br/>  - `Propane, 150% Usage`<br/>  - `Propane, 200% Usage`<br/>  - `Propane, 400% Usage`<br/>  - `Wood, 25% Usage`<br/>  - `Wood, 50% Usage`<br/>  - `Wood, 75% Usage`<br/>  - `Wood, 100% Usage`<br/>  - `Wood, 150% Usage`<br/>  - `Wood, 200% Usage`<br/>  - `Wood, 400% Usage`<br/>  - `Electric, 25% Usage`<br/>  - `Electric, 50% Usage`<br/>  - `Electric, 75% Usage`<br/>  - `Electric, 100% Usage`<br/>  - `Electric, 150% Usage`<br/>  - `Electric, 200% Usage`<br/>  - `Electric, 400% Usage`<br/>  - `Detailed Example: Wood, 55 therm/yr`
 
 
 - **Default:** `None`
@@ -1806,7 +1814,7 @@ The type of pool (pump & heater).
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Unheated, 25% Usage`, `Unheated, 50% Usage`, `Unheated, 75% Usage`, `Unheated, 100% Usage`, `Unheated, 150% Usage`, `Unheated, 200% Usage`, `Unheated, 400% Usage`, `Electric Resistance Heater, 25% Usage`, `Electric Resistance Heater, 50% Usage`, `Electric Resistance Heater, 75% Usage`, `Electric Resistance Heater, 100% Usage`, `Electric Resistance Heater, 150% Usage`, `Electric Resistance Heater, 200% Usage`, `Electric Resistance Heater, 400% Usage`, `Heat Pump Heater, 25% Usage`, `Heat Pump Heater, 50% Usage`, `Heat Pump Heater, 75% Usage`, `Heat Pump Heater, 100% Usage`, `Heat Pump Heater, 150% Usage`, `Heat Pump Heater, 200% Usage`, `Heat Pump Heater, 400% Usage`, `Natural Gas Heater, 25% Usage`, `Natural Gas Heater, 50% Usage`, `Natural Gas Heater, 75% Usage`, `Natural Gas Heater, 100% Usage`, `Natural Gas Heater, 150% Usage`, `Natural Gas Heater, 200% Usage`, `Natural Gas Heater, 400% Usage`, `Detailed Example: 2700 kWh/yr Pump, Unheated`, `Detailed Example: 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater`
+- **Choices:** <br/>  - `None`<br/>  - `Unheated, 25% Usage`<br/>  - `Unheated, 50% Usage`<br/>  - `Unheated, 75% Usage`<br/>  - `Unheated, 100% Usage`<br/>  - `Unheated, 150% Usage`<br/>  - `Unheated, 200% Usage`<br/>  - `Unheated, 400% Usage`<br/>  - `Electric Resistance Heater, 25% Usage`<br/>  - `Electric Resistance Heater, 50% Usage`<br/>  - `Electric Resistance Heater, 75% Usage`<br/>  - `Electric Resistance Heater, 100% Usage`<br/>  - `Electric Resistance Heater, 150% Usage`<br/>  - `Electric Resistance Heater, 200% Usage`<br/>  - `Electric Resistance Heater, 400% Usage`<br/>  - `Heat Pump Heater, 25% Usage`<br/>  - `Heat Pump Heater, 50% Usage`<br/>  - `Heat Pump Heater, 75% Usage`<br/>  - `Heat Pump Heater, 100% Usage`<br/>  - `Heat Pump Heater, 150% Usage`<br/>  - `Heat Pump Heater, 200% Usage`<br/>  - `Heat Pump Heater, 400% Usage`<br/>  - `Natural Gas Heater, 25% Usage`<br/>  - `Natural Gas Heater, 50% Usage`<br/>  - `Natural Gas Heater, 75% Usage`<br/>  - `Natural Gas Heater, 100% Usage`<br/>  - `Natural Gas Heater, 150% Usage`<br/>  - `Natural Gas Heater, 200% Usage`<br/>  - `Natural Gas Heater, 400% Usage`<br/>  - `Detailed Example: 2700 kWh/yr Pump, Unheated`<br/>  - `Detailed Example: 2700 kWh/yr Pump, 500 therms/yr Natural Gas Heater`
 
 
 - **Default:** `None`
@@ -1822,7 +1830,7 @@ The type of permanent spa (pump & heater).
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Unheated, 25% Usage`, `Unheated, 50% Usage`, `Unheated, 75% Usage`, `Unheated, 100% Usage`, `Unheated, 150% Usage`, `Unheated, 200% Usage`, `Unheated, 400% Usage`, `Electric Resistance Heater, 25% Usage`, `Electric Resistance Heater, 50% Usage`, `Electric Resistance Heater, 75% Usage`, `Electric Resistance Heater, 100% Usage`, `Electric Resistance Heater, 150% Usage`, `Electric Resistance Heater, 200% Usage`, `Electric Resistance Heater, 400% Usage`, `Heat Pump Heater, 25% Usage`, `Heat Pump Heater, 50% Usage`, `Heat Pump Heater, 75% Usage`, `Heat Pump Heater, 100% Usage`, `Heat Pump Heater, 150% Usage`, `Heat Pump Heater, 200% Usage`, `Heat Pump Heater, 400% Usage`, `Natural Gas Heater, 25% Usage`, `Natural Gas Heater, 50% Usage`, `Natural Gas Heater, 75% Usage`, `Natural Gas Heater, 100% Usage`, `Natural Gas Heater, 150% Usage`, `Natural Gas Heater, 200% Usage`, `Natural Gas Heater, 400% Usage`, `Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater`, `Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater`
+- **Choices:** <br/>  - `None`<br/>  - `Unheated, 25% Usage`<br/>  - `Unheated, 50% Usage`<br/>  - `Unheated, 75% Usage`<br/>  - `Unheated, 100% Usage`<br/>  - `Unheated, 150% Usage`<br/>  - `Unheated, 200% Usage`<br/>  - `Unheated, 400% Usage`<br/>  - `Electric Resistance Heater, 25% Usage`<br/>  - `Electric Resistance Heater, 50% Usage`<br/>  - `Electric Resistance Heater, 75% Usage`<br/>  - `Electric Resistance Heater, 100% Usage`<br/>  - `Electric Resistance Heater, 150% Usage`<br/>  - `Electric Resistance Heater, 200% Usage`<br/>  - `Electric Resistance Heater, 400% Usage`<br/>  - `Heat Pump Heater, 25% Usage`<br/>  - `Heat Pump Heater, 50% Usage`<br/>  - `Heat Pump Heater, 75% Usage`<br/>  - `Heat Pump Heater, 100% Usage`<br/>  - `Heat Pump Heater, 150% Usage`<br/>  - `Heat Pump Heater, 200% Usage`<br/>  - `Heat Pump Heater, 400% Usage`<br/>  - `Natural Gas Heater, 25% Usage`<br/>  - `Natural Gas Heater, 50% Usage`<br/>  - `Natural Gas Heater, 75% Usage`<br/>  - `Natural Gas Heater, 100% Usage`<br/>  - `Natural Gas Heater, 150% Usage`<br/>  - `Natural Gas Heater, 200% Usage`<br/>  - `Natural Gas Heater, 400% Usage`<br/>  - `Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater`<br/>  - `Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater`
 
 
 - **Default:** `None`
@@ -1850,7 +1858,7 @@ Select an advanced research feature to use in the model, if desired.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Temperature Capacitance Multiplier, 1`, `Temperature Capacitance Multiplier, 4`, `Temperature Capacitance Multiplier, 10`, `Temperature Capacitance Multiplier, 15`, `On/Off Thermostat Deadband, 1F`, `On/Off Thermostat Deadband, 2F`, `On/Off Thermostat Deadband, 3F`, `Heat Pump Backup Staging, 5 kW`, `Heat Pump Backup Staging, 10 kW`, `Experimental Ground-to-Air Heat Pump Model`, `HVAC Allow Increased Fixed Capacities`
+- **Choices:** <br/>  - `None`<br/>  - `Temperature Capacitance Multiplier, 1`<br/>  - `Temperature Capacitance Multiplier, 4`<br/>  - `Temperature Capacitance Multiplier, 10`<br/>  - `Temperature Capacitance Multiplier, 15`<br/>  - `On/Off Thermostat Deadband, 1F`<br/>  - `On/Off Thermostat Deadband, 2F`<br/>  - `On/Off Thermostat Deadband, 3F`<br/>  - `Heat Pump Backup Staging, 5 kW`<br/>  - `Heat Pump Backup Staging, 10 kW`<br/>  - `Experimental Ground-to-Air Heat Pump Model`<br/>  - `HVAC Allow Increased Fixed Capacities`
 
 
 - **Default:** `None`
@@ -1866,7 +1874,7 @@ Select a second advanced research feature to use in the model, if desired.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Temperature Capacitance Multiplier, 1`, `Temperature Capacitance Multiplier, 4`, `Temperature Capacitance Multiplier, 10`, `Temperature Capacitance Multiplier, 15`, `On/Off Thermostat Deadband, 1F`, `On/Off Thermostat Deadband, 2F`, `On/Off Thermostat Deadband, 3F`, `Heat Pump Backup Staging, 5 kW`, `Heat Pump Backup Staging, 10 kW`, `Experimental Ground-to-Air Heat Pump Model`, `HVAC Allow Increased Fixed Capacities`
+- **Choices:** <br/>  - `None`<br/>  - `Temperature Capacitance Multiplier, 1`<br/>  - `Temperature Capacitance Multiplier, 4`<br/>  - `Temperature Capacitance Multiplier, 10`<br/>  - `Temperature Capacitance Multiplier, 15`<br/>  - `On/Off Thermostat Deadband, 1F`<br/>  - `On/Off Thermostat Deadband, 2F`<br/>  - `On/Off Thermostat Deadband, 3F`<br/>  - `Heat Pump Backup Staging, 5 kW`<br/>  - `Heat Pump Backup Staging, 10 kW`<br/>  - `Experimental Ground-to-Air Heat Pump Model`<br/>  - `HVAC Allow Increased Fixed Capacities`
 
 
 - **Default:** `None`
@@ -1882,7 +1890,7 @@ The type of utility bill calculations to perform.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Default (EIA Average Rates)`, `Detailed Example: $0.12/kWh, $1.1/therm, $12/month`, `Detailed Example: Sample Tiered Rate`, `Detailed Example: Sample Time-of-Use Rate`, `Detailed Example: Sample Tiered and Time-of-Use Rate`, `Detailed Example: Sample Real-Time Pricing`, `Detailed Example: Net Metering w/ Wholesale Excess Rate`, `Detailed Example: Net Metering w/ Retail Excess Rate`, `Detailed Example: Feed-in Tariff`
+- **Choices:** <br/>  - `None`<br/>  - `Default (EIA Average Rates)`<br/>  - `Detailed Example: $0.12/kWh, $1.1/therm, $12/month`<br/>  - `Detailed Example: Sample Tiered Rate`<br/>  - `Detailed Example: Sample Time-of-Use Rate`<br/>  - `Detailed Example: Sample Tiered and Time-of-Use Rate`<br/>  - `Detailed Example: Sample Real-Time Pricing`<br/>  - `Detailed Example: Net Metering w/ Wholesale Excess Rate`<br/>  - `Detailed Example: Net Metering w/ Retail Excess Rate`<br/>  - `Detailed Example: Feed-in Tariff`
 
 
 - **Default:** `Default (EIA Average Rates)`
@@ -1898,7 +1906,7 @@ The second type of utility bill calculations to perform, if desired.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Default (EIA Average Rates)`, `Detailed Example: $0.12/kWh, $1.1/therm, $12/month`, `Detailed Example: Sample Tiered Rate`, `Detailed Example: Sample Time-of-Use Rate`, `Detailed Example: Sample Tiered and Time-of-Use Rate`, `Detailed Example: Sample Real-Time Pricing`, `Detailed Example: Net Metering w/ Wholesale Excess Rate`, `Detailed Example: Net Metering w/ Retail Excess Rate`, `Detailed Example: Feed-in Tariff`
+- **Choices:** <br/>  - `None`<br/>  - `Default (EIA Average Rates)`<br/>  - `Detailed Example: $0.12/kWh, $1.1/therm, $12/month`<br/>  - `Detailed Example: Sample Tiered Rate`<br/>  - `Detailed Example: Sample Time-of-Use Rate`<br/>  - `Detailed Example: Sample Tiered and Time-of-Use Rate`<br/>  - `Detailed Example: Sample Real-Time Pricing`<br/>  - `Detailed Example: Net Metering w/ Wholesale Excess Rate`<br/>  - `Detailed Example: Net Metering w/ Retail Excess Rate`<br/>  - `Detailed Example: Feed-in Tariff`
 
 
 - **Default:** `None`
@@ -1914,7 +1922,7 @@ The third type of utility bill calculations to perform, if desired.
 
 - **Required:** ``false``
 
-- **Choices:** `None`, `Default (EIA Average Rates)`, `Detailed Example: $0.12/kWh, $1.1/therm, $12/month`, `Detailed Example: Sample Tiered Rate`, `Detailed Example: Sample Time-of-Use Rate`, `Detailed Example: Sample Tiered and Time-of-Use Rate`, `Detailed Example: Sample Real-Time Pricing`, `Detailed Example: Net Metering w/ Wholesale Excess Rate`, `Detailed Example: Net Metering w/ Retail Excess Rate`, `Detailed Example: Feed-in Tariff`
+- **Choices:** <br/>  - `None`<br/>  - `Default (EIA Average Rates)`<br/>  - `Detailed Example: $0.12/kWh, $1.1/therm, $12/month`<br/>  - `Detailed Example: Sample Tiered Rate`<br/>  - `Detailed Example: Sample Time-of-Use Rate`<br/>  - `Detailed Example: Sample Tiered and Time-of-Use Rate`<br/>  - `Detailed Example: Sample Real-Time Pricing`<br/>  - `Detailed Example: Net Metering w/ Wholesale Excess Rate`<br/>  - `Detailed Example: Net Metering w/ Retail Excess Rate`<br/>  - `Detailed Example: Feed-in Tariff`
 
 
 - **Default:** `None`

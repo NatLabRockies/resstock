@@ -2910,6 +2910,10 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
     if ['base-vehicle-ev-charger-occupancy-stochastic.xml'].include? hpxml_file
       hpxml_bldg.vehicles[0].hours_per_week = 14.0
     end
+    if ['base-misc-usage-multiplier.xml'].include? hpxml_file
+      hpxml_bldg.vehicles[0].miles_per_year = nil
+      hpxml_bldg.vehicles[0].ev_usage_multiplier = 0.75
+    end
 
     # ---------------- #
     # HPXML Appliances #
