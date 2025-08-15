@@ -50,7 +50,7 @@ def process_income_lookup(geography):
     elif geography == "National":
         ext = "Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
     elif geography == "National2":
-        ext = "occ_FPL"
+        ext = "Occupants_FederalPovertyLevel"
         deps = ["Occupants", "Federal Poverty Level", "Income"]
     else:
         raise ValueError(f"geography={geography} not supported")
