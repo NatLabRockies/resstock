@@ -31,7 +31,7 @@ class ApplyUpgradeTest < Minitest::Test
     }
 
     puts 'Retaining capacities and autosizing factors:'
-    _lighting_upgrade(args_hash)
+    _window_upgrade(args_hash)
     _test_retaining_hvac_system_values(args_hash, expected_capacities, expected_autosizing_factors)
 
     _heating_system_upgrade(args_hash, expected_capacities, expected_autosizing_factors)
@@ -96,7 +96,7 @@ class ApplyUpgradeTest < Minitest::Test
     }
 
     puts 'Retaining capacities and autosizing factors:'
-    _lighting_upgrade(args_hash)
+    _window_upgrade(args_hash)
     _test_retaining_hvac_system_values(args_hash, expected_capacities, expected_autosizing_factors)
 
     _heating_system_upgrade(args_hash, expected_capacities, expected_autosizing_factors)
@@ -176,7 +176,7 @@ class ApplyUpgradeTest < Minitest::Test
     }
 
     puts 'Retaining capacities and autosizing factors:'
-    _lighting_upgrade(args_hash)
+    _window_upgrade(args_hash)
     _test_retaining_hvac_system_values(args_hash, expected_capacities, expected_autosizing_factors)
 
     _heating_system_upgrade(args_hash, expected_capacities, expected_autosizing_factors)
@@ -256,7 +256,7 @@ class ApplyUpgradeTest < Minitest::Test
     }
 
     puts 'Retaining capacities and autosizing factors:'
-    _lighting_upgrade(args_hash)
+    _window_upgrade(args_hash)
     _test_retaining_hvac_system_values(args_hash, expected_capacities, expected_autosizing_factors)
 
     _heating_system_upgrade(args_hash, expected_capacities, expected_autosizing_factors)
@@ -313,7 +313,7 @@ class ApplyUpgradeTest < Minitest::Test
 
   private
 
-  def _lighting_upgrade(args_hash)
+  def _window_upgrade(args_hash)
     puts "\twindow upgrade..."
     args_hash['window_ufactor'] = 0.29
     args_hash['window_shgc'] = 0.26
