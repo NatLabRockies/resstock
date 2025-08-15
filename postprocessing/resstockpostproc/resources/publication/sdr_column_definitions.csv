@@ -319,6 +319,8 @@ Output,report_simulation_output.report_simulation_output.hvac_capacity_heating_b
 Output,report_simulation_output.load_cooling_delivered_m_btu,MBtu,out.load.cooling.energy_delivered.kbtu,out.load.cooling.energy_delivered.kbtu,kbtu,1000,Load: Cooling: Delivered,kBtu,out.load.cooling.energy_delivered.kbtu,out.load.cooling.energy_delivered.kbtu,kBtu,1,Includes HVAC distribution losses.
 Output,report_simulation_output.load_heating_delivered_m_btu,MBtu,out.load.heating.energy_delivered.kbtu,out.load.heating.energy_delivered.kbtu,kbtu,1000,Load: Heating: Delivered,kBtu,out.load.heating.energy_delivered.kbtu,out.load.heating.energy_delivered.kbtu,kBtu,1,Includes HVAC distribution losses.
 Output,report_simulation_output.load_hot_water_delivered_m_btu,MBtu,out.load.hot_water.energy_delivered.kbtu,out.load.hot_water.energy_delivered.kbtu,kbtu,1000,Load: Hot Water: Delivered,kBtu,out.load.hot_water.energy_delivered.kbtu,out.load.hot_water.energy_delivered.kbtu,kBtu,1,Includes contributions by desuperheaters or solar thermal systems.
+Output,report_simulation_output.load_hot_water_solar_thermal_m_btu,MBtu,out.load.hot_water.energy_solar_thermal.kbtu,out.load.hot_water.energy_solar_thermal.kbtu,kbtu,1000,Load: Hot Water: Solar Thermal,kBtu,out.load.hot_water.energy_solar_thermal.kbtu,out.load.hot_water.energy_solar_thermal.kbtu,kBtu,1,Water heater solar thermal energy.
+Output,report_simulation_output.load_hot_water_tank_losses_m_btu,MBtu,out.load.hot_water.energy_tank_losses.kbtu,out.load.hot_water.energy_tank_losses.kbtu,kbtu,1000,Load: Hot Water: Tank Losses,kBtu,out.load.hot_water.energy_tank_losses.kbtu,out.load.hot_water.energy_tank_losses.kbtu,kBtu,1,Water heater tank losses energy.
 Output,report_simulation_output.peak_load_cooling_delivered_k_btu_hr,kBtu/hr,out.load.cooling.peak.kbtu_hr,out.load.cooling.peak.kbtu_hr,kbtu_hr,1,,,,,,,Includes HVAC distribution losses.
 Output,report_simulation_output.peak_load_heating_delivered_k_btu_hr,kBtu/hr,out.load.heating.peak.kbtu_hr,out.load.heating.peak.kbtu_hr,kbtu_hr,1,,,,,,,Includes HVAC distribution losses.
 Output,report_simulation_output.peak_electricity_summer_total_w,W,out.electricity.summer.peak.kw,out.electricity.summer.peak.kw,kw,0.001,,,,,,,Maximum value in Jun/Jul/Aug (or Dec/Jan/Feb in the southern hemisphere)
@@ -594,13 +596,11 @@ Calculated,,,out.electricity.total.energy_consumption.kwh.savings,out.electricit
 Calculated,,,out.fuel_oil.total.energy_consumption.kwh.savings,out.fuel_oil.total.energy_consumption.savings,kwh,,,,out.fuel_oil.total.energy_consumption.savings,out.fuel_oil.total.energy_consumption.savings,kWh,,
 Calculated,,,out.natural_gas.total.energy_consumption.kwh.savings,out.natural_gas.total.energy_consumption.savings,kwh,,,,out.natural_gas.total.energy_consumption.savings,out.natural_gas.total.energy_consumption.savings,kWh,,
 Calculated,,,out.propane.total.energy_consumption.kwh.savings,out.propane.total.energy_consumption.savings,kwh,,,,out.propane.total.energy_consumption.savings,out.propane.total.energy_consumption.savings,kWh,,
-Calculated,,,out.hot_water.clothes_washer.gal.savings,out.hot_water.clothes_washer.gal.savings,gal,,,,,,,,
-Calculated,,,out.hot_water.dishwasher.gal.savings,out.hot_water.dishwasher.gal.savings,gal,,,,,,,,
-Calculated,,,out.hot_water.distribution_waste.gal.savings,out.hot_water.distribution_waste.gal.savings,gal,,,,,,,,
-Calculated,,,out.hot_water.fixtures.gal.savings,out.hot_water.fixtures.gal.savings,gal,,,,,,,,
 Calculated,,,out.load.cooling.energy_delivered.kbtu.savings,out.load.cooling.energy_delivered.kbtu.savings,kbtu,,,,out.load.cooling.energy_delivered.kbtu.savings,out.load.cooling.energy_delivered.kbtu.savings,kBtu,,
 Calculated,,,out.load.heating.energy_delivered.kbtu.savings,out.load.heating.energy_delivered.kbtu.savings,kbtu,,,,out.load.heating.energy_delivered.kbtu.savings,out.load.heating.energy_delivered.kbtu.savings,kBtu,,
 Calculated,,,out.load.hot_water.energy_delivered.kbtu.savings,out.load.hot_water.energy_delivered.kbtu.savings,kbtu,,,,out.load.hot_water.energy_delivered.kbtu.savings,out.load.hot_water.energy_delivered.kbtu.savings,kBtu,,
+Calculated,,,out.load.hot_water.energy_solar_thermal.kbtu.savings,out.load.hot_water.energy_solar_thermal.kbtu.savings,kbtu,,,,out.load.hot_water.energy_solar_thermal.kbtu.savings,out.load.hot_water.energy_solar_thermal.kbtu.savings,kBtu,,
+Calculated,,,out.load.hot_water.energy_tank_losses.kbtu.savings,out.load.hot_water.energy_tank_losses.kbtu.savings,kbtu,,,,out.load.hot_water.energy_tank_losses.kbtu.savings,out.load.hot_water.energy_tank_losses.kbtu.savings,kBtu,,
 Calculated,,,out.load.cooling.peak.kbtu_hr.savings,out.load.cooling.peak.kbtu_hr.savings,kbtu_hr,,,,,,,,
 Calculated,,,out.load.heating.peak.kbtu_hr.savings,out.load.heating.peak.kbtu_hr.savings,kbtu_hr,,,,,,,,
 Calculated,,,out.electricity.summer.peak.kw.savings,out.electricity.summer.peak.kw.savings,kw,,,,,,,,
