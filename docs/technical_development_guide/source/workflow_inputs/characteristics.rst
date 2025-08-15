@@ -27185,7 +27185,7 @@ Arguments
      - false
      - 
      - Choice
-     - None, Compact, 200 Mile Range, 10% Usage, Compact, 200 Mile Range, 25% Usage, Compact, 200 Mile Range, 50% Usage, Compact, 200 Mile Range, 75% Usage, Compact, 200 Mile Range, 100% Usage, Compact, 200 Mile Range, 125% Usage, Compact, 200 Mile Range, 150% Usage, Compact, 200 Mile Range, 175% Usage, Compact, 200 Mile Range, 200% Usage, Compact, 300 Mile Range, 10% Usage, Compact, 300 Mile Range, 25% Usage, Compact, 300 Mile Range, 50% Usage, Compact, 300 Mile Range, 75% Usage, Compact, 300 Mile Range, 100% Usage, Compact, 300 Mile Range, 125% Usage, Compact, 300 Mile Range, 150% Usage, Compact, 300 Mile Range, 175% Usage, Compact, 300 Mile Range, 200% Usage, Midsize, 200 Mile Range, 10% Usage, Midsize, 200 Mile Range, 25% Usage, Midsize, 200 Mile Range, 50% Usage, Midsize, 200 Mile Range, 75% Usage, Midsize, 200 Mile Range, 100% Usage, Midsize, 200 Mile Range, 125% Usage, Midsize, 200 Mile Range, 150% Usage, Midsize, 200 Mile Range, 175% Usage, Midsize, 200 Mile Range, 200% Usage, Midsize, 300 Mile Range, 10% Usage, Midsize, 300 Mile Range, 25% Usage, Midsize, 300 Mile Range, 50% Usage, Midsize, 300 Mile Range, 75% Usage, Midsize, 300 Mile Range, 100% Usage, Midsize, 300 Mile Range, 125% Usage, Midsize, 300 Mile Range, 150% Usage, Midsize, 300 Mile Range, 175% Usage, Midsize, 300 Mile Range, 200% Usage, Pickup, 200 Mile Range, 10% Usage, Pickup, 200 Mile Range, 25% Usage, Pickup, 200 Mile Range, 50% Usage, Pickup, 200 Mile Range, 75% Usage, Pickup, 200 Mile Range, 100% Usage, Pickup, 200 Mile Range, 125% Usage, Pickup, 200 Mile Range, 150% Usage, Pickup, 200 Mile Range, 175% Usage, Pickup, 200 Mile Range, 200% Usage, Pickup, 300 Mile Range, 10% Usage, Pickup, 300 Mile Range, 25% Usage, Pickup, 300 Mile Range, 50% Usage, Pickup, 300 Mile Range, 75% Usage, Pickup, 300 Mile Range, 100% Usage, Pickup, 300 Mile Range, 125% Usage, Pickup, 300 Mile Range, 150% Usage, Pickup, 300 Mile Range, 175% Usage, Pickup, 300 Mile Range, 200% Usage, SUV, 200 Mile Range, 10% Usage, SUV, 200 Mile Range, 25% Usage, SUV, 200 Mile Range, 50% Usage, SUV, 200 Mile Range, 75% Usage, SUV, 200 Mile Range, 100% Usage, SUV, 200 Mile Range, 125% Usage, SUV, 200 Mile Range, 150% Usage, SUV, 200 Mile Range, 175% Usage, SUV, 200 Mile Range, 200% Usage, SUV, 300 Mile Range, 10% Usage, SUV, 300 Mile Range, 25% Usage, SUV, 300 Mile Range, 50% Usage, SUV, 300 Mile Range, 75% Usage, SUV, 300 Mile Range, 100% Usage, SUV, 300 Mile Range, 125% Usage, SUV, 300 Mile Range, 150% Usage, SUV, 300 Mile Range, 175% Usage, SUV, 300 Mile Range, 200% Usage, Detailed Example: 100 kWh battery, 0.25 kWh/mile, Detailed Example: 100 kWh battery, 4.0 miles/kWh, Detailed Example: 100 kWh battery, 135.0 mpge
+     - None, Compact, 200 Mile Range, 1000 miles/yr, Compact, 200 Mile Range, 3000 miles/yr, Compact, 200 Mile Range, 5000 miles/yr, Compact, 200 Mile Range, 7000 miles/yr, Compact, 200 Mile Range, 9000 miles/yr, Compact, 200 Mile Range, 11000 miles/yr, Compact, 200 Mile Range, 13000 miles/yr, Compact, 200 Mile Range, 15000 miles/yr, Compact, 200 Mile Range, 17000 miles/yr, Compact, 200 Mile Range, 19000 miles/yr, Compact, 200 Mile Range, 22500 miles/yr, Compact, 300 Mile Range, 1000 miles/yr, Compact, 300 Mile Range, 3000 miles/yr, Compact, 300 Mile Range, 5000 miles/yr, Compact, 300 Mile Range, 7000 miles/yr, Compact, 300 Mile Range, 9000 miles/yr, Compact, 300 Mile Range, 11000 miles/yr, Compact, 300 Mile Range, 13000 miles/yr, Compact, 300 Mile Range, 15000 miles/yr, Compact, 300 Mile Range, 17000 miles/yr, Compact, 300 Mile Range, 19000 miles/yr, Compact, 300 Mile Range, 22500 miles/yr, Midsize, 200 Mile Range, 1000 miles/yr, Midsize, 200 Mile Range, 3000 miles/yr, Midsize, 200 Mile Range, 5000 miles/yr, Midsize, 200 Mile Range, 7000 miles/yr, Midsize, 200 Mile Range, 9000 miles/yr, Midsize, 200 Mile Range, 11000 miles/yr, Midsize, 200 Mile Range, 13000 miles/yr, Midsize, 200 Mile Range, 15000 miles/yr, Midsize, 200 Mile Range, 17000 miles/yr, Midsize, 200 Mile Range, 19000 miles/yr, Midsize, 200 Mile Range, 22500 miles/yr, Midsize, 300 Mile Range, 1000 miles/yr, Midsize, 300 Mile Range, 3000 miles/yr, Midsize, 300 Mile Range, 5000 miles/yr, Midsize, 300 Mile Range, 7000 miles/yr, Midsize, 300 Mile Range, 9000 miles/yr, Midsize, 300 Mile Range, 11000 miles/yr, Midsize, 300 Mile Range, 13000 miles/yr, Midsize, 300 Mile Range, 15000 miles/yr, Midsize, 300 Mile Range, 17000 miles/yr, Midsize, 300 Mile Range, 19000 miles/yr, Midsize, 300 Mile Range, 22500 miles/yr, Pickup, 200 Mile Range, 1000 miles/yr, Pickup, 200 Mile Range, 3000 miles/yr, Pickup, 200 Mile Range, 5000 miles/yr, Pickup, 200 Mile Range, 7000 miles/yr, Pickup, 200 Mile Range, 9000 miles/yr, Pickup, 200 Mile Range, 11000 miles/yr, Pickup, 200 Mile Range, 13000 miles/yr, Pickup, 200 Mile Range, 15000 miles/yr, Pickup, 200 Mile Range, 17000 miles/yr, Pickup, 200 Mile Range, 19000 miles/yr, Pickup, 200 Mile Range, 22500 miles/yr, Pickup, 300 Mile Range, 1000 miles/yr, Pickup, 300 Mile Range, 3000 miles/yr, Pickup, 300 Mile Range, 5000 miles/yr, Pickup, 300 Mile Range, 7000 miles/yr, Pickup, 300 Mile Range, 9000 miles/yr, Pickup, 300 Mile Range, 11000 miles/yr, Pickup, 300 Mile Range, 13000 miles/yr, Pickup, 300 Mile Range, 15000 miles/yr, Pickup, 300 Mile Range, 17000 miles/yr, Pickup, 300 Mile Range, 19000 miles/yr, Pickup, 300 Mile Range, 22500 miles/yr, SUV, 200 Mile Range, 1000 miles/yr, SUV, 200 Mile Range, 3000 miles/yr, SUV, 200 Mile Range, 5000 miles/yr, SUV, 200 Mile Range, 7000 miles/yr, SUV, 200 Mile Range, 9000 miles/yr, SUV, 200 Mile Range, 11000 miles/yr, SUV, 200 Mile Range, 13000 miles/yr, SUV, 200 Mile Range, 15000 miles/yr, SUV, 200 Mile Range, 17000 miles/yr, SUV, 200 Mile Range, 19000 miles/yr, SUV, 200 Mile Range, 22500 miles/yr, SUV, 300 Mile Range, 1000 miles/yr, SUV, 300 Mile Range, 3000 miles/yr, SUV, 300 Mile Range, 5000 miles/yr, SUV, 300 Mile Range, 7000 miles/yr, SUV, 300 Mile Range, 9000 miles/yr, SUV, 300 Mile Range, 11000 miles/yr, SUV, 300 Mile Range, 13000 miles/yr, SUV, 300 Mile Range, 15000 miles/yr, SUV, 300 Mile Range, 17000 miles/yr, SUV, 300 Mile Range, 19000 miles/yr, SUV, 300 Mile Range, 22500 miles/yr, Detailed Example: 100 kWh battery, 0.25 kWh/mile, Detailed Example: 100 kWh battery, 4.0 miles/kWh, Detailed Example: 100 kWh battery, 135.0 mpge
      - The type of battery electric vehicle.
    * - ``misc_electric_vehicle_charging``
      - false
@@ -27211,35 +27211,35 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Compact, Battery Electric Vehicle, 200 mile range
      - 12%
-     - Compact, 200 Mile Range, 100% Usage
+     - Compact, 200 Mile Range, 11000 miles/yr
      - None
    * - Compact, Battery Electric Vehicle, 300 mile range
      - 34%
-     - Compact, 300 Mile Range, 100% Usage
+     - Compact, 300 Mile Range, 11000 miles/yr
      - None
    * - Midsize, Battery Electric Vehicle, 200 mile range
      - 3%
-     - Midsize, 200 Mile Range, 100% Usage
+     - Midsize, 200 Mile Range, 11000 miles/yr
      - None
    * - Midsize, Battery Electric Vehicle, 300 mile range
      - 7.6%
-     - Midsize, 300 Mile Range, 100% Usage
+     - Midsize, 300 Mile Range, 11000 miles/yr
      - None
    * - Pickup, Battery Electric Vehicle, 200 mile range
      - 0.0055%
-     - Pickup, 200 Mile Range, 100% Usage
+     - Pickup, 200 Mile Range, 11000 miles/yr
      - None
    * - Pickup, Battery Electric Vehicle, 300 mile range
      - 0.77%
-     - Pickup, 300 Mile Range, 100% Usage
+     - Pickup, 300 Mile Range, 11000 miles/yr
      - None
    * - SUV, Battery Electric Vehicle, 200 mile range
      - 12%
-     - SUV, 200 Mile Range, 100% Usage
+     - SUV, 200 Mile Range, 11000 miles/yr
      - None
    * - SUV, Battery Electric Vehicle, 300 mile range
      - 31%
-     - SUV, 300 Mile Range, 100% Usage
+     - SUV, 300 Mile Range, 11000 miles/yr
      - None
 
 .. _electric_vehicle_charge_at_home:
@@ -27440,12 +27440,12 @@ Arguments
      - Type
      - Choices
      - Description
-   * - ``ev_usage_multiplier``
+   * - ``vehicle_miles_driven_per_year``
      - false
      - miles
      - Double
      -
-     - Multiplier on the electric vehicle miles driven that can reflect, e.g., high/low usage occupants.
+     - The annual miles the vehicle is driven.
 
 Options
 *******
@@ -27459,41 +27459,41 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - Option name
      - Stock saturation
-     - ``ev_usage_multiplier``
+     - ``vehicle_miles_driven_per_year``
 
    * - 1000
      - 11%
-     - 0.1
+     - 1000
    * - 3000
      - 11%
-     - 0.25
+     - 3000
    * - 5000
      - 13%
-     - 0.5
+     - 5000
    * - 7000
      - 13%
-     - 0.75
+     - 7000
    * - 9000
      - 12%
-     - 0.75
+     - 9000
    * - 11000
      - 11%
-     - 1.0
+     - 11000
    * - 13000
      - 9.3%
-     - 1.25
+     - 13000
    * - 15000
      - 7.5%
-     - 1.25
+     - 15000
    * - 17000
      - 5.9%
-     - 1.5
+     - 17000
    * - 19000
      - 4.6%
-     - 1.75
+     - 19000
    * - 22500
      - 1.6%
-     - 2.0
+     - 22500
 
 .. _electric_vehicle_outlet_access:
 
@@ -33270,7 +33270,7 @@ Arguments
      - false
      - 
      - Choice
-     - Very Tight, Tight, Average, Leaky, Very Leaky, 1 ACH50, 2 ACH50, 3 ACH50, 4 ACH50, 5 ACH50, 6 ACH50, 7 ACH50, 8 ACH50, 10 ACH50, 15 ACH50, 20 ACH50, 25 ACH50, 30 ACH50, 40 ACH50, 50 ACH50, 0.2 nACH, 0.3 nACH, 0.335 nACH, 0.5 nACH, 0.67 nACH, 1.0 nACH, 1.5 nACH, Detailed Example: 3.57 ACH50, Detailed Example: 12.16 ACH50, Detailed Example: 2.8 ACH45, Detailed Example: 0.375 nACH, Detailed Example: 72 nCFM, Detailed Example: 79.8 sq. in. ELA, Detailed Example: 123 sq. in. ELA, Detailed Example: 1080 CFM50, Detailed Example: 1010 CFM45
+     - Very Tight, Tight, Average, Leaky, Very Leaky, 1 ACH50, 2 ACH50, 3 ACH50, 4 ACH50, 5 ACH50, 6 ACH50, 7 ACH50, 8 ACH50, 9 ACH50, 10 ACH50, 11 ACH50, 12 ACH50, 13 ACH50, 14 ACH50, 15 ACH50, 16 ACH50, 17 ACH50, 18 ACH50, 19 ACH50, 20 ACH50, 25 ACH50, 30 ACH50, 35 ACH50, 40 ACH50, 45 ACH50, 50 ACH50, 0.2 nACH, 0.3 nACH, 0.335 nACH, 0.5 nACH, 0.67 nACH, 1.0 nACH, 1.5 nACH, Detailed Example: 3.57 ACH50, Detailed Example: 12.16 ACH50, Detailed Example: 2.8 ACH45, Detailed Example: 0.375 nACH, Detailed Example: 72 nCFM, Detailed Example: 79.8 sq. in. ELA, Detailed Example: 123 sq. in. ELA, Detailed Example: 1080 CFM50, Detailed Example: 1010 CFM45
      - The amount of air leakage coming from outside. If a qualitative leakiness description (e.g., 'Average') is selected, the Year Built of the home is also required.
 
 Options
@@ -44566,7 +44566,7 @@ Arguments
      - ft2
      - String
      -
-     - The amount of window area on the unit's front/back/left/right roofs. Use a comma-separated list like '50, 0, 0, 0'.
+     - The amount of skylight area on the unit's front/back/left/right roofs. Use a comma-separated list like '50, 0, 0, 0'.
 
 Options
 *******
