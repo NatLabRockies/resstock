@@ -35712,7 +35712,7 @@ Arguments
      - 
      - Choice
      - auto, 1, 2, 3
-     - The charging level of the EV charger. If not provided, the OS-HPXML default (see `HPXML Electric Vehicle Chargers <https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>`_) is used.
+     - The charging level of the EV charger. If not provided, the OS-HPXML default (see `HPXML Electric Vehicle Chargers <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-electric-vehicle-chargers>`_) is used.
    * - ``ev_charger_power``
      - false
      - W
