@@ -4,9 +4,9 @@ require 'csv'
 
 # HPXML declared values: https://github.com/NREL/OpenStudio-HPXML/blob/master/HPXMLtoOpenStudio/resources/hpxml.rb
 class ElectricalPanelSampler
-  def initialize(runner, building_id, hpxml_bldg)
+  def initialize(runner, hpxml_bldg, args)
     @runner = runner
-    @prng = Random.new(Integer(building_id)) # initialize a random number generator
+    @prng = Random.new(Integer(args[:building_id])) # initialize a random number generator
 
     @unit_type = hpxml_bldg.building_construction.residential_facility_type
     @num_units = hpxml_bldg.building_construction.number_of_units_in_building
@@ -23,47 +23,8 @@ class ElectricalPanelSampler
     @has_pv = (hpxml_bldg.pv_systems.size > 0)
     @has_ev_charging = (hpxml_bldg.ev_chargers.size > 0)
 
-    @cfa = hpxml_bldg.building_construction.conditioned_floor_area
-    if @cfa < 500
-      @cfa_bin = '0-499'
-    elsif @cfa < 750
-      @cfa_bin = '500-749'
-    elsif @cfa < 1000
-      @cfa_bin = '750-999'
-    elsif @cfa < 1500
-      @cfa_bin = '1000-1499'
-    elsif @cfa < 2000
-      @cfa_bin = '1500-1999'
-    elsif @cfa < 2500
-      @cfa_bin = '2000-2499'
-    elsif @cfa < 3000
-      @cfa_bin = '2500-2999'
-    elsif @cfa < 4000
-      @cfa_bin = '3000-3999'
-    else
-      @cfa_bin = '4000+'
-    end
-
-    year_built = hpxml_bldg.building_construction.year_built
-    if year_built < 1940
-      @vintage = '<1940'
-    elsif year_built < 1950
-      @vintage = '1940s'
-    elsif year_built < 1960
-      @vintage = '1950s'
-    elsif year_built < 1970
-      @vintage = '1960s'
-    elsif year_built < 1980
-      @vintage = '1970s'
-    elsif year_built < 1990
-      @vintage = '1980s'
-    elsif year_built < 2000
-      @vintage = '1990s'
-    elsif year_built < 2010
-      @vintage = '2000s'
-    else
-      @vintage = '2010s'
-    end
+    @cfa_bin = args[:geometry_unit_cfa_bin]
+    @vintage = args[:vintage]
   end
 
   def assign_rated_capacity()

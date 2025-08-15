@@ -690,7 +690,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
   def set_electric_panel(runner, hpxml_bldg, args)
     # Assign miscellaneous permanently connected appliance loads
-    panel_sampler = ElectricalPanelSampler.new(runner, args[:building_id], hpxml_bldg)
+    panel_sampler = ElectricalPanelSampler.new(runner, hpxml_bldg, args)
 
     cap_value = args[:electric_panel_service_max_current_rating]
     headroom_spaces = args[:electric_panel_breaker_spaces_headroom]
