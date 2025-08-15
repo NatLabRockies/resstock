@@ -85,7 +85,7 @@ EnergyPlus simulation controls are entered in ``/HPXML/SoftwareInfo/extension/Si
   ====================================  ========  =======  ================  ========  ===========================  =====================================
   Element                               Type      Units    Constraints       Required  Default                      Notes
   ====================================  ========  =======  ================  ========  ===========================  =====================================
-  ``Timestep``                          integer   minutes  Divisor of 60     No        60 (1 hour)                  Timestep
+  ``Timestep``                          integer   minutes  See [#]_          No        60 (1 hour)                  Timestep
   ``BeginMonth``                        integer            >= 1, <= 12 [#]_  No        1 (January)                  Run period start date
   ``BeginDayOfMonth``                   integer            >= 1, <= 31       No        1                            Run period start date
   ``EndMonth``                          integer            >= 1, <= 12       No        12 (December)                Run period end date
@@ -94,6 +94,8 @@ EnergyPlus simulation controls are entered in ``/HPXML/SoftwareInfo/extension/Si
   ``AdvancedResearchFeatures``          element                              No        <none>                       Features used for advanced research modeling
   ====================================  ========  =======  ================  ========  ===========================  =====================================
 
+  .. [#] Timestep choices are 60, 30, 20, 15, 12, 10, 6, 5, 4, 3, 2, and 1.
+         Choice of timestep can have a significant impact on the speed of the EnergyPlus simulation.
   .. [#] BeginMonth/BeginDayOfMonth date must occur before EndMonth/EndDayOfMonth date (e.g., a run period from 10/1 to 3/31 is invalid).
   .. [#] If a leap year is specified (e.g., 2008), the EPW weather file must contain 8784 hours.
   .. [#] CalendarYear only applies to TMY (Typical Meteorological Year) weather. For AMY (Actual Meteorological Year) weather, the AMY year will be used regardless of what is specified.

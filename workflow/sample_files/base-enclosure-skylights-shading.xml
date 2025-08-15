@@ -296,7 +296,7 @@
           <Skylight>
             <SystemIdentifier id='Skylight1'/>
             <Area>15.0</Area>
-            <Azimuth>0</Azimuth>
+            <Azimuth>180</Azimuth>
             <UFactor>0.59</UFactor>
             <SHGC>0.55</SHGC>
             <ExteriorShading>
@@ -321,7 +321,7 @@
           <Skylight>
             <SystemIdentifier id='Skylight2'/>
             <Area>15.0</Area>
-            <Azimuth>180</Azimuth>
+            <Azimuth>0</Azimuth>
             <UFactor>0.59</UFactor>
             <SHGC>0.55</SHGC>
             <ExteriorShading>
