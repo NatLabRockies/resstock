@@ -35599,56 +35599,56 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 40.168
      - kWh/mile
      - 0.209901
-     - 22
+     - 21.975
      - 0.0
    * - Compact, Battery Electric Vehicle, 300 mile range
      - 34%
      - 63.433
      - kWh/mile
      - 0.220020
-     - 22
+     - 21.975
      - 0.0
    * - Midsize, Battery Electric Vehicle, 200 mile range
      - 3%
      - 41.978
      - kWh/mile
      - 0.219174
-     - 22
+     - 21.975
      - 0.0
    * - Midsize, Battery Electric Vehicle, 300 mile range
      - 7.6%
      - 65.441
      - kWh/mile
      - 0.229449
-     - 22
+     - 21.975
      - 0.0
    * - Pickup, Battery Electric Vehicle, 200 mile range
      - 0.0055%
      - 67.738
      - kWh/mile
      - 0.357648
-     - 22
+     - 21.975
      - 0.0
    * - Pickup, Battery Electric Vehicle, 300 mile range
      - 0.77%
      - 105.946
      - kWh/mile
      - 0.373794
-     - 22
+     - 21.975
      - 0.0
    * - SUV, Battery Electric Vehicle, 200 mile range
      - 12%
      - 53.503
      - kWh/mile
      - 0.267513
-     - 22
+     - 21.975
      - 0.0
    * - SUV, Battery Electric Vehicle, 300 mile range
      - 31%
      - 83.680
      - kWh/mile
      - 0.278934
-     - 22
+     - 21.975
      - 0.0
 
 .. _electric_vehicle_charge_at_home:
