@@ -52,7 +52,9 @@
           "hvac_flex_pre_peak_offset": 3,
           "flex_random_shift_minutes": 0,
           "ev_flex_enabled": true,
-          "building_id": "1"
+          "building_id": "1",
+          "geometry_unit_cfa_bin": "4000+",
+          "vintage": "1960s"
       }
     },
     {
