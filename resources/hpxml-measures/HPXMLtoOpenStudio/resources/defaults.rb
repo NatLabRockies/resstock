@@ -732,12 +732,12 @@ module Defaults
     end
 
     if hpxml_bldg.city.nil?
-      hpxml_bldg.city = weather.header.City
+      hpxml_bldg.city = get_city(hpxml_bldg.city, weather, hpxml_bldg.zip_code)
       hpxml_bldg.city_isdefaulted = true
     end
 
     if hpxml_bldg.time_zone_utc_offset.nil?
-      hpxml_bldg.time_zone_utc_offset = get_time_zone(hpxml_bldg.time_zone_utc_offset, weather)
+      hpxml_bldg.time_zone_utc_offset = get_time_zone(hpxml_bldg.time_zone_utc_offset, weather, hpxml_bldg.zip_code)
       hpxml_bldg.time_zone_utc_offset_isdefaulted = true
     end
 
@@ -5247,11 +5247,16 @@ module Defaults
   #
   # @param time_zone [Double] Time zone (UTC offset) from the HPXML file
   # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
   # @return [Double] Default value for time zone (UTC offset)
-  def self.get_time_zone(time_zone, weather)
+  def self.get_time_zone(time_zone, weather, zipcode)
     return time_zone unless time_zone.nil?
 
-    # FUTURE: Add time zone to zipcode_weather_stations.csv and use here first.
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode)
+      return Float(weather_data[:zipcode_utc_offset]) unless weather_data[:zipcode_utc_offset].nil?
+    end
+
     return weather.header.TimeZone
   end
 
@@ -5271,6 +5276,24 @@ module Defaults
     end
 
     return weather.header.StateProvinceRegion.upcase
+  end
+
+  # Gets the default city from the HPXML file, or as backup from the
+  # zip code, or as backup from the weather file.
+  #
+  # @param city [String] city from the HPXML file
+  # @param weather [WeatherFile] Weather object containing EPW information
+  # @param zipcode [String] Zipcode of interest
+  # @return [String] City
+  def self.get_city(city, weather, zipcode)
+    return city unless city.nil?
+
+    if not zipcode.nil?
+      weather_data = lookup_weather_data_from_zipcode(zipcode)
+      return weather_data[:zipcode_city] unless weather_data[:zipcode_city].nil?
+    end
+
+    return weather.header.City
   end
 
   # Gets the default weekday/weekend schedule fractions and monthly multipliers for each end use.
