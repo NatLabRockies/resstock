@@ -369,19 +369,6 @@ references:
         - Ground Thermal Conductivity|0.5
         - Ground Thermal Conductivity|0.8
 
-  remove_shared_heating_cooling_ghp: &remove_shared_heating_cooling_ghp
-    - not: Heating Fuel|Wood
-    - not: Heating Fuel|Other Fuel
-    - not: Heating Fuel|None
-    - HVAC Has Ducts|Yes
-    - not:
-      - or:
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
-        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
-        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
-        - HVAC Shared Efficiencies|Fan Coil Cooling Only
-
   yes_and_no_has_ducts_apply_logic: &yes_and_no_has_ducts_apply_logic
     - or:
       - HVAC Has Ducts|Yes
@@ -670,7 +657,7 @@ upgrades:
       - *partial_conditioning_100_percent_ducts_only
 
   - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
-    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity  # TODO use remove_shared_heating_cooling_ghp?
+    package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
     options:
       - *dual_speed_ducted_ghp
       - *heat_pump_cooling_efficiency_ducted
