@@ -126,7 +126,7 @@ workflow_generator:
     debug: true
 
 references:
-  remove_nonducted_high_rise_shared: &remove_nonducted_high_rise_shared
+  remove_heating_shared_other_wood: &remove_heating_shared_other_wood 
     - HVAC Has Ducts|Yes
     - not: Heating Fuel|Wood
     - not: Heating Fuel|Other Fuel
@@ -138,13 +138,12 @@ references:
         - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
         - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
         - HVAC Shared Efficiencies|Fan Coil Cooling Only
-      - and:
-        - Geometry Building Type Height|Multi-Family with 5+ Units, 8+ Stories
+
 
 
 upgrades:
   - upgrade_name: ng_95_afue_for_all
-    package_apply_logic: *remove_nonducted_high_rise_shared
+    package_apply_logic: *remove_heating_shared_other_wood
     options:
         ### -- Natural Gas Furnace AFUE 95% applies to all dwellings with ducts
       - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
@@ -153,9 +152,12 @@ upgrades:
       - option: HVAC Heating Type And Fuel|Natural Gas Fuel Furnace
         apply_logic: 
           - not: Heating Fuel|Natural Gas
+      - option: Heating Fuel|Natural Gas
+        apply_logic:
+          - not: Heating Fuel|Natural Gas
 
   - upgrade_name: prop_fo_furnace
-    package_apply_logic: *remove_nonducted_high_rise_shared
+    package_apply_logic: *remove_heating_shared_other_wood
     options:
       - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
         apply_logic: 
@@ -169,7 +171,6 @@ upgrades:
             - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
-            - HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
         lifetime: 15
       - option: HVAC Heating Efficiency|Fuel Furnace, 88% AFUE
         apply_logic: 
@@ -184,7 +185,7 @@ upgrades:
         lifetime: 15
 
   - upgrade_name: furnace_ac_ref
-    package_apply_logic: *remove_nonducted_high_rise_shared
+    package_apply_logic: *remove_heating_shared_other_wood
     options:
       # min. efficiency fuel furnaces
       - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
@@ -266,6 +267,7 @@ upgrades:
               - HVAC Cooling Efficiency|AC, SEER 10
               - HVAC Cooling Efficiency|AC, SEER 13
               - HVAC Cooling Efficiency|AC, SEER 14
+              - HVAC Cooling Efficiency|AC, SEER 15
         lifetime: 15
 
       # All other states — SEER 13.4
@@ -298,6 +300,7 @@ upgrades:
               - HVAC Cooling Efficiency|AC, SEER 8
               - HVAC Cooling Efficiency|AC, SEER 10
               - HVAC Cooling Efficiency|AC, SEER 13
+              - HVAC Cooling Efficiency|AC, SEER 15
         lifetime: 15
 
       # 5) Central ASHP
@@ -322,4 +325,5 @@ upgrades:
             - HVAC Cooling Efficiency|Room AC, EER 8.5
             - HVAC Cooling Efficiency|Room AC, EER 9.8
             - HVAC Cooling Efficiency|Room AC, EER 10.7
+            - HVAC Cooling Efficiency|Room AC, EER 12.0
         lifetime: 7
