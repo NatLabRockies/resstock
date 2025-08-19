@@ -166,8 +166,8 @@ def sample(project: str, num_datapoints: int, output: str) -> None:
     print(f"Performing final sampling with {num_segments} segments")
     sample_df = sample_all(pathlib.Path(project), new_total, initial_samples_df=initial_samples_df)
     print(f"Final sampling completed in {time.time() - start_time:.2f} seconds")
-    click.echo("Writing Parquet")
-    sample_df.to_parquet(output)
+    click.echo("Writing Buildstock CSV")
+    pl.from_pandas(sample_df).write_csv(output)
     click.echo(f"Completed sampling in {time.time() - start_time:.2f} seconds")
 
 

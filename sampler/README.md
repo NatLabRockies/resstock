@@ -23,7 +23,6 @@ pip install uv
 
 ```bash
 uv sync
-uv pip install -e .
 source .venv/bin/activate
 ```
 
@@ -35,10 +34,14 @@ The sampler provides two main commands:
 
 ```bash
 # Activate the virtual environment
-resstock-sampler sample -p /path/to/geographic_tsvs/ -n 550000 -o geo_samples.csv
+resstock-sampler sample -p ../project_national -n 550000 -o geo_samples.csv
 ```
 
 **Parameters:**
 - `-p, --project`: Path to the project directory (must contain `housing_characteristics` folder)
 - `-n, --num_datapoints`: Number of datapoints to sample. It will generate approximately that many (exactly: `num_datapoints // 12` * 12) samples.
 - `-o, --output`: Output filename for samples (parquet format)
+
+### 2. Modify the sampler config file
+
+The sampler config file is located at `sampler/sampler_config.yaml`. You can modify the config file to change the parameters used for sampling.
