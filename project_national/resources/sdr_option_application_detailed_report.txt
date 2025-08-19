@@ -244,7 +244,7 @@ Detailed report of how the 4 options were applied to the buildings.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade2:'Dual Fuel Heating System', Option1:'HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 95.0% AFUE NG, 35F switchover'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 101231 (18.4%)
+and => 98335 (17.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
     or => 60385 (11.0%)
@@ -262,7 +262,7 @@ and => 101231 (18.4%)
     ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
     ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
     ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
-  or => 339445 (61.7%)
+  or => 323226 (58.8%)
     Heating Fuel|Natural Gas => 262274 (47.7%)
     Water Heater Fuel|Natural Gas => 249106 (45.3%)
     Clothes Dryer|Gas, Premium => 0 (0.0%)
@@ -271,12 +271,6 @@ and => 101231 (18.4%)
     HVAC Secondary Heating Fuel|Natural Gas => 16 (0.0%)
     Misc Pool Heater|Natural Gas => 5795 (1.1%)
     Misc Hot Tub Spa|Natural Gas => 6113 (1.1%)
-    not => 6600 (1.2%)
-      Misc Gas Lighting|None => 543400 (98.8%)
-    not => 15950 (2.9%)
-      Misc Gas Grill|None => 534050 (97.1%)
-    not => 17600 (3.2%)
-      Misc Gas Fireplace|None => 532400 (96.8%)
 -----------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -288,13 +282,13 @@ and => 535440 (97.4%)
   not => 545939 (99.3%)
     Heating Fuel|None => 4061 (0.7%)
 ------------------------------------
-Overall applied to => 100785 (18.3%).
--------------------------------------
+Overall applied to => 98048 (17.8%).
+------------------------------------
 
 -----------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade2:'Dual Fuel Heating System', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
 -----------------------------------------------------------------------------------------------------------------
-and => 101231 (18.4%)
+and => 98335 (17.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
     or => 60385 (11.0%)
@@ -312,7 +306,7 @@ and => 101231 (18.4%)
     ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
     ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
     ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
-  or => 339445 (61.7%)
+  or => 323226 (58.8%)
     Heating Fuel|Natural Gas => 262274 (47.7%)
     Water Heater Fuel|Natural Gas => 249106 (45.3%)
     Clothes Dryer|Gas, Premium => 0 (0.0%)
@@ -321,12 +315,6 @@ and => 101231 (18.4%)
     HVAC Secondary Heating Fuel|Natural Gas => 16 (0.0%)
     Misc Pool Heater|Natural Gas => 5795 (1.1%)
     Misc Hot Tub Spa|Natural Gas => 6113 (1.1%)
-    not => 6600 (1.2%)
-      Misc Gas Lighting|None => 543400 (98.8%)
-    not => 15950 (2.9%)
-      Misc Gas Grill|None => 534050 (97.1%)
-    not => 17600 (3.2%)
-      Misc Gas Fireplace|None => 532400 (96.8%)
 -----------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -338,13 +326,13 @@ and => 535440 (97.4%)
   not => 545939 (99.3%)
     Heating Fuel|None => 4061 (0.7%)
 ------------------------------------
-Overall applied to => 100785 (18.3%).
--------------------------------------
+Overall applied to => 98048 (17.8%).
+------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade2:'Dual Fuel Heating System', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
 ---------------------------------------------------------------------------------------------------------------------------------
-and => 101231 (18.4%)
+and => 98335 (17.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
     or => 60385 (11.0%)
@@ -362,7 +350,7 @@ and => 101231 (18.4%)
     ASHRAE IECC Climate Zone 2004|7B => 622 (0.1%)
     ASHRAE IECC Climate Zone 2004|7AK => 983 (0.2%)
     ASHRAE IECC Climate Zone 2004|8AK => 286 (0.1%)
-  or => 339445 (61.7%)
+  or => 323226 (58.8%)
     Heating Fuel|Natural Gas => 262274 (47.7%)
     Water Heater Fuel|Natural Gas => 249106 (45.3%)
     Clothes Dryer|Gas, Premium => 0 (0.0%)
@@ -371,12 +359,6 @@ and => 101231 (18.4%)
     HVAC Secondary Heating Fuel|Natural Gas => 16 (0.0%)
     Misc Pool Heater|Natural Gas => 5795 (1.1%)
     Misc Hot Tub Spa|Natural Gas => 6113 (1.1%)
-    not => 6600 (1.2%)
-      Misc Gas Lighting|None => 543400 (98.8%)
-    not => 15950 (2.9%)
-      Misc Gas Grill|None => 534050 (97.1%)
-    not => 17600 (3.2%)
-      Misc Gas Fireplace|None => 532400 (96.8%)
 -----------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -388,13 +370,13 @@ and => 535440 (97.4%)
   not => 545939 (99.3%)
     Heating Fuel|None => 4061 (0.7%)
 ------------------------------------
-Overall applied to => 100785 (18.3%).
--------------------------------------
+Overall applied to => 98048 (17.8%).
+------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade2:'Dual Fuel Heating System', Option4:'HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 92.5% AFUE NG, 35F switchover'
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 157170 (28.6%)
+and => 148054 (26.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
     or => 60385 (11.0%)
@@ -413,7 +395,7 @@ and => 157170 (28.6%)
     ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
     ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
     ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
-  or => 339445 (61.7%)
+  or => 323226 (58.8%)
     Heating Fuel|Natural Gas => 262274 (47.7%)
     Water Heater Fuel|Natural Gas => 249106 (45.3%)
     Clothes Dryer|Gas, Premium => 0 (0.0%)
@@ -422,12 +404,6 @@ and => 157170 (28.6%)
     HVAC Secondary Heating Fuel|Natural Gas => 16 (0.0%)
     Misc Pool Heater|Natural Gas => 5795 (1.1%)
     Misc Hot Tub Spa|Natural Gas => 6113 (1.1%)
-    not => 6600 (1.2%)
-      Misc Gas Lighting|None => 543400 (98.8%)
-    not => 15950 (2.9%)
-      Misc Gas Grill|None => 534050 (97.1%)
-    not => 17600 (3.2%)
-      Misc Gas Fireplace|None => 532400 (96.8%)
 -----------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -439,13 +415,13 @@ and => 535440 (97.4%)
   not => 545939 (99.3%)
     Heating Fuel|None => 4061 (0.7%)
 ------------------------------------
-Overall applied to => 156500 (28.5%).
+Overall applied to => 147525 (26.8%).
 -------------------------------------
 
 -----------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade2:'Dual Fuel Heating System', Option5:'HVAC Cooling Efficiency|Ducted Heat Pump'
 -----------------------------------------------------------------------------------------------------------------
-and => 157170 (28.6%)
+and => 148054 (26.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
     or => 60385 (11.0%)
@@ -464,7 +440,7 @@ and => 157170 (28.6%)
     ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
     ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
     ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
-  or => 339445 (61.7%)
+  or => 323226 (58.8%)
     Heating Fuel|Natural Gas => 262274 (47.7%)
     Water Heater Fuel|Natural Gas => 249106 (45.3%)
     Clothes Dryer|Gas, Premium => 0 (0.0%)
@@ -473,12 +449,6 @@ and => 157170 (28.6%)
     HVAC Secondary Heating Fuel|Natural Gas => 16 (0.0%)
     Misc Pool Heater|Natural Gas => 5795 (1.1%)
     Misc Hot Tub Spa|Natural Gas => 6113 (1.1%)
-    not => 6600 (1.2%)
-      Misc Gas Lighting|None => 543400 (98.8%)
-    not => 15950 (2.9%)
-      Misc Gas Grill|None => 534050 (97.1%)
-    not => 17600 (3.2%)
-      Misc Gas Fireplace|None => 532400 (96.8%)
 -----------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -490,13 +460,13 @@ and => 535440 (97.4%)
   not => 545939 (99.3%)
     Heating Fuel|None => 4061 (0.7%)
 ------------------------------------
-Overall applied to => 156500 (28.5%).
+Overall applied to => 147525 (26.8%).
 -------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------
 Option Apply Report for - Upgrade2:'Dual Fuel Heating System', Option6:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
 ---------------------------------------------------------------------------------------------------------------------------------
-and => 157170 (28.6%)
+and => 148054 (26.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
     or => 60385 (11.0%)
@@ -515,7 +485,7 @@ and => 157170 (28.6%)
     ASHRAE IECC Climate Zone 2004|4A => 118416 (21.5%)
     ASHRAE IECC Climate Zone 2004|4B => 4252 (0.8%)
     ASHRAE IECC Climate Zone 2004|4C => 15840 (2.9%)
-  or => 339445 (61.7%)
+  or => 323226 (58.8%)
     Heating Fuel|Natural Gas => 262274 (47.7%)
     Water Heater Fuel|Natural Gas => 249106 (45.3%)
     Clothes Dryer|Gas, Premium => 0 (0.0%)
@@ -524,12 +494,6 @@ and => 157170 (28.6%)
     HVAC Secondary Heating Fuel|Natural Gas => 16 (0.0%)
     Misc Pool Heater|Natural Gas => 5795 (1.1%)
     Misc Hot Tub Spa|Natural Gas => 6113 (1.1%)
-    not => 6600 (1.2%)
-      Misc Gas Lighting|None => 543400 (98.8%)
-    not => 15950 (2.9%)
-      Misc Gas Grill|None => 534050 (97.1%)
-    not => 17600 (3.2%)
-      Misc Gas Fireplace|None => 532400 (96.8%)
 -----------------------------------------------
 Package Apply Logic Report
 --------------------------
@@ -541,17 +505,17 @@ and => 535440 (97.4%)
   not => 545939 (99.3%)
     Heating Fuel|None => 4061 (0.7%)
 ------------------------------------
-Overall applied to => 156500 (28.5%).
+Overall applied to => 147525 (26.8%).
 -------------------------------------
 
 All of the options (and-ing) were applied to: 0 (0.0%)
-Any of the options (or-ing) were applied to: 257285 (46.8%)
+Any of the options (or-ing) were applied to: 245573 (44.6%)
 --------------------------------------------------------------------------------
 Report of how the 3 options were applied to the buildings.
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================================================+=====================+==================+==================+
-|                   3 | hvac heating efficiency, hvac cooling efficiency, | 257285 (46.8%)      | 257285 (46.8%)   | 257285 (46.8%)   |
+|                   3 | hvac heating efficiency, hvac cooling efficiency, | 245573 (44.6%)      | 245573 (44.6%)   | 245573 (44.6%)   |
 |                     | hvac cooling partial space conditioning           |                     |                  |                  |
 +---------------------+---------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
@@ -559,9 +523,9 @@ Detailed report of how the 6 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   3 | 1, 2, 3           | 100785 (18.3%)      | 100785 (18.3%)   | 100785 (18.3%)   |
+|                   3 | 1, 2, 3           | 98048 (17.8%)       | 98048 (17.8%)    | 98048 (17.8%)    |
 +---------------------+-------------------+---------------------+------------------+------------------+
-|                   3 | 4, 5, 6           | 156500 (28.5%)      | 257285 (46.8%)   | 257285 (46.8%)   |
+|                   3 | 4, 5, 6           | 147525 (26.8%)      | 245573 (44.6%)   | 245573 (44.6%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
