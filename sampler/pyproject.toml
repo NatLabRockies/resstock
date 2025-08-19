@@ -15,14 +15,14 @@ dependencies = [
 ]
 
 [project.scripts]
-resstock-sampler = "src.sampler.sampler:main"
+resstock-sampler = "sampler.sampler:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src"]
+packages = ["sampler"]
 
 [dependency-groups]
 dev = [
