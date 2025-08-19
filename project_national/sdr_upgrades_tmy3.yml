@@ -571,9 +571,6 @@ references:
       - HVAC Secondary Heating Fuel|Natural Gas
       - Misc Pool Heater|Natural Gas
       - Misc Hot Tub Spa|Natural Gas
-      - not: Misc Gas Lighting|None
-      - not: Misc Gas Grill|None
-      - not: Misc Gas Fireplace|None
 
   dual_fuel_warm_apply_logic: &dual_fuel_system_warm_climate
     - HVAC Has Ducts|Yes # apply to homes with ducts who have non-shared HVAC or shared HVAC with room for a condenser
@@ -603,9 +600,6 @@ references:
       - HVAC Secondary Heating Fuel|Natural Gas
       - Misc Pool Heater|Natural Gas
       - Misc Hot Tub Spa|Natural Gas
-      - not: Misc Gas Lighting|None
-      - not: Misc Gas Grill|None
-      - not: Misc Gas Fireplace|None
 
 ### Standard Data Release - Residential -- ###
 upgrades:
