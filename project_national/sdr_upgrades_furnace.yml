@@ -261,14 +261,14 @@ upgrades:
         apply_logic:
           - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
       
-      # MSHP
-      - option: HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
-        apply_logic:
-          - HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      # MSHP (not applicable because of package_apply_logic)
+      # - option: HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      #   apply_logic:
+      #     - HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
       
-      - option: HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
-        apply_logic:
-          - HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+      # - option: HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+      #   apply_logic:
+      #     - HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
 
       ## 1.2 Categories with efficiency change:
       # min. eff fuel boilers
@@ -342,9 +342,10 @@ upgrades:
         apply_logic:
           - HVAC Cooling Efficiency|Ducted Heat Pump
       
-      - option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
-        apply_logic:
-          - HVAC Cooling Efficiency|Non-Ducted Heat Pump
+      # (not applicable because of package_apply_logic)
+      # - option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
+      #   apply_logic:
+      #     - HVAC Cooling Efficiency|Non-Ducted Heat Pump
 
       ## 2.2 Categories with efficiency change
       # Central AC — SEER 14.3 for southern states only
