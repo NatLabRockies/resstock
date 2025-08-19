@@ -11,6 +11,7 @@ dependencies = [
     "numpy",
     "pyarrow",
     "polars>=1.8.2",
+    "pyyaml>=6.0.2",
 ]
 
 [project.scripts]
