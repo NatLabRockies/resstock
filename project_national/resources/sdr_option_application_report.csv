@@ -65,3 +65,29 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",1,"Demand Flexibility HVAC|Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",548289,99.7
 17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",2,Demand Flexibility Random Shift|30 minutes,548289,99.7
 17,"HVAC Demand Flexibility - Pre-peak Load Shifting, 2F Offset, 1hr Pre-peak Duration",-1,All,548289,99.7
+18,ng_furnace,1,"HVAC Heating Efficiency|Fuel Furnace, 95% AFUE",408811,74.3
+18,ng_furnace,2,HVAC Heating Type And Fuel|Natural Gas Fuel Furnace,198854,36.2
+18,ng_furnace,3,Heating Fuel|Natural Gas,198854,36.2
+18,ng_furnace,-1,All,408811,74.3
+19,prop_fo_furnace,1,"HVAC Heating Efficiency|Fuel Furnace, 95% AFUE",18676,3.4
+19,prop_fo_furnace,2,"HVAC Heating Efficiency|Fuel Furnace, 88% AFUE",13201,2.4
+19,prop_fo_furnace,-1,All,31877,5.8
+20,reference_ac_furnace,1,"HVAC Heating Efficiency|Electric Furnace, 100% AFUE",61418,11.2
+20,reference_ac_furnace,2,"HVAC Heating Efficiency|Electric Boiler, 100% AFUE",379,0.1
+20,reference_ac_furnace,3,"HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency",10662,1.9
+20,reference_ac_furnace,4,"HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE",2023,0.4
+20,reference_ac_furnace,5,"HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE",1978,0.4
+20,reference_ac_furnace,6,"HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE",4293,0.8
+20,reference_ac_furnace,7,"HVAC Heating Efficiency|Fuel Boiler, 80% AFUE",3547,0.6
+20,reference_ac_furnace,8,"HVAC Heating Efficiency|Fuel Boiler, 83% AFUE",979,0.2
+20,reference_ac_furnace,9,"HVAC Heating Efficiency|Fuel Boiler, 90% AFUE",582,0.1
+20,reference_ac_furnace,10,"HVAC Heating Efficiency|Fuel Furnace, 80% AFUE",138455,25.2
+20,reference_ac_furnace,11,"HVAC Heating Efficiency|Fuel Furnace, 83% AFUE",13201,2.4
+20,reference_ac_furnace,12,"HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE",84157,15.3
+20,reference_ac_furnace,13,"HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2",87137,15.8
+20,reference_ac_furnace,14,HVAC Cooling Efficiency|Ducted Heat Pump,87137,15.8
+20,reference_ac_furnace,15,"HVAC Cooling Efficiency|AC, SEER2 14.3",100663,18.3
+20,reference_ac_furnace,16,"HVAC Cooling Efficiency|AC, SEER2 13.4",93128,16.9
+20,reference_ac_furnace,17,"HVAC Cooling Efficiency|AC, SEER 15",72152,13.1
+20,reference_ac_furnace,18,"HVAC Cooling Efficiency|Room AC, EER 12.0",34441,6.3
+20,reference_ac_furnace,-1,All,413614,75.2
