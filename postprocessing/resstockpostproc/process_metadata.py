@@ -67,7 +67,7 @@ def publish_upgrade_annual_results(baseline_failed_bldgs: set[int], base_pub_df:
             f"Replacig these {len(failed_bldgs)} buildings that only failed in "
             f"upgrade {upgrade_num} with baseline: {failed_bldgs}"
         )
-    
+
     upgrade_df = get_transformed_cols(upgrade_df, col_maps)
     upgrade_df = upgrade_df.with_columns([pl.lit(upgrade_num).alias("upgrade")])
     base_cols = base_pub_df.collect_schema().names()
@@ -115,43 +115,43 @@ def get_transformed_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl.LazyF
         else:
             new_col = pl.col(col_map['column_name']).alias(col_map['published_name'])
         transformed_cols.append(new_col)
-    
+
     upgrade_cols = [col for col in all_cols if col.startswith("upgrade_costs.") and col.endswith("_name")]
     transformed_cols.extend([pl.col(col).alias(col) for col in upgrade_cols])
     return df.select(transformed_cols)
 
 def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     new_cols = []
-    
+
     # Handle income parsing with better error handling
     income_expr = pl.when(pl.col("in.income").is_in(["Not Available", ""]))
     income_expr = income_expr.then(None)
-    
+
     # Handle range case like "10000-20000"
     income_expr = income_expr.when(pl.col("in.income").str.contains("-"))
     income_expr = income_expr.then(
         (pl.col("in.income").str.extract(r"(\d+)-(\d+)", 1).cast(pl.Float64, strict=False) +
          pl.col("in.income").str.extract(r"(\d+)-(\d+)", 2).cast(pl.Float64, strict=False)) / 2
     )
-    
+
     # Handle plus case like "200000+"
     income_expr = income_expr.when(pl.col("in.income").str.contains("\+"))
     income_expr = income_expr.then(
         pl.col("in.income").str.extract(r"(\d+)\+", 1).cast(pl.Float64, strict=False)
     )
-    
+
     # Handle less than case like "<10000"
     income_expr = income_expr.when(pl.col("in.income").str.contains("<"))
     income_expr = income_expr.then(
         pl.col("in.income").str.extract(r"<(\d+)", 1).cast(pl.Float64, strict=False) / 2
     )
-    
+
     # Otherwise try direct conversion
     income_expr = income_expr.otherwise(pl.col("in.income").cast(pl.Float64, strict=False))
-    
+
     rep_income_col = income_expr.alias("in.representative_income")
     new_cols.append(rep_income_col)
-    
+
     # Calculate burden only when income is not null
     burden_col = (
         pl.when(income_expr.is_not_null() & (income_expr > 0))
@@ -160,19 +160,20 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
         .alias("out.energy_burden.percentage")
     )
     new_cols.append(burden_col)
-    
+
     return df.with_columns(new_cols)
 
 def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
     savings_cols = []
     all_cols = df.collect_schema().names()
     out_cols = [col for col in all_cols if 'out.' in col and not (
-        'out.params' in col or 
-        'out.hot_water' in col or 
-        'out.panel' in col
+        'out.params' in col or
+        'out.hot_water' in col or
+        'out.panel' in col or
+        'out.capacity' in col
         )]
     # Selectively include the following for panels
-    out_panel_cols = [col for col in all_cols if 
+    out_panel_cols = [col for col in all_cols if
         "out.panel.load.total_load." in col
         or "out.panel.load.occupied_capacity." in col
         or "out.panel.breaker_space.occupied." in col
