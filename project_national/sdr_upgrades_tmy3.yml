@@ -644,7 +644,7 @@ upgrades:
             - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
         lifetime: 15
 
-  - upgrade_name: reference_ac_furnace
+  - upgrade_name: reference_space_heating_cooling
     package_apply_logic:
       and:
         - *fossil_fuel_or_electricity
