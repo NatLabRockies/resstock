@@ -645,9 +645,10 @@ upgrades:
         lifetime: 15
 
   - upgrade_name: reference_ac_furnace
-    package_apply_logic: 
-      - *fossil_fuel_or_electricity
-      - *typical_cold_climate_logic
+    package_apply_logic:
+      and:
+        - *fossil_fuel_or_electricity
+        - *typical_cold_climate_logic
     options:
       ### [1] Heating Efficiencies
       ## 1.1 Replace like with like - retain applicability for costing purposing
