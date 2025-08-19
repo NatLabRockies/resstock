@@ -649,9 +649,68 @@ upgrades:
       - *fossil_fuel_or_electricity
       - *typical_cold_climate_logic
     options:
-      # min. efficiency fuel furnaces
+      ### [1] Heating Efficiencies
+      ## 1.1 Replace like with like - retain applicability for costing purposing
+      # electric heating
+      - option: HVAC Heating Efficiency|Electric Furnace, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Furnace, 100% AFUE
+      
+      - option: HVAC Heating Efficiency|Electric Boiler, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Boiler, 100% AFUE
+      
+      - option: HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency
+      
+      - option: HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE
+
+      # non-ducted fuel furnaces
+      - option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+      
+      - option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+      
+      # MSHP
+      - option: HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+        apply_logic:
+          - HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      
+      - option: HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+        apply_logic:
+          - HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+
+      ## 1.2 Categories with efficiency change:
+      # min. eff fuel boilers
+      - option: HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+        apply_logic:
+          - or:
+            - Heating Fuel|Natural Gas
+            - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Boiler, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Boiler, 83% AFUE
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Boiler, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Boiler, 90% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Boiler, 90% AFUE
+
+      # min. efficiency ducted fuel furnaces
       - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-        apply_logic: # *typical_cold_climate_logic #TODO: how do I apply the cold climate logic?
+        apply_logic:
           - or:
             - Heating Fuel|Natural Gas
             - Heating Fuel|Propane
@@ -660,6 +719,7 @@ upgrades:
             - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
         lifetime: 15
 
       - option: HVAC Heating Efficiency|Fuel Furnace, 83% AFUE
@@ -671,33 +731,38 @@ upgrades:
             - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
-        lifetime: 15     
-
-      - option: HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
-        apply_logic:
-          - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
-        lifetime: 15
-
-      - option: HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
-        apply_logic:
-          - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
         lifetime: 15
 
       - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
         apply_logic:
           - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
         lifetime: 15
-
-      - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
+      
+      # ASHP
+      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
         apply_logic:
-          - HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
+          - or:
+            - HVAC Heating Efficiency|ASHP, SEER 10, 6.2 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 10.3, 7.0 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 11.5, 7.5 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 13, 8.0 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 14, 8.2 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 14.3, 8.5 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF #14.3 SEER2 == 15 SEER1, ducted
         lifetime: 15
 
-      - option: HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
+      ### [2] Cooling Efficiencies
+      ## 2.1 Replace like with like
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
         apply_logic:
-          - HVAC Heating Efficiency|Fuel Furnace, 96% AFUE
-        lifetime: 15
+          - HVAC Cooling Efficiency|Ducted Heat Pump
+      
+      - option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
+        apply_logic:
+          - HVAC Cooling Efficiency|Non-Ducted Heat Pump
 
+      ## 2.2 Categories with efficiency change
       # Central AC — SEER 14.3 for southern states only
       - option: HVAC Cooling Efficiency|AC, SEER2 14.3 
         apply_logic:
@@ -728,8 +793,6 @@ upgrades:
               - HVAC Cooling Efficiency|AC, SEER 8
               - HVAC Cooling Efficiency|AC, SEER 10
               - HVAC Cooling Efficiency|AC, SEER 13
-              - HVAC Cooling Efficiency|AC, SEER 14
-              - HVAC Cooling Efficiency|AC, SEER 15
         lifetime: 15
 
       # All other states — SEER 13.4
@@ -762,25 +825,14 @@ upgrades:
               - HVAC Cooling Efficiency|AC, SEER 8
               - HVAC Cooling Efficiency|AC, SEER 10
               - HVAC Cooling Efficiency|AC, SEER 13
-              - HVAC Cooling Efficiency|AC, SEER 15
         lifetime: 15
-
-      # 5) Central ASHP
-      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
+      
+      - option: HVAC Cooling Efficiency|AC, SEER 15
         apply_logic:
-          - or:
-            - HVAC Heating Efficiency|ASHP, SEER 10, 6.2 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 10.3, 7.0 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 11.5, 7.5 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 13, 8.0 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 14, 8.2 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 14.3, 8.5 HSPF
-            - HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF #14.3 SEER2 == 15 SEER1, ducted
-            - HVAC Heating Efficiency|ASHP, SEER 15, 9.0 HSPF
+          - HVAC Cooling Efficiency|AC, SEER 15
         lifetime: 15
 
-      # 6) Room (window) AC
+      # Room (window) AC
       - option: HVAC Cooling Efficiency|Room AC, EER 12.0 #CEER 11.0; EER 12.0 single package
         apply_logic:
           - or:
@@ -789,3 +841,4 @@ upgrades:
             - HVAC Cooling Efficiency|Room AC, EER 10.7
             - HVAC Cooling Efficiency|Room AC, EER 12.0
         lifetime: 7
+        
