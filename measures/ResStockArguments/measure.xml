@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>7596d7bf-31db-4b12-9690-4b4b83a25596</version_id>
-  <version_modified>2025-07-07T20:23:56Z</version_modified>
+  <version_id>bf7d218c-0389-4405-9dcc-7f1a3ef2e1d9</version_id>
+  <version_modified>2025-08-12T22:48:32Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -5475,6 +5475,33 @@
       </choices>
     </argument>
     <argument>
+      <name>ev_charger_level</name>
+      <display_name>Electric Vehicle Charger: Charging Level</display_name>
+      <description>The charging level of the EV charger. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'&gt;HPXML Electric Vehicle Chargers&lt;/a&gt;) is used.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <choices>
+        <choice>
+          <value>auto</value>
+          <display_name>auto</display_name>
+        </choice>
+        <choice>
+          <value>1</value>
+          <display_name>1</display_name>
+        </choice>
+        <choice>
+          <value>2</value>
+          <display_name>2</display_name>
+        </choice>
+        <choice>
+          <value>3</value>
+          <display_name>3</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>ev_charger_power</name>
       <display_name>Electric Vehicle Charger: Rated Charging Power</display_name>
       <description>The rated power output of the EV charger. If not provided, the OS-HPXML default (see &lt;a href='https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-electric-vehicle-chargers'&gt;HPXML Electric Vehicle Chargers&lt;/a&gt;) is used.</description>
@@ -7813,7 +7840,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>A9E80ED0</checksum>
+      <checksum>9D6C25E8</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -7830,13 +7857,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>21792D98</checksum>
+      <checksum>4A5C1377</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>518A24F2</checksum>
+      <checksum>74953DC4</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_breaker_space.csv</filename>
@@ -7866,13 +7893,13 @@
       <filename>electrical_panel.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>86F56068</checksum>
+      <checksum>B249E37B</checksum>
     </file>
     <file>
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>612918A8</checksum>
+      <checksum>DABF835A</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>

@@ -281,9 +281,7 @@ references:
         - Infiltration|30 ACH50
         - Infiltration|25 ACH50
         - Infiltration|20 ACH50
-        - Infiltration|18.5 ACH50
         - Infiltration|15 ACH50
-        - Infiltration|11.25 ACH50
     costs:
       - value: 0.53
         multiplier: Floor Area, Conditioned (ft^2)
