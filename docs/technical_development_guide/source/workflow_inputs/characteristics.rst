@@ -997,6 +997,8 @@ Assumption
 
 - \The mapping between Census Tracts and Zip Codes are approximate and some discrepancies may exist.
 
+- \For each census tract, a CEC climate zone is chosen. If the census tract has more than one CEC climate zone, then the climate zone with the most number of units is chosen.
+
 - \If the sample is outside California, the option is set to None.
 
 
@@ -1020,11 +1022,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - 3
      - 1.2%
    * - 4
-     - 0.54%
+     - 0.55%
    * - 5
      - 0.11%
    * - 6
-     - 0.87%
+     - 0.86%
    * - 7
      - 0.63%
    * - 8
@@ -1034,7 +1036,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - 10
      - 0.99%
    * - 11
-     - 0.34%
+     - 0.33%
    * - 12
      - 1.3%
    * - 13
@@ -1044,7 +1046,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - 15
      - 0.24%
    * - 16
-     - 0.24%
+     - 0.25%
    * - None
      - 90%
 
@@ -38178,7 +38180,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.7
      - auto
-   * - 2.0
+   * - 2
      - 2.3%
      - auto
      - 2.0
@@ -62562,6 +62564,169 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 4.2%
      - wood shingles or shakes
      - medium
+
+.. _sampling_region:
+
+Sampling Region
+---------------
+
+Description
+***********
+
+The sampling region that the sample is located.
+
+Created by
+**********
+
+``sources/spatial/tsv_maker.py``
+
+Source
+******
+
+- \Building Stock Segmentation Cluster Development: Technical Reference Document. 2023. NREL/TP-5500-84648.
+
+
+Assumption
+**********
+
+- \The prune rules are only for assigning impossible combinations to the Void option.
+
+
+Options
+*******
+
+From ``project_national`` the list of options, option stock saturation, and option arguments for the **Sampling Region** characteristic.
+
+.. list-table::
+   :header-rows: 1
+   :stub-columns: 1
+   :widths: auto
+
+   * - Option name
+     - Stock saturation
+
+   * - 0
+     - 2.7%
+   * - 1
+     - 0.23%
+   * - 2
+     - 1.1%
+   * - 3
+     - 0.16%
+   * - 4
+     - 1.5%
+   * - 5
+     - 5.4%
+   * - 6
+     - 1.4%
+   * - 7
+     - 0.39%
+   * - 8
+     - 2.4%
+   * - 9
+     - 4.9%
+   * - 10
+     - 3.2%
+   * - 11
+     - 0.86%
+   * - 12
+     - 1.8%
+   * - 13
+     - 3%
+   * - 14
+     - 0.4%
+   * - 15
+     - 0.67%
+   * - 16
+     - 0.97%
+   * - 17
+     - 2.8%
+   * - 18
+     - 4.3%
+   * - 19
+     - 7.9%
+   * - 20
+     - 1.7%
+   * - 21
+     - 0.19%
+   * - 22
+     - 5.4%
+   * - 23
+     - 0.58%
+   * - 24
+     - 1.6%
+   * - 25
+     - 1.8%
+   * - 26
+     - 2.3%
+   * - 27
+     - 0.65%
+   * - 28
+     - 0.87%
+   * - 29
+     - 3.2%
+   * - 30
+     - 3.7%
+   * - 31
+     - 0.49%
+   * - 32
+     - 1.6%
+   * - 33
+     - 1.3%
+   * - 34
+     - 0.51%
+   * - 35
+     - 0.44%
+   * - 36
+     - 1.9%
+   * - 37
+     - 1.6%
+   * - 38
+     - 1.7%
+   * - 39
+     - 2.8%
+   * - 40
+     - 2.6%
+   * - 41
+     - 0.14%
+   * - 42
+     - 0.19%
+   * - 43
+     - 0.3%
+   * - 44
+     - 0.36%
+   * - 45
+     - 0.37%
+   * - 46
+     - 0.31%
+   * - 47
+     - 0.63%
+   * - 48
+     - 3.6%
+   * - 49
+     - 0.78%
+   * - 100
+     - 0.62%
+   * - 101
+     - 1.2%
+   * - 102
+     - 1.5%
+   * - 103
+     - 0.63%
+   * - 104
+     - 1.1%
+   * - 105
+     - 1.6%
+   * - 106
+     - 0.99%
+   * - 107
+     - 1.7%
+   * - 108
+     - 0.58%
+   * - 109
+     - 0.5%
+   * - Void
+     - 0%
 
 .. _state:
 
