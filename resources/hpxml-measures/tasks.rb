@@ -2366,6 +2366,10 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
 
     if ['base-misc-defaults.xml'].include? hpxml_file
       hpxml_bldg.pv_systems[0].year_modules_manufactured = 2015
+    elsif ['base-pv-inverters.xml'].include? hpxml_file
+      hpxml_bldg.inverters.add(id: "Inverter#{hpxml_bldg.inverters.size + 1}",
+                               inverter_efficiency: 0.94)
+      hpxml_bldg.pv_systems[-1].inverter_idref = hpxml_bldg.inverters[-1].id
     elsif ['base-misc-generators.xml',
            'base-misc-generators-battery.xml',
            'base-misc-generators-battery-scheduled.xml',

@@ -90,6 +90,31 @@ jobs:
           path: coverage
           if-no-files-found: error
 
+  postprocessing-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install postprocessing dependencies
+        working-directory: postprocessing
+        run: |
+          uv venv
+          uv pip install -e . --group dev
+
+      - name: Run postprocessing tests
+        working-directory: postprocessing
+        run: |
+          uv run pytest tests
+
   build-documentation:
     runs-on: ubuntu-22.04
     needs: format-files

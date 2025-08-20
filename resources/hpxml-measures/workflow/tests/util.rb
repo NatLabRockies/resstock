@@ -288,6 +288,9 @@ def _verify_outputs(rundir, hpxml_path, results, hpxml, unit_multiplier)
     if hpxml_bldg.windows.any? { |w| w.exterior_shading_type == 'building' } && hpxml_bldg.neighbor_buildings.size > 0
       next if message.include? "Exterior shading type is 'building', but neighbor buildings are explicitly defined; exterior shading type will be ignored."
     end
+    if hpxml_bldg.inverters.map { |i| i.inverter_efficiency }.uniq.size > 1
+      next if message.include? 'Inverters with varying efficiencies found; using a single PV size weighted-average in the model'
+    end
 
     # FUTURE: Revert this eventually
     # https://github.com/NREL/OpenStudio-HPXML/issues/1499

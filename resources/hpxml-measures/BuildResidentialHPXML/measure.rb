@@ -7324,11 +7324,13 @@ module HPXMLFile
                                 number_of_bedrooms_served: number_of_bedrooms_served)
     end
 
-    # Add inverter efficiency; assume a single inverter even if multiple PV arrays
-    hpxml_bldg.inverters.add(id: "Inverter#{hpxml_bldg.inverters.size + 1}",
-                             inverter_efficiency: args[:pv_system_inverter_efficiency])
-    hpxml_bldg.pv_systems.each do |pv_system|
-      pv_system.inverter_idref = hpxml_bldg.inverters[-1].id
+    if not args[:pv_system_inverter_efficiency].nil?
+      # Add inverter efficiency; assume a single inverter even if multiple PV arrays
+      hpxml_bldg.inverters.add(id: "Inverter#{hpxml_bldg.inverters.size + 1}",
+                               inverter_efficiency: args[:pv_system_inverter_efficiency])
+      hpxml_bldg.pv_systems.each do |pv_system|
+        pv_system.inverter_idref = hpxml_bldg.inverters[-1].id
+      end
     end
   end
 
