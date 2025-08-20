@@ -311,6 +311,19 @@ references:
       - not: HVAC Cooling Type|None
       - not: HVAC Heating Type|None
 
+  remove_heating_shared_other_wood: &remove_heating_shared_other_wood
+    - HVAC Has Ducts|Yes
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+
   occupied_only: &occupied_only
     Vacancy Status|Occupied
 
@@ -603,6 +616,238 @@ references:
 
 ### Standard Data Release - Residential -- ###
 upgrades:
+  ### -- HVAC: Furnaces -- ###
+  - upgrade_name: Natural Gas Furnace 95% AFUE for All Dwellings with Ducts
+    package_apply_logic: *remove_heating_shared_other_wood
+    options:
+        ### -- Natural Gas Furnace AFUE 95% applies to all dwellings with ducts
+      - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
+        # no apply logic on purpose since package_apply_logic handles it
+      - option: HVAC Heating Type And Fuel|Natural Gas Fuel Furnace
+        apply_logic:
+          - not: HVAC Heating Type And Fuel|Natural Gas Fuel Furnace
+      - option: Heating Fuel|Natural Gas
+        apply_logic:
+          - not: Heating Fuel|Natural Gas
+
+  - upgrade_name: Propane or Fuel Oil Furnace 95% AFUE
+    package_apply_logic: *remove_heating_shared_other_wood
+    options:
+      - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
+        apply_logic:
+          - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+      - option: HVAC Heating Efficiency|Fuel Furnace, 88% AFUE
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
+
+  - upgrade_name: Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025
+    package_apply_logic:
+      and:
+        - *fossil_fuel_or_electricity
+        - *typical_cold_climate_logic
+    options:
+      ### [1] Heating Efficiencies
+      ## 1.1 Replace like with like - retain applicability for costing purposing
+      # electric heating
+      - option: HVAC Heating Efficiency|Electric Furnace, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Furnace, 100% AFUE
+
+      - option: HVAC Heating Efficiency|Electric Boiler, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Boiler, 100% AFUE
+
+      - option: HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency
+
+      - option: HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE
+
+      # non-ducted fuel furnaces
+      - option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+
+      # MSHP (not applicable because of package_apply_logic)
+      # - option: HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      #   apply_logic:
+      #     - HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+
+      # - option: HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+      #   apply_logic:
+      #     - HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+
+      ## 1.2 Categories with efficiency change:
+      # min. eff fuel boilers
+      - option: HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+        apply_logic:
+          - or:
+            - Heating Fuel|Natural Gas
+            - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Boiler, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Boiler, 83% AFUE
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Boiler, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Boiler, 90% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Boiler, 90% AFUE
+
+      # min. efficiency ducted fuel furnaces
+      - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        apply_logic:
+          - or:
+            - Heating Fuel|Natural Gas
+            - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 83% AFUE
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+
+      # ASHP
+      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
+        apply_logic:
+          - or:
+            - HVAC Heating Efficiency|ASHP, SEER 10, 6.2 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 10.3, 7.0 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 11.5, 7.5 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 13, 8.0 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 14, 8.2 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 14.3, 8.5 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF #14.3 SEER2 == 15 SEER1, ducted
+
+      ### [2] Cooling Efficiencies
+      ## 2.1 Replace like with like
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic:
+          - HVAC Cooling Efficiency|Ducted Heat Pump
+
+      # (not applicable because of package_apply_logic)
+      # - option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
+      #   apply_logic:
+      #     - HVAC Cooling Efficiency|Non-Ducted Heat Pump
+
+      ## 2.2 Categories with efficiency change
+      # Central AC — SEER 14.3 for southern states only
+      - option: HVAC Cooling Efficiency|AC, SEER2 14.3
+        apply_logic:
+          - and:
+            - or:
+              - State|AL
+              - State|AR
+              - State|DE
+              - State|FL
+              - State|GA
+              - State|HI
+              - State|KY
+              - State|LA
+              - State|MD
+              - State|MS
+              - State|NC
+              - State|OK
+              - State|SC
+              - State|TN
+              - State|TX
+              - State|VA
+              - State|DC
+              - State|AZ
+              - State|CA
+              - State|NV
+              - State|NM
+          - or:
+            - HVAC Cooling Efficiency|AC, SEER 8
+            - HVAC Cooling Efficiency|AC, SEER 10
+            - HVAC Cooling Efficiency|AC, SEER 13
+
+      # All other states — SEER 13.4
+      - option: HVAC Cooling Efficiency|AC, SEER2 13.4
+        apply_logic:
+          - not:
+            - or:
+              - State|AL
+              - State|AR
+              - State|DE
+              - State|FL
+              - State|GA
+              - State|HI
+              - State|KY
+              - State|LA
+              - State|MD
+              - State|MS
+              - State|NC
+              - State|OK
+              - State|SC
+              - State|TN
+              - State|TX
+              - State|VA
+              - State|DC
+              - State|AZ
+              - State|CA
+              - State|NV
+              - State|NM
+          - or:
+            - HVAC Cooling Efficiency|AC, SEER 8
+            - HVAC Cooling Efficiency|AC, SEER 10
+            - HVAC Cooling Efficiency|AC, SEER 13
+
+      - option: HVAC Cooling Efficiency|AC, SEER 15
+        apply_logic:
+          - HVAC Cooling Efficiency|AC, SEER 15
+
+      # Room (window) AC
+      - option: HVAC Cooling Efficiency|Room AC, EER 12.0 #CEER 11.0; EER 12.0 single package
+        apply_logic:
+          - or:
+            - HVAC Cooling Efficiency|Room AC, EER 8.5
+            - HVAC Cooling Efficiency|Room AC, EER 9.8
+            - HVAC Cooling Efficiency|Room AC, EER 10.7
+            - HVAC Cooling Efficiency|Room AC, EER 12.0
+
   ### -- HVAC: Air Source Heat Pumps -- ###
   - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data
     package_apply_logic: *fossil_fuel_or_electricity

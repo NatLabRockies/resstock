@@ -2811,3 +2811,1447 @@ Detailed report of how the 2 options were applied to the buildings.
 |                   2 | 1, 2              | 548289 (99.7%)      | 548289 (99.7%)   | 548289 (99.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
+----------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'ng_furnace', Option1:'HVAC Heating Efficiency|Fuel Furnace, 95% AFUE'
+----------------------------------------------------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 408811 (74.3%)
+  HVAC Has Ducts|Yes => 423604 (77.0%)
+  not => 541393 (98.4%)
+    Heating Fuel|Wood => 8607 (1.6%)
+  not => 548108 (99.7%)
+    Heating Fuel|Other Fuel => 1892 (0.3%)
+  not => 545939 (99.3%)
+    Heating Fuel|None => 4061 (0.7%)
+  not => 489615 (89.0%)
+    or => 60385 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+-------------------------------------------------------------------
+Overall applied to => 408811 (74.3%).
+-------------------------------------
+
+---------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'ng_furnace', Option2:'HVAC Heating Type And Fuel|Natural Gas Fuel Furnace'
+---------------------------------------------------------------------------------------------------------------
+not => 287726 (52.3%)
+  Heating Fuel|Natural Gas => 262274 (47.7%)
+--------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 408811 (74.3%)
+  HVAC Has Ducts|Yes => 423604 (77.0%)
+  not => 541393 (98.4%)
+    Heating Fuel|Wood => 8607 (1.6%)
+  not => 548108 (99.7%)
+    Heating Fuel|Other Fuel => 1892 (0.3%)
+  not => 545939 (99.3%)
+    Heating Fuel|None => 4061 (0.7%)
+  not => 489615 (89.0%)
+    or => 60385 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+-------------------------------------------------------------------
+Overall applied to => 198854 (36.2%).
+-------------------------------------
+
+------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'ng_furnace', Option3:'Heating Fuel|Natural Gas'
+------------------------------------------------------------------------------------
+not => 287726 (52.3%)
+  Heating Fuel|Natural Gas => 262274 (47.7%)
+--------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 408811 (74.3%)
+  HVAC Has Ducts|Yes => 423604 (77.0%)
+  not => 541393 (98.4%)
+    Heating Fuel|Wood => 8607 (1.6%)
+  not => 548108 (99.7%)
+    Heating Fuel|Other Fuel => 1892 (0.3%)
+  not => 545939 (99.3%)
+    Heating Fuel|None => 4061 (0.7%)
+  not => 489615 (89.0%)
+    or => 60385 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+-------------------------------------------------------------------
+Overall applied to => 198854 (36.2%).
+-------------------------------------
+
+All of the options (and-ing) were applied to: 198854 (36.2%)
+Any of the options (or-ing) were applied to: 408811 (74.3%)
+--------------------------------------------------------------------------------
+Report of how the 3 options were applied to the buildings.
++---------------------+------------------------------------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options                                | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+================================================+=====================+==================+==================+
+|                   1 | hvac heating efficiency                        | 209957 (38.2%)      | 209957 (38.2%)   | 209957 (38.2%)   |
++---------------------+------------------------------------------------+---------------------+------------------+------------------+
+|                   3 | hvac heating efficiency, hvac heating type and | 198854 (36.2%)      | 198854 (36.2%)   | 408811 (74.3%)   |
+|                     | fuel, heating fuel                             |                     |                  |                  |
++---------------------+------------------------------------------------+---------------------+------------------+------------------+
+--------------------------------------------------------------------------------
+Detailed report of how the 3 options were applied to the buildings.
++---------------------+-------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+===================+=====================+==================+==================+
+|                   1 | 1                 | 209957 (38.2%)      | 209957 (38.2%)   | 209957 (38.2%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   3 | 1, 2, 3           | 198854 (36.2%)      | 198854 (36.2%)   | 408811 (74.3%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+
+---------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade19:'prop_fo_furnace', Option1:'HVAC Heating Efficiency|Fuel Furnace, 95% AFUE'
+---------------------------------------------------------------------------------------------------------------
+and => 18689 (3.4%)
+  Heating Fuel|Propane => 24448 (4.4%)
+  or => 239218 (43.5%)
+    HVAC Heating Efficiency|Fuel Furnace, 60% AFUE => 2301 (0.4%)
+    HVAC Heating Efficiency|Fuel Furnace, 68% AFUE => 0 (0.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 72% AFUE => 0 (0.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 76% AFUE => 15372 (2.8%)
+    HVAC Heating Efficiency|Fuel Furnace, 80% AFUE => 136388 (24.8%)
+    HVAC Heating Efficiency|Fuel Furnace, 85% AFUE => 0 (0.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 90% AFUE => 0 (0.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE => 85157 (15.5%)
+---------------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 408811 (74.3%)
+  HVAC Has Ducts|Yes => 423604 (77.0%)
+  not => 541393 (98.4%)
+    Heating Fuel|Wood => 8607 (1.6%)
+  not => 548108 (99.7%)
+    Heating Fuel|Other Fuel => 1892 (0.3%)
+  not => 545939 (99.3%)
+    Heating Fuel|None => 4061 (0.7%)
+  not => 489615 (89.0%)
+    or => 60385 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+-------------------------------------------------------------------
+Overall applied to => 18676 (3.4%).
+-----------------------------------
+
+---------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade19:'prop_fo_furnace', Option2:'HVAC Heating Efficiency|Fuel Furnace, 88% AFUE'
+---------------------------------------------------------------------------------------------------------------
+and => 13233 (2.4%)
+  Heating Fuel|Fuel Oil => 25758 (4.7%)
+  or => 154061 (28.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 60% AFUE => 2301 (0.4%)
+    HVAC Heating Efficiency|Fuel Furnace, 68% AFUE => 0 (0.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 72% AFUE => 0 (0.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 76% AFUE => 15372 (2.8%)
+    HVAC Heating Efficiency|Fuel Furnace, 80% AFUE => 136388 (24.8%)
+    HVAC Heating Efficiency|Fuel Furnace, 85% AFUE => 0 (0.0%)
+--------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 408811 (74.3%)
+  HVAC Has Ducts|Yes => 423604 (77.0%)
+  not => 541393 (98.4%)
+    Heating Fuel|Wood => 8607 (1.6%)
+  not => 548108 (99.7%)
+    Heating Fuel|Other Fuel => 1892 (0.3%)
+  not => 545939 (99.3%)
+    Heating Fuel|None => 4061 (0.7%)
+  not => 489615 (89.0%)
+    or => 60385 (11.0%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+      HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+      HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+      HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+-------------------------------------------------------------------
+Overall applied to => 13201 (2.4%).
+-----------------------------------
+
+All of the options (and-ing) were applied to: 0 (0.0%)
+Any of the options (or-ing) were applied to: 31877 (5.8%)
+--------------------------------------------------------------------------------
+Report of how the 1 options were applied to the buildings.
++---------------------+-------------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options         | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+=========================+=====================+==================+==================+
+|                   1 | hvac heating efficiency | 31877 (5.8%)        | 31877 (5.8%)     | 31877 (5.8%)     |
++---------------------+-------------------------+---------------------+------------------+------------------+
+--------------------------------------------------------------------------------
+Detailed report of how the 2 options were applied to the buildings.
++---------------------+-------------------+---------------------+------------------+------------------+
+|   Number of options |   Applied options | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+===================+=====================+==================+==================+
+|                   1 |                 1 | 18676 (3.4%)        | 18676 (3.4%)     | 18676 (3.4%)     |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   1 |                 2 | 13201 (2.4%)        | 31877 (5.8%)     | 31877 (5.8%)     |
++---------------------+-------------------+---------------------+------------------+------------------+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option1:'HVAC Heating Efficiency|Electric Furnace, 100% AFUE'
+------------------------------------------------------------------------------------------------------------------------------------
+HVAC Heating Efficiency|Electric Furnace, 100% AFUE => 64180 (11.7%)
+--------------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 61418 (11.2%).
+------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option2:'HVAC Heating Efficiency|Electric Boiler, 100% AFUE'
+-----------------------------------------------------------------------------------------------------------------------------------
+HVAC Heating Efficiency|Electric Boiler, 100% AFUE => 1161 (0.2%)
+-----------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 379 (0.1%).
+---------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option3:'HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency'
+--------------------------------------------------------------------------------------------------------------------------------------------
+HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency => 35470 (6.4%)
+---------------------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 10662 (1.9%).
+-----------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option4:'HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE'
+-----------------------------------------------------------------------------------------------------------------------------------------
+HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE => 6267 (1.1%)
+-----------------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 2023 (0.4%).
+----------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option5:'HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE'
+------------------------------------------------------------------------------------------------------------------------------------------
+HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE => 15185 (2.8%)
+-------------------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 1978 (0.4%).
+----------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option6:'HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE'
+------------------------------------------------------------------------------------------------------------------------------------------
+HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE => 15214 (2.8%)
+-------------------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 4293 (0.8%).
+----------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option7:'HVAC Heating Efficiency|Fuel Boiler, 80% AFUE'
+------------------------------------------------------------------------------------------------------------------------------
+and => 15374 (2.8%)
+  or => 286722 (52.1%)
+    Heating Fuel|Natural Gas => 262274 (47.7%)
+    Heating Fuel|Propane => 24448 (4.4%)
+  or => 21435 (3.9%)
+    HVAC Heating Efficiency|Fuel Boiler, 76% AFUE => 3790 (0.7%)
+    HVAC Heating Efficiency|Fuel Boiler, 80% AFUE => 17645 (3.2%)
+-----------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 3547 (0.6%).
+----------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option8:'HVAC Heating Efficiency|Fuel Boiler, 83% AFUE'
+------------------------------------------------------------------------------------------------------------------------------
+and => 4846 (0.9%)
+  Heating Fuel|Fuel Oil => 25758 (4.7%)
+  or => 21435 (3.9%)
+    HVAC Heating Efficiency|Fuel Boiler, 76% AFUE => 3790 (0.7%)
+    HVAC Heating Efficiency|Fuel Boiler, 80% AFUE => 17645 (3.2%)
+-----------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 979 (0.2%).
+---------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option9:'HVAC Heating Efficiency|Fuel Boiler, 90% AFUE'
+------------------------------------------------------------------------------------------------------------------------------
+HVAC Heating Efficiency|Fuel Boiler, 90% AFUE => 2485 (0.5%)
+------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 582 (0.1%).
+---------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option10:'HVAC Heating Efficiency|Fuel Furnace, 80% AFUE'
+--------------------------------------------------------------------------------------------------------------------------------
+and => 140046 (25.5%)
+  or => 286722 (52.1%)
+    Heating Fuel|Natural Gas => 262274 (47.7%)
+    Heating Fuel|Propane => 24448 (4.4%)
+  or => 154061 (28.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 60% AFUE => 2301 (0.4%)
+    HVAC Heating Efficiency|Fuel Furnace, 68% AFUE => 0 (0.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 72% AFUE => 0 (0.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 76% AFUE => 15372 (2.8%)
+    HVAC Heating Efficiency|Fuel Furnace, 80% AFUE => 136388 (24.8%)
+--------------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 138455 (25.2%).
+-------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option11:'HVAC Heating Efficiency|Fuel Furnace, 83% AFUE'
+--------------------------------------------------------------------------------------------------------------------------------
+and => 13233 (2.4%)
+  Heating Fuel|Fuel Oil => 25758 (4.7%)
+  or => 154061 (28.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 60% AFUE => 2301 (0.4%)
+    HVAC Heating Efficiency|Fuel Furnace, 68% AFUE => 0 (0.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 72% AFUE => 0 (0.0%)
+    HVAC Heating Efficiency|Fuel Furnace, 76% AFUE => 15372 (2.8%)
+    HVAC Heating Efficiency|Fuel Furnace, 80% AFUE => 136388 (24.8%)
+--------------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 13201 (2.4%).
+-----------------------------------
+
+----------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option12:'HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE'
+----------------------------------------------------------------------------------------------------------------------------------
+HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE => 85157 (15.5%)
+-----------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 84157 (15.3%).
+------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option13:'HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2'
+-------------------------------------------------------------------------------------------------------------------------------------
+or => 87137 (15.8%)
+  HVAC Heating Efficiency|ASHP, SEER 10, 6.2 HSPF => 4075 (0.7%)
+  HVAC Heating Efficiency|ASHP, SEER 10.3, 7.0 HSPF => 0 (0.0%)
+  HVAC Heating Efficiency|ASHP, SEER 11.5, 7.5 HSPF => 0 (0.0%)
+  HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF => 41979 (7.6%)
+  HVAC Heating Efficiency|ASHP, SEER 13, 8.0 HSPF => 0 (0.0%)
+  HVAC Heating Efficiency|ASHP, SEER 14, 8.2 HSPF => 0 (0.0%)
+  HVAC Heating Efficiency|ASHP, SEER 14.3, 8.5 HSPF => 0 (0.0%)
+  HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF => 41083 (7.5%)
+-----------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 87137 (15.8%).
+------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option14:'HVAC Cooling Efficiency|Ducted Heat Pump'
+--------------------------------------------------------------------------------------------------------------------------
+HVAC Cooling Efficiency|Ducted Heat Pump => 87137 (15.8%)
+---------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 87137 (15.8%).
+------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option15:'HVAC Cooling Efficiency|AC, SEER2 14.3'
+------------------------------------------------------------------------------------------------------------------------
+and => 102149 (18.6%)
+  and => 286535 (52.1%)
+    or => 286535 (52.1%)
+      State|AL => 9065 (1.6%)
+      State|AR => 5507 (1.0%)
+      State|DE => 1715 (0.3%)
+      State|FL => 37551 (6.8%)
+      State|GA => 17052 (3.1%)
+      State|HI => 2175 (0.4%)
+      State|KY => 8007 (1.5%)
+      State|LA => 8250 (1.5%)
+      State|MD => 9940 (1.8%)
+      State|MS => 5315 (1.0%)
+      State|NC => 18270 (3.3%)
+      State|OK => 6971 (1.3%)
+      State|SC => 8992 (1.6%)
+      State|TN => 11789 (2.1%)
+      State|TX => 42845 (7.8%)
+      State|VA => 14131 (2.6%)
+      State|DC => 1259 (0.2%)
+      State|AZ => 11952 (2.2%)
+      State|CA => 57077 (10.4%)
+      State|NV => 4928 (0.9%)
+      State|NM => 3744 (0.7%)
+  or => 197016 (35.8%)
+    HVAC Cooling Efficiency|AC, SEER 8 => 4925 (0.9%)
+    HVAC Cooling Efficiency|AC, SEER 10 => 32991 (6.0%)
+    HVAC Cooling Efficiency|AC, SEER 13 => 159100 (28.9%)
+---------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 100663 (18.3%).
+-------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option16:'HVAC Cooling Efficiency|AC, SEER2 13.4'
+------------------------------------------------------------------------------------------------------------------------
+and => 94867 (17.2%)
+  not => 263465 (47.9%)
+    or => 286535 (52.1%)
+      State|AL => 9065 (1.6%)
+      State|AR => 5507 (1.0%)
+      State|DE => 1715 (0.3%)
+      State|FL => 37551 (6.8%)
+      State|GA => 17052 (3.1%)
+      State|HI => 2175 (0.4%)
+      State|KY => 8007 (1.5%)
+      State|LA => 8250 (1.5%)
+      State|MD => 9940 (1.8%)
+      State|MS => 5315 (1.0%)
+      State|NC => 18270 (3.3%)
+      State|OK => 6971 (1.3%)
+      State|SC => 8992 (1.6%)
+      State|TN => 11789 (2.1%)
+      State|TX => 42845 (7.8%)
+      State|VA => 14131 (2.6%)
+      State|DC => 1259 (0.2%)
+      State|AZ => 11952 (2.2%)
+      State|CA => 57077 (10.4%)
+      State|NV => 4928 (0.9%)
+      State|NM => 3744 (0.7%)
+  or => 197016 (35.8%)
+    HVAC Cooling Efficiency|AC, SEER 8 => 4925 (0.9%)
+    HVAC Cooling Efficiency|AC, SEER 10 => 32991 (6.0%)
+    HVAC Cooling Efficiency|AC, SEER 13 => 159100 (28.9%)
+---------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 93128 (16.9%).
+------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option17:'HVAC Cooling Efficiency|AC, SEER 15'
+---------------------------------------------------------------------------------------------------------------------
+HVAC Cooling Efficiency|AC, SEER 15 => 73340 (13.3%)
+----------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 72152 (13.1%).
+------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade20:'reference_space_heating_cooling', Option18:'HVAC Cooling Efficiency|Room AC, EER 12.0'
+---------------------------------------------------------------------------------------------------------------------------
+or => 109000 (19.8%)
+  HVAC Cooling Efficiency|Room AC, EER 8.5 => 2333 (0.4%)
+  HVAC Cooling Efficiency|Room AC, EER 9.8 => 14048 (2.6%)
+  HVAC Cooling Efficiency|Room AC, EER 10.7 => 52424 (9.5%)
+  HVAC Cooling Efficiency|Room AC, EER 12.0 => 40195 (7.3%)
+-----------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 413614 (75.2%)
+  and => 535440 (97.4%)
+    not => 541393 (98.4%)
+      Heating Fuel|Wood => 8607 (1.6%)
+    not => 548108 (99.7%)
+      Heating Fuel|Other Fuel => 1892 (0.3%)
+    not => 545939 (99.3%)
+      Heating Fuel|None => 4061 (0.7%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+--------------------------------------------------------------------
+Overall applied to => 34441 (6.3%).
+-----------------------------------
+
+All of the options (and-ing) were applied to: 0 (0.0%)
+Any of the options (or-ing) were applied to: 413614 (75.2%)
+--------------------------------------------------------------------------------
+Report of how the 2 options were applied to the buildings.
++---------------------+--------------------------------------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options                                  | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+==================================================+=====================+==================+==================+
+|                   1 | hvac heating efficiency                          | 26093 (4.7%)        | 26093 (4.7%)     | 26093 (4.7%)     |
++---------------------+--------------------------------------------------+---------------------+------------------+------------------+
+|                   1 | hvac cooling efficiency                          | 4803 (0.9%)         | 30896 (5.6%)     | 30896 (5.6%)     |
++---------------------+--------------------------------------------------+---------------------+------------------+------------------+
+|                   2 | hvac heating efficiency, hvac cooling efficiency | 382718 (69.6%)      | 382718 (69.6%)   | 413614 (75.2%)   |
++---------------------+--------------------------------------------------+---------------------+------------------+------------------+
+--------------------------------------------------------------------------------
+Detailed report of how the 18 options were applied to the buildings.
++---------------------+-------------------+---------------------+------------------+------------------+
+|   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
++=====================+===================+=====================+==================+==================+
+|                   1 | 1                 | 4782 (0.9%)         | 4782 (0.9%)      | 4782 (0.9%)      |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   1 | 7                 | 1 (0.0%)            | 4783 (0.9%)      | 4783 (0.9%)      |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   1 | 8                 | 1 (0.0%)            | 4784 (0.9%)      | 4784 (0.9%)      |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   1 | 10                | 12314 (2.2%)        | 17098 (3.1%)     | 17098 (3.1%)     |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   1 | 11                | 1485 (0.3%)         | 18583 (3.4%)     | 18583 (3.4%)     |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   1 | 12                | 7510 (1.4%)         | 26093 (4.7%)     | 26093 (4.7%)     |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   1 | 15                | 2029 (0.4%)         | 28122 (5.1%)     | 28122 (5.1%)     |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   1 | 16                | 1591 (0.3%)         | 29713 (5.4%)     | 29713 (5.4%)     |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   1 | 17                | 1183 (0.2%)         | 30896 (5.6%)     | 30896 (5.6%)     |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 1, 15             | 30265 (5.5%)        | 30265 (5.5%)     | 61161 (11.1%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 1, 16             | 7679 (1.4%)         | 37944 (6.9%)     | 68840 (12.5%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 1, 17             | 14269 (2.6%)        | 52213 (9.5%)     | 83109 (15.1%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 1, 18             | 4423 (0.8%)         | 56636 (10.3%)    | 87532 (15.9%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 2, 15             | 192 (0.0%)          | 56828 (10.3%)    | 87724 (15.9%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 2, 16             | 81 (0.0%)           | 56909 (10.3%)    | 87805 (16.0%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 2, 17             | 106 (0.0%)          | 57015 (10.4%)    | 87911 (16.0%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 3, 15             | 5361 (1.0%)         | 62376 (11.3%)    | 93272 (17.0%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 3, 16             | 2375 (0.4%)         | 64751 (11.8%)    | 95647 (17.4%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 3, 17             | 2926 (0.5%)         | 67677 (12.3%)    | 98573 (17.9%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 4, 15             | 1052 (0.2%)         | 68729 (12.5%)    | 99625 (18.1%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 4, 16             | 417 (0.1%)          | 69146 (12.6%)    | 100042 (18.2%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 4, 17             | 554 (0.1%)          | 69700 (12.7%)    | 100596 (18.3%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 5, 15             | 597 (0.1%)          | 70297 (12.8%)    | 101193 (18.4%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 5, 16             | 859 (0.2%)          | 71156 (12.9%)    | 102052 (18.6%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 5, 17             | 522 (0.1%)          | 71678 (13.0%)    | 102574 (18.6%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 6, 15             | 1177 (0.2%)         | 72855 (13.2%)    | 103751 (18.9%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 6, 16             | 1905 (0.3%)         | 74760 (13.6%)    | 105656 (19.2%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 6, 17             | 1211 (0.2%)         | 75971 (13.8%)    | 106867 (19.4%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 7, 15             | 889 (0.2%)          | 76860 (14.0%)    | 107756 (19.6%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 7, 16             | 1684 (0.3%)         | 78544 (14.3%)    | 109440 (19.9%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 7, 17             | 973 (0.2%)          | 79517 (14.5%)    | 110413 (20.1%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 8, 15             | 105 (0.0%)          | 79622 (14.5%)    | 110518 (20.1%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 8, 16             | 603 (0.1%)          | 80225 (14.6%)    | 111121 (20.2%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 8, 17             | 270 (0.0%)          | 80495 (14.6%)    | 111391 (20.3%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 9, 15             | 114 (0.0%)          | 80609 (14.7%)    | 111505 (20.3%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 9, 16             | 321 (0.1%)          | 80930 (14.7%)    | 111826 (20.3%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 9, 17             | 147 (0.0%)          | 81077 (14.7%)    | 111973 (20.4%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 10, 15            | 36065 (6.6%)        | 117142 (21.3%)   | 148038 (26.9%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 10, 16            | 44594 (8.1%)        | 161736 (29.4%)   | 192632 (35.0%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 10, 17            | 29769 (5.4%)        | 191505 (34.8%)   | 222401 (40.4%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 10, 18            | 15713 (2.9%)        | 207218 (37.7%)   | 238114 (43.3%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 11, 15            | 940 (0.2%)          | 208158 (37.8%)   | 239054 (43.5%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 11, 16            | 4336 (0.8%)         | 212494 (38.6%)   | 243390 (44.3%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 11, 17            | 1956 (0.4%)         | 214450 (39.0%)   | 245346 (44.6%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 11, 18            | 4484 (0.8%)         | 218934 (39.8%)   | 249830 (45.4%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 12, 15            | 21877 (4.0%)        | 240811 (43.8%)   | 271707 (49.4%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 12, 16            | 26683 (4.9%)        | 267494 (48.6%)   | 298390 (54.3%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 12, 17            | 18266 (3.3%)        | 285760 (52.0%)   | 316656 (57.6%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 12, 18            | 9821 (1.8%)         | 295581 (53.7%)   | 326477 (59.4%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   2 | 13, 14            | 87137 (15.8%)       | 382718 (69.6%)   | 413614 (75.2%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+

@@ -770,12 +770,14 @@ Calculated,,,upgrade.cooling_setpoint_offset_period,,,,,,,,,,Indicates the perio
 Calculated,,,upgrade.electric_vehicle_charger,,,,,,,,,,Indicates the electric vehicle charger the model is upgraded to. Blank value indicates no upgrade.
 Calculated,,,upgrade.electric_vehicle_efficiency_increase,,,,,,,,,,Indicates the efficiency increase of the electric vehicle the model is upgraded to. Blank value indicates no upgrade.
 Calculated,,,upgrade.electric_vehicle_ownership,,,,,,,,,,Indicates the electric vehicle ownership of the building the model is upgraded to. Blank value indicates no upgrade.
-Calculated,,,upgrade.heating_setpoint_has_offset,,,,,,,,,,Indicates if the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.heating_fuel,,,,,,,,,,Indicates the heating fuel the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.heating_setpoint_has_offset,,,,,,,,,,Indicates the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
 Calculated,,,upgrade.heating_setpoint_offset_magnitude,,,,,,,,,,Indicates the magnitude of the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
 Calculated,,,upgrade.heating_setpoint_offset_period,,,,,,,,,,Indicates the period of the heating setpoint offset the model is upgraded to. Blank value indicates no upgrade.
 Calculated,,,upgrade.hvac_cooling_efficiency,,,,,,,,,,Indicates the efficiency of the HVAC cooling the model is upgraded to. Blank value indicates no upgrade.
 Calculated,,,upgrade.hvac_cooling_partial_space_conditioning,,,,,,,,,,Indicates the partial space conditioning of the HVAC cooling the model is upgraded to. Blank value indicates no upgrade.
 Calculated,,,upgrade.hvac_heating_efficiency,,,,,,,,,,Indicates the efficiency of the HVAC heating the model is upgraded to. Blank value indicates no upgrade.
+Calculated,,,upgrade.hvac_heating_type_and_fuel,,,,,,,,,,Indicates the heating type and fuel the model is upgraded to. Blank value indicates no upgrade.
 Calculated,,,upgrade.hvac_secondary_heating_efficiency,,,,,,,,,,Indicates the efficiency of the HVAC secondary heating the model is upgraded to. Blank value indicates no upgrade.
 Calculated,,,upgrade.hvac_secondary_heating_fuel,,,,,,,,,,Indicates the fuel of the HVAC secondary heating the model is upgraded to. Blank value indicates no upgrade.
 Calculated,,,upgrade.infiltration_reduction,,,,,,,,,,Indicates the infiltration reduction of the building the model is upgraded to. Blank value indicates no upgrade.
