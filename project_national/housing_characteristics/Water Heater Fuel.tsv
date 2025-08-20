@@ -1787,7 +1787,7 @@ Single-Family Detached	Wood	WY	0.757901	0	0.101732	0	0.140367	0	0	45	6549.95	8.0
 # Created by: sources\recs\recs2020\tsv_maker.py and sources\aris\tsv_maker.py
 # Description: The water heater fuel type.
 # Source: U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
-# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 # Assumption: After conversations with EIA, other fuel is a combination of units with no-water heater, biomass, coal, or district steam systems.
 # Assumption: Due to low sample sizes, fallback rules applied with lumping of:
 # Assumption: [1] Geometry building SF: Mobile, Single family attached, Single family detached
@@ -1795,6 +1795,6 @@ Single-Family Detached	Wood	WY	0.757901	0	0.101732	0	0.140367	0	0	45	6549.95	8.0
 # Assumption: [3] State: Census Division RECS
 # Assumption: [4] State: Census Region
 # Assumption: [5] State: National
-# Assumption: For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+# Assumption: For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 # Assumption: For Alaska, wood and coal heating is modeled as other fuel.
 # Assumption: For Alaska, when a building uses more than one fuel for water heating, the fuel with highest consumption is considered the water heater fuel. Rest of the fuels are ignored.

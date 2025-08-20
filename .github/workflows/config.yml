@@ -90,6 +90,31 @@ jobs:
           path: coverage
           if-no-files-found: error
 
+  postprocessing-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install postprocessing dependencies
+        working-directory: postprocessing
+        run: |
+          uv venv
+          uv pip install -e . --group dev
+
+      - name: Run postprocessing tests
+        working-directory: postprocessing
+        run: |
+          uv run pytest tests
+
   build-documentation:
     runs-on: ubuntu-22.04
     needs: format-files
@@ -270,6 +295,15 @@ jobs:
           path: |
             project_national/national_baseline/results_csvs/results_up00.csv
             project_testing/testing_baseline/results_csvs/results_up00.csv
+          if-no-files-found: error
+      - name: Upload raw simulation output
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw_simulation_output
+          path: |
+            project_national/national_baseline/simulation_output
+            project_testing/testing_baseline/simulation_output
+          retention-days: 1  # This is typically about 2.5 GB. Delete quickly to save space.
           if-no-files-found: error
 
       - name: Run tests
@@ -566,6 +600,8 @@ jobs:
       - name: Run buildstockbatch
         shell: bash
         run: |
+          set -o pipefail  # ensures the pipeline fails if buildstock_local fails, not just the tee command
+
           EXTRA_ARGS=""
           if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
             echo "Running on develop branch, using --replace_existing"
@@ -574,7 +610,17 @@ jobs:
             echo "Not on develop branch, removing AWS config from YAML"
             python .github/scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_tmy3.yml
           fi
-          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml
+
+          # Run buildstockbatch and tee output to a log file
+          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml 2>&1 | tee buildstock_local.log
+
+          # Check the log for schema mismatch warnings and fail if any are present
+          SCHEMA_MISMATCH_PATTERN='^Missing columns in output data|^Extra columns in output data'
+          if grep -q -E "$SCHEMA_MISMATCH_PATTERN" buildstock_local.log; then
+            echo "::error::Detected column mismatch in buildstockbatch output. Failing job."
+            grep -E "$SCHEMA_MISMATCH_PATTERN" buildstock_local.log
+            exit 1
+          fi
 
       - name: Unzip results
         run: |
