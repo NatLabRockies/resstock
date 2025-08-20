@@ -127,8 +127,8 @@ CEC Climate Zone	8
 CEC Climate Zone	9
 CEC Climate Zone	None
 Ceiling Fan	None	ResStockArguments	ceiling_fans=None
-Ceiling Fan	Premium Efficiency	ResStockArguments	ceiling_fans=#Bedrooms+1 Fans, 22.5 W
-Ceiling Fan	Standard Efficiency	ResStockArguments	ceiling_fans=#Bedrooms+1 Fans, 45.0 W
+Ceiling Fan	Premium Efficiency	ResStockArguments	ceiling_fans=NumBedrooms+1 Fans, 22.5 W
+Ceiling Fan	Standard Efficiency	ResStockArguments	ceiling_fans=NumBedrooms+1 Fans, 45.0 W
 Ceiling Fan	Standard Efficiency, No usage	ResStockArguments	ceiling_fans=None
 Census Division	East North Central
 Census Division	East South Central
