@@ -844,11 +844,7 @@ module HVAC
     setpoint_mgr_follow_ground_temp.addToNode(plant_loop.supplyOutletNode)
 
     # Pump
-    if heat_pump.cooling_capacity > 1.0
-      pump_w = heat_pump.pump_watts_per_ton * UnitConversions.convert(heat_pump.cooling_capacity, 'Btu/hr', 'ton')
-    else
-      pump_w = heat_pump.pump_watts_per_ton * UnitConversions.convert(heat_pump.heating_capacity, 'Btu/hr', 'ton')
-    end
+    pump_w = get_pump_power_watts(heat_pump)
     pump_w = [pump_w, 1.0].max # prevent error if zero
     pump = Model.add_pump_variable_speed(
       model,
@@ -998,14 +994,22 @@ module HVAC
     return fan_watts_per_cfm * airflow_cfm
   end
 
-  # Get the boiler pump power (W).
+  # Get the boiler or GHP pump power (W).
   #
-  # @param electric_auxiliary_energy [Double] Boiler electric auxiliary energy [kWh/yr]
-  # @return [Double] Boiler pump power [W]
-  def self.get_pump_power_watts(electric_auxiliary_energy)
-    return 0.0 if electric_auxiliary_energy.nil?
+  # @param hvac_system [HPXML::HeatingSystem or HPXML::HeatPump] The HPXML HVAC system of interest
+  # @return [Double] Pump power [W]
+  def self.get_pump_power_watts(hvac_system)
+    if hvac_system.is_a?(HPXML::HeatingSystem) && (not hvac_system.electric_auxiliary_energy.nil?)
+      return hvac_system.electric_auxiliary_energy / 2.08
+    elsif hvac_system.is_a?(HPXML::HeatPump) && (not hvac_system.pump_watts_per_ton.nil?)
+      if hvac_system.cooling_capacity > 1.0
+        return hvac_system.pump_watts_per_ton * UnitConversions.convert(hvac_system.cooling_capacity, 'Btu/hr', 'ton')
+      else
+        return hvac_system.pump_watts_per_ton * UnitConversions.convert(hvac_system.heating_capacity, 'Btu/hr', 'ton')
+      end
+    end
 
-    return electric_auxiliary_energy / 2.08
+    return 0.0
   end
 
   # Returns the heating input capacity, calculated as the heating rated (output) capacity divided by the rated efficiency.
@@ -1062,7 +1066,7 @@ module HVAC
     loop_sizing.setLoopDesignTemperatureDifference(UnitConversions.convert(20.0, 'deltaF', 'deltaC'))
 
     # Pump
-    pump_w = get_pump_power_watts(heating_system.electric_auxiliary_energy)
+    pump_w = get_pump_power_watts(heating_system)
     pump_w = [pump_w, 1.0].max # prevent error if zero
     pump = Model.add_pump_variable_speed(
       model,

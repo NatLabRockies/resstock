@@ -386,7 +386,7 @@ class HPXMLtoOpenStudio < OpenStudio::Measure::ModelMeasure
     Airflow.apply(runner, model, weather, spaces, hpxml_bldg, hpxml.header, schedules_file, airloop_map)
 
     # Other
-    PV.apply(model, hpxml_bldg)
+    PV.apply(runner, model, hpxml_bldg)
     Generator.apply(model, hpxml_bldg)
     Battery.apply(runner, model, spaces, hpxml_bldg, schedules_file)
     Vehicle.apply(runner, model, spaces, hpxml_bldg, hpxml.header, schedules_file)
