@@ -37,7 +37,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
 
       _run_osw(osw_hash)
       schedule = _get_schedule(curdir)
-      _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule) unless params[:dst_enabled]
+      _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule)
       _verify_hvac_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule)
       # remove the run folder
       FileUtils.rm_rf(File.join(curdir, 'run'))
@@ -68,7 +68,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
 
       _run_osw(osw_hash)
       schedule = _get_schedule(curdir)
-      _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shed', schedule: schedule) unless params[:dst_enabled]
+      _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shed', schedule: schedule)
       _verify_ev_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shed', schedule: schedule)
       FileUtils.rm_rf(File.join(curdir, 'run'))
     end
@@ -97,7 +97,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
       schedule = _get_schedule(curdir)
 
       # Verify a shift with HVAC and shed with EV
-      _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule) unless params[:dst_enabled]
+      _verify_peak_period(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule)
       _verify_hvac_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule)
       _verify_ev_schedule(dst_enabled: params[:dst_enabled], peak_type: 'shift', schedule: schedule)
 
