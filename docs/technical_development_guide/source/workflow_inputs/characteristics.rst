@@ -900,7 +900,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - None
    * - Standard Efficiency
      - 63%
-     - #Bedrooms+1 Fans, 45.0 W
+     - NumBedrooms+1 Fans, 45.0 W
    * - Standard Efficiency, No usage
      - 8.7%
      - None
