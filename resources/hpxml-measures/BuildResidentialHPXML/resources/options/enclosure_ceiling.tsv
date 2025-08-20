@@ -15,4 +15,4 @@ IECC U-0.024	41.67
 "Detailed Example: R-19, 2x6, 24 in o.c., 10% Framing"	18.45
 "Detailed Example: R-19 + R-38, 2x6, 24 in o.c., 10% Framing"	57.49
 	
-Assembly R-Value: Assembly R-value for the ceiling.	
+# Assembly R-Value: Assembly R-value for the ceiling.	

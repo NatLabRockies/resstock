@@ -25,6 +25,6 @@ None
 "Detailed Example: 712 kWh/yr, Unconditioned Basement"	712		basement - unconditioned
 "Detailed Example: 712 kWh/yr, Garage"	712		garage
 			
-Rated Annual Consumption: The EnergyGuide rated annual energy consumption for the freezer.			
-"Usage Multiplier: Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants."			
-Location: The space type where the freezer is located.			
+# Rated Annual Consumption: The EnergyGuide rated annual energy consumption for the freezer.			
+"# Usage Multiplier: Multiplier on the freezer energy usage that can reflect, e.g., high/low usage occupants."			
+# Location: The space type where the freezer is located.			

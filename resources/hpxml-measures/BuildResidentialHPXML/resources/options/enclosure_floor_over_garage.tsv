@@ -16,5 +16,5 @@ Option Name	Type	Assembly R-Value [F-ft2-hr/Btu]
 "Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 13% Framing, No Carpet/Subfloor"	WoodFrame	13.85
 "Detailed Example: Wood Frame, R-11, 2x6, 24 in o.c., 10% Framing, No Carpet/Subfloor"	WoodFrame	14.15
 		
-Type: The type of floor.		
-Assembly R-Value: Assembly R-value for the floor.		
+# Type: The type of floor.		
+# Assembly R-Value: Assembly R-value for the floor.		

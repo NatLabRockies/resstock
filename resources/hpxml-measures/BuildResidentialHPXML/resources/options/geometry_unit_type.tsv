@@ -13,5 +13,5 @@ Option Name	Facility Type	Number of Stories
 "Manufactured Home, 3 Stories"	manufactured home	3
 "Manufactured Home, 4 Stories"	manufactured home	4
 		
-Facility Type: The type of dwelling unit.		
-"Number of Stories: The number of floors above grade in the unit, including conditioned attics. Apartment units must be 1 story."		
+# Facility Type: The type of dwelling unit.		
+"# Number of Stories: The number of floors above grade in the unit, including conditioned attics. Apartment units must be 1 story."		

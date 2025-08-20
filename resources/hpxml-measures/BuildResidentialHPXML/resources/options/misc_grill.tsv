@@ -16,6 +16,6 @@ None		0
 "Propane, 400% Usage"	propane		4
 "Detailed Example: Propane, 25 therm/yr"	propane	25	
 			
-Fuel Type: The fuel type of the grill.			
-Annual Energy Use: The annual energy consumption of the grill.			
-"Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."			
+# Fuel Type: The fuel type of the grill.			
+# Annual Energy Use: The annual energy consumption of the grill.			
+"# Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."			

@@ -54,28 +54,28 @@ None	none
 "Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance"	mini-split	SEER	17	variable speed	HSPF	10					Absolute capacities	"47.0, 17.0, 5.0, -13.0"	"11400, 5600, 3600, 2600"	"38000, 23000, 22000"	"46500, 25000, 22000, 16000"	"3.48, 2.78, 1.88, 1.52"	"2.68, 2.2, 1.8"	"2.75, 2.11, 1.8, 1.31"	"95.0, 82.0"	"9100, 9900"	36000	"36400, 43300"	"3.76, 4.61"	2.49	"2.45, 3.51"
 "Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance"	mini-split	SEER	17	variable speed	HSPF	10					Normalized capacity fractions	"47.0, 17.0, 5.0, -13.0"	"0.30, 0.15, 0.09, 0.07"	"1.00, 0.61, 0.58"	"1.22, 0.66, 0.58, 0.42"	"3.48, 2.78, 1.88, 1.52"	"2.68, 2.2, 1.8"	"2.75, 2.11, 1.8, 1.31"	"95.0, 82.0"	"0.25, 0.28"	1	"1.01, 1.20"	"3.76, 4.61"	2.49	"2.45, 3.51"
 																									
-Type: The type of system.																									
-"Cooling Efficiency Type: The cooling efficiency type. Central HPs and Mini-Split HPs use SEER2 or SEER; Geothermal HPs, Packaged Terminal HPs, and Room HPs use EER."																									
-Cooling Efficiency: The rated cooling efficiency.																									
-"Cooling Compressor Type: The compressor type of the cooling system. Applies to Central HPs, Mini-Split HPs, and Geothermal HPs."																									
-"Heating Efficiency Type: The heating efficiency type. Central HPs and Mini-Split HPs use HSPF2 or HSPF; Goethermal HPs, Packaged Terminal HPs, and Room HPs use COP."																									
-Heating Efficiency: The rated heating efficiency.																									
-"Heating Capacity Retention Fraction: The output heating capacity of the heat pump at a user-specified temperature (e.g., 17F or 5F) divided by the nominal heating capacity. Applies to all heat pump types except Geothermal HPs."																									
-"Heating Capacity Retention Temp: The corresponding user-specified temperature (e.g., 17F or 5F) for the above heating capacity retention fraction."																									
-"Is Ducted: Whether the system is ducted or not. Only used for Mini-Split HPs. It's assumed that Central HPs and Geothermal HPs are ducted, and Packaged Terminal HPs and Room HPs are not ducted."																									
-"Crankcase Heater Watts: Crankcase heater power consumption. Applies to Central HPs, Mini-Split HPs, Room HPs, and Packaged Terminal HPs."																									
-Detailed Performance Data Capacity Type: Type of capacity values when providing detailed performance data. Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Heating Outdoor Temperatures: List of outdoor temperatures when providing heating detailed performance data. Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Heating Min Speed Capacities: Minimum speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Heating Nom Speed Capacities: Nominal speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Heating Max Speed Capacities: Maximum speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Heating Min Speed COPs: Minimum speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Heating Nom Speed COPs: Nominal speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Heating Max Speed COPs: Maximum speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Cooling Outdoor Temperatures: List of outdoor temperatures when providing cooling detailed performance data. Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Cooling Min Speed Capacities: Minimum speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Cooling Nom Speed Capacities: Nominal speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Cooling Max Speed Capacities: Maximum speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Cooling Min Speed COPs: Minimum speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Cooling Nom Speed COPs: Nominal speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									
-Detailed Performance Data Cooling Max Speed COPs: Maximum speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Type: The type of system.																									
+"# Cooling Efficiency Type: The cooling efficiency type. Central HPs and Mini-Split HPs use SEER2 or SEER; Geothermal HPs, Packaged Terminal HPs, and Room HPs use EER."																									
+# Cooling Efficiency: The rated cooling efficiency.																									
+"# Cooling Compressor Type: The compressor type of the cooling system. Applies to Central HPs, Mini-Split HPs, and Geothermal HPs."																									
+"# Heating Efficiency Type: The heating efficiency type. Central HPs and Mini-Split HPs use HSPF2 or HSPF; Goethermal HPs, Packaged Terminal HPs, and Room HPs use COP."																									
+# Heating Efficiency: The rated heating efficiency.																									
+"# Heating Capacity Retention Fraction: The output heating capacity of the heat pump at a user-specified temperature (e.g., 17F or 5F) divided by the nominal heating capacity. Applies to all heat pump types except Geothermal HPs."																									
+"# Heating Capacity Retention Temp: The corresponding user-specified temperature (e.g., 17F or 5F) for the above heating capacity retention fraction."																									
+"# Is Ducted: Whether the system is ducted or not. Only used for Mini-Split HPs. It's assumed that Central HPs and Geothermal HPs are ducted, and Packaged Terminal HPs and Room HPs are not ducted."																									
+"# Crankcase Heater Watts: Crankcase heater power consumption. Applies to Central HPs, Mini-Split HPs, Room HPs, and Packaged Terminal HPs."																									
+# Detailed Performance Data Capacity Type: Type of capacity values when providing detailed performance data. Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Heating Outdoor Temperatures: List of outdoor temperatures when providing heating detailed performance data. Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Heating Min Speed Capacities: Minimum speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Heating Nom Speed Capacities: Nominal speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Heating Max Speed Capacities: Maximum speed capacities when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Heating Min Speed COPs: Minimum speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Heating Nom Speed COPs: Nominal speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Heating Max Speed COPs: Maximum speed COPs when providing detailed heating performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Cooling Outdoor Temperatures: List of outdoor temperatures when providing cooling detailed performance data. Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Cooling Min Speed Capacities: Minimum speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Cooling Nom Speed Capacities: Nominal speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Cooling Max Speed Capacities: Maximum speed capacities when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Cooling Min Speed COPs: Minimum speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Cooling Nom Speed COPs: Nominal speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									
+# Detailed Performance Data Cooling Max Speed COPs: Maximum speed COPs when providing detailed cooling performance data.  Applies to Central HPs and Mini-Split HPs.																									

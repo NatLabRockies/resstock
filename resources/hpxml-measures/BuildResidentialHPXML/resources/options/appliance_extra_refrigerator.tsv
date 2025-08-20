@@ -37,6 +37,6 @@ None
 "Detailed Example: 748 kWh/yr, Unconditioned Basement"	748		basement - unconditioned
 "Detailed Example: 748 kWh/yr, Garage"	748		garage
 			
-Rated Annual Consumption: The EnergyGuide rated annual energy consumption for the extra refrigerator.			
-"Usage Multiplier: Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants."			
-Location: The space type where the extra refrigerator is located.			
+# Rated Annual Consumption: The EnergyGuide rated annual energy consumption for the extra refrigerator.			
+"# Usage Multiplier: Multiplier on the extra refrigerator energy usage that can reflect, e.g., high/low usage occupants."			
+# Location: The space type where the extra refrigerator is located.			

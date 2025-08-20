@@ -47,7 +47,7 @@ Detailed Example: 123 sq. in. ELA		EffectiveLeakageArea		123
 Detailed Example: 1080 CFM50		CFM	50	1080
 Detailed Example: 1010 CFM45		CFM	45	1010
 				
-Leakiness Description: Qualitative description of infiltration.				
-Units: The unit of measure for the air leakage if providing a numeric air leakage value.				
-House Pressure: The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM.				
-"Value: Numeric air leakage value. For EffectiveLeakageArea, the value is in sq. in."				
+# Leakiness Description: Qualitative description of infiltration.				
+# Units: The unit of measure for the air leakage if providing a numeric air leakage value.				
+# House Pressure: The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM.				
+"# Value: Numeric air leakage value. For EffectiveLeakageArea, the value is in sq. in."				

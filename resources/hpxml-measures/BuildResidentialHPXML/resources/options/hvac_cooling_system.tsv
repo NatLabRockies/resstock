@@ -39,19 +39,19 @@ Evaporative Cooler	evaporative cooler
 "Detailed Example: Mini-Split AC, SEER 17, Absolute Detailed Performance"	mini-split	SEER	17	variable speed					Absolute capacities	"95.0, 82.0"	"9100, 9900"	36000	"36400, 43300"	"3.76, 4.61"	2.49	"2.45, 3.51"
 "Detailed Example: Mini-Split AC, SEER 17, Normalized Detailed Performance"	mini-split	SEER	17	variable speed					Normalized capacity fractions	"95.0, 82.0"	"0.25, 0.28"	1	"1.01, 1.20"	"3.76, 4.61"	2.49	"2.45, 3.51"
 																
-Type: The type of system.																
-Cooling Efficiency Type: The cooling efficiency type. Central ACs and Mini-Split ACs use SEER2 or EER2; Room ACs and Packaged Terminal ACs use CEER or EER.																
-Cooling Efficiency: The rated cooling efficiency.																
-Cooling Compressor Type: The compressor type of the cooling system. Applies to Central ACs and Mini-Split ACs.																
-"Is Ducted: Whether the system is ducted or not. Only used for Mini-Split ACs and Evaporative Coolers. It's assumed that Central ACs are ducted, and Room ACs and Packaged Terminal ACs are not ducted."																
-"Crankcase Heater Watts: Crankcase heater power consumption. Applies to Central ACs, Mini-Split ACs, Room ACs, and Packaged Terminal ACs."																
-Integrated Heating System Fuel: The fuel type of the integrated heating system. Applies to Packaged Terminal ACs and Room ACs.																
-Integrated Heating System Efficiency: The rated efficiency of the integrated heating system. Applies to Packaged Terminal ACs and Room ACs.																
-Detailed Performance Data Capacity Type: Type of capacity values when providing detailed performance data. Applies to Central ACs and Mini-Split ACs.																
-Detailed Performance Data Cooling Outdoor Temperatures: List of outdoor temperatures when providing detailed performance data. Applies to Central ACs and Mini-Split ACs.																
-Detailed Performance Data Cooling Min Speed Capacities: Minimum speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																
-Detailed Performance Data Cooling Nom Speed Capacities: Nominal speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																
-Detailed Performance Data Cooling Max Speed Capacities: Maximum speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																
-Detailed Performance Data Cooling Min Speed COPs: Minimum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																
-Detailed Performance Data Cooling Nom Speed COPs: Nominal speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																
-Detailed Performance Data Cooling Max Speed COPs: Maximum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																
+# Type: The type of system.																
+# Cooling Efficiency Type: The cooling efficiency type. Central ACs and Mini-Split ACs use SEER2 or EER2; Room ACs and Packaged Terminal ACs use CEER or EER.																
+# Cooling Efficiency: The rated cooling efficiency.																
+# Cooling Compressor Type: The compressor type of the cooling system. Applies to Central ACs and Mini-Split ACs.																
+"# Is Ducted: Whether the system is ducted or not. Only used for Mini-Split ACs and Evaporative Coolers. It's assumed that Central ACs are ducted, and Room ACs and Packaged Terminal ACs are not ducted."																
+"# Crankcase Heater Watts: Crankcase heater power consumption. Applies to Central ACs, Mini-Split ACs, Room ACs, and Packaged Terminal ACs."																
+# Integrated Heating System Fuel: The fuel type of the integrated heating system. Applies to Packaged Terminal ACs and Room ACs.																
+# Integrated Heating System Efficiency: The rated efficiency of the integrated heating system. Applies to Packaged Terminal ACs and Room ACs.																
+# Detailed Performance Data Capacity Type: Type of capacity values when providing detailed performance data. Applies to Central ACs and Mini-Split ACs.																
+# Detailed Performance Data Cooling Outdoor Temperatures: List of outdoor temperatures when providing detailed performance data. Applies to Central ACs and Mini-Split ACs.																
+# Detailed Performance Data Cooling Min Speed Capacities: Minimum speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																
+# Detailed Performance Data Cooling Nom Speed Capacities: Nominal speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																
+# Detailed Performance Data Cooling Max Speed Capacities: Maximum speed capacities when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																
+# Detailed Performance Data Cooling Min Speed COPs: Minimum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																
+# Detailed Performance Data Cooling Nom Speed COPs: Nominal speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																
+# Detailed Performance Data Cooling Max Speed COPs: Maximum speed COPs when providing detailed performance data.  Applies to Central ACs and Mini-Split ACs.																

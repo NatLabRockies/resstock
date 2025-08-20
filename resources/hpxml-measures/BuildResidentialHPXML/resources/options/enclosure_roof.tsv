@@ -12,5 +12,5 @@ IECC U-0.026	38.46	38.46
 IECC U-0.024	41.67	41.67
 "Detailed Example: Uninsulated, 0.5 in plywood, 0.25 in asphalt shingle"	1.99	
 		
-Unconditioned Assembly R-Value: Assembly R-value for the roof if above an unconditioned attic.		
-Conditioned Assembly R-Value: Assembly R-value for the roof if above conditioned space.		
+# Unconditioned Assembly R-Value: Assembly R-value for the roof if above an unconditioned attic.		
+# Conditioned Assembly R-Value: Assembly R-value for the roof if above conditioned space.		

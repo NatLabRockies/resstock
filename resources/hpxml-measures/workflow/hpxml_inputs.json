@@ -2321,7 +2321,7 @@
     "battery": "20.0 kWh",
     "electric_vehicle": "Midsize, 200 Mile Range, 11000 miles/yr",
     "electric_vehicle_charger": "Level 1, 50% Charging at Home",
-    "ceiling_fans": "#Bedrooms+1 Fans, 45.0 W"
+    "ceiling_fans": "NumBedrooms+1 Fans, 45.0 W"
   },
   "sample_files/base-misc-emissions.xml": {
     "parent_hpxml": "sample_files/base-pv-battery-and-vehicle-ev.xml"
@@ -2468,8 +2468,7 @@
     "schedules_paths": "../../HPXMLtoOpenStudio/resources/schedule_files/battery.csv"
   },
   "sample_files/base-pv-inverters.xml": {
-    "parent_hpxml": "sample_files/base-pv.xml",
-    "pv_system_inverter_efficiency": 0.96
+    "parent_hpxml": "sample_files/base-pv.xml"
   },
   "sample_files/base-residents-0.xml": {
     "parent_hpxml": "sample_files/base.xml",

@@ -19,10 +19,10 @@ None
 90% Solar Fraction							0.9
 95% Solar Fraction							0.95
 							
-Collector Loop Type: The loop type of the solar thermal system.							
-Collector Type: The type of collector.							
-Collector Area: The surface area for the collector.							
-Collector Rated Optical Efficiency: FRTA (y-intercept) from the Directory of SRCC OG-100 Certified Solar Collector Ratings.							
-Collector Rated Thermal Losses: FRUL (slope) from the Directory of SRCC OG-100 Certified Solar Collector Ratings							
-Storage Volume: Hot water storage volume.							
-Solar Fraction: Portion of total conventional hot water heating load (delivered energy plus tank standby losses). Can be obtained from Directory of SRCC OG-300 Solar Water Heating System Ratings or NREL's System Advisor Model or equivalent.							
+# Collector Loop Type: The loop type of the solar thermal system.							
+# Collector Type: The type of collector.							
+# Collector Area: The surface area for the collector.							
+# Collector Rated Optical Efficiency: FRTA (y-intercept) from the Directory of SRCC OG-100 Certified Solar Collector Ratings.							
+# Collector Rated Thermal Losses: FRUL (slope) from the Directory of SRCC OG-100 Certified Solar Collector Ratings							
+# Storage Volume: Hot water storage volume.							
+# Solar Fraction: Portion of total conventional hot water heating load (delivered energy plus tank standby losses). Can be obtained from Directory of SRCC OG-300 Solar Water Heating System Ratings or NREL's System Advisor Model or equivalent.							

@@ -25,7 +25,7 @@ Unknown	unknown	mixed
 2.6 Btu/hr-ft-F			2.6	
 "Detailed Example: Sand, Dry, 0.03 Diffusivity"	sand	dry		0.03
 				
-Soil Type: The soil type.				
-Moisture Type: The soil moisture type.				
-Conductivity: The soil thermal conductivity.				
-Diffusivity: The soil thermal diffusivity.				
+# Soil Type: The soil type.				
+# Moisture Type: The soil moisture type.				
+# Conductivity: The soil thermal conductivity.				
+# Diffusivity: The soil thermal diffusivity.				

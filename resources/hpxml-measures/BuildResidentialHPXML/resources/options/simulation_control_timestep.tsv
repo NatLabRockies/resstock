@@ -12,4 +12,4 @@ Option Name	Length [minutes]
 2	2
 1	1
 	
-Length: Length of the EnergyPlus zone timestep.	
+# Length: Length of the EnergyPlus zone timestep.	

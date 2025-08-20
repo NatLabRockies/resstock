@@ -31,9 +31,9 @@ None	0			0	0
 "Detailed Example: 1000 kWh/yr Pump, 1300 kWh/yr Electric Resistance Heater"	1000		electric resistance	1300		
 "Detailed Example: 1000 kWh/yr Pump, 260 kWh/yr Heat Pump Heater"	1000		heat pump	260		
 						
-Pump Annual Energy Use: The annual energy consumption of the spa.						
-"Pump Usage Multiplier: Multiplier on the spa pump energy usage that can reflect, e.g., high/low usage occupants."						
-Heater Type: The type of spa heater.						
-Heater Annual Electricity Use: The annual electricity consumption of the spa heater.						
-Heater Annual Natural Gas Use: The annual natural gas consumption of the spa heater.						
-"Heater Usage Multiplier: Multiplier on the spa heater energy usage that can reflect, e.g., high/low usage occupants."						
+# Pump Annual Energy Use: The annual energy consumption of the spa.						
+"# Pump Usage Multiplier: Multiplier on the spa pump energy usage that can reflect, e.g., high/low usage occupants."						
+# Heater Type: The type of spa heater.						
+# Heater Annual Electricity Use: The annual electricity consumption of the spa heater.						
+# Heater Annual Natural Gas Use: The annual natural gas consumption of the spa heater.						
+"# Heater Usage Multiplier: Multiplier on the spa heater energy usage that can reflect, e.g., high/low usage occupants."						

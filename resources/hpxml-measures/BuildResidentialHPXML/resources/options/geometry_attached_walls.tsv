@@ -14,8 +14,8 @@ None	FALSE	FALSE	FALSE	FALSE
 "3 Sides: Front, Back, Right"	TRUE	TRUE	FALSE	TRUE
 "3 Sides: Front, Left, Right"	TRUE	FALSE	TRUE	TRUE
 "3 Sides: Back, Left, Right"	FALSE	TRUE	TRUE	TRUE
-
-Front Wall Is Adiabatic: Whether the front wall of the dwelling unit is adiabatic.
-Back Wall Is Adiabatic: Whether the back wall of the dwelling unit is adiabatic.
-Left Wall Is Adiabatic: Whether the left wall of the dwelling unit is adiabatic.
-Right Wall Is Adiabatic: Whether the right wall of the dwelling unit is adiabatic.
+				
+# Front Wall Is Adiabatic: Whether the front wall of the dwelling unit is adiabatic.				
+# Back Wall Is Adiabatic: Whether the back wall of the dwelling unit is adiabatic.				
+# Left Wall Is Adiabatic: Whether the left wall of the dwelling unit is adiabatic.				
+# Right Wall Is Adiabatic: Whether the right wall of the dwelling unit is adiabatic.				

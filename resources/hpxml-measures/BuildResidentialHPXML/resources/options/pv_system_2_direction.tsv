@@ -1,12 +1,12 @@
 Option Name	Array Azimuth [deg]	Array Tilt [deg]
-"Roof Pitch, West"	270
-"Roof Pitch, Southwest"	225
-"Roof Pitch, South"	180
-"Roof Pitch, Southeast"	135
-"Roof Pitch, East"	90
-"Roof Pitch, Northeast"	45
-"Roof Pitch, North"	0
-"Roof Pitch, Northwest"	315
+"Roof Pitch, West"	270	
+"Roof Pitch, Southwest"	225	
+"Roof Pitch, South"	180	
+"Roof Pitch, Southeast"	135	
+"Roof Pitch, East"	90	
+"Roof Pitch, Northeast"	45	
+"Roof Pitch, North"	0	
+"Roof Pitch, Northwest"	315	
 0 Degrees		0
 "5 Degrees, West"	270	5
 "5 Degrees, Southwest"	225	5
@@ -58,6 +58,6 @@ Option Name	Array Azimuth [deg]	Array Tilt [deg]
 "50 Degrees, South"	180	50
 "50 Degrees, Southeast"	135	50
 "50 Degrees, East"	90	50
-
-"Array Azimuth: The azimuth of the PV system array. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270)."
-Array Tilt: The tilt of the PV system array. Defaults to roof pitch.
+		
+"# Array Azimuth: The azimuth of the PV system array. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270)."		
+# Array Tilt: The tilt of the PV system array. Defaults to roof pitch.		

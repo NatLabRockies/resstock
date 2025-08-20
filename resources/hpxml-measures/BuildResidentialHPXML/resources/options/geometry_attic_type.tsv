@@ -8,5 +8,5 @@ Flat Roof	FlatRoof
 "Attic, Conditioned, Hip"	ConditionedAttic	hip
 Below Apartment	BelowApartment	
 		
-Attic Type: The type of attic. Conditioned attics are not allowed for apartment units.		
-Roof Type: The type of roof.		
+# Attic Type: The type of attic. Conditioned attics are not allowed for apartment units.		
+# Roof Type: The type of roof.		

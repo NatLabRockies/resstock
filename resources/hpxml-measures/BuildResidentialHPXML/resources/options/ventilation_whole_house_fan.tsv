@@ -13,5 +13,5 @@ None
 6000 cfm	6000	600
 "Detailed Example: 4500 cfm, 300 W"	4500	300
 		
-Rated Flow Rate: The rated flow rate of the whole house fan.		
-Power: The fan power of the whole house fan.		
+# Rated Flow Rate: The rated flow rate of the whole house fan.		
+# Power: The fan power of the whole house fan.		

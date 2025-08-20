@@ -53,6 +53,6 @@ Electric Resistance	ElectricResistance	1
 "Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light"	FloorFurnace	0.8	600
 "Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light"	Boiler	0.92	600
 			
-Type: The type of system.			
-Heating Efficiency: The rated heating efficiency.			
-"Pilot Light: The fuel usage of the pilot light. Applies to Furnaces, Boilers, Stoves, and Fireplaces with non-electric fuel."			
+# Type: The type of system.			
+# Heating Efficiency: The rated heating efficiency.			
+"# Pilot Light: The fuel usage of the pilot light. Applies to Furnaces, Boilers, Stoves, and Fireplaces with non-electric fuel."			

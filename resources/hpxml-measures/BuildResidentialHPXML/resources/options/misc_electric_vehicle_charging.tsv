@@ -16,5 +16,5 @@ None	0
 Detailed Example: 1500 kWh/yr	1500	
 Detailed Example: 3000 kWh/yr	3000	
 		
-Annual Energy Use: The annual energy consumption of the EV charging.		
-"Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."		
+# Annual Energy Use: The annual energy consumption of the EV charging.		
+"# Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."		

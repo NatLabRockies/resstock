@@ -44,8 +44,8 @@ None
 "Detailed Example: Electricity, Standard, Non-Convection, Unconditioned Basement"	electricity	FALSE	FALSE		basement - unconditioned
 "Detailed Example: Electricity, Standard, Non-Convection, Garage"	electricity	FALSE	FALSE		garage
 					
-Fuel Type: Type of fuel used by the cooking range/oven					
-Is Induction: Whether the electric cooking range is induction.					
-Is Convection: Whether the oven is convection					
-"Usage Multiplier: Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants."					
-Location: The space type where the cooking range/oven is located.					
+# Fuel Type: Type of fuel used by the cooking range/oven					
+# Is Induction: Whether the electric cooking range is induction.					
+# Is Convection: Whether the oven is convection					
+"# Usage Multiplier: Multiplier on the cooking range/oven energy usage that can reflect, e.g., high/low usage occupants."					
+# Location: The space type where the cooking range/oven is located.					

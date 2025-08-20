@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>build_residential_hpxml</name>
   <uid>a13a8983-2b01-4930-8af2-42030b6e4233</uid>
-  <version_id>7668fe83-bee4-4c9e-ad6a-debe75f84e9d</version_id>
-  <version_modified>2025-08-15T19:17:22Z</version_modified>
+  <version_id>b5671ee5-b18b-4fcf-b4c2-965044cc0032</version_id>
+  <version_modified>2025-08-20T15:23:54Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>BuildResidentialHPXML</class_name>
   <display_name>HPXML Builder</display_name>
@@ -10115,24 +10115,24 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 45.0 W</value>
-          <display_name>#Bedrooms+1 Fans, 45.0 W</display_name>
+          <value>NumBedrooms+1 Fans, 45.0 W</value>
+          <display_name>NumBedrooms+1 Fans, 45.0 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 37.5 W</value>
-          <display_name>#Bedrooms+1 Fans, 37.5 W</display_name>
+          <value>NumBedrooms+1 Fans, 37.5 W</value>
+          <display_name>NumBedrooms+1 Fans, 37.5 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 30.0 W</value>
-          <display_name>#Bedrooms+1 Fans, 30.0 W</display_name>
+          <value>NumBedrooms+1 Fans, 30.0 W</value>
+          <display_name>NumBedrooms+1 Fans, 30.0 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 22.5 W</value>
-          <display_name>#Bedrooms+1 Fans, 22.5 W</display_name>
+          <value>NumBedrooms+1 Fans, 22.5 W</value>
+          <display_name>NumBedrooms+1 Fans, 22.5 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 15.0 W</value>
-          <display_name>#Bedrooms+1 Fans, 15.0 W</display_name>
+          <value>NumBedrooms+1 Fans, 15.0 W</value>
+          <display_name>NumBedrooms+1 Fans, 15.0 W</display_name>
         </choice>
         <choice>
           <value>1 Fan, 45.0 W</value>
@@ -11396,7 +11396,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>96CB74B1</checksum>
+      <checksum>37A46B6E</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -11413,7 +11413,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>223BCBE2</checksum>
+      <checksum>7416A621</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>
@@ -11431,637 +11431,637 @@
       <filename>options/advanced_feature.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>339E65AB</checksum>
+      <checksum>E5849695</checksum>
     </file>
     <file>
       <filename>options/advanced_feature_2.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>339E65AB</checksum>
+      <checksum>E5849695</checksum>
     </file>
     <file>
       <filename>options/appliance_clothes_dryer.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9C405FB4</checksum>
+      <checksum>2C375E28</checksum>
     </file>
     <file>
       <filename>options/appliance_clothes_washer.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>6D294E8F</checksum>
+      <checksum>C6591D26</checksum>
     </file>
     <file>
       <filename>options/appliance_cooking_range_oven.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F9B34A35</checksum>
+      <checksum>59DF5CE6</checksum>
     </file>
     <file>
       <filename>options/appliance_dehumidifier.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CFC51386</checksum>
+      <checksum>449E1B5B</checksum>
     </file>
     <file>
       <filename>options/appliance_dehumidifier_setpoint.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>634E87D8</checksum>
+      <checksum>331F2692</checksum>
     </file>
     <file>
       <filename>options/appliance_dishwasher.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>99361B71</checksum>
+      <checksum>2A5B09DE</checksum>
     </file>
     <file>
       <filename>options/appliance_extra_refrigerator.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>125F03AE</checksum>
+      <checksum>8A0399CD</checksum>
     </file>
     <file>
       <filename>options/appliance_freezer.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>DE9916DC</checksum>
+      <checksum>CE804E48</checksum>
     </file>
     <file>
       <filename>options/appliance_refrigerator.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D668479B</checksum>
+      <checksum>9BBEFDAB</checksum>
     </file>
     <file>
       <filename>options/battery.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E8F057FE</checksum>
+      <checksum>092A7429</checksum>
     </file>
     <file>
       <filename>options/ceiling_fans.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>DBBF719B</checksum>
+      <checksum>D6A6102F</checksum>
     </file>
     <file>
       <filename>options/dhw_distribution.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>65CE0034</checksum>
+      <checksum>D6E8AA48</checksum>
     </file>
     <file>
       <filename>options/dhw_drain_water_heat_recovery.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>0B4C3956</checksum>
+      <checksum>31E8956C</checksum>
     </file>
     <file>
       <filename>options/dhw_fixtures.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>08CEE7BD</checksum>
+      <checksum>D47D7DA0</checksum>
     </file>
     <file>
       <filename>options/dhw_solar_thermal.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9E66D7E7</checksum>
+      <checksum>F21D4CA6</checksum>
     </file>
     <file>
       <filename>options/dhw_solar_thermal_direction.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1370514C</checksum>
+      <checksum>6C7F1015</checksum>
     </file>
     <file>
       <filename>options/dhw_water_heater.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C6A680F0</checksum>
+      <checksum>15306C9A</checksum>
     </file>
     <file>
       <filename>options/dhw_water_heater_location.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D0B26AE4</checksum>
+      <checksum>6DD86A53</checksum>
     </file>
     <file>
       <filename>options/electric_vehicle.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2A68AF68</checksum>
+      <checksum>B66615BD</checksum>
     </file>
     <file>
       <filename>options/electric_vehicle_charger.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CDD371F4</checksum>
+      <checksum>D0FEEC80</checksum>
     </file>
     <file>
       <filename>options/enclosure_air_leakage.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>275D8092</checksum>
+      <checksum>85BE8A9A</checksum>
     </file>
     <file>
       <filename>options/enclosure_ceiling.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4294AC88</checksum>
+      <checksum>7C560884</checksum>
     </file>
     <file>
       <filename>options/enclosure_door.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>618580AE</checksum>
+      <checksum>8676D6D8</checksum>
     </file>
     <file>
       <filename>options/enclosure_floor_over_foundation.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9D3F7353</checksum>
+      <checksum>DD2DB9A1</checksum>
     </file>
     <file>
       <filename>options/enclosure_floor_over_garage.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>B9F76D91</checksum>
+      <checksum>28F1A8C1</checksum>
     </file>
     <file>
       <filename>options/enclosure_foundation_wall.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F1FE4A28</checksum>
+      <checksum>432358FB</checksum>
     </file>
     <file>
       <filename>options/enclosure_overhangs.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9353B2B8</checksum>
+      <checksum>2F708899</checksum>
     </file>
     <file>
       <filename>options/enclosure_radiant_barrier.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>93BAAF87</checksum>
+      <checksum>2B2923AE</checksum>
     </file>
     <file>
       <filename>options/enclosure_rim_joist.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>5917F62D</checksum>
+      <checksum>CC926001</checksum>
     </file>
     <file>
       <filename>options/enclosure_roof.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>EEF3A650</checksum>
+      <checksum>409D2B05</checksum>
     </file>
     <file>
       <filename>options/enclosure_roof_material.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CB08121A</checksum>
+      <checksum>F7767CD2</checksum>
     </file>
     <file>
       <filename>options/enclosure_skylight.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>956BA0B7</checksum>
+      <checksum>6B2813DC</checksum>
     </file>
     <file>
       <filename>options/enclosure_slab.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>3B75D654</checksum>
+      <checksum>06785DFE</checksum>
     </file>
     <file>
       <filename>options/enclosure_wall.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>35A39B0B</checksum>
+      <checksum>1924F317</checksum>
     </file>
     <file>
       <filename>options/enclosure_wall_continuous_insulation.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E77C17DB</checksum>
+      <checksum>6FD0B67A</checksum>
     </file>
     <file>
       <filename>options/enclosure_wall_siding.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>CCFDBCA6</checksum>
+      <checksum>FB4AEB45</checksum>
     </file>
     <file>
       <filename>options/enclosure_window.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>6BC9A6E3</checksum>
+      <checksum>B90DD94A</checksum>
     </file>
     <file>
       <filename>options/enclosure_window_exterior_shading.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1975DBF6</checksum>
+      <checksum>B6DFF84F</checksum>
     </file>
     <file>
       <filename>options/enclosure_window_insect_screens.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>5F72FB38</checksum>
+      <checksum>CD5D171D</checksum>
     </file>
     <file>
       <filename>options/enclosure_window_interior_shading.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1372255B</checksum>
+      <checksum>C55F2AB2</checksum>
     </file>
     <file>
       <filename>options/enclosure_window_natural_ventilation.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F377FABB</checksum>
+      <checksum>391C269D</checksum>
     </file>
     <file>
       <filename>options/enclosure_window_storm.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1CFB6F2C</checksum>
+      <checksum>C18968EA</checksum>
     </file>
     <file>
       <filename>options/geometry_attached_walls.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2395913B</checksum>
+      <checksum>C31C2415</checksum>
     </file>
     <file>
       <filename>options/geometry_attic_type.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>0FBEDDB9</checksum>
+      <checksum>22767D7D</checksum>
     </file>
     <file>
       <filename>options/geometry_ceiling_height.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2EA171F9</checksum>
+      <checksum>0F720F74</checksum>
     </file>
     <file>
       <filename>options/geometry_eaves.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F059A4C1</checksum>
+      <checksum>9E0E32F7</checksum>
     </file>
     <file>
       <filename>options/geometry_foundation_type.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>951C8138</checksum>
+      <checksum>8022A43C</checksum>
     </file>
     <file>
       <filename>options/geometry_garage_type.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>B58337B0</checksum>
+      <checksum>569FAC1E</checksum>
     </file>
     <file>
       <filename>options/geometry_neighbor_buildings.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>FCA37A69</checksum>
+      <checksum>B45C9F0B</checksum>
     </file>
     <file>
       <filename>options/geometry_unit_direction.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>085204E8</checksum>
+      <checksum>A6AECBB2</checksum>
     </file>
     <file>
       <filename>options/geometry_unit_num_bathrooms.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>FB54AEDA</checksum>
+      <checksum>8C416D32</checksum>
     </file>
     <file>
       <filename>options/geometry_unit_num_bedrooms.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>7A45A87A</checksum>
+      <checksum>AD080FCE</checksum>
     </file>
     <file>
       <filename>options/geometry_unit_num_occupants.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>11DC7334</checksum>
+      <checksum>66C9B0DC</checksum>
     </file>
     <file>
       <filename>options/geometry_unit_type.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>784B641B</checksum>
+      <checksum>FA0F4F6B</checksum>
     </file>
     <file>
       <filename>options/hvac_cooling_system.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F075EF59</checksum>
+      <checksum>150D1A5D</checksum>
     </file>
     <file>
       <filename>options/hvac_cooling_system_capacity.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2385005B</checksum>
+      <checksum>A1CC1C65</checksum>
     </file>
     <file>
       <filename>options/hvac_cooling_system_cooling_load_served.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1756F2C5</checksum>
+      <checksum>7D2A30DF</checksum>
     </file>
     <file>
       <filename>options/hvac_cooling_system_integrated_heating_capacity.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>641F8B4C</checksum>
+      <checksum>C6E07AE4</checksum>
     </file>
     <file>
       <filename>options/hvac_cooling_system_integrated_heating_load_served.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1756F2C5</checksum>
+      <checksum>7D2A30DF</checksum>
     </file>
     <file>
       <filename>options/hvac_ducts.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>D654CFF9</checksum>
+      <checksum>09693D8E</checksum>
     </file>
     <file>
       <filename>options/hvac_ducts_return_location.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C0AC4B1E</checksum>
+      <checksum>0F5CB42B</checksum>
     </file>
     <file>
       <filename>options/hvac_ducts_supply_location.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>A4795CCA</checksum>
+      <checksum>134CC813</checksum>
     </file>
     <file>
       <filename>options/hvac_geothermal_loop.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9DF930DA</checksum>
+      <checksum>01874F99</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9A927DE6</checksum>
+      <checksum>8FDE7081</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump_backup.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>0BEEDC44</checksum>
+      <checksum>70B2F16A</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump_backup_capacity.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>48929A90</checksum>
+      <checksum>6361F7F7</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump_capacity.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9823EF02</checksum>
+      <checksum>3C53C3B5</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump_cooling_load_served.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1756F2C5</checksum>
+      <checksum>7D2A30DF</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump_heating_load_served.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1756F2C5</checksum>
+      <checksum>7D2A30DF</checksum>
     </file>
     <file>
       <filename>options/hvac_heat_pump_temperatures.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E14C5DD6</checksum>
+      <checksum>059D8F67</checksum>
     </file>
     <file>
       <filename>options/hvac_heating_system.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>8CC14D5D</checksum>
+      <checksum>CC3547E6</checksum>
     </file>
     <file>
       <filename>options/hvac_heating_system_2.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>8CC14D5D</checksum>
+      <checksum>CC3547E6</checksum>
     </file>
     <file>
       <filename>options/hvac_heating_system_2_capacity.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>A4402A2D</checksum>
+      <checksum>522FD62D</checksum>
     </file>
     <file>
       <filename>options/hvac_heating_system_2_fuel.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9F5AC12C</checksum>
+      <checksum>BF505C7C</checksum>
     </file>
     <file>
       <filename>options/hvac_heating_system_2_heating_load_served.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1756F2C5</checksum>
+      <checksum>7D2A30DF</checksum>
     </file>
     <file>
       <filename>options/hvac_heating_system_capacity.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>A4402A2D</checksum>
+      <checksum>522FD62D</checksum>
     </file>
     <file>
       <filename>options/hvac_heating_system_fuel.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9F5AC12C</checksum>
+      <checksum>BF505C7C</checksum>
     </file>
     <file>
       <filename>options/hvac_heating_system_heating_load_served.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1756F2C5</checksum>
+      <checksum>7D2A30DF</checksum>
     </file>
     <file>
       <filename>options/lighting.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>5EDC3223</checksum>
+      <checksum>267694CB</checksum>
     </file>
     <file>
       <filename>options/location_site_type.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1B92BE07</checksum>
+      <checksum>3AD191CB</checksum>
     </file>
     <file>
       <filename>options/location_soil_type.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>6547AF5C</checksum>
+      <checksum>26ACF0A3</checksum>
     </file>
     <file>
       <filename>options/misc_electric_vehicle_charging.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>19B9DA09</checksum>
+      <checksum>11C57632</checksum>
     </file>
     <file>
       <filename>options/misc_fireplace.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>EB4C75C0</checksum>
+      <checksum>FAF541C2</checksum>
     </file>
     <file>
       <filename>options/misc_gas_lighting.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>E7D2970C</checksum>
+      <checksum>84369201</checksum>
     </file>
     <file>
       <filename>options/misc_grill.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>49A5F909</checksum>
+      <checksum>C98FD491</checksum>
     </file>
     <file>
       <filename>options/misc_permanent_spa.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>2A6C4B73</checksum>
+      <checksum>47BE56D2</checksum>
     </file>
     <file>
       <filename>options/misc_plug_loads.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>056DBB98</checksum>
+      <checksum>C7957DEE</checksum>
     </file>
     <file>
       <filename>options/misc_pool.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>273725BE</checksum>
+      <checksum>1B386DA0</checksum>
     </file>
     <file>
       <filename>options/misc_television.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>087FDED4</checksum>
+      <checksum>E7483B27</checksum>
     </file>
     <file>
       <filename>options/misc_well_pump.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>0B9956F7</checksum>
+      <checksum>E9B9689D</checksum>
     </file>
     <file>
       <filename>options/pv_system.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>108EFB75</checksum>
+      <checksum>CC22D8AD</checksum>
     </file>
     <file>
       <filename>options/pv_system_2.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>1FF94183</checksum>
+      <checksum>4B813603</checksum>
     </file>
     <file>
       <filename>options/pv_system_2_direction.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>210F3420</checksum>
+      <checksum>00709E08</checksum>
     </file>
     <file>
       <filename>options/pv_system_direction.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>210F3420</checksum>
+      <checksum>00709E08</checksum>
     </file>
     <file>
       <filename>options/simulation_control_timestep.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>667792AE</checksum>
+      <checksum>39B812DD</checksum>
     </file>
     <file>
       <filename>options/utility_bill_scenario.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4E7C03A4</checksum>
+      <checksum>15026829</checksum>
     </file>
     <file>
       <filename>options/utility_bill_scenario_2.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4E7C03A4</checksum>
+      <checksum>15026829</checksum>
     </file>
     <file>
       <filename>options/utility_bill_scenario_3.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4E7C03A4</checksum>
+      <checksum>15026829</checksum>
     </file>
     <file>
       <filename>options/ventilation_bathroom.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>74B42AF7</checksum>
+      <checksum>F6A593FC</checksum>
     </file>
     <file>
       <filename>options/ventilation_kitchen.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>34CD0A2F</checksum>
+      <checksum>E398D1FC</checksum>
     </file>
     <file>
       <filename>options/ventilation_mechanical.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>F962C7C9</checksum>
+      <checksum>179850A6</checksum>
     </file>
     <file>
       <filename>options/ventilation_whole_house_fan.tsv</filename>
       <filetype>tsv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>60F9B883</checksum>
+      <checksum>3FDB316B</checksum>
     </file>
     <file>
       <filename>options.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>C29A3F8E</checksum>
+      <checksum>BDC232FC</checksum>
     </file>
     <file>
       <filename>test_build_residential_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>95E8D502</checksum>
+      <checksum>0665238F</checksum>
     </file>
   </files>
 </measure>

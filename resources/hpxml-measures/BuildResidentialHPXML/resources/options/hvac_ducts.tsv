@@ -65,8 +65,8 @@ None	Percent	0	0	0
 "Detailed Example: 250 CFM25, R-6"	CFM25	250	6	6	
 "Detailed Example: 400 CFM50 (75% Supply), R-6"	CFM50	400	6	6	0.75
 					
-Leakage Units: The units for the duct leakage.					
-Leakage to Outside Value: The leakage to outside value.					
-Supply Insulation R-Value: The nominal insulation r-value of the supply ducts excluding air films. Use 0 for uninsulated ducts.					
-Return Insulation R-Value: The nominal insulation r-value of the return ducts excluding air films. Use 0 for uninsulated ducts.					
-Supply Leakage Fraction: The fraction of duct leakage associated with the supply ducts; the remainder is associated with the return ducts.					
+# Leakage Units: The units for the duct leakage.					
+# Leakage to Outside Value: The leakage to outside value.					
+# Supply Insulation R-Value: The nominal insulation r-value of the supply ducts excluding air films. Use 0 for uninsulated ducts.					
+# Return Insulation R-Value: The nominal insulation r-value of the return ducts excluding air films. Use 0 for uninsulated ducts.					
+# Supply Leakage Fraction: The fraction of duct leakage associated with the supply ducts; the remainder is associated with the return ducts.					

@@ -51,5 +51,5 @@ Option Name	Type	Assembly R-Value [F-ft2-hr/Btu]
 "Detailed Example: Wood Stud, R-11, 2x4, 16 in o.c., 25% Framing"	WoodStud	11.09
 "Detailed Example: Wood Stud, R-18, 2x6, 24 in o.c., 25% Framing"	WoodStud	15.71
 		
-Type: The type of wall.		
-Assembly R-Value: Assembly R-value for the wall excluding any siding and/or continuous insulation.		
+# Type: The type of wall.		
+# Assembly R-Value: Assembly R-value for the wall excluding any siding and/or continuous insulation.		

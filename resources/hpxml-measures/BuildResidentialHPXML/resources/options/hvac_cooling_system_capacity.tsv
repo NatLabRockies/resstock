@@ -25,9 +25,9 @@ Autosize
 "Detailed Example: Autosize, 170% Multiplier"		1.7	
 "Detailed Example: Autosize, 170% Multiplier, 3.0 tons Limit"		1.7	36000
 			
-Capacity: The output capacity.			
-Autosizing Factor: A capacity scaling factor that can be applied to the autosizing methodology.			
-Autosizing Limit: A maximum capacity limit that can be applied to the autosizing methodology.			
+# Capacity: The output capacity.			
+# Autosizing Factor: A capacity scaling factor that can be applied to the autosizing methodology.			
+# Autosizing Limit: A maximum capacity limit that can be applied to the autosizing methodology.			
 			
 			
 			

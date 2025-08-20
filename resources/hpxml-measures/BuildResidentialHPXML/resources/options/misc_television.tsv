@@ -15,5 +15,5 @@ None	0
 400% Usage		4
 Detailed Example: 620 kWh/yr	620	
 		
-Annual Energy Use: The annual energy consumption of the televisions.		
-"Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."		
+# Annual Energy Use: The annual energy consumption of the televisions.		
+"# Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."		

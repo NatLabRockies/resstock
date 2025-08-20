@@ -34,6 +34,6 @@ None
 "Detailed Example: 1.5 kW, Premium"	1500	premium	
 "Detailed Example: 1.5 kW, Thin Film"	1500	thin film	
 			
-Maximum Power Output: Peak power for the PV system.			
-Module Type: The type of PV module.			
-"System Losses Fraction: The total PV system losses including soiling, shading, snow, degradation, etc."			
+# Maximum Power Output: Peak power for the PV system.			
+# Module Type: The type of PV module.			
+"# System Losses Fraction: The total PV system losses including soiling, shading, snow, degradation, etc."			

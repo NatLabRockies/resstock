@@ -40,10 +40,10 @@ Autosize (Supplemental)		supplemental
 "Detailed Example: Autosize, 170% Multiplier"			1.7	
 "Detailed Example: Autosize, 90% Multiplier, 45 kBtu/hr Limit"			0.9	45000
 				
-Capacity: The output capacity.				
-Autosizing Methodology: Logic for autosized heat pump backup.				
-Autosizing Factor: A capacity scaling factor that can be applied to the autosizing methodology.				
-Autosizing Limit: A maximum capacity limit that can be applied to the autosizing methodology.				
+# Capacity: The output capacity.				
+# Autosizing Methodology: Logic for autosized heat pump backup.				
+# Autosizing Factor: A capacity scaling factor that can be applied to the autosizing methodology.				
+# Autosizing Limit: A maximum capacity limit that can be applied to the autosizing methodology.				
 				
 				
 				

@@ -55,8 +55,8 @@ Detailed Example: 0.4 Solar Absorptance			0.4	0.9	0.67
 Detailed Example: 0.6 Solar Absorptance			0.6	0.9	0.67
 Detailed Example: 0.75 Solar Absorptance			0.75	0.9	0.67
 					
-Type: The type of wall siding.					
-Color: The color of the walls.					
-Solar Absorptance: The solar absorptance of the outermost wall material.					
-Emittance: The emittance of the outermost wall material.					
-R-Value: The R-value of the siding.					
+# Type: The type of wall siding.					
+# Color: The color of the walls.					
+# Solar Absorptance: The solar absorptance of the outermost wall material.					
+# Emittance: The emittance of the outermost wall material.					
+# R-Value: The R-value of the siding.					

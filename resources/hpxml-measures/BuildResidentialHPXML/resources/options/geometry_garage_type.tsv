@@ -19,7 +19,7 @@ None	0	0	Left	0
 "3 Car, Right, Half Protruding"	30	20	Right	0.5
 "3 Car, Right, Fully Protruding"	30	20	Right	1
 				
-Width: The width of the garage.				
-Depth: The depth of the garage.				
-Position: The side of the home that that garage is attached to (when viewed from the front).				
-Protrusion: The fraction of the garage depth that is protruding from the conditioned space.				
+# Width: The width of the garage.				
+# Depth: The depth of the garage.				
+# Position: The side of the home that that garage is attached to (when viewed from the front).				
+# Protrusion: The fraction of the garage depth that is protruding from the conditioned space.				

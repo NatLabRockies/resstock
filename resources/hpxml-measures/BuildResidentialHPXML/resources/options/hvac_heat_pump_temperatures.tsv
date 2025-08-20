@@ -19,5 +19,5 @@ Default
 "Detailed Example: 5F Min Compressor Temp, 35F Max HP Backup Temp"	5	35
 "Detailed Example: 25F Min Compressor Temp, 45F Max HP Backup Temp"	25	45
 		
-Compressor Lockout: The temperature below which the heat pump compressor is disabled. Applies to all heat pump types other than Geothermal HPs.		
-Backup Lockout: The temperature above which the heat pump backup is disabled.		
+# Compressor Lockout: The temperature below which the heat pump compressor is disabled. Applies to all heat pump types other than Geothermal HPs.		
+# Backup Lockout: The temperature above which the heat pump backup is disabled.		

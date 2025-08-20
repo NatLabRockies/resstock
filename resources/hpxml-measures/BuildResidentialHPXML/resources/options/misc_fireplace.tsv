@@ -30,6 +30,6 @@ None		0
 "Electric, 400% Usage"	electricity		4
 "Detailed Example: Wood, 55 therm/yr"	wood	55	
 			
-Fuel Type: The fuel type of the grill.			
-Annual Energy Use: The annual energy consumption of the grill.			
-"Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."			
+# Fuel Type: The fuel type of the grill.			
+# Annual Energy Use: The annual energy consumption of the grill.			
+"# Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."			

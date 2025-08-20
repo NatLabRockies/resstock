@@ -21,6 +21,6 @@ Option Name	U-Factor [Btu/hr-ft2-F]	SHGC
 "IECC U-0.60, SHGC 0.30"	0.6	0.3
 "IECC U-0.55, SHGC 0.40"	0.55	0.4
 "IECC U-0.55, SHGC 0.25"	0.55	0.25
-
-U-Factor: Full-assembly NFRC U-factor.
-SHGC: Full-assembly NFRC solar heat gain coefficient.
+		
+# U-Factor: Full-assembly NFRC U-factor.		
+# SHGC: Full-assembly NFRC solar heat gain coefficient.		

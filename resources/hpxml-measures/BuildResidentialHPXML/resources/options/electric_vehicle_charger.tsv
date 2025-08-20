@@ -14,6 +14,6 @@ None
 "Level 2, 100% Charging at Home"	2	5690	1
 "Detailed Example: Level 2, 7000 W, 75% Charging at Home"	2	7000	0.75
 			
-Level: The charging level of the EV charger.			
-Power: The rated power output of the EV charger.			
-Fraction Charged at Home: The fraction of charging energy provided by the at-home charger to the vehicle.			
+# Level: The charging level of the EV charger.			
+# Power: The rated power output of the EV charger.			
+# Fraction Charged at Home: The fraction of charging energy provided by the at-home charger to the vehicle.			

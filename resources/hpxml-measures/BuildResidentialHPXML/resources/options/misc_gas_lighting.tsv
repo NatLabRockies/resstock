@@ -9,6 +9,6 @@ None		0
 "Natural Gas, 400% Usage"	natural gas		4
 "Detailed Example: Natural Gas, 28 therm/yr"	natural gas	28	
 			
-Fuel Type: The fuel type of the misc lighting.			
-Annual Energy Use: The annual energy consumption of the misc lighting.			
-"Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."			
+# Fuel Type: The fuel type of the misc lighting.			
+# Annual Energy Use: The annual energy consumption of the misc lighting.			
+"# Usage Multiplier: Multiplier on the energy usage that can reflect, e.g., high/low usage occupants."			

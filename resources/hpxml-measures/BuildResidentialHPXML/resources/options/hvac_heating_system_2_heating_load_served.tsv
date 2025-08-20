@@ -21,4 +21,4 @@ Option Name	Fraction
 5%	0.05
 0%	0
 	
-Fraction: Fraction of load served by the HVAC system.	
+# Fraction: Fraction of load served by the HVAC system.	

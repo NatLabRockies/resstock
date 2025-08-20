@@ -19,9 +19,9 @@ CFIS	central fan integrated supply
 "ERV, 80%"	energy recovery ventilator	0.8	0.68			
 "ERV, 85%"	energy recovery ventilator	0.85	0.72			
 						
-Fan Type: The type of the mechanical ventilation.						
-Sensible Recovery Efficiency: The sensible recovery efficiency for heating mode. Applies to HRVs and ERVs only.						
-Total Recovery Efficiency: The total recovery efficiency. Applies to ERVs only.						
-Flow Rate: The flow rate of the mechanical ventilation.						
-Fan Power: The fan power of the mechanical ventilation.						
-Hours In Operation: The hours in operation of the mechanical ventilation.						
+# Fan Type: The type of the mechanical ventilation.						
+# Sensible Recovery Efficiency: The sensible recovery efficiency for heating mode. Applies to HRVs and ERVs only.						
+# Total Recovery Efficiency: The total recovery efficiency. Applies to ERVs only.						
+# Flow Rate: The flow rate of the mechanical ventilation.						
+# Fan Power: The fan power of the mechanical ventilation.						
+# Hours In Operation: The hours in operation of the mechanical ventilation.						

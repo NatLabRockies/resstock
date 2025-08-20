@@ -42,11 +42,11 @@ Space-Heating Boiler w/ Tankless Coil	space-heating boiler with tankless coil
 "Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76"	storage water heater	natural gas	EnergyFactor	0.59	50	0.76		
 "Detailed Example: Natural Gas, Tankless, EF 0.95"	instantaneous water heater	natural gas	EnergyFactor	0.95				
 								
-Type: The type of water heater.								
-Fuel Type: The fuel type of the water heater.								
-Efficiency Type: The efficiency type of the water heater. Does not apply to space-heating boilers.								
-Efficiency: EnergyGuide Label rated Uniform Energy Factor (UEF) or Energy Factor (EF).								
-Tank Volume: The nominal volume of the water heater storage tank.								
-Recovery Efficiency: Ratio of energy delivered to water heater to the energy content of the fuel consumed by the water heater. Only used for non-electric storage water heaters.								
-Usage Bin: EnergyGuide label usage bin (based on First Hour Rating).								
-Temperature: The setpoint temperature of water heater.								
+# Type: The type of water heater.								
+# Fuel Type: The fuel type of the water heater.								
+# Efficiency Type: The efficiency type of the water heater. Does not apply to space-heating boilers.								
+# Efficiency: EnergyGuide Label rated Uniform Energy Factor (UEF) or Energy Factor (EF).								
+# Tank Volume: The nominal volume of the water heater storage tank.								
+# Recovery Efficiency: Ratio of energy delivered to water heater to the energy content of the fuel consumed by the water heater. Only used for non-electric storage water heaters.								
+# Usage Bin: EnergyGuide label usage bin (based on First Hour Rating).								
+# Temperature: The setpoint temperature of water heater.								

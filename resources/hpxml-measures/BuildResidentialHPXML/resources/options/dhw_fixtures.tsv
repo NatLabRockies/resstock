@@ -18,6 +18,6 @@ Option Name	Low Flow Showers	Low Flow Sinks	Usage Multiplier
 "Low Flow, 200% Usage"	TRUE	TRUE	2
 "Low Flow, 400% Usage"	TRUE	TRUE	4
 			
-Low Flow Showers: Whether the shower fixtures are low flow (<= 2.0 gpm).			
-Low Flow Sinks: Whether the sink fixtures are low flow (<= 2.0 gpm).			
-"Usage Multiplier: Multiplier on the hot water usage that can reflect, e.g., high/low usage occupants."			
+# Low Flow Showers: Whether the shower fixtures are low flow (<= 2.0 gpm).			
+# Low Flow Sinks: Whether the sink fixtures are low flow (<= 2.0 gpm).			
+"# Usage Multiplier: Multiplier on the hot water usage that can reflect, e.g., high/low usage occupants."			

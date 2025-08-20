@@ -12,5 +12,5 @@ Roof Deck	roof deck
 Manufactured Home Belly	manufactured home belly	
 "Detailed Example: Attic, 75%"	attic	0.75
 		
-Location: The primary location of the supply ducts.		
-Location Fraction: The fraction of supply ducts in this location. The remainder are assumed to be in conditioned space.		
+# Location: The primary location of the supply ducts.		
+# Location Fraction: The fraction of supply ducts in this location. The remainder are assumed to be in conditioned space.		

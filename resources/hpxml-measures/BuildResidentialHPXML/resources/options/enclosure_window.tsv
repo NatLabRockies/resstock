@@ -42,5 +42,5 @@ Option Name	U-Factor [Btu/hr-ft2-F]	SHGC
 "Detailed Example: Single, Clear, Aluminum w/ Thermal Break"	1.039	0.67
 "Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer"	0.3	0.335
 		
-U-Factor: Full-assembly NFRC U-factor.		
-SHGC: Full-assembly NFRC solar heat gain coefficient.		
+# U-Factor: Full-assembly NFRC U-factor.		
+# SHGC: Full-assembly NFRC solar heat gain coefficient.		

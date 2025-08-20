@@ -16,7 +16,7 @@ Above Apartment	AboveApartment	0	0	0
 "Detailed Example: Basement, Conditioned, 5 ft Height"	ConditionedBasement	5	1	9.25
 "Detailed Example: Crawlspace, Vented, Above-Grade"	VentedCrawlspace	4	4	9.25
 				
-Type: The foundation type of the building. Garages are assumed to be over slab-on-grade.				
-Height: The height of the foundation.				
-Height Above Grade: The height of the foundation that is above-grade.				
-Rim Joist Height: The height of the rim joists.				
+# Type: The foundation type of the building. Garages are assumed to be over slab-on-grade.				
+# Height: The height of the foundation.				
+# Height Above Grade: The height of the foundation that is above-grade.				
+# Rim Joist Height: The height of the rim joists.				

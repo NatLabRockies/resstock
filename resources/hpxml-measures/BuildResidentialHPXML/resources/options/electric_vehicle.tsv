@@ -92,9 +92,9 @@ None	None
 "Detailed Example: 100 kWh battery, 4.0 miles/kWh"	BatteryElectricVehicle	100	80	mile/kWh	4	
 "Detailed Example: 100 kWh battery, 135.0 mpge"	BatteryElectricVehicle	100	80	mpge	135	
 						
-Type: The type of vehicle.						
-Nominal Battery Capacity: The nominal capacity of the electric vehicle battery.						
-Usable Battery Capacity: The usable capacity of the electric vehicle battery.						
-Fuel Economy Units: The combined fuel economy units of the vehicle.						
-Fuel Economy Combined: The combined fuel economy of the vehicle.						
-Miles Driven Per Year: Number of miles driven per year with the vehicle.						
+# Type: The type of vehicle.						
+# Nominal Battery Capacity: The nominal capacity of the electric vehicle battery.						
+# Usable Battery Capacity: The usable capacity of the electric vehicle battery.						
+# Fuel Economy Units: The combined fuel economy units of the vehicle.						
+# Fuel Economy Combined: The combined fuel economy of the vehicle.						
+# Miles Driven Per Year: Number of miles driven per year with the vehicle.						
