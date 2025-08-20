@@ -55,11 +55,11 @@ class HVACScheduleGenerator
         cooling_setpoint << cooling_setpoint_sch[day][hour]
       end
     end
-    { heating_setpoint: heating_setpoint, cooling_setpoint: cooling_setpoint }
+    return { heating_setpoint: heating_setpoint, cooling_setpoint: cooling_setpoint }
   end
 
   def c2f(setpoint_sch)
-    setpoint_sch.map { |i| i.map { |j| UnitConversions.convert(j, 'C', 'F') } }
+    return setpoint_sch.map { |i| i.map { |j| UnitConversions.convert(j, 'C', 'F') } }
   end
 
   def get_heating_cooling_weekday_weekend_setpoints
@@ -71,7 +71,7 @@ class HVACScheduleGenerator
     clg_weekday_setpoints, clg_weekend_setpoints = HVAC.get_hvac_setpoints(:clg, @hpxml_bldg, hvac_control, @sim_year, onoff_thermostat_ddb, @weather)
 
     htg_weekday_setpoints, htg_weekend_setpoints, clg_weekday_setpoints, clg_weekend_setpoints = HVAC.create_setpoint_schedules(@runner, htg_weekday_setpoints, htg_weekend_setpoints, clg_weekday_setpoints, clg_weekend_setpoints, @sim_year, hvac_season_days)
-    [c2f(clg_weekday_setpoints), c2f(clg_weekend_setpoints), c2f(htg_weekday_setpoints), c2f(htg_weekend_setpoints)]
+    return [c2f(clg_weekday_setpoints), c2f(clg_weekend_setpoints), c2f(htg_weekday_setpoints), c2f(htg_weekend_setpoints)]
   end
 
   def get_heating_cooling_days(hvac_control)
@@ -85,7 +85,7 @@ class HVACScheduleGenerator
     clg_end_day = hvac_control.seasons_cooling_end_day || 31
     heating_days = Calendar.get_daily_season(@sim_year, htg_start_month, htg_start_day, htg_end_month, htg_end_day)
     cooling_days = Calendar.get_daily_season(@sim_year, clg_start_month, clg_start_day, clg_end_month, clg_end_day)
-    { clg: cooling_days, htg: heating_days }
+    return { clg: cooling_days, htg: heating_days }
   end
 
   def main(hpxml_path)

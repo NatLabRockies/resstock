@@ -9352,6 +9352,9 @@ class HPXML < Object
     #
     # @return [nil]
     def delete
+      pv_systems.reverse.each do |pv_system|
+        pv_system.inverter_idref = nil
+      end
       @parent_object.inverters.delete(self)
     end
 

@@ -33,27 +33,34 @@ class HPXMLtoOpenStudioPVTest < Minitest::Test
   end
 
   def test_pv
-    args_hash = {}
-    args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, 'base-pv.xml'))
-    model, _hpxml, hpxml_bldg = _test_measure(args_hash)
+    ['base-pv.xml',
+     'base-pv-inverters.xml'].each do |hpxml_name|
+      args_hash = {}
+      args_hash['hpxml_path'] = File.absolute_path(File.join(@sample_files_path, hpxml_name))
+      model, _hpxml, hpxml_bldg = _test_measure(args_hash)
 
-    hpxml_bldg.pv_systems.each_with_index do |pv_system, i|
-      generator, inverter = get_generator_inverter(model, pv_system.id)
+      hpxml_bldg.pv_systems.each_with_index do |pv_system, i|
+        generator, inverter = get_generator_inverter(model, pv_system.id)
 
-      # Check PV
-      assert_equal(pv_system.array_tilt, generator.tiltAngle)
-      assert_equal(pv_system.array_azimuth, generator.azimuthAngle)
-      assert_equal(pv_system.max_power_output, generator.dcSystemCapacity)
-      assert_equal(0.14, generator.systemLosses)
-      if i == 0
-        assert_equal('standard', generator.moduleType.downcase)
-      else
-        assert_equal('premium', generator.moduleType.downcase)
+        # Check PV
+        assert_equal(pv_system.array_tilt, generator.tiltAngle)
+        assert_equal(pv_system.array_azimuth, generator.azimuthAngle)
+        assert_equal(pv_system.max_power_output, generator.dcSystemCapacity)
+        assert_equal(0.14, generator.systemLosses)
+        if i == 0
+          assert_equal('standard', generator.moduleType.downcase)
+        else
+          assert_equal('premium', generator.moduleType.downcase)
+        end
+        assert_equal('FixedRoofMounted', generator.arrayType)
+
+        # Check inverter
+        if hpxml_name == 'base-pv.xml'
+          assert_equal(0.96, inverter.inverterEfficiency)
+        else
+          assert_in_delta(0.955, inverter.inverterEfficiency, 0.001) # weighted-average efficiency
+        end
       end
-      assert_equal('FixedRoofMounted', generator.arrayType)
-
-      # Check inverter
-      assert_equal(0.96, inverter.inverterEfficiency)
     end
   end
 

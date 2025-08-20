@@ -7,6 +7,9 @@ __New Features__
 - Updated site defaults:
   - `Address/CityMunicipality`, `Address/StateCode`, `GeoLocation/Latitude`, `GeoLocation/Longitude`, and `TimeZone/UTCOffset` now default based on zip code if available.
   - `TimeZone/DSTObserved` now defaults to false if `Address/StateCode` is 'AZ' or 'HI'.
+- Minor PV improvements:
+  - Allow `PVSystem/AttachedToInverter` to be omitted (unless there are multiple `Inverter` elements)
+  - Allow multiple inverters with different efficiencies and use a weighted-average efficiency in the model (previously threw an error)
 
 __Bugfixes__
 - Fixes ground-source heat pump plant loop fluid type (workaround for OpenStudio bug).

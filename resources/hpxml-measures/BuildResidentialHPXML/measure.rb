@@ -3328,11 +3328,13 @@ class BuildResidentialHPXML < OpenStudio::Measure::ModelMeasure
                                 system_losses_fraction: args[:pv_system_2_system_losses_fraction])
     end
 
-    # Add inverter efficiency; assume a single inverter even if multiple PV arrays
-    hpxml_bldg.inverters.add(id: "Inverter#{hpxml_bldg.inverters.size + 1}",
-                             inverter_efficiency: args[:pv_system_inverter_efficiency])
-    hpxml_bldg.pv_systems.each do |pv_system|
-      pv_system.inverter_idref = hpxml_bldg.inverters[-1].id
+    if not args[:pv_system_inverter_efficiency].nil?
+      # Add inverter efficiency; assume a single inverter even if multiple PV arrays
+      hpxml_bldg.inverters.add(id: "Inverter#{hpxml_bldg.inverters.size + 1}",
+                               inverter_efficiency: args[:pv_system_inverter_efficiency])
+      hpxml_bldg.pv_systems.each do |pv_system|
+        pv_system.inverter_idref = hpxml_bldg.inverters[-1].id
+      end
     end
   end
 

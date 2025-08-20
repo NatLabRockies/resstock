@@ -57,3 +57,8 @@ allow-direct-references = true
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]
+

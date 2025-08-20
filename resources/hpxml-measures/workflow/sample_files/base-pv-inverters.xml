@@ -17,6 +17,12 @@
   </SoftwareInfo>
   <Building>
     <BuildingID id='MyBuilding'/>
+    <Site>
+      <SiteID id='SiteID'/>
+      <Address>
+        <StateCode>CO</StateCode>
+      </Address>
+    </Site>
     <ProjectStatus>
       <EventType>proposed workscope</EventType>
     </ProjectStatus>
@@ -31,20 +37,22 @@
             <Fuel>natural gas</Fuel>
           </FuelTypesAvailable>
         </Site>
-        <BuildingOccupancy>
-          <NumberofResidents>5.5</NumberofResidents>
-        </BuildingOccupancy>
         <BuildingConstruction>
           <ResidentialFacilityType>single-family detached</ResidentialFacilityType>
           <NumberofConditionedFloors>2.0</NumberofConditionedFloors>
           <NumberofConditionedFloorsAboveGrade>1.0</NumberofConditionedFloorsAboveGrade>
           <AverageCeilingHeight>8.0</AverageCeilingHeight>
           <NumberofBedrooms>3</NumberofBedrooms>
+          <NumberofBathrooms>2</NumberofBathrooms>
           <ConditionedFloorArea>2700.0</ConditionedFloorArea>
           <ConditionedBuildingVolume>21600.0</ConditionedBuildingVolume>
         </BuildingConstruction>
       </BuildingSummary>
       <ClimateandRiskZones>
+        <ClimateZoneIECC>
+          <Year>2006</Year>
+          <ClimateZone>5B</ClimateZone>
+        </ClimateZoneIECC>
         <WeatherStation>
           <SystemIdentifier id='WeatherStation'/>
           <Name>USA_CO_Denver.Intl.AP.725650_TMY3</Name>
@@ -225,6 +233,7 @@
               </Layer>
             </UnderSlabInsulation>
             <extension>
+              <CarpetFraction>0.0</CarpetFraction>
               <CarpetRValue>0.0</CarpetRValue>
             </extension>
           </Slab>
@@ -330,6 +339,8 @@
           </HVACPlant>
           <HVACControl>
             <SystemIdentifier id='HVACControl1'/>
+            <SetpointTempHeatingSeason>68.0</SetpointTempHeatingSeason>
+            <SetpointTempCoolingSeason>78.0</SetpointTempCoolingSeason>
           </HVACControl>
           <HVACDistribution>
             <SystemIdentifier id='HVACDistribution1'/>
@@ -356,45 +367,41 @@
                   <SystemIdentifier id='Ducts1'/>
                   <DuctType>supply</DuctType>
                   <DuctInsulationRValue>4.0</DuctInsulationRValue>
+                  <DuctLocation>attic - unvented</DuctLocation>
+                  <FractionDuctArea>0.75</FractionDuctArea>
                 </Ducts>
                 <Ducts>
                   <SystemIdentifier id='Ducts2'/>
                   <DuctType>return</DuctType>
                   <DuctInsulationRValue>4.0</DuctInsulationRValue>
+                  <DuctLocation>attic - unvented</DuctLocation>
+                  <FractionDuctArea>0.75</FractionDuctArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts3'/>
+                  <DuctType>supply</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <FractionDuctArea>0.25</FractionDuctArea>
+                </Ducts>
+                <Ducts>
+                  <SystemIdentifier id='Ducts4'/>
+                  <DuctType>return</DuctType>
+                  <DuctInsulationRValue>0.0</DuctInsulationRValue>
+                  <DuctLocation>conditioned space</DuctLocation>
+                  <FractionDuctArea>0.25</FractionDuctArea>
                 </Ducts>
               </AirDistribution>
             </DistributionSystemType>
             <ConditionedFloorAreaServed>2700.0</ConditionedFloorAreaServed>
           </HVACDistribution>
         </HVAC>
-        <MechanicalVentilation>
-          <VentilationFans>
-            <VentilationFan>
-              <SystemIdentifier id='VentilationFan1'/>
-              <FanType>exhaust only</FanType>
-              <UsedForWholeBuildingVentilation>true</UsedForWholeBuildingVentilation>
-            </VentilationFan>
-            <VentilationFan>
-              <SystemIdentifier id='VentilationFan2'/>
-              <FanLocation>kitchen</FanLocation>
-              <UsedForLocalVentilation>true</UsedForLocalVentilation>
-            </VentilationFan>
-            <VentilationFan>
-              <SystemIdentifier id='VentilationFan3'/>
-              <FanLocation>bath</FanLocation>
-              <UsedForLocalVentilation>true</UsedForLocalVentilation>
-            </VentilationFan>
-            <VentilationFan>
-              <SystemIdentifier id='VentilationFan4'/>
-              <UsedForSeasonalCoolingLoadReduction>true</UsedForSeasonalCoolingLoadReduction>
-            </VentilationFan>
-          </VentilationFans>
-        </MechanicalVentilation>
         <WaterHeating>
           <WaterHeatingSystem>
             <SystemIdentifier id='WaterHeatingSystem1'/>
             <FuelType>electricity</FuelType>
             <WaterHeaterType>storage water heater</WaterHeaterType>
+            <Location>conditioned space</Location>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
             <UniformEnergyFactor>0.94</UniformEnergyFactor>
           </WaterHeatingSystem>
@@ -418,71 +425,70 @@
             <LowFlow>false</LowFlow>
           </WaterFixture>
         </WaterHeating>
-        <SolarThermal>
-          <SolarThermalSystem>
-            <SystemIdentifier id='SolarThermalSystem1'/>
-            <SystemType>hot water</SystemType>
-            <CollectorArea>40.0</CollectorArea>
-            <CollectorLoopType>liquid direct</CollectorLoopType>
-            <CollectorType>single glazing black</CollectorType>
-            <CollectorAzimuth>180</CollectorAzimuth>
-            <CollectorTilt>20.0</CollectorTilt>
-            <CollectorRatedOpticalEfficiency>0.77</CollectorRatedOpticalEfficiency>
-            <CollectorRatedThermalLosses>0.793</CollectorRatedThermalLosses>
-            <StorageVolume>60.0</StorageVolume>
-            <ConnectedTo idref='WaterHeatingSystem1'/>
-          </SolarThermalSystem>
-        </SolarThermal>
         <Photovoltaics>
           <PVSystem>
             <SystemIdentifier id='PVSystem1'/>
             <ArrayAzimuth>180</ArrayAzimuth>
             <ArrayTilt>20.0</ArrayTilt>
             <MaxPowerOutput>4000.0</MaxPowerOutput>
+            <AttachedToInverter idref='Inverter1'/>
           </PVSystem>
+          <PVSystem>
+            <SystemIdentifier id='PVSystem2'/>
+            <ModuleType>premium</ModuleType>
+            <ArrayAzimuth>90</ArrayAzimuth>
+            <ArrayTilt>20.0</ArrayTilt>
+            <MaxPowerOutput>1500.0</MaxPowerOutput>
+            <AttachedToInverter idref='Inverter2'/>
+          </PVSystem>
+          <Inverter>
+            <SystemIdentifier id='Inverter1'/>
+            <InverterEfficiency>0.96</InverterEfficiency>
+          </Inverter>
+          <Inverter>
+            <SystemIdentifier id='Inverter2'/>
+            <InverterEfficiency>0.94</InverterEfficiency>
+          </Inverter>
         </Photovoltaics>
-        <Batteries>
-          <Battery>
-            <SystemIdentifier id='Battery1'/>
-            <BatteryType>Li-ion</BatteryType>
-          </Battery>
-        </Batteries>
-        <Vehicles>
-          <Vehicle>
-            <SystemIdentifier id='Vehicle1'/>
-            <VehicleType>
-              <BatteryElectricVehicle>
-                <ConnectedCharger idref='EVCharger1'/>
-              </BatteryElectricVehicle>
-            </VehicleType>
-          </Vehicle>
-        </Vehicles>
-        <ElectricVehicleChargers>
-          <ElectricVehicleCharger>
-            <SystemIdentifier id='EVCharger1'/>
-          </ElectricVehicleCharger>
-        </ElectricVehicleChargers>
       </Systems>
       <Appliances>
         <ClothesWasher>
           <SystemIdentifier id='ClothesWasher1'/>
+          <IntegratedModifiedEnergyFactor>1.21</IntegratedModifiedEnergyFactor>
+          <RatedAnnualkWh>380.0</RatedAnnualkWh>
+          <LabelElectricRate>0.12</LabelElectricRate>
+          <LabelGasRate>1.09</LabelGasRate>
+          <LabelAnnualGasCost>27.0</LabelAnnualGasCost>
+          <LabelUsage>6.0</LabelUsage>
+          <Capacity>3.2</Capacity>
         </ClothesWasher>
         <ClothesDryer>
           <SystemIdentifier id='ClothesDryer1'/>
           <FuelType>electricity</FuelType>
+          <DryingMethod>conventional</DryingMethod>
+          <CombinedEnergyFactor>3.73</CombinedEnergyFactor>
         </ClothesDryer>
         <Dishwasher>
           <SystemIdentifier id='Dishwasher1'/>
+          <RatedAnnualkWh>307.0</RatedAnnualkWh>
+          <PlaceSettingCapacity>12</PlaceSettingCapacity>
+          <LabelElectricRate>0.12</LabelElectricRate>
+          <LabelGasRate>1.09</LabelGasRate>
+          <LabelAnnualGasCost>22.32</LabelAnnualGasCost>
+          <LabelUsage>4.0</LabelUsage>
         </Dishwasher>
         <Refrigerator>
           <SystemIdentifier id='Refrigerator1'/>
+          <RatedAnnualkWh>650.0</RatedAnnualkWh>
         </Refrigerator>
         <CookingRange>
           <SystemIdentifier id='CookingRange1'/>
           <FuelType>electricity</FuelType>
+          <IsInduction>false</IsInduction>
         </CookingRange>
         <Oven>
           <SystemIdentifier id='Oven1'/>
+          <IsConvection>false</IsConvection>
         </Oven>
       </Appliances>
       <Lighting>
@@ -534,9 +540,6 @@
             <LightEmittingDiode/>
           </LightingType>
         </LightingGroup>
-        <CeilingFan>
-          <SystemIdentifier id='CeilingFan1'/>
-        </CeilingFan>
       </Lighting>
       <MiscLoads>
         <PlugLoad>
