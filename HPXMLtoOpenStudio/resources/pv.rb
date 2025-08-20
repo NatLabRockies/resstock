@@ -4,19 +4,24 @@
 module PV
   # Adds any HPXML Photovoltaics to the OpenStudio model.
   #
+  # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @return [nil]
-  def self.apply(model, hpxml_bldg)
-    # Error-checking
+  def self.apply(runner, model, hpxml_bldg)
+    # Get inverter efficiency
+    # If multiple inverters with different efficiencies, calculate PV size weighted-average
+    inverter_efficiency = 0.0
+    total_max_power_output = hpxml_bldg.pv_systems.map { |pv| pv.max_power_output }.sum
     hpxml_bldg.pv_systems.each do |pv_system|
-      next if pv_system.inverter.inverter_efficiency == hpxml_bldg.pv_systems[0].inverter.inverter_efficiency
-
-      fail 'Expected all InverterEfficiency values to be equal.'
+      inverter_efficiency += (pv_system.inverter.inverter_efficiency * pv_system.max_power_output / total_max_power_output)
+    end
+    if hpxml_bldg.inverters.map { |i| i.inverter_efficiency }.uniq.size > 1
+      runner.registerWarning('Inverters with varying efficiencies found; using a single PV size weighted-average in the model.')
     end
 
     hpxml_bldg.pv_systems.each do |pv_system|
-      apply_pv_system(model, hpxml_bldg, pv_system)
+      apply_pv_system(model, hpxml_bldg, pv_system, inverter_efficiency)
     end
   end
 
@@ -29,8 +34,9 @@ module PV
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
   # @param hpxml_bldg [HPXML::Building] HPXML Building object representing an individual dwelling unit
   # @param pv_system [HPXML::PVSystem] Object that defines a single solar electric photovoltaic (PV) system
+  # @param inverter_efficiency [Double] Efficiency of the inverter
   # @return [nil]
-  def self.apply_pv_system(model, hpxml_bldg, pv_system)
+  def self.apply_pv_system(model, hpxml_bldg, pv_system, inverter_efficiency)
     nbeds = hpxml_bldg.building_construction.number_of_bedrooms
     unit_multiplier = hpxml_bldg.building_construction.number_of_units
     obj_name = pv_system.id
@@ -53,7 +59,7 @@ module PV
 
       ipvwatts = OpenStudio::Model::ElectricLoadCenterInverterPVWatts.new(model)
       ipvwatts.setName('PVSystem inverter')
-      ipvwatts.setInverterEfficiency(pv_system.inverter.inverter_efficiency)
+      ipvwatts.setInverterEfficiency(inverter_efficiency)
 
       elcd.setInverter(ipvwatts)
     else

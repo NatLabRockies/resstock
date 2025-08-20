@@ -3867,6 +3867,10 @@
     "parent_hpxml": "sample_files/base-pv-generators-battery.xml",
     "schedules_filepaths": "../../HPXMLtoOpenStudio/resources/schedule_files/battery.csv"
   },
+  "sample_files/base-pv-inverters.xml": {
+    "parent_hpxml": "sample_files/base-pv.xml",
+    "pv_system_inverter_efficiency": 0.96
+  },
   "sample_files/base-residents-0.xml": {
     "parent_hpxml": "sample_files/base.xml",
     "geometry_unit_num_occupants": 0

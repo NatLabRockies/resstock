@@ -364,11 +364,7 @@
             <ArrayTilt>20.0</ArrayTilt>
             <MaxPowerOutput>4000.0</MaxPowerOutput>
             <YearModulesManufactured>2015</YearModulesManufactured>
-            <AttachedToInverter idref='Inverter1'/>
           </PVSystem>
-          <Inverter>
-            <SystemIdentifier id='Inverter1'/>
-          </Inverter>
         </Photovoltaics>
         <Batteries>
           <Battery>
