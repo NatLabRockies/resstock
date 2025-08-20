@@ -683,6 +683,7 @@ jobs:
           
           # results_characteristics.csv
           python test/base_results/upgrades/create_results_characteristics.py -f base_results/upgrades/sdr_annual/results_up00.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f test/base_results/upgrades/sdr_annual/results_up00.csv
           
           # upgrades annual
           mkdir -p test/base_results/sdr_comparisons/upgrades/sdr_annual
