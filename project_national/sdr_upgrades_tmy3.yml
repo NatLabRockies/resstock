@@ -34,6 +34,9 @@ kestrel:
   sampling:
     time: 60
 
+# Timeout to avoid whole-job failures from long-running models
+max_minutes_per_sim: 5
+
 # Post proccessing and Amazon Web Services
 postprocessing:
   # Post simulation partitioning
