@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>652c1f1c-f4d7-4c6f-925a-e88fd5895ecd</version_id>
-  <version_modified>2025-08-20T16:42:11Z</version_modified>
+  <version_id>838dc32f-db12-4aae-8187-fe3573be5fff</version_id>
+  <version_modified>2025-08-20T16:51:33Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -9662,24 +9662,24 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 45.0 W</value>
-          <display_name>#Bedrooms+1 Fans, 45.0 W</display_name>
+          <value>NumBedrooms+1 Fans, 45.0 W</value>
+          <display_name>NumBedrooms+1 Fans, 45.0 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 37.5 W</value>
-          <display_name>#Bedrooms+1 Fans, 37.5 W</display_name>
+          <value>NumBedrooms+1 Fans, 37.5 W</value>
+          <display_name>NumBedrooms+1 Fans, 37.5 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 30.0 W</value>
-          <display_name>#Bedrooms+1 Fans, 30.0 W</display_name>
+          <value>NumBedrooms+1 Fans, 30.0 W</value>
+          <display_name>NumBedrooms+1 Fans, 30.0 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 22.5 W</value>
-          <display_name>#Bedrooms+1 Fans, 22.5 W</display_name>
+          <value>NumBedrooms+1 Fans, 22.5 W</value>
+          <display_name>NumBedrooms+1 Fans, 22.5 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 15.0 W</value>
-          <display_name>#Bedrooms+1 Fans, 15.0 W</display_name>
+          <value>NumBedrooms+1 Fans, 15.0 W</value>
+          <display_name>NumBedrooms+1 Fans, 15.0 W</display_name>
         </choice>
         <choice>
           <value>1 Fan, 45.0 W</value>
@@ -12643,7 +12643,7 @@
       <filename>test_resstock_arguments_post_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>689335B1</checksum>
+      <checksum>9BB397E4</checksum>
     </file>
     <file>
       <filename>test_template.osw</filename>

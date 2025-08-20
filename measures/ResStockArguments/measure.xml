@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>f1b05930-e1a6-4b14-891c-fd1c9deca020</version_id>
-  <version_modified>2025-08-20T16:42:04Z</version_modified>
+  <version_id>c492192d-4274-474d-ae61-3db0f8e2f314</version_id>
+  <version_modified>2025-08-20T16:51:30Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -9572,24 +9572,24 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 45.0 W</value>
-          <display_name>#Bedrooms+1 Fans, 45.0 W</display_name>
+          <value>NumBedrooms+1 Fans, 45.0 W</value>
+          <display_name>NumBedrooms+1 Fans, 45.0 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 37.5 W</value>
-          <display_name>#Bedrooms+1 Fans, 37.5 W</display_name>
+          <value>NumBedrooms+1 Fans, 37.5 W</value>
+          <display_name>NumBedrooms+1 Fans, 37.5 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 30.0 W</value>
-          <display_name>#Bedrooms+1 Fans, 30.0 W</display_name>
+          <value>NumBedrooms+1 Fans, 30.0 W</value>
+          <display_name>NumBedrooms+1 Fans, 30.0 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 22.5 W</value>
-          <display_name>#Bedrooms+1 Fans, 22.5 W</display_name>
+          <value>NumBedrooms+1 Fans, 22.5 W</value>
+          <display_name>NumBedrooms+1 Fans, 22.5 W</display_name>
         </choice>
         <choice>
-          <value>#Bedrooms+1 Fans, 15.0 W</value>
-          <display_name>#Bedrooms+1 Fans, 15.0 W</display_name>
+          <value>NumBedrooms+1 Fans, 15.0 W</value>
+          <display_name>NumBedrooms+1 Fans, 15.0 W</display_name>
         </choice>
         <choice>
           <value>1 Fan, 45.0 W</value>
@@ -12340,7 +12340,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>BDC4201B</checksum>
+      <checksum>A7C43A6A</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12369,7 +12369,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4859BF30</checksum>
+      <checksum>13EFDB59</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>

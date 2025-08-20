@@ -48,7 +48,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     puts 'Testing EV Load Flexibility'
     # Define test parameters
     test_cases = [
-      # FIXME { dst_enabled: false, name: 'EV without DST' },
+      { dst_enabled: false, name: 'EV without DST' },
       { dst_enabled: true, name: 'EV with DST enabled' }
     ]
 
@@ -78,7 +78,7 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     puts 'Testing Combined HVAC and EV Load Flexibility'
 
     test_cases = [
-      # FIXME { dst_enabled: false, name: 'HVAC and EV without DST' },
+      { dst_enabled: false, name: 'HVAC and EV without DST' },
       { dst_enabled: true, name: 'HVAC and EV with DST enabled' }
     ]
 
@@ -154,9 +154,9 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
   def _summer_test_indices(dst_enabled:, peak_type:)
     # indices for 06-09 (day 159) 13:00:00-14:00:00, 14:00:00-15:00:00, 15:00:00-16:00:00, 16:00:00-17:00:00,
     indices = [3830, 3831, 3832, 3833, 3834, 3835, 3836, 3837]
-    if dst_enabled # Denver
+    if dst_enabled # Denver w/ DST
       shed_offset = 2
-    else # Phoenix
+    else # Phoenix w/o DST
       shed_offset = 1
     end
     indices = indices.map { |num| num + shed_offset } if peak_type == 'shed'
@@ -227,9 +227,9 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
         assert_equal(winter_heating_setpoint_base, heating_setpoint)
         assert_equal(winter_cooling_setpoint_base, cooling_setpoint)
       elsif value == 'pre_peak'
-        if dst_enabled # Denver
+        if dst_enabled # Denver w/ DST
           assert_equal(winter_heating_setpoint_base + 3, heating_setpoint)
-        else # Phoenix
+        else # Phoenix w/o DST
           assert_equal(winter_heating_setpoint_base, heating_setpoint) # No preheating
         end
         assert_equal(winter_cooling_setpoint_base, cooling_setpoint)
@@ -247,9 +247,9 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
         assert_equal(summer_cooling_setpoint_base, cooling_setpoint)
         assert_equal(summer_heating_setpoint_base, heating_setpoint)
       elsif value == 'pre_peak'
-        if dst_enabled # Denver
+        if dst_enabled # Denver w/ DST
           assert_equal(summer_cooling_setpoint_base, cooling_setpoint) # No precooling
-        else # Phoenix
+        else # Phoenix w/o DST
           assert_equal(summer_cooling_setpoint_base - 3, cooling_setpoint)
         end
         assert_equal(summer_heating_setpoint_base, heating_setpoint)
@@ -277,8 +277,8 @@ class ResStockArgumentsPostHPXMLTest < Minitest::Test
     return fahrenheit.round
   end
 
-  def create_osw_hash(osw_hash_orgi, dst_enabled)
-    osw_hash = Marshal.load(Marshal.dump(osw_hash_orgi))
+  def create_osw_hash(osw_hash_orig, dst_enabled)
+    osw_hash = Marshal.load(Marshal.dump(osw_hash_orig))
     if dst_enabled
       osw_hash['steps'][0]['arguments']['location_epw_path'] = 'USA_CO_Denver.Intl.AP.725650_TMY3.epw'
     else
