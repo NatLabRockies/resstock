@@ -1,0 +1,16 @@
+Option Name	Flow Rate [cfm]	Hours in Operation [hrs/day]	Fan Power [W]	Start Hour [hr]	Count
+None					0
+Default					
+"50 cfm/bathroom, 1 hr/day"	50	1			
+"50 cfm/bathroom, 2 hrs/day"	50	2			
+"80 cfm/bathroom, 1 hr/day"	80	1			
+"80 cfm/bathroom, 2 hrs/day"	80	2			
+"100 cfm/bathroom, 1 hr/day"	100	1			
+"100 cfm/bathroom, 2 hrs/day"	100	2			
+"Detailed Example: 50 cfm/bathroom, 1.5 hrs/day @ 7am, 15 W"	50	1.5	15	7	
+					
+# Flow Rate: The flow rate for each bathroom fan.					
+# Hours in Operation: The hours per day of operation for each bathroom fan.					
+# Fan Power: The fan power for each bathroom fan.					
+# Start Hour: The start hour for each bathroom fan.					
+# Count: The number of bathroom fans in the home.					

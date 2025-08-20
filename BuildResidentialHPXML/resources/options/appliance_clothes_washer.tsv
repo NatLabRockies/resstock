@@ -1,0 +1,43 @@
+Option Name	Efficiency Type	Efficiency [ft3/kWh-cyc]	Rated Annual Consumption [kWh/yr]	Label Electric Rate [$/kWh]	Label Gas Rate [$/therm]	Label Annual Gas Cost [$]	Label Usage [cyc/wk]	Capacity [ft3]	Usage Multiplier	Location
+None										
+"Standard, 2008-2017, 50% Usage"	IntegratedModifiedEnergyFactor	1.21	380	0.12	1.09	27	6	3.2	0.5	
+"Standard, 2008-2017, 75% Usage"	IntegratedModifiedEnergyFactor	1.21	380	0.12	1.09	27	6	3.2	0.75	
+"Standard, 2008-2017, 100% Usage"	IntegratedModifiedEnergyFactor	1.21	380	0.12	1.09	27	6	3.2		
+"Standard, 2008-2017, 150% Usage"	IntegratedModifiedEnergyFactor	1.21	380	0.12	1.09	27	6	3.2	1.5	
+"Standard, 2008-2017, 200% Usage"	IntegratedModifiedEnergyFactor	1.21	380	0.12	1.09	27	6	3.2	2	
+"Standard, 2018-present, 50% Usage"	IntegratedModifiedEnergyFactor	1.57	284	0.12	1.09	18	6	4.2	0.5	
+"Standard, 2018-present, 75% Usage"	IntegratedModifiedEnergyFactor	1.57	284	0.12	1.09	18	6	4.2	0.75	
+"Standard, 2018-present, 100% Usage"	IntegratedModifiedEnergyFactor	1.57	284	0.12	1.09	18	6	4.2		
+"Standard, 2018-present, 150% Usage"	IntegratedModifiedEnergyFactor	1.57	284	0.12	1.09	18	6	4.2	1.5	
+"Standard, 2018-present, 200% Usage"	IntegratedModifiedEnergyFactor	1.57	284	0.12	1.09	18	6	4.2	2	
+"EnergyStar, 2006-2017, 50% Usage"	IntegratedModifiedEnergyFactor	1.63	260	0.12	1.09	18	6	3.5	0.5	
+"EnergyStar, 2006-2017, 75% Usage"	IntegratedModifiedEnergyFactor	1.63	260	0.12	1.09	18	6	3.5	0.75	
+"EnergyStar, 2006-2017, 100% Usage"	IntegratedModifiedEnergyFactor	1.63	260	0.12	1.09	18	6	3.5		
+"EnergyStar, 2006-2017, 150% Usage"	IntegratedModifiedEnergyFactor	1.63	260	0.12	1.09	18	6	3.5	1.5	
+"EnergyStar, 2006-2017, 200% Usage"	IntegratedModifiedEnergyFactor	1.63	260	0.12	1.09	18	6	3.5	2	
+"EnergyStar, 2018-present, 50% Usage"	IntegratedModifiedEnergyFactor	2.06	152	0.12	1.09	12	6	4.2	0.5	
+"EnergyStar, 2018-present, 75% Usage"	IntegratedModifiedEnergyFactor	2.06	152	0.12	1.09	12	6	4.2	0.75	
+"EnergyStar, 2018-present, 100% Usage"	IntegratedModifiedEnergyFactor	2.06	152	0.12	1.09	12	6	4.2		
+"EnergyStar, 2018-present, 150% Usage"	IntegratedModifiedEnergyFactor	2.06	152	0.12	1.09	12	6	4.2	1.5	
+"EnergyStar, 2018-present, 200% Usage"	IntegratedModifiedEnergyFactor	2.06	152	0.12	1.09	12	6	4.2	2	
+"CEE Tier II, 2018, 50% Usage"	IntegratedModifiedEnergyFactor	2.92	125	0.12	1.09	9	6	5.2	0.5	
+"CEE Tier II, 2018, 75% Usage"	IntegratedModifiedEnergyFactor	2.92	125	0.12	1.09	9	6	5.2	0.75	
+"CEE Tier II, 2018, 100% Usage"	IntegratedModifiedEnergyFactor	2.92	125	0.12	1.09	9	6	5.2		
+"CEE Tier II, 2018, 150% Usage"	IntegratedModifiedEnergyFactor	2.92	125	0.12	1.09	9	6	5.2	1.5	
+"CEE Tier II, 2018, 200% Usage"	IntegratedModifiedEnergyFactor	2.92	125	0.12	1.09	9	6	5.2	2	
+Detailed Example: ERI Reference 2006	IntegratedModifiedEnergyFactor	1	400	0.12	1.09	27	6	3		
+Detailed Example: MEF 1.65	ModifiedEnergyFactor	1.65	380	0.12	1.09	27	6	3.2		
+"Detailed Example: Standard, 2008-2017, Conditioned Basement"	IntegratedModifiedEnergyFactor	1.21	380	0.12	1.09	27	6	3.2		basement - conditioned
+"Detailed Example: Standard, 2008-2017, Unconditioned Basement"	IntegratedModifiedEnergyFactor	1.21	380	0.12	1.09	27	6	3.2		basement - unconditioned
+"Detailed Example: Standard, 2008-2017, Garage"	IntegratedModifiedEnergyFactor	1.21	380	0.12	1.09	27	6	3.2		garage
+										
+# Efficiency Type: The efficiency type of the clothes washer.										
+# Efficiency: The efficiency from the EnergyGuide label.										
+"# Rated Annual Consumption: The annual energy consumed, as rated, from the EnergyGuide label. This includes both the appliance electricity consumption and the energy required for water heating."										
+# Label Electric Rate: The electricity rate from the EnergyGuide label.										
+# Label Gas Rate: The natural gas rate from the EnergyGuide label.										
+# Label Annual Gas Cost: The annual cost of using the system under test conditions with a natural gas water heater. Input is obtained from the EnergyGuide label.										
+# Label Usage: The clothes washer loads per week from the EnergyGuide label.										
+# Capacity: Volume of the washer drum. Obtained from the EnergyStar website or the manufacturer's literature.										
+"# Usage Multiplier: Multiplier on the clothes washer energy and hot water usage that can reflect, e.g., high/low usage occupants."										
+# Location: The space type where the clothes washer is located.										
