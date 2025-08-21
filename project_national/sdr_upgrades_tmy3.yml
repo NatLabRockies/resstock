@@ -852,7 +852,7 @@ upgrades:
             - HVAC Cooling Efficiency|Room AC, EER 12.0
 
   ### -- HVAC: Air Source Heat Pumps -- ###
-  - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data
+  - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025
     package_apply_logic: *fossil_fuel_or_electricity
     options:
       - option: HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
@@ -927,7 +927,7 @@ upgrades:
       - *partial_conditioning_100_percent_ducts_only
 
   ### -- Water Heater -- ###
-  - upgrade_name: Heat Pumps Water Heater
+  - upgrade_name: Heat Pump Water Heater
     package_apply_logic: *hpwh_apply_logic
     options:
       - *change_water_heater_fuel_to_electricity
@@ -962,7 +962,7 @@ upgrades:
       - *drill_and_fill_wall_insulation
       - *infiltration_all_cz_sf_mf_mb
 
-  - upgrade_name: Air Sealing + Attic Floor Insulation + Duct sealing
+  - upgrade_name: Air Sealing, Attic Floor Insulation, and Duct sealing
     options:
       - *infiltration_all_cz_sf_mf_mb
       - *attic_insulation_cz1_sf
@@ -971,7 +971,7 @@ upgrades:
       - *duct_seal_only_r8
       - *duct_seal_and_insulate
 
-  - upgrade_name: Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation
+  - upgrade_name: Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation
     options:
       - *infiltration_all_cz_sf_mf_mb
       - *attic_insulation_cz1_sf
@@ -991,7 +991,7 @@ upgrades:
       - *infiltration_13pct_reduction_windows
 
   ### -- Packages -- ###
-  - upgrade_name: Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation with Duct Sealing
+  - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing
     package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
     options:
       ### -- Dual-Speed Ducted GHP -- ###
