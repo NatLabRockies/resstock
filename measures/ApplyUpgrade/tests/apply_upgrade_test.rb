@@ -48,25 +48,28 @@ class ApplyUpgradeTest < Minitest::Test
     expected_values = {}
 
     expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpAirToAir, nil, expected_values)
+    _test_heat_pump_backup(false, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
 
     expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, nil, expected_values)
+    _test_heat_pump_backup(true, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
 
     expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, false, expected_values)
+    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF', expected_values)
 
     expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, true, expected_values)
+    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF, Ducted', expected_values)
 
     puts 'Duct restriction:'
     expected_values = {
       'max_airflow_cfm' => nil,
-      'autosizing_limit' => nil
+      'autosizing_limit' => nil,
+      'baseline_max_airflow_cfm' => nil,
+      'heat_pump_heating_autosizing_limit' => nil,
+      'heat_pump_cooling_autosizing_limit' => nil,
     }
 
     expected_values['adjusted_fan_watts_per_cfm'] = nil
-    _test_duct_restriction(1200.0, 0.375, expected_values)
+    _test_duct_restriction(true, nil, nil, expected_values)
   end
 
   def test_SFD_1story_UB_UA_GRG_ACV_FuelFurnace_PortableHeater_HPWH
@@ -108,8 +111,12 @@ class ApplyUpgradeTest < Minitest::Test
     _test_retaining_hvac_system_values(args_hash, expected_values)
 
     puts 'Retaining existing heating system:'
+    expected_values = {}
+
+    expected_values['heat_pump_backup_type'] = nil
+    _test_heat_pump_backup(false, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+
     expected_values = {
-      'heating_system_type' => HPXML::HVACTypeFurnace,
       'heat_pump_backup_fuel' => HPXML::FuelTypeNaturalGas,
       'heat_pump_backup_heating_efficiency' => 0.92,
       'heat_pump_backup_heating_capacity' => 100000.0,
@@ -117,34 +124,56 @@ class ApplyUpgradeTest < Minitest::Test
     }
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeIntegrated
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpAirToAir, nil, expected_values)
+    _test_heat_pump_backup(true, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+
+    expected_values = {
+      'heating_system_2_type' => HPXML::HVACTypeFurnace,
+      'heating_system_2_fuel' => HPXML::FuelTypeNaturalGas,
+      'heating_system_2_heating_efficiency' => 0.92,
+      'heating_system_2_heating_capacity' => 100000.0,
+      'heating_system_2_heating_autosizing_factor' => 1.0
+    }
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, nil, expected_values)
+    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF', expected_values)
 
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, false, expected_values)
+    expected_values = {
+      'heat_pump_backup_fuel' => HPXML::FuelTypeNaturalGas,
+      'heat_pump_backup_heating_efficiency' => 0.92,
+      'heat_pump_backup_heating_capacity' => 100000.0,
+      'heat_pump_backup_heating_autosizing_factor' => 1.0
+    }
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeIntegrated
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, true, expected_values)
+    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF, Ducted', expected_values)
 
     puts 'Duct restriction:'
     expected_values = {
-      'max_airflow_cfm' => 2000.0 / 0.75,
-      'autosizing_limit' => (2000.0 / 0.75) / 400.0 * 12000.0
+      'baseline_max_airflow_cfm' => nil,
+      'heat_pump_heating_autosizing_limit' => nil,
+      'heat_pump_cooling_autosizing_limit' => nil
+    }
+
+    expected_values['adjusted_fan_watts_per_cfm'] = nil
+    _test_duct_restriction(false, nil, nil, expected_values)
+
+    expected_values = {
+      'baseline_max_airflow_cfm' => 2000.0 / 0.75,
+      'heat_pump_heating_autosizing_limit' => (2000.0 / 0.75) / 400.0 * 12000.0,
+      'heat_pump_cooling_autosizing_limit' => (2000.0 / 0.75) / 400.0 * 12000.0
     }
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.076
-    _test_duct_restriction(1200.0, 0.375, expected_values)
+    _test_duct_restriction(true, 1200.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.089
-    _test_duct_restriction(1300.0, 0.375, expected_values)
+    _test_duct_restriction(true, 1300.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.103
-    _test_duct_restriction(1400.0, 0.375, expected_values)
+    _test_duct_restriction(true, 1400.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.375
-    _test_duct_restriction(2000.0 / 0.75, 0.375, expected_values)
+    _test_duct_restriction(true, 2000.0 / 0.75, 0.375, expected_values)
   end
 
   def test_SFD_2story_CS_UA_AC2_FuelBoiler_FuelTankWH
@@ -186,43 +215,55 @@ class ApplyUpgradeTest < Minitest::Test
     _test_retaining_hvac_system_values(args_hash, expected_values)
 
     puts 'Retaining existing heating system:'
+    expected_values = {}
+
+    expected_values['heat_pump_backup_type'] = nil
+    _test_heat_pump_backup(false, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+
     expected_values = {
-      'heating_system_type' => HPXML::HVACTypeBoiler,
-      'heat_pump_backup_fuel' => HPXML::FuelTypeNaturalGas,
-      'heat_pump_backup_heating_efficiency' => 0.92,
-      'heat_pump_backup_heating_capacity' => 100000.0,
-      'heat_pump_backup_heating_autosizing_factor' => 1.0
+      'heating_system_2_type' => HPXML::HVACTypeBoiler,
+      'heating_system_2_fuel' => HPXML::FuelTypeNaturalGas,
+      'heating_system_2_heating_efficiency' => 0.92,
+      'heating_system_2_heating_capacity' => 100000.0,
+      'heating_system_2_heating_autosizing_factor' => 1.0
     }
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpAirToAir, nil, expected_values)
+    _test_heat_pump_backup(true, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, nil, expected_values)
+    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF', expected_values)
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, false, expected_values)
-
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, true, expected_values)
+    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF, Ducted', expected_values)
 
     puts 'Duct restriction:'
     expected_values = {
-      'max_airflow_cfm' => 1799.0,
-      'autosizing_limit' => 1799.0 / 400.0 * 12000.0
+      'baseline_max_airflow_cfm' => nil,
+      'heat_pump_heating_autosizing_limit' => nil,
+      'heat_pump_cooling_autosizing_limit' => nil
+    }
+
+    expected_values['adjusted_fan_watts_per_cfm'] = nil
+    _test_duct_restriction(false, nil, nil, expected_values)
+
+    expected_values = {
+      'baseline_max_airflow_cfm' => 1800.0,
+      'heat_pump_heating_autosizing_limit' => 1800.0 / 400.0 * 12000.0,
+      'heat_pump_cooling_autosizing_limit' => 1800.0 / 400.0 * 12000.0
     }
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.167
-    _test_duct_restriction(1200.0, 0.375, expected_values)
+    _test_duct_restriction(true, 1200.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.196
-    _test_duct_restriction(1300.0, 0.375, expected_values)
+    _test_duct_restriction(true, 1300.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.227
-    _test_duct_restriction(1400.0, 0.375, expected_values)
+    _test_duct_restriction(true, 1400.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.375
-    _test_duct_restriction(1799.0, 0.375, expected_values)
+    _test_duct_restriction(true, 1799.0, 0.375, expected_values)
   end
 
   def test_SFD_2story_FB_UA_GRG_AC1_ElecBaseboard_FuelTankWH
@@ -264,43 +305,55 @@ class ApplyUpgradeTest < Minitest::Test
     _test_retaining_hvac_system_values(args_hash, expected_values)
 
     puts 'Retaining existing heating system:'
+    expected_values = {}
+
+    expected_values['heat_pump_backup_type'] = nil
+    _test_heat_pump_backup(false, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+
     expected_values = {
-      'heating_system_type' => HPXML::HVACTypeElectricResistance,
-      'heat_pump_backup_fuel' => HPXML::FuelTypeElectricity,
-      'heat_pump_backup_heating_efficiency' => 1.0,
-      'heat_pump_backup_heating_capacity' => 100000.0,
-      'heat_pump_backup_heating_autosizing_factor' => 1.0
+      'heating_system_2_type' => HPXML::HVACTypeElectricResistance,
+      'heating_system_2_fuel' => HPXML::FuelTypeElectricity,
+      'heating_system_2_heating_efficiency' => 1.0,
+      'heating_system_2_heating_capacity' => 100000.0,
+      'heating_system_2_heating_autosizing_factor' => 1.0
     }
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpAirToAir, nil, expected_values)
+    _test_heat_pump_backup(true, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, nil, expected_values)
+    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF', expected_values)
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, false, expected_values)
-
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(HPXML::HVACTypeHeatPumpMiniSplit, true, expected_values)
+    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF, Ducted', expected_values)
 
     puts 'Duct restriction:'
     expected_values = {
-      'max_airflow_cfm' => 1801.0,
-      'autosizing_limit' => 1801.0 / 400.0 * 12000.0
+      'baseline_max_airflow_cfm' => nil,
+      'heat_pump_heating_autosizing_limit' => nil,
+      'heat_pump_cooling_autosizing_limit' => nil
+    }
+
+    expected_values['adjusted_fan_watts_per_cfm'] = nil
+    _test_duct_restriction(false, nil, nil, expected_values)
+
+    expected_values = {
+      'baseline_max_airflow_cfm' => 1800.0,
+      'heat_pump_heating_autosizing_limit' => 1800.0 / 400.0 * 12000.0,
+      'heat_pump_cooling_autosizing_limit' => 1800.0 / 400.0 * 12000.0
     }
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.166
-    _test_duct_restriction(1200.0, 0.375, expected_values)
+    _test_duct_restriction(true, 1200.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.195
-    _test_duct_restriction(1300.0, 0.375, expected_values)
+    _test_duct_restriction(true, 1300.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.227
-    _test_duct_restriction(1400.0, 0.375, expected_values)
+    _test_duct_restriction(true, 1400.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.375
-    _test_duct_restriction(1801.0, 0.375, expected_values)
+    _test_duct_restriction(true, 1801.0, 0.375, expected_values)
   end
 
   private
@@ -416,10 +469,22 @@ class ApplyUpgradeTest < Minitest::Test
     end
   end
 
-  def _test_heat_pump_backup(heat_pump_type, heat_pump_is_ducted, expected_values)
+  def _test_heat_pump_backup(heat_pump_backup_use_existing_system, hvac_heat_pump, expected_values)
     this_dir = File.dirname(__FILE__)
     hpxml_path = File.join(this_dir, '../../UpgradeCosts/tests/in.xml')
     hpxml = HPXML.new(hpxml_path: hpxml_path)
+
+    runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+    measures = { 'ResStockArguments' => [{ 'hvac_heat_pump_backup_use_existing_system' => heat_pump_backup_use_existing_system,
+                                           'hvac_heat_pump' => hvac_heat_pump }],
+                 'ResStockArgumentsPostHPXML' => [{}] }
+    if hvac_heat_pump.include?('Central HP') || hvac_heat_pump.include?('Ducted')
+      measures['ResStockArguments'][0]['hvac_ducts'] = '0% Leakage, Uninsulated'
+    elsif hvac_heat_pump.include?('Mini-Split')
+      measures['ResStockArguments'][0]['hvac_ducts'] = nil
+    else
+      fail 'Unhandled heat pump.'
+    end
 
     # Create instance of the measure
     measure = ApplyUpgrade.new
@@ -432,11 +497,10 @@ class ApplyUpgradeTest < Minitest::Test
         return
       end
 
-      puts "\theat_pump_type='#{heat_pump_type}', heat_pump_is_ducted='#{heat_pump_is_ducted}'..."
+      puts "\thvac_heat_pump='#{hvac_heat_pump}'..."
 
-      heat_pump_backup_type = measure.get_heat_pump_backup_type(heating_system, heat_pump_type, heat_pump_is_ducted)
-      actual_values = measure.get_heat_pump_backup_values(heating_system)
-      actual_values['heat_pump_backup_type'] = heat_pump_backup_type
+      measure.set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
+      actual_values = measures['ResStockArgumentsPostHPXML'][0]
 
       expected_values.each do |str, val|
         if val.nil?
@@ -448,17 +512,24 @@ class ApplyUpgradeTest < Minitest::Test
     end
   end
 
-  def _test_duct_restriction(upgrade_max_airflow_cfm, fan_watts_per_cfm, expected_values)
+  def _test_duct_restriction(heat_pump_sizing_is_duct_limited, upgrade_max_airflow_cfm, fan_watts_per_cfm, expected_values)
     this_dir = File.dirname(__FILE__)
     hpxml_path = File.join(this_dir, '../../UpgradeCosts/tests/in.xml')
     hpxml = HPXML.new(hpxml_path: hpxml_path)
+
+    runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+    measures = { 'ResStockArguments' => [{ 'hvac_heat_pump_sizing_is_duct_limited' => heat_pump_sizing_is_duct_limited,
+                                           'hvac_heat_pump' => 'Central HP, SEER 13, 7.7 HSPF',
+                                           'hvac_ducts' => '0% Leakage, Uninsulated' }],
+                 'ResStockArgumentsPostHPXML' => [{}] }
 
     # Create instance of the measure
     measure = ApplyUpgrade.new
 
     hpxml.buildings.each do |hpxml_bldg|
-      actual_values = measure.get_duct_restriction_values(hpxml_bldg)
-      baseline_max_airflow_cfm = actual_values['max_airflow_cfm']
+      baseline_max_airflow_cfm = measure.set_autosizing_limits(runner, measures, hpxml_bldg)
+      actual_values = measures['ResStockArgumentsPostHPXML'][0]
+      actual_values['baseline_max_airflow_cfm'] = baseline_max_airflow_cfm
 
       puts "\tbaseline_max_airflow_cfm='#{baseline_max_airflow_cfm}', upgrade_max_airflow_cfm='#{upgrade_max_airflow_cfm}', fan_watts_per_cfm='#{fan_watts_per_cfm}'..."
 

@@ -6,6 +6,7 @@
 require 'openstudio'
 require_relative 'resources/constants'
 require_relative '../../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
+require_relative '../../resources/hpxml-measures/BuildResidentialHPXML/resources/options'
 
 # start the measure
 class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
@@ -519,18 +520,31 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     end
   end
 
+  def get_detailed_hvac_arguments(measures)
+    # Returns a hash of detailed option properties (from the option TSV) for the given HVAC systems
+    args = {}
+    ['hvac_heating_system',
+     'hvac_heating_system_2',
+     'hvac_cooling_system',
+     'hvac_heat_pump'].each do |parameter_name|
+      tsv_filename = "#{parameter_name}.tsv"
+      get_option_properties(args, tsv_filename, measures['ResStockArguments'][0][parameter_name])
+    end
+    return args
+  end
+
   def set_existing_system_as_heat_pump_backup(runner, measures, hpxml_bldg)
     # Retain Existing Heating System as Heat Pump Backup
-    if measures['ResStockArguments'][0]['hvac_heat_pump_backup_use_existing_system'] == 'true' # FIXME: Needs testing
-      heating_system = get_heating_system(hpxml_bldg)
-      heat_pump = get_heat_pump(hpxml_bldg)
-      heat_pump_type = (heat_pump.nil? ? nil : heat_pump.heat_pump_type)
-      heat_pump_is_ducted = (heat_pump.nil? ? false : !heat_pump.distribution_system.nil?)
+    if measures['ResStockArguments'][0]['hvac_heat_pump_backup_use_existing_system'].to_s.downcase == 'true'
+      args = get_detailed_hvac_arguments(measures)
 
       # Only set the backup if the heat pump is applied and there is an existing heating system
-      if not heat_pump.nil?
+      heat_pump_type = args[:hvac_heat_pump_type]
+      if not heat_pump_type.nil?
+        heating_system = get_heating_system(hpxml_bldg)
         if not heating_system.nil?
-          heat_pump_backup_type = get_heat_pump_backup_type(heating_system, heat_pump_type, heat_pump_is_ducted)
+          heat_pump_is_ducted = args[:hvac_heat_pump_is_ducted]
+          heat_pump_backup_type = get_heat_pump_backup_type(heating_system.distribution_system, heat_pump_type, heat_pump_is_ducted)
           heat_pump_backup_values = get_heat_pump_backup_values(heating_system)
 
           heating_system_type = heat_pump_backup_values['heating_system_type']
@@ -591,38 +605,36 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   def set_autosizing_limits(runner, measures, hpxml_bldg)
     # Use Autosizing Limits and Maintain Duct System Curve (Part 1)
     # Set the autosizing limit based on the baseline airflow.
-    if measures['ResStockArguments'][0]['hvac_heat_pump_sizing_is_duct_limited'] == 'true' # FIXME: Needs testing
+    if measures['ResStockArguments'][0]['hvac_heat_pump_sizing_is_duct_limited'].to_s.downcase == 'true'
       duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
       baseline_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
       autosizing_limit = duct_restriction_values['autosizing_limit']
 
       # Only limit HVAC system types with ducted air distribution.
       if not autosizing_limit.nil?
+        args = get_detailed_hvac_arguments(measures)
+
         # Heating system
-        heating_system = get_heating_system(hpxml_bldg)
-        heating_system_type = (heating_system.nil? ? nil : heating_system.heating_system_type)
+        heating_system_type = args[:hvac_heating_system_type]
         if [HPXML::HVACTypeFurnace].include?(heating_system_type)
           measures['ResStockArgumentsPostHPXML'][0]['heating_system_heating_autosizing_limit'] = autosizing_limit
           runner.registerInfo("The capacity of the upgraded heating system is limited to 'heating_system_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
         end
 
         # Cooling system
-        cooling_system = get_cooling_system(hpxml_bldg)
-        cooling_system_type = (cooling_system.nil? ? nil : cooling_system.cooling_system_type)
-        cooling_system_is_ducted = (cooling_system.nil? ? false : !cooling_system.distribution_system.nil?)
-        if [HPXML::HVACTypeCentralAirConditioner,
-            HPXML::HVACTypeMiniSplitAirConditioner].include?(cooling_system_type) && cooling_system_is_ducted
+        cooling_system_type = args[:hvac_cooling_system_type]
+        cooling_system_is_ducted = args[:hvac_cooling_system_is_ducted]
+        if ([HPXML::HVACTypeCentralAirConditioner].include?(cooling_system_type) ||
+           ([HPXML::HVACTypeMiniSplitAirConditioner].include?(cooling_system_type) && cooling_system_is_ducted))
           measures['ResStockArgumentsPostHPXML'][0]['cooling_system_cooling_autosizing_limit'] = autosizing_limit
           runner.registerInfo("The capacity of the upgraded cooling system is limited to 'cooling_system_cooling_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
         end
 
         # Heat pump
-        heat_pump = get_heat_pump(hpxml_bldg)
-        heat_pump_type = (heat_pump.nil? ? nil : heat_pump.heat_pump_type)
-        heat_pump_is_ducted = (heat_pump.nil? ? false : !heat_pump.distribution_system.nil?)
-        if [HPXML::HVACTypeHeatPumpAirToAir,
-            HPXML::HVACTypeHeatPumpGroundToAir,
-            HPXML::HVACTypeHeatPumpMiniSplit].include?(heat_pump_type) && heat_pump_is_ducted
+        heat_pump_type = args[:hvac_heat_pump_type]
+        heat_pump_is_ducted = args[:hvac_heat_pump_is_ducted]
+        if ([HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(heat_pump_type) ||
+           ([HPXML::HVACTypeHeatPumpMiniSplit].include?(heat_pump_type) && heat_pump_is_ducted))
           measures['ResStockArgumentsPostHPXML'][0]['heat_pump_heating_autosizing_limit'] = autosizing_limit
           measures['ResStockArgumentsPostHPXML'][0]['heat_pump_cooling_autosizing_limit'] = autosizing_limit
           # We intentionally do not limit the heat pump backup heating autosized value.
@@ -631,8 +643,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
         end
 
         # Heating system 2
-        heating_system_2 = get_heating_system_2(hpxml_bldg)
-        heating_system_2_type = (heating_system_2.nil? ? nil : heating_system_2.heating_system_type)
+        heating_system_2_type = args[:hvac_heating_system_2_type]
         if [HPXML::HVACTypeFurnace].include?(heating_system_2_type)
           measures['ResStockArgumentsPostHPXML'][0]['heating_system_2_heating_autosizing_limit'] = autosizing_limit
           runner.registerInfo("The capacity of the upgraded second heating system is limited to 'heating_system_2_heating_autosizing_limit=#{autosizing_limit}', based on a baseline maximum airflow rate of #{baseline_max_airflow_cfm} cfm and an assumed #{Constants::DuctRestrictionAssumedAirflow} cfm/ton.")
@@ -648,7 +659,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # - Get the upgrade airflow cfm.
     # - Use it along with the baseline airflow cfm and upgrade blower fan W/cfm.
     # - Set the adjustment to the upgrade blower fan W/cfm.
-    if measures['ResStockArguments'][0]['hvac_heat_pump_sizing_is_duct_limited'] == 'true' # FIXME: Needs testing
+    if measures['ResStockArguments'][0]['hvac_heat_pump_sizing_is_duct_limited'].to_s.downcase == 'true'
       duct_restriction_values = get_duct_restriction_values(hpxml_bldg)
       upgrade_max_airflow_cfm = duct_restriction_values['max_airflow_cfm']
 
@@ -662,50 +673,16 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
   end
 
   def get_heating_system(hpxml_bldg)
-    hpxml_bldg.heating_systems.each do |heating_system|
-      next unless heating_system.primary_system
-      next if heating_system.is_shared_system
-
-      return heating_system
-    end
-    return
+    return hpxml_bldg.heating_systems.find { |h| h.primary_system && !h.is_shared_system }
   end
 
-  def get_heating_system_2(hpxml_bldg)
-    hpxml_bldg.heating_systems.each do |heating_system|
-      next if heating_system.primary_system
-      next if heating_system.is_shared_system
-
-      return heating_system
-    end
-    return
-  end
-
-  def get_cooling_system(hpxml_bldg)
-    hpxml_bldg.cooling_systems.each do |cooling_system|
-      next unless cooling_system.primary_system
-      next if cooling_system.is_shared_system
-
-      return cooling_system
-    end
-    return
-  end
-
-  def get_heat_pump(hpxml_bldg)
-    hpxml_bldg.heat_pumps.each do |heat_pump|
-      next unless heat_pump.primary_system
-      next if heat_pump.is_shared_system
-
-      return heat_pump
-    end
-    return
-  end
-
-  def get_heat_pump_backup_type(heating_system, heat_pump_type, heat_pump_is_ducted)
-    ducted_backup = [HPXML::HVACTypeFurnace].include?(heating_system.heating_system_type)
-    if (ducted_backup && (heat_pump_type == HPXML::HVACTypeHeatPumpMiniSplit) && heat_pump_is_ducted) ||
-       (ducted_backup && [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(heat_pump_type))
-      return HPXML::HeatPumpBackupTypeIntegrated
+  def get_heat_pump_backup_type(heating_distribution_system, heat_pump_type, heat_pump_is_ducted)
+    ducted_backup = (!heating_distribution_system.nil? && heating_distribution_system.distribution_system_type == HPXML::HVACDistributionTypeAir)
+    if ducted_backup
+      if ([HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(heat_pump_type) ||
+         ([HPXML::HVACTypeHeatPumpMiniSplit].include?(heat_pump_type) && heat_pump_is_ducted))
+        return HPXML::HeatPumpBackupTypeIntegrated
+      end
     end
 
     return HPXML::HeatPumpBackupTypeSeparate
