@@ -71,6 +71,7 @@ workflow_generator:
       simulation_control_run_period_end_month: 12
       simulation_control_run_period_end_day_of_month: 31
       simulation_control_run_period_calendar_year: 2018
+      add_component_loads: true
 
     # Emissions scenarios
     emissions:
