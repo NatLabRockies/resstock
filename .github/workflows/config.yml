@@ -278,20 +278,6 @@ jobs:
           tar -xvf project_national/national_baseline/simulation_output/*.tar.gz -C project_national/national_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw'
           tar -xvf project_testing/testing_baseline/simulation_output/*.tar.gz -C project_testing/testing_baseline/simulation_output --wildcards '*results_timeseries.csv' --wildcards '*.xml' --wildcards '*data_point_out.json' --wildcards '*.osw' --wildcards '*in.osm' --wildcards '*in.idf'
 
-      - name: Process results
-        run: |
-          pip install plotly
-          python test/process_bsb_analysis.py
-
-      - name: Upload integration results
-        uses: actions/upload-artifact@v4
-        with:
-          name: feature_results
-          path: |
-            baseline
-            upgrades
-          if-no-files-found: error
-
       - name: Upload buildstockbatch results
         uses: actions/upload-artifact@v4
         with:
@@ -308,6 +294,20 @@ jobs:
             project_national/national_baseline/simulation_output
             project_testing/testing_baseline/simulation_output
           retention-days: 1  # This is typically about 2.5 GB. Delete quickly to save space.
+          if-no-files-found: error
+
+      - name: Process results
+        run: |
+          pip install plotly
+          python test/process_bsb_analysis.py
+
+      - name: Upload integration results
+        uses: actions/upload-artifact@v4
+        with:
+          name: feature_results
+          path: |
+            baseline
+            upgrades
           if-no-files-found: error
 
       - name: Run tests
