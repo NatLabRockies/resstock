@@ -13638,6 +13638,8 @@ Plug Loads	96%	ResStockArguments	misc_plug_loads_other_annual_kwh=auto	misc_plug
 Plug Loads	97%	ResStockArguments	misc_plug_loads_other_annual_kwh=auto	misc_plug_loads_other_frac_sensible=0.93	misc_plug_loads_other_frac_latent=0.021	misc_plug_loads_other_usage_multiplier=0.97	misc_plug_loads_television_present=true	misc_plug_loads_television_annual_kwh=auto	misc_plug_loads_television_usage_multiplier=0.97
 Plug Loads	99%	ResStockArguments	misc_plug_loads_other_annual_kwh=auto	misc_plug_loads_other_frac_sensible=0.93	misc_plug_loads_other_frac_latent=0.021	misc_plug_loads_other_usage_multiplier=0.99	misc_plug_loads_television_present=true	misc_plug_loads_television_annual_kwh=auto	misc_plug_loads_television_usage_multiplier=0.99
 Power Outage	Summer	ResStockArguments	schedules_power_outage_periods=Jul 1 5 - Jul 31 14	schedules_power_outage_periods_window_natvent_availability=always available
+Power Outage	Travis County Summer	ResStockArguments	schedules_power_outage_periods=Aug 27 1 - Sep 5 23	schedules_power_outage_periods_window_natvent_availability=always available
+Power Outage	Travis County Winter	ResStockArguments	schedules_power_outage_periods=Feb 2 1 - Feb 24 23	schedules_power_outage_periods_window_natvent_availability=always available
 REEDS Balancing Area	1
 REEDS Balancing Area	10
 REEDS Balancing Area	100
