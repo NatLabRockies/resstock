@@ -55,49 +55,102 @@ workflow_generator:
   # ResStock HPXML workflow generator
   type: residential_hpxml
   version: 2025.04.29
+
   args:
     # Annual simulation and timestep
     build_existing_model:
-      simulation_control_timestep: 60
+      simulation_control_timestep: 15
       simulation_control_run_period_begin_month: 1
       simulation_control_run_period_begin_day_of_month: 1
       simulation_control_run_period_end_month: 12
       simulation_control_run_period_end_day_of_month: 31
-      simulation_control_run_period_calendar_year: 2007
+      simulation_control_run_period_calendar_year: 2018
 
     # Emissions scenarios
     emissions:
+      - scenario_name: AER_HighRECost_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_HighRECost_Avg
+      - scenario_name: AER_HighRECostLowNGPrice_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_HighRECostLowNGPrice_Avg
+      - scenario_name: AER_LowRECost_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_LowRECost_Avg
+      - scenario_name: AER_LowRECostHighNGPrice_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_LowRECostHighNGPrice_Avg
+      - scenario_name: AER_MidCase_Avg
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/AER_MidCase_Avg
+      - scenario_name: LRMER_HighRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_15
+      - scenario_name: LRMER_HighRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECost_25
+      - scenario_name: LRMER_HighRECostLowNGPrice_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_15
+      - scenario_name: LRMER_HighRECostLowNGPrice_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_HighRECostLowNGPrice_25
+      - scenario_name: LRMER_LowRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_15
+      - scenario_name: LRMER_LowRECost_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECost_25
+      - scenario_name: LRMER_LowRECostHighNGPrice_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_15
+      - scenario_name: LRMER_LowRECostHighNGPrice_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_LowRECostHighNGPrice_25
       - scenario_name: LRMER_MidCase_15
         type: CO2e
         elec_folder: data/emissions/cambium/2024/LRMER_MidCase_15
+      - scenario_name: LRMER_MidCase_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2024/LRMER_MidCase_25
 
     # Utility bill rates
     utility_bills:
-      - scenario_name: Bills
+      - scenario_name: Utility Rates - Fixed + Variable
+        simple_filepath: data/utility_bills/sdr_rates/State.tsv
 
     # Outputs to include
     simulation_output_report:
-      timeseries_frequency: hourly
+      timeseries_frequency: timestep
       include_timeseries_total_consumptions: true
       include_timeseries_fuel_consumptions: true
       include_timeseries_end_use_consumptions: true
       include_timeseries_emissions: true
       include_timeseries_emission_fuels: true
-      include_timeseries_emission_end_uses: true
+      include_timeseries_emission_end_uses: false
       include_timeseries_hot_water_uses: true
       include_timeseries_total_loads: true
-      include_timeseries_component_loads: false
+      include_timeseries_component_loads: true
       include_timeseries_unmet_hours: true
       include_timeseries_zone_temperatures: true
       include_timeseries_zone_conditions: true
       include_timeseries_airflows: true
       include_timeseries_weather: true
       include_timeseries_resilience: true
+      output_variables:
+        - name: People Sensible Heating Rate
+        - name: People Total Heating Rate
+        - name: Site Outdoor Air Humidity Ratio
 
     # Other reporting measures to run
     reporting_measures:
       - measure_dir_name: QOIReport
+      - measure_dir_name: ServerDirectoryCleanup # tack this on so we can save some disk space (when using debug: true)
 
     # Files to keep
     server_directory_cleanup:
-      retain_schedules_csv: false
+      retain_in_idf: true
+      retain_schedules_csv: true
+      retain_in_osm: true
+
+    debug: true
