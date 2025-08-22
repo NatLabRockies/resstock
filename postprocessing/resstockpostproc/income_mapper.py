@@ -35,7 +35,7 @@ def process_income_lookup(geography):
             ext = "Occupants_FederalPovertyLevel"
             deps = ["Occupants", "Federal Poverty Level", "Income"]
         case _:
-            raise ValueError(f"geography={geography} not supported")
+            raise ValueError(f"{geography=} not supported")
     file = f"income_bin_representative_values_by_{ext}.parquet"
 
     income_lookup = pl.read_parquet(data_dir / file)
