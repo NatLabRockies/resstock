@@ -5,12 +5,19 @@ data_dir = Path(__file__).parent / "resources" / "income_maps"
 bldg_id = "bldg_id"
 rep_inc = "in.representative_income"
 
+
 def process_income_lookup(geography):
     """
     geography option: PUMA, State, Census Division
 
     """
-    deps = ["Occupants", "Federal Poverty Level", "Tenure", "Geometry Building Type RECS", "Income"]
+    deps = [
+        "Occupants",
+        "Federal Poverty Level",
+        "Tenure",
+        "Geometry Building Type RECS",
+        "Income",
+    ]
     match geography:
         case "County and PUMA":
             ext = "CountyandPUMA_Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
@@ -36,11 +43,16 @@ def process_income_lookup(geography):
         deps = [geography] + deps
 
     income_col = "weighted_median"
-    income_lookup = income_lookup.select(deps + [pl.col(income_col).round(0)]).drop_nulls()
-    income_lookup = income_lookup.rename(lambda col: f"in.{col.lower().replace(' ', '_')}")
+    income_lookup = income_lookup.select(
+        deps + [pl.col(income_col).round(0)]
+    ).drop_nulls()
+    income_lookup = income_lookup.rename(
+        lambda col: f"in.{col.lower().replace(' ', '_')}"
+    )
     income_lookup = income_lookup.rename({f"in.{income_col}": rep_inc})
 
     return income_lookup, deps
+
 
 def assign_representative_income(df, return_map_only=False):
 
@@ -58,9 +70,7 @@ def assign_representative_income(df, return_map_only=False):
         "Census Division",
         "Census Region",
     ]
-    geo_cols = [
-        "in." + geo.lower().replace(" ", "_") for geo in geographies
-    ]
+    geo_cols = ["in." + geo.lower().replace(" ", "_") for geo in geographies]
     geographies += ["National", "National2"]
 
     # map rep income by increasingly large geographic resolution
@@ -97,10 +107,16 @@ def assign_representative_income(df, return_map_only=False):
     df2 = pl.concat(to_concat)
 
     # QC
-    check_df = df2.filter((pl.col("in.income")!="Not Available") & (pl.col(rep_inc).is_null()))
-    assert len(check_df) == 0, f"rep_income could not be mapped for {len(check_df)} rows\n{check_df}"
+    check_df = df2.filter(
+        (pl.col("in.income") != "Not Available") & (pl.col(rep_inc).is_null())
+    )
+    assert (
+        len(check_df) == 0
+    ), f"rep_income could not be mapped for {len(check_df)} rows\n{check_df}"
 
-    print(f"Note: {rep_inc} is not available for vacant units, which have 'Not Available' for in.income")
+    print(
+        f"Note: {rep_inc} is not available for vacant units, which have 'Not Available' for in.income"
+    )
 
     df3 = df2.select([bldg_id, rep_inc])
     if return_map_only:
