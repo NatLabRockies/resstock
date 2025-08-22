@@ -6,11 +6,10 @@ bldg_id = "bldg_id"
 rep_inc = "in.representative_income"
 
 
-def process_income_lookup(geography):
-    """
-    geography option: PUMA, State, Census Division
+def process_income_lookup(
+    geography: str, lazy: bool = False
+) -> tuple[pl.DataFrame, list[str]]:
 
-    """
     deps = [
         "Occupants",
         "Federal Poverty Level",
@@ -38,7 +37,11 @@ def process_income_lookup(geography):
             raise ValueError(f"{geography=} not supported")
     file = f"income_bin_representative_values_by_{ext}.parquet"
 
-    income_lookup = pl.read_parquet(data_dir / file)
+    if lazy:
+        income_lookup = pl.scan_parquet(data_dir / file)
+    else:
+        income_lookup = pl.read_parquet(data_dir / file)
+
     if geography not in ["National", "National2"]:
         deps = [geography] + deps
 
@@ -54,7 +57,11 @@ def process_income_lookup(geography):
     return income_lookup, deps
 
 
-def assign_representative_income(df, return_map_only=False):
+def assign_representative_income(
+    df: pl.LazyFrame | pl.DataFrame, return_map_only: bool = False
+) -> pl.LazyFrame:
+
+    lazy = isinstance(df, pl.LazyFrame)
 
     non_geo_cols = [
         "in.occupants",
@@ -77,7 +84,7 @@ def assign_representative_income(df, return_map_only=False):
     remaining_df = df.select([bldg_id] + geo_cols + non_geo_cols)
     matched_dfs = []
     for idx, geo in enumerate(geographies):
-        income_lookup, deps = process_income_lookup(geo)
+        income_lookup, deps = process_income_lookup(geo, lazy=lazy)
         match geo:
             case "National":
                 keys = non_geo_cols
@@ -86,7 +93,7 @@ def assign_representative_income(df, return_map_only=False):
             case _:
                 keys = [geo_cols[idx]] + non_geo_cols
 
-        if rep_inc in remaining_df.columns:
+        if rep_inc in remaining_df.collect_schema().names():
             remaining_df = remaining_df.drop(rep_inc)
 
         join_df = remaining_df.join(
@@ -97,19 +104,18 @@ def assign_representative_income(df, return_map_only=False):
         matched_dfs.append(join_df.filter(pl.col(rep_inc).is_not_null()))
         remaining_df = join_df.filter(pl.col(rep_inc).is_null())
 
-        if len(remaining_df) == 0:
-            print(f"Mapping completed, highest resolution used: {geo}")
-            break
+        if not lazy:
+            if len(remaining_df) == 0:
+                print(f"Mapping completed, highest resolution used: {geo}")
+                break
 
-    to_concat = matched_dfs
-    if len(remaining_df) > 0:
-        to_concat.append(remaining_df)
-    df2 = pl.concat(to_concat)
+    df2 = pl.concat(matched_dfs + [remaining_df])
 
     # QC
     check_df = df2.filter(
         (pl.col("in.income") != "Not Available") & (pl.col(rep_inc).is_null())
     )
+    check_df = check_df.collect() if lazy else check_df
     assert (
         len(check_df) == 0
     ), f"rep_income could not be mapped for {len(check_df)} rows\n{check_df}"
