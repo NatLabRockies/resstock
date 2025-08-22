@@ -2,9 +2,6 @@ import polars as pl
 from pathlib import Path
 import re
 
-import sys
-
-sys.path.append(str(Path(__file__).resolve().parents[1]))
 from resstockpostproc.income_mapper import assign_representative_income
 
 
