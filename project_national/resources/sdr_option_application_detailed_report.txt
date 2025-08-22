@@ -1447,65 +1447,9 @@ Detailed report of how the 18 options were applied to the buildings.
 |                   2 | 13, 14            | 87137 (15.8%)       | 382718 (69.6%)   | 413614 (75.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade4:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option1:'HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate'
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-and => 418239 (76.0%)
-  HVAC Has Ducts|Yes => 423604 (77.0%)
-  or => 507724 (92.3%)
-    not => 489615 (89.0%)
-      or => 60385 (11.0%)
-        HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
-        HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
-        HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
-        HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
-        HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
-    and => 21439 (3.9%)
-      HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
-      or => 145308 (26.4%)
-        Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
-        Geometry Building Type ACS|2 Unit => 19860 (3.6%)
-        Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
-        Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
-        Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
-        Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
-    and => 1818 (0.3%)
-      HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
-      or => 145308 (26.4%)
-        Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
-        Geometry Building Type ACS|2 Unit => 19860 (3.6%)
-        Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
-        Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
-        Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
-        Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
-    and => 47036 (8.6%)
-      HVAC Cooling Type|Central AC => 291242 (53.0%)
-      not => 542399 (98.6%)
-        HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
-      or => 145308 (26.4%)
-        Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
-        Geometry Building Type ACS|2 Unit => 19860 (3.6%)
-        Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
-        Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
-        Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
-        Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
-------------------------------------------------------------------
-Package Apply Logic Report
---------------------------
-and => 535440 (97.4%)
-  not => 541393 (98.4%)
-    Heating Fuel|Wood => 8607 (1.6%)
-  not => 548108 (99.7%)
-    Heating Fuel|Other Fuel => 1892 (0.3%)
-  not => 545939 (99.3%)
-    Heating Fuel|None => 4061 (0.7%)
-------------------------------------
-Overall applied to => 413614 (75.2%).
--------------------------------------
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade4:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option2:'HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted'
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade4:'Typical Cold Climate Ducted Air Source Heat Pump Circa 2025', Option1:'HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate'
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 418239 (76.0%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   or => 507724 (92.3%)
@@ -1560,7 +1504,7 @@ Overall applied to => 413614 (75.2%).
 -------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade4:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option3:'HVAC Cooling Efficiency|Ducted Heat Pump'
+Option Apply Report for - Upgrade4:'Typical Cold Climate Ducted Air Source Heat Pump Circa 2025', Option2:'HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted'
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 418239 (76.0%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
@@ -1615,9 +1559,9 @@ and => 535440 (97.4%)
 Overall applied to => 413614 (75.2%).
 -------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade4:'Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data', Option4:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade4:'Typical Cold Climate Ducted Air Source Heat Pump Circa 2025', Option3:'HVAC Cooling Efficiency|Ducted Heat Pump'
+----------------------------------------------------------------------------------------------------------------------------------------------------
 and => 418239 (76.0%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   or => 507724 (92.3%)
@@ -1671,28 +1615,216 @@ and => 535440 (97.4%)
 Overall applied to => 413614 (75.2%).
 -------------------------------------
 
-All of the options (and-ing) were applied to: 413614 (75.2%)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade4:'Typical Cold Climate Ducted Air Source Heat Pump Circa 2025', Option4:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+and => 418239 (76.0%)
+  HVAC Has Ducts|Yes => 423604 (77.0%)
+  or => 507724 (92.3%)
+    not => 489615 (89.0%)
+      or => 60385 (11.0%)
+        HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+        HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+        HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+        HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+        HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+    and => 21439 (3.9%)
+      HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+      or => 145308 (26.4%)
+        Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+        Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+        Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+        Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+        Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+        Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+    and => 1818 (0.3%)
+      HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+      or => 145308 (26.4%)
+        Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+        Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+        Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+        Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+        Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+        Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+    and => 47036 (8.6%)
+      HVAC Cooling Type|Central AC => 291242 (53.0%)
+      not => 542399 (98.6%)
+        HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      or => 145308 (26.4%)
+        Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+        Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+        Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+        Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+        Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+        Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+------------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 535440 (97.4%)
+  not => 541393 (98.4%)
+    Heating Fuel|Wood => 8607 (1.6%)
+  not => 548108 (99.7%)
+    Heating Fuel|Other Fuel => 1892 (0.3%)
+  not => 545939 (99.3%)
+    Heating Fuel|None => 4061 (0.7%)
+------------------------------------
+Overall applied to => 413614 (75.2%).
+-------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade4:'Typical Cold Climate Ducted Air Source Heat Pump Circa 2025', Option5:'Heating Fuel|Electricity'
+------------------------------------------------------------------------------------------------------------------------------------
+and => 254085 (46.2%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+  not => 327040 (59.5%)
+    Heating Fuel|Electricity => 222960 (40.5%)
+----------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 535440 (97.4%)
+  not => 541393 (98.4%)
+    Heating Fuel|Wood => 8607 (1.6%)
+  not => 548108 (99.7%)
+    Heating Fuel|Other Fuel => 1892 (0.3%)
+  not => 545939 (99.3%)
+    Heating Fuel|None => 4061 (0.7%)
+------------------------------------
+Overall applied to => 249460 (45.4%).
+-------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade4:'Typical Cold Climate Ducted Air Source Heat Pump Circa 2025', Option6:'HVAC Heating Type And Fuel|Electricity ASHP'
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+and => 331102 (60.2%)
+  and => 418239 (76.0%)
+    HVAC Has Ducts|Yes => 423604 (77.0%)
+    or => 507724 (92.3%)
+      not => 489615 (89.0%)
+        or => 60385 (11.0%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity => 15875 (2.9%)
+          HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel => 23624 (4.3%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity => 7469 (1.4%)
+          HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel => 5816 (1.1%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+      and => 21439 (3.9%)
+        HVAC Cooling Type|Ducted Heat Pump => 87137 (15.8%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 1818 (0.3%)
+        HVAC Cooling Type|Non-Ducted Heat Pump => 5401 (1.0%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+      and => 47036 (8.6%)
+        HVAC Cooling Type|Central AC => 291242 (53.0%)
+        not => 542399 (98.6%)
+          HVAC Shared Efficiencies|Fan Coil Cooling Only => 7601 (1.4%)
+        or => 145308 (26.4%)
+          Geometry Building Type ACS|10 to 19 Unit => 24471 (4.4%)
+          Geometry Building Type ACS|2 Unit => 19860 (3.6%)
+          Geometry Building Type ACS|20 to 49 Unit => 20217 (3.7%)
+          Geometry Building Type ACS|3 or 4 Unit => 24140 (4.4%)
+          Geometry Building Type ACS|5 to 9 Unit => 26049 (4.7%)
+          Geometry Building Type ACS|50 or more Unit => 30571 (5.6%)
+  not => 462863 (84.2%)
+    HVAC Heating Type And Fuel|Electricity ASHP => 87137 (15.8%)
+----------------------------------------------------------------
+Package Apply Logic Report
+--------------------------
+and => 535440 (97.4%)
+  not => 541393 (98.4%)
+    Heating Fuel|Wood => 8607 (1.6%)
+  not => 548108 (99.7%)
+    Heating Fuel|Other Fuel => 1892 (0.3%)
+  not => 545939 (99.3%)
+    Heating Fuel|None => 4061 (0.7%)
+------------------------------------
+Overall applied to => 326477 (59.4%).
+-------------------------------------
+
+All of the options (and-ing) were applied to: 249460 (45.4%)
 Any of the options (or-ing) were applied to: 413614 (75.2%)
 --------------------------------------------------------------------------------
-Report of how the 4 options were applied to the buildings.
+Report of how the 6 options were applied to the buildings.
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options                                    | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+====================================================+=====================+==================+==================+
-|                   4 | hvac heating efficiency, hvac detailed performance | 413614 (75.2%)      | 413614 (75.2%)   | 413614 (75.2%)   |
+|                   4 | hvac heating efficiency, hvac detailed performance | 87137 (15.8%)       | 87137 (15.8%)    | 87137 (15.8%)    |
 |                     | data, hvac cooling efficiency, hvac cooling        |                     |                  |                  |
 |                     | partial space conditioning                         |                     |                  |                  |
 +---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   5 | hvac heating efficiency, hvac detailed performance | 77017 (14.0%)       | 77017 (14.0%)    | 164154 (29.8%)   |
+|                     | data, hvac cooling efficiency, hvac cooling        |                     |                  |                  |
+|                     | partial space conditioning, hvac heating type and  |                     |                  |                  |
+|                     | fuel                                               |                     |                  |                  |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
+|                   6 | hvac heating efficiency, hvac detailed performance | 249460 (45.4%)      | 249460 (45.4%)   | 413614 (75.2%)   |
+|                     | data, hvac cooling efficiency, hvac cooling        |                     |                  |                  |
+|                     | partial space conditioning, heating fuel, hvac     |                     |                  |                  |
+|                     | heating type and fuel                              |                     |                  |                  |
++---------------------+----------------------------------------------------+---------------------+------------------+------------------+
 --------------------------------------------------------------------------------
-Detailed report of how the 4 options were applied to the buildings.
+Detailed report of how the 6 options were applied to the buildings.
 +---------------------+-------------------+---------------------+------------------+------------------+
 |   Number of options | Applied options   | Applied buildings   | Cumulative sub   | Cumulative all   |
 +=====================+===================+=====================+==================+==================+
-|                   4 | 1, 2, 3, 4        | 413614 (75.2%)      | 413614 (75.2%)   | 413614 (75.2%)   |
+|                   4 | 1, 2, 3, 4        | 87137 (15.8%)       | 87137 (15.8%)    | 87137 (15.8%)    |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   5 | 1, 2, 3, 4, 6     | 77017 (14.0%)       | 77017 (14.0%)    | 164154 (29.8%)   |
++---------------------+-------------------+---------------------+------------------+------------------+
+|                   6 | 1, 2, 3, 4, 5, 6  | 249460 (45.4%)      | 249460 (45.4%)   | 413614 (75.2%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Dual Fuel Heating System', Option1:'HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 95.0% AFUE NG, 35F switchover'
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade5:'Dual Fuel Heat Pump System', Option1:'HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 95.0% AFUE NG, 35F switchover'
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 98335 (17.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
@@ -1734,9 +1866,9 @@ and => 535440 (97.4%)
 Overall applied to => 98048 (17.8%).
 ------------------------------------
 
------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Dual Fuel Heating System', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade5:'Dual Fuel Heat Pump System', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
+-------------------------------------------------------------------------------------------------------------------
 and => 98335 (17.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
@@ -1778,9 +1910,9 @@ and => 535440 (97.4%)
 Overall applied to => 98048 (17.8%).
 ------------------------------------
 
----------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Dual Fuel Heating System', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade5:'Dual Fuel Heat Pump System', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
+-----------------------------------------------------------------------------------------------------------------------------------
 and => 98335 (17.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
@@ -1822,9 +1954,9 @@ and => 535440 (97.4%)
 Overall applied to => 98048 (17.8%).
 ------------------------------------
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Dual Fuel Heating System', Option4:'HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 92.5% AFUE NG, 35F switchover'
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade5:'Dual Fuel Heat Pump System', Option4:'HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 92.5% AFUE NG, 35F switchover'
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 148054 (26.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
@@ -1867,9 +1999,9 @@ and => 535440 (97.4%)
 Overall applied to => 147525 (26.8%).
 -------------------------------------
 
------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Dual Fuel Heating System', Option5:'HVAC Cooling Efficiency|Ducted Heat Pump'
------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade5:'Dual Fuel Heat Pump System', Option5:'HVAC Cooling Efficiency|Ducted Heat Pump'
+-------------------------------------------------------------------------------------------------------------------
 and => 148054 (26.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
@@ -1912,9 +2044,9 @@ and => 535440 (97.4%)
 Overall applied to => 147525 (26.8%).
 -------------------------------------
 
----------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade5:'Dual Fuel Heating System', Option6:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade5:'Dual Fuel Heat Pump System', Option6:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
+-----------------------------------------------------------------------------------------------------------------------------------
 and => 148054 (26.9%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
@@ -2379,9 +2511,9 @@ Detailed report of how the 3 options were applied to the buildings.
 |                   3 | 1, 2, 3           | 379889 (69.1%)      | 379889 (69.1%)   | 388840 (70.7%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Heat Pumps Water Heater', Option1:'Water Heater Fuel|Electricity'
------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade9:'Heat Pump Water Heater', Option1:'Water Heater Fuel|Electricity'
+----------------------------------------------------------------------------------------------------
 not => 284633 (51.8%)
   Water Heater Fuel|Electricity => 265367 (48.2%)
 -------------------------------------------------
@@ -2404,9 +2536,9 @@ and => 546836 (99.4%)
 Overall applied to => 283171 (51.5%).
 -------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Heat Pumps Water Heater', Option2:'Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.78 UEF'
-------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade9:'Heat Pump Water Heater', Option2:'Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.78 UEF'
+-----------------------------------------------------------------------------------------------------------------------------------
 and => 200260 (36.4%)
   or => 217700 (39.6%)
     Bedrooms|1 => 72019 (13.1%)
@@ -2436,9 +2568,9 @@ and => 546836 (99.4%)
 Overall applied to => 199124 (36.2%).
 -------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Heat Pumps Water Heater', Option3:'Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.95 UEF'
-------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade9:'Heat Pump Water Heater', Option3:'Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.95 UEF'
+-----------------------------------------------------------------------------------------------------------------------------------
 or => 205029 (37.3%)
   and => 11442 (2.1%)
     or => 217700 (39.6%)
@@ -2473,9 +2605,9 @@ and => 546836 (99.4%)
 Overall applied to => 203842 (37.1%).
 -------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade9:'Heat Pumps Water Heater', Option4:'Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.98 UEF'
-------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade9:'Heat Pump Water Heater', Option4:'Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.98 UEF'
+-----------------------------------------------------------------------------------------------------------------------------------
 or => 144711 (26.3%)
   Bedrooms|4 => 94241 (17.1%)
   Bedrooms|5 => 26148 (4.8%)
@@ -2825,9 +2957,9 @@ Detailed report of how the 2 options were applied to the buildings.
 |                   2 | 1, 2              | 164604 (29.9%)      | 164604 (29.9%)   | 510192 (92.8%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
--------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade15:'Air Sealing + Attic Floor Insulation + Duct sealing', Option1:'Infiltration|5 ACH50'
--------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade15:'Air Sealing, Attic Floor Insulation, and Duct sealing', Option1:'Infiltration|5 ACH50'
+---------------------------------------------------------------------------------------------------------------------------
 or => 507182 (92.2%)
   Infiltration|6 ACH50 => 23513 (4.3%)
   Infiltration|7 ACH50 => 27177 (4.9%)
@@ -2843,9 +2975,9 @@ or => 507182 (92.2%)
 Overall applied to => 507182 (92.2%).
 -------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade15:'Air Sealing + Attic Floor Insulation + Duct sealing', Option2:'Insulation Ceiling|R-49'
-----------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade15:'Air Sealing, Attic Floor Insulation, and Duct sealing', Option2:'Insulation Ceiling|R-49'
+------------------------------------------------------------------------------------------------------------------------------
 and => 3250 (0.6%)
   or => 9867 (1.8%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
@@ -2863,9 +2995,9 @@ and => 3250 (0.6%)
 Overall applied to => 3250 (0.6%).
 ----------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade15:'Air Sealing + Attic Floor Insulation + Duct sealing', Option3:'Insulation Ceiling|R-60'
-----------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade15:'Air Sealing, Attic Floor Insulation, and Duct sealing', Option3:'Insulation Ceiling|R-60'
+------------------------------------------------------------------------------------------------------------------------------
 and => 232751 (42.3%)
   not => 540133 (98.2%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
@@ -2884,9 +3016,9 @@ and => 232751 (42.3%)
 Overall applied to => 232751 (42.3%).
 -------------------------------------
 
------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade15:'Air Sealing + Attic Floor Insulation + Duct sealing', Option4:'Duct Leakage and Insulation|5% Leakage to Outside, R-6'
------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade15:'Air Sealing, Attic Floor Insulation, and Duct sealing', Option4:'Duct Leakage and Insulation|5% Leakage to Outside, R-6'
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 18963 (3.4%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-6 => 4930 (0.9%)
   Duct Leakage and Insulation|20% Leakage to Outside, R-6 => 8913 (1.6%)
@@ -2895,9 +3027,9 @@ or => 18963 (3.4%)
 Overall applied to => 18963 (3.4%).
 -----------------------------------
 
------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade15:'Air Sealing + Attic Floor Insulation + Duct sealing', Option5:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade15:'Air Sealing, Attic Floor Insulation, and Duct sealing', Option5:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 37604 (6.8%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-8 => 9778 (1.8%)
   Duct Leakage and Insulation|20% Leakage to Outside, R-8 => 17674 (3.2%)
@@ -2906,9 +3038,9 @@ or => 37604 (6.8%)
 Overall applied to => 37604 (6.8%).
 -----------------------------------
 
------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade15:'Air Sealing + Attic Floor Insulation + Duct sealing', Option6:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade15:'Air Sealing, Attic Floor Insulation, and Duct sealing', Option6:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 199215 (36.2%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-4 => 21559 (3.9%)
   Duct Leakage and Insulation|10% Leakage to Outside, Uninsulated => 30235 (5.5%)
@@ -2994,9 +3126,9 @@ Detailed report of how the 6 options were applied to the buildings.
 |                   3 | 1, 3, 6           | 121537 (22.1%)      | 153788 (28.0%)   | 538311 (97.9%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade16:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option1:'Infiltration|5 ACH50'
-----------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade16:'Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation', Option1:'Infiltration|5 ACH50'
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 507182 (92.2%)
   Infiltration|6 ACH50 => 23513 (4.3%)
   Infiltration|7 ACH50 => 27177 (4.9%)
@@ -3012,9 +3144,9 @@ or => 507182 (92.2%)
 Overall applied to => 507182 (92.2%).
 -------------------------------------
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade16:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option2:'Insulation Ceiling|R-49'
--------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade16:'Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation', Option2:'Insulation Ceiling|R-49'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 3250 (0.6%)
   or => 9867 (1.8%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
@@ -3032,9 +3164,9 @@ and => 3250 (0.6%)
 Overall applied to => 3250 (0.6%).
 ----------------------------------
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade16:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option3:'Insulation Ceiling|R-60'
--------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade16:'Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation', Option3:'Insulation Ceiling|R-60'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 232751 (42.3%)
   not => 540133 (98.2%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
@@ -3053,9 +3185,9 @@ and => 232751 (42.3%)
 Overall applied to => 232751 (42.3%).
 -------------------------------------
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade16:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option4:'Duct Leakage and Insulation|5% Leakage to Outside, R-6'
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade16:'Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation', Option4:'Duct Leakage and Insulation|5% Leakage to Outside, R-6'
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 18963 (3.4%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-6 => 4930 (0.9%)
   Duct Leakage and Insulation|20% Leakage to Outside, R-6 => 8913 (1.6%)
@@ -3064,9 +3196,9 @@ or => 18963 (3.4%)
 Overall applied to => 18963 (3.4%).
 -----------------------------------
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade16:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option5:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade16:'Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation', Option5:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 37604 (6.8%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-8 => 9778 (1.8%)
   Duct Leakage and Insulation|20% Leakage to Outside, R-8 => 17674 (3.2%)
@@ -3075,9 +3207,9 @@ or => 37604 (6.8%)
 Overall applied to => 37604 (6.8%).
 -----------------------------------
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade16:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option6:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade16:'Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation', Option6:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 199215 (36.2%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-4 => 21559 (3.9%)
   Duct Leakage and Insulation|10% Leakage to Outside, Uninsulated => 30235 (5.5%)
@@ -3089,9 +3221,9 @@ or => 199215 (36.2%)
 Overall applied to => 199215 (36.2%).
 -------------------------------------
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade16:'Air Sealing + Attic Floor Insulation + Duct sealing + Drill and Fill Wall Insulation', Option7:'Insulation Wall|Wood Stud, R-13'
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade16:'Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation', Option7:'Insulation Wall|Wood Stud, R-13'
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Insulation Wall|Wood Stud, Uninsulated => 167614 (30.5%)
 --------------------------------------------------------
 Overall applied to => 167614 (30.5%).
@@ -3214,33 +3346,33 @@ Detailed report of how the 7 options were applied to the buildings.
 |                   4 | 1, 3, 6, 7        | 49953 (9.1%)        | 50317 (9.1%)     | 539151 (98.0%)   |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
-------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade17:'EnergyStar Windows', Option1:'Windows|EnergyStar, Northern'
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade17:'ENERGY STAR Windows', Option1:'Windows|EnergyStar, Northern'
+-------------------------------------------------------------------------------------------------
 Energystar Climate Zone 2023|Northern => 204460 (37.2%)
 -------------------------------------------------------
 Overall applied to => 204460 (37.2%).
 -------------------------------------
 
------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade17:'EnergyStar Windows', Option2:'Windows|EnergyStar, North-Central'
------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade17:'ENERGY STAR Windows', Option2:'Windows|EnergyStar, North-Central'
+------------------------------------------------------------------------------------------------------
 Energystar Climate Zone 2023|North-Central => 135647 (24.7%)
 ------------------------------------------------------------
 Overall applied to => 135647 (24.7%).
 -------------------------------------
 
------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade17:'EnergyStar Windows', Option3:'Windows|EnergyStar, South-Central'
------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade17:'ENERGY STAR Windows', Option3:'Windows|EnergyStar, South-Central'
+------------------------------------------------------------------------------------------------------
 Energystar Climate Zone 2023|South-Central => 125636 (22.8%)
 ------------------------------------------------------------
 Overall applied to => 125636 (22.8%).
 -------------------------------------
 
-------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade17:'EnergyStar Windows', Option4:'Windows|EnergyStar, Southern'
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade17:'ENERGY STAR Windows', Option4:'Windows|EnergyStar, Southern'
+-------------------------------------------------------------------------------------------------
 and => 82510 (15.0%)
   Energystar Climate Zone 2023|Southern => 84257 (15.3%)
   not => 540074 (98.2%)
@@ -3249,9 +3381,9 @@ and => 82510 (15.0%)
 Overall applied to => 82510 (15.0%).
 ------------------------------------
 
-----------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade17:'EnergyStar Windows', Option5:'Infiltration Reduction|30%'
-----------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade17:'ENERGY STAR Windows', Option5:'Infiltration Reduction|30%'
+-----------------------------------------------------------------------------------------------
 or => 183066 (33.3%)
   Windows|Single, Clear, Metal => 77837 (14.2%)
   Windows|Single, Clear, Metal, Exterior Clear Storm => 5385 (1.0%)
@@ -3261,9 +3393,9 @@ or => 183066 (33.3%)
 Overall applied to => 183066 (33.3%).
 -------------------------------------
 
-----------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade17:'EnergyStar Windows', Option6:'Infiltration Reduction|13%'
-----------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade17:'ENERGY STAR Windows', Option6:'Infiltration Reduction|13%'
+-----------------------------------------------------------------------------------------------
 or => 366934 (66.7%)
   Windows|Double, Clear, Metal, Air => 104761 (19.0%)
   Windows|Double, Clear, Metal, Air, Exterior Clear Storm => 8086 (1.5%)
@@ -3310,9 +3442,9 @@ Detailed report of how the 6 options were applied to the buildings.
 |                   2 | 4, 6              | 39110 (7.1%)        | 548253 (99.7%)   | 550000 (100.0%)  |
 +---------------------+-------------------+---------------------+------------------+------------------+
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade18:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation with Duct Sealing', Option1:'HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0'
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing', Option1:'HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0'
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413415 (75.2%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
@@ -3350,9 +3482,9 @@ and => 388840 (70.7%)
 Overall applied to => 379889 (69.1%).
 -------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade18:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation with Duct Sealing', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing', Option2:'HVAC Cooling Efficiency|Ducted Heat Pump'
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 413415 (75.2%)
   HVAC Has Ducts|Yes => 423604 (77.0%)
   not => 489615 (89.0%)
@@ -3390,9 +3522,9 @@ and => 388840 (70.7%)
 Overall applied to => 379889 (69.1%).
 -------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade18:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation with Duct Sealing', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing', Option3:'HVAC Cooling Partial Space Conditioning|100% Conditioned'
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HVAC Has Ducts|Yes => 423604 (77.0%)
 ------------------------------------
 Package Apply Logic Report
@@ -3422,9 +3554,9 @@ and => 388840 (70.7%)
 Overall applied to => 388840 (70.7%).
 -------------------------------------
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade18:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation with Duct Sealing', Option4:'Infiltration|5 ACH50'
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing', Option4:'Infiltration|5 ACH50'
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 507182 (92.2%)
   Infiltration|6 ACH50 => 23513 (4.3%)
   Infiltration|7 ACH50 => 27177 (4.9%)
@@ -3464,9 +3596,9 @@ and => 388840 (70.7%)
 Overall applied to => 355357 (64.6%).
 -------------------------------------
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade18:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation with Duct Sealing', Option5:'Insulation Ceiling|R-49'
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing', Option5:'Insulation Ceiling|R-49'
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 3250 (0.6%)
   or => 9867 (1.8%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
@@ -3508,9 +3640,9 @@ and => 388840 (70.7%)
 Overall applied to => 2356 (0.4%).
 ----------------------------------
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade18:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation with Duct Sealing', Option6:'Insulation Ceiling|R-60'
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing', Option6:'Insulation Ceiling|R-60'
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 and => 232751 (42.3%)
   not => 540133 (98.2%)
     ASHRAE IECC Climate Zone 2004|1A => 9867 (1.8%)
@@ -3553,9 +3685,9 @@ and => 388840 (70.7%)
 Overall applied to => 190395 (34.6%).
 -------------------------------------
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade18:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation with Duct Sealing', Option7:'Duct Leakage and Insulation|5% Leakage to Outside, R-6'
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing', Option7:'Duct Leakage and Insulation|5% Leakage to Outside, R-6'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 18963 (3.4%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-6 => 4930 (0.9%)
   Duct Leakage and Insulation|20% Leakage to Outside, R-6 => 8913 (1.6%)
@@ -3588,9 +3720,9 @@ and => 388840 (70.7%)
 Overall applied to => 16441 (3.0%).
 -----------------------------------
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade18:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation with Duct Sealing', Option8:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing', Option8:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 37604 (6.8%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-8 => 9778 (1.8%)
   Duct Leakage and Insulation|20% Leakage to Outside, R-8 => 17674 (3.2%)
@@ -3623,9 +3755,9 @@ and => 388840 (70.7%)
 Overall applied to => 34833 (6.3%).
 -----------------------------------
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Option Apply Report for - Upgrade18:'Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation with Duct Sealing', Option9:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Option Apply Report for - Upgrade18:'Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing', Option9:'Duct Leakage and Insulation|5% Leakage to Outside, R-8'
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 or => 199215 (36.2%)
   Duct Leakage and Insulation|10% Leakage to Outside, R-4 => 21559 (3.9%)
   Duct Leakage and Insulation|10% Leakage to Outside, Uninsulated => 30235 (5.5%)
