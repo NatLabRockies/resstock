@@ -633,7 +633,7 @@ upgrades:
         apply_logic:
           - not: Heating Fuel|Natural Gas
 
-  - upgrade_name: Propane or Fuel Oil Furnace 95% AFUE
+  - upgrade_name: Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE
     package_apply_logic: *remove_heating_shared_other_wood
     options:
       - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
@@ -659,7 +659,7 @@ upgrades:
             - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
             - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
 
-  - upgrade_name: Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025
+  - upgrade_name: Minimum Efficiency Furnaces and Air Conditioners Circa 2025
     package_apply_logic:
       and:
         - *fossil_fuel_or_electricity
