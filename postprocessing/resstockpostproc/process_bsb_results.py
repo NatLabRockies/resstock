@@ -13,7 +13,10 @@ either be in their own folders (baseline and upgrades) or all be in the same fol
 import sys
 import polars as pl
 from pathlib import Path
-from resstockpostproc.process_metadata import publish_baseline_annual_results, publish_upgrade_annual_results
+from resstockpostproc.process_metadata import (
+    publish_baseline_annual_results,
+    publish_upgrade_annual_results,
+)
 import re
 
 
@@ -49,8 +52,7 @@ def process_results(raw_results_dir: str, output_dir: str) -> None:
         up_info = re.search(r"up(\d+)", upgrade_file.name)
         if up_info is None:
             continue
-        else:
-            upgrade_num = int(up_info.group(1))
+        upgrade_num = int(up_info.group(1))
 
         print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_num}")
         upgrade_df = read_file(upgrade_file)
@@ -84,20 +86,22 @@ def write_file(df: pl.LazyFrame, output_path: Path, upgrade: int):
     df.sink_csv(csv_file)
     print(f"Wrote {upgrade} to {parquet_file} and {csv_file}")
 
+
 if __name__ == "__main__":
     import argparse
+
     parser = argparse.ArgumentParser(
         description="Process raw BuildStock results and write transformed data"
     )
     parser.add_argument(
         "raw_results_dir",
         default="Users/radhikar/Documents/buildstock2025/resstock/postprocessing/resstockpostproc/standard_plots/sdr_plots/s3_data/res-sdr/testing-sdr-fy25/ghp_envelope_0807_30k/raw_results",
-        help="Directory containing raw BuildStock results"
+        help="Directory containing raw BuildStock results",
     )
     parser.add_argument(
         "output_dir",
         default="Users/radhikar/Documents/buildstock2025/resstock/postprocessing/resstockpostproc/standard_plots/sdr_plots/s3_data/res-sdr/testing-sdr-fy25/ghp_envelope_0807_30k/annual_results",
-        help="Directory to write transformed results"
+        help="Directory to write transformed results",
     )
     args = parser.parse_args()
     process_results(args.raw_results_dir, args.output_dir)
