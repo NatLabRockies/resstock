@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script to take in raw BuildStockBatch results_csv / parquet and convert them to pub_annual version.
+Script to take in raw BuildStockBatch results_csvs / parquet and convert them to pub_annual version.
 
 Example usage:
 uv run resstockpostproc/process_bsb_results.py /path/to/bsb_raw_results /path/to/output_dir
@@ -16,10 +16,11 @@ from pathlib import Path
 from resstockpostproc.process_metadata import publish_baseline_annual_results, publish_upgrade_annual_results
 import re
 
+
 def process_results(raw_results_dir: str, output_dir: str) -> None:
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
-    result_files = list(Path(raw_results_dir).glob("*"))
+    result_files = list(Path(raw_results_dir).rglob("*"))
     baseline_files = [f for f in result_files if "up00" in f.name.lower()]
     upgrade_files = [f for f in result_files if "up00" not in f.name.lower()]
 
@@ -32,7 +33,8 @@ def process_results(raw_results_dir: str, output_dir: str) -> None:
 
     baseline_file = baseline_files[0]
     print(f"Processing baseline file: {baseline_file}")
-    baseline_df = pl.scan_parquet(baseline_file)
+    baseline_df = read_file(baseline_file)
+
     failed_bldgs = (
         baseline_df.filter(pl.col("completed_status") == "Fail")
         .select(pl.col("building_id"))
@@ -44,13 +46,32 @@ def process_results(raw_results_dir: str, output_dir: str) -> None:
     write_file(bs_pub_df, output_path, upgrade=0)
 
     for upgrade_file in upgrade_files:
-        upgrade_num = int(re.search(r"up(\d+)", upgrade_file.name).group(1))
+        up_info = re.search(r"up(\d+)", upgrade_file.name)
+        if up_info is None:
+            continue
+        else:
+            upgrade_num = int(up_info.group(1))
+
         print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_num}")
-        upgrade_df = pl.scan_parquet(upgrade_file)
+        upgrade_df = read_file(upgrade_file)
         up_up_df = publish_upgrade_annual_results(
             failed_bldgs, bs_pub_df, upgrade_df, upgrade_num
         )
         write_file(up_up_df, output_path, upgrade_num)
+
+
+def read_file(file: Path) -> pl.LazyFrame:
+    match file.suffix:
+        case ".parquet":
+            return pl.scan_parquet(file)
+        case ".csv":
+            return pl.scan_csv(file)
+        case ".gz":
+            assert file.stem.endswith(".csv"), f"gz file is not a csv: {file}"
+            return pl.scan_csv(file)
+        case _:
+            raise ValueError(f"Unsupported file type: {file}")
+
 
 def write_file(df: pl.LazyFrame, output_path: Path, upgrade: int):
     parquet_file_dir = output_path / "parquet" / f"upgrade={upgrade}"
