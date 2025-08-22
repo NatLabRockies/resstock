@@ -585,3 +585,6 @@ Row Index,Sums To,Annual Name,Annual Units,Timeseries ResStock Name,Timeseries B
 584,,,,,schedules_electric_vehicle_discharging,frac,Availability schedule for electric vehicle discharging.
 585,,,,,schedules_peak_period,frac,Load flexibility measure ouput that indicates when the system is in the peak demand period.
 586,,,,,schedules_pre_peak_period,frac,Load flexibility measure ouput that identifies when the system is in the period leading up to the peak demand period.
+587,,,,People Sensible Heating Rate: Occupants,people_sensible_heating_rate__occupants__w,W,People Sensible Heating Rate
+588,,,,People Total Heating Rate: Occupants,people_total_heating_rate__occupants__w,W,People Total Heating Rate
+589,,,,Site Outdoor Air Humidity Ratio: Environment,site_outdoor_air_humidity_ratio__environment__kgwater/kgdryair,kgWater/kgDryAir,Site Outdoor Air Humidity Ratio Environment

@@ -271,4 +271,27 @@ report_utility_bills.register_monthly_bills,Registers monthly utility bills with
 upgrade_costs.applicable,The measure was applied to the workflow.,bool
 upgrade_costs.debug,"If true, retain existing and upgraded intermediate files.",bool
 upgrade_costs.upgrade_cost_usd,Total cost of the upgrade.,float
+upgrade_costs.door_area_ft_2,"Total area of doors in the building in square feet.",float
+upgrade_costs.duct_unconditioned_surface_area_ft_2,"Total unconditioned surface area of ducts in the building in square feet.",float
+upgrade_costs.floor_area_attic_ft_2,"Total attic floor area in the building in square feet.",float
+upgrade_costs.floor_area_attic_insulation_increase_ft_2_delta_r_value,"Total attic floor area in the building in square feet.",float
+upgrade_costs.floor_area_conditioned_ft_2,"Total conditioned floor area in the building in square feet.",float
+upgrade_costs.floor_area_conditioned_infiltration_reduction_ft_2_delta_ach_50,"Total conditioned floor area in the building in square feet.",float
+upgrade_costs.floor_area_foundation_ft_2,"Total foundation floor area in the building in square feet.",float
+upgrade_costs.floor_area_lighting_ft_2,"Total floor area in the building in square feet.",float
+upgrade_costs.flow_rate_mechanical_ventilation_cfm,"Total flow rate of mechanical ventilation in cubic feet per minute.",float
+upgrade_costs.rim_joist_area_above_grade_exterior_ft_2,"Total rim joist area above grade in the building in square feet.",float
+upgrade_costs.roof_area_ft_2,"Total roof area in the building in square feet.",float
+upgrade_costs.size_cooling_system_primary_k_btu_h,"Total size of primary cooling system in the building in kilowatt-hours.",float
+upgrade_costs.size_heat_pump_backup_primary_k_btu_h,"Total size of primary heat pump backup in the building in kilowatt-hours.",float
+upgrade_costs.size_heating_system_primary_k_btu_h,"Total size of primary heating system in the building in kilowatt-hours.",float
+upgrade_costs.size_heating_system_secondary_k_btu_h,"Total size of secondary heating system in the building in kilowatt-hours.",float
+upgrade_costs.size_water_heater_gal,"Total size of water heater in the building in gallons.",float
+upgrade_costs.slab_perimeter_exposed_conditioned_ft,"Total perimeter of slab exposed in the building in feet.",float
+upgrade_costs.upgrade_cost_usd,"Total cost of the upgrade in US dollars.",float
+upgrade_costs.wall_area_above_grade_conditioned_ft_2,"Total wall area above grade in the building in square feet.",float
+upgrade_costs.wall_area_above_grade_exterior_ft_2,"Total wall area above grade in the building in square feet.",float
+upgrade_costs.wall_area_below_grade_ft_2,"Total wall area below grade in the building in square feet.",float
+upgrade_costs.window_area_ft_2,"Total window area in the building in square feet.",float
+upgrade_costs.option_<option_number>_name,"Name of the option.",string
 qoi_report.applicable,The measure was applied to the workflow.,bool
