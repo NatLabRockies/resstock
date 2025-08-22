@@ -2,29 +2,33 @@ import polars as pl
 from pathlib import Path
 
 data_dir = Path(__file__).parent / "resources" / "income_maps"
+bldg_id = "bldg_id"
+rep_inc = "in.representative_income"
+
 def process_income_lookup(geography):
     """
     geography option: PUMA, State, Census Division
 
     """
     deps = ["Occupants", "Federal Poverty Level", "Tenure", "Geometry Building Type RECS", "Income"]
-    if geography == "County and PUMA":
-        ext = "CountyandPUMA_Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
-    elif geography == "PUMA":
-        ext = "PUMA_Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
-    elif geography == "State":
-        ext = "State_Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
-    elif geography == "Census Division":
-        ext = "CensusDivision_Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
-    elif geography == "Census Region":
-        ext = "CensusRegion_Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
-    elif geography == "National":
-        ext = "Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
-    elif geography == "National2":
-        ext = "Occupants_FederalPovertyLevel"
-        deps = ["Occupants", "Federal Poverty Level", "Income"]
-    else:
-        raise ValueError(f"geography={geography} not supported")
+    match geography:
+        case "County and PUMA":
+            ext = "CountyandPUMA_Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
+        case "PUMA":
+            ext = "PUMA_Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
+        case "State":
+            ext = "State_Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
+        case "Census Division":
+            ext = "CensusDivision_Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
+        case "Census Region":
+            ext = "CensusRegion_Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
+        case "National":
+            ext = "Occupants_FederalPovertyLevel_Tenure_GeometryBuildingTypeRECS"
+        case "National2":
+            ext = "Occupants_FederalPovertyLevel"
+            deps = ["Occupants", "Federal Poverty Level", "Income"]
+        case _:
+            raise ValueError(f"geography={geography} not supported")
     file = f"income_bin_representative_values_by_{ext}.parquet"
 
     income_lookup = pl.read_parquet(data_dir / file)
@@ -32,13 +36,14 @@ def process_income_lookup(geography):
         deps = [geography] + deps
 
     income_col = "weighted_median"
-    income_lookup = income_lookup.select(deps + [income_col]).drop_nulls()
+    income_lookup = income_lookup.select(deps + [pl.col(income_col).round(0)]).drop_nulls()
     income_lookup = income_lookup.rename(lambda col: f"in.{col.lower().replace(' ', '_')}")
-    income_lookup = income_lookup.rename({f"in.{income_col}": "rep_income"})
+    income_lookup = income_lookup.rename({f"in.{income_col}": rep_inc})
 
     return income_lookup, deps
 
 def assign_representative_income(df, return_map_only=False):
+
     non_geo_cols = [
         "in.occupants",
         "in.federal_poverty_level",
@@ -56,38 +61,49 @@ def assign_representative_income(df, return_map_only=False):
     geo_cols = [
         "in." + geo.lower().replace(" ", "_") for geo in geographies
     ]
-    df = df.select(geo_cols + non_geo_cols)
     geographies += ["National", "National2"]
 
     # map rep income by increasingly large geographic resolution
-    remaining_df = df
+    remaining_df = df.select([bldg_id] + geo_cols + non_geo_cols)
     matched_dfs = []
     for idx, geo in enumerate(geographies):
         income_lookup, deps = process_income_lookup(geo)
-        if geo == "National":
-            keys = non_geo_cols
-        elif geo == "National2":
-            keys = non_geo_cols[:3]
-        else:
-            keys = [geo_cols[idx]] + non_geo_cols
+        match geo:
+            case "National":
+                keys = non_geo_cols
+            case "National2":
+                keys = non_geo_cols[:3]
+            case _:
+                keys = [geo_cols[idx]] + non_geo_cols
 
-        # map value by County and PUMA
+        if rep_inc in remaining_df.columns:
+            remaining_df = remaining_df.drop(rep_inc)
+
         join_df = remaining_df.join(
             income_lookup,
             on=keys,
             how="left",
         )
-        matched_dfs.append(join_df.filter(pl.col("rep_income").is_not_null()))
-        remaining_df = join_df.filter(pl.col("rep_income").is_null())
-    
+        matched_dfs.append(join_df.filter(pl.col(rep_inc).is_not_null()))
+        remaining_df = join_df.filter(pl.col(rep_inc).is_null())
 
-    cond = (df["build_existing_model.income"]!="Not Available") & (df["rep_income"].isna())
-    assert len(df[cond]) == 0, f"rep_income could not be mapped for {len(df[cond])=} rows\n{df.loc[cond]}"
+        if len(remaining_df) == 0:
+            print(f"Mapping completed, highest resolution used: {geo}")
+            break
 
-    df["rep_income"] = df["rep_income"].round(0)
-    print("Note: rep_income is not available for vacant units, which have 'Not Available' for Income.")
+    to_concat = matched_dfs
+    if len(remaining_df) > 0:
+        to_concat.append(remaining_df)
+    df2 = pl.concat(to_concat)
 
+    # QC
+    check_df = df2.filter((pl.col("in.income")!="Not Available") & (pl.col(rep_inc).is_null()))
+    assert len(check_df) == 0, f"rep_income could not be mapped for {len(check_df)} rows\n{check_df}"
+
+    print(f"Note: {rep_inc} is not available for vacant units, which have 'Not Available' for in.income")
+
+    df3 = df2.select([bldg_id, rep_inc])
     if return_map_only:
-        return df[["building_id", "rep_income"]]
+        return df3
 
-    return df
+    return df.join(df3, on=bldg_id, how="left")
