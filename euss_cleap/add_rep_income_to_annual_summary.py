@@ -121,7 +121,7 @@ def assign_representative_income(df, return_map_only=False):
             )
             if len(df_section[df_section["rep_income"].isna()]) == 0:
                 print(
-                    f"Highest resolution used for mapping representative income: {geography}"
+                    f"Highest resolution used for mapping representative income: {geo}"
                 )
                 break
 
