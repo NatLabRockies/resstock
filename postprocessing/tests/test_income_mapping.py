@@ -34,12 +34,8 @@ def test_income_mapping():
     )
     test_df2 = assign_representative_income(test_df)
 
-    assert (
-        test_df2["bldg_id"].to_list() == test_df["bldg_id"].to_list()
-    ), "unexpected bldg_id"
-    assert set(test_df2.columns) == set(
-        test_df.columns + ["in.representative_income"]
-    ), "unexpected cols"
+    assert test_df2["bldg_id"].to_list() == test_df["bldg_id"].to_list(), "unexpected bldg_id"
+    assert set(test_df2.columns) == set(test_df.columns + ["in.representative_income"]), "unexpected cols"
     assert assign_representative_income(test_df, return_map_only=True).columns == [
         "bldg_id",
         "in.representative_income",

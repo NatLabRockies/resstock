@@ -6,9 +6,7 @@ bldg_id = "bldg_id"
 rep_inc = "in.representative_income"
 
 
-def process_income_lookup(
-    geography: str, lazy: bool = False
-) -> tuple[pl.DataFrame, list[str]]:
+def process_income_lookup(geography: str, lazy: bool = False) -> tuple[pl.DataFrame, list[str]]:
 
     deps = [
         "Occupants",
@@ -46,20 +44,14 @@ def process_income_lookup(
         deps = [geography] + deps
 
     income_col = "weighted_median"
-    income_lookup = income_lookup.select(
-        deps + [pl.col(income_col).round(0)]
-    ).drop_nulls()
-    income_lookup = income_lookup.rename(
-        lambda col: f"in.{col.lower().replace(' ', '_')}"
-    )
+    income_lookup = income_lookup.select(deps + [pl.col(income_col).round(0)]).drop_nulls()
+    income_lookup = income_lookup.rename(lambda col: f"in.{col.lower().replace(' ', '_')}")
     income_lookup = income_lookup.rename({f"in.{income_col}": rep_inc})
 
     return income_lookup, deps
 
 
-def assign_representative_income(
-    df: pl.LazyFrame | pl.DataFrame, return_map_only: bool = False
-) -> pl.LazyFrame:
+def assign_representative_income(df: pl.LazyFrame | pl.DataFrame, return_map_only: bool = False) -> pl.LazyFrame:
 
     lazy = isinstance(df, pl.LazyFrame)
 
@@ -112,17 +104,11 @@ def assign_representative_income(
     df2 = pl.concat(matched_dfs + [remaining_df])
 
     # QC
-    check_df = df2.filter(
-        (pl.col("in.income") != "Not Available") & (pl.col(rep_inc).is_null())
-    )
+    check_df = df2.filter((pl.col("in.income") != "Not Available") & (pl.col(rep_inc).is_null()))
     check_df = check_df.collect() if lazy else check_df
-    assert (
-        len(check_df) == 0
-    ), f"rep_income could not be mapped for {len(check_df)} rows\n{check_df}"
+    assert len(check_df) == 0, f"rep_income could not be mapped for {len(check_df)} rows\n{check_df}"
 
-    print(
-        f"Note: {rep_inc} is not available for vacant units, which have 'Not Available' for in.income"
-    )
+    print(f"Note: {rep_inc} is not available for vacant units, which have 'Not Available' for in.income")
 
     df3 = df2.select([bldg_id, rep_inc])
     if return_map_only:
