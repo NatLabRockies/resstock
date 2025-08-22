@@ -15,9 +15,10 @@ baseline:
 
 # Sampler type and number of data points per baseline or upgrade
 sampler:
-  type: residential_quota
+  type: precomputed
+  # type: residential_quota # For production run
   args:
-    n_datapoints: 250
+    sample_file: resources/national_minimal_buildstock.csv # For CI
 
 # NREL High Performance Computing machine configuration
 # Not used if running buildstock_local (local tests and CI)
@@ -59,7 +60,7 @@ workflow_generator:
   args:
     # Annual simulation and timestep
     build_existing_model:
-      simulation_control_timestep: 15
+      simulation_control_timestep: 60
       simulation_control_run_period_begin_month: 1
       simulation_control_run_period_begin_day_of_month: 1
       simulation_control_run_period_end_month: 12
