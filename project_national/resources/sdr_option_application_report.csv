@@ -3,28 +3,28 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,2,HVAC Heating Type And Fuel|Natural Gas Fuel Furnace,206587,37.6
 1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,3,Heating Fuel|Natural Gas,198854,36.2
 1,Natural Gas Furnace 95% AFUE for All Dwellings with Ducts,-1,All,408811,74.3
-2,Propane or Fuel Oil Furnace 95% AFUE,1,"HVAC Heating Efficiency|Fuel Furnace, 95% AFUE",18676,3.4
-2,Propane or Fuel Oil Furnace 95% AFUE,2,"HVAC Heating Efficiency|Fuel Furnace, 88% AFUE",13201,2.4
-2,Propane or Fuel Oil Furnace 95% AFUE,-1,All,31877,5.8
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",1,"HVAC Heating Efficiency|Electric Furnace, 100% AFUE",61418,11.2
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",2,"HVAC Heating Efficiency|Electric Boiler, 100% AFUE",379,0.1
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",3,"HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency",10662,1.9
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",4,"HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE",2023,0.4
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",5,"HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE",1978,0.4
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",6,"HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE",4293,0.8
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",7,"HVAC Heating Efficiency|Fuel Boiler, 80% AFUE",3547,0.6
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",8,"HVAC Heating Efficiency|Fuel Boiler, 83% AFUE",979,0.2
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",9,"HVAC Heating Efficiency|Fuel Boiler, 90% AFUE",582,0.1
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",10,"HVAC Heating Efficiency|Fuel Furnace, 80% AFUE",138455,25.2
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",11,"HVAC Heating Efficiency|Fuel Furnace, 83% AFUE",13201,2.4
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",12,"HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE",84157,15.3
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",13,"HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2",87137,15.8
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",14,HVAC Cooling Efficiency|Ducted Heat Pump,87137,15.8
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",15,"HVAC Cooling Efficiency|AC, SEER2 14.3",100663,18.3
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",16,"HVAC Cooling Efficiency|AC, SEER2 13.4",93128,16.9
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",17,"HVAC Cooling Efficiency|AC, SEER 15",72152,13.1
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",18,"HVAC Cooling Efficiency|Room AC, EER 12.0",34441,6.3
-3,"Minimum Efficiency Boilers, Furnaces, and Air Conditioners Circa 2025",-1,All,413614,75.2
+2,Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE,1,"HVAC Heating Efficiency|Fuel Furnace, 95% AFUE",18676,3.4
+2,Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE,2,"HVAC Heating Efficiency|Fuel Furnace, 88% AFUE",13201,2.4
+2,Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE,-1,All,31877,5.8
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,1,"HVAC Heating Efficiency|Electric Furnace, 100% AFUE",61418,11.2
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,2,"HVAC Heating Efficiency|Electric Boiler, 100% AFUE",379,0.1
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,3,"HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency",10662,1.9
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,4,"HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE",2023,0.4
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,5,"HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE",1978,0.4
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,6,"HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE",4293,0.8
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,7,"HVAC Heating Efficiency|Fuel Boiler, 80% AFUE",3547,0.6
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,8,"HVAC Heating Efficiency|Fuel Boiler, 83% AFUE",979,0.2
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,9,"HVAC Heating Efficiency|Fuel Boiler, 90% AFUE",582,0.1
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,10,"HVAC Heating Efficiency|Fuel Furnace, 80% AFUE",138455,25.2
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,11,"HVAC Heating Efficiency|Fuel Furnace, 83% AFUE",13201,2.4
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,12,"HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE",84157,15.3
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,13,"HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2",87137,15.8
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,14,HVAC Cooling Efficiency|Ducted Heat Pump,87137,15.8
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,15,"HVAC Cooling Efficiency|AC, SEER2 14.3",100663,18.3
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,16,"HVAC Cooling Efficiency|AC, SEER2 13.4",93128,16.9
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,17,"HVAC Cooling Efficiency|AC, SEER 15",72152,13.1
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,18,"HVAC Cooling Efficiency|Room AC, EER 12.0",34441,6.3
+3,Minimum Efficiency Furnaces and Air Conditioners Circa 2025,-1,All,413614,75.2
 4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,1,"HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate",413614,75.2
 4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,2,HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted,413614,75.2
 4,Typical Cold Climate Ducted Air Source Heat Pump Circa 2025,3,HVAC Cooling Efficiency|Ducted Heat Pump,413614,75.2
