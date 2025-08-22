@@ -157,10 +157,11 @@ class ApplyUpgradeTest < Minitest::Test
     expected_values['adjusted_fan_watts_per_cfm'] = nil
     _test_duct_restriction(false, nil, nil, expected_values)
 
+    cfm = 2000.0 / 0.75
     expected_values = {
-      'baseline_max_airflow_cfm' => 2000.0 / 0.75,
-      'heat_pump_heating_autosizing_limit' => (2000.0 / 0.75) / 400.0 * 12000.0,
-      'heat_pump_cooling_autosizing_limit' => (2000.0 / 0.75) / 400.0 * 12000.0
+      'baseline_max_airflow_cfm' => cfm,
+      'heat_pump_heating_autosizing_limit' => cfm / 400.0 * 12000.0,
+      'heat_pump_cooling_autosizing_limit' => cfm / 400.0 * 12000.0
     }
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.076
@@ -173,7 +174,7 @@ class ApplyUpgradeTest < Minitest::Test
     _test_duct_restriction(true, 1400.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.375
-    _test_duct_restriction(true, 2000.0 / 0.75, 0.375, expected_values)
+    _test_duct_restriction(true, cfm, 0.375, expected_values)
   end
 
   def test_SFD_2story_CS_UA_AC2_FuelBoiler_FuelTankWH
@@ -247,10 +248,11 @@ class ApplyUpgradeTest < Minitest::Test
     expected_values['adjusted_fan_watts_per_cfm'] = nil
     _test_duct_restriction(false, nil, nil, expected_values)
 
+    cfm = 1800.0
     expected_values = {
-      'baseline_max_airflow_cfm' => 1800.0,
-      'heat_pump_heating_autosizing_limit' => 1800.0 / 400.0 * 12000.0,
-      'heat_pump_cooling_autosizing_limit' => 1800.0 / 400.0 * 12000.0
+      'baseline_max_airflow_cfm' => cfm,
+      'heat_pump_heating_autosizing_limit' => cfm / 400.0 * 12000.0,
+      'heat_pump_cooling_autosizing_limit' => cfm / 400.0 * 12000.0
     }
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.167
@@ -263,7 +265,7 @@ class ApplyUpgradeTest < Minitest::Test
     _test_duct_restriction(true, 1400.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.375
-    _test_duct_restriction(true, 1799.0, 0.375, expected_values)
+    _test_duct_restriction(true, cfm, 0.375, expected_values)
   end
 
   def test_SFD_2story_FB_UA_GRG_AC1_ElecBaseboard_FuelTankWH
@@ -337,10 +339,11 @@ class ApplyUpgradeTest < Minitest::Test
     expected_values['adjusted_fan_watts_per_cfm'] = nil
     _test_duct_restriction(false, nil, nil, expected_values)
 
+    cfm = 1800.0
     expected_values = {
-      'baseline_max_airflow_cfm' => 1800.0,
-      'heat_pump_heating_autosizing_limit' => 1800.0 / 400.0 * 12000.0,
-      'heat_pump_cooling_autosizing_limit' => 1800.0 / 400.0 * 12000.0
+      'baseline_max_airflow_cfm' => cfm,
+      'heat_pump_heating_autosizing_limit' => cfm / 400.0 * 12000.0,
+      'heat_pump_cooling_autosizing_limit' => cfm / 400.0 * 12000.0
     }
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.166
@@ -353,7 +356,7 @@ class ApplyUpgradeTest < Minitest::Test
     _test_duct_restriction(true, 1400.0, 0.375, expected_values)
 
     expected_values['adjusted_fan_watts_per_cfm'] = 0.375
-    _test_duct_restriction(true, 1801.0, 0.375, expected_values)
+    _test_duct_restriction(true, cfm, 0.375, expected_values)
   end
 
   private
