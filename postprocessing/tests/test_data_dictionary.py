@@ -4,9 +4,11 @@ import yaml
 from resstockpostproc.process_data_dict import get_annual_results_schema, get_resstock_timeseries_schema, get_bsb_timeseries_schema
 import pytest
 
-def test_annual_data_dictionary():
+
+@pytest.mark.parametrize("yaml_path", ["sdr_upgrades_tmy3.yml", "national_baseline.yml"])
+def test_annual_data_dictionary(yaml_path: str):
     current_dir = Path(__file__).parent
-    sdr_yaml_path = current_dir.parent.parent / "project_national" / "sdr_upgrades_tmy3.yml"
+    sdr_yaml_path = current_dir.parent.parent / "project_national" / yaml_path
     sdr_dict_path = current_dir.parent / "resstockpostproc" / "resources" / "publication" / "sdr_column_definitions.csv"
     cfg = yaml.safe_load(sdr_yaml_path.read_text())
     annual_results_schema = get_annual_results_schema(cfg)
@@ -15,6 +17,8 @@ def test_annual_data_dictionary():
         raise ValueError(
             "get_annual_results_schema function wasn't able to resolve these columns: \n {unresolved_cols}"
         )
+    if yaml_path == "national_baseline.yml":
+        return  # sdr_column_definitions are based on the sdr_upgrades_tmy3.yml
 
     sdr_dict = pl.read_csv(sdr_dict_path, infer_schema_length=0)
     sdr_names = [n for n in sdr_dict["Annual Name"].to_list() if n is not None]

@@ -83,10 +83,11 @@ def get_annual_results_schema(cfg: dict):
     input_schema_dict |= {"step_failures":pl.String}
 
     # Handle upgrade_costs.option_<option_number>_name
-    max_num_options = max(len(upgrade.get("options", [])) for upgrade in cfg.get("upgrades", []))
     del input_schema_dict["upgrade_costs.option_<option_number>_name"]
-    for i in range(1, max_num_options + 1):
-        input_schema_dict[f"upgrade_costs.option_{i:02}_name"] = pl.String
+    if upgrades := cfg.get("upgrades", []):
+        max_num_options = max(len(upgrade.get("options", [])) for upgrade in upgrades)
+        for i in range(1, max_num_options + 1):
+            input_schema_dict[f"upgrade_costs.option_{i:02}_name"] = pl.String
     
     # Handle emissions
     emission_scenarios = [to_underscore_case(f"{scn['type']}_{scn['scenario_name']}") 
