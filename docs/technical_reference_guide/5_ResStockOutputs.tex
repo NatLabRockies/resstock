@@ -456,8 +456,8 @@ On the otherhand, the breaker space headroom in the baseline can never be negati
                 out.panel.breaker\_space.ev\_charging.count & count & Sum of electric vehicle charging occupied spaces \\ \hline
                 out.panel.breaker\_space.other.count & count & Sum of other electric load occupied spaces \\ \hline
                 
-                out.panel.constraint.capacity.<method> & bool & Whether electric panel is capacity-constrained per the given method, defined as when out.panel.load.headroom\_capacity.<method>.a <= 0 \\ \hline
-                out.panel.constraint.breaker\_space & bool & Whether electric panel is space-constrained, defined as when out.panel.breaker\_space.headroom.count <= 0 \\ \hline
+                out.panel.constraint.capacity.<method> & bool & Whether electric panel is capacity-constrained per the given method, defined as when out.panel.load.headroom\_capacity.<method>.a < 0 \\ \hline
+                out.panel.constraint.breaker\_space & bool & Whether electric panel is space-constrained, defined as when out.panel.breaker\_space.headroom.count < 0 \\ \hline
                 out.panel.constraint.overall.<method> & categorical & Summarize overall electric panel constraint per the given method as "no constraint", "space constrained only", "capacity constrained only", or "capacity and space constrained" \\ \hline
 
                 out.panel.load.total\_load.<method>.w.savings & W & For an upgrade measure only, total service feeder load reduced per selected NEC method \\ \hline
