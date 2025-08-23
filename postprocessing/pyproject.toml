@@ -37,9 +37,7 @@ include = ["resstockpostproc"]
 
 [tool.setuptools.package-data]
 resstockpostproc = [
-    "resources/gisdata/*.geojson",
-    "resources/gisdata/*.csv",
-    "resources/publication/sdr_column_definitions.csv"
+    "resources/**/*"
 ]
 
 [project.optional-dependencies]
