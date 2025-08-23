@@ -37,7 +37,7 @@ include = ["resstockpostproc"]
 
 [tool.setuptools.package-data]
 resstockpostproc = [
-    "resources"
+    "resources/**/*"
 ]
 
 [project.optional-dependencies]
