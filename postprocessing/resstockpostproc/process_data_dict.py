@@ -159,6 +159,7 @@ def get_bsb_timeseries_schema(cfg: dict):
     other_cols = [col for col in output_cols if col not in listed_cols]
     new_order = time_cols + energy_cols + component_load_cols + emission_cols + other_cols + schedule_cols
     output_schema_dict = {col: output_schema_dict[col] for col in new_order}
+    output_schema_dict = {'building_id': pl.Int32} | output_schema_dict
     return output_schema_dict   
 
 def get_resstock_timeseries_schema(cfg: dict):
