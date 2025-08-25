@@ -165,7 +165,8 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
         "out.hot_water" in col or
         "out.panel" in col or
         "out.capacity" in col or
-        "out.unmet_hours.ev_driving" in col
+        "out.unmet_hours.ev_driving" in col or
+        "out.component_load" in col
         )]
     # Selectively include the following for panels
     out_panel_cols = [col for col in all_cols if
