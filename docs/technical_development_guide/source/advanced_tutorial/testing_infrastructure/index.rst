@@ -288,13 +288,13 @@ Runs after the main CI completes successfully:
 
 - **SDR Diff**:
 
-- Generates and attaches CSV diffs as PR annotations
-- Uses a custom Python script for rich diff reporting
+  - Generates and attaches CSV diffs as PR annotations
+  - Uses a custom Python script for rich diff reporting
 
 - **Pass Checks**:
 
-- Manually marks required CI checks as passing
-- Updates GitHub commit status using the CLI
+  - Manually marks required CI checks as passing
+  - Updates GitHub commit status using the CLI
 
 Artifacts Produced
 ------------------
