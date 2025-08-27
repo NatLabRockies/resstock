@@ -703,6 +703,7 @@ jobs:
       - name: Commit the integration tests results
         run: |
           branch_name="${{ github.head_ref }}"
+          git checkout resources/options_lookup.tsv
           git pull origin $branch_name
           cp -r project_national/sdr_upgrades_tmy3/results_csvs_pub/* test/base_results/upgrades/sdr_annual
           git add test/base_results/upgrades/sdr_annual
