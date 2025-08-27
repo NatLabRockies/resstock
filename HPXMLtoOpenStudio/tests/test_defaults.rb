@@ -1842,14 +1842,14 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.cooling_systems[0].cooling_efficiency_eer2 = 11.0
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_mini_split_air_conditioner_values(default_hpxml_bldg.cooling_systems[0], 0.66, HPXML::HVACFanMotorTypeBPM, nil, -0.11, -0.22, 12345, 18.05, 11.0, 40.0, 1.0)
+    _test_default_mini_split_air_conditioner_values(default_hpxml_bldg.cooling_systems[0], 0.66, HPXML::HVACFanMotorTypeBPM, nil, -0.11, -0.22, 12345, 18.0, 11.0, 40.0, 1.0)
 
     # Test autosizing with factors
     hpxml_bldg.cooling_systems[0].cooling_capacity = nil
     hpxml_bldg.cooling_systems[0].cooling_autosizing_factor = 1.2
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_mini_split_air_conditioner_values(default_hpxml_bldg.cooling_systems[0], 0.66, HPXML::HVACFanMotorTypeBPM, nil, -0.11, -0.22, nil, 18.05, 11.0, 40.0, 1.2)
+    _test_default_mini_split_air_conditioner_values(default_hpxml_bldg.cooling_systems[0], 0.66, HPXML::HVACFanMotorTypeBPM, nil, -0.11, -0.22, nil, 18.0, 11.0, 40.0, 1.2)
 
     # Test defaults
     hpxml_bldg.cooling_systems[0].fan_watts_per_cfm = nil
@@ -1863,13 +1863,13 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.cooling_systems[0].cooling_efficiency_eer2 = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_mini_split_air_conditioner_values(default_hpxml_bldg.cooling_systems[0], 0.18, HPXML::HVACFanMotorTypeBPM, nil, 0, 0, nil, 18.05, 12.05, 19.4, 1.0)
+    _test_default_mini_split_air_conditioner_values(default_hpxml_bldg.cooling_systems[0], 0.18, HPXML::HVACFanMotorTypeBPM, nil, 0, 0, nil, 18.0, 12.03, 19.4, 1.0)
 
     # Test defaults w/ ductless
     hpxml_bldg.cooling_systems[0].distribution_system.delete
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_mini_split_air_conditioner_values(default_hpxml_bldg.cooling_systems[0], 0.07, HPXML::HVACFanMotorTypeBPM, nil, 0, 0, nil, 19.0, 12.34, 13.1, 1.0)
+    _test_default_mini_split_air_conditioner_values(default_hpxml_bldg.cooling_systems[0], 0.07, HPXML::HVACFanMotorTypeBPM, nil, 0, 0, nil, 18.0, 12.03, 13.1, 1.0)
 
     # Test defaults w/ ductless - SEER2/EER
     hpxml_bldg.cooling_systems[0].cooling_efficiency_seer2 = nil
@@ -2594,14 +2594,14 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.heat_pumps[0].backup_heating_active_during_defrost = false
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_mini_split_heat_pump_values(default_hpxml_bldg.heat_pumps[0], 0.66, HPXML::HVACFanMotorTypeBPM, nil, nil, -0.11, -0.22, 12345, 23456, 11728, 34567, 18.05, 11.0, 8.5, 40.0, 1.0, 1.0, 1.0, 99.0, HPXML::HVACPanHeaterControlTypeDefrost, false)
+    _test_default_mini_split_heat_pump_values(default_hpxml_bldg.heat_pumps[0], 0.66, HPXML::HVACFanMotorTypeBPM, nil, nil, -0.11, -0.22, 12345, 23456, 11728, 34567, 18.0, 11.0, 8.5, 40.0, 1.0, 1.0, 1.0, 99.0, HPXML::HVACPanHeaterControlTypeDefrost, false)
 
     # Test w/ heating capacity 17F
     hpxml_bldg.heat_pumps[0].heating_capacity_17F = 9876
     hpxml_bldg.heat_pumps[0].heating_capacity_fraction_17F = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_mini_split_heat_pump_values(default_hpxml_bldg.heat_pumps[0], 0.66, HPXML::HVACFanMotorTypeBPM, nil, nil, -0.11, -0.22, 12345, 23456, 9876, 34567, 18.05, 11.0, 8.5, 40.0, 1.0, 1.0, 1.0, 99.0, HPXML::HVACPanHeaterControlTypeDefrost, false)
+    _test_default_mini_split_heat_pump_values(default_hpxml_bldg.heat_pumps[0], 0.66, HPXML::HVACFanMotorTypeBPM, nil, nil, -0.11, -0.22, 12345, 23456, 9876, 34567, 18.0, 11.0, 8.5, 40.0, 1.0, 1.0, 1.0, 99.0, HPXML::HVACPanHeaterControlTypeDefrost, false)
 
     # Test autosizing with factors
     hpxml_bldg.heat_pumps[0].cooling_capacity = nil
@@ -2613,7 +2613,7 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.heat_pumps[0].backup_heating_autosizing_factor = 1.1
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_mini_split_heat_pump_values(default_hpxml_bldg.heat_pumps[0], 0.66, HPXML::HVACFanMotorTypeBPM, nil, nil, -0.11, -0.22, nil, nil, nil, nil, 18.05, 11.0, 8.5, 40.0, 1.5, 1.2, 1.1, 99.0, HPXML::HVACPanHeaterControlTypeDefrost, false)
+    _test_default_mini_split_heat_pump_values(default_hpxml_bldg.heat_pumps[0], 0.66, HPXML::HVACFanMotorTypeBPM, nil, nil, -0.11, -0.22, nil, nil, nil, nil, 18.0, 11.0, 8.5, 40.0, 1.5, 1.2, 1.1, 99.0, HPXML::HVACPanHeaterControlTypeDefrost, false)
 
     # Test defaults
     hpxml_bldg.heat_pumps[0].fan_watts_per_cfm = nil
@@ -2637,13 +2637,13 @@ class HPXMLtoOpenStudioDefaultsTest < Minitest::Test
     hpxml_bldg.heat_pumps[0].backup_heating_active_during_defrost = nil
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_mini_split_heat_pump_values(default_hpxml_bldg.heat_pumps[0], 0.18, HPXML::HVACFanMotorTypeBPM, nil, nil, 0, 0, nil, nil, nil, nil, 18.05, 12.05, 8.5, 22.1, 1.0, 1.0, 1.0, 150.0, HPXML::HVACPanHeaterControlTypeContinuous, true)
+    _test_default_mini_split_heat_pump_values(default_hpxml_bldg.heat_pumps[0], 0.18, HPXML::HVACFanMotorTypeBPM, nil, nil, 0, 0, nil, nil, nil, nil, 18.0, 12.03, 8.5, 22.1, 1.0, 1.0, 1.0, 150.0, HPXML::HVACPanHeaterControlTypeContinuous, true)
 
     # Test defaults w/ ductless and no backup
     hpxml_bldg.heat_pumps[0].distribution_system.delete
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     _default_hpxml, default_hpxml_bldg = _test_measure()
-    _test_default_mini_split_heat_pump_values(default_hpxml_bldg.heat_pumps[0], 0.07, HPXML::HVACFanMotorTypeBPM, nil, nil, 0, 0, nil, nil, nil, nil, 19.0, 12.34, 9.0, 19.9, 1.0, 1.0, 1.0, 150.0, HPXML::HVACPanHeaterControlTypeContinuous, false)
+    _test_default_mini_split_heat_pump_values(default_hpxml_bldg.heat_pumps[0], 0.07, HPXML::HVACFanMotorTypeBPM, nil, nil, 0, 0, nil, nil, nil, nil, 18.0, 12.03, 8.5, 19.9, 1.0, 1.0, 1.0, 150.0, HPXML::HVACPanHeaterControlTypeContinuous, false)
 
     # Test defaults - SEER2/HSPF2/EER
     hpxml_bldg.heat_pumps[0].cooling_efficiency_seer2 = nil

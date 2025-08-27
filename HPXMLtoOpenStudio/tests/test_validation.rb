@@ -583,10 +583,10 @@ class HPXMLtoOpenStudioValidationTest < Minitest::Test
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].fan_motor_type = 'foo'
       when 'hvac-invalid-eer'
-        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed-seer-hspf.xml')
         hpxml_bldg.heat_pumps[0].cooling_efficiency_eer = hpxml_bldg.heat_pumps[0].cooling_efficiency_seer + 1
       when 'hvac-invalid-eer2'
-        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed-seer2-hspf2.xml')
+        hpxml, hpxml_bldg = _create_hpxml('base-hvac-air-to-air-heat-pump-1-speed.xml')
         hpxml_bldg.heat_pumps[0].cooling_efficiency_eer2 = hpxml_bldg.heat_pumps[0].cooling_efficiency_seer2 + 1
       when 'hvac-location-heating-system'
         hpxml, hpxml_bldg = _create_hpxml('base-hvac-boiler-oil-only.xml')

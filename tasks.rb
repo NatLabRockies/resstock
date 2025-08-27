@@ -1832,7 +1832,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                      cooling_system_fuel: HPXML::FuelTypeElectricity,
                                      cooling_capacity: 9600,
                                      fraction_cool_load_served: 0.1333,
-                                     cooling_efficiency_eer: 8.5)
+                                     cooling_efficiency_ceer: 8.4)
       hpxml_bldg.cooling_systems.add(id: "CoolingSystem#{hpxml_bldg.cooling_systems.size + 1}",
                                      cooling_system_type: HPXML::HVACTypePTAC,
                                      cooling_system_fuel: HPXML::FuelTypeElectricity,
@@ -1851,8 +1851,8 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                 backup_heating_efficiency_percent: 1.0,
                                 fraction_heat_load_served: 0.1,
                                 fraction_cool_load_served: 0.2,
-                                heating_efficiency_hspf: 7.7,
-                                cooling_efficiency_seer: 13,
+                                heating_efficiency_hspf2: 7.0,
+                                cooling_efficiency_seer2: 13.4,
                                 heating_capacity_17F: 4800 * 0.6,
                                 compressor_type: HPXML::HVACCompressorTypeSingleStage)
       hpxml_bldg.heat_pumps.add(id: "HeatPump#{hpxml_bldg.heat_pumps.size + 1}",
@@ -1882,8 +1882,8 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
                                 backup_heating_efficiency_percent: 1.0,
                                 fraction_heat_load_served: 0.1,
                                 fraction_cool_load_served: 0.2,
-                                heating_efficiency_hspf: 10,
-                                cooling_efficiency_seer: 19,
+                                heating_efficiency_hspf2: 9,
+                                cooling_efficiency_seer2: 19,
                                 heating_capacity_17F: 4800 * 0.6,
                                 compressor_type: HPXML::HVACCompressorTypeVariableSpeed,
                                 primary_cooling_system: true,
@@ -1955,7 +1955,7 @@ def apply_hpxml_modification_sample_files(hpxml_path, hpxml)
       hpxml_bldg.dehumidifiers.add(id: 'Dehumidifier2',
                                    type: HPXML::DehumidifierTypePortable,
                                    capacity: 30,
-                                   energy_factor: 1.6,
+                                   integrated_energy_factor: 1.9,
                                    rh_setpoint: 0.5,
                                    fraction_served: 0.25,
                                    location: HPXML::LocationConditionedSpace)
