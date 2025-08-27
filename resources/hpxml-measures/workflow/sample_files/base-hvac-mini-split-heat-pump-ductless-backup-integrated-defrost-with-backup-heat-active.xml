@@ -326,12 +326,12 @@
               <FractionHeatLoadServed>1.0</FractionHeatLoadServed>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
-                <Units>SEER</Units>
+                <Units>SEER2</Units>
                 <Value>19.0</Value>
               </AnnualCoolingEfficiency>
               <AnnualHeatingEfficiency>
-                <Units>HSPF</Units>
-                <Value>10.0</Value>
+                <Units>HSPF2</Units>
+                <Value>9.0</Value>
               </AnnualHeatingEfficiency>
               <extension>
                 <BackupHeatingActiveDuringDefrost>true</BackupHeatingActiveDuringDefrost>

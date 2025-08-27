@@ -324,8 +324,8 @@
               <CoolingCapacity>24000.0</CoolingCapacity>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
-                <Units>EER</Units>
-                <Value>8.5</Value>
+                <Units>CEER</Units>
+                <Value>8.4</Value>
               </AnnualCoolingEfficiency>
             </CoolingSystem>
           </HVACPlant>
