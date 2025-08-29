@@ -2187,9 +2187,6 @@
     "heat_pump_cooling_efficiency_type": "SEER",
     "heat_pump_cooling_efficiency": 13
   },
-  "sample_files/base-hvac-air-to-air-heat-pump-1-speed-space-constrained.xml": {
-    "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml"
-  },
   "sample_files/base-hvac-air-to-air-heat-pump-2-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-air-to-air-heat-pump-1-speed.xml",
     "heat_pump_heating_efficiency": 8.2,
@@ -2426,9 +2423,6 @@
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
     "cooling_system_cooling_efficiency_type": "SEER",
     "cooling_system_cooling_efficiency": 13
-  },
-  "sample_files/base-hvac-central-ac-only-1-speed-space-constrained.xml": {
-    "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml"
   },
   "sample_files/base-hvac-central-ac-only-2-speed.xml": {
     "parent_hpxml": "sample_files/base-hvac-central-ac-only-1-speed.xml",
