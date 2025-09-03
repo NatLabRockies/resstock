@@ -3419,6 +3419,25 @@ The second method, metered-based, is a top-down approach by using the metered el
 
 For a given upgrade, the load-based method is generally more conservative than the metered-based at estimating the number of homes with a panel capacity constraint. However, this may not be the case for homes that have high equipment utilization factors or setpoints that drive up HVAC use. Additionally, as the metered-based method does not account for the removal of any legacy loads, the method may be more conservative for certain upgrade scenarios. For example, for a home that is upgrading an electric boiler to a heat pump with integrated heat strip, the heating load is being counted twice, from the incumbent equipment as part of the annual electric peak and the new equipment.
 
+%%%%
+\paragraph{Space Heating and Cooling Loads}
+The load for space heating and cooling is determined separately and only the larger of the two is used in the load calculation. The power rating of the system is the sum of its individual components, which are summarized in Table \ref{tab:power_heat_cool}.
+For example, the power rating of a ducted heat pump is the sum of the power rating of the compressor, the air handler, and any electric backup that can operate simutaneously as the heat pump. If only the heat pump or the backup is allowed at a given time, ResStock takes only the maxium of the heat pump or the backup rating. 
+This also applies to non-ducted heat pumps, whose power rating can be estimated based on compressor and any applicable electric backup.
+
+The compressor power rating is estimated based on its design capacity using a regression equation derived from a review of over 200 direct expansion systems. The products reviewed include ducted and non-ducted heat pumps, central AC, and 240V room AC, as a similar trend is observed across them. The regression estimates the Minimum Circuit Amp of the compressor, which is then multiplied by the voltage (240V) to arrive at power. 
+The electric resistance heating power rating is directly converted from its design heating capacity at an efficiency of 100\%.
+The air handler and boiler pump power ratings are estimated from their respective OS-HPXML modeling assumptions. For fuel heating systems, their service rating only consists of their auxiliary equipment.
+
+\begin{customLongTable}{ |p{3cm}|p{4cm}|p{8cm}| }
+  {Default service rating of space heating and cooling system components.} {tab:power_heat_cool} 
+  {\textbf{System Component} & \textbf{Power Rating [W]} & \textbf{Note}}
+  Heat Pump or AC Compressor & (0.631 * Heating\_or\_Cooling\_Capacity [kBtu/h] + 1.615) * 240 & Regression of Minimum Circuit Amp, multiplied by voltage \hline
+  Electric Resistance Furnace, Boiler, or Strip Heat & Heating_Capacity [kBtu/h] * 293.07 & Convert heating capacity to power directly at 100\% efficiency \\ \hline
+  Air Handler & Air\_Flow [cfm] * Fan\_Power [W/cfm] & Default to OS-HPXML blower fan assumptions \\ \hline
+  Boiler Pump & Boiler\_Auxiliary\_Energy [kWh/yr]  / 2.08 & Default to OS-HPXML boiler pump assumptions \\
+\end{customLongTable}
+
 \subsection{Breaker Space Calculations}
 The breaker space calculation is broken out into two parts. First the total rated breaker space is determined for the panel in the baseline home. This is done by summing the number of available breaker spaces (probabilistically assigned based on housing characteristics) and the estimated total occupied spaces by major electric equipment. Table \ref{tab:breaker_spaces} below lists the electric equipment considered and their associated voltage and breaker space requirement. Generally 120V-rated equipment take up one breaker space and 240V-rated equipment take up two spaces in order to make contact with two live bus bars to get the 240V service. While space-saving breakers, such as tandem, tri, and quad breakers, are available, they are not currently modeled in ResStock.
 
@@ -3463,12 +3482,13 @@ Table \ref{tab:breaker_spaces_hp} below summarizes the breaker space requirement
 \begin{customLongTable}{ |p{3cm}|p{4cm}|p{8cm}| }
   {Default voltage and breaker space by heat pump systems.} {tab:breaker_spaces_hp} 
   {\textbf{Heat Pump System} & \textbf{Circuits} & \textbf{Breaker Spaces}}
-  Air-to-air, ducted, dual-fuel & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 120V, IDU} & \makecell[l]{ckt 1: 2*(ODU power rating in W/240V/50A).ceil \\ ckt 2: 1} \\ \hline
-  Air-to-air, ducted, no backup & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 240V, IDU} & \makecell[l]{ckt 1: 2*(ODU power rating in W/240V/50A).ceil \\ ckt 2: 2} \\ \hline
-  Air-to-air / mini-split, ducted, electric backup & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 240V, IDU + backup} & \makecell[l]{ckt 1: 2*(ODU power rating in W/240V/50A).ceil \\ ckt 2: 2*(IDU + backup power rating in W/240V/50A).ceil} \\ \hline
-  Mini-split, ductless, no backup & ckt 1: 240V, ODU & ckt 1: 2*(ODU power rating in W/240V/50A).ceil \\ \hline
-  Mini-split, ductless, electric backup & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 240V, backup} & \makecell[l]{ckt 1: 2*(ODU power rating in W/240V/50A).ceil \\ ckt 2: 2*(backup power rating in W/240V/50A).ceil} \\ \hline
-  Mini-split, ducted, no backup & ckt 1: 240V, ODU + IDU & ckt 1: 2*(ODU + IDU power rating in W/240V/50A).ceil \\
+  Air-to-air, ducted, dual-fuel & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 120V, IDU} & \makecell[l]{ckt 1: 2 * round\_up(ODU power [W] / 240V / 50A) \\ ckt 2: 1} \\ \hline
+  Air-to-air, ducted, no backup & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 240V, IDU} & \makecell[l]{ckt 1: 2 * round\_up(ODU power [W] / 240V / 50A) \\ ckt 2: 2} \\ \hline
+  Air-to-air / mini-split, ducted, electric backup & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 240V, IDU + backup} & \makecell[l]{ckt 1: 2 * round\_up(ODU power [W] / 240V / 50A) \\ ckt 2: 2 * round\_up((IDU + backup) power [W] / 240V / 50A)} \\ \hline
+  Mini-split, ductless, fuel backup & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: depends on fuel heating} & \makecell[l]{ckt 1: 2 * round\_up(ODU power [W] / 240V / 50A) \\ ckt 2: depends on fuel heating} \\ \hline
+  Mini-split, ductless, no backup & ckt 1: 240V, ODU & ckt 1: 2 * round\_up(ODU power [W] / 240V / 50A) \\ \hline
+  Mini-split, ductless, electric backup & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 240V, backup} & \makecell[l]{ckt 1: 2 * round\_up(ODU power [W] / 240V / 50A) \\ ckt 2: 2 * round\_up(backup power [W] / 240V / 50A)} \\ \hline
+  Mini-split, ducted, no backup & ckt 1: 240V, ODU + IDU & ckt 1: 2 * round\_up((ODU + IDU) power [W] / 240V / 50A) \\
 \end{customLongTable}
 
 Once the total rated breaker space is calculated, it is used to calculate the headroom breaker space in an upgrade simulation by subtracting from it the new total spaces occupied by electric loads in the upgraded home. Note, although the headroom breaker space for the baseline is an input characteristic, all space-related metrics are listed as output metrics to avoid confusion.
@@ -3511,9 +3531,7 @@ Similar to FPL, Area Median Income in ResStock is household income standardized 
 State Metro Median Income (SMMI) is a variant of Area Median Income. As the name suggests, SMMI standardizes the household income based on 2019 Income Limits set at the state level while differentiating between metropolitan and non-metropolitan areas. This metric is created primarily for the integration of socio-demographically differentiated time-use schedules from the American Time Use Survey, which tags respondents by state and metro status.
 
 \subsection{Energy Burden}\label{resstock_input_energy_burden}
-Energy burden can be calculated using the energy bills and income information from ResStock simulation summary results. Energy burden is defined as the percent of household income spent on energy bills. A household spending 6\% or more of their income on energy is generally regarded as highly energy burdened and 10\% or more as severely burdened (\cite{drehobl2020_energy_burden}).  
-For this calculation, the income bins can be converted to representative income values using a series of lookup tables derived from the ACS data. The lookup tables tabulate the weighted median income over the cross sections of income bin, occupants, FPL, tenure, building type, and different geographic resolutions, starting with the intersection of PUMA and county. The income bin gets converted to a numerical value for each housing sample by matching the mapping characteristics in the lookup table. The conversion starts with the highest geographic resolution lookup and moves to the next highest resolution if the lookup value is missing until all housing samples are converted.
-Finally, since negative and zero income are reported in ACS, any representative income at zero or less is adjusted to one so that the energy burden can be approximated.
+Energy burden can be calculated using the energy bills and income information from ResStock simulation summary results. Energy burden is defined as the percent of household income spent on energy bills. A household spending 6\% or more of their income on energy is generally regarded as highly energy burdened and 10\% or more as severely burdened (\cite{drehobl2020_energy_burden}).  For this calculation, the income bins can be converted to representative income values using a series of lookup tables derived from the ACS data. The lookup tables tabulate the weighted median income over the cross sections of income bin, occupants, FPL, tenure, building type, and different geographic resolutions, starting with the intersection of PUMA and county. The income bin gets converted to a numerical value for each housing sample by matching the mapping characteristics in the lookup table. The conversion starts with the highest geographic resolution lookup and moves to the next highest resolution if the lookup value is missing until all housing samples are converted.
 
 \subsection{Vacant Units}\label{vacant_units}
 ResStock models just over 12\% of housing units as vacant nationally, reflecting the data in PUMS 2019. In PUMS, a housing unit is considered vacant if it is not occupied at the time of the survey. This includes housing units being prepared for rent or sale, units rented or sold but not yet occupied, or units for seasonal, occasional, or migratory use. The portion of housing units that are vacant is dependent on the building type and PUMA (i.e., location). While the vacancy saturation includes samples that are only vacant part time, ResStock models all vacant units as vacant for an entire calendar year. 
