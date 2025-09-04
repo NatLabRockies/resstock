@@ -9,15 +9,15 @@ This page describes the ResStock testing infrastructure, which ensures that code
 Overview
 ========
 
-ResStock's testing infrastructure is built on **GitHub Actions** and supports:
+ResStock's testing infrastructure is built on `GitHub Actions <https://github.com/NREL/resstock/actions>`_ and supports:
 
 - **Continuous Integration (CI)** to ensure code stability
 - **Automated Testing** for model integrity and software logic
 - **Documentation Generation**
 - **Results Validation**
 
-CI is triggered automatically on pull requests, merges to key branches, or via manual dispatch.
-The system includes unit, integration, and end-to-end analysis tests.
+CI is triggered automatically on pull requests, merges to the ``develop`` and ``main`` branches, or via manual workflow dispatch.
+The test suite includes jobs for running different types of tests and tasks, including file formatting, unit and integration tests, as well as comparisons of simulation results.
 
 .. note::
   
@@ -44,7 +44,7 @@ The test suite covers:
 - Integrity of input files and simulation workflows
 - Functionality of measures and upgrade logic
 - Consistency of annual and timeseries simulation outputs
-- Differences between feature and base branches for upgrades
+- Differences between feature and base branches
 - Documentation generation and structure
 - Specialized SDR simulations and data formatting
 
@@ -62,24 +62,23 @@ Concurrency Control
 -------------------
 
 To avoid test queue congestion, CI jobs from the same branch or PR are automatically canceled if a new run is queued.
+This helps to avoid situations where resources are used for meaningless tests against out-of-date branch versions.
 
 Environment Variables
 ---------------------
 
-Shared environment variables define:
+Shared environment variables (in both the GitHub Actions configuration and project YML files) define:
 
-- OpenStudio versions
-- Branches for BuildStock and other dependencies
-- Simulation batch settings
+- OpenStudio installer package (e.g., version, SHA, and platform)
+- Branches for BuildStock and other dependencies (e.g., BuildStock-Batch and BuildStock-Query)
+- Simulation batch settings (e.g., account, n_jobs, etc.)
 
 CI Jobs
 =======
 
 This section documents the testing infrastructure and continuous integration (CI) process for ResStock to ensure the software stack works when running testing or production runs.
 
-CI is implemented using GitHub Actions and ensures code quality, test coverage, documentation generation, and results validation before changes are merged into main development branches.
-
-Each CI job is defined in the main workflow and other supporting workflows.
+Each CI job is defined in the main workflow (i.e., ``config.yml``) and other supporting workflows.
 They are executed in a structured order (see image below), with dependencies enforced through the `needs` keyword.
 
 .. image:: ../../images/ci_workflow.png
@@ -145,8 +144,8 @@ Artifacts uploaded:
 
 - documentation
 
-After a successful merge into develop, this job creates the documentation tests_housing_characteristics is hosted on Read-the-Docs. 
-To view the Technical Development Guide locally, use the instructions https://github.com/NREL/resstock/blob/develop/docs/technical_development_guide/README.md
+After a successful merge into develop, this job creates the documentation ResStock Technical Development Guide, which is hosted on Read-the-Docs. 
+To view the Technical Development Guide locally, use the `README instructions <https://github.com/NREL/resstock/blob/develop/docs/technical_development_guide/README.md>`_.
 
 .. note::
 
@@ -155,28 +154,28 @@ To view the Technical Development Guide locally, use the instructions https://gi
 analysis-tests
 ~~~~~~~~~~~~~~
 
-Runs the project_testing and project_national baseline yaml files using ``run_analysis.rb``.
+Runs the project_testing and project_national baseline YML files using ``run_analysis.rb``.
 Then processes the results to be compared to the BuildStockBatch run.
 Uses ``project_testing/testing_baseline.yml`` and ``project_national/national_baseline.yml`` for the simulation.
 
-Artifacts Uploaded:
+Artifacts uploaded:
 
 - precomputed_buildstocks
 - run_analysis_results_csvs
 
 .. note::
 
-  Using ``run_analysis.rb`` is the easiest way to simulate a single building model for debugging.
+  Using ``run_analysis.rb`` is the easiest way to simulate a single building model for debugging purposes.
   Running ``run_analysis.rb`` is best when modifying the models, not the input characteristics.
 
 integration-tests
 ~~~~~~~~~~~~~~~~~
 
 Runs full simulations of project_testing and project_national using BuildStockBatch.
-The data is then processed to be compared with the results from ``run_analysis.rb``.
+The data is then processed to be compared with the results from ``run_analysis.rb`` run in the analysis-tests job.
 Uses ``project_testing/testing_baseline.yml`` and ``project_national/national_baseline.yml`` for the simulation.
 
-Artifacts Uploaded:
+Artifacts uploaded:
 
 - feature_results
 - buildstockbatch_results_csvs
@@ -190,25 +189,27 @@ Artifacts Uploaded:
 compare-tools
 ~~~~~~~~~~~~~
 
-This job compares outputs from ``run_analysis.rb`` vs. BuildStockBatch.
+This job compares outputs from ``run_analysis.rb`` (run in the analysis-tests job) vs. BuildStockBatch (run in the integration-tests job).
 It does this by comparing the columns and ensuring there are no missing or extra columns in either of the results.
-The job also tests to ensures the total annual energy is the same between ``run_analysis.rb`` and BuildStockBatch.
+The job also tests to ensures the total annual energy is the same between the two simulation tools.
 
 compare-results
 ~~~~~~~~~~~~~~~
 
-Runs (only on pull requests) to compare the base branch results with the feature branch results. This job is useful for model changes. An example of model changes is changes to any of the ResStock or OpenStudio-HPXML measures.
+Runs (only on pull requests) to compare the base branch results with the feature branch results.
+This job is useful for comparing impacts of model changes.
+A model change happens when something is modified/added/deleted (e.g., piece of code) in ResStock or OpenStudio-HPXML measures.
 
 .. note::
 
-  This job is not useful for TSV changes as the samples are shuffled.
+  This job is *not* useful for TSV changes as the samples are shuffled between the base and feature branches.
 
 Compares:
 
 - Baseline results (annual + timeseries)
 - Differences in samples and outputs
 
-Artifacts Uploaded:
+Artifacts uploaded:
 
 - comparisons
 
@@ -232,7 +233,7 @@ Analysis to determine upgrade applicability and generation of the 550,000 ResSto
 - Analyzes with `buildstock_query`
 - Tests for apply logic not applying to any samples
 
-Artifacts Uploaded:
+Artifacts uploaded:
 
 - national_550ksamples
 - sdr_options_analysis 
@@ -246,7 +247,7 @@ Commits:
 sdr-integration-tests
 ~~~~~~~~~~~~~~~~~~~~~
 
-Full simulation test of SDR baseline and upgrades on the minimal buildstock from the SDR Options Analaysis test:
+Full simulation test of SDR baseline and upgrades on the minimal buildstock from the SDR Options Analysis test:
 
 - Executes BuildStockBatch ``buildstock_local`` using ``project_national/sdr_upgrades_tmy3.yml``
 - Validates successful simulations (no failures in the simulations)
@@ -270,7 +271,8 @@ Commits:
 Supporting CI Jobs
 ------------------
 
-These CI Jobs are outside the main GitHub actions workflow for new feature development and bug fixes. They are used to help with the organization of the software development or assist with the new features and bug fixes.
+These CI Jobs are outside the main GitHub actions workflow for new feature development and bug fixes.
+They are used to help with the organization of the software development or assist with the new features and bug fixes.
 
 Add Pull Request or Issue to Project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -301,15 +303,15 @@ Artifacts Produced
 
 Artifacts produced if tests are successful:
 
-- options_lookup: A sorted and formated version of ``options_lookup.tsv`` that allows diffs to easily be seen.
+- options_lookup: A sorted and formatted version of ``options_lookup.tsv`` that allows diffs to easily be seen.
 - coverage: Coverage logs.
 - feature_samples: The samples simulated in the feature branch for the analysis and integration tests.
 - documentation: A current version of the ResStock documentation in Read-the-Docs and the Technical Reference Guide PDF.
-- precomputed_buildstocks: Precomputed `buildstock.csv` for ``test/test_yml_files/``.
+- precomputed_buildstocks: Precomputed `buildstock.csv` for ``test/test_yml_files``.
 - run_analysis_results_csvs: Annual results from the analysis tests.
-- feature_results: TODO
+- feature_results: Processed baseline annual and timeseries results from the integration tests.
 - buildstockbatch_results_csvs: Annual results from the integration tests.
-- raw_simulation_output: TODO
+- raw_simulation_output: Unprocessed simulation output files from the integration tests.
 - comparisons: Plots that show the difference in the results between the base branch and feature branch. Helpful during model changes, not characteristics changes.
 - national_550ksamples: The current 550,000 sample in ResStock that will be simulated. Used in the SDR integration tests.
 - sdr_options_analysis: Analysis of the upgrade options and their percent applicability based on the current national 550,000 sample. The minimal buildstock for SDR integration tests.

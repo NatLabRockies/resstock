@@ -9,7 +9,10 @@ These tests are designed to ensure that the output of the baseline analysis proc
 
 The `test_baseline_columns` and `test_baseline_results` tests are located in the `TestTools` class. This class is run as part of the standard testing process for baseline result validation. It is designed to ensure that no discrepancies occur between the expected and actual output during the baseline analysis phase of the project.
 
-The tests are designed to check two main aspects of the baseline analysis output 1. baseline columns consistency, 2. baseline results consistency.
+The tests are designed to check two main aspects of the baseline analysis output:
+
+1. baseline columns consistency,
+2. baseline results consistency.
 
 Each test is executed for two project directories, `national` and `testing`, and ensures that the results produced by both the `buildstockbatch` and `run_analysis` are consistent in terms of both the structure and numerical values.
 

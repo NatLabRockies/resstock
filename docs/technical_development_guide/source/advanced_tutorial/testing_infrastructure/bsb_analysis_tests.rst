@@ -21,53 +21,53 @@ Functions
 
 ``before_setup``
 
-  - Sets up the test environment by initializing instance variables pointing to testing and national baselines.
+- Sets up the test environment by initializing instance variables pointing to testing and national baselines.
 
 ``_map_scenario_names(list, from, to)``
 
-  - Maps placeholder scenario names in the outputs dictionary to real scenario identifiers.
-  - Used for matching expected outputs with actual CSV fields.
+- Maps placeholder scenario names in the outputs dictionary to real scenario identifiers.
+- Used for matching expected outputs with actual CSV fields.
 
 Test Scenarios
 --------------
 
 ``test_testing_baseline``
 
-  - Verifies existence of results file (`results_up00.csv`) in the testing baseline.
-  - Checks for required directories and timeseries files.
-  - Confirms required CSV columns and timeseries structure are present.
+- Verifies existence of results file (`results_up00.csv`) in the testing baseline.
+- Checks for required directories and timeseries files.
+- Confirms required CSV columns and timeseries structure are present.
 
 ``test_national_baseline``
 
-  - Performs the same checks as ``test_testing_baseline`` but on the national baseline directory.
+- Performs the same checks as ``test_testing_baseline`` but on the national baseline directory.
 
 ``test_testing_inputs``
 
-  - Validates that the input columns in `results_up00.csv` match the expected input names in the outputs dictionary.
-  - Excludes known ignorable fields like `bills_2`, `bills_3`, and `server_directory_cleanup`.
+- Validates that the input columns in `results_up00.csv` match the expected input names in the outputs dictionary.
+- Excludes known ignorable fields like `bills_2`, `bills_3`, and `server_directory_cleanup`.
 
 ``test_national_inputs``
 
-  - Verifies that national inputs match the expected schema defined in the outputs dictionary.
-  - Fails on both missing or unexpected columns.
+- Verifies that national inputs match the expected schema defined in the outputs dictionary.
+- Fails on both missing or unexpected columns.
 
 ``test_testing_annual_outputs``
 
-  - Checks for presence of expected output metrics in the testing baseline.
-  - Validates that grouped outputs (defined by "Sums To") aggregate numerically within tolerance (0.001).
+- Checks for presence of expected output metrics in the testing baseline.
+- Validates that grouped outputs (defined by "Sums To") aggregate numerically within tolerance (0.001).
 
 ``test_national_annual_outputs``
 
-  - Same as ``test_testing_annual_outputs``, but validates the national dataset.
+- Same as ``test_testing_annual_outputs``, but validates the national dataset.
 
 ``test_timeseries_resstock_outputs``
 
-  - Validates presence of expected timeseries columns in `baseline/timeseries/results_output.csv`.
-  - Uses the outputs dictionary to match against expected "Timeseries ResStock Name" values.
-  - Verifies summation logic for grouped outputs and includes unit conversion (e.g., from kWh to kBtu).
+- Validates presence of expected timeseries columns in `baseline/timeseries/results_output.csv`.
+- Uses the outputs dictionary to match against expected "Timeseries ResStock Name" values.
+- Verifies summation logic for grouped outputs and includes unit conversion (e.g., from kWh to kBtu).
 
 ``test_timeseries_buildstockbatch_outputs``
 
-  - Same as ``test_timeseries_resstock_outputs`` but validates `buildstockbatch.csv`.
-  - Compares field names using "Timeseries BuildStockBatch Name" mapping.
+- Same as ``test_timeseries_resstock_outputs`` but validates `buildstockbatch.csv`.
+- Compares field names using "Timeseries BuildStockBatch Name" mapping.
 
