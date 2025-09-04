@@ -5,7 +5,7 @@ require 'csv'
 require_relative '../resources/hpxml-measures/HPXMLtoOpenStudio/resources/meta_measure'
 
 module Version
-  ResStock_Version = '3.4.0' # Version of ResStock
+  ResStock_Version = '2025_R1' # Version of ResStock
   BuildStockBatch_Version = '2023.10.0' # Minimum required version of BuildStockBatch
   WorkflowGenerator_Version = '2025.04.29' # Version of buildstockbatch workflow generator
 
