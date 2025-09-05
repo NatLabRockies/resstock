@@ -1291,7 +1291,7 @@ module Waterheater
     fan_power_sensor = Model.add_ems_sensor(
       model,
       name: "#{obj_name} fan pwr",
-      output_var_or_meter_name: "Fan #{EPlus::FuelTypeElectricity} Rate",
+      output_var_or_meter_name: 'Fan Electricity Rate',
       key_name: fan.name
     )
 
@@ -1729,13 +1729,13 @@ module Waterheater
         ec_adj_hp_sensor = Model.add_ems_sensor(
           model,
           name: "#{water_heater.dXCoil.name} energy",
-          output_var_or_meter_name: "Cooling Coil Water Heating #{EPlus::FuelTypeElectricity} Rate",
+          output_var_or_meter_name: 'Cooling Coil Water Heating Electricity Rate',
           key_name: water_heater.dXCoil.name
         )
         ec_adj_fan_sensor = Model.add_ems_sensor(
           model,
           name: "#{water_heater.fan.name} energy",
-          output_var_or_meter_name: "Fan #{EPlus::FuelTypeElectricity} Rate",
+          output_var_or_meter_name: 'Fan Electricity Rate',
           key_name: water_heater.fan.name
         )
       end
@@ -1744,13 +1744,13 @@ module Waterheater
     ec_adj_oncyc_sensor = Model.add_ems_sensor(
       model,
       name: "#{tank.name} on cycle parasitic",
-      output_var_or_meter_name: "Water Heater On Cycle Parasitic #{EPlus::FuelTypeElectricity} Rate",
+      output_var_or_meter_name: 'Water Heater On Cycle Parasitic Electricity Rate',
       key_name: tank.name
     )
     ec_adj_offcyc_sensor = Model.add_ems_sensor(
       model,
       name: "#{tank.name} off cycle parasitic",
-      output_var_or_meter_name: "Water Heater Off Cycle Parasitic #{EPlus::FuelTypeElectricity} Rate",
+      output_var_or_meter_name: 'Water Heater Off Cycle Parasitic Electricity Rate',
       key_name: tank.name
     )
 

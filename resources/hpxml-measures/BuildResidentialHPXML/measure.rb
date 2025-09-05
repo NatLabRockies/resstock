@@ -6215,6 +6215,8 @@ module HPXMLFile
       cooling_efficiency_seer2 = args[:heat_pump_cooling_efficiency]
     when HPXML::UnitsEER
       cooling_efficiency_eer = args[:heat_pump_cooling_efficiency]
+    when HPXML::UnitsCEER
+      cooling_efficiency_ceer = args[:heat_pump_cooling_efficiency]
     end
 
     if [HPXML::HVACTypeHeatPumpAirToAir, HPXML::HVACTypeHeatPumpGroundToAir].include?(heat_pump_type) || ([HPXML::HVACTypeHeatPumpMiniSplit].include?(heat_pump_type) && (args[:heat_pump_is_ducted]))
@@ -6260,6 +6262,7 @@ module HPXMLFile
                               cooling_efficiency_seer2: cooling_efficiency_seer2,
                               heating_efficiency_cop: heating_efficiency_cop,
                               cooling_efficiency_eer: cooling_efficiency_eer,
+                              cooling_efficiency_ceer: cooling_efficiency_ceer,
                               airflow_defect_ratio: airflow_defect_ratio,
                               charge_defect_ratio: args[:heat_pump_charge_defect_ratio],
                               crankcase_heater_watts: heat_pump_crankcase_heater_watts,

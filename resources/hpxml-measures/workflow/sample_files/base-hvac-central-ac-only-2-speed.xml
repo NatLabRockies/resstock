@@ -317,8 +317,8 @@
               <CompressorType>two stage</CompressorType>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
-                <Units>SEER</Units>
-                <Value>18.0</Value>
+                <Units>SEER2</Units>
+                <Value>17.0</Value>
               </AnnualCoolingEfficiency>
             </CoolingSystem>
           </HVACPlant>

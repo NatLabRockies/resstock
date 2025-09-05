@@ -2100,9 +2100,9 @@ module HVAC
     sys_id = hpxml_object.id
 
     if fan_or_pump.is_a? OpenStudio::Model::FanSystemModel
-      var = "Fan #{EPlus::FuelTypeElectricity} Energy"
+      var = 'Fan Electricity Energy'
     elsif fan_or_pump.is_a? OpenStudio::Model::PumpVariableSpeed
-      var = "Pump #{EPlus::FuelTypeElectricity} Energy"
+      var = 'Pump Electricity Energy'
     else
       fail "Unexpected fan/pump object '#{fan_or_pump.name}'."
     end
@@ -2263,7 +2263,7 @@ module HVAC
     dehumidifier_power = Model.add_ems_sensor(
       model,
       name: "#{dehumidifier.name} power htg",
-      output_var_or_meter_name: "Zone Dehumidifier #{EPlus::FuelTypeElectricity} Rate",
+      output_var_or_meter_name: 'Zone Dehumidifier Electricity Rate',
       key_name: dehumidifier.name
     )
 

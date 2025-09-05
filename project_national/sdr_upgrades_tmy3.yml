@@ -34,6 +34,9 @@ kestrel:
   sampling:
     time: 60
 
+# Timeout to avoid whole-job failures from long-running models
+max_minutes_per_sim: 5
+
 # Post proccessing and Amazon Web Services
 postprocessing:
   # Post simulation partitioning
@@ -68,6 +71,7 @@ workflow_generator:
       simulation_control_run_period_end_month: 12
       simulation_control_run_period_end_day_of_month: 31
       simulation_control_run_period_calendar_year: 2018
+      add_component_loads: true
 
     # Emissions scenarios
     emissions:
@@ -160,33 +164,14 @@ workflow_generator:
 
 references:
   ### -- Anchors not dependent on other anchors -- ###
-  attic_insulation_iecc_cz1a: &attic_insulation_iecc_cz1a
-    option: Insulation Ceiling|R-30
-    apply_logic:
-      - ASHRAE IECC Climate Zone 2004|1A
-      - Geometry Attic Type|Vented Attic
-      - or:
-        - Insulation Ceiling|Uninsulated
-        - Insulation Ceiling|R-7
-        - Insulation Ceiling|R-13
-        - Insulation Ceiling|R-19
-    costs:
-      - value: 0.0482
-        multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
-      - value: 0.2163
-        multiplier: Floor Area, Attic (ft^2)
-    lifetime: 60
-
-  attic_insulation_iecc_cz2a_2b_3a_3b_3c: &attic_insulation_iecc_cz2a_2b_3a_3b_3c
+  attic_insulation_cz1_sf: &attic_insulation_cz1_sf
     option: Insulation Ceiling|R-49
     apply_logic:
       - or:
-        - ASHRAE IECC Climate Zone 2004|2A
-        - ASHRAE IECC Climate Zone 2004|2B
-        - ASHRAE IECC Climate Zone 2004|3A
-        - ASHRAE IECC Climate Zone 2004|3B
-        - ASHRAE IECC Climate Zone 2004|3C
-      - Geometry Attic Type|Vented Attic
+        - ASHRAE IECC Climate Zone 2004|1A
+      - or:
+        - Geometry Attic Type|Vented Attic
+        - Geometry Attic Type|Unvented Attic
       - or:
         - Insulation Ceiling|Uninsulated
         - Insulation Ceiling|R-7
@@ -194,27 +179,14 @@ references:
         - Insulation Ceiling|R-19
         - Insulation Ceiling|R-30
         - Insulation Ceiling|R-38
-    costs:
-      - value: 0.0482
-        multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
-      - value: 0.2163
-        multiplier: Floor Area, Attic (ft^2)
-    lifetime: 60
 
-  attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b: &attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b
+  attic_insulation_cz2_8_sf: &attic_insulation_cz2_8_sf
     option: Insulation Ceiling|R-60
     apply_logic:
+      - not: ASHRAE IECC Climate Zone 2004|1A
       - or:
-        - ASHRAE IECC Climate Zone 2004|4A
-        - ASHRAE IECC Climate Zone 2004|4B
-        - ASHRAE IECC Climate Zone 2004|4C
-        - ASHRAE IECC Climate Zone 2004|5A
-        - ASHRAE IECC Climate Zone 2004|5B
-        - ASHRAE IECC Climate Zone 2004|6A
-        - ASHRAE IECC Climate Zone 2004|6B
-        - ASHRAE IECC Climate Zone 2004|7A
-        - ASHRAE IECC Climate Zone 2004|7B
-      - Geometry Attic Type|Vented Attic
+        - Geometry Attic Type|Vented Attic
+        - Geometry Attic Type|Unvented Attic
       - or:
         - Insulation Ceiling|Uninsulated
         - Insulation Ceiling|R-7
@@ -223,24 +195,95 @@ references:
         - Insulation Ceiling|R-30
         - Insulation Ceiling|R-38
         - Insulation Ceiling|R-49
-    costs:
-      - value: 0.0482
-        multiplier: Floor Area, Attic * Insulation Increase (ft^2 * Delta R-value)
-      - value: 0.2163
-        multiplier: Floor Area, Attic (ft^2)
-    lifetime: 60
 
-  costs_ashp_ducted_seer_20_11_hspf: &costs_ashp_ducted_seer_20_11_hspf
-    - value: 10229.58
-      multiplier: Fixed (1)
-    - value: 167.64
-      multiplier: Size, Heating System Primary (kBtu/h)
+  #Air sealing / infiltration reduction
+  infiltration_all_cz_sf_mf_mb: &infiltration_all_cz_sf_mf_mb
+    option: Infiltration|5 ACH50
+    apply_logic:
+      - or:
+          - Infiltration|6 ACH50
+          - Infiltration|7 ACH50
+          - Infiltration|8 ACH50
+          - Infiltration|10 ACH50
+          - Infiltration|15 ACH50
+          - Infiltration|20 ACH50
+          - Infiltration|25 ACH50
+          - Infiltration|30 ACH50
+          - Infiltration|40 ACH50
+          - Infiltration|50 ACH50
 
-  costs_ghp: &costs_ghp
-    - value: 999
-      multiplier: Fixed (1)
-    - value: 999
-      multiplier: Size, Heating System Primary (kBtu/h)
+  duct_seal_only_r6: &duct_seal_only_r6
+    option: Duct Leakage and Insulation|5% Leakage to Outside, R-6
+    apply_logic:
+      - or:
+        - Duct Leakage and Insulation|10% Leakage to Outside, R-6
+        - Duct Leakage and Insulation|20% Leakage to Outside, R-6
+        - Duct Leakage and Insulation|30% Leakage to Outside, R-6
+
+  duct_seal_only_r8: &duct_seal_only_r8
+    option: Duct Leakage and Insulation|5% Leakage to Outside, R-8
+    apply_logic:
+      - or:
+        - Duct Leakage and Insulation|10% Leakage to Outside, R-8
+        - Duct Leakage and Insulation|20% Leakage to Outside, R-8
+        - Duct Leakage and Insulation|30% Leakage to Outside, R-8
+
+  duct_seal_and_insulate: &duct_seal_and_insulate
+    option: Duct Leakage and Insulation|5% Leakage to Outside, R-8
+    apply_logic:
+      - or:
+        - Duct Leakage and Insulation|10% Leakage to Outside, R-4
+        - Duct Leakage and Insulation|10% Leakage to Outside, Uninsulated
+        - Duct Leakage and Insulation|20% Leakage to Outside, R-4
+        - Duct Leakage and Insulation|20% Leakage to Outside, Uninsulated
+        - Duct Leakage and Insulation|30% Leakage to Outside, R-4
+        - Duct Leakage and Insulation|30% Leakage to Outside, Uninsulated
+
+  drill_and_fill_wall_insulation: &drill_and_fill_wall_insulation
+    option: Insulation Wall|Wood Stud, R-13
+    apply_logic:
+      - Insulation Wall|Wood Stud, Uninsulated
+
+  infiltration_30pct_reduction_windows: &infiltration_30pct_reduction_windows
+    option: Infiltration Reduction|30%
+    apply_logic:
+      - or:
+        - Windows|Single, Clear, Metal
+        - Windows|Single, Clear, Metal, Exterior Clear Storm
+        - Windows|Single, Clear, Non-metal
+        - Windows|Single, Clear, Non-metal, Exterior Clear Storm
+
+  infiltration_13pct_reduction_windows: &infiltration_13pct_reduction_windows
+    option: Infiltration Reduction|13%
+    apply_logic:
+      - or:
+        - Windows|Double, Clear, Metal, Air
+        - Windows|Double, Clear, Metal, Air, Exterior Clear Storm
+        - Windows|Double, Clear, Non-metal, Air
+        - Windows|Double, Clear, Non-metal, Air, Exterior Clear Storm
+        - Windows|Double, Low-E, Non-metal, Air, M-Gain
+        - Windows|Triple, Low-E, Non-metal, Air, L-Gain
+
+  energystar_window_northern: &energystar_window_northern
+    option: Windows|EnergyStar, Northern
+    apply_logic:
+      - Energystar Climate Zone 2023|Northern
+
+  energystar_window_north_central: &energystar_window_north_central
+    option: Windows|EnergyStar, North-Central
+    apply_logic:
+      - Energystar Climate Zone 2023|North-Central
+
+  energystar_window_south_central: &energystar_window_south_central
+    option: Windows|EnergyStar, South-Central
+    apply_logic:
+      - Energystar Climate Zone 2023|South-Central
+
+  energystar_window_southern: &energystar_window_southern
+    option: Windows|EnergyStar, Southern
+    apply_logic:
+      - Energystar Climate Zone 2023|Southern
+      - not: Windows|Triple, Low-E, Non-metal, Air, L-Gain
 
   demand_flexibility_30_minute_random_shift: &demand_flexibility_30_minute_random_shift
     option: Demand Flexibility Random Shift|30 minutes
@@ -272,24 +315,18 @@ references:
       - not: HVAC Cooling Type|None
       - not: HVAC Heating Type|None
 
-  infiltration_30_percent_reduction: &infiltration_30_percent_reduction
-    option: Infiltration Reduction|30%
-    apply_logic:
+  remove_heating_shared_other_wood: &remove_heating_shared_other_wood
+    - HVAC Has Ducts|Yes
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+    - not:
       - or:
-        - Infiltration|50 ACH50
-        - Infiltration|40 ACH50
-        - Infiltration|30 ACH50
-        - Infiltration|25 ACH50
-        - Infiltration|20 ACH50
-        - Infiltration|15 ACH50
-    costs:
-      - value: 0.53
-        multiplier: Floor Area, Conditioned (ft^2)
-    lifetime: 60
-
-  lifetime_ducted_ashp: &lifetime_ducted_ashp 15
-
-  lifetime_ducted_ghp: &lifetime_ducted_ghp 15
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
 
   occupied_only: &occupied_only
     Vacancy Status|Occupied
@@ -354,6 +391,90 @@ references:
       - HVAC Has Ducts|Yes
       - HVAC Has Ducts|No
 
+  hpwh_apply_logic: &hpwh_apply_logic
+    # remove dwelling units that have hpwh or solar thermal water heater
+    - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF
+    - not: Water Heater Fuel|Solar Thermal
+    - not: Water Heater Fuel|Other Fuel
+    - not: Water Heater Fuel|Wood
+
+  high_eff_ng_tankless_wh_apply_logic: &high_eff_ng_tankless_wh_apply_logic
+    # remove dwelling units that have hpwh or solar thermal wh or tankless gas wh
+    # have access to natural gas
+    - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF
+    - not: Water Heater Fuel|Solar Thermal
+    - not: Water Heater Fuel|Other Fuel
+    - not: Water Heater Fuel|Wood
+    - not: Water Heater Efficiency|Natural Gas Tankless
+    - or:
+      - Water Heater Fuel|Natural Gas
+      - Heating Fuel|Natural Gas
+      - HVAC Secondary Heating Fuel|Natural Gas
+      - Clothes Dryer|Gas
+      - Cooking Range|Gas
+      - Misc Pool Heater|Natural Gas
+      - Misc Hot Tub Spa|Natural Gas
+
+  change_water_heater_fuel_to_electricity: &change_water_heater_fuel_to_electricity
+    option: Water Heater Fuel|Electricity
+    apply_logic:
+      - not: Water Heater Fuel|Electricity
+
+  change_water_heater_fuel_to_natural_gas: &change_water_heater_fuel_to_natural_gas
+    option: Water Heater Fuel|Natural Gas
+    apply_logic:
+      - not: Water Heater Fuel|Natural Gas
+
+  hpwh_50_gal_3_pt_78_uef: &hpwh_50_gal_3_pt_78_uef
+    option: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.78 UEF
+    apply_logic:
+      - or:
+        - Bedrooms|1
+        - Bedrooms|2
+      - or:
+        - Occupants|0
+        - Occupants|1
+        - Occupants|2
+        - Occupants|3
+
+  hpwh_66_gal_3_pt_95_uef: &hpwh_66_gal_3_pt_95_uef
+    option: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.95 UEF
+    apply_logic:
+      - or:
+        - and:
+          - or:
+            - Bedrooms|1
+            - Bedrooms|2
+          - Occupants|4
+        - and:
+          - Bedrooms|3
+          - or:
+            - Occupants|0
+            - Occupants|1
+            - Occupants|2
+            - Occupants|3
+            - Occupants|4
+
+  hpwh_80_gal_3_pt_98_uef: &hpwh_80_gal_3_pt_98_uef
+    option: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.98 UEF
+    apply_logic:
+      - or:
+        - Bedrooms|4
+        - Bedrooms|5
+        - Occupants|5
+        - Occupants|6
+        - Occupants|7
+        - Occupants|8
+        - Occupants|9
+        - Occupants|10+
+
+  high_eff_ng_tankless_wh: &high_eff_ng_tankless_wh
+    option: Water Heater Efficiency|High Efficiency Natural Gas Tankless, Condensing
+
   ### -- Anchors dependent on other anchors -- ###
   cooling_setpoint_no_offset: &cooling_setpoint_no_offset
       option: Cooling Setpoint Has Offset|No
@@ -370,14 +491,10 @@ references:
   ducted_ashp_seer_20_11_hspf_cchp_electric_backup: &ducted_ashp_seer_20_11_hspf_cchp_electric_backup
       option: HVAC Heating Efficiency|ASHP, SEER 20, 11 HSPF, CCHP, Max Load
       apply_logic: *ducted_ashp_apply_logic
-      costs: *costs_ashp_ducted_seer_20_11_hspf
-      lifetime: *lifetime_ducted_ashp
 
   dual_speed_ducted_ghp: &dual_speed_ducted_ghp
       option: HVAC Heating Efficiency|GSHP, EER 20.5, COP 4.0
       apply_logic: *ducted_ashp_apply_logic
-      costs: *costs_ghp
-      lifetime: *lifetime_ducted_ghp
 
   heat_pump_cooling_efficiency_ducted: &heat_pump_cooling_efficiency_ducted
       option: HVAC Cooling Efficiency|Ducted Heat Pump
@@ -399,19 +516,390 @@ references:
       option: HVAC Cooling Partial Space Conditioning|100% Conditioned
       apply_logic: *yes_and_no_has_ducts_apply_logic
 
+  fossil_fuel_or_electricity: &fossil_fuel_or_electricity
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+
+  cchp_apply_logic: &typical_cold_climate_logic
+    - HVAC Has Ducts|Yes # apply to homes with ducts who have non-shared HVAC or shared HVAC with room for a condenser
+    - or:
+        - not:
+          - or:
+            - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+            - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+            - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+            - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+            - HVAC Shared Efficiencies|Fan Coil Cooling Only
+        # - or:
+        - and:
+          - HVAC Cooling Type|Ducted Heat Pump
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+        - and:
+          - HVAC Cooling Type|Non-Ducted Heat Pump
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+        - and:
+          - HVAC Cooling Type|Central AC
+          - not: HVAC Shared Efficiencies|Fan Coil Cooling Only
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+
+  dual_fuel_cold_apply_logic: &dual_fuel_system_cold_climate
+    - HVAC Has Ducts|Yes # apply to homes with ducts who have non-shared HVAC or shared HVAC with room for a condenser
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+    - or:
+      - ASHRAE IECC Climate Zone 2004|5A
+      - ASHRAE IECC Climate Zone 2004|5B
+      - ASHRAE IECC Climate Zone 2004|6A
+      - ASHRAE IECC Climate Zone 2004|6B
+      - ASHRAE IECC Climate Zone 2004|7A
+      - ASHRAE IECC Climate Zone 2004|7B
+      - ASHRAE IECC Climate Zone 2004|7AK
+      - ASHRAE IECC Climate Zone 2004|8AK
+    - or:
+      - Heating Fuel|Natural Gas
+      - Water Heater Fuel|Natural Gas
+      - Clothes Dryer|Gas, Premium
+      - Clothes Dryer|Gas
+      - Cooking Range|Gas
+      - HVAC Secondary Heating Fuel|Natural Gas
+      - Misc Pool Heater|Natural Gas
+      - Misc Hot Tub Spa|Natural Gas
+
+  dual_fuel_warm_apply_logic: &dual_fuel_system_warm_climate
+    - HVAC Has Ducts|Yes # apply to homes with ducts who have non-shared HVAC or shared HVAC with room for a condenser
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+    - or:
+        - ASHRAE IECC Climate Zone 2004|1A
+        - ASHRAE IECC Climate Zone 2004|2A
+        - ASHRAE IECC Climate Zone 2004|2B
+        - ASHRAE IECC Climate Zone 2004|3A
+        - ASHRAE IECC Climate Zone 2004|3B
+        - ASHRAE IECC Climate Zone 2004|3C
+        - ASHRAE IECC Climate Zone 2004|4A
+        - ASHRAE IECC Climate Zone 2004|4B
+        - ASHRAE IECC Climate Zone 2004|4C
+    - or:
+      - Heating Fuel|Natural Gas
+      - Water Heater Fuel|Natural Gas
+      - Clothes Dryer|Gas, Premium
+      - Clothes Dryer|Gas
+      - Cooking Range|Gas
+      - HVAC Secondary Heating Fuel|Natural Gas
+      - Misc Pool Heater|Natural Gas
+      - Misc Hot Tub Spa|Natural Gas
+
 ### Standard Data Release - Residential -- ###
 upgrades:
+  ### -- HVAC: Furnaces -- ###
+  - upgrade_name: Natural Gas Furnace 95% AFUE for All Dwellings with Ducts
+    package_apply_logic: *remove_heating_shared_other_wood
+    options:
+        ### -- Natural Gas Furnace AFUE 95% applies to all dwellings with ducts
+      - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
+        # no apply logic on purpose since package_apply_logic handles it
+      - option: HVAC Heating Type And Fuel|Natural Gas Fuel Furnace
+        apply_logic:
+          - not: HVAC Heating Type And Fuel|Natural Gas Fuel Furnace
+      - option: Heating Fuel|Natural Gas
+        apply_logic:
+          - not: Heating Fuel|Natural Gas
+
+  - upgrade_name: Propane Furnace 95% AFUE or Fuel Oil Furnace 88% AFUE
+    package_apply_logic: *remove_heating_shared_other_wood
+    options:
+      - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
+        apply_logic:
+          - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+      - option: HVAC Heating Efficiency|Fuel Furnace, 88% AFUE
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
+
+  - upgrade_name: Minimum Efficiency Furnaces and Air Conditioners Circa 2025
+    package_apply_logic:
+      and:
+        - *fossil_fuel_or_electricity
+        - *typical_cold_climate_logic
+    options:
+      ### [1] Heating Efficiencies
+      ## 1.1 Replace like with like - retain applicability for costing purposing
+      # electric heating
+      - option: HVAC Heating Efficiency|Electric Furnace, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Furnace, 100% AFUE
+
+      - option: HVAC Heating Efficiency|Electric Boiler, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Boiler, 100% AFUE
+
+      - option: HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency
+
+      - option: HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE
+
+      # non-ducted fuel furnaces
+      - option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+
+      # MSHP (not applicable because of package_apply_logic)
+      # - option: HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      #   apply_logic:
+      #     - HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+
+      # - option: HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+      #   apply_logic:
+      #     - HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+
+      ## 1.2 Categories with efficiency change:
+      # min. eff fuel boilers
+      - option: HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+        apply_logic:
+          - or:
+            - Heating Fuel|Natural Gas
+            - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Boiler, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Boiler, 83% AFUE
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Boiler, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Boiler, 90% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Boiler, 90% AFUE
+
+      # min. efficiency ducted fuel furnaces
+      - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        apply_logic:
+          - or:
+            - Heating Fuel|Natural Gas
+            - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 83% AFUE
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+
+      # ASHP
+      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
+        apply_logic:
+          - or:
+            - HVAC Heating Efficiency|ASHP, SEER 10, 6.2 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 10.3, 7.0 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 11.5, 7.5 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 13, 8.0 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 14, 8.2 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 14.3, 8.5 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF #14.3 SEER2 == 15 SEER1, ducted
+
+      ### [2] Cooling Efficiencies
+      ## 2.1 Replace like with like
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic:
+          - HVAC Cooling Efficiency|Ducted Heat Pump
+
+      # (not applicable because of package_apply_logic)
+      # - option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
+      #   apply_logic:
+      #     - HVAC Cooling Efficiency|Non-Ducted Heat Pump
+
+      ## 2.2 Categories with efficiency change
+      # Central AC — SEER 14.3 for southern states only
+      - option: HVAC Cooling Efficiency|AC, SEER2 14.3
+        apply_logic:
+          - and:
+            - or:
+              - State|AL
+              - State|AR
+              - State|DE
+              - State|FL
+              - State|GA
+              - State|HI
+              - State|KY
+              - State|LA
+              - State|MD
+              - State|MS
+              - State|NC
+              - State|OK
+              - State|SC
+              - State|TN
+              - State|TX
+              - State|VA
+              - State|DC
+              - State|AZ
+              - State|CA
+              - State|NV
+              - State|NM
+          - or:
+            - HVAC Cooling Efficiency|AC, SEER 8
+            - HVAC Cooling Efficiency|AC, SEER 10
+            - HVAC Cooling Efficiency|AC, SEER 13
+
+      # All other states — SEER 13.4
+      - option: HVAC Cooling Efficiency|AC, SEER2 13.4
+        apply_logic:
+          - not:
+            - or:
+              - State|AL
+              - State|AR
+              - State|DE
+              - State|FL
+              - State|GA
+              - State|HI
+              - State|KY
+              - State|LA
+              - State|MD
+              - State|MS
+              - State|NC
+              - State|OK
+              - State|SC
+              - State|TN
+              - State|TX
+              - State|VA
+              - State|DC
+              - State|AZ
+              - State|CA
+              - State|NV
+              - State|NM
+          - or:
+            - HVAC Cooling Efficiency|AC, SEER 8
+            - HVAC Cooling Efficiency|AC, SEER 10
+            - HVAC Cooling Efficiency|AC, SEER 13
+
+      - option: HVAC Cooling Efficiency|AC, SEER 15
+        apply_logic:
+          - HVAC Cooling Efficiency|AC, SEER 15
+
+      # Room (window) AC
+      - option: HVAC Cooling Efficiency|Room AC, EER 12.0 #CEER 11.0; EER 12.0 single package
+        apply_logic:
+          - or:
+            - HVAC Cooling Efficiency|Room AC, EER 8.5
+            - HVAC Cooling Efficiency|Room AC, EER 9.8
+            - HVAC Cooling Efficiency|Room AC, EER 10.7
+            - HVAC Cooling Efficiency|Room AC, EER 12.0
+
   ### -- HVAC: Air Source Heat Pumps -- ###
-  - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump with Detailed Performance Data
-    package_apply_logic: *remove_high_rise_shared
+  - upgrade_name: Typical Cold Climate Ducted Air Source Heat Pump Circa 2025
+    package_apply_logic: *fossil_fuel_or_electricity
     options:
       - option: HVAC Heating Efficiency|ASHP, SEER2 17.5, 8.5 HSPF2, Typical Cold Climate
-        apply_logic: *ducted_ashp_apply_logic
+        apply_logic: *typical_cold_climate_logic
 
       - option: HVAC Detailed Performance Data|Cold Climate Heat Pump Ducted
-        apply_logic: *ducted_ashp_apply_logic
+        apply_logic: *typical_cold_climate_logic
 
-      - *heat_pump_cooling_efficiency_ducted
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *typical_cold_climate_logic
+
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *typical_cold_climate_logic
+
+      - option: Heating Fuel|Electricity
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: Heating Fuel|Electricity
+
+      - option: HVAC Heating Type And Fuel|Electricity ASHP
+        apply_logic:
+            and:
+              - *typical_cold_climate_logic
+              - not: HVAC Heating Type And Fuel|Electricity ASHP
+
+  - upgrade_name: Dual Fuel Heat Pump System
+    package_apply_logic: *fossil_fuel_or_electricity
+    options:
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 95.0% AFUE NG, 35F switchover
+        apply_logic: *dual_fuel_system_cold_climate
+
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *dual_fuel_system_cold_climate
+
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *dual_fuel_system_cold_climate
+
+      - option: HVAC Heating Efficiency|Dual-Fuel ASHP, SEER 15.2, 7.8 HSPF2, Integrated Backup, 92.5% AFUE NG, 35F switchover
+        apply_logic: *dual_fuel_system_warm_climate
+
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic: *dual_fuel_system_warm_climate
+
+      - option: HVAC Cooling Partial Space Conditioning|100% Conditioned
+        apply_logic: *dual_fuel_system_warm_climate
 
   ### -- HVAC: Geothermal Heat Pumps -- ###
   - upgrade_name: Single-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes
@@ -419,8 +907,6 @@ upgrades:
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 18.6, COP 3.8
         apply_logic: *ducted_ashp_apply_logic
-        costs: *costs_ghp
-        lifetime: *lifetime_ducted_ghp
 
       - *heat_pump_cooling_efficiency_ducted
       - *partial_conditioning_100_percent_ducts_only
@@ -437,25 +923,76 @@ upgrades:
     options:
       - option: HVAC Heating Efficiency|GSHP, EER 30.9, COP 4.4
         apply_logic: *ducted_ashp_apply_logic
-        costs: *costs_ghp
-        lifetime: *lifetime_ducted_ghp
 
       - *heat_pump_cooling_efficiency_ducted
       - *partial_conditioning_100_percent_ducts_only
 
+  ### -- Water Heater -- ###
+  - upgrade_name: Heat Pump Water Heater
+    package_apply_logic: *hpwh_apply_logic
+    options:
+      - *change_water_heater_fuel_to_electricity
+      - *hpwh_50_gal_3_pt_78_uef
+      - *hpwh_66_gal_3_pt_95_uef
+      - *hpwh_80_gal_3_pt_98_uef
+
+  - upgrade_name: High Efficiency Natural Gas Tankless Water Heater
+    package_apply_logic: *high_eff_ng_tankless_wh_apply_logic
+    options:
+      - *change_water_heater_fuel_to_natural_gas
+      - *high_eff_ng_tankless_wh
+
   ### -- Envelope and Ducts -- ###
   - upgrade_name: Air Sealing
     options:
-      - *infiltration_30_percent_reduction
+      - *infiltration_all_cz_sf_mf_mb
 
   - upgrade_name: Attic Floor Insulation for Unfinished Attics
     options:
-    - *attic_insulation_iecc_cz1a
-    - *attic_insulation_iecc_cz2a_2b_3a_3b_3c
-    - *attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+
+  - upgrade_name: Duct Sealing and Insulation
+    options:
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate
+
+  - upgrade_name: Drill and Fill Wall Insulation with Air Sealing
+    options:
+      - *drill_and_fill_wall_insulation
+      - *infiltration_all_cz_sf_mf_mb
+
+  - upgrade_name: Air Sealing, Attic Floor Insulation, and Duct sealing
+    options:
+      - *infiltration_all_cz_sf_mf_mb
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate
+
+  - upgrade_name: Air Sealing, Attic Floor Insulation, Duct sealing, and Drill-and-Fill Wall Insulation
+    options:
+      - *infiltration_all_cz_sf_mf_mb
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate
+      - *drill_and_fill_wall_insulation
+
+  - upgrade_name: ENERGY STAR Windows
+    options:
+      - *energystar_window_northern
+      - *energystar_window_north_central
+      - *energystar_window_south_central
+      - *energystar_window_southern
+      - *infiltration_30pct_reduction_windows
+      - *infiltration_13pct_reduction_windows
 
   ### -- Packages -- ###
-  - upgrade_name: Package - Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes with Air Sealing with Attic Floor Insulation
+  - upgrade_name: Dual-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes, Air Sealing, Attic Floor Insulation, and Duct Sealing
     package_apply_logic: *remove_nonducted_high_rise_shared_low_ground_conductivity
     options:
       ### -- Dual-Speed Ducted GHP -- ###
@@ -463,13 +1000,13 @@ upgrades:
       - *heat_pump_cooling_efficiency_ducted
       - *partial_conditioning_100_percent_ducts_only
 
-      ### -- Attic Floor Insulation -- ###
-      - *attic_insulation_iecc_cz1a
-      - *attic_insulation_iecc_cz2a_2b_3a_3b_3c
-      - *attic_insulation_iecc_cz4b_4b_4b_5b_5b_6b_6b_7a_7b
-
-      ### -- Air Sealing -- ###
-      - *infiltration_30_percent_reduction
+      ### --Envelope Package -- ###
+      - *infiltration_all_cz_sf_mf_mb
+      - *attic_insulation_cz1_sf
+      - *attic_insulation_cz2_8_sf
+      - *duct_seal_only_r6
+      - *duct_seal_only_r8
+      - *duct_seal_and_insulate
 
   ### -- Electric Vehicles -- ###
   - upgrade_name: Electric Vehicle Adoption with Level 1 Charging
