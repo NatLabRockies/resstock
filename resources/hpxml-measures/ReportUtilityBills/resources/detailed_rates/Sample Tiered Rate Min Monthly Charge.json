@@ -1,9 +1,9 @@
 {
   "items": [
     {
-      "name": "Sample Tiered Rate",
+      "name": "Sample Tiered Rate Min Monthly Charge",
       "sector": "Residential",
-      "description": "Sample file defined by BEopt.",
+      "description": "Sample file",
       "fixedchargeunits": "$/month",
       "fixedchargefirstmeter": 9,
       "minchargeunits": "$/month",
