@@ -1,6 +1,6 @@
-=====================
-Development Changelog
-=====================
+========================
+2025 Release 1 Changelog
+========================
 
 .. changelog::
     :version: 2025_Release_1
