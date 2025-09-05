@@ -59,7 +59,7 @@ module Vehicle
     elsif vehicle.fuel_economy_units == HPXML::UnitsMPGe
       kwh_per_mile = 33.705 / vehicle.fuel_economy_combined # Per EPA, one gallon of gasoline is equal to 33.705 kWh
     end
-    ev_annl_energy = kwh_per_mile * vehicle.miles_per_year # kWh/year
+    ev_annl_energy = kwh_per_mile * vehicle.miles_per_year * vehicle.ev_usage_multiplier # kWh/year
 
     # Create schedule
     charging_schedule, discharging_schedule = nil, nil
@@ -143,12 +143,16 @@ module Vehicle
         name: 'ev_discharge_program'
       )
       ev_discharge_program.additionalProperties.setFeature('ObjectType', Constants::ObjectTypeBEVDischargeProgram)
-      unmet_hr_var = OpenStudio::Model::EnergyManagementSystemOutputVariable.new(model, 'unmet_driving_hours')
-      unmet_hr_var.setName('unmet_driving_hours')
-      unmet_hr_var.setTypeOfDataInVariable('Summed')
-      unmet_hr_var.setUpdateFrequency('SystemTimestep')
-      unmet_hr_var.setEMSProgramOrSubroutineName(ev_discharge_program)
-      unmet_hr_var.setUnits('hr')
+
+      unmet_hr_var = Model.add_ems_output_variable(
+        model,
+        name: 'unmet_driving_hours',
+        ems_variable_name: 'unmet_driving_hours',
+        type_of_data: 'Summed',
+        update_frequency: 'SystemTimestep',
+        ems_program_or_subroutine: ev_discharge_program,
+        units: 'hr'
+      )
 
       # Power adjustment vs ambient temperature curve; derived from most recent data in Figure 9 of https://www.nrel.gov/docs/fy23osti/83916.pdf
       # This adjustment scales power demand based on ambient temperature, and encompasses losses due to battery and space conditioning (i.e., discharging losses), as well as charging losses.

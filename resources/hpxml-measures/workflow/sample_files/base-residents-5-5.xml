@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<HPXML xmlns='http://hpxmlonline.com/2023/09' schemaVersion='4.0'>
+<HPXML xmlns='http://hpxmlonline.com/2023/09' schemaVersion='4.2'>
   <XMLTransactionHeaderInformation>
     <XMLType>HPXML</XMLType>
     <XMLGeneratedBy>tasks.rb</XMLGeneratedBy>
@@ -10,7 +10,7 @@
     <extension>
       <UtilityBillScenarios>
         <UtilityBillScenario>
-          <Name>Bills</Name>
+          <Name>Default</Name>
         </UtilityBillScenario>
       </UtilityBillScenarios>
     </extension>
@@ -97,6 +97,7 @@
             <SystemIdentifier id='Roof1'/>
             <InteriorAdjacentTo>attic - unvented</InteriorAdjacentTo>
             <Area>1509.3</Area>
+            <RoofType>asphalt or fiberglass shingles</RoofType>
             <SolarAbsorptance>0.7</SolarAbsorptance>
             <Emittance>0.92</Emittance>
             <Pitch>6.0</Pitch>
@@ -112,11 +113,12 @@
             <ExteriorAdjacentTo>outside</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
             <Area>115.6</Area>
+            <Siding>wood siding</Siding>
             <SolarAbsorptance>0.7</SolarAbsorptance>
             <Emittance>0.92</Emittance>
             <Insulation>
               <SystemIdentifier id='RimJoist1Insulation'/>
-              <AssemblyEffectiveRValue>23.0</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>13.9</AssemblyEffectiveRValue>
             </Insulation>
           </RimJoist>
         </RimJoists>
@@ -129,6 +131,7 @@
               <WoodStud/>
             </WallType>
             <Area>1200.0</Area>
+            <Siding>wood siding</Siding>
             <SolarAbsorptance>0.7</SolarAbsorptance>
             <Emittance>0.92</Emittance>
             <InteriorFinish>
@@ -136,7 +139,7 @@
             </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='Wall1Insulation'/>
-              <AssemblyEffectiveRValue>23.0</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>22.7</AssemblyEffectiveRValue>
             </Insulation>
           </Wall>
           <Wall>
@@ -148,6 +151,7 @@
               <WoodStud/>
             </WallType>
             <Area>225.0</Area>
+            <Siding>wood siding</Siding>
             <SolarAbsorptance>0.7</SolarAbsorptance>
             <Emittance>0.92</Emittance>
             <Insulation>
@@ -161,6 +165,7 @@
             <SystemIdentifier id='FoundationWall1'/>
             <ExteriorAdjacentTo>ground</ExteriorAdjacentTo>
             <InteriorAdjacentTo>basement - conditioned</InteriorAdjacentTo>
+            <Type>solid concrete</Type>
             <Height>8.0</Height>
             <Area>1200.0</Area>
             <DepthBelowGrade>7.0</DepthBelowGrade>
@@ -171,7 +176,7 @@
               <SystemIdentifier id='FoundationWall1Insulation'/>
               <Layer>
                 <InstallationType>continuous - exterior</InstallationType>
-                <NominalRValue>8.9</NominalRValue>
+                <NominalRValue>10.0</NominalRValue>
               </Layer>
               <Layer>
                 <InstallationType>continuous - interior</InstallationType>
@@ -195,7 +200,7 @@
             </InteriorFinish>
             <Insulation>
               <SystemIdentifier id='Floor1Insulation'/>
-              <AssemblyEffectiveRValue>39.3</AssemblyEffectiveRValue>
+              <AssemblyEffectiveRValue>39.6</AssemblyEffectiveRValue>
             </Insulation>
           </Floor>
         </Floors>
@@ -229,32 +234,52 @@
             <SystemIdentifier id='Window1'/>
             <Area>108.0</Area>
             <Azimuth>0</Azimuth>
-            <UFactor>0.33</UFactor>
-            <SHGC>0.45</SHGC>
+            <UFactor>0.35</UFactor>
+            <SHGC>0.44</SHGC>
+            <InteriorShading>
+              <SystemIdentifier id='Window1InteriorShading'/>
+              <Type>light curtains</Type>
+            </InteriorShading>
+            <FractionOperable>0.67</FractionOperable>
             <AttachedToWall idref='Wall1'/>
           </Window>
           <Window>
             <SystemIdentifier id='Window2'/>
             <Area>72.0</Area>
             <Azimuth>90</Azimuth>
-            <UFactor>0.33</UFactor>
-            <SHGC>0.45</SHGC>
+            <UFactor>0.35</UFactor>
+            <SHGC>0.44</SHGC>
+            <InteriorShading>
+              <SystemIdentifier id='Window2InteriorShading'/>
+              <Type>light curtains</Type>
+            </InteriorShading>
+            <FractionOperable>0.67</FractionOperable>
             <AttachedToWall idref='Wall1'/>
           </Window>
           <Window>
             <SystemIdentifier id='Window3'/>
             <Area>108.0</Area>
             <Azimuth>180</Azimuth>
-            <UFactor>0.33</UFactor>
-            <SHGC>0.45</SHGC>
+            <UFactor>0.35</UFactor>
+            <SHGC>0.44</SHGC>
+            <InteriorShading>
+              <SystemIdentifier id='Window3InteriorShading'/>
+              <Type>light curtains</Type>
+            </InteriorShading>
+            <FractionOperable>0.67</FractionOperable>
             <AttachedToWall idref='Wall1'/>
           </Window>
           <Window>
             <SystemIdentifier id='Window4'/>
             <Area>72.0</Area>
             <Azimuth>270</Azimuth>
-            <UFactor>0.33</UFactor>
-            <SHGC>0.45</SHGC>
+            <UFactor>0.35</UFactor>
+            <SHGC>0.44</SHGC>
+            <InteriorShading>
+              <SystemIdentifier id='Window4InteriorShading'/>
+              <Type>light curtains</Type>
+            </InteriorShading>
+            <FractionOperable>0.67</FractionOperable>
             <AttachedToWall idref='Wall1'/>
           </Window>
         </Windows>
@@ -282,7 +307,7 @@
                 <Furnace/>
               </HeatingSystemType>
               <HeatingSystemFuel>natural gas</HeatingSystemFuel>
-              <HeatingCapacity>36000.0</HeatingCapacity>
+              <HeatingCapacity>35000.0</HeatingCapacity>
               <AnnualHeatingEfficiency>
                 <Units>AFUE</Units>
                 <Value>0.92</Value>
@@ -298,8 +323,8 @@
               <CompressorType>single stage</CompressorType>
               <FractionCoolLoadServed>1.0</FractionCoolLoadServed>
               <AnnualCoolingEfficiency>
-                <Units>SEER</Units>
-                <Value>13.0</Value>
+                <Units>SEER2</Units>
+                <Value>13.4</Value>
               </AnnualCoolingEfficiency>
             </CoolingSystem>
           </HVACPlant>
@@ -337,7 +362,6 @@
                   <DuctType>return</DuctType>
                   <DuctInsulationRValue>4.0</DuctInsulationRValue>
                 </Ducts>
-                <NumberofReturnRegisters>2</NumberofReturnRegisters>
               </AirDistribution>
             </DistributionSystemType>
             <ConditionedFloorAreaServed>2700.0</ConditionedFloorAreaServed>
@@ -372,19 +396,21 @@
             <FuelType>electricity</FuelType>
             <WaterHeaterType>storage water heater</WaterHeaterType>
             <FractionDHWLoadServed>1.0</FractionDHWLoadServed>
-            <HeatingCapacity>18767.0</HeatingCapacity>
-            <EnergyFactor>0.95</EnergyFactor>
+            <UniformEnergyFactor>0.94</UniformEnergyFactor>
           </WaterHeatingSystem>
           <HotWaterDistribution>
             <SystemIdentifier id='HotWaterDistribution1'/>
             <SystemType>
               <Standard/>
             </SystemType>
+            <PipeInsulation>
+              <PipeRValue>0.0</PipeRValue>
+            </PipeInsulation>
           </HotWaterDistribution>
           <WaterFixture>
             <SystemIdentifier id='WaterFixture1'/>
             <WaterFixtureType>shower head</WaterFixtureType>
-            <LowFlow>true</LowFlow>
+            <LowFlow>false</LowFlow>
           </WaterFixture>
           <WaterFixture>
             <SystemIdentifier id='WaterFixture2'/>
@@ -403,6 +429,7 @@
             <CollectorTilt>20.0</CollectorTilt>
             <CollectorRatedOpticalEfficiency>0.77</CollectorRatedOpticalEfficiency>
             <CollectorRatedThermalLosses>0.793</CollectorRatedThermalLosses>
+            <StorageVolume>60.0</StorageVolume>
             <ConnectedTo idref='WaterHeatingSystem1'/>
           </SolarThermalSystem>
         </SolarThermal>
@@ -412,11 +439,7 @@
             <ArrayAzimuth>180</ArrayAzimuth>
             <ArrayTilt>20.0</ArrayTilt>
             <MaxPowerOutput>4000.0</MaxPowerOutput>
-            <AttachedToInverter idref='Inverter1'/>
           </PVSystem>
-          <Inverter>
-            <SystemIdentifier id='Inverter1'/>
-          </Inverter>
         </Photovoltaics>
         <Batteries>
           <Battery>
