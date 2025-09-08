@@ -441,7 +441,7 @@ references:
         - Occupants|2
         - Occupants|3
 
-  hpwh_4_pt_0_uef: &hpwh_4_pt_0_uef
+  hpwh_4_pt_0_uef: &hpwh_4_pt_0_uef_1
     option: Water Heater Efficiency|Electric Heat Pump, 4.0 UEF
     apply_logic:
       - or:
@@ -459,7 +459,8 @@ references:
             - Occupants|3
             - Occupants|4
 
-  hpwh_4_pt_0_uef: &hpwh_4_pt_0_uef
+  # FIXME: Combine with above
+  hpwh_4_pt_0_uef: &hpwh_4_pt_0_uef_2
     option: Water Heater Efficiency|Electric Heat Pump, 4.0 UEF
     apply_logic:
       - or:
@@ -933,8 +934,8 @@ upgrades:
     options:
       - *change_water_heater_fuel_to_electricity
       - *hpwh_3_pt_75_uef
-      - *hpwh_4_pt_0_uef
-      - *hpwh_4_pt_0_uef
+      - *hpwh_4_pt_0_uef_1
+      - *hpwh_4_pt_0_uef_2
 
   - upgrade_name: High Efficiency Natural Gas Tankless Water Heater
     package_apply_logic: *high_eff_ng_tankless_wh_apply_logic
