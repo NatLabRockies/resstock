@@ -52,13 +52,13 @@ upgrade,upgrade_name,option_num,option,applicable_to,applicable_percent
 8,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,3,HVAC Cooling Partial Space Conditioning|100% Conditioned,388849,70.7
 8,Variable-Speed Geothermal Heat Pump with Thermally Enhanced Grout and Pipes,-1,All,388849,70.7
 9,Heat Pump Water Heater,1,Water Heater Fuel|Electricity,283143,51.5
-9,Heat Pump Water Heater,2,"Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.78 UEF",199852,36.3
-9,Heat Pump Water Heater,3,"Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.95 UEF",204429,37.2
-9,Heat Pump Water Heater,4,"Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.98 UEF",144253,26.2
-9,Heat Pump Water Heater,-1,All,548534,99.7
-10,High Efficiency Natural Gas Tankless Water Heater,1,Water Heater Fuel|Natural Gas,73702,13.4
-10,High Efficiency Natural Gas Tankless Water Heater,2,"Water Heater Efficiency|High Efficiency Natural Gas Tankless, Condensing",306610,55.7
-10,High Efficiency Natural Gas Tankless Water Heater,-1,All,306610,55.7
+9,Heat Pump Water Heater,2,"Water Heater Efficiency|Electric Heat Pump, 3.75 UEF",199186,36.2
+9,Heat Pump Water Heater,3,"Water Heater Efficiency|Electric Heat Pump, 4.0 UEF",203826,37.1
+9,Heat Pump Water Heater,4,"Water Heater Efficiency|Electric Heat Pump, 4.0 UEF",143820,26.1
+9,Heat Pump Water Heater,-1,All,546832,99.4
+10,High Efficiency Natural Gas Tankless Water Heater,1,Water Heater Fuel|Natural Gas,73240,13.3
+10,High Efficiency Natural Gas Tankless Water Heater,2,"Water Heater Efficiency|High Efficiency Natural Gas Tankless, Condensing",306148,55.7
+10,High Efficiency Natural Gas Tankless Water Heater,-1,All,306148,55.7
 11,Air Sealing,1,Infiltration|5 ACH50,507167,92.2
 11,Air Sealing,-1,All,507167,92.2
 12,Attic Floor Insulation for Unfinished Attics,1,Insulation Ceiling|R-49,3218,0.6
