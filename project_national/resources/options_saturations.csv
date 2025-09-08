@@ -69,7 +69,7 @@ Level,Parameter,Option,Saturation
 0,HVAC System Is Scaled,Yes,0
 0,Holiday Lighting,No Exterior Use,1
 0,Hot Water Distribution,Uninsulated,1
-0,Interior Shading,"Summer = 0.7, Winter = 0.85",1
+0,Interior Shading,Light Curtains,1
 0,Lighting Interior Use,100% Usage,1
 0,Lighting Other Use,100% Usage,1
 0,Mechanical Ventilation,None,1
@@ -88,7 +88,6 @@ Level,Parameter,Option,Saturation
 0,Orientation,South,0.18484
 0,Orientation,Northwest,0.077049
 0,Orientation,Southeast,0.077049
-0,Overhangs,None,1
 0,Range Spot Vent Hour,Hour0,0.007
 0,Range Spot Vent Hour,Hour1,0.007
 0,Range Spot Vent Hour,Hour2,0.004
@@ -12769,9 +12768,7 @@ Level,Parameter,Option,Saturation
 6,Water Heater In Unit,Yes,0.856723
 7,Battery,None,1
 7,Battery,10 kWh,0
-7,Battery,"20 kWh, Outside",0
-7,Battery,"20 kWh, Garage",0
-7,Battery,"20 kWh, 80% Round Trip Efficiency",0
+7,Battery,20 kWh,0
 7,PV Orientation,East,0.00161683
 7,PV Orientation,None,0.989785
 7,PV Orientation,North,0.000170797
@@ -12818,9 +12815,7 @@ Level,Parameter,Option,Saturation
 7,HVAC Secondary Heating Type,Ducted Heating,1.95013e-05
 7,HVAC Secondary Heating Type,Non-Ducted Heating,0.000367707
 7,HVAC Secondary Heating Type,None,0.999613
-7,Water Heater Efficiency,"Electric Heat Pump, 50 gal, 3.45 UEF",0.0031028
-7,Water Heater Efficiency,"Electric Heat Pump, 66 gal, 3.35 UEF",0
-7,Water Heater Efficiency,"Electric Heat Pump, 80 gal, 3.45 UEF",0
+7,Water Heater Efficiency,"Electric Heat Pump, 3.5 UEF",0.0031028
 7,Water Heater Efficiency,Electric Premium,0.0989463
 7,Water Heater Efficiency,Electric Standard,0.362258
 7,Water Heater Efficiency,Electric Tankless,0.020497
@@ -12907,8 +12902,8 @@ Level,Parameter,Option,Saturation
 8,HVAC Secondary Heating Partial Space Conditioning,10%,4.55981e-05
 8,HVAC Secondary Heating Partial Space Conditioning,20%,8.20741e-05
 8,HVAC Secondary Heating Partial Space Conditioning,30%,0.000136533
-8,HVAC Secondary Heating Partial Space Conditioning,40%,6.10411e-05
-8,HVAC Secondary Heating Partial Space Conditioning,49%,6.02766e-05
+8,HVAC Secondary Heating Partial Space Conditioning,40%,6.68006e-05
+8,HVAC Secondary Heating Partial Space Conditioning,50%,5.45173e-05
 8,HVAC Secondary Heating Partial Space Conditioning,Void,0
 8,Insulation Rim Joist,None,0.481809
 8,Insulation Rim Joist,Uninsulated,0.473216
@@ -13239,9 +13234,9 @@ Level,Parameter,Option,Saturation
 13,Cooling Unavailable Days,Never,0.948744
 13,Cooling Unavailable Days,Year round,0.00232387
 13,Cooling Unavailable Days,Void,0
-13,Dishwasher,290 Rated kWh,0.303722
-13,Dishwasher,318 Rated kWh,0.419347
+13,Dishwasher,EnergyStar,0.303722
 13,Dishwasher,None,0.276931
+13,Dishwasher,Standard,0.419347
 13,Dishwasher,Void,0
 13,Electric Vehicle Charge At Home,0-19%,0.130877
 13,Electric Vehicle Charge At Home,20-39%,0.014261
