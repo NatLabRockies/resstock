@@ -692,7 +692,7 @@ Battery
 Description
 ***********
 
-The presence, size, location, and efficiency of an onsite battery (not modeled in project_national).
+The size of an onsite battery (not modeled in project_national).
 
 Created by
 **********
@@ -790,30 +790,14 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 10
      - auto
      - auto
-   * - 20 kWh, Outside
-     - 0%
-     - true
-     - outside
-     - auto
-     - 20
-     - auto
-     - auto
-   * - 20 kWh, Garage
-     - 0%
-     - true
-     - garage
-     - auto
-     - 20
-     - auto
-     - auto
-   * - 20 kWh, 80% Round Trip Efficiency
+   * - 20 kWh
      - 0%
      - true
      - auto
      - auto
      - 20
      - auto
-     - 0.8
+     - auto
 
 .. _bedrooms:
 
@@ -34687,7 +34671,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``dishwasher_label_usage``
      - ``dishwasher_place_setting_capacity``
 
-   * - 290 Rated kWh
+   * - EnergyStar
      - 30%
      - true
      - auto
@@ -34696,17 +34680,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.12
      - 1.09
      - 23
-     - 4
-     - 12
-   * - 318 Rated kWh
-     - 42%
-     - true
-     - auto
-     - RatedAnnualkWh
-     - 318
-     - 0.12
-     - 1.09
-     - 25
      - 4
      - 12
    * - None
@@ -34720,6 +34693,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0
      - 0
      - 0
+   * - Standard
+     - 42%
+     - true
+     - auto
+     - RatedAnnualkWh
+     - 318
+     - 0.12
+     - 1.09
+     - 25
+     - 4
+     - 12
    * - Void
      - 0%
      - 
@@ -35402,6 +35386,78 @@ Arguments
      - Double
      -
      - The eaves depth of the roof.
+   * - ``overhangs_front_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the front facade.
+   * - ``overhangs_front_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the front facade.
+   * - ``overhangs_front_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the front facade.
+   * - ``overhangs_back_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the back facade.
+   * - ``overhangs_back_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the back facade.
+   * - ``overhangs_back_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the back facade.
+   * - ``overhangs_left_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the left facade.
+   * - ``overhangs_left_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the left facade.
+   * - ``overhangs_left_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the left facade.
+   * - ``overhangs_right_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the right facade.
+   * - ``overhangs_right_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the right facade.
+   * - ``overhangs_right_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the right facade.
 
 Options
 *******
@@ -35416,10 +35472,34 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
      - ``geometry_eaves_depth``
+     - ``overhangs_front_depth``
+     - ``overhangs_front_distance_to_top_of_window``
+     - ``overhangs_front_distance_to_bottom_of_window``
+     - ``overhangs_back_depth``
+     - ``overhangs_back_distance_to_top_of_window``
+     - ``overhangs_back_distance_to_bottom_of_window``
+     - ``overhangs_left_depth``
+     - ``overhangs_left_distance_to_top_of_window``
+     - ``overhangs_left_distance_to_bottom_of_window``
+     - ``overhangs_right_depth``
+     - ``overhangs_right_distance_to_top_of_window``
+     - ``overhangs_right_distance_to_bottom_of_window``
 
    * - 2 ft
      - 100%
      - 2
+     - 0
+     - 0
+     - 4
+     - 0
+     - 0
+     - 4
+     - 0
+     - 0
+     - 4
+     - 0
+     - 0
+     - 4
 
 .. _electric_vehicle_battery:
 
@@ -40901,11 +40981,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.014%
      - 0.3
    * - 40%
-     - 0.0061%
+     - 0.0067%
      - 0.4
-   * - 49%
-     - 0.006%
-     - 0.49
+   * - 50%
+     - 0.0055%
+     - 0.5
    * - Void
      - 0%
      - 
@@ -42891,7 +42971,7 @@ Hot Water Distribution
 Description
 ***********
 
-Hot water piping material and insulation level.
+Type of distribution system and presence of hot water piping insulation.
 
 Created by
 **********
@@ -44604,7 +44684,7 @@ Interior Shading
 Description
 ***********
 
-Fraction of window shading in the summer and winter.
+Type of window interior shading.
 
 Created by
 **********
@@ -44665,7 +44745,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``window_interior_shading_winter``
      - ``window_interior_shading_summer``
 
-   * - Summer = 0.7, Winter = 0.85
+   * - Light Curtains
      - 100%
      - auto
      - 0.85
@@ -48715,155 +48795,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Southeast
      - 7.7%
      - 135
-
-.. _overhangs:
-
-Overhangs
----------
-
-Description
-***********
-
-Presence, depth, and location of window overhangs (not used in project_national).
-
-Created by
-**********
-
-manually created
-
-Source
-******
-
-- \Not applicable
-
-- \all homes are assumed to not have window overhangs other than eaves.
-
-
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``overhangs_front_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the front facade.
-   * - ``overhangs_front_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the front facade.
-   * - ``overhangs_front_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the front facade.
-   * - ``overhangs_back_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the back facade.
-   * - ``overhangs_back_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the back facade.
-   * - ``overhangs_back_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the back facade.
-   * - ``overhangs_left_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the left facade.
-   * - ``overhangs_left_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the left facade.
-   * - ``overhangs_left_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the left facade.
-   * - ``overhangs_right_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the right facade.
-   * - ``overhangs_right_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the right facade.
-   * - ``overhangs_right_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the right facade.
-
-Options
-*******
-
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Overhangs** characteristic.
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-   :widths: auto
-
-   * - Option name
-     - Stock saturation
-     - ``overhangs_front_depth``
-     - ``overhangs_front_distance_to_top_of_window``
-     - ``overhangs_front_distance_to_bottom_of_window``
-     - ``overhangs_back_depth``
-     - ``overhangs_back_distance_to_top_of_window``
-     - ``overhangs_back_distance_to_bottom_of_window``
-     - ``overhangs_left_depth``
-     - ``overhangs_left_distance_to_top_of_window``
-     - ``overhangs_left_distance_to_bottom_of_window``
-     - ``overhangs_right_depth``
-     - ``overhangs_right_distance_to_top_of_window``
-     - ``overhangs_right_distance_to_bottom_of_window``
-
-   * - None
-     - 100%
-     - 0
-     - 0
-     - 4
-     - 0
-     - 0
-     - 4
-     - 0
-     - 0
-     - 4
-     - 0
-     - 0
-     - 4
 
 .. _puma:
 
@@ -63264,8 +63195,6 @@ Assumption
 
 - \Heat Pump Water Heaters are added in manually as they are not in the survey.
 
-- \Default efficiency of HPWH: Electric Heat Pump, 50 gal, 3.45 UEF.
-
 - \Default solar thermal collector assumed: 40 sqft, Roof Pitch,
 
 - \Solar thermal backup is informed by secondary water heater fuel type. Solar collector orientation is based on rooftop solar orientation for electric backup and assumed south-facing for fuel backup. If a solar thermal system has no secondary water heater or has a second solar thermal system, they are assumed to have electric backup.
@@ -63495,71 +63424,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``solar_thermal_solar_fraction``
      - ``water_heater_has_flue_or_chimney``
 
-   * - Electric Heat Pump, 50 gal, 3.45 UEF
+   * - Electric Heat Pump, 3.5 UEF
      - 0.31%
      - heat pump water heater
      - electricity
-     - 50
+     - auto
      - UniformEnergyFactor
-     - 3.45
-     - auto
-     - 0
-     - auto
-     - auto
-     - 0
-     - 0
-     - 125
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
-   * - Electric Heat Pump, 66 gal, 3.35 UEF
-     - 0%
-     - heat pump water heater
-     - electricity
-     - 66
-     - UniformEnergyFactor
-     - 3.35
-     - auto
-     - 0
-     - auto
-     - auto
-     - 0
-     - 0
-     - 125
-     - auto
-     - auto
-     - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
-   * - Electric Heat Pump, 80 gal, 3.45 UEF
-     - 0%
-     - heat pump water heater
-     - electricity
-     - 80
-     - UniformEnergyFactor
-     - 3.45
+     - 3.5
      - auto
      - 0
      - auto
