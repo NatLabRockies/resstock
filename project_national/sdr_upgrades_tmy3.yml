@@ -583,7 +583,6 @@ references:
     - or:
       - Heating Fuel|Natural Gas
       - Water Heater Fuel|Natural Gas
-      - Clothes Dryer|Gas, Premium
       - Clothes Dryer|Gas
       - Cooking Range|Gas
       - HVAC Secondary Heating Fuel|Natural Gas
@@ -612,7 +611,6 @@ references:
     - or:
       - Heating Fuel|Natural Gas
       - Water Heater Fuel|Natural Gas
-      - Clothes Dryer|Gas, Premium
       - Clothes Dryer|Gas
       - Cooking Range|Gas
       - HVAC Secondary Heating Fuel|Natural Gas
