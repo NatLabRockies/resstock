@@ -45,7 +45,7 @@ For updating to the latest version of OpenStudio-HPXML's ``master`` branch enter
 
   $ openstudio tasks.rb update_resources
 
-See :doc:`running_task_commands` for more information and context about running tasks.
+See :doc:`testing_infrastructure/running_task_commands` for more information and context about running tasks.
 (Executing the ``update_resources`` task will issue the appropriate ``git subtree`` command for syncing ResStock with OpenStudio-HPXML's ``master`` branch; there is more on this below.)
 
 Once ``resources/hpxml-measures`` has been updated, there are a few :ref:`remaining steps<post-git-subtree-steps>` for ensuring ResStock is properly connected to OpenStudio-HPXML.
