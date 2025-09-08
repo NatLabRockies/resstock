@@ -134,7 +134,6 @@ build_existing_model.natural_ventilation,:ref:`natural_ventilation`
 build_existing_model.neighbors,:ref:`neighbors`
 build_existing_model.occupants,:ref:`occupants`
 build_existing_model.orientation,:ref:`orientation`
-build_existing_model.overhangs,:ref:`overhangs`
 build_existing_model.plug_load_diversity,:ref:`plug_load_diversity`
 build_existing_model.plug_loads,:ref:`plug_loads`
 build_existing_model.puma,:ref:`puma`
