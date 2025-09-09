@@ -27,7 +27,8 @@ jobs:
   format-files:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
@@ -51,7 +52,8 @@ jobs:
     container:
       image: docker://nrel/openstudio:3.10.0
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
@@ -94,11 +96,13 @@ jobs:
   postprocessing-tests:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - uses: actions/setup-python@v5
+      - name: Setup python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -120,7 +124,8 @@ jobs:
     runs-on: ubuntu-22.04
     needs: format-files
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
@@ -182,7 +187,8 @@ jobs:
     container:
       image: docker://nrel/openstudio:3.10.0
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
@@ -236,8 +242,9 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout base branch
         if: github.event_name == 'pull_request'
+        uses: actions/checkout@v4        
         with:
           ref: ${{ github.event.pull_request.base.sha }}
 
@@ -249,7 +256,8 @@ jobs:
           path: test/base_results
           if-no-files-found: error
 
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
@@ -399,7 +407,8 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [analysis-tests, integration-tests]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
@@ -428,7 +437,8 @@ jobs:
     container:
       image: docker://nrel/openstudio:3.10.0
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
@@ -558,11 +568,13 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [sdr-options-analysis]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - uses: actions/setup-python@v5
+      - name: Setup python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
