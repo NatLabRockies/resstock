@@ -177,7 +177,6 @@ Uses ``project_testing/testing_baseline.yml`` and ``project_national/national_ba
 
 Artifacts uploaded:
 
-- feature_results
 - buildstockbatch_results_csvs
 - raw_simulation_output
 
@@ -309,7 +308,6 @@ Artifacts produced if tests are successful:
 - documentation: A current version of the ResStock documentation in Read-the-Docs and the Technical Reference Guide PDF.
 - precomputed_buildstocks: Precomputed `buildstock.csv` for ``test/test_yml_files``.
 - run_analysis_results_csvs: Annual results from the analysis tests.
-- feature_results: Processed baseline annual and timeseries results from the integration tests.
 - buildstockbatch_results_csvs: Annual results from the integration tests.
 - raw_simulation_output: Unprocessed simulation output files from the integration tests.
 - comparisons: Plots that show the difference in the results between the base branch and feature branch. Helpful during model changes, not characteristics changes.
