@@ -237,10 +237,12 @@ jobs:
     needs: [unit-tests]
     steps:
       - uses: actions/checkout@v4
+        if: github.event_name == 'pull_request'
         with:
           ref: ${{ github.event.pull_request.base.sha }}
 
       - name: Upload base results
+        if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: base_results
@@ -360,12 +362,14 @@ jobs:
           fi
 
       - name: Download base results
+        if: github.event_name == 'pull_request'
         uses: actions/download-artifact@v4
         with:
           path: base_results
           name: base_results
 
       - name: Compare samples and results
+        if: github.event_name == 'pull_request'
         run: |          
           pip install numpy
           pip install pandas
@@ -384,6 +388,7 @@ jobs:
           python test/compare.py -a timeseries -b base_results/baseline/timeseries -f baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
 
       - name: Upload comparisons
+        if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: comparisons
