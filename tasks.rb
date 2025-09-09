@@ -106,3 +106,4 @@ end
 if ARGV[0].to_sym == :download_weather
   download_epws
 end
+
