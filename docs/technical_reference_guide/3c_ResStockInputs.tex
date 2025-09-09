@@ -1903,7 +1903,7 @@ The heating fuel of the pool heater if there is a pool.
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
     \item Constructed using U.S. EIA 2020 RECS microdata.
-    \item Constructed using the California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata 
+    \item Constructed using the California Energy Commission 2019 Residential Appliance Saturation Study (RASS) microdata. 
 \end{itemize} 
 
 \paragraph{Direct Conditional Dependencies}
@@ -1922,7 +1922,6 @@ There are five options for pool heaters: Electricity, Electric Heat Pump, Natura
 \texttt{pool\_heater\_annual\_kwh} &
 \texttt{pool\_heater\_annual\_therm} &
 \texttt{pool\_heater\_usage\_multiplier}} 
-Electric Heat Pump & heat pump & auto & 0 & 1.0 \\
 Electricity & electric resistance & auto & 0 & 1.0 \\
 Electric Heat Pump & heat pump & auto & 0 & 1.0 \\
 Natural Gas & gas fired & 0 & auto & 1.0 \\
@@ -1947,7 +1946,7 @@ resistance, gas fired, heat pump & The type of pool heater. Use
 \textquotesingle none\textquotesingle{} if there is no pool heater. \\
 \hline
 \texttt{pool\_heater\_annual\_kwh} & false & kWh/yr & Double & auto &
-The annual energy consumption of the electric resistance pool heater. \\
+The annual energy consumption of the electric pool heater. \\
 \hline
 \texttt{pool\_heater\_annual\_therm} & false & therm/yr & Double & auto
 & The annual energy consumption of the gas fired pool heater. \\
@@ -1959,7 +1958,7 @@ high/low usage occupants.  \\
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
-    \item Within electric pool heaters, proportion of heat pump electric pool heating vs. non-heat pump electric pool heating was derived from RASS 2019.
+    \item Electric heat pump pool heater is not present in RECS 2020, so state-level RASS 2019 is used to split all pool heaters tagged "Electricity" by RECS 2020 into either electric resistance (still labeled "Electricity") and "Electric Heat Pump".
 \end{itemize}
 
 \subsubsection{Misc Pool Pump}
