@@ -604,7 +604,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - uses: actions/setup-python@v5
         with:
@@ -703,9 +703,9 @@ jobs:
 
       - name: Commit the integration tests results
         run: |
-          branch_name="${{ github.head_ref }}"
+          branch_name="${{ github.head_ref || github.ref_name }}"
           git checkout resources/options_lookup.tsv
-          git pull origin $branch_name
+          git pull --ff-only --no-tags --depth=1 origin $branch_name
           cp -r project_national/sdr_upgrades_tmy3/results_csvs_pub/* test/base_results/upgrades/sdr_annual
           git add test/base_results/upgrades/sdr_annual
           git status
