@@ -33,5 +33,6 @@ Development Changelog
 
         Title:
         Ensure deterministic order in pub results by sorting
+
         Description:
         The order of rows in the published results CSV files are now always sorted by building_id.
