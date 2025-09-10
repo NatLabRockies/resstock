@@ -24,3 +24,15 @@ Development Changelog
         OpenStudio-HPXML: `pull request 1879 <https://github.com/NREL/OpenStudio-HPXML/pull/1879>`_, `pull request 1939 <https://github.com/NREL/OpenStudio-HPXML/pull/1939>`_, `pull request 2028 <https://github.com/NREL/OpenStudio-HPXML/pull/2028>`_
 
         Assignees: Joe Robertson, Scott Horowitz
+
+    .. change::
+        :tags: software, postprocessing
+        :pullreq: 1483
+
+        **Date**: 2025-09-09
+
+        Title:
+        Ensure deterministic order in pub results by sorting
+
+        Description:
+        The order of rows in the published results CSV files are now always sorted by building_id.
