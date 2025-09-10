@@ -247,7 +247,8 @@ class DataProcessor:
             )
 
             # 2. Join the baseline values back to the full dataset on `building_id`.
-            df_with_baseline = combined_df.join(baseline_df, on=join_key, how="left", validate="m:1")
+            df_with_baseline = combined_df.join(baseline_df, on=join_key, how="left", validate="m:1",
+                                                maintain_order='left')
 
             # 3. Replace the quantity columns with the calculated savings.
             savings_exprs = [(pl.col(f"baseline_{q}") - pl.col(q)).alias(q) for q in quantities]
@@ -414,11 +415,11 @@ class DataProcessor:
             maintain_order=True
         )
 
-        grid = groups.lazy().join(pl.DataFrame({"bin": full_bins}).lazy(), how="cross")
+        grid = groups.lazy().join(pl.DataFrame({"bin": full_bins}).lazy(), how="cross", maintain_order='left')
 
         # ---------- 5. Merge counts → zerofill ----------
         hist_full = (
-            grid.join(counts.lazy(), on=group_keys, how="left")
+            grid.join(counts.lazy(), on=group_keys, how="left", maintain_order='left')
             .with_columns(pl.col("count").fill_null(0).cast(pl.UInt32))
             # ---------- 6. Bin boundaries ----------
             .with_columns(
@@ -461,20 +462,18 @@ class DataProcessor:
         include_kde: bool = True,
         kde_points: int = 100,
     ) -> pl.DataFrame:
-        """
-        Return one row per group with:
-            q1, median, q3, mean, n_points,
-            lower_whisker, upper_whisker, outliers [list]
-        +   kde_x / kde_y                (only when include_kde=True)
 
-        All cheap stats stay in Polars.  SciPy's gaussian_kde is called
-        *per group* only when include_kde=True.
-        """
         # ─── 1. keys ──────────────────────────────────────────────────────────────
         gcols = ["upgrade", "upgrade_name"]
         if group_by:
             gcols.append(group_by)
-
+        max_items_per_group = max(combined_df.group_by(gcols).agg(pl.len()).collect()['len'].to_list())
+        if max_items_per_group < 30000:
+            cutoff = 0.01  # Upto 30K datapoints, show 1% outliers
+        elif max_items_per_group < 100000:
+            cutoff = 0.001  # Upto 100K datapoints, show 0.1% outliers
+        else:
+            cutoff = 0.0001  # very large groups, use 0.01% outliers
         lazy = (
             combined_df.fill_null(0)
             .group_by(gcols, maintain_order=True)
@@ -482,11 +481,11 @@ class DataProcessor:
                 pl.col(quantity).alias("vals"),
                 pl.col("bldg_id").alias("bldg_ids"),
                 pl.col(quantity).min().alias("min"),
-                pl.col(quantity).quantile(0.01).alias("lower_cutoff"),
+                pl.col(quantity).quantile(cutoff).alias("lower_cutoff"),
                 pl.col(quantity).quantile(0.25).alias("q1"),
                 pl.col(quantity).median().alias("median"),
                 pl.col(quantity).quantile(0.75).alias("q3"),
-                pl.col(quantity).quantile(0.99).alias("upper_cutoff"),
+                pl.col(quantity).quantile(1 - cutoff).alias("upper_cutoff"),
                 pl.col(quantity).max().alias("max"),
                 pl.col(quantity).mean().alias("mean"),
                 pl.count().alias("n_points"),
@@ -534,7 +533,6 @@ class DataProcessor:
             )
             .drop(["iqr", "lower_fence", "upper_fence"])
         )
-
         df = lazy.collect()
 
         # ─── 3. optional KDE step ─────────────────────────────────────────────────

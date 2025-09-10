@@ -17,6 +17,7 @@ import os
 import textwrap
 import traceback
 from pathlib import Path
+import time
 from typing import Any
 
 import dash
@@ -1000,9 +1001,14 @@ def get_app() -> DashProxy:
                 user_warning += "\nPlease view it in the old dashboard or re-run the flow."
                 df, fig = _get_dummy_df_fig(user_warning)
                 return df, fig, False
+            start_time = time.time()
+            print("Preparing data for plot...")
             df = orchestrator.processor.prepare_data_for_plot(spec)
+            print(f"Data prepared in {time.time() - start_time:.1f} seconds. Generating data ...")
             plotter = orchestrator.get_plotter(spec.visualization_type)
+            start_time = time.time()
             fig = plotter.create_plot(df, spec)
+            print(f"Figure generated in {time.time() - start_time:.1f} seconds.")
 
         # styling tweaks similar to original implementation
         fig.layout.title.subtitle.text = ""
