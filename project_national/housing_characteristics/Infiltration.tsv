@@ -1379,12 +1379,12 @@ Dependency=ASHRAE IECC Climate Zone 2004	Dependency=Geometry Floor Area	Dependen
 # Created by: sources\resdb\tsv_maker.py and sources\aris\tsv_maker.py
 # Description: Total infiltration to the dwelling unit.
 # Source: Distributions are based on the cumulative distribution functions from the Residential Diagnostics Database (ResDB), http://resdb.lbl.gov/.
-# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corpotation.
+# Source: Alaska specific distribution is based on Alaska Retrofit Information System (2008 to 2022) maintained by Alaska Housing Finance Corporation.
 # Assumption: All ACH50 are based on Single-Family Detached blower door tests.
 # Assumption: Climate zones that are copied: 2A to 1A, 6A to 7A, and 6B to 7B.
 # Assumption: Vintage bins that are copied: 2000s to 2010s, 1950s to 1940s, 1950s to <1940s.
 # Assumption: Homes are assumed to not be Weatherization Assistance Program (WAP) qualified and not ENERGY STAR certified.
 # Assumption: Climate zones 7AK and 8AK are averages of 6A and 6B.
 # Assumption: ResStock models multi-family and SFA units with the unit total air leakage type. The unit total air leakage assume that some of the sampled ACH50 value goes to neighboring units. The model infiltration value to the exterior is a smaller infiltration value that what is sampled and is adjusted by the ratio of exterior envelope surface area to total envelope surface area. The modeled infiltration to the exterior is reported in the results.
-# Assumption: For Alaska, we are using a field in ARIS that lumps muti-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
+# Assumption: For Alaska, we are using a field in ARIS that lumps multi-family 2-4 units and multi-family 5+ units buildings together. Data from the American Community Survey is used to distribute the between these two building types.
 # Assumption: For Alaska, Infiltration ACH50 values are calculated based on CFM50 from blower door test and estimated volume of the home.

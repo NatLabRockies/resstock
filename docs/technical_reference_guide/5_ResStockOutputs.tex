@@ -1,18 +1,18 @@
 \chapter{ResStock Outputs}\label{sec:resstock_outputs}
-ResStock produces a range of results around energy, housing characteristics, schedules, emissions, and costs. This section overviews the outputs available in the latest ResStock data release (2024 release 2). The data dictionary that summarizes these outputs is available with the \href{https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/data_dictionary.tsv}{data release}.  
+ResStock produces a range of results around energy, housing characteristics, schedules, emissions, and costs. This section overviews the outputs available in the latest ResStock data release (2024 release 2). The data dictionary that summarizes these outputs is available with the \href{https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_amy2018_release_2/data_dictionary.tsv}{data release}.
 
 \section{Building Characteristics}
 %Tables - basically our data dictionaries (ideally automated). Data dictionaries are already automated but need heavy QC
-The ResStock workflow generates a sample of residential housing units using the conditional distributions and sampling methodology described in Section \ref{sec:sampling_methodology}. Each housing unit sample is specified using a set of characteristics, which include location, housing type, vintage,  heating fuel, building size and geometry, materials, information on the HVAC system, insulation, infiltration, appliances, as well as information on occupant demographics and  behavior. These characteristics are used for the model creation process, but they are also available as metadata associated with the results. The metadata is useful for performing analysis and slicing the data into segments. Some characteristics directly impact the OpenStudio model creation (e.g., wall insulation levels), whereas others are meta-parameters used as tags (e.g., ISO/RTO region) or as characteristics that correlate with other energy-relevant characteristics (e.g., vintage). Each of these characteristics is described in detail in Section \ref{sec:resstock_inputs}, and are summarized in Table \ref{table:hc_output_fields}. In published ResStock datasets, these housing characteristics are the fields that use the ``in'' prefix followed by the housing characteristic name, for example ``in.windows'' for the Windows characteristic. If an upgrade or measure changes a housing characteristic, the post-upgrade characteristic uses the ``upgrade'' prefix, for example ``upgrade.windows.'' 
+The ResStock workflow generates a sample of residential housing units using the conditional distributions and sampling methodology described in Section \ref{sec:sampling_methodology}. Each housing unit sample is specified using a set of characteristics, which include location, housing type, vintage,  heating fuel, building size and geometry, materials, information on the HVAC system, insulation, infiltration, appliances, as well as information on occupant demographics and  behavior. These characteristics are used for the model creation process, but they are also available as metadata associated with the results. The metadata is useful for performing analysis and slicing the data into segments. Some characteristics directly impact the OpenStudio model creation (e.g., wall insulation levels), whereas others are meta-parameters used as tags (e.g., ISO/RTO region) or as characteristics that correlate with other energy-relevant characteristics (e.g., vintage). Each of these characteristics is described in detail in Section \ref{sec:resstock_inputs}, and are summarized in Table \ref{table:hc_output_fields}. In published ResStock datasets, these housing characteristics are the fields that use the ``in'' prefix followed by the housing characteristic name, for example ``in.windows'' for the Windows characteristic. If an upgrade or measure changes a housing characteristic, the post-upgrade characteristic uses the ``upgrade'' prefix, for example ``upgrade.windows.''
 
-Most national ResStock data releases have approximately one sample for every 250 housing units that actually exist in the modeled geography, though this can vary if the sample size is increased or decreased. Taken together, the set of samples describes the housing stock with its intrinsic variety and is used as both an output of ResStock and an input to further steps in the ResStock workflow (see Section \ref{sec:workflow} for more information about the workflow). 
+Most national ResStock data releases have approximately one sample for every 250 housing units that actually exist in the modeled geography, though this can vary if the sample size is increased or decreased. Taken together, the set of samples describes the housing stock with its intrinsic variety and is used as both an output of ResStock and an input to further steps in the ResStock workflow (see Section \ref{sec:workflow} for more information about the workflow).
 
 Note that ResStock assigns certain characteristics that are not always used. Two examples of this are \textit{cooling setpoint} in housing units with no cooling system, and \textit{clothes washer usage level} in housing units with no clothes washer. This doesn't impact the building energy models, this is merely a mechanism that allows for variability in probability distributions if the schedules are used for an upgrade. These characteristics, however, can lead to confusion because they're preserved in the metadata as being assigned even if they're not modeled. For further discussion see the the BuildStock Batch \href{https://buildstockbatch.readthedocs.io/en/v2023.10.0/project_defn.html#upgrade-scenarios}{Upgrade Scenario} documentation.
 
 
 \begin{customLongTable}{ |p{6cm}|p{9cm}| }
-{ResStock building characteristic output field names and descriptions} {table:hc_output_fields} 
-{\textbf{Field Name} & \textbf{Field Description}} 
+{ResStock building characteristic output field names and descriptions} {table:hc_output_fields}
+{\textbf{Field Name} & \textbf{Field Description}}
         in.ahs\_region & American Housing Survey region \\ \hline
         in.aiannh\_area & The sample is or is not located in census-designated American Indian/Alaska Native/Native Hawaiian Area \\ \hline
         in.area\_median\_income & Area median income of the household occupying the housing unit \\ \hline
@@ -51,6 +51,7 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.duct\_leakage\_and\_insulation & Duct insulation and leakage to outside from the portion of ducts in unconditioned spaces \\ \hline
         in.duct\_location & Location of duct system \\ \hline
         in.eaves & Depth of roof eaves \\ \hline
+        in.electric\_panel\_breaker\_space\_total\_count & Total breaker spaces on electric panel \\ \hline
         in.electric\_panel\_service\_rating & Electrical panel service or max current rating (A) \\ \hline
         in.electric\_panel\_service\_rating\_bin & Electrical panel service or max current rating in bins (A) \\ \hline
         in.electric\_vehicle\_battery & The type of battery used by EV \\ \hline
@@ -61,7 +62,7 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.electric\_vehicle\_ownership & Whether the EV is present or not \\ \hline
         in.energystar\_climate\_zone\_2023 & Climate zones for windows, doors, and skylights per ENERGY STAR guidelines as of 2023 \\ \hline
         in.federal\_poverty\_level & Federal poverty level of the household occupying the housing unit \\ \hline
-        in.generation\_and\_emissions\_assessment\_region & Generation and carbon emissions assessment (GEA) region from Cambium 2022 \\ \hline
+        in.generation\_and\_emissions\_assessment\_region & Generation and carbon emissions assessment (GEA) region from Cambium 2023 \\ \hline
         in.geometry\_attic\_type & Type of attic \\ \hline
         in.geometry\_building\_horizontal\_location\_mf & Location of the multifamily unit horizontally within the building (left, middle, right) \\ \hline
         in.geometry\_building\_horizontal\_location\_sfa & Location of the single-family attached unit horizontally within the building (left, middle, right) \\ \hline
@@ -156,14 +157,14 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.refrigerator & The presence and rated efficiency of the primary refrigerator \\ \hline
         in.refrigerator\_usage\_level & Refrigerator energy usage level multiplier \\ \hline
         in.roof\_material & Roof material type \\ \hline
-        
+
         in.solar\_hot\_water & Presence, size, and location of solar hot water system \\ \hline
         in.sqft & Finished floor area of the representative housing unit \\ \hline
         in.state & State \\ \hline
         in.tenure & The tenancy (owner or renter) of the household occupying the housing unit \\ \hline
         in.units\_represented & Number of housing units the building model represents (this field is no longer used) \\ \hline
         in.usage\_level & Usage of major appliances relative to the national average \\ \hline
-        
+
         in.vacancy\_status & Presence of occupants \\ \hline
         in.vintage & Range in which the building was constructed \\ \hline
         in.vintage\_acs & Range in which the building was constructed using ACS bins \\ \hline
@@ -172,16 +173,16 @@ Note that ResStock assigns certain characteristics that are not always used. Two
         in.water\_heater\_in\_unit & Individual water heater present or not present in the housing unit that solely serves the specific housing unit \\ \hline
         in.water\_heater\_location & Water heater location for the housing unit if applicable \\ \hline
         in.weather\_file\_city & City of weather file \\ \hline
-        
+
         in.window\_areas & Window to wall ratios of the front, back, left, and right walls  \\ \hline
         in.windows & Construction type and efficiency levels of windows \\
 \end{customLongTable}
 
-In addition to the housing characteristics themselves, several other ResStock outputs receive the ``in.'' prefix. These are inputs that are not provided as housing characteristics, but that are necessary inputs to the model. Most of these values are specified in the \href{https://github.com/NREL/resstock/blob/v3.2.0-2024.2/project_national/EUSSRR2_project_500k_AMY2018.yml}{project configuration file}. 
+In addition to the housing characteristics themselves, several other ResStock outputs receive the ``in.'' prefix. These are inputs that are not provided as housing characteristics, but that are necessary inputs to the model. Most of these values are specified in the \href{https://github.com/NREL/resstock/blob/v3.2.0-2024.2/project_national/EUSSRR2_project_500k_AMY2018.yml}{project configuration file}.
 
 \begin{customLongTable}{ |p{6cm}|p{9cm}| }
 {ResStock building characteristic output field names and descriptions} {table:supplmentary_input_fields}
-{\textbf{Field Name} & \textbf{Field Description}} 
+{\textbf{Field Name} & \textbf{Field Description}}
 
         in.emissions\_electricity\_folders & Relative paths of electricity emissions factor schedule files with hourly values. Paths are relative to the resources folder. If multiple scenarios, use a comma-separated list. File names must contain GEA region names. \\ \hline
         in.emissions\_electricity\_units & Electricity emissions factors units. If multiple scenarios, use a comma-separated list. Only lb/MWh and kg/MWh are allowed. \\ \hline
@@ -217,14 +218,14 @@ In addition to the housing characteristics themselves, several other ResStock ou
     \end{customLongTable}
 
 \section{Energy Consumption by Fuel and End Use}
-The ResStock workflow models each housing unit sample in OpenStudio and EnergyPlus to produce energy consumption of each model at subhourly time steps and then processes the results into ResStock outputs. These outputs are produced by fuel type (e.g., electricity, natural gas) and end use (e.g., lighting, heating). Totals are calculated for each fuel and for all fuels combined. For electricity and all fuels combined, net totals are also calculated, which incorporate the impacts of on-site photovoltaics. The full list of energy consumption outputs from the ResStock workflow is available in Table \ref{table:results_output_fields}. Note that to date, ResStock has included only consumption of electricity, natural gas, propane, and fuel oil---excluding on-site consumption, wood, coal, or other fuels in its modeling, although the workflow is set up to include these additional fuels. Future releases will likely include wood. 
+The ResStock workflow models each housing unit sample in OpenStudio and EnergyPlus to produce energy consumption of each model at subhourly time steps and then processes the results into ResStock outputs. These outputs are produced by fuel type (e.g., electricity, natural gas) and end use (e.g., lighting, heating). Totals are calculated for each fuel and for all fuels combined. For electricity and all fuels combined, net totals are also calculated, which incorporate the impacts of on-site photovoltaics. The full list of energy consumption outputs from the ResStock workflow is available in Table \ref{table:results_output_fields}. Note that to date, ResStock has included only consumption of electricity, natural gas, propane, and fuel oil---excluding on-site consumption, wood, coal, or other fuels in its modeling, although the workflow is set up to include these additional fuels. Future releases will likely include wood.
 
 As an output, the energy consumption results are all preceded with an ``out.'' prefix, followed by either the fuel type (e.g., ``out.electricity.'') or ``total.'' if it is an aggregate of all fuel types, and then the end use, ``net.''  or ``total.'' if it is an aggregate of all end uses in that fuel type.
 %%%% Bill calculations are really confusing and need to be better covered either here or OS-HPXML (or both). OS-HPXML documentation is lacking
 
 \begin{customLongTable}{ |p{6cm}|p{1.5cm}|p{7cm}| }
-{ResStock energy output field names, units, and descriptions} {table:results_output_fields} 
-{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}} 
+{ResStock energy output field names, units, and descriptions} {table:results_output_fields}
+{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}}
         out.electricity.ceiling\_fan.energy\_consumption.kwh & kWh & Electricity consumed by ceiling fans \\ \hline
         out.electricity.clothes\_dryer.energy\_consumption.kwh & kWh & Electricity consumed by clothes dryers \\ \hline
         out.electricity.clothes\_washer.energy\_consumption.kwh & kWh & Electricity consumed by clothes washers \\ \hline
@@ -275,7 +276,7 @@ As an output, the energy consumption results are all preceded with an ``out.'' p
         out.propane.range\_oven.energy\_consumption.kwh & kWh & Propane consumed by propane range and oven \\ \hline
         out.propane.total.energy\_consumption.kwh & kWh & Total propane energy consumed \\ \hline
         out.site\_energy.net.energy\_consumption.kwh & kWh & Total site energy consumed subtracts any power produced by PV or generators \\ \hline
-        out.site\_energy.total.energy\_consumption.kwh & kWh & Total site energy consumed \\ 
+        out.site\_energy.total.energy\_consumption.kwh & kWh & Total site energy consumed \\
 \end{customLongTable}
 
 \section{Cost Multipliers}
@@ -313,48 +314,43 @@ upgrade\_costs.window\_area\_ft\_2 & ft\textsuperscript{2}& Window Area
 \end{longtable}
 
 \section{Emissions}
-%Standard convention of how we do this. Methodology. 
+%Standard convention of how we do this. Methodology.
 The ResStock workflow includes the capability of including emissions factors as supplemental inputs, which are then used to calculate the corresponding emissions outputs. These outputs are generated by end use and fuel type, as well as per-fuel totals. Total emissions impacts of a measure across fuels are calculated from ResStock results.
 
 \subsection{Emissions From On-Site Combustion (Scope 1)}
-The ResStock workflow currently accepts emissions factors for non-electric energy consumption as annual values only. Our typical approach is to use the values from Table 7.1.2(1) of PDS-01 of BSR/RESNET/ICCC 301 Addendum B, CO\textsubscript{2} Index (\cite{RESNET2022}), which account for both combustion and pre-combustion (e.g., methane leakage) impacts. These are 147.3 lb/MMBtu (228.5 kg/MWh) for natural gas, 177.8 lb/MMBtu (275.8 kg/MWh) for propane, and 195.9 lb/MMBtu (303.9 kg/MWh) for fuel oil. ResStock then outputs the associated carbon-equivalent emissions for every fuel and end-use combination. 
+The ResStock workflow currently accepts emissions factors for non-electric energy consumption as annual values only. Our typical approach is to use the values from Table 7.1.2(1) of PDS-01 of BSR/RESNET/ICCC 301 Addendum B, CO\textsubscript{2} Index (\cite{RESNET2022}), which account for both combustion and pre-combustion (e.g., methane leakage) impacts. These are 147.3 lb/MMBtu (228.5 kg/MWh) for natural gas, 177.8 lb/MMBtu (275.8 kg/MWh) for propane, and 195.9 lb/MMBtu (303.9 kg/MWh) for fuel oil. ResStock then outputs the associated carbon-equivalent emissions for every fuel and end-use combination.
 
 If multiple emissions scenarios are being run, ResStock will output values for each fuel for each end use for each scenario, even if that particular fuel's emissions factors do not differ between scenarios. This occurs frequently when we run multiple electricity emissions scenarios with different values for emissions factors related to electricity generation that all use the same emissions factors for on-site non-electric fuel consumption. The full list of emissions output fields from non-electric energy consumption is in Table \ref{table:emissions_output}. In published ResStock datasets, we convert the units on these results to kilograms of CO\textsubscript{2} equivalent emissions. These are the fields in public datasets that begin ``out.emissions.natural\_gas,'' ``out.emissions.propane,'' and ``out.emissions.fuel\_oil.''
 
 \subsection{Emissions From Electricity Generation (Scope 2)}
-The ResStock workflow currently accepts emissions factors for electricity consumption as either annual or hourly values. We have used several approaches in selecting electricity emissions factors for use. Our most commonly used approach is to include multiple scenarios, generally relying on data from NREL's Cambium database (\cite{Cambium2023}). When using Cambium data, we use multiple standard scenarios (potential futures of the electric grid) as a type of sensitivity. ResStock releases generally have three long-run marginal emissions scenarios with a computed a levelized factor over a 15 or 25 year lifetime with a 3\% discount rate, starting a few years in the future. We then use timeseries (hourly) data at the GEA geographic resolution. 
+The ResStock workflow currently accepts emissions factors for electricity consumption as either annual or hourly values. We have used several approaches in selecting electricity emissions factors for use. Our most commonly used approach is to include multiple scenarios, generally relying on data from NREL's Cambium database (\cite{Gagnon2025}). When using Cambium data, we use multiple standard scenarios (potential futures of the electric grid) as a type of sensitivity. ResStock releases generally have five long-run marginal emissions scenarios with a computed a levelized factor over a 15 or 25 year lifetime with a 3\% discount rate, starting a few years in the future. We then use timeseries (hourly) data at the GEA geographic resolution. ResStock also published average emissions rates, which are a simple average from the beginning to the end of the analysis period.
 
 The full list of emissions output fields from electric energy consumption is in Table \ref{table:emissions_output}. In published ResStock datasets, we convert the units on these results to kilograms of CO\textsubscript{2} equivalent emissions. These are the fields in public datasets that begin ``out.emissions.electricity.''
 
 \begin{customLongTable}{ |p{5cm}|p{1.5cm}|p{8cm}| }
-{ResStock utility bill output field names, units, and descriptions} {table:emissions_output} 
-{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}} 
-out.emissions.all\_fuels.lrmer\_high\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2022 high renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years \\ \hline
-        out.emissions.all\_fuels.lrmer\_low\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2022 low renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years \\ \hline
-        out.emissions.all\_fuels.lrmer\_mid\_case\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2022 mid-case scenario with long run marginal emissions rate levelized by 3\% over 15 years \\ \hline
-        out.emissions.all\_fuels.lrmer\_mid\_case\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2022 mid-case scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
-        out.emissions.electricity.lrmer\_high\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions from electricity under Cambium 2022 high renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years \\ \hline
-        out.emissions.electricity.lrmer\_low\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions from electricity under Cambium 2022 low renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years \\ \hline
-        out.emissions.electricity.lrmer\_mid\_case\_15.co2e\_kg & co2e\_kg & Emissions from electricity under Cambium 2022 mid-case scenario with long run marginal emissions rate levelized by 3\% over 15 years \\ \hline
-        out.emissions.electricity.lrmer\_mid\_case\_25.co2e\_kg & co2e\_kg & Emissions from electricity under Cambium 2022 mid-case scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
-        out.emissions.fuel\_oil.lrmer\_high\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions from on-site fuel oil consumption using ANSI/RESNET data \\ \hline
-        out.emissions.fuel\_oil.lrmer\_low\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions from on-site fuel oil consumption using ANSI/RESNET data \\ \hline
-        out.emissions.fuel\_oil.lrmer\_mid\_case\_15.co2e\_kg & co2e\_kg & Emissions from on-site fuel oil consumption using ANSI/RESNET data \\ \hline
-        out.emissions.fuel\_oil.lrmer\_mid\_case\_25.co2e\_kg & co2e\_kg & Emissions from on-site fuel oil consumption using ANSI/RESNET data \\ \hline
-        out.emissions.natural\_gas.lrmer\_high\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions from on-site natural gas consumption using ANSI/RESNET data \\ \hline
-        out.emissions.natural\_gas.lrmer\_low\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions from on-site natural gas consumption using ANSI/RESNET data \\ \hline
-        out.emissions.natural\_gas.lrmer\_mid\_case\_15.co2e\_kg & co2e\_kg & Emissions from on-site natural gas consumption using ANSI/RESNET data \\ \hline
-        out.emissions.natural\_gas.lrmer\_mid\_case\_25.co2e\_kg & co2e\_kg & Emissions from on-site natural gas consumption using ANSI/RESNET data \\ \hline
-        out.emissions.propane.lrmer\_high\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions from on-site propane consumption using ANSI/RESNET data \\ \hline
-        out.emissions.propane.lrmer\_low\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions from on-site propane consumption using ANSI/RESNET data \\ \hline
-        out.emissions.propane.lrmer\_mid\_case\_15.co2e\_kg & co2e\_kg & Emissions from on-site propane consumption using ANSI/RESNET data \\ \hline
-        out.emissions.propane.lrmer\_mid\_case\_25.co2e\_kg & co2e\_kg & Emissions from on-site propane consumption using ANSI/RESNET data \\
+{ResStock utility bill output field names, units, and descriptions} {table:emissions_output}
+{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}}
+out.emissions.all\_fuels.lrmer\_mid\_case\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 mid case scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.all\_fuels.lrmer\_mid\_case\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 mid case scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.all\_fuels.lrmer\_high\_re\_cost\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.all\_fuels.lrmer\_high\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.all\_fuels.lrmer\_low\_re\_cost\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.all\_fuels.lrmer\_low\_re\_cost\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.all\_fuels.lrmer\_low\_re\_cost\_high\_ng\_price\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost high natural gas price scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.all\_fuels.lrmer\_low\_re\_cost\_high\_ng\_price\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost high natural gas price scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.all\_fuels.lrmer\_high\_re\_cost\_low\_ng\_price\_25.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost low natural gas price scenario with long run marginal emissions rate levelized by 3\% over 25 years \\ \hline
+out.emissions.all\_fuels.lrmer\_high\_re\_cost\_low\_ng\_price\_15.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost low natural gas price scenario with long run marginal emissions rate levelized by 3\% over 15 years starting in 2027 \\ \hline
+out.emissions.all\_fuels.aer\_high\_re\_cost\_avg.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.all\_fuels.aer\_high\_re\_cost\_low\_ng\_price\_avg.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 high renewable cost low natural gas price scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.all\_fuels.aer\_low\_re\_cost\_avg.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.all\_fuels.aer\_low\_re\_cost\_high\_ng\_price\_avg.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 low renewable cost high natural gas price scenario with average emissions rates averaged from 2025-2050.  \\ \hline
+out.emissions.all\_fuels.aer\_mid\_case\_avg.co2e\_kg & co2e\_kg & Emissions using on-site fossil fuel rates from ANSI/RESNET and electricity using Cambium 2024 mid case scenario with average emissions rates averaged from 2025-2050.  \\
 \end{customLongTable}
 
 \section{Utility Bills}
 The ResStock workflow is able to accept a limited range of utility rate inputs and output the corresponding utility bills. The inputs available are fixed charges and volumetric rates for each modeled fuel (typically electricity, natural gas, propane, and fuel oil). These can vary by any one housing characteristic, such as State. Multiple scenarios may be specified. For the list of utility bill outputs, see Table \ref{table:cost_multipliers}.
 
-Our most common approach within the ResStock workflow for utility rates for electricity and natural gas is to use a single scenario, using both a flat charge and a per-consumption charge. We typically use data downloaded from \href{https://openei.org/wiki/Utility_Rate_Database}{NREL's Utility Rate Database} to calculate the customer-weighted average fixed monthly electricity charge across all utilities in the database, which comes out to approximately \$10/customer/month or \$120/customer/year. For natural gas, we use the American Gas Association's 2015 value of \$11.25/customer/month for the fixed portion of the utility bill (generally referred to as the ``customer charge''). We additionally use EIA state-level information on revenue, sales, and number of customers to calculate the average per-consumption electricity and natural gas rate for each state with the fixed charges removed. The total electricity and natural gas bills for each housing unit model sample are then calculated by summing the flat charge and the product of the per-consumption charge and the total consumption. For example, this process may result in a flat charge of \$120/year and a per-consumption electricity rate of \$0.20/kWh---for a housing unit with a full year electricity consumption of 3000 kWh, the total electricity bill would be \$120 + (3,000 kWh * \$0.20/kWh) = \$720. If a housing unit has uses no natural gas for the year, the flat charge is not included as it is presumed not to have natural gas service. 
+Our most common approach within the ResStock workflow for utility rates for electricity and natural gas is to use a single scenario, using both a flat charge and a per-consumption charge. We typically use data downloaded from \href{https://openei.org/wiki/Utility_Rate_Database}{NREL's Utility Rate Database} to calculate the customer-weighted average fixed monthly electricity charge across all utilities in the database, which comes out to approximately \$10/customer/month or \$120/customer/year. For natural gas, we use the American Gas Association's 2015 value of \$11.25/customer/month for the fixed portion of the utility bill (generally referred to as the ``customer charge''). We additionally use EIA state-level information on revenue, sales, and number of customers to calculate the average per-consumption electricity and natural gas rate for each state with the fixed charges removed. The total electricity and natural gas bills for each housing unit model sample are then calculated by summing the flat charge and the product of the per-consumption charge and the total consumption. For example, this process may result in a flat charge of \$120/year and a per-consumption electricity rate of \$0.20/kWh---for a housing unit with a full year electricity consumption of 3000 kWh, the total electricity bill would be \$120 + (3,000 kWh * \$0.20/kWh) = \$720. If a housing unit has uses no natural gas for the year, the flat charge is not included as it is presumed not to have natural gas service.
 
 Our most common approach within the ResStock workflow for utility rates for propane and fuel oil is to use a single scenario using weekly volumetric rate data from the EIA, averaged over a year (either a calendar year or a winter). When state-level data are not available, we use data from the state's Petroleum Administration for Defense Districts (PADD) region. When PADD region data are not available, we use U.S. national average values. We then calculate propane and fuel oil bills by multiplying the fuel consumption for each housing unit model by the volumetric rate for that fuel and state. An example of this is in ResStock dataset 2024.1 \citep{Present2024}.
 
@@ -388,8 +384,8 @@ When this field is available in public datasets, it begins with ``out.energy\_bu
 ResStock optionally outputs schedules into the timeseries files. These schedules include energy use schedules as fractions (0-1) and unavailable period schedules from HVAC, power outage, and vacancy periods.
 
 \begin{customLongTable}{ |p{6.cm}|p{1.8cm}|p{8.2cm}| }
-{ResStock schedule output field names, units, and descriptions} {tab:schedule_outputs} 
-{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}} 
+{ResStock schedule output field names, units, and descriptions} {tab:schedule_outputs}
+{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}}
 out.schedules\_ceiling\_fan & frac & Ceiling fan energy use schedule. \\ \hline
 out.schedules\_clothes\_dryer & frac & Clothes dryer energy use schedule. \\ \hline
 out.schedules\_clothes\_washer & frac & Clothes washer energy use schedule. \\ \hline
@@ -411,56 +407,73 @@ out.schedules\_vacancy & 0,1 & Vacancy unavailable period. \\
 
 \section{Electrical Panels} \label{sec:output_panels}
 For electrical panel, occupied capacity and breaker spaces are tabulated by end use. The total occupied capacity and spaces are calculated as well as their headroom, or the amount of capacity or space left unused.  In public ResStock datasets, these fields are prefixed with ``out.electric\_panel`` and described in \ref{tab:panels}. 
-For capacity, the total occupied load (W) can be calculated using different methods and will be labeled accordingly. In the public datasets, results are available for the 2023 load-based (NEC 220.83) and meter-based (NEC 220.87) methods for existing dwellings. See Section \ref{sec:input_panels} for the method description. The occupied capacity (A) is converted from occupied load (W) by dividing by 240V, the panel voltage, and then subtracted from the input field ``in.electrical\_panel\_service\_rating``'' (A) to get the headroom capacity (A). Users can use the headroom capacity to estimate the number of homes that may require an electrical intervention, such as a panel or service upsizing, for a given upgrade. If the headroom capacity value is negative, then the panel is considered capacity-constrained, and an intervention may be required. If the headroom is positive, no mitigation is necessary. Headroom capacity is also calculated for the baseline and a negative value, while uncommon, can be interpreted as the home already being capacity-constrained prior to any upgrade. This is consistent with anecdotal observations that some homes do in fact trip their breakers often, an indication of a capacity shortfall. However, it's important to interpret any electrical panel outcomes as modeled estimates and that results with negative capacity headroom in the baseline have the same degree of uncertainty as those with positive capacity headroom.  
-For breaker spaces, headroom count is labeled as an output metric but is actually an input characteristic probabilistically assigned based on the panel service rating, the number of major electrical loads of the home, and, in some cases, floor area as well. Because the headroom count is predetermined in the baseline, it can never be negative, unlike capacity. Using the input headroom count and a bottom-up tabulation of electrical equipment in the home, the total rated space count is determined for the baseline. In the upgrade simulations, this total rated count remains the same for the home and the headroom count is recalculated according to the content of the upgrade package. See Section \ref{sec:input_panels} for details. Users can estimate the number of homes that are space-constrained and requiring mitigation by looking at the headroom counts that are negative, similar to capacity. 
+For capacity, the total occupied load (W) can be calculated using different methods and will be labeled accordingly. In the public datasets, results are available for the 2023 load-based (NEC 220.83) method only for existing dwellings. See Section \ref{sec:input_panels} for the method description. The occupied capacity (A) is converted from occupied load (W) by dividing by 240V, the panel voltage, and then subtracted from the input field ``in.electrical\_panel\_service\_rating``'' (A) to get the headroom capacity (A). 
+The headroom capacity is used to determine capacity constraint – the panel is considered capacity-constrained if headroom is negative and unconstrained otherwise. This outcome is useful to account for any additional costs needed to resolve the constraint, such as through an electrical panel or service upgrade, or by using lower power appliances as an alternative. 
+Users are encouraged to calculate the capacity constraint on their own to reflect their desired margin of error.
+
+For breaker space, total rated count is labeled as an input metric in table \ref{table:hc_output_fields}. This is actually derived from the breaker space headroom, which is probabilistically assigned based on the panel ampacity rating and other housing characteristics, and a tabulation of electrical equipment in the baseline home. In the upgrade simulations, the total breaker space count is carried over from the baseline simulation and the headroom count is recalculated according to the content of the upgrade package. See Section \ref{sec:input_panels} for details.
+For ease of interpretation by mirroring the structure of the capacity metrics, total breaker space count is labeled as an input just like the panel service rating. All occupied and headroom tabulations are labeled as outputs.
+Breaker space headroom is used to calculate the space constraint, which exists when the headroom count is negative. The overall panel constraint is summarized into "no constraint", "space constrained only", "capacity constrained only", or "capacity and space constrained".
+
+All results should be interpreted with uncertainty in mind, even if they look reasonable. The prediction of the panel service rating and headroom space do not account for all electrical and connected loads in the model. As a result, the capacity headroom can be negative for a model in the baseline, although it is uncommon.
+This can be interpreted as the house already being constrained prior to any upgrade and is consistent with anecdotal observations that some houses do trip their breakers often, an indication of a capacity shortfall.
+On the otherhand, the breaker space headroom in the baseline can never be negative because our modeling approach prevents this by sampling a non-negative headroom count directly. This is also consistent with the physical constraint of breaker space. 
+
 \begin{customLongTable}{ |p{6cm}|p{1.5cm}|p{7.5cm}| }
         {ResStock electrical panel output field names, units, and descriptions} {tab:panels} 
         {\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}} 
-                out.electric\_panel\_load.<method>.total\_load.w & W & Total service feeder load calculated per selected NEC method \\ \hline
-                out.electric\_panel\_load.<method>.total\_capacity.a & A & Total capacity occupied on the panel, calculated as total load (W) divided by panel voltage (240V) \\ \hline
-                out.electric\_panel\_load.<method>.headroom\_capacity.a & A & Available capacity on the panel, calculated as panel service rating (A) minus total occupied capacity (A) \\ \hline
-                out.electric\_panel\_load.heating.w & W & Sum of heating system and heat pump heating demand loads \\ \hline
-                out.electric\_panel\_load.cooling.w & W & Sum of cooling system and heat pump cooling demand loads \\ \hline
-                out.electric\_panel\_load.hot\_water.w & W & Sum of water heating system demand loads \\ \hline
-                out.electric\_panel\_load.clothes\_dryer.w & W & Sum of clothes dryer demand loads \\ \hline
-                out.electric\_panel\_load.dishwasher.w & W & Sum of dishwasher demand loads \\ \hline
-                out.electric\_panel\_load.range\_oven.w & W & Sum of range/oven demand loads \\ \hline
-                out.electric\_panel\_load.mech\_vent.w & W & Sum of mechanical ventilation demand loads \\ \hline
-                out.electric\_panel\_load.permanent\_spa\_heater.w & W & Sum of permanent spa heater demand loads \\ \hline
-                out.electric\_panel\_load.permanent\_spa\_pump.w & W & Sum of permanent spa pump demand loads \\ \hline
-                out.electric\_panel\_load.pool\_heater.w & W & Sum of pool heater demand loads \\ \hline
-                out.electric\_panel\_load.pool\_pump.w & W & Sum of pool pump demand loads \\ \hline
-                out.electric\_panel\_load.well\_pump.w & W & Sum of well pump demand loads \\ \hline
-                out.electric\_panel\_load.electric\_vehicle\_charging.w & W & Sum of electric vehicle charging demand loads \\ \hline
-                out.electric\_panel\_load.other.w & W & Sum of other electric demand loads \\ \hline
-                out.electric\_panel\_breaker\_spaces.total.count & count & Total rated number of spaces on the panel \\ \hline
-                out.electric\_panel\_breaker\_spaces.occupied.count & count & Total number of occupied spaces on the panel \\ \hline
-                out.electric\_panel\_breaker\_spaces.headroom.count & count & Available spaces, calculated as total rated spaces minus occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.heating.count & count & Sum of heating system and heat pump heating occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.cooling.count & count & Sum of cooling system and heat pump cooling occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.hot\_water.count & count & Sum of water heating system occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.clothes\_dryer.count & count & Sum of clothes dryer occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.dishwasher.count & count & Sum of dishwasher occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.range\_oven.count & count & Sum of range/oven occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.mech\_vent.count & count & Sum of mechanical ventilation occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.permanent\_spa\_heater.count & count & Sum of permanent spa heater occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.permanent\_spa\_pump.count & count & Sum of permanent spa pump occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.pool\_heater.count & count & Sum of pool heater occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.pool\_pump.count & count & Sum of pool pump occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.well\_pump.count & count & Sum of well pump occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.electric\_vehicle\_charging.count & count & Sum of electric vehicle charging occupied spaces \\ \hline
-                out.electric\_panel\_breaker\_spaces.other.count & count & Sum of other electric load occupied spaces \\
+                out.panel.load.total\_load.<method>.w & W & Total service feeder load calculated per selected NEC method \\ \hline
+                out.panel.load.occupied\_capacity.<method>.a & A & Total capacity occupied on the panel, calculated as total load (W) divided by panel voltage (240V) \\ \hline
+                out.panel.load.headroom\_capacity.<method>.a & A & Available capacity on the panel, calculated as panel service rating (A) minus total occupied capacity (A) \\ \hline
+                out.panel.load.heating.w & W & Sum of space heating system and heat pump heating electric loads. For the load calculation, only the max of heating or cooling is used, not both \\ \hline
+                out.panel.load.cooling.w & W & Sum of space cooling system and heat pump cooling electric loads. For the load calculation, only the max of heating or cooling is used, not both \\ \hline
+                out.panel.load.hot\_water.w & W & Sum of water heating system electric loads, for electric only \\ \hline
+                out.panel.load.clothes\_dryer.w & W & Sum of clothes dryer electric loads, for electric only \\ \hline
+                out.panel.load.dishwasher.w & W & Sum of dishwasher electric loads \\ \hline
+                out.panel.load.range\_oven.w & W & Sum of range/oven electric loads, for electric only \\ \hline
+                out.panel.load.mech\_vent.w & W & Sum of mechanical ventilation electric loads \\ \hline
+                out.panel.load.permanent\_spa\_heat.w & W & Sum of permanent spa heater electric load, for electric only \\ \hline
+                out.panel.load.permanent\_spa\_pump.w & W & Sum of permanent spa pump electric loads \\ \hline
+                out.panel.load.pool\_heater.w & W & Sum of pool heater electric loads \\ \hline
+                out.panel.load.pool\_pump.w & W & Sum of pool pump electric loads \\ \hline
+                out.panel.load.well\_pump.w & W & Sum of well pump electric loads \\ \hline
+                out.panel.load.ev\_charging.w & W & Sum of electric vehicle charging equipment electric loads \\ \hline
+                out.panel.load.other.w & W & Sum of other electric loads, including but not limited to lighting/general receptacles at 3 W/sqft, refrigerator, microwave, and garbage disposal \\ \hline
+                out.panel.breaker\_space.occupied.count & count & Total number of occupied spaces on the panel \\ \hline
+                out.panel.breaker\_space.headroom.count & count & Available spaces, calculated as total rated spaces minus occupied spaces \\ \hline
+                out.panel.breaker\_space.heating.count & count & Sum of heating system and heat pump heating occupied spaces \\ \hline
+                out.panel.breaker\_space.cooling.count & count & Sum of cooling system and heat pump cooling occupied spaces \\ \hline
+                out.panel.breaker\_space.hot\_water.count & count & Sum of water heating system occupied spaces \\ \hline
+                out.panel.breaker\_space.clothes\_dryer.count & count & Sum of clothes dryer occupied spaces \\ \hline
+                out.panel.breaker\_space.dishwasher.count & count & Sum of dishwasher occupied spaces \\ \hline
+                out.panel.breaker\_space.range\_oven.count & count & Sum of range/oven occupied spaces \\ \hline
+                out.panel.breaker\_space.mech\_vent.count & count & Sum of mechanical ventilation occupied spaces \\ \hline
+                out.panel.breaker\_space.permanent\_spa\_heat.count & count & Sum of permanent spa heater occupied spaces \\ \hline
+                out.panel.breaker\_space.permanent\_spa\_pump.count & count & Sum of permanent spa pump occupied spaces \\ \hline
+                out.panel.breaker\_space.pool\_heater.count & count & Sum of pool heater occupied spaces \\ \hline
+                out.panel.breaker\_space.pool\_pump.count & count & Sum of pool pump occupied spaces \\ \hline
+                out.panel.breaker\_space.well\_pump.count & count & Sum of well pump occupied spaces \\ \hline
+                out.panel.breaker\_space.ev\_charging.count & count & Sum of electric vehicle charging occupied spaces \\ \hline
+                out.panel.breaker\_space.other.count & count & Sum of other electric load occupied spaces \\ \hline
+                
+                out.panel.constraint.capacity.<method> & bool & Whether electric panel is capacity-constrained per the given method, defined as when out.panel.load.headroom\_capacity.<method>.a < 0 \\ \hline
+                out.panel.constraint.breaker\_space & bool & Whether electric panel is space-constrained, defined as when out.panel.breaker\_space.headroom.count < 0 \\ \hline
+                out.panel.constraint.overall.<method> & categorical & Summarize overall electric panel constraint per the given method as "no constraint", "space constrained only", "capacity constrained only", or "capacity and space constrained" \\ \hline
+
+                out.panel.load.total\_load.<method>.w.savings & W & For an upgrade measure only, total service feeder load reduced per selected NEC method \\ \hline
+                out.panel.load.occupied\_capacity.<method>.a.savings & A & For an upgrade measure only, total occupied capacity reduced per selected NEC method \\ \hline
+                out.panel.breaker\_space.occupied.count.savings & count & For an upgrade measure only, total number of occupied spaces reduced \\
 \end{customLongTable}
 
 \section{Other Outputs}
 
-The ResStock workflow can optionally output any variable available in EnergyPlus. We regularly use this capability for a variety of purposes, including modeling improvement and validation, debugging, special purpose variables for specific projects, and additional variables to publish as part of public datasets. 
+The ResStock workflow can optionally output any variable available in EnergyPlus. We regularly use this capability for a variety of purposes, including modeling improvement and validation, debugging, special purpose variables for specific projects, and additional variables to publish as part of public datasets.
 
 Table \ref{tab:other_outputs} shows a list of output variables that are not covered in other headings in this section but that we have typically included in many of our recent public datasets, where they begin with ``out.x.''
 
 \begin{customLongTable}{ |p{6cm}|p{1.5cm}|p{7.5cm}| }
-{Other ResStock results output field names, units, and descriptions} {tab:other_outputs} 
-{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}} 
+{Other ResStock results output field names, units, and descriptions} {tab:other_outputs}
+{\textbf{Field Name} & \textbf{Units} & \textbf{Field Description}}
         out.cooling\_unavailable\_period & & Cooling unavailable period. \\ \hline
         out.electricity.summer.peak.kw & kW & Maximum power value in Jun/Jul/Aug \\ \hline
         out.electricity.winter.peak.kw & kW & Maximum power value in Dec/Jan/Feb \\ \hline

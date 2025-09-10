@@ -15,11 +15,11 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  OPENSTUDIO_VER: 3.9.0
-  OPENSTUDIO_SHA: c77fbb9569
+  OPENSTUDIO_VER: 3.10.0
+  OPENSTUDIO_SHA: 86d7e215a1
   OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
   OPENSTUDIO_EXT: deb
-  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.9.0
+  OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0
   BUILDSTOCK_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
@@ -29,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
       - name: Format Files
         shell: bash
         run: |
@@ -48,11 +48,11 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [format-files]
     container:
-      image: docker://nrel/openstudio:3.9.0
+      image: docker://nrel/openstudio:3.10.0
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Install gems
         run: |
@@ -90,13 +90,38 @@ jobs:
           path: coverage
           if-no-files-found: error
 
+  postprocessing-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install postprocessing dependencies
+        working-directory: postprocessing
+        run: |
+          uv venv
+          uv pip install -e . --group dev
+
+      - name: Run postprocessing tests
+        working-directory: postprocessing
+        run: |
+          uv run pytest tests
+
   build-documentation:
     runs-on: ubuntu-22.04
     needs: format-files
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Install software
         run: |
@@ -136,10 +161,10 @@ jobs:
           if-no-files-found: error
 
       - name: Commit latest documentation
-        shell: bash        
+        shell: bash
         run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
+          branch_name="${{ github.head_ref || github.ref_name }}"
+          git pull --ff-only --no-tags --depth=1 origin $branch_name
           git add docs
           git status
           if [[ $(git diff --cached --exit-code) ]]; then
@@ -154,11 +179,11 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     container:
-      image: docker://nrel/openstudio:3.9.0
+      image: docker://nrel/openstudio:3.10.0
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Install gems
         run: |
@@ -212,7 +237,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - uses: actions/setup-python@v5
         with:
@@ -274,6 +299,16 @@ jobs:
           path: |
             project_national/national_baseline/results_csvs/results_up00.csv
             project_testing/testing_baseline/results_csvs/results_up00.csv
+          if-no-files-found: error
+
+      - name: Upload raw simulation output
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw_simulation_output
+          path: |
+            project_national/national_baseline/simulation_output
+            project_testing/testing_baseline/simulation_output
+          retention-days: 1  # This is typically about 2.5 GB. Delete quickly to save space.
           if-no-files-found: error
 
       - name: Run tests
@@ -339,7 +374,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Download buildstockbatch results
         uses: actions/download-artifact@v4
@@ -429,7 +464,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Install software
         run: |
@@ -464,8 +499,8 @@ jobs:
       - name: Commit the integration tests results
         shell: bash        
         run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
+          branch_name="${{ github.head_ref || github.ref_name }}"
+          git pull --ff-only --no-tags --depth=1 origin $branch_name
           cp -r samples/buildstock*.csv test/base_results/baseline/annual
           cp -r results/baseline/annual/results*.csv test/base_results/baseline/annual
           cp -r results/baseline/timeseries/*.csv test/base_results/baseline/timeseries
@@ -485,11 +520,11 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     container:
-      image: docker://nrel/openstudio:3.9.0
+      image: docker://nrel/openstudio:3.10.0
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Install gems
         run: |
@@ -601,8 +636,8 @@ jobs:
       - name: Commit the options analysis results
         shell: bash
         run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
+          branch_name="${{ github.head_ref || github.ref_name }}"
+          git pull --ff-only --no-tags --depth=1 origin $branch_name
           git add project_national/resources
           git status
           if [[ $(git diff --cached --exit-code) ]]; then
@@ -619,7 +654,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - uses: actions/setup-python@v5
         with:
@@ -663,6 +698,8 @@ jobs:
       - name: Run buildstockbatch
         shell: bash
         run: |
+          set -o pipefail  # ensures the pipeline fails if buildstock_local fails, not just the tee command
+
           EXTRA_ARGS=""
           if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
             echo "Running on develop branch, using --replace_existing"
@@ -671,7 +708,17 @@ jobs:
             echo "Not on develop branch, removing AWS config from YAML"
             python .github/scripts/remove_aws_from_yaml.py project_national/sdr_upgrades_tmy3.yml
           fi
-          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml
+
+          # Run buildstockbatch and tee output to a log file
+          buildstock_local --low-disk $EXTRA_ARGS project_national/sdr_upgrades_tmy3.yml 2>&1 | tee buildstock_local.log
+
+          # Check the log for schema mismatch warnings and fail if any are present
+          SCHEMA_MISMATCH_PATTERN='^Missing columns in output data|^Extra columns in output data'
+          if grep -q -E "$SCHEMA_MISMATCH_PATTERN" buildstock_local.log; then
+            echo "::error::Detected column mismatch in buildstockbatch output. Failing job."
+            grep -E "$SCHEMA_MISMATCH_PATTERN" buildstock_local.log
+            exit 1
+          fi
 
       - name: Unzip results
         run: |
@@ -706,8 +753,9 @@ jobs:
 
       - name: Commit the integration tests results
         run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
+          branch_name="${{ github.head_ref || github.ref_name }}"
+          git checkout resources/options_lookup.tsv
+          git pull --ff-only --no-tags --depth=1 origin $branch_name
           cp -r project_national/sdr_upgrades_tmy3/results_csvs_pub/* test/base_results/upgrades/sdr_annual
           git add test/base_results/upgrades/sdr_annual
           git status

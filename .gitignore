@@ -45,3 +45,6 @@ node_modules/
 # Python compiled files
 **/*.pyc
 **/__pycache__/
+# Postprocessing build outputs
+/postprocessing/build/
+/postprocessing/resstockpostproc.egg-info/

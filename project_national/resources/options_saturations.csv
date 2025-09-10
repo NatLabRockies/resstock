@@ -11378,6 +11378,25 @@ Level,Parameter,Option,Saturation
 3,Energystar Climate Zone 2023,South-Central,0.228425
 3,Energystar Climate Zone 2023,Southern,0.153194
 3,Energystar Climate Zone 2023,Void,0
+3,Generation And Emissions Assessment Region,CAISO,0.103463
+3,Generation And Emissions Assessment Region,ERCOT,0.0676725
+3,Generation And Emissions Assessment Region,FRCC,0.0645126
+3,Generation And Emissions Assessment Region,ISONE,0.0482471
+3,Generation And Emissions Assessment Region,MISO Central,0.0762976
+3,Generation And Emissions Assessment Region,MISO North,0.0504599
+3,Generation And Emissions Assessment Region,MISO South,0.0333944
+3,Generation And Emissions Assessment Region,None,0.00626205
+3,Generation And Emissions Assessment Region,Northern Grid East,0.00946627
+3,Generation And Emissions Assessment Region,Northern Grid South,0.0169077
+3,Generation And Emissions Assessment Region,Northern Grid West,0.0348595
+3,Generation And Emissions Assessment Region,NYISO,0.0611059
+3,Generation And Emissions Assessment Region,PJM East,0.173659
+3,Generation And Emissions Assessment Region,PJM West,0.0304482
+3,Generation And Emissions Assessment Region,SERTP,0.12679
+3,Generation And Emissions Assessment Region,SPP North,0.00944459
+3,Generation And Emissions Assessment Region,SPP South,0.0384438
+3,Generation And Emissions Assessment Region,West Connect North,0.0187105
+3,Generation And Emissions Assessment Region,West Connect South,0.0298551
 3,ISO RTO Region,CAISO,0.0684827
 3,ISO RTO Region,ERCOT,0.0691888
 3,ISO RTO Region,MISO,0.156392
@@ -12504,27 +12523,6 @@ Level,Parameter,Option,Saturation
 3,PUMA Metro Status,Not/partially in metro area,0.226881
 4,County Metro Status,Metropolitan,0.833251
 4,County Metro Status,Non-Metropolitan,0.166749
-4,Generation And Emissions Assessment Region,AZNMc,0.0363015
-4,Generation And Emissions Assessment Region,CAMXc,0.103463
-4,Generation And Emissions Assessment Region,ERCTc,0.0676725
-4,Generation And Emissions Assessment Region,FRCCc,0.0645126
-4,Generation And Emissions Assessment Region,MROEc,0.00967153
-4,Generation And Emissions Assessment Region,MROWc,0.0426677
-4,Generation And Emissions Assessment Region,NEWEc,0.0482471
-4,Generation And Emissions Assessment Region,None,0.00626205
-4,Generation And Emissions Assessment Region,NWPPc,0.0546463
-4,Generation And Emissions Assessment Region,NYSTc,0.0611059
-4,Generation And Emissions Assessment Region,RFCEc,0.0817027
-4,Generation And Emissions Assessment Region,RFCMc,0.0328487
-4,Generation And Emissions Assessment Region,RFCWc,0.117273
-4,Generation And Emissions Assessment Region,RMPAc,0.0192409
-4,Generation And Emissions Assessment Region,SPNOc,0.0177981
-4,Generation And Emissions Assessment Region,SPSOc,0.0206457
-4,Generation And Emissions Assessment Region,SRMVc,0.0333944
-4,Generation And Emissions Assessment Region,SRMWc,0.0231876
-4,Generation And Emissions Assessment Region,SRSOc,0.0512508
-4,Generation And Emissions Assessment Region,SRTVc,0.0371743
-4,Generation And Emissions Assessment Region,SRVCc,0.0709341
 4,Census Division RECS,East North Central,0.152791
 4,Census Division RECS,East South Central,0.0621322
 4,Census Division RECS,Middle Atlantic,0.129575

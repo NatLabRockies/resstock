@@ -59,8 +59,14 @@ def main() -> int:  # pragma: no cover
     parser.add_argument(
         "-k",
         "--key-column",
-        default=DEFAULT_KEY_COLUMN,
-        help="Unique column used to join rows between the two CSVs.",
+        dest="key_columns",
+        action="append",
+        default=[],
+        help=(
+            "Unique column(s) used to join rows between the two CSVs. "
+            "Pass this flag multiple times to join on multiple columns, e.g. "
+            "`-k bldg_id -k upgrade_name`."
+        ),
     )
     md_group = parser.add_mutually_exclusive_group()
     md_group.add_argument(
@@ -86,7 +92,9 @@ def main() -> int:  # pragma: no cover
 
     args = parser.parse_args()
     csv_path: Path = args.csv_path
-    key_column: str = args.key_column
+    key_columns: list[str] = args.key_columns
+    if not key_columns:
+        key_columns = [DEFAULT_KEY_COLUMN]
     markdown_output: bool = args.markdown
 
     if not csv_path.exists():
@@ -104,19 +112,33 @@ def main() -> int:  # pragma: no cover
         current_df,
         df1_name=REF_BRANCH,
         df2_name="current",
-        join_columns=[key_column],
-        cast_column_names_lower=True,
+        join_columns=key_columns,
+        cast_column_names_lower=False,
     )
 
-    if cmp.matches(ignore_extra_columns=False):
-        print(f"No differences with `{REF_BRANCH}`.")
-        sys.exit(0)
-
     report_text = ""
+    try:
+        ref_keys = ref_df.select(key_columns).rows()      # list[tuple]
+        cur_keys = current_df.select(key_columns).rows()  # list[tuple]
+        common_keys = set(ref_keys) & set(cur_keys)
+        ref_seq_common = [k for k in ref_keys if k in common_keys]
+        cur_seq_common = [k for k in cur_keys if k in common_keys]
+        if ref_seq_common != cur_seq_common:
+            report_text += "The relative order of common rows has changed.\n"
+    except Exception:
+        pass
+
+    if cmp.matches(ignore_extra_columns=False):
+        if not report_text:
+            print(f"No differences with `{REF_BRANCH}`.")
+        else:
+            print(report_text)
+        sys.exit(0)
+    
     if len(cmp.df2_unq_rows) > 0:
-        report_text += f"Rows with {key_column}={list(cmp.df2_unq_rows[key_column])} are added.\n"
+        report_text += f"Rows with {key_columns}={list(cmp.df2_unq_rows[key_columns])} are added.\n"
     if len(cmp.df1_unq_rows) > 0:
-        report_text += f"Rows with {key_column}={list(cmp.df1_unq_rows[key_column])} are removed.\n"
+        report_text += f"Rows with {key_columns}={list(cmp.df1_unq_rows[key_columns])} are removed.\n"
 
     if len(cmp.df1_unq_columns()) > 0:
         report_text += f"Columns {list(cmp.df1_unq_columns())} are removed.\n"
@@ -138,7 +160,7 @@ def main() -> int:  # pragma: no cover
                 f"All columns except these {len(matched_cols)} columns have value changes: {', '.join(matched_cols)}\n"
             )
         else:
-            report_text += f"All columns except {len(matched_cols)} columns have value changes\n"
+            report_text += f"All but {len(matched_cols)} columns have value changes\n"
 
     if args.short:
         print(report_text)
@@ -148,7 +170,6 @@ def main() -> int:  # pragma: no cover
 
     if markdown_output:
         output = (
-            f"Diff for `{csv_path}` vs `{REF_BRANCH}`: \n\n"
             f"{report_text}"
             "<details><summary>Full datacompy report</summary>\n\n"
             "```text\n"
@@ -158,7 +179,6 @@ def main() -> int:  # pragma: no cover
         )
     else:
         output = (
-            f"Diff for {csv_path} vs {REF_BRANCH}\n"
             f"{report_text}\n"
             f"{full_report}"
         )

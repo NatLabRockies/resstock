@@ -829,12 +829,10 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       args[:geometry_unit_num_floors_above_grade] = args[:geometry_num_floors_above_grade]
     end
 
-    # Adiabatic Floor/Ceiling
-    if not args[:geometry_unit_level].nil?
+    # Adiabatic Floor/Ceiling (for MF buildings w/ more than 1 story)
+    if (not args[:geometry_unit_level].nil?) && (args[:geometry_num_floors_above_grade] > 1)
       if args[:geometry_unit_level] == 'Bottom'
-        if args[:geometry_num_floors_above_grade] > 1 # this could be "bottom" of a 1-story building
-          args[:geometry_attic_type] = HPXML::AtticTypeBelowApartment
-        end
+        args[:geometry_attic_type] = HPXML::AtticTypeBelowApartment
       elsif args[:geometry_unit_level] == 'Middle'
         args[:geometry_foundation_type] = HPXML::FoundationTypeAboveApartment
         args[:geometry_attic_type] = HPXML::AtticTypeBelowApartment
@@ -913,16 +911,15 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     panel_sampler = ElectricalPanelSampler.new(runner: runner, **args)
     cap_bin, cap_val = panel_sampler.assign_rated_capacity(args: args)
 
-    args[:electric_panel_service_rating_bin] = cap_bin
-    args[:electric_panel_service_rating] = cap_val
+    args[:electric_panel_service_max_current_rating_bin] = cap_bin
+    args[:electric_panel_service_max_current_rating] = cap_val
 
     breaker_spaces_headroom = panel_sampler.assign_breaker_space_headroom(args: args)
-    args[:electric_panel_breaker_spaces_type] = 'headroom'
-    args[:electric_panel_breaker_spaces] = breaker_spaces_headroom
+    args[:electric_panel_breaker_spaces_headroom] = breaker_spaces_headroom
 
     # Assign miscellaneous permanently connected appliance loads
-    if args[:electric_panel_load_other_power].nil?
-      args[:electric_panel_load_other_power] = 0
+    if args[:electric_panel_load_other_power_rating].nil?
+      args[:electric_panel_load_other_power_rating] = 0
     end
     # Assume all homes have a microwave
     if args[:geometry_unit_num_bedrooms] <= 2
@@ -949,16 +946,16 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
       end
     end
 
-    if args[:geometry_garage_width] == 0 && args[:geometry_garage_depth] == 0
+    if args[:geometry_garage_width] == 0 || args[:geometry_garage_depth] == 0
       garage_door_power = 0
     else
       # Assume one automatic door opener if has garage, regardless of no. garages
       garage_door_power = 373 # W, 1/2 HP (1 mech HP = 745.7 W)
     end
 
-    args[:electric_panel_load_other_power] += microwave_power
-    args[:electric_panel_load_other_power] += garbage_disposal_power
-    args[:electric_panel_load_other_power] += garage_door_power
+    args[:electric_panel_load_other_power_rating] += microwave_power
+    args[:electric_panel_load_other_power_rating] += garbage_disposal_power
+    args[:electric_panel_load_other_power_rating] += garage_door_power
 
     # Register values to runner
     args.each do |arg_name, arg_value|
@@ -982,7 +979,7 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
   def get_heating_and_cooling_seasons(args, weather)
     latitude = args[:site_latitude]
     latitude = nil if latitude == Constants::Auto
-    latitude = Defaults.get_latitude(latitude, weather)
+    latitude = Defaults.get_latitude(latitude, weather, nil)
 
     heating_months, cooling_months = HVAC.get_building_america_hvac_seasons(weather, latitude)
     sim_calendar_year = Location.get_sim_calendar_year(nil, weather)

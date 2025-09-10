@@ -6,12 +6,15 @@ require_relative '../../HPXMLtoOpenStudio/resources/constants'
 require_relative '../../HPXMLtoOpenStudio/resources/energyplus'
 require_relative '../../HPXMLtoOpenStudio/resources/hpxml'
 require_relative '../../HPXMLtoOpenStudio/resources/defaults'
+require_relative '../../HPXMLtoOpenStudio/resources/materials'
 require_relative '../../HPXMLtoOpenStudio/resources/minitest_helper'
+require_relative '../../HPXMLtoOpenStudio/resources/psychrometrics'
 require_relative '../../HPXMLtoOpenStudio/resources/schedules'
 require_relative '../../HPXMLtoOpenStudio/resources/unit_conversions'
 require_relative '../../HPXMLtoOpenStudio/resources/utility_bills'
-require_relative '../../HPXMLtoOpenStudio/resources/xmlhelper'
 require_relative '../../HPXMLtoOpenStudio/resources/version'
+require_relative '../../HPXMLtoOpenStudio/resources/weather'
+require_relative '../../HPXMLtoOpenStudio/resources/xmlhelper'
 require_relative '../resources/util.rb'
 require 'openstudio'
 require 'openstudio/measure/ShowRunnerOutput'
@@ -78,10 +81,17 @@ class ReportUtilityBillsTest < Minitest::Test
                                              propane_marginal_rate: 2.4532692307692305,
                                              fuel_oil_marginal_rate: 3.495346153846154)
 
-    # Check for presence of fuels once
-    has_fuel = @hpxml_bldg.has_fuels()
-    Defaults.apply_header(@hpxml_header, @hpxml_bldg, nil)
-    Defaults.apply_utility_bill_scenarios(nil, @hpxml_header, @hpxml_bldg, has_fuel)
+    @has_fuel = {}
+    @has_fuel[HPXML::FuelTypeElectricity] = true
+    HPXML::fossil_fuels.each do |fuel|
+      @has_fuel[fuel] = true
+    end
+
+    runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
+    weather_dir = File.join(File.dirname(__FILE__), '..', '..', 'weather')
+    weather = WeatherFile.new(epw_path: File.join(weather_dir, 'USA_CO_Denver.Intl.AP.725650_TMY3.epw'), runner: runner)
+    Defaults.apply_header(@hpxml_header, @hpxml_bldg, weather)
+    Defaults.apply_utility_bill_scenarios(runner, @hpxml_header, @hpxml_bldg, @has_fuel)
 
     @root_path = File.absolute_path(File.join(File.dirname(__FILE__), '..', '..'))
     @sample_files_path = File.join(@root_path, 'workflow', 'sample_files')
@@ -224,7 +234,7 @@ class ReportUtilityBillsTest < Minitest::Test
     hpxml = HPXML.new(hpxml_path: File.join(@sample_files_path, 'base-location-AMY-2012.xml'))
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     actual_bills, actual_monthly_bills = _test_measure()
-    assert_operator(actual_bills['Bills: Total (USD)'], :>, 0)
+    assert_operator(actual_bills['Default: Total (USD)'], :>, 0)
     _check_monthly_bills(actual_bills, actual_monthly_bills)
   end
 
@@ -233,7 +243,7 @@ class ReportUtilityBillsTest < Minitest::Test
     hpxml = HPXML.new(hpxml_path: File.join(@sample_files_path, 'base-simcontrol-runperiod-1-month.xml'))
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     actual_bills, actual_monthly_bills = _test_measure()
-    assert_operator(actual_bills['Bills: Total (USD)'], :>, 0)
+    assert_operator(actual_bills['Default: Total (USD)'], :>, 0)
     _check_monthly_bills(actual_bills, actual_monthly_bills)
   end
 
@@ -244,6 +254,16 @@ class ReportUtilityBillsTest < Minitest::Test
     XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
     actual_bills, _actual_monthly_bills = _test_measure(hpxml: hpxml)
     assert_nil(actual_bills)
+  end
+
+  def test_workflow_unused_fuel
+    @args_hash['hpxml_path'] = File.absolute_path(@tmp_hpxml_path)
+    hpxml = HPXML.new(hpxml_path: File.join(@sample_files_path, 'base-location-honolulu-hi.xml'))
+    XMLHelper.write_file(hpxml.to_doc, @tmp_hpxml_path)
+    actual_bills, actual_monthly_bills = _test_measure()
+    assert_operator(actual_bills['Default: Natural Gas: Fixed (USD)'], :>, 0)
+    assert_equal(0.0, actual_bills['Default: Natural Gas: Energy (USD)'])
+    _check_monthly_bills(actual_bills, actual_monthly_bills)
   end
 
   def test_workflow_detailed_calculations
@@ -456,6 +476,45 @@ class ReportUtilityBillsTest < Minitest::Test
     assert_equal(1.0, CalculateUtilityBill.calculate_monthly_prorate(header, 3))
     assert_equal(10 / 30.0, CalculateUtilityBill.calculate_monthly_prorate(header, 4))
     assert_equal(0.0, CalculateUtilityBill.calculate_monthly_prorate(header, 5))
+  end
+
+  def test_downloaded_utility_rates
+    require 'rubygems/package'
+    require 'zip'
+    require 'tempfile'
+
+    @hpxml_bldg.pv_systems.each { |pv_system| pv_system.max_power_output = 1000.0 / @hpxml_bldg.pv_systems.size }
+    utility_bill_scenario = @hpxml_header.utility_bill_scenarios[0]
+    Zip.on_exists_proc = true
+    Zip::File.open(File.join(File.dirname(__FILE__), '../resources/detailed_rates/openei_rates.zip')) do |zip_file|
+      zip_file.each_with_index do |entry, i|
+        break if i >= 1000 # No need to run *every* file, that will take a while
+        next unless entry.file?
+
+        tmpdir = Dir.tmpdir
+        tmpfile = Tempfile.new(['rate', '.json'], tmpdir)
+        tmp_path = tmpfile.path.to_s
+
+        File.open(tmp_path, 'wb') do |f|
+          f.print entry.get_input_stream.read
+
+          utility_bill_scenario.elec_tariff_filepath = tmp_path
+          File.delete(@bills_csv) if File.exist? @bills_csv
+          File.delete(@bills_monthly_csv) if File.exist? @bills_monthly_csv
+          actual_bills, actual_monthly_bills = _bill_calcs(@fuels_pv_1kw_detailed, @hpxml_header, @hpxml.buildings, utility_bill_scenario)
+          if !File.exist?(@bills_csv)
+            flunk "#{entry.name} was not successful."
+          end
+          if entry.name.include? 'North Slope Borough Power Light - Aged or Handicappedseniors over 60'
+            # No cost if < 600 kWh/month, which is the case for PV_None.csv
+            assert_equal(0, actual_bills['Test: Electricity: Total (USD)'])
+          else
+            assert_operator(actual_bills['Test: Electricity: Total (USD)'], :>, 0)
+          end
+          _check_monthly_bills(actual_bills, actual_monthly_bills)
+        end
+      end
+    end
   end
 
   # Detailed (JSON) Calculations
@@ -1095,45 +1154,6 @@ class ReportUtilityBillsTest < Minitest::Test
     _check_monthly_bills(actual_bills, actual_monthly_bills)
   end
 
-  def test_downloaded_utility_rates
-    require 'rubygems/package'
-    require 'zip'
-    require 'tempfile'
-
-    @hpxml_bldg.pv_systems.each { |pv_system| pv_system.max_power_output = 1000.0 / @hpxml_bldg.pv_systems.size }
-    utility_bill_scenario = @hpxml_header.utility_bill_scenarios[0]
-    Zip.on_exists_proc = true
-    Zip::File.open(File.join(File.dirname(__FILE__), '../resources/detailed_rates/openei_rates.zip')) do |zip_file|
-      zip_file.each_with_index do |entry, i|
-        break if i >= 1000 # No need to run *every* file, that will take a while
-        next unless entry.file?
-
-        tmpdir = Dir.tmpdir
-        tmpfile = Tempfile.new(['rate', '.json'], tmpdir)
-        tmp_path = tmpfile.path.to_s
-
-        File.open(tmp_path, 'wb') do |f|
-          f.print entry.get_input_stream.read
-
-          utility_bill_scenario.elec_tariff_filepath = tmp_path
-          File.delete(@bills_csv) if File.exist? @bills_csv
-          File.delete(@bills_monthly_csv) if File.exist? @bills_monthly_csv
-          actual_bills, actual_monthly_bills = _bill_calcs(@fuels_pv_1kw_detailed, @hpxml_header, @hpxml.buildings, utility_bill_scenario)
-          if !File.exist?(@bills_csv)
-            flunk "#{entry.name} was not successful."
-          end
-          if entry.name.include? 'North Slope Borough Power Light - Aged or Handicappedseniors over 60'
-            # No cost if < 600 kWh/month, which is the case for PV_None.csv
-            assert_equal(0, actual_bills['Test: Electricity: Total (USD)'])
-          else
-            assert_operator(actual_bills['Test: Electricity: Total (USD)'], :>, 0)
-          end
-          _check_monthly_bills(actual_bills, actual_monthly_bills)
-        end
-      end
-    end
-  end
-
   private
 
   def _get_expected_bills(expected_bills)
@@ -1217,7 +1237,7 @@ class ReportUtilityBillsTest < Minitest::Test
 
     utility_rates, utility_bills = @measure.setup_utility_outputs()
     pv_monthly_fee = @measure.get_pv_monthly_fee(utility_bill_scenario, hpxml_buildings)
-    @measure.get_utility_rates(@hpxml_path, fuels, utility_rates, utility_bill_scenario, pv_monthly_fee)
+    @measure.get_utility_rates(@hpxml_path, @has_fuel, utility_rates, utility_bill_scenario, pv_monthly_fee)
     @measure.get_utility_bills(fuels, utility_rates, utility_bills, utility_bill_scenario, header)
 
     # Annual
