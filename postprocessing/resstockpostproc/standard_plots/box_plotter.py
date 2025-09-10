@@ -156,7 +156,8 @@ class BoxPlotter(BasePlotter):
                     whiskerwidth=0.6,
                     x=[lst if lst else [np.nan] for lst in list(reversed(fdata["outliers"].to_list()))],  # type: ignore
                     customdata=list(reversed(fdata["outlier_buildings"].to_list())),
-                    boxpoints="all",
+                    boxpoints="outliers",
+                    pointpos=0.2,
                     boxmean=True,
                     hoveron="boxes+points",
                     hovertemplate=f"<b>{category}</b><br>Building = %{{customdata}}<br>Value = %{{x:.2f}}<br>",
@@ -200,5 +201,12 @@ class BoxPlotter(BasePlotter):
                             showlegend=False,  # legend handled by the box trace
                         )
                     )
+        # set x-axis range from min to max and ensure ticks at min, max, and 0
+        min_val = data["min"].min()
+        max_val = data["max"].max()
+        fig.update_xaxes(
+            tick0=min_val,
+            range=[min_val, max_val],
+        )
         self.theme.apply_layout(fig)
         return fig

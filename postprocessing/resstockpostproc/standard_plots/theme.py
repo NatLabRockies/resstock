@@ -3,6 +3,7 @@ Centralizes style configuration so all plotters share a consistent look & feel.
 """
 
 import plotly.graph_objects as go
+import itertools as it
 
 from resstockpostproc.standard_plots.schema.end_use_dicts import column2color, column2pattern
 from resstockpostproc.standard_plots.schema.workflow_schema import WorkflowConfig
@@ -26,15 +27,16 @@ nrel_color_series = [  # from https://www.nrel.gov/comm-standards/web/typography
         "#9ECE42",
         "#C1EE86",
     ],
-    [  # gray series
-        "#4B545A",
-        "#626D72",
-        "#D1D5D8",
-        "#DEE2E5",
-    ],
+    # [  # gray series
+    #     "#4B545A",
+    #     "#626D72",
+    #     "#D1D5D8",
+    #     "#DEE2E5",
+    # ],
     [  # black series
-        "#000000#212121",
-        "#00A3E4",
+        "#000000",
+        "#212121",
+        "#282D30",
         "#3A4246",
     ],
 ]
@@ -61,8 +63,13 @@ class ThemeManager:
         self.primary_color_sequence = nrel_color_series[0]
         self.end_use_to_color = column2color
         self.end_use_to_pattern = column2pattern
-        self.upgrade_palette = dict(zip(workflow.upgrade_names, nrel_color_series[0]))
-
+        color_list = nrel_color_series[0]
+        if len(workflow.upgrade_names) > len(color_list):
+            self.upgrade_palette = {workflow.upgrade_names[0]: color_list[0]}
+            for i, name in enumerate(workflow.upgrade_names[1:]):
+                self.upgrade_palette[name] = color_list[1]
+        else:
+            self.upgrade_palette = dict(zip(workflow.upgrade_names, color_list))
         self.fig_width: int = 1000
         self.facet_width: int = 200
         self.fig_height: int = 600

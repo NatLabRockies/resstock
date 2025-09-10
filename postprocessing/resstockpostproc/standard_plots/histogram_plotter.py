@@ -93,8 +93,8 @@ class HistogramPlotter(BasePlotter):
             shared_xaxes="all",
             row_titles=upgrades,
             column_titles=[str(f) for f in facets] if facet_column else None,
-            horizontal_spacing=0.01,
-            vertical_spacing=0.06,
+            horizontal_spacing=(0.1 * (1 / n_cols)),
+            vertical_spacing=0.1 * (1 / n_rows),
         )
 
         # ------------------------------------------------------------------

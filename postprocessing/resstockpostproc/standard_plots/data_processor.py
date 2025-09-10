@@ -481,11 +481,13 @@ class DataProcessor:
             .agg(
                 pl.col(quantity).alias("vals"),
                 pl.col("bldg_id").alias("bldg_ids"),
+                pl.col(quantity).min().alias("min"),
                 pl.col(quantity).quantile(0.01).alias("lower_cutoff"),
                 pl.col(quantity).quantile(0.25).alias("q1"),
                 pl.col(quantity).median().alias("median"),
                 pl.col(quantity).quantile(0.75).alias("q3"),
                 pl.col(quantity).quantile(0.99).alias("upper_cutoff"),
+                pl.col(quantity).max().alias("max"),
                 pl.col(quantity).mean().alias("mean"),
                 pl.count().alias("n_points"),
             )
@@ -550,7 +552,8 @@ class DataProcessor:
                     ys = np.array([1.0])
                 else:
                     # Filter data between fences for KDE calculation
-                    filtered_arr = arr[(arr >= lower_cutoff) & (arr <= upper_cutoff)]
+                    filtered_arr = arr[(arr > lower_cutoff) & (arr < upper_cutoff)]
+                    # filtered_arr = arr
                     if len(filtered_arr) < 2:  # noqa: PLR2004
                         # If not enough points after filtering, use a single point
                         xs = np.array([np.mean(filtered_arr) if len(filtered_arr) > 0 else arr.mean()])
