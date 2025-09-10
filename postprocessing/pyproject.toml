@@ -89,8 +89,3 @@ analytics_enabled = false
 enable_orchestration_telemetry = false
 [tool.prefect.logging]
 level = "INFO"
-[dependency-groups]
-dev = [
-    "pytest>=8.3.5",
-]
-
