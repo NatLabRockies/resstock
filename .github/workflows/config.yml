@@ -20,16 +20,18 @@ env:
   OPENSTUDIO_PLATFORM: Ubuntu-22.04-x86_64
   OPENSTUDIO_EXT: deb
   OPENSTUDIO_URL: https://github.com/NREL/OpenStudio/releases/download/v3.10.0
-  BUILDSTOCK_BRANCH: develop
+  BUILDSTOCK_BATCH_BRANCH: develop
   BUILDSTOCK_QUERY_BRANCH: main
 
 jobs:
   format-files:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
+
       - name: Format Files
         shell: bash
         run: |
@@ -50,9 +52,10 @@ jobs:
     container:
       image: docker://nrel/openstudio:3.10.0
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Install gems
         run: |
@@ -93,11 +96,13 @@ jobs:
   postprocessing-tests:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
-      - uses: actions/setup-python@v5
+      - name: Setup python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -119,9 +124,10 @@ jobs:
     runs-on: ubuntu-22.04
     needs: format-files
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Install software
         run: |
@@ -163,8 +169,8 @@ jobs:
       - name: Commit latest documentation
         shell: bash
         run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
+          branch_name="${{ github.head_ref || github.ref_name }}"
+          git pull --ff-only --no-tags --depth=1 origin $branch_name
           git add docs
           git status
           if [[ $(git diff --cached --exit-code) ]]; then
@@ -181,9 +187,10 @@ jobs:
     container:
       image: docker://nrel/openstudio:3.10.0
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Install gems
         run: |
@@ -235,11 +242,27 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout base branch
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v4        
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.event.pull_request.base.sha }}
 
-      - uses: actions/setup-python@v5
+      - name: Upload base results
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: base_results
+          path: test/base_results
+          if-no-files-found: error
+
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Setup python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -251,16 +274,10 @@ jobs:
           openstudio openstudio_version
           which openstudio
 
-      - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
-        with:
-          path: resources
-          name: options_lookup
-
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone --single-branch --branch $BUILDSTOCK_BRANCH https://github.com/NREL/buildstockbatch.git
+          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
@@ -282,15 +299,6 @@ jobs:
         run: |
           pip install plotly
           python test/process_bsb_analysis.py
-
-      - name: Upload integration results
-        uses: actions/upload-artifact@v4
-        with:
-          name: feature_results
-          path: |
-            baseline
-            upgrades
-          if-no-files-found: error
 
       - name: Upload buildstockbatch results
         uses: actions/upload-artifact@v4
@@ -318,13 +326,92 @@ jobs:
           sudo gem install simplecov-html
           ruby test/test_bsb_analysis.rb
 
+      - name: Install software
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt update
+          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
+
+      - name: Download feature samples
+        uses: actions/download-artifact@v4
+        with:
+          path: samples
+          name: feature_samples
+
+      - name: Download formatted options_lookup
+        uses: actions/download-artifact@v4
+        with:
+          path: resources
+          name: options_lookup
+
+      - name: Download precomputed buildstocks
+        uses: actions/download-artifact@v4
+        with:
+          path: test/tests_yml_files
+          name: precomputed_buildstocks
+
+      - name: Commit the integration tests results
+        shell: bash        
+        run: |
+          branch_name="${{ github.head_ref || github.ref_name }}"
+          git pull --ff-only --no-tags --depth=1 origin $branch_name
+          cp -r samples/buildstock*.csv test/base_results/baseline/annual
+          cp -r baseline/annual/results*.csv test/base_results/baseline/annual
+          cp -r baseline/timeseries/*.csv test/base_results/baseline/timeseries
+          git add test/base_results
+          git add resources/options_lookup.tsv
+          git add test/tests_yml_files
+          git status
+          if [[ $(git diff --cached --exit-code) ]]; then
+            git config --global user.email "github-action@users.noreply.github.com"
+            git config --global user.name "GitHub Action"
+            git commit -m "Baseline integration tests results."
+            echo "Pushing to branch: $branch_name"
+            git push -u origin $branch_name
+          fi
+
+      - name: Download base results
+        if: github.event_name == 'pull_request'
+        uses: actions/download-artifact@v4
+        with:
+          path: base_results
+          name: base_results
+
+      - name: Compare samples and results
+        if: github.event_name == 'pull_request'
+        run: |          
+          pip install numpy
+          pip install pandas
+          pip install plotly
+          pip install kaleido
+          
+          # baseline annual
+          mkdir -p test/base_results/comparisons/baseline/annual
+          python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
+          python test/compare.py -a results -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
+          python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
+          
+          # baseline timeseries
+          mkdir test/base_results/comparisons/baseline/timeseries
+          python test/compare.py -a timeseries -b base_results/baseline/timeseries -f baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
+
+      - name: Upload comparisons
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: comparisons
+          path: test/base_results/comparisons
+          if-no-files-found: error
+
   compare-tools:
     runs-on: ubuntu-22.04
     needs: [analysis-tests, integration-tests]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Download buildstockbatch results
         uses: actions/download-artifact@v4
@@ -345,136 +432,16 @@ jobs:
           sudo gem install simplecov-html
           ruby test/test_analysis_tools.rb
 
-  compare-results:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-22.04
-    needs: [integration-tests]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.sha }}
-
-      - name: Upload base results
-        uses: actions/upload-artifact@v4
-        with:
-          name: base_results
-          path: test/base_results
-          if-no-files-found: error
-
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Download base results
-        uses: actions/download-artifact@v4
-        with:
-          path: base_results
-          name: base_results
-
-      - name: Download feature samples
-        uses: actions/download-artifact@v4
-        with:
-          path: samples
-          name: feature_samples
-
-      - name: Download feature results
-        uses: actions/download-artifact@v4
-        with:
-          path: results
-          name: feature_results
-
-      - name: Compare samples and results
-        run: |          
-          pip install numpy
-          pip install pandas
-          pip install plotly
-          pip install kaleido
-          
-          # baseline annual
-          mkdir -p test/base_results/comparisons/baseline/annual
-          python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
-          python test/compare.py -a results -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
-          python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
-          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f results/baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
-          
-          # baseline timeseries
-          mkdir test/base_results/comparisons/baseline/timeseries
-          python test/compare.py -a timeseries -b base_results/baseline/timeseries -f results/baseline/timeseries -e test/base_results/comparisons/baseline/timeseries # cvrmse_nmbe_*.csv
-
-      - name: Upload comparisons
-        uses: actions/upload-artifact@v4
-        with:
-          name: comparisons
-          path: test/base_results/comparisons
-          if-no-files-found: error
-
-  update-results:
-    runs-on: ubuntu-22.04
-    needs: [analysis-tests, integration-tests]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Install software
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt update
-          sudo -E apt-get install -y wget unzip python3-sphinx-rtd-theme
-
-      - name: Download feature samples
-        uses: actions/download-artifact@v4
-        with:
-          path: samples
-          name: feature_samples
-
-      - name: Download feature results
-        uses: actions/download-artifact@v4
-        with:
-          path: results
-          name: feature_results
-
-      - name: Download formatted options_lookup
-        uses: actions/download-artifact@v4
-        with:
-          path: resources
-          name: options_lookup
-
-      - name: Download precomputed buildstocks
-        uses: actions/download-artifact@v4
-        with:
-          path: test/tests_yml_files
-          name: precomputed_buildstocks
-
-      - name: Commit the integration tests results
-        shell: bash        
-        run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
-          cp -r samples/buildstock*.csv test/base_results/baseline/annual
-          cp -r results/baseline/annual/results*.csv test/base_results/baseline/annual
-          cp -r results/baseline/timeseries/*.csv test/base_results/baseline/timeseries
-          git add test/base_results
-          git add resources/options_lookup.tsv
-          git add test/tests_yml_files
-          git status
-          if [[ $(git diff --cached --exit-code) ]]; then
-            git config --global user.email "github-action@users.noreply.github.com"
-            git config --global user.name "GitHub Action"
-            git commit -m "Baseline integration tests results."
-            echo "Pushing to branch: $branch_name"
-            git push -u origin $branch_name
-          fi
-
   sdr-options-analysis:
     runs-on: ubuntu-22.04
     needs: [unit-tests]
     container:
       image: docker://nrel/openstudio:3.10.0
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Install gems
         run: |
@@ -586,8 +553,8 @@ jobs:
       - name: Commit the options analysis results
         shell: bash
         run: |
-          branch_name="${{ github.head_ref }}"
-          git pull origin $branch_name
+          branch_name="${{ github.head_ref || github.ref_name }}"
+          git pull --ff-only --no-tags --depth=1 origin $branch_name
           git add project_national/resources
           git status
           if [[ $(git diff --cached --exit-code) ]]; then
@@ -602,13 +569,16 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [sdr-options-analysis]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
-      - uses: actions/setup-python@v5
+      - name: Setup python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4.1.0
         with:
@@ -617,8 +587,10 @@ jobs:
           aws-region: us-east-2
           role-duration-seconds: 1200
           role-session-name: MySession
+
       - name: Who am I?
         run: aws sts get-caller-identity
+
       - name: Download and Install OpenStudio
         run: |
           export OS_DEBFILE="OpenStudio-$OPENSTUDIO_VER+$OPENSTUDIO_SHA-$OPENSTUDIO_PLATFORM.$OPENSTUDIO_EXT"
@@ -636,7 +608,7 @@ jobs:
       - name: Clone and install buildstockbatch repository
         run: |
           cd ..
-          git clone --single-branch --branch $BUILDSTOCK_BRANCH https://github.com/NREL/buildstockbatch.git
+          git clone --single-branch --branch $BUILDSTOCK_BATCH_BRANCH https://github.com/NREL/buildstockbatch.git
           python -m pip install --progress-bar off --upgrade pip
           cd buildstockbatch
           bash install.sh dev
@@ -703,9 +675,9 @@ jobs:
 
       - name: Commit the integration tests results
         run: |
-          branch_name="${{ github.head_ref }}"
+          branch_name="${{ github.head_ref || github.ref_name }}"
           git checkout resources/options_lookup.tsv
-          git pull origin $branch_name
+          git pull --ff-only --no-tags --depth=1 origin $branch_name
           cp -r project_national/sdr_upgrades_tmy3/results_csvs_pub/* test/base_results/upgrades/sdr_annual
           git add test/base_results/upgrades/sdr_annual
           git status
@@ -716,3 +688,31 @@ jobs:
             echo "Pushing to branch: $branch_name"
             git push -u origin $branch_name
           fi
+
+      - name: Download base results
+        uses: actions/download-artifact@v4
+        with:
+          path: base_results
+          name: base_results
+
+      - name: Compare samples and results
+        run: |          
+          pip install numpy
+          pip install pandas
+          pip install plotly
+          pip install kaleido
+          
+          # results_characteristics.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f base_results/upgrades/sdr_annual/results_up00.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f test/base_results/upgrades/sdr_annual/results_up00.csv
+          
+          # upgrades annual
+          mkdir -p test/base_results/sdr_comparisons/upgrades/sdr_annual
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/upgrades/sdr_annual -f test/base_results/upgrades/sdr_annual -e test/base_results/sdr_comparisons/upgrades/sdr_annual # *.html
+
+      - name: Upload comparisons
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdr_comparisons
+          path: test/base_results/sdr_comparisons
+          if-no-files-found: error
