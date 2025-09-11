@@ -6,6 +6,7 @@ started_at,Simulation start time.
 completed_at,Simulation end time.
 completed_status,"Simulation Success, Fail, or Invalid."
 eplusout_err,Contents of the eplusout.err file.
+step_failures,Contents of the step_failures.
 build_existing_model.air_leakage_to_outside_ach_50,Total infiltration to the dwelling unit adjusted by ratio of exterior envelope surface area to total envelope surface area.
 build_existing_model.applicable,The measure was applied to the workflow.
 build_existing_model.buildstock_csv_path,Absolute/relative path of the buildstock CSV file. Relative is compared to the 'lib/housing_characteristics' directory.
@@ -53,8 +54,8 @@ build_existing_model.weather_file_latitude,Latitude from the EPW weather file.
 build_existing_model.weather_file_longitude,Longitude from the EPW weather file.
 build_existing_model.heating_unavailable_period,Heating unavailable period.
 build_existing_model.cooling_unavailable_period,Cooling unavailable period.
-build_existing_model.electric_panel_service_max_current_rating,The service rating capacity value corresponding to the bin.
-build_existing_model.electric_panel_service_max_current_rating_bin,The sampled service rating capacity bin of the electric panel.
+build_existing_model.electric_panel_service_rating,The service rating capacity value corresponding to the bin.
+build_existing_model.electric_panel_service_rating_bin,The sampled service rating capacity bin of the electric panel.
 build_existing_model.unit_height_above_grade,Height of the lowest conditioned floor above grade for the unit.
 apply_upgrade.applicable,The measure was applied to the workflow.
 apply_upgrade.upgrade_name,User-specificed name that describes the upgrade.
@@ -76,6 +77,7 @@ report_simulation_output.include_annual_peak_loads,Generates annual peak loads f
 report_simulation_output.include_annual_component_loads,Generates annual heating and cooling loads disaggregated by component type.
 report_simulation_output.include_annual_hot_water_uses,Generates annual hot water usages for each end use.
 report_simulation_output.include_annual_hvac_summary,"Generates HVAC capacities, design temperatures, and design loads."
+report_simulation_output.include_annual_panel_summary,Generates electric panel breaker spaces and loads.
 report_simulation_output.include_annual_resilience,Generates annual resilience outputs.
 report_simulation_output.include_timeseries_total_consumptions,Generates timeseries energy consumptions for the total building.
 report_simulation_output.include_timeseries_fuel_consumptions,Generates timeseries energy consumptions for each fuel type.
