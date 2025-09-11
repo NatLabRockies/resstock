@@ -3258,20 +3258,25 @@ module Defaults
   def self.apply_water_heaters(hpxml_bldg, eri_version, schedules_file)
     nbeds = hpxml_bldg.building_construction.number_of_bedrooms
     nbaths = hpxml_bldg.building_construction.number_of_bathrooms
+    n_occ = hpxml_bldg.building_occupancy.number_of_residents
+
     hpxml_bldg.water_heating_systems.each do |water_heating_system|
       if water_heating_system.is_shared_system.nil?
         water_heating_system.is_shared_system = false
         water_heating_system.is_shared_system_isdefaulted = true
       end
+
       schedules_file_includes_water_heater_setpoint_temp = (schedules_file.nil? ? false : schedules_file.includes_col_name(SchedulesFile::Columns[:WaterHeaterSetpoint].name))
       if water_heating_system.temperature.nil? && !schedules_file_includes_water_heater_setpoint_temp
         water_heating_system.temperature = get_water_heater_temperature(eri_version)
         water_heating_system.temperature_isdefaulted = true
       end
+
       if water_heating_system.performance_adjustment.nil?
         water_heating_system.performance_adjustment = get_water_heater_performance_adjustment(water_heating_system)
         water_heating_system.performance_adjustment_isdefaulted = true
       end
+
       if water_heating_system.usage_bin.nil? && (not water_heating_system.uniform_energy_factor.nil?) # FHR & UsageBin only applies to UEF
         if not water_heating_system.first_hour_rating.nil?
           water_heating_system.usage_bin = get_water_heater_usage_bin(water_heating_system.first_hour_rating)
@@ -3280,11 +3285,13 @@ module Defaults
         end
         water_heating_system.usage_bin_isdefaulted = true
       end
-      if (water_heating_system.water_heater_type == HPXML::WaterHeaterTypeCombiStorage)
+
+      if water_heating_system.water_heater_type == HPXML::WaterHeaterTypeCombiStorage
         if water_heating_system.tank_volume.nil?
-          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.related_hvac_system.heating_system_fuel, nbeds, nbaths)
+          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.related_hvac_system.heating_system_fuel, false, nbeds, nbaths, n_occ)
           water_heating_system.tank_volume_isdefaulted = true
         end
+
         if water_heating_system.standby_loss_value.nil?
           # Use equation fit from AHRI database
           # calculate independent variable SurfaceArea/vol(physically linear to standby_loss/skin_u under test condition) to fit the linear equation from AHRI database
@@ -3296,44 +3303,52 @@ module Defaults
           water_heating_system.standby_loss_units = HPXML::UnitsDegFPerHour
           water_heating_system.standby_loss_units_isdefaulted = true
         end
-      end
-      if (water_heating_system.water_heater_type == HPXML::WaterHeaterTypeStorage)
+
+      elsif water_heating_system.water_heater_type == HPXML::WaterHeaterTypeStorage
         if water_heating_system.heating_capacity.nil?
-          water_heating_system.heating_capacity = (get_water_heater_heating_capacity(water_heating_system.fuel_type, nbeds, hpxml_bldg.water_heating_systems.size, nbaths) * 1000.0).round
+          water_heating_system.heating_capacity = get_water_heater_heating_capacity(water_heating_system.fuel_type, nbeds, hpxml_bldg.water_heating_systems.size, nbaths)
           water_heating_system.heating_capacity_isdefaulted = true
         end
+
         if water_heating_system.tank_volume.nil?
-          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.fuel_type, nbeds, nbaths)
+          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.fuel_type, false, nbeds, nbaths, n_occ)
           water_heating_system.tank_volume_isdefaulted = true
         end
+
         if water_heating_system.recovery_efficiency.nil?
           water_heating_system.recovery_efficiency = get_water_heater_recovery_efficiency(water_heating_system)
           water_heating_system.recovery_efficiency_isdefaulted = true
         end
+
         if water_heating_system.tank_model_type.nil?
           water_heating_system.tank_model_type = HPXML::WaterHeaterTankModelTypeMixed
           water_heating_system.tank_model_type_isdefaulted = true
         end
-      end
-      if (water_heating_system.water_heater_type == HPXML::WaterHeaterTypeHeatPump)
-        Waterheater.set_heat_pump_cop(water_heating_system)
+
+      elsif water_heating_system.water_heater_type == HPXML::WaterHeaterTypeHeatPump
+        water_heating_system.additional_properties.cop = get_water_heater_heat_pump_cop(water_heating_system)
+
         if water_heating_system.heating_capacity.nil?
           water_heating_system.heating_capacity = (UnitConversions.convert(0.5, 'kW', 'Btu/hr') * water_heating_system.additional_properties.cop).round
           water_heating_system.heating_capacity_isdefaulted = true
         end
+
         if water_heating_system.backup_heating_capacity.nil?
           water_heating_system.backup_heating_capacity = UnitConversions.convert(4.5, 'kW', 'Btu/hr').round
           water_heating_system.backup_heating_capacity_isdefaulted = true
         end
+
         if water_heating_system.tank_volume.nil?
-          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.fuel_type, nbeds, nbaths)
+          water_heating_system.tank_volume = get_water_heater_tank_volume(water_heating_system.fuel_type, true, nbeds, nbaths, n_occ)
           water_heating_system.tank_volume_isdefaulted = true
         end
+
         schedules_file_includes_water_heater_operating_mode = (schedules_file.nil? ? false : schedules_file.includes_col_name(SchedulesFile::Columns[:WaterHeaterOperatingMode].name))
         if water_heating_system.operating_mode.nil? && !schedules_file_includes_water_heater_operating_mode
           water_heating_system.operating_mode = HPXML::WaterHeaterOperatingModeHybridAuto
           water_heating_system.operating_mode_isdefaulted = true
         end
+
       end
       next unless water_heating_system.location.nil?
 
@@ -6096,13 +6111,11 @@ module Defaults
   # Gets the default heating capacity for the water heater based on fuel type and number of bedrooms
   # and bathrooms in the home.
   #
-  # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
-  #
   # @param fuel [String] Water heater fuel type (HPXML::FuelTypeXXX)
   # @param nbeds [Integer] Number of bedrooms in the dwelling unit
   # @param num_water_heaters [Integer] Number of water heaters serving the dwelling unit
   # @param nbaths [Integer] Number of bathrooms in the dwelling unit
-  # @return [Double] Water heater heating capacity (kBtu/hr)
+  # @return [Double] Water heater heating capacity (Btu/hr)
   def self.get_water_heater_heating_capacity(fuel, nbeds, num_water_heaters, nbaths = nil)
     if nbaths.nil?
       nbaths = Defaults.get_num_bathrooms(nbeds)
@@ -6111,100 +6124,134 @@ module Defaults
     # Adjust the heating capacity if there are multiple water heaters in the home
     nbaths /= num_water_heaters.to_f
 
-    if fuel != HPXML::FuelTypeElectricity
+    if fuel == HPXML::FuelTypeElectricity # Electric tank WHs
+      # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
+      if nbeds <= 1
+        cap_kw = 2.5
+      elsif nbeds <= 2
+        cap_kw = (nbaths <= 1.5 ? 3.5 : 4.5)
+      elsif nbeds <= 3
+        cap_kw = (nbaths <= 1.5 ? 4.5 : 5.5)
+      else
+        cap_kw = 5.5
+      end
+      cap_btuh = UnitConversions.convert(cap_kw, 'kW', 'Btu/hr')
+
+    else # Non-electric tank WHs
+      # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
       if nbeds <= 3
         cap_kbtuh = 36.0
-      elsif nbeds == 4
+      elsif nbeds <= 4
         cap_kbtuh = 38.0
-      elsif nbeds == 5
+      elsif nbeds <= 5
         cap_kbtuh = 48.0
       else
         cap_kbtuh = 50.0
       end
-      return cap_kbtuh
-    else
-      if nbeds == 1
-        cap_kw = 2.5
-      elsif nbeds == 2
-        if nbaths <= 1.5
-          cap_kw = 3.5
-        else
-          cap_kw = 4.5
-        end
-      elsif nbeds == 3
-        if nbaths <= 1.5
-          cap_kw = 4.5
-        else
-          cap_kw = 5.5
-        end
-      else
-        cap_kw = 5.5
-      end
-      return UnitConversions.convert(cap_kw, 'kW', 'kBtu/hr')
+      cap_btuh = UnitConversions.convert(cap_kbtuh, 'kBtu/hr', 'Btu/hr')
+
     end
+
+    return cap_btuh.round
   end
 
   # Gets the default tank volume for a storage water heater based on fuel type and number of bedrooms
   # and bathrooms in the home.
   #
-  # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
-  #
   # @param fuel [String] Water heater fuel type (HPXML::FuelTypeXXX)
+  # @param is_hpwh [Boolean] True if a heat pump water heater
   # @param nbeds [Integer] Number of bedrooms in the dwelling unit
   # @param nbaths [Integer] Number of bathrooms in the dwelling unit
+  # @param n_occ [Double] Number of occupants in the dwelling unit
   # @return [Double] Water heater tank volume (gal)
-  def self.get_water_heater_tank_volume(fuel, nbeds, nbaths = nil)
+  def self.get_water_heater_tank_volume(fuel, is_hpwh, nbeds, nbaths, n_occ)
+    # FUTURE: Take into account usage multipliers
+    # FUTURE: Incorporate number of occupants for conventional elec/gas storage WHs.
+
     if nbaths.nil?
       nbaths = Defaults.get_num_bathrooms(nbeds)
     end
 
-    if fuel != HPXML::FuelTypeElectricity # Non-electric tank WHs
-      case nbeds
-      when 0, 1, 2
+    if is_hpwh && !n_occ.nil? # Heat pump water heater
+      # Source: Jeff Maguire recommendation for ResStock when num occupants is known
+      if (nbeds <= 2) && (n_occ <= 3)
+        # Up to 2 bedrooms AND up to 3 occupants
+        return 50.0
+      elsif (nbeds >= 4) || (n_occ >= 5)
+        # 4 or more bedrooms OR 5 or more occupants
+        return 80.0
+      else
+        # (3 bedrooms AND up to 4 occupants) OR (up to 3 bedrooms AND 4 occupants)
+        return 66.0
+      end
+
+    elsif fuel == HPXML::FuelTypeElectricity # Electric tank WHs
+      # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
+      if nbeds <= 1
+        tank_vol = 30.0
+      elsif nbeds <= 2
+        tank_vol = (nbaths <= 1.5 ? 30.0 : 40.0)
+      elsif nbeds <= 3
+        tank_vol = (nbaths <= 1.5 ? 40.0 : 50.0)
+      elsif nbeds <= 4
+        tank_vol = (nbaths <= 2.5 ? 50.0 : 66.0)
+      elsif nbeds <= 5
+        tank_vol = 66.0
+      else
+        tank_vol = 80.0
+      end
+
+      if is_hpwh
+        # Bump up size (e.g., 30/40 => 50, 50 => 66, 66 => 80)
+        # Note: There are very few HPWHs < 50 or > 80 gal in AHRI
+        if tank_vol < 50
+          tank_vol = 50.0
+        elsif tank_vol < 66
+          tank_vol = 66.0
+        else
+          tank_vol = 80.0
+        end
+      end
+
+      return tank_vol
+
+    else # Non-electric tank WHs
+      # Source: Table 8. Benchmark DHW Storage and Burner Capacity in 2014 BA HSP
+      if nbeds <= 2
         return 30.0
-      when 3
-        if nbaths <= 1.5
-          return 30.0
-        else
-          return 40.0
-        end
-      when 4
-        if nbaths <= 2.5
-          return 40.0
-        else
-          return 50.0
-        end
+      elsif nbeds <= 3
+        return (nbaths <= 1.5 ? 30.0 : 40.0)
+      elsif nbeds <= 4
+        return (nbaths <= 2.5 ? 40.0 : 50.0)
       else
         return 50.0
       end
-    else
-      case nbeds
-      when 0, 1
-        return 30.0
-      when 2
-        if nbaths <= 1.5
-          return 30.0
-        else
-          return 40.0
-        end
-      when 3
-        if nbaths <= 1.5
-          return 40.0
-        else
-          return 50.0
-        end
-      when 4
-        if nbaths <= 2.5
-          return 50.0
-        else
-          return 66.0
-        end
-      when 5
-        return 66.0
-      else
-        return 80.0
+    end
+  end
+
+  # Gets the assumed COP of the water heater's heat pump based on UEF regressions.
+  #
+  # @param water_heating_system [HPXML::WaterHeatingSystem] The HPXML water heating system of interest
+  # @return [Double] COP of the heat pump (W/W)
+  def self.get_water_heater_heat_pump_cop(water_heating_system)
+    # Based on simulations of the UEF test procedure at varying COPs
+    if not water_heating_system.energy_factor.nil?
+      uef = (0.60522 + water_heating_system.energy_factor) / 1.2101
+      cop = 1.174536058 * uef
+    elsif not water_heating_system.uniform_energy_factor.nil?
+      uef = water_heating_system.uniform_energy_factor
+      case water_heating_system.usage_bin
+      when HPXML::WaterHeaterUsageBinVerySmall
+        fail 'It is unlikely that a heat pump water heater falls into the very small bin of the First Hour Rating (FHR) test. Double check input.'
+      when HPXML::WaterHeaterUsageBinLow
+        cop = 1.0005 * uef - 0.0789
+      when HPXML::WaterHeaterUsageBinMedium
+        cop = 1.0909 * uef - 0.0868
+      when HPXML::WaterHeaterUsageBinHigh
+        cop = 1.1022 * uef - 0.0877
       end
     end
+    return cop
   end
 
   # Gets the default recovery efficiency for the water heater based on fuel type and efficiency.

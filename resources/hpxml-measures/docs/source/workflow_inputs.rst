@@ -4288,7 +4288,12 @@ Each heat pump water heater is entered as a ``/HPXML/Building/BuildingDetails/Sy
 
          \- **IECC zones 3-8, unknown**: "basement - unconditioned", "basement - conditioned", "conditioned space"
 
-  .. [#] If TankVolume not provided, defaults based on Table 8 in the `2014 BAHSP <https://www.energy.gov/sites/prod/files/2014/03/f13/house_simulation_protocols_2014.pdf>`_.
+  .. [#] If TankVolume not provided, defaults as follows:
+
+         \- If NumberofResidents provided, defaults to 50 gal if NumberofResidents <= 3 AND NumberofBedrooms <= 2, otherwise 80 gal if NumberofResidents >= 5 OR NumberofBedrooms >= 4, otherwise 66 gal.
+
+         \- If NumberofResidents not provided, defaults based on Table 8 in the `2014 BAHSP <https://www.energy.gov/sites/prod/files/2014/03/f13/house_simulation_protocols_2014.pdf>`_ for conventional electric storage water heaters but the size is increased to 50 gal if the table value < 50, increased to 66 gal if the table value < 66, otherwise increased to 80 gal.
+
   .. [#] The sum of all ``FractionDHWLoadServed`` (across all WaterHeatingSystems) must equal to 1.
   .. [#] FractionDHWLoadServed represents only the fraction of the hot water load associated with the hot water **fixtures**.
          Additional hot water load from clothes washers/dishwashers will be automatically assigned to the appropriate water heater(s).
