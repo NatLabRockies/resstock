@@ -3425,15 +3425,16 @@ The load for space heating and cooling is determined separately and only the lar
 For example, the power rating of a ducted heat pump is the sum of the power rating of the compressor, the air handler, and any electric backup that can operate simutaneously as the heat pump. If only the heat pump or the backup is allowed at a given time, ResStock takes only the maxium of the heat pump or the backup rating. 
 This also applies to non-ducted heat pumps, whose power rating can be estimated based on compressor and any applicable electric backup.
 
-The compressor power rating is estimated based on its design capacity using a regression equation derived from a review of over 200 direct expansion systems. The products reviewed include ducted and non-ducted heat pumps, central AC, and 240V room AC, as a similar trend is observed across them. The regression estimates the Minimum Circuit Amp of the compressor, which is then multiplied by the voltage (240V) to arrive at power. 
+The compressor power rating is estimated based on its design capacity using a regression equation derived from a review of over 200 direct expansion systems. The products reviewed include ducted and non-ducted air source heat pumps, central AC, and 240V room AC, as a similar trend is observed across them. The regression estimates the Minimum Circuit Amp of the compressor, which is then multiplied by the voltage (240V) to arrive at power. 
+This regression is also being applied to ground source heat pumps, as ground source heat pump specific product information is not yet surveyed.
 The electric resistance heating power rating is directly converted from its design heating capacity at an efficiency of 100\%.
 The air handler and boiler pump power ratings are estimated from their respective OS-HPXML modeling assumptions. For fuel heating systems, their service rating only consists of their auxiliary equipment.
 
 \begin{customLongTable}{ |p{3cm}|p{4cm}|p{8cm}| }
   {Default service rating of space heating and cooling system components.} {tab:power_heat_cool} 
   {\textbf{System Component} & \textbf{Power Rating [W]} & \textbf{Note}}
-  Heat Pump or AC Compressor & (0.631 * Heating\_or\_Cooling\_Capacity [kBtu/h] + 1.615) * 240 & Regression of Minimum Circuit Amp, multiplied by voltage \hline
-  Electric Resistance Furnace, Boiler, or Strip Heat & Heating_Capacity [kBtu/h] * 293.07 & Convert heating capacity to power directly at 100\% efficiency \\ \hline
+  Heat Pump or AC Compressor & (0.631 * Heating\_or\_Cooling\_Capacity [kBtu/h] + 1.615) * 240 & Regression of Minimum Circuit Amp, multiplied by voltage. Applies to ground source heat pumps. \\ \hline
+  Electric Resistance Furnace, Boiler, or Strip Heat & Heating\_Capacity [kBtu/h] * 293.07 & Convert heating capacity to power directly at 100\% efficiency \\ \hline
   Air Handler & Air\_Flow [cfm] * Fan\_Power [W/cfm] & Default to OS-HPXML blower fan assumptions \\ \hline
   Boiler Pump & Boiler\_Auxiliary\_Energy [kWh/yr]  / 2.08 & Default to OS-HPXML boiler pump assumptions \\
 \end{customLongTable}
