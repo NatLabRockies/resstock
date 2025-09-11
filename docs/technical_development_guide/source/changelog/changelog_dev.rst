@@ -36,3 +36,5 @@ Development Changelog
 
         Description:
         The order of rows in the published results CSV files are now always sorted by building_id.
+
+        Assignees: Rajendra Adhikari
