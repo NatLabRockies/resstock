@@ -113,7 +113,11 @@ def get_app() -> DashProxy:
     transforms = [MultiplexerTransform()]  # allows multiple callbacks to update same Output
 
     app = DashProxy(
-        __name__, external_stylesheets=[dbc.themes.BOOTSTRAP], transforms=transforms, external_scripts=external_scripts
+        __name__,
+        external_stylesheets=[dbc.themes.BOOTSTRAP],
+        transforms=transforms,
+        external_scripts=external_scripts,
+        suppress_callback_exceptions=True,
     )
 
     # ----------------------------------------------------------------------------
@@ -235,7 +239,7 @@ def get_app() -> DashProxy:
                                             dcc.RadioItems(
                                                 id="aggregation-type",
                                                 options=[vt.value for vt in workflow.aggregation_types],
-                                                value="distribution",
+                                                value="average",
                                                 inline=True,
                                             ),
                                         ]
@@ -295,7 +299,7 @@ def get_app() -> DashProxy:
                                     html.Div(
                                         [
                                             html.Small("Quantity", className="d-block fw-bold mb-1"),
-                                            dcc.Dropdown(id="quantity", clearable=False, value="__group_stacked__"),
+                                            dcc.Dropdown(id="quantity", clearable=False, value="out.bills.all_fuels.usd"),
                                         ]
                                     ),
                                     md=4,
@@ -531,12 +535,47 @@ def get_app() -> DashProxy:
             return html.Div("Run folder does not have orchestrator. Cannot give run info.")
         baseline_df = orchestrator.processor.combined_df.filter(pl.col("upgrade") == 0)
         num_data_points = baseline_df.select(pl.len()).collect().item()
-        # calculate the % of buildings with applicability = True for each upgrade in the combined_df
-        upgrade_text = ""
-        for upgrade in upgrades:
+        upgrade_tokens: list[str] = []
+        # Keep baseline (0) but make it disabled in the checklist so it stays always selected.
+        non_baseline_upgrades = [u for u in upgrades if u != 0]
+        baseline_token = None
+        if 0 in upgrades:
+            baseline_token = f"{'0(Base)':<10}"
+        for upgrade in non_baseline_upgrades:
             upgrade_df = orchestrator.processor.combined_df.filter(pl.col("upgrade") == upgrade)
             num_applicable = upgrade_df.filter(pl.col("applicability")).select(pl.len()).collect().item()
-            upgrade_text += f"{upgrade}({num_applicable / num_data_points * 100:.1f}%), "
+            token = f"{upgrade}({num_applicable / num_data_points * 100:.1f}%)"
+            upgrade_tokens.append(f"{token:<10}")
+
+        # Build a checklist so user can filter upgrades visually. All selected by default.
+        # We keep tokens short (e.g., "3(75.2%)") and rely on wrapping to avoid layout breakage.
+        checklist_options = []
+        if baseline_token is not None:
+            checklist_options.append({"label": baseline_token, "value": 0, "disabled": True})
+        checklist_options.extend(
+            {"label": tok, "value": upg} for tok, upg in zip(upgrade_tokens, non_baseline_upgrades)
+        )
+        checklist = dcc.Checklist(
+            id="selected-upgrades",
+            options=checklist_options,
+            value=[opt["value"] for opt in checklist_options],  # all selected including baseline
+            inline=True,
+            inputStyle={"marginRight": "2px"},
+            labelStyle={
+                "display": "inline-block",
+                "width": "12ch",
+                "fontFamily": "ui-monospace",
+                "whiteSpace": "pre",
+                "marginRight": "8px",
+                "verticalAlign": "top",
+            },
+            style={"display": "inline-block"},
+        )
+
+        upgrade_children: list[Any] = [
+            html.Span("Upgrades (applied %): ", className="fw-bold me-1"),
+            checklist,
+        ]
 
         return html.Div(
             [
@@ -546,8 +585,14 @@ def get_app() -> DashProxy:
                     style={"fontSize": "0.75rem", "wordBreak": "break-all"},
                 ),
                 html.Div(
-                    [html.Span("Upgrades (applied %): ", className="fw-bold"), html.Span(upgrade_text)],
-                    style={"fontSize": "0.75rem"},
+                    upgrade_children,
+                    style={
+                        "fontSize": "0.75rem",
+                        "maxWidth": "480px",
+                        "whiteSpace": "normal",
+                        "wordWrap": "break-word",
+                        "lineHeight": "1.1rem",
+                    },
                 ),
                 html.Div(
                     [html.Span("Number of data points: ", className="fw-bold"), html.Span(num_data_points)],
@@ -624,6 +669,7 @@ def get_app() -> DashProxy:
         Input("facet-wrap-width", "value"),
         Input("dynamic-toggle", "value"),  # NE dynamic on/off
         Input("run-folder", "value"),  # NEW - selected run folder
+        Input("selected-upgrades", "value"),  # selected upgrades from checklist
     )
     def _generate_figure(
         _: int | None,
@@ -643,6 +689,7 @@ def get_app() -> DashProxy:
         wrap_width: int,
         dynamic_mode: bool,  # receives value from dynamic-toggle
         run_folder_val: str,  # receives selected run folder
+        selected_upgrades: list[int],
     ):
         # if not n_clicks:
         #     return go.Figure(), dash.no_update, dash.no_update
@@ -677,6 +724,7 @@ def get_app() -> DashProxy:
                 wrap_width,
                 dynamic_mode,
                 run_folder_val,
+                selected_upgrades,
             )
         except Exception:  # noqa: BLE001 catch blind exception
             error = f"Failed to generate figure for plot spec: {plot_spec}. Error: {traceback.format_exc()}"
@@ -858,25 +906,29 @@ def get_app() -> DashProxy:
         Output("building-inclusion", "options"),
         Output("building-inclusion", "value"),
         Input("run-folder", "value"),
+        Input("selected-upgrades", "value"),
         State("building-inclusion", "value"),
     )
-    def _update_upgrade_inclusion_dd(run_folder: str, current_val: str):
-        """Refresh the Upgrade Inclusion dropdown based on available upgrades for the selected run."""
+    def _update_upgrade_inclusion_dd(run_folder: str, selected_upgrades: list[int], current_val: str):
+        """Refresh Upgrade Inclusion dropdown based on selected upgrades.
+
+        If user deselects some upgrades in the checklist, only those remain as
+        explicit "Applied in Upgrade N" options. Baseline (0) is never shown
+        as a selectable single-upgrade option here.
+        """
         orchestrator = get_orchestrator_for_run(run_folder)
         if orchestrator is None:
             raise PreventUpdate
 
-        upgrades = [u for u in orchestrator.workflow.upgrades if u != 0]  # exclude baseline 0
-
-        # Core options
         opts: list[dict[str, str]] = [
             {"label": "All", "value": "__all__"},
             {"label": "Applied in respective upgrades", "value": "applied_all"},
-            # Applied only in a specific upgrade
-            *[{"label": f"Applied in Upgrade {u}", "value": f"applied_{u}"} for u in upgrades],
         ]
+        opts.extend({"label": f"Applied in Upgrade {u}", "value": f"applied_{u}"}
+                    for u in selected_upgrades if u != 0)
 
-        new_val = current_val if current_val in {o["value"] for o in opts} else "__all__"
+        valid_vals = {o["value"] for o in opts}
+        new_val = current_val if current_val in valid_vals else "__all__"
         return opts, new_val
 
     # ----------------------------------------------------------------------------
@@ -961,6 +1013,7 @@ def get_app() -> DashProxy:
         wrap_width: int,
         dynamic_mode: bool,
         run_folder_val: str,
+        selected_upgrades: list[int] | None,
     ):
         """Return dataframe and fully styled figure for given PlotSpec and layout inputs."""
         df = pl.DataFrame()
@@ -969,6 +1022,12 @@ def get_app() -> DashProxy:
             raise PreventUpdate
         orchestrator = get_orchestrator_for_run(run_folder_val)
         loaded_from_file = False  # Track if we used cached artefacts
+        # If a subset of non-baseline upgrades is selected, force dynamic mode (cache stores full set).
+        if orchestrator is not None and selected_upgrades is not None:
+            if sorted(selected_upgrades) != sorted(orchestrator.workflow.upgrades):
+                dynamic_mode = True
+            else:
+                selected_upgrades = None  # pass None to use all upgrades in workflow
         if not dynamic_mode:
             # Construct expected file locations using the OutputManager schema
             path_seg, name = spec.get_path_and_name()
@@ -1003,10 +1062,11 @@ def get_app() -> DashProxy:
                 return df, fig, False
             start_time = time.time()
             print("Preparing data for plot...")
-            df = orchestrator.processor.prepare_data_for_plot(spec)
+            df = orchestrator.processor.prepare_data_for_plot(spec, selected_upgrades=selected_upgrades)
             print(f"Data prepared in {time.time() - start_time:.1f} seconds. Generating data ...")
             plotter = orchestrator.get_plotter(spec.visualization_type)
             start_time = time.time()
+            orchestrator.theme.update_upgrade_palette(selected_upgrades)
             fig = plotter.create_plot(df, spec)
             print(f"Figure generated in {time.time() - start_time:.1f} seconds.")
 
@@ -1037,8 +1097,8 @@ def get_app() -> DashProxy:
 
         fig.update_layout(width=fig_w, height=fig_h, showlegend=show_legend, legend=legend_cfg)
         path_seg, name = spec.get_path_and_name()
-        if orchestrator is not None:
-            orchestrator.out_mgr.save_plot(fig, path_seg, df, name)
+        # if orchestrator is not None:
+            # orchestrator.out_mgr.save_plot(fig, path_seg, df, name)
         return df, fig, loaded_from_file
 
     def _apply_facet_orientation(fig: Figure, vertical: bool, wrap_width: int | None = None):

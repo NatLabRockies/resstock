@@ -276,12 +276,13 @@ class DataProcessor:
             return result
         raise ValueError(f"Unsupported quantity type: {quantity_type}")
 
-    def prepare_data_for_plot(self, plot_spec: PlotSpec) -> pl.DataFrame:
+    def prepare_data_for_plot(self, plot_spec: PlotSpec, *, selected_upgrades: list[int] | None = None) -> pl.DataFrame:
         """
         Prepare data for plotting by grouping and aggregating using mean
 
         Args:
             plot_spec: PlotSpec object containing the plot configuration
+            selected_upgrades: Optional list of upgrades to include in the plot. If None, include all upgrades.
 
         Returns:
             DataFrame prepared for plotting with aggregated (mean) values
@@ -298,13 +299,17 @@ class DataProcessor:
         combined_df = self.fill_missing_quantities(self.combined_df, quantities)
         combined_df = self.convert_quantity_type(combined_df, quantities, plot_spec.quantity_type)
 
+        if selected_upgrades is not None:
+            keep_upgrades = set([0, *selected_upgrades])  # keep baseline because needed for certain calculations
+            combined_df = combined_df.filter(pl.col("upgrade").is_in(keep_upgrades))
+
         if plot_spec.upgrade is not None:
             combined_df = combined_df.filter(pl.col("upgrade").is_in([0, plot_spec.upgrade]))
 
         if plot_spec.building_inclusion == BuildingInclusion.applied_only:
             if plot_spec.upgrade is None:  # Applied in respective upgrades (No Baseline)
                 combined_df = combined_df.filter(pl.col("applicability") & (pl.col("upgrade") != 0))
-            else:  # Applied in a specific upgrade including baseline filtered to applicable buildings in that upgrade
+            else:  # Applied in upgrade x (include baseline in this case)
                 is_upgrade_applicable = (
                     ((pl.col("upgrade") == plot_spec.upgrade) & pl.col("applicability")).any().over("bldg_id")
                 )

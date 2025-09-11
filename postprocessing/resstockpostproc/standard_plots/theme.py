@@ -63,17 +63,24 @@ class ThemeManager:
         self.primary_color_sequence = nrel_color_series[0]
         self.end_use_to_color = column2color
         self.end_use_to_pattern = column2pattern
-        color_list = nrel_color_series[0]
-        if len(workflow.upgrade_names) > len(color_list):
-            self.upgrade_palette = {workflow.upgrade_names[0]: color_list[0]}
-            for i, name in enumerate(workflow.upgrade_names[1:]):
-                self.upgrade_palette[name] = color_list[1]
-        else:
-            self.upgrade_palette = dict(zip(workflow.upgrade_names, color_list))
         self.fig_width: int = 1000
         self.facet_width: int = 200
         self.fig_height: int = 600
         self.facet_title_width = 15
+        self.workflow = workflow
+        self.update_upgrade_palette(workflow.upgrades)
+
+    def update_upgrade_palette(self, upgrades: tuple[int, ...] | None = None) -> None:
+        upgrades = upgrades or self.workflow.upgrades
+        color_list = nrel_color_series[0]
+        workflow_upgrade2name = dict(zip(self.workflow.upgrades, self.workflow.upgrade_names))
+        upgrade2name = {upgrade: workflow_upgrade2name[int(upgrade)] for upgrade in upgrades}
+        if len(upgrades) > len(color_list):
+            self.upgrade_palette = {upgrade2name[upgrades[0]]: color_list[0]}
+            for i, upgrade in enumerate(upgrades[1:]):
+                self.upgrade_palette[upgrade2name[upgrade]] = color_list[1]
+        else:
+            self.upgrade_palette = dict(zip(upgrade2name.values(), color_list))
 
     def apply_layout(self, fig: go.Figure) -> go.Figure:
         """Apply the theme's common layout to *fig* and return it for chaining."""
