@@ -1,9 +1,9 @@
 {
   "items": [
     {
-      "name": "Sample Time-of-Use Rate",
+      "name": "Sample Time-of-Use Rate High Peak",
       "sector": "Residential",
-      "description": "Sample file defined by BEopt.",
+      "description": "Sample file",
       "fixedchargeunits": "$/month",
       "fixedchargefirstmeter": 9,
       "energyweekdayschedule": [

@@ -88,7 +88,7 @@ class ElectricalPanelSampler
       geometry_building_type_recs,
       args[:geometry_unit_cfa_bin],
       major_elec_load_count.to_s,
-      args[:electric_panel_service_rating_bin].to_s,
+      args[:electric_panel_service_max_current_rating_bin].to_s,
     ]
 
     breaker_space_headroom = get_row_headers(breaker_space_headroom_prob_map, lookup_array, header_size: 32)

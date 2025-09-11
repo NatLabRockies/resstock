@@ -25,6 +25,7 @@ OpenStudio-HPXML capabilities include:
 - Modeling individual dwelling units or whole multifamily buildings
 - Modeling a wide range of building technologies
 - HVAC design load calculations and equipment autosizing
+- Electric panel NEC load calculations (experimental research feature)
 - Occupancy schedules (smooth or stochastic)
 - Utility bill calculations (flat, tiered, time-of-use, real-time pricing, etc.)
 - Emissions calculations (CO2e, etc.)

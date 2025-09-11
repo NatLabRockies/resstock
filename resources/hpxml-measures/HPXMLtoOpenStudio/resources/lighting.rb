@@ -86,10 +86,7 @@ module Lighting
       end
       if interior_sch.nil?
         interior_unavailable_periods = Schedule.get_unavailable_periods(runner, interior_col_name, hpxml_header.unavailable_periods)
-        interior_weekday_sch = lighting.interior_weekday_fractions
-        interior_weekend_sch = lighting.interior_weekend_fractions
-        interior_monthly_sch = lighting.interior_monthly_multipliers
-        interior_sch = MonthWeekdayWeekendSchedule.new(model, interior_obj_name + ' schedule', interior_weekday_sch, interior_weekend_sch, interior_monthly_sch, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: interior_unavailable_periods)
+        interior_sch = MonthWeekdayWeekendSchedule.new(model, interior_obj_name + ' schedule', lighting.interior_weekday_fractions, lighting.interior_weekend_fractions, lighting.interior_monthly_multipliers, EPlus::ScheduleTypeLimitsFraction, unavailable_periods: interior_unavailable_periods)
         design_level = interior_sch.calc_design_level_from_daily_kwh(int_kwh / 365.0)
         interior_sch = interior_sch.schedule
       else
