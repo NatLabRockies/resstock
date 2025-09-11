@@ -148,6 +148,9 @@ def get_app() -> DashProxy:
                                     value="",
                                     clearable=False,
                                     style={"minWidth": "250px"},
+                                    persistence=True,
+                                    persistence_type="local",
+                                    persisted_props=["value"],
                                 ),
                             ],
                         ),
@@ -165,6 +168,8 @@ def get_app() -> DashProxy:
                                     label="Always Dynamic",
                                     value=False,  # default OFF
                                     className="me-2",
+                                    persistence=True,
+                                    persistence_type="local",
                                 ),
                                 html.Small(
                                     "Enable Dynamic mode to always generate figures on the fly",
@@ -198,6 +203,9 @@ def get_app() -> DashProxy:
                                                 },
                                                 value="applied_all",
                                                 clearable=False,
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
                                             ),
                                         ]
                                     ),
@@ -212,6 +220,9 @@ def get_app() -> DashProxy:
                                                 options=[vi.value for vi in workflow.vacancy_inclusion],
                                                 value=workflow.vacancy_inclusion[0].value,
                                                 inline=True,
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
                                             ),
                                         ]
                                     ),
@@ -227,6 +238,9 @@ def get_app() -> DashProxy:
                                                 value="savings",
                                                 clearable=False,
                                                 style={"minWidth": "180px"},
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
                                             ),
                                         ]
                                     ),
@@ -241,6 +255,9 @@ def get_app() -> DashProxy:
                                                 options=[vt.value for vt in workflow.aggregation_types],
                                                 value="average",
                                                 inline=True,
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
                                             ),
                                         ]
                                     ),
@@ -256,6 +273,9 @@ def get_app() -> DashProxy:
                                                 options=[vt.value for vt in workflow.visualization_types],
                                                 value="box",
                                                 inline=True,
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
                                             ),
                                         ]
                                     ),
@@ -276,6 +296,9 @@ def get_app() -> DashProxy:
                                                 options=[],
                                                 value="__none__",
                                                 clearable=False,
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
                                             ),
                                         ]
                                     ),
@@ -290,6 +313,9 @@ def get_app() -> DashProxy:
                                                 options=list(qg_by_name.keys()),
                                                 value="Bills",
                                                 clearable=False,
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
                                             ),
                                         ]
                                     ),
@@ -299,7 +325,14 @@ def get_app() -> DashProxy:
                                     html.Div(
                                         [
                                             html.Small("Quantity", className="d-block fw-bold mb-1"),
-                                            dcc.Dropdown(id="quantity", clearable=False, value="out.bills.all_fuels.usd"),
+                                            dcc.Dropdown(
+                                                id="quantity",
+                                                clearable=False,
+                                                value="out.bills.all_fuels.usd",
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
+                                            ),
                                         ]
                                     ),
                                     md=4,
@@ -326,6 +359,9 @@ def get_app() -> DashProxy:
                                                 options=[{"label": "Edit text", "value": "editable"}],
                                                 value=[],
                                                 switch=True,
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
                                                 className="mb-2",
                                             ),
                                             html.Small("Width (px)", className="d-block fw-bold mb-1"),
@@ -335,6 +371,9 @@ def get_app() -> DashProxy:
                                                 max=2500,
                                                 step=100,
                                                 value=1000,
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
                                                 marks={i: str(i) for i in range(400, 2501, 400)},
                                             ),
                                             html.Small("Height (px)", className="d-block fw-bold mb-1"),
@@ -344,6 +383,9 @@ def get_app() -> DashProxy:
                                                 max=1800,
                                                 step=50,
                                                 value=700,
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
                                                 marks={i: str(i) for i in range(300, 1801, 300)},
                                             ),
                                         ],
@@ -360,6 +402,8 @@ def get_app() -> DashProxy:
                                                 value=["show"],
                                                 switch=True,
                                                 className="mb-2",
+                                                persistence=True,
+                                                persistence_type="local",
                                             ),
                                             html.Small("Legend position", className="d-block fw-bold mb-1"),
                                             dcc.Dropdown(
@@ -375,6 +419,9 @@ def get_app() -> DashProxy:
                                                 value="right",
                                                 clearable=False,
                                                 className="mb-2",
+                                                persistence=True,
+                                                persistence_type="local",
+                                                persisted_props=["value"],
                                             ),
                                         ],
                                         id="legend-adjustment-box",
@@ -393,6 +440,8 @@ def get_app() -> DashProxy:
                                                     options=[{"label": "Orientation", "value": "vertical"}],
                                                     value=[],
                                                     switch=True,
+                                                    persistence=True,
+                                                    persistence_type="local",
                                                 ),
                                                 id="facet-title-orientation-div",
                                                 className="mb-2",
@@ -416,6 +465,9 @@ def get_app() -> DashProxy:
                                                             "always_visible": False,
                                                         },
                                                         className="mt-2",
+                                                        persistence=True,
+                                                        persistence_type="local",
+                                                        persisted_props=["value"],
                                                     ),
                                                 ],
                                                 id="facet-wrap-width-div",
@@ -570,6 +622,9 @@ def get_app() -> DashProxy:
                 "verticalAlign": "top",
             },
             style={"display": "inline-block"},
+            persistence=True,
+            persistence_type="local",
+            persisted_props=["value"],
         )
 
         upgrade_children: list[Any] = [
@@ -1066,7 +1121,9 @@ def get_app() -> DashProxy:
             print(f"Data prepared in {time.time() - start_time:.1f} seconds. Generating data ...")
             plotter = orchestrator.get_plotter(spec.visualization_type)
             start_time = time.time()
-            orchestrator.theme.update_upgrade_palette(selected_upgrades)
+            orchestrator.theme.update_upgrade_palette(
+                tuple(selected_upgrades) if selected_upgrades is not None else None
+            )
             fig = plotter.create_plot(df, spec)
             print(f"Figure generated in {time.time() - start_time:.1f} seconds.")
 
