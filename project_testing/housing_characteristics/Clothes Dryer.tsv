@@ -1,5 +1,5 @@
 Dependency=Clothes Washer Presence	Option=Electric	Option=Gas	Option=None	Option=Propane	Option=Void	sampling_probability
-None	0	0	1	0	0	0.111111
-Yes	0.25	0.25	0.25	0.25	0	0.222222
-# Created by: sources\recs\recs2020\tsv_maker.py						
-# Description: The presence, rated efficiency, and fuel type of the clothes dryer in a dwelling unit.						
+None	0	0	1	0	0	0.5
+Yes	0.25	0.25	0.25	0.25	0	0.5
+# Created by: sources\recs\recs2020\tsv_maker.py
+# Description: The presence, rated efficiency, and fuel type of the clothes dryer in a dwelling unit.
