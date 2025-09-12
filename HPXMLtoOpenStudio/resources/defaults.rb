@@ -222,7 +222,7 @@ module Defaults
     end
 
     if hpxml_header.ground_to_air_heat_pump_model_type.nil? && (hpxml_bldg.heat_pumps.any? { |hp| hp.heat_pump_type == HPXML::HVACTypeHeatPumpGroundToAir })
-      hpxml_header.ground_to_air_heat_pump_model_type = HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard
+      hpxml_header.ground_to_air_heat_pump_model_type = HPXML::GroundToAirHeatPumpModelTypeStandard
       hpxml_header.ground_to_air_heat_pump_model_type_isdefaulted = true
     end
 
@@ -1612,58 +1612,56 @@ module Defaults
         window.orientation = get_orientation_from_azimuth(window.azimuth)
         window.orientation_isdefaulted = true
       end
-      if window.interior_shading_factor_winter.nil? || window.interior_shading_factor_summer.nil?
-        if window.interior_shading_type.nil?
-          if window.glass_layers == HPXML::WindowLayersGlassBlock
-            window.interior_shading_type = HPXML::InteriorShadingTypeNone
-          else
-            window.interior_shading_type = HPXML::InteriorShadingTypeLightCurtains # ANSI/RESNET/ICC 301-2022
-          end
-          window.interior_shading_type_isdefaulted = true
+      if window.interior_shading_type.nil?
+        if window.glass_layers == HPXML::WindowLayersGlassBlock
+          window.interior_shading_type = HPXML::InteriorShadingTypeNone
+        else
+          window.interior_shading_type = HPXML::InteriorShadingTypeLightCurtains # ANSI/RESNET/ICC 301-2022
         end
-        if window.interior_shading_coverage_summer.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
-          if blinds_types.include? window.interior_shading_type
-            window.interior_shading_coverage_summer = 1.0
-          else
-            window.interior_shading_coverage_summer = 0.5 # ANSI/RESNET/ICC 301-2022
-          end
-          window.interior_shading_coverage_summer_isdefaulted = true
-        end
-        if window.interior_shading_coverage_winter.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
-          if blinds_types.include? window.interior_shading_type
-            window.interior_shading_coverage_winter = 1.0
-          else
-            window.interior_shading_coverage_winter = 0.5 # ANSI/RESNET/ICC 301-2022
-          end
-          window.interior_shading_coverage_winter_isdefaulted = true
-        end
+        window.interior_shading_type_isdefaulted = true
+      end
+      if window.interior_shading_coverage_summer.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
         if blinds_types.include? window.interior_shading_type
-          if window.interior_shading_blinds_summer_closed_or_open.nil?
-            window.interior_shading_blinds_summer_closed_or_open = HPXML::BlindsHalfOpen
-            window.interior_shading_blinds_summer_closed_or_open_isdefaulted = true
-          end
-          if window.interior_shading_blinds_winter_closed_or_open.nil?
-            window.interior_shading_blinds_winter_closed_or_open = HPXML::BlindsHalfOpen
-            window.interior_shading_blinds_winter_closed_or_open_isdefaulted = true
-          end
+          window.interior_shading_coverage_summer = 1.0
+        else
+          window.interior_shading_coverage_summer = 0.5 # ANSI/RESNET/ICC 301-2022
         end
-        default_int_sf_summer, default_int_sf_winter = get_window_interior_shading_factors(
-          window.interior_shading_type,
-          window.shgc,
-          window.interior_shading_coverage_summer,
-          window.interior_shading_coverage_winter,
-          window.interior_shading_blinds_summer_closed_or_open,
-          window.interior_shading_blinds_winter_closed_or_open,
-          eri_version
-        )
-        if window.interior_shading_factor_summer.nil? && (not default_int_sf_summer.nil?)
-          window.interior_shading_factor_summer = default_int_sf_summer
-          window.interior_shading_factor_summer_isdefaulted = true
+        window.interior_shading_coverage_summer_isdefaulted = true
+      end
+      if window.interior_shading_coverage_winter.nil? && window.interior_shading_type != HPXML::InteriorShadingTypeNone
+        if blinds_types.include? window.interior_shading_type
+          window.interior_shading_coverage_winter = 1.0
+        else
+          window.interior_shading_coverage_winter = 0.5 # ANSI/RESNET/ICC 301-2022
         end
-        if window.interior_shading_factor_winter.nil? && (not default_int_sf_winter.nil?)
-          window.interior_shading_factor_winter = default_int_sf_winter
-          window.interior_shading_factor_winter_isdefaulted = true
+        window.interior_shading_coverage_winter_isdefaulted = true
+      end
+      if blinds_types.include? window.interior_shading_type
+        if window.interior_shading_blinds_summer_closed_or_open.nil?
+          window.interior_shading_blinds_summer_closed_or_open = HPXML::BlindsHalfOpen
+          window.interior_shading_blinds_summer_closed_or_open_isdefaulted = true
         end
+        if window.interior_shading_blinds_winter_closed_or_open.nil?
+          window.interior_shading_blinds_winter_closed_or_open = HPXML::BlindsHalfOpen
+          window.interior_shading_blinds_winter_closed_or_open_isdefaulted = true
+        end
+      end
+      default_int_sf_summer, default_int_sf_winter = get_window_interior_shading_factors(
+        window.interior_shading_type,
+        window.shgc,
+        window.interior_shading_coverage_summer,
+        window.interior_shading_coverage_winter,
+        window.interior_shading_blinds_summer_closed_or_open,
+        window.interior_shading_blinds_winter_closed_or_open,
+        eri_version
+      )
+      if window.interior_shading_factor_summer.nil? && (not default_int_sf_summer.nil?)
+        window.interior_shading_factor_summer = default_int_sf_summer
+        window.interior_shading_factor_summer_isdefaulted = true
+      end
+      if window.interior_shading_factor_winter.nil? && (not default_int_sf_winter.nil?)
+        window.interior_shading_factor_winter = default_int_sf_winter
+        window.interior_shading_factor_winter_isdefaulted = true
       end
       if window.exterior_shading_factor_winter.nil? || window.exterior_shading_factor_summer.nil?
         if window.exterior_shading_type.nil?
@@ -7857,7 +7855,7 @@ module Defaults
       clg_ap.cool_rated_cfm_per_ton = HVAC::RatedCFMPerTon
 
       case hpxml_header.ground_to_air_heat_pump_model_type
-      when HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard
+      when HPXML::GroundToAirHeatPumpModelTypeStandard
         clg_ap.cool_capacity_ratios = [1.0]
 
         # E+ equation fit coil coefficients generated following approach in Tang's thesis:
@@ -7873,7 +7871,7 @@ module Defaults
 
         cool_cop_ratios = [1.0]
 
-      when HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeExperimental
+      when HPXML::GroundToAirHeatPumpModelTypeExperimental
         case cooling_system.compressor_type
         when HPXML::HVACCompressorTypeSingleStage
           clg_ap.cool_capacity_ratios = [1.0]
@@ -8063,7 +8061,7 @@ module Defaults
       htg_ap.heat_rated_cfm_per_ton = HVAC::RatedCFMPerTon
 
       case hpxml_header.ground_to_air_heat_pump_model_type
-      when HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard
+      when HPXML::GroundToAirHeatPumpModelTypeStandard
         htg_ap.heat_capacity_ratios = [1.0]
         # E+ equation fit coil coefficients following approach from Tang's thesis:
         # See Appendix B Figure B.3 of  https://shareok.org/bitstream/handle/11244/10075/Tang_okstate_0664M_1318.pdf?sequence=1&isAllowed=y
@@ -8075,7 +8073,7 @@ module Defaults
         htg_ap.heat_cap_curve_spec = [[-3.75031847962047, -2.18062040443483, 6.8363364819032, 0.188376814356582, 0.0869274802923634]]
         htg_ap.heat_power_curve_spec = [[-8.4754723813072, 8.10952801956388, 1.38771494628738, -0.33766445915032, 0.0223085217874051]]
         heat_cop_ratios = [1.0]
-      when HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeExperimental
+      when HPXML::GroundToAirHeatPumpModelTypeExperimental
         case heating_system.compressor_type
         when HPXML::HVACCompressorTypeSingleStage
           htg_ap.heat_capacity_ratios = [1.0]

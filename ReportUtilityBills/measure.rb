@@ -41,19 +41,19 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
     format_chs << 'json'
     format_chs << 'msgpack'
     # format_chs << 'csv_dview': # TODO: support this
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('output_format', format_chs, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('output_format', format_chs, false)
     arg.setDisplayName('Output Format')
     arg.setDescription('The file format of the annual (and timeseries, if requested) outputs.')
     arg.setDefaultValue('csv')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_annual_bills', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_annual_bills', false)
     arg.setDisplayName('Generate Annual Utility Bills')
     arg.setDescription('Generates output file containing annual utility bills.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('include_monthly_bills', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('include_monthly_bills', false)
     arg.setDisplayName('Generate Monthly Utility Bills')
     arg.setDescription('Generates output file containing monthly utility bills.')
     arg.setDefaultValue(true)
@@ -62,29 +62,29 @@ class ReportUtilityBills < OpenStudio::Measure::ReportingMeasure
     timestamp_chs = OpenStudio::StringVector.new
     timestamp_chs << 'start'
     timestamp_chs << 'end'
-    arg = OpenStudio::Measure::OSArgument::makeChoiceArgument('monthly_timestamp_convention', timestamp_chs, false)
+    arg = OpenStudio::Measure::OSArgument.makeChoiceArgument('monthly_timestamp_convention', timestamp_chs, false)
     arg.setDisplayName('Generate Monthly Output: Timestamp Convention')
     arg.setDescription('Determines whether monthly timestamps use the start-of-period or end-of-period convention.')
     arg.setDefaultValue('start')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('annual_output_file_name', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('annual_output_file_name', false)
     arg.setDisplayName('Annual Output File Name')
     arg.setDescription("If not provided, defaults to 'results_bills.csv' (or 'results_bills.json' or 'results_bills.msgpack').")
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeStringArgument('monthly_output_file_name', false)
+    arg = OpenStudio::Measure::OSArgument.makeStringArgument('monthly_output_file_name', false)
     arg.setDisplayName('Monthly Output File Name')
     arg.setDescription("If not provided, defaults to 'results_bills_monthly.csv' (or 'results_bills_monthly.json' or 'results_bills_monthly.msgpack').")
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('register_annual_bills', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('register_annual_bills', false)
     arg.setDisplayName('Register Annual Utility Bills')
     arg.setDescription('Registers annual utility bills with the OpenStudio runner for downstream processing.')
     arg.setDefaultValue(true)
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('register_monthly_bills', false)
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('register_monthly_bills', false)
     arg.setDisplayName('Register Monthly Utility Bills')
     arg.setDescription('Registers monthly utility bills with the OpenStudio runner for downstream processing.')
     arg.setDefaultValue(false)

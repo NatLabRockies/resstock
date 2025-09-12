@@ -916,31 +916,29 @@ class ReportSimulationOutputTest < Minitest::Test
                                                              "Component Load: Cooling: #{CLT::InternalGains}"])
   end
 
-  def check_timeseries_hourly_unmet_hours(xml_file, unmet_hours_cols)
-    args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), "../../workflow/sample_files/#{xml_file}"),
-                  'skip_validation' => true,
-                  'add_component_loads' => true,
-                  'timeseries_frequency' => 'hourly',
-                  'include_timeseries_unmet_hours' => true }
-    annual_csv, timeseries_csv, run_log = _test_measure(args_hash)
-    assert(File.exist?(annual_csv))
-    assert(File.exist?(timeseries_csv))
-    expected_timeseries_cols = ['Time'] + BaseHPXMLTimeseriesColsUnmetHours
-    actual_timeseries_cols = File.readlines(timeseries_csv)[0].strip.split(',')
-    assert_equal(expected_timeseries_cols.sort, actual_timeseries_cols.sort)
-    timeseries_rows = CSV.read(timeseries_csv)
-    assert_equal(8760, timeseries_rows.size - 2)
-    timeseries_cols = timeseries_rows.transpose
-    assert_equal(1, _check_for_constant_timeseries_step(timeseries_cols[0]))
-    _check_for_nonzero_avg_timeseries_value(timeseries_csv, unmet_hours_cols)
-    if xml_file.include? 'base-vehicle-ev-charger-undercharged'
-      assert(File.readlines(run_log).any? { |line| line.include?('driving hours could not be met') })
-    end
-  end
-
   def test_timeseries_hourly_unmet_hours
-    check_timeseries_hourly_unmet_hours('base-hvac-undersized.xml', ["Unmet Hours: #{UHT::Heating}", "Unmet Hours: #{UHT::Cooling}"])
-    check_timeseries_hourly_unmet_hours('base-vehicle-ev-charger-undercharged.xml', ["Unmet Hours: #{UHT::Driving}"])
+    { 'base-hvac-undersized.xml' => ["Unmet Hours: #{UHT::Heating}", "Unmet Hours: #{UHT::Cooling}"],
+      'base-vehicle-ev-charger-undercharged.xml' => ["Unmet Hours: #{UHT::Driving}"] }.each do |xml_file, unmet_hours_cols|
+      args_hash = { 'hpxml_path' => File.join(File.dirname(__FILE__), "../../workflow/sample_files/#{xml_file}"),
+                    'skip_validation' => true,
+                    'add_component_loads' => true,
+                    'timeseries_frequency' => 'hourly',
+                    'include_timeseries_unmet_hours' => true }
+      annual_csv, timeseries_csv, run_log = _test_measure(args_hash)
+      assert(File.exist?(annual_csv))
+      assert(File.exist?(timeseries_csv))
+      expected_timeseries_cols = ['Time'] + BaseHPXMLTimeseriesColsUnmetHours
+      actual_timeseries_cols = File.readlines(timeseries_csv)[0].strip.split(',')
+      assert_equal(expected_timeseries_cols.sort, actual_timeseries_cols.sort)
+      timeseries_rows = CSV.read(timeseries_csv)
+      assert_equal(8760, timeseries_rows.size - 2)
+      timeseries_cols = timeseries_rows.transpose
+      assert_equal(1, _check_for_constant_timeseries_step(timeseries_cols[0]))
+      _check_for_nonzero_avg_timeseries_value(timeseries_csv, unmet_hours_cols)
+      if xml_file == 'base-vehicle-ev-charger-undercharged.xml'
+        assert(File.readlines(run_log).any? { |line| line.include?('driving hours could not be met') })
+      end
+    end
   end
 
   def test_timeseries_hourly_zone_temperatures
