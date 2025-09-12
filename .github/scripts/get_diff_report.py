@@ -116,11 +116,25 @@ def main() -> int:  # pragma: no cover
         cast_column_names_lower=False,
     )
 
-    if cmp.matches(ignore_extra_columns=False):
-        print(f"No differences with `{REF_BRANCH}`.")
-        sys.exit(0)
-
     report_text = ""
+    try:
+        ref_keys = ref_df.select(key_columns).rows()      # list[tuple]
+        cur_keys = current_df.select(key_columns).rows()  # list[tuple]
+        common_keys = set(ref_keys) & set(cur_keys)
+        ref_seq_common = [k for k in ref_keys if k in common_keys]
+        cur_seq_common = [k for k in cur_keys if k in common_keys]
+        if ref_seq_common != cur_seq_common:
+            report_text += "The relative order of common rows has changed.\n"
+    except Exception:
+        pass
+
+    if cmp.matches(ignore_extra_columns=False):
+        if not report_text:
+            print(f"No differences with `{REF_BRANCH}`.")
+        else:
+            print(report_text)
+        sys.exit(0)
+    
     if len(cmp.df2_unq_rows) > 0:
         report_text += f"Rows with {key_columns}={list(cmp.df2_unq_rows[key_columns])} are added.\n"
     if len(cmp.df1_unq_rows) > 0:

@@ -945,10 +945,10 @@ class HPXMLtoOpenStudioWaterHeaterTest < Minitest::Test
     # Expected value
     tank_volume = UnitConversions.convert(water_heating_system.tank_volume * 0.9, 'gal', 'm^3') # convert to actual volume
     fuel = EPlus.fuel_type(water_heating_system.fuel_type)
-    u = 1.045
+    u = 0.926
     ther_eff = 1.0
     cop = 3.731
-    tank_height = 1.0335
+    tank_height = 1.3343
     cap = 500.0 * cop # W
     backup_cap = 4500.0 # W
 
@@ -1021,10 +1021,10 @@ class HPXMLtoOpenStudioWaterHeaterTest < Minitest::Test
     # Expected value
     tank_volume = UnitConversions.convert(water_heating_system.tank_volume * 0.9, 'gal', 'm^3') # convert to actual volume
     fuel = EPlus.fuel_type(water_heating_system.fuel_type)
-    u =  1.045
+    u = 0.926
     ther_eff = 1.0
-    cop = 3.73
-    tank_height = 1.0335
+    cop = 3.731
+    tank_height = 1.3343
     cap = UnitConversions.convert(water_heating_system.heating_capacity, 'Btu/hr', 'W') # W
     backup_cap = UnitConversions.convert(water_heating_system.backup_heating_capacity, 'Btu/hr', 'W') # W
 
