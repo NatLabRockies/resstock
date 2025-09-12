@@ -219,9 +219,6 @@ class UpgradeCosts < OpenStudio::Measure::ModelMeasure
       existing_hpxml, upgraded_hpxml = retrieve_hpxmls(existing_hpxml, upgraded_hpxml)
       if !upgraded_hpxml.nil?
         existing_hpxml.buildings.zip(upgraded_hpxml.buildings).each do |existing_bldg, upgraded_bldg|
-          fail 'Found multiple air infiltration measurement values.' if existing_bldg.air_infiltration_measurements.size > 1
-          fail 'Found multiple air infiltration measurement values.' if upgraded_bldg.air_infiltration_measurements.size > 1
-
           existing_bldg.air_infiltration_measurements.zip(upgraded_bldg.air_infiltration_measurements).each do |existing_meas, upgraded_meas|
             if !existing_meas.air_leakage.nil? && !upgraded_meas.air_leakage.nil?
               air_leakage_reduction = existing_meas.air_leakage - upgraded_meas.air_leakage
