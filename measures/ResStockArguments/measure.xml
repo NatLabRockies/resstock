@@ -1,10 +1,17 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
+  <error>Failed to query information from measure 'ResStockArguments' from '/mnt/c/git/resstock/measures/ResStockArguments/measure.rb': SWIG director method error. NameError: uninitialized constant HPXML::AdvancedResearchGroundToAirHeatPumpModelTypeStandard
+
+Traceback (most recent call last):
+eval:435:in `const_missing'
+/mnt/c/git/resstock/resources/hpxml-measures/BuildResidentialHPXML/measure.rb:123:in `arguments'
+/mnt/c/git/resstock/measures/ResStockArguments/measure.rb:36:in `arguments'
+</error>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>86232563-8d20-49c8-ac86-652a24e6299c</version_id>
-  <version_modified>2025-08-22T15:04:51Z</version_modified>
+  <version_id>7c4b85d0-98ad-47cb-9cca-65316296b8c7</version_id>
+  <version_modified>2025-09-12T19:59:28Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -12340,7 +12347,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>A7C43A6A</checksum>
+      <checksum>2B4C57DC</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12369,7 +12376,7 @@
       <filename>measure.txt</filename>
       <filetype>txt</filetype>
       <usage_type>resource</usage_type>
-      <checksum>4859BF30</checksum>
+      <checksum>4ECCCD8A</checksum>
     </file>
     <file>
       <filename>resstock_arguments_test.rb</filename>

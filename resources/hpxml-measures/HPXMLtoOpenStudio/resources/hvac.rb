@@ -2057,6 +2057,7 @@ module HVAC
     )
     pump_program.addLine("If #{htg_load_sensor.name} > 0.0 && #{clg_load_sensor.name} > 0.0") # Heating loads
     pump_program.addLine("  Set estimated_plr = (@ABS #{htg_load_sensor.name}) / #{htg_coil.ratedHeatingCapacityAtSelectedNominalSpeedLevel}") # Use nominal capacity for estimation
+    pump_program.addLine('  Set estimated_plr = @Max estimated_plr 0.1') # Avoid small water flow rate, which causes E+ failures
     pump_program.addLine("  Set max_vfr_htg = #{htg_coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel}")
     pump_program.addLine('  Set estimated_vfr = estimated_plr * max_vfr_htg')
     pump_program.addLine("  If estimated_vfr < #{htg_coil.speeds[0].referenceUnitRatedWaterFlowRate}") # Actuate the water flow rate below first stage
@@ -2066,6 +2067,7 @@ module HVAC
     pump_program.addLine('  EndIf')
     pump_program.addLine("ElseIf #{htg_load_sensor.name} < 0.0 && #{clg_load_sensor.name} < 0.0") # Cooling loads
     pump_program.addLine("  Set estimated_plr = (@ABS #{clg_load_sensor.name}) / #{clg_coil.grossRatedTotalCoolingCapacityAtSelectedNominalSpeedLevel}") # Use nominal capacity for estimation
+    pump_program.addLine('  Set estimated_plr = @Max estimated_plr 0.1') # Avoid small water flow rate, which causes E+ failures
     pump_program.addLine("  Set max_vfr_clg = #{clg_coil.ratedWaterFlowRateAtSelectedNominalSpeedLevel}")
     pump_program.addLine('  Set estimated_vfr = estimated_plr * max_vfr_clg')
     pump_program.addLine("  If estimated_vfr < #{clg_coil.speeds[0].referenceUnitRatedWaterFlowRate}") # Actuate the water flow rate below first stage
@@ -2100,9 +2102,9 @@ module HVAC
     sys_id = hpxml_object.id
 
     if fan_or_pump.is_a? OpenStudio::Model::FanSystemModel
-      var = "Fan #{EPlus::FuelTypeElectricity} Energy"
+      var = 'Fan Electricity Energy'
     elsif fan_or_pump.is_a? OpenStudio::Model::PumpVariableSpeed
-      var = "Pump #{EPlus::FuelTypeElectricity} Energy"
+      var = 'Pump Electricity Energy'
     else
       fail "Unexpected fan/pump object '#{fan_or_pump.name}'."
     end
@@ -2263,7 +2265,7 @@ module HVAC
     dehumidifier_power = Model.add_ems_sensor(
       model,
       name: "#{dehumidifier.name} power htg",
-      output_var_or_meter_name: "Zone Dehumidifier #{EPlus::FuelTypeElectricity} Rate",
+      output_var_or_meter_name: 'Zone Dehumidifier Electricity Rate',
       key_name: dehumidifier.name
     )
 

@@ -6,6 +6,7 @@ Changelogs
 .. toctree::
    :titlesonly:
 
+   changelog_2025_R1
    changelog_3_4_0
    changelog_3_3_0
    changelog_3_2_0

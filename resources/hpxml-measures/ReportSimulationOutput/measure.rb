@@ -16,7 +16,6 @@ require_relative '../HPXMLtoOpenStudio/resources/unit_conversions.rb'
 class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
   # human readable name
   def name
-    # Measure name should be the title case of the class name.
     return 'HPXML Simulation Output Report'
   end
 
@@ -322,12 +321,13 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return result
   end
 
-  # TODO
+  # Gets the measure's argument values. Also ensures that when the timeseries frequency
+  # is set to None, all of the other timeseries arguments are reset.
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
-  # @param arguments [TODO] TODO
+  # @param arguments [OpenStudio::Measure::OSArgumentVector] an OpenStudio::Measure::OSArgumentVector object
   # @param user_arguments [OpenStudio::Measure::OSArgumentMap] OpenStudio measure arguments
-  # @return [TODO] TODO
+  # @return [Hash] Map of :argument_name => value
   def get_arguments(runner, arguments, user_arguments)
     args = runner.getArgumentValues(arguments, user_arguments)
     if args[:timeseries_frequency] == EPlus::TimeseriesFrequencyNone
@@ -370,7 +370,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     args = get_arguments(runner, arguments(model), user_arguments)
 
     setup_outputs(false, args)
-    args = setup_timeseries_includes(@emissions, args)
+    args = setup_timeseries_includes(args)
 
     has_electricity_production = false
     if @end_uses.count { |_key, end_use| end_use.is_negative && end_use.variables.size > 0 } > 0
@@ -735,8 +735,8 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
   # Returns the number of hours in the run period.
   #
   # @param timeseries_frequency [String] Timeseries reporting frequency (TimeseriesFrequencyXXX)
-  # @param sim_start_day [TODO] TODO
-  # @param sim_end_day [TODO] TODO
+  # @param sim_start_day [Integer] Day number of the year for the simulation run period start (1-365)
+  # @param sim_end_day [Integer] Day number of the year for the simulation run period end (1-365)
   # @param year [Integer] the calendar year
   # @return [Integer] Number of hours in the run period
   def get_n_hours_per_period(timeseries_frequency, sim_start_day, sim_end_day, year)
@@ -752,13 +752,13 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return n_hours_per_period
   end
 
-  # TODO
+  # Aggregates the timeseries output into daily or monthly timeseries output.
   #
-  # @param timeseries_output [TODO] TODO
+  # @param timeseries_output [Array<Double>] Timeseries output values
   # @param timeseries_frequency [String] Timeseries reporting frequency (TimeseriesFrequencyXXX)
-  # @param average [Boolean] TODO
-  # @return [TODO] TODO
-  def rollup_timeseries_output_to_daily_or_monthly(timeseries_output, timeseries_frequency, average = false)
+  # @param average [Boolean] True to calculate the daily/monthly average, false to calculate the daily/monthly sum
+  # @return [Array<Double>] Daily or monthly timeseries output values
+  def rollup_timeseries_output_to_daily_or_monthly(timeseries_output, timeseries_frequency, average)
     year = @hpxml_header.sim_calendar_year
     sim_start_day, sim_end_day = get_sim_days_of_year(year)
     n_hours_per_period = get_n_hours_per_period(timeseries_frequency, sim_start_day, sim_end_day, year)
@@ -775,13 +775,14 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return ts_output
   end
 
-  # TODO
+  # Retrieves the EnergyPlus outputs and sets the annual/timeseries values on the
+  # various output objects (@fuels, @loads, @end_uses, etc.).
   #
   # @param runner [OpenStudio::Measure::OSRunner] Object typically used to display warnings
   # @param args [Hash] Map of :argument_name => value
   # @return [nil]
   def get_outputs(runner, args)
-    args = setup_timeseries_includes(@emissions, args)
+    args = setup_timeseries_includes(args)
 
     # Fuel Uses
     @fuels.each do |(_fuel_type, _total_or_net), fuel|
@@ -1114,7 +1115,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
       resilience_timeseries = []
       n_timesteps = crit_load.size
       (0...n_timesteps).each do |init_time_step|
-        resilience_timeseries << get_resilience_timeseries(init_time_step, batt_kwh, batt_kw, batt_soc_kwh[init_time_step], crit_load, batt_roundtrip_eff, n_timesteps, ts_per_hr)
+        resilience_timeseries << get_resilience_timestep_value(init_time_step, batt_kwh, batt_kw, batt_soc_kwh[init_time_step], crit_load, batt_roundtrip_eff, n_timesteps, ts_per_hr)
       end
 
       resilience.annual_output = resilience_timeseries.sum(0.0) / resilience_timeseries.size
@@ -1122,8 +1123,6 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
       next unless args[:include_timeseries_resilience]
 
       resilience.timeseries_output = resilience_timeseries
-
-      # Aggregate up from hourly to the desired timeseries frequency
       if [EPlus::TimeseriesFrequencyDaily, EPlus::TimeseriesFrequencyMonthly].include? args[:timeseries_frequency]
         resilience.timeseries_output = rollup_timeseries_output_to_daily_or_monthly(resilience.timeseries_output, args[:timeseries_frequency], true)
       end
@@ -1270,7 +1269,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     # Output Variables
     @output_variables = {}
     @output_variables_requests.each do |output_variable_name|
-      key_values, units = get_report_variable_data_timeseries_key_values_and_units(output_variable_name)
+      key_values, units = get_output_variable_key_values_and_units(output_variable_name)
       if key_values.empty?
         runner.registerWarning("Request for output variable '#{output_variable_name}' returned no results.")
         next
@@ -1287,7 +1286,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     # Output Meters
     @output_meters = {}
     @output_meters_requests.each do |output_meter_name|
-      units = get_report_meter_data_timeseries_units(output_meter_name, args[:timeseries_frequency])
+      units = get_output_meter_units(output_meter_name, args[:timeseries_frequency])
       if units.nil?
         runner.registerWarning("Request for output meter '#{output_meter_name}' returned no results.")
         next
@@ -1379,10 +1378,8 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
           fail 'Unexpected failure for emissions calculations.' if timeseries_elec_factors.size != timeseries_elec.size
 
           @emissions[key].timeseries_output_by_end_use[eu_key] = timeseries_elec.zip(timeseries_elec_factors).map { |n, f| n * f * elec_units_mult }
-
-          # Aggregate up from hourly to the desired timeseries frequency
           if [EPlus::TimeseriesFrequencyDaily, EPlus::TimeseriesFrequencyMonthly].include? args[:timeseries_frequency]
-            @emissions[key].timeseries_output_by_end_use[eu_key] = rollup_timeseries_output_to_daily_or_monthly(@emissions[key].timeseries_output_by_end_use[eu_key], args[:timeseries_frequency])
+            @emissions[key].timeseries_output_by_end_use[eu_key] = rollup_timeseries_output_to_daily_or_monthly(@emissions[key].timeseries_output_by_end_use[eu_key], args[:timeseries_frequency], false)
           end
         end
 
@@ -1448,20 +1445,20 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     end
   end
 
-  # TODO
+  # Returns the start/end day numbers of the year (1-365) associated with the simulation run period.
   #
   # @param year [Integer] the calendar year
-  # @return [TODO] TODO
+  # @return [Array<Integer, Integer>] the start/end day numbers of the year
   def get_sim_days_of_year(year)
     sim_start_day = Calendar.get_day_num_from_month_day(year, @hpxml_header.sim_begin_month, @hpxml_header.sim_begin_day)
     sim_end_day = Calendar.get_day_num_from_month_day(year, @hpxml_header.sim_end_month, @hpxml_header.sim_end_day)
     return sim_start_day, sim_end_day
   end
 
-  # TODO
+  # Returns the start/end day numbers of the year (1-365) associated with the simulation run period.
   #
   # @param year [Integer] the calendar year
-  # @return [TODO] TODO
+  # @return [Array<Integer, Integer>] the start/end hour numbers of the year
   def get_sim_hours_of_year(year)
     sim_start_day, sim_end_day = get_sim_days_of_year(year)
     sim_start_hour = (sim_start_day - 1) * 24
@@ -1984,9 +1981,9 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     runner.registerInfo("Wrote timeseries output results to #{timeseries_output_path}.")
   end
 
-  # TODO
+  # Gets the start/end index of the year associated with Daylight Savings Time.
   #
-  # @return [TODO] TODO
+  # @return [Array<Integer, Integer>] DST start/end indices
   def get_dst_start_end_indexes()
     dst_start_ix = nil
     dst_end_ix = nil
@@ -2000,11 +1997,11 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return dst_start_ix, dst_end_ix
   end
 
-  # TODO
+  # Retrieves the total annual value for the specified output meters from the EnergyPlus msgpack output file.
   #
-  # @param meter_names [TODO] TODO
-  # @param unit_conv [TODO] TODO
-  # @return [TODO] TODO
+  # @param meter_names [Array<String>] List of EnergyPlus output meter names
+  # @param unit_conv [Double] Unit conversion to apply to the EnergyPlus output
+  # @return [Double] Sum of output meter annual outputs
   def get_report_meter_data_annual(meter_names, unit_conv = UnitConversions.convert(1.0, 'J', 'MBtu'))
     return 0.0 if meter_names.empty?
 
@@ -2017,13 +2014,13 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return val
   end
 
-  # TODO
+  # Retrieves the total annual value for the specified output variables from the EnergyPlus msgpack output file.
   #
-  # @param key_values [TODO] TODO
-  # @param variables [TODO] TODO
-  # @param unit_conv [TODO] TODO
-  # @param is_negative [TODO] TODO
-  # @return [TODO] TODO
+  # @param key_values [Array<String>] List of EnergyPlus output variable key values
+  # @param variables [Array<String>] List of EnergyPlus output variable names
+  # @param unit_conv [Double] Unit conversion to apply to the EnergyPlus output
+  # @param is_negative [Boolean] Whether the EnergyPlus outputs are negative and need to be multiplied by -1
+  # @return [Double] Sum of output variable annual outputs
   def get_report_variable_data_annual(key_values, variables, unit_conv = UnitConversions.convert(1.0, 'J', 'MBtu'), is_negative: false)
     return 0.0 if variables.empty?
 
@@ -2038,18 +2035,18 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return val
   end
 
-  # TODO
+  # Calculates the resilience value for the given timestep.
   #
-  # @param init_time_step [TODO] TODO
-  # @param batt_kwh [TODO] TODO
-  # @param batt_kw [TODO] TODO
-  # @param batt_soc_kwh [TODO] TODO
-  # @param crit_load [TODO] TODO
-  # @param batt_roundtrip_eff [TODO] TODO
-  # @param n_timesteps [TODO] TODO
-  # @param ts_per_hr [TODO] TODO
-  # @return [TODO] TODO
-  def get_resilience_timeseries(init_time_step, batt_kwh, batt_kw, batt_soc_kwh, crit_load, batt_roundtrip_eff, n_timesteps, ts_per_hr)
+  # @param init_time_step [Integer] Timestep of year to perform the calculation
+  # @param batt_kwh [Double] Battery usable capacity (kWh)
+  # @param batt_kw [Double] Battery discharge power (kW)
+  # @param batt_soc_kwh [Double] Battery state of charge for the given timestep (kWh)
+  # @param crit_load [Array<Double>] Timeseries building electric load values (kWh)
+  # @param batt_roundtrip_eff [Double] Battery round-trip efficiency
+  # @param n_timesteps [Integer] Number of timesteps in the simulation
+  # @param ts_per_hr [Integer] Number of timesteps per hour
+  # @return [Double] Resilience value for the timestep.
+  def get_resilience_timestep_value(init_time_step, batt_kwh, batt_kw, batt_soc_kwh, crit_load, batt_roundtrip_eff, n_timesteps, ts_per_hr)
     for i in 0...n_timesteps
       t = (init_time_step + i) % n_timesteps # for wrapping around end of year
       load_kw = crit_load[t]
@@ -2082,13 +2079,13 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return n_timesteps / Float(ts_per_hr)
   end
 
-  # TODO
+  # Retrieves the total timeseries values for the specified output meters from the EnergyPlus msgpack output file.
   #
-  # @param meter_names [TODO] TODO
-  # @param unit_conv [TODO] TODO
-  # @param unit_adder [TODO] TODO
+  # @param meter_names [Array<String>] List of EnergyPlus output meter names
+  # @param unit_conv unit_conv [Double] Unit conversion to apply to the EnergyPlus output
+  # @param unit_adder [Double] Adder value to apply to the EnergyPlus output
   # @param timeseries_frequency [String] Timeseries reporting frequency (TimeseriesFrequencyXXX)
-  # @return [TODO] TODO
+  # @return [Array<Double>] Sum of output meter timeseries outputs
   def get_report_meter_data_timeseries(meter_names, unit_conv, unit_adder, timeseries_frequency)
     return [0.0] * @timestamps.size if meter_names.empty?
 
@@ -2130,16 +2127,16 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return vals
   end
 
-  # TODO
+  # Retrieves the total timeseries values for the specified output variables from the EnergyPlus msgpack output file.
   #
-  # @param key_values [TODO] TODO
-  # @param variables [TODO] TODO
-  # @param unit_conv [TODO] TODO
-  # @param unit_adder [TODO] TODO
+  # @param key_values [Array<String>] List of EnergyPlus output variable key values
+  # @param variables [Array<String>] List of EnergyPlus output variable names
+  # @param unit_conv unit_conv [Double] Unit conversion to apply to the EnergyPlus output
+  # @param unit_adder [Double] Adder value to apply to the EnergyPlus output
   # @param timeseries_frequency [String] Timeseries reporting frequency (TimeseriesFrequencyXXX)
-  # @param is_negative [TODO] TODO
-  # @param ems_shift [TODO] TODO
-  # @return [TODO] TODO
+  # @param is_negative [Boolean] Whether the EnergyPlus outputs are negative and need to be multiplied by -1
+  # @param ems_shift [Boolean] Whether to shift the EnergyPlus outputs by one timestep because they are EMS outputs and thus lagged
+  # @return [Array<Double>] Sum of output variable timeseries outputs
   def get_report_variable_data_timeseries(key_values, variables, unit_conv, unit_adder, timeseries_frequency, is_negative: false, ems_shift: false)
     return [0.0] * @timestamps.size if variables.empty?
 
@@ -2186,12 +2183,12 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return vals
   end
 
-  # TODO
+  # Returns whether we should shift the EMS outputs or not. Only shift if we reporting timestep values
+  # (i.e., not daily, monthly, or hourly w/ a sub-hourly timestep).
   #
   # @param timeseries_frequency [String] Timeseries reporting frequency (TimeseriesFrequencyXXX)
-  # @return [TODO] TODO
+  # @return [Boolean] True if the output should be shifted
   def apply_ems_shift(timeseries_frequency)
-    # Only shift if we reporting timestep values (i.e., not daily, monthly, or hourly w/ a sub-hourly timestep)
     if (timeseries_frequency == EPlus::TimeseriesFrequencyTimestep)
       return true
     elsif (timeseries_frequency == EPlus::TimeseriesFrequencyHourly) && (@model.getTimestep.numberOfTimestepsPerHour == 1)
@@ -2201,11 +2198,11 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return false
   end
 
-  # TODO
+  # Returns the EnergyPlus key values and units from the msgpack output file for the given requested output variable.
   #
-  # @param var_name [TODO] TODO
-  # @return [TODO] TODO
-  def get_report_variable_data_timeseries_key_values_and_units(var_name)
+  # @param var_name [Name] Name of the EnergyPlus output variable
+  # @return [Array<String, String>] The key value and units for the output variable
+  def get_output_variable_key_values_and_units(var_name)
     keys = []
     units = ''
     return keys, units if @msgpackDataTimeseries.nil?
@@ -2220,12 +2217,12 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return keys, units
   end
 
-  # TODO
+  # Returns the EnergyPlus units from the msgpack output file for the given requested output meter.
   #
-  # @param meter_name [TODO] TODO
+  # @param meter_name [String] Name of the EnergyPlus output meter
   # @param timeseries_frequency [String] Timeseries reporting frequency (TimeseriesFrequencyXXX)
-  # @return [TODO] TODO
-  def get_report_meter_data_timeseries_units(meter_name, timeseries_frequency)
+  # @return [String] The units for the output meter
+  def get_output_meter_units(meter_name, timeseries_frequency)
     return if @msgpackData.nil?
 
     msgpack_timeseries_name = EPlus::get_msgpack_timeseries_name(timeseries_frequency)
@@ -2241,15 +2238,15 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return
   end
 
-  # TODO
+  # Gets the total value from the given EnergyPlus tabular report in the msgpack output file.
   #
-  # @param report_name [TODO] TODO
-  # @param report_for_string [TODO] TODO
-  # @param table_name [TODO] TODO
-  # @param row_names [TODO] TODO
-  # @param col_name [TODO] TODO
-  # @param units [TODO] TODO
-  # @return [TODO] TODO
+  # @param report_name [String] Name of the EnergyPlus report
+  # @param report_for_string [String] Name of the EnergyPlus object the report is for
+  # @param table_name [String] Name of the table in the EnergyPlus report
+  # @param row_names [Array<String>] Name of the table rows to search within
+  # @param col_name [String] Name of the table column to search within
+  # @param units [string] The units associated with the value
+  # @return [Double] Sum of the matching report values
   def get_tabular_data_value(report_name, report_for_string, table_name, row_names, col_name, units)
     vals = []
     @msgpackData['TabularReports'].each do |tabular_report|
@@ -2270,13 +2267,14 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return vals.sum(0.0)
   end
 
-  # TODO
+  # Applies a specified multiplier value to all outputs stored in the output object(s).
+  # Used to, e.g., apply Distribution System Efficiency (DSE) losses to HVAC outputs.
   #
-  # @param obj [TODO] TODO
-  # @param sync_objs [TODO] TODO
-  # @param sys_id [TODO] TODO
-  # @param mult [TODO] TODO
-  # @return [TODO] TODO
+  # @param obj [EndUse or Load] The output object of interest
+  # @param sync_objs [Fuel or Load] Additional outputs that need to be kept in sync
+  # @param sys_id [String] The related HPXML object's System Identifier
+  # @param mult [Double] The multiplier value to apply
+  # @return [nil]
   def apply_multiplier_to_output(obj, sync_objs, sys_id, mult)
     # Annual
     orig_value = obj.annual_output_by_system[sys_id]
@@ -2301,9 +2299,12 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     end
   end
 
-  # TODO
+  # Creates a global hash that maps output classes/keys (e.g., [HWT, HWT::ClothesWasher])
+  # with its associated data (HPXML ID, EnergyPlus output variable name/key value). This
+  # will be used later to look up the EnergyPlus annual or timeseries value(s) for this
+  # particular output.
   #
-  # @return [TODO] TODO
+  # @return [nil]
   def create_all_object_outputs_by_key
     @object_variables_by_key = {}
     return if @model.nil?
@@ -2311,8 +2312,8 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     @model.getModelObjects.sort.each do |object|
       next if object.to_AdditionalProperties.is_initialized
 
-      [EUT, HWT, LT, RT].each do |class_name|
-        vars_by_key = get_object_outputs_by_key(@model, object, class_name)
+      [EUT, HWT, LT, RT].each do |class_type|
+        vars_by_key = get_object_outputs_by_key(@model, object, class_type)
         next if vars_by_key.size == 0
 
         sys_id = object.additionalProperties.getFeatureAsString('HPXML_ID')
@@ -2325,7 +2326,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
             else
               varkey = object.name.to_s.upcase
             end
-            hash_key = [class_name, key]
+            hash_key = [class_type, key]
             @object_variables_by_key[hash_key] = [] if @object_variables_by_key[hash_key].nil?
             next if @object_variables_by_key[hash_key].include? [sys_id, varkey, output_var]
 
@@ -2336,19 +2337,20 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     end
   end
 
-  # TODO
+  # Returns the list of outputs associated with the given output class type and key.
   #
-  # @param class_name [TODO] TODO
-  # @param key [TODO] TODO
-  # @return [TODO] TODO
-  def get_object_outputs(class_name, key)
-    hash_key = [class_name, key]
+  # @param class_type [Module] The output class type
+  # @param key [String] The particular key for the output class, e.g. HWT::ClothesWasher
+  # @return [Array<Array<String, String, String>>] Sets of outputs with: HPXML ID, EnergyPlus output variable key, EnergyPlus output variable/meter name
+  def get_object_outputs(class_type, key)
+    hash_key = [class_type, key]
     vars = @object_variables_by_key[hash_key]
     vars = [] if vars.nil?
     return vars
   end
 
-  # TODO
+  # Base structure to store EnergyPlus annual/timeseries outputs; structures for end uses, loads,
+  # etc., will inherit from this class and include additional properties/logic as needed.
   class BaseOutput
     def initialize()
       @timeseries_output = []
@@ -2356,17 +2358,13 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     attr_accessor(:name, :annual_output, :timeseries_output, :annual_units, :timeseries_units)
   end
 
-  # TODO
+  # Structure to store EnergyPlus total (and net) energy outputs.
   class TotalEnergy < BaseOutput
-    def initialize
-      super()
-    end
-    attr_accessor()
   end
 
-  # TODO
+  # Structure to store EnergyPlus outputs by fuel type.
   class Fuel < BaseOutput
-    # @param meter [TODO] TODO
+    # @param meter [String] Name of EnergyPlus output meter
     def initialize(meter:)
       super()
       @meter = meter
@@ -2375,11 +2373,11 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     attr_accessor(:meter, :timeseries_output_by_system)
   end
 
-  # TODO
+  # Structure to store EnergyPlus outputs by end use and fuel type.
   class EndUse < BaseOutput
-    # @param outputs [TODO] TODO
-    # @param is_negative [TODO] TODO
-    # @param is_storage [TODO] TODO
+    # @param outputs [Array<Array<String, String, String>>] Sets of outputs with: HPXML ID, EnergyPlus output variable key, EnergyPlus output variable/meter name
+    # @param is_negative [Boolean] Whether the EnergyPlus outputs are negative
+    # @param is_storage [Boolean] Whether the EnergyPlus outputs are associated with battery storage
     def initialize(outputs:, is_negative: false, is_storage: false)
       super()
       @variables = outputs.select { |o| !o[2].include?(':') }
@@ -2396,7 +2394,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
                   :hourly_output, :hourly_output_by_system)
   end
 
-  # TODO
+  # Structure to store EnergyPlus emission outputs.
   class Emission < BaseOutput
     def initialize()
       super()
@@ -2411,9 +2409,9 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
                   :net_annual_output, :net_timeseries_output)
   end
 
-  # TODO
+  # Structure to store EnergyPlus hot water outputs.
   class HotWater < BaseOutput
-    # @param outputs [TODO] TODO
+    # @param outputs [Array<Array<String, String, String>>] Sets of outputs with: HPXML ID, EnergyPlus output variable key, EnergyPlus output variable/meter name
     def initialize(outputs:)
       super()
       @variables = outputs.select { |o| !o[2].include?(':') }
@@ -2424,9 +2422,9 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     attr_accessor(:variables, :meters, :annual_output_by_system, :timeseries_output_by_system)
   end
 
-  # TODO
+  # Structure to store EnergyPlus resilience outputs.
   class Resilience < BaseOutput
-    # @param variables [TODO] TODO
+    # @param variables [Array<String>] List of EnergyPlus output variable names
     def initialize(variables:)
       super()
       @variables = variables
@@ -2434,10 +2432,10 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     attr_accessor(:variables)
   end
 
-  # TODO
+  # Structure to store EnergyPlus peak fuel outputs
   class PeakFuel < BaseOutput
-    # @param report [TODO] TODO
-    # @param meter [TODO] TODO
+    # @param report [String] Name of EnergyPlus report
+    # @param meter [String] Name of EnergyPlus output meter
     def initialize(report:, meter:)
       super()
       @report = report
@@ -2446,11 +2444,11 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     attr_accessor(:report, :meter)
   end
 
-  # TODO
+  # Structure to store EnergyPlus building load outputs.
   class Load < BaseOutput
-    # @param variables [TODO] TODO
-    # @param ems_variable [TODO] TODO
-    # @param is_negative [TODO] TODO
+    # @param variables [String] List of EnergyPlus output variable names
+    # @param ems_variable [String] EnergyPlus EMS output variable name
+    # @param is_negative [Boolean] Whether the EnergyPlus outputs are negative
     def initialize(variables: [], ems_variable: nil, is_negative: false)
       super()
       @variables = variables
@@ -2462,9 +2460,9 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     attr_accessor(:variables, :ems_variable, :is_negative, :annual_output_by_system, :timeseries_output_by_system)
   end
 
-  # TODO
+  # Structure to store EnergyPlus heating/cooling component load outputs.
   class ComponentLoad < BaseOutput
-    # @param ems_variable [TODO] TODO
+    # @param ems_variable [String] EnergyPlus EMS output variable name
     def initialize(ems_variable:)
       super()
       @ems_variable = ems_variable
@@ -2472,9 +2470,9 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     attr_accessor(:ems_variable)
   end
 
-  # TODO
+  # Structure to store EnergyPlus unmet hour outputs.
   class UnmetHours < BaseOutput
-    # @param ems_variable [TODO] TODO
+    # @param ems_variable [String] EnergyPlus EMS output variable name
     def initialize(ems_variable:)
       super()
       @ems_variable = ems_variable
@@ -2482,10 +2480,10 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     attr_accessor(:ems_variable)
   end
 
-  # TODO
+  # Structure to store EnergyPlus peak load outputs.
   class PeakLoad < BaseOutput
-    # @param ems_variable [TODO] TODO
-    # @param report [TODO] TODO
+    # @param ems_variable [String] EnergyPlus EMS output variable name
+    # @param report [String] Name of EnergyPlus report
     def initialize(ems_variable:, report:)
       super()
       @ems_variable = ems_variable
@@ -2494,25 +2492,17 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     attr_accessor(:ems_variable, :report)
   end
 
-  # TODO
+  # Structure to store EnergyPlus zone temperature outputs.
   class ZoneTemp < BaseOutput
-    def initialize
-      super()
-    end
-    attr_accessor()
   end
 
-  # TODO
+  # Structure to store EnergyPlus detailed zone conditions outputs.
   class ZoneCond < BaseOutput
-    def initialize
-      super()
-    end
-    attr_accessor
   end
 
-  # TODO
+  # Structure to store EnergyPlus airflow outputs.
   class Airflow < BaseOutput
-    # @param ems_variable [TODO] TODO
+    # @param ems_variable [String] EnergyPlus EMS output variable name
     def initialize(ems_variable:)
       super()
       @ems_variable = ems_variable
@@ -2520,11 +2510,11 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     attr_accessor(:ems_variable)
   end
 
-  # TODO
+  # Structure to store EnergyPlus weather outputs.
   class Weather < BaseOutput
-    # @param variable [TODO] TODO
-    # @param variable_units [TODO] TODO
-    # @param timeseries_units [TODO] TODO
+    # @param variable [String] EnergyPlus output variable name
+    # @param variable_units [String] Units for the EnergyPlus output
+    # @param timeseries_units [String] Desired timeseries output units
     def initialize(variable:, variable_units:, timeseries_units:)
       super()
       @variable = variable
@@ -2534,30 +2524,25 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     attr_accessor(:variable, :variable_units)
   end
 
-  # TODO
+  # Structure to store EnergyPlus output variable/meter request outputs.
   class OutputVariableOrMeter < BaseOutput
-    def initialize
-      super()
-    end
-    attr_accessor()
   end
 
-  # TODO
+  # Creates global hashes (e.g., @end_uses) to contain the output objects (e.g., EndUse); these output
+  # objects will be later populated by reading and processing EnergyPlus outputs. The output objects
+  # typically contain the relevant EnergyPlus output variables/meters.
   #
-  # @param called_from_outputs_method [TODO] TODO
-  # @param args [TODO] TODO
-  # @return [TODO] TODO
+  # @param called_from_outputs_method [Boolean] Whether this method was called from the outputs method
+  # @param args [Hash] Map of :argument_name => value
+  # @return [nil]
   def setup_outputs(called_from_outputs_method, args = {})
-    # TODO
+    # Returns the timeseries units associated with energy use
+    # for the given fuel.
     #
-    # @param fuel_type [TODO] TODO
-    # @return [TODO] TODO
+    # @param fuel_type [String] The given fuel type (FT::XXX)
+    # @return [String] The units
     def get_timeseries_units_from_fuel_type(fuel_type)
-      if fuel_type == FT::Elec
-        return 'kWh'
-      end
-
-      return 'kBtu'
+      return (fuel_type == FT::Elec ? 'kWh' : 'kBtu')
     end
 
     # End Uses
@@ -2596,12 +2581,9 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     @end_uses[[FT::Elec, EUT::PoolPump]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, EUT::PoolPump]))
     @end_uses[[FT::Elec, EUT::PermanentSpaHeater]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, EUT::PermanentSpaHeater]))
     @end_uses[[FT::Elec, EUT::PermanentSpaPump]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, EUT::PermanentSpaPump]))
-    @end_uses[[FT::Elec, EUT::PV]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, EUT::PV]),
-                                                is_negative: true)
-    @end_uses[[FT::Elec, EUT::Generator]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, EUT::Generator]),
-                                                       is_negative: true)
-    @end_uses[[FT::Elec, EUT::Battery]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, EUT::Battery]),
-                                                     is_storage: true)
+    @end_uses[[FT::Elec, EUT::PV]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, EUT::PV]), is_negative: true)
+    @end_uses[[FT::Elec, EUT::Generator]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, EUT::Generator]), is_negative: true)
+    @end_uses[[FT::Elec, EUT::Battery]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, EUT::Battery]), is_storage: true)
     @end_uses[[FT::Elec, EUT::Vehicle]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, EUT::Vehicle]))
     @end_uses[[FT::Gas, EUT::Heating]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Gas, EUT::Heating]))
     @end_uses[[FT::Gas, EUT::HeatingHeatPumpBackup]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Gas, EUT::HeatingHeatPumpBackup]))
@@ -2777,11 +2759,9 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     @loads[LT::HeatingHeatPumpBackup] = Load.new(variables: get_object_outputs(LT, LT::HeatingHeatPumpBackup))
     @loads[LT::Cooling] = Load.new(ems_variable: 'loads_clg_tot')
     @loads[LT::HotWaterDelivered] = Load.new(variables: get_object_outputs(LT, LT::HotWaterDelivered))
-    @loads[LT::HotWaterTankLosses] = Load.new(variables: get_object_outputs(LT, LT::HotWaterTankLosses),
-                                              is_negative: true)
+    @loads[LT::HotWaterTankLosses] = Load.new(variables: get_object_outputs(LT, LT::HotWaterTankLosses), is_negative: true)
     @loads[LT::HotWaterDesuperheater] = Load.new(variables: get_object_outputs(LT, LT::HotWaterDesuperheater))
-    @loads[LT::HotWaterSolarThermal] = Load.new(variables: get_object_outputs(LT, LT::HotWaterSolarThermal),
-                                                is_negative: true)
+    @loads[LT::HotWaterSolarThermal] = Load.new(variables: get_object_outputs(LT, LT::HotWaterSolarThermal), is_negative: true)
 
     @loads.each do |load_type, load|
       load.name = "Load: #{load_type}"
@@ -2900,18 +2880,19 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     @output_meters_requests = args[:user_output_meters].to_s.split(',').map(&:strip)
   end
 
-  # TODO
+  # Sets timeseries output requests for EnergyPlus needed to support performing emissions calculations.
+  # To calculate timeseries emissions or timeseries fuel consumption, we also need to select timeseries
+  # end use consumption because EnergyPlus results may be post-processed due to HVAC DSE.
   #
-  # @param emissions [TODO] TODO
+  # NOTE: We might be able to avoid this if we could account for DSE inside EnergyPlus instead of
+  # applying the DSE impact during post-processing.
+  #
   # @param args [Hash] Map of :argument_name => value
-  # @return [TODO] TODO
-  def setup_timeseries_includes(emissions, args)
-    # To calculate timeseries emissions or timeseries fuel consumption, we also need to select timeseries
-    # end use consumption because EnergyPlus results may be post-processed due to HVAC DSE.
-    # TODO: This could be removed if we could account for DSE inside EnergyPlus.
+  # @return [Hash] New map of :argument_name => value
+  def setup_timeseries_includes(args)
     args = args.dup # We don't want to modify the original arguments
     args[:include_hourly_electric_end_use_consumptions] = false
-    if not emissions.empty?
+    if not @emissions.empty?
       args[:include_hourly_electric_end_use_consumptions] = true # Need hourly electricity values for Cambium
       if args[:include_timeseries_emissions] || args[:include_timeseries_emission_end_uses] || args[:include_timeseries_emission_fuels]
         args[:include_timeseries_fuel_consumptions] = true
@@ -2929,11 +2910,10 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return args
   end
 
-  # TODO
+  # Returns a list of HPXML IDs corresponds to HVAC or water heating systems
   #
-  # @return [TODO] TODO
+  # @return [Array<String>] List of HPXML IDs
   def get_hpxml_system_ids
-    # Returns a list of HPXML IDs corresponds to HVAC or water heating systems
     return [] if @hpxml_bldgs.empty?
 
     system_ids = []
@@ -2945,16 +2925,14 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     return system_ids
   end
 
-  # TODO
+  # For a given object, returns the Output:Variables or Output:Meters to be requested,
+  # and associates them with the appropriate keys (e.g., [FT::Elec, EUT::Heating]).
   #
   # @param model [OpenStudio::Model::Model] OpenStudio Model object
-  # @param object [TODO] TODO
-  # @param class_name [TODO] TODO
-  # @return [TODO] TODO
-  def get_object_outputs_by_key(model, object, class_name)
-    # For a given object, returns the Output:Variables or Output:Meters to be requested,
-    # and associates them with the appropriate keys (e.g., [FT::Elec, EUT::Heating]).
-
+  # @param object [OpenStudio::Model::Foo] A given object in the OpenStudio Model
+  # @param class_type [Module] The output class type
+  # @return [Hash] Map of output key => array of EnergyPlus output variable/meter names
+  def get_object_outputs_by_key(model, object, class_type)
     object_type = object.additionalProperties.getFeatureAsString('ObjectType')
     object_type = object_type.get if object_type.is_initialized
 
@@ -2966,26 +2944,26 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
               EPlus::FuelTypeWoodPellets => FT::WoodPellets,
               EPlus::FuelTypeCoal => FT::Coal }
 
-    if class_name == EUT
+    if class_type == EUT
 
       # End uses
 
       if object.to_CoilHeatingDXSingleSpeed.is_initialized || object.to_CoilHeatingDXMultiSpeed.is_initialized
-        vars = { [FT::Elec, EUT::Heating] => ["Heating Coil #{EPlus::FuelTypeElectricity} Energy", "Heating Coil Defrost #{EPlus::FuelTypeElectricity} Energy"] }
+        vars = { [FT::Elec, EUT::Heating] => ['Heating Coil Electricity Energy', 'Heating Coil Defrost Electricity Energy'] }
         if object.additionalProperties.getFeatureAsDouble('FractionHeatLoadServed').is_initialized && object.additionalProperties.getFeatureAsDouble('FractionHeatLoadServed').get <= 0
           # HP only provides cooling, allocate crankcase to cooling end use
-          vars[[FT::Elec, EUT::Cooling]] = ["Heating Coil Crankcase Heater #{EPlus::FuelTypeElectricity} Energy"]
+          vars[[FT::Elec, EUT::Cooling]] = ['Heating Coil Crankcase Heater Electricity Energy']
         else
           # Allocate crankcase to heating end use
-          vars[[FT::Elec, EUT::Heating]] << "Heating Coil Crankcase Heater #{EPlus::FuelTypeElectricity} Energy"
+          vars[[FT::Elec, EUT::Heating]] << 'Heating Coil Crankcase Heater Electricity Energy'
         end
         return vars
 
       elsif object.to_CoilHeatingElectric.is_initialized || object.to_CoilHeatingElectricMultiStage.is_initialized
         if object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').is_initialized && object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').get
-          return { [FT::Elec, EUT::HeatingHeatPumpBackup] => ["Heating Coil #{EPlus::FuelTypeElectricity} Energy"] }
+          return { [FT::Elec, EUT::HeatingHeatPumpBackup] => ['Heating Coil Electricity Energy'] }
         else
-          return { [FT::Elec, EUT::Heating] => ["Heating Coil #{EPlus::FuelTypeElectricity} Energy"] }
+          return { [FT::Elec, EUT::Heating] => ['Heating Coil Electricity Energy'] }
         end
 
       elsif object.to_CoilHeatingGas.is_initialized
@@ -2997,13 +2975,13 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         end
 
       elsif object.to_CoilHeatingWaterToAirHeatPumpEquationFit.is_initialized || object.to_CoilHeatingWaterToAirHeatPumpVariableSpeedEquationFit.is_initialized
-        return { [FT::Elec, EUT::Heating] => ["Heating Coil #{EPlus::FuelTypeElectricity} Energy"] }
+        return { [FT::Elec, EUT::Heating] => ['Heating Coil Electricity Energy'] }
 
       elsif object.to_ZoneHVACBaseboardConvectiveElectric.is_initialized
         if object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').is_initialized && object.additionalProperties.getFeatureAsBoolean('IsHeatPumpBackup').get
-          return { [FT::Elec, EUT::HeatingHeatPumpBackup] => ["Baseboard #{EPlus::FuelTypeElectricity} Energy"] }
+          return { [FT::Elec, EUT::HeatingHeatPumpBackup] => ['Baseboard Electricity Energy'] }
         else
-          return { [FT::Elec, EUT::Heating] => ["Baseboard #{EPlus::FuelTypeElectricity} Energy"] }
+          return { [FT::Elec, EUT::Heating] => ['Baseboard Electricity Energy'] }
         end
 
       elsif object.to_BoilerHotWater.is_initialized
@@ -3024,7 +3002,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         end
 
       elsif object.to_CoilCoolingDXSingleSpeed.is_initialized || object.to_CoilCoolingDXMultiSpeed.is_initialized
-        vars = { [FT::Elec, EUT::Cooling] => ["Cooling Coil #{EPlus::FuelTypeElectricity} Energy"] }
+        vars = { [FT::Elec, EUT::Cooling] => ['Cooling Coil Electricity Energy'] }
         parent = model.getAirLoopHVACUnitarySystems.select { |u| u.coolingCoil.is_initialized && u.coolingCoil.get.handle.to_s == object.handle.to_s }
         if (not parent.empty?) && parent[0].heatingCoil.is_initialized
           htg_coil = parent[0].heatingCoil.get
@@ -3041,56 +3019,56 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
 
         if htg_coil.nil? || (not (htg_coil.to_CoilHeatingDXSingleSpeed.is_initialized || htg_coil.to_CoilHeatingDXMultiSpeed.is_initialized))
           # Crankcase variable only available if no DX heating coil on parent
-          vars[[FT::Elec, EUT::Cooling]] << "Cooling Coil Crankcase Heater #{EPlus::FuelTypeElectricity} Energy"
+          vars[[FT::Elec, EUT::Cooling]] << 'Cooling Coil Crankcase Heater Electricity Energy'
         end
         return vars
 
       elsif object.to_CoilCoolingWaterToAirHeatPumpEquationFit.is_initialized || object.to_CoilCoolingWaterToAirHeatPumpVariableSpeedEquationFit.is_initialized
-        return { [FT::Elec, EUT::Cooling] => ["Cooling Coil #{EPlus::FuelTypeElectricity} Energy"] }
+        return { [FT::Elec, EUT::Cooling] => ['Cooling Coil Electricity Energy'] }
 
       elsif object.to_EvaporativeCoolerDirectResearchSpecial.is_initialized
-        return { [FT::Elec, EUT::Cooling] => ["Evaporative Cooler #{EPlus::FuelTypeElectricity} Energy"] }
+        return { [FT::Elec, EUT::Cooling] => ['Evaporative Cooler Electricity Energy'] }
 
       elsif object.to_CoilWaterHeatingAirToWaterHeatPumpWrapped.is_initialized
-        return { [FT::Elec, EUT::HotWater] => ["Cooling Coil Water Heating #{EPlus::FuelTypeElectricity} Energy"] }
+        return { [FT::Elec, EUT::HotWater] => ['Cooling Coil Water Heating Electricity Energy'] }
 
       elsif object.to_FanSystemModel.is_initialized
         if object_type == Constants::ObjectTypeWaterHeater
-          return { [FT::Elec, EUT::HotWater] => ["Fan #{EPlus::FuelTypeElectricity} Energy"] }
+          return { [FT::Elec, EUT::HotWater] => ['Fan Electricity Energy'] }
         end
 
       elsif object.to_PumpConstantSpeed.is_initialized
         if object_type == Constants::ObjectTypeSolarHotWater
-          return { [FT::Elec, EUT::HotWaterSolarThermalPump] => ["Pump #{EPlus::FuelTypeElectricity} Energy"] }
+          return { [FT::Elec, EUT::HotWaterSolarThermalPump] => ['Pump Electricity Energy'] }
         end
 
       elsif object.to_WaterHeaterMixed.is_initialized
         fuel = object.to_WaterHeaterMixed.get.heaterFuelType
-        return { [to_ft[fuel], EUT::HotWater] => ["Water Heater #{fuel} Energy", "Water Heater Off Cycle Parasitic #{EPlus::FuelTypeElectricity} Energy", "Water Heater On Cycle Parasitic #{EPlus::FuelTypeElectricity} Energy"] }
+        return { [to_ft[fuel], EUT::HotWater] => ["Water Heater #{fuel} Energy", 'Water Heater Off Cycle Parasitic Electricity Energy', 'Water Heater On Cycle Parasitic Electricity Energy'] }
 
       elsif object.to_WaterHeaterStratified.is_initialized
         fuel = object.to_WaterHeaterStratified.get.heaterFuelType
-        return { [to_ft[fuel], EUT::HotWater] => ["Water Heater #{fuel} Energy", "Water Heater Off Cycle Parasitic #{EPlus::FuelTypeElectricity} Energy", "Water Heater On Cycle Parasitic #{EPlus::FuelTypeElectricity} Energy"] }
+        return { [to_ft[fuel], EUT::HotWater] => ["Water Heater #{fuel} Energy", 'Water Heater Off Cycle Parasitic Electricity Energy', 'Water Heater On Cycle Parasitic Electricity Energy'] }
 
       elsif object.to_ExteriorLights.is_initialized
         subcategory = object.to_ExteriorLights.get.endUseSubcategory
-        return { [FT::Elec, EUT::LightsExterior] => ["#{subcategory}:ExteriorLights:#{EPlus::FuelTypeElectricity}"] }
+        return { [FT::Elec, EUT::LightsExterior] => ["#{subcategory}:ExteriorLights:Electricity"] }
 
       elsif object.to_Lights.is_initialized
         subcategory = object.to_Lights.get.endUseSubcategory
         end_use = { Constants::ObjectTypeLightingInterior => EUT::LightsInterior,
                     Constants::ObjectTypeLightingGarage => EUT::LightsGarage }[subcategory]
-        return { [FT::Elec, end_use] => ["#{subcategory}:InteriorLights:#{EPlus::FuelTypeElectricity}"] }
+        return { [FT::Elec, end_use] => ["#{subcategory}:InteriorLights:Electricity"] }
 
       elsif object.to_ElectricLoadCenterInverterPVWatts.is_initialized
         return { [FT::Elec, EUT::PV] => ['Inverter Conversion Loss Decrement Energy'] }
 
       elsif object.to_GeneratorPVWatts.is_initialized
-        return { [FT::Elec, EUT::PV] => ["Generator Produced DC #{EPlus::FuelTypeElectricity} Energy"] }
+        return { [FT::Elec, EUT::PV] => ['Generator Produced DC Electricity Energy'] }
 
       elsif object.to_GeneratorMicroTurbine.is_initialized
         fuel = object.to_GeneratorMicroTurbine.get.fuelType
-        return { [FT::Elec, EUT::Generator] => ["Generator Produced AC #{EPlus::FuelTypeElectricity} Energy"],
+        return { [FT::Elec, EUT::Generator] => ['Generator Produced AC Electricity Energy'],
                  [to_ft[fuel], EUT::Generator] => ["Generator #{fuel} HHV Basis Energy"] }
 
       elsif object.to_ElectricLoadCenterStorageLiIonNMCBattery.is_initialized
@@ -3135,9 +3113,9 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
           # Use Output:Meter instead of Output:Variable because they incorporate thermal zone multipliers
           if object.space.is_initialized
             zone_name = object.space.get.thermalZone.get.name.to_s.upcase
-            return { [FT::Elec, end_use] => ["#{subcategory}:InteriorEquipment:#{EPlus::FuelTypeElectricity}:Zone:#{zone_name}"] }
+            return { [FT::Elec, end_use] => ["#{subcategory}:InteriorEquipment:Electricity:Zone:#{zone_name}"] }
           else
-            return { [FT::Elec, end_use] => ["#{subcategory}:InteriorEquipment:#{EPlus::FuelTypeElectricity}"] }
+            return { [FT::Elec, end_use] => ["#{subcategory}:InteriorEquipment:Electricity"] }
           end
         end
 
@@ -3176,7 +3154,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         end
 
       elsif object.to_ZoneHVACDehumidifierDX.is_initialized
-        return { [FT::Elec, EUT::Dehumidifier] => ["Zone Dehumidifier #{EPlus::FuelTypeElectricity} Energy"] }
+        return { [FT::Elec, EUT::Dehumidifier] => ['Zone Dehumidifier Electricity Energy'] }
 
       elsif object.to_EnergyManagementSystemOutputVariable.is_initialized
         if object_type == Constants::ObjectTypeFanPumpDisaggregatePrimaryHeat
@@ -3191,7 +3169,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
 
       end
 
-    elsif class_name == HWT
+    elsif class_type == HWT
 
       # Hot Water Use
 
@@ -3204,7 +3182,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
 
       end
 
-    elsif class_name == LT
+    elsif class_type == LT
 
       # Load
 
@@ -3248,7 +3226,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
 
       end
 
-    elsif class_name == RT
+    elsif class_type == RT
 
       # Resilience
 
@@ -3259,7 +3237,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
 
       elsif object.to_OtherEquipment.is_initialized
         if object_type == Constants::ObjectTypeBatteryLossesAdjustment
-          return { RT::Battery => ["Other Equipment #{EPlus::FuelTypeElectricity} Energy"] }
+          return { RT::Battery => ['Other Equipment Electricity Energy'] }
         end
 
       end

@@ -784,10 +784,10 @@ Level,Parameter,Option,Saturation
 3,HVAC Secondary Heating Fuel,Other Fuel,0.0244898
 3,HVAC Secondary Heating Fuel,Propane,0.0244898
 3,HVAC Secondary Heating Fuel,Wood,0.0244898
-3,Clothes Dryer,Electric,0.25
-3,Clothes Dryer,Gas,0.25
-3,Clothes Dryer,None,0.25
-3,Clothes Dryer,Propane,0.25
+3,Clothes Dryer,Electric,0.125
+3,Clothes Dryer,Gas,0.125
+3,Clothes Dryer,None,0.625
+3,Clothes Dryer,Propane,0.125
 3,Clothes Dryer,Void,0
 3,Clothes Washer,EnergyStar,0.25
 3,Clothes Washer,None,0.5
