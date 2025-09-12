@@ -1,0 +1,429 @@
+schema_version: '0.6'
+os_version: 3.9.0
+os_sha: c77fbb9569
+buildstock_directory: ../ # Relative to this file or absolute
+project_directory: project_national # Relative to buildstock_directory
+output_directory: /projects/enduse/sdr/runs/kstenger/sdr_30k_furnaces
+# weather_files_url: https://data.nrel.gov/system/files/156/Buildstock_TMY3_FIPS-1678817889.zip
+# weather_files_path: c:/OpenStudio/BuildStock_TMY3_FIPS.zip # Local weather files example
+# weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_TMY3_FIPS.zip # Kestrel TMY3 weather files
+weather_files_path: /kfs2/shared-projects/buildstock/weather/BuildStock_2018_FIPS.zip # Kestrel 2018 weather files
+
+# Baseline number of units
+baseline:
+  n_buildings_represented: 139647020 # American Community Survey 2021 5-year, B25001, does not include territories
+
+# Sampler type and number of data points per baseline or upgrade
+sampler:
+  # type: precomputed
+  type: residential_quota # For production run
+  args:
+    # sample_file: resources/buildstock_furnace_streamlined.csv # For CI
+    n_datapoints: 30000 # For production run
+
+# NREL High Performance Computing machine configuration
+# Not used if running buildstock_local (local tests and CI)
+kestrel:
+  n_jobs: 10
+  minutes_per_sim: 5
+  account: enduse
+  postprocessing:
+    time: 600
+    n_workers: 20
+    n_procs: 20
+  sampling:
+    time: 60
+
+# Post proccessing and Amazon Web Services
+postprocessing:
+  # Post simulation partitioning
+  keep_individual_timeseries: true
+  partition_columns:
+    - State
+    - County
+  publish_annual_results: true
+  # AWS upload bucket and athena setup (uncomment during production and testing runs)
+  aws:
+   region_name: us-west-2
+   s3:
+     bucket: res-sdr
+     prefix: testing-sdr-fy25
+   athena:
+     glue_service_role: service-role/AWSGlueServiceRole-default
+     database_name: res_sdr
+     max_crawling_time: 1200
+
+# Workflow generator
+workflow_generator:
+  # ResStock HPXML workflow generator
+  type: residential_hpxml
+  version: 2025.04.29
+
+  args:
+    # Annual simulation and timestep
+    build_existing_model:
+      simulation_control_timestep: 15
+      simulation_control_run_period_begin_month: 1
+      simulation_control_run_period_begin_day_of_month: 1
+      simulation_control_run_period_end_month: 12
+      simulation_control_run_period_end_day_of_month: 31
+      simulation_control_run_period_calendar_year: 2018
+
+    # Emissions scenarios
+    emissions:
+      - scenario_name: LRMER_LowRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2022/LRMER_LowRECost_15
+      - scenario_name: LRMER_MidCase_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_15
+      - scenario_name: LRMER_HighRECost_15
+        type: CO2e
+        elec_folder: data/emissions/cambium/2022/LRMER_HighRECost_15
+      - scenario_name: LRMER_MidCase_25
+        type: CO2e
+        elec_folder: data/emissions/cambium/2022/LRMER_MidCase_25
+
+    # Utility bill rates
+    utility_bills:
+      - scenario_name: Utility Rates - Fixed + Variable
+        simple_filepath: data/utility_bills/sdr_rates/State.tsv
+
+    # Outputs to include
+    simulation_output_report:
+      timeseries_frequency: timestep
+      include_timeseries_total_consumptions: true
+      include_timeseries_fuel_consumptions: true
+      include_timeseries_end_use_consumptions: true
+      include_timeseries_emissions: true
+      include_timeseries_emission_fuels: true
+      include_timeseries_emission_end_uses: false
+      include_timeseries_hot_water_uses: true
+      include_timeseries_total_loads: true
+      include_timeseries_component_loads: true
+      include_timeseries_unmet_hours: true
+      include_timeseries_zone_temperatures: true
+      include_timeseries_zone_conditions: true
+      include_timeseries_airflows: true
+      include_timeseries_weather: true
+      include_timeseries_resilience: true
+      output_variables:
+        - name: People Sensible Heating Rate
+        - name: People Total Heating Rate
+        - name: Site Outdoor Air Humidity Ratio
+
+    # Other reporting measures to run
+    reporting_measures:
+      - measure_dir_name: QOIReport
+      - measure_dir_name: ServerDirectoryCleanup # tack this on so we can save some disk space (when using debug: true)
+
+    # Files to keep
+    server_directory_cleanup:
+      retain_in_idf: true
+      retain_schedules_csv: true
+      retain_in_osm: true
+
+    debug: true
+
+references:
+  remove_heating_shared_other_wood: &remove_heating_shared_other_wood 
+    - HVAC Has Ducts|Yes
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+    - not:
+      - or:
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+        - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+        - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+        - HVAC Shared Efficiencies|Fan Coil Cooling Only
+
+  fuel_apply_logic: &fossil_fuel_or_electricity
+    - not: Heating Fuel|Wood
+    - not: Heating Fuel|Other Fuel
+    - not: Heating Fuel|None
+
+  cchp_apply_logic: &typical_cold_climate_logic
+    - HVAC Has Ducts|Yes # apply to homes with ducts who have non-shared HVAC or shared HVAC with room for a condenser
+    - or:
+        - not:
+          - or:
+            - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Electricity
+            - HVAC Shared Efficiencies|Boiler Baseboards Heating Only, Fuel
+            - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Electricity
+            - HVAC Shared Efficiencies|Fan Coil Heating and Cooling, Fuel
+            - HVAC Shared Efficiencies|Fan Coil Cooling Only
+        # - or:
+        - and: 
+          - HVAC Cooling Type|Ducted Heat Pump
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+        - and: 
+          - HVAC Cooling Type|Non-Ducted Heat Pump
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit                  
+        - and:
+          - HVAC Cooling Type|Central AC
+          - not: HVAC Shared Efficiencies|Fan Coil Cooling Only
+          - or:
+            - Geometry Building Type ACS|10 to 19 Unit
+            - Geometry Building Type ACS|2 Unit
+            - Geometry Building Type ACS|20 to 49 Unit
+            - Geometry Building Type ACS|3 or 4 Unit
+            - Geometry Building Type ACS|5 to 9 Unit
+            - Geometry Building Type ACS|50 or more Unit
+
+upgrades:
+  - upgrade_name: ng_furnace
+    package_apply_logic: *remove_heating_shared_other_wood
+    options:
+        ### -- Natural Gas Furnace AFUE 95% applies to all dwellings with ducts
+      - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
+        # no apply logic on purpose since package_apply_logic handles it
+        lifetime: 15
+      - option: HVAC Heating Type And Fuel|Natural Gas Fuel Furnace
+        apply_logic: 
+          - not: HVAC Heating Type And Fuel|Natural Gas Fuel Furnace
+      - option: Heating Fuel|Natural Gas
+        apply_logic:
+          - not: Heating Fuel|Natural Gas
+
+  - upgrade_name: prop_fo_furnace
+    package_apply_logic: *remove_heating_shared_other_wood
+    options:
+      - option: HVAC Heating Efficiency|Fuel Furnace, 95% AFUE
+        apply_logic: 
+          - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 90% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        lifetime: 15
+      - option: HVAC Heating Efficiency|Fuel Furnace, 88% AFUE
+        apply_logic: 
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 85% AFUE
+        lifetime: 15
+
+  - upgrade_name: reference_space_heating_cooling
+    package_apply_logic:
+      and:
+        - *fossil_fuel_or_electricity
+        - *typical_cold_climate_logic
+    options:
+      ### [1] Heating Efficiencies
+      ## 1.1 Replace like with like - retain applicability for costing purposing
+      # electric heating
+      - option: HVAC Heating Efficiency|Electric Furnace, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Furnace, 100% AFUE
+      
+      - option: HVAC Heating Efficiency|Electric Boiler, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Boiler, 100% AFUE
+      
+      - option: HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Baseboard, 100% Efficiency
+      
+      - option: HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Electric Wall Furnace, 100% AFUE
+
+      # non-ducted fuel furnaces
+      - option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 60% AFUE
+      
+      - option: HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Wall/Floor Furnace, 68% AFUE
+      
+      # MSHP (not applicable because of package_apply_logic)
+      # - option: HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      #   apply_logic:
+      #     - HVAC Heating Efficiency|MSHP, SEER 14.5, 8.2 HSPF
+      
+      # - option: HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+      #   apply_logic:
+      #     - HVAC Heating Efficiency|MSHP, SEER 29.3, 14 HSPF
+
+      ## 1.2 Categories with efficiency change:
+      # min. eff fuel boilers
+      - option: HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+        apply_logic:
+          - or:
+            - Heating Fuel|Natural Gas
+            - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Boiler, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Boiler, 83% AFUE
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Boiler, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Boiler, 80% AFUE
+
+      - option: HVAC Heating Efficiency|Fuel Boiler, 90% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Boiler, 90% AFUE
+
+      # min. efficiency ducted fuel furnaces
+      - option: HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        apply_logic:
+          - or:
+            - Heating Fuel|Natural Gas
+            - Heating Fuel|Propane
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        lifetime: 15
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 83% AFUE
+        apply_logic:
+          - Heating Fuel|Fuel Oil
+          - or:
+            - HVAC Heating Efficiency|Fuel Furnace, 60% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 68% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 72% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 76% AFUE
+            - HVAC Heating Efficiency|Fuel Furnace, 80% AFUE
+        lifetime: 15
+
+      - option: HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        apply_logic:
+          - HVAC Heating Efficiency|Fuel Furnace, 92.5% AFUE
+        lifetime: 15
+      
+      # ASHP
+      - option: HVAC Heating Efficiency|ASHP, SEER2 14.3, 7.5 HSPF2
+        apply_logic:
+          - or:
+            - HVAC Heating Efficiency|ASHP, SEER 10, 6.2 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 10.3, 7.0 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 11.5, 7.5 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 13, 7.7 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 13, 8.0 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 14, 8.2 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 14.3, 8.5 HSPF
+            - HVAC Heating Efficiency|ASHP, SEER 15, 8.5 HSPF #14.3 SEER2 == 15 SEER1, ducted
+        lifetime: 15
+
+      ### [2] Cooling Efficiencies
+      ## 2.1 Replace like with like
+      - option: HVAC Cooling Efficiency|Ducted Heat Pump
+        apply_logic:
+          - HVAC Cooling Efficiency|Ducted Heat Pump
+      
+      # (not applicable because of package_apply_logic)
+      # - option: HVAC Cooling Efficiency|Non-Ducted Heat Pump
+      #   apply_logic:
+      #     - HVAC Cooling Efficiency|Non-Ducted Heat Pump
+
+      ## 2.2 Categories with efficiency change
+      # Central AC — SEER 14.3 for southern states only
+      - option: HVAC Cooling Efficiency|AC, SEER2 14.3 
+        apply_logic:
+          - and:
+            - or:
+                - State|AL
+                - State|AR
+                - State|DE
+                - State|FL
+                - State|GA
+                - State|HI
+                - State|KY
+                - State|LA
+                - State|MD
+                - State|MS
+                - State|NC
+                - State|OK
+                - State|SC
+                - State|TN
+                - State|TX
+                - State|VA
+                - State|DC
+                - State|AZ
+                - State|CA
+                - State|NV
+                - State|NM
+          - or:
+              - HVAC Cooling Efficiency|AC, SEER 8
+              - HVAC Cooling Efficiency|AC, SEER 10
+              - HVAC Cooling Efficiency|AC, SEER 13
+        lifetime: 15
+
+      # All other states — SEER 13.4
+      - option: HVAC Cooling Efficiency|AC, SEER2 13.4
+        apply_logic:
+          - not:
+              - or:
+                  - State|AL
+                  - State|AR
+                  - State|DE
+                  - State|FL
+                  - State|GA
+                  - State|HI
+                  - State|KY
+                  - State|LA
+                  - State|MD
+                  - State|MS
+                  - State|NC
+                  - State|OK
+                  - State|SC
+                  - State|TN
+                  - State|TX
+                  - State|VA
+                  - State|DC
+                  - State|AZ
+                  - State|CA
+                  - State|NV
+                  - State|NM
+          - or:
+              - HVAC Cooling Efficiency|AC, SEER 8
+              - HVAC Cooling Efficiency|AC, SEER 10
+              - HVAC Cooling Efficiency|AC, SEER 13
+        lifetime: 15
+      
+      - option: HVAC Cooling Efficiency|AC, SEER 15
+        apply_logic:
+          - HVAC Cooling Efficiency|AC, SEER 15
+        lifetime: 15
+
+      # Room (window) AC
+      - option: HVAC Cooling Efficiency|Room AC, EER 12.0 #CEER 11.0; EER 12.0 single package
+        apply_logic:
+          - or:
+            - HVAC Cooling Efficiency|Room AC, EER 8.5
+            - HVAC Cooling Efficiency|Room AC, EER 9.8
+            - HVAC Cooling Efficiency|Room AC, EER 10.7
+            - HVAC Cooling Efficiency|Room AC, EER 12.0
+        lifetime: 7
+        
