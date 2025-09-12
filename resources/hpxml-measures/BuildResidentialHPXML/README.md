@@ -834,10 +834,10 @@ The type and efficiency of the cooling system. Use 'None' if there is no cooling
 
 - **Required:** ``true``
 
-- **Choices:** <br/>  - `None`<br/>  - `Central AC, SEER 8`<br/>  - `Central AC, SEER 10`<br/>  - `Central AC, SEER 13`<br/>  - `Central AC, SEER 14`<br/>  - `Central AC, SEER 15`<br/>  - `Central AC, SEER 16`<br/>  - `Central AC, SEER 17`<br/>  - `Central AC, SEER 18`<br/>  - `Central AC, SEER 21`<br/>  - `Central AC, SEER 24`<br/>  - `Central AC, SEER 24.5`<br/>  - `Central AC, SEER 27`<br/>  - `Central AC, SEER2 12.4`<br/>  - `Mini-Split AC, SEER 13`<br/>  - `Mini-Split AC, SEER 17`<br/>  - `Mini-Split AC, SEER 19`<br/>  - `Mini-Split AC, SEER 19, Ducted`<br/>  - `Mini-Split AC, SEER 24`<br/>  - `Mini-Split AC, SEER 25`<br/>  - `Mini-Split AC, SEER 29.3`<br/>  - `Mini-Split AC, SEER 33`<br/>  - `Room AC, EER 8.5`<br/>  - `Room AC, EER 8.5, Electric Resistance Heating`<br/>  - `Room AC, EER 9.8`<br/>  - `Room AC, EER 10.7`<br/>  - `Room AC, EER 12.0`<br/>  - `Room AC, CEER 8.4`<br/>  - `Packaged Terminal AC, EER 10.7`<br/>  - `Packaged Terminal AC, EER 10.7, Electric Resistance Heating`<br/>  - `Packaged Terminal AC, EER 10.7, 80% AFUE Gas Heating`<br/>  - `Evaporative Cooler`<br/>  - `Evaporative Cooler, Ducted`<br/>  - `Detailed Example: Central AC, SEER 13, Absolute Detailed Performance`<br/>  - `Detailed Example: Central AC, SEER 18, Absolute Detailed Performance`<br/>  - `Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance`<br/>  - `Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance`<br/>  - `Detailed Example: Mini-Split AC, SEER 17, Absolute Detailed Performance`<br/>  - `Detailed Example: Mini-Split AC, SEER 17, Normalized Detailed Performance`
+- **Choices:** <br/>  - `None`<br/>  - `Central AC, SEER 8.0`<br/>  - `Central AC, SEER 10.0`<br/>  - `Central AC, SEER 13.0`<br/>  - `Central AC, SEER 14.0`<br/>  - `Central AC, SEER 15.0`<br/>  - `Central AC, SEER2 13.4`<br/>  - `Central AC, SEER2 14.0`<br/>  - `Central AC, SEER2 15.0`<br/>  - `Central AC, SEER2 16.0`<br/>  - `Central AC, SEER2 17.0`<br/>  - `Central AC, SEER2 18.0`<br/>  - `Central AC, SEER2 19.0`<br/>  - `Central AC, SEER2 20.0`<br/>  - `Central AC, SEER2 21.0`<br/>  - `Central AC, SEER2 22.0`<br/>  - `Central AC, SEER2 23.0`<br/>  - `Central AC, SEER2 24.0`<br/>  - `Central AC, SEER2 25.0`<br/>  - `Ductless Mini-Split AC, SEER2 14.5`<br/>  - `Ductless Mini-Split AC, SEER2 16.0`<br/>  - `Ductless Mini-Split AC, SEER2 17.0`<br/>  - `Ductless Mini-Split AC, SEER2 18.0`<br/>  - `Ductless Mini-Split AC, SEER2 19.0`<br/>  - `Ductless Mini-Split AC, SEER2 20.0`<br/>  - `Ductless Mini-Split AC, SEER2 21.0`<br/>  - `Ductless Mini-Split AC, SEER2 22.0`<br/>  - `Ductless Mini-Split AC, SEER2 23.0`<br/>  - `Ductless Mini-Split AC, SEER2 24.0`<br/>  - `Ductless Mini-Split AC, SEER2 25.0`<br/>  - `Ductless Mini-Split AC, SEER2 26.0`<br/>  - `Ductless Mini-Split AC, SEER2 27.0`<br/>  - `Ductless Mini-Split AC, SEER2 28.0`<br/>  - `Room AC, CEER 8.4`<br/>  - `Room AC, CEER 9.7`<br/>  - `Room AC, CEER 10.6`<br/>  - `Room AC, CEER 11.8`<br/>  - `Room AC, CEER 13.1`<br/>  - `Packaged Terminal AC, EER 8.5`<br/>  - `Packaged Terminal AC, EER 9.8`<br/>  - `Packaged Terminal AC, EER 10.7`<br/>  - `Packaged Terminal AC, EER 11.9`<br/>  - `Packaged Terminal AC, EER 13.2`<br/>  - `Evaporative Cooler`<br/>  - `Detailed Example: Central AC, SEER2 13.4, Absolute Detailed Performance`<br/>  - `Detailed Example: Central AC, SEER2 17.1, Absolute Detailed Performance`<br/>  - `Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance`<br/>  - `Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance`<br/>  - `Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Absolute Detailed Performance`<br/>  - `Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Normalized Detailed Performance`
 
 
-- **Default:** `Central AC, SEER 13`
+- **Default:** `Central AC, SEER 13.0`
 
 <br/>
 
@@ -873,38 +873,6 @@ The fraction of the cooling load served by the cooling system.
 
 <br/>
 
-**HVAC: Cooling System Integrated Heating Capacity**
-
-The output capacity of the cooling system's integrated heating system. Only used for packaged terminal air conditioner and room air conditioner systems with integrated heating.
-
-- **Name:** ``hvac_cooling_system_integrated_heating_capacity``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** <br/>  - `Autosize`<br/>  - `5 kBtu/hr`<br/>  - `10 kBtu/hr`<br/>  - `15 kBtu/hr`<br/>  - `20 kBtu/hr`<br/>  - `25 kBtu/hr`<br/>  - `30 kBtu/hr`<br/>  - `35 kBtu/hr`<br/>  - `40 kBtu/hr`<br/>  - `45 kBtu/hr`<br/>  - `50 kBtu/hr`<br/>  - `55 kBtu/hr`<br/>  - `60 kBtu/hr`<br/>  - `65 kBtu/hr`<br/>  - `70 kBtu/hr`<br/>  - `75 kBtu/hr`<br/>  - `80 kBtu/hr`<br/>  - `85 kBtu/hr`<br/>  - `90 kBtu/hr`<br/>  - `95 kBtu/hr`<br/>  - `100 kBtu/hr`<br/>  - `105 kBtu/hr`<br/>  - `110 kBtu/hr`<br/>  - `115 kBtu/hr`<br/>  - `120 kBtu/hr`<br/>  - `125 kBtu/hr`<br/>  - `130 kBtu/hr`<br/>  - `135 kBtu/hr`<br/>  - `140 kBtu/hr`<br/>  - `145 kBtu/hr`<br/>  - `150 kBtu/hr`
-
-
-- **Default:** `Autosize`
-
-<br/>
-
-**HVAC: Cooling System Integrated Heating Fraction Heat Load Served**
-
-The fraction of the heating load served by the cooling system's integrated heating system.
-
-- **Name:** ``hvac_cooling_system_integrated_heating_load_served``
-- **Type:** ``Choice``
-
-- **Required:** ``false``
-
-- **Choices:** <br/>  - `100%`<br/>  - `95%`<br/>  - `90%`<br/>  - `85%`<br/>  - `80%`<br/>  - `75%`<br/>  - `70%`<br/>  - `65%`<br/>  - `60%`<br/>  - `55%`<br/>  - `50%`<br/>  - `45%`<br/>  - `40%`<br/>  - `35%`<br/>  - `30%`<br/>  - `25%`<br/>  - `20%`<br/>  - `15%`<br/>  - `10%`<br/>  - `5%`<br/>  - `0%`
-
-
-- **Default:** `100%`
-
-<br/>
-
 **HVAC: Heat Pump**
 
 The type and efficiency of the heat pump.
@@ -914,7 +882,7 @@ The type and efficiency of the heat pump.
 
 - **Required:** ``true``
 
-- **Choices:** <br/>  - `None`<br/>  - `Central HP, SEER 8, 6.0 HSPF`<br/>  - `Central HP, SEER 10, 6.2 HSPF`<br/>  - `Central HP, SEER 10, 6.8 HSPF`<br/>  - `Central HP, SEER 10.3, 7.0 HSPF`<br/>  - `Central HP, SEER 11.5, 7.5 HSPF`<br/>  - `Central HP, SEER 13, 7.7 HSPF`<br/>  - `Central HP, SEER 13, 8.0 HSPF`<br/>  - `Central HP, SEER 13, 9.85 HSPF`<br/>  - `Central HP, SEER 14, 8.2 HSPF`<br/>  - `Central HP, SEER 14.3, 8.5 HSPF`<br/>  - `Central HP, SEER 15, 8.5 HSPF`<br/>  - `Central HP, SEER 15, 9.0 HSPF`<br/>  - `Central HP, SEER 16, 9.0 HSPF`<br/>  - `Central HP, SEER 17, 8.7 HSPF`<br/>  - `Central HP, SEER 18, 9.3 HSPF`<br/>  - `Central HP, SEER 20, 11 HSPF`<br/>  - `Central HP, SEER 22, 10 HSPF`<br/>  - `Central HP, SEER 24, 13 HSPF`<br/>  - `Mini-Split HP, SEER 14.5, 8.2 HSPF`<br/>  - `Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 16, 9.2 HSPF`<br/>  - `Mini-Split HP, SEER 17, 9.5 HSPF`<br/>  - `Mini-Split HP, SEER 17, 9.5 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 18.0, 9.6 HSPF`<br/>  - `Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 19, 10 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 19, 10 HSPF`<br/>  - `Mini-Split HP, SEER 20, 11 HSPF`<br/>  - `Mini-Split HP, SEER 24, 13 HSPF`<br/>  - `Mini-Split HP, SEER 25, 12.7 HSPF`<br/>  - `Mini-Split HP, SEER 25, 12.7 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 29.3, 14 HSPF`<br/>  - `Mini-Split HP, SEER 29.3, 14 HSPF, Ducted`<br/>  - `Mini-Split HP, SEER 33, 13.3 HSPF`<br/>  - `Mini-Split HP, SEER 33, 13.3 HSPF, Ducted`<br/>  - `Geothermal HP, EER 16.6, COP 3.6`<br/>  - `Geothermal HP, EER 18.2, COP 3.7`<br/>  - `Geothermal HP, EER 18.6, COP 3.8`<br/>  - `Geothermal HP, EER 19.4, COP 3.8`<br/>  - `Geothermal HP, EER 20.2, COP 4.2`<br/>  - `Geothermal HP, EER 20.5, COP 4.0`<br/>  - `Geothermal HP, EER 30.9, COP 4.4`<br/>  - `Packaged Terminal HP, EER 11.4, COP 3.6`<br/>  - `Room AC w/ Reverse Cycle, EER 11.4, COP 3.6`<br/>  - `Detailed Example: Central HP, SEER2 12.4, HSPF2 6.5`<br/>  - `Detailed Example: Central HP, SEER 13, 7.7 HSPF, Absolute Detailed Performance`<br/>  - `Detailed Example: Central HP, SEER 18, 9.3 HSPF, Absolute Detailed Performance`<br/>  - `Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance`<br/>  - `Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance`<br/>  - `Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance`<br/>  - `Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance`<br/>  - `Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance`<br/>  - `Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance`
+- **Choices:** <br/>  - `None`<br/>  - `Central HP, SEER 8.0, HSPF 6.0`<br/>  - `Central HP, SEER 10.0, HSPF 6.8`<br/>  - `Central HP, SEER 13.0, HSPF 7.7`<br/>  - `Central HP, SEER 14.0, HSPF 8.2`<br/>  - `Central HP, SEER 15.0, HSPF 8.5`<br/>  - `Central HP, SEER2 13.4, HSPF2 7.0`<br/>  - `Central HP, SEER2 14.0, HSPF2 7.3`<br/>  - `Central HP, SEER2 15.0, HSPF2 7.6`<br/>  - `Central HP, SEER2 16.0, HSPF2 7.9`<br/>  - `Central HP, SEER2 17.0, HSPF2 8.2`<br/>  - `Central HP, SEER2 18.0, HSPF2 8.5`<br/>  - `Central HP, SEER2 19.0, HSPF2 8.7`<br/>  - `Central HP, SEER2 20.0, HSPF2 9.0`<br/>  - `Central HP, SEER2 21.0, HSPF2 9.2`<br/>  - `Central HP, SEER2 22.0, HSPF2 9.5`<br/>  - `Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7`<br/>  - `Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1`<br/>  - `Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5`<br/>  - `Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8`<br/>  - `Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0`<br/>  - `Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4`<br/>  - `Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7`<br/>  - `Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1`<br/>  - `Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4`<br/>  - `Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7`<br/>  - `Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0`<br/>  - `Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4`<br/>  - `Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7`<br/>  - `Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0`<br/>  - `Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3`<br/>  - `Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7`<br/>  - `Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3`<br/>  - `Geothermal HP, EER 16.6, COP 3.6`<br/>  - `Geothermal HP, EER 18.6, COP 3.8`<br/>  - `Geothermal HP, EER 20.5, COP 4.0`<br/>  - `Geothermal HP, EER 30.9, COP 4.4`<br/>  - `Room HP, CEER 8.4, COP 2.7`<br/>  - `Room HP, CEER 9.7, COP 3.0`<br/>  - `Room HP, CEER 10.6, COP 3.3`<br/>  - `Room HP, CEER 11.8, COP 3.6`<br/>  - `Room HP, CEER 13.1, COP 3.9`<br/>  - `Packaged Terminal HP, EER 8.5, COP 2.7`<br/>  - `Packaged Terminal HP, EER 9.8, COP 3.0`<br/>  - `Packaged Terminal HP, EER 10.7, COP 3.3`<br/>  - `Packaged Terminal HP, EER 11.9, COP 3.6`<br/>  - `Packaged Terminal HP, EER 13.2, COP 3.9`<br/>  - `Detailed Example: Central HP, SEER 13.0, HSPF 9.85`<br/>  - `Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance`<br/>  - `Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance`<br/>  - `Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance`<br/>  - `Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance`<br/>  - `Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance`<br/>  - `Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance`
 
 
 - **Default:** `None`
@@ -1638,7 +1606,7 @@ The type of dehumidifier.
 
 - **Required:** ``false``
 
-- **Choices:** <br/>  - `None`<br/>  - `Portable, 15 pints/day`<br/>  - `Portable, 20 pints/day`<br/>  - `Portable, 30 pints/day`<br/>  - `Portable, 40 pints/day`<br/>  - `Whole-Home, 60 pints/day`<br/>  - `Whole-Home, 75 pints/day`<br/>  - `Whole-Home, 95 pints/day`<br/>  - `Whole-Home, 125 pints/day`<br/>  - `Detailed Example: Portable, 40 pints/day, EF 1.8`
+- **Choices:** <br/>  - `None`<br/>  - `Portable, 15 pints/day`<br/>  - `Portable, 20 pints/day`<br/>  - `Portable, 30 pints/day`<br/>  - `Portable, 40 pints/day`<br/>  - `Whole-Home, 60 pints/day`<br/>  - `Whole-Home, 75 pints/day`<br/>  - `Whole-Home, 95 pints/day`<br/>  - `Whole-Home, 125 pints/day`<br/>  - `Detailed Example: Portable, 40 pints/day, EF 1.8`<br/>  - `Detailed Example: Whole-Home, 60 pints/day, EF 2.3`<br/>  - `Detailed Example: Portable, 40 pints/day, IEF 1.4`
 
 
 - **Default:** `None`

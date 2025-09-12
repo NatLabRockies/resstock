@@ -34,7 +34,6 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'extra-second-heating-system-fireplace-to-heating-system.xml' => 'base-sfd.xml',
       'extra-second-heating-system-boiler-to-heating-system.xml' => 'base-sfd.xml',
       'extra-second-heating-system-portable-heater-to-heat-pump.xml' => 'base-sfd.xml',
-      'extra-second-heating-system-fireplace-to-heat-pump.xml' => 'base-sfd.xml',
       'extra-second-heating-system-boiler-to-heat-pump.xml' => 'base-sfd.xml',
       'extra-enclosure-windows-shading.xml' => 'base-sfd.xml',
       'extra-enclosure-garage-partially-protruded.xml' => 'base-sfd.xml',
@@ -142,7 +141,6 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'error-cooling-system-and-heat-pump.xml' => 'base-sfd.xml',
       'error-sfd-adiabatic-walls.xml' => 'base-sfd.xml',
       'error-second-heating-system-but-no-primary-heating.xml' => 'base-sfd.xml',
-      'error-second-heating-system-ducted-with-ducted-primary-heating.xml' => 'base-sfd.xml',
       'error-sfa-above-apartment.xml' => 'base-sfa.xml',
       'error-sfa-below-apartment.xml' => 'base-sfa.xml',
       'error-mf-conditioned-attic.xml' => 'base-mf.xml',
@@ -170,7 +168,6 @@ class BuildResidentialHPXMLTest < Minitest::Test
       'error-mf-conditioned-basement' => ['Conditioned basement/crawlspace foundation type for apartment units is not currently supported.'],
       'error-mf-conditioned-crawlspace' => ['Conditioned basement/crawlspace foundation type for apartment units is not currently supported.'],
       'error-second-heating-system-but-no-primary-heating.xml' => ['A second heating system was specified without a primary heating system.'],
-      'error-second-heating-system-ducted-with-ducted-primary-heating.xml' => ["A ducted heat pump with 'separate' ducted backup is not supported."],
       'error-sfa-above-apartment.xml' => ['Single-family attached units cannot be above another unit.'],
       'error-sfa-below-apartment.xml' => ['Single-family attached units cannot be below another unit.'],
       'error-mf-conditioned-attic.xml' => ['Conditioned attic type for apartment units is not currently supported.'],
@@ -297,8 +294,12 @@ class BuildResidentialHPXMLTest < Minitest::Test
         refute(option_name.include?('=')) # don't allow "=" in option names for resstock
       end
 
-      # Check for a valid default value
-      arg = arguments.find { |a| a.name == tsv_name.gsub('.tsv', '') }
+      # Check for argument w/ valid default value
+      arg_name = tsv_name.gsub('.tsv', '')
+      arg = arguments.find { |a| a.name == arg_name }
+      if arg.nil?
+        flunk "Argument '#{arg_name}' not found."
+      end
       if arg.hasDefaultValue
         puts "  Default value: #{arg.defaultValueAsString}"
         assert(option_names.include?(arg.defaultValueAsString))
@@ -378,7 +379,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['hvac_heating_system'] = 'Central Furnace, 92% AFUE'
       args['hvac_heating_system_capacity'] = '40 kBtu/hr'
       args['hvac_heating_system_heating_load_served'] = '100%'
-      args['hvac_cooling_system'] = 'Central AC, SEER 13'
+      args['hvac_cooling_system'] = 'Central AC, SEER 13.0'
       args['hvac_cooling_system_capacity'] = '2.0 tons'
       args['hvac_cooling_system_cooling_load_served'] = '100%'
       args['hvac_heat_pump'] = 'None'
@@ -467,7 +468,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
     when 'extra-second-heating-system-portable-heater-to-heat-pump.xml'
       args['hvac_heating_system'] = 'None'
       args['hvac_cooling_system'] = 'None'
-      args['hvac_heat_pump'] = 'Central HP, SEER 10, 6.2 HSPF'
+      args['hvac_heat_pump'] = 'Central HP, SEER 10.0, HSPF 6.8'
       args['hvac_heat_pump_backup'] = 'Integrated, Electricity, 100% Efficiency'
       args['hvac_heat_pump_capacity'] = '4.0 tons'
       args['hvac_heat_pump_heating_load_served'] = '75%'
@@ -475,14 +476,6 @@ class BuildResidentialHPXMLTest < Minitest::Test
       args['hvac_ducts_supply_location'] = 'Conditioned Space'
       args['hvac_ducts_return_location'] = 'Conditioned Space'
       args['hvac_heating_system_2'] = 'Space Heater, 100% Efficiency'
-      args['hvac_heating_system_2_capacity'] = '15 kBtu/hr'
-    when 'extra-second-heating-system-fireplace-to-heat-pump.xml'
-      args['hvac_heating_system'] = 'None'
-      args['hvac_cooling_system'] = 'None'
-      args['hvac_heat_pump'] = 'Mini-Split HP, SEER 19, 10 HSPF, Ducted'
-      args['hvac_heat_pump_capacity'] = '4.0 tons'
-      args['hvac_heat_pump_heating_load_served'] = '75%'
-      args['hvac_heating_system_2'] = 'Fireplace, 100% Efficiency'
       args['hvac_heating_system_2_capacity'] = '15 kBtu/hr'
     when 'extra-second-heating-system-boiler-to-heat-pump.xml'
       args['hvac_heating_system'] = 'None'
@@ -541,7 +534,7 @@ class BuildResidentialHPXMLTest < Minitest::Test
     when 'extra-detailed-performance-autosize.xml'
       args['hvac_heating_system'] = 'None'
       args['hvac_cooling_system'] = 'None'
-      args['hvac_heat_pump'] = 'Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance'
+      args['hvac_heat_pump'] = 'Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance'
     when 'extra-sfa-atticroof-flat.xml'
       args['geometry_attic_type'] = 'Flat Roof'
       args['hvac_ducts'] = '0 CFM25 per 100ft2, R-4'
@@ -674,10 +667,10 @@ class BuildResidentialHPXMLTest < Minitest::Test
     case hpxml_file
     when 'error-heating-system-and-heat-pump.xml'
       args['hvac_cooling_system'] = 'None'
-      args['hvac_heat_pump'] = 'Central HP, SEER 10, 6.2 HSPF'
+      args['hvac_heat_pump'] = 'Central HP, SEER 10.0, HSPF 6.8'
     when 'error-cooling-system-and-heat-pump.xml'
       args['hvac_heating_system'] = 'None'
-      args['hvac_heat_pump'] = 'Central HP, SEER 10, 6.2 HSPF'
+      args['hvac_heat_pump'] = 'Central HP, SEER 10.0, HSPF 6.8'
     when 'error-sfd-adiabatic-walls.xml'
       args['geometry_attached_walls'] = '1 Side: Left'
     when 'error-mf-conditioned-basement'
@@ -687,12 +680,6 @@ class BuildResidentialHPXMLTest < Minitest::Test
     when 'error-second-heating-system-but-no-primary-heating.xml'
       args['hvac_heating_system'] = 'None'
       args['hvac_heating_system_2'] = 'Fireplace, 100% Efficiency'
-    when 'error-second-heating-system-ducted-with-ducted-primary-heating.xml'
-      args['hvac_heating_system'] = 'None'
-      args['hvac_cooling_system'] = 'None'
-      args['hvac_heat_pump'] = 'Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted'
-      args['hvac_heat_pump_backup'] = 'Separate Heating System'
-      args['hvac_heating_system_2'] = 'Central Furnace, 100% AFUE'
     when 'error-sfa-above-apartment.xml'
       args['geometry_foundation_type'] = 'Above Apartment'
     when 'error-sfa-below-apartment.xml'

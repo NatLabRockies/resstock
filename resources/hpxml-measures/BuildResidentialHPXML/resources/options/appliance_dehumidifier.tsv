@@ -9,6 +9,8 @@ None
 "Whole-Home, 95 pints/day"	whole-home	IntegratedEnergyFactor	2.3	95
 "Whole-Home, 125 pints/day"	whole-home	IntegratedEnergyFactor	2.4	125
 "Detailed Example: Portable, 40 pints/day, EF 1.8"	portable	EnergyFactor	1.8	40
+"Detailed Example: Whole-Home, 60 pints/day, EF 2.3"	whole-home	EnergyFactor	2.3	60
+"Detailed Example: Portable, 40 pints/day, IEF 1.4"	portable	IntegratedEnergyFactor	1.4	40
 				
 # Type: The type of dehumidifier.				
 # Efficiency Type: The efficiency type of the dehumidifier.				
