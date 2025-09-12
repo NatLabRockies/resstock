@@ -125,7 +125,7 @@ class UpgradeCosts < OpenStudio::Measure::ModelMeasure
 
       option_cost = 0.0
       option_cost_pairs[option_num].each do |cost_value, cost_mult_type|
-        cost_mult = get_bldg_output(cost_mult_type, values, existing_hpxml, upgraded_hpxml)
+        cost_mult = get_bldg_output(cost_mult_type, hpxml, existing_hpxml, upgraded_hpxml)
         total_cost = cost_value * cost_mult
         next if total_cost == 0
 
