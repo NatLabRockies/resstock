@@ -429,7 +429,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           end
         end
         # Detailed performance
-        set_hvac_detailed_performance_data(cooling_system.cooling_detailed_performance_data,
+        set_hvac_detailed_performance_data('cooling',
+                                           cooling_system.cooling_detailed_performance_data,
                                            args[:hvac_perf_data_cooling_outdoor_temperatures],
                                            args[:hvac_perf_data_cooling_min_speed_cops],
                                            args[:hvac_perf_data_cooling_nom_speed_cops],
@@ -463,7 +464,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
           end
         end
         # Detailed performance
-        set_hvac_detailed_performance_data(heat_pump.cooling_detailed_performance_data,
+        set_hvac_detailed_performance_data('cooling',
+                                           heat_pump.cooling_detailed_performance_data,
                                            args[:hvac_perf_data_cooling_outdoor_temperatures],
                                            args[:hvac_perf_data_cooling_min_speed_cops],
                                            args[:hvac_perf_data_cooling_nom_speed_cops],
@@ -472,7 +474,8 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
                                            args[:hvac_perf_data_cooling_nom_speed_capacities],
                                            args[:hvac_perf_data_cooling_max_speed_capacities],
                                            heat_pump.compressor_type)
-        set_hvac_detailed_performance_data(heat_pump.heating_detailed_performance_data,
+        set_hvac_detailed_performance_data('heating',
+                                           heat_pump.heating_detailed_performance_data,
                                            args[:hvac_perf_data_heating_outdoor_temperatures],
                                            args[:hvac_perf_data_heating_min_speed_cops],
                                            args[:hvac_perf_data_heating_nom_speed_cops],
@@ -952,7 +955,7 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     return unavail_begin_month, unavail_begin_day, unavail_end_month, unavail_end_day
   end
 
-  def set_hvac_detailed_performance_data(hvac_perf_data, outdoor_temperatures, min_cops, nom_cops, max_cops,
+  def set_hvac_detailed_performance_data(perf_type, hvac_perf_data, outdoor_temperatures, min_cops, nom_cops, max_cops,
                                          min_capacities, nom_capacities, max_capacities, compressor_type)
     return if outdoor_temperatures.nil?
 
@@ -962,8 +965,25 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       HPXML::HVACCompressorTypeVariableSpeed => [HPXML::CapacityDescriptionMinimum, HPXML::CapacityDescriptionNominal, HPXML::CapacityDescriptionMaximum],
     }
 
+    speeds = speeds_map[compressor_type]
+    num_speeds = speeds.size
+
+    if min_capacities.split(',').size > num_speeds
+      fail "HVAC system is #{compressor_type} but #{min_capacities.split(',').size} minimum capacities for #{perf_type} provided."
+    elsif min_cops.split(',').size > num_speeds
+      fail "HVAC system is #{compressor_type} but #{min_cops.split(',').size} minimum COPs for #{perf_type} provided."
+    elsif nom_capacities.split(',').size > num_speeds
+      fail "HVAC system is #{compressor_type} but #{nom_capacities.split(',').size} nominal capacities for #{perf_type} provided."
+    elsif nom_cops.split(',').size > num_speeds
+      fail "HVAC system is #{compressor_type} but #{nom_cops.split(',').size} nominal COPs for #{perf_type} provided."
+    elsif max_capacities.split(',').size > num_speeds
+      fail "HVAC system is #{compressor_type} but #{max_capacities.split(',').size} maximum capacities for #{perf_type} provided."
+    elsif max_cops.split(',').size > num_speeds
+      fail "HVAC system is #{compressor_type} but #{max_cops.split(',').size} maximum COPs for #{perf_type} provided."
+    end
+
     outdoor_temperatures.split(',').map(&:strip).each_with_index do |outdoor_temperature, i|
-      for speed in speeds_map[compressor_type]
+      for speed in speeds
         if speed == HPXML::CapacityDescriptionMinimum
           capacity = (Float(min_capacities.split(',').map(&:strip)[i]) rescue nil)
           cop = (Float(min_cops.split(',').map(&:strip)[i]) rescue nil)

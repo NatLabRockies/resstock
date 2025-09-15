@@ -28,7 +28,7 @@
         "hvac_heating_system_2_fuel": "Electricity",
         "hvac_heating_system_2_capacity": "20 kBtu/hr",
         "hvac_heating_system_2_heating_load_served": "25%",
-        "hvac_cooling_system": "Central AC, SEER 24.5",
+        "hvac_cooling_system": "Central AC, SEER2 24.0",
         "hvac_cooling_system_capacity": "5.0 tons",
         "hvac_heat_pump": "None",
         "hvac_ducts": "15% Leakage, Uninsulated",

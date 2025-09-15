@@ -81,7 +81,7 @@ class UpgradeCostsTest < Minitest::Test
       'Size, Heating System Secondary (kBtu/h)' => 0.0,
       'Size, Cooling System Primary (kBtu/h)' => 60.0,
       'Size, Heat Pump Backup Primary (kBtu/h)' => 100.0, # backup
-      'Size, Water Heater (gal)' => 50.0,
+      'Size, Water Heater (gal)' => 66.0,
       'Flow Rate, Mechanical Ventilation (cfm)' => 0.0,
       'Slab Perimeter, Exposed, Conditioned (ft)' => 0.0,
       'Rim Joist Area, Above-Grade, Exterior (ft^2)' => 176.2
@@ -109,7 +109,7 @@ class UpgradeCostsTest < Minitest::Test
       'Size, Heating System Secondary (kBtu/h)' => 20.0,
       'Size, Cooling System Primary (kBtu/h)' => 60.0,
       'Size, Heat Pump Backup Primary (kBtu/h)' => 0.0, # backup
-      'Size, Water Heater (gal)' => 50.0,
+      'Size, Water Heater (gal)' => 66.0,
       'Flow Rate, Mechanical Ventilation (cfm)' => 0.0,
       'Slab Perimeter, Exposed, Conditioned (ft)' => 0.0,
       'Rim Joist Area, Above-Grade, Exterior (ft^2)' => 219.4
@@ -389,7 +389,7 @@ class UpgradeCostsTest < Minitest::Test
       'Size, Heating System Secondary (kBtu/h)' => 0.0,
       'Size, Cooling System Primary (kBtu/h)' => 60.0,
       'Size, Heat Pump Backup Primary (kBtu/h)' => 100.0, # backup
-      'Size, Water Heater (gal)' => 50.0,
+      'Size, Water Heater (gal)' => 66.0,
       'Flow Rate, Mechanical Ventilation (cfm)' => 0.0,
       'Slab Perimeter, Exposed, Conditioned (ft)' => 0.0,
       'Rim Joist Area, Above-Grade, Exterior (ft^2)' => 51.0
@@ -501,7 +501,7 @@ class UpgradeCostsTest < Minitest::Test
       'Size, Heating System Secondary (kBtu/h)' => 0.0,
       'Size, Cooling System Primary (kBtu/h)' => 60.0,
       'Size, Heat Pump Backup Primary (kBtu/h)' => 100.0, # backup
-      'Size, Water Heater (gal)' => 50.0,
+      'Size, Water Heater (gal)' => 66.0,
       'Flow Rate, Mechanical Ventilation (cfm)' => 0.0,
       'Slab Perimeter, Exposed, Conditioned (ft)' => 0.0,
       'Rim Joist Area, Above-Grade, Exterior (ft^2)' => 71.8

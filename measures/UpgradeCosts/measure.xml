@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>upgrade_costs</name>
   <uid>ef51212c-acc4-48d7-9b29-cf2a5c6c4449</uid>
-  <version_id>13ef8c4c-7d63-4705-ba9d-9e5f116405dd</version_id>
-  <version_modified>2025-09-12T19:59:29Z</version_modified>
+  <version_id>c72f1737-2e02-48c4-bac9-b654b9e7e97d</version_id>
+  <version_modified>2025-09-15T15:42:23Z</version_modified>
   <xml_checksum>B1F14CB4</xml_checksum>
   <class_name>UpgradeCosts</class_name>
   <display_name>Upgrade Costs</display_name>
@@ -87,127 +87,127 @@
       <filename>MF_1story_UB_Furnace_AC1_FuelTankWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>49309625</checksum>
+      <checksum>5683D9A4</checksum>
     </file>
     <file>
       <filename>MF_2story_UB_ASHP2_HPWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>5A788370</checksum>
+      <checksum>30E52F2C</checksum>
     </file>
     <file>
       <filename>MF_2story_UB_FuelBoiler_AC1_FuelTankWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>661FADF4</checksum>
+      <checksum>649FFC86</checksum>
     </file>
     <file>
       <filename>MF_2story_UB_Furnace_AC1_FuelTankWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>F71E9BC9</checksum>
+      <checksum>D4898D56</checksum>
     </file>
     <file>
       <filename>SFA_2story_FB_FuelBoiler_RoomAC_FuelTankWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>ED2D8473</checksum>
+      <checksum>E5F00971</checksum>
     </file>
     <file>
       <filename>SFA_2story_UB_ASHP2_HPWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>CB6D17F7</checksum>
+      <checksum>7714C662</checksum>
     </file>
     <file>
       <filename>SFA_2story_UB_FuelBoiler_RoomAC_FuelTankWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>491FA0D2</checksum>
+      <checksum>C795ACBF</checksum>
     </file>
     <file>
       <filename>SFA_2story_UB_Furnace_RoomAC_FuelTankWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>CCAB8598</checksum>
+      <checksum>5AEFD9BF</checksum>
     </file>
     <file>
       <filename>SFD_1story_FB_UA_GRG_MSHP_FuelTanklessWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>4D683B94</checksum>
+      <checksum>5873DFBF</checksum>
     </file>
     <file>
       <filename>SFD_1story_FB_UA_GRG_MSHP_FuelTanklessWH.xml</filename>
       <filetype>xml</filetype>
       <usage_type>test</usage_type>
-      <checksum>8D097075</checksum>
+      <checksum>94FA2FDE</checksum>
     </file>
     <file>
       <filename>SFD_1story_FB_UA_GRG_RoomAC_ElecBoiler_FuelTanklessWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>B6753DB8</checksum>
+      <checksum>80FF8C82</checksum>
     </file>
     <file>
       <filename>SFD_1story_UB_UA_ASHP2_HPWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>9E9D7E63</checksum>
+      <checksum>2DBD78A8</checksum>
     </file>
     <file>
       <filename>SFD_1story_UB_UA_GRG_ACV_FuelFurnace_PortableHeater_HPWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>E4B4B338</checksum>
+      <checksum>91D0B21B</checksum>
     </file>
     <file>
       <filename>SFD_1story_UB_UA_GRG_ACV_FuelFurnace_PortableHeater_HPWH.xml</filename>
       <filetype>xml</filetype>
       <usage_type>test</usage_type>
-      <checksum>1E118079</checksum>
+      <checksum>F41D7ECB</checksum>
     </file>
     <file>
       <filename>SFD_2story_CS_UA_AC2_FuelBoiler_FuelTankWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>9DBFD1FF</checksum>
+      <checksum>9E3B987B</checksum>
     </file>
     <file>
       <filename>SFD_2story_CS_UA_AC2_FuelBoiler_FuelTankWH.xml</filename>
       <filetype>xml</filetype>
       <usage_type>test</usage_type>
-      <checksum>E7F457A4</checksum>
+      <checksum>B3A62BC9</checksum>
     </file>
     <file>
       <filename>SFD_2story_CS_UA_GRG_ASHPV_FuelTanklessWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>1460DE9D</checksum>
+      <checksum>24A6C791</checksum>
     </file>
     <file>
       <filename>SFD_2story_FB_UA_GRG_AC1_ElecBaseboard_FuelTankWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>7ED9593A</checksum>
+      <checksum>2923F8A4</checksum>
     </file>
     <file>
       <filename>SFD_2story_FB_UA_GRG_AC1_ElecBaseboard_FuelTankWH.xml</filename>
       <filetype>xml</filetype>
       <usage_type>test</usage_type>
-      <checksum>3A7962F3</checksum>
+      <checksum>B87A95C9</checksum>
     </file>
     <file>
       <filename>SFD_2story_FB_UA_GRG_AC1_UnitHeater_FuelTankWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>44A1151B</checksum>
+      <checksum>AE50862C</checksum>
     </file>
     <file>
       <filename>SFD_2story_FB_UA_GRG_GSHP_ElecTanklessWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>EFD21CB5</checksum>
+      <checksum>DB9B2997</checksum>
     </file>
     <file>
       <filename>SFD_2story_PB_UA_ElecFurnace_ElecTankWH.osw</filename>
@@ -219,7 +219,7 @@
       <filename>SFD_2story_S_UA_GRG_ASHP1_Fireplace_FuelTanklessWH_ERV.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>6767485A</checksum>
+      <checksum>D861EAA5</checksum>
     </file>
     <file>
       <filename>in.epw</filename>
@@ -231,19 +231,19 @@
       <filename>in.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
-      <checksum>7AEFC2FF</checksum>
+      <checksum>94B3E994</checksum>
     </file>
     <file>
       <filename>in.xml</filename>
       <filetype>xml</filetype>
       <usage_type>test</usage_type>
-      <checksum>F8FB377D</checksum>
+      <checksum>A53CA83D</checksum>
     </file>
     <file>
       <filename>upgrade_costs_test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>6B41E853</checksum>
+      <checksum>66D70820</checksum>
     </file>
   </files>
 </measure>

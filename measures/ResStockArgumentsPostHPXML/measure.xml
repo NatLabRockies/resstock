@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>838dc32f-db12-4aae-8187-fe3573be5fff</version_id>
-  <version_modified>2025-08-20T16:51:33Z</version_modified>
+  <version_id>012be491-b519-4737-85a2-9a0f507553bf</version_id>
+  <version_modified>2025-09-15T15:42:22Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -3783,147 +3783,191 @@
       <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
-      <default_value>Central AC, SEER 13</default_value>
+      <default_value>Central AC, SEER 13.0</default_value>
       <choices>
         <choice>
           <value>None</value>
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 8</value>
-          <display_name>Central AC, SEER 8</display_name>
+          <value>Central AC, SEER 8.0</value>
+          <display_name>Central AC, SEER 8.0</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 10</value>
-          <display_name>Central AC, SEER 10</display_name>
+          <value>Central AC, SEER 10.0</value>
+          <display_name>Central AC, SEER 10.0</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 13</value>
-          <display_name>Central AC, SEER 13</display_name>
+          <value>Central AC, SEER 13.0</value>
+          <display_name>Central AC, SEER 13.0</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 14</value>
-          <display_name>Central AC, SEER 14</display_name>
+          <value>Central AC, SEER 14.0</value>
+          <display_name>Central AC, SEER 14.0</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 15</value>
-          <display_name>Central AC, SEER 15</display_name>
+          <value>Central AC, SEER 15.0</value>
+          <display_name>Central AC, SEER 15.0</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 16</value>
-          <display_name>Central AC, SEER 16</display_name>
+          <value>Central AC, SEER2 13.4</value>
+          <display_name>Central AC, SEER2 13.4</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 17</value>
-          <display_name>Central AC, SEER 17</display_name>
+          <value>Central AC, SEER2 14.0</value>
+          <display_name>Central AC, SEER2 14.0</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 18</value>
-          <display_name>Central AC, SEER 18</display_name>
+          <value>Central AC, SEER2 15.0</value>
+          <display_name>Central AC, SEER2 15.0</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 21</value>
-          <display_name>Central AC, SEER 21</display_name>
+          <value>Central AC, SEER2 16.0</value>
+          <display_name>Central AC, SEER2 16.0</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 24</value>
-          <display_name>Central AC, SEER 24</display_name>
+          <value>Central AC, SEER2 17.0</value>
+          <display_name>Central AC, SEER2 17.0</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 24.5</value>
-          <display_name>Central AC, SEER 24.5</display_name>
+          <value>Central AC, SEER2 18.0</value>
+          <display_name>Central AC, SEER2 18.0</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER 27</value>
-          <display_name>Central AC, SEER 27</display_name>
+          <value>Central AC, SEER2 19.0</value>
+          <display_name>Central AC, SEER2 19.0</display_name>
         </choice>
         <choice>
-          <value>Central AC, SEER2 12.4</value>
-          <display_name>Central AC, SEER2 12.4</display_name>
+          <value>Central AC, SEER2 20.0</value>
+          <display_name>Central AC, SEER2 20.0</display_name>
         </choice>
         <choice>
-          <value>Mini-Split AC, SEER 13</value>
-          <display_name>Mini-Split AC, SEER 13</display_name>
+          <value>Central AC, SEER2 21.0</value>
+          <display_name>Central AC, SEER2 21.0</display_name>
         </choice>
         <choice>
-          <value>Mini-Split AC, SEER 17</value>
-          <display_name>Mini-Split AC, SEER 17</display_name>
+          <value>Central AC, SEER2 22.0</value>
+          <display_name>Central AC, SEER2 22.0</display_name>
         </choice>
         <choice>
-          <value>Mini-Split AC, SEER 19</value>
-          <display_name>Mini-Split AC, SEER 19</display_name>
+          <value>Central AC, SEER2 23.0</value>
+          <display_name>Central AC, SEER2 23.0</display_name>
         </choice>
         <choice>
-          <value>Mini-Split AC, SEER 19, Ducted</value>
-          <display_name>Mini-Split AC, SEER 19, Ducted</display_name>
+          <value>Central AC, SEER2 24.0</value>
+          <display_name>Central AC, SEER2 24.0</display_name>
         </choice>
         <choice>
-          <value>Mini-Split AC, SEER 24</value>
-          <display_name>Mini-Split AC, SEER 24</display_name>
+          <value>Central AC, SEER2 25.0</value>
+          <display_name>Central AC, SEER2 25.0</display_name>
         </choice>
         <choice>
-          <value>Mini-Split AC, SEER 25</value>
-          <display_name>Mini-Split AC, SEER 25</display_name>
+          <value>Ductless Mini-Split AC, SEER2 14.5</value>
+          <display_name>Ductless Mini-Split AC, SEER2 14.5</display_name>
         </choice>
         <choice>
-          <value>Mini-Split AC, SEER 29.3</value>
-          <display_name>Mini-Split AC, SEER 29.3</display_name>
+          <value>Ductless Mini-Split AC, SEER2 16.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 16.0</display_name>
         </choice>
         <choice>
-          <value>Mini-Split AC, SEER 33</value>
-          <display_name>Mini-Split AC, SEER 33</display_name>
+          <value>Ductless Mini-Split AC, SEER2 17.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 17.0</display_name>
         </choice>
         <choice>
-          <value>Room AC, EER 8.5</value>
-          <display_name>Room AC, EER 8.5</display_name>
+          <value>Ductless Mini-Split AC, SEER2 18.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 18.0</display_name>
         </choice>
         <choice>
-          <value>Room AC, EER 8.5, Electric Resistance Heating</value>
-          <display_name>Room AC, EER 8.5, Electric Resistance Heating</display_name>
+          <value>Ductless Mini-Split AC, SEER2 19.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 19.0</display_name>
         </choice>
         <choice>
-          <value>Room AC, EER 9.8</value>
-          <display_name>Room AC, EER 9.8</display_name>
+          <value>Ductless Mini-Split AC, SEER2 20.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 20.0</display_name>
         </choice>
         <choice>
-          <value>Room AC, EER 10.7</value>
-          <display_name>Room AC, EER 10.7</display_name>
+          <value>Ductless Mini-Split AC, SEER2 21.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 21.0</display_name>
         </choice>
         <choice>
-          <value>Room AC, EER 12.0</value>
-          <display_name>Room AC, EER 12.0</display_name>
+          <value>Ductless Mini-Split AC, SEER2 22.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 22.0</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split AC, SEER2 23.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 23.0</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split AC, SEER2 24.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 24.0</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split AC, SEER2 25.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 25.0</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split AC, SEER2 26.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 26.0</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split AC, SEER2 27.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 27.0</display_name>
+        </choice>
+        <choice>
+          <value>Ductless Mini-Split AC, SEER2 28.0</value>
+          <display_name>Ductless Mini-Split AC, SEER2 28.0</display_name>
         </choice>
         <choice>
           <value>Room AC, CEER 8.4</value>
           <display_name>Room AC, CEER 8.4</display_name>
         </choice>
         <choice>
+          <value>Room AC, CEER 9.7</value>
+          <display_name>Room AC, CEER 9.7</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, CEER 10.6</value>
+          <display_name>Room AC, CEER 10.6</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, CEER 11.8</value>
+          <display_name>Room AC, CEER 11.8</display_name>
+        </choice>
+        <choice>
+          <value>Room AC, CEER 13.1</value>
+          <display_name>Room AC, CEER 13.1</display_name>
+        </choice>
+        <choice>
+          <value>Packaged Terminal AC, EER 8.5</value>
+          <display_name>Packaged Terminal AC, EER 8.5</display_name>
+        </choice>
+        <choice>
+          <value>Packaged Terminal AC, EER 9.8</value>
+          <display_name>Packaged Terminal AC, EER 9.8</display_name>
+        </choice>
+        <choice>
           <value>Packaged Terminal AC, EER 10.7</value>
           <display_name>Packaged Terminal AC, EER 10.7</display_name>
         </choice>
         <choice>
-          <value>Packaged Terminal AC, EER 10.7, Electric Resistance Heating</value>
-          <display_name>Packaged Terminal AC, EER 10.7, Electric Resistance Heating</display_name>
+          <value>Packaged Terminal AC, EER 11.9</value>
+          <display_name>Packaged Terminal AC, EER 11.9</display_name>
         </choice>
         <choice>
-          <value>Packaged Terminal AC, EER 10.7, 80% AFUE Gas Heating</value>
-          <display_name>Packaged Terminal AC, EER 10.7, 80% AFUE Gas Heating</display_name>
+          <value>Packaged Terminal AC, EER 13.2</value>
+          <display_name>Packaged Terminal AC, EER 13.2</display_name>
         </choice>
         <choice>
           <value>Evaporative Cooler</value>
           <display_name>Evaporative Cooler</display_name>
         </choice>
         <choice>
-          <value>Evaporative Cooler, Ducted</value>
-          <display_name>Evaporative Cooler, Ducted</display_name>
+          <value>Detailed Example: Central AC, SEER2 13.4, Absolute Detailed Performance</value>
+          <display_name>Detailed Example: Central AC, SEER2 13.4, Absolute Detailed Performance</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Central AC, SEER 13, Absolute Detailed Performance</value>
-          <display_name>Detailed Example: Central AC, SEER 13, Absolute Detailed Performance</display_name>
-        </choice>
-        <choice>
-          <value>Detailed Example: Central AC, SEER 18, Absolute Detailed Performance</value>
-          <display_name>Detailed Example: Central AC, SEER 18, Absolute Detailed Performance</display_name>
+          <value>Detailed Example: Central AC, SEER2 17.1, Absolute Detailed Performance</value>
+          <display_name>Detailed Example: Central AC, SEER2 17.1, Absolute Detailed Performance</display_name>
         </choice>
         <choice>
           <value>Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance</value>
@@ -3934,12 +3978,12 @@
           <display_name>Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Mini-Split AC, SEER 17, Absolute Detailed Performance</value>
-          <display_name>Detailed Example: Mini-Split AC, SEER 17, Absolute Detailed Performance</display_name>
+          <value>Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Absolute Detailed Performance</value>
+          <display_name>Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Absolute Detailed Performance</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Mini-Split AC, SEER 17, Normalized Detailed Performance</value>
-          <display_name>Detailed Example: Mini-Split AC, SEER 17, Normalized Detailed Performance</display_name>
+          <value>Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Normalized Detailed Performance</value>
+          <display_name>Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Normalized Detailed Performance</display_name>
         </choice>
       </choices>
     </argument>
@@ -4166,164 +4210,140 @@
           <display_name>None</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 8, 6.0 HSPF</value>
-          <display_name>Central HP, SEER 8, 6.0 HSPF</display_name>
+          <value>Central HP, SEER 8.0, HSPF 6.0</value>
+          <display_name>Central HP, SEER 8.0, HSPF 6.0</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 10, 6.2 HSPF</value>
-          <display_name>Central HP, SEER 10, 6.2 HSPF</display_name>
+          <value>Central HP, SEER 10.0, HSPF 6.8</value>
+          <display_name>Central HP, SEER 10.0, HSPF 6.8</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 10, 6.8 HSPF</value>
-          <display_name>Central HP, SEER 10, 6.8 HSPF</display_name>
+          <value>Central HP, SEER 13.0, HSPF 7.7</value>
+          <display_name>Central HP, SEER 13.0, HSPF 7.7</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 10.3, 7.0 HSPF</value>
-          <display_name>Central HP, SEER 10.3, 7.0 HSPF</display_name>
+          <value>Central HP, SEER 14.0, HSPF 8.2</value>
+          <display_name>Central HP, SEER 14.0, HSPF 8.2</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 11.5, 7.5 HSPF</value>
-          <display_name>Central HP, SEER 11.5, 7.5 HSPF</display_name>
+          <value>Central HP, SEER 15.0, HSPF 8.5</value>
+          <display_name>Central HP, SEER 15.0, HSPF 8.5</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 13, 7.7 HSPF</value>
-          <display_name>Central HP, SEER 13, 7.7 HSPF</display_name>
+          <value>Central HP, SEER2 13.4, HSPF2 7.0</value>
+          <display_name>Central HP, SEER2 13.4, HSPF2 7.0</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 13, 8.0 HSPF</value>
-          <display_name>Central HP, SEER 13, 8.0 HSPF</display_name>
+          <value>Central HP, SEER2 14.0, HSPF2 7.3</value>
+          <display_name>Central HP, SEER2 14.0, HSPF2 7.3</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 13, 9.85 HSPF</value>
-          <display_name>Central HP, SEER 13, 9.85 HSPF</display_name>
+          <value>Central HP, SEER2 15.0, HSPF2 7.6</value>
+          <display_name>Central HP, SEER2 15.0, HSPF2 7.6</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 14, 8.2 HSPF</value>
-          <display_name>Central HP, SEER 14, 8.2 HSPF</display_name>
+          <value>Central HP, SEER2 16.0, HSPF2 7.9</value>
+          <display_name>Central HP, SEER2 16.0, HSPF2 7.9</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 14.3, 8.5 HSPF</value>
-          <display_name>Central HP, SEER 14.3, 8.5 HSPF</display_name>
+          <value>Central HP, SEER2 17.0, HSPF2 8.2</value>
+          <display_name>Central HP, SEER2 17.0, HSPF2 8.2</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 15, 8.5 HSPF</value>
-          <display_name>Central HP, SEER 15, 8.5 HSPF</display_name>
+          <value>Central HP, SEER2 18.0, HSPF2 8.5</value>
+          <display_name>Central HP, SEER2 18.0, HSPF2 8.5</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 15, 9.0 HSPF</value>
-          <display_name>Central HP, SEER 15, 9.0 HSPF</display_name>
+          <value>Central HP, SEER2 19.0, HSPF2 8.7</value>
+          <display_name>Central HP, SEER2 19.0, HSPF2 8.7</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 16, 9.0 HSPF</value>
-          <display_name>Central HP, SEER 16, 9.0 HSPF</display_name>
+          <value>Central HP, SEER2 20.0, HSPF2 9.0</value>
+          <display_name>Central HP, SEER2 20.0, HSPF2 9.0</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 17, 8.7 HSPF</value>
-          <display_name>Central HP, SEER 17, 8.7 HSPF</display_name>
+          <value>Central HP, SEER2 21.0, HSPF2 9.2</value>
+          <display_name>Central HP, SEER2 21.0, HSPF2 9.2</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 18, 9.3 HSPF</value>
-          <display_name>Central HP, SEER 18, 9.3 HSPF</display_name>
+          <value>Central HP, SEER2 22.0, HSPF2 9.5</value>
+          <display_name>Central HP, SEER2 22.0, HSPF2 9.5</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 20, 11 HSPF</value>
-          <display_name>Central HP, SEER 20, 11 HSPF</display_name>
+          <value>Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7</value>
+          <display_name>Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 22, 10 HSPF</value>
-          <display_name>Central HP, SEER 22, 10 HSPF</display_name>
+          <value>Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1</value>
+          <display_name>Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1</display_name>
         </choice>
         <choice>
-          <value>Central HP, SEER 24, 13 HSPF</value>
-          <display_name>Central HP, SEER 24, 13 HSPF</display_name>
+          <value>Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5</value>
+          <display_name>Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 14.5, 8.2 HSPF</value>
-          <display_name>Mini-Split HP, SEER 14.5, 8.2 HSPF</display_name>
+          <value>Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8</value>
+          <display_name>Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted</value>
-          <display_name>Mini-Split HP, SEER 14.5, 8.2 HSPF, Ducted</display_name>
+          <value>Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0</value>
+          <display_name>Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 16, 9.2 HSPF</value>
-          <display_name>Mini-Split HP, SEER 16, 9.2 HSPF</display_name>
+          <value>Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4</value>
+          <display_name>Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 17, 9.5 HSPF</value>
-          <display_name>Mini-Split HP, SEER 17, 9.5 HSPF</display_name>
+          <value>Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7</value>
+          <display_name>Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 17, 9.5 HSPF, Ducted</value>
-          <display_name>Mini-Split HP, SEER 17, 9.5 HSPF, Ducted</display_name>
+          <value>Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1</value>
+          <display_name>Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 18.0, 9.6 HSPF</value>
-          <display_name>Mini-Split HP, SEER 18.0, 9.6 HSPF</display_name>
+          <value>Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4</value>
+          <display_name>Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted</value>
-          <display_name>Mini-Split HP, SEER 18.0, 9.6 HSPF, Ducted</display_name>
+          <value>Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7</value>
+          <display_name>Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 19, 10 HSPF, Ducted</value>
-          <display_name>Mini-Split HP, SEER 19, 10 HSPF, Ducted</display_name>
+          <value>Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0</value>
+          <display_name>Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 19, 10 HSPF</value>
-          <display_name>Mini-Split HP, SEER 19, 10 HSPF</display_name>
+          <value>Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4</value>
+          <display_name>Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 20, 11 HSPF</value>
-          <display_name>Mini-Split HP, SEER 20, 11 HSPF</display_name>
+          <value>Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7</value>
+          <display_name>Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 24, 13 HSPF</value>
-          <display_name>Mini-Split HP, SEER 24, 13 HSPF</display_name>
+          <value>Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0</value>
+          <display_name>Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 25, 12.7 HSPF</value>
-          <display_name>Mini-Split HP, SEER 25, 12.7 HSPF</display_name>
+          <value>Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3</value>
+          <display_name>Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 25, 12.7 HSPF, Ducted</value>
-          <display_name>Mini-Split HP, SEER 25, 12.7 HSPF, Ducted</display_name>
+          <value>Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7</value>
+          <display_name>Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7</display_name>
         </choice>
         <choice>
-          <value>Mini-Split HP, SEER 29.3, 14 HSPF</value>
-          <display_name>Mini-Split HP, SEER 29.3, 14 HSPF</display_name>
-        </choice>
-        <choice>
-          <value>Mini-Split HP, SEER 29.3, 14 HSPF, Ducted</value>
-          <display_name>Mini-Split HP, SEER 29.3, 14 HSPF, Ducted</display_name>
-        </choice>
-        <choice>
-          <value>Mini-Split HP, SEER 33, 13.3 HSPF</value>
-          <display_name>Mini-Split HP, SEER 33, 13.3 HSPF</display_name>
-        </choice>
-        <choice>
-          <value>Mini-Split HP, SEER 33, 13.3 HSPF, Ducted</value>
-          <display_name>Mini-Split HP, SEER 33, 13.3 HSPF, Ducted</display_name>
+          <value>Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3</value>
+          <display_name>Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3</display_name>
         </choice>
         <choice>
           <value>Geothermal HP, EER 16.6, COP 3.6</value>
           <display_name>Geothermal HP, EER 16.6, COP 3.6</display_name>
         </choice>
         <choice>
-          <value>Geothermal HP, EER 18.2, COP 3.7</value>
-          <display_name>Geothermal HP, EER 18.2, COP 3.7</display_name>
-        </choice>
-        <choice>
           <value>Geothermal HP, EER 18.6, COP 3.8</value>
           <display_name>Geothermal HP, EER 18.6, COP 3.8</display_name>
-        </choice>
-        <choice>
-          <value>Geothermal HP, EER 19.4, COP 3.8</value>
-          <display_name>Geothermal HP, EER 19.4, COP 3.8</display_name>
-        </choice>
-        <choice>
-          <value>Geothermal HP, EER 20.2, COP 4.2</value>
-          <display_name>Geothermal HP, EER 20.2, COP 4.2</display_name>
         </choice>
         <choice>
           <value>Geothermal HP, EER 20.5, COP 4.0</value>
@@ -4334,48 +4354,72 @@
           <display_name>Geothermal HP, EER 30.9, COP 4.4</display_name>
         </choice>
         <choice>
-          <value>Packaged Terminal HP, EER 11.4, COP 3.6</value>
-          <display_name>Packaged Terminal HP, EER 11.4, COP 3.6</display_name>
+          <value>Room HP, CEER 8.4, COP 2.7</value>
+          <display_name>Room HP, CEER 8.4, COP 2.7</display_name>
         </choice>
         <choice>
-          <value>Room AC w/ Reverse Cycle, EER 11.4, COP 3.6</value>
-          <display_name>Room AC w/ Reverse Cycle, EER 11.4, COP 3.6</display_name>
+          <value>Room HP, CEER 9.7, COP 3.0</value>
+          <display_name>Room HP, CEER 9.7, COP 3.0</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Central HP, SEER2 12.4, HSPF2 6.5</value>
-          <display_name>Detailed Example: Central HP, SEER2 12.4, HSPF2 6.5</display_name>
+          <value>Room HP, CEER 10.6, COP 3.3</value>
+          <display_name>Room HP, CEER 10.6, COP 3.3</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Central HP, SEER 13, 7.7 HSPF, Absolute Detailed Performance</value>
-          <display_name>Detailed Example: Central HP, SEER 13, 7.7 HSPF, Absolute Detailed Performance</display_name>
+          <value>Room HP, CEER 11.8, COP 3.6</value>
+          <display_name>Room HP, CEER 11.8, COP 3.6</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Central HP, SEER 18, 9.3 HSPF, Absolute Detailed Performance</value>
-          <display_name>Detailed Example: Central HP, SEER 18, 9.3 HSPF, Absolute Detailed Performance</display_name>
+          <value>Room HP, CEER 13.1, COP 3.9</value>
+          <display_name>Room HP, CEER 13.1, COP 3.9</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance</value>
-          <display_name>Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Absolute Detailed Performance</display_name>
+          <value>Packaged Terminal HP, EER 8.5, COP 2.7</value>
+          <display_name>Packaged Terminal HP, EER 8.5, COP 2.7</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance</value>
-          <display_name>Detailed Example: Central HP, SEER 17.5, 9.5 HSPF, Normalized Detailed Performance</display_name>
+          <value>Packaged Terminal HP, EER 9.8, COP 3.0</value>
+          <display_name>Packaged Terminal HP, EER 9.8, COP 3.0</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance</value>
-          <display_name>Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Absolute Detailed Performance</display_name>
+          <value>Packaged Terminal HP, EER 10.7, COP 3.3</value>
+          <display_name>Packaged Terminal HP, EER 10.7, COP 3.3</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance</value>
-          <display_name>Detailed Example: Mini-Split HP, SEER 16.7, 11.3 HSPF, Normalized Detailed Performance</display_name>
+          <value>Packaged Terminal HP, EER 11.9, COP 3.6</value>
+          <display_name>Packaged Terminal HP, EER 11.9, COP 3.6</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance</value>
-          <display_name>Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Absolute Detailed Performance</display_name>
+          <value>Packaged Terminal HP, EER 13.2, COP 3.9</value>
+          <display_name>Packaged Terminal HP, EER 13.2, COP 3.9</display_name>
         </choice>
         <choice>
-          <value>Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance</value>
-          <display_name>Detailed Example: Mini-Split HP, SEER 17, 10 HSPF, Normalized Detailed Performance</display_name>
+          <value>Detailed Example: Central HP, SEER 13.0, HSPF 9.85</value>
+          <display_name>Detailed Example: Central HP, SEER 13.0, HSPF 9.85</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance</value>
+          <display_name>Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance</value>
+          <display_name>Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance</value>
+          <display_name>Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance</value>
+          <display_name>Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance</value>
+          <display_name>Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance</value>
+          <display_name>Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance</display_name>
         </choice>
       </choices>
     </argument>
@@ -9405,6 +9449,14 @@
           <value>Detailed Example: Portable, 40 pints/day, EF 1.8</value>
           <display_name>Detailed Example: Portable, 40 pints/day, EF 1.8</display_name>
         </choice>
+        <choice>
+          <value>Detailed Example: Whole-Home, 60 pints/day, EF 2.3</value>
+          <display_name>Detailed Example: Whole-Home, 60 pints/day, EF 2.3</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Portable, 40 pints/day, IEF 1.4</value>
+          <display_name>Detailed Example: Portable, 40 pints/day, IEF 1.4</display_name>
+        </choice>
       </choices>
     </argument>
     <argument>
@@ -12553,7 +12605,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>E09BF38F</checksum>
+      <checksum>B141FF17</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -12649,7 +12701,7 @@
       <filename>test_template.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>545BA201</checksum>
+      <checksum>AD113DEE</checksum>
     </file>
   </files>
 </measure>

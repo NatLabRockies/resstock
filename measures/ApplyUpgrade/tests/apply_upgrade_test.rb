@@ -48,16 +48,13 @@ class ApplyUpgradeTest < Minitest::Test
     expected_values = {}
 
     expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(false, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+    _test_heat_pump_backup(false, 'Central HP, SEER 13.0, HSPF 7.7', expected_values)
 
     expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(true, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+    _test_heat_pump_backup(true, 'Central HP, SEER 13.0, HSPF 7.7', expected_values)
 
     expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF', expected_values)
-
-    expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF, Ducted', expected_values)
+    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values)
 
     puts 'Duct restriction:'
     expected_values = {
@@ -114,7 +111,7 @@ class ApplyUpgradeTest < Minitest::Test
     expected_values = {}
 
     expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(false, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+    _test_heat_pump_backup(false, 'Central HP, SEER 13.0, HSPF 7.7', expected_values)
 
     expected_values = {
       'heat_pump_backup_fuel' => HPXML::FuelTypeNaturalGas,
@@ -124,7 +121,7 @@ class ApplyUpgradeTest < Minitest::Test
     }
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeIntegrated
-    _test_heat_pump_backup(true, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+    _test_heat_pump_backup(true, 'Central HP, SEER 13.0, HSPF 7.7', expected_values)
 
     expected_values = {
       'heating_system_2_type' => HPXML::HVACTypeFurnace,
@@ -135,17 +132,7 @@ class ApplyUpgradeTest < Minitest::Test
     }
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF', expected_values)
-
-    expected_values = {
-      'heat_pump_backup_fuel' => HPXML::FuelTypeNaturalGas,
-      'heat_pump_backup_heating_efficiency' => 0.92,
-      'heat_pump_backup_heating_capacity' => 100000.0,
-      'heat_pump_backup_heating_autosizing_factor' => 1.0
-    }
-
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeIntegrated
-    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF, Ducted', expected_values)
+    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values)
 
     puts 'Duct restriction:'
     expected_values = {
@@ -219,7 +206,7 @@ class ApplyUpgradeTest < Minitest::Test
     expected_values = {}
 
     expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(false, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+    _test_heat_pump_backup(false, 'Central HP, SEER 13.0, HSPF 7.7', expected_values)
 
     expected_values = {
       'heating_system_2_type' => HPXML::HVACTypeBoiler,
@@ -230,13 +217,10 @@ class ApplyUpgradeTest < Minitest::Test
     }
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+    _test_heat_pump_backup(true, 'Central HP, SEER 13.0, HSPF 7.7', expected_values)
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF', expected_values)
-
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF, Ducted', expected_values)
+    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values)
 
     puts 'Duct restriction:'
     expected_values = {
@@ -310,7 +294,7 @@ class ApplyUpgradeTest < Minitest::Test
     expected_values = {}
 
     expected_values['heat_pump_backup_type'] = nil
-    _test_heat_pump_backup(false, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+    _test_heat_pump_backup(false, 'Central HP, SEER 13.0, HSPF 7.7', expected_values)
 
     expected_values = {
       'heating_system_2_type' => HPXML::HVACTypeElectricResistance,
@@ -321,13 +305,10 @@ class ApplyUpgradeTest < Minitest::Test
     }
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Central HP, SEER 13, 7.7 HSPF', expected_values)
+    _test_heat_pump_backup(true, 'Central HP, SEER 13.0, HSPF 7.7', expected_values)
 
     expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF', expected_values)
-
-    expected_values['heat_pump_backup_type'] = HPXML::HeatPumpBackupTypeSeparate
-    _test_heat_pump_backup(true, 'Mini-Split HP, SEER 19, 10 HSPF, Ducted', expected_values)
+    _test_heat_pump_backup(true, 'Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0', expected_values)
 
     puts 'Duct restriction:'
     expected_values = {
@@ -405,7 +386,7 @@ class ApplyUpgradeTest < Minitest::Test
     puts "\theat pump upgrade..."
     args_hash['hvac_heating_system'] = 'None'
     args_hash['hvac_cooling_system'] = 'None'
-    args_hash['hvac_heat_pump'] = 'Central HP, SEER 13, 7.7 HSPF'
+    args_hash['hvac_heat_pump'] = 'Central HP, SEER 13.0, HSPF 7.7'
     expected_values['heating_system_heating_capacity'] = nil
     expected_values['cooling_system_cooling_capacity'] = nil
     expected_values['heat_pump_heating_capacity'] = nil
@@ -522,7 +503,7 @@ class ApplyUpgradeTest < Minitest::Test
 
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     measures = { 'ResStockArguments' => [{ 'hvac_heat_pump_sizing_is_duct_limited' => heat_pump_sizing_is_duct_limited,
-                                           'hvac_heat_pump' => 'Central HP, SEER 13, 7.7 HSPF',
+                                           'hvac_heat_pump' => 'Central HP, SEER 13.0, HSPF 7.7',
                                            'hvac_ducts' => '0% Leakage, Uninsulated' }],
                  'ResStockArgumentsPostHPXML' => [{}] }
 

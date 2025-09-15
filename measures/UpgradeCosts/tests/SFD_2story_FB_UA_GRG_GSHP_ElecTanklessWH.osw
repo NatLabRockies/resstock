@@ -22,7 +22,7 @@
         "geometry_door_area": "30",
         "hvac_heating_system": "None",
         "hvac_cooling_system": "None",
-        "hvac_heat_pump": "Geothermal HP, EER 20.2, COP 4.2",
+        "hvac_heat_pump": "Geothermal HP, EER 20.5, COP 4.0",
         "hvac_heat_pump_capacity": "5.0 tons",
         "hvac_heat_pump_backup": "Integrated, Electricity, 100% Efficiency",
         "hvac_heat_pump_backup_capacity": "100 kBtu/hr",

@@ -24,7 +24,7 @@
         "hvac_heating_system": "Central Furnace, 92% AFUE",
         "hvac_heating_system_fuel": "Natural Gas",
         "hvac_heating_system_capacity": "100 kBtu/hr",
-        "hvac_cooling_system": "Room AC, EER 8.5",
+        "hvac_cooling_system": "Room AC, CEER 8.4",
         "hvac_cooling_system_capacity": "3.0 tons",
         "hvac_heat_pump": "None",
         "hvac_ducts": "15% Leakage, Uninsulated",
