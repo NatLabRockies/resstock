@@ -3466,11 +3466,11 @@ The breaker space calculation is broken out into two parts. First the total rate
   hot water & 240 & 4 & Tankless water heater - one bathroom. The default power rating is 1800W. Two 50A circuit breaker. \\ \hline
   hot water & 240 & 4 & Tankless water heater - two bathrooms. The default power rating is 2400W. Two 50A circuit breaker. \\ \hline
   hot water & 240 & 6 & Tankless water heater - three or more bathrooms. The default power rating is 3600W. Three 50A circuit breaker. \\ \hline
-  hot water &	240 &	auto & Storage water heater. The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
-  hot water & 120 & auto & 120V heat pump water heater. Assumes dedicated circuit. The default power rating is auto sized. The number of breaker space = (power rating in W/240V/15A).ceil. \\ \hline
-  hot water & 240 &	auto & 240V heat pump water heater. The default power rating is auto sized. The number of breaker space = 2*(power rating in W/240V/50A).ceil. \\ \hline
-  heating & 240 & auto & The default power rating is auto sized and includes auxiliary devices such as air handler and hydronic pump. The number of breaker space depends on the HVAC configuration, but generally = 2*(power rating in W/240V/50A).ceil. \\ \hline
-  cooling	& 240 &	auto & The default power rating is auto sized and includes auxiliary devices such as air handler and hydronic pump. The number of breaker space depends on the HVAC configuration, but generally = 2*(power rating in W/240V/50A).ceil. \\ \hline
+  hot water &	240 &	auto & Storage water heater. The default power rating is auto sized. The number of breaker space = 2 * round\_up(power rating [W] / 240V / 50A). \\ \hline
+  hot water & 120 & auto & 120V heat pump water heater. Assumes dedicated circuit. The default power rating is auto sized. The number of breaker space = round\_up(power rating [W] / 240V / 15A). \\ \hline
+  hot water & 240 &	auto & 240V heat pump water heater. The default power rating is auto sized. The number of breaker space = 2 * round\_up(power rating [W] / 240V / 50A). \\ \hline
+  heating & 240 & auto & The default power rating is auto sized and includes auxiliary devices such as air handler and hydronic pump. The number of breaker space depends on the HVAC configuration, but generally = 2 * round\_up(power rating [W] / 240V / 50A). \\ \hline
+  cooling	& 240 &	auto & The default power rating is auto sized and includes auxiliary devices such as air handler and hydronic pump. The number of breaker space depends on the HVAC configuration, but generally = 2 * round\_up(power rating [W] / 240V / 50A). \\ \hline
   mechanical ventilation & 120 & 1	&  \\ \hline
   other	& 120 &	1	& Only assumes 1 garage door opener if a garage is present and does not account for other permanent appliances (e.g. garbage disposal). \\
 \end{customLongTable}
@@ -3481,7 +3481,7 @@ The air handler is typically 240V to allow for the installation of heat strip ba
 Table \ref{tab:breaker_spaces_hp} below summarizes the breaker space requirement implemented in ResStock.
 
 \begin{customLongTable}{ |p{3cm}|p{4cm}|p{8cm}| }
-  {Default voltage and breaker space by heat pump systems.} {tab:breaker_spaces_hp} 
+  {Default voltage and breaker space by heat pump systems. (Note: ckt = circuit)} {tab:breaker_spaces_hp} 
   {\textbf{Heat Pump System} & \textbf{Circuits} & \textbf{Breaker Spaces}}
   Air-to-air, ducted, dual-fuel & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 120V, IDU} & \makecell[l]{ckt 1: 2 * round\_up(ODU power [W] / 240V / 50A) \\ ckt 2: 1} \\ \hline
   Air-to-air, ducted, no backup & \makecell[l]{ckt 1: 240V, ODU \\ ckt 2: 240V, IDU} & \makecell[l]{ckt 1: 2 * round\_up(ODU power [W] / 240V / 50A) \\ ckt 2: 2} \\ \hline
