@@ -17,6 +17,7 @@ None	none
 "Natural Gas, Tankless, UEF 0.82"	instantaneous water heater	natural gas	UniformEnergyFactor	0.82				
 "Natural Gas, Tankless, UEF 0.93"	instantaneous water heater	natural gas	UniformEnergyFactor	0.93				
 "Natural Gas, Tankless, UEF 0.96"	instantaneous water heater	natural gas	UniformEnergyFactor	0.96				
+"Natural Gas, Tankless, UEF 0.98"	instantaneous water heater	natural gas	UniformEnergyFactor	0.98				
 "Fuel Oil, Tank, UEF 0.61"	storage water heater	fuel oil	UniformEnergyFactor	0.61				
 "Fuel Oil, Tank, UEF 0.64"	storage water heater	fuel oil	UniformEnergyFactor	0.64				
 "Fuel Oil, Tank, UEF 0.67"	storage water heater	fuel oil	UniformEnergyFactor	0.67				

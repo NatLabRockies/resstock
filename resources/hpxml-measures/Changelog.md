@@ -12,11 +12,14 @@ __New Features__
 - Minor PV improvements:
   - Allow `PVSystem/AttachedToInverter` to be omitted (unless there are multiple `Inverter` elements)
   - Allow multiple inverters with different efficiencies and use a weighted-average efficiency in the model (previously threw an error)
+- Updates shared pump power for ground-source heat pumps on a shared recirculation loop to cycle with heating/cooling load rather than operate continuously per RESNET HERS Addendum 94.
 
 __Bugfixes__
 - Fixes ground-source heat pump plant loop fluid type (workaround for OpenStudio bug).
 - Fixes default hours driven per week for electric vehicles (8.88 -> 9.5).
 - Fixes empty TimeDST/TimeUTC columns in JSON timeseries data.
+- Fixes zero mech vent fan energy when CFIS system w/ `AdditionalRuntimeOperatingMode="air handler fan"` has the airflow rate set to zero.
+- Fixes requested EnergyPlus timeseries output variables/meters not displayed in DView if they don't have units.
 
 ## OpenStudio-HPXML v1.10.0
 
