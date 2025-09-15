@@ -300,7 +300,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
   def outputs
     result = OpenStudio::Measure::OSOutputVector.new
 
-    setup_outputs(true)
+    setup_outputs()
 
     [@totals,
      @fuels,
@@ -369,7 +369,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
 
     args = get_arguments(runner, arguments(model), user_arguments)
 
-    setup_outputs(false, args)
+    setup_outputs(args)
     args = setup_timeseries_includes(args)
 
     has_electricity_production = false
@@ -605,7 +605,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     @hpxml_header = hpxml.header
     @hpxml_bldgs = hpxml.buildings
 
-    setup_outputs(false, args)
+    setup_outputs(args)
 
     if not File.exist? File.join(output_dir, 'eplusout.msgpack')
       runner.registerError('Cannot find eplusout.msgpack.')
@@ -898,27 +898,6 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         end
       end
     end
-
-    # Disaggregate 8760 GSHP shared pump energy into heating vs cooling by
-    # applying proportionally to the GSHP heating & cooling fan/pump energy use.
-    gshp_shared_loop_end_use = @end_uses[[FT::Elec, 'TempGSHPSharedPump']]
-    htg_fan_pump_end_use = @end_uses[[FT::Elec, EUT::HeatingFanPump]]
-    backup_htg_fan_pump_end_use = @end_uses[[FT::Elec, EUT::HeatingHeatPumpBackupFanPump]]
-    clg_fan_pump_end_use = @end_uses[[FT::Elec, EUT::CoolingFanPump]]
-    gshp_shared_loop_end_use.annual_output_by_system.keys.each do |sys_id|
-      # Calculate heating & cooling fan/pump end use multiplier
-      htg_energy = htg_fan_pump_end_use.annual_output_by_system[sys_id].to_f + backup_htg_fan_pump_end_use.annual_output_by_system[sys_id].to_f
-      clg_energy = clg_fan_pump_end_use.annual_output_by_system[sys_id].to_f
-      shared_pump_energy = gshp_shared_loop_end_use.annual_output_by_system[sys_id]
-      energy_multiplier = (htg_energy + clg_energy + shared_pump_energy) / (htg_energy + clg_energy)
-      # Apply multiplier
-      [htg_fan_pump_end_use, backup_htg_fan_pump_end_use, clg_fan_pump_end_use].each do |end_use|
-        next if end_use.annual_output_by_system[sys_id].nil?
-
-        apply_multiplier_to_output(end_use, [], sys_id, energy_multiplier)
-      end
-    end
-    @end_uses.delete([FT::Elec, 'TempGSHPSharedPump'])
 
     # Hot Water Uses
     @hot_water_uses.each do |_hot_water_type, hot_water|
@@ -1270,7 +1249,7 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     @output_variables = {}
     @output_variables_requests.each do |output_variable_name|
       key_values, units = get_output_variable_key_values_and_units(output_variable_name)
-      if key_values.empty?
+      if units.nil?
         runner.registerWarning("Request for output variable '#{output_variable_name}' returned no results.")
         next
       end
@@ -1935,6 +1914,11 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         data.delete_at(1) # Remove units, added to header data above
         data.delete_at(0) # Remove series name, added to header data above
 
+        # DView requires a units string to display a variable, but some EnergyPlus output
+        # variables (like Runtime Fractions) don't have units. So we specify them as
+        # unitless for DView.
+        header_data[-1].map! { |units| units.empty? ? 'unitless' : units }
+
         # Apply daylight savings
         if args[:timeseries_frequency] == EPlus::TimeseriesFrequencyTimestep || args[:timeseries_frequency] == EPlus::TimeseriesFrequencyHourly
           if @hpxml_bldgs[0].dst_observed
@@ -2203,10 +2187,10 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
   # @param var_name [Name] Name of the EnergyPlus output variable
   # @return [Array<String, String>] The key value and units for the output variable
   def get_output_variable_key_values_and_units(var_name)
-    keys = []
-    units = ''
-    return keys, units if @msgpackDataTimeseries.nil?
+    return if @msgpackDataTimeseries.nil?
 
+    keys = []
+    units = nil
     @msgpackDataTimeseries['Cols'].each do |col|
       next unless col['Variable'].end_with? ":#{var_name}"
 
@@ -2532,10 +2516,9 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
   # objects will be later populated by reading and processing EnergyPlus outputs. The output objects
   # typically contain the relevant EnergyPlus output variables/meters.
   #
-  # @param called_from_outputs_method [Boolean] Whether this method was called from the outputs method
   # @param args [Hash] Map of :argument_name => value
   # @return [nil]
-  def setup_outputs(called_from_outputs_method, args = {})
+  def setup_outputs(args = {})
     # Returns the timeseries units associated with energy use
     # for the given fuel.
     #
@@ -2647,11 +2630,6 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
     @end_uses[[FT::Coal, EUT::Lighting]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Coal, EUT::Lighting]))
     @end_uses[[FT::Coal, EUT::Fireplace]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Coal, EUT::Fireplace]))
     @end_uses[[FT::Coal, EUT::Generator]] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Coal, EUT::Generator]))
-    if not called_from_outputs_method
-      # Temporary end use to disaggregate 8760 GSHP shared loop pump energy into heating vs cooling.
-      # This end use will not appear in output data/files.
-      @end_uses[[FT::Elec, 'TempGSHPSharedPump']] = EndUse.new(outputs: get_object_outputs(EUT, [FT::Elec, 'TempGSHPSharedPump']))
-    end
     @end_uses.each do |key, end_use|
       fuel_type, end_use_type = key
       end_use.name = "End Use: #{fuel_type}: #{end_use_type}"
@@ -3085,7 +3063,6 @@ class ReportSimulationOutput < OpenStudio::Measure::ReportingMeasure
         subcategory = object.endUseSubcategory
         end_use = nil
         { Constants::ObjectTypeHotWaterRecircPump => EUT::HotWaterRecircPump,
-          Constants::ObjectTypeGSHPSharedPump => 'TempGSHPSharedPump',
           Constants::ObjectTypeClothesWasher => EUT::ClothesWasher,
           Constants::ObjectTypeClothesDryer => EUT::ClothesDryer,
           Constants::ObjectTypeDishwasher => EUT::Dishwasher,

@@ -8,10 +8,13 @@ Electric Resistance	ElectricResistance	1
 "Central Furnace, 76% AFUE"	Furnace	0.76	
 "Central Furnace, 78% AFUE"	Furnace	0.78	
 "Central Furnace, 80% AFUE"	Furnace	0.8	
+"Central Furnace, 83% AFUE"	Furnace	0.83	
 "Central Furnace, 85% AFUE"	Furnace	0.85	
+"Central Furnace, 88% AFUE"	Furnace	0.88	
 "Central Furnace, 90% AFUE"	Furnace	0.9	
 "Central Furnace, 92% AFUE"	Furnace	0.92	
 "Central Furnace, 92.5% AFUE"	Furnace	0.925	
+"Central Furnace, 95% AFUE"	Furnace	0.95	
 "Central Furnace, 96% AFUE"	Furnace	0.96	
 "Central Furnace, 98% AFUE"	Furnace	0.98	
 "Central Furnace, 100% AFUE"	Furnace	1	
@@ -28,8 +31,9 @@ Electric Resistance	ElectricResistance	1
 "Boiler, 76% AFUE"	Boiler	0.76	
 "Boiler, 78% AFUE"	Boiler	0.78	
 "Boiler, 80% AFUE"	Boiler	0.8	
-"Boiler, 82% AFUE"	Boiler	0.82	
+"Boiler, 83% AFUE"	Boiler	0.83	
 "Boiler, 85% AFUE"	Boiler	0.85	
+"Boiler, 88% AFUE"	Boiler	0.88	
 "Boiler, 90% AFUE"	Boiler	0.9	
 "Boiler, 92% AFUE"	Boiler	0.92	
 "Boiler, 92.5% AFUE"	Boiler	0.925	

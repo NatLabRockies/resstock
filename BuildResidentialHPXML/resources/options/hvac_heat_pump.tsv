@@ -10,7 +10,7 @@ None	none
 "Central HP, SEER2 15.0, HSPF2 7.6"	air-to-air	SEER2	15	single stage	HSPF2	7.6															
 "Central HP, SEER2 16.0, HSPF2 7.9"	air-to-air	SEER2	16	single stage	HSPF2	7.9															
 "Central HP, SEER2 17.0, HSPF2 8.2"	air-to-air	SEER2	17	two stage	HSPF2	8.2															
-"Central HP, SEER2 18.0, HSPF2 8.5"	air-to-air	SEER2	18	two stage	HSPF2	8.5															
+"Central HP, SEER2 18.0, HSPF2 8.5"	air-to-air	SEER2	18	variable speed	HSPF2	8.5															
 "Central HP, SEER2 19.0, HSPF2 8.7"	air-to-air	SEER2	19	variable speed	HSPF2	8.7															
 "Central HP, SEER2 20.0, HSPF2 9.0"	air-to-air	SEER2	20	variable speed	HSPF2	9															
 "Central HP, SEER2 21.0, HSPF2 9.2"	air-to-air	SEER2	21	variable speed	HSPF2	9.2															
