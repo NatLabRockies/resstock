@@ -30328,7 +30328,7 @@ Arguments
      - true
      - 
      - Choice
-     - None, Electric Resistance, Central Furnace, 60% AFUE, Central Furnace, 64% AFUE, Central Furnace, 68% AFUE, Central Furnace, 72% AFUE, Central Furnace, 76% AFUE, Central Furnace, 78% AFUE, Central Furnace, 80% AFUE, Central Furnace, 85% AFUE, Central Furnace, 90% AFUE, Central Furnace, 92% AFUE, Central Furnace, 92.5% AFUE, Central Furnace, 96% AFUE, Central Furnace, 98% AFUE, Central Furnace, 100% AFUE, Wall Furnace, 60% AFUE, Wall Furnace, 68% AFUE, Wall Furnace, 82% AFUE, Wall Furnace, 98% AFUE, Wall Furnace, 100% AFUE, Floor Furnace, 60% AFUE, Floor Furnace, 70% AFUE, Floor Furnace, 80% AFUE, Boiler, 60% AFUE, Boiler, 72% AFUE, Boiler, 76% AFUE, Boiler, 78% AFUE, Boiler, 80% AFUE, Boiler, 82% AFUE, Boiler, 85% AFUE, Boiler, 90% AFUE, Boiler, 92% AFUE, Boiler, 92.5% AFUE, Boiler, 95% AFUE, Boiler, 96% AFUE, Boiler, 98% AFUE, Boiler, 100% AFUE, Stove, 60% Efficiency, Stove, 70% Efficiency, Stove, 80% Efficiency, Space Heater, 60% Efficiency, Space Heater, 70% Efficiency, Space Heater, 80% Efficiency, Space Heater, 92% Efficiency, Space Heater, 100% Efficiency, Fireplace, 60% Efficiency, Fireplace, 70% Efficiency, Fireplace, 80% Efficiency, Fireplace, 100% Efficiency, Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light
+     - None, Electric Resistance, Central Furnace, 60% AFUE, Central Furnace, 64% AFUE, Central Furnace, 68% AFUE, Central Furnace, 72% AFUE, Central Furnace, 76% AFUE, Central Furnace, 78% AFUE, Central Furnace, 80% AFUE, Central Furnace, 83% AFUE, Central Furnace, 85% AFUE, Central Furnace, 88% AFUE, Central Furnace, 90% AFUE, Central Furnace, 92% AFUE, Central Furnace, 92.5% AFUE, Central Furnace, 95% AFUE, Central Furnace, 96% AFUE, Central Furnace, 98% AFUE, Central Furnace, 100% AFUE, Wall Furnace, 60% AFUE, Wall Furnace, 68% AFUE, Wall Furnace, 82% AFUE, Wall Furnace, 98% AFUE, Wall Furnace, 100% AFUE, Floor Furnace, 60% AFUE, Floor Furnace, 70% AFUE, Floor Furnace, 80% AFUE, Boiler, 60% AFUE, Boiler, 72% AFUE, Boiler, 76% AFUE, Boiler, 78% AFUE, Boiler, 80% AFUE, Boiler, 83% AFUE, Boiler, 85% AFUE, Boiler, 88% AFUE, Boiler, 90% AFUE, Boiler, 92% AFUE, Boiler, 92.5% AFUE, Boiler, 95% AFUE, Boiler, 96% AFUE, Boiler, 98% AFUE, Boiler, 100% AFUE, Stove, 60% Efficiency, Stove, 70% Efficiency, Stove, 80% Efficiency, Space Heater, 60% Efficiency, Space Heater, 70% Efficiency, Space Heater, 80% Efficiency, Space Heater, 92% Efficiency, Space Heater, 100% Efficiency, Fireplace, 60% Efficiency, Fireplace, 70% Efficiency, Fireplace, 80% Efficiency, Fireplace, 100% Efficiency, Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light
      - The type and efficiency of the heating system. Use 'None' if there is no heating system or if there is a heat pump serving a heating load.
    * - ``hvac_heating_system_capacity``
      - false
@@ -30937,7 +30937,7 @@ Arguments
      - false
      - 
      - Choice
-     - None, Electric Resistance, Central Furnace, 60% AFUE, Central Furnace, 64% AFUE, Central Furnace, 68% AFUE, Central Furnace, 72% AFUE, Central Furnace, 76% AFUE, Central Furnace, 78% AFUE, Central Furnace, 80% AFUE, Central Furnace, 85% AFUE, Central Furnace, 90% AFUE, Central Furnace, 92% AFUE, Central Furnace, 92.5% AFUE, Central Furnace, 96% AFUE, Central Furnace, 98% AFUE, Central Furnace, 100% AFUE, Wall Furnace, 60% AFUE, Wall Furnace, 68% AFUE, Wall Furnace, 82% AFUE, Wall Furnace, 98% AFUE, Wall Furnace, 100% AFUE, Floor Furnace, 60% AFUE, Floor Furnace, 70% AFUE, Floor Furnace, 80% AFUE, Boiler, 60% AFUE, Boiler, 72% AFUE, Boiler, 76% AFUE, Boiler, 78% AFUE, Boiler, 80% AFUE, Boiler, 82% AFUE, Boiler, 85% AFUE, Boiler, 90% AFUE, Boiler, 92% AFUE, Boiler, 92.5% AFUE, Boiler, 95% AFUE, Boiler, 96% AFUE, Boiler, 98% AFUE, Boiler, 100% AFUE, Stove, 60% Efficiency, Stove, 70% Efficiency, Stove, 80% Efficiency, Space Heater, 60% Efficiency, Space Heater, 70% Efficiency, Space Heater, 80% Efficiency, Space Heater, 92% Efficiency, Space Heater, 100% Efficiency, Fireplace, 60% Efficiency, Fireplace, 70% Efficiency, Fireplace, 80% Efficiency, Fireplace, 100% Efficiency, Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light
+     - None, Electric Resistance, Central Furnace, 60% AFUE, Central Furnace, 64% AFUE, Central Furnace, 68% AFUE, Central Furnace, 72% AFUE, Central Furnace, 76% AFUE, Central Furnace, 78% AFUE, Central Furnace, 80% AFUE, Central Furnace, 83% AFUE, Central Furnace, 85% AFUE, Central Furnace, 88% AFUE, Central Furnace, 90% AFUE, Central Furnace, 92% AFUE, Central Furnace, 92.5% AFUE, Central Furnace, 95% AFUE, Central Furnace, 96% AFUE, Central Furnace, 98% AFUE, Central Furnace, 100% AFUE, Wall Furnace, 60% AFUE, Wall Furnace, 68% AFUE, Wall Furnace, 82% AFUE, Wall Furnace, 98% AFUE, Wall Furnace, 100% AFUE, Floor Furnace, 60% AFUE, Floor Furnace, 70% AFUE, Floor Furnace, 80% AFUE, Boiler, 60% AFUE, Boiler, 72% AFUE, Boiler, 76% AFUE, Boiler, 78% AFUE, Boiler, 80% AFUE, Boiler, 83% AFUE, Boiler, 85% AFUE, Boiler, 88% AFUE, Boiler, 90% AFUE, Boiler, 92% AFUE, Boiler, 92.5% AFUE, Boiler, 95% AFUE, Boiler, 96% AFUE, Boiler, 98% AFUE, Boiler, 100% AFUE, Stove, 60% Efficiency, Stove, 70% Efficiency, Stove, 80% Efficiency, Space Heater, 60% Efficiency, Space Heater, 70% Efficiency, Space Heater, 80% Efficiency, Space Heater, 92% Efficiency, Space Heater, 100% Efficiency, Fireplace, 60% Efficiency, Fireplace, 70% Efficiency, Fireplace, 80% Efficiency, Fireplace, 100% Efficiency, Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light
      - The type and efficiency of the second heating system. If a heat pump is specified and the backup type is 'separate', this heating system represents the 'separate' backup heating.
    * - ``hvac_heating_system_2_capacity``
      - false
@@ -31277,7 +31277,7 @@ Arguments
      - true
      - 
      - Choice
-     - None, Electric Resistance, Central Furnace, 60% AFUE, Central Furnace, 64% AFUE, Central Furnace, 68% AFUE, Central Furnace, 72% AFUE, Central Furnace, 76% AFUE, Central Furnace, 78% AFUE, Central Furnace, 80% AFUE, Central Furnace, 85% AFUE, Central Furnace, 90% AFUE, Central Furnace, 92% AFUE, Central Furnace, 92.5% AFUE, Central Furnace, 96% AFUE, Central Furnace, 98% AFUE, Central Furnace, 100% AFUE, Wall Furnace, 60% AFUE, Wall Furnace, 68% AFUE, Wall Furnace, 82% AFUE, Wall Furnace, 98% AFUE, Wall Furnace, 100% AFUE, Floor Furnace, 60% AFUE, Floor Furnace, 70% AFUE, Floor Furnace, 80% AFUE, Boiler, 60% AFUE, Boiler, 72% AFUE, Boiler, 76% AFUE, Boiler, 78% AFUE, Boiler, 80% AFUE, Boiler, 82% AFUE, Boiler, 85% AFUE, Boiler, 90% AFUE, Boiler, 92% AFUE, Boiler, 92.5% AFUE, Boiler, 95% AFUE, Boiler, 96% AFUE, Boiler, 98% AFUE, Boiler, 100% AFUE, Stove, 60% Efficiency, Stove, 70% Efficiency, Stove, 80% Efficiency, Space Heater, 60% Efficiency, Space Heater, 70% Efficiency, Space Heater, 80% Efficiency, Space Heater, 92% Efficiency, Space Heater, 100% Efficiency, Fireplace, 60% Efficiency, Fireplace, 70% Efficiency, Fireplace, 80% Efficiency, Fireplace, 100% Efficiency, Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light
+     - None, Electric Resistance, Central Furnace, 60% AFUE, Central Furnace, 64% AFUE, Central Furnace, 68% AFUE, Central Furnace, 72% AFUE, Central Furnace, 76% AFUE, Central Furnace, 78% AFUE, Central Furnace, 80% AFUE, Central Furnace, 83% AFUE, Central Furnace, 85% AFUE, Central Furnace, 88% AFUE, Central Furnace, 90% AFUE, Central Furnace, 92% AFUE, Central Furnace, 92.5% AFUE, Central Furnace, 95% AFUE, Central Furnace, 96% AFUE, Central Furnace, 98% AFUE, Central Furnace, 100% AFUE, Wall Furnace, 60% AFUE, Wall Furnace, 68% AFUE, Wall Furnace, 82% AFUE, Wall Furnace, 98% AFUE, Wall Furnace, 100% AFUE, Floor Furnace, 60% AFUE, Floor Furnace, 70% AFUE, Floor Furnace, 80% AFUE, Boiler, 60% AFUE, Boiler, 72% AFUE, Boiler, 76% AFUE, Boiler, 78% AFUE, Boiler, 80% AFUE, Boiler, 83% AFUE, Boiler, 85% AFUE, Boiler, 88% AFUE, Boiler, 90% AFUE, Boiler, 92% AFUE, Boiler, 92.5% AFUE, Boiler, 95% AFUE, Boiler, 96% AFUE, Boiler, 98% AFUE, Boiler, 100% AFUE, Stove, 60% Efficiency, Stove, 70% Efficiency, Stove, 80% Efficiency, Space Heater, 60% Efficiency, Space Heater, 70% Efficiency, Space Heater, 80% Efficiency, Space Heater, 92% Efficiency, Space Heater, 100% Efficiency, Fireplace, 60% Efficiency, Fireplace, 70% Efficiency, Fireplace, 80% Efficiency, Fireplace, 100% Efficiency, Detailed Example: Central Furnace, 92% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Floor Furnace, 80% AFUE, 600 Btu/hr Pilot Light, Detailed Example: Boiler, 92% AFUE, 600 Btu/hr Pilot Light
      - The type and efficiency of the heating system. Use 'None' if there is no heating system or if there is a heat pump serving a heating load.
    * - ``hvac_heating_system_capacity``
      - false
@@ -44125,7 +44125,7 @@ Arguments
      - true
      - 
      - Choice
-     - None, Electricity, Tank, UEF 0.90, Electricity, Tank, UEF 0.92, Electricity, Tank, UEF 0.94, Electricity, Tankless, UEF 0.94, Electricity, Tankless, UEF 0.98, Electricity, Heat Pump, UEF 3.50, Electricity, Heat Pump, UEF 3.75, Electricity, Heat Pump, UEF 4.00, Natural Gas, Tank, UEF 0.57, Natural Gas, Tank, UEF 0.60, Natural Gas, Tank, UEF 0.64, Natural Gas, Tank, UEF 0.67, Natural Gas, Tank, UEF 0.70, Natural Gas, Tank, UEF 0.80, Natural Gas, Tankless, UEF 0.82, Natural Gas, Tankless, UEF 0.93, Natural Gas, Tankless, UEF 0.96, Fuel Oil, Tank, UEF 0.61, Fuel Oil, Tank, UEF 0.64, Fuel Oil, Tank, UEF 0.67, Propane, Tank, UEF 0.57, Propane, Tank, UEF 0.60, Propane, Tank, UEF 0.64, Propane, Tank, UEF 0.67, Propane, Tank, UEF 0.70, Propane, Tank, UEF 0.80, Propane, Tankless, UEF 0.82, Propane, Tankless, UEF 0.93, Propane, Tankless, UEF 0.96, Wood, Tank, UEF 0.60, Coal, Tank, UEF 0.60, Space-Heating Boiler w/ Storage Tank, Space-Heating Boiler w/ Tankless Coil, Detailed Example: Electricity, Tank, 40 gal, EF 0.93, Detailed Example: Electricity, Tank, UEF 0.94, 135F, Detailed Example: Electricity, Tankless, EF 0.96, Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1, Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78, Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78, Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76, Detailed Example: Natural Gas, Tankless, EF 0.95
+     - None, Electricity, Tank, UEF 0.90, Electricity, Tank, UEF 0.92, Electricity, Tank, UEF 0.94, Electricity, Tankless, UEF 0.94, Electricity, Tankless, UEF 0.98, Electricity, Heat Pump, UEF 3.50, Electricity, Heat Pump, UEF 3.75, Electricity, Heat Pump, UEF 4.00, Natural Gas, Tank, UEF 0.57, Natural Gas, Tank, UEF 0.60, Natural Gas, Tank, UEF 0.64, Natural Gas, Tank, UEF 0.67, Natural Gas, Tank, UEF 0.70, Natural Gas, Tank, UEF 0.80, Natural Gas, Tankless, UEF 0.82, Natural Gas, Tankless, UEF 0.93, Natural Gas, Tankless, UEF 0.96, Natural Gas, Tankless, UEF 0.98, Fuel Oil, Tank, UEF 0.61, Fuel Oil, Tank, UEF 0.64, Fuel Oil, Tank, UEF 0.67, Propane, Tank, UEF 0.57, Propane, Tank, UEF 0.60, Propane, Tank, UEF 0.64, Propane, Tank, UEF 0.67, Propane, Tank, UEF 0.70, Propane, Tank, UEF 0.80, Propane, Tankless, UEF 0.82, Propane, Tankless, UEF 0.93, Propane, Tankless, UEF 0.96, Wood, Tank, UEF 0.60, Coal, Tank, UEF 0.60, Space-Heating Boiler w/ Storage Tank, Space-Heating Boiler w/ Tankless Coil, Detailed Example: Electricity, Tank, 40 gal, EF 0.93, Detailed Example: Electricity, Tank, UEF 0.94, 135F, Detailed Example: Electricity, Tankless, EF 0.96, Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1, Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78, Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78, Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76, Detailed Example: Natural Gas, Tankless, EF 0.95
      - The type and efficiency of the water heater.
    * - ``dhw_solar_thermal``
      - false
@@ -44139,6 +44139,12 @@ Arguments
      - Choice
      - Roof Pitch, West, Roof Pitch, Southwest, Roof Pitch, South, Roof Pitch, Southeast, Roof Pitch, East, Roof Pitch, Northeast, Roof Pitch, North, Roof Pitch, Northwest, 0 Degrees, 5 Degrees, West, 5 Degrees, Southwest, 5 Degrees, South, 5 Degrees, Southeast, 5 Degrees, East, 10 Degrees, West, 10 Degrees, Southwest, 10 Degrees, South, 10 Degrees, Southeast, 10 Degrees, East, 15 Degrees, West, 15 Degrees, Southwest, 15 Degrees, South, 15 Degrees, Southeast, 15 Degrees, East, 20 Degrees, West, 20 Degrees, Southwest, 20 Degrees, South, 20 Degrees, Southeast, 20 Degrees, East, 25 Degrees, West, 25 Degrees, Southwest, 25 Degrees, South, 25 Degrees, Southeast, 25 Degrees, East, 30 Degrees, West, 30 Degrees, Southwest, 30 Degrees, South, 30 Degrees, Southeast, 30 Degrees, East, 35 Degrees, West, 35 Degrees, Southwest, 35 Degrees, South, 35 Degrees, Southeast, 35 Degrees, East, 40 Degrees, West, 40 Degrees, Southwest, 40 Degrees, South, 40 Degrees, Southeast, 40 Degrees, East, 45 Degrees, West, 45 Degrees, Southwest, 45 Degrees, South, 45 Degrees, Southeast, 45 Degrees, East, 50 Degrees, West, 50 Degrees, Southwest, 50 Degrees, South, 50 Degrees, Southeast, 50 Degrees, East
      - The azimuth and tilt of the solar thermal system collectors.
+   * - ``dhw_water_heater_jacket_rvalue``
+     - true
+     - h-ft^2-R/Btu
+     - Double
+     -
+     - The jacket R-value of the storage water heater.
 
 Options
 *******
@@ -44155,117 +44161,140 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``dhw_water_heater``
      - ``dhw_solar_thermal``
      - ``dhw_solar_thermal_direction``
+     - ``dhw_water_heater_jacket_rvalue``
 
    * - Electric Heat Pump, 3.5 UEF
      - 0.31%
      - Electricity, Heat Pump, UEF 3.50
      - None
      - Roof Pitch, South
+     - 0
    * - Electric Premium
      - 9.9%
      - Electricity, Tank, UEF 0.94
      - None
      - Roof Pitch, South
+     - 0
    * - Electric Standard
      - 36%
      - Electricity, Tank, UEF 0.92
      - None
      - Roof Pitch, South
+     - 0
    * - Electric Tankless
      - 2%
      - Electricity, Tankless, UEF 0.94
      - None
      - Roof Pitch, South
+     - 0
    * - FIXME Fuel Oil Indirect
      - 0.72%
      - Fuel Oil, Tank, UEF 0.64
      - None
      - Roof Pitch, South
+     - 0
    * - Fuel Oil Premium
      - 0.47%
      - Fuel Oil, Tank, UEF 0.67
      - None
      - Roof Pitch, South
+     - 0
    * - Fuel Oil Standard
      - 1.4%
      - Fuel Oil, Tank, UEF 0.64
      - None
      - Roof Pitch, South
+     - 0
    * - Natural Gas Premium
      - 8.3%
      - Natural Gas, Tank, UEF 0.70
      - None
      - Roof Pitch, South
+     - 0
    * - Natural Gas Standard
      - 33%
      - Natural Gas, Tank, UEF 0.60
      - None
      - Roof Pitch, South
+     - 0
    * - Natural Gas Tankless
      - 2.9%
      - Natural Gas, Tankless, UEF 0.82
      - None
      - Roof Pitch, South
+     - 0
    * - Other Fuel
      - 0.044%
      - Coal, Tank, UEF 0.60
      - None
      - Roof Pitch, South
+     - 0
    * - Propane Premium
      - 0.63%
      - Propane, Tank, UEF 0.67
      - None
      - Roof Pitch, South
+     - 0
    * - Propane Standard
      - 2.4%
      - Propane, Tank, UEF 0.60
      - None
      - Roof Pitch, South
+     - 0
    * - Propane Tankless
      - 0.92%
      - Propane, Tankless, UEF 0.82
      - None
      - Roof Pitch, South
+     - 0
    * - Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup
      - 0.037%
      - Electricity, Tank, UEF 0.92
      - Indirect, Flat Plate, 40 sqft
      - Roof Pitch, East
+     - 6.2
    * - Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup
      - 0.004%
      - Electricity, Tank, UEF 0.92
      - Indirect, Flat Plate, 40 sqft
      - Roof Pitch, North
+     - 6.2
    * - Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup
      - 0.093%
      - Electricity, Tank, UEF 0.92
      - Indirect, Flat Plate, 40 sqft
      - Roof Pitch, South
+     - 6.2
    * - Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup
      - 0.00032%
      - Fuel Oil, Tank, UEF 0.64
      - Indirect, Flat Plate, 40 sqft
      - Roof Pitch, South
+     - 0
    * - Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup
      - 0.002%
      - Natural Gas, Tank, UEF 0.60
      - Indirect, Flat Plate, 40 sqft
      - Roof Pitch, South
+     - 0
    * - Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup
      - 0.0058%
      - Propane, Tank, UEF 0.60
      - Indirect, Flat Plate, 40 sqft
      - Roof Pitch, South
+     - 0
    * - Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup
      - 0.022%
      - Electricity, Tank, UEF 0.92
      - Indirect, Flat Plate, 40 sqft
      - Roof Pitch, West
+     - 6.2
    * - Wood
      - 0.076%
      - Wood, Tank, UEF 0.60
      - None
      - Roof Pitch, South
+     - 0
 
 .. _water_heater_fuel:
 
@@ -44686,7 +44715,7 @@ Arguments
      - true
      - 
      - Choice
-     - Single, Clear, Metal, Single, Clear, Non-Metal, Double, Clear, Metal, Air, Double, Clear, Thermal-Break, Air, Double, Clear, Non-Metal, Air, Double, Low-E, Non-Metal, Air, High Gain, Double, Low-E, Non-Metal, Air, Med Gain, Double, Low-E, Non-Metal, Air, Low Gain, Double, Low-E, Non-Metal, Gas, High Gain, Double, Low-E, Non-Metal, Gas, Med Gain, Double, Low-E, Non-Metal, Gas, Low Gain, Double, Low-E, Insulated, Air, High Gain, Double, Low-E, Insulated, Air, Med Gain, Double, Low-E, Insulated, Air, Low Gain, Double, Low-E, Insulated, Gas, High Gain, Double, Low-E, Insulated, Gas, Med Gain, Double, Low-E, Insulated, Gas, Low Gain, Triple, Low-E, Non-Metal, Air, High Gain, Triple, Low-E, Non-Metal, Air, Low Gain, Triple, Low-E, Non-Metal, Gas, High Gain, Triple, Low-E, Non-Metal, Gas, Low Gain, Triple, Low-E, Insulated, Air, High Gain, Triple, Low-E, Insulated, Air, Low Gain, Triple, Low-E, Insulated, Gas, High Gain, Triple, Low-E, Insulated, Gas, Low Gain, IECC U-1.20, SHGC 0.40, IECC U-1.20, SHGC 0.30, IECC U-1.20, SHGC 0.25, IECC U-0.75, SHGC 0.40, IECC U-0.65, SHGC 0.40, IECC U-0.65, SHGC 0.30, IECC U-0.50, SHGC 0.30, IECC U-0.50, SHGC 0.25, IECC U-0.40, SHGC 0.40, IECC U-0.40, SHGC 0.25, IECC U-0.35, SHGC 0.40, IECC U-0.35, SHGC 0.30, IECC U-0.35, SHGC 0.25, IECC U-0.32, SHGC 0.25, IECC U-0.30, SHGC 0.25, Detailed Example: Single, Clear, Aluminum w/ Thermal Break, Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer
+     - Single, Clear, Metal, Single, Clear, Non-Metal, Double, Clear, Metal, Air, Double, Clear, Thermal-Break, Air, Double, Clear, Non-Metal, Air, Double, Low-E, Non-Metal, Air, High Gain, Double, Low-E, Non-Metal, Air, Med Gain, Double, Low-E, Non-Metal, Air, Low Gain, Double, Low-E, Non-Metal, Gas, High Gain, Double, Low-E, Non-Metal, Gas, Med Gain, Double, Low-E, Non-Metal, Gas, Low Gain, Double, Low-E, Insulated, Air, High Gain, Double, Low-E, Insulated, Air, Med Gain, Double, Low-E, Insulated, Air, Low Gain, Double, Low-E, Insulated, Gas, High Gain, Double, Low-E, Insulated, Gas, Med Gain, Double, Low-E, Insulated, Gas, Low Gain, Triple, Low-E, Non-Metal, Air, High Gain, Triple, Low-E, Non-Metal, Air, Low Gain, Triple, Low-E, Non-Metal, Gas, High Gain, Triple, Low-E, Non-Metal, Gas, Low Gain, Triple, Low-E, Insulated, Air, High Gain, Triple, Low-E, Insulated, Air, Low Gain, Triple, Low-E, Insulated, Gas, High Gain, Triple, Low-E, Insulated, Gas, Low Gain, IECC U-1.20, SHGC 0.40, IECC U-1.20, SHGC 0.30, IECC U-1.20, SHGC 0.25, IECC U-0.75, SHGC 0.40, IECC U-0.65, SHGC 0.40, IECC U-0.65, SHGC 0.30, IECC U-0.50, SHGC 0.30, IECC U-0.50, SHGC 0.25, IECC U-0.40, SHGC 0.40, IECC U-0.40, SHGC 0.25, IECC U-0.35, SHGC 0.40, IECC U-0.35, SHGC 0.30, IECC U-0.35, SHGC 0.25, IECC U-0.32, SHGC 0.25, IECC U-0.30, SHGC 0.25, EnergyStar, North-Central, EnergyStar, Northern, EnergyStar, South-Central, EnergyStar, Southern, Detailed Example: Single, Clear, Aluminum w/ Thermal Break, Detailed Example: Double, Low-E, Wood, Argon, Insulated Spacer
      - The type of windows.
    * - ``enclosure_window_exterior_shading``
      - false
