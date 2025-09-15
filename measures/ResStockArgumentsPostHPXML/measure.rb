@@ -970,25 +970,25 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       HPXML::HVACCompressorTypeVariableSpeed => [HPXML::CapacityDescriptionMinimum, HPXML::CapacityDescriptionNominal, HPXML::CapacityDescriptionMaximum],
     }
 
-    speeds = speeds_map[compressor_type]
-    num_speeds = speeds.size
-
-    if min_capacities.split(',').size > num_speeds
-      fail "HVAC system is #{compressor_type} but #{min_capacities.split(',').size} minimum capacities for #{perf_type} provided."
-    elsif min_cops.split(',').size > num_speeds
-      fail "HVAC system is #{compressor_type} but #{min_cops.split(',').size} minimum COPs for #{perf_type} provided."
-    elsif nom_capacities.split(',').size > num_speeds
-      fail "HVAC system is #{compressor_type} but #{nom_capacities.split(',').size} nominal capacities for #{perf_type} provided."
-    elsif nom_cops.split(',').size > num_speeds
-      fail "HVAC system is #{compressor_type} but #{nom_cops.split(',').size} nominal COPs for #{perf_type} provided."
-    elsif max_capacities.split(',').size > num_speeds
-      fail "HVAC system is #{compressor_type} but #{max_capacities.split(',').size} maximum capacities for #{perf_type} provided."
-    elsif max_cops.split(',').size > num_speeds
-      fail "HVAC system is #{compressor_type} but #{max_cops.split(',').size} maximum COPs for #{perf_type} provided."
+    if [HPXML::HVACCompressorTypeSingleStage].include? compressor_type
+      if not min_capacities.to_s.empty?
+        fail "HVAC system is #{compressor_type} but minimum speed capacities for #{perf_type} provided."
+      end
+      if not min_cops.to_s.empty?
+        fail "HVAC system is #{compressor_type} but minimum speed COPs for #{perf_type} provided."
+      end
+    end
+    if [HPXML::HVACCompressorTypeSingleStage, HPXML::HVACCompressorTypeTwoStage].include? compressor_type
+      if not max_capacities.to_s.empty?
+        fail "HVAC system is #{compressor_type} but maximum speed capacities for #{perf_type} provided."
+      end
+      if not max_cops.to_s.empty?
+        fail "HVAC system is #{compressor_type} but maximum speed COPs for #{perf_type} provided."
+      end
     end
 
     outdoor_temperatures.split(',').map(&:strip).each_with_index do |outdoor_temperature, i|
-      for speed in speeds
+      for speed in speeds_map[compressor_type]
         if speed == HPXML::CapacityDescriptionMinimum
           capacity = (Float(min_capacities.split(',').map(&:strip)[i]) rescue nil)
           cop = (Float(min_cops.split(',').map(&:strip)[i]) rescue nil)
