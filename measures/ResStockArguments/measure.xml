@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments</name>
   <uid>c984bb9e-4ac4-4930-a399-9d23f8f6936a</uid>
-  <version_id>423a8d73-b3df-4ebe-b5f8-f79e6b9a6ece</version_id>
-  <version_modified>2025-09-15T15:42:19Z</version_modified>
+  <version_id>c1eb0b60-9417-4fd0-8965-8bffcf7ba45a</version_id>
+  <version_modified>2025-09-15T16:42:05Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArguments</class_name>
   <display_name>ResStock Arguments</display_name>
@@ -2422,6 +2422,22 @@
           <display_name>IECC U-0.30, SHGC 0.25</display_name>
         </choice>
         <choice>
+          <value>EnergyStar, North-Central</value>
+          <display_name>EnergyStar, North-Central</display_name>
+        </choice>
+        <choice>
+          <value>EnergyStar, Northern</value>
+          <display_name>EnergyStar, Northern</display_name>
+        </choice>
+        <choice>
+          <value>EnergyStar, South-Central</value>
+          <display_name>EnergyStar, South-Central</display_name>
+        </choice>
+        <choice>
+          <value>EnergyStar, Southern</value>
+          <display_name>EnergyStar, Southern</display_name>
+        </choice>
+        <choice>
           <value>Detailed Example: Single, Clear, Aluminum w/ Thermal Break</value>
           <display_name>Detailed Example: Single, Clear, Aluminum w/ Thermal Break</display_name>
         </choice>
@@ -3272,8 +3288,16 @@
           <display_name>Central Furnace, 80% AFUE</display_name>
         </choice>
         <choice>
+          <value>Central Furnace, 83% AFUE</value>
+          <display_name>Central Furnace, 83% AFUE</display_name>
+        </choice>
+        <choice>
           <value>Central Furnace, 85% AFUE</value>
           <display_name>Central Furnace, 85% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 88% AFUE</value>
+          <display_name>Central Furnace, 88% AFUE</display_name>
         </choice>
         <choice>
           <value>Central Furnace, 90% AFUE</value>
@@ -3286,6 +3310,10 @@
         <choice>
           <value>Central Furnace, 92.5% AFUE</value>
           <display_name>Central Furnace, 92.5% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 95% AFUE</value>
+          <display_name>Central Furnace, 95% AFUE</display_name>
         </choice>
         <choice>
           <value>Central Furnace, 96% AFUE</value>
@@ -3352,12 +3380,16 @@
           <display_name>Boiler, 80% AFUE</display_name>
         </choice>
         <choice>
-          <value>Boiler, 82% AFUE</value>
-          <display_name>Boiler, 82% AFUE</display_name>
+          <value>Boiler, 83% AFUE</value>
+          <display_name>Boiler, 83% AFUE</display_name>
         </choice>
         <choice>
           <value>Boiler, 85% AFUE</value>
           <display_name>Boiler, 85% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 88% AFUE</value>
+          <display_name>Boiler, 88% AFUE</display_name>
         </choice>
         <choice>
           <value>Boiler, 90% AFUE</value>
@@ -5105,8 +5137,16 @@
           <display_name>Central Furnace, 80% AFUE</display_name>
         </choice>
         <choice>
+          <value>Central Furnace, 83% AFUE</value>
+          <display_name>Central Furnace, 83% AFUE</display_name>
+        </choice>
+        <choice>
           <value>Central Furnace, 85% AFUE</value>
           <display_name>Central Furnace, 85% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 88% AFUE</value>
+          <display_name>Central Furnace, 88% AFUE</display_name>
         </choice>
         <choice>
           <value>Central Furnace, 90% AFUE</value>
@@ -5119,6 +5159,10 @@
         <choice>
           <value>Central Furnace, 92.5% AFUE</value>
           <display_name>Central Furnace, 92.5% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Central Furnace, 95% AFUE</value>
+          <display_name>Central Furnace, 95% AFUE</display_name>
         </choice>
         <choice>
           <value>Central Furnace, 96% AFUE</value>
@@ -5185,12 +5229,16 @@
           <display_name>Boiler, 80% AFUE</display_name>
         </choice>
         <choice>
-          <value>Boiler, 82% AFUE</value>
-          <display_name>Boiler, 82% AFUE</display_name>
+          <value>Boiler, 83% AFUE</value>
+          <display_name>Boiler, 83% AFUE</display_name>
         </choice>
         <choice>
           <value>Boiler, 85% AFUE</value>
           <display_name>Boiler, 85% AFUE</display_name>
+        </choice>
+        <choice>
+          <value>Boiler, 88% AFUE</value>
+          <display_name>Boiler, 88% AFUE</display_name>
         </choice>
         <choice>
           <value>Boiler, 90% AFUE</value>
@@ -6298,6 +6346,10 @@
         <choice>
           <value>Natural Gas, Tankless, UEF 0.96</value>
           <display_name>Natural Gas, Tankless, UEF 0.96</display_name>
+        </choice>
+        <choice>
+          <value>Natural Gas, Tankless, UEF 0.98</value>
+          <display_name>Natural Gas, Tankless, UEF 0.98</display_name>
         </choice>
         <choice>
           <value>Fuel Oil, Tank, UEF 0.61</value>
@@ -10903,6 +10955,15 @@
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
+      <name>dhw_water_heater_jacket_rvalue</name>
+      <display_name>Water Heater: Jacket R-value</display_name>
+      <description>The jacket R-value of the storage water heater.</description>
+      <type>Double</type>
+      <units>h-ft^2-R/Btu</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>hvac_control_heating_weekday_setpoint_temp</name>
       <display_name>HVAC Control: Heating Setpoint Weekday Temperature</display_name>
       <description>Specify the weekday heating setpoint temperature.</description>
@@ -12392,7 +12453,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>0FE98551</checksum>
+      <checksum>163C982E</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -12409,7 +12470,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>4C13C148</checksum>
+      <checksum>E72580AA</checksum>
     </file>
     <file>
       <filename>constants.rb</filename>

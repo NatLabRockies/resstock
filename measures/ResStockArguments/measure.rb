@@ -183,6 +183,12 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('Reduction (%) on the air exchange rate value.')
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('dhw_water_heater_jacket_rvalue', true)
+    arg.setDisplayName('Water Heater: Jacket R-value')
+    arg.setDescription('The jacket R-value of the storage water heater.')
+    arg.setUnits('h-ft^2-R/Btu')
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument::makeDoubleArgument('hvac_control_heating_weekday_setpoint_temp', true)
     arg.setDisplayName('HVAC Control: Heating Setpoint Weekday Temperature')
     arg.setDescription('Specify the weekday heating setpoint temperature.')
