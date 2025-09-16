@@ -323,7 +323,8 @@ Solar thermal water heaters are characterized by \texttt{solar\_thermal\_system\
   \item \texttt{solar\_thermal\_solar\_fraction}: 0
 \end{itemize}
 
-The options for solar water heaters in ResStock are a combination of orientation and backup fuel, Table \ref{table:hc_opt_solar_water_heater_eff}. 
+The options for solar water heaters in ResStock distinguishes by orientation and backup fuel as shown in Table \ref{table:hc_opt_solar_water_heater_eff}. The tilt of the collector is set to roof pitch for all options. The azimuth of the collector varies by option, with East (90\degree), South (180\degree), West (270\degree), and North (0\degree) orientations available.
+ All solar water heaters are modeled as two-tank systems, where the backup has its own storage separately from the primary tank. While this may be the common configuration for fuel backup systems, it is less common for electric backup systems, which often use a single tank with integrated solar and electric heating elements. To model a typical solar water heater with a single tank that has backup heating elements, the secondary tank is given a R-6.2 jacket to reduce the standby loss of the secondary tank. R-6.2 is the highest R-value allowable without causing OS-HPXML validation error.
 
 \begin{customLongTable}{|p{3cm}|p{1.85cm}|p{1.85cm}|p{1.5cm}|p{1.95cm}|p{1.95cm}|p{1.5cm}|}{Water Heater Efficiency options and arguments that vary for each option of solar water heaters.}{table:hc_opt_solar_water_heater_eff} 
   {Option name &
@@ -349,7 +350,7 @@ The options for solar water heaters in ResStock are a combination of orientation
   270 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\
   \end{customLongTable}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_eff} on storage and tankless water heaters and Table \ref{table:hc_arg_def_solar_hot_water} on solar water heaters. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
+For the full argument definitions, see Table \ref{table:hc_arg_def_water_heater_eff} on storage and tankless water heaters and Table \ref{table:hc_arg_def_solar_hot_water} on solar water heaters. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
 
 \begin{customLongTable}{|p{2.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4.5cm}|} {The ResStock argument definitions set in the Water Heater Efficiency characteristic} {table:hc_arg_def_water_heater_eff}  
 {Name & Required & Units & Type & Choices & Description} 
