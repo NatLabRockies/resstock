@@ -10106,11 +10106,11 @@ Insulation Wall	"Brick, 12-in, 3-wythe, R-15"	ResStockArguments	wall_type=Struct
 Insulation Wall	"Brick, 12-in, 3-wythe, R-19"	ResStockArguments	wall_type=StructuralBrick	wall_assembly_r=18.3
 Insulation Wall	"Brick, 12-in, 3-wythe, R-7"	ResStockArguments	wall_type=StructuralBrick	wall_assembly_r=10.3
 Insulation Wall	"Brick, 12-in, 3-wythe, Uninsulated"	ResStockArguments	wall_type=StructuralBrick	wall_assembly_r=4.9
-Insulation Wall	"CMU, 6-in Hollow, R-11"	ResStockArguments	wall_type=ConcreteMasonryUnit	wall_assembly_r=13.0
-Insulation Wall	"CMU, 6-in Hollow, R-15"	ResStockArguments	wall_type=ConcreteMasonryUnit	wall_assembly_r=15.9
-Insulation Wall	"CMU, 6-in Hollow, R-19"	ResStockArguments	wall_type=ConcreteMasonryUnit	wall_assembly_r=19.7
-Insulation Wall	"CMU, 6-in Hollow, R-7"	ResStockArguments	wall_type=ConcreteMasonryUnit	wall_assembly_r=9.7
-Insulation Wall	"CMU, 6-in Hollow, Uninsulated"	ResStockArguments	wall_type=ConcreteMasonryUnit	wall_assembly_r=4
+Insulation Wall	"CMU, 6-in, R-11"	ResStockArguments	wall_type=ConcreteMasonryUnit	wall_assembly_r=13.0
+Insulation Wall	"CMU, 6-in, R-15"	ResStockArguments	wall_type=ConcreteMasonryUnit	wall_assembly_r=15.9
+Insulation Wall	"CMU, 6-in, R-19"	ResStockArguments	wall_type=ConcreteMasonryUnit	wall_assembly_r=19.7
+Insulation Wall	"CMU, 6-in, R-7"	ResStockArguments	wall_type=ConcreteMasonryUnit	wall_assembly_r=9.7
+Insulation Wall	"CMU, 6-in, Uninsulated"	ResStockArguments	wall_type=ConcreteMasonryUnit	wall_assembly_r=4
 Insulation Wall	"Double Wood Stud, R-33"	ResStockArguments	wall_type=DoubleWoodStud	wall_assembly_r=28.1
 Insulation Wall	"Double Wood Stud, R-45, Grade 3"	ResStockArguments	wall_type=DoubleWoodStud	wall_assembly_r=25.1
 Insulation Wall	"Generic, 10-in Grid ICF"	ResStockArguments	wall_type=WoodStud	wall_assembly_r=12.4

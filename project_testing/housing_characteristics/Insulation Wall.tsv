@@ -1,4 +1,4 @@
-Dependency=Geometry Wall Type	Option=Wood Stud, Uninsulated	Option=Wood Stud, R-7	Option=Wood Stud, R-11	Option=Wood Stud, R-15	Option=Wood Stud, R-19	Option=CMU, 6-in Hollow, Uninsulated	Option=CMU, 6-in Hollow, R-7	Option=CMU, 6-in Hollow, R-11	Option=CMU, 6-in Hollow, R-15	Option=CMU, 6-in Hollow, R-19	Option=Brick, 12-in, 3-wythe, Uninsulated	Option=Brick, 12-in, 3-wythe, R-7	Option=Brick, 12-in, 3-wythe, R-11	Option=Brick, 12-in, 3-wythe, R-15	Option=Brick, 12-in, 3-wythe, R-19	Option=Void	sampling_probability
+Dependency=Geometry Wall Type	Option=Wood Stud, Uninsulated	Option=Wood Stud, R-7	Option=Wood Stud, R-11	Option=Wood Stud, R-15	Option=Wood Stud, R-19	Option=CMU, 6-in, Uninsulated	Option=CMU, 6-in, R-7	Option=CMU, 6-in, R-11	Option=CMU, 6-in, R-15	Option=CMU, 6-in, R-19	Option=Brick, 12-in, 3-wythe, Uninsulated	Option=Brick, 12-in, 3-wythe, R-7	Option=Brick, 12-in, 3-wythe, R-11	Option=Brick, 12-in, 3-wythe, R-15	Option=Brick, 12-in, 3-wythe, R-19	Option=Void	sampling_probability
 Brick	0	0	0	0	0	0	0	0	0	0	0.2	0.2	0.2	0.2	0.2	0	0.25
 Concrete	0	0	0	0	0	0.2	0.2	0.2	0.2	0.2	0	0	0	0	0	0	0.25
 Void	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
