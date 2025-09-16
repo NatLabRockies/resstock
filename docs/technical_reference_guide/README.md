@@ -4,8 +4,8 @@ This folder contains the LaTeX project for the ResStock Technical Reference Guid
 The main file is the `ResStockTechnicalReferenceGuide.tex` file and when compiled produces `ResStockTechnicalReferenceGuide.pdf` in this directory. 
 
 ## GitHub Actions
-In the `.github/workflows/config.yml` file, the `updates-results` job `Build technical reference guide` task compiles the project into the `ResStockTechnicalReferenceGuide.pdf` file.
-This file is then committed in the "Latest results" commit in the `Commit latest results` task.
+In the `.github/workflows/config.yml` file, the `Build technical reference guide` step of the `build-documentation` job compiles the project into the `ResStockTechnicalReferenceGuide.pdf` file.
+This file is then uploaded in the `Save documentation` step.
 These actions will help keep the document up to date with any changes and fail in the tests if the document does not compile.
 
 ## Building Technical Reference Guide Locally
