@@ -44631,23 +44631,23 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 10%
      - WoodStud
      - 15.4
-   * - CMU, 6-in Hollow, Uninsulated
+   * - CMU, 6-in, Uninsulated
      - 1.4%
      - ConcreteMasonryUnit
      - 4
-   * - CMU, 6-in Hollow, R-7
+   * - CMU, 6-in, R-7
      - 0.4%
      - ConcreteMasonryUnit
      - 9.4
-   * - CMU, 6-in Hollow, R-11
+   * - CMU, 6-in, R-11
      - 0.9%
      - ConcreteMasonryUnit
      - 12.4
-   * - CMU, 6-in Hollow, R-15
+   * - CMU, 6-in, R-15
      - 0.17%
      - ConcreteMasonryUnit
      - 15
-   * - CMU, 6-in Hollow, R-19
+   * - CMU, 6-in, R-19
      - 0.43%
      - ConcreteMasonryUnit
      - 17.4
