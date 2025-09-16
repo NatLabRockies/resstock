@@ -393,7 +393,9 @@ references:
 
   hpwh_apply_logic: &hpwh_apply_logic
     # remove dwelling units that have hpwh or solar thermal water heater
-    - not: Water Heater Efficiency|Electric Heat Pump, 3.5 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF
     - not: Water Heater Fuel|Solar Thermal
     - not: Water Heater Fuel|Other Fuel
     - not: Water Heater Fuel|Wood
@@ -401,7 +403,9 @@ references:
   high_eff_ng_tankless_wh_apply_logic: &high_eff_ng_tankless_wh_apply_logic
     # remove dwelling units that have hpwh or solar thermal wh or tankless gas wh
     # have access to natural gas
-    - not: Water Heater Efficiency|Electric Heat Pump, 3.5 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.45 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.35 UEF
+    - not: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.45 UEF
     - not: Water Heater Fuel|Solar Thermal
     - not: Water Heater Fuel|Other Fuel
     - not: Water Heater Fuel|Wood
@@ -425,8 +429,8 @@ references:
     apply_logic:
       - not: Water Heater Fuel|Natural Gas
 
-  hpwh_3_pt_75_uef: &hpwh_3_pt_75_uef
-    option: Water Heater Efficiency|Electric Heat Pump, 3.75 UEF
+  hpwh_50_gal_3_pt_78_uef: &hpwh_50_gal_3_pt_78_uef
+    option: Water Heater Efficiency|Electric Heat Pump, 50 gal, 3.78 UEF
     apply_logic:
       - or:
         - Bedrooms|1
@@ -437,8 +441,8 @@ references:
         - Occupants|2
         - Occupants|3
 
-  hpwh_4_pt_0_uef_1: &hpwh_4_pt_0_uef_1
-    option: Water Heater Efficiency|Electric Heat Pump, 4.0 UEF
+  hpwh_66_gal_3_pt_95_uef: &hpwh_66_gal_3_pt_95_uef
+    option: Water Heater Efficiency|Electric Heat Pump, 66 gal, 3.95 UEF
     apply_logic:
       - or:
         - and:
@@ -455,8 +459,8 @@ references:
             - Occupants|3
             - Occupants|4
 
-  hpwh_4_pt_0_uef_2: &hpwh_4_pt_0_uef_2
-    option: Water Heater Efficiency|Electric Heat Pump, 4.0 UEF
+  hpwh_80_gal_3_pt_98_uef: &hpwh_80_gal_3_pt_98_uef
+    option: Water Heater Efficiency|Electric Heat Pump, 80 gal, 3.98 UEF
     apply_logic:
       - or:
         - Bedrooms|4
@@ -928,9 +932,9 @@ upgrades:
     package_apply_logic: *hpwh_apply_logic
     options:
       - *change_water_heater_fuel_to_electricity
-      - *hpwh_3_pt_75_uef
-      - *hpwh_4_pt_0_uef_1
-      - *hpwh_4_pt_0_uef_2
+      - *hpwh_50_gal_3_pt_78_uef
+      - *hpwh_66_gal_3_pt_95_uef
+      - *hpwh_80_gal_3_pt_98_uef
 
   - upgrade_name: High Efficiency Natural Gas Tankless Water Heater
     package_apply_logic: *high_eff_ng_tankless_wh_apply_logic

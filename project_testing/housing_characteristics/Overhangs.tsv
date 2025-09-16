@@ -1,0 +1,4 @@
+Option=None	Option=2ft, All Windows	Option=2ft, Front Windows	Option=2ft, Back Windows	Option=2ft, Left Windows	Option=2ft, Right Windows	sampling_probability
+0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	1
+# Created by: manually created
+# Description: Presence, depth, and location of window overhangs (not used in project_national).

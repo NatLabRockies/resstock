@@ -1,4 +1,4 @@
-Dependency=Custom State	Dependency=HVAC Secondary Heating Fuel	Dependency=HVAC Secondary Heating Type	Option=0%	Option=10%	Option=20%	Option=30%	Option=40%	Option=50%	Option=Void	sampling_probability
+Dependency=Custom State	Dependency=HVAC Secondary Heating Fuel	Dependency=HVAC Secondary Heating Type	Option=0%	Option=10%	Option=20%	Option=30%	Option=40%	Option=49%	Option=Void	sampling_probability
 AK	Electricity	Ducted Heating	1	0	0	0	0	0	0	0
 AK	Electricity	Non-Ducted Heating	1	0	0	0	0	0	0	0
 AK	Electricity	None	1	0	0	0	0	0	0	0.0244898
