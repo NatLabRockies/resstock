@@ -120,8 +120,9 @@ Executes:
 
 Artifacts uploaded:
 
-- coverage
+- precomputed_buildstocks
 - feature_samples
+- coverage
 
 .. note::
 
@@ -160,7 +161,6 @@ Uses ``project_testing/testing_baseline.yml`` and ``project_national/national_ba
 
 Artifacts uploaded:
 
-- precomputed_buildstocks
 - run_analysis_results_csvs
 
 .. note::
@@ -296,10 +296,10 @@ Artifacts Produced
 Artifacts produced if tests are successful:
 
 - options_lookup: A sorted and formatted version of ``options_lookup.tsv`` that allows diffs to easily be seen.
-- coverage: Coverage logs.
-- feature_samples: The samples simulated in the feature branch for the analysis and integration tests.
-- documentation: A current version of the ResStock documentation in Read-the-Docs and the Technical Reference Guide PDF.
 - precomputed_buildstocks: Precomputed `buildstock.csv` for ``test/test_yml_files``.
+- feature_samples: The samples simulated in the feature branch for the analysis and integration tests.
+- coverage: Coverage logs.
+- documentation: A current version of the ResStock documentation in Read-the-Docs and the Technical Reference Guide PDF.
 - run_analysis_results_csvs: Annual results from the analysis tests.
 - base_results: Baseline and upgrades results stored on the base branch.
 - buildstockbatch_results_csvs: Annual results from the integration tests.
