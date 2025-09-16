@@ -828,11 +828,11 @@ Level,Parameter,Option,Saturation
 3,Insulation Wall,"Wood Stud, R-11",0.1
 3,Insulation Wall,"Wood Stud, R-15",0.1
 3,Insulation Wall,"Wood Stud, R-19",0.1
-3,Insulation Wall,"CMU, 6-in Hollow, Uninsulated",0.05
-3,Insulation Wall,"CMU, 6-in Hollow, R-7",0.05
-3,Insulation Wall,"CMU, 6-in Hollow, R-11",0.05
-3,Insulation Wall,"CMU, 6-in Hollow, R-15",0.05
-3,Insulation Wall,"CMU, 6-in Hollow, R-19",0.05
+3,Insulation Wall,"CMU, 6-in, Uninsulated",0.05
+3,Insulation Wall,"CMU, 6-in, R-7",0.05
+3,Insulation Wall,"CMU, 6-in, R-11",0.05
+3,Insulation Wall,"CMU, 6-in, R-15",0.05
+3,Insulation Wall,"CMU, 6-in, R-19",0.05
 3,Insulation Wall,"Brick, 12-in, 3-wythe, Uninsulated",0.05
 3,Insulation Wall,"Brick, 12-in, 3-wythe, R-7",0.05
 3,Insulation Wall,"Brick, 12-in, 3-wythe, R-11",0.05
