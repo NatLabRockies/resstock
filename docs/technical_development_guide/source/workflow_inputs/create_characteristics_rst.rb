@@ -268,7 +268,7 @@ source_report.each do |row|
           f.puts('     - ')
         end
       else
-        # If option specifies arguments, insert arguments according to the order of r_arguements
+        # If option specifies arguments, insert arguments according to the order of r_arguments
         r_arguments.each do |argument|
           # Look for each argument in r_arguments
           found_arg = false

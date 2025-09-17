@@ -1264,23 +1264,15 @@ The presence and rated efficiency of the dishwasher.
 \end{itemize}
 
 \paragraph{Options}
-The ResStock baseline has two dishwasher options, one at 290 rated kWh and one at 318 rated kWh, along with a ``None'' option.\footnote{ResStock currently does not account for hand washing of dishes in hot water in cases where no dishwasher is present.} Both dishwasher options have arguments of true for \texttt{dishwasher\_present}, auto for \texttt{dishwasher\_location}, RatedAnnualkWh for \texttt{dishwasher\_efficiency\_type}, 0.12 for \texttt{dishwasher\_label\_electric\_rate}, 1.09 for \texttt{dishwasher\_label\_gas\_rate}, 4 for \texttt{dishwasher\_label\_usage}, and 12 for \texttt{dishasher\_place\_setting\_capacity};  see Table \ref{table:hc_opt_dish}. 
+The ResStock baseline has two dishwasher options, one at 290 rated kWh and one at 318 rated kWh, along with a ``None'' option.\footnote{ResStock currently does not account for hand washing of dishes in hot water in cases where no dishwasher is present.} Both dishwasher options have arguments of true for \texttt{dishwasher\_present}, auto for \texttt{dishwasher\_location}, RatedAnnualkWh for \texttt{dishwasher\_efficiency\_type}, 0.12 for \texttt{dishwasher\_label\_electric\_rate}, 1.09 for \texttt{dishwasher\_label\_gas\_rate}, 4 for \texttt{dishwasher\_label\_usage}, and 12 for \texttt{dishasher\_place\_setting\_capacity}; see Table \ref{table:hc_opt_dishwasher}. 
 
 %options table
-\begin{customLongTable}{ |p{3cm}|p{4cm}|p{4cm}| }
-{Dishwasher options and arguments that vary for each option} {table:hc_opt_dish} 
-{Option name &
-\texttt{dishwasher\_efficiency} &
-\texttt{dishwasher\_label\_annual\_gas\_cost}} 
-290 Rated kWh & 290 & 23  \\
-318 Rated kWh & 318 & 25 \\
-None & 0 & 0 \\
-\end{customLongTable}
+\input{tables/options/Dishwasher}
 
 For the argument definitions, see Table \ref{table:hc_arg_def_dishwasher}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-dishwasher}{Dishwasher} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/Dishwasher}
+\input{tables/arguments/Dishwasher}
 
 \paragraph{Distribution Assumption(s)}
 The 2020 RECS survey does not contain ENERGY STAR rating of dishwashers. ENERGY STAR efficiency distributions with Geometry Building Type, Census Division RECS, Federal Poverty Level, and Tenure as dependencies are imported from RECS 2009.

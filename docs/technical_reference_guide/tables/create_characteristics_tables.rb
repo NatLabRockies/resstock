@@ -3,17 +3,6 @@
 require 'csv'
 require 'oga'
 
-class String
-  def to_underscore_case
-    gsub(/::/, '/')
-      .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-      .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-      .tr('-', '_')
-      .tr(' ', '_')
-      .downcase
-  end
-end
-
 def href_to_rst(str)
   urls_names = str.scan(/<a href='(.+?)'>(.+?)<\/a>/)
   return str if urls_names.empty?
@@ -79,7 +68,6 @@ resstockarguments_xml.keys.each do |k|
   end
 end
 
-source_report_cols = ['Description', 'Created by', 'Source', 'Assumption']
 arguments_cols = ['Name', 'Required', 'Units', 'Type', 'Choices', 'Description']
 
 lookup_file = File.join(resources_dir, 'options_lookup.tsv')
@@ -91,7 +79,6 @@ source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_nat
 source_report.each do |row|
   parameter = row['Parameter']
 
-  # Arguments
   r_arguments = []
   lookup_csv_data.each do |lookup_row|
     next if lookup_row[0] != parameter
@@ -104,7 +91,8 @@ source_report.each do |row|
   end
   next unless r_arguments.any?
 
-  f = File.open(File.join(File.dirname(__FILE__), "#{parameter}.tex"), 'w')
+  # Arguments
+  f = File.open(File.join(File.dirname(__FILE__), "arguments/#{parameter}.tex"), 'w')
 
   f.puts('\begin{customLongTable}{ |p{2.5cm}|p{1.5cm}|p{2.5cm}|p{1.1cm}|p{2.9cm}|p{3cm}| }')
   f.puts("{The ResStock argument definitions set in the #{parameter} characteristic} {table:hc_arg_def_#{parameter.downcase}}")
@@ -125,6 +113,81 @@ source_report.each do |row|
       row += ' \\hline'
     end
     f.puts(row)
+  end
+  f.puts('\end{customLongTable}')
+
+  # Options
+  f = File.open(File.join(File.dirname(__FILE__), "options/#{parameter}.tex"), 'w')
+
+  options = {}
+  option_sat_csv_data.each do |param_option_row|
+    # If the parameter does not match next
+    next if param_option_row[1] != parameter
+
+    # Insert the options and the stock saturation
+    option = param_option_row[2]
+
+    next if Float(param_option_row[3]) == 0
+
+    # Check if there are arguments
+    next unless !r_arguments.empty?
+
+    # If there are arguments, go through options lookup to find the option
+    lookup_csv_data.each do |lookup_row|
+      next if lookup_row[0] != parameter
+      next if lookup_row[1] != option
+
+      next unless lookup_row[2] == 'ResStockArguments'
+
+      if not options.keys.include?(option)
+        options[option] = {}
+      end
+
+      # If option specifies arguments, insert arguments according to the order of r_arguments
+      r_arguments.each do |argument|
+        # Look for each argument in r_arguments
+        lookup_row[3..-1].each do |argument_value|
+          arg, value = argument_value.split('=')
+          if argument == arg
+            options[option][arg] = value
+          end
+        end
+      end
+    end
+  end
+
+  changing_args = []
+  r_arguments.each do |r_argument|
+    vals = []
+    options.keys.each do |option|
+      next if option == 'None'
+
+      vals << options[option][r_argument]
+    end
+    if vals.uniq.size != 1
+      changing_args << r_argument
+    end
+  end
+
+  row = '\begin{customLongTable}{ |p{2.5cm}'
+  changing_args.each do |_changing_arg|
+    row += '|p{3cm}'
+  end
+  f.puts("#{row}| }")
+  f.puts("{#{parameter} options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase}}")
+
+  row = '{Option name'
+  changing_args.each do |changing_arg|
+    row += " & \\texttt{#{changing_arg}}".gsub('_', '\_')
+  end
+  f.puts("#{row}}")
+
+  options.keys.each do |option|
+    row = option
+    changing_args.each do |changing_arg|
+      row += " & #{options[option][changing_arg]}"
+    end
+    f.puts("#{row} \\\\")
   end
   f.puts('\end{customLongTable}')
 end

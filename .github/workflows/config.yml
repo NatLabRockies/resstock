@@ -176,7 +176,7 @@ jobs:
       - name: Technical reference guide tables
         run: |
           sudo gem install oga
-          ruby docs/technical_reference_guide/tables/create_housing_characteristics_tables.rb
+          ruby docs/technical_reference_guide/tables/create_characteristics_tables.rb
 
       - name: Build technical reference guide
         uses: dante-ev/latex-action@2023-A
