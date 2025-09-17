@@ -1,0 +1,45 @@
+\begin{customLongTable}{ |p{2.5cm}|p{1.5cm}|p{2.5cm}|p{1.1cm}|p{2.9cm}|p{3cm}| }
+{The ResStock argument definitions set in the HVAC Shared Efficiencies characteristic} {table:hc_arg_def_hvac shared efficiencies}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{heating\_system\_type} & true &  & Choice & none, Furnace, WallFurnace, FloorFurnace, Boiler, ElectricResistance, Stove, SpaceHeater, Fireplace, Shared Boiler w/ Baseboard, Shared Boiler w/ Ductless Fan Coil & The type of heating system. Use 'none' if there is no heating system or if there is a heat pump serving a heating load.  \\ \hline
+\texttt{heating\_system\_heating\_efficiency} & true & Frac & Double &  & The rated heating efficiency value of the heating system.  \\ \hline
+\texttt{heating\_system\_heating\_capacity} & false & Btu/hr & Double &  & The output heating capacity of the heating system.   \\ \hline
+\texttt{heating\_system\_heating\_autosizing\_limit} & false & Btu/hr & Double &  & The maximum capacity limit applied to the auto-sizing methodology.   \\ \hline
+\texttt{heating\_system\_fraction\_heat\_load\_served} & true & Frac & Double &  & The heating load served by the heating system.  \\ \hline
+\texttt{heating\_system\_has\_flue\_or\_chimney} & true &  & String &  & Whether the heating system has a flue or chimney.  \\ \hline
+\texttt{heat\_pump\_type} & true &  & Choice & none, air-to-air, mini-split, ground-to-air, packaged terminal heat pump, room air conditioner with reverse cycle & The type of heat pump. Use 'none' if there is no heat pump.  \\ \hline
+\texttt{heat\_pump\_heating\_efficiency\_type} & true &  & Choice & HSPF, HSPF2, COP & The heating efficiency type of heat pump. System types air-to-air and mini-split use HSPF or HSPF2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use COP.  \\ \hline
+\texttt{heat\_pump\_heating\_efficiency} & true &  & Double &  & The rated heating efficiency value of the heat pump.  \\ \hline
+\texttt{heat\_pump\_cooling\_efficiency\_type} & true &  & Choice & SEER, SEER2, EER, CEER & The cooling efficiency type of heat pump. System types air-to-air and mini-split use SEER or SEER2. System types ground-to-air, packaged terminal heat pump and room air conditioner with reverse cycle use EER.  \\ \hline
+\texttt{heat\_pump\_cooling\_efficiency} & true &  & Double &  & The rated cooling efficiency value of the heat pump.  \\ \hline
+\texttt{heat\_pump\_sizing\_methodology} & false &  & Choice & auto, ACCA, HERS, MaxLoad & The auto-sizing methodology to use when the heat pump capacity is not provided.   \\ \hline
+\texttt{heat\_pump\_backup\_sizing\_methodology} & false &  & Choice & auto, emergency, supplemental & The auto-sizing methodology to use when the heat pump backup capacity is not provided.   \\ \hline
+\texttt{heat\_pump\_heating\_capacity} & false & Btu/hr & Double &  & The output heating capacity of the heat pump.   \\ \hline
+\texttt{heat\_pump\_heating\_autosizing\_limit} & false & Btu/hr & Double &  & The maximum capacity limit applied to the auto-sizing methodology.   \\ \hline
+\texttt{heat\_pump\_fraction\_heat\_load\_served} & true & Frac & Double &  & The heating load served by the heat pump.  \\ \hline
+\texttt{heat\_pump\_cooling\_capacity} & false & Btu/hr & Double &  & The output cooling capacity of the heat pump.   \\ \hline
+\texttt{heat\_pump\_cooling\_autosizing\_limit} & false & Btu/hr & Double &  & The maximum capacity limit applied to the auto-sizing methodology.   \\ \hline
+\texttt{heat\_pump\_fraction\_cool\_load\_served} & true & Frac & Double &  & The cooling load served by the heat pump.  \\ \hline
+\texttt{heat\_pump\_backup\_type} & true &  & Choice & auto, none, integrated, separate & The backup type of the heat pump. If 'integrated', represents e.g. built-in electric strip heat or dual-fuel integrated furnace. If 'separate', represents e.g. electric baseboard or boiler based on the Heating System 2 specified below. Use 'none' if there is no backup heating. E.g., 'integrated' or 'auto'. Use 'auto' when Backup Use Existing System is true.  \\ \hline
+\texttt{heat\_pump\_backup\_fuel} & true &  & Choice & auto, electricity, natural gas, fuel oil, propane & The backup fuel type of the heat pump. Only applies if Backup Type is 'integrated'. E.g., 'electricity' or 'auto'. Use 'auto' when Backup Use Existing System is true.  \\ \hline
+\texttt{heat\_pump\_backup\_heating\_efficiency} & true &  & Double & auto & The backup rated efficiency value of the heat pump. Percent for electricity fuel type. AFUE otherwise. Only applies if Backup Type is 'integrated'. E.g., '1' or 'auto'. Use 'auto' when Backup Use Existing System is true.  \\ \hline
+\texttt{heat\_pump\_backup\_heating\_capacity} & false & Btu/hr & Double &  & The backup output heating capacity of the heat pump.   \\ \hline
+\texttt{heat\_pump\_backup\_heating\_autosizing\_limit} & false & Btu/hr & Double &  & The maximum capacity limit applied to the auto-sizing methodology if Backup Type is 'integrated'.   \\ \hline
+\texttt{geothermal\_loop\_configuration} & false &  & Choice & auto, none, vertical & Configuration of the geothermal loop. Only applies to ground-to-air heat pump type.   \\ \hline
+\texttt{geothermal\_loop\_borefield\_configuration} & false &  & Choice & auto, Rectangle, Open Rectangle, C, L, U, Lopsided U & Borefield configuration of the geothermal loop. Only applies to ground-to-air heat pump type.   \\ \hline
+\texttt{geothermal\_loop\_loop\_flow} & false & gpm & Double &  & Water flow rate through the geothermal loop. Only applies to ground-to-air heat pump type.   \\ \hline
+\texttt{geothermal\_loop\_boreholes\_count} & false & \# & Integer &  & Number of boreholes. Only applies to ground-to-air heat pump type.   \\ \hline
+\texttt{geothermal\_loop\_boreholes\_length} & false & ft & Double &  & Average length of each borehole (vertical). Only applies to ground-to-air heat pump type.   \\ \hline
+\texttt{geothermal\_loop\_boreholes\_spacing} & false & ft & Double & auto & Distance between bores. Only applies to ground-to-air heat pump type.   \\ \hline
+\texttt{geothermal\_loop\_boreholes\_diameter} & false & in & Double & auto & Diameter of bores. Only applies to ground-to-air heat pump type.   \\ \hline
+\texttt{geothermal\_loop\_grout\_type} & false &  & Choice & auto, standard, thermally enhanced & Grout type of the geothermal loop. Only applies to ground-to-air heat pump type.   \\ \hline
+\texttt{geothermal\_loop\_pipe\_type} & false &  & Choice & auto, standard, thermally enhanced & Pipe type of the geothermal loop. Only applies to ground-to-air heat pump type.   \\ \hline
+\texttt{geothermal\_loop\_pipe\_diameter} & false & in & Choice & auto, 3/4" pipe, 1" pipe, 1-1/4" pipe & Pipe diameter of the geothermal loop. Only applies to ground-to-air heat pump type.   \\ \hline
+\texttt{cooling\_system\_type} & true &  & Choice & none, central air conditioner, room air conditioner, evaporative cooler, mini-split, packaged terminal air conditioner & The type of cooling system. Use 'none' if there is no cooling system or if there is a heat pump serving a cooling load.  \\ \hline
+\texttt{cooling\_system\_cooling\_efficiency\_type} & true &  & Choice & SEER, SEER2, EER, CEER & The efficiency type of the cooling system. System types central air conditioner and mini-split use SEER or SEER2. System types room air conditioner and packaged terminal air conditioner use EER or CEER. Ignored for system type evaporative cooler.  \\ \hline
+\texttt{cooling\_system\_cooling\_efficiency} & true &  & Double &  & The rated efficiency value of the cooling system. Ignored for evaporative cooler.  \\ \hline
+\texttt{cooling\_system\_cooling\_capacity} & false & Btu/hr & Double &  & The output cooling capacity of the cooling system.   \\ \hline
+\texttt{cooling\_system\_is\_ducted} & false &  & Boolean & auto, true, false & Whether the cooling system is ducted or not. Only used for mini-split and evaporative cooler. It's assumed that central air conditioner is ducted, and room air conditioner and packaged terminal air conditioner are not ducted.  \\ \hline
+\texttt{cooling\_system\_compressor\_type} & false &  & Choice & auto, single stage, two stage, variable speed & The compressor type of the cooling system. Required for central air conditioner and mini-split.  \\ \hline
+\texttt{cooling\_system\_cooling\_autosizing\_limit} & false & Btu/hr & Double &  & The maximum capacity limit applied to the auto-sizing methodology.   \\
+\end{customLongTable}

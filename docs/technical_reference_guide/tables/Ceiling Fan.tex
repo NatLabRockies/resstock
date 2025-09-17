@@ -1,0 +1,9 @@
+\begin{customLongTable}{ |p{2.5cm}|p{1.5cm}|p{2.5cm}|p{1.1cm}|p{2.9cm}|p{3cm}| }
+{The ResStock argument definitions set in the Ceiling Fan characteristic} {table:hc_arg_def_ceiling fan}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{ceiling\_fan\_present} & true &  & Boolean & true, false & Whether there are any ceiling fans.  \\ \hline
+\texttt{ceiling\_fan\_label\_energy\_use} & false & W & Double & auto & The label average energy use of the ceiling fan(s). If neither Efficiency nor Label Energy Use provided, the OS-HPXML default (see `HPXML Ceiling Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-ceiling-fans>`_) is used.  \\ \hline
+\texttt{ceiling\_fan\_efficiency} & false & CFM/W & Double & auto & The efficiency rating of the ceiling fan(s) at medium speed. Only used if Label Energy Use not provided. If neither Efficiency nor Label Energy Use provided, the OS-HPXML default (see `HPXML Ceiling Fans <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-ceiling-fans>`_) is used.  \\ \hline
+\texttt{ceiling\_fan\_quantity} & false & \# & Integer & auto & Total number of ceiling fans.   \\ \hline
+\texttt{ceiling\_fan\_cooling\_setpoint\_temp\_offset} & false & F & Double & auto & The cooling setpoint temperature offset during months when the ceiling fans are operating. Only applies if ceiling fan quantity is greater than zero.   \\
+\end{customLongTable}

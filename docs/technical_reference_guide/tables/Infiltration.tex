@@ -1,0 +1,10 @@
+\begin{customLongTable}{ |p{2.5cm}|p{1.5cm}|p{2.5cm}|p{1.1cm}|p{2.9cm}|p{3cm}| }
+{The ResStock argument definitions set in the Infiltration characteristic} {table:hc_arg_def_infiltration}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{air\_leakage\_leakiness\_description} & false &  & Choice & auto, very tight, tight, average, leaky, very leaky & Qualitative description of infiltration. If provided, the Year Built of the home is required. Either provide this input or provide a numeric air leakage value below.  \\ \hline
+\texttt{air\_leakage\_units} & false &  & Choice & auto, ACH, CFM, ACHnatural, CFMnatural, EffectiveLeakageArea & The unit of measure for the air leakage if providing a numeric air leakage value.  \\ \hline
+\texttt{air\_leakage\_house\_pressure} & false & Pa & Double &  & The house pressure relative to outside if providing a numeric air leakage value. Required when units are ACH or CFM.  \\ \hline
+\texttt{air\_leakage\_value} & false &  & Double &  & Numeric air leakage value. For 'EffectiveLeakageArea', provide value in sq. in. If provided, overrides Leakiness Description input.  \\ \hline
+\texttt{air\_leakage\_type} & false &  & Choice & auto, unit total, unit exterior only & Type of air leakage if providing a numeric air leakage value. If 'unit total', represents the total infiltration to the unit as measured by a compartmentalization test, in which case the air leakage value will be adjusted by the ratio of exterior envelope surface area to total envelope surface area. Otherwise, if 'unit exterior only', represents the infiltration to the unit from outside only as measured by a guarded test. Required when unit type is single-family attached or apartment unit.  \\ \hline
+\texttt{site\_shielding\_of\_home} & false &  & Choice & auto, exposed, normal, well-shielded & Presence of nearby buildings, trees, obstructions for infiltration model.   \\
+\end{customLongTable}

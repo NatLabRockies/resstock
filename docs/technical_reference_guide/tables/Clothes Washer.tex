@@ -1,0 +1,13 @@
+\begin{customLongTable}{ |p{2.5cm}|p{1.5cm}|p{2.5cm}|p{1.1cm}|p{2.9cm}|p{3cm}| }
+{The ResStock argument definitions set in the Clothes Washer characteristic} {table:hc_arg_def_clothes washer}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{clothes\_washer\_location} & false &  & Choice & auto, conditioned space, basement - conditioned, basement - unconditioned, garage, other housing unit, other heated space, other multifamily buffer space, other non-freezing space & The space type for the clothes washer location.   \\ \hline
+\texttt{clothes\_washer\_efficiency\_type} & true &  & Choice & ModifiedEnergyFactor, IntegratedModifiedEnergyFactor & The efficiency type of the clothes washer.  \\ \hline
+\texttt{clothes\_washer\_efficiency} & false & ft^3/kWh-cyc & Double & auto & The efficiency of the clothes washer.   \\ \hline
+\texttt{clothes\_washer\_rated\_annual\_kwh} & false & kWh/yr & Double & auto & The annual energy consumed by the clothes washer, as rated, obtained from the EnergyGuide label. This includes both the appliance electricity consumption and the energy required for water heating.   \\ \hline
+\texttt{clothes\_washer\_label\_electric\_rate} & false & \$/kWh & Double & auto & The annual energy consumed by the clothes washer, as rated, obtained from the EnergyGuide label. This includes both the appliance electricity consumption and the energy required for water heating.   \\ \hline
+\texttt{clothes\_washer\_label\_gas\_rate} & false & \$/therm & Double & auto & The annual energy consumed by the clothes washer, as rated, obtained from the EnergyGuide label. This includes both the appliance electricity consumption and the energy required for water heating.   \\ \hline
+\texttt{clothes\_washer\_label\_annual\_gas\_cost} & false & \$ & Double & auto & The annual cost of using the system under test conditions. Input is obtained from the EnergyGuide label.   \\ \hline
+\texttt{clothes\_washer\_label\_usage} & false & cyc/wk & Double & auto & The clothes washer loads per week.   \\ \hline
+\texttt{clothes\_washer\_capacity} & false & ft^3 & Double & auto & Volume of the washer drum. Obtained from the EnergyStar website or the manufacturer's literature.   \\
+\end{customLongTable}

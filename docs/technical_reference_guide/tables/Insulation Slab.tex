@@ -1,0 +1,14 @@
+\begin{customLongTable}{ |p{2.5cm}|p{1.5cm}|p{2.5cm}|p{1.1cm}|p{2.9cm}|p{3cm}| }
+{The ResStock argument definitions set in the Insulation Slab characteristic} {table:hc_arg_def_insulation slab}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{slab\_perimeter\_insulation\_r} & true & h-ft^2-R/Btu & Double &  & Nominal R-value of the vertical slab perimeter insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.  \\ \hline
+\texttt{slab\_perimeter\_insulation\_depth} & true & ft & Double &  & Depth from grade to bottom of vertical slab perimeter insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.  \\ \hline
+\texttt{slab\_exterior\_horizontal\_insulation\_r} & false & h-ft^2-R/Btu & Double &  & Nominal R-value of the slab exterior horizontal insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.  \\ \hline
+\texttt{slab\_exterior\_horizontal\_insulation\_width} & false & ft & Double &  & Width of the slab exterior horizontal insulation measured from the exterior surface of the vertical slab perimeter insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.  \\ \hline
+\texttt{slab\_exterior\_horizontal\_insulation\_depth\_below\_grade} & false & ft & Double &  & Depth of the slab exterior horizontal insulation measured from the top surface of the slab exterior horizontal insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.  \\ \hline
+\texttt{slab\_under\_insulation\_r} & true & h-ft^2-R/Btu & Double &  & Nominal R-value of the horizontal under slab insulation. Applies to slab-on-grade foundations and basement/crawlspace floors.  \\ \hline
+\texttt{slab\_under\_insulation\_width} & true & ft & Double &  & Width from slab edge inward of horizontal under-slab insulation. Enter 999 to specify that the under slab insulation spans the entire slab. Applies to slab-on-grade foundations and basement/crawlspace floors.  \\ \hline
+\texttt{slab\_thickness} & false & in & Double & auto & The thickness of the slab. Zero can be entered if there is a dirt floor instead of a slab.   \\ \hline
+\texttt{slab\_carpet\_fraction} & false & Frac & Double & auto & Fraction of the slab floor area that is carpeted.   \\ \hline
+\texttt{slab\_carpet\_r} & false & h-ft^2-R/Btu & Double & auto & R-value of the slab carpet.   \\
+\end{customLongTable}

@@ -1,0 +1,18 @@
+\begin{customLongTable}{ |p{2.5cm}|p{1.5cm}|p{2.5cm}|p{1.1cm}|p{2.9cm}|p{3cm}| }
+{The ResStock argument definitions set in the PV System Size characteristic} {table:hc_arg_def_pv system size}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{pv\_system\_present} & true &  & Boolean & true, false & Whether there is a PV system present.  \\ \hline
+\texttt{pv\_system\_module\_type} & false &  & Choice & auto, standard, premium, thin film & Module type of the PV system.   \\ \hline
+\texttt{pv\_system\_max\_power\_output} & true & W & Double &  & Maximum power output of the PV system. For a shared system, this is the total building maximum power output.  \\ \hline
+\texttt{pv\_system\_location} & false &  & Choice & auto, roof, ground & Location of the PV system.   \\ \hline
+\texttt{pv\_system\_tracking} & false &  & Choice & auto, fixed, 1-axis, 1-axis backtracked, 2-axis & Type of tracking for the PV system.   \\ \hline
+\texttt{pv\_system\_array\_tilt} & true & degrees & String &  & Array tilt of the PV system. Can also enter, e.g., RoofPitch, RoofPitch+20, Latitude, Latitude-15, etc.  \\ \hline
+\texttt{pv\_system\_inverter\_efficiency} & false & Frac & Double & auto & Inverter efficiency of the PV system. If there are two PV systems, this will apply to both.   \\ \hline
+\texttt{pv\_system\_system\_losses\_fraction} & false & Frac & Double & auto & System losses fraction of the PV system. If there are two PV systems, this will apply to both.   \\ \hline
+\texttt{pv\_system\_2\_present} & true &  & Boolean & true, false & Whether there is a second PV system present.  \\ \hline
+\texttt{pv\_system\_2\_module\_type} & false &  & Choice & auto, standard, premium, thin film & Module type of the second PV system.   \\ \hline
+\texttt{pv\_system\_2\_max\_power\_output} & true & W & Double &  & Maximum power output of the second PV system. For a shared system, this is the total building maximum power output.  \\ \hline
+\texttt{pv\_system\_2\_location} & false &  & Choice & auto, roof, ground & Location of the second PV system.   \\ \hline
+\texttt{pv\_system\_2\_tracking} & false &  & Choice & auto, fixed, 1-axis, 1-axis backtracked, 2-axis & Type of tracking for the second PV system.   \\ \hline
+\texttt{pv\_system\_2\_array\_tilt} & true & degrees & String &  & Array tilt of the second PV system. Can also enter, e.g., RoofPitch, RoofPitch+20, Latitude, Latitude-15, etc.  \\
+\end{customLongTable}
