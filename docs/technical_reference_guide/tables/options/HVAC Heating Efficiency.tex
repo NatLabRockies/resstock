@@ -1,0 +1,23 @@
+\begin{customLongTable}{ |p{2.5cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}| }
+{HVAC Heating Efficiency options and arguments that vary for each option} {table:hc_opt_hvac heating efficiency}
+{Option name & \texttt{heating\_system\_type} & \texttt{heating\_system\_heating\_efficiency} & \texttt{heat\_pump\_type} & \texttt{heat\_pump\_heating\_efficiency} & \texttt{heat\_pump\_cooling\_efficiency} & \texttt{heat\_pump\_backup\_type} & \texttt{heat\_pump\_heating\_capacity\_fraction\_17\_f} & \texttt{heat\_pump\_is\_ducted} & \texttt{heat\_pump\_backup\_heating\_lockout\_temp} & \texttt{heat\_pump\_compressor\_lockout\_temp} & \texttt{heat\_pump\_compressor\_type} & \texttt{heat\_pump\_crankcase\_heater\_watts} & \texttt{heat\_pump\_pan\_heater\_watts} & \texttt{heat\_pump\_pan\_heater\_control\_type} & \texttt{heating\_system\_pilot\_light}}
+ASHP, SEER 10, 6.2 HSPF & none & 0 & air-to-air & 6.2 & 10 & integrated & auto & true & auto & auto & single stage & auto & auto & auto &  \\
+ASHP, SEER 13, 7.7 HSPF & none & 0 & air-to-air & 7.7 & 13 & integrated & auto & true & auto & auto & single stage & auto & auto & auto &  \\
+ASHP, SEER 15, 8.5 HSPF & none & 0 & air-to-air & 8.5 & 15 & integrated & auto & true & auto & auto & single stage & auto & auto & auto &  \\
+Electric Baseboard, 100% Efficiency & ElectricResistance & 1 & none & 0 & 0 & none &  &  &  &  &  &  &  &  &  \\
+Electric Boiler, 100% AFUE & Boiler & 1 & none & 0 & 0 & none &  &  &  &  &  &  &  &  &  \\
+Electric Furnace, 100% AFUE & Furnace & 1 & none & 0 & 0 & none &  &  &  &  &  &  &  &  &  \\
+Electric Wall Furnace, 100% AFUE & WallFurnace & 1 & none & 0 & 0 & none &  &  &  &  &  &  &  &  &  \\
+Fuel Boiler, 76% AFUE & Boiler & 0.76 & none & 0 & 0 & none &  &  &  &  &  &  &  &  & auto \\
+Fuel Boiler, 80% AFUE & Boiler & 0.8 & none & 0 & 0 & none &  &  &  &  &  &  &  &  & auto \\
+Fuel Boiler, 90% AFUE & Boiler & 0.9 & none & 0 & 0 & none &  &  &  &  &  &  &  &  & auto \\
+Fuel Furnace, 60% AFUE & Furnace & 0.6 & none & 0 & 0 & none &  &  &  &  &  &  &  &  & auto \\
+Fuel Furnace, 76% AFUE & Furnace & 0.76 & none & 0 & 0 & none &  &  &  &  &  &  &  &  & auto \\
+Fuel Furnace, 80% AFUE & Furnace & 0.8 & none & 0 & 0 & none &  &  &  &  &  &  &  &  & auto \\
+Fuel Furnace, 92.5% AFUE & Furnace & 0.925 & none & 0 & 0 & none &  &  &  &  &  &  &  &  & auto \\
+Fuel Wall/Floor Furnace, 60% AFUE & WallFurnace & 0.6 & none & 0 & 0 & none &  &  &  &  &  &  &  &  & auto \\
+Fuel Wall/Floor Furnace, 68% AFUE & WallFurnace & 0.68 & none & 0 & 0 & none &  &  &  &  &  &  &  &  & auto \\
+MSHP, SEER 14.5, 8.2 HSPF & none & 0 & mini-split & 8.2 & 14.5 & integrated & auto & false & auto & auto & variable speed & auto & auto & auto &  \\
+MSHP, SEER 29.3, 14 HSPF & none & 0 & mini-split & 14 & 29.3 & integrated & auto & false & auto & auto & variable speed & auto & auto & auto &  \\
+None & none & 0 & none & 6.2 & 10 & none &  &  &  &  &  &  &  &  &  \\
+\end{customLongTable}
