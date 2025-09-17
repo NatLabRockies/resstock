@@ -105,20 +105,7 @@ The U.S.~state where the sample is located. In ResStock, States are defined by a
 \paragraph{Options}
 The options for each State are the collection of postal abbreviations (e.g., AL, AK, AR). Each option sets the \texttt{site\_state\_code} argument. The \texttt{site\_state\_code} argument choices are also the State abbreviations. An example option and argument assignment for Alabama is as follows: the option name is AL and \texttt{site\_state\_code}=AL. The rest of the States follow this structure.
 
-\begin{longtable}[]{ |p{3.5cm}|p{1.5cm}|p{1cm}|p{4.5cm}|p{3cm}| }
-\caption{The ResStock argument definitions for the State characteristic} \label{table:hc_arg_def_state}  \\
-\toprule\noalign{}
-Name & Required & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{site\_state\_code} & false  & Choice & auto, AK, AL, AR, AZ,
-CA, CO, CT, DC, DE, FL, GA, HI, IA, ID, IL, IN, KS, KY, LA, MA, MD, ME,
-MI, MN, MO, MS, MT, NC, ND, NE, NH, NJ, NM, NV, NY, OH, OK, OR, PA, RI,
-SC, SD, TN, TX, UT, VA, VT, WA, WI, WV, WY & State code of the home
-address. \\
-\end{longtable}
+\input{tables/arguments/State}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.
@@ -153,26 +140,7 @@ The \texttt{site\_time\_zone\_utc\_offset} argument is assigned using the popula
 
 The \texttt{weather\_station\_epw\_filepath} argument is ``../../../weather/<County GISJOIN>.epw'' where <County GISJOIN> is the NHGIS GISJOIN value for the county. The NHGISJOIN for a county always starts with the letter ``G'' followed by the state's two-digit FIPS, a ``0,'' and then the County 3-digit FIPS code. An example of this argument assignment for the option ``CO, Denver County'' is \texttt{weather\_station\_epw\_filepath}=../../../weather/G0800310.epw.
 
-\begin{longtable}[]{ |p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.9cm}|p{5cm}| }
-\caption{The ResStock argument definitions for the County characteristic} \label{table:hc_arg_def_county}  \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{simulation\_control\_daylight\_saving\_enabled} & false & &
-Boolean & auto, true, false & Whether to use daylight saving. \\
-\hline
-\texttt{site\_zip\_code} & false & & String & & Zip code of the home
-address. \\
-\hline
-\texttt{site\_time\_zone\_utc\_offset} & false & hr & Double & auto &
-Time zone UTC offset of the home address. Must be between -12 and 14.  \\
-\hline
-\texttt{weather\_station\_epw\_filepath} & true & & String & & Path of
-the EnergyPlus Weather (EPW) file. \\
-\end{longtable}
+\input{tables/arguments/County}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.

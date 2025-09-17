@@ -94,7 +94,7 @@ source_report.each do |row|
   # Arguments
   f = File.open(File.join(File.dirname(__FILE__), "arguments/#{parameter}.tex"), 'w')
 
-  f.puts('\begin{customLongTable}{ |p{2.5cm}|p{1.5cm}|p{2.5cm}|p{1.1cm}|p{2.9cm}|p{3cm}| }')
+  f.puts('\begin{customLongTable}{ |p{3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }')
   f.puts("{The ResStock argument definitions set in the #{parameter} characteristic} {table:hc_arg_def_#{parameter.downcase}}")
   f.puts("{#{arguments_cols.join(' & ')}}")
   r_arguments.each_with_index do |r_argument, i|
