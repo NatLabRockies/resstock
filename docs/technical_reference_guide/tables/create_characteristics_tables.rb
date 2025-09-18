@@ -75,6 +75,8 @@ option_sat_file = File.join('project_national', 'resources', 'options_saturation
 lookup_csv_data = CSV.open(lookup_file, col_sep: "\t").each.to_a
 option_sat_csv_data = CSV.open(option_sat_file, quote_char: '"', col_sep: ',').each.to_a
 
+desc_exclusions = ['If not provided', 'If neither']
+
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_national/resources/source_report.csv'), headers: true)
 source_report.each do |row|
   parameter = row['Parameter']
@@ -94,8 +96,8 @@ source_report.each do |row|
   # Arguments
   f = File.open(File.join(File.dirname(__FILE__), "arguments/#{parameter}.tex"), 'w')
 
-  f.puts('\begin{customLongTable}{ |p{3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }')
-  f.puts("{The ResStock argument definitions set in the #{parameter} characteristic} {table:hc_arg_def_#{parameter.downcase}}")
+  f.puts('\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }')
+  f.puts("{The ResStock argument definitions set in the #{parameter} characteristic} {table:hc_arg_def_#{parameter.downcase.gsub(' ', '_')}}")
   f.puts("{#{arguments_cols.join(' & ')}}")
   r_arguments.each_with_index do |r_argument, i|
     name = "\\texttt{#{r_argument}}".gsub('_', '\_')
@@ -104,9 +106,11 @@ source_report.each do |row|
     type = resstockarguments_xml[r_argument]['type']
     choices = resstockarguments_xml[r_argument]['choices'].join(', ')
     description = resstockarguments_xml[r_argument]['description']
-    ix = description.index('If not provided')
-    if ix
-      description = description.slice(0, ix)
+    desc_exclusions.each do |desc_exclusion|
+      ix = description.index(desc_exclusion)
+      if ix
+        description = description.slice(0, ix)
+      end
     end
     row = "#{name} & #{required} & #{units} & #{type} & #{choices} & #{description}  \\\\"
     if i < r_arguments.size - 1
@@ -160,8 +164,6 @@ source_report.each do |row|
   r_arguments.each do |r_argument|
     vals = []
     options.keys.each do |option|
-      next if option == 'None'
-
       vals << options[option][r_argument]
     end
     if vals.uniq.size != 1
@@ -169,12 +171,17 @@ source_report.each do |row|
     end
   end
 
-  row = '\begin{customLongTable}{ |p{2.5cm}'
+  max_changing_args = 4
+  if changing_args.size > max_changing_args
+    puts "Warning: #{parameter} varying arguments #{changing_args.size} / #{max_changing_args}"
+  end
+
+  row = '\begin{customLongTable}{ |p{3cm}'
   changing_args.each do |_changing_arg|
-    row += '|p{3cm}'
+    row += '|p{2.75cm}'
   end
   f.puts("#{row}| }")
-  f.puts("{#{parameter} options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase}}")
+  f.puts("{#{parameter} options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
 
   row = '{Option name'
   changing_args.each do |changing_arg|
@@ -182,12 +189,16 @@ source_report.each do |row|
   end
   f.puts("#{row}}")
 
-  options.keys.each do |option|
+  options.keys.each_with_index do |option, i|
     row = option
-    changing_args.each do |changing_arg|
+    changing_args.each_with_index do |changing_arg, _i|
       row += " & #{options[option][changing_arg]}"
     end
-    f.puts("#{row} \\\\")
+    row = "#{row} \\\\"
+    if i < options.keys.size - 1
+      row += ' \\hline'
+    end
+    f.puts(row)
   end
   f.puts('\end{customLongTable}')
 end

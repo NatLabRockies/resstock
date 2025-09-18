@@ -173,25 +173,7 @@ The options for PUMAs are structured by their state abbreviation and the PUMA co
 
 There are three ResStock arguments set with the PUMA options: \texttt{site\_elevation}, \texttt{site\_latitude}, and \texttt{site\_longitude}. All three of these arguments are set to ``auto'' and use the default \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-site}{OpenStudio-HPXML Building Site} values.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{1.4cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the PUMA characteristic} \label{table:hc_arg_def_puma}  \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{site\_elevation} & false & ft & Double & auto & Elevation of the
-home address.  \\
-\hline
-\texttt{site\_latitude} & false & deg & Double & auto & Latitude of the
-home address. Must be between -90 and 90. Use negative values for
-southern hemisphere.\\
-\hline
-\texttt{site\_longitude} & false & deg & Double & auto & Longitude of
-the home address. Must be between -180 and 180. Use negative values for
-the western hemisphere.\\
-\end{longtable}
+\input{tables/arguments/PUMA}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.
@@ -277,17 +259,7 @@ The options are structured as the State abbreviation of the city, a comma, and t
 
 The ResStock argument \texttt{site\_city} is assigned in the City characteristic. The argument is set to ``auto,'' which is the OpenStudio-HPXML default value; see the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-building-site}{Building Site} section of the documentation for the default values.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1.1cm}|p{6cm}| }
-\caption{The ResStock argument definitions set in the City characteristic} \label{table:hc_arg_def_city}  \\
-\toprule\noalign{}
-Name & Required & Type  & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{site\_city} & false & String & City/municipality of the home
-address. \\
-\end{longtable}
+\input{tables/arguments/City}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -420,16 +392,7 @@ A set of counties defines each climate and moisture zone. Climate zones range fr
 
 The ASHRAE IECC Climate Zone 2004 sets the \texttt{site\_type} and \texttt{site\_iecc\_zone} arguments. The \texttt{site\_type} is always set to ``auto.'' The \texttt{site\_iecc\_zone} argument matches the climate zone with the exception of climate zones 7 and 8 in Alaska. ResStock departs from the climate zone definitions by using 7AK and 8AK instead of 7 and 8 from the standards.
 
-\begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1.1cm}|p{4.4cm}|p{4cm}| }
-{The ResStock arguments set in the ASHRAE IECC Climate Zone 2004 characteristic} {table:hc_arg_def_ashrae_2004}
-{Name & Required & Type & Choices & Description}
-\texttt{site\_type} & false & Choice & auto, suburban, urban, rural &
-The type of site.  \\
-\hline
-\texttt{site\_iecc\_zone} & false & Choice & auto, 1A, 1B, 1C, 2A, 2B,
-2C, 3A, 3B, 3C, 4A, 4B, 4C, 5A, 5B, 5C, 6A, 6B, 6C, 7, 8 & IECC zone of
-the home address. \\
-\end{customLongTable}
+\input{tables/arguments/ASHRAE IECC Climate Zone 2004}
 
 \paragraph{Distribution Assumption(s)}
 No assumptions are made.

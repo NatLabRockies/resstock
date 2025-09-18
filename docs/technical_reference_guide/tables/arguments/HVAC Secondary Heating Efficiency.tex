@@ -1,5 +1,5 @@
-\begin{customLongTable}{ |p{3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
-{The ResStock argument definitions set in the HVAC Secondary Heating Efficiency characteristic} {table:hc_arg_def_hvac secondary heating efficiency}
+\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
+{The ResStock argument definitions set in the HVAC Secondary Heating Efficiency characteristic} {table:hc_arg_def_hvac_secondary_heating_efficiency}
 {Name & Required & Units & Type & Choices & Description}
 \texttt{heating\_system\_2\_type} & true &  & Choice & none, Furnace, WallFurnace, FloorFurnace, Boiler, ElectricResistance, Stove, SpaceHeater, Fireplace & The type of the second heating system. If a heat pump is specified and the backup type is 'separate', this heating system represents 'separate' backup heating. For ducted heat pumps where the backup heating system is a 'Furnace', the backup would typically be characterized as 'integrated' in that the furnace and heat pump share the same distribution system and blower fan; a 'Furnace' as 'separate' backup to a ducted heat pump is not supported.  \\ \hline
 \texttt{heating\_system\_2\_heating\_efficiency} & true & Frac & Double &  & The rated heating efficiency value of the second heating system.  \\ \hline

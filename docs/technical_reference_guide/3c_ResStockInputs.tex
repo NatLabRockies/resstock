@@ -979,7 +979,7 @@ Constructed using U.S. EIA 2020 RECS microdata.
 
 \paragraph{Options}
 The Misc Freezer option in baseline has an EF of 12, intended to represent the national average. The characteristic sets the \texttt{freezer\_present}, \texttt{freezer\_location}, \texttt{freezer\_rated\_annual\_kwh}, and \texttt{freezer\_usage\_multiplier} ResStock arguments (Table \ref{table:hc_opt_freezer}).
-The usage multiplier varies by state and is set to account for the presence of extra freezers, see \ref{table:hc_opt_freezer_usage_mult}.
+The usage multiplier varies by state and is set to account for the presence of extra freezers, see Table \ref{table:hc_opt_freezer_usage_mult}.
 
 \begin{longtable}[]{ |p{3cm}|p{3cm}|p{3cm}|p{3cm}| }
 \caption{Misc Freezer options and arguments that vary for each option} \label{table:hc_opt_freezer} \\
@@ -1746,50 +1746,15 @@ Building America House Simulation Protocols (\cite{Wilson2014}); national averag
 \end{itemize}
 
 \paragraph{Options}
-ResStock has three options for the ceiling fan characteristic: a standard efficiency ceiling fan, a standard efficiency ceiling fan that is not used, and ``None.'' For the standard efficiency ceiling fan that is not used, as well as the ``None'' option, the \texttt{ceiling\_fan\_present} argument is set to false and the \texttt{ceiling\_fan\_quantity} is set to 0. The \texttt{ceiling\_fan\_cooling\_setpoint\_offset} argument is 0 for all options. The remaining arguments set by ResStock are shown in Table \ref{table:opt_def_ceiling_fans}.
+ResStock has three options for the ceiling fan characteristic: a standard efficiency ceiling fan, a standard efficiency ceiling fan that is not used, and ``None.'' For the standard efficiency ceiling fan that is not used, as well as the ``None'' option, the \texttt{ceiling\_fan\_present} argument is set to false and the \texttt{ceiling\_fan\_quantity} is set to 0. The \texttt{ceiling\_fan\_cooling\_setpoint\_offset} argument is 0 for all options. The remaining arguments set by ResStock are shown in Table \ref{table:hc_opt_ceiling_fan}.
 
 %options table
-\begin{longtable}[]{ |p{5cm}|p{4cm}|p{4cm}| }
-\caption{Ceiling Fan options and arguments that vary for each option} \label{table:opt_def_ceiling_fans}\\
-\toprule\noalign{}
-Option name &
-\texttt{ceiling\_fan\_label\_energy\_use} &
-\texttt{ceiling\_fan\_efficiency} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-None & 0 & 0 \\
-Standard Efficiency & auto & 70.4 \\
-Standard Efficiency, No usage & auto & 0 \\
-\end{longtable}
+\input{tables/options/Ceiling Fan}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ceiling_fans}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-ceiling-fans}{Ceiling Fans} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_ceiling_fan}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-ceiling-fans}{Ceiling Fans} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\begin{customLongTable}{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4cm}| }
-{The ResStock argument definitions set in the Ceiling Fan characteristic} {table:hc_arg_def_ceiling_fans} 
-{Name & Required & Units & Type & Choices & Description} 
-\texttt{ceiling\_fan\_present} & true & & Boolean & true, false &
-Whether there are any ceiling fans. \\ \hline
-\texttt{ceiling\_fan\_label\_energy\_use} & false & W & Double & auto &
-The label average energy use of the ceiling fan(s). If neither
-Efficiency nor Label Energy Use provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-ceiling-fans}{HPXML
-Ceiling Fans}) is used. \\ \hline
-\texttt{ceiling\_fan\_efficiency} & false & CFM/W & Double & auto & The
-efficiency rating of the ceiling fan(s) at medium speed. Only used if
-Label Energy Use not provided. If neither Efficiency nor Label Energy
-Use provided, the OS-HPXML default (see
-\href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html\#hpxml-ceiling-fans}{HPXML
-Ceiling Fans}) is used. \\ \hline
-\texttt{ceiling\_fan\_quantity} & false & \# & Integer & auto & Total
-number of ceiling fans.  \\ \hline
-\texttt{ceiling\_fan\_cooling\_setpoint\_temp\_offset} & false & deg-F &
-Double & auto & The cooling setpoint temperature offset during months
-when the ceiling fans are operating. Only applies if ceiling fan
-quantity is greater than zero.  \\
-\end{customLongTable}
+\input{tables/arguments/Ceiling Fan}
 
 \paragraph{Distribution Assumption(s)}
 If the unit is vacant, there is no ceiling fan energy.

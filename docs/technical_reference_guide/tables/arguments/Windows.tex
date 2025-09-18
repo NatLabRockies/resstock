@@ -1,4 +1,4 @@
-\begin{customLongTable}{ |p{3cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
+\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
 {The ResStock argument definitions set in the Windows characteristic} {table:hc_arg_def_windows}
 {Name & Required & Units & Type & Choices & Description}
 \texttt{window\_ufactor} & true & Btu/hr-ft^2-R & Double &  & Full-assembly NFRC U-factor.  \\ \hline
@@ -6,7 +6,7 @@
 \texttt{skylight\_ufactor} & true & Btu/hr-ft^2-R & Double &  & Full-assembly NFRC U-factor.  \\ \hline
 \texttt{skylight\_shgc} & true &  & Double &  & Full-assembly NFRC solar heat gain coefficient.  \\ \hline
 \texttt{skylight\_storm\_type} & false &  & Choice & auto, clear, low-e & The type of storm, if present.   \\ \hline
-\texttt{window\_exterior\_shading\_type} & false &  & Choice & auto, solar film, solar screens, none & Type of window exterior shading. Summer/winter shading coefficients can be provided below instead. If neither is provided, the OS-HPXML default (see `HPXML Exterior Shading <https://openstudio-hpxml.readthedocs.io/en/v1.11.0/workflow_inputs.html#hpxml-exterior-shading>`_) is used.  \\ \hline
+\texttt{window\_exterior\_shading\_type} & false &  & Choice & auto, solar film, solar screens, none & Type of window exterior shading. Summer/winter shading coefficients can be provided below instead.   \\ \hline
 \texttt{window\_exterior\_shading\_summer} & false & Frac & Double & auto & Exterior shading coefficient for the summer season, which if provided overrides the shading type input. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc.   \\ \hline
 \texttt{window\_exterior\_shading\_winter} & false & Frac & Double & auto & Exterior shading coefficient for the winter season, which if provided overrides the shading type input. 1.0 indicates no reduction in solar gain, 0.85 indicates 15% reduction, etc.   \\ \hline
 \texttt{window\_natvent\_availability} & false & Days/week & Integer & auto & For operable windows, the number of days/week that windows can be opened by occupants for natural ventilation.   \\ \hline
