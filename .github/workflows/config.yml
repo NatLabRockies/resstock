@@ -320,7 +320,6 @@ jobs:
 
       - name: Process results
         run: |
-          pip install plotly
           python test/process_bsb_analysis.py
 
       - name: Upload buildstockbatch results
@@ -413,7 +412,7 @@ jobs:
           python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
           python test/compare.py -a results -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
           python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
-          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
           
           # baseline timeseries
           mkdir test/base_results/comparisons/baseline/timeseries
@@ -719,6 +718,11 @@ jobs:
           path: base_results
           name: base_results
 
+      - name: Process results
+        if: github.event_name == 'pull_request'
+        run: |
+          python test/process_sdr_analysis.py
+
       - name: Compare samples and results
         if: github.event_name == 'pull_request'
         run: |          
@@ -728,12 +732,12 @@ jobs:
           pip install kaleido
           
           # results_characteristics.csv
-          python test/base_results/upgrades/create_results_characteristics.py -f base_results/upgrades/sdr_annual/results_up00.csv
-          python test/base_results/upgrades/create_results_characteristics.py -f test/base_results/upgrades/sdr_annual/results_up00.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f base_results/upgrades/sdr_annual/combined/results.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f test/base_results/upgrades/sdr_annual/combined/results.csv
           
           # upgrades annual
           mkdir -p test/base_results/sdr_comparisons/upgrades/sdr_annual
-          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/upgrades/sdr_annual -f test/base_results/upgrades/sdr_annual -e test/base_results/sdr_comparisons/upgrades/sdr_annual # *.html
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/upgrades/sdr_annual/combined -f test/base_results/upgrades/sdr_annual/combined -e test/base_results/sdr_comparisons/upgrades/sdr_annual # *.html
 
       - name: Upload comparisons
         if: github.event_name == 'pull_request'

@@ -692,7 +692,7 @@ Battery
 Description
 ***********
 
-The presence, size, location, and efficiency of an onsite battery (not modeled in project_national).
+The size of an onsite battery (not modeled in project_national).
 
 Created by
 **********
@@ -790,30 +790,14 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 10
      - auto
      - auto
-   * - 20 kWh, Outside
-     - 0%
-     - true
-     - outside
-     - auto
-     - 20
-     - auto
-     - auto
-   * - 20 kWh, Garage
-     - 0%
-     - true
-     - garage
-     - auto
-     - 20
-     - auto
-     - auto
-   * - 20 kWh, 80% Round Trip Efficiency
+   * - 20 kWh
      - 0%
      - true
      - auto
      - auto
      - 20
      - auto
-     - 0.8
+     - auto
 
 .. _bedrooms:
 
@@ -1140,24 +1124,24 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - None
      - 28%
      - false
+     - auto
+     - auto
      - 0
-     - 0
-     - 0
-     - 0
+     - auto
    * - Standard Efficiency
      - 63%
      - true
+     - 45
      - auto
-     - 70.4
-     - 1
-     - 0
+     - auto
+     - auto
    * - Standard Efficiency, No usage
      - 8.7%
      - false
      - auto
+     - auto
      - 0
-     - 0
-     - 0
+     - auto
 
 .. _census_division:
 
@@ -4851,7 +4835,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - electricity
      - auto
      - CombinedEnergyFactor
-     - 2.70
+     - 3.73
    * - Gas
      - 14%
      - true
@@ -4859,7 +4843,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - natural gas
      - auto
      - CombinedEnergyFactor
-     - 2.39
+     - 3.3
    * - None
      - 18%
      - false
@@ -4875,7 +4859,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - propane
      - auto
      - CombinedEnergyFactor
-     - 2.39
+     - 3.3
    * - Void
      - 0%
      - 
@@ -5101,13 +5085,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 34%
      - auto
      - IntegratedModifiedEnergyFactor
-     - 2.07
-     - 123
-     - 0.1065
-     - 1.218
-     - 9
-     - 7.538462
-     - 3.68
+     - 1.63
+     - 260
+     - 0.12
+     - 1.09
+     - 18
+     - 6
+     - 3.5
    * - None
      - 16%
      - auto
@@ -5123,13 +5107,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 50%
      - auto
      - IntegratedModifiedEnergyFactor
-     - 0.95
-     - 387
-     - 0.1065
-     - 1.218
-     - 24
-     - 7.538462
-     - 3.5
+     - 1.21
+     - 380
+     - 0.12
+     - 1.09
+     - 27
+     - 6
+     - 3.2
    * - Void
      - 0%
      - 
@@ -9673,31 +9657,31 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ../../../weather/G1303210.epw
    * - HI, Hawaii County
      - 0.064%
-     - true
+     - false
      - 96721
      - -10
      - ../../../weather/G1500010.epw
    * - HI, Honolulu County
      - 0.26%
-     - true
+     - false
      - 96813
      - -10
      - ../../../weather/G1500030.epw
    * - HI, Kalawao County
      - 7.3e-05%
-     - true
+     - false
      - 96742
      - -10
      - ../../../weather/G1500050.epw
    * - HI, Kauai County
      - 0.023%
-     - true
+     - false
      - 96746
      - -10
      - ../../../weather/G1500070.epw
    * - HI, Maui County
      - 0.053%
-     - true
+     - false
      - 96793
      - -10
      - ../../../weather/G1500090.epw
@@ -34687,26 +34671,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``dishwasher_label_usage``
      - ``dishwasher_place_setting_capacity``
 
-   * - 290 Rated kWh
+   * - EnergyStar
      - 30%
      - true
      - auto
      - RatedAnnualkWh
-     - 290
+     - 270
      - 0.12
      - 1.09
-     - 23
-     - 4
-     - 12
-   * - 318 Rated kWh
-     - 42%
-     - true
-     - auto
-     - RatedAnnualkWh
-     - 318
-     - 0.12
-     - 1.09
-     - 25
+     - 22.23
      - 4
      - 12
    * - None
@@ -34720,6 +34693,17 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0
      - 0
      - 0
+   * - Standard
+     - 42%
+     - true
+     - auto
+     - RatedAnnualkWh
+     - 307
+     - 0.12
+     - 1.09
+     - 22.32
+     - 4
+     - 12
    * - Void
      - 0%
      - 
@@ -35054,132 +35038,132 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - 10% Leakage to Outside, R-4
      - 3.9%
      - Percent
-     - 0.067
+     - 0.05
      - 4
      - auto
      - auto
-     - 0.033
+     - 0.05
      - 4
      - auto
      - auto
    * - 10% Leakage to Outside, R-6
      - 0.89%
      - Percent
-     - 0.067
+     - 0.05
      - 6
      - auto
      - auto
-     - 0.033
+     - 0.05
      - 6
      - auto
      - auto
    * - 10% Leakage to Outside, R-8
      - 1.8%
      - Percent
-     - 0.067
+     - 0.05
      - 8
      - auto
      - auto
-     - 0.033
+     - 0.05
      - 8
      - auto
      - auto
    * - 10% Leakage to Outside, Uninsulated
      - 5.5%
      - Percent
-     - 0.067
+     - 0.05
      - 0
      - auto
      - auto
-     - 0.033
+     - 0.05
      - 0
      - auto
      - auto
    * - 20% Leakage to Outside, R-4
      - 7%
      - Percent
-     - 0.133
+     - 0.1
      - 4
      - auto
      - auto
-     - 0.067
+     - 0.1
      - 4
      - auto
      - auto
    * - 20% Leakage to Outside, R-6
      - 1.6%
      - Percent
-     - 0.133
+     - 0.1
      - 6
      - auto
      - auto
-     - 0.067
+     - 0.1
      - 6
      - auto
      - auto
    * - 20% Leakage to Outside, R-8
      - 3.2%
      - Percent
-     - 0.133
+     - 0.1
      - 8
      - auto
      - auto
-     - 0.067
+     - 0.1
      - 8
      - auto
      - auto
    * - 20% Leakage to Outside, Uninsulated
      - 9.9%
      - Percent
-     - 0.133
+     - 0.1
      - 0
      - auto
      - auto
-     - 0.067
+     - 0.1
      - 0
      - auto
      - auto
    * - 30% Leakage to Outside, R-4
      - 4%
      - Percent
-     - 0.200
+     - 0.150
      - 4
      - auto
      - auto
-     - 0.100
+     - 0.15
      - 4
      - auto
      - auto
    * - 30% Leakage to Outside, R-6
      - 0.93%
      - Percent
-     - 0.200
+     - 0.150
      - 6
      - auto
      - auto
-     - 0.100
+     - 0.15
      - 6
      - auto
      - auto
    * - 30% Leakage to Outside, R-8
      - 1.8%
      - Percent
-     - 0.200
+     - 0.150
      - 8
      - auto
      - auto
-     - 0.100
+     - 0.15
      - 8
      - auto
      - auto
    * - 30% Leakage to Outside, Uninsulated
      - 5.7%
      - Percent
-     - 0.200
+     - 0.150
      - 0
      - auto
      - auto
-     - 0.100
+     - 0.15
      - 0
      - auto
      - auto
@@ -35402,6 +35386,78 @@ Arguments
      - Double
      -
      - The eaves depth of the roof.
+   * - ``overhangs_front_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the front facade.
+   * - ``overhangs_front_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the front facade.
+   * - ``overhangs_front_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the front facade.
+   * - ``overhangs_back_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the back facade.
+   * - ``overhangs_back_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the back facade.
+   * - ``overhangs_back_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the back facade.
+   * - ``overhangs_left_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the left facade.
+   * - ``overhangs_left_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the left facade.
+   * - ``overhangs_left_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the left facade.
+   * - ``overhangs_right_depth``
+     - true
+     - ft
+     - Double
+     -
+     - The depth of overhangs for windows for the right facade.
+   * - ``overhangs_right_distance_to_top_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the top of window for the right facade.
+   * - ``overhangs_right_distance_to_bottom_of_window``
+     - true
+     - ft
+     - Double
+     -
+     - The overhangs distance to the bottom of window for the right facade.
 
 Options
 *******
@@ -35416,10 +35472,34 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Option name
      - Stock saturation
      - ``geometry_eaves_depth``
+     - ``overhangs_front_depth``
+     - ``overhangs_front_distance_to_top_of_window``
+     - ``overhangs_front_distance_to_bottom_of_window``
+     - ``overhangs_back_depth``
+     - ``overhangs_back_distance_to_top_of_window``
+     - ``overhangs_back_distance_to_bottom_of_window``
+     - ``overhangs_left_depth``
+     - ``overhangs_left_distance_to_top_of_window``
+     - ``overhangs_left_distance_to_bottom_of_window``
+     - ``overhangs_right_depth``
+     - ``overhangs_right_distance_to_top_of_window``
+     - ``overhangs_right_distance_to_bottom_of_window``
 
    * - 2 ft
      - 100%
      - 2
+     - 0
+     - 1
+     - 4
+     - 0
+     - 1
+     - 4
+     - 0
+     - 1
+     - 4
+     - 0
+     - 1
+     - 4
 
 .. _electric_vehicle_battery:
 
@@ -35519,56 +35599,56 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 40.168
      - kWh/mile
      - 0.209901
-     - 22
+     - 21.975
      - 0.0
    * - Compact, Battery Electric Vehicle, 300 mile range
      - 34%
      - 63.433
      - kWh/mile
      - 0.220020
-     - 22
+     - 21.975
      - 0.0
    * - Midsize, Battery Electric Vehicle, 200 mile range
      - 3%
      - 41.978
      - kWh/mile
      - 0.219174
-     - 22
+     - 21.975
      - 0.0
    * - Midsize, Battery Electric Vehicle, 300 mile range
      - 7.6%
      - 65.441
      - kWh/mile
      - 0.229449
-     - 22
+     - 21.975
      - 0.0
    * - Pickup, Battery Electric Vehicle, 200 mile range
      - 0.0055%
      - 67.738
      - kWh/mile
      - 0.357648
-     - 22
+     - 21.975
      - 0.0
    * - Pickup, Battery Electric Vehicle, 300 mile range
      - 0.77%
      - 105.946
      - kWh/mile
      - 0.373794
-     - 22
+     - 21.975
      - 0.0
    * - SUV, Battery Electric Vehicle, 200 mile range
      - 12%
      - 53.503
      - kWh/mile
      - 0.267513
-     - 22
+     - 21.975
      - 0.0
    * - SUV, Battery Electric Vehicle, 300 mile range
      - 31%
      - 83.680
      - kWh/mile
      - 0.278934
-     - 22
+     - 21.975
      - 0.0
 
 .. _electric_vehicle_charge_at_home:
@@ -37042,12 +37122,12 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - 0-499
      - 3.2%
      - auto
-     - 0.72
+     - 0.5
      - 0-499
    * - 500-749
      - 8.5%
      - auto
-     - 0.75
+     - 0.5
      - 500-749
    * - 750-999
      - 15%
@@ -37355,22 +37435,22 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - 1 Car
      - 10%
      - 12
-     - 24
+     - 20
      - Right
    * - 2 Car
      - 19%
-     - 24
-     - 24
+     - 21
+     - 20
      - Right
    * - 3 Car
      - 2.6%
-     - 36
-     - 24
+     - 30
+     - 20
      - Right
    * - None
      - 68%
      - 0
-     - 24
+     - 0
      - Right
 
 .. _geometry_space_combination:
@@ -40901,11 +40981,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 0.014%
      - 0.3
    * - 40%
-     - 0.0061%
+     - 0.0067%
      - 0.4
-   * - 49%
-     - 0.006%
-     - 0.49
+   * - 50%
+     - 0.0055%
+     - 0.5
    * - Void
      - 0%
      - 
@@ -42891,7 +42971,7 @@ Hot Water Distribution
 Description
 ***********
 
-Hot water piping material and insulation level.
+Type of distribution system and presence of hot water piping insulation.
 
 Created by
 **********
@@ -43581,7 +43661,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - 1 ACH50
      - 0.064%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43589,7 +43669,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 2 ACH50
      - 0.66%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43597,7 +43677,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 3 ACH50
      - 1.4%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43605,7 +43685,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 4 ACH50
      - 2.3%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43613,7 +43693,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 5 ACH50
      - 3.4%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43621,7 +43701,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 6 ACH50
      - 4.3%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43629,7 +43709,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 7 ACH50
      - 4.9%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43637,7 +43717,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 8 ACH50
      - 5.3%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43645,7 +43725,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 10 ACH50
      - 11%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43653,7 +43733,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 15 ACH50
      - 24%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43661,7 +43741,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 20 ACH50
      - 17%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43669,7 +43749,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 25 ACH50
      - 10%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43677,7 +43757,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 30 ACH50
      - 6.1%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43685,7 +43765,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 40 ACH50
      - 5.7%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -43693,7 +43773,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - unit total
    * - 50 ACH50
      - 3.2%
-     - normal
+     - auto
      - auto
      - ACH
      - 50
@@ -44551,26 +44631,26 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 10%
      - WoodStud
      - 15.4
-   * - CMU, 6-in Hollow, Uninsulated
+   * - CMU, 6-in, Uninsulated
      - 1.4%
      - ConcreteMasonryUnit
      - 4
-   * - CMU, 6-in Hollow, R-7
+   * - CMU, 6-in, R-7
      - 0.4%
      - ConcreteMasonryUnit
-     - 9.4
-   * - CMU, 6-in Hollow, R-11
+     - 9.7
+   * - CMU, 6-in, R-11
      - 0.9%
      - ConcreteMasonryUnit
-     - 12.4
-   * - CMU, 6-in Hollow, R-15
+     - 13.0
+   * - CMU, 6-in, R-15
      - 0.17%
      - ConcreteMasonryUnit
-     - 15
-   * - CMU, 6-in Hollow, R-19
+     - 15.9
+   * - CMU, 6-in, R-19
      - 0.43%
      - ConcreteMasonryUnit
-     - 17.4
+     - 19.7
    * - Brick, 12-in, 3-wythe, Uninsulated
      - 9.9%
      - StructuralBrick
@@ -44604,7 +44684,7 @@ Interior Shading
 Description
 ***********
 
-Fraction of window shading in the summer and winter.
+Type of window interior shading.
 
 Created by
 **********
@@ -44665,11 +44745,11 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``window_interior_shading_winter``
      - ``window_interior_shading_summer``
 
-   * - Summer = 0.7, Winter = 0.85
+   * - Light Curtains
      - 100%
+     - light curtains
      - auto
-     - 0.85
-     - 0.7
+     - auto
 
 .. _lighting:
 
@@ -47304,12 +47384,12 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 11%
      - true
      - auto
-     - 433
+     - 434
    * - EF 19.9
      - 6.9%
      - true
      - auto
-     - 383
+     - 384
    * - EF 21.9
      - 0.47%
      - true
@@ -48715,155 +48795,6 @@ From ``project_national`` the list of options, option stock saturation, and opti
    * - Southeast
      - 7.7%
      - 135
-
-.. _overhangs:
-
-Overhangs
----------
-
-Description
-***********
-
-Presence, depth, and location of window overhangs (not used in project_national).
-
-Created by
-**********
-
-manually created
-
-Source
-******
-
-- \Not applicable
-
-- \all homes are assumed to not have window overhangs other than eaves.
-
-
-Arguments
-*********
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-
-   * - Name
-     - Required
-     - Units
-     - Type
-     - Choices
-     - Description
-   * - ``overhangs_front_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the front facade.
-   * - ``overhangs_front_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the front facade.
-   * - ``overhangs_front_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the front facade.
-   * - ``overhangs_back_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the back facade.
-   * - ``overhangs_back_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the back facade.
-   * - ``overhangs_back_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the back facade.
-   * - ``overhangs_left_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the left facade.
-   * - ``overhangs_left_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the left facade.
-   * - ``overhangs_left_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the left facade.
-   * - ``overhangs_right_depth``
-     - true
-     - ft
-     - Double
-     -
-     - The depth of overhangs for windows for the right facade.
-   * - ``overhangs_right_distance_to_top_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the top of window for the right facade.
-   * - ``overhangs_right_distance_to_bottom_of_window``
-     - true
-     - ft
-     - Double
-     -
-     - The overhangs distance to the bottom of window for the right facade.
-
-Options
-*******
-
-From ``project_national`` the list of options, option stock saturation, and option arguments for the **Overhangs** characteristic.
-
-.. list-table::
-   :header-rows: 1
-   :stub-columns: 1
-   :widths: auto
-
-   * - Option name
-     - Stock saturation
-     - ``overhangs_front_depth``
-     - ``overhangs_front_distance_to_top_of_window``
-     - ``overhangs_front_distance_to_bottom_of_window``
-     - ``overhangs_back_depth``
-     - ``overhangs_back_distance_to_top_of_window``
-     - ``overhangs_back_distance_to_bottom_of_window``
-     - ``overhangs_left_depth``
-     - ``overhangs_left_distance_to_top_of_window``
-     - ``overhangs_left_distance_to_bottom_of_window``
-     - ``overhangs_right_depth``
-     - ``overhangs_right_distance_to_top_of_window``
-     - ``overhangs_right_distance_to_bottom_of_window``
-
-   * - None
-     - 100%
-     - 0
-     - 0
-     - 4
-     - 0
-     - 0
-     - 4
-     - 0
-     - 0
-     - 4
-     - 0
-     - 0
-     - 4
 
 .. _puma:
 
@@ -61311,8 +61242,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.78
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.78
    * - 79%
      - 0.21%
@@ -61320,8 +61251,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.79
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.79
    * - 82%
      - 1.1%
@@ -61329,8 +61260,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.82
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.82
    * - 84%
      - 2.9%
@@ -61338,8 +61269,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.84
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.84
    * - 85%
      - 10%
@@ -61347,8 +61278,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.85
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.85
    * - 86%
      - 1%
@@ -61356,8 +61287,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.86
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.86
    * - 89%
      - 5.5%
@@ -61365,8 +61296,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.89
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.89
    * - 91%
      - 5.6%
@@ -61374,8 +61305,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.91
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.91
    * - 94%
      - 10%
@@ -61383,8 +61314,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.94
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.94
    * - 95%
      - 5%
@@ -61392,8 +61323,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.95
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.95
    * - 96%
      - 4%
@@ -61401,8 +61332,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.96
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.96
    * - 97%
      - 0.74%
@@ -61410,8 +61341,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.97
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.97
    * - 99%
      - 2.8%
@@ -61419,8 +61350,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.99
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 0.99
    * - 100%
      - 0.28%
@@ -61428,8 +61359,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.0
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.0
    * - 101%
      - 7.6%
@@ -61437,8 +61368,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.01
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.01
    * - 102%
      - 0.66%
@@ -61446,8 +61377,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.02
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.02
    * - 103%
      - 0.17%
@@ -61455,8 +61386,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.03
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.03
    * - 104%
      - 2.7%
@@ -61464,8 +61395,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.04
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.04
    * - 105%
      - 0.57%
@@ -61473,8 +61404,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.05
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.05
    * - 106%
      - 17%
@@ -61482,8 +61413,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.06
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.06
    * - 108%
      - 1.3%
@@ -61491,8 +61422,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.08
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.08
    * - 110%
      - 6.1%
@@ -61500,8 +61431,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.1
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.1
    * - 113%
      - 8%
@@ -61509,8 +61440,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.13
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.13
    * - 119%
      - 1.8%
@@ -61518,8 +61449,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.19
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.19
    * - 121%
      - 0.84%
@@ -61527,8 +61458,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.21
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.21
    * - 123%
      - 1.4%
@@ -61536,8 +61467,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.23
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.23
    * - 134%
      - 0.74%
@@ -61545,8 +61476,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.34
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.34
    * - 137%
      - 0.12%
@@ -61554,8 +61485,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.37
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.37
    * - 140%
      - 0.37%
@@ -61563,8 +61494,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.4
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.4
    * - 144%
      - 1%
@@ -61572,8 +61503,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.44
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.44
    * - 166%
      - 0.4%
@@ -61581,8 +61512,8 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 1.66
      - auto
-     - 0.93
-     - 0.021
+     - auto
+     - auto
      - 1.66
 
 .. _reeds_balancing_area:
@@ -62348,12 +62279,12 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - 40%
      - true
      - auto
-     - 433
+     - 434
    * - EF 19.9
      - 41%
      - true
      - auto
-     - 383
+     - 384
    * - EF 21.9
      - 4.7%
      - true
@@ -63264,8 +63195,6 @@ Assumption
 
 - \Heat Pump Water Heaters are added in manually as they are not in the survey.
 
-- \Default efficiency of HPWH: Electric Heat Pump, 50 gal, 3.45 UEF.
-
 - \Default solar thermal collector assumed: 40 sqft, Roof Pitch,
 
 - \Solar thermal backup is informed by secondary water heater fuel type. Solar collector orientation is based on rooftop solar orientation for electric backup and assumed south-facing for fuel backup. If a solar thermal system has no secondary water heater or has a second solar thermal system, they are assumed to have electric backup.
@@ -63495,78 +63424,20 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``solar_thermal_solar_fraction``
      - ``water_heater_has_flue_or_chimney``
 
-   * - Electric Heat Pump, 50 gal, 3.45 UEF
+   * - Electric Heat Pump, 3.5 UEF
      - 0.31%
      - heat pump water heater
      - electricity
-     - 50
+     - auto
      - UniformEnergyFactor
-     - 3.45
-     - auto
-     - 0
-     - auto
-     - auto
-     - 0
-     - 0
-     - 125
+     - 3.5
      - auto
      - auto
      - auto
      - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
-   * - Electric Heat Pump, 66 gal, 3.35 UEF
-     - 0%
-     - heat pump water heater
-     - electricity
-     - 66
-     - UniformEnergyFactor
-     - 3.35
-     - auto
-     - 0
-     - auto
-     - auto
-     - 0
-     - 0
-     - 125
      - auto
      - auto
      - auto
-     - auto
-     - none
-     - 40
-     - liquid indirect
-     - single glazing black
-     - 0
-     - 0
-     - 0.77
-     - 0.793
-     - auto
-     - 0
-     - auto
-   * - Electric Heat Pump, 80 gal, 3.45 UEF
-     - 0%
-     - heat pump water heater
-     - electricity
-     - 80
-     - UniformEnergyFactor
-     - 3.45
-     - auto
-     - 0
-     - auto
-     - auto
-     - 0
-     - 0
-     - 125
      - auto
      - auto
      - auto
@@ -63587,15 +63458,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - electricity
      - auto
-     - EnergyFactor
-     - 0.95
+     - UniformEnergyFactor
+     - 0.94
+     - auto
+     - auto
+     - auto
      - auto
      - 0
      - auto
      - auto
-     - 0
-     - 0
-     - 125
      - auto
      - auto
      - auto
@@ -63616,15 +63487,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - electricity
      - auto
-     - EnergyFactor
+     - UniformEnergyFactor
      - 0.92
      - auto
+     - auto
+     - auto
+     - auto
      - 0
      - auto
      - auto
-     - 0
-     - 0
-     - 125
      - auto
      - auto
      - auto
@@ -63645,15 +63516,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - instantaneous water heater
      - electricity
      - 0
-     - EnergyFactor
-     - 0.99
+     - UniformEnergyFactor
+     - 0.94
+     - auto
+     - auto
+     - auto
      - auto
      - 0
      - auto
      - auto
-     - 0
-     - 0
-     - 125
      - auto
      - auto
      - auto
@@ -63674,15 +63545,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - fuel oil
      - auto
-     - EnergyFactor
-     - 0.62
+     - UniformEnergyFactor
+     - 0.64
      - auto
-     - 0.78
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -63703,15 +63574,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - fuel oil
      - auto
-     - EnergyFactor
-     - 0.68
+     - UniformEnergyFactor
+     - 0.67
      - auto
-     - 0.9
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -63732,15 +63603,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - fuel oil
      - auto
-     - EnergyFactor
-     - 0.62
+     - UniformEnergyFactor
+     - 0.64
      - auto
-     - 0.78
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -63761,15 +63632,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - natural gas
      - auto
-     - EnergyFactor
-     - 0.67
+     - UniformEnergyFactor
+     - 0.7
      - auto
-     - 0.78
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -63790,15 +63661,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - natural gas
      - auto
-     - EnergyFactor
-     - 0.59
+     - UniformEnergyFactor
+     - 0.6
      - auto
-     - 0.76
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -63819,15 +63690,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - instantaneous water heater
      - natural gas
      - 0
-     - EnergyFactor
+     - UniformEnergyFactor
      - 0.82
      - auto
+     - auto
+     - auto
+     - auto
      - 0
      - auto
      - auto
-     - 0
-     - 0
-     - 125
      - auto
      - auto
      - auto
@@ -63848,15 +63719,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - coal
      - auto
-     - EnergyFactor
-     - 0.59
+     - UniformEnergyFactor
+     - 0.6
      - auto
-     - 0.76
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -63877,15 +63748,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - propane
      - auto
-     - EnergyFactor
+     - UniformEnergyFactor
      - 0.67
      - auto
-     - 0.78
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -63906,15 +63777,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - propane
      - auto
-     - EnergyFactor
-     - 0.59
+     - UniformEnergyFactor
+     - 0.6
      - auto
-     - 0.76
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -63935,15 +63806,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - instantaneous water heater
      - propane
      - 0
-     - EnergyFactor
+     - UniformEnergyFactor
      - 0.82
      - auto
+     - auto
+     - auto
+     - auto
      - 0
      - auto
      - auto
-     - 0
-     - 0
-     - 125
      - auto
      - auto
      - auto
@@ -63964,15 +63835,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - electricity
      - auto
-     - EnergyFactor
-     - 0.97
+     - UniformEnergyFactor
+     - 0.92
      - auto
-     - 0.98
+     - auto
      - auto
      - auto
      - 0
      - 6.2
-     - 125
+     - auto
      - auto
      - auto
      - auto
@@ -63993,15 +63864,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - electricity
      - auto
-     - EnergyFactor
-     - 0.97
+     - UniformEnergyFactor
+     - 0.92
      - auto
-     - 0.98
+     - auto
      - auto
      - auto
      - 0
      - 6.2
-     - 125
+     - auto
      - auto
      - auto
      - auto
@@ -64022,15 +63893,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - electricity
      - auto
-     - EnergyFactor
-     - 0.97
+     - UniformEnergyFactor
+     - 0.92
      - auto
-     - 0.98
+     - auto
      - auto
      - auto
      - 0
      - 6.2
-     - 125
+     - auto
      - auto
      - auto
      - auto
@@ -64051,15 +63922,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - fuel oil
      - auto
-     - EnergyFactor
-     - 0.62
+     - UniformEnergyFactor
+     - 0.64
      - auto
-     - 0.78
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -64080,15 +63951,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - natural gas
      - auto
-     - EnergyFactor
-     - 0.59
+     - UniformEnergyFactor
+     - 0.60
      - auto
-     - 0.76
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -64109,15 +63980,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - propane
      - auto
-     - EnergyFactor
-     - 0.59
+     - UniformEnergyFactor
+     - 0.60
      - auto
-     - 0.76
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -64138,15 +64009,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - electricity
      - auto
-     - EnergyFactor
-     - 0.97
+     - UniformEnergyFactor
+     - 0.92
      - auto
-     - 0.98
+     - auto
      - auto
      - auto
      - 0
      - 6.2
-     - 125
+     - auto
      - auto
      - auto
      - auto
@@ -64167,15 +64038,15 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - storage water heater
      - wood
      - auto
-     - EnergyFactor
-     - 0.59
+     - UniformEnergyFactor
+     - 0.6
      - auto
-     - 0.76
+     - auto
      - auto
      - auto
      - 0
-     - 0
-     - 125
+     - auto
+     - auto
      - auto
      - auto
      - auto
@@ -64798,6 +64669,12 @@ Arguments
      - Choice
      - auto, none, exterior, interior
      - The type of insect screens, if present. If not provided, assumes there are no insect screens.
+   * - ``window_storm_type``
+     - false
+     - 
+     - Choice
+     - auto, clear, low-e
+     - The type of storm, if present. If not provided, assumes there is no storm.
    * - ``skylight_ufactor``
      - true
      - Btu/hr-ft^2-R
@@ -64837,6 +64714,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - ``window_exterior_shading_summer``
      - ``window_shading_summer_season``
      - ``window_insect_screens``
+     - ``window_storm_type``
      - ``skylight_ufactor``
      - ``skylight_shgc``
      - ``skylight_storm_type``
@@ -64851,19 +64729,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - auto
+     - auto
      - 0.37
      - 0.3
      - auto
    * - Double, Clear, Metal, Air, Exterior Clear Storm
      - 1.5%
      - auto
-     - 0.55
-     - 0.51
+     - 0.76
+     - 0.67
      - auto
      - auto
      - auto
      - auto
      - auto
+     - clear
      - 0.37
      - 0.3
      - auto
@@ -64877,19 +64757,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - auto
+     - auto
      - 0.37
      - 0.3
      - auto
    * - Double, Clear, Non-metal, Air, Exterior Clear Storm
      - 3.5%
      - auto
-     - 0.34
      - 0.49
+     - 0.56
      - auto
      - auto
      - auto
      - auto
      - auto
+     - clear
      - 0.37
      - 0.3
      - auto
@@ -64898,6 +64780,7 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - 0.38
      - 0.44
+     - auto
      - auto
      - auto
      - auto
@@ -64916,19 +64799,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - auto
+     - auto
      - 0.37
      - 0.3
      - auto
    * - Single, Clear, Metal, Exterior Clear Storm
      - 0.99%
      - auto
-     - 0.67
-     - 0.56
+     - 1.16
+     - 0.76
      - auto
      - auto
      - auto
      - auto
      - auto
+     - clear
      - 0.37
      - 0.3
      - auto
@@ -64942,19 +64827,21 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - auto
+     - auto
      - 0.37
      - 0.3
      - auto
    * - Single, Clear, Non-metal, Exterior Clear Storm
      - 1.5%
      - auto
-     - 0.47
-     - 0.54
+     - 0.84
+     - 0.63
      - auto
      - auto
      - auto
      - auto
      - auto
+     - clear
      - 0.37
      - 0.3
      - auto
@@ -64968,11 +64855,13 @@ From ``project_national`` the list of options, option stock saturation, and opti
      - auto
      - auto
      - auto
+     - auto
      - 0.37
      - 0.3
      - auto
    * - Void
      - 0%
+     - 
      - 
      - 
      - 

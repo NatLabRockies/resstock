@@ -7,8 +7,6 @@
     {
       "arguments": {
         "apply_defaults": true,
-        "site_state_code" : "CO",
-        "simulation_control_daylight_saving_enabled": false,
         "air_leakage_house_pressure": 50,
         "site_shielding_of_home": "normal",
         "air_leakage_units": "ACH",
@@ -286,7 +284,6 @@
         "water_heater_standby_loss": 0,
         "water_heater_tank_volume": 40,
         "water_heater_type": "instantaneous water heater",
-        "weather_station_epw_filepath": "USA_CO_Denver.Intl.AP.725650_TMY3.epw",
         "whole_house_fan_flow_rate": 4500,
         "whole_house_fan_power": 300,
         "whole_house_fan_present": false,

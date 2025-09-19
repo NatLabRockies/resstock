@@ -1,4 +1,4 @@
-Option=None	Option=Standard Efficiency	Option=Standard Efficiency, No usage	Option=Premium Efficiency	Option=Standard Efficiency, 0.5F Offset	Option=Premium Efficiency, 0.5F Offset	sampling_probability
-0.166667	0.166667	0.166667	0.166667	0.166667	0.166667	1
+Option=None	Option=Standard Efficiency	Option=Standard Efficiency, No usage	Option=Premium Efficiency	sampling_probability
+0.25	0.25	0.25	0.25	1
 # Created by: manually created
-# Description: Presence and energy usage of ceiling fans at medium speed
+# Description: Presence and energy usage of ceiling fans at medium speed.
