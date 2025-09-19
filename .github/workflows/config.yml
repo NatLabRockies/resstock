@@ -714,6 +714,7 @@ jobs:
           name: base_results
 
       - name: Process results
+        if: github.event_name == 'pull_request'
         run: |
           python test/process_sdr_analysis.py
 

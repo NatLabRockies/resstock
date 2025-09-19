@@ -3,7 +3,9 @@
 __New Features__
 - Updates to HPXML v4.2-rc3.
 - Allows optional `UsageMultiplier` for electric vehicles described using `Vehicles`.
-- Improves water heater tank losses when using `EnergyFactor` as the metric; now consistent with how `UniformEnergyFactor` is handled.
+- Water heater improvements:
+  - Improves tank losses when using `EnergyFactor` as the metric; now consistent with how `UniformEnergyFactor` is handled.
+  - Improves HPWH tank volume defaulting, particularly when `NumberofResidents` is provided.
 - Updated site defaults:
   - `Address/CityMunicipality`, `Address/StateCode`, `GeoLocation/Latitude`, `GeoLocation/Longitude`, and `TimeZone/UTCOffset` now default based on zip code if available.
   - `TimeZone/DSTObserved` now defaults to false if `Address/StateCode` is 'AZ' or 'HI'.
