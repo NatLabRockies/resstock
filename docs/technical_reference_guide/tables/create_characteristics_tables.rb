@@ -76,6 +76,21 @@ lookup_csv_data = CSV.open(lookup_file, col_sep: "\t").each.to_a
 option_sat_csv_data = CSV.open(option_sat_file, quote_char: '"', col_sep: ',').each.to_a
 
 desc_exclusions = ['If not provided', 'If neither']
+saturation_inclusions = ['Orientation',
+                         'Geometry Stories',
+                         'Geometry Story Bin',
+                         'Geometry Building Type Height',
+                         'Geometry Building Number Units MF',
+                         'Geometry Building Number Units SFA',
+                         'Geometry Building Level MF',
+                         'Geometry Building Horizontal Location MF',
+                         'Geometry Building Horizontal Location SFA',
+                         'Neighbors',
+                         'Corridor',
+                         'Geometry Building Type ACS',
+                         'Geometry Building Type RECS',
+                         'Vintage',
+                         'Vintage ACS']
 
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_national/resources/source_report.csv'), headers: true)
 source_report.each do |row|
@@ -91,34 +106,35 @@ source_report.each do |row|
       r_arguments << argument if !r_arguments.include?(argument)
     end
   end
-  next unless r_arguments.any?
 
   # Arguments
-  f = File.open(File.join(File.dirname(__FILE__), "arguments/#{parameter}.tex"), 'w')
+  if r_arguments.any?
+    f = File.open(File.join(File.dirname(__FILE__), "arguments/#{parameter}.tex"), 'w')
 
-  f.puts('\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }')
-  f.puts("{The ResStock argument definitions set in the #{parameter} characteristic} {table:hc_arg_def_#{parameter.downcase.gsub(' ', '_')}}")
-  f.puts("{#{arguments_cols.join(' & ')}}")
-  r_arguments.each_with_index do |r_argument, i|
-    name = "\\texttt{#{r_argument}}".gsub('_', '\_')
-    required = resstockarguments_xml[r_argument]['required']
-    units = resstockarguments_xml[r_argument]['units'].gsub('$', '\$').gsub('#', '\#')
-    type = resstockarguments_xml[r_argument]['type']
-    choices = resstockarguments_xml[r_argument]['choices'].join(', ')
-    description = resstockarguments_xml[r_argument]['description']
-    desc_exclusions.each do |desc_exclusion|
-      ix = description.index(desc_exclusion)
-      if ix
-        description = description.slice(0, ix)
+    f.puts('\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }')
+    f.puts("{The ResStock argument definitions set in the #{parameter} characteristic} {table:hc_arg_def_#{parameter.downcase.gsub(' ', '_')}}")
+    f.puts("{#{arguments_cols.join(' & ')}}")
+    r_arguments.each_with_index do |r_argument, i|
+      name = "\\texttt{#{r_argument}}".gsub('_', '\_')
+      required = resstockarguments_xml[r_argument]['required']
+      units = resstockarguments_xml[r_argument]['units'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}')
+      type = resstockarguments_xml[r_argument]['type']
+      choices = resstockarguments_xml[r_argument]['choices'].join(', ')
+      description = resstockarguments_xml[r_argument]['description']
+      desc_exclusions.each do |desc_exclusion|
+        ix = description.index(desc_exclusion)
+        if ix
+          description = description.slice(0, ix)
+        end
       end
+      row = "#{name} & #{required} & #{units} & #{type} & #{choices} & #{description}  \\\\"
+      if i < r_arguments.size - 1
+        row += ' \\hline'
+      end
+      f.puts(row)
     end
-    row = "#{name} & #{required} & #{units} & #{type} & #{choices} & #{description}  \\\\"
-    if i < r_arguments.size - 1
-      row += ' \\hline'
-    end
-    f.puts(row)
+    f.puts('\end{customLongTable}')
   end
-  f.puts('\end{customLongTable}')
 
   # Options
   f = File.open(File.join(File.dirname(__FILE__), "options/#{parameter}.tex"), 'w')
@@ -131,7 +147,19 @@ source_report.each do |row|
     # Insert the options and the stock saturation
     option = param_option_row[2]
 
+    if not options.keys.include?(option)
+      options[option] = {}
+    end
+
     next if Float(param_option_row[3]) == 0
+
+    sat_percent = Float(param_option_row[3]) * 100.0
+    if Integer(sat_percent.truncate()) == 100
+      sat_percent = '%.3g%%' % [sat_percent]
+    else
+      sat_percent = '%.2g%%' % [sat_percent]
+    end
+    options[option]['sat'] = "#{sat_percent}".gsub("%", "\\%")
 
     # Check if there are arguments
     next unless !r_arguments.empty?
@@ -142,10 +170,6 @@ source_report.each do |row|
       next if lookup_row[1] != option
 
       next unless lookup_row[2] == 'ResStockArguments'
-
-      if not options.keys.include?(option)
-        options[option] = {}
-      end
 
       # If option specifies arguments, insert arguments according to the order of r_arguments
       r_arguments.each do |argument|
@@ -177,6 +201,9 @@ source_report.each do |row|
   end
 
   row = '\begin{customLongTable}{ |p{3cm}'
+  if saturation_inclusions.include?(parameter)
+    row += '|p{2.75cm}'
+  end
   changing_args.each do |_changing_arg|
     row += '|p{2.75cm}'
   end
@@ -184,6 +211,9 @@ source_report.each do |row|
   f.puts("{#{parameter} options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
 
   row = '{Option name'
+  if saturation_inclusions.include?(parameter)
+    row += ' & Stock saturation'
+  end
   changing_args.each do |changing_arg|
     row += " & \\texttt{#{changing_arg}}".gsub('_', '\_')
   end
@@ -191,6 +221,9 @@ source_report.each do |row|
 
   options.keys.each_with_index do |option, i|
     row = option
+    if saturation_inclusions.include?(parameter)
+      row += " & #{options[option]['sat']}"
+    end
     changing_args.each_with_index do |changing_arg, _i|
       row += " & #{options[option][changing_arg]}"
     end

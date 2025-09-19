@@ -1,14 +1,15 @@
-\begin{customLongTable}{ |p{3cm}|p{2.75cm}|p{2.75cm}| }
+\begin{customLongTable}{ |p{3cm}|p{2.75cm}|p{2.75cm}|p{2.75cm}|p{2.75cm}|p{2.75cm}|p{2.75cm}|p{2.75cm}|p{2.75cm}|p{2.75cm}|p{2.75cm}|p{2.75cm}|p{2.75cm}| }
 {Windows options and arguments that vary for each option} {table:hc_opt_windows}
-{Option name & \texttt{window\_ufactor} & \texttt{window\_shgc}}
-Double, Clear, Metal, Air & 0.76 & 0.67 \\ \hline
-Double, Clear, Metal, Air, Exterior Clear Storm & 0.55 & 0.51 \\ \hline
-Double, Clear, Non-metal, Air & 0.49 & 0.56 \\ \hline
-Double, Clear, Non-metal, Air, Exterior Clear Storm & 0.34 & 0.49 \\ \hline
-Double, Low-E, Non-metal, Air, M-Gain & 0.38 & 0.44 \\ \hline
-Single, Clear, Metal & 1.16 & 0.76 \\ \hline
-Single, Clear, Metal, Exterior Clear Storm & 0.67 & 0.56 \\ \hline
-Single, Clear, Non-metal & 0.84 & 0.63 \\ \hline
-Single, Clear, Non-metal, Exterior Clear Storm & 0.47 & 0.54 \\ \hline
-Triple, Low-E, Non-metal, Air, L-Gain & 0.29 & 0.26 \\
+{Option name & \texttt{window\_ufactor} & \texttt{window\_shgc} & \texttt{window\_storm\_type} & \texttt{skylight\_ufactor} & \texttt{skylight\_shgc} & \texttt{skylight\_storm\_type} & \texttt{window\_exterior\_shading\_type} & \texttt{window\_exterior\_shading\_summer} & \texttt{window\_exterior\_shading\_winter} & \texttt{window\_natvent\_availability} & \texttt{window\_shading\_summer\_season} & \texttt{window\_insect\_screens}}
+Double, Clear, Metal, Air & 0.76 & 0.67 & auto & 0.37 & 0.3 & auto & auto & auto & auto & auto & auto & auto \\ \hline
+Double, Clear, Metal, Air, Exterior Clear Storm & 0.76 & 0.67 & clear & 0.37 & 0.3 & auto & auto & auto & auto & auto & auto & auto \\ \hline
+Double, Clear, Non-metal, Air & 0.49 & 0.56 & auto & 0.37 & 0.3 & auto & auto & auto & auto & auto & auto & auto \\ \hline
+Double, Clear, Non-metal, Air, Exterior Clear Storm & 0.49 & 0.56 & clear & 0.37 & 0.3 & auto & auto & auto & auto & auto & auto & auto \\ \hline
+Double, Low-E, Non-metal, Air, M-Gain & 0.38 & 0.44 & auto & 0.37 & 0.3 & auto & auto & auto & auto & auto & auto & auto \\ \hline
+Single, Clear, Metal & 1.16 & 0.76 & auto & 0.37 & 0.3 & auto & auto & auto & auto & auto & auto & auto \\ \hline
+Single, Clear, Metal, Exterior Clear Storm & 1.16 & 0.76 & clear & 0.37 & 0.3 & auto & auto & auto & auto & auto & auto & auto \\ \hline
+Single, Clear, Non-metal & 0.84 & 0.63 & auto & 0.37 & 0.3 & auto & auto & auto & auto & auto & auto & auto \\ \hline
+Single, Clear, Non-metal, Exterior Clear Storm & 0.84 & 0.63 & clear & 0.37 & 0.3 & auto & auto & auto & auto & auto & auto & auto \\ \hline
+Triple, Low-E, Non-metal, Air, L-Gain & 0.29 & 0.26 & auto & 0.37 & 0.3 & auto & auto & auto & auto & auto & auto & auto \\ \hline
+Void &  &  &  &  &  &  &  &  &  &  &  &  \\
 \end{customLongTable}
