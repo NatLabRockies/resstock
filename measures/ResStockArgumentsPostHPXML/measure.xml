@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>9656da29-b7f5-42d6-93ec-e43ad00505cc</version_id>
-  <version_modified>2025-07-07T19:02:58Z</version_modified>
+  <version_id>d6c4db5c-68d5-43c3-894a-98c8a6c7521e</version_id>
+  <version_modified>2025-08-20T15:10:08Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
@@ -117,13 +117,13 @@
       <filename>common/schedule_modifier.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>AF0E72CB</checksum>
+      <checksum>7E7B73F5</checksum>
     </file>
     <file>
       <filename>common/seasonal_shedding_peak_hours.json</filename>
       <filetype>json</filetype>
       <usage_type>resource</usage_type>
-      <checksum>5F914EFF</checksum>
+      <checksum>49FA4C52</checksum>
     </file>
     <file>
       <filename>common/seasonal_shifting_peak_hours.json</filename>
@@ -141,7 +141,7 @@
       <filename>hvac_flexibility/detailed_schedule_generator.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>18F5ABAD</checksum>
+      <checksum>37C59BA9</checksum>
     </file>
     <file>
       <filename>hvac_flexibility/hvac.rb</filename>
@@ -153,7 +153,7 @@
       <filename>hvac_flexibility/setpoint_modifier.rb</filename>
       <filetype>rb</filetype>
       <usage_type>resource</usage_type>
-      <checksum>9E3BEAF7</checksum>
+      <checksum>EB5BB41B</checksum>
     </file>
     <file>
       <filename>test_hvac_load_flexibility.rb</filename>
@@ -165,13 +165,13 @@
       <filename>test_resstock_arguments_post_hpxml.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>A4CE490F</checksum>
+      <checksum>925ADF67</checksum>
     </file>
     <file>
       <filename>test_template.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>79820C4A</checksum>
+      <checksum>F3B331B6</checksum>
     </file>
   </files>
 </measure>

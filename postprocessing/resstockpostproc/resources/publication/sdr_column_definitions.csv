@@ -144,7 +144,6 @@ Input,build_existing_model.natural_ventilation,,in.natural_ventilation,in.natura
 Input,build_existing_model.neighbors,,in.neighbors,in.neighbors,,,,,,,,,:ref:`neighbors`
 Input,build_existing_model.occupants,,in.occupants,in.occupants,,,,,,,,,:ref:`occupants`
 Input,build_existing_model.orientation,,in.orientation,in.orientation,,,,,,,,,:ref:`orientation`
-Input,build_existing_model.overhangs,,in.overhangs,in.overhangs,,,,,,,,,:ref:`overhangs`
 Input,build_existing_model.plug_load_diversity,,in.plug_load_diversity,in.plug_load_diversity,,,,,,,,,:ref:`plug_load_diversity`
 Input,build_existing_model.plug_loads,,in.plug_loads,in.plug_loads,,,,,,,,,:ref:`plug_loads`
 Input,build_existing_model.puma,,in.puma,in.puma,,,,,,,,,:ref:`puma`
