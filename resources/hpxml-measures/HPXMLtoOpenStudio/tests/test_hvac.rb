@@ -1792,6 +1792,9 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     heat_pump = hpxml_bldg.heat_pumps[0]
     clg_capacity = UnitConversions.convert(heat_pump.cooling_capacity, 'Btu/hr', 'W')
     htg_capacity = UnitConversions.convert(heat_pump.heating_capacity, 'Btu/hr', 'W')
+    pump_w = heat_pump.pump_watts_per_ton * UnitConversions.convert(heat_pump.cooling_capacity, 'Btu/hr', 'ton')
+    shared_pump_w = heat_pump.shared_loop_watts
+    shared_pump_n_units = heat_pump.number_of_units_served
 
     # Check cooling coil
     assert_equal(1, model.getCoilCoolingWaterToAirHeatPumpEquationFits.size)
@@ -1804,6 +1807,11 @@ class HPXMLtoOpenStudioHVACTest < Minitest::Test
     htg_coil = model.getCoilHeatingWaterToAirHeatPumpEquationFits[0]
     assert_in_epsilon(4.02, htg_coil.ratedHeatingCoefficientofPerformance, 0.01)
     assert_in_epsilon(htg_capacity, htg_coil.ratedHeatingCapacity.get, 0.01)
+
+    # Check pump
+    assert_equal(2, model.getPumpVariableSpeeds.size) # 1 for dhw, 1 for ghp
+    pump = model.getPumpVariableSpeeds.find { |pump| pump.name.get.include? Constants::ObjectTypeGroundSourceHeatPump }
+    assert_equal(pump_w + shared_pump_w / shared_pump_n_units, pump.ratedPowerConsumption.get)
   end
 
   def test_install_quality_air_to_air_heat_pump
