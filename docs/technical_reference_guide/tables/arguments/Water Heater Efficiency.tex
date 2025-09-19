@@ -8,7 +8,7 @@
 \texttt{water\_heater\_efficiency} & true &  & Double &  & Rated Energy Factor or Uniform Energy Factor. Does not apply to space-heating boilers.  \\ \hline
 \texttt{water\_heater\_recovery\_efficiency} & false & Frac & Double & auto & Ratio of energy delivered to water heater to the energy content of the fuel consumed by the water heater. Only used for non-electric storage water heaters.   \\ \hline
 \texttt{water\_heater\_standby\_loss} & false & F/hr & Double & auto & The standby loss of water heater. Only applies to space-heating boilers.   \\ \hline
-\texttt{water\_heater\_jacket\_rvalue} & false & h-ft^2-R/Btu & Double &  & The jacket R-value of water heater. Doesn't apply to instantaneous water heater or space-heating boiler with tankless coil.   \\ \hline
+\texttt{water\_heater\_jacket\_rvalue} & false & h-ft\textsuperscript{2}-R/Btu & Double &  & The jacket R-value of water heater. Doesn't apply to instantaneous water heater or space-heating boiler with tankless coil.   \\ \hline
 \texttt{water\_heater\_setpoint\_temperature} & false & F & Double & auto & The setpoint temperature of water heater.   \\ \hline
 \texttt{water\_heater\_heating\_capacity} & false & Btu/hr & Double & auto & Heating capacity. Only applies to storage water heater and heat pump water heater (compressor).   \\ \hline
 \texttt{water\_heater\_backup\_heating\_capacity} & false & Btu/hr & Double & auto & Backup heating capacity for a heat pump water heater.   \\ \hline
@@ -19,13 +19,13 @@
 \texttt{water\_heater\_usage\_bin} & false &  & Choice & auto, very small, low, medium, high & The usage of the water heater. Only applies if Efficiency Type is UniformEnergyFactor and Type is not instantaneous water heater. Does not apply to space-heating boilers.   \\ \hline
 \texttt{water\_heater\_uses\_desuperheater} & false &  & Boolean & auto, true, false & Requires that the dwelling unit has a air-to-air, mini-split, or ground-to-air heat pump or a central air conditioner or mini-split air conditioner.   \\ \hline
 \texttt{solar\_thermal\_system\_type} & true &  & Choice & none, hot water & The type of solar thermal system. Use 'none' if there is no solar thermal system.  \\ \hline
-\texttt{solar\_thermal\_collector\_area} & true & ft^2 & Double &  & The collector area of the solar thermal system.  \\ \hline
+\texttt{solar\_thermal\_collector\_area} & true & ft\textsuperscript{2} & Double &  & The collector area of the solar thermal system.  \\ \hline
 \texttt{solar\_thermal\_collector\_loop\_type} & true &  & Choice & liquid direct, liquid indirect, passive thermosyphon & The collector loop type of the solar thermal system.  \\ \hline
 \texttt{solar\_thermal\_collector\_type} & true &  & Choice & evacuated tube, single glazing black, double glazing black, integrated collector storage & The collector type of the solar thermal system.  \\ \hline
 \texttt{solar\_thermal\_collector\_azimuth} & true & degrees & Double &  & The collector azimuth of the solar thermal system. Azimuth is measured clockwise from north (e.g., North=0, East=90, South=180, West=270).  \\ \hline
 \texttt{solar\_thermal\_collector\_tilt} & true & degrees & String &  & The collector tilt of the solar thermal system. Can also enter, e.g., RoofPitch, RoofPitch+20, Latitude, Latitude-15, etc.  \\ \hline
 \texttt{solar\_thermal\_collector\_rated\_optical\_efficiency} & true & Frac & Double &  & The collector rated optical efficiency of the solar thermal system.  \\ \hline
-\texttt{solar\_thermal\_collector\_rated\_thermal\_losses} & true & Btu/hr-ft^2-R & Double &  & The collector rated thermal losses of the solar thermal system.  \\ \hline
+\texttt{solar\_thermal\_collector\_rated\_thermal\_losses} & true & Btu/hr-ft\textsuperscript{2}-R & Double &  & The collector rated thermal losses of the solar thermal system.  \\ \hline
 \texttt{solar\_thermal\_storage\_volume} & false & gal & Double & auto & The storage volume of the solar thermal system.   \\ \hline
 \texttt{solar\_thermal\_solar\_fraction} & true & Frac & Double &  & The solar fraction of the solar thermal system. If provided, overrides all other solar thermal inputs.  \\
 \end{customLongTable}
