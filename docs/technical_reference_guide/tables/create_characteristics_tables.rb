@@ -121,7 +121,7 @@ source_report.each do |row|
       units = resstockarguments_xml[r_argument]['units'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}')
       type = resstockarguments_xml[r_argument]['type']
       choices = resstockarguments_xml[r_argument]['choices'].join(', ')
-      description = resstockarguments_xml[r_argument]['description'].gsub("%", "\\%")
+      description = resstockarguments_xml[r_argument]['description'].gsub('%', '\\%')
       desc_exclusions.each do |desc_exclusion|
         ix = description.index(desc_exclusion)
         if ix
@@ -160,7 +160,7 @@ source_report.each do |row|
     else
       sat_percent = '%.2g%%' % [sat_percent]
     end
-    options[option]['sat'] = "#{sat_percent}".gsub("%", "\\%")
+    options[option]['sat'] = "#{sat_percent}".gsub('%', '\\%')
 
     # Check if there are arguments
     next unless !r_arguments.empty?
