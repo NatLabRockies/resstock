@@ -147,6 +147,8 @@ source_report.each do |row|
     # Insert the options and the stock saturation
     option = param_option_row[2]
 
+    next if option == 'Void'
+
     if not options.keys.include?(option)
       options[option] = {}
     end

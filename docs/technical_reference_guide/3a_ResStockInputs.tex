@@ -1553,54 +1553,14 @@ Wall siding material and color. This is the main input file that provides the th
     \item Vintage ACS.
 \end{itemize}
 \paragraph{Option(s)}
-ResStock uses 11 options (see Table \ref{table:hc_opt_geo_wall_ext_fin}) for the exterior finish of the walls---correlated with the Geometry Wall Type via the input dependencies. A portion of the wall R-value is attributable to this exterior finish.
+ResStock uses 11 options (see Table \ref{table:hc_opt_geometry_wall_exterior_finish}) for the exterior finish of the walls---correlated with the Geometry Wall Type via the input dependencies. A portion of the wall R-value is attributable to this exterior finish.
 
-\begin{longtable}[]{|p{3.5cm}|p{2.5cm}|p{3.cm}|p{2.5cm}|p{2.5cm}|} \caption{Geometry Wall Exterior Finish options and arguments that vary for each option} \label{table:hc_opt_geo_wall_ext_fin} \\
+\input{tables/options/Geometry Wall Exterior Finish}
 
-\toprule\noalign{}
-Option name & \texttt{wall\_siding\_type} &
-\texttt{wall\_color} & \texttt{exterior\_finish\_r} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Aluminum, Light & aluminum siding & light & 0.6 \\ \hline
-Brick, Light & brick veneer & light & 0.7 \\\hline
-Brick, Medium/Dark & brick veneer & medium dark & 0.7 \\\hline
-Fiber-Cement, Light & fiber cement siding & light & 0.2 \\\hline
-None & none & medium & 0 \\\hline
-Shingle, Asbestos, Medium & asbestos siding & medium & 0.6 \\\hline
-Shingle, Composition, Medium & composite shingle siding & medium
-& 0.6 \\\hline
-Stucco, Light & stucco & light & 0.2 \\\hline
-Stucco, Medium/Dark & stucco & medium dark & 0.2 \\\hline
-Vinyl, Light & vinyl siding & light & 0.6 \\\hline
-Wood, Medium/Dark & wood siding & medium dark & 1.4 \\
-\end{longtable}
+For the argument definitions, see Table \ref{table:hc_arg_def_geometry_wall_exterior_finish}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls}{Walls} documentation for the available HPXML schema elements, default values, and constraints.
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ext_finish}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls}{Walls} documentation for the available HPXML schema elements, default values, and constraints.
+\input{tables/arguments/Geometry Wall Exterior Finish}
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}
-\caption{The ResStock argument definitions for the Geometry Exterior Finish characteristic} \label{table:hc_arg_def_ext_finish} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{wall\_siding\_type} & false & & Choice & auto, aluminum siding,
-asbestos siding, brick veneer, composite shingle siding, fiber cement
-siding, masonite siding, none, stucco, synthetic stucco, vinyl siding,
-wood siding & The siding type of the walls. Also applies to rim joists. \\
-\hline
-\texttt{wall\_color} & false & & Choice & auto, dark, light, medium,
-medium dark, reflective & The color of the walls. Also applies to rim
-joists.  \\
-\hline
-\texttt{exterior\_finish\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double & &
-R-value of the exterior finish. \\
-\end{longtable}
-% Template starting-place header swap: %{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
 \item
@@ -1639,51 +1599,14 @@ Wall construction type and insulation level. Provides the main R-value for the w
     \item Vintage.
 \end{itemize}
 \paragraph{Option(s)}
-ResStock models 15 different Insulation Wall levels; see Table \ref{table:hc_ins_wall}. These are based upon the Geometry Wall Type defined, but provide a distribution of insulation levels for each of those options.
+ResStock models 15 different Insulation Wall levels; see Table \ref{table:hc_opt_insulation_wall}. These are based upon the Geometry Wall Type defined, but provide a distribution of insulation levels for each of those options.
 
-\begin{longtable}[]{|p{5.5cm}|p{4cm}|p{3.2cm}|p{3cm}|} \caption{Insulation Wall options and arguments that vary for each option} \label{table:hc_ins_wall} \\
-\toprule\noalign{}
-Option name & \texttt{wall\_type} &
-\texttt{wall\_assembly\_r} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Wood Stud, Uninsulated & WoodStud & 3.4 \\
-Wood Stud, R-7 & WoodStud & 8.7 \\
-Wood Stud, R-11 & WoodStud & 10.3 \\
-Wood Stud, R-15 & WoodStud & 12.1 \\
-Wood Stud, R-19 & WoodStud & 15.4 \\
-CMU, 6-in Hollow, Uninsulated & ConcreteMasonryUnit & 4 \\
-CMU, 6-in Hollow, R-7 & ConcreteMasonryUnit & 9.4 \\
-CMU, 6-in Hollow, R-11 & ConcreteMasonryUnit & 12.4 \\
-CMU, 6-in Hollow, R-15 & ConcreteMasonryUnit & 15 \\
-CMU, 6-in Hollow, R-19 & ConcreteMasonryUnit & 17.4 \\
-Brick, 12-in, 3-wythe, Uninsulated & StructuralBrick & 4.9 \\
-Brick, 12-in, 3-wythe, R-7 & StructuralBrick & 10.3 \\
-Brick, 12-in, 3-wythe, R-11 & StructuralBrick & 13.3 \\
-Brick, 12-in, 3-wythe, R-15 & StructuralBrick & 15.9 \\
-Brick, 12-in, 3-wythe, R-19 & StructuralBrick & 18.3 \\
-\end{longtable}
+\input{tables/options/Insulation Wall}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ins_wall}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls}{Walls} documentation for the available HPXML schema elements, default values, and constraints.
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}
-\caption{The ResStock argument definitions set in the Insulation Wall characteristic} \label{table:hc_arg_def_ins_wall} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{wall\_type} & true & & Choice & WoodStud, ConcreteMasonryUnit,
-DoubleWoodStud, InsulatedConcreteForms, LogWall,
-StructuralInsulatedPanel, SolidConcrete, SteelFrame, Stone, StrawBale,
-StructuralBrick & The type of walls. \\
-\hline
-\texttt{wall\_assembly\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double & &
-Assembly R-value of the walls. \\
-\end{longtable}
-% Template starting-place header swap: %{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|}
+For the argument definitions, see Table \ref{table:hc_arg_def_insulation_wall}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-walls}{Walls} documentation for the available HPXML schema elements, default values, and constraints.
+
+\input{tables/arguments/Insulation Wall}
+
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
 
@@ -1723,38 +1646,13 @@ Finished roof insulation level. Insulation levels for unfinished attics covered 
     \item Geometry Attic Type.
 \end{itemize}
 \paragraph{Option(s)}
-Insulation roof options correspond to the amount of insulation at the roof deck and if the roof is finished; see Table \ref{table:hc_ins_roof}. A finished roof is a cathedralized construction of the roof. An unfinished roof corresponds to the roof deck being open to the attic.
+Insulation roof options correspond to the amount of insulation at the roof deck and if the roof is finished; see Table \ref{table:hc_opt_insulation_roof}. A finished roof is a cathedralized construction of the roof. An unfinished roof corresponds to the roof deck being open to the attic.
 
-\begin{longtable}[]{|p{3.5cm}|p{3.5cm}|}
-\caption{Insulation Roof options and arguments that vary for each option} \label{table:hc_ins_roof} \\
-\toprule\noalign{}
-Option name & \texttt{roof\_assembly\_r} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Unfinished, Uninsulated  & 2.3 \\
-Finished, Uninsulated & 3.7 \\
-Finished, R-7 & 10.2 \\
-Finished, R-13 & 14.3 \\
-Finished, R-19 & 21.2 \\
-Finished, R-30 & 29.7 \\
-Finished, R-38 & 36.5 \\
-Finished, R-49 & 47.0 \\
-\end{longtable}
+\input{tables/options/Insulation Roof}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_ins_roof}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roofs}{Roofs} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_insulation_roof}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-roofs}{Roofs} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{|p{3.5cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.cm}|p{3.3cm}|} \caption{The ResStock argument definitions set in the Insulation Roof characteristic} \label{table:hc_arg_def_ins_roof} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{roof\_assembly\_r} & true & h-ft\textsuperscript{2}-R/Btu & Double & &
-Assembly R-value of the roof \\
-\end{longtable}
+\input{tables/arguments/Insulation Roof}
 
 \paragraph{Distribution Assumption(s)}
 None
