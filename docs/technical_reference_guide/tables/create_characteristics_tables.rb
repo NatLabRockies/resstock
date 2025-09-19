@@ -90,7 +90,8 @@ saturation_inclusions = ['Orientation',
                          'Geometry Building Type ACS',
                          'Geometry Building Type RECS',
                          'Vintage',
-                         'Vintage ACS']
+                         'Vintage ACS',
+                         'Insulation Rim Joist']
 
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_national/resources/source_report.csv'), headers: true)
 source_report.each do |row|
@@ -120,7 +121,7 @@ source_report.each do |row|
       units = resstockarguments_xml[r_argument]['units'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}')
       type = resstockarguments_xml[r_argument]['type']
       choices = resstockarguments_xml[r_argument]['choices'].join(', ')
-      description = resstockarguments_xml[r_argument]['description']
+      description = resstockarguments_xml[r_argument]['description'].gsub("%", "\\%")
       desc_exclusions.each do |desc_exclusion|
         ix = description.index(desc_exclusion)
         if ix
@@ -152,8 +153,6 @@ source_report.each do |row|
     if not options.keys.include?(option)
       options[option] = {}
     end
-
-    next if Float(param_option_row[3]) == 0
 
     sat_percent = Float(param_option_row[3]) * 100.0
     if Integer(sat_percent.truncate()) == 100
@@ -192,7 +191,7 @@ source_report.each do |row|
     options.keys.each do |option|
       vals << options[option][r_argument]
     end
-    if vals.uniq.size != 1
+    if (vals.uniq.size != 1) || (vals.size == 1)
       changing_args << r_argument
     end
   end
@@ -222,7 +221,7 @@ source_report.each do |row|
   f.puts("#{row}}")
 
   options.keys.each_with_index do |option, i|
-    row = option
+    row = option.gsub('^2', '\textsuperscript{2}')
     if saturation_inclusions.include?(parameter)
       row += " & #{options[option]['sat']}"
     end
