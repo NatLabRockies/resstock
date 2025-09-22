@@ -92,7 +92,8 @@ saturation_inclusions = ['Orientation',
                          'Geometry Building Type RECS',
                          'Vintage',
                          'Vintage ACS',
-                         'Insulation Rim Joist']
+                         'Insulation Rim Joist',
+                         'Misc Gas Lighting']
 
 arguments_folder = File.join(File.dirname(__FILE__), 'arguments')
 options_folder = File.join(File.dirname(__FILE__), 'options')
@@ -127,7 +128,7 @@ source_report.each do |row|
     r_arguments.each_with_index do |r_argument, i|
       name = "\\texttt{#{r_argument}}".gsub('_', '\_')
       required = resstockarguments_xml[r_argument]['required']
-      units = resstockarguments_xml[r_argument]['units'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}')
+      units = resstockarguments_xml[r_argument]['units'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}').gsub('^3', '\textsuperscript{3}')
       type = resstockarguments_xml[r_argument]['type']
       choices = resstockarguments_xml[r_argument]['choices'].join(', ')
       description = resstockarguments_xml[r_argument]['description'].gsub('%', '\\%').gsub('_', '\_')
