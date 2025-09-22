@@ -115,6 +115,8 @@ source_report.each do |row|
     end
   end
 
+  r_arguments = r_arguments.sort_by &arg_order.method(:index)
+
   # Arguments
   if r_arguments.any?
     f = File.open(File.join(arguments_folder, "#{parameter}.tex"), 'w')
@@ -128,7 +130,7 @@ source_report.each do |row|
       units = resstockarguments_xml[r_argument]['units'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}')
       type = resstockarguments_xml[r_argument]['type']
       choices = resstockarguments_xml[r_argument]['choices'].join(', ')
-      description = resstockarguments_xml[r_argument]['description'].gsub('%', '\\%')
+      description = resstockarguments_xml[r_argument]['description'].gsub('%', '\\%').gsub('_', '\_')
       desc_exclusions.each do |desc_exclusion|
         ix = description.index(desc_exclusion)
         if ix
@@ -228,7 +230,7 @@ source_report.each do |row|
   f.puts("#{row}}")
 
   options.keys.each_with_index do |option, i|
-    row = option.gsub('^2', '\textsuperscript{2}')
+    row = option.gsub('^2', '\textsuperscript{2}').gsub('%', '\\%').gsub('<', '\textless') # Door Area, Partial Space Conditioning
     if saturation_inclusions.include?(parameter)
       row += " & #{options[option]['sat']}"
     end

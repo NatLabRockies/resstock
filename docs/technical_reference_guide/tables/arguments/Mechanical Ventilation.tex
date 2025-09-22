@@ -9,6 +9,13 @@
 \texttt{mech\_vent\_sensible\_recovery\_efficiency} & true & Frac & Double &  & The Unadjusted or Adjusted sensible recovery efficiency of the mechanical ventilation. Applies to energy recovery ventilator and heat recovery ventilator.  \\ \hline
 \texttt{mech\_vent\_fan\_power} & false & W & Double & auto & The fan power of the mechanical ventilation.   \\ \hline
 \texttt{mech\_vent\_num\_units\_served} & true & \# & Integer &  & Number of dwelling units served by the mechanical ventilation system. Must be 1 if single-family detached. Used to apportion flow rate and fan power to the unit.  \\ \hline
+\texttt{mech\_vent\_shared\_frac\_recirculation} & false & Frac & Double &  & Fraction of the total supply air that is recirculated, with the remainder assumed to be outdoor air. The value must be 0 for exhaust only systems. Required for a shared mechanical ventilation system.  \\ \hline
+\texttt{mech\_vent\_shared\_preheating\_fuel} & false &  & Choice & auto, electricity, natural gas, fuel oil, propane, wood, wood pellets, coal & Fuel type of the preconditioning heating equipment. Only used for a shared mechanical ventilation system.   \\ \hline
+\texttt{mech\_vent\_shared\_preheating\_efficiency} & false & COP & Double &  & Efficiency of the preconditioning heating equipment. Only used for a shared mechanical ventilation system.   \\ \hline
+\texttt{mech\_vent\_shared\_preheating\_fraction\_heat\_load\_served} & false & Frac & Double &  & Fraction of heating load introduced by the shared ventilation system that is met by the preconditioning heating equipment.   \\ \hline
+\texttt{mech\_vent\_shared\_precooling\_fuel} & false &  & Choice & auto, electricity & Fuel type of the preconditioning cooling equipment. Only used for a shared mechanical ventilation system.   \\ \hline
+\texttt{mech\_vent\_shared\_precooling\_efficiency} & false & COP & Double &  & Efficiency of the preconditioning cooling equipment. Only used for a shared mechanical ventilation system.   \\ \hline
+\texttt{mech\_vent\_shared\_precooling\_fraction\_cool\_load\_served} & false & Frac & Double &  & Fraction of cooling load introduced by the shared ventilation system that is met by the preconditioning cooling equipment.   \\ \hline
 \texttt{mech\_vent\_2\_fan\_type} & true &  & Choice & none, exhaust only, supply only, energy recovery ventilator, heat recovery ventilator, balanced & The type of the second mechanical ventilation. Use 'none' if there is no second mechanical ventilation system.  \\ \hline
 \texttt{mech\_vent\_2\_flow\_rate} & true & CFM & Double &  & The flow rate of the second mechanical ventilation.  \\ \hline
 \texttt{mech\_vent\_2\_hours\_in\_operation} & true & hrs/day & Double &  & The hours in operation of the second mechanical ventilation.  \\ \hline
@@ -18,12 +25,5 @@
 \texttt{mech\_vent\_2\_fan\_power} & true & W & Double &  & The fan power of the second mechanical ventilation.  \\ \hline
 \texttt{whole\_house\_fan\_present} & true &  & Boolean & true, false & Whether there is a whole house fan.  \\ \hline
 \texttt{whole\_house\_fan\_flow\_rate} & false & CFM & Double & auto & The flow rate of the whole house fan.   \\ \hline
-\texttt{whole\_house\_fan\_power} & false & W & Double & auto & The fan power of the whole house fan.   \\ \hline
-\texttt{mech\_vent\_shared\_frac\_recirculation} & false & Frac & Double &  & Fraction of the total supply air that is recirculated, with the remainder assumed to be outdoor air. The value must be 0 for exhaust only systems. Required for a shared mechanical ventilation system.  \\ \hline
-\texttt{mech\_vent\_shared\_precooling\_efficiency} & false & COP & Double &  & Efficiency of the preconditioning cooling equipment. Only used for a shared mechanical ventilation system.   \\ \hline
-\texttt{mech\_vent\_shared\_precooling\_fraction\_cool\_load\_served} & false & Frac & Double &  & Fraction of cooling load introduced by the shared ventilation system that is met by the preconditioning cooling equipment.   \\ \hline
-\texttt{mech\_vent\_shared\_precooling\_fuel} & false &  & Choice & auto, electricity & Fuel type of the preconditioning cooling equipment. Only used for a shared mechanical ventilation system.   \\ \hline
-\texttt{mech\_vent\_shared\_preheating\_efficiency} & false & COP & Double &  & Efficiency of the preconditioning heating equipment. Only used for a shared mechanical ventilation system.   \\ \hline
-\texttt{mech\_vent\_shared\_preheating\_fraction\_heat\_load\_served} & false & Frac & Double &  & Fraction of heating load introduced by the shared ventilation system that is met by the preconditioning heating equipment.   \\ \hline
-\texttt{mech\_vent\_shared\_preheating\_fuel} & false &  & Choice & auto, electricity, natural gas, fuel oil, propane, wood, wood pellets, coal & Fuel type of the preconditioning heating equipment. Only used for a shared mechanical ventilation system.   \\
+\texttt{whole\_house\_fan\_power} & false & W & Double & auto & The fan power of the whole house fan.   \\
 \end{customLongTable}

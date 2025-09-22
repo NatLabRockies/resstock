@@ -6,18 +6,17 @@
 \texttt{water\_heater\_tank\_volume} & false & gal & Double & auto & Nominal volume of water heater tank.   \\ \hline
 \texttt{water\_heater\_efficiency\_type} & true &  & Choice & EnergyFactor, UniformEnergyFactor & The efficiency type of water heater. Does not apply to space-heating boilers.  \\ \hline
 \texttt{water\_heater\_efficiency} & true &  & Double &  & Rated Energy Factor or Uniform Energy Factor. Does not apply to space-heating boilers.  \\ \hline
+\texttt{water\_heater\_usage\_bin} & false &  & Choice & auto, very small, low, medium, high & The usage of the water heater. Only applies if Efficiency Type is UniformEnergyFactor and Type is not instantaneous water heater. Does not apply to space-heating boilers.   \\ \hline
 \texttt{water\_heater\_recovery\_efficiency} & false & Frac & Double & auto & Ratio of energy delivered to water heater to the energy content of the fuel consumed by the water heater. Only used for non-electric storage water heaters.   \\ \hline
+\texttt{water\_heater\_heating\_capacity} & false & Btu/hr & Double & auto & Heating capacity. Only applies to storage water heater and heat pump water heater (compressor).   \\ \hline
+\texttt{water\_heater\_backup\_heating\_capacity} & false & Btu/hr & Double & auto & Backup heating capacity for a heat pump water heater.   \\ \hline
 \texttt{water\_heater\_standby\_loss} & false & F/hr & Double & auto & The standby loss of water heater. Only applies to space-heating boilers.   \\ \hline
 \texttt{water\_heater\_jacket\_rvalue} & false & h-ft\textsuperscript{2}-R/Btu & Double &  & The jacket R-value of water heater. Doesn't apply to instantaneous water heater or space-heating boiler with tankless coil.   \\ \hline
 \texttt{water\_heater\_setpoint\_temperature} & false & F & Double & auto & The setpoint temperature of water heater.   \\ \hline
-\texttt{water\_heater\_heating\_capacity} & false & Btu/hr & Double & auto & Heating capacity. Only applies to storage water heater and heat pump water heater (compressor).   \\ \hline
-\texttt{water\_heater\_backup\_heating\_capacity} & false & Btu/hr & Double & auto & Backup heating capacity for a heat pump water heater.   \\ \hline
-\texttt{water\_heater\_has\_flue\_or\_chimney} & true &  & String &  & Whether the water heater has a flue or chimney.  \\ \hline
 \texttt{water\_heater\_num\_bedrooms\_served} & false & \# & Integer &  & Number of bedrooms served (directly or indirectly) by the water heater. Only needed if single-family attached or apartment unit and it is a shared water heater serving multiple dwelling units. Used to apportion water heater tank losses to the unit.  \\ \hline
-\texttt{water\_heater\_operating\_mode} & false &  & Choice & auto, hybrid/auto, heat pump only & The water heater operating mode. The 'heat pump only' option only uses the heat pump, while 'hybrid/auto' allows the backup electric resistance to come on in high demand situations. This is ignored if a scheduled operating mode type is selected. Applies only to heat pump water heater.   \\ \hline
-\texttt{water\_heater\_tank\_model\_type} & false &  & Choice & auto, mixed, stratified & Type of tank model to use. The 'stratified' tank generally provide more accurate results, but may significantly increase run time. Applies only to storage water heater.   \\ \hline
-\texttt{water\_heater\_usage\_bin} & false &  & Choice & auto, very small, low, medium, high & The usage of the water heater. Only applies if Efficiency Type is UniformEnergyFactor and Type is not instantaneous water heater. Does not apply to space-heating boilers.   \\ \hline
 \texttt{water\_heater\_uses\_desuperheater} & false &  & Boolean & auto, true, false & Requires that the dwelling unit has a air-to-air, mini-split, or ground-to-air heat pump or a central air conditioner or mini-split air conditioner.   \\ \hline
+\texttt{water\_heater\_tank\_model\_type} & false &  & Choice & auto, mixed, stratified & Type of tank model to use. The 'stratified' tank generally provide more accurate results, but may significantly increase run time. Applies only to storage water heater.   \\ \hline
+\texttt{water\_heater\_operating\_mode} & false &  & Choice & auto, hybrid/auto, heat pump only & The water heater operating mode. The 'heat pump only' option only uses the heat pump, while 'hybrid/auto' allows the backup electric resistance to come on in high demand situations. This is ignored if a scheduled operating mode type is selected. Applies only to heat pump water heater.   \\ \hline
 \texttt{solar\_thermal\_system\_type} & true &  & Choice & none, hot water & The type of solar thermal system. Use 'none' if there is no solar thermal system.  \\ \hline
 \texttt{solar\_thermal\_collector\_area} & true & ft\textsuperscript{2} & Double &  & The collector area of the solar thermal system.  \\ \hline
 \texttt{solar\_thermal\_collector\_loop\_type} & true &  & Choice & liquid direct, liquid indirect, passive thermosyphon & The collector loop type of the solar thermal system.  \\ \hline
@@ -27,5 +26,6 @@
 \texttt{solar\_thermal\_collector\_rated\_optical\_efficiency} & true & Frac & Double &  & The collector rated optical efficiency of the solar thermal system.  \\ \hline
 \texttt{solar\_thermal\_collector\_rated\_thermal\_losses} & true & Btu/hr-ft\textsuperscript{2}-R & Double &  & The collector rated thermal losses of the solar thermal system.  \\ \hline
 \texttt{solar\_thermal\_storage\_volume} & false & gal & Double & auto & The storage volume of the solar thermal system.   \\ \hline
-\texttt{solar\_thermal\_solar\_fraction} & true & Frac & Double &  & The solar fraction of the solar thermal system. If provided, overrides all other solar thermal inputs.  \\
+\texttt{solar\_thermal\_solar\_fraction} & true & Frac & Double &  & The solar fraction of the solar thermal system. If provided, overrides all other solar thermal inputs.  \\ \hline
+\texttt{water\_heater\_has\_flue\_or\_chimney} & true &  & String &  & Whether the water heater has a flue or chimney.  \\
 \end{customLongTable}

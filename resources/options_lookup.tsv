@@ -9664,11 +9664,11 @@ HVAC Cooling Efficiency	Non-Ducted Heat Pump	ResStockArguments	cooling_system_ty
 HVAC Cooling Efficiency	None	ResStockArguments	cooling_system_type=none	cooling_system_cooling_efficiency_type=SEER	cooling_system_cooling_efficiency=0	cooling_system_cooling_capacity=auto	cooling_system_cooling_autosizing_limit=auto	cooling_system_is_ducted=false	cooling_system_compressor_type=auto	cooling_system_crankcase_heater_watts=auto	cooling_system_integrated_heating_system_capacity=auto	cooling_system_integrated_heating_system_efficiency_percent=auto	cooling_system_integrated_heating_system_fraction_heat_load_served=auto	cooling_system_integrated_heating_system_fuel=auto
 HVAC Cooling Efficiency	Shared Cooling
 HVAC Cooling Partial Space Conditioning	100% Conditioned	ResStockArguments	cooling_system_fraction_cool_load_served=1
-HVAC Cooling Partial Space Conditioning	20% Conditioned	ResStockArguments	cooling_system_fraction_cool_load_served=.2
-HVAC Cooling Partial Space Conditioning	40% Conditioned	ResStockArguments	cooling_system_fraction_cool_load_served=.4
-HVAC Cooling Partial Space Conditioning	60% Conditioned	ResStockArguments	cooling_system_fraction_cool_load_served=.6
-HVAC Cooling Partial Space Conditioning	80% Conditioned	ResStockArguments	cooling_system_fraction_cool_load_served=.8
-HVAC Cooling Partial Space Conditioning	<10% Conditioned	ResStockArguments	cooling_system_fraction_cool_load_served=.1
+HVAC Cooling Partial Space Conditioning	20% Conditioned	ResStockArguments	cooling_system_fraction_cool_load_served=0.2
+HVAC Cooling Partial Space Conditioning	40% Conditioned	ResStockArguments	cooling_system_fraction_cool_load_served=0.4
+HVAC Cooling Partial Space Conditioning	60% Conditioned	ResStockArguments	cooling_system_fraction_cool_load_served=0.6
+HVAC Cooling Partial Space Conditioning	80% Conditioned	ResStockArguments	cooling_system_fraction_cool_load_served=0.8
+HVAC Cooling Partial Space Conditioning	<10% Conditioned	ResStockArguments	cooling_system_fraction_cool_load_served=0.1
 HVAC Cooling Partial Space Conditioning	None	ResStockArguments	cooling_system_fraction_cool_load_served=0
 HVAC Cooling Partial Space Conditioning	Void
 HVAC Cooling Type	Central AC
