@@ -2,6 +2,7 @@
 
 require 'csv'
 require 'oga'
+require 'fileutils'
 
 def href_to_rst(str)
   urls_names = str.scan(/<a href='(.+?)'>(.+?)<\/a>/)
@@ -93,6 +94,12 @@ saturation_inclusions = ['Orientation',
                          'Vintage ACS',
                          'Insulation Rim Joist']
 
+arguments_folder = File.join(File.dirname(__FILE__), 'arguments')
+options_folder = File.join(File.dirname(__FILE__), 'options')
+
+FileUtils.rm_rf(Dir.glob("#{arguments_folder}/*"))
+FileUtils.rm_rf(Dir.glob("#{options_folder}/*"))
+
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_national/resources/source_report.csv'), headers: true)
 source_report.each do |row|
   parameter = row['Parameter']
@@ -110,7 +117,7 @@ source_report.each do |row|
 
   # Arguments
   if r_arguments.any?
-    f = File.open(File.join(File.dirname(__FILE__), "arguments/#{parameter}.tex"), 'w')
+    f = File.open(File.join(arguments_folder, "#{parameter}.tex"), 'w')
 
     f.puts('\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }')
     f.puts("{The ResStock argument definitions set in the #{parameter} characteristic} {table:hc_arg_def_#{parameter.downcase.gsub(' ', '_')}}")
@@ -138,7 +145,7 @@ source_report.each do |row|
   end
 
   # Options
-  f = File.open(File.join(File.dirname(__FILE__), "options/#{parameter}.tex"), 'w')
+  f = File.open(File.join(options_folder, "#{parameter}.tex"), 'w')
 
   options = {}
   option_sat_csv_data.each do |param_option_row|
