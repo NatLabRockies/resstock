@@ -40,39 +40,13 @@ The fuel used for primary heating of the housing unit.
 \end{itemize}
 
 \paragraph{Options}
-The Heating Fuel characteristic options are Electricity, Natural Gas, Propane, Fuel Oil, None, Other Fuel, and Wood. Other Fuel is currently modeled as wood energy. However, although ResStock simulates wood energy consumption for heating, current datasets do not publish data on heating with wood. The characteristic sets the \texttt{heating\_system\_fuel} ResStock argument (Table \ref{table:hc_opt_hf}). The argument definition for the \texttt{heating\_system\_fuel} argument is in Table \ref{table:hc_arg_def_hf}.
+The Heating Fuel characteristic options are Electricity, Natural Gas, Propane, Fuel Oil, None, Other Fuel, and Wood. Other Fuel is currently modeled as wood energy. However, although ResStock simulates wood energy consumption for heating, current datasets do not publish data on heating with wood. The characteristic sets the \texttt{heating\_system\_fuel} ResStock argument (Table \ref{table:hc_opt_heating_fuel}). The argument definition for the \texttt{heating\_system\_fuel} argument is in Table \ref{table:hc_arg_def_heating_fuel}.
 
 See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{ |p{3.cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{2.4cm}|p{5cm}| }
-\caption{The ResStock argument definitions set in the Heating Fuel characteristic} \label{table:hc_arg_def_hf} \\
-\toprule\noalign{}
-Name & Required & Units & Type & Choices & Description \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{heating\_system\_fuel} & true & & Choice & electricity, natural
-gas, fuel oil, propane, wood, wood pellets, coal & The fuel type of the
-heating system. Ignored for ElectricResistance. \\
-\end{longtable}
+\input{tables/arguments/Heating Fuel}
 
-\begin{longtable}[]{ |p{4.cm}|p{4cm}| }
-\caption{Heating Fuel options and arguments that vary for each option} \label{table:hc_opt_hf} \\
-\toprule\noalign{}
-Option name & \texttt{heating\_system\_fuel} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Electricity & electricity \\
-Fuel Oil & fuel oil \\
-Natural Gas & natural gas \\
-None & natural gas \\
-Other Fuel & wood \\
-Propane & propane \\
-Wood & wood \\
-\end{longtable}
+\input{tables/options/Heating Fuel}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
