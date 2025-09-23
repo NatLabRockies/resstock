@@ -131,7 +131,7 @@ source_report.each do |row|
       units = resstockarguments_xml[r_argument]['units'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}').gsub('^3', '\textsuperscript{3}')
       type = resstockarguments_xml[r_argument]['type']
       choices = resstockarguments_xml[r_argument]['choices'].join(', ')
-      description = resstockarguments_xml[r_argument]['description'].gsub('%', '\\%').gsub('_', '\_')
+      description = resstockarguments_xml[r_argument]['description'].gsub('%', '\\%').gsub('_', '\_').gsub('&', '\\\&')
       desc_exclusions.each do |desc_exclusion|
         ix = description.index(desc_exclusion)
         if ix
