@@ -150,62 +150,15 @@ They are not used in baseline models.
 
 \input{tables/arguments/HVAC Heating Efficiency}
 
-For heat pump options and arguments that vary across the heat pump options, see Table \ref{table:hc_opt_ht_eff_hp}. The \texttt{heating\_system\_type} argument is none, \texttt{heating\_system\_heating\_efficiency} is 0 and not used. The \texttt{heat\_pump\_backup\_type} is set to integrated. The \texttt{heating\_system\_pilot\_light} argument is not specified. The \texttt{heat\_pump\_cooling\_compressor\_type}, 
+For heat pump options and arguments that vary across the heat pump options, see Table \ref{table:hc_opt_hvac_heating_efficiency_-_heat_pump}. The \texttt{heating\_system\_type} argument is none, \texttt{heating\_system\_heating\_efficiency} is 0 and not used. The \texttt{heat\_pump\_backup\_type} is set to integrated. The \texttt{heating\_system\_pilot\_light} argument is not specified. The \texttt{heat\_pump\_cooling\_compressor\_type}, 
 \texttt{heat\_pump\_cooling\_sensible\_heat\_fraction}, 
 \texttt{heat\_pump\_heating\_capacity}, \texttt{heat\_pump\_heating\_autosizing\_limit}, \texttt{heat\_pump\_compressor\_lockout\_temp}, \texttt{heat\_pump\_backup\_heating\_lockout\_temp}, and \texttt{heat\_pump\_crankcase\_heater\_watts} are set to ``auto.''
 
-\begin{longtable}[]{ |p{2.2cm}|p{1.5cm}|p{2.1cm}|p{2.1cm}|p{2.2cm}|p{2.2cm}|p{1.4cm}| }
-\caption{HVAC Heating Efficiency heat pump options and arguments that vary for each option} \label{table:hc_opt_ht_eff_hp} \\
-\toprule\noalign{}
-Option name &
-\texttt{heat\_pump\_type} &
-\texttt{heat\_pump\_heating\_efficiency} &
-\texttt{heat\_pump\_cooling\_efficiency} &
-\texttt{heat\_pump\_heating\_capacity\_retention\_fraction} & \texttt{heat\_pump\_heating\_capacity\_retention\_temp} &
-\texttt{heat\_pump\_is\_ducted} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-ASHP, SEER 10, 6.2 HSPF &
-air-to-air & 6.2 & 10 & auto &
-auto & \\ \hline
-ASHP, SEER 13, 7.7 HSPF &
-air-to-air & 7.7 & 13 & auto &
-auto & \\\hline
-ASHP, SEER 15, 8.5 HSPF &
-air-to-air & 8.5 & 15 & auto &
-auto & \\\hline
-MSHP, SEER 14.5, 8.2 HSPF &
-mini-split & 8.2 & 14.5 & 0.25
-& -5 & false \\\hline
-MSHP, SEER 29.3, 14 HSPF &
-mini-split & 14 & 29.3 & 0.5 &
--15  & false \\
-\end{longtable}
+\input{tables/options/HVAC Heating Efficiency - heat_pump}
 
-For other heating systems the options and arguments that vary across these options, see Table \ref{table:hc_opt_ht_eff_oth}. The \texttt{heat\_pump\_type} and the \texttt{heat\_pump\_backup\_type} arguments are set to none. The \texttt{heat\_pump\_heating\_efficiency} and \texttt{heat\_pump\_cooling\_efficiency} arguments are set to 0 and are not used. The \texttt{heat\_pump\_cooling\_compressor\_type}, \texttt{heat\_pump\_cooling\_sensible\_heat\_fraction}, \texttt{heat\_pump\_heating\_capacity\_retention\_fraction},  \texttt{heat\_pump\_heating\_capacity\_retention\_temp}, \texttt{heat\_pump\_compressor\_lockout\_temp}, \texttt{heat\_pump\_backup\_heating\_lockout\_temp}, \texttt{heat\_pump\_is\_ducted}, and \texttt{heat\_pump\_crankcase\_heater\_watts} are not set.
+For other heating systems the options and arguments that vary across these options, see Table \ref{table:hc_opt_hvac_heating_efficiency_-_heating_system}. The \texttt{heat\_pump\_type} and the \texttt{heat\_pump\_backup\_type} arguments are set to none. The \texttt{heat\_pump\_heating\_efficiency} and \texttt{heat\_pump\_cooling\_efficiency} arguments are set to 0 and are not used. The \texttt{heat\_pump\_cooling\_compressor\_type}, \texttt{heat\_pump\_cooling\_sensible\_heat\_fraction}, \texttt{heat\_pump\_heating\_capacity\_retention\_fraction},  \texttt{heat\_pump\_heating\_capacity\_retention\_temp}, \texttt{heat\_pump\_compressor\_lockout\_temp}, \texttt{heat\_pump\_backup\_heating\_lockout\_temp}, \texttt{heat\_pump\_is\_ducted}, and \texttt{heat\_pump\_crankcase\_heater\_watts} are not set.
 
-\begin{customLongTable}{ |p{3cm}|p{3cm}|p{3cm}|p{3cm}| }
-{HVAC Heating Efficiency non-heat pump heating system options and arguments that vary for each option} {table:hc_opt_ht_eff_oth} 
-{Option name &
-\texttt{heating\_system\_type} &
-\texttt{heating\_system\_heating\_efficiency} &
-\texttt{heating\_system\_pilot\_light}} 
-Electric Baseboard, 100\% Efficiency & ElectricResistance & 1 &  \\ \hline
-Electric Boiler, 100\% AFUE & Boiler & 1 & \\ \hline
-Electric Furnace, 100\% AFUE & Furnace & 1 & \\ \hline
-Electric Wall Furnace, 100\% AFUE & WallFurnace & 1 & \\ \hline
-Fuel Boiler, 76\% AFUE & Boiler & 0.76 & auto \\ \hline
-Fuel Boiler, 80\% AFUE & Boiler & 0.8 & auto \\ \hline
-Fuel Boiler, 90\% AFUE & Boiler & 0.9 & auto \\ \hline
-Fuel Furnace, 60\% AFUE & Furnace & 0.6 & auto \\ \hline
-Fuel Furnace, 76\% AFUE & Furnace & 0.76 & auto \\ \hline
-Fuel Furnace, 80\% AFUE & Furnace & 0.8 & auto \\ \hline
-Fuel Wall/Floor Furnace, 60\% AFUE & WallFurnace & 0.6 & auto \\ \hline
-Fuel Wall/Floor Furnace, 68\% AFUE & WallFurnace & 0.68 & auto \\ \hline
-None & none & 0 & \\
-\end{customLongTable}
+\input{tables/options/HVAC Heating Efficiency - heating_system}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}

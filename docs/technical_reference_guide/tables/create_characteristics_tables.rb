@@ -102,16 +102,31 @@ FileUtils.rm_rf(Dir.glob("#{arguments_folder}/*"))
 FileUtils.rm_rf(Dir.glob("#{options_folder}/*"))
 
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_national/resources/source_report.csv'), headers: true)
-source_report.each do |row|
-  parameter = row['Parameter']
+parameters = source_report.collect { |row| row['Parameter'] }
+
+parameters << 'HVAC Heating Efficiency - heating_system'
+parameters << 'HVAC Heating Efficiency - heat_pump'
+
+parameters.each do |parameter|
+  parameter_name = parameter
+  if parameter.include?('HVAC Heating Efficiency')
+    parameter_name = 'HVAC Heating Efficiency'
+  end
 
   r_arguments = []
   lookup_csv_data.each do |lookup_row|
-    next if lookup_row[0] != parameter
+    next if lookup_row[0] != parameter_name
     next if lookup_row[2] != 'ResStockArguments'
 
     lookup_row[3..-1].each do |argument_value|
       argument, _value = argument_value.split('=')
+
+      if parameter.include?('heating_system')
+        next unless argument.include?('heating_system')
+      elsif parameter.include?('heat_pump')
+        next unless argument.include?('heat_pump')
+      end
+
       r_arguments << argument if !r_arguments.include?(argument)
     end
   end
@@ -119,7 +134,7 @@ source_report.each do |row|
   r_arguments = r_arguments.sort_by &arg_order.method(:index)
 
   # Arguments
-  if r_arguments.any?
+  if r_arguments.any? && !parameter.include?('heating_system') && !parameter.include?('heat_pump')
     f = File.open(File.join(arguments_folder, "#{parameter}.tex"), 'w')
 
     f.puts('\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }')
@@ -148,15 +163,24 @@ source_report.each do |row|
   end
 
   # Options
+  next if parameter.end_with?('HVAC Heating Efficiency')
+
   f = File.open(File.join(options_folder, "#{parameter}.tex"), 'w')
 
   options = {}
   option_sat_csv_data.each do |param_option_row|
     # If the parameter does not match next
-    next if param_option_row[1] != parameter
+    next if param_option_row[1] != parameter_name
 
     # Insert the options and the stock saturation
     option = param_option_row[2]
+
+    if parameter.include?('heating_system')
+      next if option.include?('HP,')
+      next if option.include?('Shared Heating')
+    elsif parameter.include?('heat_pump')
+      next unless option.include?('HP,')
+    end
 
     next if option == 'Void'
 
@@ -177,7 +201,7 @@ source_report.each do |row|
 
     # If there are arguments, go through options lookup to find the option
     lookup_csv_data.each do |lookup_row|
-      next if lookup_row[0] != parameter
+      next if lookup_row[0] != parameter_name
       next if lookup_row[1] != option
 
       next unless lookup_row[2] == 'ResStockArguments'
@@ -219,10 +243,16 @@ source_report.each do |row|
     row += '|p{2.75cm}'
   end
   f.puts("#{row}| }")
-  f.puts("{#{parameter} options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+  if parameter.include?('heating_system')
+    f.puts("{#{parameter_name} non-heat pump heating system options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+  elsif parameter.include?('heat_pump')
+    f.puts("{#{parameter_name} heat pump options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+  else
+    f.puts("{#{parameter_name} options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+  end
 
   row = '{Option name'
-  if saturation_inclusions.include?(parameter)
+  if saturation_inclusions.include?(parameter_name)
     row += ' & Stock saturation'
   end
   changing_args.each do |changing_arg|
@@ -232,7 +262,7 @@ source_report.each do |row|
 
   options.keys.each_with_index do |option, i|
     row = option.gsub('^2', '\textsuperscript{2}').gsub('%', '\\%').gsub('<', '\textless') # Door Area, Partial Space Conditioning
-    if saturation_inclusions.include?(parameter)
+    if saturation_inclusions.include?(parameter_name)
       row += " & #{options[option]['sat']}"
     end
     changing_args.each_with_index do |changing_arg, _i|
