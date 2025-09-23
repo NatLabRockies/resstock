@@ -201,7 +201,9 @@ parameters.each do |parameter|
 
     next if option == 'Void'
 
-    if parameter == 'HVAC Shared Efficiencies'
+    if parameter == 'HVAC Cooling Efficiency'
+      next if ['Shared Cooling'].include?(option)
+    elsif parameter == 'HVAC Shared Efficiencies'
       next if ['Fan Coil Cooling Only', 'None'].include?(option)
     end
 
