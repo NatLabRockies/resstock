@@ -1,15 +1,20 @@
 import polars as pl
 import pathlib
 import geopandas as gpd
+import logging
+import s3fs
 from typing import Sequence
 
 from resstockpostproc.utils import (
     fix_site_energy_total,
     fix_all_fuels_emissions,
     get_col_maps,
+    setup_fsspec_filesystem,
+    write_geo_data
 )
 from resstockpostproc.income_mapper import assign_representative_income
 
+logger = logging.getLogger(__name__)
 
 def get_failed_bldgs(metadata_df: pl.LazyFrame) -> set[int]:
     failed_bldgs = metadata_df.filter(pl.col("completed_status") == "Fail")
@@ -297,3 +302,120 @@ def reorder_columns(lf: pl.LazyFrame, col_maps: Sequence[dict], is_baseline: boo
         print(f"Missing columns in output data that is defined in publication column definition: {missing_cols}")
     available_cols = [col for col in all_defined_cols if col in all_df_cols]
     return lf.select(available_cols)
+
+
+def export_metadata_and_annual_results_to_oedi_by_geography(output_dir, aws_profile_name=None):
+    """
+    Subdivides the annual results by geography and writes to OEDI.
+    Creates .parquet and .csv.gz files.
+
+    Args:
+        output_dir: String path in s3:// or local filesystem format.
+        aws_profile_name: Name of the AWS profile to use for authentication if writing to S3.
+    Returns:
+        None
+
+    """
+    output_dir = setup_fsspec_filesystem(output_dir, aws_profile_name)
+
+    bucket_name = 'oedi-data-lake'
+    if output_dir['fs'].exists(bucket_name):
+        print(f"Bucket {bucket_name} exists")
+    else:
+        print(f"Bucket {bucket_name} does not exist")
+
+    # Get a list of upgrades
+    up_pqts = []
+    pqt_glob = f"{output_dir['fs_path']}/metadata_and_annual_results/national/parquet/full/*.parquet"
+    print(pqt_glob)
+    for p in output_dir['fs'].glob(pqt_glob):
+        if isinstance(output_dir['fs'], s3fs.S3FileSystem):
+            up_pqts.append(f's3://{p}')
+        else:
+            up_pqts.append(p)
+    print(f'Found {len(up_pqts)} upgrade parquet files, including the baseline.')
+
+    # Define the geographic partitions to export
+    geo_exports = [
+    {
+        'geo_top_dir': 'by_state',
+        'partition_cols': {
+            'in.state': 'state'
+        },
+        'data_types': ['full'],  # TODO add basic
+        'file_types': ['csv', 'parquet'],
+    }
+    ]
+
+    for ge in geo_exports:
+        geo_top_dir = ge['geo_top_dir']
+        partition_cols = ge['partition_cols']
+        print('partition_cols')
+        print(partition_cols)
+        data_types = ge['data_types']
+        file_types = ge['file_types']
+        # geo_col_names = list(partition_cols.keys())
+
+        # Name the top-level directory
+        full_geo_dir = f"{output_dir['fs_path']}/metadata_and_annual_results/{geo_top_dir}"
+
+        # Make a directory for the geography type
+        if not isinstance(output_dir['fs'], s3fs.S3FileSystem):
+            output_dir['fs'].mkdirs(full_geo_dir, exist_ok=True)
+
+        # Make a directory for each data type X file type combo
+        if not isinstance(output_dir['fs'], s3fs.S3FileSystem):
+            for data_type in data_types:
+                for file_type in file_types:
+                    output_dir['fs'].mkdirs(f'{full_geo_dir}/{data_type}/{file_type}', exist_ok=True)
+
+        # Load the file
+        for up_pqt in up_pqts:
+            upgrade_id = pathlib.Path(up_pqt).stem.replace('upgrade', '')
+            print(f'Processing upgrade {upgrade_id}')
+
+            # Read the file
+            up_df = pl.read_parquet(up_pqt, hive_partitioning=True, storage_options=output_dir['storage_options'] )
+            # for c in df.columns:
+            #     print(c)
+
+            # Export by various geographies
+            for by_col, by_dir_name  in partition_cols.items():
+                for by_val, geo_df in up_df.group_by(by_col):
+                    by_val = by_val[0]
+                    geo_levels = [f'{by_dir_name}={by_val}']
+                    geo_prefixes = [by_val]
+                    for data_type in data_types:
+                        # TODO Downselect the DF to fewer columns for basic version
+
+                        for file_type in file_types:
+                            file_path = get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id)
+                            print(f"Queuing {file_path}")
+                            input_args = (geo_df, output_dir, file_type, file_path)
+                            # write_geo_data(input_args)
+
+            break
+
+def get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id):
+    """
+    Builds a file path for each aggregate based on name, file type, and aggregation level
+    """
+    geo_level_dir = f'{full_geo_dir}/{data_type}/{file_type}'
+    if len(geo_levels) > 0:
+        geo_level_dir = f'{geo_level_dir}/' + '/'.join(geo_levels)
+    if not isinstance(output_dir['fs'], s3fs.S3FileSystem):
+        output_dir['fs'].mkdirs(geo_level_dir, exist_ok=True)
+    file_name = f'upgrade{upgrade_id}'
+    # Add geography prefix to filename
+    if len(geo_prefixes) > 0:
+        geo_prefix = '_'.join(geo_prefixes)
+        file_name = f'{geo_prefix}_{file_name}'
+    # Add data_type suffix to filename
+    if data_type == 'basic':
+        file_name = f'{file_name}_{data_type}'
+    # Add the filetype extension to filename
+    file_name = f'{file_name}.{file_type}'
+    # Write the file, depending on filetype
+    file_path = f'{geo_level_dir}/{file_name}'
+
+    return file_path

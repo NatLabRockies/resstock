@@ -4,6 +4,7 @@ Script to take in raw BuildStockBatch results_csvs / parquet and convert them to
 
 Example usage:
 uv run resstockpostproc/process_bsb_results.py /path/to/bsb_raw_results /path/to/output_dir
+uv run resstockpostproc/process_bsb_results.py /path/to/bsb_raw_results "s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/resstock_amy2018_release_1"
 
 Note: bsb_raw_results folder must contain both baseline and upgrade files. Baseline file should be named
 results_up00.parquet and upgrade files should be named results_upXX.parquet where XX is the upgrade number. The can
@@ -16,6 +17,7 @@ from pathlib import Path
 from resstockpostproc.process_metadata import (
     publish_baseline_annual_results,
     publish_upgrade_annual_results,
+    export_metadata_and_annual_results_to_oedi_by_geography
 )
 import re
 
@@ -104,4 +106,6 @@ if __name__ == "__main__":
         help="Directory to write transformed results",
     )
     args = parser.parse_args()
-    process_results(args.raw_results_dir, args.output_dir)
+    # process_results(args.raw_results_dir, args.output_dir)
+
+    export_metadata_and_annual_results_to_oedi_by_geography(args.output_dir)

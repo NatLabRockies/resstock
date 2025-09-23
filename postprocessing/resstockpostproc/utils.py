@@ -4,6 +4,17 @@ import polars.selectors as cs
 from collections import defaultdict
 import re
 import pathlib
+import logging
+import pathlib
+import boto3
+import s3fs
+import gzip
+import tarfile
+from io import BytesIO
+from fsspec import register_implementation
+from fsspec.core import url_to_fs
+
+logger = logging.getLogger(__name__)
 
 def remove_all_empty_cols(df: pl.DataFrame):
     """
@@ -76,3 +87,115 @@ def get_col_maps():
     col_maps = col_map_df.to_dicts()
     return col_maps
 
+def setup_fsspec_filesystem(output_dir, aws_profile_name):
+    """
+    Creates fsspec filesystem to handle local or S3 output locations
+    """
+    # Use fsspec to enable local or S3 directories
+    # if output_dir is None:
+    #     current_dir = pathlib.Path(__file__).resolve().parent
+    #     output_dir = current_dir.parent / "output" / self.dataset_name
+
+    # PyAthena >2.18.0 implements an s3 filesystem that replaces s3fs but does not implement file.open()
+    # Make fsspec use the s3fs s3 filesystem implementation for writing files to S3
+    # This is necessary for import into SightGlassDataProcessing
+    register_implementation("s3", s3fs.S3FileSystem, clobber=True)
+    out_fs, out_fs_path = url_to_fs(output_dir, profile=aws_profile_name)
+    output_dir = {
+        'fs': out_fs,
+        'fs_path': out_fs_path
+    }
+    if isinstance(output_dir['fs'], s3fs.S3FileSystem):
+        if aws_profile_name is None:
+            logger.info(f'Accessing AWS using profile: None, which uses the [default] profile in .aws/config file')
+        else:
+            logger.info(f'Accessing AWS using profile: {aws_profile_name}')
+        session = boto3.Session(aws_profile_name)
+        credentials = session.get_credentials().get_frozen_credentials()
+        output_dir['storage_options'] = {
+            "aws_access_key_id": credentials.access_key,
+            "aws_secret_access_key": credentials.secret_key,
+            "aws_region": "us-west-2",
+        }
+        if credentials.token:
+            output_dir['storage_options']["aws_session_token"] = credentials.token
+    else:
+        output_dir['storage_options'] = None
+
+    return output_dir
+
+
+def write_geo_data(combo):
+    """
+    Writes the data to the desired location and file format.
+    This function must be a global static function in order to work with parallel processing.
+    """
+    geo_data, out_location, file_type, file_path = combo
+    if isinstance(geo_data, pl.LazyFrame):
+        geo_data = geo_data.collect()
+    if file_type == 'csv':
+        write_polars_csv_to_s3_or_local(geo_data, out_location['fs'], file_path)
+    elif file_type == 'parquet':
+        with out_location['fs'].open(file_path, "wb") as f:
+            geo_data.write_parquet(f, use_pyarrow=True)
+    else:
+        raise RuntimeError(f'Unknown file type {file_type} requested in export_metadata_and_annual_results()')
+
+
+def write_polars_csv_to_s3_or_local(data: pl.DataFrame, out_fs, out_path):
+    """
+    Writes the data to the desired location and file format.
+    This function must be a global static function in order to work with parallel processing
+    """
+    # If local, write uncompressed CSV
+    if not isinstance(out_fs, s3fs.S3FileSystem):
+        data.write_csv(out_path)
+        return True
+
+    # Get filename from full path
+    file_name = out_path.split('/')[-1]
+
+    # Create a tar archive in memory that contains the CSV
+    tar_buffer = BytesIO()
+    with tarfile.open(mode='w', fileobj=tar_buffer) as tar:
+        # Get CSV data
+        csv_buffer = BytesIO()
+        data.write_csv(csv_buffer)
+        csv_buffer.seek(0)
+
+        # Create a TarInfo object with file metadata
+        tarinfo = tarfile.TarInfo(name=file_name)
+        tarinfo.size = len(csv_buffer.getvalue())
+
+        # Add the CSV data to the tar archive
+        tar.addfile(tarinfo, csv_buffer)
+
+    # Compress the in memory tar archive with gzip
+    tar_buffer.seek(0)
+    gzip_buffer = BytesIO()
+    with gzip.GzipFile(filename=f'{file_name}', mode='wb', fileobj=gzip_buffer, compresslevel=9) as gz:
+        gz.write(tar_buffer.getvalue())
+
+    # Upload directly to S3
+    bucket_name = out_path.split('/')[0]
+    s3_key = '/'.join(out_path.split('/')[1:]) + '.gz'
+    s3_client = boto3.client('s3')
+    try:
+        gzip_buffer.seek(0)
+        s3_client.upload_fileobj(
+            gzip_buffer,      # File-like object
+            bucket_name,     # Bucket name
+            s3_key          # S3 object key
+        )
+    except Exception as e:
+        logger.error(f"S3 upload failed: {str(e)}")
+    finally:
+        # Clean up
+        csv_buffer.close()
+        tar_buffer.close()
+        gzip_buffer.close()
+
+    # Clean up
+    csv_buffer.close()
+    tar_buffer.close()
+    gzip_buffer.close()
