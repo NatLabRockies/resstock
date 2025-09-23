@@ -109,10 +109,16 @@ parameters = source_report.collect { |row| row['Parameter'] }
 parameters << 'HVAC Heating Efficiency - heating_system'
 parameters << 'HVAC Heating Efficiency - heat_pump'
 
+# Accommodate special "storage and tankless" and "solar" options
+parameters << 'Water Heater Efficiency - water_heater'
+parameters << 'Water Heater Efficiency - solar_thermal'
+
 parameters.each do |parameter|
   parameter_name = parameter
   if parameter.include?('HVAC Heating Efficiency')
     parameter_name = 'HVAC Heating Efficiency'
+  elsif parameter.include?('Water Heater Efficiency')
+    parameter_name = 'Water Heater Efficiency'
   end
 
   r_arguments = []
@@ -127,6 +133,10 @@ parameters.each do |parameter|
         next unless argument.include?('heating_system')
       elsif parameter.include?('heat_pump')
         next unless argument.include?('heat_pump')
+      elsif parameter.include?('water_heater')
+        next unless argument.include?('water_heater')
+      elsif parameter.include?('solar_thermal')
+        # next unless argument.include?('solar_thermal') # intentionally include water_heater arguments with Solar Thermal options
       end
 
       r_arguments << argument if !r_arguments.include?(argument)
@@ -136,7 +146,7 @@ parameters.each do |parameter|
   r_arguments = r_arguments.sort_by &arg_order.method(:index)
 
   # Arguments
-  if r_arguments.any? && !parameter.include?('heating_system') && !parameter.include?('heat_pump')
+  if r_arguments.any? && !parameter.include?('heating_system') && !parameter.include?('heat_pump') && !parameter.include?('water_heater') && !parameter.include?('solar_thermal')
     f = File.open(File.join(arguments_folder, "#{parameter}.tex"), 'w')
 
     f.puts('\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }')
@@ -166,6 +176,7 @@ parameters.each do |parameter|
 
   # Options
   next if parameter.end_with?('HVAC Heating Efficiency')
+  next if parameter.end_with?('Water Heater Efficiency')
 
   f = File.open(File.join(options_folder, "#{parameter}.tex"), 'w')
 
@@ -182,6 +193,10 @@ parameters.each do |parameter|
       next if option.include?('Shared Heating')
     elsif parameter.include?('heat_pump')
       next unless option.include?('HP,')
+    elsif parameter.include?('water_heater')
+      next if option.include?('Solar Thermal,')
+    elsif parameter.include?('solar_thermal')
+      next unless option.include?('Solar Thermal,')
     end
 
     next if option == 'Void'
@@ -262,6 +277,10 @@ parameters.each do |parameter|
     f.puts("{#{parameter_name} non-heat pump heating system options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
   elsif parameter.include?('heat_pump')
     f.puts("{#{parameter_name} heat pump options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+  elsif parameter.include?('water_heater')
+    f.puts("{#{parameter_name} storage and tankless options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
+  elsif parameter.include?('solar_thermal')
+    f.puts("{#{parameter_name} solar thermal options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
   else
     f.puts("{#{parameter_name} options and arguments that vary for each option} {table:hc_opt_#{parameter.downcase.gsub(' ', '_')}}")
   end

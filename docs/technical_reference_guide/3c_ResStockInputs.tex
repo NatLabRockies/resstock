@@ -210,7 +210,7 @@ The efficiency and type of the water heater by heating fuel.
 \end{itemize}
 
 \paragraph{Options}
-Water Heater Efficiency options define the technical details of the standalone water heaters and solar thermal water heaters with storage backup, from fuel type to the presence of flue (Table \ref{table:hc_opt_water_heater_eff}). 
+Water Heater Efficiency options define the technical details of the standalone water heaters and solar thermal water heaters with storage backup, from fuel type to the presence of flue (Table \ref{table:hc_opt_water_heater_efficiency_-_water_heater}). 
 The following arguments are constant across the non-solar standalone water heater options. The arguments for solar water heater options are available further down. 
 
 \begin{itemize}
@@ -239,35 +239,7 @@ The following arguments are constant across the non-solar standalone water heate
 
 For heat pump water heaters the \texttt{water\_heater\_efficiency\_type} UniformEnergyFactor is used; EnergyFactor is currently used for all other water heaters.
 
-\begin{customLongTable}{|p{3cm}|p{2.25cm}|p{2cm}|p{1.75cm}|p{2.5cm}|p{2.25cm}|}{Water Heater Efficiency options and arguments that vary for each option of storage and tankless water heaters.} {table:hc_opt_water_heater_eff} 
-{Option name &
-\texttt{water\_heater\_type} &
-\texttt{water\_heater\_fuel\_type} &
-\texttt{water\_heater\_tank\_volume} &
-\texttt{water\_heater\_efficiency\_type} &
-\texttt{water\_heater\_recovery\_efficiency}} 
-Electric Heat Pump, 50 gal, 3.45 UEF & heat pump water heater &
-electricity & 50 & 3.45 & 0  \\ \hline
-Electric Heat Pump, 66 gal, 3.35 UEF & heat pump water heater &
-electricity & 66 & 3.35 & 0 \\ \hline
-Electric Heat Pump, 80 gal, 3.45 UEF & heat pump water heater &
-electricity & 80 & 3.45 & 0 \\ \hline
-Electric Premium & storage water heater & electricity & auto & 0.95 & 0\\ \hline
-Electric Standard & storage water heater & electricity & auto & 0.92 & 0 \\ \hline
-Electric Tankless & instantaneous water heater & electricity & 0 & 0.99 & 0 \\ \hline
-FIXME Fuel Oil Indirect & storage water heater & fuel oil &
-auto & 0.62 & 0.78 \\ \hline
-Fuel Oil Premium & storage water heater & fuel oil & auto & 0.68 & 0.9 \\ \hline
-Fuel Oil Standard & storage water heater & fuel oil & auto & 0.62 & 0.78 \\ \hline
-Natural Gas Premium & storage water heater & natural gas & auto & 0.67 & 0.78 \\ \hline
-Natural Gas Standard & storage water heater & natural gas & auto & 0.59 & 0.76 \\ \hline
-Natural Gas Tankless & instantaneous water heater & natural gas & 0 & 0.82 & 0 \\ \hline
-Other Fuel & storage water heater & coal & auto & 0.59 & 0.76 \\
-Propane Premium & storage water heater & propane & auto & 0.67 & 0.78 \\ \hline
-Propane Standard & storage water heater & propane & auto & 0.59 & 0.76 \\ \hline
-Propane Tankless & instantaneous water heater & propane & 0 & 0.82 & 0 \\ \hline
-Wood & storage water heater & wood & auto & 0.59 & 0.76 \\
-\end{customLongTable}
+\input{tables/options/Water Heater Efficiency - water_heater}
 
 Solar thermal water heaters are characterized by \texttt{solar\_thermal\_system\_type=hot water}. The following arguments are constant across the solar water heater options:
 
@@ -294,158 +266,13 @@ Solar thermal water heaters are characterized by \texttt{solar\_thermal\_system\
   \item \texttt{solar\_thermal\_solar\_fraction}: 0
 \end{itemize}
 
-The options for solar water heaters in ResStock are a combination of orientation and backup fuel, Table \ref{table:hc_opt_solar_water_heater_eff}. 
+The options for solar water heaters in ResStock are a combination of orientation and backup fuel, Table \ref{table:hc_opt_water_heater_efficiency_-_solar_thermal}. 
 
-\begin{customLongTable}{|p{3cm}|p{1.85cm}|p{1.85cm}|p{1.5cm}|p{1.95cm}|p{1.95cm}|p{1.5cm}|}{Water Heater Efficiency options and arguments that vary for each option of solar water heaters.}{table:hc_opt_solar_water_heater_eff} 
-  {Option name &
-  \texttt{solar\_thermal\_collector\_azimuth} &
-  \texttt{solar\_thermal\_collector\_tilt} &
-  \texttt{water\_heater\_fuel\_type} &
-  \texttt{water\_heater\_efficiency\_type} &
-  \texttt{water\_heater\_recovery\_efficiency} &
-  \texttt{water\_heater\_jacket\_rvalue}}
-  Solar Thermal, 40 sqft, East, Roof Pitch, Electric Standard Backup &
-  90 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, North, Roof Pitch, Electric Standard Backup &
-  0 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, South, Roof Pitch, Electric Standard Backup &
-  180 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\ \hline
-  Solar Thermal, 40 sqft, South, Roof Pitch, Fuel Oil Standard Backup &
-  180 & roofpitch & fuel oil & 0.62 & 0.78 & 0 \\ \hline
-  Solar Thermal, 40 sqft, South, Roof Pitch, Natural Gas Standard Backup &
-  180 & roofpitch & natural gas & 0.59 & 0.76 & 0 \\ \hline
-  Solar Thermal, 40 sqft, South, Roof Pitch, Propane Standard Backup &
-  180 & roofpitch & propane & 0.59 & 0.76 & 0 \\ \hline
-  Solar Thermal, 40 sqft, West, Roof Pitch, Electric Standard Backup &
-  270 & roofpitch & electricity & 0.97 & 0.98 & 6.2 \\
-  \end{customLongTable}
+\input{tables/options/Water Heater Efficiency - solar_thermal}
 
-For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_eff} on storage and tankless water heaters and Table \ref{table:hc_arg_def_solar_hot_water} on solar water heaters. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
+For the argument definitions, see Table \ref{table:hc_arg_def_water_heater_efficiency} on storage, tankless, and solar water heaters. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-water-heating-systems}{Water Heating Systems} and \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-solar-thermal}{Solar Thermal} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{customLongTable}{|p{2.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{3.4cm}|p{4.5cm}|} {The ResStock argument definitions set in the Water Heater Efficiency characteristic} {table:hc_arg_def_water_heater_eff}  
-{Name & Required & Units & Type & Choices & Description} 
-\texttt{water\_heater\_type} & true & & Choice & none, storage water
-heater, instantaneous water heater, heat pump water heater,
-space-heating boiler with storage tank, space-heating boiler with
-tankless coil & The type of water heater. Use
-\textquotesingle none\textquotesingle{} if there is no water heater. \\
-\hline
-\texttt{water\_heater\_fuel\_type} & true & & Choice & electricity,
-natural gas, fuel oil, propane, wood, coal & The fuel type of water
-heater. Ignored for heat pump water heater. \\
-\hline
-\texttt{water\_heater\_tank\_volume} & false & gal & Double & auto &
-Nominal volume of water heater tank. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#conventional-storage}{Conventional Storage}, \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#heat-pump}{Heat Pump} is used.) \\
-\hline
-\texttt{water\_backup\_heaing\_efficiency} & false & Btu/hr & Double &
-auto & Backup heating capacity for a heat pump water heater. If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#heat-pump}{Heat Pump}.)\\
-\hline
-\texttt{water\_heater\_efficiency\_type} & true & & Choice &
-EnergyFactor, UniformEnergyFactor & The efficiency type of water heater.
-Does not apply to space-heating boilers. \\
-\hline
-\texttt{water\_heater\_efficiency} & true & & Double & & Rated Energy
-Factor or Uniform Energy Factor. Does not apply to space-heating
-boilers. \\
-\hline
-\texttt{water\_heater\_usage\_bin} & false & & Choice & auto, very
-small, low, medium, high & The usage of the water heater. Only applies
-if Efficiency Type is UniformEnergyFactor and Type is not instantaneous
-water heater. Does not apply to space-heating boilers.  \\
-\hline
-\texttt{water\_heater\_recovery\_efficiency} & false & Frac & Double &
-auto & Ratio of energy delivered to water heater to the energy content
-of the fuel consumed by the water heater. Only used for non-electric
-storage water heaters.  \\
-\hline
-\texttt{water\_heater\_heating\_capacity} & false & Btu/hr & Double &
-auto & Heating capacity. Only applies to storage water heater and heat pump water heater (compressor). If not provided, the OS-HPXML default (see \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#conventional-storage}{Conventional Storage}, \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#heat-pump}{Heat Pump} is used.) \\
-\hline
-\texttt{water\_heater\_standby\_loss} & false & deg-F/hr & Double & auto
-& The standby loss of water heater. Only applies to space-heating
-boilers.  \\
-\hline
-\texttt{water\_heater\_jacket\_rvalue} & false & h-ft\textsuperscript{2}-R/Btu &
-Double & & The jacket R-value of water heater. Doesn\textquotesingle t
-apply to instantaneous water heater or space-heating boiler with
-tankless coil.  \\
-\hline
-\texttt{water\_heater\_setpoint\_temperature} & false & deg-F & Double &
-auto & The setpoint temperature of water heater.  \\
-\hline
-\texttt{water\_heater\_num\_bedrooms\_served} & false & \# & Integer & &
-Number of bedrooms served (directly or indirectly) by the water heater.
-Only needed if single-family attached or apartment unit and it is a
-shared water heater serving multiple housing units. Used to apportion
-water heater tank losses to the unit. \\
-\hline
-\texttt{water\_heater\_uses\_desuperheater} & false & & Boolean & auto,
-true, false & Requires that the housing unit has a air-to-air,
-mini-split, or ground-to-air heat pump or a central air conditioner or
-mini-split air conditioner. If not provided, assumes no
-desuperheater. \\
-\hline
-\texttt{water\_heater\_tank\_model\_type} & false & & Choice & auto,
-mixed, stratified & Type of tank model to use. The
-\textquotesingle stratified\textquotesingle{} tank generally provide
-more accurate results, but may significantly increase run time. Applies
-only to storage water heater.  \\
-\hline
-\texttt{water\_heater\_operating\_mode} & false & & Choice & auto,
-hybrid/auto, heat pump only & The water heater operating mode. The
-\textquotesingle heat pump only\textquotesingle{} option only uses the
-heat pump, while \textquotesingle hybrid/auto\textquotesingle{} allows
-the backup electric resistance to come on in high demand situations.
-This is ignored if a scheduled operating mode type is selected. Applies
-only to heat pump water heater.  \\
-\hline
-\texttt{water\_heater\_has\_flue\_or\_chimney} & true & & String & &
-Whether the water heater has a flue or chimney. \\
-\end{customLongTable}
-
-
-\begin{customLongTable}{|p{3.5cm}|p{1.5cm}|p{1cm}|p{1.1cm}|p{2.9cm}|p{4cm}|} {The ResStock argument definitions set in the Solar Hot Water characteristic} {table:hc_arg_def_solar_hot_water} 
-{Name & Required & Units & Type & Choices & Description} 
-\texttt{solar\_thermal\_system\_type} & true & & Choice & none, hot
-water & The type of solar thermal system. Use
-\textquotesingle none\textquotesingle{} if there is no solar thermal
-system. \\
-\hline
-\texttt{solar\_thermal\_collector\_area} & true & ft\textsuperscript{2} & Double & &
-The collector area of the solar thermal system. \\
-\hline
-\texttt{solar\_thermal\_collector\_loop\_type} & true & & Choice &
-liquid direct, liquid indirect, passive thermosyphon & The collector
-loop type of the solar thermal system. \\
-\hline
-\texttt{solar\_thermal\_collector\_type} & true & & Choice & evacuated
-tube, single glazing black, double glazing black, integrated collector
-storage & The collector type of the solar thermal system. \\
-\hline
-\texttt{solar\_thermal\_collector\_azimuth} & true & degrees & Double &
-& The collector azimuth of the solar thermal system. Azimuth is measured
-clockwise from north (e.g., North=0, East=90, South=180, West=270). \\
-\hline
-\texttt{solar\_thermal\_collector\_tilt} & true & degrees & String & &
-The collector tilt of the solar thermal system. Can also enter, e.g.,
-RoofPitch, RoofPitch+20, Latitude, Latitude-15, etc. \\
-\hline
-\texttt{solar\_thermal\_collector\_rated\_optical\_efficiency} & true &
-frac & Double & & The collector rated optical efficiency of the solar
-thermal system. \\
-\hline
-\texttt{solar\_thermal\_collector\_rated\_thermal\_losses} & true &
-Btu/hr-ft\textsuperscript{2}-R & Double & & The collector rated thermal losses of the
-solar thermal system. \\
-\hline
-\texttt{solar\_thermal\_storage\_volume} & false & gal & Double & auto &
-The storage volume of the solar thermal system. \\
-\hline
-\texttt{solar\_thermal\_solar\_fraction} & true & frac & Double & & The
-solar fraction of the solar thermal system. If provided, overrides all
-other solar thermal inputs. \\
-\end{customLongTable}
-
+\input{tables/arguments/Water Heater Efficiency}
 
 \paragraph{Distribution Assumptions}\label{assumption-83}
 \begin{itemize}
@@ -655,7 +482,7 @@ The refrigerator usage level is set based on the usage level characteristic. It 
 For the argument definitions, see Table \ref{table:hc_arg_def_refrigerator_usage_level}. %See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/options/Refrigerator Usage Level}
+\input{tables/arguments/Refrigerator Usage Level}
 
 \paragraph{Distribution Assumption(s)}
 None
@@ -1187,7 +1014,7 @@ The clothes dryer usage level is set based on the usage level (Section \ref{usag
 For the argument definitions, see Table \ref{table:hc_arg_def_clothes_dryer_usage_level}. See the \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-refrigerators}{OpenStudio-HPXML Refrigerators} documentation for the available HPXML schema elements, default values, and constraints.
 
 %arguments table
-\input{tables/options/Clothes Dryer Usage Level}
+\input{tables/arguments/Clothes Dryer Usage Level}
 
 \paragraph{Distribution Assumption(s)}
 None.
@@ -1364,7 +1191,7 @@ As shown, the ``Other Fuel'' option is assigned the same arguments as ``None,'' 
 
 For the argument definitions, see Table \ref{table:hc_arg_def_misc_hot_tub_spa}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-permanent-spas}{Permanent Spas} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/options/Misc Hot Tub Spa}
+\input{tables/arguments/Misc Hot Tub Spa}
 
 \paragraph{Distribution Assumption(s)}
 Due to the low sample count, the input file is constructed by downscaling a housing unit sub-input file with a household sub-input file. The sub-input files have the following dependencies: 
@@ -1673,8 +1500,6 @@ Option name & Interior argument & Exterior argument & Garage argument\\
 \hline
 100\% LED & \textit{lighting\_interior\_fraction\_led} = 1 &\textit{lighting\_exterior\_fraction\_led} = 1 & \textit{lighting\_garage\_fraction\_led} = 1 \\
 \end{longtable}
-
-\input{tables/options/Lighting}
 
 For the argument definitions, see Table \ref{table:hc_arg_def_lighting}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-lighting}{Lighting} documentation for the available HPXML schema elements, default values, and constraints.
 
