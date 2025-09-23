@@ -957,7 +957,7 @@ The number of housing units in the single-family attached (SFA) building.
 \end{itemize}
 
 \paragraph{Options}
-The options for the Geometry Building Level SFA characteristic are a set of integers between 2 and 144; see Table \ref{table:hc_opt_geom_build_units_sfa}. The ``None'' option is used for all building types other than SFA.
+The options for the Geometry Building Level SFA characteristic are a set of integers between 2 and 144; see Table \ref{table:hc_opt_geometry_building_number_units_sfa}. The ``None'' option is used for all building types other than SFA.
 
 \input{tables/options/Geometry Building Number Units SFA}
 
@@ -2230,34 +2230,36 @@ For the argument definitions, see Table \ref{table:hc_arg_def_window_areas}. See
   SFD, SFA, and Mobile Homes are represented by the SFD window area
   distribution.
 \end{itemize}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Overhangs}\label{overhangs}
+\subsubsection{Eaves}\label{eaves}
 \paragraph{Description}
-Presence, depth, and location of window overhangs (not currently used in ResStock baseline).
+Depth of roof eaves.
+
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
-\item Not applicable.
+    \item Building America House Simulation Protocols (\cite{Wilson2014}).
 \end{itemize}
-\paragraph{Direct Conditional Dependencies}
 
-\begin{itemize}
-    \item None.
-\end{itemize}
+\paragraph{Direct Conditional Dependencies}
+None.
+
 \paragraph{Option(s)}
-ResStock currently assumes all buildings have no overhang. Therefore, all models are assigned the option of ``None'' for this characteristic, and receive the following ResStock arguments:
+ResStock currently assumes 2 ft eaves (which are modeled as overhangs) for all buildings. Therefore, all models receive the following ResStock arguments:
 \begin{itemize}
+    \item \texttt{geometry\_eaves\_depth} = 2
     \item \texttt{overhangs\_front\_depth} = 0
-\item \texttt{overhangs\_front\_distance\_to\_top\_of\_window} = 0
-\item \texttt{overhangs\_front\_distance\_to\_bottom\_of\_window} = 4
-\item \texttt{overhangs\_back\_depth} = 0
-\item \texttt{overhangs\_back\_distance\_to\_top\_of\_window} = 0
-\item \texttt{overhangs\_back\_distance\_to\_bottom\_of\_window} = 4
-\item \texttt{overhangs\_left\_depth} = 0
-\item \texttt{overhangs\_left\_distance\_to\_top\_of\_window} = 0
-\item \texttt{overhangs\_left\_distance\_to\_bottom\_of\_window} = 4
-\item \texttt{overhangs\_right\_depth} = 0
-\item \texttt{overhangs\_right\_distance\_to\_top\_of\_window} = 0
-\item \texttt{overhangs\_right\_distance\_to\_bottom\_of\_window} = 4
+    \item \texttt{overhangs\_front\_distance\_to\_top\_of\_window} = 0
+    \item \texttt{overhangs\_front\_distance\_to\_bottom\_of\_window} = 4
+    \item \texttt{overhangs\_back\_depth} = 0
+    \item \texttt{overhangs\_back\_distance\_to\_top\_of\_window} = 0
+    \item \texttt{overhangs\_back\_distance\_to\_bottom\_of\_window} = 4
+    \item \texttt{overhangs\_left\_depth} = 0
+    \item \texttt{overhangs\_left\_distance\_to\_top\_of\_window} = 0
+    \item \texttt{overhangs\_left\_distance\_to\_bottom\_of\_window} = 4
+    \item \texttt{overhangs\_right\_depth} = 0
+    \item \texttt{overhangs\_right\_distance\_to\_top\_of\_window} = 0
+    \item \texttt{overhangs\_right\_distance\_to\_bottom\_of\_window} = 4
 \end{itemize}
 
 For the argument definitions, see Table \ref{table:hc_arg_def_eaves}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-overhangs}{Overhangs} documentation for the available HPXML schema elements, default values, and constraints.
@@ -2265,33 +2267,8 @@ For the argument definitions, see Table \ref{table:hc_arg_def_eaves}. See the Op
 \input{tables/arguments/Eaves}
 
 \paragraph{Distribution Assumption(s)}
-\begin{itemize}
-\item
-  All homes are assumed to not have window overhangs (roof eaves are defined separately).
-\end{itemize}
-%%%%%%%%%%
-
-\subsubsection{Eaves}\label{eaves}
-\paragraph{Description}
-Depth of roof eaves.
-\paragraph{Distribution Data Source(s)}
-\begin{itemize}
-
-\item
-  Building America House Simulation Protocols (\cite{Wilson2014}).
-\end{itemize}
-\paragraph{Direct Conditional Dependencies}
-
 None.
 
-\paragraph{Option(s)}
-
-All buildings receive the same value of 2 feet for \texttt{geometry\_eaves\_depth}.
-
-For the argument definitions, see Table \ref{table:hc_arg_def_eaves}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-enclosure}{Enclosure} documentation for the available HPXML schema elements, default values, and constraints.
-
-\paragraph{Distribution Assumption(s)}
-None.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Interior Shading}\label{interior_shading}
 \paragraph{Description}

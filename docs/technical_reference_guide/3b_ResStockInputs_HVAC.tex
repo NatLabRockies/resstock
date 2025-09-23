@@ -131,13 +131,25 @@ The options of the HVAC Heating Efficiency characteristic assigns the heating sy
 
 The following arguments are always set to ``auto'' for all systems:
 \begin{itemize}
-    \item \texttt{heating\_system\_heating\_capacity} \item\texttt{heating\_system\_heating\_autosizing\_limit}
-    \item \texttt{heat\_pump\_heating\_capacity} \item\texttt{heat\_pump\_heating\_autosizing\_limit} 
-    \item \texttt{heat\_pump\_cooling\_capacity} \item \texttt{heat\_pump\_cooling\_autosizing\_limit} \item \texttt{heat\_pump\_backup\_heating\_autosizing\_limit}
-    \item \texttt{heat\_pump\_backup\_heating\_capacity} \item \texttt{heat\_pump\_backup\_sizing\_methodology} \item \texttt{geothermal\_loop\_borefield\_configuration}
+    \item \texttt{heating\_system\_heating\_capacity}
+    \item \texttt{heating\_system\_heating\_autosizing\_limit}
+    \item \texttt{heat\_pump\_heating\_capacity}
+    \item \texttt{heat\_pump\_heating\_autosizing\_limit} 
+    \item \texttt{heat\_pump\_cooling\_capacity}
+    \item \texttt{heat\_pump\_cooling\_autosizing\_limit}
+    \item \texttt{heat\_pump\_backup\_heating\_autosizing\_limit}
+    \item \texttt{heat\_pump\_backup\_heating\_capacity}
+    \item \texttt{heat\_pump\_backup\_sizing\_methodology}
+    \item \texttt{geothermal\_loop\_borefield\_configuration}
     \item \texttt{geothermal\_loop\_loop\_flow}
-    \item \texttt{geothermal\_loop\_boreholes\_count} \item \texttt{geothermal\_loop\_boreholes\_length} \item \texttt{geothermal\_loop\_boreholes\_spacing} \item \texttt{geothermal\_loop\_boreholes\_diameter} \item \texttt{geothermal\_loop\_grout\_type} \item \texttt{geothermal\_loop\_pipe\_type}
-    \item \texttt{geothermal\_loop\_pipe\_diameter} and \item \texttt{heating\_system\_has\_flue\_or\_chimney}. 
+    \item \texttt{geothermal\_loop\_boreholes\_count}
+    \item \texttt{geothermal\_loop\_boreholes\_length}
+    \item \texttt{geothermal\_loop\_boreholes\_spacing}
+    \item \texttt{geothermal\_loop\_boreholes\_diameter}
+    \item \texttt{geothermal\_loop\_grout\_type}
+    \item \texttt{geothermal\_loop\_pipe\_type}
+    \item \texttt{geothermal\_loop\_pipe\_diameter} and
+    \item \texttt{heating\_system\_has\_flue\_or\_chimney}. 
 \end{itemize}
 
 The \texttt{heating\_system\_fraction\_heat\_load\_served}, \texttt{heat\_pump\_fraction\_heat\_load\_served}, \texttt{heat\_pump\_fraction\_cool\_load\_served}, and \texttt{heat\_pump\_backup\_heating\_efficiency} arguments are always set to 1 for all systems. 
@@ -150,13 +162,12 @@ They are not used in baseline models.
 
 \input{tables/arguments/HVAC Heating Efficiency}
 
-For heat pump options and arguments that vary across the heat pump options, see Table \ref{table:hc_opt_hvac_heating_efficiency_-_heat_pump}. The \texttt{heating\_system\_type} argument is none, \texttt{heating\_system\_heating\_efficiency} is 0 and not used. The \texttt{heat\_pump\_backup\_type} is set to integrated. The \texttt{heating\_system\_pilot\_light} argument is not specified. The \texttt{heat\_pump\_cooling\_compressor\_type}, 
-\texttt{heat\_pump\_cooling\_sensible\_heat\_fraction}, 
-\texttt{heat\_pump\_heating\_capacity}, \texttt{heat\_pump\_heating\_autosizing\_limit}, \texttt{heat\_pump\_compressor\_lockout\_temp}, \texttt{heat\_pump\_backup\_heating\_lockout\_temp}, and \texttt{heat\_pump\_crankcase\_heater\_watts} are set to ``auto.''
+For heat pump options and arguments that vary across the heat pump options, see Table \ref{table:hc_opt_hvac_heating_efficiency_-_heat_pump}. The \texttt{heating\_system\_type} argument is none, \texttt{heating\_system\_heating\_efficiency} is 0 and not used. The \texttt{heat\_pump\_backup\_type} is set to integrated. The \texttt{heating\_system\_pilot\_light} argument is not specified.
+The \texttt{heat\_pump\_heating\_capacity}, \texttt{heat\_pump\_heating\_autosizing\_limit}, \texttt{heat\_pump\_heating\_capacity\_fraction\_17\_f}, \texttt{heat\_pump\_compressor\_lockout\_temp}, \texttt{heat\_pump\_backup\_heating\_lockout\_temp}, \texttt{heat\_pump\_crankcase\_heater\_watts}, \texttt{heat\_pump\_pan\_heater\_watts}, and \texttt{heat\_pump\_pan\_heater\_control\_type\_watts} are set to ``auto.''
 
 \input{tables/options/HVAC Heating Efficiency - heat_pump}
 
-For other heating systems the options and arguments that vary across these options, see Table \ref{table:hc_opt_hvac_heating_efficiency_-_heating_system}. The \texttt{heat\_pump\_type} and the \texttt{heat\_pump\_backup\_type} arguments are set to none. The \texttt{heat\_pump\_heating\_efficiency} and \texttt{heat\_pump\_cooling\_efficiency} arguments are set to 0 and are not used. The \texttt{heat\_pump\_cooling\_compressor\_type}, \texttt{heat\_pump\_cooling\_sensible\_heat\_fraction}, \texttt{heat\_pump\_heating\_capacity\_retention\_fraction},  \texttt{heat\_pump\_heating\_capacity\_retention\_temp}, \texttt{heat\_pump\_compressor\_lockout\_temp}, \texttt{heat\_pump\_backup\_heating\_lockout\_temp}, \texttt{heat\_pump\_is\_ducted}, and \texttt{heat\_pump\_crankcase\_heater\_watts} are not set.
+For other heating systems the options and arguments that vary across these options, see Table \ref{table:hc_opt_hvac_heating_efficiency_-_heating_system}. The \texttt{heat\_pump\_type} and the \texttt{heat\_pump\_backup\_type} arguments are set to none. The \texttt{heat\_pump\_heating\_efficiency} and \texttt{heat\_pump\_cooling\_efficiency} arguments are set to 0 and are not used. The \texttt{heat\_pump\_compressor\_type}, \texttt{heat\_pump\_heating\_capacity\_fraction\_17\_f}, \texttt{heat\_pump\_compressor\_lockout\_temp}, \texttt{heat\_pump\_backup\_heating\_lockout\_temp}, \texttt{heat\_pump\_is\_ducted}, \texttt{heat\_pump\_crankcase\_heater\_watts}, \texttt{heat\_pump\_pan\_heater\_watts}, and \texttt{heat\_pump\_pan\_heater\_control\_type\_watts} are not set.
 
 \input{tables/options/HVAC Heating Efficiency - heating_system}
 
@@ -425,8 +436,7 @@ ResStock includes four options for central air conditioners and four options for
 
 Across options with ResStock arguments, many are the same and set to \textit{auto}:
 \begin{itemize}
-    \item \texttt{cooling\_system\_cooling\_compressor\_type} 
-    \item \texttt{cooling\_system\_cooling\_sensible\_heat\_fraction}
+    \item \texttt{cooling\_system\_compressor\_type} 
     \item \texttt{cooling\_system\_cooling\_capacity} 
     \item \texttt{cooling\_system\_cooling\_autosizing\_limit} 
     \item \texttt{cooling\_system\_crankcase\_heater\_watts}
@@ -995,7 +1005,7 @@ distribution: Lucas and Cole (\href{https://www.pnnl.gov/main/publications/exter
     \item Vintage.
 \end{itemize}
 \paragraph{Options}
-ResStock uses 13 combinations of insulation and air leakage from ducts (Table \ref{table:hc_opt_duct_leak}). The following ResStock arguments are constant across all options:
+ResStock uses 13 combinations of insulation and air leakage from ducts (Table \ref{table:hc_opt_duct_leakage_and_insulation}). The following ResStock arguments are constant across all options:
 \begin{itemize}
     \item \texttt{ducts\_leakage\_units}: percent
     \item \texttt{ducts\_supply\_buried\_insulation\_level}: auto
