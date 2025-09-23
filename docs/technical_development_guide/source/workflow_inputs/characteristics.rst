@@ -38731,19 +38731,19 @@ From ``project_national`` the list of options, option stock saturation, and opti
 
    * - <10% Conditioned
      - 0.47%
-     - .1
+     - 0.1
    * - 20% Conditioned
      - 6.4%
-     - .2
+     - 0.2
    * - 40% Conditioned
      - 5.9%
-     - .4
+     - 0.4
    * - 60% Conditioned
      - 6.6%
-     - .6
+     - 0.6
    * - 80% Conditioned
      - 3.6%
-     - .8
+     - 0.8
    * - 100% Conditioned
      - 67%
      - 1
