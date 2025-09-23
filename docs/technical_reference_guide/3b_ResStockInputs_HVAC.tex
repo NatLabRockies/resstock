@@ -305,11 +305,11 @@ The efficiency of the secondary heating system.
 \paragraph{Options}
 The options of the HVAC Secondary Heating Efficiency are the secondary heating system efficiency (Table \ref{table:hc_opt_hvac_secondary_heating_efficiency}). The Shared Heating option is used for Shared Heating. The ``None'' option is used for systems without secondary heating systems. The characteristic sets the following ResStock arguments to ``auto'': \texttt{heating\_system\_2\_heating\_capacity}, \texttt{heating\_system\_2\_heating\_autosizing\_limit}, and \texttt{heating\_system\_2\_has\_flue\_or\_chimney}.
 
-\input{tables/options/HVAC Secondary Heating Fuel}
+\input{tables/options/HVAC Secondary Heating Efficiency}
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_secondary_heating_efficiency}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\input{tables/arguments/HVAC Secondary Heating Fuel}
+\input{tables/arguments/HVAC Secondary Heating Efficiency}
 
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
@@ -560,7 +560,6 @@ Homes can be assigned to have shared cooling, shared heating, shared both heatin
     \item Non-Ducted Heat Pump option (a non-shared system) assigned for both heating and cooling.
 \end{itemize}
  
-
 \subsubsection{HVAC Shared Efficiencies}
 
 \paragraph{Description}
@@ -577,11 +576,11 @@ The efficiency of a shared HVAC system.
     \item HVAC Has Shared System
 \end{itemize}
 \paragraph{Options}
-For homes with shared systems, ResStock models one option for Cooling-Only shared systems (Fan Coil, Cooling Only); two options for heating-only shared systems (Boiler Baseboards Heating Only, Electricity; and Boiler Baseboards Heating Only, Fuel); and two options for homes that have both heating and cooling shared (Fan Coil Heating and Cooling, Electricity; Fan Coil Heating and Cooling, Fuel). 89\% of homes have no shared system.  
+For homes with shared systems, ResStock models one option for Cooling-Only shared systems (Fan Coil Cooling Only); two options for heating-only shared systems (Boiler Baseboards Heating Only, Electricity; and Boiler Baseboards Heating Only, Fuel); and two options for homes that have both heating and cooling shared (Fan Coil Heating and Cooling, Electricity; Fan Coil Heating and Cooling, Fuel). 89\% of homes have no shared system.  
 
 %%%%%%%%%%%%%%Cooling only
 
-For homes that have only a cooling shared system (and in-unit heating or no heating), this in nominally labeled as Fan Coil, Cooling only. However, ResStock currently approximates this as a mini-split heat pump instead of modeling a Fan Coil. The ResStock arguments for the placeholder are:
+For homes that have only a cooling shared system (and in-unit heating or no heating), this is nominally labeled as Fan Coil Cooling only. However, ResStock currently approximates this as a mini-split heat pump instead of modeling a Fan Coil. The ResStock arguments for the placeholder are:
 \begin{itemize}
     \item \texttt{cooling\_system\_type}: mini-split
     \item \texttt{cooling\_system\_cooling\_efficiency\_type}: SEER
@@ -591,7 +590,6 @@ For homes that have only a cooling shared system (and in-unit heating or no heat
     \item \texttt{cooling\_system\_cooling\_efficiency\_type}: auto
     \item \texttt{cooling\_system\_is\_ducted}: false
 \end{itemize}
-
 
 %%%%%%%%%Heating Only
 
@@ -636,24 +634,6 @@ Additionally, the shared heating system doesn't use an air-source or geothermal 
     \item \texttt{geothermal\_loop\_pipe\_diameter}: auto.
 
 \end{itemize}
-
-\begin{longtable}[]{|p{3.5cm}|p{4cm}|p{3.5cm}|} 
-\caption{The ResStock argument definitions set in the HVAC Shared Efficiencies characteristic for Shared Heating} \label{table:hc_arg_def_hvac_shared_eff_heat}\\
-\toprule\noalign{}
-Option name & \texttt{heating\_system\_type} &
-\texttt{heating\_system\_heating\_efficiency} 
- \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Boiler Baseboards Heating Only, Electricity & Shared Boiler w/
-Baseboard & 1   \\ 
-\hline
-Boiler Baseboards Heating Only, Fuel & Shared Boiler w/
-Baseboard & 0.78 \\
-\end{longtable}
-
 
 %%%%%Cooling and Heating
 
@@ -709,21 +689,7 @@ Required but unused heating arguments:
     \item \texttt{geothermal\_loop\_pipe\_diameter}: auto.
 \end{itemize}
 
-\begin{longtable}[]{|p{3cm}|p{3cm}|p{3cm}|p{4cm}|} 
-\caption{The ResStock argument definitions set in the HVAC Shared Efficiencies characteristic for Shared Heating and Cooling} \label{table:hc_arg_def_hvac_shared_eff_both}\\
-\toprule\noalign{}
-Option name & Stock saturation & \texttt{heating\_system\_type} &
-\texttt{heating\_system\_heating\_efficiency} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Fan Coil Heating and Cooling, Electricity & 1.3\% & Shared Boiler w/
-Ductless Fan Coil & 1 \\
-\hline
-Fan Coil Heating and Cooling, Fuel & 1.1\% & Shared Boiler w/ Ductless
-Fan Coil & 0.78  \\
-\end{longtable}
+\input{tables/options/HVAC Shared Efficiencies}
 
 For the argument definitions, see Table \ref{table:hc_arg_def_hvac_shared_efficiencies}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#boiler-shared}{Boiler-Shared} or \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#mini-split-heat-pump}{Mini-Split Heat Pumps} documentation for the available HPXML schema elements, default values, and constraints.
 

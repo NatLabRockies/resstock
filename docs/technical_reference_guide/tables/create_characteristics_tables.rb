@@ -93,7 +93,8 @@ saturation_inclusions = ['Orientation',
                          'Vintage',
                          'Vintage ACS',
                          'Insulation Rim Joist',
-                         'Misc Gas Lighting']
+                         'Misc Gas Lighting',
+                         'HVAC Shared Efficiencies']
 
 arguments_folder = File.join(File.dirname(__FILE__), 'arguments')
 options_folder = File.join(File.dirname(__FILE__), 'options')
@@ -104,6 +105,7 @@ FileUtils.rm_rf(Dir.glob("#{options_folder}/*"))
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../project_national/resources/source_report.csv'), headers: true)
 parameters = source_report.collect { |row| row['Parameter'] }
 
+# Accommodate special "non-heat pump heating system" and "heat pump" options
 parameters << 'HVAC Heating Efficiency - heating_system'
 parameters << 'HVAC Heating Efficiency - heat_pump'
 
@@ -184,6 +186,10 @@ parameters.each do |parameter|
 
     next if option == 'Void'
 
+    if parameter == 'HVAC Shared Efficiencies'
+      next if ['Fan Coil Cooling Only', 'None'].include?(option)
+    end
+
     if not options.keys.include?(option)
       options[option] = {}
     end
@@ -211,6 +217,11 @@ parameters.each do |parameter|
         # Look for each argument in r_arguments
         lookup_row[3..-1].each do |argument_value|
           arg, value = argument_value.split('=')
+
+          if parameter == 'HVAC Shared Efficiencies'
+            next if arg.include?('cooling_system_')
+          end
+
           if argument == arg
             options[option][arg] = value
           end
@@ -239,8 +250,12 @@ parameters.each do |parameter|
   if saturation_inclusions.include?(parameter)
     row += '|p{2.75cm}'
   end
-  changing_args.each do |_changing_arg|
-    row += '|p{2.75cm}'
+  changing_args.each do |changing_arg|
+    if changing_arg.end_with?('setpoint_schedule') # special accommodation for XXX Setpoint Offset Period
+      row += '|p{4.5cm}'
+    else
+      row += '|p{2.75cm}'
+    end
   end
   f.puts("#{row}| }")
   if parameter.include?('heating_system')
