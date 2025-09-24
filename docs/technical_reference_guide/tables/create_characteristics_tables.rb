@@ -201,8 +201,11 @@ parameters.each do |parameter|
       next if ['Shared Cooling'].include?(option)
     elsif parameter == 'HVAC Shared Efficiencies'
       next if ['Fan Coil Cooling Only', 'None'].include?(option)
-    elsif ['Dishwasher', 'Clothes Washer', 'Clothes Dryer'].include?(parameter)
-      next if option == 'None' # options table may be too wide
+    elsif ['Dishwasher', 'Clothes Washer', 'Clothes Dryer'].include?(parameter) # options table may be too wide
+      next if option.include?('None')
+    elsif ['Misc Hot Tub Spa'].include?(parameter) # options table may be too wide
+      next if option.include?('None')
+      next if option.include?('Other Fuel')
     end
 
     next if option == 'Void'
