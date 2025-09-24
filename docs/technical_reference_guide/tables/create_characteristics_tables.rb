@@ -1,39 +1,7 @@
 # frozen_string_literal: true
 
-require 'csv'
-require 'oga'
 require 'fileutils'
-
-def href_to_rst(str)
-  urls_names = str.scan(/<a href='(.+?)'>(.+?)<\/a>/)
-  return str if urls_names.empty?
-
-  urls_names.each do |url_name|
-    url, name = url_name
-
-    str = str.gsub("<a href='#{url}'>#{name}</a>", "`#{name} <#{url}>`_")
-  end
-  return str
-end
-
-def get_measure_xml(filepath)
-  measure_xml = {}
-  parse_xml = Oga.parse_xml(filepath)
-  parse_xml.xpath('//measure/arguments/argument').each do |argument|
-    name = argument.at_xpath('name').text
-    measure_xml[name] = {}
-    ['type', 'required', 'units', 'choices', 'description'].each do |property|
-      if property != 'choices'
-        element = argument.at_xpath(property)
-        value = !element.nil? ? element.text : ''
-      else
-        value = argument.xpath('choices/choice').map { |c| c.at_xpath('value').text }
-      end
-      measure_xml[name][property] = value
-    end
-  end
-  return measure_xml
-end
+require_relative '../../resources/util'
 
 resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../../resources'))
 
@@ -43,40 +11,15 @@ buildreshpxmlarguments_xml = get_measure_xml(filepath)
 filepath = File.read(File.join(resources_dir, '../measures/ResStockArguments/measure.xml'))
 resstockarguments_xml = get_measure_xml(filepath)
 
-# Refine resstockarguments_xml
 resstockarguments_xml.each do |name, properties|
-  # Get required and type from BuildResidentialHPXML
-  ['required', 'type'].each do |property|
-    resstockarguments_xml[name][property] = buildreshpxmlarguments_xml[name][property] if buildreshpxmlarguments_xml.keys.include?(name)
-  end
-
-  # Add "auto" to Choices for optional String/Double/Integer
-  extra_args_with_auto = ['year_built', 'geometry_unit_num_occupants', 'geometry_unit_cfa', 'heat_pump_backup_heating_efficiency'] # these are special because ResStockArguments provides the default instead of OS-HPXML
-  if (properties['description'].include?('OS-HPXML default') && ['String', 'Double', 'Integer'].include?(properties['type'])) ||
-     extra_args_with_auto.include?(name)
-    resstockarguments_xml[name]['choices'].unshift('auto')
-  end
-
-  # Convert href to rst for description
-  resstockarguments_xml[name]['description'] = href_to_rst(resstockarguments_xml[name]['description'])
+  refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_xml, name, properties)
 end
 
-# Display arguments in Arguments and Options table by the order they appear in BuildResidentialHPXML, otherwise use ResStockArguments if only defined there
-arg_order = buildreshpxmlarguments_xml.keys
-resstockarguments_xml.keys.each do |k|
-  if !arg_order.include?(k)
-    arg_order << k
-  end
-end
+arg_order = get_arg_order(buildreshpxmlarguments_xml, resstockarguments_xml)
+arguments_cols = get_arguments_cols()
+lookup_csv_data, option_sat_csv_data = get_lookup_and_saturations_csv_data(resources_dir)
 
-arguments_cols = ['Name', 'Required', 'Units', 'Type', 'Choices', 'Description']
-
-lookup_file = File.join(resources_dir, 'options_lookup.tsv')
-option_sat_file = File.join('project_national', 'resources', 'options_saturations.csv')
-lookup_csv_data = CSV.open(lookup_file, col_sep: "\t").each.to_a
-option_sat_csv_data = CSV.open(option_sat_file, quote_char: '"', col_sep: ',').each.to_a
-
-desc_exclusions = ['If not provided', 'If neither']
+desc_exclusions = ['If not provided', 'If neither'] # skip these sentences in argument descriptions
 saturation_inclusions = ['Orientation',
                          'Geometry Stories',
                          'Geometry Story Bin',
@@ -94,7 +37,7 @@ saturation_inclusions = ['Orientation',
                          'Vintage ACS',
                          'Insulation Rim Joist',
                          'Misc Gas Lighting',
-                         'HVAC Shared Efficiencies']
+                         'HVAC Shared Efficiencies'] # include "Stock saturation" column for options tables
 
 arguments_folder = File.join(File.dirname(__FILE__), 'arguments')
 options_folder = File.join(File.dirname(__FILE__), 'options')
