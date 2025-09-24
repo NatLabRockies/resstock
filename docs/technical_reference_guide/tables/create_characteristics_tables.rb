@@ -197,15 +197,15 @@ parameters.each do |parameter|
       next if option.include?('Solar Thermal,')
     elsif parameter.include?('solar_thermal')
       next unless option.include?('Solar Thermal,')
-    end
-
-    next if option == 'Void'
-
-    if parameter == 'HVAC Cooling Efficiency'
+    elsif parameter == 'HVAC Cooling Efficiency'
       next if ['Shared Cooling'].include?(option)
     elsif parameter == 'HVAC Shared Efficiencies'
       next if ['Fan Coil Cooling Only', 'None'].include?(option)
+    elsif ['Dishwasher', 'Clothes Washer', 'Clothes Dryer'].include?(parameter)
+      next if option == 'None' # options table may be too wide
     end
+
+    next if option == 'Void'
 
     if not options.keys.include?(option)
       options[option] = {}
@@ -268,9 +268,9 @@ parameters.each do |parameter|
     row += '|p{2.75cm}'
   end
   changing_args.each do |changing_arg|
-    if changing_arg.end_with?('setpoint_schedule') # special accommodation for XXX Setpoint Offset Period
+    if changing_arg.end_with?('setpoint_schedule') # increase column widths for XXX Setpoint Offset Period
       row += '|p{4.5cm}'
-    elsif options.keys.include?('ASHP, SEER 10, 6.2 HSPF') # special accommodation for HVAC Heating Efficiency - heat_pump
+    elsif options.keys.include?('ASHP, SEER 10, 6.2 HSPF') # decrease column widths for HVAC Heating Efficiency - heat_pump
       row += '|p{2.25cm}'
     else
       row += '|p{2.75cm}'

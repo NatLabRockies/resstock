@@ -723,7 +723,7 @@ The presence and rated efficiency of the dishwasher.
 \end{itemize}
 
 \paragraph{Options}
-The ResStock baseline has two dishwasher options, one at 290 rated kWh and one at 318 rated kWh, along with a ``None'' option.\footnote{ResStock currently does not account for hand washing of dishes in hot water in cases where no dishwasher is present.} Both dishwasher options have arguments of true for \texttt{dishwasher\_present}, auto for \texttt{dishwasher\_location}, RatedAnnualkWh for \texttt{dishwasher\_efficiency\_type}, 0.12 for \texttt{dishwasher\_label\_electric\_rate}, 1.09 for \texttt{dishwasher\_label\_gas\_rate}, 4 for \texttt{dishwasher\_label\_usage}, and 12 for \texttt{dishasher\_place\_setting\_capacity}; see Table \ref{table:hc_opt_dishwasher}. 
+The ResStock baseline has two dishwasher options, one at 270 rated kWh and one at 307 rated kWh, along with a ``None'' option.\footnote{ResStock currently does not account for hand washing of dishes in hot water in cases where no dishwasher is present.} Both dishwasher options have arguments of true for \texttt{dishwasher\_present}, auto for \texttt{dishwasher\_location}, RatedAnnualkWh for \texttt{dishwasher\_efficiency\_type}, 0.12 for \texttt{dishwasher\_label\_electric\_rate}, 1.09 for \texttt{dishwasher\_label\_gas\_rate}, 4 for \texttt{dishwasher\_label\_usage}, and 12 for \texttt{dishasher\_place\_setting\_capacity}; see Table \ref{table:hc_opt_dishwasher}. 
 
 %options table
 \input{tables/options/Dishwasher}
@@ -809,7 +809,7 @@ Constructed using U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Options}
-ResStock has two clothes washer options in baseline, along with a ``None'' option. Both clothes washer options have a \texttt{clothes\_washer\_location} of \textit{auto}, a \texttt{clothes\_washer\_efficiency\_type} of \textit{IntegratedModifiedEnergyFactor}, a \texttt{clothes\_washer\_label\_electric\_rate} of 0.1065, a \texttt{clothes\_washer\_gas\_rate} of 1.218, and a \texttt{clothes\_washer\_label\_usage} of 7.538462. The arguments that differ between the two options are shown in Table \ref{table:hc_opt_clothes_washer}. 
+ResStock has two clothes washer options in baseline, along with a ``None'' option. Both clothes washer options have a \texttt{clothes\_washer\_location} of \textit{auto}, a \texttt{clothes\_washer\_efficiency\_type} of \textit{IntegratedModifiedEnergyFactor}, a \texttt{clothes\_washer\_label\_electric\_rate} of 0.12, a \texttt{clothes\_washer\_gas\_rate} of 1.09, and a \texttt{clothes\_washer\_label\_usage} of 6. The arguments that differ between the two options are shown in Table \ref{table:hc_opt_clothes_washer}. 
 
 %options 
 \input{tables/options/Clothes Washer}
@@ -954,7 +954,7 @@ Constructed using U.S. EIA 2020 RECS microdata.
 \end{itemize}
 
 \paragraph{Options}
-The ResStock baseline includes three dryer options: an electric dryer, a natural gas dryer, and a propane dryer. There is also a ``None'' option. Certain arguments are common across all three dryer options: auto for \texttt{clothes\_dryer\_location}, CombinedEnergyFactor for \texttt{clothes\_dryer\_efficiency\_type}, and auto for \texttt{clothes\_dryer\_vented\_flow\_rate}. The arguments that differ across options are shown in Table \ref{table:hc_opt_clothes_dryer}. 
+The ResStock baseline includes three dryer options: an electric dryer, a natural gas dryer, and a propane dryer. There is also a ``None'' option. Certain arguments are common across all three dryer options: auto for \texttt{clothes\_dryer\_location}, CombinedEnergyFactor for \texttt{clothes\_dryer\_efficiency\_type}, and auto for \texttt{clothes\_dryer\_drying\_method}. The arguments that differ across options are shown in Table \ref{table:hc_opt_clothes_dryer}. 
 
 %options table
 \input{tables/options/Clothes Dryer}
