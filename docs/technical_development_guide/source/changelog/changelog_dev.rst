@@ -16,8 +16,8 @@ Development Changelog
         Update the documentation
 
         Description:
-        Create a script, similar to `create_characteristics_rst.rb`, for creating options/arguments table tex files corresponding to each Parameter.
-        This will help to automate creating many of the tables in the technical reference guide.
+        Create a new script for creating options/arguments table tex files corresponding to each Parameter.
+        This will help to automate creating many of the tables in the ResStock Technical Reference Documentation.
 
         Assignees: Joe Robertson
 
