@@ -61,6 +61,18 @@ jobs:
         run: |
           rm -f Gemfile.lock && bundle install
 
+      - name: Install python
+        shell: bash
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt update
+          sudo -E apt-get install -y python3-pip
+
+      - name: Install python dependencies
+        run : |
+          python3 -m pip install --progress-bar off --upgrade pip
+          pip3 install --progress-bar off pandas pyyaml
+
       - name: Download formatted options_lookup
         uses: actions/download-artifact@v4
         with:
@@ -78,6 +90,17 @@ jobs:
       - name: Run all measure tests
         run: |
           bundle exec rake unit_tests:measure_tests
+
+      - name: Generate precomputed buildstocks
+        run: |
+          python3 test/update_yml_precomputed_files.py
+
+      - name: Upload precomputed buildstocks
+        uses: actions/upload-artifact@v4
+        with:
+          name: precomputed_buildstocks
+          path: test/tests_yml_files/yml_precomputed*/buildstock*.csv
+          if-no-files-found: error
 
       - name: Upload feature samples
         uses: actions/upload-artifact@v4
@@ -214,20 +237,15 @@ jobs:
           path: resources
           name: options_lookup
 
-      - name: Generate precomputed buildstocks
-        run: |
-          python3 test/update_yml_precomputed_files.py
+      - name: Download precomputed buildstocks
+        uses: actions/download-artifact@v4
+        with:
+          path: test/tests_yml_files
+          name: precomputed_buildstocks
 
       - name: Run run_analysis.rb
         run: |          
           bundle exec rake workflow:analysis_tests
-
-      - name: Upload precomputed buildstocks
-        uses: actions/upload-artifact@v4
-        with:
-          name: precomputed_buildstocks
-          path: test/tests_yml_files/yml_precomputed*/buildstock*.csv
-          if-no-files-found: error
 
       - name: Upload run_analysis.rb results
         uses: actions/upload-artifact@v4
@@ -297,7 +315,6 @@ jobs:
 
       - name: Process results
         run: |
-          pip install plotly
           python test/process_bsb_analysis.py
 
       - name: Upload buildstockbatch results
@@ -390,7 +407,7 @@ jobs:
           python test/compare.py -a samples -b base_results/baseline/annual -f samples -e test/base_results/comparisons/baseline/annual # base_samples.csv, feature_samples.csv
           python test/compare.py -a results -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_characteristics.csv, results_output.csv
           python test/compare.py -a results -af sum -ac build_existing_model.geometry_building_type_recs -x results_output_building_type_sum.csv -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # results_output_building_type_sum.csv
-          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -x results_output_building_type.html -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/baseline/annual -f baseline/annual -e test/base_results/comparisons/baseline/annual # *.html
           
           # baseline timeseries
           mkdir test/base_results/comparisons/baseline/timeseries
@@ -690,12 +707,19 @@ jobs:
           fi
 
       - name: Download base results
+        if: github.event_name == 'pull_request'
         uses: actions/download-artifact@v4
         with:
           path: base_results
           name: base_results
 
+      - name: Process results
+        if: github.event_name == 'pull_request'
+        run: |
+          python test/process_sdr_analysis.py
+
       - name: Compare samples and results
+        if: github.event_name == 'pull_request'
         run: |          
           pip install numpy
           pip install pandas
@@ -703,14 +727,15 @@ jobs:
           pip install kaleido
           
           # results_characteristics.csv
-          python test/base_results/upgrades/create_results_characteristics.py -f base_results/upgrades/sdr_annual/results_up00.csv
-          python test/base_results/upgrades/create_results_characteristics.py -f test/base_results/upgrades/sdr_annual/results_up00.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f base_results/upgrades/sdr_annual/combined/results.csv
+          python test/base_results/upgrades/create_results_characteristics.py -f test/base_results/upgrades/sdr_annual/combined/results.csv
           
           # upgrades annual
           mkdir -p test/base_results/sdr_comparisons/upgrades/sdr_annual
-          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/upgrades/sdr_annual -f test/base_results/upgrades/sdr_annual -e test/base_results/sdr_comparisons/upgrades/sdr_annual # *.html
+          python test/compare.py -a visualize -dc build_existing_model.geometry_building_type_recs -b base_results/upgrades/sdr_annual/combined -f test/base_results/upgrades/sdr_annual/combined -e test/base_results/sdr_comparisons/upgrades/sdr_annual # *.html
 
       - name: Upload comparisons
+        if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: sdr_comparisons

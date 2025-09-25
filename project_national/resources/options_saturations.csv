@@ -13506,11 +13506,11 @@ Level,Parameter,Option,Saturation
 14,Insulation Wall,"Wood Stud, R-11",0.225545
 14,Insulation Wall,"Wood Stud, R-15",0.0471472
 14,Insulation Wall,"Wood Stud, R-19",0.10473
-14,Insulation Wall,"CMU, 6-in Hollow, Uninsulated",0.014177
-14,Insulation Wall,"CMU, 6-in Hollow, R-7",0.00401396
-14,Insulation Wall,"CMU, 6-in Hollow, R-11",0.00904369
-14,Insulation Wall,"CMU, 6-in Hollow, R-15",0.00165918
-14,Insulation Wall,"CMU, 6-in Hollow, R-19",0.00434392
+14,Insulation Wall,"CMU, 6-in, Uninsulated",0.014177
+14,Insulation Wall,"CMU, 6-in, R-7",0.00401396
+14,Insulation Wall,"CMU, 6-in, R-11",0.00904369
+14,Insulation Wall,"CMU, 6-in, R-15",0.00165918
+14,Insulation Wall,"CMU, 6-in, R-19",0.00434392
 14,Insulation Wall,"Brick, 12-in, 3-wythe, Uninsulated",0.0991602
 14,Insulation Wall,"Brick, 12-in, 3-wythe, R-7",0.0257565
 14,Insulation Wall,"Brick, 12-in, 3-wythe, R-11",0.0547341
