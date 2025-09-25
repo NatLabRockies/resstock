@@ -10053,11 +10053,11 @@ Insulation Wall	Brick, 12-in, 3-wythe, R-15	ResStockArguments	enclosure_wall=Str
 Insulation Wall	Brick, 12-in, 3-wythe, R-19	ResStockArguments	enclosure_wall=Structural Brick, R-19	enclosure_wall_continuous_insulation=Uninsulated
 Insulation Wall	Brick, 12-in, 3-wythe, R-7	ResStockArguments	enclosure_wall=Structural Brick, R-7	enclosure_wall_continuous_insulation=Uninsulated
 Insulation Wall	Brick, 12-in, 3-wythe, Uninsulated	ResStockArguments	enclosure_wall=Structural Brick, Uninsulated	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	CMU, 6-in Hollow, R-11	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-11	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	CMU, 6-in Hollow, R-15	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-15	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	CMU, 6-in Hollow, R-19	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-19	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	CMU, 6-in Hollow, R-7	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-7	enclosure_wall_continuous_insulation=Uninsulated
-Insulation Wall	CMU, 6-in Hollow, Uninsulated	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, Uninsulated	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	CMU, 6-in, R-11	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-11	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	CMU, 6-in, R-15	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-15	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	CMU, 6-in, R-19	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-19	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	CMU, 6-in, R-7	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, R-7	enclosure_wall_continuous_insulation=Uninsulated
+Insulation Wall	CMU, 6-in, Uninsulated	ResStockArguments	enclosure_wall=Concrete Masonry Unit, Hollow or Concrete Filled, Uninsulated	enclosure_wall_continuous_insulation=Uninsulated
 Insulation Wall	Void
 Insulation Wall	Wood Stud, R-11	ResStockArguments	enclosure_wall=Wood Stud, R-11	enclosure_wall_continuous_insulation=Uninsulated
 Insulation Wall	Wood Stud, R-13	ResStockArguments	enclosure_wall=Wood Stud, R-13	enclosure_wall_continuous_insulation=Uninsulated
