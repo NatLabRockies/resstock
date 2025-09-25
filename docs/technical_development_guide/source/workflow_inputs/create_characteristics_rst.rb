@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'csv'
-require 'oga'
+require_relative '../../../resources/util'
 
 class String
   def to_underscore_case
@@ -40,6 +39,7 @@ def write_subsection(f, row, name, sc, delim)
   f.puts
 end
 
+# Convert href to rst for description
 def href_to_rst(str)
   urls_names = str.scan(/<a href='(.+?)'>(.+?)<\/a>/)
   return str if urls_names.empty?
@@ -52,25 +52,6 @@ def href_to_rst(str)
   return str
 end
 
-def get_measure_xml(filepath)
-  measure_xml = {}
-  parse_xml = Oga.parse_xml(filepath)
-  parse_xml.xpath('//measure/arguments/argument').each do |argument|
-    name = argument.at_xpath('name').text
-    measure_xml[name] = {}
-    ['type', 'required', 'units', 'choices', 'description'].each do |property|
-      if property != 'choices'
-        element = argument.at_xpath(property)
-        value = !element.nil? ? element.text : ''
-      else
-        value = argument.xpath('choices/choice').map { |c| c.at_xpath('value').text }
-      end
-      measure_xml[name][property] = value
-    end
-  end
-  return measure_xml
-end
-
 resources_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../../../../resources'))
 
 filepath = File.read(File.join(resources_dir, 'hpxml-measures/BuildResidentialHPXML/measure.xml'))
@@ -79,34 +60,14 @@ buildreshpxmlarguments_xml = get_measure_xml(filepath)
 filepath = File.read(File.join(resources_dir, '../measures/ResStockArguments/measure.xml'))
 resstockarguments_xml = get_measure_xml(filepath)
 
-# Refine resstockarguments_xml
 resstockarguments_xml.each do |name, properties|
-  # Get required and type from BuildResidentialHPXML
-  ['required', 'type'].each do |property|
-    resstockarguments_xml[name][property] = buildreshpxmlarguments_xml[name][property] if buildreshpxmlarguments_xml.keys.include?(name)
-  end
-
-  # Add "auto" to Choices for optional String/Double/Integer
-  extra_args_with_auto = ['year_built', 'geometry_unit_num_occupants', 'geometry_unit_cfa', 'heat_pump_backup_heating_efficiency'] # these are special because ResStockArguments provides the default instead of OS-HPXML
-  if (properties['description'].include?('OS-HPXML default') && ['String', 'Double', 'Integer'].include?(properties['type'])) ||
-     extra_args_with_auto.include?(name)
-    resstockarguments_xml[name]['choices'].unshift('auto')
-  end
-
-  # Convert href to rst for description
+  refine_resstockarguments_xml(resstockarguments_xml, buildreshpxmlarguments_xml, name, properties)
   resstockarguments_xml[name]['description'] = href_to_rst(resstockarguments_xml[name]['description'])
 end
 
-# Display arguments in Arguments and Options table by the order they appear in BuildResidentialHPXML, otherwise use ResStockArguments if only defined there
-arg_order = buildreshpxmlarguments_xml.keys
-resstockarguments_xml.keys.each do |k|
-  if !arg_order.include?(k)
-    arg_order << k
-  end
-end
-
+arg_order = get_arg_order(buildreshpxmlarguments_xml, resstockarguments_xml)
 source_report_cols = ['Description', 'Created by', 'Source', 'Assumption']
-arguments_cols = ['Name', 'Required', 'Units', 'Type', 'Choices', 'Description']
+arguments_cols = get_arguments_cols()
 
 f = File.open(File.join(File.dirname(__FILE__), 'characteristics.rst'), 'w')
 f.puts('.. _housing_characteristics:')
@@ -141,10 +102,7 @@ f.puts('Assigning "auto" means that downstream default values (e.g., from OpenSt
 f.puts('When an argument is defaulted using OpenStudio-HPXML, the **Description** field will include link(s) to `OpenStudio-HPXML documentation <https://openstudio-hpxml.readthedocs.io/en/latest/?badge=latest>`_ describing these default values.')
 f.puts
 
-lookup_file = File.join(resources_dir, 'options_lookup.tsv')
-option_sat_file = File.join('project_national', 'resources', 'options_saturations.csv')
-lookup_csv_data = CSV.open(lookup_file, col_sep: "\t").each.to_a
-option_sat_csv_data = CSV.open(option_sat_file, quote_char: '"', col_sep: ',').each.to_a
+lookup_csv_data, option_sat_csv_data = get_lookup_and_saturations_csv_data(resources_dir)
 
 source_report = CSV.read(File.join(File.dirname(__FILE__), '../../../../project_national/resources/source_report.csv'), headers: true)
 source_report.each do |row|
@@ -191,15 +149,9 @@ source_report.each do |row|
       line = "   * - #{arguments_col}" if i == 0
       f.puts(line)
     end
-    if parameter == 'HVAC Heating Efficiency'
-      puts "r_arguments 1 #{r_arguments}"
-    end
-    # r_arguments = r_arguments.sort_by &resstockarguments_xml.keys.method(:index)
-    # r_arguments = r_arguments.sort
+
     r_arguments = r_arguments.sort_by &arg_order.method(:index)
-    if parameter == 'HVAC Heating Efficiency'
-      puts "r_arguments 2 #{r_arguments}"
-    end
+
     r_arguments.each do |r_argument|
       f.puts("   * - ``#{r_argument}``")
       f.puts("     - #{resstockarguments_xml[r_argument]['required']}")
@@ -215,6 +167,7 @@ source_report.each do |row|
     end
     f.puts
   end
+
   # Options
   name = 'Options'
   f.puts(name)
@@ -268,7 +221,7 @@ source_report.each do |row|
           f.puts('     - ')
         end
       else
-        # If option specifies arguments, insert arguments according to the order of r_arguements
+        # If option specifies arguments, insert arguments according to the order of r_arguments
         r_arguments.each do |argument|
           # Look for each argument in r_arguments
           found_arg = false

@@ -1,0 +1,9 @@
+\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
+{The ResStock argument definitions set in the Cooking Range characteristic} {table:hc_arg_def_cooking_range}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{cooking\_range\_oven\_present} & true &  & Boolean & true, false & Whether there is a cooking range/oven present.  \\ \hline
+\texttt{cooking\_range\_oven\_location} & false &  & Choice & auto, conditioned space, basement - conditioned, basement - unconditioned, garage, other housing unit, other heated space, other multifamily buffer space, other non-freezing space & The space type for the cooking range/oven location.   \\ \hline
+\texttt{cooking\_range\_oven\_fuel\_type} & true &  & Choice & electricity, natural gas, fuel oil, propane, wood, coal & Type of fuel used by the cooking range/oven.  \\ \hline
+\texttt{cooking\_range\_oven\_is\_induction} & false &  & Boolean & auto, true, false & Whether the cooking range is induction.   \\ \hline
+\texttt{cooking\_range\_oven\_is\_convection} & false &  & Boolean & auto, true, false & Whether the oven is convection.   \\
+\end{customLongTable}

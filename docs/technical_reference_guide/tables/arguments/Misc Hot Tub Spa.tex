@@ -1,0 +1,11 @@
+\begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
+{The ResStock argument definitions set in the Misc Hot Tub Spa characteristic} {table:hc_arg_def_misc_hot_tub_spa}
+{Name & Required & Units & Type & Choices & Description}
+\texttt{permanent\_spa\_present} & true &  & Boolean & true, false & Whether there is a permanent spa.  \\ \hline
+\texttt{permanent\_spa\_pump\_annual\_kwh} & false & kWh/yr & Double & auto & The annual energy consumption of the permanent spa pump.   \\ \hline
+\texttt{permanent\_spa\_pump\_usage\_multiplier} & false &  & Double & auto & Multiplier on the permanent spa pump energy usage that can reflect, e.g., high/low usage occupants.   \\ \hline
+\texttt{permanent\_spa\_heater\_type} & true &  & Choice & none, electric resistance, gas fired, heat pump & The type of permanent spa heater. Use 'none' if there is no permanent spa heater.  \\ \hline
+\texttt{permanent\_spa\_heater\_annual\_kwh} & false & kWh/yr & Double & auto & The annual energy consumption of the electric resistance permanent spa heater.   \\ \hline
+\texttt{permanent\_spa\_heater\_annual\_therm} & false & therm/yr & Double & auto & The annual energy consumption of the gas fired permanent spa heater.   \\ \hline
+\texttt{permanent\_spa\_heater\_usage\_multiplier} & false &  & Double & auto & Multiplier on the permanent spa heater energy usage that can reflect, e.g., high/low usage occupants.   \\
+\end{customLongTable}
