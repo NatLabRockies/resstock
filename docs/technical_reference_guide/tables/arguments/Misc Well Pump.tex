@@ -1,8 +1,5 @@
 \begin{customLongTable}{ |p{3cm}|p{1.25cm}|p{1.5cm}|p{1.5cm}|p{3cm}|p{3.5cm}| }
 {The ResStock argument definitions set in the Misc Well Pump characteristic} {table:hc_arg_def_misc_well_pump}
 {Name & Required & Units & Type & Choices & Description}
-\texttt{misc\_plug\_loads\_well\_pump\_present} & true &  & Boolean & true, false & Whether there is a well pump.  \\ \hline
-\texttt{misc\_plug\_loads\_well\_pump\_annual\_kwh} & false & kWh/yr & Double & auto & The annual energy consumption of the well pump plug loads.   \\ \hline
-\texttt{misc\_plug\_loads\_well\_pump\_usage\_multiplier} & false &  & Double & auto & Multiplier on the well pump energy usage that can reflect, e.g., high/low usage occupants.   \\ \hline
-\texttt{misc\_plug\_loads\_well\_pump\_2\_usage\_multiplier} & true &  & Double &  & Additional multiplier on the well pump energy usage that can reflect, e.g., high/low usage occupants.  \\
+\texttt{misc\_well\_pump} & false &  & Choice & None, Typical Efficiency, High Efficiency, Detailed Example: 475 kWh/yr & The amount of well pump usage, relative to the national average.  \\
 \end{customLongTable}

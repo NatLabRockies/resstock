@@ -100,7 +100,7 @@ parameters.each do |parameter|
       required = resstockarguments_xml[r_argument]['required']
       units = resstockarguments_xml[r_argument]['units'].gsub('$', '\$').gsub('#', '\#').gsub('^2', '\textsuperscript{2}').gsub('^3', '\textsuperscript{3}')
       type = resstockarguments_xml[r_argument]['type']
-      choices = resstockarguments_xml[r_argument]['choices'].join(', ')
+      choices = resstockarguments_xml[r_argument]['choices'].join(', ').gsub('%', '\\%').gsub('&', '\\\&')
       description = resstockarguments_xml[r_argument]['description'].gsub('%', '\\%').gsub('_', '\_').gsub('&', '\\\&')
       desc_exclusions.each do |desc_exclusion|
         ix = description.index(desc_exclusion)
@@ -250,7 +250,7 @@ parameters.each do |parameter|
       row += " & #{options[option]['sat']}"
     end
     changing_args.each_with_index do |changing_arg, _i|
-      row += " & #{options[option][changing_arg]}"
+      row += " & #{options[option][changing_arg]}".gsub('%', '\\%')
     end
     row = "#{row} \\\\"
     if i < options.keys.size - 1
