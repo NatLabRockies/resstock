@@ -3,14 +3,16 @@ import pathlib
 import geopandas as gpd
 import logging
 import s3fs
+import json
+import re
 from typing import Sequence
 
 from resstockpostproc.utils import (
     fix_site_energy_total,
     fix_all_fuels_emissions,
     get_col_maps,
-    setup_fsspec_filesystem,
-    write_geo_data
+    write_geo_data,
+    conversion_factor
 )
 from resstockpostproc.income_mapper import assign_representative_income
 
@@ -22,12 +24,13 @@ def get_failed_bldgs(metadata_df: pl.LazyFrame) -> set[int]:
     return set(failed_bldgs.collect()["building_id"].to_list())
 
 
-def publish_baseline_annual_results(base_raw_df: pl.LazyFrame) -> pl.LazyFrame:
+def process_baseline_simulation_outputs(base_raw_df: pl.LazyFrame, upgrade_renamer: dict[str, str]) -> pl.LazyFrame:
     """
     Publishes the annual results for the baseline.
 
     Args:
         base_raw_df: LazyFrame containing baseline results from raw BuildStockBatch results.
+        upgrade_renamer: Map of upgrade names from YML to new names for publication.
     Returns:
         LazyFrame containing published baseline results.
     """
@@ -36,6 +39,7 @@ def publish_baseline_annual_results(base_raw_df: pl.LazyFrame) -> pl.LazyFrame:
     base_df = get_transformed_cols(base_df, col_maps)
     base_df = base_df.with_columns(pl.lit(True).alias("applicability"))
     base_df = base_df.with_columns([pl.lit(0).alias("upgrade"), pl.lit("Baseline").alias("in.upgrade_name")])
+    base_df = rename_upgrades(base_df, upgrade_renamer)
     base_df = add_income_and_burden(base_df)
     base_df = add_county_column(base_df)
     base_df = add_puma_column(base_df)
@@ -44,24 +48,28 @@ def publish_baseline_annual_results(base_raw_df: pl.LazyFrame) -> pl.LazyFrame:
     print("Fixing site energy and site emission total for baseline ...")
     base_df = fix_site_energy_total(base_df, all_cols)
     base_df = fix_all_fuels_emissions(base_df, all_cols)
+    base_df = remove_unused_consumption_cols(base_df)
     base_df = add_panel_contraint_cols(base_df)
     base_df = add_upgrade_columns(base_df)
+    # base_df = add_saving_cols(base_df, base_df)  # Intentionally passing base columns twice - zero savings in baseline
+    base_df = add_weighted_cols(base_df)
     base_df = reorder_columns(base_df, col_maps, is_baseline=True)
     return base_df
 
 
-def publish_upgrade_annual_results(
+def process_upgrade_simulation_outputs(
     baseline_failed_bldgs: set[int],
     base_pub_df: pl.LazyFrame,
     upgrade_raw_df: pl.LazyFrame,
     upgrade_num: int,
+    upgrade_renamer: dict[str, str]
 ) -> pl.LazyFrame:
     """
     Publishes the annual results for a specific upgrade.
 
     Args:
         baseline_failed_bldgs: Set of failed building IDs in baseline.
-        base_pub_df: LazyFrame containing baseline results already passed through publish_baseline_annual_results.
+        base_pub_df: LazyFrame containing baseline results already passed through process_baseline_simulation_outputs.
         upgrade_raw_df: LazyFrame containing upgrade results from raw BuildStockBatch results.
         upgrade_num: Integer representing the upgrade number.
     Returns:
@@ -88,9 +96,27 @@ def publish_upgrade_annual_results(
 
     upgrade_df = get_transformed_cols(upgrade_df, col_maps)
     upgrade_df = upgrade_df.with_columns([pl.lit(upgrade_num).alias("upgrade")])
+    upgrade_df = rename_upgrades(upgrade_df, upgrade_renamer)
     base_cols = base_pub_df.collect_schema().names()
     upgrade_cols = upgrade_df.collect_schema().names()
-    missing_cols = list(set(base_cols) - set(upgrade_cols)) + ["bldg_id"]
+    exclude_terms = [
+        "calc.weighted",
+        "energy_savings",
+        "emissions_reduction",
+        "energy_burden_savings",
+        "bill_savings",
+        "capacity_savings",
+        "load_savings",
+    ]
+    missing_cols = [
+        c for c in list(set(base_cols) - set(upgrade_cols)) + ["bldg_id"]
+        if not any(term in c for term in exclude_terms)
+    ]
+    print('Adding missing cols from upgrade to baseline:')
+    for mc in sorted(missing_cols):
+        print(mc)
+    print('\n\n\n')
+
     upgrade_df = upgrade_df.join(base_pub_df.select(missing_cols), on="bldg_id", how="left")
     all_cols = upgrade_df.collect_schema().names()
     print("Fixing site energy and site emission total for upgrade ...")
@@ -115,8 +141,10 @@ def publish_upgrade_annual_results(
     missing_bldgs_df = missing_bldgs_df.join(upgrade_name_df, how="cross")
     upgrade_df = pl.concat([upgrade_df, missing_bldgs_df], how="diagonal_relaxed")
     upgrade_df = upgrade_df.sort("bldg_id")
+    upgrade_df = remove_unused_consumption_cols(upgrade_df)
     upgrade_df = add_saving_cols(upgrade_df, base_pub_df)
     upgrade_df = add_panel_contraint_cols(upgrade_df)
+    upgrade_df = add_weighted_cols(upgrade_df)
     upgrade_df = reorder_columns(upgrade_df, col_maps, is_baseline=False)
     return upgrade_df
 
@@ -142,6 +170,44 @@ def get_transformed_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl.LazyF
     transformed_cols.extend([pl.col(col).alias(col) for col in upgrade_cols])
     return df.select(transformed_cols)
 
+def get_upgrade_rename_dict(raw_results_dir):
+    file_path = pathlib.Path(raw_results_dir["fs_path"]) / "rename_upgrades.json"
+    if not raw_results_dir["fs"].exists(file_path):
+        return dict()
+    with raw_results_dir['fs'].open(file_path, "r") as f:
+        upgrade_renamer = json.load(f)
+    return upgrade_renamer
+
+def rename_upgrades(df: pl.LazyFrame, upgrade_renamer: dict) -> pl.LazyFrame:
+    """
+    Renames the upgrades in the in.upgrade_name column from values used in the YML file
+    to new values more appropriate for publication. If an empty dict is supplied, no
+    renaming is performed.
+
+    Args:
+        base_raw_df: LazyFrame containing the results.
+        upgrade_renamer: Map of upgrade names from YML to new names for publication.
+    Returns:
+        LazyFrame containing results with modified in.upgrade_name column values.
+    """
+    if not upgrade_renamer:
+        print("No upgrade renamer was supplied, upgrades not renamed.")
+        return df
+    else:
+        print("Renaming upgrades")
+        # for old, new in upgrade_renamer.items():
+        #     print(f'{old} -> {new}')
+
+    # Check that each upgrade name is present in the upgrade renamer dict
+    up_names = df.select(pl.col("in.upgrade_name")).unique().collect().to_series().to_list()
+    print(up_names)
+    for up_name in up_names:
+        if not up_name in upgrade_renamer:
+            raise ValueError(f"No upgrade rename supplied for: {up_name}")
+
+    df = df.with_columns((pl.col("in.upgrade_name").replace(upgrade_renamer)).alias("in.upgrade_name"))
+    return df
+
 
 def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
     df = assign_representative_income(df)
@@ -163,6 +229,22 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
 
 
 def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
+
+    up_cols = set(df.collect_schema().names())
+    base_cols = set(baseline_df.collect_schema().names())
+    in_base_not_up = list(base_cols - up_cols)
+    in_up_not_base = list(up_cols - base_cols)
+    print('in_base_not_up:')
+    for c in in_base_not_up:
+        print(c)
+    print('\n\n\n')
+
+    print('in_up_not_base:')
+    for c in in_up_not_base:
+        print(c)
+    print('\n\n\n')
+
+
     savings_cols = []
     all_cols = df.collect_schema().names()
     out_cols = [col for col in all_cols if 'out.' in col and not (
@@ -180,6 +262,11 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
     ]
     out_cols += out_panel_cols
 
+    print('Calculating savings for:')
+    for oc in out_cols:
+        print(oc)
+    print('\n\n\n')
+
     baseline_df_with_renamed = baseline_df.select(
         [pl.col(col).alias(f"baseline_{col}") for col in out_cols] + ["bldg_id"]
     )
@@ -191,7 +278,28 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
     return df_with_baseline.with_columns(savings_cols).drop([f"baseline_{col}" for col in out_cols])
 
 
-def col_name_to_savings(col_name):
+def col_name_to_weighted(col_name: str, new_units=None) -> str:
+    col_name = col_name.replace('out.', 'calc.')
+    col_name = col_name.replace('calc.', 'calc.weighted.')
+    if new_units is not None:
+        old_units = units_from_col_name(col_name)
+        col_name = col_name.replace(f'..{old_units}', f'..{new_units}')
+
+    return col_name
+
+
+def units_from_col_name(col_name: str) -> str:
+    # Extract the units from the column name
+    match = re.search('\.\.(.*)', col_name)
+    if match:
+        units = match.group(1)
+    else:
+        units = ''
+
+    return units
+
+
+def col_name_to_savings(col_name: str) -> str:
     converted_col_name = str(col_name)
     svg_renames = {
         '.energy_consumption': '.energy_savings',
@@ -220,7 +328,51 @@ def col_name_to_savings(col_name):
 
 
 def remove_unused_consumption_cols(df: pl.LazyFrame) -> pl.LazyFrame:
-    # TODO
+    empty_cols = []
+    all_cols = df.collect_schema().names()
+    out_cols = [col for col in all_cols if 'energy_consumption' in col]
+    engy_df = df.select(out_cols).collect().sum()
+    for col, val in engy_df.to_dicts()[0].items():
+        if val == 0:
+            empty_cols.append(col)
+            print(f'Dropping unused (all-zeroes) energy column: {col}')
+
+    return df.drop(empty_cols)
+
+
+def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:
+    all_cols = df.collect_schema().names()
+    wtd_cols = [col for col in all_cols if 'out.' in col and (
+        ".energy_consumption" in col or
+        ".energy_savings" in col or
+        ".emissions." in col or
+        ".emissions_reduction." in col
+        )]
+    # # Selectively include the following for params
+    # out_panel_cols = [col for col in all_cols if
+    #     "out.params.panel_load_total_load" in col
+    #     or "out.params.panel_load_occupied_capacity" in col
+    #     or "out.params.panel_breaker_space_occupied" in col
+    # ]
+    # wtd_cols += out_panel_cols
+
+    wtd_col_unit_convs = {
+        'kwh': 'tbtu',
+        'co2e_kg': 'co2e_mmt'
+    }
+
+    for col in wtd_cols:
+        old_units = units_from_col_name(col)
+        new_units = wtd_col_unit_convs[old_units]
+        conv_fact = conversion_factor(old_units, new_units)
+        wtd_col_name = col_name_to_weighted(col, new_units)
+        df = df.with_columns(
+            pl.col(col)
+            .mul(pl.col("weight"))
+            .mul(conv_fact)
+            .alias(wtd_col_name)
+        )
+
     return df
 
 
@@ -331,24 +483,26 @@ def reorder_columns(lf: pl.LazyFrame, col_maps: Sequence[dict], is_baseline: boo
     if missing_cols:
         print(f"Missing columns in output data that are defined in publication column definition:")
         for c in sorted(missing_cols):
+            if 'out.component_load' in c:  # TODO ANDREW WUZ HERE remove this - temporarily suppressing known missing cols
+                continue
             print(f"Missing column: {c}")
     available_cols = [col for col in all_defined_cols if col in all_df_cols]
     return lf.select(available_cols)
 
 
-def export_metadata_and_annual_results_to_oedi_by_geography(output_dir, aws_profile_name=None):
+def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_exports):
     """
     Subdivides the annual results by geography and writes to OEDI.
     Creates .parquet and .csv.gz files.
 
     Args:
-        output_dir: String path in s3:// or local filesystem format.
-        aws_profile_name: Name of the AWS profile to use for authentication if writing to S3.
+        output_dir: Dict of filesystem object information
+        upgrade_id: Integer ID for the upgrade to process
+        geo_exports: List of Dicts of export definitions
     Returns:
         None
 
     """
-    output_dir = setup_fsspec_filesystem(output_dir, aws_profile_name)
 
     bucket_name = 'oedi-data-lake'
     if output_dir['fs'].exists(bucket_name):
@@ -356,29 +510,20 @@ def export_metadata_and_annual_results_to_oedi_by_geography(output_dir, aws_prof
     else:
         print(f"Bucket {bucket_name} does not exist")
 
-    # Get a list of upgrades
-    up_pqts = []
-    pqt_glob = f"{output_dir['fs_path']}/metadata_and_annual_results/national/parquet/full/*.parquet"
-    print(pqt_glob)
-    for p in output_dir['fs'].glob(pqt_glob):
-        if isinstance(output_dir['fs'], s3fs.S3FileSystem):
-            up_pqts.append(f's3://{p}')
-        else:
-            up_pqts.append(p)
-    print(f'Found {len(up_pqts)} upgrade parquet files, including the baseline.')
+    print(f"Exporting metadata for upgrade {upgrade_id}")
 
-    # Define the geographic partitions to export
-    geo_exports = [
-    {
-        'geo_top_dir': 'by_state',
-        'partition_cols': {
-            'in.state': 'state'
-        },
-        'data_types': ['full'],  # TODO add basic
-        'file_types': ['csv', 'parquet'],
-    }
-    ]
+    # Read the cached simulation results
+    sim_out_cache_dir = f"{output_dir['fs_path']}/cached_simulation_outputs"
+    parquet_file_dir = pathlib.Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
+    parquet_file = parquet_file_dir / f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
+    if isinstance(output_dir['fs'], s3fs.S3FileSystem):
+        parquet_file = f's3://{parquet_file.as_posix()}'
+    if not output_dir['fs'].exists(parquet_file):
+        raise FileNotFoundError(
+        f'Cannot load upgrade data from {parquet_file}, call process_upgrade_simulation_outputs() first.')
+    up_df = pl.read_parquet(parquet_file, storage_options=output_dir['storage_options'] )
 
+    # Export each geo export level
     for ge in geo_exports:
         geo_top_dir = ge['geo_top_dir']
         partition_cols = ge['partition_cols']
@@ -386,6 +531,8 @@ def export_metadata_and_annual_results_to_oedi_by_geography(output_dir, aws_prof
         print(partition_cols)
         data_types = ge['data_types']
         file_types = ge['file_types']
+        print(f"Exporting {geo_top_dir} by {partition_cols} {data_types} {file_types}")
+
         # geo_col_names = list(partition_cols.keys())
 
         # Name the top-level directory
@@ -401,17 +548,8 @@ def export_metadata_and_annual_results_to_oedi_by_geography(output_dir, aws_prof
                 for file_type in file_types:
                     output_dir['fs'].mkdirs(f'{full_geo_dir}/{data_type}/{file_type}', exist_ok=True)
 
-        # Load the file
-        for up_pqt in up_pqts:
-            upgrade_id = pathlib.Path(up_pqt).stem.replace('upgrade', '')
-            print(f'Processing upgrade {upgrade_id}')
-
-            # Read the file
-            up_df = pl.read_parquet(up_pqt, hive_partitioning=True, storage_options=output_dir['storage_options'] )
-            # for c in df.columns:
-            #     print(c)
-
-            # Export by various geographies
+        # Export by various geographies
+        if partition_cols:
             for by_col, by_dir_name  in partition_cols.items():
                 for by_val, geo_df in up_df.group_by(by_col):
                     by_val = by_val[0]
@@ -424,7 +562,19 @@ def export_metadata_and_annual_results_to_oedi_by_geography(output_dir, aws_prof
                             file_path = get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id)
                             print(f"Queuing {file_path}")
                             input_args = (geo_df, output_dir, file_type, file_path)
-                            # write_geo_data(input_args)
+                            write_geo_data(input_args)
+        else:
+            # National level is not partitioned
+            geo_levels = []
+            geo_prefixes = []
+            for data_type in data_types:
+                # TODO Downselect the DF to fewer columns for basic version
+
+                for file_type in file_types:
+                    file_path = get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id)
+                    print(f"Queuing {file_path}")
+                    input_args = (up_df, output_dir, file_type, file_path)
+                    write_geo_data(input_args)
 
             break
 

@@ -4,41 +4,61 @@ Script to take in raw BuildStockBatch results_csvs / parquet and convert them to
 
 Example usage:
 uv run resstockpostproc/process_bsb_results.py /path/to/bsb_raw_results /path/to/output_dir
-uv run resstockpostproc/process_bsb_results.py /path/to/bsb_raw_results "s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/resstock_amy2018_release_1"
+uv run resstockpostproc/process_bsb_results.py "C:/Scratch/ResStock/efforts/full_550k_run" "C:/Scratch/ResStock/efforts/full_550k_run_output"
+uv run resstockpostproc/process_bsb_results.py "C:/Scratch/ResStock/efforts/full_550k_run" "s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/resstock_amy2018_release_1"
+
+
+
 
 Note: bsb_raw_results folder must contain both baseline and upgrade files. Baseline file should be named
 results_up00.parquet and upgrade files should be named results_upXX.parquet where XX is the upgrade number. The can
 either be in their own folders (baseline and upgrades) or all be in the same folder.
 """
 
+import re
 import sys
+import s3fs
 import polars as pl
 from pathlib import Path
 from resstockpostproc.process_metadata import (
-    publish_baseline_annual_results,
-    publish_upgrade_annual_results,
-    export_metadata_and_annual_results_to_oedi_by_geography
+    process_baseline_simulation_outputs,
+    process_upgrade_simulation_outputs,
+    get_upgrade_rename_dict,
+    export_metadata_and_annual_results_for_upgrade
 )
-import re
+from resstockpostproc.utils import (
+    setup_fsspec_filesystem
+)
 
+def export_metadata_and_annual_results(raw_results_dir: str,
+                                       output_dir: str,
+                                       aws_profile_name = None) -> None:
+    # Set up filesystem objects for raw results and output directories
+    raw_results_dir = setup_fsspec_filesystem(raw_results_dir, aws_profile_name)
+    output_dir = setup_fsspec_filesystem(output_dir, aws_profile_name)
 
-def process_results(raw_results_dir: str, output_dir: str) -> None:
-    output_path = Path(output_dir)
-    output_path.mkdir(parents=True, exist_ok=True)
-    result_files = list(Path(raw_results_dir).rglob("*"))
-    baseline_files = [f for f in result_files if "up00" in f.name.lower()]
-    upgrade_files = [f for f in result_files if "up00" not in f.name.lower()]
+    # output_path = Path(output_dir)
+    # output_path.mkdir(parents=True, exist_ok=True)
+    pqt_glob = f'{raw_results_dir["fs_path"]}/**/*.parquet'
+    result_files = raw_results_dir['fs'].glob(pqt_glob)
+    baseline_files = [f for f in result_files if "up00" in Path(f).name.lower()]
+    upgrade_files = [f for f in result_files if "up00" not in Path(f).name.lower()]
+    upgrade_renamer = get_upgrade_rename_dict(raw_results_dir)
 
+    upgrade_files = upgrade_files[0:1] # TODO ANDREW WUZ HERE remove this
+
+    # Process and cache the baseline simulation outputs
     if not baseline_files:
-        print("Error: No baseline or upgrade files found")
+        print("Error: No baseline files found")
         sys.exit(1)
     if len(baseline_files) > 1:
         print("Error: More than one baseline file found")
         sys.exit(1)
 
     baseline_file = baseline_files[0]
+    upgrade_id = 0
     print(f"Processing baseline file: {baseline_file}")
-    baseline_df = read_file(baseline_file)
+    baseline_df = pl.scan_parquet(baseline_file, storage_options=raw_results_dir['storage_options'])
 
     failed_bldgs = (
         baseline_df.filter(pl.col("completed_status") == "Fail")
@@ -47,21 +67,69 @@ def process_results(raw_results_dir: str, output_dir: str) -> None:
         .to_list()
     )
     print(f"Removing {len(failed_bldgs)} buildings that failed in baseline")
-    bs_pub_df = publish_baseline_annual_results(baseline_df)
-    write_file(bs_pub_df, output_path, upgrade=0)
+    bs_pub_df = process_baseline_simulation_outputs(baseline_df, upgrade_renamer)
+    sim_out_cache_dir = f"{output_dir['fs_path']}/cached_simulation_outputs"
+    parquet_file_dir = Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
+    parquet_file = parquet_file_dir / f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
+    if isinstance(output_dir['fs'], s3fs.S3FileSystem):
+        parquet_file = f's3://{parquet_file.as_posix()}'
+    else:
+        Path(parquet_file_dir).mkdir(parents=True, exist_ok=True)
+    print(f'Opening: {str(parquet_file)}')
+    with output_dir['fs'].open(str(parquet_file), "wb") as f:
+        bs_pub_df.sink_parquet(f)
+    print(f"Cached simulation outputs for upgrade {upgrade_id} to {parquet_file}")
 
+    # Process and cache the upgrade simulation outputs
+    upgrade_ids = [0]
     for upgrade_file in upgrade_files:
-        up_info = re.search(r"up(\d+)", upgrade_file.name)
+        up_info = re.search(r"up(\d+)", Path(upgrade_file).name)
         if up_info is None:
             continue
-        upgrade_num = int(up_info.group(1))
-
-        print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_num}")
-        upgrade_df = read_file(upgrade_file)
-        up_up_df = publish_upgrade_annual_results(
-            failed_bldgs, bs_pub_df, upgrade_df, upgrade_num
+        upgrade_id = int(up_info.group(1))
+        upgrade_ids.append(upgrade_id)
+        print('\n\n\n*******************************************************')
+        print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_id}")
+        upgrade_df = pl.scan_parquet(upgrade_file, storage_options=raw_results_dir['storage_options'])
+        up_df = process_upgrade_simulation_outputs(
+            failed_bldgs, bs_pub_df, upgrade_df, upgrade_id, upgrade_renamer
         )
-        write_file(up_up_df, output_path, upgrade_num)
+        parquet_file_dir = Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
+        parquet_file = parquet_file_dir / f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
+        if isinstance(output_dir['fs'], s3fs.S3FileSystem):
+            parquet_file = f's3://{parquet_file.as_posix()}'
+        else:
+            Path(parquet_file_dir).mkdir(parents=True, exist_ok=True)
+        with output_dir['fs'].open(str(parquet_file), "wb") as f:
+            up_df.sink_parquet(f)
+
+        print(f"Cached simulation outputs for upgrade {upgrade_id} to {parquet_file}")
+    upgrade_ids.sort()
+
+
+    # Define the geographic partitions to export
+    geo_exports = [
+    {
+        'geo_top_dir': 'national',
+        'partition_cols': {},
+        'data_types': ['full'],  # TODO add basic
+        'file_types': ['parquet'], # 'csv',
+    },
+    # {
+    #     'geo_top_dir': 'by_state',
+    #     'partition_cols': {
+    #         'in.state': 'state'
+    #     },
+    #     'data_types': ['full'],  # TODO add basic
+    #     'file_types': ['csv', 'parquet'],
+    # }
+    ]
+
+    for upgrade_id in upgrade_ids:
+        export_metadata_and_annual_results_for_upgrade(
+            output_dir,
+            upgrade_id,
+            geo_exports)
 
 
 def read_file(file: Path) -> pl.LazyFrame:
@@ -80,13 +148,9 @@ def read_file(file: Path) -> pl.LazyFrame:
 def write_file(df: pl.LazyFrame, output_path: Path, upgrade: int):
     parquet_file_dir = output_path / "parquet" / f"upgrade={upgrade}"
     parquet_file_dir.mkdir(parents=True, exist_ok=True)
-    csv_file_dir = output_path / "results_csvs_pub"
-    csv_file_dir.mkdir(parents=True, exist_ok=True)
-    csv_file = csv_file_dir / f"results_up{upgrade:02d}.csv"
-    parquet_file = parquet_file_dir / f"results_up{upgrade:02d}.parquet"
+    parquet_file = parquet_file_dir / f"cached_simulation_outputs_upgrade{upgrade}.parquet"
     df.sink_parquet(parquet_file)
-    df.sink_csv(csv_file)
-    print(f"Wrote {upgrade} to {parquet_file} and {csv_file}")
+    print(f"Cached simulation outputs for upgrade {upgrade} to {parquet_file}")
 
 
 if __name__ == "__main__":
@@ -106,6 +170,4 @@ if __name__ == "__main__":
         help="Directory to write transformed results",
     )
     args = parser.parse_args()
-    # process_results(args.raw_results_dir, args.output_dir)
-
-    export_metadata_and_annual_results_to_oedi_by_geography(args.output_dir)
+    export_metadata_and_annual_results(args.raw_results_dir, args.output_dir)

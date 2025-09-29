@@ -199,3 +199,43 @@ def write_polars_csv_to_s3_or_local(data: pl.DataFrame, out_fs, out_path):
     csv_buffer.close()
     tar_buffer.close()
     gzip_buffer.close()
+
+
+def conversion_factor(from_unit, to_unit):
+
+    # Constants for unit conversion
+    # Created using OpenStudio unit conversion library
+    unit_conversions = {
+        'kwh_to_kwh' : 1,
+        'kwh_to_mwh' : 1e-3,
+        'mwh_to_kwh' : 1e3,
+        'twh_to_kwh' : 1e9,
+        'mbtu_to_kbtu' : 1000,
+        'kwh_to_kbtu' : 3.412141633127942,
+        'kwh_to_tbtu' : ((1.0 / 1e9) * 3.412141633127942),
+        'kbtu_to_kwh': (1.0 / 3.412141633127942),
+        'therm_to_kbtu' : 100,
+        'therm_to_kwh' : (100 / 3.412141633127942),
+        'kbtu_to_tbtu' : (1.0 / 1e9),
+        'tbtu_to_kbtu' : 1e9,
+        'btu_to_kbtu' : (1.0 / 1e3),
+        'million_btu_to_kbtu': (1e9 / 1e6),
+        'million_btu_to_kwh': (1000 / 3.412141633127942),
+        'gj_to_kbtu' : 947.8171203133173,
+        'gj_to_kwh' : 277.77777777777777,
+        'w_per_m2_k_to_btu_per_ft2_f_hr': 0.17611,
+        'pa_to_inwc': 0.004015,
+        'w_per_m2_to_w_per_ft2': (1.0/10.763910416709722),
+        'co2e_kg_to_co2e_mmt': (0.000000001),
+        'co2e_kg_to_co2e_metric_ton': 0.001,
+        'usd_to_billion_usd': 0.000000001,
+        'kw_to_gw': 0.000001,
+        'percent_to_percent': 1,
+    }
+    conv_string = f'{from_unit}_to_{to_unit}'
+
+    if conv_string in unit_conversions:
+        return unit_conversions[conv_string]
+    else:
+        raise KeyError(f'Conversion from {from_unit} to {to_unit} \
+        not defined in unit_conversions, add it there.')
