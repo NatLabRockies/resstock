@@ -108,7 +108,7 @@ def assign_representative_income(df: pl.LazyFrame | pl.DataFrame, return_map_onl
     check_df = check_df.collect() if lazy else check_df
     assert len(check_df) == 0, f"rep_income could not be mapped for {len(check_df)} rows\n{check_df}"
 
-    print(f"Note: {rep_inc} is not available for vacant units, which have 'Not Available' for in.income")
+    # print(f"Note: {rep_inc} is not available for vacant units, which have 'Not Available' for in.income")
 
     df3 = df2.select([bldg_id, rep_inc])
     if return_map_only:

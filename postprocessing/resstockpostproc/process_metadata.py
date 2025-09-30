@@ -45,15 +45,11 @@ def process_baseline_simulation_outputs(base_raw_df: pl.LazyFrame, upgrade_renam
     base_df = add_puma_column(base_df)
 
     all_cols = base_df.collect_schema().names()
-    print("Fixing site energy and site emission total for baseline ...")
     base_df = fix_site_energy_total(base_df, all_cols)
     base_df = fix_all_fuels_emissions(base_df, all_cols)
     base_df = remove_unused_consumption_cols(base_df)
     base_df = add_panel_contraint_cols(base_df)
     base_df = add_upgrade_columns(base_df)
-    # base_df = add_saving_cols(base_df, base_df)  # Intentionally passing base columns twice - zero savings in baseline
-    base_df = add_weighted_cols(base_df)
-    base_df = reorder_columns(base_df, col_maps, is_baseline=True)
     return base_df
 
 
@@ -62,7 +58,8 @@ def process_upgrade_simulation_outputs(
     base_pub_df: pl.LazyFrame,
     upgrade_raw_df: pl.LazyFrame,
     upgrade_num: int,
-    upgrade_renamer: dict[str, str]
+    upgrade_renamer: dict[str, str],
+    upgrade_col_schema: dict[str, str]
 ) -> pl.LazyFrame:
     """
     Publishes the annual results for a specific upgrade.
@@ -90,8 +87,8 @@ def process_upgrade_simulation_outputs(
     )
     if failed_bldgs:
         print(
-            f"Replacig these {len(failed_bldgs)} buildings that only failed in "
-            f"upgrade {upgrade_num} with baseline: {failed_bldgs}"
+            f"Replacing {len(failed_bldgs)} buildings that only failed in "
+            f"upgrade {upgrade_num} with results from baseline: {failed_bldgs}"
         )
 
     upgrade_df = get_transformed_cols(upgrade_df, col_maps)
@@ -112,14 +109,8 @@ def process_upgrade_simulation_outputs(
         c for c in list(set(base_cols) - set(upgrade_cols)) + ["bldg_id"]
         if not any(term in c for term in exclude_terms)
     ]
-    print('Adding missing cols from upgrade to baseline:')
-    for mc in sorted(missing_cols):
-        print(mc)
-    print('\n\n\n')
-
     upgrade_df = upgrade_df.join(base_pub_df.select(missing_cols), on="bldg_id", how="left")
     all_cols = upgrade_df.collect_schema().names()
-    print("Fixing site energy and site emission total for upgrade ...")
     upgrade_df = fix_site_energy_total(upgrade_df, all_cols)
     upgrade_df = fix_all_fuels_emissions(upgrade_df, all_cols)
     upgrade_df = add_upgrade_columns(upgrade_df)
@@ -145,7 +136,8 @@ def process_upgrade_simulation_outputs(
     upgrade_df = add_saving_cols(upgrade_df, base_pub_df)
     upgrade_df = add_panel_contraint_cols(upgrade_df)
     upgrade_df = add_weighted_cols(upgrade_df)
-    upgrade_df = reorder_columns(upgrade_df, col_maps, is_baseline=False)
+    upgrade_df = add_missing_upgrade_cols(upgrade_df, upgrade_col_schema)
+    upgrade_df = reorder_columns(upgrade_df, col_maps)
     return upgrade_df
 
 
@@ -154,6 +146,8 @@ def get_transformed_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl.LazyF
     all_cols = df.collect_schema().names()
     for col_map in col_maps:
         if col_map["column_type"] not in ["Input", "Output"]:
+            continue
+        if not col_map["include"] == 'yes':
             continue
         assert col_map["column_name"] is not None, "ResStock column name must be provided for Input or Output columns"
         if col_map["column_name"] not in all_cols:
@@ -200,7 +194,6 @@ def rename_upgrades(df: pl.LazyFrame, upgrade_renamer: dict) -> pl.LazyFrame:
 
     # Check that each upgrade name is present in the upgrade renamer dict
     up_names = df.select(pl.col("in.upgrade_name")).unique().collect().to_series().to_list()
-    print(up_names)
     for up_name in up_names:
         if not up_name in upgrade_renamer:
             raise ValueError(f"No upgrade rename supplied for: {up_name}")
@@ -229,22 +222,6 @@ def add_income_and_burden(df: pl.LazyFrame) -> pl.LazyFrame:
 
 
 def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame:
-
-    up_cols = set(df.collect_schema().names())
-    base_cols = set(baseline_df.collect_schema().names())
-    in_base_not_up = list(base_cols - up_cols)
-    in_up_not_base = list(up_cols - base_cols)
-    print('in_base_not_up:')
-    for c in in_base_not_up:
-        print(c)
-    print('\n\n\n')
-
-    print('in_up_not_base:')
-    for c in in_up_not_base:
-        print(c)
-    print('\n\n\n')
-
-
     savings_cols = []
     all_cols = df.collect_schema().names()
     out_cols = [col for col in all_cols if 'out.' in col and not (
@@ -261,12 +238,6 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
         or "out.params.panel_breaker_space_occupied" in col
     ]
     out_cols += out_panel_cols
-
-    print('Calculating savings for:')
-    for oc in out_cols:
-        print(oc)
-    print('\n\n\n')
-
     baseline_df_with_renamed = baseline_df.select(
         [pl.col(col).alias(f"baseline_{col}") for col in out_cols] + ["bldg_id"]
     )
@@ -328,6 +299,7 @@ def col_name_to_savings(col_name: str) -> str:
 
 
 def remove_unused_consumption_cols(df: pl.LazyFrame) -> pl.LazyFrame:
+    print("Removing unused (all-zero) energy consumption columns")
     empty_cols = []
     all_cols = df.collect_schema().names()
     out_cols = [col for col in all_cols if 'energy_consumption' in col]
@@ -341,6 +313,7 @@ def remove_unused_consumption_cols(df: pl.LazyFrame) -> pl.LazyFrame:
 
 
 def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:
+    print("Adding weighted columns")
     all_cols = df.collect_schema().names()
     wtd_cols = [col for col in all_cols if 'out.' in col and (
         ".energy_consumption" in col or
@@ -348,13 +321,6 @@ def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:
         ".emissions." in col or
         ".emissions_reduction." in col
         )]
-    # # Selectively include the following for params
-    # out_panel_cols = [col for col in all_cols if
-    #     "out.params.panel_load_total_load" in col
-    #     or "out.params.panel_load_occupied_capacity" in col
-    #     or "out.params.panel_breaker_space_occupied" in col
-    # ]
-    # wtd_cols += out_panel_cols
 
     wtd_col_unit_convs = {
         'kwh': 'tbtu',
@@ -377,6 +343,7 @@ def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:
 
 
 def add_panel_contraint_cols(df: pl.LazyFrame) -> pl.LazyFrame:
+    print("Adding panel constraint columns")
     all_cols = df.collect_schema().names()
     amp_prefix = "out.params.panel_load_headroom_capacity."
     amp_cols = [col for col in all_cols if amp_prefix in col]
@@ -411,6 +378,7 @@ def add_county_column(df: pl.LazyFrame):
     """
     Changes the county column to the FIPS code and adds a county name column.
     """
+    print("Adding county column")
     here = pathlib.Path(__file__).resolve().parent
     county_map_df = pl.read_csv(
         here / "resources" / "gisdata" / "county_lookup_table.csv",
@@ -431,14 +399,44 @@ def add_puma_column(df: pl.LazyFrame):
     """
     Changes the puma column to the GISJOIN code.
     """
+    print("Adding PUMA column")
     here = pathlib.Path(__file__).resolve().parent
     pumas = gpd.read_file(here / "resources" / "gisdata" / "ipums_pums_2010_simple_t100_area_us_puma.geojson")
     puma_map = pumas[["GISJOIN", "puma_tsv"]].set_index("puma_tsv")["GISJOIN"].to_dict()
     df = df.with_columns([pl.col("in.puma").replace(puma_map).alias("in.puma")])
     return df
 
+def get_upgrade_columns(lf: pl.LazyFrame) -> list:
+    upgrade_cols = [c for c in lf.collect_schema().names() if c.startswith("upgrade_costs.") and c.endswith("_name")]
+    if not upgrade_cols:
+        return []
+    upgrade_lf = lf.select(["building_id"] + upgrade_cols)
+    upgrade_df = (
+        upgrade_lf.unpivot(
+            index="building_id",
+            on=upgrade_cols,
+            variable_name="in.upgrade_name",
+            value_name="upgrade_value",
+        )
+        .drop_nulls("upgrade_value")
+        .filter(pl.col("upgrade_value") != "")
+        .with_columns(
+            pl.col("upgrade_value").str.split_exact("|", 1).struct.rename_fields(["upgrade_key", "upgrade_value"])
+        )
+        .unnest("upgrade_value")
+        .collect()
+        .group_by(["building_id", "upgrade_key"])
+        .agg(pl.col("upgrade_value").first())
+        .pivot(index="building_id", columns="upgrade_key", values="upgrade_value")
+    )
+    upgrade_df = upgrade_df.rename(
+        {c: f"upgrade.{c.lower().replace(' ', '_')}" for c in upgrade_df.columns if c != "building_id"}
+    )
+    return upgrade_df.drop("building_id").schema
+
 
 def add_upgrade_columns(lf: pl.LazyFrame) -> pl.LazyFrame:
+    print("Adding upgrade columns from this upgrade")
     upgrade_cols = [c for c in lf.collect_schema().names() if c.startswith("upgrade_costs.") and c.endswith("_name")]
     if not upgrade_cols:
         return lf
@@ -461,25 +459,35 @@ def add_upgrade_columns(lf: pl.LazyFrame) -> pl.LazyFrame:
         .agg(pl.col("upgrade_value").first())
         .pivot(index="bldg_id", columns="upgrade_key", values="upgrade_value")
     )
-    print("Done adding upgrade columns")
     upgrade_df = upgrade_df.rename(
         {c: f"upgrade.{c.lower().replace(' ', '_')}" for c in upgrade_df.columns if c != "bldg_id"}
     )
     return lf.drop(upgrade_cols).join(upgrade_df.lazy(), on="bldg_id", how="left")
 
 
-def reorder_columns(lf: pl.LazyFrame, col_maps: Sequence[dict], is_baseline: bool):
+def add_missing_upgrade_cols(df: pl.LazyFrame, upgrade_col_schema: dict) -> pl.LazyFrame:
+    print("Adding upgrade columns from superset across all upgrades")
+    all_cols = df.collect_schema().names()
+    for col_name, col_dtype in upgrade_col_schema.items():
+        if col_name in all_cols:
+            continue
+        df = df.with_columns(
+            pl.lit(None).cast(col_dtype).alias(col_name)
+        )
+    return df
+
+
+def reorder_columns(lf: pl.LazyFrame, col_maps: Sequence[dict]):
+    print("Reordering columns and checking for missing/extra columns")
     # verify that all the columns in lf are one published_name in col_maps
     all_df_cols = set(lf.collect_schema().names())
-    all_defined_cols = [col_map["published_name"] for col_map in col_maps]
+    all_defined_cols = [col_map["published_name"] for col_map in col_maps if "yes" in col_map["include"]]
     extra_cols = all_df_cols - set(all_defined_cols)
     if extra_cols:
         print(f"Extra columns in output data not defined in publication column definition:")
         for c in sorted(extra_cols):
             print(f"Extra column: {c}")
     missing_cols = [col for col in set(all_defined_cols) - all_df_cols if not col.startswith("upgrade.")]
-    if is_baseline:
-        missing_cols = [col for col in missing_cols if not ("savings" in col or "reduction" in col)]
     if missing_cols:
         print(f"Missing columns in output data that are defined in publication column definition:")
         for c in sorted(missing_cols):
@@ -504,13 +512,7 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
 
     """
 
-    bucket_name = 'oedi-data-lake'
-    if output_dir['fs'].exists(bucket_name):
-        print(f"Bucket {bucket_name} exists")
-    else:
-        print(f"Bucket {bucket_name} does not exist")
-
-    print(f"Exporting metadata for upgrade {upgrade_id}")
+    print(f"Exporting metadata and annual results for upgrade {upgrade_id}")
 
     # Read the cached simulation results
     sim_out_cache_dir = f"{output_dir['fs_path']}/cached_simulation_outputs"
@@ -527,8 +529,6 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
     for ge in geo_exports:
         geo_top_dir = ge['geo_top_dir']
         partition_cols = ge['partition_cols']
-        print('partition_cols')
-        print(partition_cols)
         data_types = ge['data_types']
         file_types = ge['file_types']
         print(f"Exporting {geo_top_dir} by {partition_cols} {data_types} {file_types}")
@@ -575,8 +575,6 @@ def export_metadata_and_annual_results_for_upgrade(output_dir, upgrade_id, geo_e
                     print(f"Queuing {file_path}")
                     input_args = (up_df, output_dir, file_type, file_path)
                     write_geo_data(input_args)
-
-            break
 
 def get_file_path(output_dir, full_geo_dir, geo_prefixes, geo_levels, file_type, data_type, upgrade_id):
     """

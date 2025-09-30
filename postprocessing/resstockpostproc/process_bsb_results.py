@@ -22,6 +22,12 @@ import polars as pl
 from pathlib import Path
 from resstockpostproc.process_metadata import (
     process_baseline_simulation_outputs,
+    get_upgrade_columns,
+    get_col_maps,
+    add_weighted_cols,
+    add_saving_cols,
+    add_missing_upgrade_cols,
+    reorder_columns,
     process_upgrade_simulation_outputs,
     get_upgrade_rename_dict,
     export_metadata_and_annual_results_for_upgrade
@@ -47,7 +53,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
 
     upgrade_files = upgrade_files[0:1] # TODO ANDREW WUZ HERE remove this
 
-    # Process and cache the baseline simulation outputs
+    # Process the baseline simulation outputs
     if not baseline_files:
         print("Error: No baseline files found")
         sys.exit(1)
@@ -56,7 +62,6 @@ def export_metadata_and_annual_results(raw_results_dir: str,
         sys.exit(1)
 
     baseline_file = baseline_files[0]
-    upgrade_id = 0
     print(f"Processing baseline file: {baseline_file}")
     baseline_df = pl.scan_parquet(baseline_file, storage_options=raw_results_dir['storage_options'])
 
@@ -68,31 +73,26 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     )
     print(f"Removing {len(failed_bldgs)} buildings that failed in baseline")
     bs_pub_df = process_baseline_simulation_outputs(baseline_df, upgrade_renamer)
-    sim_out_cache_dir = f"{output_dir['fs_path']}/cached_simulation_outputs"
-    parquet_file_dir = Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
-    parquet_file = parquet_file_dir / f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
-    if isinstance(output_dir['fs'], s3fs.S3FileSystem):
-        parquet_file = f's3://{parquet_file.as_posix()}'
-    else:
-        Path(parquet_file_dir).mkdir(parents=True, exist_ok=True)
-    print(f'Opening: {str(parquet_file)}')
-    with output_dir['fs'].open(str(parquet_file), "wb") as f:
-        bs_pub_df.sink_parquet(f)
-    print(f"Cached simulation outputs for upgrade {upgrade_id} to {parquet_file}")
+
+    # Find the superset of upgrade.foo columns across all upgrades
+    upgrade_col_schema = {}
+    for upgrade_file in upgrade_files:
+        upgrade_df = pl.scan_parquet(upgrade_file, storage_options=raw_results_dir['storage_options'])
+        upgrade_col_schema.update(get_upgrade_columns(upgrade_df))
 
     # Process and cache the upgrade simulation outputs
     upgrade_ids = [0]
+    sim_out_cache_dir = f"{output_dir['fs_path']}/cached_simulation_outputs"
     for upgrade_file in upgrade_files:
         up_info = re.search(r"up(\d+)", Path(upgrade_file).name)
         if up_info is None:
             continue
         upgrade_id = int(up_info.group(1))
         upgrade_ids.append(upgrade_id)
-        print('\n\n\n*******************************************************')
         print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_id}")
         upgrade_df = pl.scan_parquet(upgrade_file, storage_options=raw_results_dir['storage_options'])
         up_df = process_upgrade_simulation_outputs(
-            failed_bldgs, bs_pub_df, upgrade_df, upgrade_id, upgrade_renamer
+            failed_bldgs, bs_pub_df, upgrade_df, upgrade_id, upgrade_renamer, upgrade_col_schema
         )
         parquet_file_dir = Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
         parquet_file = parquet_file_dir / f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
@@ -106,6 +106,23 @@ def export_metadata_and_annual_results(raw_results_dir: str,
         print(f"Cached simulation outputs for upgrade {upgrade_id} to {parquet_file}")
     upgrade_ids.sort()
 
+    # Add savings and weighted columns to baseline and cache
+    col_maps = get_col_maps()
+    bs_pub_df = add_saving_cols(bs_pub_df, bs_pub_df)  # Intentionally passing base columns twice - zero savings in baseline
+    bs_pub_df = add_weighted_cols(bs_pub_df)
+    bs_pub_df = add_missing_upgrade_cols(bs_pub_df, upgrade_col_schema)
+    bs_pub_df = reorder_columns(bs_pub_df, col_maps)
+
+    upgrade_id = 0
+    parquet_file_dir = Path(f"{sim_out_cache_dir}/upgrade={upgrade_id}")
+    parquet_file = parquet_file_dir / f"cached_simulation_outputs_upgrade{upgrade_id}.parquet"
+    if isinstance(output_dir['fs'], s3fs.S3FileSystem):
+        parquet_file = f's3://{parquet_file.as_posix()}'
+    else:
+        Path(parquet_file_dir).mkdir(parents=True, exist_ok=True)
+    with output_dir['fs'].open(str(parquet_file), "wb") as f:
+        bs_pub_df.sink_parquet(f)
+    print(f"Cached simulation outputs for upgrade {upgrade_id} to {parquet_file}")
 
     # Define the geographic partitions to export
     geo_exports = [
@@ -115,14 +132,14 @@ def export_metadata_and_annual_results(raw_results_dir: str,
         'data_types': ['full'],  # TODO add basic
         'file_types': ['parquet'], # 'csv',
     },
-    # {
-    #     'geo_top_dir': 'by_state',
-    #     'partition_cols': {
-    #         'in.state': 'state'
-    #     },
-    #     'data_types': ['full'],  # TODO add basic
-    #     'file_types': ['csv', 'parquet'],
-    # }
+    {
+        'geo_top_dir': 'by_state',
+        'partition_cols': {
+            'in.state': 'state'
+        },
+        'data_types': ['full'],  # TODO add basic
+        'file_types': ['csv', 'parquet'],
+    }
     ]
 
     for upgrade_id in upgrade_ids:
