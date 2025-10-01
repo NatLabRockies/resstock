@@ -65,6 +65,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
             upgrade_foo_col_schema
         )
     cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, bs_pub_df)
+    base_cols = set(sorted(bs_pub_df.collect_schema().names()))
 
     # Process and cache the upgrade simulation outputs
     upgrade_ids = []
@@ -86,6 +87,9 @@ def export_metadata_and_annual_results(raw_results_dir: str,
             upgrade_foo_col_schema
         )
         cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, up_df)
+        up_cols = set(sorted(up_df.collect_schema().names()))
+        if not base_cols == up_cols:
+            raise ValueError(f"Column set in baseline and upgrade don't match")
     upgrade_ids.sort()
 
     # Define the geographic partitions to export
