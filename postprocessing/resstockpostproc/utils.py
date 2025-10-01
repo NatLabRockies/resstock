@@ -30,11 +30,12 @@ def remove_all_empty_cols(df: pl.DataFrame):
     cleaned_base = df.drop(all_empty_cols)
     return cleaned_base
 
-def fix_site_energy_total(df: pl.LazyFrame, all_cols: List[str]):
+def fix_site_energy_total(df: pl.LazyFrame):
     """
     We need to do this because normally site energy total includes coal and wood but we don't want to include those.
     """
     print("Removing coal and wood from energy totals")
+    all_cols = df.collect_schema().names()
     updated_cols = []
     for suffix in ['', '_intensity', 'energy_consumption..kwh', 'energy_savings..kwh']:
         if f'out.electricity.total.{suffix}' not in df:
@@ -51,12 +52,13 @@ def fix_site_energy_total(df: pl.LazyFrame, all_cols: List[str]):
             updated_cols.append(net_electricity_col.alias(f'out.electricity.net.{suffix}'))
     return df.with_columns(updated_cols)
 
-def fix_all_fuels_emissions(df: pl.LazyFrame, all_cols: List[str]):
+def fix_all_fuels_emissions(df: pl.LazyFrame):
     """
     Recalculate out.all_fuels.total.<scenario_name>.co2e_kg columns using
     only the subset of fuel total columns. Basically, exclude wood from the all_fuel emissions.
     """
     print("Removing coal and wood from emissions totals")
+    all_cols = df.collect_schema().names()
     all_fuel_cols = []
     emissions_re = re.compile(r"^out\.emissions\.(electricity|natural_gas|fuel_oil|propane).(\w+)..co2e_kg")
 
@@ -82,7 +84,8 @@ def get_col_maps():
                     pl.col("Published Annual Name").is_not_null()
         ).select(
                 pl.col('Column Type').alias('column_type'),
-                pl.col('Include').alias('include'),
+                pl.col('Import From Raw').alias('import_from_raw'),
+                pl.col('Publish In Full').alias('publish_in_full'),
                 pl.col("Annual Name").alias('column_name'),
                 pl.col("Published Annual Name").alias('published_name'),
                 pl.col("ResStock To Published Annual Unit Conversion Factor").alias("conversion_factor")
