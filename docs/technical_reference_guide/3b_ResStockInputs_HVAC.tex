@@ -744,7 +744,7 @@ Option name &
 
 For the argument definitions, see Table \ref{table:arg_def_hvac_sec_par}. See the OpenStudio-HPXML \href{https://openstudio-hpxml.readthedocs.io/en/v1.10.0/workflow_inputs.html#hpxml-heating-systems}{Heating Systems} documentation for the available HPXML schema elements, default values, and constraints.
 
-\begin{longtable}[]{|p{4cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.3cm}|}\caption{HVAC Secondary Heating Partial Space Conditioning options and arguments that vary for each option} \label{table:arg_def_hvac_sec_par} \\
+\begin{longtable}[]{|p{4cm}|p{1.5cm}|p{1.3cm}|p{1.1cm}|p{3.3cm}|}\caption{The ResStock argument definitions set in the HVAC Secondary Heating Partial Space Conditioning characteristic} \label{table:arg_def_hvac_sec_par} \\
 \toprule\noalign{}
 Name & Required & Units & Type &  Description \\
 \midrule\noalign{}
@@ -942,8 +942,8 @@ The fraction of cooling load served by the cooling system. This is approximately
 
 \paragraph{Distribution Data Source(s)}
 \begin{itemize}
-\item Constructed using U.S.~EIA 2009 RECS microdata.
-\item Hawaii constructed using U.S. EIA 2020 Residential Energy Consumption Survey (RECS) microdata.
+\item Constructed using U.S. EIA 2020 RECS microdata in Hawaii.
+\item Constructed using U.S. EIA 2009 RECS microdata in all locations except Hawaii.
 \end{itemize}
 
 \paragraph{Direct Conditional Dependencies}
@@ -989,7 +989,7 @@ Double &  The cooling load served by the cooling system. \\
 \paragraph{Distribution Assumption(s)}
 \begin{itemize}
     \item Central AC systems need to serve at least 60\% of the floor area.
-    \item Heat pumps serve 100\% of the floor area because the system serves 100\% of the heated floor area, except in Hawaii.
+    \item Heat pumps serve 100\% of the floor area in all locations except Hawaii because the system serves 100\% of the heated floor area. Partial cooling is common in cooling dominated climate.
     \item Due to low sample count, this input is constructed by downscaling a core sub-input file with 3 sub-input files of different dependencies. The sub-input files have the following dependencies: 
     \begin{itemize}
         \item input1 : ‘HVAC Cooling Type’, ‘ASHRAE IECC Climate Zone 2004---Sub-CZ Split’
