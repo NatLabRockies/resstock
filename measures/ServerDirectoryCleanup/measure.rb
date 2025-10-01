@@ -50,6 +50,11 @@ class ServerDirectoryCleanup < OpenStudio::Measure::ReportingMeasure
     arg.setDefaultValue(false)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('retain_eplusout_csv', true)
+    arg.setDisplayName('Retain eplusout.csv')
+    arg.setDefaultValue(false)
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument.makeBoolArgument('retain_eplusout_eio', true)
     arg.setDisplayName('Retain eplusout.eio')
     arg.setDefaultValue(false)
@@ -90,8 +95,28 @@ class ServerDirectoryCleanup < OpenStudio::Measure::ReportingMeasure
     arg.setDefaultValue(false)
     args << arg
 
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('retain_eplusout_sql', true)
+    arg.setDisplayName('Retain eplusout.sql')
+    arg.setDefaultValue(false)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('retain_eplusout_perflog_csv', true)
+    arg.setDisplayName('Retain eplusout_perflog.csv')
+    arg.setDefaultValue(false)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('retain_eplusout_json', true)
+    arg.setDisplayName('Retain eplusout*.json')
+    arg.setDefaultValue(false)
+    args << arg
+
     arg = OpenStudio::Measure::OSArgument.makeBoolArgument('retain_eplusout_msgpack', true)
     arg.setDisplayName('Retain eplusout*.msgpack')
+    arg.setDefaultValue(false)
+    args << arg
+
+    arg = OpenStudio::Measure::OSArgument.makeBoolArgument('retain_eplusmtr_csv', true)
+    arg.setDisplayName('Retain eplusmtr.csv')
     arg.setDefaultValue(false)
     args << arg
 
@@ -157,6 +182,7 @@ class ServerDirectoryCleanup < OpenStudio::Measure::ReportingMeasure
       :retain_pre_process_idf => 'pre-preprocess.idf',
       :retain_eplusout_audit => 'eplusout.audit',
       :retain_eplusout_bnd => 'eplusout.bnd',
+      :retain_eplusout_csv => 'eplusout.csv',
       :retain_eplusout_eio => 'eplusout.eio',
       :retain_eplusout_end => 'eplusout.end',
       :retain_eplusout_err => 'eplusout.err',
@@ -165,7 +191,11 @@ class ServerDirectoryCleanup < OpenStudio::Measure::ReportingMeasure
       :retain_eplusout_mtd => 'eplusout.mtd',
       :retain_eplusout_rdd => 'eplusout.rdd',
       :retain_eplusout_shd => 'eplusout.shd',
+      :retain_eplusout_sql => 'eplusout.sql',
+      :retain_eplusout_perflog_csv => 'eplusout_perflog.csv',
+      :retain_eplusout_json => 'eplusout*.json',
       :retain_eplusout_msgpack => 'eplusout*.msgpack',
+      :retain_eplusmtr_csv => 'eplusmtr.csv',
       :retain_eplustbl_htm => 'eplustbl.htm',
       :retain_stdout_energyplus => 'stdout-energyplus',
       :retain_stdout_expandobject => 'stdout-expandobject',
