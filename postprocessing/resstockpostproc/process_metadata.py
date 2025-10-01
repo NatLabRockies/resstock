@@ -51,6 +51,7 @@ def process_simulation_outputs(
 
     # TODO move no-op functionality for baseline vs. upgrade inside functions, add is_baseline as argument
     df = upgrade_raw_df
+    df = set_baseline_applicability(df) if is_baseline else df
     df = add_missing_cols_from_baseline_to_upgrade(df, base_raw_df) if not is_baseline else df
     df = replace_missing_buildings_with_baseline(df, base_raw_df, upgrade_num) if not is_baseline else df
     df = downselect_and_rename_cols(df, col_maps)  # Per sdr_column_definitions.csv
@@ -60,12 +61,10 @@ def process_simulation_outputs(
     df = add_county_column(df)
     df = add_puma_column(df)
     df = add_baseline_upgrade_name_col(df) if is_baseline else df
-    df = set_baseline_applicability(df) if is_baseline else df
     df = add_upgrade_id_col(df, upgrade_num)
     df = rename_upgrades(df, upgrade_renamer)
     df = fix_site_energy_total(df)
     df = add_upgrade_foo_cols(df)
-    df = remove_unused_consumption_cols(df)
     df = add_panel_contraint_cols(df)
     df = fix_all_fuels_emissions(df)
     df = downselect_fuel_emissions_cols(df)
@@ -155,7 +154,9 @@ def add_missing_cols_from_baseline_to_upgrade(upgrade_df: pl.LazyFrame, baseline
 
 
 def replace_missing_buildings_with_baseline(upgrade_df: pl.LazyFrame, baseline_df: pl.LazyFrame, upgrade_id: int) -> pl.LazyFrame:
-    cols_at_start = set(upgrade_df.collect_schema().names())
+    print('Replacing buildings missing from the upgrade with baseline data')
+    # All buildings present in the upgrade_df are there because the upgrade was applicable to them
+    upgrade_df = upgrade_df.with_columns(pl.lit(True).alias("applicability"))
     upgrade_name_df = upgrade_df.select(pl.col("apply_upgrade.upgrade_name").first())
     missing_bldgs_df = baseline_df.join(
         upgrade_df,
@@ -164,23 +165,17 @@ def replace_missing_buildings_with_baseline(upgrade_df: pl.LazyFrame, baseline_d
     )
     missing_bldgs_df = missing_bldgs_df.with_columns(
         [
-            pl.lit(False).alias("applicability"),
-            pl.lit(upgrade_id).alias("upgrade"),
+            pl.lit(False).alias("applicability"),  # Missing buildings are missing b/c upgrade wasn't applicable
         ]
     ).drop("apply_upgrade.upgrade_name")
     missing_bldgs_df = missing_bldgs_df.join(upgrade_name_df, how="cross")
     upgrade_df = pl.concat([upgrade_df, missing_bldgs_df], how="diagonal_relaxed")
-
-    cols_at_end = set(upgrade_df.collect_schema().names())
-    if not cols_at_start == cols_at_end:
-        new_cols = cols_at_end - cols_at_start
-        print(f'Added: {new_cols}')
-
     return upgrade_df
+
 
 def downselect_and_rename_cols(df: pl.LazyFrame, col_maps: Sequence[dict]) -> pl.LazyFrame:
     print('Downselecting and renaming columns from raw simulation outputs per sdr_column_definitions.csv')
-    transformed_cols = []
+    transformed_cols = ['applicability']  # Special case
     all_cols = df.collect_schema().names()
     for col_map in col_maps:
         if col_map["column_type"] not in ["Input", "Output"]:
@@ -346,20 +341,6 @@ def col_name_to_savings(col_name: str) -> str:
         raise ValueError(f"Cannot convert column name {col_name} to savings column")
 
     return converted_col_name
-
-
-def remove_unused_consumption_cols(df: pl.LazyFrame) -> pl.LazyFrame:
-    print("Removing unused (all-zero) energy consumption columns")
-    empty_cols = []
-    all_cols = df.collect_schema().names()
-    out_cols = [col for col in all_cols if 'energy_consumption' in col]
-    engy_df = df.select(out_cols).collect().sum()
-    for col, val in engy_df.to_dicts()[0].items():
-        if val == 0:
-            empty_cols.append(col)
-            print(f'Dropping unused (all-zeroes) energy column: {col}')
-
-    return df.drop(empty_cols)
 
 
 def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:

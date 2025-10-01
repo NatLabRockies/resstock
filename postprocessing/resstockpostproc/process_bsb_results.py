@@ -38,33 +38,31 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     raw_results_dir = setup_fsspec_filesystem(raw_results_dir, aws_profile_name)
     output_dir = setup_fsspec_filesystem(output_dir, aws_profile_name)
 
-    # output_path = Path(output_dir)
-    # output_path.mkdir(parents=True, exist_ok=True)
+    # Find the raw results files
     pqt_glob = f'{raw_results_dir["fs_path"]}/**/*.parquet'
     result_files = raw_results_dir['fs'].glob(pqt_glob)
     baseline_files = [f for f in result_files if "up00" in Path(f).name.lower()]
     upgrade_files = [f for f in result_files if "up00" not in Path(f).name.lower()]
 
-    upgrade_files = upgrade_files[0:1] # TODO ANDREW WUZ HERE remove this
-
+    # Information used across upgrades
     upgrade_renamer = get_upgrade_rename_dict(raw_results_dir)
     upgrade_foo_col_schema = get_upgrade_foo_col_schema(upgrade_files, raw_results_dir)
     sim_out_cache_dir = Path(f"{output_dir['fs_path']}/cached_simulation_outputs")
 
     # Process and cache the baseline simulation outputs
-    # if not baseline_files:
-    #     print("Error: No baseline files found")
-    #     sys.exit(1)
-    # if len(baseline_files) > 1:
-    #     print("Error: More than one baseline file found")
-    #     sys.exit(1)
     upgrade_id = 0
     baseline_file = baseline_files[0]
     print(f"Processing baseline file: {baseline_file}")
     baseline_df = pl.scan_parquet(baseline_file, storage_options=raw_results_dir['storage_options'])
     failed_bldgs = get_failed_building_list(baseline_df)
     bs_pub_df = process_simulation_outputs(
-            failed_bldgs, baseline_df, None, baseline_df, upgrade_id, upgrade_renamer, upgrade_foo_col_schema
+            failed_bldgs,
+            baseline_df,
+            None,
+            baseline_df,
+            upgrade_id,
+            upgrade_renamer,
+            upgrade_foo_col_schema
         )
     cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, bs_pub_df)
 
@@ -79,7 +77,13 @@ def export_metadata_and_annual_results(raw_results_dir: str,
         print(f"Processing upgrade file: {upgrade_file}, upgrade number: {upgrade_id} {'*'*100}")
         upgrade_df = pl.scan_parquet(upgrade_file, storage_options=raw_results_dir['storage_options'])
         up_df = process_simulation_outputs(
-            failed_bldgs, baseline_df, bs_pub_df, upgrade_df, upgrade_id, upgrade_renamer, upgrade_foo_col_schema
+            failed_bldgs,
+            baseline_df,
+            bs_pub_df,
+            upgrade_df,
+            upgrade_id,
+            upgrade_renamer,
+            upgrade_foo_col_schema
         )
         cache_simulation_outputs_file(output_dir, sim_out_cache_dir, upgrade_id, up_df)
     upgrade_ids.sort()
