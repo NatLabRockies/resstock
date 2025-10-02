@@ -74,6 +74,7 @@ def process_simulation_outputs(
     else:
         df = add_saving_cols(df, base_pub_df)
 
+    df = add_intensity_cols(df)
     df = add_weighted_cols(df)
     df = add_missing_upgrade_cols(df, upgrade_col_schema)
     df = downselect_and_order_pub_cols(df, col_maps)  # Per sdr_column_definitions.csv
@@ -294,6 +295,36 @@ def add_saving_cols(df: pl.LazyFrame, baseline_df: pl.LazyFrame) -> pl.LazyFrame
     return df
 
 
+def col_name_to_intensity(col_name: str, new_units=None) -> str:
+    col_name = col_name.replace('energy_consumption', 'energy_consumption_intensity')
+    col_name = col_name.replace('energy_savings', 'energy_savings_intensity')
+    if new_units is not None:
+        old_units = units_from_col_name(col_name)
+        col_name = col_name.replace(f'..{old_units}', f'..{new_units}')
+
+    return col_name
+
+
+def add_intensity_cols(df: pl.LazyFrame) -> pl.LazyFrame:
+    print("Adding intensity columns")
+    all_cols = df.collect_schema().names()
+    int_cols = [col for col in all_cols if 'out.' in col and (
+        ".energy_consumption" in col or
+        ".energy_savings" in col
+        )]
+
+    for col in int_cols:
+        new_units = "kwh_per_ft2"
+        wtd_col_name = col_name_to_intensity(col, new_units)
+        df = df.with_columns(
+            pl.col(col)
+            .truediv(pl.col("in.sqft..ft2"))
+            .alias(wtd_col_name)
+        )
+
+    return df
+
+
 def col_name_to_weighted(col_name: str, new_units=None) -> str:
     col_name = col_name.replace('out.', 'calc.')
     col_name = col_name.replace('calc.', 'calc.weighted.')
@@ -347,8 +378,8 @@ def add_weighted_cols(df: pl.LazyFrame) -> pl.LazyFrame:
     print("Adding weighted columns")
     all_cols = df.collect_schema().names()
     wtd_cols = [col for col in all_cols if 'out.' in col and (
-        ".energy_consumption" in col or
-        ".energy_savings" in col or
+        ".energy_consumption." in col or
+        ".energy_savings." in col or
         ".emissions." in col or
         ".emissions_reduction." in col
         )]
