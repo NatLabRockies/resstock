@@ -68,7 +68,7 @@ def fix_all_fuels_emissions(df: pl.LazyFrame):
             scenario2cols[match[2]].append(col)
 
     for scenario, cols in scenario2cols.items():
-        new_col = f'out.emissions.all_fuels.{scenario}..co2e_kg'
+        new_col = f'out.emissions.total.{scenario}..co2e_kg'
         all_fuel_cols.append(pl.sum_horizontal(cols).alias(new_col))
 
     return df.with_columns(all_fuel_cols)

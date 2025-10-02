@@ -68,7 +68,7 @@ def export_metadata_and_annual_results(raw_results_dir: str,
     base_cols = set(sorted(bs_pub_df.collect_schema().names()))
 
     # Process and cache the upgrade simulation outputs
-    upgrade_ids = []
+    upgrade_ids = [0]
     for upgrade_file in upgrade_files:
         up_info = re.search(r"up(\d+)", Path(upgrade_file).name)
         if up_info is None:
