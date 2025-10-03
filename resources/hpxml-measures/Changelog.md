@@ -1,18 +1,20 @@
 ## OpenStudio-HPXML v1.11.0
 
 __New Features__
-- Updates to HPXML v4.2-rc3.
+- Updates to HPXML v4.2.
 - Allows optional `UsageMultiplier` for electric vehicles described using `Vehicles`.
 - Water heater improvements:
-  - Improves tank losses when using `EnergyFactor` as the metric; now consistent with how `UniformEnergyFactor` is handled.
+  - Improves electric water heater tank losses when using `EnergyFactor` as the metric; now consistent with how `UniformEnergyFactor` is handled.
   - Improves HPWH tank volume defaulting, particularly when `NumberofResidents` is provided.
 - Updated site defaults:
   - `Address/CityMunicipality`, `Address/StateCode`, `GeoLocation/Latitude`, `GeoLocation/Longitude`, and `TimeZone/UTCOffset` now default based on zip code if available.
   - `TimeZone/DSTObserved` now defaults to false if `Address/StateCode` is 'AZ' or 'HI'.
 - Minor PV improvements:
-  - Allow `PVSystem/AttachedToInverter` to be omitted (unless there are multiple `Inverter` elements)
+  - Allow `PVSystem/AttachedToInverter` to be omitted (unless there are multiple `Inverter` elements).
   - Allow multiple inverters with different efficiencies and use a weighted-average efficiency in the model (previously threw an error)
 - Updates shared pump power for ground-source heat pumps on a shared recirculation loop to cycle with heating/cooling load rather than operate continuously per RESNET HERS Addendum 94.
+- BuildResidentialHPXML measure:
+  - Automatically adjusts garage dimensions for dwelling units with small footprints to avoid errors.
 
 __Bugfixes__
 - Fixes ground-source heat pump plant loop fluid type (workaround for OpenStudio bug).
