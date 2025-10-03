@@ -57,11 +57,6 @@ class ResStockArguments < OpenStudio::Measure::ModelMeasure
     arg.setDescription('The building unit number (between 1 and the number of samples).')
     args << arg
 
-    arg = OpenStudio::Measure::OSArgument::makeBoolArgument('whole_sfa_or_mf_building_sim', false)
-    arg.setDisplayName('Whole SFA/MF Building Simulation?')
-    arg.setDescription('If the HPXML file represents a single family-attached/multifamily building with multiple dwelling units defined, specifies whether to run the HPXML file as a single whole building model.')
-    args << arg
-
     site_iecc_zone_choices = OpenStudio::StringVector.new
     Constants::IECCZones.each do |iz|
       site_iecc_zone_choices << iz

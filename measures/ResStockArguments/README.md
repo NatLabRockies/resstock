@@ -11,6 +11,30 @@ Passes in all ResStockArguments arguments from the options lookup, processes the
 ## Arguments
 
 
+**Simulation Control: Timestep**
+
+The timestep for the simulation; defaults to hourly calculations for fastest runtime.
+
+- **Name:** ``simulation_control_timestep``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `60`, `30`, `20`, `15`, `12`, `10`, `6`, `5`, `4`, `3`, `2`, `1`
+
+<br/>
+
+**Simulation Control: Run Period**
+
+Enter a date range like 'Mar 1 - May 31'. Defaults to the entire year.
+
+- **Name:** ``simulation_control_run_period``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **Location: Zip Code**
 
 Zip code of the home address. Either this or the EnergyPlus Weather (EPW) File Path input below must be provided.
@@ -30,6 +54,19 @@ Path to the EPW file. Either this or the Zip Code input above must be provided.
 - **Type:** ``String``
 
 - **Required:** ``false``
+
+<br/>
+
+**Location: Site Type**
+
+The terrain/shielding of the home, for the infiltration model. Defaults to 'Suburban, Normal' for single-family detached and manufactured home and 'Suburban, Well-Shielded' for single-family attached and apartment units.
+
+- **Name:** ``location_site_type``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `Default`, `Suburban, Normal`, `Suburban, Well-Shielded`, `Suburban, Exposed`, `Urban, Normal`, `Urban, Well-Shielded`, `Urban, Exposed`, `Rural, Normal`, `Rural, Well-Shielded`, `Rural, Exposed`
 
 <br/>
 
@@ -54,6 +91,19 @@ The year the building was built.
 - **Type:** ``Integer``
 
 - **Required:** ``false``
+
+<br/>
+
+**Geometry: Unit Attached Walls**
+
+For single-family attached and apartment units, the location(s) of the attached walls.
+
+- **Name:** ``geometry_attached_walls``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `None`, `1 Side: Front`, `1 Side: Back`, `1 Side: Left`, `1 Side: Right`, `2 Sides: Front, Left`, `2 Sides: Front, Right`, `2 Sides: Back, Left`, `2 Sides: Back, Right`, `2 Sides: Front, Back`, `2 Sides: Left, Right`, `3 Sides: Front, Back, Left`, `3 Sides: Front, Back, Right`, `3 Sides: Front, Left, Right`, `3 Sides: Back, Left, Right`
 
 <br/>
 
@@ -595,7 +645,7 @@ The type and efficiency of the cooling system. Use 'None' if there is no cooling
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Central AC, SEER 8.0`, `Central AC, SEER 10.0`, `Central AC, SEER 13.0`, `Central AC, SEER 14.0`, `Central AC, SEER 15.0`, `Central AC, SEER2 13.4`, `Central AC, SEER2 14.0`, `Central AC, SEER2 15.0`, `Central AC, SEER2 16.0`, `Central AC, SEER2 17.0`, `Central AC, SEER2 18.0`, `Central AC, SEER2 19.0`, `Central AC, SEER2 20.0`, `Central AC, SEER2 21.0`, `Central AC, SEER2 22.0`, `Central AC, SEER2 23.0`, `Central AC, SEER2 24.0`, `Central AC, SEER2 25.0`, `Ductless Mini-Split AC, SEER2 14.5`, `Ductless Mini-Split AC, SEER2 16.0`, `Ductless Mini-Split AC, SEER2 17.0`, `Ductless Mini-Split AC, SEER2 18.0`, `Ductless Mini-Split AC, SEER2 19.0`, `Ductless Mini-Split AC, SEER2 20.0`, `Ductless Mini-Split AC, SEER2 21.0`, `Ductless Mini-Split AC, SEER2 22.0`, `Ductless Mini-Split AC, SEER2 23.0`, `Ductless Mini-Split AC, SEER2 24.0`, `Ductless Mini-Split AC, SEER2 25.0`, `Ductless Mini-Split AC, SEER2 26.0`, `Ductless Mini-Split AC, SEER2 27.0`, `Ductless Mini-Split AC, SEER2 28.0`, `Room AC, CEER 8.4`, `Room AC, CEER 9.7`, `Room AC, CEER 10.6`, `Room AC, CEER 11.8`, `Room AC, CEER 13.1`, `Packaged Terminal AC, EER 8.5`, `Packaged Terminal AC, EER 9.8`, `Packaged Terminal AC, EER 10.7`, `Packaged Terminal AC, EER 11.9`, `Packaged Terminal AC, EER 13.2`, `Evaporative Cooler`, `Detailed Example: Central AC, SEER2 13.4, Absolute Detailed Performance`, `Detailed Example: Central AC, SEER2 17.1, Absolute Detailed Performance`, `Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance`, `Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance`, `Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Absolute Detailed Performance`, `Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Normalized Detailed Performance`
+- **Choices:** `None`, `Central AC, SEER 8.0`, `Central AC, SEER 10.0`, `Central AC, SEER 13.0`, `Central AC, SEER 14.0`, `Central AC, SEER 15.0`, `Central AC, SEER2 13.4`, `Central AC, SEER2 13.8`, `Central AC, SEER2 14.0`, `Central AC, SEER2 14.3`, `Central AC, SEER2 15.0`, `Central AC, SEER2 16.0`, `Central AC, SEER2 17.0`, `Central AC, SEER2 18.0`, `Central AC, SEER2 19.0`, `Central AC, SEER2 20.0`, `Central AC, SEER2 21.0`, `Central AC, SEER2 22.0`, `Central AC, SEER2 23.0`, `Central AC, SEER2 24.0`, `Central AC, SEER2 25.0`, `Ductless Mini-Split AC, SEER2 14.5`, `Ductless Mini-Split AC, SEER2 16.0`, `Ductless Mini-Split AC, SEER2 17.0`, `Ductless Mini-Split AC, SEER2 18.0`, `Ductless Mini-Split AC, SEER2 19.0`, `Ductless Mini-Split AC, SEER2 20.0`, `Ductless Mini-Split AC, SEER2 21.0`, `Ductless Mini-Split AC, SEER2 22.0`, `Ductless Mini-Split AC, SEER2 23.0`, `Ductless Mini-Split AC, SEER2 24.0`, `Ductless Mini-Split AC, SEER2 25.0`, `Ductless Mini-Split AC, SEER2 26.0`, `Ductless Mini-Split AC, SEER2 27.0`, `Ductless Mini-Split AC, SEER2 28.0`, `Room AC, CEER 8.4`, `Room AC, CEER 9.7`, `Room AC, CEER 10.6`, `Room AC, CEER 11.8`, `Room AC, CEER 13.1`, `Packaged Terminal AC, EER 8.5`, `Packaged Terminal AC, EER 9.8`, `Packaged Terminal AC, EER 10.7`, `Packaged Terminal AC, EER 11.9`, `Packaged Terminal AC, EER 13.2`, `Evaporative Cooler`, `Detailed Example: Central AC, SEER2 13.4, Absolute Detailed Performance`, `Detailed Example: Central AC, SEER2 17.1, Absolute Detailed Performance`, `Detailed Example: Central AC, SEER 17.5, Absolute Detailed Performance`, `Detailed Example: Central AC, SEER 17.5, Normalized Detailed Performance`, `Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Absolute Detailed Performance`, `Detailed Example: Ductless Mini-Split AC, SEER2 19.0, Normalized Detailed Performance`
 
 <br/>
 
@@ -634,7 +684,7 @@ The type and efficiency of the heat pump.
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Central HP, SEER 8.0, HSPF 6.0`, `Central HP, SEER 10.0, HSPF 6.8`, `Central HP, SEER 13.0, HSPF 7.7`, `Central HP, SEER 14.0, HSPF 8.2`, `Central HP, SEER 15.0, HSPF 8.5`, `Central HP, SEER2 13.4, HSPF2 7.0`, `Central HP, SEER2 14.0, HSPF2 7.3`, `Central HP, SEER2 15.0, HSPF2 7.6`, `Central HP, SEER2 16.0, HSPF2 7.9`, `Central HP, SEER2 17.0, HSPF2 8.2`, `Central HP, SEER2 18.0, HSPF2 8.5`, `Central HP, SEER2 19.0, HSPF2 8.7`, `Central HP, SEER2 20.0, HSPF2 9.0`, `Central HP, SEER2 21.0, HSPF2 9.2`, `Central HP, SEER2 22.0, HSPF2 9.5`, `Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7`, `Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1`, `Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5`, `Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8`, `Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0`, `Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4`, `Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7`, `Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1`, `Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4`, `Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7`, `Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0`, `Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4`, `Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7`, `Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0`, `Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3`, `Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7`, `Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3`, `Geothermal HP, EER 16.6, COP 3.6`, `Geothermal HP, EER 18.6, COP 3.8`, `Geothermal HP, EER 20.5, COP 4.0`, `Geothermal HP, EER 30.9, COP 4.4`, `Room HP, CEER 8.4, COP 2.7`, `Room HP, CEER 9.7, COP 3.0`, `Room HP, CEER 10.6, COP 3.3`, `Room HP, CEER 11.8, COP 3.6`, `Room HP, CEER 13.1, COP 3.9`, `Packaged Terminal HP, EER 8.5, COP 2.7`, `Packaged Terminal HP, EER 9.8, COP 3.0`, `Packaged Terminal HP, EER 10.7, COP 3.3`, `Packaged Terminal HP, EER 11.9, COP 3.6`, `Packaged Terminal HP, EER 13.2, COP 3.9`, `Detailed Example: Central HP, SEER 13.0, HSPF 9.85`, `Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance`, `Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance`, `Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance`
+- **Choices:** `None`, `Central HP, SEER 8.0, HSPF 6.0`, `Central HP, SEER 10.0, HSPF 6.8`, `Central HP, SEER 13.0, HSPF 7.7`, `Central HP, SEER 14.0, HSPF 8.2`, `Central HP, SEER 15.0, HSPF 8.5`, `Central HP, SEER2 13.4, HSPF2 7.0`, `Central HP, SEER2 14.0, HSPF2 7.3`, `Central HP, SEER2 14.3, HSPF2 7.5`, `Central HP, SEER2 15.0, HSPF2 7.6`, `Central HP, SEER2 16.0, HSPF2 7.9`, `Central HP, SEER2 17.0, HSPF2 8.2`, `Central HP, SEER2 18.0, HSPF2 8.5`, `Central HP, SEER2 19.0, HSPF2 8.7`, `Central HP, SEER2 20.0, HSPF2 9.0`, `Central HP, SEER2 21.0, HSPF2 9.2`, `Central HP, SEER2 22.0, HSPF2 9.5`, `Ductless Mini-Split HP, SEER2 14.5, HSPF2 7.7`, `Ductless Mini-Split HP, SEER2 16.0, HSPF2 8.1`, `Ductless Mini-Split HP, SEER2 17.0, HSPF2 8.5`, `Ductless Mini-Split HP, SEER2 18.0, HSPF2 8.8`, `Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0`, `Ductless Mini-Split HP, SEER2 20.0, HSPF2 9.4`, `Ductless Mini-Split HP, SEER2 21.0, HSPF2 9.7`, `Ductless Mini-Split HP, SEER2 22.0, HSPF2 10.1`, `Ductless Mini-Split HP, SEER2 23.0, HSPF2 10.4`, `Ductless Mini-Split HP, SEER2 24.0, HSPF2 10.7`, `Ductless Mini-Split HP, SEER2 25.0, HSPF2 11.0`, `Ductless Mini-Split HP, SEER2 26.0, HSPF2 11.4`, `Ductless Mini-Split HP, SEER2 27.0, HSPF2 11.7`, `Ductless Mini-Split HP, SEER2 28.0, HSPF2 12.0`, `Ductless Mini-Split HP, SEER2 29.0, HSPF2 12.3`, `Ductless Mini-Split HP, SEER2 30.0, HSPF2 12.7`, `Ductless Mini-Split HP, SEER2 32.0, HSPF2 13.3`, `Geothermal HP, EER 16.6, COP 3.6`, `Geothermal HP, EER 18.6, COP 3.8`, `Geothermal HP, EER 20.5, COP 4.0`, `Geothermal HP, EER 30.9, COP 4.4`, `Room HP, CEER 8.4, COP 2.7`, `Room HP, CEER 9.7, COP 3.0`, `Room HP, CEER 10.6, COP 3.3`, `Room HP, CEER 11.8, COP 3.6`, `Room HP, CEER 13.1, COP 3.9`, `Packaged Terminal HP, EER 8.5, COP 2.7`, `Packaged Terminal HP, EER 9.8, COP 3.0`, `Packaged Terminal HP, EER 10.7, COP 3.3`, `Packaged Terminal HP, EER 11.9, COP 3.6`, `Packaged Terminal HP, EER 13.2, COP 3.9`, `Detailed Example: Central HP, SEER 13.0, HSPF 9.85`, `Detailed Example: Central HP, SEER2 13.4, HSPF2 7.0, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER2 17.1, HSPF2 7.9, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Absolute Detailed Performance`, `Detailed Example: Central HP, SEER 17.5, HSPF 9.5, Normalized Detailed Performance`, `Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Absolute Detailed Performance`, `Detailed Example: Ductless Mini-Split HP, SEER2 19.0, HSPF2 9.0, Normalized Detailed Performance`
 
 <br/>
 
@@ -781,6 +831,50 @@ The fraction of the heating load served by the second heating system.
 
 <br/>
 
+**HVAC Control: Heating Weekday Setpoint Schedule**
+
+Specify the constant or 24-hour comma-separated weekday heating setpoint schedule.
+
+- **Name:** ``hvac_control_heating_weekday_setpoint``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC Control: Heating Weekend Setpoint Schedule**
+
+Specify the constant or 24-hour comma-separated weekend heating setpoint schedule.
+
+- **Name:** ``hvac_control_heating_weekend_setpoint``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC Control: Cooling Weekday Setpoint Schedule**
+
+Specify the constant or 24-hour comma-separated weekday cooling setpoint schedule.
+
+- **Name:** ``hvac_control_cooling_weekday_setpoint``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
+**HVAC Control: Cooling Weekend Setpoint Schedule**
+
+Specify the constant or 24-hour comma-separated weekend cooling setpoint schedule.
+
+- **Name:** ``hvac_control_cooling_weekend_setpoint``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **HVAC Control: Heating Season Period**
 
 Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availability.
@@ -903,7 +997,7 @@ The type and efficiency of the water heater.
 
 - **Required:** ``true``
 
-- **Choices:** `None`, `Electricity, Tank, UEF 0.90`, `Electricity, Tank, UEF 0.92`, `Electricity, Tank, UEF 0.94`, `Electricity, Tankless, UEF 0.94`, `Electricity, Tankless, UEF 0.98`, `Electricity, Heat Pump, UEF 3.50`, `Electricity, Heat Pump, UEF 3.75`, `Electricity, Heat Pump, UEF 4.00`, `Natural Gas, Tank, UEF 0.57`, `Natural Gas, Tank, UEF 0.60`, `Natural Gas, Tank, UEF 0.64`, `Natural Gas, Tank, UEF 0.67`, `Natural Gas, Tank, UEF 0.70`, `Natural Gas, Tank, UEF 0.80`, `Natural Gas, Tankless, UEF 0.82`, `Natural Gas, Tankless, UEF 0.93`, `Natural Gas, Tankless, UEF 0.96`, `Natural Gas, Tankless, UEF 0.98`, `Fuel Oil, Tank, UEF 0.61`, `Fuel Oil, Tank, UEF 0.64`, `Fuel Oil, Tank, UEF 0.67`, `Propane, Tank, UEF 0.57`, `Propane, Tank, UEF 0.60`, `Propane, Tank, UEF 0.64`, `Propane, Tank, UEF 0.67`, `Propane, Tank, UEF 0.70`, `Propane, Tank, UEF 0.80`, `Propane, Tankless, UEF 0.82`, `Propane, Tankless, UEF 0.93`, `Propane, Tankless, UEF 0.96`, `Wood, Tank, UEF 0.60`, `Coal, Tank, UEF 0.60`, `Space-Heating Boiler w/ Storage Tank`, `Space-Heating Boiler w/ Tankless Coil`, `Detailed Example: Electricity, Tank, 40 gal, EF 0.93`, `Detailed Example: Electricity, Tank, UEF 0.94, 135F`, `Detailed Example: Electricity, Tankless, EF 0.96`, `Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78`, `Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76`, `Detailed Example: Natural Gas, Tankless, EF 0.95`
+- **Choices:** `None`, `Electricity, Tank, UEF 0.90`, `Electricity, Tank, UEF 0.92`, `Electricity, Tank, UEF 0.94`, `Electricity, Tankless, UEF 0.94`, `Electricity, Tankless, UEF 0.98`, `Electricity, Heat Pump, UEF 3.50`, `Electricity, Heat Pump, UEF 3.75`, `Electricity, Heat Pump, UEF 4.00`, `Natural Gas, Tank, UEF 0.57`, `Natural Gas, Tank, UEF 0.60`, `Natural Gas, Tank, UEF 0.64`, `Natural Gas, Tank, UEF 0.67`, `Natural Gas, Tank, UEF 0.70`, `Natural Gas, Tank, UEF 0.80`, `Natural Gas, Tank, UEF 0.90`, `Natural Gas, Tankless, UEF 0.82`, `Natural Gas, Tankless, UEF 0.93`, `Natural Gas, Tankless, UEF 0.96`, `Natural Gas, Tankless, UEF 0.98`, `Fuel Oil, Tank, UEF 0.61`, `Fuel Oil, Tank, UEF 0.64`, `Fuel Oil, Tank, UEF 0.67`, `Propane, Tank, UEF 0.57`, `Propane, Tank, UEF 0.60`, `Propane, Tank, UEF 0.64`, `Propane, Tank, UEF 0.67`, `Propane, Tank, UEF 0.70`, `Propane, Tank, UEF 0.80`, `Propane, Tank, UEF 0.90`, `Propane, Tankless, UEF 0.82`, `Propane, Tankless, UEF 0.93`, `Propane, Tankless, UEF 0.96`, `Wood, Tank, UEF 0.60`, `Coal, Tank, UEF 0.60`, `Space-Heating Boiler w/ Storage Tank`, `Space-Heating Boiler w/ Tankless Coil`, `Detailed Example: Electricity, Tank, 40 gal, EF 0.93`, `Detailed Example: Electricity, Tank, UEF 0.94, 135F`, `Detailed Example: Electricity, Tankless, EF 0.96`, `Detailed Example: Electricity, Heat Pump, 80 gal, EF 3.1`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.56, RE 0.78`, `Detailed Example: Natural Gas, Tank, 40 gal, EF 0.62, RE 0.78`, `Detailed Example: Natural Gas, Tank, 50 gal, EF 0.59, RE 0.76`, `Detailed Example: Natural Gas, Tankless, EF 0.95`
 
 <br/>
 
@@ -1336,6 +1430,17 @@ The type of permanent spa (pump & heater).
 
 <br/>
 
+**Schedules: CSV File Paths**
+
+Absolute/relative paths of csv files containing user-specified detailed schedules, if desired. Use a comma-separated list for multiple files.
+
+- **Name:** ``schedules_paths``
+- **Type:** ``String``
+
+- **Required:** ``false``
+
+<br/>
+
 **Advanced Feature**
 
 Select an advanced research feature to use in the model, if desired.
@@ -1349,12 +1454,64 @@ Select an advanced research feature to use in the model, if desired.
 
 <br/>
 
-**Building Unit ID**
+**Advanced Feature 2**
 
-The building unit number (between 1 and the number of samples).
+Select a second advanced research feature to use in the model, if desired.
 
-- **Name:** ``building_id``
-- **Type:** ``Integer``
+- **Name:** ``advanced_feature_2``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `None`, `Temperature Capacitance Multiplier, 1`, `Temperature Capacitance Multiplier, 4`, `Temperature Capacitance Multiplier, 10`, `Temperature Capacitance Multiplier, 15`, `On/Off Thermostat Deadband, 1F`, `On/Off Thermostat Deadband, 2F`, `On/Off Thermostat Deadband, 3F`, `Heat Pump Backup Staging, 5 kW`, `Heat Pump Backup Staging, 10 kW`, `Experimental Ground-to-Air Heat Pump Model`, `HVAC Allow Increased Fixed Capacities`
+
+<br/>
+
+**Utility Bill Scenario**
+
+The type of utility bill calculations to perform.
+
+- **Name:** ``utility_bill_scenario``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `None`, `Default (EIA Average Rates)`, `Detailed Example: $0.12/kWh, $1.1/therm, $12/month`, `Detailed Example: Sample Tiered Rate`, `Detailed Example: Sample Time-of-Use Rate`, `Detailed Example: Sample Tiered and Time-of-Use Rate`, `Detailed Example: Sample Real-Time Pricing`, `Detailed Example: Net Metering w/ Wholesale Excess Rate`, `Detailed Example: Net Metering w/ Retail Excess Rate`, `Detailed Example: Feed-in Tariff`
+
+<br/>
+
+**Utility Bill Scenario 2**
+
+The second type of utility bill calculations to perform, if desired.
+
+- **Name:** ``utility_bill_scenario_2``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `None`, `Default (EIA Average Rates)`, `Detailed Example: $0.12/kWh, $1.1/therm, $12/month`, `Detailed Example: Sample Tiered Rate`, `Detailed Example: Sample Time-of-Use Rate`, `Detailed Example: Sample Tiered and Time-of-Use Rate`, `Detailed Example: Sample Real-Time Pricing`, `Detailed Example: Net Metering w/ Wholesale Excess Rate`, `Detailed Example: Net Metering w/ Retail Excess Rate`, `Detailed Example: Feed-in Tariff`
+
+<br/>
+
+**Utility Bill Scenario 3**
+
+The third type of utility bill calculations to perform, if desired.
+
+- **Name:** ``utility_bill_scenario_3``
+- **Type:** ``Choice``
+
+- **Required:** ``false``
+
+- **Choices:** `None`, `Default (EIA Average Rates)`, `Detailed Example: $0.12/kWh, $1.1/therm, $12/month`, `Detailed Example: Sample Tiered Rate`, `Detailed Example: Sample Time-of-Use Rate`, `Detailed Example: Sample Tiered and Time-of-Use Rate`, `Detailed Example: Sample Real-Time Pricing`, `Detailed Example: Net Metering w/ Wholesale Excess Rate`, `Detailed Example: Net Metering w/ Retail Excess Rate`, `Detailed Example: Feed-in Tariff`
+
+<br/>
+
+**Additional Properties**
+
+Additional properties specified as key-value pairs (i.e., key=value). If multiple additional properties, use a |-separated list. For example, 'LowIncome=false|Remodeled|Description=2-story home in Denver'. These properties will be stored in the HPXML file under /HPXML/SoftwareInfo/extension/AdditionalProperties.
+
+- **Name:** ``additional_properties``
+- **Type:** ``String``
 
 - **Required:** ``false``
 
@@ -1362,10 +1519,54 @@ The building unit number (between 1 and the number of samples).
 
 **Whole SFA/MF Building Simulation?**
 
-If the HPXML file represents a single family-attached/multifamily building with multiple dwelling units defined, specifies whether to run the HPXML file as a single whole building model.
+Set true if creating an HPXML file to simulate a whole single-family attached or multifamily building with multiple dwelling units within. If an HPXML file already exists at the specified HPXML File Path, a new HPXML Building element describing the current dwelling unit will be appended to this HPXML file.
 
 - **Name:** ``whole_sfa_or_mf_building_sim``
 - **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Combine like surfaces?**
+
+If true, combines like surfaces to simplify the HPXML file generated.
+
+- **Name:** ``combine_like_surfaces``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Apply Default Values?**
+
+If true, applies OS-HPXML default values to the HPXML output file. Setting to true will also force validation of the HPXML output file before applying OS-HPXML default values.
+
+- **Name:** ``apply_defaults``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Apply Validation?**
+
+If true, validates the HPXML output file. Set to false for faster performance. Note that validation is not needed if the HPXML file will be validated downstream (e.g., via the HPXMLtoOpenStudio measure).
+
+- **Name:** ``apply_validation``
+- **Type:** ``Boolean``
+
+- **Required:** ``false``
+
+<br/>
+
+**Building Unit ID**
+
+The building unit number (between 1 and the number of samples).
+
+- **Name:** ``building_id``
+- **Type:** ``Integer``
 
 - **Required:** ``false``
 

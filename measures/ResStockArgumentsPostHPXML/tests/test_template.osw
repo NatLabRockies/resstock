@@ -29,8 +29,7 @@
         "enclosure_wall": "Wood Stud, R-13",
         "enclosure_window": "Double, Clear, Metal, Air",
         "electric_vehicle": "Midsize, 200 Mile Range, 11000 miles/yr",
-        "electric_vehicle_charger": "Level 1, 90% Charging at Home",
-        "apply_defaults": true
+        "electric_vehicle_charger": "Level 1, 90% Charging at Home"
       },
       "measure_dir_name": "BuildResidentialHPXML"
   },

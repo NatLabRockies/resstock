@@ -362,7 +362,6 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     # Set arguments for the BuildResidentialHPXML measure
     hpxml_path = File.expand_path('../existing.xml')
     measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
-    measures['BuildResidentialHPXML'][0]['apply_validation'] = true
 
     set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir)
     set_building_header(measures)
@@ -374,7 +373,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
         measures['BuildResidentialHPXML'][0]['existing_hpxml_path'] = hpxml_path
       end
 
-      set_resstock_arguments(measures, runner, resstock_arguments_runner)
+      set_resstock_arguments(measures, resstock_arguments_runner)
       if not unit_multipliers.empty?
         unit_multiplier = unit_multipliers[unit_number]
       end
@@ -470,7 +469,7 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
 
   def set_header(runner, measures, args, whole_sfa_or_mf_building_sim, bldg_data, resources_dir)
     # Whole SFA/MF Building Simulation?
-    measures['ResStockArgumentsPostHPXML'][0]['whole_sfa_or_mf_building_sim'] = whole_sfa_or_mf_building_sim
+    measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = whole_sfa_or_mf_building_sim
 
     # Simulation Control
     measures['BuildResidentialHPXML'][0]['simulation_control_timestep'] = args[:simulation_control_timestep].to_s if !args[:simulation_control_timestep].nil?
@@ -595,12 +594,11 @@ class BuildExistingModel < OpenStudio::Measure::ModelMeasure
     end
   end
 
-  def set_resstock_arguments(measures, runner, child_runner)
+  def set_resstock_arguments(measures, child_runner)
     # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
     child_runner.result.stepValues.each do |step_value|
       value = get_value_from_workflow_step_value(step_value)
-      register_value(runner, step_value.name, value) if Constants::ArgumentsToRegister.include?(step_value.name)
-      next if value == '' || Constants::ArgumentsToExclude.include?(step_value.name)
+      next if value == ''
 
       measures['BuildResidentialHPXML'][0][step_value.name] = value
     end

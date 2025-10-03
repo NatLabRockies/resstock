@@ -3,14 +3,84 @@
   <schema_version>3.1</schema_version>
   <name>res_stock_arguments_post_hpxml</name>
   <uid>db102ce5-ac96-4ef9-90d3-abbe53478716</uid>
-  <version_id>0ba55078-3116-46b3-a675-bdfe00581262</version_id>
-  <version_modified>2025-09-15T19:01:18Z</version_modified>
+  <version_id>2fbb22fc-e6f3-4645-9251-1fe6142bcc08</version_id>
+  <version_modified>2025-10-03T16:33:59Z</version_modified>
   <xml_checksum>2C38F48B</xml_checksum>
   <class_name>ResStockArgumentsPostHPXML</class_name>
   <display_name>ResStock Arguments Post-HPXML</display_name>
   <description>Measure that post-processes the output of the BuildResidentialHPXML and BuildResidentialScheduleFile measures.</description>
   <modeler_description>Passes in all ResStockArgumentsPostHPXML arguments from the options lookup, processes them, and then modifies output of other measures.</modeler_description>
   <arguments>
+    <argument>
+      <name>simulation_control_timestep</name>
+      <display_name>Simulation Control: Timestep</display_name>
+      <description>The timestep for the simulation; defaults to hourly calculations for fastest runtime.</description>
+      <type>Choice</type>
+      <units>min</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>60</default_value>
+      <choices>
+        <choice>
+          <value>60</value>
+          <display_name>60</display_name>
+        </choice>
+        <choice>
+          <value>30</value>
+          <display_name>30</display_name>
+        </choice>
+        <choice>
+          <value>20</value>
+          <display_name>20</display_name>
+        </choice>
+        <choice>
+          <value>15</value>
+          <display_name>15</display_name>
+        </choice>
+        <choice>
+          <value>12</value>
+          <display_name>12</display_name>
+        </choice>
+        <choice>
+          <value>10</value>
+          <display_name>10</display_name>
+        </choice>
+        <choice>
+          <value>6</value>
+          <display_name>6</display_name>
+        </choice>
+        <choice>
+          <value>5</value>
+          <display_name>5</display_name>
+        </choice>
+        <choice>
+          <value>4</value>
+          <display_name>4</display_name>
+        </choice>
+        <choice>
+          <value>3</value>
+          <display_name>3</display_name>
+        </choice>
+        <choice>
+          <value>2</value>
+          <display_name>2</display_name>
+        </choice>
+        <choice>
+          <value>1</value>
+          <display_name>1</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>simulation_control_run_period</name>
+      <display_name>Simulation Control: Run Period</display_name>
+      <description>Enter a date range like 'Mar 1 - May 31'. Defaults to the entire year.</description>
+      <type>String</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Jan 1 - Dec 31</default_value>
+    </argument>
     <argument>
       <name>location_zip_code</name>
       <display_name>Location: Zip Code</display_name>
@@ -28,6 +98,58 @@
       <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>location_site_type</name>
+      <display_name>Location: Site Type</display_name>
+      <description>The terrain/shielding of the home, for the infiltration model. Defaults to 'Suburban, Normal' for single-family detached and manufactured home and 'Suburban, Well-Shielded' for single-family attached and apartment units.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Default</default_value>
+      <choices>
+        <choice>
+          <value>Default</value>
+          <display_name>Default</display_name>
+        </choice>
+        <choice>
+          <value>Suburban, Normal</value>
+          <display_name>Suburban, Normal</display_name>
+        </choice>
+        <choice>
+          <value>Suburban, Well-Shielded</value>
+          <display_name>Suburban, Well-Shielded</display_name>
+        </choice>
+        <choice>
+          <value>Suburban, Exposed</value>
+          <display_name>Suburban, Exposed</display_name>
+        </choice>
+        <choice>
+          <value>Urban, Normal</value>
+          <display_name>Urban, Normal</display_name>
+        </choice>
+        <choice>
+          <value>Urban, Well-Shielded</value>
+          <display_name>Urban, Well-Shielded</display_name>
+        </choice>
+        <choice>
+          <value>Urban, Exposed</value>
+          <display_name>Urban, Exposed</display_name>
+        </choice>
+        <choice>
+          <value>Rural, Normal</value>
+          <display_name>Rural, Normal</display_name>
+        </choice>
+        <choice>
+          <value>Rural, Well-Shielded</value>
+          <display_name>Rural, Well-Shielded</display_name>
+        </choice>
+        <choice>
+          <value>Rural, Exposed</value>
+          <display_name>Rural, Exposed</display_name>
+        </choice>
+      </choices>
     </argument>
     <argument>
       <name>location_soil_type</name>
@@ -150,6 +272,78 @@
       <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>2025</default_value>
+    </argument>
+    <argument>
+      <name>geometry_attached_walls</name>
+      <display_name>Geometry: Unit Attached Walls</display_name>
+      <description>For single-family attached and apartment units, the location(s) of the attached walls.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>None</default_value>
+      <choices>
+        <choice>
+          <value>None</value>
+          <display_name>None</display_name>
+        </choice>
+        <choice>
+          <value>1 Side: Front</value>
+          <display_name>1 Side: Front</display_name>
+        </choice>
+        <choice>
+          <value>1 Side: Back</value>
+          <display_name>1 Side: Back</display_name>
+        </choice>
+        <choice>
+          <value>1 Side: Left</value>
+          <display_name>1 Side: Left</display_name>
+        </choice>
+        <choice>
+          <value>1 Side: Right</value>
+          <display_name>1 Side: Right</display_name>
+        </choice>
+        <choice>
+          <value>2 Sides: Front, Left</value>
+          <display_name>2 Sides: Front, Left</display_name>
+        </choice>
+        <choice>
+          <value>2 Sides: Front, Right</value>
+          <display_name>2 Sides: Front, Right</display_name>
+        </choice>
+        <choice>
+          <value>2 Sides: Back, Left</value>
+          <display_name>2 Sides: Back, Left</display_name>
+        </choice>
+        <choice>
+          <value>2 Sides: Back, Right</value>
+          <display_name>2 Sides: Back, Right</display_name>
+        </choice>
+        <choice>
+          <value>2 Sides: Front, Back</value>
+          <display_name>2 Sides: Front, Back</display_name>
+        </choice>
+        <choice>
+          <value>2 Sides: Left, Right</value>
+          <display_name>2 Sides: Left, Right</display_name>
+        </choice>
+        <choice>
+          <value>3 Sides: Front, Back, Left</value>
+          <display_name>3 Sides: Front, Back, Left</display_name>
+        </choice>
+        <choice>
+          <value>3 Sides: Front, Back, Right</value>
+          <display_name>3 Sides: Front, Back, Right</display_name>
+        </choice>
+        <choice>
+          <value>3 Sides: Front, Left, Right</value>
+          <display_name>3 Sides: Front, Left, Right</display_name>
+        </choice>
+        <choice>
+          <value>3 Sides: Back, Left, Right</value>
+          <display_name>3 Sides: Back, Left, Right</display_name>
+        </choice>
+      </choices>
     </argument>
     <argument>
       <name>geometry_unit_aspect_ratio</name>
@@ -3846,8 +4040,16 @@
           <display_name>Central AC, SEER2 13.4</display_name>
         </choice>
         <choice>
+          <value>Central AC, SEER2 13.8</value>
+          <display_name>Central AC, SEER2 13.8</display_name>
+        </choice>
+        <choice>
           <value>Central AC, SEER2 14.0</value>
           <display_name>Central AC, SEER2 14.0</display_name>
+        </choice>
+        <choice>
+          <value>Central AC, SEER2 14.3</value>
+          <display_name>Central AC, SEER2 14.3</display_name>
         </choice>
         <choice>
           <value>Central AC, SEER2 15.0</value>
@@ -4268,6 +4470,10 @@
         <choice>
           <value>Central HP, SEER2 14.0, HSPF2 7.3</value>
           <display_name>Central HP, SEER2 14.0, HSPF2 7.3</display_name>
+        </choice>
+        <choice>
+          <value>Central HP, SEER2 14.3, HSPF2 7.5</value>
+          <display_name>Central HP, SEER2 14.3, HSPF2 7.5</display_name>
         </choice>
         <choice>
           <value>Central HP, SEER2 15.0, HSPF2 7.6</value>
@@ -5672,6 +5878,46 @@
       </choices>
     </argument>
     <argument>
+      <name>hvac_control_heating_weekday_setpoint</name>
+      <display_name>HVAC Control: Heating Weekday Setpoint Schedule</display_name>
+      <description>Specify the constant or 24-hour comma-separated weekday heating setpoint schedule.</description>
+      <type>String</type>
+      <units>F</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>68</default_value>
+    </argument>
+    <argument>
+      <name>hvac_control_heating_weekend_setpoint</name>
+      <display_name>HVAC Control: Heating Weekend Setpoint Schedule</display_name>
+      <description>Specify the constant or 24-hour comma-separated weekend heating setpoint schedule.</description>
+      <type>String</type>
+      <units>F</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>68</default_value>
+    </argument>
+    <argument>
+      <name>hvac_control_cooling_weekday_setpoint</name>
+      <display_name>HVAC Control: Cooling Weekday Setpoint Schedule</display_name>
+      <description>Specify the constant or 24-hour comma-separated weekday cooling setpoint schedule.</description>
+      <type>String</type>
+      <units>F</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>78</default_value>
+    </argument>
+    <argument>
+      <name>hvac_control_cooling_weekend_setpoint</name>
+      <display_name>HVAC Control: Cooling Weekend Setpoint Schedule</display_name>
+      <description>Specify the constant or 24-hour comma-separated weekend cooling setpoint schedule.</description>
+      <type>String</type>
+      <units>F</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>78</default_value>
+    </argument>
+    <argument>
       <name>hvac_control_heating_season_period</name>
       <display_name>HVAC Control: Heating Season Period</display_name>
       <description>Enter a date range like 'Nov 1 - Jun 30'. Defaults to year-round heating availability.</description>
@@ -6402,6 +6648,10 @@
           <display_name>Natural Gas, Tank, UEF 0.80</display_name>
         </choice>
         <choice>
+          <value>Natural Gas, Tank, UEF 0.90</value>
+          <display_name>Natural Gas, Tank, UEF 0.90</display_name>
+        </choice>
+        <choice>
           <value>Natural Gas, Tankless, UEF 0.82</value>
           <display_name>Natural Gas, Tankless, UEF 0.82</display_name>
         </choice>
@@ -6452,6 +6702,10 @@
         <choice>
           <value>Propane, Tank, UEF 0.80</value>
           <display_name>Propane, Tank, UEF 0.80</display_name>
+        </choice>
+        <choice>
+          <value>Propane, Tank, UEF 0.90</value>
+          <display_name>Propane, Tank, UEF 0.90</display_name>
         </choice>
         <choice>
           <value>Propane, Tankless, UEF 0.82</value>
@@ -10676,6 +10930,15 @@
       </choices>
     </argument>
     <argument>
+      <name>schedules_paths</name>
+      <display_name>Schedules: CSV File Paths</display_name>
+      <description>Absolute/relative paths of csv files containing user-specified detailed schedules, if desired. Use a comma-separated list for multiple files.</description>
+      <type>String</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
       <name>advanced_feature</name>
       <display_name>Advanced Feature</display_name>
       <description>Select an advanced research feature to use in the model, if desired.</description>
@@ -10736,10 +10999,226 @@
       </choices>
     </argument>
     <argument>
-      <name>building_id</name>
-      <display_name>Building Unit ID</display_name>
-      <description>The building unit number (between 1 and the number of samples).</description>
-      <type>Integer</type>
+      <name>advanced_feature_2</name>
+      <display_name>Advanced Feature 2</display_name>
+      <description>Select a second advanced research feature to use in the model, if desired.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>None</default_value>
+      <choices>
+        <choice>
+          <value>None</value>
+          <display_name>None</display_name>
+        </choice>
+        <choice>
+          <value>Temperature Capacitance Multiplier, 1</value>
+          <display_name>Temperature Capacitance Multiplier, 1</display_name>
+        </choice>
+        <choice>
+          <value>Temperature Capacitance Multiplier, 4</value>
+          <display_name>Temperature Capacitance Multiplier, 4</display_name>
+        </choice>
+        <choice>
+          <value>Temperature Capacitance Multiplier, 10</value>
+          <display_name>Temperature Capacitance Multiplier, 10</display_name>
+        </choice>
+        <choice>
+          <value>Temperature Capacitance Multiplier, 15</value>
+          <display_name>Temperature Capacitance Multiplier, 15</display_name>
+        </choice>
+        <choice>
+          <value>On/Off Thermostat Deadband, 1F</value>
+          <display_name>On/Off Thermostat Deadband, 1F</display_name>
+        </choice>
+        <choice>
+          <value>On/Off Thermostat Deadband, 2F</value>
+          <display_name>On/Off Thermostat Deadband, 2F</display_name>
+        </choice>
+        <choice>
+          <value>On/Off Thermostat Deadband, 3F</value>
+          <display_name>On/Off Thermostat Deadband, 3F</display_name>
+        </choice>
+        <choice>
+          <value>Heat Pump Backup Staging, 5 kW</value>
+          <display_name>Heat Pump Backup Staging, 5 kW</display_name>
+        </choice>
+        <choice>
+          <value>Heat Pump Backup Staging, 10 kW</value>
+          <display_name>Heat Pump Backup Staging, 10 kW</display_name>
+        </choice>
+        <choice>
+          <value>Experimental Ground-to-Air Heat Pump Model</value>
+          <display_name>Experimental Ground-to-Air Heat Pump Model</display_name>
+        </choice>
+        <choice>
+          <value>HVAC Allow Increased Fixed Capacities</value>
+          <display_name>HVAC Allow Increased Fixed Capacities</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>utility_bill_scenario</name>
+      <display_name>Utility Bill Scenario</display_name>
+      <description>The type of utility bill calculations to perform.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Default (EIA Average Rates)</default_value>
+      <choices>
+        <choice>
+          <value>None</value>
+          <display_name>None</display_name>
+        </choice>
+        <choice>
+          <value>Default (EIA Average Rates)</value>
+          <display_name>Default (EIA Average Rates)</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: $0.12/kWh, $1.1/therm, $12/month</value>
+          <display_name>Detailed Example: $0.12/kWh, $1.1/therm, $12/month</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Tiered Rate</value>
+          <display_name>Detailed Example: Sample Tiered Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Time-of-Use Rate</value>
+          <display_name>Detailed Example: Sample Time-of-Use Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Tiered and Time-of-Use Rate</value>
+          <display_name>Detailed Example: Sample Tiered and Time-of-Use Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Real-Time Pricing</value>
+          <display_name>Detailed Example: Sample Real-Time Pricing</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Net Metering w/ Wholesale Excess Rate</value>
+          <display_name>Detailed Example: Net Metering w/ Wholesale Excess Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Net Metering w/ Retail Excess Rate</value>
+          <display_name>Detailed Example: Net Metering w/ Retail Excess Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Feed-in Tariff</value>
+          <display_name>Detailed Example: Feed-in Tariff</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>utility_bill_scenario_2</name>
+      <display_name>Utility Bill Scenario 2</display_name>
+      <description>The second type of utility bill calculations to perform, if desired.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>None</default_value>
+      <choices>
+        <choice>
+          <value>None</value>
+          <display_name>None</display_name>
+        </choice>
+        <choice>
+          <value>Default (EIA Average Rates)</value>
+          <display_name>Default (EIA Average Rates)</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: $0.12/kWh, $1.1/therm, $12/month</value>
+          <display_name>Detailed Example: $0.12/kWh, $1.1/therm, $12/month</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Tiered Rate</value>
+          <display_name>Detailed Example: Sample Tiered Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Time-of-Use Rate</value>
+          <display_name>Detailed Example: Sample Time-of-Use Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Tiered and Time-of-Use Rate</value>
+          <display_name>Detailed Example: Sample Tiered and Time-of-Use Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Real-Time Pricing</value>
+          <display_name>Detailed Example: Sample Real-Time Pricing</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Net Metering w/ Wholesale Excess Rate</value>
+          <display_name>Detailed Example: Net Metering w/ Wholesale Excess Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Net Metering w/ Retail Excess Rate</value>
+          <display_name>Detailed Example: Net Metering w/ Retail Excess Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Feed-in Tariff</value>
+          <display_name>Detailed Example: Feed-in Tariff</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>utility_bill_scenario_3</name>
+      <display_name>Utility Bill Scenario 3</display_name>
+      <description>The third type of utility bill calculations to perform, if desired.</description>
+      <type>Choice</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>None</default_value>
+      <choices>
+        <choice>
+          <value>None</value>
+          <display_name>None</display_name>
+        </choice>
+        <choice>
+          <value>Default (EIA Average Rates)</value>
+          <display_name>Default (EIA Average Rates)</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: $0.12/kWh, $1.1/therm, $12/month</value>
+          <display_name>Detailed Example: $0.12/kWh, $1.1/therm, $12/month</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Tiered Rate</value>
+          <display_name>Detailed Example: Sample Tiered Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Time-of-Use Rate</value>
+          <display_name>Detailed Example: Sample Time-of-Use Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Tiered and Time-of-Use Rate</value>
+          <display_name>Detailed Example: Sample Tiered and Time-of-Use Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Sample Real-Time Pricing</value>
+          <display_name>Detailed Example: Sample Real-Time Pricing</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Net Metering w/ Wholesale Excess Rate</value>
+          <display_name>Detailed Example: Net Metering w/ Wholesale Excess Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Net Metering w/ Retail Excess Rate</value>
+          <display_name>Detailed Example: Net Metering w/ Retail Excess Rate</display_name>
+        </choice>
+        <choice>
+          <value>Detailed Example: Feed-in Tariff</value>
+          <display_name>Detailed Example: Feed-in Tariff</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>additional_properties</name>
+      <display_name>Additional Properties</display_name>
+      <description>Additional properties specified as key-value pairs (i.e., key=value). If multiple additional properties, use a |-separated list. For example, 'LowIncome=false|Remodeled|Description=2-story home in Denver'. These properties will be stored in the HPXML file under /HPXML/SoftwareInfo/extension/AdditionalProperties.</description>
+      <type>String</type>
       <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -10747,11 +11226,12 @@
     <argument>
       <name>whole_sfa_or_mf_building_sim</name>
       <display_name>Whole SFA/MF Building Simulation?</display_name>
-      <description>If the HPXML file represents a single family-attached/multifamily building with multiple dwelling units defined, specifies whether to run the HPXML file as a single whole building model.</description>
+      <description>Set true if creating an HPXML file to simulate a whole single-family attached or multifamily building with multiple dwelling units within. If an HPXML file already exists at the specified HPXML File Path, a new HPXML Building element describing the current dwelling unit will be appended to this HPXML file.</description>
       <type>Boolean</type>
       <units></units>
       <required>false</required>
       <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
       <choices>
         <choice>
           <value>true</value>
@@ -10762,6 +11242,75 @@
           <display_name>false</display_name>
         </choice>
       </choices>
+    </argument>
+    <argument>
+      <name>combine_like_surfaces</name>
+      <display_name>Combine like surfaces?</display_name>
+      <description>If true, combines like surfaces to simplify the HPXML file generated.</description>
+      <type>Boolean</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>apply_defaults</name>
+      <display_name>Apply Default Values?</display_name>
+      <description>If true, applies OS-HPXML default values to the HPXML output file. Setting to true will also force validation of the HPXML output file before applying OS-HPXML default values.</description>
+      <type>Boolean</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>apply_validation</name>
+      <display_name>Apply Validation?</display_name>
+      <description>If true, validates the HPXML output file. Set to false for faster performance. Note that validation is not needed if the HPXML file will be validated downstream (e.g., via the HPXMLtoOpenStudio measure).</description>
+      <type>Boolean</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>building_id</name>
+      <display_name>Building Unit ID</display_name>
+      <description>The building unit number (between 1 and the number of samples).</description>
+      <type>Integer</type>
+      <units></units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>site_iecc_zone</name>
@@ -12666,7 +13215,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9C1331A3</checksum>
+      <checksum>87E2F251</checksum>
     </file>
     <file>
       <filename>common/README.md</filename>
@@ -12702,13 +13251,13 @@
       <filename>electrical_panel/electrical_panel_rated_capacity__multi_family.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>49D707DF</checksum>
+      <checksum>D9EFFE53</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_rated_capacity__single_family_electric_heating.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>AAC795D7</checksum>
+      <checksum>2ACA8671</checksum>
     </file>
     <file>
       <filename>electrical_panel/electrical_panel_rated_capacity__single_family_nonelectric_heating.csv</filename>
@@ -12762,7 +13311,7 @@
       <filename>test_template.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
-      <checksum>AD113DEE</checksum>
+      <checksum>868B10BD</checksum>
     </file>
   </files>
 </measure>

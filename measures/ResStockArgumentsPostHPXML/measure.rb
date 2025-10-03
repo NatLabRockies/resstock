@@ -102,9 +102,6 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
     @hpxml.header.software_program_used = 'ResStock'
     @hpxml.header.software_program_version = Version::ResStock_Version
 
-    # Whole SFA/MF Building Simulation?
-    @hpxml.header.whole_sfa_or_mf_building_sim = args[:whole_sfa_or_mf_building_sim]
-
     # Simulation controls
     @hpxml.header.sim_calendar_year = Location.get_sim_calendar_year(args[:simulation_control_run_period_calendar_year], weather)
 
@@ -497,6 +494,11 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
 
     # Apply defaults
     @hpxml.buildings.each do |hpxml_bldg|
+      # Always check for invalid HPXML file before applying defaults
+      if not validate_hpxml(runner, @hpxml, @hpxml.to_doc(), @hpxml_path)
+        return false
+      end
+
       # Get a schedules_file object so that we don't end up with simple weekday/weekend/month schedules
       # when we apply defaults.
       schedules_filepaths = hpxml_bldg.header.schedules_filepaths
@@ -538,8 +540,14 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       write_schedule(modified_ev_schedule, hpxml_bldg, index, output_csv_path)
     end
 
+    # Validate final HPXML
+    hpxml_doc = @hpxml.to_doc()
+    if not validate_hpxml(runner, @hpxml, hpxml_doc, @hpxml_path)
+      return false
+    end
+
     # Write out the modified hpxml
-    XMLHelper.write_file(@hpxml.to_doc(), @hpxml_path)
+    XMLHelper.write_file(hpxml_doc, @hpxml_path)
 
     return true
   end
@@ -1023,6 +1031,41 @@ class ResStockArgumentsPostHPXML < OpenStudio::Measure::ModelMeasure
       end
     end
     return args
+  end
+
+  # Check for errors in hpxml, and validate hpxml_doc against hpxml_path
+  def validate_hpxml(runner, hpxml, hpxml_doc, hpxml_path)
+    # Check for errors in the HPXML object
+    errors = []
+    hpxml.buildings.each do |hpxml_bldg|
+      errors += hpxml_bldg.check_for_errors()
+    end
+    if errors.size > 0
+      fail "ERROR: Invalid HPXML object produced.\n#{errors}"
+    end
+
+    is_valid = true
+
+    # Validate input HPXML against schema
+    schema_path = File.join(File.dirname(__FILE__), '..', '..', 'resources', 'hpxml-measures', 'HPXMLtoOpenStudio', 'resources', 'hpxml_schema', 'HPXML.xsd')
+    schema_validator = XMLValidator.get_xml_validator(schema_path)
+    xsd_errors, xsd_warnings = XMLValidator.validate_against_schema(hpxml_path, schema_validator)
+
+    # Validate input HPXML against schematron docs
+    schematron_path = File.join(File.dirname(__FILE__), '..', '..', 'resources', 'hpxml-measures', 'HPXMLtoOpenStudio', 'resources', 'hpxml_schematron', 'EPvalidator.sch')
+    schematron_validator = XMLValidator.get_xml_validator(schematron_path)
+    sct_errors, sct_warnings = XMLValidator.validate_against_schematron(hpxml_path, schematron_validator, hpxml_doc)
+
+    # Handle errors/warnings
+    (xsd_errors + sct_errors).each do |error|
+      runner.registerError("#{hpxml_path}: #{error}")
+      is_valid = false
+    end
+    (xsd_warnings + sct_warnings).each do |warning|
+      runner.registerWarning("#{hpxml_path}: #{warning}")
+    end
+
+    return is_valid
   end
 end
 

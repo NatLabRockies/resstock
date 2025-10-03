@@ -333,7 +333,6 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # Set arguments for the BuildResidentialHPXML measure
     hpxml_path = File.expand_path('../upgraded.xml')
     measures['BuildResidentialHPXML'] = [{ 'hpxml_path' => hpxml_path }]
-    measures['BuildResidentialHPXML'][0]['apply_validation'] = true
 
     set_header(measures, hpxml, values)
     set_building_header(measures)
@@ -432,7 +431,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
 
   def set_header(measures, hpxml, values)
     # Whole SFA/MF Building Simulation?
-    measures['ResStockArgumentsPostHPXML'][0]['whole_sfa_or_mf_building_sim'] = hpxml.header.whole_sfa_or_mf_building_sim
+    measures['BuildResidentialHPXML'][0]['whole_sfa_or_mf_building_sim'] = hpxml.header.whole_sfa_or_mf_building_sim
 
     # Simulation Control
     measures['BuildResidentialHPXML'][0]['simulation_control_timestep'] = values['simulation_control_timestep']
@@ -468,7 +467,7 @@ class ApplyUpgrade < OpenStudio::Measure::ModelMeasure
     # Assign ResStockArgument's runner arguments to BuildResidentialHPXML
     child_runner.result.stepValues.each do |step_value|
       value = get_value_from_workflow_step_value(step_value)
-      next if value == '' || Constants::ArgumentsToExclude.include?(step_value.name)
+      next if value == ''
 
       measures['BuildResidentialHPXML'][0][step_value.name] = value
     end

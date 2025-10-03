@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>upgrade_costs</name>
   <uid>ef51212c-acc4-48d7-9b29-cf2a5c6c4449</uid>
-  <version_id>2ddceacb-e061-4563-aa63-287fb4836944</version_id>
-  <version_modified>2025-09-25T16:59:21Z</version_modified>
+  <version_id>447144ea-ef1f-4b29-88c1-33e04fc1c7a1</version_id>
+  <version_modified>2025-10-03T16:34:00Z</version_modified>
   <xml_checksum>B1F14CB4</xml_checksum>
   <class_name>UpgradeCosts</class_name>
   <display_name>Upgrade Costs</display_name>
@@ -132,6 +132,12 @@
       <checksum>5873DFBF</checksum>
     </file>
     <file>
+      <filename>SFD_1story_FB_UA_GRG_MSHP_FuelTanklessWH.xml</filename>
+      <filetype>xml</filetype>
+      <usage_type>test</usage_type>
+      <checksum>94FA2FDE</checksum>
+    </file>
+    <file>
       <filename>SFD_1story_FB_UA_GRG_RoomAC_ElecBoiler_FuelTanklessWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
@@ -150,10 +156,22 @@
       <checksum>91D0B21B</checksum>
     </file>
     <file>
+      <filename>SFD_1story_UB_UA_GRG_ACV_FuelFurnace_PortableHeater_HPWH.xml</filename>
+      <filetype>xml</filetype>
+      <usage_type>test</usage_type>
+      <checksum>F41D7ECB</checksum>
+    </file>
+    <file>
       <filename>SFD_2story_CS_UA_AC2_FuelBoiler_FuelTankWH.osw</filename>
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
       <checksum>9E3B987B</checksum>
+    </file>
+    <file>
+      <filename>SFD_2story_CS_UA_AC2_FuelBoiler_FuelTankWH.xml</filename>
+      <filetype>xml</filetype>
+      <usage_type>test</usage_type>
+      <checksum>B3A62BC9</checksum>
     </file>
     <file>
       <filename>SFD_2story_CS_UA_GRG_ASHPV_FuelTanklessWH.osw</filename>
@@ -166,6 +184,12 @@
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
       <checksum>2923F8A4</checksum>
+    </file>
+    <file>
+      <filename>SFD_2story_FB_UA_GRG_AC1_ElecBaseboard_FuelTankWH.xml</filename>
+      <filetype>xml</filetype>
+      <usage_type>test</usage_type>
+      <checksum>B87A95C9</checksum>
     </file>
     <file>
       <filename>SFD_2story_FB_UA_GRG_AC1_UnitHeater_FuelTankWH.osw</filename>
@@ -190,6 +214,24 @@
       <filetype>osw</filetype>
       <usage_type>test</usage_type>
       <checksum>D861EAA5</checksum>
+    </file>
+    <file>
+      <filename>in.epw</filename>
+      <filetype>epw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>E23378AA</checksum>
+    </file>
+    <file>
+      <filename>in.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>94B3E994</checksum>
+    </file>
+    <file>
+      <filename>in.xml</filename>
+      <filetype>xml</filetype>
+      <usage_type>test</usage_type>
+      <checksum>A53CA83D</checksum>
     </file>
     <file>
       <filename>upgrade_costs_test.rb</filename>
