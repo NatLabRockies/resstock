@@ -77,6 +77,7 @@ def process_simulation_outputs(
     df = add_intensity_cols(df)
     df = add_weighted_cols(df)
     df = add_missing_upgrade_cols(df, upgrade_col_schema)
+    df = adjust_col_dtypes(df)
     df = downselect_and_order_pub_cols(df, col_maps)  # Per sdr_column_definitions.csv
     df = df.sort("bldg_id")
     return df
@@ -536,6 +537,13 @@ def add_missing_upgrade_cols(df: pl.LazyFrame, upgrade_col_schema: dict) -> pl.L
         df = df.with_columns(
             pl.lit(None).cast(col_dtype).alias(col_name)
         )
+    return df
+
+
+def adjust_col_dtypes(df: pl.LazyFrame) -> pl.LazyFrame:
+    print("Adjusting column dtypes")
+    # Upgrade ID must be Athena bigint (np.int64)
+    df = df.with_columns(pl.col("upgrade").cast(pl.Int64))
     return df
 
 
