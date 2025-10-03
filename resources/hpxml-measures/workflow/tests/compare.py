@@ -293,7 +293,7 @@ class BaseCompare:
                         n_colors = 1
                         colors = px.colors.sample_colorscale('Viridis', [0.0])
                         if 'color_index' in y.columns.values:
-                            n_colors = len(list(set(y['color_index'])))
+                            n_colors = max(2, len(list(set(y['color_index']))))
                             colors = px.colors.sample_colorscale('Viridis', [n/(n_colors - 1) for n in range(n_colors)])
 
                         color = [colors[0] for i in y[col]]
