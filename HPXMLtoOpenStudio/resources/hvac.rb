@@ -4824,7 +4824,7 @@ module HVAC
     program.addLine('  Set fraction_compressor_htg = 1.0 - F_defrost')
     # Steady state compressor runtime fraction including heating cycle and defrost cycle
     program.addLine("  Set fraction_compressor_ss = #{htg_coil_rtf_sensor.name} * #{frost_cap_multiplier_act.name} / fraction_compressor_htg")
-    program.addLine('  Set fraction_defrost = F_defrost * (@Max 1.0 fraction_compressor_ss)')
+    program.addLine('  Set fraction_defrost = F_defrost * fraction_compressor_ss')
     program.addLine("  If #{htg_coil_rtf_sensor.name} > 0")
     program.addLine("    Set q_dot_defrost = (fraction_compressor_htg * (#{htg_coil_htg_rate_sensor.name} / #{frost_cap_multiplier_act.name}) - #{htg_coil_htg_rate_sensor.name}) / #{unit_multiplier} / fraction_defrost")
     program.addLine('  Else')

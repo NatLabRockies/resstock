@@ -14,6 +14,7 @@ None	none
 "Natural Gas, Tank, UEF 0.67"	storage water heater	natural gas	UniformEnergyFactor	0.67				
 "Natural Gas, Tank, UEF 0.70"	storage water heater	natural gas	UniformEnergyFactor	0.7				
 "Natural Gas, Tank, UEF 0.80"	storage water heater	natural gas	UniformEnergyFactor	0.8				
+"Natural Gas, Tank, UEF 0.90"	storage water heater	natural gas	UniformEnergyFactor	0.9				
 "Natural Gas, Tankless, UEF 0.82"	instantaneous water heater	natural gas	UniformEnergyFactor	0.82				
 "Natural Gas, Tankless, UEF 0.93"	instantaneous water heater	natural gas	UniformEnergyFactor	0.93				
 "Natural Gas, Tankless, UEF 0.96"	instantaneous water heater	natural gas	UniformEnergyFactor	0.96				
@@ -27,6 +28,7 @@ None	none
 "Propane, Tank, UEF 0.67"	storage water heater	propane	UniformEnergyFactor	0.67				
 "Propane, Tank, UEF 0.70"	storage water heater	propane	UniformEnergyFactor	0.7				
 "Propane, Tank, UEF 0.80"	storage water heater	propane	UniformEnergyFactor	0.8				
+"Propane, Tank, UEF 0.90"	storage water heater	propane	UniformEnergyFactor	0.9				
 "Propane, Tankless, UEF 0.82"	instantaneous water heater	propane	UniformEnergyFactor	0.82				
 "Propane, Tankless, UEF 0.93"	instantaneous water heater	propane	UniformEnergyFactor	0.93				
 "Propane, Tankless, UEF 0.96"	instantaneous water heater	propane	UniformEnergyFactor	0.96				
