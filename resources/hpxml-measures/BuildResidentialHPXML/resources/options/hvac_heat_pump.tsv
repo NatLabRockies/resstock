@@ -7,6 +7,7 @@ None	none
 "Central HP, SEER 15.0, HSPF 8.5"	air-to-air	SEER	15	single stage	HSPF	8.5															
 "Central HP, SEER2 13.4, HSPF2 7.0"	air-to-air	SEER2	13.4	single stage	HSPF2	7															
 "Central HP, SEER2 14.0, HSPF2 7.3"	air-to-air	SEER2	14	single stage	HSPF2	7.3															
+"Central HP, SEER2 14.3, HSPF2 7.5"	air-to-air	SEER2	14.3	single stage	HSPF2	7.5															
 "Central HP, SEER2 15.0, HSPF2 7.6"	air-to-air	SEER2	15	single stage	HSPF2	7.6															
 "Central HP, SEER2 16.0, HSPF2 7.9"	air-to-air	SEER2	16	single stage	HSPF2	7.9															
 "Central HP, SEER2 17.0, HSPF2 8.2"	air-to-air	SEER2	17	two stage	HSPF2	8.2															
