@@ -193,7 +193,7 @@ jobs:
         shell: bash
         run: |
           branch_name="${{ github.head_ref || github.ref_name }}"
-          git pull --ff-only --no-tags --depth=1 origin $branch_name
+          git pull --no-tags --depth=1 origin $branch_name
           git add docs
           git status
           if [[ $(git diff --cached --exit-code) ]]; then
@@ -371,7 +371,7 @@ jobs:
         shell: bash        
         run: |
           branch_name="${{ github.head_ref || github.ref_name }}"
-          git pull --ff-only --no-tags --depth=1 origin $branch_name
+          git pull --no-tags --depth=1 origin $branch_name
           cp -r samples/buildstock*.csv test/base_results/baseline/annual
           cp -r baseline/annual/results*.csv test/base_results/baseline/annual
           cp -r baseline/timeseries/*.csv test/base_results/baseline/timeseries
@@ -571,7 +571,7 @@ jobs:
         shell: bash
         run: |
           branch_name="${{ github.head_ref || github.ref_name }}"
-          git pull --ff-only --no-tags --depth=1 origin $branch_name
+          git pull --no-tags --depth=1 origin $branch_name
           git add project_national/resources
           git status
           if [[ $(git diff --cached --exit-code) ]]; then
@@ -694,7 +694,7 @@ jobs:
         run: |
           branch_name="${{ github.head_ref || github.ref_name }}"
           git checkout resources/options_lookup.tsv
-          git pull --ff-only --no-tags --depth=1 origin $branch_name
+          git pull --no-tags --depth=1 origin $branch_name
           cp -r project_national/sdr_upgrades_tmy3/results_csvs_pub/* test/base_results/upgrades/sdr_annual
           git add test/base_results/upgrades/sdr_annual
           git status
